@@ -14,6 +14,7 @@ namespace stream
     public:
         DataContainer(const unsigned int id, const Operator* const owner, Data* const data);
         DataContainer(const unsigned int id, Data* const data);
+        virtual ~DataContainer();
         
         const std::type_info & type() { return typeid(DataContainer); }
         const unsigned int id() { return m_id; }

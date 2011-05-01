@@ -25,6 +25,12 @@ namespace stream
             throw ArgumentException("Data pointer is 0");
     }
     
+    DataContainer::~DataContainer()
+    {
+        delete m_data;
+    }
+
+    
     void DataContainer::reference()
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
@@ -61,6 +67,9 @@ namespace stream
     Data*const DataContainer::obtainOwnership(const Operator* const owner)
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
+        
+        if(! m_owner)
+            throw ArgumentException("Owner pointer is 0");
         
         if(m_refCount != 1)
             throw ReferenceCountException("Data container is referenced by more than one clients");

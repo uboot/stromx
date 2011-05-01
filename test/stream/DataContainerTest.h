@@ -1,22 +1,34 @@
-#ifndef STREAM_DATACONTAINER_TEST_H
-#define STREAM_DATACONTAINER_TEST_H
+#ifndef STREAM_DATACONTAINERTEST_H
+#define STREAM_DATACONTAINERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-
-class DataContainerTest : public CPPUNIT_NS :: TestFixture
+namespace stream
 {
-    CPPUNIT_TEST_SUITE (DataContainerTest);
-    CPPUNIT_TEST (referenceTest);
-    CPPUNIT_TEST_SUITE_END ();
+    class DataContainer;
 
-    public:
-        void setUp (void);
-        void tearDown (void);
+    class DataContainerTest : public CPPUNIT_NS :: TestFixture
+    {
+        CPPUNIT_TEST_SUITE (DataContainerTest);
+        CPPUNIT_TEST (referenceTest);
+        CPPUNIT_TEST (ownershipTest);
+        CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void referenceTest (void);
-};
+        public:
+            DataContainerTest() : m_container(0) {}
+            
+            void setUp();
+            void tearDown();
 
-#endif // STREAM_DATACONTAINER_TEST_H
+        protected:
+            void referenceTest();
+            void ownershipTest();
+            
+        private:
+        DataContainer* m_container; 
+            
+    };
+}
+
+#endif // STREAM_DATACONTAINERTEST_H
