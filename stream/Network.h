@@ -1,5 +1,7 @@
-#include <string>
+#ifndef STREAM_NETWORK_H
+#define STREAM_NETWORK_H
 
+#include <string>
 
 namespace stream
 {
@@ -14,3 +16,5 @@ namespace stream
         std::string m_name; 
     };
 }
+
+#endif // STREAM_NETWORK_H

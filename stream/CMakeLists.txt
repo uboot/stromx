@@ -1,3 +1,7 @@
 project(libstream)
 
-add_library(stream SHARED Network.cpp)
+set(SOURCES
+    Network.cpp
+    DataContainer.cpp)
+
+add_library(stream SHARED ${SOURCES})
