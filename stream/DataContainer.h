@@ -1,5 +1,5 @@
-#ifndef STREAM_DATA_CONTAINER_H
-#define STREAM_DATA_CONTAINER_H
+#ifndef STREAM_DATACONTAINER_H
+#define STREAM_DATACONTAINER_H
 
 #include <typeinfo>
 #include <boost/thread/mutex.hpp>
@@ -37,4 +37,4 @@ namespace stream
    
 }
 
-#endif // STREAM_DATA_CONTAINER_H
+#endif // STREAM_DATACONTAINER_H

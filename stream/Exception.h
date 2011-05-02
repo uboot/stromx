@@ -35,6 +35,30 @@ namespace stream
           : Exception(message)
         {}
     };  
+    
+    class WrongIdException : public Exception
+    {
+    public:
+        WrongIdException(const std::string & message = "WrongIdException")
+          : Exception(message)
+        {}
+    };  
+    
+    class InvalidStateException : public Exception
+    {
+    public:
+        InvalidStateException(const std::string & message = "InvalidStateException")
+          : Exception(message)
+        {}
+    };
+    
+    class InternalException : public Exception
+    {
+    public:
+        InternalException(const std::string & message = "InternalException")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H
