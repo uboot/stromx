@@ -1,6 +1,7 @@
 #include "Id2DataPair.h"
 
 #include "Exception.h"
+#include <boost/assert.hpp>
 
 namespace stream
 {  
@@ -21,24 +22,24 @@ namespace stream
         return iter->second == 0;
     }
     
-    const bool Id2DataPair::tryGet(const Id2ConstDataMap& id2DataMap) const
+    const bool Id2DataPair::tryGet(const Id2DataMap& id2DataMap) const
     {
         if(m_data == 0)
-            throw InvalidStateException("This ID-data contains a 0 data pointer");
+            throw InvalidStateException("This ID-data pair contains a 0 data pointer");
         
-        Id2ConstDataMap::const_iterator iter = id2DataMap.find(m_id);
+        Id2DataMap::const_iterator iter = id2DataMap.find(m_id);
         if(iter == id2DataMap.end())
             throw WrongIdException("No output with ID " + m_id);
         
         return iter->second != 0;
     }
     
-    void Id2DataPair::get(const stream::Id2ConstDataMap& id2DataMap)
+    void Id2DataPair::get(const stream::Id2DataMap& id2DataMap)
     {
         if(m_data != 0)
             throw InvalidStateException("Data has already been assigned to this ID-data pair");
             
-        Id2ConstDataMap::const_iterator iter = id2DataMap.find(m_id);
+        Id2DataMap::const_iterator iter = id2DataMap.find(m_id);
         if(iter == id2DataMap.end())
             throw WrongIdException("No output with ID " + m_id);
         

@@ -17,10 +17,10 @@ namespace stream
         {}
         
         virtual const bool trySet(const Id2DataMap& id2DataMap) const;
-        virtual const bool tryGet(const Id2ConstDataMap& id2DataMap) const;
+        virtual const bool tryGet(const Id2DataMap& id2DataMap) const;
         
         virtual void set(Id2DataMap& id2DataMap) const;
-        virtual void get(const Id2ConstDataMap& id2DataMap); 
+        virtual void get(const Id2DataMap& id2DataMap); 
     
     private:
         unsigned int m_id;

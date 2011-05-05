@@ -1,6 +1,6 @@
 project(libstream)
 
-set(SOURCES
+set(SOURCES   
     DataContainer.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp

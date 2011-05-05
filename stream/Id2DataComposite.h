@@ -14,25 +14,26 @@ namespace stream
             OR
         };
         
-        // TODO: must also (type safe) accept non-const arguments
-        Id2DataComposite(const Id2DataMapper& lhs, const Id2DataMapper& rhs, const Type type)
+        Id2DataComposite(Id2DataMapper& lhs, Id2DataMapper& rhs, const Type type)
           : m_lhs(lhs),
             m_rhs(rhs),
             m_type(type)
         {}
         
         virtual const bool trySet(const Id2DataMap& id2DataMap) const;
-        virtual const bool tryGet(const Id2ConstDataMap& id2DataMap) const;
+        virtual const bool tryGet(const Id2DataMap& id2DataMap) const;
         
         virtual void set(Id2DataMap& id2DataMap) const;
-        virtual void get(const Id2ConstDataMap& id2DataMap); 
+        virtual void get(const Id2DataMap& id2DataMap); 
     
     private:
-        const Id2DataMapper & m_lhs;
-        const Id2DataMapper & m_rhs;
+        Id2DataMapper & m_lhs;
+        Id2DataMapper & m_rhs;
         Type m_type;
     };
-    
+     
+    Id2DataComposite operator&&(Id2DataMapper & lhs, Id2DataMapper & rhs);
+    Id2DataComposite operator||(Id2DataMapper & lhs, Id2DataMapper & rhs);    
    
 }
 
