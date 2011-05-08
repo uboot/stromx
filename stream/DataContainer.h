@@ -12,12 +12,11 @@ namespace stream
     class DataContainer
     {
     public:
-        DataContainer(const unsigned int id, const Operator* const owner, Data* const data);
-        DataContainer(const unsigned int id, Data* const data);
+        DataContainer(const Operator* const owner, Data* const data);
+        DataContainer(Data* const data);
         virtual ~DataContainer();
         
         const std::type_info & type() { return typeid(DataContainer); }
-        const unsigned int id() { return m_id; }
         const Operator* const Owner() { return m_owner; }
         
         void reference();
@@ -27,7 +26,6 @@ namespace stream
         void releaseOwnership(const Operator* const owner);
             
     private:
-        unsigned int m_id;
         const Operator* m_owner;
         Data* m_data;
         boost::mutex m_mutex;

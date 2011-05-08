@@ -1,13 +1,12 @@
 #ifndef STREAM_ID2DATAMAPPER_H
 #define STREAM_ID2DATAMAPPER_H
 
+#include "Id2DataMap.h"
 #include <map>
 
 namespace stream
 {
     class DataContainer;
-   
-    typedef std::map<unsigned int, DataContainer*> Id2DataMap;
     
     class Id2DataMapper
     {

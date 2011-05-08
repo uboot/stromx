@@ -5,9 +5,8 @@
 
 namespace stream
 {
-    DataContainer::DataContainer ( const unsigned int id, const stream::Operator*const owner, stream::Data* const data )
-      : m_id(id),
-        m_owner(owner),
+    DataContainer::DataContainer (const stream::Operator*const owner, stream::Data* const data )
+      : m_owner(owner),
         m_data(data),
         m_refCount(1)
     {
@@ -15,9 +14,8 @@ namespace stream
             throw ArgumentException();
     }
     
-    DataContainer::DataContainer ( const unsigned int id, stream::Data* const data )
-      : m_id(id),
-        m_owner(0),
+    DataContainer::DataContainer ( stream::Data* const data )
+      : m_owner(0),
         m_data(data),
         m_refCount(1)
     {

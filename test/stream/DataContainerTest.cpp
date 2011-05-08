@@ -17,7 +17,7 @@ namespace stream
         m_container = new DataContainer(0, data);
     }
 
-    void DataContainerTest::referenceTest ( void )
+    void DataContainerTest::dereferenceTest ( void )
     {
         Data* data = new None;
         DataContainer* container = new DataContainer(0, data);
@@ -28,7 +28,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(container->dereference(), ReferenceCountException);
     }
 
-    void DataContainerTest::ownershipTest()
+    void DataContainerTest::obtainOwnershipTest()
     {
         CPPUNIT_ASSERT_THROW(m_container->obtainOwnership(0), ArgumentException);
     }

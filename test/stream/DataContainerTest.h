@@ -11,8 +11,8 @@ namespace stream
     class DataContainerTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (DataContainerTest);
-        CPPUNIT_TEST (referenceTest);
-        CPPUNIT_TEST (ownershipTest);
+        CPPUNIT_TEST (dereferenceTest);
+        CPPUNIT_TEST (obtainOwnershipTest);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -22,8 +22,8 @@ namespace stream
             void tearDown();
 
         protected:
-            void referenceTest();
-            void ownershipTest();
+            void dereferenceTest();
+            void obtainOwnershipTest();
             
         private:
         DataContainer* m_container; 

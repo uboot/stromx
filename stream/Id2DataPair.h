@@ -16,6 +16,9 @@ namespace stream
             m_data(0)
         {}
         
+        const unsigned int id() const { return m_id; }
+        DataContainer* const data() const { return m_data; }
+        
         virtual const bool trySet(const Id2DataMap& id2DataMap) const;
         virtual const bool tryGet(const Id2DataMap& id2DataMap) const;
         
