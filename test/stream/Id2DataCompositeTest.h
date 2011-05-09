@@ -1,5 +1,5 @@
 #ifndef STREAM_ID2DATAPAIRTEST_H
-#define STREAM_ID2DATAPAIRTEST_H
+#define STREAM_ID2DATACOMPOSITETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -9,9 +9,9 @@ namespace stream
     class Id2DataMap;
     class DataContainer;
     
-    class Id2DataPairTest : public CPPUNIT_NS :: TestFixture
+    class Id2DataCompositeTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (Id2DataPairTest);
+        CPPUNIT_TEST_SUITE (Id2DataCompositeTest);
         CPPUNIT_TEST (tryGetTest);
         CPPUNIT_TEST (trySetTest);
         CPPUNIT_TEST (setTest);
@@ -19,7 +19,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            Id2DataPairTest() : m_map(0), m_dataContainer(0) {}
+            Id2DataCompositeTest() : m_map(0), m_dataContainer(0) {}
             void setUp();
             void tearDown();
 
@@ -35,4 +35,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_ID2DATAPAIRTEST_H
+#endif // STREAM_ID2DATACOMPOSITETEST_H

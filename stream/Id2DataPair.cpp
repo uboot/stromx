@@ -4,12 +4,7 @@
 #include <boost/assert.hpp>
 
 namespace stream
-{  
-    Id2DataPair::Id2DataPair(const unsigned int id, DataContainer* const data)
-      : m_id(id),
-        m_data(data)
-    { }
-        
+{      
     const bool Id2DataPair::trySet(const Id2DataMap& id2DataMap) const
     {
         return id2DataMap[m_id] == 0;

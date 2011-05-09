@@ -33,6 +33,9 @@ namespace stream
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
         
+        if(m_owner != 0)
+            throw OwnershipException("This data can not be referenced because it is owned");
+        
         m_refCount++;
     }
 
@@ -40,24 +43,22 @@ namespace stream
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
         
-        if(m_refCount == 0)
-            throw ReferenceCountException("Reference count is 0");
+        BOOST_ASSERT(m_refCount != 0);
+        
+        if(m_owner != 0)
+            throw OwnershipException("This data can not be dereferenced because it is owned");
         
         m_refCount--;
         
         if(m_refCount == 0)
-        {
-            delete m_data;
-            m_data = 0;
-        }
+            delete this;
     }
     
     const Data*const DataContainer::getReadAccess()
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
         
-        if(m_refCount == 0)
-            throw ReferenceCountException("Data container is not referenced");
+        BOOST_ASSERT(m_refCount != 0);
             
         return m_data;    
     }
@@ -65,6 +66,8 @@ namespace stream
     Data*const DataContainer::obtainOwnership(const Operator* const owner)
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
+        
+        BOOST_ASSERT(m_refCount != 0);
         
         if(! m_owner)
             throw ArgumentException("Owner pointer is 0");

@@ -19,13 +19,10 @@ namespace stream
 
     void DataContainerTest::dereferenceTest ( void )
     {
-        Data* data = new None;
-        DataContainer* container = new DataContainer(0, data);
-        
-        CPPUNIT_ASSERT_NO_THROW(container->reference());
-        CPPUNIT_ASSERT_NO_THROW(container->dereference()); 
-        CPPUNIT_ASSERT_NO_THROW(container->dereference());
-        CPPUNIT_ASSERT_THROW(container->dereference(), ReferenceCountException);
+        CPPUNIT_ASSERT_NO_THROW(m_container->reference());
+        CPPUNIT_ASSERT_NO_THROW(m_container->reference());
+        CPPUNIT_ASSERT_NO_THROW(m_container->dereference());
+        CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
     }
 
     void DataContainerTest::obtainOwnershipTest()

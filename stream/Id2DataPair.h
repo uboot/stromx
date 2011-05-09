@@ -9,7 +9,10 @@ namespace stream
     {
     public:
         
-        Id2DataPair(const unsigned int id, DataContainer* const data);
+        Id2DataPair(const unsigned int id, DataContainer* data)
+          : m_id(id),
+            m_data(data)
+        {}
         
         Id2DataPair(const unsigned int id)
           : m_id(id),

@@ -21,6 +21,7 @@ namespace stream
         
         void reference();
         void dereference();
+
         const Data* const getReadAccess();
         Data* const obtainOwnership(const Operator* const owner);
         void releaseOwnership(const Operator* const owner);

@@ -28,6 +28,14 @@ namespace stream
         {}
     };  
     
+    class OwnershipException : public Exception
+    {
+    public:
+        OwnershipException(const std::string & message = "OwnershipException")
+          : Exception(message)
+        {}
+    };  
+    
     class ArgumentException : public Exception
     {
     public:

@@ -14,7 +14,7 @@ namespace stream
     void Id2DataPairTest::setUp ( void )
     {
         std::vector<Descriptor> descriptors;
-        descriptors.push_back(Descriptor("Input", 0, DataType()));
+        descriptors.push_back(Descriptor("Data", 0, DataType()));
         m_map = new Id2DataMap(descriptors);
         m_dataContainer = new DataContainer(new None());
     }
@@ -35,14 +35,14 @@ namespace stream
     
     void Id2DataPairTest::tryGetTest()
     {
-        Id2DataPair pair1(0, 0);
+        Id2DataPair pair1(0);
         CPPUNIT_ASSERT_NO_THROW(pair1.tryGet(*m_map));
         CPPUNIT_ASSERT_EQUAL(false, pair1.tryGet(*m_map));
         
         (*m_map)[0] = m_dataContainer;
         CPPUNIT_ASSERT_EQUAL(true, pair1.tryGet(*m_map));
         
-        Id2DataPair pair2(1, 0);
+        Id2DataPair pair2(1);
         CPPUNIT_ASSERT_THROW(pair2.tryGet(*m_map), WrongIdException);
     }
     
@@ -63,13 +63,13 @@ namespace stream
     {
         (*m_map)[0] = m_dataContainer;
         
-        Id2DataPair pair1(0, 0);
+        Id2DataPair pair1(0);
         CPPUNIT_ASSERT_NO_THROW(pair1.get(*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
         
         CPPUNIT_ASSERT_THROW(pair1.get(*m_map), InvalidStateException);
         
-        Id2DataPair pair2(1, 0);
+        Id2DataPair pair2(1);
         CPPUNIT_ASSERT_THROW(pair2.get(*m_map), WrongIdException);
     }
 
