@@ -10,7 +10,12 @@ namespace stream
     class DataProvider
     {
     public:
-        const bool isStopped();
+        virtual ~DataProvider() {}
+        
+        virtual const bool isStopped() = 0;
+        
+        virtual void receiveInputData() = 0;
+        virtual void sendOutputData() = 0;
     };
 }
 

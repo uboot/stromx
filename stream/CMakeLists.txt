@@ -8,6 +8,7 @@ set(SOURCES
     Network.cpp
     None.cpp
     Operator.cpp
+    OperatorWrapper.cpp
 )
 
 add_library(stream SHARED ${SOURCES})
