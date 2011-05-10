@@ -12,7 +12,7 @@ namespace stream
     {
         CPPUNIT_TEST_SUITE (DataContainerTest);
         CPPUNIT_TEST (dereferenceTest);
-        CPPUNIT_TEST (obtainOwnershipTest);
+        CPPUNIT_TEST (getWriteAccessTest);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -23,7 +23,7 @@ namespace stream
 
         protected:
             void dereferenceTest();
-            void obtainOwnershipTest();
+            void getWriteAccessTest();
             
         private:
         DataContainer* m_container; 

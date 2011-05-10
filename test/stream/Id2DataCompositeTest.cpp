@@ -27,7 +27,7 @@ namespace stream
         Id2DataPair pair0 = Id2DataPair(0, m_dataContainer);
         Id2DataPair pair1 = Id2DataPair(1, m_dataContainer);
         Id2DataPair pair2 = Id2DataPair(2, m_dataContainer);
-        Id2DataComposite mapper = (pair0 || pair1);
+        Id2DataComposite mapper = pair0 || pair1;
         mapper && pair2;
     }
     

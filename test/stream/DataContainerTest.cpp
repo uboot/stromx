@@ -14,7 +14,7 @@ namespace stream
     void DataContainerTest::setUp ( void )
     {
         Data* data = new stream::None;
-        m_container = new DataContainer(0, data);
+        m_container = new DataContainer(data);
     }
 
     void DataContainerTest::dereferenceTest ( void )
@@ -25,9 +25,13 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
     }
 
-    void DataContainerTest::obtainOwnershipTest()
+    void DataContainerTest::getWriteAccessTest()
     {
-        CPPUNIT_ASSERT_THROW(m_container->obtainOwnership(0), ArgumentException);
+        CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
+        CPPUNIT_ASSERT_NO_THROW(m_container->reference());
+        CPPUNIT_ASSERT_THROW(m_container->getWriteAccess(), ReferenceCountException);
+        CPPUNIT_ASSERT_NO_THROW(m_container->dereference());
+        CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
     }
 
     void DataContainerTest::tearDown ( void )
