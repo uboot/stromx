@@ -38,8 +38,8 @@ namespace stream
         Type m_type;
     };
      
-    Id2DataComposite operator&&(Id2DataMapper & lhs, Id2DataMapper & rhs);
-    Id2DataComposite operator||(Id2DataMapper & lhs, Id2DataMapper & rhs);    
+    Id2DataComposite & operator&&(Id2DataMapper & lhs, Id2DataMapper & rhs);
+    Id2DataComposite & operator||(Id2DataMapper & lhs, Id2DataMapper & rhs);    
    
 }
 

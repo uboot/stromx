@@ -22,14 +22,13 @@ namespace stream
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);
-        void setInputData();
-        void getOutputData();
-        void clearOutputData();
+        void setInputData(unsigned int id, DataContainer* const data);
+        DataContainer* const getOutputData(unsigned int id);
+        void clearOutputData(unsigned int id);
         
         const bool isStopped() { return false; }
-        void receiveInputData() {}
-        void sendOutputData() {}
-        
+        void receiveInputData(Id2DataMapper& mapper) {}
+        void sendOutputData(const Id2DataMapper& mapper) {} 
     };
 }
 

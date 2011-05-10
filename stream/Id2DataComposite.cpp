@@ -75,14 +75,14 @@ namespace stream
     }
     
 
-    Id2DataComposite operator&&(Id2DataMapper & lhs, Id2DataMapper & rhs)
-    {
-        return Id2DataComposite(lhs, rhs, Id2DataComposite::AND);
-    }
-    
-    Id2DataComposite operator||(Id2DataMapper & lhs, Id2DataMapper & rhs)
-    {
-        return Id2DataComposite(lhs, rhs, Id2DataComposite::OR);
-    }
+//     Id2DataComposite & operator&&(Id2DataMapper & lhs, Id2DataMapper & rhs)
+//     {
+//         return Id2DataComposite(lhs, rhs, Id2DataComposite::AND);
+//     }
+//     
+//     Id2DataComposite & operator||(Id2DataMapper & lhs, Id2DataMapper & rhs)
+//     {
+//         return Id2DataComposite(lhs, rhs, Id2DataComposite::OR);
+//     }
 
 }
