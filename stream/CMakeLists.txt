@@ -2,7 +2,6 @@ project(libstream)
 
 set(SOURCES   
     DataContainer.cpp
-   
     Id2DataMap.cpp
     Id2DataPair.cpp
     Network.cpp

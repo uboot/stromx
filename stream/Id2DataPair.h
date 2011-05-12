@@ -1,11 +1,11 @@
 #ifndef STREAM_ID2DATAPAIR_H
 #define STREAM_ID2DATAPAIR_H
 
-#include "Id2DataMapper.h"
+#include "Id2DataMap.h"
 
 namespace stream
 {  
-    class Id2DataPair : public Id2DataMapper
+    class Id2DataPair
     {
     private:
         enum NodeType
@@ -25,6 +25,11 @@ namespace stream
         {
             createNode(lhs, rhs, OR);
         }
+        
+        friend bool trySet(Id2DataPair& mapper, const Id2DataMap& id2DataMap);
+        friend bool tryGet(Id2DataPair& mapper, const Id2DataMap& id2DataMap);
+        friend void get(Id2DataPair& mapper, Id2DataMap& id2DataMap); 
+        friend void set(Id2DataPair& mapper, Id2DataMap& id2DataMap); 
     
         Id2DataPair(const unsigned int id, DataContainer* data)
           : m_id(id),
@@ -58,16 +63,15 @@ namespace stream
         const unsigned int id() const { return m_id; }
         DataContainer* const data() const { return m_data; }
         
-        const bool trySet(const Id2DataMap& id2DataMap) const;
-        const bool tryGet(const Id2DataMap& id2DataMap) const;
-        
-        void set(Id2DataMap& id2DataMap);
-        void get(Id2DataMap& id2DataMap); 
     
     private:
         static Id2DataPair & createNode(Id2DataPair & lhs, Id2DataPair & rhs, const NodeType type);
         
         const bool trySetTraverse(const Id2DataMap& id2DataMap) const;
+        const bool tryGetTraverse(const Id2DataMap& id2DataMap) const;
+        void setTraverse(Id2DataMap& id2DataMap);
+        void getTraverse(Id2DataMap& id2DataMap); 
+        void clean();
         
         unsigned int m_id;
         DataContainer* m_data;
