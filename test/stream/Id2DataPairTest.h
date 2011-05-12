@@ -12,8 +12,8 @@ namespace stream
     class Id2DataPairTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (Id2DataPairTest);
-        CPPUNIT_TEST (tryGetTest);
         CPPUNIT_TEST (trySetTest);
+        CPPUNIT_TEST (tryGetTest);
         CPPUNIT_TEST (setTest);
         CPPUNIT_TEST (getTest);
         CPPUNIT_TEST_SUITE_END ();
