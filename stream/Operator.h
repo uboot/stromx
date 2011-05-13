@@ -15,7 +15,12 @@ namespace stream
     class Operator
     {
     public:
-        Operator(const std::string & name, const Version & version);
+        Operator(const unsigned int id,
+                 const std::string & name,
+                 const Version & version,
+                 const std::vector<Descriptor>& inputs,
+                 const std::vector<Descriptor>& outputs,
+                 const std::vector<Parameter>& parameters);
         
         const std::string& name() { return m_name; }
         const Version& version() { return m_version; }
@@ -33,6 +38,10 @@ namespace stream
         virtual void deactivate() {}
         
     private:
+        static void validate(const std::vector<Descriptor>& descriptors);
+        static void validate(const std::vector<Parameter>& descriptors);
+        
+        unsigned int m_id;
         std::string m_name;
         Version m_version;
         std::vector<Descriptor> m_inputs;

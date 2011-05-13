@@ -23,6 +23,8 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_container->reference());
         CPPUNIT_ASSERT_NO_THROW(m_container->dereference());
         CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
+        CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
+        m_container = 0;
     }
 
     void DataContainerTest::getWriteAccessTest()

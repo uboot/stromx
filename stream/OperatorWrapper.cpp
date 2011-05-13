@@ -27,14 +27,20 @@ namespace stream
     {
         lock_t lock(m_mutex);
         
+        if(m_status != NONE)
+            throw InvalidStateException();
+        
         m_op->activate();
         m_status = ACTIVE;
     }
     
     void OperatorWrapper::deactivate()
-    {
+    { 
         {
             lock_t lock(m_mutex);
+            
+            if(m_status == NONE)
+                return;
             
             // this may improve our chances to be lock-free as soon as possible
             m_isDeactivating = true;
@@ -66,7 +72,9 @@ namespace stream
     }
 
     void OperatorWrapper::receiveInputData(Id2DataPair& mapper)
-    {
+    {        
+        BOOST_ASSERT(m_status != NONE);
+        
         // the mutex is locked because this function is called from Operator::execute()
         // This function is called by OperatorWrapper::exececute() which locks
         // the mutex
@@ -94,9 +102,12 @@ namespace stream
     DataContainer* const OperatorWrapper::getOutputData(const unsigned int id)
     {
         DataContainer* value = 0;
+        
         unique_lock_t lock(m_mutex);
+        BOOST_ASSERT(m_status != NONE);
+        
         {
-            while(! m_outputMap[id] == 0)
+            while(m_outputMap[id] == 0)
             {
                 // try to get some output data by executing
                 if(m_status == ACTIVE)
@@ -115,6 +126,8 @@ namespace stream
 
     void OperatorWrapper::sendOutputData(stream::Id2DataPair& mapper)
     {
+        BOOST_ASSERT(m_status != NONE);
+        
         // the mutex is locked because this function is called from Operator::execute()
         // This function is called by OperatorWrapper::exececute() which locks
         // the mutex
@@ -123,14 +136,14 @@ namespace stream
         {
             unique_lock_t lock(m_mutex);
             
-            while(! trySet(mapper, m_inputMap))
+            while(! trySet(mapper, m_outputMap))
             {
                 m_cond.wait(lock);
                 if(m_isDeactivating)
                     throw IsDeactivatingException();
             }
             
-            set(mapper, m_inputMap);
+            set(mapper, m_outputMap);
         }
         
         m_cond.notify_all();
@@ -150,6 +163,7 @@ namespace stream
     {
         {
             unique_lock_t lock(m_mutex);
+            BOOST_ASSERT(m_status != NONE);
             
             while(m_inputMap[id])
             {
@@ -169,6 +183,11 @@ namespace stream
     void OperatorWrapper::execute()
     {
         // m_mutex is locked if this function is called
+        // TODO: take care of the input and output data
+        //       output data must be referenced and then input data must be
+        //       dereferenced
+        m_op->execute(*this);
+        
     }
 
 }

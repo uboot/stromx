@@ -4,17 +4,20 @@
 #include <typeinfo>
 #include <boost/thread/mutex.hpp>
 
+#include "Data.h"
+
 namespace stream
 {
     class DataManager;
-    class Data;
+    class DataType;
     
     class DataContainer
     {
     public:
         DataContainer(Data* const data, DataManager* const manager = 0);
+        ~DataContainer();
         
-        const std::type_info & type() { return typeid(DataContainer); }
+        const DataType & type() { return m_data->type(); }
         
         void reference();
         void dereference();

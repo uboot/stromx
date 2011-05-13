@@ -15,8 +15,12 @@ namespace stream
         if(! data)
             throw ArgumentException();
     }
-
     
+    DataContainer::~DataContainer()
+    {
+        delete m_data;
+    }
+ 
     void DataContainer::reference()
     {
         boost::lock_guard<boost::mutex> lock(m_mutex);
@@ -28,13 +32,23 @@ namespace stream
 
     void DataContainer::dereference()
     {
-        boost::lock_guard<boost::mutex> lock(m_mutex);
+        bool destroy = false;
         
-        BOOST_ASSERT(m_refCount != 0);
+        {
+            boost::lock_guard<boost::mutex> lock(m_mutex);
+            
+            BOOST_ASSERT(m_refCount != 0);
+            
+            m_refCount--;
+            
+            if(m_refCount == 0)
+                destroy = true;
+        }
         
-        m_refCount--;
-        
-        if(m_refCount == 0)
+        // the following code possibly leads to the deletion of 
+        // the object
+        // it can not be executed while the mutex is locked
+        if(destroy)
         {
             if(m_manager)
                 m_manager->release(this);

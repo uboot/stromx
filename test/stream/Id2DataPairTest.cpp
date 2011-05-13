@@ -135,6 +135,6 @@ namespace stream
     void Id2DataPairTest::tearDown ( void )
     {
         delete m_map;
-        m_dataContainer->dereference();
+        delete m_dataContainer;
     }
 }
