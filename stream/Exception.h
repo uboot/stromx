@@ -67,6 +67,14 @@ namespace stream
           : Exception(message)
         {}
     };
+    
+    class IsDeactivatingException : public Exception
+    {
+    public:
+        IsDeactivatingException(const std::string & message = "IsDeactivatingException")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H

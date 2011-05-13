@@ -4,6 +4,8 @@
 #include "Parameter.h"
 #include "Version.h"
 
+#include <vector>
+
 namespace stream
 {
     class Data;
@@ -14,6 +16,12 @@ namespace stream
     {
     public:
         Operator(const std::string & name, const Version & version);
+        
+        const std::string& name() { return m_name; }
+        const Version& version() { return m_version; }
+        const std::vector<Descriptor>& inputs() { return m_inputs; }
+        const std::vector<Descriptor>& outputs() { return m_outputs; }
+        const std::vector<Parameter>& parameters() { return m_parameters; }
         
         DataContainer* const createDataContainer(Data* const data);
         
@@ -27,6 +35,9 @@ namespace stream
     private:
         std::string m_name;
         Version m_version;
+        std::vector<Descriptor> m_inputs;
+        std::vector<Descriptor> m_outputs;
+        std::vector<Parameter> m_parameters;
         
     };
 }

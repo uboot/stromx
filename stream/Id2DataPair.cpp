@@ -76,12 +76,20 @@ namespace stream
     
     void get(Id2DataPair& mapper, Id2DataMap& id2DataMap)
     {
-        if(mapper.m_node)
-            mapper.m_node->getTraverse(id2DataMap);
-        else
-            mapper.getTraverse(id2DataMap);
-        
-        mapper.clean();
+        try
+        {
+            if(mapper.m_node)
+                mapper.m_node->getTraverse(id2DataMap);
+            else
+                mapper.getTraverse(id2DataMap);
+            
+            mapper.clean();
+        }
+        catch(InvalidStateException& e)
+        {
+            mapper.clean();
+            throw e;
+        }     
     }
     
     void Id2DataPair::getTraverse(stream::Id2DataMap& id2DataMap)
@@ -115,12 +123,20 @@ namespace stream
     
     void set(Id2DataPair& mapper, Id2DataMap& id2DataMap)
     {
-        if(mapper.m_node)
-            mapper.m_node->setTraverse(id2DataMap);
-        else
-            mapper.setTraverse(id2DataMap);
-        
-        mapper.clean();
+        try
+        {
+            if(mapper.m_node)
+                mapper.m_node->setTraverse(id2DataMap);
+            else
+                mapper.setTraverse(id2DataMap);
+            
+            mapper.clean();
+        }
+        catch(InvalidStateException& e)
+        {
+            mapper.clean();
+            throw e;
+        }
     }
 
     void Id2DataPair::setTraverse(stream::Id2DataMap& id2DataMap)

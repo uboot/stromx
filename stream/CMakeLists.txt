@@ -11,3 +11,4 @@ set(SOURCES
 )
 
 add_library(stream SHARED ${SOURCES})
+target_link_libraries(stream boost_thread)

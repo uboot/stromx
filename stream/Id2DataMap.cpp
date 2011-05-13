@@ -3,10 +3,10 @@
 
 namespace stream
 {
-    Id2DataMap::Id2DataMap(const std::vector<Descriptor> & ids)
+    Id2DataMap::Id2DataMap(const std::vector<Descriptor> & descriptions)
     {
-        for(std::vector<Descriptor>::const_iterator iter = ids.begin();
-            iter != ids.end();
+        for(std::vector<Descriptor>::const_iterator iter = descriptions.begin();
+            iter != descriptions.end();
             ++iter)
         {
             if(m_map.count(iter->id()))
