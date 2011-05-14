@@ -28,13 +28,11 @@ namespace stream
         const std::vector<Descriptor>& outputs() { return m_outputs; }
         const std::vector<Parameter>& parameters() { return m_parameters; }
         
-        DataContainer* const createDataContainer(Data* const data);
-        
         virtual void setParameter(unsigned int id, const Data& value) = 0;
         virtual void getParameter(unsigned int id, Data& value) = 0;
         
         virtual void execute(DataProvider& provider) = 0;
-        virtual void activate() {}
+        virtual void activate(DataProvider& provider) {}
         virtual void deactivate() {}
         
     private:

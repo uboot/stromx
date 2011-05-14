@@ -1,6 +1,5 @@
 #include "Operator.h"
 
-#include "DataContainer.h"
 #include "Exception.h"
 
 #include <set>
@@ -24,11 +23,6 @@ namespace stream
         validate(inputs);
         validate(outputs);
         validate(parameters);
-    }
-    
-    DataContainer* const Operator::createDataContainer(Data* const data)
-    {
-        return new DataContainer(data);
     }
     
     void Operator::validate(const std::vector<Descriptor>& descriptors)

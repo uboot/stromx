@@ -18,9 +18,11 @@ namespace stream
     public:
         enum Status
         {
-            NONE,
+            INACTIVE,
             ACTIVE,
-            EXECUTING
+            EXECUTING,
+            DEACTIVATING_AND_EXECUTING,
+            DEACTIVATING
         };
         
         OperatorWrapper(Operator* const op);
@@ -28,18 +30,22 @@ namespace stream
         
         Operator& op() { return *m_op; }
         const Status status() { return m_status; }
+        virtual const bool isDeactivating() { return m_status == DEACTIVATING || m_status == DEACTIVATING_AND_EXECUTING; }
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);
         
-        const bool isDeactivating() { return m_isDeactivating; }
         virtual void receiveInputData(const Id2DataMapper& mapper);
         virtual void sendOutputData(const Id2DataMapper& mapper);
+        virtual DataContainer* const createDataContainer(Data* const data);
+        
         DataContainer* const getOutputData(const unsigned int id);
         void setInputData(const unsigned int id, DataContainer* const data);
         virtual void clearOutputData(unsigned int id);
+        
         virtual void activate();
-        virtual void deactivate();
+        virtual void startDeactivating();
+        virtual void joinDeactivating();
         
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
@@ -49,8 +55,8 @@ namespace stream
         
         Operator* m_op;
         Status m_status;
-        boost::mutex m_mutex;
         boost::condition_variable_any m_cond;
+        boost::mutex m_mutex;
         Id2DataMap m_inputMap;
         Id2DataMap m_outputMap;
         bool m_isDeactivating;
