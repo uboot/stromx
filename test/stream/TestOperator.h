@@ -20,6 +20,8 @@ namespace stream
         virtual void getParameter(unsigned int id, Data& value);
         virtual void execute(DataProvider& provider);
         
+        const unsigned int numExecutes() { return m_numExecutes; }
+        
     private:
         static const std::vector<Descriptor> setupInputs();
         static const std::vector<Descriptor> setupOutputs();
@@ -29,6 +31,7 @@ namespace stream
         static const Version VERSION;
         
         unsigned int m_sleepTime;
+        unsigned int m_numExecutes;
     };
 }
 

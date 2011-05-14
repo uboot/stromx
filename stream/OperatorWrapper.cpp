@@ -71,7 +71,7 @@ namespace stream
         m_op->setParameter(id, value);
     }
 
-    void OperatorWrapper::receiveInputData(Id2DataPair& mapper)
+    void OperatorWrapper::receiveInputData(const Id2DataMapper& mapper)
     {        
         BOOST_ASSERT(m_status != NONE);
         
@@ -124,7 +124,7 @@ namespace stream
         return value;
     }
 
-    void OperatorWrapper::sendOutputData(stream::Id2DataPair& mapper)
+    void OperatorWrapper::sendOutputData(const stream::Id2DataMapper& mapper)
     {
         BOOST_ASSERT(m_status != NONE);
         

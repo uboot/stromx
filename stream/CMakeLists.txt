@@ -2,7 +2,9 @@ project(libstream)
 
 set(SOURCES   
     DataContainer.cpp
+    Id2DataComposite.cpp
     Id2DataMap.cpp
+    Id2DataMapper.cpp
     Id2DataPair.cpp
     Network.cpp
     None.cpp

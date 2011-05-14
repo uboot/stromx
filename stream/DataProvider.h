@@ -6,7 +6,7 @@
 namespace stream
 {
     class DataContainer;
-    class Id2DataPair;
+    class Id2DataMapper;
     
     class DataProvider
     {
@@ -15,8 +15,8 @@ namespace stream
         
         virtual const bool isDeactivating() = 0;
         
-        virtual void receiveInputData(Id2DataPair& mapper) = 0;
-        virtual void sendOutputData(Id2DataPair& mapper) = 0;
+        virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
+        virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
     };
 }
 

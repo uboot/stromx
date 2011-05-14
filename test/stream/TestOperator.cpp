@@ -1,6 +1,7 @@
 #include "TestOperator.h"
 
 #include <stream/Id2DataPair.h>
+#include <stream/Id2DataComposite.h>
 #include <stream/DataProvider.h>
 
 namespace stream
@@ -10,7 +11,8 @@ namespace stream
     
     TestOperator::TestOperator(const unsigned int id)
       : Operator(id, NAME, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_sleepTime(1000)
+        m_sleepTime(1000),
+        m_numExecutes(0)
     {
     }
 
@@ -34,6 +36,7 @@ namespace stream
         provider.receiveInputData(input1 && input2);
         
         // execute...
+        m_numExecutes++;
         usleep(m_sleepTime * 1000);
         
         provider.sendOutputData(input1 && input2);

@@ -33,8 +33,8 @@ namespace stream
         void getParameter(unsigned int id, Data& value);
         
         const bool isDeactivating() { return m_isDeactivating; }
-        virtual void receiveInputData(Id2DataPair& mapper);
-        virtual void sendOutputData(Id2DataPair& mapper);
+        virtual void receiveInputData(const Id2DataMapper& mapper);
+        virtual void sendOutputData(const Id2DataMapper& mapper);
         DataContainer* const getOutputData(const unsigned int id);
         void setInputData(const unsigned int id, DataContainer* const data);
         virtual void clearOutputData(unsigned int id);
