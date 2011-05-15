@@ -18,6 +18,8 @@ namespace stream
         
         DataContainer* const operator[](const unsigned int id) const;
         DataContainer*& operator[](const unsigned int id);
+        void clear();
+        const bool isEmpty() const;
         
     private:
         std::map<unsigned int, DataContainer*> m_map;

@@ -40,8 +40,12 @@ namespace stream
     {
         lock_t lock(m_mutex);
         
+        
         if(m_status != INACTIVE)
             throw InvalidStateException("Operator must be inactive.");
+        
+        BOOST_ASSERT(m_inputMap.isEmpty());
+        BOOST_ASSERT(m_outputMap.isEmpty());
         
         m_op->activate(*this);
         m_status = ACTIVE;
@@ -56,6 +60,9 @@ namespace stream
         
         if(m_status == EXECUTING)
             throw InvalidStateException("Operator can not be deactivated while it is executing.");
+        
+        m_inputMap.clear();
+        m_outputMap.clear();
         
         m_op->deactivate();
         
@@ -152,40 +159,31 @@ namespace stream
     
     DataContainer* const OperatorWrapper::getOutputData(const unsigned int id)
     {
-        DataContainer* data = 0;
+        unique_lock_t lock(m_mutex);
         
+        if( m_status != ACTIVE
+            && m_status != EXECUTING)
         {
-            unique_lock_t lock(m_mutex);
-            
-            if( m_status != ACTIVE
-                && m_status != EXECUTING)
+            throw InvalidStateException("Can not get output data if operator is inactive.");
+        }
+    
+        while(m_outputMap[id] == 0)
+        {
+            // this section might throw an InterruptionException which will fall
+            // through to the calling function
+            if(m_status == ACTIVE)
             {
-                throw InvalidStateException("Can not get output data if operator is inactive.");
+                // try to get some output data by executing
+                execute();
             }
-        
-            while(m_outputMap[id] == 0)
+            else
             {
-                // this section might throw an InterruptionException which will fall
-                // through to the calling function
-                if(m_status == ACTIVE)
-                {
-                    // try to get some output data by executing
-                    execute();
-                }
-                else
-                {
-                    // wait for the situation to change
-                    waitForSignal(lock);
-                }
+                // wait for the situation to change
+                waitForSignal(lock);
             }
-            
-            if(m_outputMap[id] != 0)
-                data = m_outputMap[id];
         }
         
-        m_cond.notify_all();
-        
-        return data;
+        return m_outputMap[id];
     }
 
     void OperatorWrapper::setInputData(const unsigned int id, DataContainer* const data)
@@ -215,8 +213,8 @@ namespace stream
                 }
             }
             
-            if(m_inputMap[id] == 0)
-                m_inputMap[id] = data;
+            data->reference();
+            m_inputMap[id] = data;
         }
         
         m_cond.notify_all();
@@ -224,9 +222,16 @@ namespace stream
     
     void OperatorWrapper::clearOutputData(unsigned int id)
     {
-        lock_t lock(m_mutex);
+        {
+            lock_t lock(m_mutex);
+            
+            if(DataContainer* data = m_outputMap[id])
+                data->dereference();
+                
+            m_outputMap[id] = 0;
+        }
         
-        m_outputMap[id] = 0;
+        m_cond.notify_all();
     }
     
     void OperatorWrapper::execute()

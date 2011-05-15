@@ -31,43 +31,55 @@ namespace stream
         
         TestOperator& op = reinterpret_cast<TestOperator&>(m_operator->op());
         
+        /*** Test 1 ***/
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), op.numExecutes());
         
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), op.numExecutes());
         
-        CPPUNIT_ASSERT_NO_THROW(data1 = m_operator->getOutputData(TestOperator::INPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(data1 = m_operator->getOutputData(TestOperator::OUTPUT_1));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), op.numExecutes());
         
-        CPPUNIT_ASSERT_NO_THROW(data2 = m_operator->getOutputData(TestOperator::INPUT_2));
+        CPPUNIT_ASSERT_NO_THROW(data2 = m_operator->getOutputData(TestOperator::OUTPUT_2));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), op.numExecutes());
         
         CPPUNIT_ASSERT_EQUAL(m_container, data1);
         CPPUNIT_ASSERT_EQUAL(m_container, data2);
         
-        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::INPUT_1));
-        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::INPUT_2));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_2));
         
+        /*** Test 2 ***/
         boost::thread t1(boost::bind(&OperatorWrapperTest::setInputDataDelayed, this, _1), TestOperator::INPUT_1);
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
         
-        CPPUNIT_ASSERT_NO_THROW(data1 = m_operator->getOutputData(TestOperator::INPUT_1));
-        CPPUNIT_ASSERT_NO_THROW(data2 = m_operator->getOutputData(TestOperator::INPUT_2));
+        CPPUNIT_ASSERT_NO_THROW(data1 = m_operator->getOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(data2 = m_operator->getOutputData(TestOperator::OUTPUT_2));
         
         CPPUNIT_ASSERT_EQUAL(m_container, data1);
         CPPUNIT_ASSERT_EQUAL(m_container, data2);
         
         t1.join();
         
-        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::INPUT_1));
-        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::INPUT_2));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_2));
+        
+        /*** Test 3 ***/
         
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
         boost::thread t2(boost::bind(&OperatorWrapper::getOutputData, m_operator, _1), TestOperator::OUTPUT_1);
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
         
         t2.join();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_2));
+        
+        /*** Test 4 ***/
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
     }
     
     void OperatorWrapperTest::setInputDataDelayed ( const unsigned int id )
@@ -76,23 +88,67 @@ namespace stream
         m_operator->setInputData(id, m_container);
     }
     
+    void OperatorWrapperTest::clearOutputDataDelayed ( const unsigned int id )
+    {
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        m_operator->clearOutputData(id);
+    }
+    
     void OperatorWrapperTest::getOutputDataWithInterrupt(const unsigned int id)
     {
         CPPUNIT_ASSERT_THROW(m_operator->getOutputData(id), InterruptException);
+    }
+    
+    void OperatorWrapperTest::setInputDataWithInterrupt(const unsigned int id)
+    {
+        CPPUNIT_ASSERT_THROW(m_operator->setInputData(id, m_container), InterruptException);
     }
         
     void OperatorWrapperTest::getOutputDataTest()
     {
         DataContainer* data1;
         
+        /*** Test 1 ***/
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
         
-        boost::thread t(boost::bind(&OperatorWrapperTest::getOutputDataWithInterrupt, this, _1), TestOperator::OUTPUT_1);
+        boost::thread t1(boost::bind(&OperatorWrapperTest::getOutputDataWithInterrupt, this, _1), TestOperator::OUTPUT_1);
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        
+        t1.interrupt();
+        t1.join();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
+        CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+        
+        /*** Test 2 ***/
+        boost::thread t2(boost::bind(&OperatorWrapperTest::clearOutputDataDelayed, this, _1), TestOperator::OUTPUT_1);
+        boost::thread t3(boost::bind(&OperatorWrapperTest::clearOutputDataDelayed, this, _1), TestOperator::OUTPUT_2);
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        
+        t2.join();
+        t3.join();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
+        CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+        
+        /*** Test 3 ***/
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        boost::thread t4(boost::bind(&OperatorWrapperTest::setInputDataWithInterrupt, this, _1), TestOperator::INPUT_1);
         
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         
-        t.interrupt();
-        t.join();
+        t4.interrupt();
+        t4.join();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_2));
     }
 
     

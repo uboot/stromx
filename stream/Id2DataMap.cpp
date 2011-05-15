@@ -1,5 +1,6 @@
 #include "Id2DataMap.h"
 #include "Exception.h"
+#include "DataContainer.h"
 
 namespace stream
 {
@@ -33,5 +34,34 @@ namespace stream
         
         return iter->second;
     }
-
+    
+    void Id2DataMap::clear()
+    {
+        for(std::map<unsigned int, DataContainer*>::iterator iter = m_map.begin();
+            iter != m_map.end();
+            ++iter)
+        {
+            if(iter->second)
+                iter->second->dereference();
+            
+            iter->second = 0;
+        }       
+    }
+    
+    const bool Id2DataMap::isEmpty() const
+    {
+        bool value = true;
+        for(std::map<unsigned int, DataContainer*>::const_iterator iter = m_map.begin();
+            iter != m_map.end();
+            ++iter)
+        {
+            if(iter->second)
+            {
+                value = false;
+                break;
+            }
+        }   
+        
+        return value;
+    }
 }

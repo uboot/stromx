@@ -28,7 +28,9 @@ namespace stream
             
     private:
         void setInputDataDelayed(const unsigned int id); 
+        void clearOutputDataDelayed(const unsigned int id); 
         void getOutputDataWithInterrupt(const unsigned id);
+        void setInputDataWithInterrupt(const unsigned int id);
         
         OperatorWrapper* m_operator;
         DataContainer* m_container;

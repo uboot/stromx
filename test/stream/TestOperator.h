@@ -10,8 +10,8 @@ namespace stream
     public:
         static const unsigned int INPUT_1 = 0;
         static const unsigned int INPUT_2 = 1;
-        static const unsigned int OUTPUT_1 = 0;
-        static const unsigned int OUTPUT_2 = 1;
+        static const unsigned int OUTPUT_1 = 2;
+        static const unsigned int OUTPUT_2 = 3;
         static const unsigned int SLEEP_TIME = 0;
         
         TestOperator(const unsigned int id);

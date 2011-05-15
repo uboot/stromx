@@ -39,7 +39,9 @@ namespace stream
         m_numExecutes++;
         usleep(m_sleepTime * 1000);
         
-        provider.sendOutputData(input1 && input2);
+        Id2DataPair output1(OUTPUT_1, input1.data());
+        Id2DataPair output2(OUTPUT_2, input2.data());
+        provider.sendOutputData(output1 && output2);
     }
 
     
