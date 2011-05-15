@@ -14,6 +14,9 @@ namespace stream
         CPPUNIT_TEST_SUITE (OperatorWrapperTest);
         CPPUNIT_TEST (setInputDataTest);
         CPPUNIT_TEST (getOutputDataTest);
+        CPPUNIT_TEST (clearOutputDataTest);
+        CPPUNIT_TEST (activateTest);
+        CPPUNIT_TEST (deactivateTest);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -25,6 +28,9 @@ namespace stream
     protected:
         void setInputDataTest();
         void getOutputDataTest();
+        void clearOutputDataTest();
+        void activateTest();
+        void deactivateTest();
             
     private:
         void setInputDataDelayed(const unsigned int id); 

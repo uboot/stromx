@@ -82,6 +82,51 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
     }
     
+    void OperatorWrapperTest::clearOutputDataTest()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->getOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->getOutputData(TestOperator::OUTPUT_2));
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->clearOutputData(TestOperator::OUTPUT_2));
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->getOutputData(TestOperator::OUTPUT_1));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->getOutputData(TestOperator::OUTPUT_2));
+    }
+    
+    void OperatorWrapperTest::activateTest()
+    {
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::ACTIVE, m_operator->status());
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
+        
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INACTIVE, m_operator->status());
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+        
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::ACTIVE, m_operator->status());
+    }
+    
+    void OperatorWrapperTest::deactivateTest()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
+        
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INACTIVE, m_operator->status());
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+        
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
+        CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
+    }
+
+    
     void OperatorWrapperTest::setInputDataDelayed ( const unsigned int id )
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
