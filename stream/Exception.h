@@ -68,11 +68,11 @@ namespace stream
         {}
     };
     
-    class IsDeactivatingException : public Exception
+    class InterruptException : public InvalidStateException
     {
     public:
-        IsDeactivatingException(const std::string & message = "IsDeactivatingException")
-          : Exception(message)
+        InterruptException(const std::string & message = "InterruptException")
+          : InvalidStateException(message)
         {}
     };
 }

@@ -12,11 +12,10 @@ namespace stream
     public:
         virtual ~DataProvider() {}
         
-        virtual const bool isDeactivating() = 0;
+        virtual void testForInterruption() = 0;
         
         virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
         virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
-        virtual DataContainer* const createDataContainer(Data* const data) = 0;
     };
 }
 
