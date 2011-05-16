@@ -6,10 +6,12 @@ set(SOURCES
     Id2DataMap.cpp
     Id2DataMapper.cpp
     Id2DataPair.cpp
+    InputNode.cpp
     Network.cpp
     None.cpp
     Operator.cpp
     OperatorWrapper.cpp
+    OutputNode.cpp
 )
 
 add_library(stream SHARED ${SOURCES})
