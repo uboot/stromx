@@ -28,7 +28,7 @@ namespace stream
         
         Operator& op() { return *m_op; }
         const Status status() { return m_status; }
-        virtual void testForInterruption();
+        virtual void testForInterrupt();
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);

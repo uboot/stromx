@@ -24,7 +24,7 @@ namespace stream
         delete m_op;
     }
     
-    void OperatorWrapper::testForInterruption()
+    void OperatorWrapper::testForInterrupt()
     {
         try
         {

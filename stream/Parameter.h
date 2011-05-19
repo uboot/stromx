@@ -17,15 +17,15 @@ namespace stream
         };
         
         Parameter(const std::string & name, const unsigned int id, const DataType & type,
-                  const AccessMode initializedAccess, const AccessMode activatedAccess)
+                  const AccessMode inactiveAccess, const AccessMode activeAccess)
           : Descriptor(name, id, type),
-            m_initializedAccess(initializedAccess),
-            m_activatedAccess(activatedAccess)
+            m_inactiveAccess(inactiveAccess),
+            m_activeAccess(activeAccess)
         {}
         
     private:
-        AccessMode m_initializedAccess;
-        AccessMode m_activatedAccess;
+        AccessMode m_inactiveAccess;
+        AccessMode m_activeAccess;
     };
 }
 
