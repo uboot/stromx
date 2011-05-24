@@ -10,8 +10,8 @@ namespace stream
     Operator::Operator (const unsigned int id,
                         const std::string & name,
                         const Version & version,
-                        const std::vector<Descriptor>& inputs,
-                        const std::vector<Descriptor>& outputs,
+                        const std::vector<Description>& inputs,
+                        const std::vector<Description>& outputs,
                         const std::vector<Parameter>& parameters)
       : m_id(id),
         m_name(name),
@@ -25,11 +25,19 @@ namespace stream
         validate(parameters);
     }
     
-    void Operator::validate(const std::vector<Descriptor>& descriptors)
+    Description& Operator::getParameterDescription(unsigned int id)
+    {
+        if(id >= m_parameters.size())
+            throw WrongIdException("No parameter with ID " + id);
+        
+        return m_parameters[id];
+    }
+    
+    void Operator::validate(const std::vector<Description>& descriptors)
     {
         std::set<unsigned int> ids;
         
-        for(std::vector<Descriptor>::const_iterator iter = descriptors.begin();
+        for(std::vector<Description>::const_iterator iter = descriptors.begin();
             iter != descriptors.end();
             ++iter)
         {

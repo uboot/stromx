@@ -6,10 +6,10 @@
 
 namespace stream
 {
-    class Descriptor
+    class Description
     {
     public:
-        Descriptor(const std::string & name, const unsigned int id, const DataType & type)
+        Description(const std::string & name, const unsigned int id, const DataType & type)
           : m_name(name),
             m_id(id),
             m_type(type)

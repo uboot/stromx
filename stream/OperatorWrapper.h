@@ -3,9 +3,11 @@
 
 #include "DataProvider.h"
 #include "Id2DataMap.h"
+#include "Parameter.h"
 
-#include <boost/thread/recursive_mutex.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
+#include "Operator.h"
 
 
 namespace stream
@@ -26,9 +28,12 @@ namespace stream
         OperatorWrapper(Operator* const op);
         virtual ~OperatorWrapper();
         
-        Operator& op() { return *m_op; }
         const Status status() { return m_status; }
         virtual void testForInterrupt();
+        
+        const std::vector<Description>& inputs() { return m_op->inputs(); }
+        const std::vector<Description>& outputs() { return m_op->outputs(); }
+        const std::vector<Parameter>& parameters() { return m_op->parameters(); }
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);

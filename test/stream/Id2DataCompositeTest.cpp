@@ -15,11 +15,11 @@ namespace stream
 {
     void Id2DataCompositeTest::setUp ( void )
     {
-        std::vector<Descriptor> descriptors;
-        descriptors.push_back(Descriptor("Data 0", 0, DataType()));
-        descriptors.push_back(Descriptor("Data 1", 1, DataType()));
-        descriptors.push_back(Descriptor("Data 2", 2, DataType()));
-        m_map = new Id2DataMap(descriptors);
+        std::vector<Description> descriptions;
+        descriptions.push_back(Description("Data 0", 0, DataType()));
+        descriptions.push_back(Description("Data 1", 1, DataType()));
+        descriptions.push_back(Description("Data 2", 2, DataType()));
+        m_map = new Id2DataMap(descriptions);
         m_dataContainer = new DataContainer(new None());
     }
 

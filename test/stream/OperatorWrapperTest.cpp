@@ -18,7 +18,8 @@ namespace stream
 {
     void OperatorWrapperTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new TestOperator(0));
+        m_testOperator = new TestOperator(0);
+        m_operator = new OperatorWrapper(m_testOperator);
         m_operator->activate();
         Data* data = new stream::None;
         m_container = new DataContainer(data);  
@@ -29,20 +30,18 @@ namespace stream
         DataContainer* data1;
         DataContainer* data2;
         
-        TestOperator& op = reinterpret_cast<TestOperator&>(m_operator->op());
-        
         /*** Test 1 ***/
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container));
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), op.numExecutes());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_testOperator->numExecutes());
         
         CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), op.numExecutes());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_testOperator->numExecutes());
         
         CPPUNIT_ASSERT_NO_THROW(data1 = m_operator->getOutputData(TestOperator::OUTPUT_1));
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), op.numExecutes());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_testOperator->numExecutes());
         
         CPPUNIT_ASSERT_NO_THROW(data2 = m_operator->getOutputData(TestOperator::OUTPUT_2));
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), op.numExecutes());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_testOperator->numExecutes());
         
         CPPUNIT_ASSERT_EQUAL(m_container, data1);
         CPPUNIT_ASSERT_EQUAL(m_container, data2);

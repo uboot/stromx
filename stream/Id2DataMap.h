@@ -2,7 +2,7 @@
 #define STREAM_ID2DATAMAP_H
 
 
-#include "Descriptor.h"
+#include "Description.h"
 
 #include <vector>
 #include <map>
@@ -14,7 +14,7 @@ namespace stream
     class Id2DataMap
     {
     public:
-        Id2DataMap(const std::vector<Descriptor> & descriptions);
+        Id2DataMap(const std::vector<Description> & descriptions);
         
         DataContainer* const operator[](const unsigned int id) const;
         DataContainer*& operator[](const unsigned int id);

@@ -1,11 +1,11 @@
 #ifndef STREAM_PARAMETER_H
 #define STREAM_PARAMETER_H
 
-#include "Descriptor.h"
+#include "Description.h"
 
 namespace stream
 {
-    class Parameter : public Descriptor
+    class Parameter : public Description
     {
     public:
         enum AccessMode
@@ -18,7 +18,7 @@ namespace stream
         
         Parameter(const std::string & name, const unsigned int id, const DataType & type,
                   const AccessMode inactiveAccess, const AccessMode activeAccess)
-          : Descriptor(name, id, type),
+          : Description(name, id, type),
             m_inactiveAccess(inactiveAccess),
             m_activeAccess(activeAccess)
         {}

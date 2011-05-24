@@ -10,6 +10,7 @@ set(SOURCES
     Network.cpp
     None.cpp
     Operator.cpp
+    OperatorNode.cpp
     OperatorWrapper.cpp
     OutputNode.cpp
 )

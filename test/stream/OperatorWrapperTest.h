@@ -8,6 +8,7 @@ namespace stream
 {
     class DataContainer;
     class OperatorWrapper;
+    class TestOperator;
 
     class OperatorWrapperTest : public CPPUNIT_NS :: TestFixture
     {
@@ -39,6 +40,7 @@ namespace stream
         void setInputDataWithInterrupt(const unsigned int id);
         
         OperatorWrapper* m_operator;
+        TestOperator* m_testOperator;
         DataContainer* m_container;
             
     };

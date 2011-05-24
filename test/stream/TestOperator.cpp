@@ -45,20 +45,20 @@ namespace stream
     }
 
     
-    const std::vector< Descriptor > TestOperator::setupInputs()
+    const std::vector< Description > TestOperator::setupInputs()
     {
-        std::vector<Descriptor> inputs;
-        inputs.push_back(Descriptor("Input 1", INPUT_1, DataType()));
-        inputs.push_back(Descriptor("Input 2", INPUT_2, DataType()));
+        std::vector<Description> inputs;
+        inputs.push_back(Description("Input 1", INPUT_1, DataType()));
+        inputs.push_back(Description("Input 2", INPUT_2, DataType()));
         
         return inputs;
     }
     
-    const std::vector< Descriptor > TestOperator::setupOutputs()
+    const std::vector< Description > TestOperator::setupOutputs()
     {
-        std::vector<Descriptor> outputs;
-        outputs.push_back(Descriptor("Output 1", OUTPUT_1, DataType()));
-        outputs.push_back(Descriptor("Output 2", OUTPUT_2, DataType()));
+        std::vector<Description> outputs;
+        outputs.push_back(Description("Output 1", OUTPUT_1, DataType()));
+        outputs.push_back(Description("Output 2", OUTPUT_2, DataType()));
         
         return outputs;
     }
