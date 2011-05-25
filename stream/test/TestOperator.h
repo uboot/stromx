@@ -1,7 +1,7 @@
 #ifndef STREAM_TESTOPERATOR_H
 #define STREAM_TESTOPERATOR_H
 
-#include <stream/Operator.h>
+#include "Operator.h"
 
 namespace stream
 {

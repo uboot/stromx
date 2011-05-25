@@ -1,10 +1,10 @@
 #include "Id2DataPairTest.h"
 
-#include <stream/None.h>
-#include <stream/Exception.h>
-#include <stream/Id2DataPair.h>
-#include <stream/DataContainer.h>
-#include <stream/Id2DataMap.h>
+#include "None.h"
+#include "Exception.h"
+#include "Id2DataPair.h"
+#include "DataContainer.h"
+#include "Id2DataMap.h"
 
 #include <cppunit/TestAssert.h>
 

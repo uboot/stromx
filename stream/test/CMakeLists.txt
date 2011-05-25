@@ -1,0 +1,23 @@
+project(streamtest)
+
+include_directories(..)
+
+add_executable(streamtest
+    main.cpp
+    ../DataContainer.cpp
+    DataContainerTest.cpp
+    ../Id2DataMap.cpp
+    ../Id2DataMapper.cpp
+    ../Id2DataComposite.cpp
+    Id2DataCompositeTest.cpp
+    ../Id2DataPair.cpp
+    Id2DataPairTest.cpp
+    ../OperatorWrapper.cpp
+    ../Operator.cpp
+    ../None.cpp
+    OperatorWrapperTest.cpp
+    TestOperator.cpp
+)
+
+target_link_libraries(streamtest boost_thread cppunit dl)
+

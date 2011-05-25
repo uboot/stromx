@@ -2,10 +2,10 @@
 
 #include "TestOperator.h"
 
-#include <stream/OperatorWrapper.h>
-#include <stream/None.h>
-#include <stream/DataContainer.h>
-#include <stream/Exception.h>
+#include "OperatorWrapper.h"
+#include "None.h"
+#include "DataContainer.h"
+#include "Exception.h"
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>

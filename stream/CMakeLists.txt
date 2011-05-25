@@ -1,5 +1,7 @@
 project(libstream)
 
+add_subdirectory(test)
+
 set(SOURCES   
     DataContainer.cpp
     Id2DataComposite.cpp

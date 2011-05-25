@@ -1,8 +1,8 @@
 #include "TestOperator.h"
 
-#include <stream/Id2DataPair.h>
-#include <stream/Id2DataComposite.h>
-#include <stream/DataProvider.h>
+#include "Id2DataPair.h"
+#include "Id2DataComposite.h"
+#include "DataProvider.h"
 
 namespace stream
 {
@@ -18,15 +18,11 @@ namespace stream
 
     void TestOperator::setParameter(unsigned int id, const stream::Data& value)
     {
-
     }
-
 
     void TestOperator::getParameter(unsigned int id, Data& value)
     {
-
-    }
-    
+    }  
     
     void TestOperator::execute(DataProvider& provider)
     {
