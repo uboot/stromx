@@ -12,10 +12,10 @@ namespace stream
     class Id2DataPairTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (Id2DataPairTest);
-        CPPUNIT_TEST (trySetTest);
-        CPPUNIT_TEST (tryGetTest);
-        CPPUNIT_TEST (setTest);
-        CPPUNIT_TEST (getTest);
+        CPPUNIT_TEST (testTrySet);
+        CPPUNIT_TEST (testTryGet);
+        CPPUNIT_TEST (testSet);
+        CPPUNIT_TEST (testGet);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -24,10 +24,10 @@ namespace stream
             void tearDown();
 
         protected:
-            void trySetTest();
-            void tryGetTest();
-            void setTest();
-            void getTest();
+            void testTrySet();
+            void testTryGet();
+            void testSet();
+            void testGet();
             
         private:
             Id2DataMap* m_map;

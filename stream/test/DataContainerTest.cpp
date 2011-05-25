@@ -17,7 +17,7 @@ namespace stream
         m_container = new DataContainer(data);
     }
 
-    void DataContainerTest::dereferenceTest ( void )
+    void DataContainerTest::testDereference ( void )
     {
         CPPUNIT_ASSERT_NO_THROW(m_container->reference());
         CPPUNIT_ASSERT_NO_THROW(m_container->reference());
@@ -27,7 +27,7 @@ namespace stream
         m_container = 0;
     }
 
-    void DataContainerTest::getWriteAccessTest()
+    void DataContainerTest::testGetWriteAccess()
     {
         CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
         CPPUNIT_ASSERT_NO_THROW(m_container->reference());

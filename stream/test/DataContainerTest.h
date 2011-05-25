@@ -11,8 +11,8 @@ namespace stream
     class DataContainerTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (DataContainerTest);
-        CPPUNIT_TEST (dereferenceTest);
-        CPPUNIT_TEST (getWriteAccessTest);
+        CPPUNIT_TEST (testDereference);
+        CPPUNIT_TEST (testGetWriteAccess);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -22,12 +22,11 @@ namespace stream
             void tearDown();
 
         protected:
-            void dereferenceTest();
-            void getWriteAccessTest();
+            void testDereference();
+            void testGetWriteAccess();
             
         private:
-        DataContainer* m_container; 
-            
+            DataContainer* m_container;
     };
 }
 

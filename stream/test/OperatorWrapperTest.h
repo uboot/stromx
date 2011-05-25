@@ -13,11 +13,11 @@ namespace stream
     class OperatorWrapperTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (OperatorWrapperTest);
-        CPPUNIT_TEST (setInputDataTest);
-        CPPUNIT_TEST (getOutputDataTest);
-        CPPUNIT_TEST (clearOutputDataTest);
-        CPPUNIT_TEST (activateTest);
-        CPPUNIT_TEST (deactivateTest);
+        CPPUNIT_TEST (testSetInputData);
+        CPPUNIT_TEST (testGetOutputData);
+        CPPUNIT_TEST (testClearOutputData);
+        CPPUNIT_TEST (testActivate);
+        CPPUNIT_TEST (testDeactivate);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -27,11 +27,11 @@ namespace stream
         void tearDown();
 
     protected:
-        void setInputDataTest();
-        void getOutputDataTest();
-        void clearOutputDataTest();
-        void activateTest();
-        void deactivateTest();
+        void testSetInputData();
+        void testGetOutputData();
+        void testClearOutputData();
+        void testActivate();
+        void testDeactivate();
             
     private:
         void setInputDataDelayed(const unsigned int id); 

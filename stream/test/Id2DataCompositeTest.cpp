@@ -23,7 +23,7 @@ namespace stream
         m_dataContainer = new DataContainer(new None());
     }
 
-    void Id2DataCompositeTest::setTest ( void )
+    void Id2DataCompositeTest::testSet ( void )
     {
         {
             (*m_map)[0] = m_dataContainer;
@@ -69,7 +69,7 @@ namespace stream
         }
     }
     
-    void Id2DataCompositeTest::tryGetTest()
+    void Id2DataCompositeTest::testTryGet()
     {
         Id2DataPair pair0(0);
         Id2DataPair pair1(1);
@@ -82,7 +82,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(false, tryGet(pair0 && (pair1 || pair2), *m_map));
     }
     
-    void Id2DataCompositeTest::trySetTest()
+    void Id2DataCompositeTest::testTrySet()
     {
         Id2DataPair pair0(0, m_dataContainer);
         Id2DataPair pair1(1, m_dataContainer);
@@ -94,7 +94,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(false, trySet(pair0 && (pair1 || pair2), *m_map));
     }
 
-    void Id2DataCompositeTest::getTest ( void )
+    void Id2DataCompositeTest::testGet ( void )
     {
         {
             (*m_map)[1] = m_dataContainer;

@@ -22,7 +22,7 @@ namespace stream
         m_dataContainer = new DataContainer(new None());
     }
 
-    void Id2DataPairTest::setTest ( void )
+    void Id2DataPairTest::testSet ( void )
     {
         Id2DataPair pair0(0, 0);
         CPPUNIT_ASSERT_THROW(set(pair0, *m_map), InvalidStateException);
@@ -37,7 +37,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(set(pair3,*m_map), WrongIdException);
     }
     
-    void Id2DataPairTest::tryGetTest()
+    void Id2DataPairTest::testTryGet()
     {
         Id2DataPair pair0(0);
         CPPUNIT_ASSERT_NO_THROW(tryGet(pair0,*m_map));
@@ -50,7 +50,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(tryGet(pair3,*m_map), WrongIdException);
     }
     
-    void Id2DataPairTest::trySetTest()
+    void Id2DataPairTest::testTrySet()
     {
         Id2DataPair pair0(0, m_dataContainer);
         CPPUNIT_ASSERT_NO_THROW(trySet(pair0, *m_map));
@@ -63,7 +63,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(trySet(pair3, *m_map), WrongIdException);
     }
 
-    void Id2DataPairTest::getTest ( void )
+    void Id2DataPairTest::testGet ( void )
     {
         (*m_map)[0] = m_dataContainer;
         Id2DataPair pair0(0);
