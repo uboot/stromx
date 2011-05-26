@@ -2,7 +2,7 @@
 #define STREAM_OPERATORNODE_H
 
 #include <boost/thread/mutex.hpp>
-#include <vector>
+#include <map>
 
 namespace stream
 {
@@ -20,8 +20,8 @@ namespace stream
         OutputNode* const getOutputNode(const unsigned int id);
         
     private:
-        std::vector<OutputNode*> m_outputs;
-        std::vector<InputNode*> m_inputs;
+        std::map<unsigned int, OutputNode*> m_outputs;
+        std::map<unsigned int, InputNode*> m_inputs;
     };
 }
 

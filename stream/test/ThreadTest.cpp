@@ -28,11 +28,11 @@ namespace stream
         
         for(unsigned int i = 0; i < 2; ++i)
         {
-            m_operatorNodes[i + 1]->getInputNode(0)
-                ->connect(m_operatorNodes[i]->getOutputNode(0));
+            m_operatorNodes[i + 1]->getInputNode(TestOperator::INPUT_1)
+                ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_1));
                 
-            m_operatorNodes[i + 1]->getInputNode(1)
-                ->connect(m_operatorNodes[i]->getOutputNode(1));
+            m_operatorNodes[i + 1]->getInputNode(TestOperator::INPUT_2)
+                ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
         }
         
         m_thread = new Thread(m_operatorNodes);

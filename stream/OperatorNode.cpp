@@ -14,37 +14,43 @@ namespace stream
             iter != op->inputs().end();
             ++iter)
         {
-            m_inputs.push_back(new InputNode(op, iter->id()));
+            if(m_inputs.count(iter->id()))
+                throw ArgumentException("Two inputs with the same ID.");
+            
+            m_inputs[iter->id()] = new InputNode(op, iter->id());
         }
         
         for(std::vector<Description>::const_iterator iter = op->outputs().begin();
             iter != op->outputs().end();
             ++iter)
         {
-            m_outputs.push_back(new OutputNode(op, iter->id()));
+            if(m_outputs.count(iter->id()))
+                throw ArgumentException("Two outputs with the same ID.");
+            
+            m_outputs[iter->id()] = new OutputNode(op, iter->id());
         }
     }
 
     OperatorNode::~OperatorNode()
     {
-        for(std::vector<InputNode*>::const_iterator iter = m_inputs.begin();
+        for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
             iter != m_inputs.end();
             ++iter)
         {
-            delete *iter;
-        }
-
-        for(std::vector<OutputNode*>::const_iterator iter = m_outputs.begin();
+            delete iter->second;
+        } 
+        
+        for(std::map<unsigned int, OutputNode*>::iterator iter = m_outputs.begin();
             iter != m_outputs.end();
             ++iter)
         {
-            delete *iter;
+            delete iter->second;
         }
     }
     
     InputNode*const OperatorNode::getInputNode(const unsigned int id)
     {
-        if(id >= m_inputs.size())
+        if(! m_inputs.count(id))
             throw ArgumentException("Input with this ID does not exist.");
         
         return m_inputs[id];
@@ -52,7 +58,7 @@ namespace stream
 
     OutputNode*const OperatorNode::getOutputNode(const unsigned int id)
     {
-        if(id >= m_outputs.size())
+        if(! m_outputs.count(id))
             throw ArgumentException("Output with this ID does not exist.");
         
         return m_outputs[id];
