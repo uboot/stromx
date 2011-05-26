@@ -21,7 +21,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        OperatorWrapperTest() {}
+        OperatorWrapperTest() : m_operatorWrapper(0), m_testOperator(0), m_container(0) {}
         
         void setUp();
         void tearDown();
@@ -39,7 +39,7 @@ namespace stream
         void getOutputDataWithInterrupt(const unsigned id);
         void setInputDataWithInterrupt(const unsigned int id);
         
-        OperatorWrapper* m_operator;
+        OperatorWrapper* m_operatorWrapper;
         TestOperator* m_testOperator;
         DataContainer* m_container;
             

@@ -17,7 +17,13 @@ add_executable(streamtest
     ../None.cpp
     TestOperator.cpp
     OperatorWrapperTest.cpp
+    ../OutputNode.cpp
     OutputNodeTest.cpp
+    ../InputNode.cpp
+    InputNodeTest.cpp   
+    ../OperatorNode.cpp
+    ../Thread.cpp
+    ThreadTest.cpp
 )
 
 target_link_libraries(streamtest boost_thread cppunit dl)

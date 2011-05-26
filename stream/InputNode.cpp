@@ -32,5 +32,4 @@ namespace stream
         
         m_operator->setInputData(m_inputId, inputData);
     }
-
 }

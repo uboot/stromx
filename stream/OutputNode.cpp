@@ -39,9 +39,11 @@ namespace stream
         if(! m_remainingCopies)
             m_remainingCopies = m_connectedInputs;
         
-        m_operator->getOutputData(m_outputId);
+        DataContainer* value = m_operator->getOutputData(m_outputId);
         
         m_remainingCopies--; 
+        
+        return value;
     }
 
 }

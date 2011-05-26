@@ -1,8 +1,8 @@
 #include "TestOperator.h"
 
-#include "Id2DataPair.h"
-#include "Id2DataComposite.h"
-#include "DataProvider.h"
+#include <Id2DataPair.h>
+#include <Id2DataComposite.h>
+#include <DataProvider.h>
 
 namespace stream
 {

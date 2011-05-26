@@ -22,6 +22,9 @@ namespace stream
     OperatorWrapper::~OperatorWrapper()
     {
         delete m_op;
+        
+        m_inputMap.clear();
+        m_outputMap.clear();
     }
     
     void OperatorWrapper::testForInterrupt()
@@ -39,7 +42,6 @@ namespace stream
     void OperatorWrapper::activate()
     {
         lock_t lock(m_mutex);
-        
         
         if(m_status != INACTIVE)
             throw InvalidStateException("Operator must be inactive.");
@@ -61,10 +63,10 @@ namespace stream
         if(m_status == EXECUTING)
             throw InvalidStateException("Operator can not be deactivated while it is executing.");
         
+        m_op->deactivate();
+        
         m_inputMap.clear();
         m_outputMap.clear();
-        
-        m_op->deactivate();
         
         m_status = INACTIVE;
     } 

@@ -1,8 +1,8 @@
 #include "DataContainerTest.h"
 
-#include "DataContainer.h"
-#include "None.h"
-#include "Exception.h"
+#include <DataContainer.h>
+#include <None.h>
+#include <Exception.h>
 
 
 #include <cppunit/TestAssert.h>

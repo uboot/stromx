@@ -25,8 +25,7 @@ namespace stream
         unsigned int m_connectedInputs;
         unsigned int m_remainingCopies;
         
-        boost::mutex m_mutex;
-        
+        boost::mutex m_mutex;  
     };
 }
 
