@@ -4,9 +4,6 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "OperatorWrapper.h"
-#include "None.h"
-
 namespace stream
 {
     class OperatorWrapper;
@@ -21,15 +18,22 @@ namespace stream
         CPPUNIT_TEST(testStart);
         CPPUNIT_TEST(testStop);
         CPPUNIT_TEST(testJoin);
+        CPPUNIT_TEST(testAddOperator);
+        CPPUNIT_TEST(testInsertOperator);
+        CPPUNIT_TEST(testRemoveOperator);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        ThreadTest() : m_thread(0) {}
+        ThreadTest() : m_thread(0), m_container(0), m_newOperator(0) {}
         
         void setUp();
         void tearDown();
 
     protected:
+        void testAddOperator();
+        void testInsertOperator();
+        void testRemoveOperator();
+        
         void testStart();
         void testStop();
         void testJoin();
@@ -39,6 +43,7 @@ namespace stream
         std::vector<OperatorNode*> m_operatorNodes;
         Thread* m_thread;
         DataContainer* m_container;
+        OperatorNode* m_newOperator;
     };
 }
 

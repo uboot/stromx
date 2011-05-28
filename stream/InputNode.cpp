@@ -2,6 +2,7 @@
 
 #include "OutputNode.h"
 #include "OperatorInterface.h"
+#include "Exception.h"
 
 namespace stream
 {
@@ -18,7 +19,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_source)
-            m_source->decrementConnectedInputs();
+            throw InvalidStateException("Input node has already been connected.");
         
         m_source = output;
         m_source->incrementConnectedInputs();
@@ -29,5 +30,15 @@ namespace stream
         DataContainer* inputData = m_source->getOutputData();
         
         m_operator->setInputData(m_inputId, inputData);
+    }
+    
+    void InputNode::disconnect()
+    {
+        lock_t lock(m_mutex);
+        
+        if(m_source)
+            m_source->decrementConnectedInputs();
+        
+        m_source = 0;
     }
 }

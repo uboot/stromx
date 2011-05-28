@@ -35,8 +35,42 @@ namespace stream
                 ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
         }
         
-        m_thread = new Thread(m_operatorNodes);
+        m_thread = new Thread("");
+        
+        for(std::vector<OperatorNode*>::iterator iter = m_operatorNodes.begin();
+            iter != m_operatorNodes.end();
+            ++iter)
+        {
+            m_thread->addOperator(*iter);
+        }
+        
         m_container = new DataContainer(new stream::None);
+        m_newOperator = new OperatorNode(new OperatorWrapper(new TestOperator()));
+    }
+    
+    void ThreadTest::testAddOperator()
+    {
+        unsigned int numOperators = m_thread->operatorSequence().size();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_thread->addOperator(m_newOperator));
+        CPPUNIT_ASSERT_EQUAL(numOperators + 1, (unsigned int)(m_thread->operatorSequence().size()));
+        CPPUNIT_ASSERT_EQUAL(m_newOperator, m_thread->operatorSequence()[numOperators]);  
+    }
+
+    void ThreadTest::testInsertOperator()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_thread->insertOperator(0, m_newOperator));
+        CPPUNIT_ASSERT_EQUAL(m_newOperator, m_thread->operatorSequence()[0]);  
+    }
+
+    void ThreadTest::testRemoveOperator()
+    {
+        m_thread->insertOperator(0, m_newOperator);
+        unsigned int numOperators = m_thread->operatorSequence().size();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(0));
+        CPPUNIT_ASSERT_EQUAL(numOperators - 1, (unsigned int)(m_thread->operatorSequence().size()));
+        CPPUNIT_ASSERT(m_newOperator != m_thread->operatorSequence()[0]);  
     }
     
     void ThreadTest::testStart()
@@ -97,6 +131,7 @@ namespace stream
             delete *iter;
         }
         
+        delete m_newOperator;
     }
 }
 

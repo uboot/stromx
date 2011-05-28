@@ -17,6 +17,7 @@ namespace stream
     {
         CPPUNIT_TEST_SUITE (InputNodeTest);
         CPPUNIT_TEST(testConnect);
+        CPPUNIT_TEST(testDisconnect);
         CPPUNIT_TEST(testSetInputData);
         CPPUNIT_TEST_SUITE_END ();
 
@@ -33,7 +34,8 @@ namespace stream
         void tearDown();
 
     protected:
-        void testConnect();;
+        void testConnect();
+        void testDisconnect();
         void testSetInputData();
             
     private: 

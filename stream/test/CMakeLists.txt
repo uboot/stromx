@@ -1,6 +1,7 @@
 project(streamtest)
 
 include_directories(..)
+include_directories(${CPPUNIT_INCLUDE_DIR})
 
 add_executable(streamtest
     main.cpp
@@ -24,7 +25,8 @@ add_executable(streamtest
     ../OperatorNode.cpp
     ../Thread.cpp
     ThreadTest.cpp
+    NetworkTest.cpp
 )
 
-target_link_libraries(streamtest boost_thread cppunit dl)
+target_link_libraries(streamtest ${Boost_LIBRARIES} ${CPPUNIT_LIBRARY} dl)
 
