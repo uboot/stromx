@@ -17,5 +17,6 @@ set(SOURCES
     OutputNode.cpp
 )
 
+include_directories(${Boost_INCLUDE_DIRS})
 add_library(stream SHARED ${SOURCES})
-target_link_libraries(stream boost_thread)
+target_link_libraries(stream ${Boost_LIBRARIES})
