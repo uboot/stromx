@@ -18,7 +18,7 @@ namespace stream
 {
     void OperatorWrapperTest::setUp ( void )
     {
-        m_testOperator = new TestOperator(0);
+        m_testOperator = new TestOperator();
         m_operatorWrapper = new OperatorWrapper(m_testOperator);
         m_operatorWrapper->activate();
         Data* data = new stream::None;

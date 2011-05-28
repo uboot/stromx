@@ -7,14 +7,12 @@
 
 namespace stream
 {
-    Operator::Operator (const unsigned int id,
-                        const std::string & name,
+    Operator::Operator (const std::string & name,
                         const Version & version,
                         const std::vector<Description>& inputs,
                         const std::vector<Description>& outputs,
                         const std::vector<Parameter>& parameters)
-      : m_id(id),
-        m_name(name),
+      : m_name(name),
         m_version(version),
         m_inputs(inputs),
         m_outputs(outputs),

@@ -15,8 +15,7 @@ namespace stream
     class Operator
     {
     public:
-        Operator(const unsigned int id,
-                 const std::string & name,
+        Operator(const std::string & name,
                  const Version & version,
                  const std::vector<Description>& inputs,
                  const std::vector<Description>& outputs,
@@ -42,7 +41,6 @@ namespace stream
         static void validate(const std::vector<Description>& descriptors);
         static void validate(const std::vector<Parameter>& descriptors);
         
-        unsigned int m_id;
         std::string m_name;
         Version m_version;
         std::vector<Description> m_inputs;

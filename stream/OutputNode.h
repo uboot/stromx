@@ -5,13 +5,13 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class OperatorInterface;
     class DataContainer;
     
     class OutputNode
     {
     public:
-        OutputNode(OperatorWrapper* const op, const unsigned int outputId);
+        OutputNode(OperatorInterface* const op, const unsigned int outputId);
         
         DataContainer* const getOutputData();
         void incrementConnectedInputs();
@@ -20,7 +20,7 @@ namespace stream
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
         
-        OperatorWrapper* m_operator;
+        OperatorInterface* m_operator;
         unsigned int m_outputId;
         unsigned int m_connectedInputs;
         unsigned int m_remainingCopies;

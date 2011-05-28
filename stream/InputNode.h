@@ -7,12 +7,12 @@ namespace stream
 {
     class OutputNode;
     class DataContainer;
-    class OperatorWrapper;
+    class OperatorInterface;
     
     class InputNode
     {
     public:
-        InputNode(OperatorWrapper* const op, const unsigned int inputId);
+        InputNode(OperatorInterface* const op, const unsigned int inputId);
         
         const OutputNode& source() const { return *m_source; }
         void connect(OutputNode* const output);
@@ -23,7 +23,7 @@ namespace stream
         
         OutputNode *m_source;
         unsigned int m_inputId;
-        OperatorWrapper* m_operator;
+        OperatorInterface* m_operator;
         
         boost::mutex m_mutex;
     };

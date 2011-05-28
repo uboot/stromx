@@ -1,11 +1,11 @@
 #include "InputNode.h"
 
 #include "OutputNode.h"
-#include "OperatorWrapper.h"
+#include "OperatorInterface.h"
 
 namespace stream
 {
-    InputNode::InputNode(OperatorWrapper* const op, const unsigned int inputId)
+    InputNode::InputNode(OperatorInterface* const op, const unsigned int inputId)
       : m_source(0),
         m_inputId(inputId),
         m_operator(op)
@@ -26,8 +26,6 @@ namespace stream
     
     void InputNode::setInputData()
     {
-        lock_t lock(m_mutex);
-            
         DataContainer* inputData = m_source->getOutputData();
         
         m_operator->setInputData(m_inputId, inputData);

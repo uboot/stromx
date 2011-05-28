@@ -14,7 +14,7 @@ namespace stream
         static const unsigned int OUTPUT_2 = 3;
         static const unsigned int SLEEP_TIME = 0;
         
-        TestOperator(const unsigned int id);
+        TestOperator();
         
         virtual void setParameter(unsigned int id, const Data& value);
         virtual void getParameter(unsigned int id, Data& value);

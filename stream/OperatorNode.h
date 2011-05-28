@@ -6,20 +6,22 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class OperatorInterface;
     class InputNode;
     class OutputNode;
     
     class OperatorNode
     {
     public:
-        OperatorNode(OperatorWrapper* const op);
+        OperatorNode(OperatorInterface* const op);
         ~OperatorNode();
         
         InputNode* const getInputNode(const unsigned int id);
         OutputNode* const getOutputNode(const unsigned int id);
+        OperatorInterface* const op() { return m_operator; }
         
     private:
+        OperatorInterface* m_operator;
         std::map<unsigned int, OutputNode*> m_outputs;
         std::map<unsigned int, InputNode*> m_inputs;
     };

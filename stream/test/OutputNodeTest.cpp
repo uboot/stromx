@@ -16,7 +16,7 @@ namespace stream
 {
     void OutputNodeTest::setUp()
     {
-        m_operatorWrapper = new OperatorWrapper(new TestOperator(0));
+        m_operatorWrapper = new OperatorWrapper(new TestOperator());
         m_operatorWrapper->activate();
         m_container = new DataContainer(new stream::None);
         m_outputNode = new OutputNode(m_operatorWrapper, TestOperator::OUTPUT_1);

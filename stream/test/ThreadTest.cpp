@@ -21,9 +21,9 @@ namespace stream
     {
         for(unsigned int i = 0; i < 3; ++i)
         {
-            m_operators.push_back(new TestOperator(0));
-            m_operatorWrappers.push_back(new OperatorWrapper(m_operators.back()));
-            m_operatorNodes.push_back(new OperatorNode(m_operatorWrappers.back()));
+            m_operators.push_back(new TestOperator());
+            OperatorInterface* interface = new OperatorWrapper(m_operators.back());
+            m_operatorNodes.push_back(new OperatorNode(interface));
         }
         
         for(unsigned int i = 0; i < 2; ++i)
@@ -44,15 +44,15 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_thread->start());
         CPPUNIT_ASSERT_THROW(m_thread->start(), InvalidStateException);
         
-        m_operatorWrappers[0]->setInputData(TestOperator::INPUT_1, m_container);
-        m_operatorWrappers[0]->setInputData(TestOperator::INPUT_2, m_container);
+        m_operatorNodes[0]->op()->setInputData(TestOperator::INPUT_1, m_container);
+        m_operatorNodes[0]->op()->setInputData(TestOperator::INPUT_2, m_container);
         
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         
-        DataContainer* data = m_operatorWrappers[2]->getOutputData(TestOperator::OUTPUT_1);
+        DataContainer* data = m_operatorNodes[2]->op()->getOutputData(TestOperator::OUTPUT_1);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
-        data = m_operatorWrappers[2]->getOutputData(TestOperator::OUTPUT_2);
+        data = m_operatorNodes[2]->op()->getOutputData(TestOperator::OUTPUT_2);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
         for(std::vector<TestOperator*>::const_iterator iter = m_operators.begin();
@@ -89,13 +89,6 @@ namespace stream
         m_thread->join();
         
         delete m_thread;
-        
-        for(std::vector<OperatorWrapper*>::iterator iter = m_operatorWrappers.begin();
-            iter != m_operatorWrappers.end();
-            ++iter)
-        {
-            delete *iter;
-        }
         
         for(std::vector<OperatorNode*>::iterator iter = m_operatorNodes.begin();
             iter != m_operatorNodes.end();

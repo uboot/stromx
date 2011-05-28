@@ -9,8 +9,8 @@ namespace stream
     const std::string TestOperator::NAME("Test Operator");
     const Version TestOperator::VERSION(0, 1);
     
-    TestOperator::TestOperator(const unsigned int id)
-      : Operator(id, NAME, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+    TestOperator::TestOperator()
+      : Operator(NAME, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_sleepTime(1000),
         m_numExecutes(0)
     {

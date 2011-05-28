@@ -1,11 +1,11 @@
 #include "OutputNode.h"
 
 #include "Exception.h"
-#include "OperatorWrapper.h"
+#include "OperatorInterface.h"
 
 namespace stream
 {
-    OutputNode::OutputNode(OperatorWrapper*const op, const unsigned int outputId)
+    OutputNode::OutputNode(OperatorInterface*const op, const unsigned int outputId)
       : m_operator(op),
         m_outputId(outputId),
         m_connectedInputs(0),
@@ -31,17 +31,24 @@ namespace stream
 
     DataContainer*const OutputNode::getOutputData()
     {
-        lock_t lock(m_mutex);
-        
-        if(! m_connectedInputs)
-            throw InvalidStateException("No inputs are connected to this output node.");
-        
-        if(! m_remainingCopies)
-            m_remainingCopies = m_connectedInputs;
-        
         DataContainer* value = m_operator->getOutputData(m_outputId);
         
-        m_remainingCopies--; 
+        // the data has been obtained
+        // now make sure the connection counter is adapted in an atomic operation
+        {
+            lock_t lock(m_mutex);
+            
+            if(! m_connectedInputs)
+                throw InvalidStateException("No inputs are connected to this output node.");
+            
+            if(! m_remainingCopies)
+            {
+                m_operator->clearOutputData(m_outputId);
+                m_remainingCopies = m_connectedInputs;
+            }
+            
+            m_remainingCopies--; 
+        }
         
         return value;
     }

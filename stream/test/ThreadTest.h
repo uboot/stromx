@@ -36,7 +36,6 @@ namespace stream
             
     private: 
         std::vector<TestOperator*> m_operators;
-        std::vector<OperatorWrapper*> m_operatorWrappers;
         std::vector<OperatorNode*> m_operatorNodes;
         Thread* m_thread;
         DataContainer* m_container;

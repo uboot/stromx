@@ -2,6 +2,7 @@
 #define STREAM_OPERATORWRAPPER_H
 
 #include "DataProvider.h"
+#include "OperatorInterface.h"
 #include "Id2DataMap.h"
 #include "Parameter.h"
 
@@ -15,7 +16,7 @@ namespace stream
     class Operator;
     class Data;
     
-    class OperatorWrapper : public DataProvider
+    class OperatorWrapper : public DataProvider, public OperatorInterface
     {
     public:
         enum Status

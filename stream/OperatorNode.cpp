@@ -1,14 +1,15 @@
 #include "OperatorNode.h"
 
 #include "Description.h"
-#include "OperatorWrapper.h"
+#include "OperatorInterface.h"
 #include "InputNode.h"
 #include "OutputNode.h"
 #include "Exception.h"
 
 namespace stream
 {
-    OperatorNode::OperatorNode(OperatorWrapper*const op)
+    OperatorNode::OperatorNode(OperatorInterface*const op)
+        : m_operator(op)
     {
         for(std::vector<Description>::const_iterator iter = op->inputs().begin();
             iter != op->inputs().end();
@@ -46,6 +47,8 @@ namespace stream
         {
             delete iter->second;
         }
+        
+        delete m_operator;
     }
     
     InputNode*const OperatorNode::getInputNode(const unsigned int id)
