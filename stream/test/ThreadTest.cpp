@@ -35,7 +35,7 @@ namespace stream
                 ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
         }
         
-        m_thread = new Thread("");
+        m_thread = new Thread("Thread");
         
         for(std::vector<OperatorNode*>::iterator iter = m_operatorNodes.begin();
             iter != m_operatorNodes.end();

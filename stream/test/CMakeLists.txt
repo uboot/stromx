@@ -13,10 +13,10 @@ add_executable(streamtest
     Id2DataCompositeTest.cpp
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp
-    ../OperatorWrapper.cpp
     ../Operator.cpp
     ../None.cpp
     TestOperator.cpp
+    ../OperatorWrapper.cpp
     OperatorWrapperTest.cpp
     ../OutputNode.cpp
     OutputNodeTest.cpp
@@ -25,6 +25,7 @@ add_executable(streamtest
     ../OperatorNode.cpp
     ../Thread.cpp
     ThreadTest.cpp
+    ../Network.cpp
     NetworkTest.cpp
 )
 

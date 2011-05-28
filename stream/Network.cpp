@@ -30,11 +30,11 @@ namespace stream
     {
     }
 
-    OperatorNode*const Network::addOperator(OperatorInterface*const op)
+    OperatorNode*const Network::addOperator(Operator*const op)
     {
     }
 
-    void Network::removeOperator(OperatorInterface*const op)
+    void Network::removeOperator(OperatorNode*const op)
     {
     }
 }

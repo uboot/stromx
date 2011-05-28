@@ -10,11 +10,10 @@ namespace stream
 {
     class Network;
     class OperatorWrapper;
-    class TestOperator;
     
     class NetworkTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (ThreadTest);
+        CPPUNIT_TEST_SUITE (NetworkTest);
         CPPUNIT_TEST(testAddOperator);
         CPPUNIT_TEST(testRemoveOperator);
         CPPUNIT_TEST(testActivate);
@@ -22,7 +21,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        ThreadTest() : m_network(0) {}
+        NetworkTest() : m_network(0) {}
         
         void setUp();
         void tearDown();
@@ -35,7 +34,6 @@ namespace stream
             
     private: 
         Network* m_network;
-        std::vector<TestOperator*> m_operators;
     };
 }
 
