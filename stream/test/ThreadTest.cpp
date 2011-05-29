@@ -22,8 +22,9 @@ namespace stream
         for(unsigned int i = 0; i < 3; ++i)
         {
             m_operators.push_back(new TestOperator());
-            OperatorInterface* interface = new OperatorWrapper(m_operators.back());
-            m_operatorNodes.push_back(new OperatorNode(interface));
+            OperatorWrapper* wrapper = new OperatorWrapper(m_operators.back());
+            m_operatorNodes.push_back(new OperatorNode(wrapper));
+            wrapper->activate();
         }
         
         for(unsigned int i = 0; i < 2; ++i)
@@ -37,12 +38,8 @@ namespace stream
         
         m_thread = new Thread("Thread");
         
-        for(std::vector<OperatorNode*>::iterator iter = m_operatorNodes.begin();
-            iter != m_operatorNodes.end();
-            ++iter)
-        {
-            m_thread->addOperator(*iter);
-        }
+        for(unsigned int i = 1; i < 3; ++i)
+            m_thread->addOperator(m_operatorNodes[i]);
         
         m_container = new DataContainer(new stream::None);
         m_newOperator = new OperatorNode(new OperatorWrapper(new TestOperator()));
@@ -59,7 +56,10 @@ namespace stream
 
     void ThreadTest::testInsertOperator()
     {
+        unsigned int numOperators = m_thread->operatorSequence().size();
+        
         CPPUNIT_ASSERT_NO_THROW(m_thread->insertOperator(0, m_newOperator));
+        CPPUNIT_ASSERT_EQUAL(numOperators + 1, (unsigned int)(m_thread->operatorSequence().size()));
         CPPUNIT_ASSERT_EQUAL(m_newOperator, m_thread->operatorSequence()[0]);  
     }
 

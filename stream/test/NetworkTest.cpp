@@ -51,10 +51,19 @@ namespace stream
 
     void NetworkTest::testActivate()
     {
+        CPPUNIT_ASSERT_NO_THROW(m_network->activate());
+        CPPUNIT_ASSERT_EQUAL(Network::ACTIVE, m_network->status());
+        
+        CPPUNIT_ASSERT_THROW(m_network->activate(), InvalidStateException);
     }
 
     void NetworkTest::testDeactivate()
     {
+        CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
+        
+        m_network->activate();
+        CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
+        CPPUNIT_ASSERT_EQUAL(Network::INACTIVE, m_network->status());
     }
 
     void NetworkTest::tearDown()

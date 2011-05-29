@@ -4,6 +4,14 @@
 #include <vector>
 #include <string>
 
+#include <boost/thread/mutex.hpp>
+#include <boost/thread.hpp>
+
+namespace boost
+{
+    class thread;
+}
+
 namespace stream
 {
     class OperatorNode;
@@ -26,6 +34,9 @@ namespace stream
         void join();
                
     private:
+        void loop();
+        
+        boost::thread* m_thread;
         std::string m_name;
         std::vector<OperatorNode*> m_operatorSequence;
     };

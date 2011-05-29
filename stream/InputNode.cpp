@@ -27,6 +27,9 @@ namespace stream
     
     void InputNode::setInputData()
     {
+        if(! m_source)
+            throw InvalidStateException("Input node has not been connected.");
+        
         DataContainer* inputData = m_source->getOutputData();
         
         m_operator->setInputData(m_inputId, inputData);

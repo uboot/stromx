@@ -30,24 +30,27 @@ namespace stream
         virtual ~OperatorWrapper();
         
         const Status status() { return m_status; }
-        virtual void testForInterrupt();
+        const Operator* const op() const { return m_op; }
         
+        DataContainer* const getOutputData(const unsigned int id);
+        void setInputData(const unsigned int id, DataContainer* const data);
+        void clearOutputData(unsigned int id);
+        
+        void activate();
+        void deactivate();
+        
+        // DataProvider implementation
+        void receiveInputData(const Id2DataMapper& mapper);
+        void sendOutputData(const Id2DataMapper& mapper);
+        void testForInterrupt();
+        
+        // OperatorInterface implementation
         const std::vector<Description>& inputs() { return m_op->inputs(); }
         const std::vector<Description>& outputs() { return m_op->outputs(); }
         const std::vector<Parameter>& parameters() { return m_op->parameters(); }
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);
-        
-        virtual void receiveInputData(const Id2DataMapper& mapper);
-        virtual void sendOutputData(const Id2DataMapper& mapper);
-        
-        DataContainer* const getOutputData(const unsigned int id);
-        void setInputData(const unsigned int id, DataContainer* const data);
-        virtual void clearOutputData(unsigned int id);
-        
-        virtual void activate();
-        virtual void deactivate();
         
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;

@@ -259,7 +259,7 @@ namespace stream
                 dynamic_cast<InterruptException&>(e);
                 interruptExceptionWasThrown = true;
             }
-            catch(std::exception&)
+            catch(std::bad_cast&)
             {
             }
         }

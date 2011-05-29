@@ -36,6 +36,6 @@ namespace stream
             throw InvalidStateException("Data has already been assigned to this input ID");
         
         id2DataMap[m_id] = *m_data;
-        *m_data = 0;
+       *m_data = 0;
     }
 }
