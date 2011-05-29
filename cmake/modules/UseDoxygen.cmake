@@ -1,3 +1,6 @@
+# 2011-05-29
+# Copied from http://tobias.rautenkranz.ch/cmake/doxygen/
+
 # - Run Doxygen
 #
 # Adds a doxygen target that runs doxygen to generate the html
