@@ -14,6 +14,8 @@ find_package(Boost 1.36.0 COMPONENTS thread)
 
 find_package(CppUnit)
 
+find_package(Threads)
+
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)
 endif()

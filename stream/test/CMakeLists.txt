@@ -29,5 +29,5 @@ add_executable(streamtest
     NetworkTest.cpp
 )
 
-target_link_libraries(streamtest ${Boost_LIBRARIES} ${CPPUNIT_LIBRARY} ${CMAKE_DL_LIBS})
+target_link_libraries(streamtest ${Boost_LIBRARIES} ${CPPUNIT_LIBRARY} ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 

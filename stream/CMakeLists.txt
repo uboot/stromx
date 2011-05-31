@@ -21,4 +21,4 @@ set(SOURCES
 
 include_directories(${Boost_INCLUDE_DIRS})
 add_library(stream SHARED ${SOURCES})
-target_link_libraries(stream ${Boost_LIBRARIES})
+target_link_libraries(stream ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
