@@ -39,6 +39,18 @@ namespace stream
         } 
     }
     
+    void OperatorWrapper::sleep(const unsigned int microseconds)
+    {
+        try
+        {
+            boost::this_thread::sleep(boost::posix_time::microseconds(1));
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        } 
+    }
+    
     void OperatorWrapper::activate()
     {
         lock_t lock(m_mutex);
@@ -70,6 +82,14 @@ namespace stream
         
         m_status = INACTIVE;
     } 
+    
+    void OperatorWrapper::clearAllData()
+    {
+        lock_t lock(m_mutex);
+        
+        m_inputMap.clear();
+        m_outputMap.clear();
+    }
     
     void OperatorWrapper::getParameter(unsigned int id, Data& value)
     {

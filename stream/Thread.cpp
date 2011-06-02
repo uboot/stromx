@@ -104,5 +104,13 @@ namespace stream
         catch(InterruptException&)
         {
         }
+        
+        // clean up
+        for(std::vector<OperatorNode*>::iterator operatorNode = m_operatorSequence.begin();
+                        operatorNode != m_operatorSequence.end();
+                        ++operatorNode)
+        {
+            (*operatorNode)->op()->clearAllData();
+        }
     }
 }

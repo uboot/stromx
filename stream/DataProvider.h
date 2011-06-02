@@ -13,6 +13,7 @@ namespace stream
         virtual ~DataProvider() {}
         
         virtual void testForInterrupt() = 0;
+        virtual void sleep(const unsigned int microseconds) = 0;
         
         virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
         virtual void sendOutputData(const Id2DataMapper& mapper) = 0;

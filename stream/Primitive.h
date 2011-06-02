@@ -17,7 +17,7 @@ namespace stream
         
         virtual const DataType & type() const { return m_type; }
         
-        operator repr_t() { return m_value; }
+        operator repr_t() const { return m_value; }
         
     private:
         val_t m_value;

@@ -42,7 +42,6 @@ namespace stream
         OperatorWrapper* m_operatorWrapper;
         TestOperator* m_testOperator;
         DataContainer* m_container;
-            
     };
 }
 
