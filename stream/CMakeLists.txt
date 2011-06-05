@@ -6,10 +6,12 @@ endif()
 
 set(SOURCES   
     DataContainer.cpp
+    DataType.cpp
     Id2DataComposite.cpp
     Id2DataMap.cpp
     Id2DataMapper.cpp
     Id2DataPair.cpp
+    Image.cpp
     InputNode.cpp
     Network.cpp
     None.cpp
@@ -17,8 +19,21 @@ set(SOURCES
     OperatorNode.cpp
     OperatorWrapper.cpp
     OutputNode.cpp
+    Primitive.cpp
 )
 
-include_directories(${Boost_INCLUDE_DIRS})
+if(BUILD_OPERATOR)
+set(SOURCES
+    ${SOURCES}
+    op/Clip.cpp)
+endif()
+
 add_library(stream SHARED ${SOURCES})
+
+if(BUILD_OPERATOR)
+    include_directories(${OpenCV_ROOT_DIR})
+    target_link_libraries(stream ${OpenCV2_CORE_LIBRARY})
+endif()
+
+include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(stream ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

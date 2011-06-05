@@ -27,6 +27,8 @@ add_executable(streamtest
     ThreadTest.cpp
     ../Network.cpp
     NetworkTest.cpp
+    ../Primitive.cpp
+    ../DataType.cpp
     PrimitiveTest.cpp
 )
 

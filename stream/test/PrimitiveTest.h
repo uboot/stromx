@@ -24,6 +24,7 @@ namespace stream
     protected:
         void testInt32();
         void testUInt32();
+        void testString();
             
     private: 
         Int32 m_int32;

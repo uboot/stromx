@@ -16,6 +16,8 @@ find_package(CppUnit)
 
 find_package(Threads)
 
+find_package(OpenCV2)
+
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)
 endif()
@@ -24,6 +26,9 @@ if(Boost_FOUND)
     set(BUILD_STREAM true)
 endif()
 
+if(OpenCV2_FOUND)
+    option(BUILD_OPERATOR "Build operators" ON)
+endif()
 
 if(BUILD_STREAM)
     add_subdirectory(stream)

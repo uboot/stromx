@@ -2,5 +2,5 @@
 
 namespace stream
 {
-    const DataType None::m_type;
+    const DataType None::m_type(0);
 }

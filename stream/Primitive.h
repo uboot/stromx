@@ -5,6 +5,7 @@
 #include "Data.h"
 
 #include <stdint.h>
+#include <float.h>
 
 namespace stream
 {
@@ -24,11 +25,21 @@ namespace stream
         static const DataType m_type;
     };
     
-    template <class repr_t, class val_t>
-    const DataType Primitive<repr_t, val_t>::m_type;
+    typedef Primitive<bool, bool> Bool;
+    
+    typedef Primitive<unsigned int, uint32_t> Enum;
         
+    typedef Primitive<int, int8_t> Int8;
+    typedef Primitive<unsigned int, uint8_t> UInt8;
+        
+    typedef Primitive<int, int16_t> Int16;
+    typedef Primitive<unsigned int, uint16_t> UInt16;
+    
     typedef Primitive<int, int32_t> Int32;
     typedef Primitive<unsigned int, uint32_t> UInt32;
+    
+    typedef Primitive<double, float> Float;
+    typedef Primitive<double, double> Double;
 }
 
 #endif // STREAM_PRIMITIVE_H

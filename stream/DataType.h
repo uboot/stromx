@@ -7,7 +7,20 @@ namespace stream
     class DataType
     {
     public:
-        DataType() {}
+        enum Types
+        {
+            BOOL,
+            INT_32,
+            UINT_32
+        };
+        
+        DataType(const unsigned int type = 0) : m_type(type) {}
+        
+        virtual const bool is(const DataType& type) const;
+    
+    private:
+        
+        unsigned int m_type;
     };
 }
 

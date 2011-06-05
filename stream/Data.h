@@ -11,6 +11,8 @@ namespace stream
         virtual const DataType & type() const = 0;
         virtual ~Data() {}
         
+        bool is(const DataType & t) const { return type().is(t); }
+        
     protected:
         Data() {} 
     };
