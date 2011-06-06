@@ -10,8 +10,19 @@ namespace stream
         enum Types
         {
             BOOL,
+            INT,
+            UINT,
+            INT_8,
+            UINT_8,
+            INT_16,
+            UINT_16,
             INT_32,
-            UINT_32
+            UINT_32,
+            FLOAT,
+            DOUBLE,
+            IMAGE,
+            MONO_8_IMAGE,
+            RGB_24_IMAGE
         };
         
         DataType(const unsigned int type = 0) : m_type(type) {}
