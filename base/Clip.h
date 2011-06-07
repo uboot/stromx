@@ -1,7 +1,7 @@
 #ifndef STREAM_OPERATOR_CLIP_H
 #define STREAM_OPERATOR_CLIP_H
 
-#include "../Operator.h"
+#include <stream/Operator.h>
 
 namespace stream
 {

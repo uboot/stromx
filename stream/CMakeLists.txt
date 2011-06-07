@@ -1,4 +1,4 @@
-project(libstream)
+project(stream)
 
 if(BUILD_TESTS)
     add_subdirectory(test)
@@ -22,18 +22,7 @@ set(SOURCES
     Primitive.cpp
 )
 
-if(BUILD_OPERATOR)
-set(SOURCES
-    ${SOURCES}
-    op/Clip.cpp)
-endif()
-
 add_library(stream SHARED ${SOURCES})
-
-if(BUILD_OPERATOR)
-    include_directories(${OpenCV_ROOT_DIR})
-    target_link_libraries(stream ${OpenCV2_CORE_LIBRARY})
-endif()
 
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(stream ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
