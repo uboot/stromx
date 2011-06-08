@@ -75,6 +75,14 @@ namespace stream
           : InvalidStateException(message)
         {}
     };
+    
+    class FileAccessException : public Exception
+    {
+    public:
+        FileAccessException(const std::string & message = "FileAccessException")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H

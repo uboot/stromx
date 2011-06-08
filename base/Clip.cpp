@@ -2,51 +2,48 @@
 
 
 
-namespace stream
+namespace base
 {
-    namespace op
+    const std::string Clip::NAME("Clip");
+    const std::string Clip::PACKAGE("Base");
+    const stream::Version Clip::VERSION(0, 1);
+    
+    Clip::Clip()
+    : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
-        const std::string Clip::NAME("Clip");
-        const std::string Clip::PACKAGE("Base");
-        const Version Clip::VERSION(0, 1);
-        
-        Clip::Clip()
-        : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
-        {
-        }
+    }
 
-        void Clip::setParameter(unsigned int id, const stream::Data& value)
-        {
-        }
+    void Clip::setParameter(unsigned int id, const stream::Data& value)
+    {
+    }
 
-        void Clip::getParameter(unsigned int id, Data& value)
-        {
-        }  
-        
-        void Clip::execute(DataProvider& provider)
-        {
-        }
+    void Clip::getParameter(unsigned int id, stream::Data& value)
+    {
+    }  
+    
+    void Clip::execute(stream::DataProvider& provider)
+    {
+    }
 
+    
+    const std::vector< stream::Description > Clip::setupInputs()
+    {
+        std::vector<stream::Description> inputs;
         
-        const std::vector< Description > Clip::setupInputs()
-        {
-            std::vector<Description> inputs;
-            
-            return inputs;
-        }
+        return inputs;
+    }
+    
+    const std::vector< stream::Description > Clip::setupOutputs()
+    {
+        std::vector<stream::Description> outputs;
         
-        const std::vector< Description > Clip::setupOutputs()
-        {
-            std::vector<Description> outputs;
-            
-            return outputs;
-        }
-        
-        const std::vector< Parameter > Clip::setupParameters()
-        {
-            std::vector<Parameter> parameters;
-                                        
-            return parameters;
-        }
-    } 
-}
+        return outputs;
+    }
+    
+    const std::vector< stream::Parameter > Clip::setupParameters()
+    {
+        std::vector<stream::Parameter> parameters;
+                                    
+        return parameters;
+    }
+} 

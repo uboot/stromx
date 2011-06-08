@@ -11,7 +11,7 @@ set(SOURCES
     Id2DataMap.cpp
     Id2DataMapper.cpp
     Id2DataPair.cpp
-    Image.cpp
+    ImageWrapper.cpp
     InputNode.cpp
     Network.cpp
     None.cpp
@@ -25,4 +25,7 @@ set(SOURCES
 add_library(stream SHARED ${SOURCES})
 
 include_directories(${Boost_INCLUDE_DIRS})
-target_link_libraries(stream ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(stream
+    ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+)

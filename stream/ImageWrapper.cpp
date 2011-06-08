@@ -1,10 +1,10 @@
-#include "Image.h"
+#include "ImageWrapper.h"
 
 #include "Exception.h"
 
 namespace stream
 {
-    Image::Image()
+    ThinImage::ThinImage()
       : m_width(0),
         m_height(0),
         m_stride(0),
@@ -14,31 +14,27 @@ namespace stream
     {
     }
     
-    Image::~Image()
-    {
-    }
-    
-    void Image::setWidth(const unsigned int width)
+    void ThinImage::setWidth(const unsigned int width)
     {
         m_width = width;
     }
 
-    void Image::setHeight(const unsigned int height)
+    void ThinImage::setHeight(const unsigned int height)
     {
         m_height = height;
     }
 
-    void Image::setStride(const unsigned int stride)
+    void ThinImage::setStride(const unsigned int stride)
     {
         m_stride = stride;
     }
 
-    void Image::setData(uint8_t*const data)
+    void ThinImage::setData(uint8_t*const data)
     {
         m_data = data;
     }
 
-    void Image::setPixelType(const stream::Image::PixelType pixelType)
+    void ThinImage::setPixelType(const stream::Image::PixelType pixelType)
     {
         m_pixelType = pixelType;
         
@@ -54,5 +50,9 @@ namespace stream
             throw ArgumentException("This pixel type is not supported.");
         }
     }
-
+    
+    void ThinImage::setDataType(const stream::DataType& dataType)
+    {
+        m_dataType = dataType;
+    }
 }

@@ -16,33 +16,17 @@ namespace stream
             RGB_24
         };
         
-        Image();
-        virtual ~Image();
+        virtual ~Image() {}
         
-        const unsigned int width() const { return m_width; }
-        const unsigned int height() const { return m_height; }
-        const unsigned int stride() const { return m_stride; }
-        const PixelType pixelType() const { return m_pixelType; }
+        virtual const unsigned int width() const = 0;
+        virtual const unsigned int height() const = 0;
+        virtual const unsigned int stride() const = 0;
+        virtual const PixelType pixelType() const = 0;
         
-        uint8_t* const data() { return m_data; }
-        const uint8_t* const data() const { return m_data; }
+        virtual uint8_t* const data() = 0;
+        virtual const uint8_t* const data() const = 0;
         
-        virtual const DataType & type() const { return m_dataType; }
-       
-    protected:
-        void setWidth(const unsigned int width);
-        void setHeight(const unsigned int height);
-        void setStride(const unsigned int stride);
-        void setPixelType(const PixelType pixelType);
-        void setData(uint8_t* const data);
-        
-    private:
-        unsigned int m_width;
-        unsigned int m_height;
-        unsigned int m_stride;
-        PixelType m_pixelType;
-        uint8_t* m_data;
-        DataType m_dataType;
+        virtual const DataType & type() const = 0;
     };
 }
 
