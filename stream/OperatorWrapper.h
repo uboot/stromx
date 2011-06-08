@@ -29,7 +29,7 @@ namespace stream
         OperatorWrapper(Operator* const op);
         virtual ~OperatorWrapper();
         
-        const Operator* const op() const { return m_op; }
+        const OperatorInfo* const info() const { return m_op; }
         
         void activate();
         void deactivate();
@@ -42,10 +42,6 @@ namespace stream
         
         // OperatorInterface implementation
         const Status status() { return m_status; }
-        
-        const std::vector<Description>& inputs() { return m_op->inputs(); }
-        const std::vector<Description>& outputs() { return m_op->outputs(); }
-        const std::vector<Parameter>& parameters() { return m_op->parameters(); }
         
         void setParameter(unsigned int id, const Data& value);
         void getParameter(unsigned int id, Data& value);

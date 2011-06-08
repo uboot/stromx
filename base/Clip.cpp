@@ -7,10 +7,11 @@ namespace stream
     namespace op
     {
         const std::string Clip::NAME("Clip");
+        const std::string Clip::PACKAGE("Base");
         const Version Clip::VERSION(0, 1);
         
         Clip::Clip()
-        : Operator(NAME, VERSION, setupInputs(), setupOutputs(), setupParameters())
+        : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
         {
         }
 

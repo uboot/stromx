@@ -2,6 +2,7 @@
 
 #include "Description.h"
 #include "OperatorInterface.h"
+#include "OperatorInfo.h"
 #include "InputNode.h"
 #include "OutputNode.h"
 #include "Exception.h"
@@ -11,8 +12,8 @@ namespace stream
     OperatorNode::OperatorNode(OperatorInterface*const op)
         : m_operator(op)
     {
-        for(std::vector<Description>::const_iterator iter = op->inputs().begin();
-            iter != op->inputs().end();
+        for(std::vector<Description>::const_iterator iter = op->info()->inputs().begin();
+            iter != op->info()->inputs().end();
             ++iter)
         {
             if(m_inputs.count(iter->id()))
@@ -21,8 +22,8 @@ namespace stream
             m_inputs[iter->id()] = new InputNode(op, iter->id());
         }
         
-        for(std::vector<Description>::const_iterator iter = op->outputs().begin();
-            iter != op->outputs().end();
+        for(std::vector<Description>::const_iterator iter = op->info()->outputs().begin();
+            iter != op->info()->outputs().end();
             ++iter)
         {
             if(m_outputs.count(iter->id()))

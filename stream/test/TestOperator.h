@@ -28,6 +28,7 @@ namespace stream
         static const std::vector<Parameter> setupParameters();
         
         static const std::string NAME;
+        static const std::string PACKAGE;
         static const Version VERSION;
         
         unsigned int m_sleepTime;

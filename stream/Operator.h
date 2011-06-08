@@ -17,10 +17,7 @@
 #ifndef STREAM_OPERATOR_H
 #define STREAM_OPERATOR_H
 
-#include "Parameter.h"
-#include "Version.h"
-
-#include <vector>
+#include "OperatorInfo.h"
 
 namespace stream
 {
@@ -28,20 +25,22 @@ namespace stream
     class DataContainer;
     class DataProvider;
     
-    class Operator
+    class Operator : public OperatorInfo
     {
     public:
         Operator(const std::string & name,
+                 const std::string & package,
                  const Version & version,
                  const std::vector<Description>& inputs,
                  const std::vector<Description>& outputs,
                  const std::vector<Parameter>& parameters);
         
-        const std::string& name() { return m_name; }
-        const Version& version() { return m_version; }
-        const std::vector<Description>& inputs() { return m_inputs; }
-        const std::vector<Description>& outputs() { return m_outputs; }
-        const std::vector<Parameter>& parameters() { return m_parameters; }
+        const std::string& name() const { return m_name; }
+        const std::string& package() const { return m_package; }
+        const Version& version() const { return m_version; }
+        const std::vector<Description>& inputs() const { return m_inputs; }
+        const std::vector<Description>& outputs() const { return m_outputs; }
+        const std::vector<Parameter>& parameters() const { return m_parameters; }
         
         virtual void setParameter(unsigned int id, const Data& value) = 0;
         virtual void getParameter(unsigned int id, Data& value) = 0;
@@ -58,6 +57,7 @@ namespace stream
         static void validate(const std::vector<Parameter>& descriptors);
         
         std::string m_name;
+        std::string m_package;
         Version m_version;
         std::vector<Description> m_inputs;
         std::vector<Description> m_outputs;

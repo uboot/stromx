@@ -19,10 +19,9 @@ namespace stream
     class Thread
     {
     public:
-        Thread(const std::string & name);
+        Thread();
         ~Thread();
         
-        const std::string name() const { return m_name; }
         const std::vector<OperatorNode*> & operatorSequence() const { return m_operatorSequence; }
         
         void addOperator(OperatorNode* const op);
@@ -37,7 +36,6 @@ namespace stream
         void loop();
         
         boost::thread* m_thread;
-        std::string m_name;
         std::vector<OperatorNode*> m_operatorSequence;
     };
 }

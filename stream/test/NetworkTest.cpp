@@ -18,7 +18,7 @@ namespace stream
     
     void NetworkTest::setUp()
     {
-        m_network = new Network("Network");
+        m_network = new Network();
     }
 
     void NetworkTest::testAddOperator()

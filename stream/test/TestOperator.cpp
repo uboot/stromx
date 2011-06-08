@@ -7,10 +7,11 @@
 namespace stream
 {
     const std::string TestOperator::NAME("Test Operator");
+    const std::string TestOperator::PACKAGE("Test Package");
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()
-      : Operator(NAME, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_sleepTime(1000),
         m_numExecutes(0)
     {

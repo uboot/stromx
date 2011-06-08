@@ -36,7 +36,7 @@ namespace stream
                 ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
         }
         
-        m_thread = new Thread("Thread");
+        m_thread = new Thread();
         
         for(unsigned int i = 1; i < 3; ++i)
             m_thread->addOperator(m_operatorNodes[i]);

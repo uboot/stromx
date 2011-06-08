@@ -4,14 +4,14 @@
 #include "InputNode.h"
 #include "OperatorNode.h"
 #include "OperatorInterface.h"
+#include "OperatorInfo.h"
 
 #include <boost/bind.hpp>
 
 namespace stream
 {
-    Thread::Thread(const std::string& name)
-      : m_thread(0),
-        m_name(name)
+    Thread::Thread()
+      : m_thread(0)
     {
     }
     
@@ -80,8 +80,8 @@ namespace stream
                         operatorNode != m_operatorSequence.end();
                         ++operatorNode)
                 {
-                    for(std::vector<Description>::const_iterator input = (*operatorNode)->op()->inputs().begin();
-                        input != (*operatorNode)->op()->inputs().end();
+                    for(std::vector<Description>::const_iterator input = (*operatorNode)->op()->info()->inputs().begin();
+                        input != (*operatorNode)->op()->info()->inputs().end();
                         ++input)
                     {
                         InputNode* inputNode = (*operatorNode)->getInputNode(input->id());

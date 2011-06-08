@@ -24,11 +24,13 @@
 namespace stream
 {
     Operator::Operator (const std::string & name,
+                        const std::string & package,
                         const Version & version,
                         const std::vector<Description>& inputs,
                         const std::vector<Description>& outputs,
                         const std::vector<Parameter>& parameters)
       : m_name(name),
+        m_package(package),
         m_version(version),
         m_inputs(inputs),
         m_outputs(outputs),

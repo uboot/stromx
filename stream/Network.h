@@ -19,10 +19,11 @@ namespace stream
             ACTIVE
         };
         
-        Network(const std::string & name);
+        Network();
         virtual ~Network();
         
         const std::string & name() { return m_name; }
+        void setName(const std::string name) { m_name = name; }
         const Status status() { return m_status; }
         const std::vector<OperatorNode*> operators() { return m_operators; }
         

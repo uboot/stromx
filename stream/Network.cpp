@@ -4,9 +4,8 @@
 
 namespace stream
 {
-    Network::Network(const std::string & name)
-        : m_name(name),
-          m_status(INACTIVE)
+    Network::Network()
+        : m_status(INACTIVE)
     {
     }
     

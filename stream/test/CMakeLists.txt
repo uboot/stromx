@@ -1,9 +1,9 @@
-project(streamtest)
+project(stream_test)
 
 include_directories(..)
 include_directories(${CPPUNIT_INCLUDE_DIR})
 
-add_executable(streamtest
+add_executable(run
     main.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
@@ -32,5 +32,5 @@ add_executable(streamtest
     PrimitiveTest.cpp
 )
 
-target_link_libraries(streamtest ${Boost_LIBRARIES} ${CPPUNIT_LIBRARY} ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(run ${Boost_LIBRARIES} ${CPPUNIT_LIBRARY} ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 

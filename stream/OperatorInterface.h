@@ -7,7 +7,7 @@
 
 namespace stream
 {
-    class Operator;
+    class OperatorInfo;
     class Data;
     
     class OperatorInterface
@@ -15,9 +15,7 @@ namespace stream
     public:
         virtual ~OperatorInterface() {}
         
-        virtual const std::vector<Description>& inputs() = 0;
-        virtual const std::vector<Description>& outputs() = 0;
-        virtual const std::vector<Parameter>& parameters() = 0;
+        virtual const OperatorInfo* const info() const = 0;
         
         virtual void setParameter(unsigned int id, const Data& value) = 0;
         virtual void getParameter(unsigned int id, Data& value) = 0;
