@@ -15,6 +15,7 @@ namespace base
         
         Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
         Image(const std::string & filename);
+        virtual ~Image();
         
         virtual void save(const std::string & filename);
         

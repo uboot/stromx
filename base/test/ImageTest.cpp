@@ -24,15 +24,22 @@ namespace base
     
     void ImageTest::testImageRgb24()
     {
-        m_image = new Image(200, 100, stream::Image::RGB_24);
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, stream::Image::RGB_24));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, m_image->pixelType());
     }
 
-    void ImageTest::testSave()
+    void ImageTest::testSaveJpeg()
     {
+        m_image = new Image(200, 100, stream::Image::RGB_24);
+        CPPUNIT_ASSERT_NO_THROW(m_image->save("test.jpg"));
+        delete m_image;
+        m_image = 0;
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image("test.jpg"));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
     }
 
     void ImageTest::tearDown ( void )

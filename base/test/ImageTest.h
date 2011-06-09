@@ -13,7 +13,7 @@ namespace base
         CPPUNIT_TEST_SUITE (ImageTest);
         CPPUNIT_TEST (testImageFromJpeg);
         CPPUNIT_TEST (testImageRgb24);
-        CPPUNIT_TEST (testSave);
+        CPPUNIT_TEST (testSaveJpeg);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -25,7 +25,7 @@ namespace base
         protected:
             void testImageFromJpeg();
             void testImageRgb24();
-            void testSave();
+            void testSaveJpeg();
             
         private:
             Image* m_image;

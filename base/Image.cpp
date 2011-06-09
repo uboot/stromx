@@ -39,6 +39,12 @@ namespace base
         }
     }
     
+    Image::~Image()
+    {
+        cvReleaseImage(&m_image);
+    }
+
+    
     const unsigned int Image::width() const
     {
         return m_image->width;
