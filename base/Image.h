@@ -29,9 +29,14 @@ namespace base
         const stream::DataType & type() const { return m_dataType; }
         
     private:
+        static const int numChannels(const PixelType pixelType);
+        static const int depth(const PixelType pixelType);
+        static const PixelType pixelType(const int depth, const int numChannels);
+        static const stream::DataType dataType(const PixelType pixelType);
+        
         PixelType m_pixelType;
         stream::DataType m_dataType;
-        cv::Mat m_image;
+        IplImage* m_image;
     };
 }
 

@@ -11,6 +11,8 @@ namespace base
     class ImageTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ImageTest);
+        CPPUNIT_TEST (testImageFromJpeg);
+        CPPUNIT_TEST (testImageRgb24);
         CPPUNIT_TEST (testSave);
         CPPUNIT_TEST_SUITE_END ();
 
@@ -21,6 +23,8 @@ namespace base
             void tearDown();
 
         protected:
+            void testImageFromJpeg();
+            void testImageRgb24();
             void testSave();
             
         private:
