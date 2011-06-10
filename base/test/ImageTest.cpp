@@ -20,6 +20,7 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, m_image->pixelType());
+        CPPUNIT_ASSERT(m_image->data());
     }
     
     void ImageTest::testImageRgb24()
@@ -29,6 +30,17 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, m_image->pixelType());
+        CPPUNIT_ASSERT(m_image->data());
+    }
+    
+    void ImageTest::testImageMono8()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, stream::Image::MONO_8));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->stride());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, m_image->pixelType());
+        CPPUNIT_ASSERT(m_image->data());
     }
 
     void ImageTest::testSaveJpeg()
@@ -37,7 +49,7 @@ namespace base
         CPPUNIT_ASSERT_NO_THROW(m_image->save("test.jpg"));
         delete m_image;
         m_image = 0;
-        CPPUNIT_ASSERT_NO_THROW(m_image = new Image("test.jpg"));
+        m_image = new Image("test.jpg");
         CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
     }

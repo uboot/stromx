@@ -18,14 +18,16 @@
 #define STREAM_OPERATOR_H
 
 #include "OperatorInfo.h"
+#include "DataOwner.h"
 
 namespace stream
 {
     class Data;
     class DataContainer;
     class DataProvider;
+    class DataContainer;
     
-    class Operator : public OperatorInfo
+    class Operator : public OperatorInfo, public DataOwner
     {
     public:
         Operator(const std::string & name,
@@ -48,6 +50,8 @@ namespace stream
         virtual void execute(DataProvider& provider) = 0;
         virtual void activate(DataProvider& provider) {}
         virtual void deactivate() {}
+        
+        virtual void release(DataContainer* const data) {};
         
     protected: 
         Description& getParameterDescription(unsigned int id);

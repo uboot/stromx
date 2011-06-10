@@ -2,13 +2,13 @@
 
 #include "Data.h"
 #include "Exception.h"
-#include "DataManager.h"
+#include "DataOwner.h"
 
 namespace stream
 {
-    DataContainer::DataContainer (stream::Data* const data, DataManager* const manager)
+    DataContainer::DataContainer (stream::Data* const data, DataOwner* const owner)
       : m_data(data),
-        m_manager(manager),
+        m_owner(owner),
         m_refCount(1),
         m_hasWriteAccess(false)
     {
@@ -50,8 +50,8 @@ namespace stream
         // it can not be executed while the mutex is locked
         if(destroy)
         {
-            if(m_manager)
-                m_manager->release(this);
+            if(m_owner)
+                m_owner->release(this);
             else
                 delete this;
         }

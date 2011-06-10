@@ -8,13 +8,13 @@
 
 namespace stream
 {
-    class DataManager;
+    class DataOwner;
     class DataType;
     
     class DataContainer
     {
     public:
-        DataContainer(Data* const data, DataManager* const manager = 0);
+        DataContainer(Data* const data, DataOwner* const owner = 0);
         ~DataContainer();
         
         const DataType & type() { return m_data->type(); }
@@ -28,7 +28,7 @@ namespace stream
             
     private:
         Data* m_data;
-        DataManager* m_manager;
+        DataOwner* m_owner;
         boost::mutex m_mutex;
         unsigned int m_refCount;
         bool m_hasWriteAccess;

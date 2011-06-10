@@ -10,4 +10,10 @@ namespace stream
     
     template<>
     const DataType UInt32::m_type(DataType::UINT_32);
+    
+    template<>
+    const UInt32 UInt32::MIN = UInt32(0);
+    
+    template<>
+    const UInt32 UInt32::MAX = UInt32(UINT32_MAX);
 }

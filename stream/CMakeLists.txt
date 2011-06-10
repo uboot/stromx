@@ -1,5 +1,13 @@
 project(stream)
 
+set (STREAM_VERSION_MAJOR 0)
+set (STREAM_VERSION_MINOR 1)
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/Config.h.in"
+  "${PROJECT_BINARY_DIR}/Config.h"
+)
+
 if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
@@ -24,7 +32,11 @@ set(SOURCES
 
 add_library(stream SHARED ${SOURCES})
 
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(
+    ${Boost_INCLUDE_DIRS}
+    ${PROJECT_BINARY_DIR}
+)
+
 target_link_libraries(stream
     ${Boost_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}

@@ -1,9 +1,26 @@
+/* 
+*  Copyright 2011 Matthias Fuchs
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
+
 #ifndef STREAM_PRIMITIVE_H
 #define STREAM_PRIMITIVE_H
 
 #include "Description.h"
 #include "Data.h"
 
+#define __STDC_LIMIT_MACROS
 #include <stdint.h>
 #include <float.h>
 
@@ -19,6 +36,9 @@ namespace stream
         virtual const DataType & type() const { return m_type; }
         
         operator repr_t() const { return m_value; }
+        
+        static const Primitive MIN;
+        static const Primitive MAX;
         
     private:
         val_t m_value;
