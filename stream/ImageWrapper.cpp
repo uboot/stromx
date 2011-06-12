@@ -4,7 +4,7 @@
 
 namespace stream
 {
-    ThinImage::ThinImage()
+    ImageWrapper::ImageWrapper()
       : m_width(0),
         m_height(0),
         m_stride(0),
@@ -14,27 +14,27 @@ namespace stream
     {
     }
     
-    void ThinImage::setWidth(const unsigned int width)
+    void ImageWrapper::setWidth(const unsigned int width)
     {
         m_width = width;
     }
 
-    void ThinImage::setHeight(const unsigned int height)
+    void ImageWrapper::setHeight(const unsigned int height)
     {
         m_height = height;
     }
 
-    void ThinImage::setStride(const unsigned int stride)
+    void ImageWrapper::setStride(const unsigned int stride)
     {
         m_stride = stride;
     }
 
-    void ThinImage::setData(uint8_t*const data)
+    void ImageWrapper::setData(uint8_t*const data)
     {
         m_data = data;
     }
 
-    void ThinImage::setPixelType(const stream::Image::PixelType pixelType)
+    void ImageWrapper::setPixelType(const PixelType pixelType)
     {
         m_pixelType = pixelType;
         
@@ -51,7 +51,7 @@ namespace stream
         }
     }
     
-    void ThinImage::setDataType(const stream::DataType& dataType)
+    void ImageWrapper::setDataType(const stream::DataType& dataType)
     {
         m_dataType = dataType;
     }

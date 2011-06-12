@@ -1,15 +1,15 @@
-#ifndef STREAM_THINIMAGE_H
-#define STREAM_THINIMAGE_H
+#ifndef STREAM_IMAGEWRAPPER_H
+#define STREAM_IMAGEWRAPPER_H
 
 #include "Image.h"
 
 namespace stream
 {
-    class ThinImage : public Image
+    class ImageWrapper : public Image
     {
     public:
         
-        ThinImage();
+        ImageWrapper();
         
         const unsigned int width() const { return m_width; }
         const unsigned int height() const { return m_height; }
@@ -39,4 +39,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_THINIMAGE_H
+#endif // STREAM_IMAGEWRAPPER_H
