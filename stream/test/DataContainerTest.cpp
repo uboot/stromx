@@ -28,8 +28,20 @@ namespace stream
         m_container->getWriteAccess();
         boost::thread t1(boost::bind(&DataContainerTest::clearWriteAccessDelayed, this));
         CPPUNIT_ASSERT_NO_THROW(m_container->reference());      
+        m_container->dereference();
+        
+        m_container->getWriteAccess();
+        boost::thread t2(boost::bind(&DataContainerTest::referenceWithInterruptException, this));
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        t2.interrupt();
+        t2.join();
     }
-
+    
+    void DataContainerTest::referenceWithInterruptException()
+    {
+        CPPUNIT_ASSERT_THROW(m_container->reference(), InterruptException);
+    }
+    
     void DataContainerTest::testDereference ( void )
     {
         m_container->reference();
@@ -61,8 +73,19 @@ namespace stream
         
         m_container->reference();
         boost::thread t1(boost::bind(&DataContainerTest::dereferenceDelayed, this));
-        
         CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
+        
+        m_container->clearWriteAccess();
+        m_container->reference();
+        boost::thread t2(boost::bind(&DataContainerTest::getWriteAccessWithInterruptException, this));
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        t2.interrupt();
+        t2.join();
+    }
+    
+    void DataContainerTest::getWriteAccessWithInterruptException()
+    {
+        CPPUNIT_ASSERT_THROW(m_container->getWriteAccess(), InterruptException);
     }
     
     void DataContainerTest::testClearWriteAccess()

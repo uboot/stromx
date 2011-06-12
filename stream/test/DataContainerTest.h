@@ -35,6 +35,8 @@ namespace stream
         private:
             void dereferenceDelayed();
             void clearWriteAccessDelayed();
+            void referenceWithInterruptException();
+            void getWriteAccessWithInterruptException();
             
             DataContainer* m_container;
             const Data* m_data;
