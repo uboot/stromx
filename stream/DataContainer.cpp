@@ -23,9 +23,17 @@ namespace stream
  
     void DataContainer::reference()
     {
-        boost::lock_guard<boost::mutex> lock(m_mutex);
+        unique_lock_t lock(m_mutex);
         
-        BOOST_ASSERT(! m_hasWriteAccess);
+        try
+        {
+            while(m_hasWriteAccess)
+                m_cond.wait(lock);
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        }  
         
         m_refCount++;
     }
@@ -35,7 +43,7 @@ namespace stream
         bool destroy = false;
         
         {
-            boost::lock_guard<boost::mutex> lock(m_mutex);
+            lock_t lock(m_mutex);
             
             BOOST_ASSERT(m_refCount != 0);
             
@@ -43,6 +51,14 @@ namespace stream
             
             if(m_refCount == 0)
                 destroy = true;
+            else
+                m_cond.notify_all();
+            
+            if(m_hasWriteAccess)
+            {
+                BOOST_ASSERT(m_refCount == 0);
+                m_hasWriteAccess = false;
+            }        
         }
         
         // the following code possibly leads to the deletion of 
@@ -59,6 +75,8 @@ namespace stream
     
     const Data*const DataContainer::getReadAccess()
     {
+        lock_t lock(m_mutex);
+        
         BOOST_ASSERT(m_refCount != 0);
         
         return m_data;    
@@ -66,21 +84,30 @@ namespace stream
     
     Data*const DataContainer::getWriteAccess()
     {
-        boost::lock_guard<boost::mutex> lock(m_mutex);
+        unique_lock_t lock(m_mutex);
         
         BOOST_ASSERT(m_refCount != 0);
         
-        if(m_refCount != 1)
-            throw ReferenceCountException("Data container is referenced by more than one clients");
+        try
+        {
+            while(m_refCount != 1)
+                m_cond.wait(lock);
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        } 
+           
+        m_hasWriteAccess = true;
         
         return m_data;
     }
     
     void DataContainer::clearWriteAccess()
     {
-        boost::lock_guard<boost::mutex> lock(m_mutex);
+        lock_t lock(m_mutex);
         
-        BOOST_ASSERT(m_refCount == 1);
+        m_cond.notify_all();
         
         m_hasWriteAccess = false;             
     }

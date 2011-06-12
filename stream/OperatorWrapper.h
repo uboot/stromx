@@ -5,10 +5,10 @@
 #include "OperatorInterface.h"
 #include "Id2DataMap.h"
 #include "Parameter.h"
+#include "Operator.h"
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
-#include "Operator.h"
 
 
 namespace stream

@@ -7,12 +7,16 @@
 namespace stream
 {
     class DataContainer;
+    class Data;
 
     class DataContainerTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (DataContainerTest);
+        CPPUNIT_TEST (testReference);
         CPPUNIT_TEST (testDereference);
+        CPPUNIT_TEST (testGetReadAccess);
         CPPUNIT_TEST (testGetWriteAccess);
+        CPPUNIT_TEST (testClearWriteAccess);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -22,11 +26,18 @@ namespace stream
             void tearDown();
 
         protected:
+            void testReference();
             void testDereference();
+            void testGetReadAccess();
             void testGetWriteAccess();
+            void testClearWriteAccess();
             
         private:
+            void dereferenceDelayed();
+            void clearWriteAccessDelayed();
+            
             DataContainer* m_container;
+            const Data* m_data;
     };
 }
 

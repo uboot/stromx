@@ -3,6 +3,7 @@
 
 #include <typeinfo>
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
 
 #include "Data.h"
 
@@ -27,9 +28,13 @@ namespace stream
         void clearWriteAccess();
             
     private:
+        typedef boost::lock_guard<boost::mutex> lock_t;
+        typedef boost::unique_lock<boost::mutex> unique_lock_t;
+        
+        boost::mutex m_mutex;
+        boost::condition_variable_any m_cond;
         Data* m_data;
         DataOwner* m_owner;
-        boost::mutex m_mutex;
         unsigned int m_refCount;
         bool m_hasWriteAccess;
     };     

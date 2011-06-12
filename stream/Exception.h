@@ -20,14 +20,6 @@ namespace stream
         std::string m_message; 
     };
     
-    class ReferenceCountException : public Exception
-    {
-    public:
-        ReferenceCountException(const std::string & message = "ReferenceCountException")
-          : Exception(message)
-        {}
-    };  
-    
     class OwnershipException : public Exception
     {
     public:
