@@ -6,6 +6,7 @@
 #include <OperatorWrapper.h>
 #include <None.h>
 #include <OutputNode.h>
+#include <InputNode.h>
 #include <Exception.h>
 
 #include <cppunit/TestAssert.h>
@@ -20,7 +21,7 @@ namespace stream
         m_operatorWrapper->activate();
         m_container = new DataContainer(new stream::None);
         m_outputNode = new OutputNode(m_operatorWrapper, TestOperator::OUTPUT_1);
-        
+        m_inputNode = new InputNode(m_operatorWrapper, 0);
     }
 
     void OutputNodeTest::tearDown()
@@ -32,7 +33,6 @@ namespace stream
     
     void OutputNodeTest::testGetOutputData()
     {
-        m_outputNode->incrementConnectedInputs();
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
@@ -41,16 +41,19 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(m_container, data);
     }
     
-    void OutputNodeTest::testDecrementConnectedInputs()
+    void OutputNodeTest::testRemoveConnectedInputs()
     {
-        m_outputNode->incrementConnectedInputs();
-        CPPUNIT_ASSERT_NO_THROW(m_outputNode->decrementConnectedInputs());
-        CPPUNIT_ASSERT_THROW(m_outputNode->decrementConnectedInputs(), InvalidStateException);
+        m_outputNode->addConnectedInput(m_inputNode);
+        CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(m_inputNode));
+        CPPUNIT_ASSERT_THROW(m_outputNode->removeConnectedInput(m_inputNode), ArgumentException);
     }
     
-    void OutputNodeTest::testIncrementConnectedInputs()
+    void OutputNodeTest::testAddConnectedInputs()
     {
-        CPPUNIT_ASSERT_NO_THROW(m_outputNode->incrementConnectedInputs());
+        CPPUNIT_ASSERT_NO_THROW(m_outputNode->addConnectedInput(m_inputNode));
+        CPPUNIT_ASSERT_EQUAL(size_t(1), m_outputNode->connectedInputs().size());
+        
+        CPPUNIT_ASSERT_THROW(m_outputNode->addConnectedInput(0), ArgumentException);
     }
 }
 

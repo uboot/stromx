@@ -8,25 +8,30 @@ namespace stream
     OutputNode::OutputNode(OperatorInterface*const op, const unsigned int outputId)
       : m_operator(op),
         m_outputId(outputId),
-        m_connectedInputs(0),
         m_remainingCopies(0)
     {}
     
-    void OutputNode::incrementConnectedInputs()
+    void OutputNode::addConnectedInput(InputNode*const input)
     {
         lock_t lock(m_mutex);
         
-        m_connectedInputs++;
+        if(! input)
+            throw ArgumentException("Passed null as input.");
+        
+        if(m_connectedInputs.count(input))
+            throw ArgumentException("Input node has already been connected to this output node.");
+        
+        m_connectedInputs.insert(input);
     }
 
-    void OutputNode::decrementConnectedInputs()
+    void OutputNode::removeConnectedInput(stream::InputNode*const input)
     {
         lock_t lock(m_mutex);
         
-        if(! m_connectedInputs)
-            throw InvalidStateException("Number of connected inputs is 0.");
+        if(! m_connectedInputs.count(input))
+            throw ArgumentException("Input node is not connected to this output node.");
         
-        m_connectedInputs--;   
+        m_connectedInputs.erase(input);
     }
 
     DataContainer*const OutputNode::getOutputData()
@@ -38,13 +43,10 @@ namespace stream
         {
             lock_t lock(m_mutex);
             
-            if(! m_connectedInputs)
-                throw InvalidStateException("No inputs are connected to this output node.");
-            
             if(! m_remainingCopies)
             {
                 m_operator->clearOutputData(m_outputId);
-                m_remainingCopies = m_connectedInputs;
+                m_remainingCopies = m_connectedInputs.size();
             }
             
             m_remainingCopies--; 

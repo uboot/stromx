@@ -22,7 +22,7 @@ namespace stream
             throw InvalidStateException("Input node has already been connected.");
         
         m_source = output;
-        m_source->incrementConnectedInputs();
+        m_source->addConnectedInput(this);
     }
     
     void InputNode::setInputData()
@@ -40,7 +40,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_source)
-            m_source->decrementConnectedInputs();
+            m_source->removeConnectedInput(this);
         
         m_source = 0;
     }

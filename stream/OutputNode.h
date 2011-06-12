@@ -2,11 +2,13 @@
 #define STREAM_OUTPUTNODE_H
 
 #include <boost/thread/mutex.hpp>
+#include <set>
 
 namespace stream
 {
     class OperatorInterface;
     class DataContainer;
+    class InputNode;
     
     class OutputNode
     {
@@ -14,15 +16,16 @@ namespace stream
         OutputNode(OperatorInterface* const op, const unsigned int outputId);
         
         DataContainer* const getOutputData();
-        void incrementConnectedInputs();
-        void decrementConnectedInputs();
+        void addConnectedInput(InputNode* const input);
+        void removeConnectedInput(InputNode* const input);
+        const std::set<InputNode*> connectedInputs() { return m_connectedInputs; }
         
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
         
         OperatorInterface* m_operator;
         unsigned int m_outputId;
-        unsigned int m_connectedInputs;
+        std::set<InputNode*> m_connectedInputs;
         unsigned int m_remainingCopies;
         
         boost::mutex m_mutex;  

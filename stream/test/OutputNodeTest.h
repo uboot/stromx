@@ -9,14 +9,15 @@ namespace stream
 {
     class OperatorWrapper;
     class OutputNode;
+    class InputNode;
     class DataContainer;
     
     class OutputNodeTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (OutputNodeTest);
         CPPUNIT_TEST(testGetOutputData);
-        CPPUNIT_TEST(testIncrementConnectedInputs);
-        CPPUNIT_TEST(testDecrementConnectedInputs);
+        CPPUNIT_TEST(testAddConnectedInputs);
+        CPPUNIT_TEST(testRemoveConnectedInputs);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -27,13 +28,14 @@ namespace stream
 
     protected:
         void testGetOutputData();;
-        void testIncrementConnectedInputs();
-        void testDecrementConnectedInputs();
+        void testAddConnectedInputs();
+        void testRemoveConnectedInputs();
             
     private: 
         OperatorWrapper* m_operatorWrapper;
         DataContainer* m_container;
         OutputNode* m_outputNode;
+        InputNode* m_inputNode;
     };
 }
 
