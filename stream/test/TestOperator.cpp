@@ -1,8 +1,13 @@
 #include "TestOperator.h"
 
-#include <Id2DataPair.h>
-#include <Id2DataComposite.h>
-#include <DataProvider.h>
+#include <stream/Id2DataPair.h>
+#include <stream/Id2DataComposite.h>
+#include <stream/DataProvider.h>
+#include <stream/Primitive.h>
+#include <stream/OperatorException.h>
+
+#include <typeinfo>
+
 
 namespace stream
 {
@@ -19,10 +24,20 @@ namespace stream
 
     void TestOperator::setParameter(unsigned int id, const stream::Data& value)
     {
+        try
+        {
+            const UInt32& v = dynamic_cast<const UInt32&>(value);
+            m_sleepTime = v;
+        }
+        catch(std::bad_cast&)
+        {
+            throw ParameterTypeException(parameters()[id], *this);
+        }
     }
 
-    void TestOperator::getParameter(unsigned int id, Data& value)
+    const Data& TestOperator::getParameter(unsigned int id)
     {
+        return m_sleepTime;
     }  
     
     void TestOperator::execute(DataProvider& provider)

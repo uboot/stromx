@@ -20,7 +20,9 @@ include_directories(
 
 set(SOURCES
     Clip.cpp
-    Image.cpp)
+    Image.cpp
+    Utilities.cpp
+)
 
 
 include_directories(${OpenCV_ROOT_DIR})

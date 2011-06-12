@@ -17,17 +17,16 @@ namespace base
         Image(const std::string & filename);
         virtual ~Image();
         
-        virtual void save(const std::string & filename);
+        virtual void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
+        virtual void save(const std::string & filename) const;
         
-        const unsigned int width() const;
-        const unsigned int height() const;
-        const unsigned int stride() const;
-        const PixelType pixelType() const { return m_pixelType; }
-        
-        uint8_t* const data();
-        const uint8_t* const data() const;
-        
-        const stream::DataType & type() const { return m_dataType; }
+        virtual const unsigned int width() const;
+        virtual const unsigned int height() const;
+        virtual const unsigned int stride() const;
+        virtual const PixelType pixelType() const { return m_pixelType; }
+        virtual uint8_t* const data();
+        virtual const uint8_t* const data() const;
+        virtual const stream::DataType & type() const { return m_dataType; }
         
     private:
         static const int numChannels(const PixelType pixelType);

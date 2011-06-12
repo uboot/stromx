@@ -2,10 +2,10 @@
 
 #include "TestOperator.h"
 
-#include <Network.h>
-#include <Exception.h>
-#include <OperatorWrapper.h>
-#include <OperatorNode.h>
+#include <stream/Network.h>
+#include <stream/Exception.h>
+#include <stream/OperatorWrapper.h>
+#include <stream/OperatorNode.h>
 
 #include <cppunit/TestAssert.h>
 #include <boost/thread/thread.hpp>

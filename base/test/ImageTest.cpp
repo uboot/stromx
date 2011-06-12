@@ -1,6 +1,6 @@
 #include "ImageTest.h"
 
-#include <Image.h>
+#include <base/Image.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -46,10 +46,10 @@ namespace base
     void ImageTest::testSaveJpeg()
     {
         m_image = new Image(200, 100, stream::Image::RGB_24);
-        CPPUNIT_ASSERT_NO_THROW(m_image->save("test.jpg"));
+        CPPUNIT_ASSERT_NO_THROW(m_image->save("testSaveJpeg.jpg"));
         delete m_image;
         m_image = 0;
-        m_image = new Image("test.jpg");
+        m_image = new Image("testSaveJpeg.jpg");
         CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
     }

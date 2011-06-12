@@ -4,7 +4,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "None.h"
+#include <stream/None.h>
 
 namespace stream
 {

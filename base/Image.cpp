@@ -9,7 +9,14 @@ namespace base
         m_dataType(dataType(pixelType)),
         m_image(0)
     {
-        m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+        try
+        {
+            m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+        }
+        catch(cv::Exception& e)
+        {
+            throw stream::OutOfMemoryException("Failed to create new image.");
+        }
     }
     
     Image::Image(const std::string& filename)
@@ -27,7 +34,23 @@ namespace base
         }
     }
     
-    void Image::save(const std::string& filename)
+void Image::resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
+{
+    if(m_image)
+        cvReleaseImage(&m_image);
+    
+    try
+    {
+        m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+    }
+    catch(cv::Exception& e)
+    {
+        throw stream::OutOfMemoryException("Failed to create new image.");
+    }
+}
+
+    
+    void Image::save(const std::string& filename) const
     {
         try
         {

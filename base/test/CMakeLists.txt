@@ -1,7 +1,6 @@
 project(base_test)
 
 include_directories(
-    ..
     ../..
     ${CPPUNIT_INCLUDE_DIR}
     ${PROJECT_BINARY_DIR}/..
@@ -13,6 +12,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINA
 
 add_executable(base_test
     ../Clip.cpp
+    ../Utilities.cpp
     ClipTest.cpp
     ../Image.cpp
     ImageTest.cpp

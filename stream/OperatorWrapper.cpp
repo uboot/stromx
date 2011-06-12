@@ -4,6 +4,7 @@
 #include "Exception.h"
 #include "Id2DataPair.h"
 #include "DataContainer.h"
+#include "OperatorException.h"
 
 #include <boost/thread/thread.hpp>
 
@@ -24,7 +25,6 @@ namespace stream
         delete m_op;
         
         m_inputMap.clear();
-        m_outputMap.clear();
     }
     
     void OperatorWrapper::testForInterrupt()
@@ -91,17 +91,20 @@ namespace stream
         m_outputMap.clear();
     }
     
-    void OperatorWrapper::getParameter(unsigned int id, Data& value)
+    const Data& OperatorWrapper::getParameter(unsigned int id)
     {
         lock_t lock(m_executeMutex);
         
-        m_op->getParameter(id, value);
+        validateParameterId(id);
+        return m_op->getParameter(id);
     }
         
     void OperatorWrapper::setParameter(unsigned int id, const Data& value)
     {
         lock_t lock(m_executeMutex);
         
+        validateParameterId(id);
+        validateParameterType(id, value.type());
         m_op->setParameter(id, value);
     }
 
@@ -304,4 +307,28 @@ namespace stream
         } 
     }
     
+    void OperatorWrapper::validateParameterId(const unsigned int id)
+    {
+        bool isValid = false;
+        for(std::vector<Parameter>::const_iterator iter = info()->parameters().begin();
+            iter != info()->parameters().end();
+            ++iter)
+        {
+            if(iter->id() == id)
+            {
+                isValid = true;
+                break;
+            }
+        }
+        
+        if(! isValid)
+            throw ParameterIdException(id, *this->info());
+    }
+    
+    void OperatorWrapper::validateParameterType(const unsigned int id, const stream::DataType& type)
+    {
+        const Parameter& param = info()->parameters()[id];
+        if(! type.is(param.type()))
+            throw ParameterTypeException(param, *this->info());
+    }   
 }

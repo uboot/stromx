@@ -2,10 +2,11 @@
 
 #include "TestOperator.h"
 
-#include <OperatorWrapper.h>
-#include <None.h>
-#include <DataContainer.h>
-#include <Exception.h>
+#include <stream/OperatorWrapper.h>
+#include <stream/None.h>
+#include <stream/DataContainer.h>
+#include <stream/Exception.h>
+#include <stream/OperatorException.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
@@ -188,6 +189,27 @@ namespace stream
         CPPUNIT_ASSERT_THROW(data1 = m_operatorWrapper->getOutputData(TestOperator::OUTPUT_1), InvalidStateException);       
     }
 
+    void OperatorWrapperTest::testGetParameter()
+    {
+        const Data& value = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
+        CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
+        
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(1), ParameterIdException);
+    }
+
+    void OperatorWrapperTest::testSetParameter()
+    {
+        UInt32 value(2000);
+        CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value));
+        
+        const Data& testValue = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
+        CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
+        
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(1, value), ParameterIdException);
+        
+        UInt16 wrongType;
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, wrongType), ParameterTypeException);
+    }
     
     void OperatorWrapperTest::tearDown ( void )
     {

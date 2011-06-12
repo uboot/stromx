@@ -6,6 +6,12 @@ namespace stream
     const DataType Bool::m_type(DataType::BOOL);
     
     template<>
+    const DataType Int16::m_type(DataType::INT_16);
+    
+    template<>
+    const DataType UInt16::m_type(DataType::UINT_16);
+    
+    template<>
     const DataType Int32::m_type(DataType::INT_32);
     
     template<>

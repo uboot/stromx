@@ -18,6 +18,12 @@
 #define BASE_OPERATOR_CLIP_H
 
 #include <stream/Operator.h>
+#include <stream/Primitive.h>
+
+namespace stream
+{
+    class DataContainer;
+}
 
 namespace base
 {
@@ -38,13 +44,14 @@ namespace base
             TOP,
             LEFT,
             WIDTH,
-            HEIGHT
+            HEIGHT,
+            NUM_PARAMS
         };
         
         Clip();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual void getParameter(unsigned int id, stream::Data& value);
+        virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
         
     private:
@@ -55,6 +62,13 @@ namespace base
         static const std::string NAME;
         static const std::string PACKAGE;
         static const stream::Version VERSION;
+        
+        stream::UInt32 m_top;
+        stream::UInt32 m_left;
+        stream::UInt32 m_width;
+        stream::UInt32 m_height;
+        
+        stream::DataContainer* m_image;
     };
 }
 

@@ -2,12 +2,12 @@
 
 #include "TestOperator.h"
 
-#include <DataContainer.h>
-#include <OperatorWrapper.h>
-#include <None.h>
-#include <InputNode.h>
-#include <OutputNode.h>
-#include <Exception.h>
+#include <stream/DataContainer.h>
+#include <stream/OperatorWrapper.h>
+#include <stream/None.h>
+#include <stream/InputNode.h>
+#include <stream/OutputNode.h>
+#include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>
 

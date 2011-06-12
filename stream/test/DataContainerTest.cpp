@@ -1,8 +1,8 @@
 #include "DataContainerTest.h"
 
-#include <DataContainer.h>
-#include <None.h>
-#include <Exception.h>
+#include <stream/DataContainer.h>
+#include <stream/None.h>
+#include <stream/Exception.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>

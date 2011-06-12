@@ -44,7 +44,7 @@ namespace stream
         const Status status() { return m_status; }
         
         void setParameter(unsigned int id, const Data& value);
-        void getParameter(unsigned int id, Data& value);
+        const Data& getParameter(unsigned int id);
         
         DataContainer* const getOutputData(const unsigned int id);
         void setInputData(const unsigned int id, DataContainer* const data);
@@ -57,6 +57,8 @@ namespace stream
         
         void execute();
         void waitForSignal(unique_lock_t& lock);
+        void validateParameterId(const unsigned int id);
+        void validateParameterType(const unsigned int id, const DataType& type);
         
         Operator* m_op;
         Status m_status;

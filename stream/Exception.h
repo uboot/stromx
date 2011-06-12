@@ -75,6 +75,14 @@ namespace stream
           : Exception(message)
         {}
     };
+    
+    class OutOfMemoryException : public Exception
+    {
+    public:
+        OutOfMemoryException(const std::string & message = "OutOfMemoryException")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H

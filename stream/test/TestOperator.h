@@ -1,7 +1,8 @@
 #ifndef STREAM_TESTOPERATOR_H
 #define STREAM_TESTOPERATOR_H
 
-#include "Operator.h"
+#include <stream/Operator.h>
+#include <stream/Primitive.h>
 
 namespace stream
 {
@@ -17,7 +18,7 @@ namespace stream
         TestOperator();
         
         virtual void setParameter(unsigned int id, const Data& value);
-        virtual void getParameter(unsigned int id, Data& value);
+        const Data& getParameter(unsigned int id);
         virtual void execute(DataProvider& provider);
         
         const unsigned int numExecutes() { return m_numExecutes; }
@@ -31,7 +32,7 @@ namespace stream
         static const std::string PACKAGE;
         static const Version VERSION;
         
-        unsigned int m_sleepTime;
+        UInt32 m_sleepTime;
         unsigned int m_numExecutes;
     };
 }

@@ -4,8 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "OperatorWrapper.h"
-#include "None.h"
+#include <stream/OperatorWrapper.h>
+#include <stream/None.h>
 
 namespace stream
 {
