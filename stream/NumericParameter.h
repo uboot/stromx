@@ -17,37 +17,26 @@
 #ifndef STREAM_NUMERICPARAMETER
 #define STREAM_NUMERICPARAMETER
 
-#include "AbstractNumericParameter.h"
+#include "Parameter.h"
 
 namespace stream
 {
+    class Data;
+    
     template<typename data_t>
-    class NumericParameter : public AbstractNumericParameter
+    class NumericParameter : public Parameter
     {
     public:
-        NumericParameter(const std::string& name, const unsigned int id,
-                         const stream::DataType& type,
-                         const stream::Parameter::AccessMode inactiveAccess,
-                         const stream::Parameter::AccessMode activeAccess,
-                         const data_t& min, const data_t& max)
-          : AbstractNumericParameter(name, id, type, inactiveAccess, activeAccess),
-            m_min(min),
-            m_max(max)
-        {}
-        
-        NumericParameter(const std::string& name, const unsigned int id,
-                         const stream::DataType& type,
-                         const stream::Parameter::AccessMode inactiveAccess,
-                         const stream::Parameter::AccessMode activeAccess)
-          : AbstractNumericParameter(name, id, type, inactiveAccess, activeAccess),
+        NumericParameter(const unsigned int id)
+          : Parameter(id),
             m_min(data_t::MIN),
             m_max(data_t::MAX)
         {}
         
         
         virtual const Data& max() const { return m_max; }
-        
         virtual const Data& min() const { return m_min; }
+        
         virtual void setMax(const data_t& value)
         {
             m_max = value;

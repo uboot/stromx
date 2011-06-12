@@ -16,9 +16,9 @@ namespace stream
     void Id2DataCompositeTest::setUp ( void )
     {
         std::vector<Description> descriptions;
-        descriptions.push_back(Description("Data 0", 0, DataType()));
-        descriptions.push_back(Description("Data 1", 1, DataType()));
-        descriptions.push_back(Description("Data 2", 2, DataType()));
+        descriptions.push_back(Description(0));
+        descriptions.push_back(Description(1));
+        descriptions.push_back(Description(2));
         m_map = new Id2DataMap(descriptions);
         m_dataContainer = new DataContainer(new None());
     }

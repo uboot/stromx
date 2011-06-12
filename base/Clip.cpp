@@ -1,49 +1,57 @@
-#include "Clip.h"
+ #include "Clip.h"
 
 #include "Config.h"
 
 #include <stream/NumericParameter.h>
 #include <stream/Primitive.h>
 
+using namespace stream;
 
 namespace base
 {
     const std::string Clip::NAME("Clip");
-    const std::string Clip::PACKAGE("Base");
-    const stream::Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
+    
+    const std::string Clip::PACKAGE(PACKAGE_NAME);
+    const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Clip::Clip()
     : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
-    void Clip::setParameter(unsigned int id, const stream::Data& value)
+    void Clip::setParameter(unsigned int id, const Data& value)
     {
     }
 
-    void Clip::getParameter(unsigned int id, stream::Data& value)
+    void Clip::getParameter(unsigned int id, Data& value)
     {
     }  
     
-    void Clip::execute(stream::DataProvider& provider)
+    void Clip::execute(DataProvider& provider)
     {
     }
 
     
-    const std::vector< stream::Description > Clip::setupInputs()
+    const std::vector< Description > Clip::setupInputs()
     {
-        std::vector<stream::Description> inputs;
+        std::vector<Description> inputs;
         
-        inputs.push_back(stream::Description("Input", INPUT, stream::DataType(stream::DataType::IMAGE)));
+        Description input(INPUT);
+        input.setName("Input");
+        input.setType(DataType::IMAGE);
+        inputs.push_back(input);
         
         return inputs;
     }
     
     const std::vector< stream::Description > Clip::setupOutputs()
     {
-        std::vector<stream::Description> outputs;
+        std::vector<Description> outputs;
         
-        outputs.push_back(stream::Description("Output", OUTPUT, stream::DataType(stream::DataType::IMAGE)));
+        Description output(OUTPUT);
+        output.setName("Output");
+        output.setType(DataType::IMAGE);
+        outputs.push_back(output);
         
         return outputs;
     }
@@ -52,21 +60,33 @@ namespace base
     {
         std::vector<stream::Parameter> parameters;
         
-        parameters.push_back(stream::NumericParameter<stream::UInt32>(
-            "Top", TOP, stream::DataType::UINT_32,
-            stream::Parameter::READ_WRITE, stream::Parameter::READ_WRITE));
+        Parameter top(TOP);
+        top.setName("Top");
+        top.setType(DataType::UINT_32);
+        top.setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        top.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        parameters.push_back(top);
         
-        parameters.push_back(stream::NumericParameter<stream::UInt32>(
-            "Left", LEFT, stream::DataType::UINT_32,
-            stream::Parameter::READ_WRITE, stream::Parameter::READ_WRITE));
+        Parameter left(LEFT);
+        left.setName("Left");
+        left.setType(DataType::UINT_32);
+        left.setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        left.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        parameters.push_back(top);
         
-        parameters.push_back(stream::NumericParameter<stream::UInt32>(
-            "Width", WIDTH, stream::DataType::UINT_32,
-            stream::Parameter::READ_WRITE, stream::Parameter::READ_WRITE));
+        Parameter width(WIDTH);
+        width.setName("Width");
+        width.setType(DataType::UINT_32);
+        width.setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        width.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        parameters.push_back(top);
         
-        parameters.push_back(stream::NumericParameter<stream::UInt32>(
-            "Height", HEIGHT, stream::DataType::UINT_32,
-            stream::Parameter::READ_WRITE, stream::Parameter::READ_WRITE));
+        Parameter height(HEIGHT);
+        height.setName("Height");
+        height.setType(DataType::UINT_32);
+        height.setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        height.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        parameters.push_back(top);
                                     
         return parameters;
     }

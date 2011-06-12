@@ -1,7 +1,9 @@
 project(stream_test)
 
-include_directories(..)
-include_directories(${CPPUNIT_INCLUDE_DIR})
+include_directories(
+    ..
+    ${CPPUNIT_INCLUDE_DIR}
+)
 
 add_executable(stream_test
     main.cpp

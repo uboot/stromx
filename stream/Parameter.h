@@ -16,12 +16,14 @@ namespace stream
             READ_WRITE = READ | WRITE
         };
         
-        Parameter(const std::string & name, const unsigned int id, const DataType & type,
-                  const AccessMode inactiveAccess, const AccessMode activeAccess)
-          : Description(name, id, type),
-            m_inactiveAccess(inactiveAccess),
-            m_activeAccess(activeAccess)
+        Parameter(const unsigned int id)
+          : Description(id),
+            m_inactiveAccess(NONE),
+            m_activeAccess(NONE)
         {}
+        
+        void setInactiveAccessMode(const AccessMode mode) { m_inactiveAccess = mode; }
+        void setActiveAccessMode(const AccessMode mode) { m_activeAccess = mode; }
         
     private:
         AccessMode m_inactiveAccess;

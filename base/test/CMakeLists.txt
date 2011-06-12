@@ -1,14 +1,19 @@
 project(base_test)
 
-include_directories(..)
-include_directories(../..)
-include_directories(${CPPUNIT_INCLUDE_DIR})
+include_directories(
+    ..
+    ../..
+    ${CPPUNIT_INCLUDE_DIR}
+    ${PROJECT_BINARY_DIR}/..
+)
 
 SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(base_test
+    ../Clip.cpp
+    ClipTest.cpp
     ../Image.cpp
     ImageTest.cpp
     main.cpp

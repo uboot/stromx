@@ -2,6 +2,7 @@ project(base)
 
 set (BASE_VERSION_MAJOR 0)
 set (BASE_VERSION_MINOR 1)
+set (PACKAGE_NAME "\"Base\"")
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -12,14 +13,15 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
-set(SOURCES
-    Clip.cpp
-    Image.cpp)
-
 include_directories(
     ..
     ${PROJECT_BINARY_DIR}
 )
+
+set(SOURCES
+    Clip.cpp
+    Image.cpp)
+
 
 include_directories(${OpenCV_ROOT_DIR})
 add_library(stream_base_operators SHARED ${SOURCES})
