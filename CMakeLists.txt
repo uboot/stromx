@@ -27,13 +27,13 @@ if(Boost_FOUND)
 endif()
 
 if(OpenCV2_FOUND)
-    option(BUILD_OPERATOR "Build base operators" ON)
+    option(BUILD_BASE "Build base operators" ON)
 endif()
 
 if(BUILD_STREAM)
     add_subdirectory(stream)
 endif()
 
-if(BUILD_STREAM)
+if(BUILD_BASE)
     add_subdirectory(base)
 endif()
