@@ -63,6 +63,10 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION;
         
+        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
+                              unsigned int & left, unsigned int & top,
+                              unsigned int & width, unsigned int & height);                           
+        
         stream::UInt32 m_top;
         stream::UInt32 m_left;
         stream::UInt32 m_width;

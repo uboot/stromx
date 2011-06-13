@@ -83,11 +83,18 @@ namespace base
         const Data* inData = inputDataMapper.data()->getReadAccess();
         const Image* inImage = dynamic_cast<const Image*>(inData);
         
+        unsigned int top = m_top;
+        unsigned int left = m_left;
+        unsigned int height = m_height;
+        unsigned int width = m_width;
+        
+        adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
+        
         Image* outImage = 0;
         
         if(! m_image)
         {
-            outImage = new Image(m_width, m_height, inImage->pixelType());
+            outImage = new Image(width, height, inImage->pixelType());
             m_image = new DataContainer(outImage, this);
         }
         else
@@ -96,17 +103,18 @@ namespace base
             outImage = dynamic_cast<Image*>(outData);
             
             if(inImage->pixelType() != outImage->pixelType()
-                || inImage->width() != m_width
-                || inImage->height() != m_height)
+                || inImage->width() != width
+                || inImage->height() != height)
             {
-                outImage->resize(m_width, m_height, inImage->pixelType());
+                outImage->resize(width, height, inImage->pixelType());
             }
         }
         
         cv::Mat inCvImage = getOpenCvMat(*inImage);
         cv::Mat outCvImage = getOpenCvMat(*outImage);
         
-        inCvImage.adjustROI(m_top, m_left, inImage->height() - m_height, inImage->width() - m_width);
+        inCvImage.adjustROI(-top, -(inImage->height() - height - top),
+                            -left, -(inImage->width() - width - left));
         inCvImage.copyTo(outCvImage);
         
         Id2DataPair outputDataMapper(INPUT, m_image);
@@ -171,4 +179,10 @@ namespace base
                                     
         return parameters;
     }
+    
+    void Clip::adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight, unsigned int& left, unsigned int& top, unsigned int& width, unsigned int& height)
+    {
+        
+    }
+
 } 

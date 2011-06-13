@@ -22,6 +22,6 @@ namespace base
         
         uint8_t* data = const_cast<uint8_t*>(image.data());
         
-        return cv::Mat(image.width(), image.height(), cvType, data, image.stride());
+        return cv::Mat(image.height(), image.width(), cvType, data, image.stride());
     }
 }

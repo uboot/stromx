@@ -65,8 +65,7 @@ namespace stream
         Version m_version;
         std::vector<Description> m_inputs;
         std::vector<Description> m_outputs;
-        std::vector<Parameter> m_parameters;
-        
+        std::vector<Parameter> m_parameters;       
     };
 }
 

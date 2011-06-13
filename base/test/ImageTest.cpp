@@ -31,6 +31,9 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, m_image->pixelType());
         CPPUNIT_ASSERT(m_image->data());
+        delete m_image;
+        
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, stream::Image::RGB_24));
     }
     
     void ImageTest::testImageMono8()
@@ -41,6 +44,9 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, m_image->pixelType());
         CPPUNIT_ASSERT(m_image->data());
+        delete m_image;
+        
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, stream::Image::MONO_8));
     }
 
     void ImageTest::testSaveJpeg()

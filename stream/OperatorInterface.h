@@ -24,6 +24,9 @@ namespace stream
         virtual void setInputData(const unsigned int id, DataContainer* const data) = 0;
         virtual void clearOutputData(unsigned int id) = 0;
         virtual void clearAllData() = 0;
+        
+        virtual void activate() = 0;
+        virtual void deactivate() = 0;
     };
 }
 
