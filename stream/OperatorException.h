@@ -49,24 +49,16 @@ namespace stream
         unsigned int m_id;
     };
     
-    class ParameterException : public OperatorException
+    class ParameterTypeException : public OperatorException
     {
-    protected:
-        ParameterException(const Parameter& param, const OperatorInfo& op, const std::string & message)
+    public:
+        ParameterTypeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
           : OperatorException(op, message),
             m_parameter(param)
         {}
           
     private:
         const Parameter& m_parameter;
-    };
-    
-    class ParameterTypeException : public ParameterException
-    {
-    public:
-        ParameterTypeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : ParameterException(param, op, message)
-        {}
     };
 }
 

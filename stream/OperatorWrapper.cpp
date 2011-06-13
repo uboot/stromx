@@ -61,7 +61,7 @@ namespace stream
         BOOST_ASSERT(m_inputMap.isEmpty());
         BOOST_ASSERT(m_outputMap.isEmpty());
         
-        m_op->activate(*this);
+        m_op->activate();
         m_status = ACTIVE;
     }
     

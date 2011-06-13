@@ -32,6 +32,8 @@ namespace base
     {
         CPPUNIT_TEST_SUITE (ClipTest);
         CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST (testAdjustClipRegion1);
+        CPPUNIT_TEST (testAdjustClipRegion2);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -42,6 +44,8 @@ namespace base
 
         protected:
             void testExecute();
+            void testAdjustClipRegion1();
+            void testAdjustClipRegion2();
             
         private:
             stream::OperatorWrapper* m_operator;

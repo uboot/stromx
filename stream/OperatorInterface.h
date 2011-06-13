@@ -13,8 +13,16 @@ namespace stream
     class OperatorInterface
     {
     public:
+        enum Status
+        {
+            INACTIVE,
+            ACTIVE,
+            EXECUTING
+        };
+        
         virtual ~OperatorInterface() {}
         
+        virtual const Status status() = 0;
         virtual const OperatorInfo* const info() const = 0;
         
         virtual void setParameter(unsigned int id, const Data& value) = 0;

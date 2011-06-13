@@ -48,7 +48,7 @@ namespace stream
         virtual const Data& getParameter(unsigned int id) = 0;
         
         virtual void execute(DataProvider& provider) = 0;
-        virtual void activate(DataProvider& provider) {}
+        virtual void activate() {}
         virtual void deactivate() {}
         
         virtual void release(DataContainer* const data) {};

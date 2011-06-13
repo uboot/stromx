@@ -18,14 +18,7 @@ namespace stream
     
     class OperatorWrapper : public DataProvider, public OperatorInterface
     {
-    public:
-        enum Status
-        {
-            INACTIVE,
-            ACTIVE,
-            EXECUTING
-        };
-        
+    public:    
         OperatorWrapper(Operator* const op);
         virtual ~OperatorWrapper();
         

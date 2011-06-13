@@ -18,14 +18,6 @@ namespace stream
                        
     private:
         std::string m_message; 
-    };
-    
-    class OwnershipException : public Exception
-    {
-    public:
-        OwnershipException(const std::string & message = "OwnershipException")
-          : Exception(message)
-        {}
     };  
     
     class ArgumentException : public Exception
@@ -60,11 +52,11 @@ namespace stream
         {}
     };
     
-    class InterruptException : public InvalidStateException
+    class InterruptException : public Exception
     {
     public:
         InterruptException(const std::string & message = "InterruptException")
-          : InvalidStateException(message)
+          : Exception(message)
         {}
     };
     

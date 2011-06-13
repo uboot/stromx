@@ -182,7 +182,9 @@ namespace base
     
     void Clip::adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight, unsigned int& left, unsigned int& top, unsigned int& width, unsigned int& height)
     {
-        
+         left = std::min(left, destWidth);
+         width = std::min(width, destWidth - left);
+         top = std::min(top, destHeight);
+         height = std::min(height, destHeight - top);
     }
-
 } 
