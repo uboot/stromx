@@ -9,7 +9,9 @@ namespace stream
     public:
         enum Types
         {
+            NONE,
             BOOL,
+            ENUM,
             INT,
             UINT,
             INT_8,
@@ -25,7 +27,7 @@ namespace stream
             RGB_24_IMAGE
         };
         
-        DataType(const unsigned int type = 0) : m_type(type) {}
+        DataType(const unsigned int type = NONE) : m_type(type) {}
         
         virtual const bool is(const DataType& type) const;
     

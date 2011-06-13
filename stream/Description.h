@@ -9,8 +9,9 @@ namespace stream
     class Description
     {
     public:
-        Description(const unsigned int id)
-          : m_id(id)
+        Description(const unsigned int id, const DataType& type)
+          : m_id(id),
+            m_type(type)
         {}
         
         const std::string & name() const { return m_name; }
@@ -18,7 +19,6 @@ namespace stream
         const DataType & type() const { return m_type; }
         
         void setName(const std::string & name) { m_name = name; }
-        void setType(const DataType& type) { m_type = type; }
         
     private:
         std::string m_name;

@@ -15,9 +15,9 @@ namespace stream
     void Id2DataPairTest::setUp ( void )
     {
         std::vector<Description> descriptions;
-        descriptions.push_back(Description(0));
-        descriptions.push_back(Description(1));
-        descriptions.push_back(Description(2));
+        descriptions.push_back(Description(0, DataType()));
+        descriptions.push_back(Description(1, DataType()));
+        descriptions.push_back(Description(2, DataType()));
         m_map = new Id2DataMap(descriptions);
         m_dataContainer = new DataContainer(new None());
     }

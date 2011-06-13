@@ -31,7 +31,7 @@ namespace stream
     {
     public:
         explicit Primitive() : m_value(0) {}
-        explicit Primitive(repr_t value) : m_value(value) {}
+        explicit Primitive(const repr_t value) : m_value(value) {}
         
         virtual const DataType & type() const { return m_type; }
         
@@ -46,8 +46,6 @@ namespace stream
     };
     
     typedef Primitive<bool, bool> Bool;
-    
-    typedef Primitive<unsigned int, uint32_t> Enum;
         
     typedef Primitive<int, int8_t> Int8;
     typedef Primitive<unsigned int, uint8_t> UInt8;

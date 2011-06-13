@@ -16,8 +16,8 @@ namespace stream
             READ_WRITE = READ | WRITE
         };
         
-        Parameter(const unsigned int id)
-          : Description(id),
+        Parameter(const unsigned int id, const DataType& type)
+          : Description(id, type),
             m_inactiveAccess(NONE),
             m_activeAccess(NONE)
         {}

@@ -60,8 +60,8 @@ namespace stream
     const std::vector< Description > TestOperator::setupInputs()
     {
         std::vector<Description> inputs;
-        inputs.push_back(Description(INPUT_1));
-        inputs.push_back(Description(INPUT_2));
+        inputs.push_back(Description(INPUT_1, DataType()));
+        inputs.push_back(Description(INPUT_2, DataType()));
         
         return inputs;
     }
@@ -69,8 +69,8 @@ namespace stream
     const std::vector< Description > TestOperator::setupOutputs()
     {
         std::vector<Description> outputs;
-        outputs.push_back(Description(OUTPUT_1));
-        outputs.push_back(Description(OUTPUT_2));
+        outputs.push_back(Description(OUTPUT_1, DataType()));
+        outputs.push_back(Description(OUTPUT_2, DataType()));
         
         return outputs;
     }
@@ -78,8 +78,7 @@ namespace stream
     const std::vector< Parameter > TestOperator::setupParameters()
     {
         std::vector<Parameter> parameters;
-        Parameter param(SLEEP_TIME);
-        param.setType(DataType::UINT_32);
+        Parameter param(SLEEP_TIME, DataType::UINT_32);
         param.setInactiveAccessMode(Parameter::READ_WRITE);
         param.setActiveAccessMode(Parameter::READ_WRITE);
         parameters.push_back(param);

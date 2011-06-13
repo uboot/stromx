@@ -15,6 +15,8 @@ endif()
 set(SOURCES   
     DataContainer.cpp
     DataType.cpp
+    Enum.cpp
+    EnumParameter.cpp
     Id2DataComposite.cpp
     Id2DataMap.cpp
     Id2DataMapper.cpp
