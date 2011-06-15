@@ -1,4 +1,4 @@
- #include "Clip.h"
+#include "Clip.h"
 
 #include "Config.h"
 #include "Image.h"
@@ -10,7 +10,6 @@
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
 
-#include <typeinfo>
 #include <stream/Id2DataPair.h>
 
 using namespace stream;
@@ -24,9 +23,7 @@ namespace base
     
     Clip::Clip()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_image(0),
-        m_width(0),
-        m_height(0)
+        m_image(0)
     {
     }
 
@@ -147,25 +144,25 @@ namespace base
     {
         std::vector<stream::Parameter> parameters;
         
-        Parameter top(TOP, DataType::UINT_32);
+        NumericParameter<UInt32> top(TOP);
         top.setName("Top");
         top.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         top.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(top);
         
-        Parameter left(LEFT, DataType::UINT_32);
+        NumericParameter<UInt32> left(LEFT);
         left.setName("Left");
         left.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         left.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(left);
         
-        Parameter width(WIDTH, DataType::UINT_32);
+        NumericParameter<UInt32> width(WIDTH);
         width.setName("Width");
         width.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         width.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(width);
         
-        Parameter height(HEIGHT, DataType::UINT_32);
+        NumericParameter<UInt32> height(HEIGHT);
         height.setName("Height");
         height.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         height.setActiveAccessMode(stream::Parameter::READ_WRITE);

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIP_H
-#define BASE_CLIP_H
+#ifndef BASE_ADJUSTRGBCHANNELS_H
+#define BASE_ADJUSTRGBCHANNELS_H
 
 #include <stream/Operator.h>
 #include <stream/Primitive.h>
@@ -27,7 +27,7 @@ namespace stream
 
 namespace base
 {
-    class Clip : public stream::Operator
+    class AdjustRgbChannels : public stream::Operator
     {
     public:
         enum InputIds
@@ -41,14 +41,12 @@ namespace base
         
         enum ParameterIds
         {
-            TOP,
-            LEFT,
-            WIDTH,
-            HEIGHT,
-            NUM_PARAMS
+            RED,
+            GREEN,
+            BLUE
         };
         
-        Clip();
+        AdjustRgbChannels();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
@@ -61,19 +59,12 @@ namespace base
         
         static const std::string NAME;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const stream::Version VERSION;                         
         
-        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
-                              unsigned int & left, unsigned int & top,
-                              unsigned int & width, unsigned int & height);                           
-        
-        stream::UInt32 m_top;
-        stream::UInt32 m_left;
-        stream::UInt32 m_width;
-        stream::UInt32 m_height;
-        
-        stream::DataContainer* m_image;
+        stream::Double m_red;
+        stream::Double m_green;
+        stream::Double m_blue;
     };
 }
 
-#endif // BASE_CLIP_H
+#endif // BASE_ADJUSTRGBCHANNELS_H

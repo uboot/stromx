@@ -3,23 +3,24 @@
 namespace stream
 {
     template<>
-    const DataType Bool::m_type(DataType::BOOL);
+    const DataType Bool::TYPE(DataType::BOOL);
     
     template<>
-    const DataType Int16::m_type(DataType::INT_16);
+    const DataType Int16::TYPE(DataType::INT_16);
     
     template<>
-    const DataType UInt16::m_type(DataType::UINT_16);
+    const DataType UInt16::TYPE(DataType::UINT_16);
     
     template<>
-    const DataType Int32::m_type(DataType::INT_32);
+    const DataType Int32::TYPE(DataType::INT_32);
     
     template<>
-    const DataType UInt32::m_type(DataType::UINT_32);
-    
+    const DataType UInt32::TYPE(DataType::UINT_32);
     template<>
     const UInt32 UInt32::MIN = UInt32(0);
-    
     template<>
     const UInt32 UInt32::MAX = UInt32(UINT32_MAX);
+    
+    template<>
+    const DataType Double::TYPE(DataType::DOUBLE);
 }

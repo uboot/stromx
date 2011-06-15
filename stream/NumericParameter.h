@@ -28,9 +28,15 @@ namespace stream
     {
     public:
         NumericParameter(const unsigned int id)
-          : Parameter(id),
+          : Parameter(id, data_t::TYPE),
             m_min(data_t::MIN),
             m_max(data_t::MAX)
+        {}
+        
+        NumericParameter(const unsigned int id, const data_t min, const data_t max)
+          : Parameter(id, data_t::TYPE),
+            m_min(min),
+            m_max(max)
         {}
         
         

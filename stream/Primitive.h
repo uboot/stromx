@@ -26,23 +26,30 @@
 
 namespace stream
 {
+    template<typename data_t>
+    class NumericParameter;
+    
     template <class repr_t, class val_t>
     class Primitive : public Data
     {
+        friend class NumericParameter< Primitive<repr_t, val_t> >;
+        
     public:
         explicit Primitive() : m_value(0) {}
         explicit Primitive(const repr_t value) : m_value(value) {}
         
-        virtual const DataType & type() const { return m_type; }
+        virtual const DataType & type() const { return TYPE; }
         
         operator repr_t() const { return m_value; }
         
         static const Primitive MIN;
         static const Primitive MAX;
         
+        
     private:
+        static const DataType TYPE;
+        
         val_t m_value;
-        static const DataType m_type;
     };
     
     typedef Primitive<bool, bool> Bool;

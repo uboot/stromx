@@ -23,8 +23,12 @@ namespace stream
             FLOAT,
             DOUBLE,
             IMAGE,
+            MONO_IMAGE,
+            RGB_IMAGE,
             MONO_8_IMAGE,
-            RGB_24_IMAGE
+            RGB_24_IMAGE,
+            MONO_16_IMAGE,
+            RGB_48_IMAGE
         };
         
         DataType(const unsigned int type = NONE) : m_type(type) {}

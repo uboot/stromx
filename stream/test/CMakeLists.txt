@@ -9,6 +9,8 @@ add_executable(stream_test
     main.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
+    ../DataType.cpp
+    DataTypeTest.cpp
     ../Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp

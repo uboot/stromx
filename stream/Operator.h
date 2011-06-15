@@ -25,7 +25,6 @@ namespace stream
     class Data;
     class DataContainer;
     class DataProvider;
-    class DataContainer;
     
     class Operator : public OperatorInfo, public DataOwner
     {

@@ -60,6 +60,18 @@ namespace stream
     private:
         const Parameter& m_parameter;
     };
+    
+    class InputTypeException : public OperatorException
+    {
+    public:
+        InputTypeException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+          : OperatorException(op, message),
+            m_inputId(inputId)
+        {}
+          
+    private:
+        const unsigned int m_inputId;;
+    };
 }
 
 #endif // STREAM_OPERATOREXCEPTI0N_H
