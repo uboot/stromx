@@ -31,9 +31,10 @@ namespace stream
         const static DataType MONO_16_IMAGE;
         const static DataType RGB_48_IMAGE;
         
-        explicit DataType(const unsigned int typeId, const Version& version)
+        explicit DataType(const unsigned int typeId, const Version& version, const std::string & package)
           : m_typeId(typeId),
-            m_version(version)
+            m_version(version),
+            m_package(package)
         {}
         
         ~DataType() {}

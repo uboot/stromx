@@ -2,6 +2,7 @@ project(stream)
 
 set (STREAM_VERSION_MAJOR 0)
 set (STREAM_VERSION_MINOR 1)
+set (PACKAGE_NAME "\"Base\"")
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -31,6 +32,13 @@ set(SOURCES
 )
 
 add_library(stream SHARED ${SOURCES})
+
+set(VERSION_STRING "${STREAM_VERSION_MAJOR}.${STREAM_VERSION_MINOR}")
+
+set_target_properties(stream PROPERTIES
+    VERSION ${VERSION_STRING}
+    SOVERSION ${VERSION_STRING}
+)
 
 include_directories(
     ${Boost_INCLUDE_DIRS}
