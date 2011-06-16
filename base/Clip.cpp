@@ -125,9 +125,8 @@ namespace base
     {
         std::vector<Description> inputs;
         
-        Description input(INPUT);
+        Description input(INPUT, DataType::IMAGE);
         input.setName("Input");
-        input.setType(DataType::IMAGE);
         inputs.push_back(input);
         
         return inputs;
@@ -137,9 +136,8 @@ namespace base
     {
         std::vector<Description> outputs;
         
-        Description output(OUTPUT);
+        Description output(OUTPUT, DataType::IMAGE);
         output.setName("Output");
-        output.setType(DataType::IMAGE);
         outputs.push_back(output);
         
         return outputs;
@@ -149,30 +147,26 @@ namespace base
     {
         std::vector<stream::Parameter> parameters;
         
-        Parameter top(TOP);
+        Parameter top(TOP, DataType::UINT_32);
         top.setName("Top");
-        top.setType(DataType::UINT_32);
         top.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         top.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(top);
         
-        Parameter left(LEFT);
+        Parameter left(LEFT, DataType::UINT_32);
         left.setName("Left");
-        left.setType(DataType::UINT_32);
         left.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         left.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(left);
         
-        Parameter width(WIDTH);
+        Parameter width(WIDTH, DataType::UINT_32);
         width.setName("Width");
-        width.setType(DataType::UINT_32);
         width.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         width.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(width);
         
-        Parameter height(HEIGHT);
+        Parameter height(HEIGHT, DataType::UINT_32);
         height.setName("Height");
-        height.setType(DataType::UINT_32);
         height.setInactiveAccessMode(stream::Parameter::READ_WRITE);
         height.setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(height);

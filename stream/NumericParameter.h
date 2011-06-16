@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_NUMERICPARAMETER
-#define STREAM_NUMERICPARAMETER
+#ifndef STREAM_NUMERICPARAMETER_H
+#define STREAM_NUMERICPARAMETER_H
 
 #include "Parameter.h"
 
@@ -54,4 +54,4 @@ namespace stream
 }
 
 
-#endif // STREAM_NUMERICPARAMETER
+#endif // STREAM_NUMERICPARAMETER_H
