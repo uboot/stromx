@@ -51,7 +51,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameters()[id], *this);
+            throw ParameterTypeException(*parameters()[id], *this);
         }
     }
 
@@ -118,54 +118,54 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description > Clip::setupInputs()
+    const std::vector< Description* > Clip::setupInputs()
     {
-        std::vector<Description> inputs;
+        std::vector<Description*> inputs;
         
-        Description input(INPUT, DataType::IMAGE);
-        input.setName("Input");
+        Description* input = new Description(INPUT, DataType::IMAGE);
+        input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector< stream::Description > Clip::setupOutputs()
+    const std::vector< stream::Description* > Clip::setupOutputs()
     {
-        std::vector<Description> outputs;
+        std::vector<Description*> outputs;
         
-        Description output(OUTPUT, DataType::IMAGE);
-        output.setName("Output");
+        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector< stream::Parameter > Clip::setupParameters()
+    const std::vector< stream::Parameter* > Clip::setupParameters()
     {
-        std::vector<stream::Parameter> parameters;
+        std::vector<stream::Parameter*> parameters;
         
-        NumericParameter<UInt32> top(TOP);
-        top.setName("Top");
-        top.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        top.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
+        top->setName("Top");
+        top->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        top->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(top);
         
-        NumericParameter<UInt32> left(LEFT);
-        left.setName("Left");
-        left.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        left.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
+        left->setName("Left");
+        left->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        left->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(left);
         
-        NumericParameter<UInt32> width(WIDTH);
-        width.setName("Width");
-        width.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        width.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
+        width->setName("Width");
+        width->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        width->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(width);
         
-        NumericParameter<UInt32> height(HEIGHT);
-        height.setName("Height");
-        height.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        height.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
+        height->setName("Height");
+        height->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        height->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(height);
                                     
         return parameters;

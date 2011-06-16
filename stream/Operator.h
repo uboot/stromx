@@ -32,16 +32,18 @@ namespace stream
         Operator(const std::string & name,
                  const std::string & package,
                  const Version & version,
-                 const std::vector<Description>& inputs,
-                 const std::vector<Description>& outputs,
-                 const std::vector<Parameter>& parameters);
+                 const std::vector<Description*>& inputs,
+                 const std::vector<Description*>& outputs,
+                 const std::vector<Parameter*>& parameters);
+                 
+        virtual ~Operator();
         
         const std::string& name() const { return m_name; }
         const std::string& package() const { return m_package; }
         const Version& version() const { return m_version; }
-        const std::vector<Description>& inputs() const { return m_inputs; }
-        const std::vector<Description>& outputs() const { return m_outputs; }
-        const std::vector<Parameter>& parameters() const { return m_parameters; }
+        const std::vector<Description*>& inputs() const { return m_inputs; }
+        const std::vector<Description*>& outputs() const { return m_outputs; }
+        const std::vector<Parameter*>& parameters() const { return m_parameters; }
         
         virtual void setParameter(unsigned int id, const Data& value) = 0;
         virtual const Data& getParameter(unsigned int id) = 0;
@@ -52,19 +54,16 @@ namespace stream
         
         virtual void release(DataContainer* const data) {};
         
-    protected: 
-        Description& getParameterDescription(unsigned int id);
-        
     private:
-        static void validate(const std::vector<Description>& descriptors);
-        static void validate(const std::vector<Parameter>& descriptors);
+        static void validate(const std::vector<Description*>& descriptors);
+        static void validate(const std::vector<Parameter*>& descriptors);
         
         std::string m_name;
         std::string m_package;
         Version m_version;
-        std::vector<Description> m_inputs;
-        std::vector<Description> m_outputs;
-        std::vector<Parameter> m_parameters;       
+        std::vector<Description*> m_inputs;
+        std::vector<Description*> m_outputs;
+        std::vector<Parameter*> m_parameters;       
     };
 }
 

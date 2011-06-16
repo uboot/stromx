@@ -47,7 +47,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameters()[id], *this);
+            throw ParameterTypeException(*parameters()[id], *this);
         }
     }
 
@@ -99,48 +99,48 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description > AdjustRgbChannels::setupInputs()
+    const std::vector< Description* > AdjustRgbChannels::setupInputs()
     {
-        std::vector<Description> inputs;
+        std::vector<Description*> inputs;
         
-        Description input(INPUT, DataType::RGB_IMAGE);
-        input.setName("Input");
+        Description* input = new Description(INPUT, DataType::RGB_IMAGE);
+        input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector< stream::Description > AdjustRgbChannels::setupOutputs()
+    const std::vector< stream::Description* > AdjustRgbChannels::setupOutputs()
     {
-        std::vector<Description> outputs;
+        std::vector<Description*> outputs;
         
-        Description output(OUTPUT, DataType::RGB_IMAGE);
-        output.setName("Output");
+        Description* output = new Description(OUTPUT, DataType::RGB_IMAGE);
+        output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector< stream::Parameter > AdjustRgbChannels::setupParameters()
+    const std::vector< stream::Parameter* > AdjustRgbChannels::setupParameters()
     {
-        std::vector<stream::Parameter> parameters;
+        std::vector<stream::Parameter*> parameters;
         
-        NumericParameter<Double> red(RED, Double(0.0), Double(10.0));
-        red.setName("Red");
-        red.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        red.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataType::DOUBLE, Double(0.0), Double(10.0));
+        red->setName("Red");
+        red->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        red->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(red);
         
-        NumericParameter<Double> green(GREEN, Double(0.0), Double(10.0));
-        green.setName("Green");
-        green.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        green.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataType::DOUBLE, Double(0.0), Double(10.0));
+        green->setName("Green");
+        green->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        green->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(green);
         
-        NumericParameter<Double> blue(BLUE, Double(0.0), Double(10.0));
-        blue.setName("Blue");
-        blue.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        blue.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataType::DOUBLE, Double(0.0), Double(10.0));
+        blue->setName("Blue");
+        blue->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        blue->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(blue);
                                     
         return parameters;

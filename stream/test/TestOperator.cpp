@@ -31,7 +31,7 @@ namespace stream
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameters()[id], *this);
+            throw ParameterTypeException(*parameters()[id], *this);
         }
     }
 
@@ -57,30 +57,30 @@ namespace stream
     }
 
     
-    const std::vector< Description > TestOperator::setupInputs()
+    const std::vector<Description*> TestOperator::setupInputs()
     {
-        std::vector<Description> inputs;
-        inputs.push_back(Description(INPUT_1, DataType()));
-        inputs.push_back(Description(INPUT_2, DataType()));
+        std::vector<Description*> inputs;
+        inputs.push_back(new Description(INPUT_1, DataType::NONE));
+        inputs.push_back(new Description(INPUT_2, DataType::NONE));
         
         return inputs;
     }
     
-    const std::vector< Description > TestOperator::setupOutputs()
+    const std::vector<Description*> TestOperator::setupOutputs()
     {
-        std::vector<Description> outputs;
-        outputs.push_back(Description(OUTPUT_1, DataType()));
-        outputs.push_back(Description(OUTPUT_2, DataType()));
+        std::vector<Description*> outputs;
+        outputs.push_back(new Description(OUTPUT_1, DataType::NONE));
+        outputs.push_back(new Description(OUTPUT_2, DataType::NONE));
         
         return outputs;
     }
     
-    const std::vector< Parameter > TestOperator::setupParameters()
+    const std::vector<Parameter*> TestOperator::setupParameters()
     {
-        std::vector<Parameter> parameters;
-        Parameter param(SLEEP_TIME, DataType::UINT_32);
-        param.setInactiveAccessMode(Parameter::READ_WRITE);
-        param.setActiveAccessMode(Parameter::READ_WRITE);
+        std::vector<Parameter*> parameters;
+        Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
+        param->setInactiveAccessMode(Parameter::READ_WRITE);
+        param->setActiveAccessMode(Parameter::READ_WRITE);
         parameters.push_back(param);
                                        
         return parameters;

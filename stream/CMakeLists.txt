@@ -15,7 +15,6 @@ endif()
 set(SOURCES   
     DataContainer.cpp
     DataType.cpp
-    Enum.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp
     Id2DataMap.cpp
@@ -24,7 +23,6 @@ set(SOURCES
     ImageWrapper.cpp
     InputNode.cpp
     Network.cpp
-    None.cpp
     Operator.cpp
     OperatorNode.cpp
     OperatorWrapper.cpp

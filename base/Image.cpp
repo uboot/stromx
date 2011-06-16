@@ -20,7 +20,8 @@ namespace base
     }
     
     Image::Image(const std::string& filename)
-      : stream::Image()
+      : stream::Image(),
+        m_dataType(stream::DataType::IMAGE)
     {
         try
         {

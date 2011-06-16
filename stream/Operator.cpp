@@ -26,9 +26,9 @@ namespace stream
     Operator::Operator (const std::string & name,
                         const std::string & package,
                         const Version & version,
-                        const std::vector<Description>& inputs,
-                        const std::vector<Description>& outputs,
-                        const std::vector<Parameter>& parameters)
+                        const std::vector<Description*>& inputs,
+                        const std::vector<Description*>& outputs,
+                        const std::vector<Parameter*>& parameters)
       : m_name(name),
         m_package(package),
         m_version(version),
@@ -41,37 +41,53 @@ namespace stream
         validate(parameters);
     }
     
-    Description& Operator::getParameterDescription(unsigned int id)
+    Operator::~Operator()
     {
-        if(id >= m_parameters.size())
-            throw WrongIdException("No parameter with ID " + id);
+        for(std::vector<Description*>::const_iterator iter = m_inputs.begin();
+            iter != m_inputs.end();
+            ++iter)
+        {
+            delete *iter;
+        }
         
-        return m_parameters[id];
+        for(std::vector<Description*>::const_iterator iter = m_outputs.begin();
+            iter != m_outputs.end();
+            ++iter)
+        {
+            delete *iter;
+        }
+        
+        for(std::vector<Parameter*>::const_iterator iter = m_parameters.begin();
+            iter != m_parameters.end();
+            ++iter)
+        {
+            delete *iter;
+        }
     }
-    
-    void Operator::validate(const std::vector<Description>& descriptors)
+
+    void Operator::validate(const std::vector<Description*>& descriptors)
     {
         std::set<unsigned int> ids;
         
-        for(std::vector<Description>::const_iterator iter = descriptors.begin();
+        for(std::vector<Description*>::const_iterator iter = descriptors.begin();
             iter != descriptors.end();
             ++iter)
         {
-            if(ids.count(iter->id()))
-                throw ArgumentException("ID " + boost::lexical_cast<std::string>(iter->id()) + " appears twice.");
+            if(ids.count((*iter)->id()))
+                throw ArgumentException("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
     
-    void Operator::validate(const std::vector<Parameter>& descriptors)
+    void Operator::validate(const std::vector<Parameter*>& descriptors)
     {
         std::set<unsigned int> ids;
         
-        for(std::vector<Parameter>::const_iterator iter = descriptors.begin();
+        for(std::vector<Parameter*>::const_iterator iter = descriptors.begin();
             iter != descriptors.end();
             ++iter)
         {
-            if(ids.count(iter->id()))
-                throw ArgumentException("ID " + boost::lexical_cast<std::string>(iter->id()) + " appears twice.");
+            if(ids.count((*iter)->id()))
+                throw ArgumentException("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
 }

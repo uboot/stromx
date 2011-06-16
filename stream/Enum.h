@@ -26,10 +26,7 @@ namespace stream
     public:
         Enum(const unsigned int value) : UInt32(value) {}
         
-        virtual const DataType & type() const { return m_type; }
-        
-    private:
-        static const DataType m_type;
+        virtual const DataType & type() const { return DataType::ENUM; }
     };
 }
 

@@ -12,24 +12,24 @@ namespace stream
     OperatorNode::OperatorNode(OperatorInterface*const op)
         : m_operator(op)
     {
-        for(std::vector<Description>::const_iterator iter = op->info()->inputs().begin();
+        for(std::vector<Description*>::const_iterator iter = op->info()->inputs().begin();
             iter != op->info()->inputs().end();
             ++iter)
         {
-            if(m_inputs.count(iter->id()))
+            if(m_inputs.count((*iter)->id()))
                 throw ArgumentException("Two inputs with the same ID.");
             
-            m_inputs[iter->id()] = new InputNode(op, iter->id());
+            m_inputs[(*iter)->id()] = new InputNode(op, (*iter)->id());
         }
         
-        for(std::vector<Description>::const_iterator iter = op->info()->outputs().begin();
+        for(std::vector<Description*>::const_iterator iter = op->info()->outputs().begin();
             iter != op->info()->outputs().end();
             ++iter)
         {
-            if(m_outputs.count(iter->id()))
+            if(m_outputs.count((*iter)->id()))
                 throw ArgumentException("Two outputs with the same ID.");
             
-            m_outputs[iter->id()] = new OutputNode(op, iter->id());
+            m_outputs[(*iter)->id()] = new OutputNode(op, (*iter)->id());
         }
     }
 

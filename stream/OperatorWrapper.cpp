@@ -310,11 +310,11 @@ namespace stream
     void OperatorWrapper::validateParameterId(const unsigned int id)
     {
         bool isValid = false;
-        for(std::vector<Parameter>::const_iterator iter = info()->parameters().begin();
+        for(std::vector<Parameter*>::const_iterator iter = info()->parameters().begin();
             iter != info()->parameters().end();
             ++iter)
         {
-            if(iter->id() == id)
+            if((*iter)->id() == id)
             {
                 isValid = true;
                 break;
@@ -327,8 +327,8 @@ namespace stream
     
     void OperatorWrapper::validateParameterType(const unsigned int id, const stream::DataType& type)
     {
-        const Parameter& param = info()->parameters()[id];
-        if(! type.is(param.type()))
-            throw ParameterTypeException(param, *this->info());
+        const Parameter* param = info()->parameters()[id];
+        if(! type.is(param->type()))
+            throw ParameterTypeException(*param, *this->info());
     }   
 }
