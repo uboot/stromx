@@ -114,7 +114,7 @@ namespace base
         }
         
         container->clearWriteAccess();
-        Id2DataPair outputDataMapper(INPUT, container);
+        Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);
     }
     

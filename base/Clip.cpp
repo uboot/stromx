@@ -99,7 +99,7 @@ namespace base
         inCvImage.copyTo(outCvImage);
         
         m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(INPUT, m_image);
+        Id2DataPair outputDataMapper(OUTPUT, m_image);
         provider.sendOutputData( outputDataMapper);
     }
     

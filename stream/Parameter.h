@@ -22,6 +22,9 @@ namespace stream
             m_activeAccess(NONE)
         {}
         
+        const AccessMode inactiveAccessMode() const { return m_inactiveAccess; }
+        const AccessMode activeAccessMode() const { return m_activeAccess; }
+        
         void setInactiveAccessMode(const AccessMode mode) { m_inactiveAccess = mode; }
         void setActiveAccessMode(const AccessMode mode) { m_activeAccess = mode; }
         

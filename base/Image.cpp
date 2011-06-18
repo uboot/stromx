@@ -21,6 +21,25 @@ namespace base
         }
     }
     
+    Image::Image(const stream::Image& image)
+      : m_pixelType(image.pixelType()),
+        m_dataType(dataType(m_pixelType)),
+        m_image(0)
+    {
+        try
+        {
+            m_image = cvCreateImage(cv::Size(image.width(), image.height()), depth(m_pixelType), numChannels(m_pixelType));
+        }
+        catch(cv::Exception& e)
+        {
+            throw stream::OutOfMemoryException("Failed to create new image.");
+        }
+        
+        cv::Mat cvInImage = getOpenCvMat(image);
+        cv::Mat cvImage(m_image);
+        cvInImage.copyTo(cvImage);
+    }
+    
     Image::Image(const std::string& filename)
       : stream::Image(),
         m_dataType(stream::DataType::IMAGE)

@@ -5,6 +5,8 @@
 namespace stream
 {
     const DataType DataType::NONE = DataType(NONE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "None");
+    const DataType DataType::DATA = DataType(DATA_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Data");
+    const DataType DataType::TRIGGER = DataType(TRIGGER_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Trigger");
     const DataType DataType::BOOL = DataType(BOOL_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Bool");
     const DataType DataType::ENUM = DataType(ENUM_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Enum");
     const DataType DataType::INT = DataType(INT_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Int");
@@ -31,6 +33,9 @@ namespace stream
         
     const bool DataType::is(const stream::DataType& type) const
     {
+        if(type.m_typeId == DATA_ID)
+            return true;
+        
         if(type.m_package != m_package)
             return false;
         

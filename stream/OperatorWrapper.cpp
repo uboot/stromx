@@ -96,6 +96,7 @@ namespace stream
         lock_t lock(m_executeMutex);
         
         validateParameterId(id);
+        validateReadAccess(id);
         return m_op->getParameter(id);
     }
         
@@ -104,6 +105,7 @@ namespace stream
         lock_t lock(m_executeMutex);
         
         validateParameterId(id);
+        validateWriteAccess(id);
         validateParameterType(id, value.type());
         m_op->setParameter(id, value);
     }
@@ -323,6 +325,44 @@ namespace stream
         
         if(! isValid)
             throw ParameterIdException(id, *this->info());
+    }
+    
+    void OperatorWrapper::validateReadAccess(const unsigned int id)
+    {
+        const Parameter* param = info()->parameters()[id];
+        
+        switch(status())
+        {
+        case INACTIVE:
+            if(! (Parameter::READ & param->inactiveAccessMode()))
+                throw ParameterAccessModeException(*param, *this->info());
+            break;
+        case ACTIVE:
+            if(! (Parameter::READ & param->activeAccessMode()))
+                throw ParameterAccessModeException(*param, *this->info());
+            break;           
+        default:
+            BOOST_ASSERT(false);    
+        }
+    }
+    
+    void OperatorWrapper::validateWriteAccess(const unsigned int id)
+    {
+        const Parameter* param = info()->parameters()[id];
+        
+        switch(status())
+        {
+        case INACTIVE:
+            if(! (Parameter::WRITE & param->inactiveAccessMode()))
+                throw ParameterAccessModeException(*param, *this->info());
+            break;
+        case ACTIVE:
+            if(! (Parameter::WRITE & param->activeAccessMode()))
+                throw ParameterAccessModeException(*param, *this->info());
+            break;           
+        default:
+            BOOST_ASSERT(false);    
+        }
     }
     
     void OperatorWrapper::validateParameterType(const unsigned int id, const stream::DataType& type)

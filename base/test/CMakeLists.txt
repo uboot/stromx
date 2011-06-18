@@ -18,9 +18,15 @@ add_executable(base_test
     ClipTest.cpp
     ../ConvertPixelType.cpp
     ConvertPixelTypeTest.cpp
+    ../ConstImage.cpp
+    ConstImageTest.cpp
     ../Image.cpp
     ImageTest.cpp
     main.cpp
+    ../TimePeriod.cpp
+    TimePeriodTest.cpp
+    ../Trigger.cpp
+    TriggerTest.cpp
 )
 
 target_link_libraries(base_test 

@@ -79,8 +79,8 @@ namespace stream
     {
         std::vector<Parameter*> parameters;
         Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
-        param->setInactiveAccessMode(Parameter::READ_WRITE);
-        param->setActiveAccessMode(Parameter::READ_WRITE);
+        param->setInactiveAccessMode(Parameter::READ);
+        param->setActiveAccessMode(Parameter::WRITE);
         parameters.push_back(param);
                                        
         return parameters;

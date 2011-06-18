@@ -22,7 +22,10 @@ set(SOURCES
     AdjustRgbChannels.cpp
     Clip.cpp
     ConvertPixelType.cpp
+    ConstImage.cpp
     Image.cpp
+    TimePeriod.cpp
+    Trigger.cpp
     Utilities.cpp
 )
 

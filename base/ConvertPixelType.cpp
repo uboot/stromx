@@ -83,7 +83,7 @@ namespace base
         }
         
         m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(INPUT, m_image);
+        Id2DataPair outputDataMapper(OUTPUT, m_image);
         provider.sendOutputData( outputDataMapper);
     }
     
@@ -114,6 +114,8 @@ namespace base
         std::vector<stream::Parameter*> parameters;
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
+        pixelType->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        pixelType->setActiveAccessMode(stream::Parameter::READ_WRITE);
         pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));
         pixelType->add(EnumDescription(Enum(stream::Image::RGB_24), "RGB image 24-bit"));
         pixelType->add(EnumDescription(Enum(stream::Image::BGR_24), "BGR image 24-bit"));

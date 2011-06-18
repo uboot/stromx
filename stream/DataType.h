@@ -11,6 +11,8 @@ namespace stream
     {
     public:
         const static DataType NONE;
+        const static DataType DATA;
+        const static DataType TRIGGER;
         const static DataType BOOL;
         const static DataType ENUM;
         const static DataType INT;
@@ -50,6 +52,8 @@ namespace stream
         enum Types
         {
             NONE_ID,
+            DATA_ID,
+            TRIGGER_ID,
             BOOL_ID,
             ENUM_ID,
             INT_ID,
