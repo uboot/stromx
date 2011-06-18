@@ -19,7 +19,7 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
-        CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, m_image->pixelType());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::BGR_24, m_image->pixelType());
         CPPUNIT_ASSERT(m_image->data());
     }
     

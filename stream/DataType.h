@@ -28,8 +28,12 @@ namespace stream
         const static DataType RGB_IMAGE;
         const static DataType MONO_8_IMAGE;
         const static DataType RGB_24_IMAGE;
+        const static DataType BGR_24_IMAGE;
+        const static DataType BAYERBG_8_IMAGE;
+        const static DataType BAYERGB_8_IMAGE;
         const static DataType MONO_16_IMAGE;
         const static DataType RGB_48_IMAGE;
+        const static DataType BGR_48_IMAGE;
         
         explicit DataType(const unsigned int typeId, const Version& version, const std::string & package, const std::string & name)
           : m_typeId(typeId),
@@ -63,8 +67,12 @@ namespace stream
             RGB_IMAGE_ID,
             MONO_8_IMAGE_ID,
             RGB_24_IMAGE_ID,
+            BGR_24_IMAGE_ID,
+            BAYERBG_8_IMAGE_ID,
+            BAYERGB_8_IMAGE_ID,
             MONO_16_IMAGE_ID,
-            RGB_48_IMAGE_ID
+            RGB_48_IMAGE_ID,
+            BGR_48_IMAGE_ID
         };
         
         unsigned int m_typeId;

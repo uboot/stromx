@@ -21,6 +21,7 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Clip.cpp
+    ConvertPixelType.cpp
     Image.cpp
     Utilities.cpp
 )

@@ -22,8 +22,12 @@ namespace stream
     const DataType DataType::RGB_IMAGE = DataType(RGB_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "RGB image");
     const DataType DataType::MONO_8_IMAGE = DataType(MONO_8_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Mono image 8-bit");
     const DataType DataType::RGB_24_IMAGE = DataType(RGB_24_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "RGB image 24-bit");
+    const DataType DataType::BGR_24_IMAGE = DataType(BGR_24_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "BGR image 24-bit");
+    const DataType DataType::BAYERBG_8_IMAGE = DataType(BAYERBG_8_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Bayer BG image 8-bit");
+    const DataType DataType::BAYERGB_8_IMAGE = DataType(BAYERGB_8_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Bayer GB image 8-bit");
     const DataType DataType::MONO_16_IMAGE = DataType(MONO_16_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "Mono image 16-bit");
     const DataType DataType::RGB_48_IMAGE = DataType(RGB_48_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "RGB image 48-bit");
+    const DataType DataType::BGR_48_IMAGE = DataType(BGR_48_IMAGE_ID, Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR), PACKAGE_NAME, "BGR image 48-bit");
         
     const bool DataType::is(const stream::DataType& type) const
     {
@@ -52,7 +56,9 @@ namespace stream
                 || is(MONO_16_IMAGE);
         case RGB_IMAGE_ID:
             return is(RGB_24_IMAGE)
-                || is(RGB_48_IMAGE);
+                || is(BGR_24_IMAGE)
+                || is(RGB_48_IMAGE)
+                || is(BGR_48_IMAGE);
         default:
             return false;
         }

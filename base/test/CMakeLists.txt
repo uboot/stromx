@@ -16,6 +16,8 @@ add_executable(base_test
     ../Clip.cpp
     ../Utilities.cpp
     ClipTest.cpp
+    ../ConvertPixelType.cpp
+    ConvertPixelTypeTest.cpp
     ../Image.cpp
     ImageTest.cpp
     main.cpp

@@ -101,6 +101,7 @@ namespace stream
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
+        m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
         t1.join();
         t2.join();    

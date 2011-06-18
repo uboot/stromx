@@ -87,25 +87,9 @@ namespace base
         
         adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
         
-        Image* outImage = 0;
+        adjustImage(width, height, inImage->pixelType(), this, m_image);
         
-        if(! m_image)
-        {
-            outImage = new Image(width, height, inImage->pixelType());
-            m_image = new DataContainer(outImage, this);
-        }
-        else
-        {
-            Data* outData = m_image->getWriteAccess();
-            outImage = dynamic_cast<Image*>(outData);
-            
-            if(inImage->pixelType() != outImage->pixelType()
-                || inImage->width() != width
-                || inImage->height() != height)
-            {
-                outImage->resize(width, height, inImage->pixelType());
-            }
-        }
+        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
         
         cv::Mat inCvImage = getOpenCvMat(*inImage);
         cv::Mat outCvImage = getOpenCvMat(*outImage);
@@ -114,6 +98,7 @@ namespace base
                             -left, -(inImage->width() - width - left));
         inCvImage.copyTo(outCvImage);
         
+        m_image->clearWriteAccess();
         Id2DataPair outputDataMapper(INPUT, m_image);
         provider.sendOutputData( outputDataMapper);
     }
