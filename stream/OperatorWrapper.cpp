@@ -264,10 +264,6 @@ namespace stream
     void OperatorWrapper::execute()
     {
         // m_mutex is locked if this function is called
-        // TODO: take care of the input and output data
-        //       output data must be referenced and then input data must be
-        //       dereferenced
-                
         m_status = EXECUTING;
         
         bool interruptExceptionWasThrown = false;
