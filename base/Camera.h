@@ -35,12 +35,12 @@ namespace base
     class Camera : public stream::Operator
     {
     public:
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             IMAGE
         };

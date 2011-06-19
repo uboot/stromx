@@ -31,16 +31,17 @@ namespace base
     class ConvertPixelType : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
-        enum OutputIds
+        
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             PIXEL_TYPE
         };

@@ -30,17 +30,17 @@ namespace base
     class Clip : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
         
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             TOP,
             LEFT,

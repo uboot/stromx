@@ -34,17 +34,17 @@ namespace base
     class Trigger : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
         
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             TRIGGER,
             ACTIVE
