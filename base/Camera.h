@@ -14,15 +14,16 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_TRIGGER_H
-#define BASE_TRIGGER_H
+#ifndef BASE_CAMERA_H
+#define BASE_CAMERA_H
 
 #include <stream/Operator.h>
-#include <stream/Image.h>
 #include <stream/Primitive.h>
 
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+#include "Clip.h"
+#include "AdjustRgbChannels.h"
+#include "Trigger.h"
+#include "TimePeriod.h"
 
 namespace stream
 {
@@ -31,14 +32,9 @@ namespace stream
 
 namespace base
 {
-    class Trigger : public stream::Operator
+    class Camera : public stream::Operator
     {
     public:
-        enum InputIds
-        {
-            INPUT
-        };
-        
         enum OutputIds
         {
             OUTPUT
@@ -46,15 +42,17 @@ namespace base
         
         enum ParameterIds
         {
-            TRIGGER,
-            ACTIVE
+            IMAGE
         };
         
-        Trigger();
+        Camera();
+        virtual ~Camera();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
+        virtual void activate();
+        virtual void deactivate();
         
     private:
         static const std::vector<stream::Description*> setupInputs();
@@ -65,12 +63,11 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
         
-        typedef boost::unique_lock<boost::mutex> unique_lock_t;
-        
-        boost::condition_variable_any m_cond;
-        boost::mutex m_mutex;
-        stream::Bool m_active;
+        Clip m_clip;
+        AdjustRgbChannels m_adjustRgbChannels;
+        Trigger m_trigger;
+        TimePeriod m_timePeriod;
     };
 }
 
-#endif // BASE_TRIGGER_H
+#endif // BASE_CAMERA_H

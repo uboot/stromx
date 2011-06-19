@@ -34,6 +34,7 @@ namespace base
         {
             INPUT
         };
+        
         enum OutputIds
         {
             OUTPUT

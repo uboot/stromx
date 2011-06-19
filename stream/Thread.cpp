@@ -87,7 +87,7 @@ namespace stream
                         InputNode* inputNode = (*operatorNode)->getInputNode((*input)->id());
                         
                         inputNode->setInputData();
-                        // TODO: handle exceptions in setInputData(), i.e. in the operator
+                        // TODO: handle exceptions in setInputData(), i.e. in Operator::execute()
                         
                         try
                         {

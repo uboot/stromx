@@ -27,7 +27,7 @@ namespace base
         m_operator->setInputData(Trigger::INPUT, m_image);
     }
     
-    void TriggerTest::testExecute()
+    void TriggerTest::testExecuteActive()
     {
         /*** Test 1 ***/
         boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
@@ -52,6 +52,15 @@ namespace base
         boost::thread t3(boost::bind(&TriggerTest::getOutputDataInterrupted, this));
         t3.interrupt();
         t3.join();
+    }
+    
+    void TriggerTest::testExecuteInactive()
+    {
+        m_operator->setParameter(Trigger::ACTIVE, Bool(false));
+        
+        DataContainer* result = m_operator->getOutputData(Trigger::OUTPUT);
+        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        CPPUNIT_ASSERT(image);
     }
     
     void TriggerTest::getOutputDataInterrupted()

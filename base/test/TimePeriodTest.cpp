@@ -27,7 +27,7 @@ namespace base
     
     void TimePeriodTest::testExecute()
     {
-        m_operator->setParameter(TimePeriod::PERIOD, stream::UInt32(2000));
+        m_operator->setParameter(TimePeriod::PERIOD, stream::UInt32(1000));
         
         DataContainer* result = m_operator->getOutputData(TimePeriod::PERIOD);
         const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
@@ -50,6 +50,27 @@ namespace base
         boost::thread t1(boost::bind(&TimePeriodTest::getOutputDataInterrupted, this));
         t1.interrupt();
         t1.join();
+    }
+    
+    void TimePeriodTest::testExecuteZeroPeriod()
+    {
+        m_operator->setParameter(TimePeriod::PERIOD, stream::UInt32(0));
+        
+        DataContainer* result = m_operator->getOutputData(TimePeriod::PERIOD);
+        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        CPPUNIT_ASSERT(image);
+        
+        m_operator->clearOutputData(TimePeriod::OUTPUT);
+        m_operator->setInputData(TimePeriod::INPUT, m_image);
+        result = m_operator->getOutputData(TimePeriod::PERIOD);
+        
+        m_operator->clearOutputData(TimePeriod::OUTPUT);
+        m_operator->setInputData(TimePeriod::INPUT, m_image);
+        result = m_operator->getOutputData(TimePeriod::PERIOD);
+        
+        m_operator->clearOutputData(TimePeriod::OUTPUT);
+        m_operator->setInputData(TimePeriod::INPUT, m_image);
+        result = m_operator->getOutputData(TimePeriod::PERIOD);
     }
     
     void TimePeriodTest::getOutputDataInterrupted()

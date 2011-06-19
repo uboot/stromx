@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_TIMEPERIODTEST_H
-#define BASE_TIMEPERIODTEST_H
+#ifndef BASE_CAMERATEST_H
+#define BASE_CAMERATEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -28,29 +28,24 @@ namespace stream
 
 namespace base
 {
-    class TimePeriodTest : public CPPUNIT_NS :: TestFixture
+    class CameraTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (TimePeriodTest);
+        CPPUNIT_TEST_SUITE (CameraTest);
         CPPUNIT_TEST (testExecute);
-        CPPUNIT_TEST (testExecuteZeroPeriod);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            TimePeriodTest() : m_operator(0), m_image(0) {}
+            CameraTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
             void testExecute();
-            void testExecuteZeroPeriod();
             
         private:
-            void getOutputDataInterrupted();
-            
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer* m_image;
     };
 }
 
-#endif // BASE_TRIGGERTEST_H
+#endif // BASE_CAMERATEST_H

@@ -31,7 +31,8 @@ namespace base
     class TriggerTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (TriggerTest);
-        CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST (testExecuteActive);
+        CPPUNIT_TEST (testExecuteInactive);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,7 +42,8 @@ namespace base
             void tearDown();
 
         protected:
-            void testExecute();
+            void testExecuteActive();
+            void testExecuteInactive();
             
         private:
             void triggerDelayed ();
