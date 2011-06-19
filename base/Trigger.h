@@ -19,7 +19,9 @@
 
 #include <stream/Operator.h>
 #include <stream/Image.h>
-#include <stream/Enum.h>
+
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
 
 namespace stream
 {
@@ -60,6 +62,11 @@ namespace base
         static const std::string NAME;
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
+        
+        typedef boost::unique_lock<boost::mutex> unique_lock_t;
+        
+        boost::condition_variable_any m_cond;
+        boost::mutex m_mutex;
     };
 }
 

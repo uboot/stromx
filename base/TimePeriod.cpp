@@ -7,6 +7,8 @@
 #include <stream/Id2DataPair.h>
 #include <stream/OperatorException.h>
 
+#include <boost/thread/mutex.hpp>
+
 using namespace stream;
 
 namespace base
@@ -17,9 +19,16 @@ namespace base
     const Version TimePeriod::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     TimePeriod::TimePeriod()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+        m_isFirstRun(true)
     {
     }
+    
+    void TimePeriod::activate()
+    {
+        m_isFirstRun = true;
+    }
+
 
     void TimePeriod::setParameter(unsigned int id, const Data& value)
     {
@@ -58,6 +67,32 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
+        try
+        {
+            if(m_isFirstRun)
+            {
+                boost::this_thread::sleep(boost::posix_time::millisec(m_period));
+                m_isFirstRun = false;
+            }
+            else
+            {
+                boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+                boost::posix_time::time_duration passedTime = now - m_lastExecute;
+                
+                if(passedTime.total_milliseconds() < m_period)
+                {
+                    UInt32 remainingMilliseconds(m_period - passedTime.total_milliseconds());
+                    boost::this_thread::sleep(boost::posix_time::millisec(remainingMilliseconds));
+                }
+            }
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        }
+        
+        m_lastExecute = boost::posix_time::second_clock::local_time();
+        
         Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
         provider.sendOutputData( outputDataMapper);
     }
@@ -89,6 +124,7 @@ namespace base
         std::vector<stream::Parameter*> parameters;
         
         Parameter* period = new Parameter(PERIOD, DataType::UINT_32);
+        period->setName("Period (milliseconds)");
         period->setActiveAccessMode(Parameter::WRITE);
         period->setInactiveAccessMode(Parameter::WRITE);
         parameters.push_back(period);

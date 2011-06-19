@@ -21,6 +21,8 @@
 #include <stream/Image.h>
 #include <stream/Primitive.h>
 
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 namespace stream
 {
     class DataContainer;
@@ -51,6 +53,7 @@ namespace base
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
+        virtual void activate();
         
     private:
         static const std::vector<stream::Description*> setupInputs();
@@ -62,6 +65,8 @@ namespace base
         static const stream::Version VERSION; 
         
         stream::UInt32 m_period;
+        bool m_isFirstRun;
+        boost::posix_time::ptime m_lastExecute;
     };
 }
 

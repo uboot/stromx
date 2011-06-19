@@ -44,6 +44,8 @@ namespace base
             void testExecute();
             
         private:
+            void getOutputDataInterrupted();
+            
             stream::OperatorWrapper* m_operator;
             stream::DataContainer* m_image;
     };

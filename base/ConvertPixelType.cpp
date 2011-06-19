@@ -114,6 +114,7 @@ namespace base
         std::vector<stream::Parameter*> parameters;
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
+        pixelType->setName("Pixel type");
         pixelType->setInactiveAccessMode(stream::Parameter::READ_WRITE);
         pixelType->setActiveAccessMode(stream::Parameter::READ_WRITE);
         pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));

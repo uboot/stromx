@@ -6,6 +6,10 @@
 #include <stream/Trigger.h>
 #include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
+#include <stream/Exception.h>
+
+#include <boost/thread.hpp>
+#include <boost/bind.hpp>
 
 #include <cppunit/TestAssert.h>
 
@@ -25,11 +29,40 @@ namespace base
     
     void TriggerTest::testExecute()
     {
-        m_operator->setParameter(Trigger::TRIGGER, stream::Trigger());
-        
+        /*** Test 1 ***/
+        boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
         DataContainer* result = m_operator->getOutputData(Trigger::OUTPUT);
         
         const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        CPPUNIT_ASSERT(image);
+        
+        m_operator->clearOutputData(Trigger::OUTPUT);
+        m_operator->setInputData(Trigger::INPUT, m_image);
+        t1.join();
+        
+        /*** Test 2 ***/
+        boost::thread t2(boost::bind(&TriggerTest::triggerDelayed, this));
+        result = m_operator->getOutputData(Trigger::OUTPUT);
+        
+        m_operator->clearOutputData(Trigger::OUTPUT);
+        m_operator->setInputData(Trigger::INPUT, m_image);
+        t2.join();
+        
+        /*** Test 2 ***/
+        boost::thread t3(boost::bind(&TriggerTest::getOutputDataInterrupted, this));
+        t3.interrupt();
+        t3.join();
+    }
+    
+    void TriggerTest::getOutputDataInterrupted()
+    {
+        CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Trigger::OUTPUT), InterruptException);
+    }
+        
+    void TriggerTest::triggerDelayed()
+    {
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        m_operator->setParameter(Trigger::TRIGGER, stream::Trigger());
     }
 
     void TriggerTest::tearDown ( void )

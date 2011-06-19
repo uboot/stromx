@@ -102,12 +102,20 @@ namespace stream
         
     void OperatorWrapper::setParameter(unsigned int id, const Data& value)
     {
-        lock_t lock(m_executeMutex);
-        
         validateParameterId(id);
         validateWriteAccess(id);
         validateParameterType(id, value.type());
-        m_op->setParameter(id, value);
+        
+        DataType parameterType = info()->parameters()[id]->type();
+        if(parameterType.is(DataType::TRIGGER))
+        {
+            m_op->setParameter(id, value);
+        }
+        else
+        {
+            lock_t lock(m_executeMutex);
+            m_op->setParameter(id, value);
+        }
     }
 
     void OperatorWrapper::receiveInputData(const Id2DataMapper& mapper)
@@ -353,6 +361,7 @@ namespace stream
                 throw ParameterAccessModeException(*param, *this->info());
             break;
         case ACTIVE:
+        case EXECUTING:
             if(! (Parameter::WRITE & param->activeAccessMode()))
                 throw ParameterAccessModeException(*param, *this->info());
             break;           

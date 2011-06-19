@@ -29,7 +29,8 @@ namespace base
             {
             case TRIGGER:
             {
-                
+                // trigger
+                m_cond.notify_all();
                 break;
             }
             default:
@@ -57,6 +58,17 @@ namespace base
     {
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
+        
+        try
+        {
+            // wait for trigger
+            unique_lock_t lock(m_mutex);
+            m_cond.wait(lock);
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        }
         
         Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
         provider.sendOutputData( outputDataMapper);
@@ -89,6 +101,7 @@ namespace base
         std::vector<stream::Parameter*> parameters;
         
         Parameter* trigger = new Parameter(TRIGGER, DataType::TRIGGER);
+        trigger->setName("Trigger");
         trigger->setActiveAccessMode(Parameter::WRITE);
         trigger->setInactiveAccessMode(Parameter::WRITE);
         parameters.push_back(trigger);

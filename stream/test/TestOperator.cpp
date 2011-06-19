@@ -7,6 +7,7 @@
 #include <stream/OperatorException.h>
 
 #include <typeinfo>
+#include <boost/thread/thread.hpp>
 
 
 namespace stream
@@ -17,7 +18,7 @@ namespace stream
     
     TestOperator::TestOperator()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_sleepTime(1000),
+        m_sleepTime(100),
         m_numExecutes(0)
     {
     }
@@ -49,7 +50,7 @@ namespace stream
         
         // execute...
         m_numExecutes++;
-        usleep(m_sleepTime * 1000);
+        boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
         
         Id2DataPair output1(OUTPUT_1, input1.data());
         Id2DataPair output2(OUTPUT_2, input2.data());
