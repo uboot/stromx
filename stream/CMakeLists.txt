@@ -29,6 +29,7 @@ set(SOURCES
     OperatorWrapper.cpp
     OutputNode.cpp
     Primitive.cpp
+    Try.cpp
 )
 
 add_library(stream SHARED ${SOURCES})

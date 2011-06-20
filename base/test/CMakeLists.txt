@@ -25,6 +25,8 @@ add_executable(base_test
     ../Image.cpp
     ImageTest.cpp
     main.cpp
+    ../Queue.cpp
+    QueueTest.cpp
     ../TimePeriod.cpp
     TimePeriodTest.cpp
     ../Trigger.cpp

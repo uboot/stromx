@@ -25,6 +25,7 @@ set(SOURCES
     ConvertPixelType.cpp
     ConstImage.cpp
     Image.cpp
+    Queue.cpp
     TimePeriod.cpp
     Trigger.cpp
     Utilities.cpp

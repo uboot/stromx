@@ -34,6 +34,8 @@ add_executable(stream_test
     ../Primitive.cpp
     ../DataType.cpp
     PrimitiveTest.cpp
+    ../Try.cpp
+    TryTest.cpp
 )
 
 target_link_libraries(stream_test
