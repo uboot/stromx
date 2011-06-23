@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright @YEAR@ @AUTHOR@
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,34 +14,33 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_DATACONTAINER_H
-#define STREAM_DATACONTAINER_H
+#ifndef @PREPROCESSOR_MACRO_TEST@
+#define @PREPROCESSOR_MACRO_TEST@
 
-#include <boost/shared_ptr.hpp>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
-#include "DataContainerImpl.h"
+#include <@PACKAGE@/@CLASS@.h>
 
-namespace stream
+namespace @PACKAGE@
 {
-    class Data;
-    class DataType;
-    
-    class DataContainer
+    class @CLASS@Test : public CPPUNIT_NS :: TestFixture
     {
-        friend class WriteAccess;
-        friend class ReadAccess;
-        friend class RecycleAccessImpl;
-        
+        CPPUNIT_TEST_SUITE (@CLASS@Test);
+        CPPUNIT_TEST(test);
+        CPPUNIT_TEST_SUITE_END ();
+
     public:
-        DataContainer(stream::Data*const data);
-        ~DataContainer();
+        @CLASS@Test () {}
         
-        const DataType & type();
+        void setUp();
+        void tearDown();
+
+    protected:
+        void test();
+            
     private:
-        DataContainer();
-        
-        boost::shared_ptr<DataContainerImpl> m_impl;
-    };     
+    };
 }
 
-#endif // STREAM_DATACONTAINER_H
+#endif // @PREPROCESSOR_MACRO_TEST@

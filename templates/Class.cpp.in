@@ -1,4 +1,4 @@
-#include "@HEADER@"
+#include "@CLASS@.h"
 
 namespace @PACKAGE@
 {

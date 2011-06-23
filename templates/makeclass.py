@@ -45,6 +45,8 @@ def main():
 
     process('Class.h.in', className + '.h', author, className, package)
     process('Class.cpp.in', className + '.cpp', author, className, package)
+    process('ClassTest.h.in', className + 'Test' + '.h', author, className, package)
+    process('ClassTest.cpp.in', className + 'Test' + '.cpp', author, className, package)
 
 def usage():
     print 'USAGE: python makeclass.py --author="Sean Connery" --package="stream" --class="Operator"'
@@ -52,14 +54,14 @@ def usage():
 def replace(text, author, className, package):
     year = str(datetime.date.today().year)
     preprocessorMacro = package.upper() + '_' + className.upper() + '_H'
-    header = className + '.h'
+    preprocessorMacroTest = package.upper() + '_' + className.upper() + 'TEST_H'
     
     text = re.sub(r'@PREPROCESSOR_MACRO@', preprocessorMacro, text)
+    text = re.sub(r'@PREPROCESSOR_MACRO_TEST@', preprocessorMacroTest, text)
     text = re.sub(r'@CLASS@', className, text)
     text = re.sub(r'@PACKAGE@', package, text)
     text = re.sub(r'@AUTHOR@', author, text)
     text = re.sub(r'@YEAR@', year, text)
-    text = re.sub(r'@HEADER@', header, text)
     return text
 
 def process(inFilePath, outFilePath, author, className, package):

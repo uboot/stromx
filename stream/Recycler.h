@@ -14,34 +14,18 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_DATACONTAINER_H
-#define STREAM_DATACONTAINER_H
-
-#include <boost/shared_ptr.hpp>
-
-#include "DataContainerImpl.h"
+#ifndef STREAM_RECYCLER_H
+#define STREAM_RECYCLER_H
 
 namespace stream
 {
     class Data;
-    class DataType;
     
-    class DataContainer
+    class Recycler
     {
-        friend class WriteAccess;
-        friend class ReadAccess;
-        friend class RecycleAccessImpl;
-        
     public:
-        DataContainer(stream::Data*const data);
-        ~DataContainer();
-        
-        const DataType & type();
-    private:
-        DataContainer();
-        
-        boost::shared_ptr<DataContainerImpl> m_impl;
-    };     
+        virtual void recycle(Data* data) = 0;
+    };
 }
 
-#endif // STREAM_DATACONTAINER_H
+#endif // STREAM_RECYCLER_H

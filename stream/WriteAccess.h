@@ -14,34 +14,27 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_DATACONTAINER_H
-#define STREAM_DATACONTAINER_H
-
-#include <boost/shared_ptr.hpp>
-
-#include "DataContainerImpl.h"
+#ifndef STREAM_WRITEACCESS_H
+#define STREAM_WRITEACCESS_H
 
 namespace stream
 {
+    class DataContainer;
     class Data;
-    class DataType;
     
-    class DataContainer
+    class WriteAccess
     {
-        friend class WriteAccess;
-        friend class ReadAccess;
-        friend class RecycleAccessImpl;
-        
     public:
-        DataContainer(stream::Data*const data);
-        ~DataContainer();
+        WriteAccess(DataContainer& data);
+        ~WriteAccess();
         
-        const DataType & type();
+        Data* const operator()();
+        
     private:
-        DataContainer();
-        
-        boost::shared_ptr<DataContainerImpl> m_impl;
-    };     
+        WriteAccess();
+
+        DataContainer& m_data;
+    };
 }
 
-#endif // STREAM_DATACONTAINER_H
+#endif // STREAM_WRITEACCESS_H
