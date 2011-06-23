@@ -28,15 +28,15 @@ namespace stream
 
 namespace base
 {
-    class TimePeriodTest : public CPPUNIT_NS :: TestFixture
+    class PeriodicDelayTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (TimePeriodTest);
+        CPPUNIT_TEST_SUITE (PeriodicDelayTest);
         CPPUNIT_TEST (testExecute);
         CPPUNIT_TEST (testExecuteZeroPeriod);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            TimePeriodTest() : m_operator(0), m_image(0) {}
+            PeriodicDelayTest() : m_operator(0), m_image(0) {}
             
             void setUp();
             void tearDown();

@@ -26,7 +26,7 @@ set(SOURCES
     ConstImage.cpp
     Image.cpp
     Queue.cpp
-    TimePeriod.cpp
+    PeriodicDelay.cpp
     Trigger.cpp
     Utilities.cpp
 )

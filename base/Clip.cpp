@@ -77,7 +77,8 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        const Data* inData = inputDataMapper.data()->getReadAccess();
+        DataContainer* inContainer = inputDataMapper.data();
+        const Data* inData = inContainer->getReadAccess();
         const Image* inImage = dynamic_cast<const Image*>(inData);
         
         unsigned int top = m_top;
@@ -97,6 +98,7 @@ namespace base
         inCvImage.adjustROI(-top, -(inImage->height() - height - top),
                             -left, -(inImage->width() - width - left));
         inCvImage.copyTo(outCvImage);
+        inContainer->dereference();
         
         m_image->clearWriteAccess();
         Id2DataPair outputDataMapper(OUTPUT, m_image);

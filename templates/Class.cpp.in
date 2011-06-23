@@ -1,0 +1,6 @@
+#include "@HEADER@"
+
+namespace @PACKAGE@
+{
+    
+} 

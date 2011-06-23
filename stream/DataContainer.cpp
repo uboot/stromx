@@ -40,7 +40,7 @@ namespace stream
 
     void DataContainer::dereference()
     {
-        bool destroy = false;
+        bool readyToDestroy = false;
         
         {
             lock_t lock(m_mutex);
@@ -50,7 +50,7 @@ namespace stream
             m_refCount--;
             
             if(m_refCount == 0)
-                destroy = true;
+                readyToDestroy = true;
             else
                 m_cond.notify_all();
             
@@ -64,14 +64,18 @@ namespace stream
         // the following code possibly leads to the deletion of 
         // the object
         // it can not be executed while the mutex is locked
-        if(destroy)
-        {
-            if(m_owner)
-                m_owner->release(this);
-            else
-                delete this;
-        }
+        if(readyToDestroy)
+            destroy();
     }
+    
+    void DataContainer::destroy()
+    {  
+        if(m_owner)
+            m_owner->release(this);
+        else
+            delete this;
+    }
+
     
     const Data*const DataContainer::getReadAccess()
     {

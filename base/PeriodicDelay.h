@@ -30,7 +30,7 @@ namespace stream
 
 namespace base
 {
-    class TimePeriod : public stream::Operator
+    class PeriodicDelay : public stream::Operator
     {
     public:
         enum InputId
@@ -48,7 +48,7 @@ namespace base
             PERIOD
         };
         
-        TimePeriod();
+        PeriodicDelay();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);

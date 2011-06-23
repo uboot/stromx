@@ -27,8 +27,8 @@ add_executable(base_test
     main.cpp
     ../Queue.cpp
     QueueTest.cpp
-    ../TimePeriod.cpp
-    TimePeriodTest.cpp
+    ../PeriodicDelay.cpp
+    PeriodicDelayTest.cpp
     ../Trigger.cpp
     TriggerTest.cpp
 )

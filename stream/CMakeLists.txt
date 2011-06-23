@@ -13,7 +13,7 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
-set(SOURCES   
+set(SOURCES
     DataContainer.cpp
     DataType.cpp
     EnumParameter.cpp

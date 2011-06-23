@@ -23,7 +23,7 @@
 #include "Clip.h"
 #include "AdjustRgbChannels.h"
 #include "Trigger.h"
-#include "TimePeriod.h"
+#include "PeriodicDelay.h"
 
 namespace stream
 {
@@ -66,7 +66,6 @@ namespace base
         Clip m_clip;
         AdjustRgbChannels m_adjustRgbChannels;
         Trigger m_trigger;
-        TimePeriod m_timePeriod;
     };
 }
 
