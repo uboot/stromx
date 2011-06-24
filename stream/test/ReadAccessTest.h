@@ -14,29 +14,31 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_READACCESS_H
-#define STREAM_READACCESS_H
+#ifndef STREAM_READACCESSTEST_H
+#define STREAM_READACCESSTEST_H
 
-#include "ReadAccessImpl.h"
-
-#include <boost/shared_ptr.hpp>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 namespace stream
 {
-    class DataContainer;
-    class Data;
-    
-    class ReadAccess
+    class ReadAccessTest : public CPPUNIT_NS :: TestFixture
     {
+        CPPUNIT_TEST_SUITE (ReadAccessTest);
+        CPPUNIT_TEST(testReadAccess);
+        CPPUNIT_TEST(testReleaseReadAccess);
+        CPPUNIT_TEST_SUITE_END ();
+
     public:
-        ReadAccess(DataContainer& data);
+        ReadAccessTest () {}
         
-        const Data* const operator()();
-        
-    private:
-        ReadAccess();
-        boost::shared_ptr<ReadAccessImpl> m_impl;
+        void setUp() {}
+        void tearDown() {}
+
+    protected:
+        void testReadAccess();
+        void testReleaseReadAccess();
     };
 }
 
-#endif // STREAM_READACCESS_H
+#endif // STREAM_READACCESSTEST_H

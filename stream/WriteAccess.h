@@ -17,6 +17,10 @@
 #ifndef STREAM_WRITEACCESS_H
 #define STREAM_WRITEACCESS_H
 
+#include "WriteAccessImpl.h"
+
+#include <boost/shared_ptr.hpp>
+
 namespace stream
 {
     class DataContainer;
@@ -26,14 +30,13 @@ namespace stream
     {
     public:
         WriteAccess(DataContainer& data);
-        ~WriteAccess();
         
         Data* const operator()();
         
     private:
         WriteAccess();
 
-        DataContainer& m_data;
+        boost::shared_ptr<WriteAccessImpl> m_impl;
     };
 }
 

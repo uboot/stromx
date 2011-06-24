@@ -26,7 +26,7 @@ namespace stream
     {
     public:
         RecycleAccess(DataContainer& data);
-        ~RecycleAccess();
+        RecycleAccess() {}
         
         Data* const operator()();
         

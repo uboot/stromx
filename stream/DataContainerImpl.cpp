@@ -8,7 +8,7 @@
 
 namespace stream
 {
-    DataContainerImpl::DataContainerImpl(Data* data)
+    DataContainerImpl::DataContainerImpl(Data* const data)
       : m_readAccessCounter(0),
         m_writeAccess(false),
         m_recycleAccess(0),
@@ -18,15 +18,12 @@ namespace stream
             throw ArgumentException();
     }
     
-    const stream::Data*const DataContainerImpl::getReadAccess()
+    void DataContainerImpl::getReadAccess()
     {
         lock_t lock(m_mutex);
         
-        BOOST_ASSERT(m_readAccessCounter);
         BOOST_ASSERT(m_data);
         m_readAccessCounter++;
-        
-        return m_data;
     }
     
     DataContainerImpl::~DataContainerImpl()
@@ -44,7 +41,7 @@ namespace stream
         m_cond.notify_all();
     }
         
-    Data*const DataContainerImpl::getWriteAccess()
+    void DataContainerImpl::getWriteAccess()
     {
         unique_lock_t lock(m_mutex);
         
@@ -59,8 +56,6 @@ namespace stream
         } 
             
         m_writeAccess = true;
-        
-        return m_data;
     }
 
     void DataContainerImpl::returnWriteAccess()
@@ -108,9 +103,10 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_recycleAccess)
+        {
             m_recycleAccess->recycle(m_data);
-        
-        m_data = 0;
+            m_data = 0;
+        }        
     }
 
 } 

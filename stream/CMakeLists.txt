@@ -10,16 +10,18 @@ configure_file (
 )
 
 if(BUILD_TESTS)
-#     add_subdirectory(test)
+    add_subdirectory(test)
 endif()
 
 set(SOURCES
     DataContainer.cpp
     DataContainerImpl.cpp
     ReadAccess.cpp
+    ReadAccessImpl.cpp
     RecycleAccess.cpp
     RecycleAccessImpl.cpp
     WriteAccess.cpp
+    WriteAccessImpl.cpp
 #     DataType.cpp
 #     EnumParameter.cpp
 #     Id2DataComposite.cpp

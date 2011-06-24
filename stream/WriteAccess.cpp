@@ -5,18 +5,12 @@
 namespace stream
 {
     WriteAccess::WriteAccess(DataContainer& data)
-    : m_data(data)
+      : m_impl(new WriteAccessImpl(data))
     {
-        m_data.m_impl->getWriteAccess();
     }
 
     Data* const WriteAccess::operator()()
     {
-        return m_data.m_impl->data();
-    }
-    
-    WriteAccess::~WriteAccess()
-    {
-        m_data.m_impl->returnWriteAccess();
+        return (*m_impl)();
     }
 } 

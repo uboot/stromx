@@ -28,17 +28,17 @@ namespace stream
     
     class DataContainer
     {
-        friend class WriteAccess;
-        friend class ReadAccess;
+        friend class WriteAccessImpl;
+        friend class ReadAccessImpl;
         friend class RecycleAccessImpl;
         
     public:
+        DataContainer() {}
         DataContainer(stream::Data*const data);
         ~DataContainer();
         
         const DataType & type();
     private:
-        DataContainer();
         
         boost::shared_ptr<DataContainerImpl> m_impl;
     };     

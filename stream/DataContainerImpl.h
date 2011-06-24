@@ -28,13 +28,13 @@ namespace stream
     class DataContainerImpl
     {
     public:
-        DataContainerImpl(Data* data);
+        DataContainerImpl(Data* const data);
         ~DataContainerImpl();
         
-        const Data* const getReadAccess();
+        void getReadAccess();
         void returnReadAccess();
         
-        Data* const getWriteAccess();
+        void getWriteAccess();
         void returnWriteAccess();
         
         void getRecycleAccess(Recycler* const recycler);

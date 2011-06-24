@@ -8,34 +8,45 @@ include_directories(
 
 add_executable(stream_test
     main.cpp
+    ../DataContainerImpl.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
     ../DataType.cpp
-    DataTypeTest.cpp
-    ../Id2DataMap.cpp
-    ../Id2DataMapper.cpp
-    ../Id2DataComposite.cpp
-    Id2DataCompositeTest.cpp
-    ../Id2DataPair.cpp
-    Id2DataPairTest.cpp
-    ../Operator.cpp
-    TestOperator.cpp
-    ../OperatorWrapper.cpp
-    OperatorWrapperTest.cpp
-    ../OutputNode.cpp
-    OutputNodeTest.cpp
-    ../InputNode.cpp
-    InputNodeTest.cpp   
-    ../OperatorNode.cpp
-    ../Thread.cpp
-    ThreadTest.cpp
-    ../Network.cpp
-    NetworkTest.cpp
-    ../Primitive.cpp
-    ../DataType.cpp
-    PrimitiveTest.cpp
-    ../Try.cpp
-    TryTest.cpp
+#     DataTypeTest.cpp
+#     ../Id2DataMap.cpp
+#     ../Id2DataMapper.cpp
+#     ../Id2DataComposite.cpp
+#     Id2DataCompositeTest.cpp
+#     ../Id2DataPair.cpp
+#     Id2DataPairTest.cpp
+#     ../Operator.cpp
+#     TestOperator.cpp
+#     ../OperatorWrapper.cpp
+#     OperatorWrapperTest.cpp
+#     ../OutputNode.cpp
+#     OutputNodeTest.cpp
+#     ../InputNode.cpp
+#     InputNodeTest.cpp   
+#     ../OperatorNode.cpp
+    ../ReadAccess.cpp
+    ../ReadAccessImpl.cpp
+    ReadAccessTest.cpp
+    ../RecycleAccess.cpp
+    ../RecycleAccessImpl.cpp
+    RecycleAccessTest.cpp
+#     ../Thread.cpp
+#     ThreadTest.cpp
+#     ../Network.cpp
+#     NetworkTest.cpp
+#     ../Primitive.cpp
+#     ../DataType.cpp
+#     PrimitiveTest.cpp
+    TestData.cpp
+#     ../Try.cpp
+#     TryTest.cpp
+    ../WriteAccess.cpp
+    ../WriteAccessImpl.cpp
+    WriteAccessTest.cpp
 )
 
 target_link_libraries(stream_test

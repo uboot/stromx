@@ -5,18 +5,12 @@
 namespace stream
 {
     ReadAccess::ReadAccess(DataContainer& data)
-    : m_data(data)
+      : m_impl(new ReadAccessImpl(data))
     {
-        m_data.m_impl->getReadAccess();
     }
 
     const Data* const ReadAccess::operator()()
     {
-        return m_data.m_impl->data();
-    }
-    
-    ReadAccess::~ReadAccess()
-    {
-        m_data.m_impl->getReadAccess();
+        return (*m_impl)();
     }
 } 

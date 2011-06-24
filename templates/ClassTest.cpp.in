@@ -1,7 +1,6 @@
 #include "@CLASS@Test.h"
 
 #include <cppunit/TestAssert.h>
-#include <boost/thread/thread.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
 

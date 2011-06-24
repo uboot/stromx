@@ -4,7 +4,7 @@
 
 namespace stream
 {
-    DataContainer::DataContainer(Data*const data)
+    DataContainer::DataContainer(Data* const data)
     : m_impl(new DataContainerImpl(data))
     {
     }
