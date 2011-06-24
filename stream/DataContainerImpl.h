@@ -40,7 +40,6 @@ namespace stream
         void getRecycleAccess(Recycler* const recycler);
         void returnRecycleAccess();
         
-        void recycle();
         Data* const data() const { return m_data; }
         
     private:
@@ -49,6 +48,8 @@ namespace stream
         
         boost::mutex m_mutex;
         boost::condition_variable_any m_cond;
+        
+        void recycle();
         
         unsigned int m_readAccessCounter;
         bool m_writeAccess;

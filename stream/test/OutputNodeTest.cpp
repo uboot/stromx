@@ -19,7 +19,7 @@ namespace stream
     {
         m_operatorWrapper = new OperatorWrapper(new TestOperator());
         m_operatorWrapper->activate();
-        m_container = new DataContainer(new stream::None);
+        m_container = DataContainer(new stream::None);
         m_outputNode = new OutputNode(m_operatorWrapper, TestOperator::OUTPUT_1);
         m_inputNode = new InputNode(m_operatorWrapper, 0);
     }
@@ -27,7 +27,6 @@ namespace stream
     void OutputNodeTest::tearDown()
     {
         delete m_operatorWrapper;
-        delete m_container;
         delete m_outputNode;
     }
     
@@ -36,7 +35,7 @@ namespace stream
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
-        DataContainer* data = 0;
+        DataContainer data;
         CPPUNIT_ASSERT_NO_THROW(data = m_outputNode->getOutputData());
         CPPUNIT_ASSERT_EQUAL(m_container, data);
     }

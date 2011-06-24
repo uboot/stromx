@@ -23,7 +23,6 @@
 namespace stream
 {
     class OperatorWrapper;
-    class DataContainer;
 }
 
 namespace base

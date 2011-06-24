@@ -20,10 +20,11 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
+
 namespace stream
 {
     class OperatorWrapper;
-    class DataContainer;
 }
 
 namespace base
@@ -35,7 +36,7 @@ namespace base
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ConvertPixelTypeTest() : m_operator(0), m_image(0) {}
+            ConvertPixelTypeTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
@@ -45,7 +46,7 @@ namespace base
             
         private:
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer* m_image;
+            stream::DataContainer m_image;
     };
 }
 

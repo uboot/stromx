@@ -31,17 +31,24 @@ namespace stream
         friend class WriteAccessImpl;
         friend class ReadAccessImpl;
         friend class RecycleAccessImpl;
+        friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
         
     public:
         DataContainer() {}
-        DataContainer(stream::Data*const data);
-        ~DataContainer();
+        explicit DataContainer(stream::Data*const data);
         
         const DataType & type();
+        const bool empty() const { return m_impl.get() == 0; }
     private:
         
         boost::shared_ptr<DataContainerImpl> m_impl;
     };     
+    
+    const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+    const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+    std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
 #endif // STREAM_DATACONTAINER_H

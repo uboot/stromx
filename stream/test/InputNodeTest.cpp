@@ -22,7 +22,7 @@ namespace stream
         m_sourceOperatorWrapper = new OperatorWrapper(new TestOperator());
         m_sourceOperatorWrapper->activate();
         
-        m_container = new DataContainer(new stream::None);
+        m_container = DataContainer(new stream::None);
         m_inputNode = new InputNode(m_operatorWrapper, TestOperator::INPUT_1);
         m_sourceNode = new OutputNode(m_sourceOperatorWrapper, TestOperator::OUTPUT_2);
     }
@@ -54,7 +54,6 @@ void InputNodeTest::testDisconnect()
     {
         delete m_operatorWrapper;
         delete m_sourceOperatorWrapper;
-        delete m_container;
         delete m_inputNode;
         delete m_sourceNode;
     }

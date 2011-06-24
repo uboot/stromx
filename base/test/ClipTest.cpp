@@ -5,6 +5,7 @@
 #include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/Primitive.h>
+#include <stream/ReadAccess.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -18,7 +19,7 @@ namespace base
     {
         m_operator = new OperatorWrapper(new Clip());
         m_operator->activate();
-        m_image = new DataContainer(new Image("lenna.jpg"));
+        m_image = DataContainer(new Image("lenna.jpg"));
         m_operator->setInputData(Clip::INPUT, m_image);
     }
     
@@ -29,14 +30,15 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
-        stream::DataContainer* result = m_operator->getOutputData(Clip::OUTPUT);
+        {
+            stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+            
+            ReadAccess access(result);
+            const Image* image = dynamic_cast<const Image*>(access());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->height());
+        }
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->height());
-        
-        // simulate a reference by a following operator
-        result->reference();
         m_operator->clearOutputData(Clip::OUTPUT);
         
         m_operator->setParameter(Clip::LEFT, UInt32(210));
@@ -45,9 +47,10 @@ namespace base
         m_operator->setParameter(Clip::HEIGHT, UInt32(100));
         m_operator->setInputData(Clip::INPUT, m_image);
         
-        result = m_operator->getOutputData(Clip::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
         
-        image = dynamic_cast<const Image*>(result->getReadAccess());
+        ReadAccess access = ReadAccess(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->height());
     }
@@ -59,9 +62,10 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
-        stream::DataContainer* result = m_operator->getOutputData(Clip::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+        ReadAccess access(result);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image->height());
     }
@@ -73,9 +77,10 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
-        stream::DataContainer* result = m_operator->getOutputData(Clip::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+        ReadAccess access(result);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image->height());
     }
@@ -83,6 +88,5 @@ namespace base
     void ClipTest::tearDown ( void )
     {
         delete m_operator;
-        delete m_image;
     }
 }

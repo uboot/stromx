@@ -12,38 +12,38 @@ add_executable(stream_test
     ../DataContainer.cpp
     DataContainerTest.cpp
     ../DataType.cpp
-#     DataTypeTest.cpp
-#     ../Id2DataMap.cpp
-#     ../Id2DataMapper.cpp
-#     ../Id2DataComposite.cpp
-#     Id2DataCompositeTest.cpp
-#     ../Id2DataPair.cpp
-#     Id2DataPairTest.cpp
-#     ../Operator.cpp
-#     TestOperator.cpp
-#     ../OperatorWrapper.cpp
-#     OperatorWrapperTest.cpp
-#     ../OutputNode.cpp
-#     OutputNodeTest.cpp
-#     ../InputNode.cpp
-#     InputNodeTest.cpp   
-#     ../OperatorNode.cpp
+    DataTypeTest.cpp
+    ../Id2DataMap.cpp
+    ../Id2DataMapper.cpp
+    ../Id2DataComposite.cpp
+    Id2DataCompositeTest.cpp
+    ../Id2DataPair.cpp
+    Id2DataPairTest.cpp
+    ../Operator.cpp
+    TestOperator.cpp
+    ../OperatorWrapper.cpp
+    OperatorWrapperTest.cpp
+    ../OutputNode.cpp
+    OutputNodeTest.cpp
+    ../InputNode.cpp
+    InputNodeTest.cpp   
+    ../OperatorNode.cpp
     ../ReadAccess.cpp
     ../ReadAccessImpl.cpp
     ReadAccessTest.cpp
     ../RecycleAccess.cpp
     ../RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
-#     ../Thread.cpp
-#     ThreadTest.cpp
-#     ../Network.cpp
-#     NetworkTest.cpp
-#     ../Primitive.cpp
-#     ../DataType.cpp
-#     PrimitiveTest.cpp
+    ../Thread.cpp
+    ThreadTest.cpp
+    ../Network.cpp
+    NetworkTest.cpp
+    ../Primitive.cpp
+    ../DataType.cpp
+    PrimitiveTest.cpp
     TestData.cpp
-#     ../Try.cpp
-#     TryTest.cpp
+    ../Try.cpp
+    TryTest.cpp
     ../WriteAccess.cpp
     ../WriteAccessImpl.cpp
     WriteAccessTest.cpp

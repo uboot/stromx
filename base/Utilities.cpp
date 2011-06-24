@@ -2,6 +2,7 @@
 
 #include <stream/Exception.h>
 #include <stream/Image.h>
+#include <base/Image.h>
 #include <stream/DataContainer.h>
 
 using namespace stream;
@@ -32,29 +33,20 @@ namespace base
     }
     
     void adjustImage(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType,
-                     DataOwner* const owner, stream::DataContainer*& image)
+                     base::Image*& image)
     {
         if(! image)
         {
-            Image* outImage = new Image(width, height, pixelType);
-            image = new stream::DataContainer(outImage, owner);
+            image = new base::Image(width, height, pixelType);
         }
         else
         {
-            Data* outData = image->getWriteAccess();
-            Image* outImage = dynamic_cast<Image*>(outData);
-            
-            if(!outImage)
-                throw ArgumentException("Expected data of type base::Image.");
-            
-            if(pixelType != outImage->pixelType()
-                || width != outImage->width()
-                || height != outImage->height())
+            if(pixelType != image->pixelType()
+                || width != image->width()
+                || height != image->height())
             {
-                outImage->resize(width, height, pixelType);
+                image->resize(width, height, pixelType);
             }
-            
-            image->clearWriteAccess();
         }
     } 
 }

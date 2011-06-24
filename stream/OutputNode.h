@@ -15,7 +15,7 @@ namespace stream
     public:
         OutputNode(OperatorInterface* const op, const unsigned int outputId);
         
-        DataContainer* const getOutputData();
+        DataContainer getOutputData();
         void addConnectedInput(InputNode* const input);
         void removeConnectedInput(InputNode* const input);
         const std::set<InputNode*> connectedInputs() { return m_connectedInputs; }

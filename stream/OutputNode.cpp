@@ -2,6 +2,7 @@
 
 #include "Exception.h"
 #include "OperatorInterface.h"
+#include "DataContainer.h"
 
 namespace stream
 {
@@ -34,9 +35,9 @@ namespace stream
         m_connectedInputs.erase(input);
     }
 
-    DataContainer*const OutputNode::getOutputData()
+    DataContainer OutputNode::getOutputData()
     {
-        DataContainer* value = m_operator->getOutputData(m_outputId);
+        DataContainer value = m_operator->getOutputData(m_outputId);
         
         // the data has been obtained
         // now make sure the connection counter is adapted in an atomic operation

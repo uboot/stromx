@@ -4,9 +4,10 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
+
 namespace stream
 {
-    class DataContainer;
     class OperatorWrapper;
     class TestOperator;
 
@@ -23,7 +24,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        OperatorWrapperTest() : m_operatorWrapper(0), m_testOperator(0), m_container(0) {}
+        OperatorWrapperTest() : m_operatorWrapper(0), m_testOperator(0) {}
         
         void setUp();
         void tearDown();
@@ -45,7 +46,7 @@ namespace stream
         
         OperatorWrapper* m_operatorWrapper;
         TestOperator* m_testOperator;
-        DataContainer* m_container;
+        DataContainer m_container;
     };
 }
 

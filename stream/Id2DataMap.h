@@ -16,13 +16,13 @@ namespace stream
     public:
         Id2DataMap(const std::vector<Description*> & descriptions);
         
-        DataContainer* const operator[](const unsigned int id) const;
-        DataContainer*& operator[](const unsigned int id);
+        DataContainer operator[](const unsigned int id) const;
+        DataContainer& operator[](const unsigned int id);
         void clear();
         const bool isEmpty() const;
         
     private:
-        std::map<unsigned int, DataContainer*> m_map;
+        std::map<unsigned int, DataContainer> m_map;
     };
 }
 

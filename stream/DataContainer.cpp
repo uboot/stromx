@@ -8,11 +8,31 @@ namespace stream
     : m_impl(new DataContainerImpl(data))
     {
     }
-
-    DataContainer::~DataContainer()
+    
+    const bool operator==(const stream::DataContainer& lhs, const stream::DataContainer& rhs)
     {
-        if(m_impl.unique())
-            m_impl->recycle();
+        if(! lhs.m_impl.get() && ! rhs.m_impl.get())
+            return true;
+        
+        if(! lhs.m_impl.get() || ! rhs.m_impl.get())
+            return false;
+        
+        return lhs.m_impl->data() == rhs.m_impl->data();
     }
+    
+    const bool operator!=(const stream::DataContainer& lhs, const stream::DataContainer& rhs)
+    {
+        return ! (lhs == rhs);
+    }
+    
+    std::ostream& operator<<(std::ostream& out, const stream::DataContainer& container)
+    {
+        if(! container.m_impl.get())
+            out << 0;
+        else
+            out << container.m_impl->data();
+    }
+
+
 }
  

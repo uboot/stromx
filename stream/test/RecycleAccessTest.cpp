@@ -20,6 +20,7 @@ namespace stream
         Data* data = new TestData();
         
         RecycleAccess access;
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
         
         {
             DataContainer container = DataContainer(data);
@@ -28,7 +29,7 @@ namespace stream
         
         CPPUNIT_ASSERT_EQUAL(data, access());
         CPPUNIT_ASSERT(! TestData::wasDestructed);
-        CPPUNIT_ASSERT_THROW(access(), InvalidStateException);
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
         
         delete data;
     }
@@ -47,7 +48,7 @@ namespace stream
         
         CPPUNIT_ASSERT_EQUAL(data, access());
         CPPUNIT_ASSERT(! TestData::wasDestructed);
-        CPPUNIT_ASSERT_THROW(access(), InvalidStateException);
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
         
         delete data;
     }

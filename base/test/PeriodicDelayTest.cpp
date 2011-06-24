@@ -3,9 +3,9 @@
 #include <base/PeriodicDelay.h>
 #include <base/Image.h>
 
-#include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/Exception.h>
+#include <stream/ReadAccess.h>
 
 #include <boost/thread.hpp>
 
@@ -21,7 +21,7 @@ namespace base
     {
         m_operator = new OperatorWrapper(new PeriodicDelay());
         m_operator->activate();
-        m_image = new DataContainer(new Image("lenna.jpg"));
+        m_image = DataContainer(new Image("lenna.jpg"));
         m_operator->setInputData(PeriodicDelay::INPUT, m_image);
     }
     
@@ -29,21 +29,30 @@ namespace base
     {
         m_operator->setParameter(PeriodicDelay::PERIOD, stream::UInt32(1000));
         
-        DataContainer* result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
-        CPPUNIT_ASSERT(image);
+        {
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+            ReadAccess access(result);
+            const Image* image = dynamic_cast<const Image*>(access());
+            CPPUNIT_ASSERT(image);
+        }
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }
 
         m_operator->clearOutputData(PeriodicDelay::OUTPUT);
         m_operator->setInputData(PeriodicDelay::INPUT, m_image);
@@ -56,21 +65,31 @@ namespace base
     {
         m_operator->setParameter(PeriodicDelay::PERIOD, stream::UInt32(0));
         
-        DataContainer* result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
-        CPPUNIT_ASSERT(image);
+        {
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+            ReadAccess access(result);
+            const Image* image = dynamic_cast<const Image*>(access());
+            CPPUNIT_ASSERT(image);
+        }
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }
         
-        m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-        m_operator->setInputData(PeriodicDelay::INPUT, m_image);
-        result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }   
+        
+        {
+            m_operator->clearOutputData(PeriodicDelay::OUTPUT);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+        }
     }
     
     void PeriodicDelayTest::getOutputDataInterrupted()
@@ -81,6 +100,5 @@ namespace base
     void PeriodicDelayTest::tearDown ( void )
     {
         delete m_operator;
-        delete m_image;
     }
 }

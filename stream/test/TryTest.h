@@ -17,6 +17,8 @@
 #ifndef STREAM_TRYTEST_H
 #define STREAM_TRYTEST_H
 
+#include <stream/DataContainer.h>
+
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -35,7 +37,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            TryTest() : m_map(0), m_dataContainer(0) {}
+            TryTest() : m_map(0) {}
             void setUp();
             void tearDown();
 
@@ -47,7 +49,7 @@ namespace stream
             
         private:
             Id2DataMap* m_map;
-            DataContainer* m_dataContainer; 
+            DataContainer m_dataContainer; 
     };
 }
 

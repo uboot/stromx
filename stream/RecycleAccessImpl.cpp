@@ -41,7 +41,7 @@ namespace stream
         unique_lock_t lock(m_mutex);
         
         if(m_isExpired)
-            throw InvalidStateException("Data has already been returned by this recycle access.");
+            return 0;
         
         try
         {

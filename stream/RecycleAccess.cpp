@@ -9,6 +9,9 @@ namespace stream
 
     Data*const RecycleAccess::operator()()
     {
+        if(! m_impl.get())
+            return 0;
+        
         return (*m_impl)();
     }
 

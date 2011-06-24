@@ -23,13 +23,13 @@ namespace stream
         m_operatorWrapper = new OperatorWrapper(m_testOperator);
         m_operatorWrapper->activate();
         Data* data = new stream::None;
-        m_container = new DataContainer(data);  
+        m_container = DataContainer(data);  
     }
 
     void OperatorWrapperTest::testSetInputData ( void )
     {
-        DataContainer* data1;
-        DataContainer* data2;
+        DataContainer data1;
+        DataContainer data2;
         
         /*** Test 1 ***/
         boost::thread t1(boost::bind(&OperatorWrapperTest::setInputDataDelayed, this, _1), TestOperator::INPUT_1);
@@ -157,8 +157,8 @@ namespace stream
         
     void OperatorWrapperTest::testGetOutputData()
     {
-        DataContainer* data1;
-        DataContainer* data2;
+        DataContainer data1;
+        DataContainer data2;
         
         /*** Test 1 ***/
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
@@ -224,6 +224,5 @@ namespace stream
     void OperatorWrapperTest::tearDown ( void )
     {
         delete m_operatorWrapper;
-        delete m_container;
     }
 } 

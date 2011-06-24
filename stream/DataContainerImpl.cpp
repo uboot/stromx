@@ -28,6 +28,8 @@ namespace stream
     
     DataContainerImpl::~DataContainerImpl()
     {
+        recycle();
+        
         delete m_data;
     }
 

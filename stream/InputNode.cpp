@@ -2,6 +2,7 @@
 
 #include "OutputNode.h"
 #include "OperatorInterface.h"
+#include "DataContainer.h"
 #include "Exception.h"
 
 namespace stream
@@ -30,7 +31,7 @@ namespace stream
         if(! m_source)
             throw InvalidStateException("Input node has not been connected.");
         
-        DataContainer* inputData = m_source->getOutputData();
+        DataContainer inputData = m_source->getOutputData();
         
         m_operator->setInputData(m_inputId, inputData);
     }

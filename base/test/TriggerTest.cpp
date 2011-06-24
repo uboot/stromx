@@ -4,9 +4,9 @@
 #include <base/Image.h>
 
 #include <stream/Trigger.h>
-#include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/Exception.h>
+#include <stream/ReadAccess.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
@@ -23,7 +23,7 @@ namespace base
     {
         m_operator = new OperatorWrapper(new Trigger());
         m_operator->activate();
-        m_image = new DataContainer(new Image("lenna.jpg"));
+        m_image = DataContainer(new Image("lenna.jpg"));
         m_operator->setInputData(Trigger::INPUT, m_image);
     }
     
@@ -31,9 +31,10 @@ namespace base
     {
         /*** Test 1 ***/
         boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
-        DataContainer* result = m_operator->getOutputData(Trigger::OUTPUT);
+        DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        ReadAccess access(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT(image);
         
         m_operator->clearOutputData(Trigger::OUTPUT);
@@ -58,8 +59,9 @@ namespace base
     {
         m_operator->setParameter(Trigger::ACTIVE, Bool(false));
         
-        DataContainer* result = m_operator->getOutputData(Trigger::OUTPUT);
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
+        ReadAccess access(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT(image);
     }
     
@@ -77,6 +79,5 @@ namespace base
     void TriggerTest::tearDown ( void )
     {
         delete m_operator;
-        delete m_image;
     }
 }

@@ -22,21 +22,21 @@ set(SOURCES
     RecycleAccessImpl.cpp
     WriteAccess.cpp
     WriteAccessImpl.cpp
-#     DataType.cpp
-#     EnumParameter.cpp
-#     Id2DataComposite.cpp
-#     Id2DataMap.cpp
-#     Id2DataMapper.cpp
-#     Id2DataPair.cpp
-#     ImageWrapper.cpp
-#     InputNode.cpp
-#     Network.cpp
-#     Operator.cpp
-#     OperatorNode.cpp
-#     OperatorWrapper.cpp
-#     OutputNode.cpp
-#     Primitive.cpp
-#     Try.cpp
+    DataType.cpp
+    EnumParameter.cpp
+    Id2DataComposite.cpp
+    Id2DataMap.cpp
+    Id2DataMapper.cpp
+    Id2DataPair.cpp
+    ImageWrapper.cpp
+    InputNode.cpp
+    Network.cpp
+    Operator.cpp
+    OperatorNode.cpp
+    OperatorWrapper.cpp
+    OutputNode.cpp
+    Primitive.cpp
+    Try.cpp
 )
 
 add_library(stream SHARED ${SOURCES})

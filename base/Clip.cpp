@@ -9,7 +9,7 @@
 #include <stream/OperatorException.h>
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
-
+#include <stream/ReadAccess.h>
 #include <stream/Id2DataPair.h>
 
 using namespace stream;
@@ -22,8 +22,7 @@ namespace base
     const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Clip::Clip()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_image(0)
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
@@ -77,9 +76,9 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        DataContainer* inContainer = inputDataMapper.data();
-        const Data* inData = inContainer->getReadAccess();
-        const Image* inImage = dynamic_cast<const Image*>(inData);
+        DataContainer inContainer = inputDataMapper.data();
+        ReadAccess access(inContainer);
+        const Image* inImage = dynamic_cast<const Image*>(access());
         
         unsigned int top = m_top;
         unsigned int left = m_left;
@@ -88,9 +87,10 @@ namespace base
         
         adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
         
-        adjustImage(width, height, inImage->pixelType(), this, m_image);
-        
-        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
+        Data* data = m_imageAccess();
+        base::Image* outImage = dynamic_cast<base::Image*>(data);
+            
+        adjustImage(width, height, inImage->pixelType(), outImage);
         
         cv::Mat inCvImage = getOpenCvMat(*inImage);
         cv::Mat outCvImage = getOpenCvMat(*outImage);
@@ -98,10 +98,11 @@ namespace base
         inCvImage.adjustROI(-top, -(inImage->height() - height - top),
                             -left, -(inImage->width() - width - left));
         inCvImage.copyTo(outCvImage);
-        inContainer->dereference();
         
-        m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(OUTPUT, m_image);
+        DataContainer outContainer = DataContainer(outImage);
+        m_imageAccess = RecycleAccess(outContainer);
+        
+        Id2DataPair outputDataMapper(OUTPUT, outContainer);
         provider.sendOutputData( outputDataMapper);
     }
     

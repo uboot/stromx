@@ -19,11 +19,8 @@
 
 #include <stream/Operator.h>
 #include <stream/Primitive.h>
+#include <stream/RecycleAccess.h>
 
-namespace stream
-{
-    class DataContainer;
-}
 
 namespace base
 {
@@ -73,7 +70,7 @@ namespace base
         stream::UInt32 m_width;
         stream::UInt32 m_height;
         
-        stream::DataContainer* m_image;
+        stream::RecycleAccess m_imageAccess;
     };
 }
 

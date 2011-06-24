@@ -21,20 +21,19 @@
 
 #include <stream/Image.h>
 
-#include <base/Image.h>
-
 namespace stream
 {
     class Image;
     class DataContainer;
-    class DataOwner;
 }
 
 namespace base
 {
+    class Image;
+    
     cv::Mat getOpenCvMat(const stream::Image& image);
     void adjustImage(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType,
-                     stream::DataOwner* const owner, stream::DataContainer*& image);
+                     base::Image*& image);
 };
 
 #endif // BASE_UTILITIES_H

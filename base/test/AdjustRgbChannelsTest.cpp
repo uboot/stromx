@@ -2,9 +2,11 @@
 
 #include <base/AdjustRgbChannels.h>
 #include <base/Image.h>
+
 #include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/Primitive.h>
+#include <stream/ReadAccess.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -18,9 +20,8 @@ namespace base
     {
         m_operator = new OperatorWrapper(new AdjustRgbChannels());
         m_operator->activate();
-        m_image = new DataContainer(new Image("lenna.jpg"));
+        m_image = DataContainer(new Image("lenna.jpg"));
         m_operator->setInputData(AdjustRgbChannels::INPUT, m_image);
-        m_image->dereference();
     }
     
     void AdjustRgbChannelsTest::testExecute()
@@ -29,10 +30,12 @@ namespace base
         m_operator->setParameter(AdjustRgbChannels::GREEN, Double(1.0));
         m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
         
-        stream::DataContainer* result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
-        CPPUNIT_ASSERT(image);
+        {
+            ReadAccess access(result);
+            CPPUNIT_ASSERT(access());
+        }
         
         m_operator->setInputData(AdjustRgbChannels::INPUT, m_image);
         m_operator->clearOutputData(AdjustRgbChannels::OUTPUT);
@@ -43,6 +46,5 @@ namespace base
     void AdjustRgbChannelsTest::tearDown ( void )
     {
         delete m_operator;
-        delete m_image;
     }
 }

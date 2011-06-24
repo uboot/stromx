@@ -49,5 +49,32 @@ namespace stream
         boost::this_thread::sleep(boost::posix_time::seconds(1));
     }
     
+    void DataContainerTest::testComparison()
+    {
+        Data* data = new TestData();
+        
+        DataContainer container1(data);
+        DataContainer container2 = container1;
+        CPPUNIT_ASSERT(container1 == container2);
+        
+        DataContainer container3;
+        DataContainer container4;
+        CPPUNIT_ASSERT(container3 == container4);
+        CPPUNIT_ASSERT(container1 != container3);
+    }
+    
+    void DataContainerTest::testEmpty()
+    {
+        DataContainer container;
+        CPPUNIT_ASSERT(container.empty());
+        
+        Data* data = new TestData();
+        container = DataContainer(data);
+        CPPUNIT_ASSERT(! container.empty());
+        
+        container = DataContainer();
+        CPPUNIT_ASSERT(container.empty());
+    }
+
 
 }

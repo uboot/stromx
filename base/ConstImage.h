@@ -20,10 +20,11 @@
 #include <stream/Operator.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
+#include <stream/RecycleAccess.h>
 
 namespace stream
 {
-    class DataContainer;
+    class Image;
 }
 
 namespace base
@@ -57,7 +58,8 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION;   
         
-        stream::DataContainer* m_image;
+        stream::Image* m_image;
+        stream::RecycleAccess m_imageAccess;
     };
 }
 

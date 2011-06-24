@@ -9,6 +9,7 @@
 #include <stream/Id2DataPair.h>
 #include <stream/OperatorException.h>
 #include <stream/EnumParameter.h>
+#include <stream/ReadAccess.h>
 
 using namespace stream;
 
@@ -21,8 +22,7 @@ namespace base
     
     ConvertPixelType::ConvertPixelType()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_pixelType(stream::Image::MONO_8),
-        m_image(0)
+        m_pixelType(stream::Image::MONO_8)
     {
     }
 
@@ -61,13 +61,15 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        const Data* inData = inputDataMapper.data()->getReadAccess();
-        const Image* inImage = dynamic_cast<const Image*>(inData);
+        DataContainer inContainer = inputDataMapper.data();
+        ReadAccess access(inContainer);
+        const Image* inImage = dynamic_cast<const Image*>(access());
+        
+        Data* data = m_imageAccess();
+        base::Image* outImage = dynamic_cast<base::Image*>(data);
         
         stream::Image::PixelType outPixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
-        adjustImage(inImage->width(), inImage->height(), outPixelType, this, m_image);
-        
-        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
+        adjustImage(inImage->width(), inImage->height(), outPixelType, outImage);
         
         cv::Mat inCvImage = getOpenCvMat(*inImage);
         cv::Mat outCvImage = getOpenCvMat(*outImage);
@@ -82,8 +84,10 @@ namespace base
             cv::cvtColor(inCvImage, outCvImage, code);
         }
         
-        m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(OUTPUT, m_image);
+        DataContainer outContainer = DataContainer(outImage);
+        m_imageAccess = RecycleAccess(outContainer);
+        
+        Id2DataPair outputDataMapper(OUTPUT, outContainer);
         provider.sendOutputData( outputDataMapper);
     }
     

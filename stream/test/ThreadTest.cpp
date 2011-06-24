@@ -2,7 +2,6 @@
 
 #include "TestOperator.h"
 
-#include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/OperatorNode.h>
 #include <stream/None.h>
@@ -41,7 +40,7 @@ namespace stream
         for(unsigned int i = 1; i < 3; ++i)
             m_thread->addOperator(m_operatorNodes[i]);
         
-        m_container = new DataContainer(new stream::None);
+        m_container = DataContainer(new stream::None);
         m_newOperator = new OperatorNode(new OperatorWrapper(new TestOperator()));
     }
     
@@ -83,7 +82,7 @@ namespace stream
         
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         
-        DataContainer* data = m_operatorNodes[2]->op()->getOutputData(TestOperator::OUTPUT_1);
+        DataContainer data = m_operatorNodes[2]->op()->getOutputData(TestOperator::OUTPUT_1);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
         data = m_operatorNodes[2]->op()->getOutputData(TestOperator::OUTPUT_2);

@@ -20,11 +20,8 @@
 #include <stream/Operator.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
+#include <stream/RecycleAccess.h>
 
-namespace stream
-{
-    class DataContainer;
-}
 
 namespace base
 {
@@ -64,7 +61,7 @@ namespace base
         static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);      
         
         stream::Enum m_pixelType;
-        stream::DataContainer* m_image;
+        stream::RecycleAccess m_imageAccess;
     };
 }
 

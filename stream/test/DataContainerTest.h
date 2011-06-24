@@ -13,6 +13,8 @@ namespace stream
         CPPUNIT_TEST_SUITE (DataContainerTest);
         CPPUNIT_TEST (testDestroy);
         CPPUNIT_TEST (testDestroyDelayed);
+        CPPUNIT_TEST (testComparison);
+        CPPUNIT_TEST (testEmpty);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -24,6 +26,8 @@ namespace stream
         protected:
             void testDestroy();
             void testDestroyDelayed();
+            void testComparison();
+            void testEmpty();
         private:
             void destroyDelayed(DataContainer & container);
     };
