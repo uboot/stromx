@@ -4,6 +4,7 @@
 
 #include <stream/DataContainer.h>
 #include <stream/WriteAccess.h>
+#include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -55,5 +56,25 @@ namespace stream
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         CPPUNIT_ASSERT_EQUAL(m_data, access());
+    }
+        
+    void WriteAccessTest::writeAccessInterrupt(DataContainer& container)
+    {
+        CPPUNIT_ASSERT_THROW(WriteAccess access(container), InterruptException);
+    }
+    
+    void WriteAccessTest::testWriteAccessInterrupt()
+    {
+        {
+            DataContainer container = DataContainer(new TestData());
+            WriteAccess access(container);
+            boost::thread t(boost::bind(&WriteAccessTest::writeAccessInterrupt, this, _1), container);
+            
+            t.interrupt();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            t.join();
+        }
+        
+        CPPUNIT_ASSERT(TestData::wasDestructed);
     }
 }

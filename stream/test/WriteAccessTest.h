@@ -24,6 +24,7 @@ namespace stream
 {
     class WriteAccess;
     class Data;
+    class DataContainer;
     
     class WriteAccessTest : public CPPUNIT_NS :: TestFixture
     {
@@ -31,6 +32,7 @@ namespace stream
         CPPUNIT_TEST(testWriteAccess);
         CPPUNIT_TEST(testReleaseWriteAccess);
         CPPUNIT_TEST(testWriteAccessDelayed);
+        CPPUNIT_TEST(testWriteAccessInterrupt);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -43,10 +45,13 @@ namespace stream
         void testWriteAccess();
         void testReleaseWriteAccess();
         void testWriteAccessDelayed();
+        void testWriteAccessInterrupt();
             
     private:
-        Data* m_data;
         void releaseDelayed(WriteAccess& access);
+        void writeAccessInterrupt(DataContainer & container);
+        
+        Data* m_data;
     };
 }
 

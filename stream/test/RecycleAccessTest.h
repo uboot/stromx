@@ -25,6 +25,7 @@
 namespace stream
 {
     class DataContainer;
+    class RecycleAccess;
     
     class RecycleAccessTest : public CPPUNIT_NS :: TestFixture
     {
@@ -33,6 +34,9 @@ namespace stream
         CPPUNIT_TEST(testNoRecycle);
         CPPUNIT_TEST(testDelayedRecycle);
         CPPUNIT_TEST(testCopiedRecycle);
+        CPPUNIT_TEST(testRecycleInterrupt);
+        CPPUNIT_TEST(testGetRecycleAccessDelayed);
+        CPPUNIT_TEST(testGetRecycleAccessInterrupt);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -46,9 +50,15 @@ namespace stream
         void testNoRecycle();
         void testDelayedRecycle();
         void testCopiedRecycle();
+        void testRecycleInterrupt();
+        void testGetRecycleAccessDelayed();
+        void testGetRecycleAccessInterrupt();
         
     private:
         void destroyDelayed(DataContainer & container);
+        void recycleInterrupt(RecycleAccess & access);
+        void releaseAccessDelayed(RecycleAccess & access);
+        void getAccessInterrupt(DataContainer & container);
     };
 }
 

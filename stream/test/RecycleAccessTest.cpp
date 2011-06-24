@@ -84,5 +84,55 @@ namespace stream
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
     }
-
+    
+    void RecycleAccessTest::recycleInterrupt(RecycleAccess& access)
+    {
+        CPPUNIT_ASSERT_THROW(access(), InterruptException);
+    }
+    
+    void RecycleAccessTest::testRecycleInterrupt()
+    {
+        {
+            DataContainer container = DataContainer(new TestData());
+            RecycleAccess access(container);
+            boost::thread t(boost::bind(&RecycleAccessTest::recycleInterrupt, this, _1), access);
+            
+            t.interrupt();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            t.join();
+        }
+        
+        CPPUNIT_ASSERT(TestData::wasDestructed);
+    }
+    
+    void RecycleAccessTest::getAccessInterrupt(DataContainer& container)
+    {
+        CPPUNIT_ASSERT_THROW(RecycleAccess access(container), InterruptException);
+    }
+    
+    void RecycleAccessTest::releaseAccessDelayed(RecycleAccess& access)
+    {
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+    }
+    
+    void RecycleAccessTest::testGetRecycleAccessDelayed()
+    {
+        DataContainer container = DataContainer(new TestData());
+        {
+            RecycleAccess access(container);
+            boost::thread t(boost::bind(&RecycleAccessTest::releaseAccessDelayed, this, _1), access);
+        }
+        
+        RecycleAccess access(container);
+    }
+    
+    void RecycleAccessTest::testGetRecycleAccessInterrupt()
+    {
+        DataContainer container = DataContainer(new TestData());
+        RecycleAccess access(container);
+        
+        boost::thread t(boost::bind(&RecycleAccessTest::getAccessInterrupt, this, _1), container);
+        t.interrupt();
+        t.join();
+    }
 }
