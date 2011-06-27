@@ -1,4 +1,4 @@
- #include "Clip.h"
+#include "Clip.h"
 
 #include "Config.h"
 #include "Image.h"
@@ -10,7 +10,6 @@
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
 
-#include <typeinfo>
 #include <stream/Id2DataPair.h>
 
 using namespace stream;
@@ -24,9 +23,7 @@ namespace base
     
     Clip::Clip()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_image(0),
-        m_width(0),
-        m_height(0)
+        m_image(0)
     {
     }
 
@@ -54,7 +51,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameters()[id], *this);
+            throw ParameterTypeException(*parameters()[id], *this);
         }
     }
 
@@ -90,25 +87,9 @@ namespace base
         
         adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
         
-        Image* outImage = 0;
+        adjustImage(width, height, inImage->pixelType(), this, m_image);
         
-        if(! m_image)
-        {
-            outImage = new Image(width, height, inImage->pixelType());
-            m_image = new DataContainer(outImage, this);
-        }
-        else
-        {
-            Data* outData = m_image->getWriteAccess();
-            outImage = dynamic_cast<Image*>(outData);
-            
-            if(inImage->pixelType() != outImage->pixelType()
-                || inImage->width() != width
-                || inImage->height() != height)
-            {
-                outImage->resize(width, height, inImage->pixelType());
-            }
-        }
+        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
         
         cv::Mat inCvImage = getOpenCvMat(*inImage);
         cv::Mat outCvImage = getOpenCvMat(*outImage);
@@ -117,58 +98,59 @@ namespace base
                             -left, -(inImage->width() - width - left));
         inCvImage.copyTo(outCvImage);
         
-        Id2DataPair outputDataMapper(INPUT, m_image);
+        m_image->clearWriteAccess();
+        Id2DataPair outputDataMapper(OUTPUT, m_image);
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description > Clip::setupInputs()
+    const std::vector< Description* > Clip::setupInputs()
     {
-        std::vector<Description> inputs;
+        std::vector<Description*> inputs;
         
-        Description input(INPUT, DataType::IMAGE);
-        input.setName("Input");
+        Description* input = new Description(INPUT, DataType::IMAGE);
+        input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector< stream::Description > Clip::setupOutputs()
+    const std::vector< stream::Description* > Clip::setupOutputs()
     {
-        std::vector<Description> outputs;
+        std::vector<Description*> outputs;
         
-        Description output(OUTPUT, DataType::IMAGE);
-        output.setName("Output");
+        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector< stream::Parameter > Clip::setupParameters()
+    const std::vector< stream::Parameter* > Clip::setupParameters()
     {
-        std::vector<stream::Parameter> parameters;
+        std::vector<stream::Parameter*> parameters;
         
-        Parameter top(TOP, DataType::UINT_32);
-        top.setName("Top");
-        top.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        top.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
+        top->setName("Top");
+        top->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        top->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(top);
         
-        Parameter left(LEFT, DataType::UINT_32);
-        left.setName("Left");
-        left.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        left.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
+        left->setName("Left");
+        left->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        left->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(left);
         
-        Parameter width(WIDTH, DataType::UINT_32);
-        width.setName("Width");
-        width.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        width.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
+        width->setName("Width");
+        width->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        width->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(width);
         
-        Parameter height(HEIGHT, DataType::UINT_32);
-        height.setName("Height");
-        height.setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        height.setActiveAccessMode(stream::Parameter::READ_WRITE);
+        NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
+        height->setName("Height");
+        height->setInactiveAccessMode(stream::Parameter::READ_WRITE);
+        height->setActiveAccessMode(stream::Parameter::READ_WRITE);
         parameters.push_back(height);
                                     
         return parameters;

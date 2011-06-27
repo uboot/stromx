@@ -14,27 +14,38 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_UTILITIES_H
-#define BASE_UTILITIES_H
+#ifndef BASE_CONSTIMAGETEST_H
+#define BASE_CONSTIMAGETEST_H
 
-#include <opencv2/opencv.hpp>
-
-#include <stream/Image.h>
-
-#include <base/Image.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 namespace stream
 {
-    class Image;
+    class OperatorWrapper;
     class DataContainer;
-    class DataOwner;
 }
 
 namespace base
 {
-    cv::Mat getOpenCvMat(const stream::Image& image);
-    void adjustImage(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType,
-                     stream::DataOwner* const owner, stream::DataContainer*& image);
-};
+    class ConstImageTest : public CPPUNIT_NS :: TestFixture
+    {
+        CPPUNIT_TEST_SUITE (ConstImageTest);
+        CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST_SUITE_END ();
 
-#endif // BASE_UTILITIES_H
+        public:
+            ConstImageTest() : m_operator(0) {}
+            
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testExecute();
+            
+        private:
+            stream::OperatorWrapper* m_operator;
+    };
+}
+
+#endif // BASE_CONSTIMAGETEST_H

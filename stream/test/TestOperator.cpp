@@ -7,6 +7,7 @@
 #include <stream/OperatorException.h>
 
 #include <typeinfo>
+#include <boost/thread/thread.hpp>
 
 
 namespace stream
@@ -17,7 +18,7 @@ namespace stream
     
     TestOperator::TestOperator()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_sleepTime(1000),
+        m_sleepTime(100),
         m_numExecutes(0)
     {
     }
@@ -31,7 +32,7 @@ namespace stream
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameters()[id], *this);
+            throw ParameterTypeException(*parameters()[id], *this);
         }
     }
 
@@ -49,7 +50,7 @@ namespace stream
         
         // execute...
         m_numExecutes++;
-        usleep(m_sleepTime * 1000);
+        boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
         
         Id2DataPair output1(OUTPUT_1, input1.data());
         Id2DataPair output2(OUTPUT_2, input2.data());
@@ -57,30 +58,30 @@ namespace stream
     }
 
     
-    const std::vector< Description > TestOperator::setupInputs()
+    const std::vector<Description*> TestOperator::setupInputs()
     {
-        std::vector<Description> inputs;
-        inputs.push_back(Description(INPUT_1, DataType()));
-        inputs.push_back(Description(INPUT_2, DataType()));
+        std::vector<Description*> inputs;
+        inputs.push_back(new Description(INPUT_1, DataType::NONE));
+        inputs.push_back(new Description(INPUT_2, DataType::NONE));
         
         return inputs;
     }
     
-    const std::vector< Description > TestOperator::setupOutputs()
+    const std::vector<Description*> TestOperator::setupOutputs()
     {
-        std::vector<Description> outputs;
-        outputs.push_back(Description(OUTPUT_1, DataType()));
-        outputs.push_back(Description(OUTPUT_2, DataType()));
+        std::vector<Description*> outputs;
+        outputs.push_back(new Description(OUTPUT_1, DataType::NONE));
+        outputs.push_back(new Description(OUTPUT_2, DataType::NONE));
         
         return outputs;
     }
     
-    const std::vector< Parameter > TestOperator::setupParameters()
+    const std::vector<Parameter*> TestOperator::setupParameters()
     {
-        std::vector<Parameter> parameters;
-        Parameter param(SLEEP_TIME, DataType::UINT_32);
-        param.setInactiveAccessMode(Parameter::READ_WRITE);
-        param.setActiveAccessMode(Parameter::READ_WRITE);
+        std::vector<Parameter*> parameters;
+        Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
+        param->setInactiveAccessMode(Parameter::READ);
+        param->setActiveAccessMode(Parameter::WRITE);
         parameters.push_back(param);
                                        
         return parameters;

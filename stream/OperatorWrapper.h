@@ -10,7 +10,6 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-
 namespace stream
 {
     class Operator;
@@ -51,6 +50,8 @@ namespace stream
         void execute();
         void waitForSignal(unique_lock_t& lock);
         void validateParameterId(const unsigned int id);
+        void validateWriteAccess(const unsigned int id);
+        void validateReadAccess(const unsigned int id);
         void validateParameterType(const unsigned int id, const DataType& type);
         
         Operator* m_op;

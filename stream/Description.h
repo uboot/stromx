@@ -14,6 +14,8 @@ namespace stream
             m_type(type)
         {}
         
+        virtual ~Description() {}
+        
         const std::string & name() const { return m_name; }
         const unsigned int id() const { return m_id; }
         const DataType & type() const { return m_type; }

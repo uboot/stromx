@@ -14,11 +14,12 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIP_H
-#define BASE_CLIP_H
+#ifndef BASE_CONVERTPIXELTYPE_H
+#define BASE_CONVERTPIXELTYPE_H
 
 #include <stream/Operator.h>
-#include <stream/Primitive.h>
+#include <stream/Image.h>
+#include <stream/Enum.h>
 
 namespace stream
 {
@@ -27,7 +28,7 @@ namespace stream
 
 namespace base
 {
-    class Clip : public stream::Operator
+    class ConvertPixelType : public stream::Operator
     {
     public:
         enum InputIds
@@ -41,14 +42,10 @@ namespace base
         
         enum ParameterIds
         {
-            TOP,
-            LEFT,
-            WIDTH,
-            HEIGHT,
-            NUM_PARAMS
+            PIXEL_TYPE
         };
         
-        Clip();
+        ConvertPixelType();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
@@ -61,19 +58,13 @@ namespace base
         
         static const std::string NAME;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const stream::Version VERSION;   
         
-        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
-                              unsigned int & left, unsigned int & top,
-                              unsigned int & width, unsigned int & height);                           
+        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);      
         
-        stream::UInt32 m_top;
-        stream::UInt32 m_left;
-        stream::UInt32 m_width;
-        stream::UInt32 m_height;
-        
+        stream::Enum m_pixelType;
         stream::DataContainer* m_image;
     };
 }
 
-#endif // BASE_CLIP_H
+#endif // BASE_CONVERTPIXELTYPE_H

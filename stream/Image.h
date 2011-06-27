@@ -13,7 +13,10 @@ namespace stream
         enum PixelType
         {
             MONO_8,
-            RGB_24
+            RGB_24,
+            BGR_24,
+            BAYERBG_8,
+            BAYERGB_8
         };
         
         virtual ~Image() {}

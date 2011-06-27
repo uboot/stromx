@@ -10,10 +10,7 @@ namespace stream
     public:
         None() {}
         
-        virtual const DataType & type() const { return m_type; }
-        
-    private:
-        static const DataType m_type;
+        virtual const DataType & type() const { return DataType::NONE; }
     };
 }
 

@@ -14,11 +14,14 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIP_H
-#define BASE_CLIP_H
+#ifndef BASE_TRIGGER_H
+#define BASE_TRIGGER_H
 
 #include <stream/Operator.h>
-#include <stream/Primitive.h>
+#include <stream/Image.h>
+
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
 
 namespace stream
 {
@@ -27,13 +30,14 @@ namespace stream
 
 namespace base
 {
-    class Clip : public stream::Operator
+    class Trigger : public stream::Operator
     {
     public:
         enum InputIds
         {
             INPUT
         };
+        
         enum OutputIds
         {
             OUTPUT
@@ -41,14 +45,10 @@ namespace base
         
         enum ParameterIds
         {
-            TOP,
-            LEFT,
-            WIDTH,
-            HEIGHT,
-            NUM_PARAMS
+            TRIGGER
         };
         
-        Clip();
+        Trigger();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
@@ -61,19 +61,13 @@ namespace base
         
         static const std::string NAME;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const stream::Version VERSION; 
         
-        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
-                              unsigned int & left, unsigned int & top,
-                              unsigned int & width, unsigned int & height);                           
+        typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
-        stream::UInt32 m_top;
-        stream::UInt32 m_left;
-        stream::UInt32 m_width;
-        stream::UInt32 m_height;
-        
-        stream::DataContainer* m_image;
+        boost::condition_variable_any m_cond;
+        boost::mutex m_mutex;
     };
 }
 
-#endif // BASE_CLIP_H
+#endif // BASE_TRIGGER_H

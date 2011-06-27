@@ -3,12 +3,15 @@ project(stream_test)
 include_directories(
     ../..
     ${CPPUNIT_INCLUDE_DIR}
+    ${PROJECT_BINARY_DIR}/..
 )
 
 add_executable(stream_test
     main.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
+    ../DataType.cpp
+    DataTypeTest.cpp
     ../Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp
@@ -16,7 +19,6 @@ add_executable(stream_test
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp
     ../Operator.cpp
-    ../None.cpp
     TestOperator.cpp
     ../OperatorWrapper.cpp
     OperatorWrapperTest.cpp

@@ -1,8 +1,6 @@
 #ifndef STREAM_VERSION_H
 #define STREAM_VERSION_H
 
-#include "Parameter.h"
-
 namespace stream
 {
     class Version

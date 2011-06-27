@@ -15,6 +15,7 @@ namespace base
         
         Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
         Image(const std::string & filename);
+        Image(const stream::Image& image);
         virtual ~Image();
         
         virtual void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);

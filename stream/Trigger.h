@@ -14,19 +14,19 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_ENUM_H
-#define STREAM_ENUM_H
+#ifndef STREAM_TRIGGER_H
+#define STREAM_TRIGGER_H
 
-#include "Primitive.h"
+#include "Data.h"
 
 namespace stream
 {
-    class Enum : public UInt32
+    class Trigger : public Data
     {
     public:
-        Enum(const unsigned int value) : UInt32(value) {}
+        Trigger() {}
         
-        virtual const DataType & type() const { return DataType::ENUM; }
+        virtual const DataType & type() const { return DataType::TRIGGER; }
     };
 }
 

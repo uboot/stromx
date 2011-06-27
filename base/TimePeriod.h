@@ -14,11 +14,14 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIP_H
-#define BASE_CLIP_H
+#ifndef BASE_TIMEPERIOD_H
+#define BASE_TIMEPERIOD_H
 
 #include <stream/Operator.h>
+#include <stream/Image.h>
 #include <stream/Primitive.h>
+
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace stream
 {
@@ -27,13 +30,14 @@ namespace stream
 
 namespace base
 {
-    class Clip : public stream::Operator
+    class TimePeriod : public stream::Operator
     {
     public:
         enum InputIds
         {
             INPUT
         };
+        
         enum OutputIds
         {
             OUTPUT
@@ -41,18 +45,15 @@ namespace base
         
         enum ParameterIds
         {
-            TOP,
-            LEFT,
-            WIDTH,
-            HEIGHT,
-            NUM_PARAMS
+            PERIOD
         };
         
-        Clip();
+        TimePeriod();
         
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
+        virtual void activate();
         
     private:
         static const std::vector<stream::Description*> setupInputs();
@@ -61,19 +62,12 @@ namespace base
         
         static const std::string NAME;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const stream::Version VERSION; 
         
-        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
-                              unsigned int & left, unsigned int & top,
-                              unsigned int & width, unsigned int & height);                           
-        
-        stream::UInt32 m_top;
-        stream::UInt32 m_left;
-        stream::UInt32 m_width;
-        stream::UInt32 m_height;
-        
-        stream::DataContainer* m_image;
+        stream::UInt32 m_period;
+        bool m_isFirstRun;
+        boost::posix_time::ptime m_lastExecute;
     };
 }
 
-#endif // BASE_CLIP_H
+#endif // BASE_TIMEPERIOD_H

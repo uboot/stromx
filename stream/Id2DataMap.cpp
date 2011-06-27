@@ -4,16 +4,16 @@
 
 namespace stream
 {
-    Id2DataMap::Id2DataMap(const std::vector<Description> & descriptions)
+    Id2DataMap::Id2DataMap(const std::vector<Description*> & descriptions)
     {
-        for(std::vector<Description>::const_iterator iter = descriptions.begin();
+        for(std::vector<Description*>::const_iterator iter = descriptions.begin();
             iter != descriptions.end();
             ++iter)
         {
-            if(m_map.count(iter->id()))
+            if(m_map.count((*iter)->id()))
                 throw ArgumentException("Two descriptors with the same ID");
             
-            m_map[iter->id()] = 0;
+            m_map[(*iter)->id()] = 0;
         }
     }
     

@@ -80,11 +80,11 @@ namespace stream
                         operatorNode != m_operatorSequence.end();
                         ++operatorNode)
                 {
-                    for(std::vector<Description>::const_iterator input = (*operatorNode)->op()->info()->inputs().begin();
+                    for(std::vector<Description*>::const_iterator input = (*operatorNode)->op()->info()->inputs().begin();
                         input != (*operatorNode)->op()->info()->inputs().end();
                         ++input)
                     {
-                        InputNode* inputNode = (*operatorNode)->getInputNode(input->id());
+                        InputNode* inputNode = (*operatorNode)->getInputNode((*input)->id());
                         
                         inputNode->setInputData();
                         // TODO: handle exceptions in setInputData(), i.e. in the operator

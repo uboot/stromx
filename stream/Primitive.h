@@ -26,6 +26,9 @@
 
 namespace stream
 {
+    template<typename data_t>
+    class NumericParameter;
+    
     template <class repr_t, class val_t>
     class Primitive : public Data
     {
@@ -33,7 +36,7 @@ namespace stream
         explicit Primitive() : m_value(0) {}
         explicit Primitive(const repr_t value) : m_value(value) {}
         
-        virtual const DataType & type() const { return m_type; }
+        virtual const DataType & type() const;
         
         operator repr_t() const { return m_value; }
         
@@ -42,7 +45,6 @@ namespace stream
         
     private:
         val_t m_value;
-        static const DataType m_type;
     };
     
     typedef Primitive<bool, bool> Bool;

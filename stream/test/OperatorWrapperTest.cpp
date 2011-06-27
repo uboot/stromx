@@ -101,6 +101,7 @@ namespace stream
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
+        m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
         t1.join();
         t2.join();    
@@ -191,6 +192,10 @@ namespace stream
 
     void OperatorWrapperTest::testGetParameter()
     {
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME), ParameterAccessModeException);
+        
+        m_operatorWrapper->deactivate();
+        
         const Data& value = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
         
@@ -201,9 +206,14 @@ namespace stream
     {
         UInt32 value(2000);
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value));
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME), ParameterAccessModeException);
+        
+        m_operatorWrapper->deactivate();
         
         const Data& testValue = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
+        
+        m_operatorWrapper->activate();
         
         CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(1, value), ParameterIdException);
         
