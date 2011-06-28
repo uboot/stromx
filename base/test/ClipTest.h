@@ -20,8 +20,6 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/DataContainer.h>
-
 namespace stream
 {
     class OperatorWrapper;
@@ -50,7 +48,6 @@ namespace base
             
         private:
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer m_image;
     };
 }
 

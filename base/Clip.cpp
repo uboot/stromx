@@ -9,7 +9,7 @@
 #include <stream/OperatorException.h>
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
-#include <stream/ReadAccess.h>
+#include <stream/WriteAccess.h>
 #include <stream/Id2DataPair.h>
 
 using namespace stream;
@@ -76,33 +76,22 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        DataContainer inContainer = inputDataMapper.data();
-        ReadAccess access(inContainer);
-        const Image* inImage = dynamic_cast<const Image*>(access());
+        DataContainer container = inputDataMapper.data();
+        WriteAccess access(container);
+        Image* image = dynamic_cast<Image*>(access());
         
         unsigned int top = m_top;
         unsigned int left = m_left;
         unsigned int height = m_height;
         unsigned int width = m_width;
         
-        adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
+        adjustClipRegion(image->width(), image->height(), left, top, width, height);
         
-        Data* data = m_imageAccess();
-        base::Image* outImage = dynamic_cast<base::Image*>(data);
-            
-        adjustImage(width, height, inImage->pixelType(), outImage);
+        image->setWidth(width);
+        image->setHeight(height);
+        image->setData(image->data() + top * image->stride() + left * image->pixelSize());
         
-        cv::Mat inCvImage = getOpenCvMat(*inImage);
-        cv::Mat outCvImage = getOpenCvMat(*outImage);
-        
-        inCvImage.adjustROI(-top, -(inImage->height() - height - top),
-                            -left, -(inImage->width() - width - left));
-        inCvImage.copyTo(outCvImage);
-        
-        DataContainer outContainer = DataContainer(outImage);
-        m_imageAccess = RecycleAccess(outContainer);
-        
-        Id2DataPair outputDataMapper(OUTPUT, outContainer);
+        Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);
     }
     

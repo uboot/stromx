@@ -9,6 +9,7 @@ namespace stream
     {
     public:
         ImageWrapper(const unsigned int size, uint8_t* const buffer);
+        ImageWrapper();
         
         virtual const DataType & type() const { return m_dataType; }
         virtual void setDataType(const DataType& dataType);
@@ -30,13 +31,20 @@ namespace stream
         virtual const PixelType pixelType() const { return m_pixelType; }
         virtual void setPixelType(const PixelType pixelType);
         
+        virtual const unsigned int pixelSize() const;
+        
         virtual uint8_t* const data() { return m_data; }
         virtual const uint8_t* const data() const { return m_data; }
         virtual void setData(uint8_t* const value) ; 
         
-    private:
+    protected:
         static const int numChannels(const PixelType pixelType);
         static const int depth(const PixelType pixelType);
+        
+        virtual void setSize(const unsigned int size);
+        virtual void setBuffer(uint8_t* const buffer);
+        
+    private:
         void validate(const unsigned int width,
                       const unsigned int height,
                       const unsigned int stride,

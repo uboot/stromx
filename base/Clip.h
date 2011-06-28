@@ -69,8 +69,6 @@ namespace base
         stream::UInt32 m_left;
         stream::UInt32 m_width;
         stream::UInt32 m_height;
-        
-        stream::RecycleAccess m_imageAccess;
     };
 }
 

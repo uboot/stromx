@@ -20,8 +20,8 @@ namespace base
     {
         m_operator = new OperatorWrapper(new AdjustRgbChannels());
         m_operator->activate();
-        m_image = DataContainer(new Image("lenna.jpg"));
-        m_operator->setInputData(AdjustRgbChannels::INPUT, m_image);
+        DataContainer image(new Image("lenna.jpg"));
+        m_operator->setInputData(AdjustRgbChannels::INPUT, image);
     }
     
     void AdjustRgbChannelsTest::testExecute()
@@ -31,16 +31,10 @@ namespace base
         m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
         
         stream::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
+        ReadAccess access(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         
-        {
-            ReadAccess access(result);
-            CPPUNIT_ASSERT(access());
-        }
-        
-        m_operator->setInputData(AdjustRgbChannels::INPUT, m_image);
-        m_operator->clearOutputData(AdjustRgbChannels::OUTPUT);
-        
-        result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
+        image->save("AdjustRgbChannelsTest_testExecute.png");
     }
     
     void AdjustRgbChannelsTest::tearDown ( void )

@@ -46,7 +46,6 @@ namespace base
             
         private:
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer m_image;
     };
 }
 

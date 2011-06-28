@@ -46,6 +46,8 @@ namespace stream
         virtual const PixelType pixelType() const = 0;
         virtual void setPixelType(const PixelType value) = 0;
         
+        virtual const unsigned int pixelSize() const = 0;
+        
         virtual uint8_t* const data() = 0;
         virtual const uint8_t* const data() const = 0;
         virtual void setData(uint8_t* const value) = 0;

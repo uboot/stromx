@@ -19,8 +19,8 @@ namespace base
     {
         m_operator = new OperatorWrapper(new Clip());
         m_operator->activate();
-        m_image = DataContainer(new Image("lenna.jpg"));
-        m_operator->setInputData(Clip::INPUT, m_image);
+        DataContainer image(new Image("lenna.jpg"));
+        m_operator->setInputData(Clip::INPUT, image);
     }
     
     void ClipTest::testExecute()
@@ -29,30 +29,15 @@ namespace base
         m_operator->setParameter(Clip::TOP, UInt32(210));
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
-        
-        {
-            stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-            
-            ReadAccess access(result);
-            const Image* image = dynamic_cast<const Image*>(access());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->height());
-        }
-        
-        m_operator->clearOutputData(Clip::OUTPUT);
-        
-        m_operator->setParameter(Clip::LEFT, UInt32(210));
-        m_operator->setParameter(Clip::TOP, UInt32(200));
-        m_operator->setParameter(Clip::WIDTH, UInt32(90));
-        m_operator->setParameter(Clip::HEIGHT, UInt32(100));
-        m_operator->setInputData(Clip::INPUT, m_image);
-        
+
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-        
-        ReadAccess access = ReadAccess(result);
+            
+        ReadAccess access(result);
         const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->height());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->height());
+        
+        image->save("ClipTest_testExecute.png");
     }
     
     void ClipTest::testAdjustClipRegion1()
@@ -68,6 +53,8 @@ namespace base
         const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image->height());
+        
+        image->save("ClipTest_testAdjustClipRegion1.png");
     }
     
     void ClipTest::testAdjustClipRegion2()

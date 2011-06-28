@@ -16,6 +16,18 @@ namespace stream
     {
     }
     
+    ImageWrapper::ImageWrapper()
+      : m_size(0),
+        m_buffer(0),
+        m_width(0),
+        m_height(0),
+        m_stride(0),
+        m_pixelType(MONO_8),
+        m_data(0),
+        m_dataType(DataType::MONO_8_IMAGE)
+    {
+    }
+    
     void ImageWrapper::setWidth(const unsigned int width)
     {
         validate(width, m_height, m_stride, m_data, m_pixelType);
@@ -51,6 +63,16 @@ namespace stream
         m_dataType = dataType;
     }
     
+    void ImageWrapper::setSize(const unsigned int size)
+    {
+        m_size = size;
+    }
+
+    void ImageWrapper::setBuffer(uint8_t*const buffer)
+    {
+        m_buffer = buffer;
+    }
+
     const int ImageWrapper::numChannels(const stream::Image::PixelType pixelType)
     {
         switch(pixelType)
@@ -93,24 +115,29 @@ namespace stream
         }
     }
     
+    const unsigned int ImageWrapper::pixelSize() const
+    {
+        return depth(m_pixelType) * numChannels(m_pixelType);
+    }
+    
     void ImageWrapper::validate(const unsigned int width,
                                 const unsigned int height,
                                 const unsigned int stride,
                                 const uint8_t*const data,
                                 const stream::Image::PixelType pixelType) const
     {
+        if(width == 0 || height == 0)
+            return;
+        
         unsigned int dataPerPixel = depth(pixelType) * numChannels(pixelType);
         
         // check row length
-        if(width * dataPerPixel > stride)
+        if(width * pixelSize() > stride)
             throw ArgumentException("Too small stride.");
         
         // check total data size
-        unsigned int dataSize = stride * height;
+        unsigned int dataSize = stride * (height - 1) + width;
         if(data + dataSize > m_buffer + m_size)
             throw ArgumentException("Too small buffer.");
     }
-
-    
-    
 }
