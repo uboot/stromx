@@ -30,7 +30,7 @@ namespace stream
         
         
         const unsigned int id() const { return m_id; }
-        DataContainer data() const { return *m_data; }
+        DataContainer & data() const { return *m_data; }
         
         virtual const bool trySet(const Id2DataMap& id2DataMap) const;
         virtual const bool tryGet(const Id2DataMap& id2DataMap) const;

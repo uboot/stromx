@@ -30,7 +30,8 @@ namespace base
     public:
         enum InputId
         {
-            INPUT
+            SOURCE,
+            DESTINATION
         };
         
         enum OutputId
@@ -58,10 +59,10 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION;   
         
-        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);      
+        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);
+        static const unsigned int getDestPixelSize(const stream::Image::PixelType pixelType);     
         
         stream::Enum m_pixelType;
-        stream::RecycleAccess m_imageAccess;
     };
 }
 

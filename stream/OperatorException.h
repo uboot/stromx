@@ -73,16 +73,24 @@ namespace stream
         const Parameter& m_parameter;
     };
     
-    class InputTypeException : public OperatorException
+    class InputException : public OperatorException
     {
     public:
-        InputTypeException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+        InputException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
           : OperatorException(op, message),
             m_inputId(inputId)
         {}
           
     private:
         const unsigned int m_inputId;;
+    };
+    
+    class InputTypeException : public InputException
+    {
+    public:
+        InputTypeException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+          : InputException(inputId, op, message)
+        {}
     };
 }
 

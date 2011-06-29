@@ -87,9 +87,8 @@ namespace base
         
         adjustClipRegion(image->width(), image->height(), left, top, width, height);
         
-        image->setWidth(width);
-        image->setHeight(height);
-        image->setData(image->data() + top * image->stride() + left * image->pixelSize());
+        uint8_t* data = image->data() + top * image->stride() + left * image->pixelSize();
+        image->initialize(width, height, image->stride(), data, image->pixelType());
         
         Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);

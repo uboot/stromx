@@ -15,27 +15,27 @@ namespace stream
         virtual void setDataType(const DataType& dataType);
         
         virtual uint8_t* const buffer() { return m_buffer; }
-        virtual const uint8_t* const buffer() const  { return m_buffer; }
         
         virtual const unsigned int size() const { return m_size; };
         
         virtual const unsigned int width() const { return m_width; }
-        virtual void setWidth(const unsigned int width);
         
         virtual const unsigned int height() const { return m_height; }
-        virtual void setHeight(const unsigned int height);
         
         virtual const unsigned int stride() const { return m_stride; }
-        virtual void setStride(const unsigned int stride);
         
         virtual const PixelType pixelType() const { return m_pixelType; }
-        virtual void setPixelType(const PixelType pixelType);
         
         virtual const unsigned int pixelSize() const;
         
         virtual uint8_t* const data() { return m_data; }
         virtual const uint8_t* const data() const { return m_data; }
-        virtual void setData(uint8_t* const value) ; 
+        
+        virtual void initialize(const unsigned int width, 
+                                const unsigned int height, 
+                                const unsigned int stride, 
+                                uint8_t* const data, 
+                                const PixelType pixelType);
         
     protected:
         static const int numChannels(const PixelType pixelType);

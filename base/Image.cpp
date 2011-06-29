@@ -12,8 +12,7 @@ namespace base
         {
             m_image = cvCreateImage(cv::Size(width, height), depth(pixelType) * 8, numChannels(pixelType));
             
-            getDataFromCvImage();
-            setPixelType(pixelType);
+            getDataFromCvImage(pixelType);
             setDataType(dataTypeFromPixelType(pixelType));
         }
         catch(cv::Exception& e)
@@ -29,8 +28,7 @@ namespace base
             m_image = cvCreateImage(cv::Size(image.width(), image.height()),
                                     depth(image.pixelType()) * 8, numChannels(image.pixelType()));
             
-            getDataFromCvImage();
-            setPixelType(image.pixelType());
+            getDataFromCvImage(image.pixelType());
             setDataType(image.type());
         }
         catch(cv::Exception& e)
@@ -49,8 +47,7 @@ namespace base
         {
             m_image = cvLoadImage(filename.c_str());
             
-            getDataFromCvImage();
-            setPixelType(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
+            getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
             setDataType(dataTypeFromPixelType(pixelType()));
         }
         catch(cv::Exception& e)
@@ -60,14 +57,11 @@ namespace base
     }
     
     
-    void Image::getDataFromCvImage()
+    void Image::getDataFromCvImage(const PixelType pixelType)
     {
         setBuffer((uint8_t*)(m_image->imageData));
         setSize(m_image->imageSize);
-        setData((uint8_t*)(m_image->imageData));
-        setStride(m_image->widthStep);
-        setWidth(m_image->width);
-        setHeight(m_image->height);
+        initialize(m_image->width, m_image->height, m_image->widthStep, (uint8_t*)(m_image->imageData), pixelType);
     }
     
     void Image::resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
@@ -78,7 +72,7 @@ namespace base
         try
         {
             m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
-            setPixelType(pixelType);
+            getDataFromCvImage(pixelType);
             setDataType(dataTypeFromPixelType(pixelType));
         }
         catch(cv::Exception& e)

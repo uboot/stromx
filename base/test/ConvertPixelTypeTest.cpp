@@ -19,27 +19,26 @@ namespace base
     {
         m_operator = new OperatorWrapper(new ConvertPixelType());
         m_operator->activate();
-        m_image = DataContainer(new Image("lenna.jpg"));
-        m_operator->setInputData(ConvertPixelType::INPUT, m_image);
+        DataContainer source(new Image("lenna.jpg"));
+        m_operator->setInputData(ConvertPixelType::SOURCE, source);
     }
     
-    void ConvertPixelTypeTest::testExecute()
+    void ConvertPixelTypeTest::testExecuteMono8()
     {
         m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::MONO_8));
+        DataContainer destination(new Image(512, 500, stream::Image::BAYERBG_8));
+        m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
         
-        {
-            stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
-
-            ReadAccess access = ReadAccess(result);
-            const Image* image = dynamic_cast<const Image*>(access());
-            CPPUNIT_ASSERT(image);
-            CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image->pixelType());
-        }
-        
-        m_operator->clearOutputData(ConvertPixelType::OUTPUT);
-        
-        m_operator->setInputData(ConvertPixelType::INPUT, m_image);
         stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        
+        ReadAccess access = ReadAccess(result);
+        const Image* image = dynamic_cast<const Image*>(access());
+        CPPUNIT_ASSERT(image);
+        CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image->pixelType());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image->height());
+        
+        image->save("ConverPixelTypeTest_testExecuteMono8.png");
     }
     
     void ConvertPixelTypeTest::tearDown ( void )

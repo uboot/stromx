@@ -24,8 +24,6 @@ namespace stream
     OperatorWrapper::~OperatorWrapper()
     {
         delete m_op;
-        
-        m_inputMap.clear();
     }
     
     void OperatorWrapper::testForInterrupt()

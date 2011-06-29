@@ -27,37 +27,7 @@ namespace stream
         m_dataType(DataType::MONO_8_IMAGE)
     {
     }
-    
-    void ImageWrapper::setWidth(const unsigned int width)
-    {
-        validate(width, m_height, m_stride, m_data, m_pixelType);
-        m_width = width;
-    }
-
-    void ImageWrapper::setHeight(const unsigned int height)
-    {
-        validate(m_width, height, m_stride, m_data, m_pixelType);
-        m_height = height;
-    }
-
-    void ImageWrapper::setStride(const unsigned int stride)
-    {
-        validate(m_width, m_height, stride, m_data, m_pixelType);
-        m_stride = stride;
-    }
-
-    void ImageWrapper::setData(uint8_t*const data)
-    {
-        validate(m_width, m_height, m_stride, data, m_pixelType);
-        m_data = data;
-    }
-
-    void ImageWrapper::setPixelType(const PixelType pixelType)
-    {
-        validate(m_width, m_height, m_stride, m_data, pixelType);
-        m_pixelType = pixelType;
-    }
-    
+     
     void ImageWrapper::setDataType(const stream::DataType& dataType)
     {
         m_dataType = dataType;
@@ -118,6 +88,23 @@ namespace stream
     const unsigned int ImageWrapper::pixelSize() const
     {
         return depth(m_pixelType) * numChannels(m_pixelType);
+    }
+    
+    
+        
+    void ImageWrapper::initialize(const unsigned int width, 
+                            const unsigned int height, 
+                            const unsigned int stride,
+                            uint8_t*const data, 
+                            const PixelType pixelType)
+    {
+        validate(width, height, stride, data, pixelType);
+        
+        m_width = width;
+        m_height = height;
+        m_stride = stride;
+        m_data = data;
+        m_pixelType = pixelType;
     }
     
     void ImageWrapper::validate(const unsigned int width,

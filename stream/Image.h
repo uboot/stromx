@@ -25,32 +25,32 @@ namespace stream
         };
         
         virtual ~Image() {}
-        
+                                
         virtual const DataType & type() const = 0;
         virtual void setDataType(const DataType& dataType) = 0;
         
         virtual uint8_t* const buffer() = 0;
-        virtual const uint8_t* const buffer() const = 0;
         
         virtual const unsigned int size() const = 0;
         
         virtual const unsigned int width() const = 0;
-        virtual void setWidth(const unsigned int value) = 0;
         
         virtual const unsigned int height() const = 0;
-        virtual void setHeight(const unsigned int value) = 0;
         
         virtual const unsigned int stride() const = 0;
-        virtual void setStride(const unsigned int value) = 0;
         
         virtual const PixelType pixelType() const = 0;
-        virtual void setPixelType(const PixelType value) = 0;
         
         virtual const unsigned int pixelSize() const = 0;
         
         virtual uint8_t* const data() = 0;
         virtual const uint8_t* const data() const = 0;
-        virtual void setData(uint8_t* const value) = 0;
+        
+        virtual void initialize(const unsigned int width, 
+                                const unsigned int height, 
+                                const unsigned int stride, 
+                                uint8_t* const data, 
+                                const PixelType pixelType) = 0; 
     };
 }
 
