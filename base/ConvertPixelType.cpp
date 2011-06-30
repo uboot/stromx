@@ -92,10 +92,8 @@ namespace base
             cv::cvtColor(inCvImage, outCvImage, code);
         }
         
-        DataContainer outContainer = DataContainer(destImage);
-        
-        Id2DataPair outputDataMapper(OUTPUT, outContainer);
-        provider.sendOutputData( outputDataMapper);
+        Id2DataPair outputMapper(OUTPUT, destMapper.data());
+        provider.sendOutputData( outputMapper);
     }
     
     const std::vector< Description* > ConvertPixelType::setupInputs()

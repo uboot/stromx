@@ -38,38 +38,47 @@ namespace stream
         m_thread = new Thread();
         
         for(unsigned int i = 1; i < 3; ++i)
-            m_thread->addOperator(m_operatorNodes[i]);
+        {
+            for(std::vector<Description*>::const_iterator input = m_operatorNodes[i]->op()->info()->inputs().begin();
+                input != m_operatorNodes[i]->op()->info()->inputs().end();
+                ++input)
+            {
+                InputNode* inputNode = m_operatorNodes[i]->getInputNode((*input)->id());
+                m_thread->addNode(inputNode);
+            }
+        }
         
         m_container = DataContainer(new stream::None);
-        m_newOperator = new OperatorNode(new OperatorWrapper(new TestOperator()));
+        m_operatorNode = new OperatorNode(new OperatorWrapper(new TestOperator()));
+        m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);
     }
     
     void ThreadTest::testAddOperator()
     {
-        unsigned int numOperators = m_thread->operatorSequence().size();
+        unsigned int numNodes = m_thread->nodeSequence().size();
         
-        CPPUNIT_ASSERT_NO_THROW(m_thread->addOperator(m_newOperator));
-        CPPUNIT_ASSERT_EQUAL(numOperators + 1, (unsigned int)(m_thread->operatorSequence().size()));
-        CPPUNIT_ASSERT_EQUAL(m_newOperator, m_thread->operatorSequence()[numOperators]);  
+        CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(m_node));
+        CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->nodeSequence().size()));
+        CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[numNodes]);  
     }
 
     void ThreadTest::testInsertOperator()
     {
-        unsigned int numOperators = m_thread->operatorSequence().size();
+        unsigned int numNodes = m_thread->nodeSequence().size();
         
-        CPPUNIT_ASSERT_NO_THROW(m_thread->insertOperator(0, m_newOperator));
-        CPPUNIT_ASSERT_EQUAL(numOperators + 1, (unsigned int)(m_thread->operatorSequence().size()));
-        CPPUNIT_ASSERT_EQUAL(m_newOperator, m_thread->operatorSequence()[0]);  
+        CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(0, m_node));
+        CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->nodeSequence().size()));
+        CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[0]);  
     }
 
     void ThreadTest::testRemoveOperator()
     {
-        m_thread->insertOperator(0, m_newOperator);
-        unsigned int numOperators = m_thread->operatorSequence().size();
+        m_thread->insertNode(0, m_node);
+        unsigned int numNodes = m_thread->nodeSequence().size();
         
-        CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(0));
-        CPPUNIT_ASSERT_EQUAL(numOperators - 1, (unsigned int)(m_thread->operatorSequence().size()));
-        CPPUNIT_ASSERT(m_newOperator != m_thread->operatorSequence()[0]);  
+        CPPUNIT_ASSERT_NO_THROW(m_thread->removeNode(0));
+        CPPUNIT_ASSERT_EQUAL(numNodes - 1, (unsigned int)(m_thread->nodeSequence().size()));
+        CPPUNIT_ASSERT(m_node != m_thread->nodeSequence()[0]);  
     }
     
     void ThreadTest::testStart()
@@ -130,7 +139,7 @@ namespace stream
             delete *iter;
         }
         
-        delete m_newOperator;
+        delete m_operatorNode;
     }
 }
 

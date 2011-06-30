@@ -14,7 +14,7 @@ namespace boost
 
 namespace stream
 {
-    class OperatorNode;
+    class InputNode;
     
     class Thread
     {
@@ -22,11 +22,11 @@ namespace stream
         Thread();
         ~Thread();
         
-        const std::vector<OperatorNode*> & operatorSequence() const { return m_operatorSequence; }
+        const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
         
-        void addOperator(OperatorNode* const op);
-        void insertOperator(const unsigned int position, OperatorNode* const op);
-        void removeOperator(const unsigned int position);
+        void addNode(InputNode* const op);
+        void insertNode(const unsigned int position, InputNode* const op);
+        void removeNode(const unsigned int position);
         
         void start();
         void stop();
@@ -36,7 +36,7 @@ namespace stream
         void loop();
         
         boost::thread* m_thread;
-        std::vector<OperatorNode*> m_operatorSequence;
+        std::vector<InputNode*> m_nodeSequence;
     };
 }
 

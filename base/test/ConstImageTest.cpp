@@ -25,16 +25,13 @@ namespace base
     
     void ConstImageTest::testExecute()
     {
-        {
-            stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
-            
-            ReadAccess access = ReadAccess(result);
-            const Image* image = dynamic_cast<const Image*>(access());
-            CPPUNIT_ASSERT(image);
-        }
-        
-        m_operator->clearOutputData(ConstImage::OUTPUT);
         stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
+        
+        ReadAccess access = ReadAccess(result);
+        const Image* image = dynamic_cast<const Image*>(access());
+        CPPUNIT_ASSERT(image);
+        
+        image->save("ConstImageTest_testExecute.png");
     }
     
     void ConstImageTest::tearDown ( void )

@@ -14,6 +14,8 @@ namespace stream
     public:
         InputNode(OperatorInterface* const op, const unsigned int inputId);
         
+        const unsigned int inputId() const { return m_inputId; }
+        const OperatorInterface* const op() { return m_operator; }
         const bool isConnected() const { return m_source == 0; }
         const OutputNode& source() const { return *m_source; }
         void connect(OutputNode* const output);

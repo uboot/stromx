@@ -48,6 +48,7 @@ namespace base
         Camera();
         virtual ~Camera();
         
+        virtual Operator* const clone() const { return new Camera; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

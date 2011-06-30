@@ -17,6 +17,7 @@ namespace stream
         
         TestOperator();
         
+        virtual Operator* const clone() const { return new TestOperator; }
         virtual void setParameter(unsigned int id, const Data& value);
         const Data& getParameter(unsigned int id);
         virtual void execute(DataProvider& provider);

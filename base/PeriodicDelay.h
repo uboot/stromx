@@ -50,6 +50,7 @@ namespace base
         
         PeriodicDelay();
         
+        virtual Operator* const clone() const { return new PeriodicDelay; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

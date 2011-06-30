@@ -52,6 +52,7 @@ namespace base
         
         Trigger();
         
+        virtual Operator* const clone() const { return new Trigger; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

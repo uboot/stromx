@@ -35,6 +35,7 @@ namespace stream
                  const std::vector<Description*>& outputs,
                  const std::vector<Parameter*>& parameters);
                  
+        virtual Operator* const clone() const = 0;
         virtual ~Operator();
         
         const std::string& name() const { return m_name; }
