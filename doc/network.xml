@@ -8,7 +8,7 @@
         name CDATA #IMPLIED
     >
     
-    <!ELEMENT Thread (OperatorNode*)>
+    <!ELEMENT Thread (InputNode*)>
     <!ATTLIST Thread
         name CDATA #IMPLIED
     >
@@ -33,9 +33,10 @@
         output NMTOKEN #REQUIRED
     >
     
-    <!ELEMENT OperatorNode EMPTY>
-    <!ATTLIST OperatorNode
-        id NMTOKEN #REQUIRED
+    <!ELEMENT InputNode EMPTY>
+    <!ATTLIST InputNode
+        operator NMTOKEN #REQUIRED
+        input NMTOKEN #REQUIRED
     >
 
     <!ELEMENT ImageFileName (#PCDATA)>
@@ -91,10 +92,11 @@
             <Input id="0" operator="2" output="0"/>
         </Operator>
     </Network>
-    <Thread name="Processing thread">
-        <OperatorNode id="0"/>
-        <OperatorNode id="1"/>
-        <OperatorNode id="2"/>
-        <OperatorNode id="3"/>
+    <Thread name="First processing thread">
+        <InputNode operator="1" input="0"/>
+        <InputNode operator="2" input="0"/>
+    </Thread> 
+    <Thread name="Second processing thread">
+        <InputNode operator="3" input="0"/>
     </Thread> 
 </Stream>
