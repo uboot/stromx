@@ -38,6 +38,8 @@ add_executable(stream_test
     ThreadTest.cpp
     ../Network.cpp
     NetworkTest.cpp
+    ../OperatorFactory.cpp
+    OperatorFactoryTest.cpp
     ../Primitive.cpp
     ../DataType.cpp
     PrimitiveTest.cpp

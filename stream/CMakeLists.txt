@@ -32,6 +32,7 @@ set(SOURCES
     InputNode.cpp
     Network.cpp
     Operator.cpp
+    OperatorFactory.cpp
     OperatorNode.cpp
     OperatorWrapper.cpp
     OutputNode.cpp

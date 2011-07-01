@@ -12,8 +12,8 @@
 
 namespace stream
 {
-    const std::string TestOperator::NAME("Test Operator");
-    const std::string TestOperator::PACKAGE("Test Package");
+    const std::string TestOperator::NAME("TestOperator");
+    const std::string TestOperator::PACKAGE("TestPackage");
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()

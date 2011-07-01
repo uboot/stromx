@@ -1,5 +1,5 @@
 /* 
-*  Copyright @YEAR@ @AUTHOR@
+*  Copyright 2011 Thomas Fidler
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,31 +14,36 @@
 *  limitations under the License.
 */
 
-#ifndef @PREPROCESSOR_MACRO_TEST@
-#define @PREPROCESSOR_MACRO_TEST@
+#ifndef STREAM_OPERATORFACTORYTEST_H
+#define STREAM_OPERATORFACTORYTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace @PACKAGE@
+namespace stream
 {
-    class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+    class OperatorFactory;
+    
+    class OperatorFactoryTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (@CLASS@Test);
-        CPPUNIT_TEST(test);
+        CPPUNIT_TEST_SUITE (OperatorFactoryTest);
+        CPPUNIT_TEST(testRegisterOperator);
+        CPPUNIT_TEST(testNewOperator);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        @CLASS@Test () {}
+        OperatorFactoryTest () {}
         
         void setUp();
         void tearDown();
 
     protected:
-        void test();
+        void testRegisterOperator();
+        void testNewOperator();
             
     private:
+        OperatorFactory* m_factory;
     };
 }
 
-#endif // @PREPROCESSOR_MACRO_TEST@
+#endif // STREAM_OPERATORFACTORYTEST_H

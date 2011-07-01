@@ -2,6 +2,8 @@
 
 #include <cppunit/TestAssert.h>
 
+#include <@PACKAGE@/@CLASS@.h>
+
 CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
 
 namespace @PACKAGE@
