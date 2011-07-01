@@ -14,14 +14,38 @@
 *  limitations under the License.
 */
 
+#include "Stream.h"
+#include "Thread.h"
+#include "Exception.h"
+
 namespace stream
 {
-    Stream::Stream()
+    Stream::Stream(Network* const network)
+      : m_network(network),
+        m_threads(0)    
     {
+        if (m_network == 0)
+        {
+            throw ArgumentException("Invalid argument: Null pointer");
+        }
     }
     
     Stream::~Stream()
     {
+        if (!m_threads.empty())
+        {
+            for(std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter) 
+            {
+                (*iter)->stop();
+            }
+        } 
+    }
+    
+    Network* const Stream::network() const
+    {
+        return m_network;
     }
     
     void Stream::addThread(Thread* const thr)
@@ -30,6 +54,11 @@ namespace stream
     
     void Stream::removeThread(Thread* const thr)
     {
+    }
+    
+    const std::vector<Thread*> & Stream::threads()
+    {
+        return m_threads;
     }
     
 }

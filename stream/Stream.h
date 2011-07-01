@@ -17,6 +17,8 @@
 #ifndef STREAM_STREAM_H
 #define STREAM_STREAM_H
 
+#include <vector> 
+
 namespace stream
 {
     class Thread;
@@ -25,13 +27,16 @@ namespace stream
     class Stream
     {
     public:
-        Stream();
+        Stream(Network* const m_network);
         ~Stream();
+	Network* const network() const;
         void addThread(Thread* const thr);
         void removeThread(Thread* const thr);
+	const std::vector<Thread*> & threads();
         
     private:
-        Network* m_network;
+        Network* const m_network;
+	std::vector<Thread*> m_threads;
     };
 }
 
