@@ -1,0 +1,17 @@
+#include "@CLASS@Test.h"
+
+#include <cppunit/TestAssert.h>
+
+CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
+
+namespace @PACKAGE@
+{
+    void @CLASS@Test::setUp()
+    {
+    }
+
+    void @CLASS@Test::tearDown()
+    {
+    }
+
+}

@@ -23,7 +23,6 @@
 namespace stream
 {
     class OperatorWrapper;
-    class DataContainer;
 }
 
 namespace base
@@ -31,21 +30,20 @@ namespace base
     class ConvertPixelTypeTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ConvertPixelTypeTest);
-        CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST (testExecuteMono8);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ConvertPixelTypeTest() : m_operator(0), m_image(0) {}
+            ConvertPixelTypeTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testExecute();
+            void testExecuteMono8();
             
         private:
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer* m_image;
     };
 }
 

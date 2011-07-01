@@ -10,6 +10,7 @@
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
 #include <stream/Id2DataPair.h>
+#include <stream/WriteAccess.h>
 
 using namespace stream;
 
@@ -73,9 +74,9 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        DataContainer* container = inputDataMapper.data();
-        Data* data = container->getWriteAccess();
-        Image* image = dynamic_cast<Image*>(data);
+        DataContainer container = inputDataMapper.data();
+        WriteAccess access(container);
+        Image* image = dynamic_cast<Image*>(access());
 
         cv::Mat cvImage = getOpenCvMat(*image);
         
@@ -113,7 +114,6 @@ namespace base
             throw InputTypeException(INPUT, *this);
         }
         
-        container->clearWriteAccess();
         Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);
     }

@@ -4,10 +4,11 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
+
 namespace stream
 {
     class Id2DataMap;
-    class DataContainer;
     
     class Id2DataCompositeTest : public CPPUNIT_NS :: TestFixture
     {
@@ -19,7 +20,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            Id2DataCompositeTest() : m_map(0), m_dataContainer(0) {}
+            Id2DataCompositeTest() : m_map(0) {}
             void setUp();
             void tearDown();
 
@@ -31,7 +32,7 @@ namespace stream
             
         private:
             Id2DataMap* m_map;
-            DataContainer* m_dataContainer; 
+            DataContainer m_dataContainer; 
     };
 }
 

@@ -1,0 +1,6 @@
+#include "@CLASS@.h"
+
+namespace @PACKAGE@
+{
+    
+} 

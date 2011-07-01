@@ -20,10 +20,11 @@
 #include <stream/Operator.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
+#include <stream/RecycleAccess.h>
 
 namespace stream
 {
-    class DataContainer;
+    class Image;
 }
 
 namespace base
@@ -44,6 +45,7 @@ namespace base
         ConstImage();
         virtual ~ConstImage();
         
+        virtual Operator* const clone() const { return new ConstImage; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
@@ -57,7 +59,8 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION;   
         
-        stream::DataContainer* m_image;
+        stream::Image* m_image;
+        stream::RecycleAccess m_imageAccess;
     };
 }
 

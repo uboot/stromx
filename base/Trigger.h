@@ -19,6 +19,7 @@
 
 #include <stream/Operator.h>
 #include <stream/Image.h>
+#include <stream/Primitive.h>
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
@@ -33,23 +34,25 @@ namespace base
     class Trigger : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
         
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
-            TRIGGER
+            TRIGGER,
+            ACTIVE
         };
         
         Trigger();
         
+        virtual Operator* const clone() const { return new Trigger; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
@@ -67,6 +70,7 @@ namespace base
         
         boost::condition_variable_any m_cond;
         boost::mutex m_mutex;
+        stream::Bool m_active;
     };
 }
 

@@ -22,7 +22,7 @@ namespace base
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_image(0)
     {
-        m_image = new DataContainer(new Image(0, 0, stream::Image::MONO_8));
+        m_image = new Image(0, 0, stream::Image::MONO_8);
     }
     
     ConstImage::~ConstImage()
@@ -38,22 +38,17 @@ namespace base
             {
             case IMAGE:
             {
-                if(m_image)
-                    m_image->dereference();
+                delete m_image;
                 
-                Image* imagePtr = 0;
                 try
                 {
                     const stream::Image& image = dynamic_cast<const stream::Image&>(value);
-                    imagePtr = new Image(image);
+                    m_image = new Image(image);
                 }
                 catch(std::bad_cast&)
                 {
                     throw ParameterTypeException(*parameters()[id], *this);
                 }
-                
-                m_image = new DataContainer(imagePtr);
-                m_image->reference();
                 break;
             }
             default:
@@ -71,7 +66,7 @@ namespace base
         switch(id)
         {
         case IMAGE:
-            return *m_image->getWriteAccess();
+            return *m_image;
         default:
             throw ParameterIdException(id, *this);
         }
@@ -79,7 +74,20 @@ namespace base
     
     void ConstImage::execute(DataProvider& provider)
     {
-        Id2DataPair outputDataMapper(OUTPUT, m_image);
+        Data* outData = m_imageAccess();
+        base::Image* outImage = dynamic_cast<base::Image*>(outData);
+            
+        adjustImage(m_image->width(), m_image->height(), m_image->pixelType(), outImage);
+        
+        cv::Mat inCvImage = getOpenCvMat(*m_image);
+        cv::Mat outCvImage = getOpenCvMat(*outImage);
+        
+        inCvImage.copyTo(outCvImage);
+        
+        DataContainer outContainer = DataContainer(outImage);
+        m_imageAccess = RecycleAccess(outContainer);
+        
+        Id2DataPair outputDataMapper(OUTPUT, outContainer);
         provider.sendOutputData( outputDataMapper);
     }
     

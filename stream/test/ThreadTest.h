@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
+
 namespace stream
 {
     class OperatorWrapper;
@@ -11,6 +13,7 @@ namespace stream
     class OperatorNode;
     class Thread;
     class DataContainer;
+    class InputNode;
     
     class ThreadTest : public CPPUNIT_NS :: TestFixture
     {
@@ -24,7 +27,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        ThreadTest() : m_thread(0), m_container(0), m_newOperator(0) {}
+        ThreadTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
         
         void setUp();
         void tearDown();
@@ -41,9 +44,10 @@ namespace stream
     private: 
         std::vector<TestOperator*> m_operators;
         std::vector<OperatorNode*> m_operatorNodes;
+        DataContainer m_container;
         Thread* m_thread;
-        DataContainer* m_container;
-        OperatorNode* m_newOperator;
+        InputNode* m_node;
+        OperatorNode* m_operatorNode;
     };
 }
 

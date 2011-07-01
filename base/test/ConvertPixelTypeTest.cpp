@@ -5,6 +5,7 @@
 #include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/Primitive.h>
+#include <stream/ReadAccess.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -18,31 +19,30 @@ namespace base
     {
         m_operator = new OperatorWrapper(new ConvertPixelType());
         m_operator->activate();
-        m_image = new DataContainer(new Image("lenna.jpg"));
-        m_operator->setInputData(ConvertPixelType::INPUT, m_image);
+        DataContainer source(new Image("lenna.jpg"));
+        m_operator->setInputData(ConvertPixelType::SOURCE, source);
     }
     
-    void ConvertPixelTypeTest::testExecute()
+    void ConvertPixelTypeTest::testExecuteMono8()
     {
         m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::MONO_8));
+        DataContainer destination(new Image(512, 500, stream::Image::BAYERBG_8));
+        m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
         
-        stream::DataContainer* result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        ReadAccess access = ReadAccess(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT(image);
         CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image->pixelType());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image->height());
         
-        // simulate a reference by a following operator
-        result->reference();
-        m_operator->clearOutputData(ConvertPixelType::OUTPUT);
-        
-        m_operator->setInputData(ConvertPixelType::INPUT, m_image);
-        result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        image->save("ConverPixelTypeTest_testExecuteMono8.png");
     }
     
     void ConvertPixelTypeTest::tearDown ( void )
     {
         delete m_operator;
-        delete m_image;
     }
 }

@@ -20,11 +20,13 @@ include_directories(
 
 set(SOURCES
     AdjustRgbChannels.cpp
+    Camera.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
     Image.cpp
-    TimePeriod.cpp
+    Queue.cpp
+    PeriodicDelay.cpp
     Trigger.cpp
     Utilities.cpp
 )
@@ -32,16 +34,16 @@ set(SOURCES
 
 include_directories(${OpenCV_ROOT_DIR})
 
-add_library(stream_base_operators SHARED ${SOURCES})
+add_library(stream_base SHARED ${SOURCES})
 
 set(VERSION_STRING "${BASE_VERSION_MAJOR}.${BASE_VERSION_MINOR}")
 
-set_target_properties(stream_base_operators PROPERTIES
+set_target_properties(stream_base PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
 )
 
-target_link_libraries(stream_base_operators
+target_link_libraries(stream_base
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
 )

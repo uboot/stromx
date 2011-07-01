@@ -8,6 +8,7 @@ include_directories(
 
 add_executable(stream_test
     main.cpp
+    ../DataContainerImpl.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
     ../DataType.cpp
@@ -27,6 +28,12 @@ add_executable(stream_test
     ../InputNode.cpp
     InputNodeTest.cpp   
     ../OperatorNode.cpp
+    ../ReadAccess.cpp
+    ../ReadAccessImpl.cpp
+    ReadAccessTest.cpp
+    ../RecycleAccess.cpp
+    ../RecycleAccessImpl.cpp
+    RecycleAccessTest.cpp
     ../Thread.cpp
     ThreadTest.cpp
     ../Network.cpp
@@ -34,6 +41,12 @@ add_executable(stream_test
     ../Primitive.cpp
     ../DataType.cpp
     PrimitiveTest.cpp
+    TestData.cpp
+    ../Try.cpp
+    TryTest.cpp
+    ../WriteAccess.cpp
+    ../WriteAccessImpl.cpp
+    WriteAccessTest.cpp
 )
 
 target_link_libraries(stream_test

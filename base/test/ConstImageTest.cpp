@@ -4,6 +4,7 @@
 #include <base/Image.h>
 #include <stream/DataContainer.h>
 #include <stream/OperatorWrapper.h>
+#include <stream/ReadAccess.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -24,13 +25,13 @@ namespace base
     
     void ConstImageTest::testExecute()
     {
-        stream::DataContainer* result = m_operator->getOutputData(ConstImage::OUTPUT);
+        stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
         
-        const Image* image = dynamic_cast<const Image*>(result->getReadAccess());
+        ReadAccess access = ReadAccess(result);
+        const Image* image = dynamic_cast<const Image*>(access());
         CPPUNIT_ASSERT(image);
         
-        m_operator->clearOutputData(ConstImage::OUTPUT);
-        result = m_operator->getOutputData(ConstImage::OUTPUT);
+        image->save("ConstImageTest_testExecute.png");
     }
     
     void ConstImageTest::tearDown ( void )

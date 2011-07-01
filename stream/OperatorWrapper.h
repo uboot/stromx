@@ -38,8 +38,8 @@ namespace stream
         void setParameter(unsigned int id, const Data& value);
         const Data& getParameter(unsigned int id);
         
-        DataContainer* const getOutputData(const unsigned int id);
-        void setInputData(const unsigned int id, DataContainer* const data);
+        DataContainer getOutputData(const unsigned int id);
+        void setInputData(const unsigned int id, DataContainer data);
         void clearOutputData(unsigned int id);
         void clearAllData();
         

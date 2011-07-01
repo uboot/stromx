@@ -9,7 +9,7 @@
 #include <stream/OperatorException.h>
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
-
+#include <stream/WriteAccess.h>
 #include <stream/Id2DataPair.h>
 
 using namespace stream;
@@ -22,8 +22,7 @@ namespace base
     const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Clip::Clip()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_image(0)
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
@@ -77,29 +76,21 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        const Data* inData = inputDataMapper.data()->getReadAccess();
-        const Image* inImage = dynamic_cast<const Image*>(inData);
+        DataContainer container = inputDataMapper.data();
+        WriteAccess access(container);
+        Image* image = dynamic_cast<Image*>(access());
         
         unsigned int top = m_top;
         unsigned int left = m_left;
         unsigned int height = m_height;
         unsigned int width = m_width;
         
-        adjustClipRegion(inImage->width(), inImage->height(), left, top, width, height);
+        adjustClipRegion(image->width(), image->height(), left, top, width, height);
         
-        adjustImage(width, height, inImage->pixelType(), this, m_image);
+        uint8_t* data = image->data() + top * image->stride() + left * image->pixelSize();
+        image->initialize(width, height, image->stride(), data, image->pixelType());
         
-        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
-        
-        cv::Mat inCvImage = getOpenCvMat(*inImage);
-        cv::Mat outCvImage = getOpenCvMat(*outImage);
-        
-        inCvImage.adjustROI(-top, -(inImage->height() - height - top),
-                            -left, -(inImage->width() - width - left));
-        inCvImage.copyTo(outCvImage);
-        
-        m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(OUTPUT, m_image);
+        Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);
     }
     

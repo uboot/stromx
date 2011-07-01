@@ -7,39 +7,29 @@
 namespace stream
 {
     class DataContainer;
-    class Data;
-
+    
     class DataContainerTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (DataContainerTest);
-        CPPUNIT_TEST (testReference);
-        CPPUNIT_TEST (testDereference);
-        CPPUNIT_TEST (testGetReadAccess);
-        CPPUNIT_TEST (testGetWriteAccess);
-        CPPUNIT_TEST (testClearWriteAccess);
+        CPPUNIT_TEST (testDestroy);
+        CPPUNIT_TEST (testDestroyDelayed);
+        CPPUNIT_TEST (testComparison);
+        CPPUNIT_TEST (testEmpty);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            DataContainerTest() : m_container(0) {}
+            DataContainerTest() {}
             
-            void setUp();
-            void tearDown();
+            void setUp() {}
+            void tearDown() {}
 
         protected:
-            void testReference();
-            void testDereference();
-            void testGetReadAccess();
-            void testGetWriteAccess();
-            void testClearWriteAccess();
-            
+            void testDestroy();
+            void testDestroyDelayed();
+            void testComparison();
+            void testEmpty();
         private:
-            void dereferenceDelayed();
-            void clearWriteAccessDelayed();
-            void referenceWithInterruptException();
-            void getWriteAccessWithInterruptException();
-            
-            DataContainer* m_container;
-            const Data* m_data;
+            void destroyDelayed(DataContainer & container);
     };
 }
 

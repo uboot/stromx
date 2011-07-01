@@ -1,118 +1,80 @@
 #include "DataContainerTest.h"
 
 #include <stream/DataContainer.h>
-#include <stream/None.h>
 #include <stream/Exception.h>
+
+#include "TestData.h"
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
 #include <cppunit/TestAssert.h>
 
+
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::DataContainerTest);
 
 namespace stream
 {
-    void DataContainerTest::setUp ( void )
+    void DataContainerTest::testDestroy()
     {
-        Data* data = new stream::None;
-        m_container = new DataContainer(data);
-        m_data = data;
+        {
+            DataContainer copy;
+            {
+                DataContainer container(new TestData());
+                copy = container;
+                CPPUNIT_ASSERT(! TestData::wasDestructed);
+            }
+            
+            CPPUNIT_ASSERT(! TestData::wasDestructed);
+        }
+        
+        CPPUNIT_ASSERT(TestData::wasDestructed);
     }
     
-    void DataContainerTest::testReference()
+    void DataContainerTest::testDestroyDelayed()
     {
-        CPPUNIT_ASSERT_NO_THROW(m_container->reference());
-        m_container->dereference();
-        
-        m_container->getWriteAccess();
-        boost::thread t1(boost::bind(&DataContainerTest::clearWriteAccessDelayed, this));
-        CPPUNIT_ASSERT_NO_THROW(m_container->reference());      
-        m_container->dereference();
-        
-        m_container->getWriteAccess();
-        boost::thread t2(boost::bind(&DataContainerTest::referenceWithInterruptException, this));
+        {
+            DataContainer container(new TestData());
+            boost::thread t(boost::bind(&DataContainerTest::destroyDelayed, this, _1), container);
+            CPPUNIT_ASSERT(! TestData::wasDestructed);
+            
+            t.join();
+            CPPUNIT_ASSERT(! TestData::wasDestructed);
+        }
+        CPPUNIT_ASSERT(TestData::wasDestructed);
+    }
+    
+    void DataContainerTest::destroyDelayed(DataContainer& container)
+    {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
-        t2.interrupt();
-        t2.join();
     }
     
-    void DataContainerTest::referenceWithInterruptException()
+    void DataContainerTest::testComparison()
     {
-        CPPUNIT_ASSERT_THROW(m_container->reference(), InterruptException);
-    }
-    
-    void DataContainerTest::testDereference ( void )
-    {
-        m_container->reference();
-        CPPUNIT_ASSERT_NO_THROW(m_container->dereference());
+        Data* data = new TestData();
         
-        m_container->reference();
-        m_container->reference();
-        CPPUNIT_ASSERT_NO_THROW(m_container->dereference());
-        CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
-        CPPUNIT_ASSERT_NO_THROW(m_container->dereference()); 
-        m_container = 0;
+        DataContainer container1(data);
+        DataContainer container2 = container1;
+        CPPUNIT_ASSERT(container1 == container2);
+        
+        DataContainer container3;
+        DataContainer container4;
+        CPPUNIT_ASSERT(container3 == container4);
+        CPPUNIT_ASSERT(container1 != container3);
+    }
+    
+    void DataContainerTest::testEmpty()
+    {
+        DataContainer container;
+        CPPUNIT_ASSERT(container.empty());
+        
+        Data* data = new TestData();
+        container = DataContainer(data);
+        CPPUNIT_ASSERT(! container.empty());
+        
+        container = DataContainer();
+        CPPUNIT_ASSERT(container.empty());
     }
 
-    void DataContainerTest::testGetReadAccess()
-    {
-        const Data* data = 0;
-        CPPUNIT_ASSERT_NO_THROW(data = m_container->getReadAccess());
-        CPPUNIT_ASSERT_EQUAL(m_data, data);
-    }
 
-    void DataContainerTest::testGetWriteAccess()
-    {
-        const Data* data = 0;
-        CPPUNIT_ASSERT_NO_THROW(data = m_container->getWriteAccess());
-        CPPUNIT_ASSERT_EQUAL(m_data, data);
-        
-        CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
-        m_container->clearWriteAccess();
-        
-        m_container->reference();
-        boost::thread t1(boost::bind(&DataContainerTest::dereferenceDelayed, this));
-        CPPUNIT_ASSERT_NO_THROW(m_container->getWriteAccess());
-        
-        m_container->clearWriteAccess();
-        m_container->reference();
-        boost::thread t2(boost::bind(&DataContainerTest::getWriteAccessWithInterruptException, this));
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-        t2.interrupt();
-        t2.join();
-    }
-    
-    void DataContainerTest::getWriteAccessWithInterruptException()
-    {
-        CPPUNIT_ASSERT_THROW(m_container->getWriteAccess(), InterruptException);
-    }
-    
-    void DataContainerTest::testClearWriteAccess()
-    {
-        m_container->getWriteAccess();
-        CPPUNIT_ASSERT_NO_THROW(m_container->clearWriteAccess());
-        
-        m_container->reference();
-        m_container->dereference();
-        m_container->getWriteAccess();
-    }
-    
-    void DataContainerTest::dereferenceDelayed()
-    {
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-        m_container->dereference();
-    }
-    
-    void DataContainerTest::clearWriteAccessDelayed()
-    {
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-        m_container->clearWriteAccess();
-    }
-
-    void DataContainerTest::tearDown ( void )
-    {
-        delete m_container;
-        m_data = 0;
-    }
 }

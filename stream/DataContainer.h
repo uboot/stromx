@@ -1,43 +1,54 @@
-#ifndef STREAM_DATACONTAINERIMPL_H
-#define STREAM_DATACONTAINERIMPL_H
+/* 
+*  Copyright 2011 Matthias Fuchs
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
 
-#include <typeinfo>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+#ifndef STREAM_DATACONTAINER_H
+#define STREAM_DATACONTAINER_H
 
-#include "Data.h"
+#include <boost/shared_ptr.hpp>
+
+#include "DataContainerImpl.h"
 
 namespace stream
 {
-    class DataOwner;
+    class Data;
     class DataType;
     
     class DataContainer
     {
+        friend class WriteAccessImpl;
+        friend class ReadAccessImpl;
+        friend class RecycleAccessImpl;
+        friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+        
     public:
-        DataContainer(Data* const data, DataOwner* const owner = 0);
-        ~DataContainer();
+        DataContainer() {}
+        explicit DataContainer(stream::Data*const data);
         
-        const DataType & type() { return m_data->type(); }
-        
-        void reference();
-        void dereference();
-
-        const Data* const getReadAccess();
-        Data* const getWriteAccess();
-        void clearWriteAccess();
-            
+        const DataType & type();
+        const bool empty() const { return m_impl.get() == 0; }
     private:
-        typedef boost::lock_guard<boost::mutex> lock_t;
-        typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
-        boost::mutex m_mutex;
-        boost::condition_variable_any m_cond;
-        Data* m_data;
-        DataOwner* m_owner;
-        unsigned int m_refCount;
-        bool m_hasWriteAccess;
+        boost::shared_ptr<DataContainerImpl> m_impl;
     };     
+    
+    const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+    const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+    std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
-#endif // STREAM_DATACONTAINERIMPL_H
+#endif // STREAM_DATACONTAINER_H

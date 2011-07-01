@@ -7,13 +7,13 @@
 namespace base
 {
     Image::Image(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
-      : m_pixelType(pixelType),
-        m_dataType(dataType(pixelType)),
-        m_image(0)
     {
         try
         {
-            m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+            m_image = cvCreateImage(cv::Size(width, height), depth(pixelType) * 8, numChannels(pixelType));
+            
+            getDataFromCvImage(pixelType);
+            setDataType(dataTypeFromPixelType(pixelType));
         }
         catch(cv::Exception& e)
         {
@@ -22,13 +22,14 @@ namespace base
     }
     
     Image::Image(const stream::Image& image)
-      : m_pixelType(image.pixelType()),
-        m_dataType(dataType(m_pixelType)),
-        m_image(0)
     {
         try
         {
-            m_image = cvCreateImage(cv::Size(image.width(), image.height()), depth(m_pixelType), numChannels(m_pixelType));
+            m_image = cvCreateImage(cv::Size(image.width(), image.height()),
+                                    depth(image.pixelType()) * 8, numChannels(image.pixelType()));
+            
+            getDataFromCvImage(image.pixelType());
+            setDataType(image.type());
         }
         catch(cv::Exception& e)
         {
@@ -41,14 +42,13 @@ namespace base
     }
     
     Image::Image(const std::string& filename)
-      : stream::Image(),
-        m_dataType(stream::DataType::IMAGE)
     {
         try
         {
             m_image = cvLoadImage(filename.c_str());
-            m_pixelType = pixelType(m_image->depth, m_image->nChannels);
-            m_dataType = dataType(m_pixelType);
+            
+            getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
+            setDataType(dataTypeFromPixelType(pixelType()));
         }
         catch(cv::Exception& e)
         {
@@ -56,36 +56,47 @@ namespace base
         }
     }
     
-void Image::resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
-{
-    if(m_image)
-        cvReleaseImage(&m_image);
     
-    try
+    void Image::getDataFromCvImage(const PixelType pixelType)
     {
-        m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+        setBuffer((uint8_t*)(m_image->imageData));
+        setSize(m_image->imageSize);
+        initialize(m_image->width, m_image->height, m_image->widthStep, (uint8_t*)(m_image->imageData), pixelType);
     }
-    catch(cv::Exception& e)
+    
+    void Image::resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
     {
-        throw stream::OutOfMemoryException("Failed to create new image.");
+        if(m_image)
+            cvReleaseImage(&m_image);
+        
+        try
+        {
+            m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
+            getDataFromCvImage(pixelType);
+            setDataType(dataTypeFromPixelType(pixelType));
+        }
+        catch(cv::Exception& e)
+        {
+            throw stream::OutOfMemoryException("Failed to create new image.");
+        }
     }
-}
-
     
     void Image::save(const std::string& filename) const
     {
-        switch(m_pixelType)
+        cv::Mat inImage = getOpenCvMat(*this);
+        
+        switch(pixelType())
         {
         case stream::Image::RGB_24:
         {
             Image tempImage(width(), height(), BGR_24);
             cv::Mat cvTempImage(tempImage.m_image);
             
-            cv::cvtColor(cv::Mat(this->m_image), cvTempImage, CV_RGB2BGR); 
+            cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
                       
             try
             {
-                cvSaveImage(filename.c_str(), tempImage.m_image);
+                cv::imwrite(filename, tempImage.m_image);
             }
             catch(cv::Exception& e)
             {
@@ -98,7 +109,7 @@ void Image::resize(const unsigned int width, const unsigned int height, const st
         {
             try
             {
-                cvSaveImage(filename.c_str(), m_image);
+                cv::imwrite(filename, inImage);
             }
             catch(cv::Exception& e)
             {
@@ -116,65 +127,7 @@ void Image::resize(const unsigned int width, const unsigned int height, const st
         cvReleaseImage(&m_image);
     }
 
-    
-    const unsigned int Image::width() const
-    {
-        return m_image->width;
-    }
-
-    const unsigned int Image::height() const
-    {
-        return m_image->height;
-    }
-
-    const unsigned int Image::stride() const
-    {
-        return m_image->widthStep;
-
-    }
-        
-    uint8_t*const Image::data()
-    {
-        return reinterpret_cast<uint8_t*>(m_image->imageData);
-    }
-
-    const uint8_t*const Image::data() const
-    {
-        return reinterpret_cast<uint8_t*>(m_image->imageData);
-    }
-    
-    const int Image::numChannels(const stream::Image::PixelType pixelType)
-    {
-        switch(pixelType)
-        {
-        case stream::Image::MONO_8:
-        case stream::Image::BAYERBG_8:
-        case stream::Image::BAYERGB_8:
-            return 1;
-        case stream::Image::RGB_24:
-        case stream::Image::BGR_24:
-            return 3;
-        default:
-            throw stream::ArgumentException("Unknown pixel type.");    
-        }
-    }
-    
-    const int Image::depth(const stream::Image::PixelType pixelType)
-    {
-        switch(pixelType)
-        {
-        case stream::Image::MONO_8:
-        case stream::Image::RGB_24:
-        case stream::Image::BGR_24:
-        case stream::Image::BAYERBG_8:
-        case stream::Image::BAYERGB_8:
-            return 8;
-        default:
-            throw stream::ArgumentException("Unknown pixel type.");    
-        }
-    }
-    
-    const stream::DataType Image::dataType(const stream::Image::PixelType pixelType)
+    const stream::DataType Image::dataTypeFromPixelType(const stream::Image::PixelType pixelType)
     {
         switch(pixelType)
         {
@@ -193,8 +146,7 @@ void Image::resize(const unsigned int width, const unsigned int height, const st
         }
     }
 
-
-    const stream::Image::PixelType Image::pixelType(const int depth, const int numChannels)
+    const stream::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
     {
         switch(depth)
         {
@@ -216,8 +168,6 @@ void Image::resize(const unsigned int width, const unsigned int height, const st
             }
         default:
             throw stream::ArgumentException("Unknown combination of depth and number of channels.");    
-        }
-            
+        }         
     }
-
 }

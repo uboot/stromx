@@ -30,16 +30,16 @@ namespace base
     class AdjustRgbChannels : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             RED,
             GREEN,
@@ -48,6 +48,7 @@ namespace base
         
         AdjustRgbChannels();
         
+        virtual Operator* const clone() const { return new AdjustRgbChannels; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

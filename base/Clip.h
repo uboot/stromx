@@ -19,27 +19,25 @@
 
 #include <stream/Operator.h>
 #include <stream/Primitive.h>
+#include <stream/RecycleAccess.h>
 
-namespace stream
-{
-    class DataContainer;
-}
 
 namespace base
 {
     class Clip : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
-        enum OutputIds
+        
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             TOP,
             LEFT,
@@ -50,6 +48,7 @@ namespace base
         
         Clip();
         
+        virtual Operator* const clone() const { return new Clip; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
@@ -71,8 +70,6 @@ namespace base
         stream::UInt32 m_left;
         stream::UInt32 m_width;
         stream::UInt32 m_height;
-        
-        stream::DataContainer* m_image;
     };
 }
 

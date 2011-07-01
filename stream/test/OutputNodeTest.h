@@ -4,13 +4,13 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
 
 namespace stream
 {
     class OperatorWrapper;
     class OutputNode;
     class InputNode;
-    class DataContainer;
     
     class OutputNodeTest : public CPPUNIT_NS :: TestFixture
     {
@@ -21,7 +21,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        OutputNodeTest() : m_operatorWrapper(0), m_container(0), m_outputNode(0) {}
+        OutputNodeTest() : m_operatorWrapper(0), m_outputNode(0) {}
         
         void setUp();
         void tearDown();
@@ -33,7 +33,7 @@ namespace stream
             
     private: 
         OperatorWrapper* m_operatorWrapper;
-        DataContainer* m_container;
+        DataContainer m_container;
         OutputNode* m_outputNode;
         InputNode* m_inputNode;
     };

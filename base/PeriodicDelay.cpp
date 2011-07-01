@@ -1,4 +1,4 @@
-#include "TimePeriod.h"
+#include "PeriodicDelay.h"
 
 #include "Config.h"
 
@@ -13,24 +13,24 @@ using namespace stream;
 
 namespace base
 {
-    const std::string TimePeriod::NAME("Time period");
+    const std::string PeriodicDelay::NAME("PeriodicDelay");
     
-    const std::string TimePeriod::PACKAGE(PACKAGE_NAME);
-    const Version TimePeriod::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
+    const std::string PeriodicDelay::PACKAGE(PACKAGE_NAME);
+    const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
-    TimePeriod::TimePeriod()
+    PeriodicDelay::PeriodicDelay()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_isFirstRun(true)
     {
     }
     
-    void TimePeriod::activate()
+    void PeriodicDelay::activate()
     {
         m_isFirstRun = true;
     }
 
 
-    void TimePeriod::setParameter(unsigned int id, const Data& value)
+    void PeriodicDelay::setParameter(unsigned int id, const Data& value)
     {
         try
         {
@@ -51,7 +51,7 @@ namespace base
         }
     }
 
-    const Data& TimePeriod::getParameter(unsigned int id)
+    const Data& PeriodicDelay::getParameter(unsigned int id)
     {
         switch(id)
         {
@@ -62,7 +62,7 @@ namespace base
         }
     }  
     
-    void TimePeriod::execute(DataProvider& provider)
+    void PeriodicDelay::execute(DataProvider& provider)
     {
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
@@ -97,7 +97,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description* > TimePeriod::setupInputs()
+    const std::vector< Description* > PeriodicDelay::setupInputs()
     {
         std::vector<Description*> inputs;
         
@@ -108,7 +108,7 @@ namespace base
         return inputs;
     }
     
-    const std::vector< stream::Description* > TimePeriod::setupOutputs()
+    const std::vector< stream::Description* > PeriodicDelay::setupOutputs()
     {
         std::vector<Description*> outputs;
         
@@ -119,7 +119,7 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > TimePeriod::setupParameters()
+    const std::vector< stream::Parameter* > PeriodicDelay::setupParameters()
     {
         std::vector<stream::Parameter*> parameters;
         

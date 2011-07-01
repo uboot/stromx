@@ -28,8 +28,8 @@ namespace stream
         virtual void setParameter(unsigned int id, const Data& value) = 0;
         virtual const Data& getParameter(unsigned int id) = 0;
         
-        virtual DataContainer* const getOutputData(const unsigned int id) = 0;
-        virtual void setInputData(const unsigned int id, DataContainer* const data) = 0;
+        virtual DataContainer getOutputData(const unsigned int id) = 0;
+        virtual void setInputData(const unsigned int id, DataContainer data) = 0;
         virtual void clearOutputData(unsigned int id) = 0;
         virtual void clearAllData() = 0;
         

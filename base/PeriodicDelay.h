@@ -30,26 +30,27 @@ namespace stream
 
 namespace base
 {
-    class TimePeriod : public stream::Operator
+    class PeriodicDelay : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
             INPUT
         };
         
-        enum OutputIds
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             PERIOD
         };
         
-        TimePeriod();
+        PeriodicDelay();
         
+        virtual Operator* const clone() const { return new PeriodicDelay; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

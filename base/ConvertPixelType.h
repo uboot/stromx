@@ -20,33 +20,33 @@
 #include <stream/Operator.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
+#include <stream/RecycleAccess.h>
 
-namespace stream
-{
-    class DataContainer;
-}
 
 namespace base
 {
     class ConvertPixelType : public stream::Operator
     {
     public:
-        enum InputIds
+        enum InputId
         {
-            INPUT
+            SOURCE,
+            DESTINATION
         };
-        enum OutputIds
+        
+        enum OutputId
         {
             OUTPUT
         };
         
-        enum ParameterIds
+        enum ParameterId
         {
             PIXEL_TYPE
         };
         
         ConvertPixelType();
         
+        virtual Operator* const clone() const { return new ConvertPixelType; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
@@ -60,10 +60,10 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION;   
         
-        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);      
+        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);
+        static const unsigned int getDestPixelSize(const stream::Image::PixelType pixelType);     
         
         stream::Enum m_pixelType;
-        stream::DataContainer* m_image;
     };
 }
 

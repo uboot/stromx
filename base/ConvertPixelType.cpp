@@ -7,8 +7,11 @@
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
 #include <stream/Id2DataPair.h>
+#include <stream/Id2DataComposite.h>
 #include <stream/OperatorException.h>
 #include <stream/EnumParameter.h>
+#include <stream/ReadAccess.h>
+#include <stream/WriteAccess.h>
 
 using namespace stream;
 
@@ -21,8 +24,7 @@ namespace base
     
     ConvertPixelType::ConvertPixelType()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_pixelType(stream::Image::MONO_8),
-        m_image(0)
+        m_pixelType(stream::Image::MONO_8)
     {
     }
 
@@ -58,42 +60,53 @@ namespace base
     
     void ConvertPixelType::execute(DataProvider& provider)
     {
-        Id2DataPair inputDataMapper(INPUT);
-        provider.receiveInputData(inputDataMapper);
+        Id2DataPair srcMapper(SOURCE);
+        Id2DataPair destMapper(DESTINATION);
+        provider.receiveInputData(srcMapper && destMapper);
         
-        const Data* inData = inputDataMapper.data()->getReadAccess();
-        const Image* inImage = dynamic_cast<const Image*>(inData);
+        ReadAccess src(srcMapper.data());
+        WriteAccess dest(destMapper.data());
         
-        stream::Image::PixelType outPixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
-        adjustImage(inImage->width(), inImage->height(), outPixelType, this, m_image);
+        const Image* srcImage = dynamic_cast<const Image*>(src());
+        Image* destImage = dynamic_cast<Image*>(dest());
         
-        Image* outImage = dynamic_cast<Image*>(m_image->getWriteAccess());
+        stream::Image::PixelType pixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
         
-        cv::Mat inCvImage = getOpenCvMat(*inImage);
-        cv::Mat outCvImage = getOpenCvMat(*outImage);
+        unsigned int destImageSize = srcImage->width() * srcImage->height() * getDestPixelSize(pixelType);
         
-        if(outPixelType == inImage->pixelType())
+        if(destImage->size() < destImageSize)
+            throw InputException(DESTINATION, *this, "Destination image is too small");
+        
+        destImage->initialize(srcImage->width(), srcImage->height(), srcImage->width(), destImage->buffer(), pixelType);
+        
+        cv::Mat inCvImage = getOpenCvMat(*srcImage);
+        cv::Mat outCvImage = getOpenCvMat(*destImage);
+        
+        if(pixelType == srcImage->pixelType())
         {
             inCvImage.copyTo(outCvImage);
         }
         else
         {
-            int code = getCvConversionCode(inImage->pixelType(), outPixelType);
+            int code = getCvConversionCode(srcImage->pixelType(), pixelType);
             cv::cvtColor(inCvImage, outCvImage, code);
         }
         
-        m_image->clearWriteAccess();
-        Id2DataPair outputDataMapper(OUTPUT, m_image);
-        provider.sendOutputData( outputDataMapper);
+        Id2DataPair outputMapper(OUTPUT, destMapper.data());
+        provider.sendOutputData( outputMapper);
     }
     
     const std::vector< Description* > ConvertPixelType::setupInputs()
     {
         std::vector<Description*> inputs;
         
-        Description* input = new Description(INPUT, DataType::IMAGE);
-        input->setName("Input");
-        inputs.push_back(input);
+        Description* source = new Description(SOURCE, DataType::IMAGE);
+        source->setName("Source");
+        inputs.push_back(source);
+        
+        Description* destination = new Description(DESTINATION, DataType::IMAGE);
+        destination->setName("Destination");
+        inputs.push_back(destination);
         
         return inputs;
     }
@@ -180,5 +193,28 @@ namespace base
         default:
             throw stream::ArgumentException("Unknown conversion.");
         }         
+    }
+    
+    const unsigned int ConvertPixelType::getDestPixelSize(const stream::Image::PixelType pixelType)
+    {
+        switch(pixelType)
+        {
+        case stream::Image::MONO_8:
+        case stream::Image::MONO_16:
+        case stream::Image::BAYERBG_8:
+        case stream::Image::BAYERGB_8:
+            return 1;
+        case stream::Image::BAYERBG_16:
+        case stream::Image::BAYERGB_16:
+            return 2;
+        case stream::Image::RGB_24:
+        case stream::Image::BGR_24:
+            return 3;
+        case stream::Image::RGB_48:
+        case stream::Image::BGR_48:
+            return 6;
+        default:
+            throw stream::ArgumentException("Unknown pixel type.");    
+        }  
     }
 } 

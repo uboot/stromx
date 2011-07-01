@@ -20,6 +20,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/DataContainer.h>
+
 namespace stream
 {
     class OperatorWrapper;
@@ -28,26 +30,28 @@ namespace stream
 
 namespace base
 {
-    class TimePeriodTest : public CPPUNIT_NS :: TestFixture
+    class PeriodicDelayTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (TimePeriodTest);
+        CPPUNIT_TEST_SUITE (PeriodicDelayTest);
         CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST (testExecuteZeroPeriod);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            TimePeriodTest() : m_operator(0), m_image(0) {}
+            PeriodicDelayTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
             void testExecute();
+            void testExecuteZeroPeriod();
             
         private:
             void getOutputDataInterrupted();
             
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer* m_image;
+            stream::DataContainer m_image;
     };
 }
 

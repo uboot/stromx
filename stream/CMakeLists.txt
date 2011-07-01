@@ -13,8 +13,15 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
-set(SOURCES   
+set(SOURCES
     DataContainer.cpp
+    DataContainerImpl.cpp
+    ReadAccess.cpp
+    ReadAccessImpl.cpp
+    RecycleAccess.cpp
+    RecycleAccessImpl.cpp
+    WriteAccess.cpp
+    WriteAccessImpl.cpp
     DataType.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp
@@ -31,6 +38,7 @@ set(SOURCES
     Primitive.cpp
     Stream.cpp
     Thread.cpp
+    Try.cpp
 )
 
 add_library(stream SHARED ${SOURCES})

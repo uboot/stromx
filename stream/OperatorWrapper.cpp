@@ -3,6 +3,7 @@
 #include "Operator.h"
 #include "Exception.h"
 #include "Id2DataPair.h"
+#include "Data.h"
 #include "DataContainer.h"
 #include "OperatorException.h"
 
@@ -23,8 +24,6 @@ namespace stream
     OperatorWrapper::~OperatorWrapper()
     {
         delete m_op;
-        
-        m_inputMap.clear();
     }
     
     void OperatorWrapper::testForInterrupt()
@@ -192,7 +191,7 @@ namespace stream
             throw InterruptException();   
     }
     
-    DataContainer* const OperatorWrapper::getOutputData(const unsigned int id)
+    DataContainer OperatorWrapper::getOutputData(const unsigned int id)
     {
         unique_lock_t lock(m_mutex);
         
@@ -202,7 +201,7 @@ namespace stream
             throw InvalidStateException("Can not get output data if operator is inactive.");
         }
     
-        while(m_outputMap[id] == 0)
+        while(m_outputMap[id].empty())
         {
             // this section might throw an InterruptionException which will fall
             // through to the calling function
@@ -221,7 +220,7 @@ namespace stream
         return m_outputMap[id];
     }
 
-    void OperatorWrapper::setInputData(const unsigned int id, DataContainer* const data)
+    void OperatorWrapper::setInputData(const unsigned int id, DataContainer data)
     {
         {
             unique_lock_t lock(m_mutex);
@@ -232,7 +231,7 @@ namespace stream
                 throw InvalidStateException("Can not get output data if operator is inactive.");
             }
         
-            while(m_inputMap[id] != 0)
+            while(! m_inputMap[id].empty())
             {
                 // this section might throw an InterruptionException which will fall
                 // through to the calling function
@@ -248,7 +247,6 @@ namespace stream
                 }
             }
             
-            data->reference();
             m_inputMap[id] = data;
         }
         
@@ -260,10 +258,7 @@ namespace stream
         {
             lock_t lock(m_mutex);
             
-            if(DataContainer* data = m_outputMap[id])
-                data->dereference();
-                
-            m_outputMap[id] = 0;
+            m_outputMap[id] = DataContainer();
         }
         
         m_cond.notify_all();

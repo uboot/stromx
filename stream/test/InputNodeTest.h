@@ -4,8 +4,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/OperatorWrapper.h>
-#include <stream/None.h>
+#include <stream/DataContainer.h>
 
 namespace stream
 {
@@ -25,7 +24,6 @@ namespace stream
         InputNodeTest() 
           : m_operatorWrapper(0),
             m_sourceOperatorWrapper(0),
-            m_container(0),
             m_inputNode(0),
             m_sourceNode(0)
         {}
@@ -41,7 +39,7 @@ namespace stream
     private: 
         OperatorWrapper* m_operatorWrapper;
         OperatorWrapper* m_sourceOperatorWrapper;
-        DataContainer* m_container;
+        DataContainer m_container;
         InputNode* m_inputNode;
         OutputNode* m_sourceNode;
         

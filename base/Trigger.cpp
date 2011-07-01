@@ -17,7 +17,8 @@ namespace base
     const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Trigger::Trigger()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+        m_active(true)
     {
     }
 
@@ -33,6 +34,9 @@ namespace base
                 m_cond.notify_all();
                 break;
             }
+            case ACTIVE:
+                m_active = dynamic_cast<const Bool&>(value);
+                break;
             default:
                 throw ParameterIdException(id, *this);
             }
@@ -49,6 +53,8 @@ namespace base
         {
         case TRIGGER:
             throw ParameterAccessModeException(*parameters()[id], *this);
+        case ACTIVE:
+            return m_active;
         default:
             throw ParameterIdException(id, *this);
         }
@@ -59,15 +65,18 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        try
+        if(m_active)
         {
-            // wait for trigger
-            unique_lock_t lock(m_mutex);
-            m_cond.wait(lock);
-        }
-        catch(boost::thread_interrupted&)
-        {
-            throw InterruptException();
+            try
+            {
+                // wait for trigger
+                unique_lock_t lock(m_mutex);
+                m_cond.wait(lock);
+            }
+            catch(boost::thread_interrupted&)
+            {
+                throw InterruptException();
+            }
         }
         
         Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
@@ -105,6 +114,12 @@ namespace base
         trigger->setActiveAccessMode(Parameter::WRITE);
         trigger->setInactiveAccessMode(Parameter::WRITE);
         parameters.push_back(trigger);
+        
+        Parameter* active = new Parameter(ACTIVE, DataType::BOOL);
+        active->setName("Active");
+        active->setActiveAccessMode(Parameter::WRITE);
+        active->setInactiveAccessMode(Parameter::WRITE);
+        parameters.push_back(active);
                                     
         return parameters;
     }

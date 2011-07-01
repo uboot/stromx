@@ -23,7 +23,6 @@
 namespace stream
 {
     class OperatorWrapper;
-    class DataContainer;
 }
 
 namespace base
@@ -37,7 +36,7 @@ namespace base
         CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ClipTest() : m_operator(0), m_image(0) {}
+            ClipTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
@@ -49,7 +48,6 @@ namespace base
             
         private:
             stream::OperatorWrapper* m_operator;
-            stream::DataContainer* m_image;
     };
 }
 
