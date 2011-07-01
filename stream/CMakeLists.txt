@@ -37,6 +37,8 @@ set(SOURCES
     OperatorWrapper.cpp
     OutputNode.cpp
     Primitive.cpp
+    Stream.cpp
+    Thread.cpp
     Try.cpp
 )
 

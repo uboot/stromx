@@ -58,36 +58,35 @@ namespace stream
 	    iter != m_operators.end();
 	    ++iter)
 	{
-	    if ((*iter)->op()->info() == reinterpret_cast<OperatorInfo*>(op))
+	    if ((*iter)->op()->info() == static_cast<OperatorInfo*>(op))
 	    {
-	      throw InvalidStateException("Operator already exists");
-	      break;
+            throw ArgumentException("Operator already exists");
 	    }
-	    
-	    OperatorWrapper* wrapper = new OperatorWrapper(op);
-            OperatorNode* node = new OperatorNode(wrapper);
-            m_operators.push_back(node);
-	    return node;
 	}
+	
+	OperatorWrapper* wrapper = new OperatorWrapper(op);
+    OperatorNode* node = new OperatorNode(wrapper);
+    m_operators.push_back(node);
+	return node;
     }
 
     void Network::removeOperator(OperatorNode*const op)
     {
-	if (op == 0)
-	{
-	  throw ArgumentException("Invalid argument: Null pointer");
-	}
-	
-	for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
-	    iter != m_operators.end();
-	    ++iter)
-	{
-	    if ((*iter)->op() == reinterpret_cast<OperatorInterface*>(op))
-	    {
-	      m_operators.erase(iter);
-	      break;
-	    }
-	}
+        if (op == 0)
+        {
+            throw ArgumentException("Invalid argument: Null pointer");
+        }
+
+        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+            iter != m_operators.end();
+            ++iter)
+        {
+            if ((*iter) == op)
+            {
+                m_operators.erase(iter);
+                return;
+            }
+        }
 	
 	throw ArgumentException("Operator does not exist");
     }
@@ -105,6 +104,5 @@ namespace stream
 	}  
 	
 	throw InvalidStateException("Operator does not exist");
-	return 0;
     }
 }
