@@ -19,12 +19,12 @@
 
 namespace stream
 {
-    class Data;
+    class DataContainerImpl;
     
     class Recycler
     {
     public:
-        virtual void recycle(Data* data) = 0;
+        virtual void recycle(DataContainerImpl* const container) = 0;
     };
 }
 

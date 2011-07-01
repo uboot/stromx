@@ -14,5 +14,13 @@ namespace stream
         
         return (*m_impl)();
     }
+    
+    void RecycleAccess::add(DataContainer& data)
+    {
+        if(! m_impl.get())
+            m_impl = boost::shared_ptr<RecycleAccessImpl>(new RecycleAccessImpl(data));
+        else
+            m_impl->add(data);
+    }
 
 } 

@@ -17,10 +17,14 @@
 #ifndef STREAM_RECYCLEACCESSIMPL_H
 #define STREAM_RECYCLEACCESSIMPL_H
 
+#include "Recycler.h"
+
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-#include "Recycler.h"
+#include <set>
+#include <deque>
+
 
 namespace stream
 {
@@ -34,8 +38,9 @@ namespace stream
         RecycleAccessImpl(DataContainer& data);
         ~RecycleAccessImpl();    
         
-        virtual void recycle(Data* const data);
+        void recycle(DataContainerImpl* const container);
         Data* const operator()();
+        void add(DataContainer& data);
         
     private:
         RecycleAccessImpl();
@@ -46,10 +51,8 @@ namespace stream
         boost::mutex m_mutex;
         boost::condition_variable_any m_cond;
 
-        bool m_isExpired;
-        DataContainerImpl* m_dataContainer;  
-        Data* m_data;
-        
+        std::deque<Data*> m_data;
+        std::set<DataContainerImpl*> m_dataContainer;
     };
 }
 

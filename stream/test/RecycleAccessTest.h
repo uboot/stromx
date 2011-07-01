@@ -37,6 +37,8 @@ namespace stream
         CPPUNIT_TEST(testRecycleInterrupt);
         CPPUNIT_TEST(testGetRecycleAccessDelayed);
         CPPUNIT_TEST(testGetRecycleAccessInterrupt);
+        CPPUNIT_TEST(testAdd);
+        CPPUNIT_TEST(testRecycleMultiple);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -53,6 +55,8 @@ namespace stream
         void testRecycleInterrupt();
         void testGetRecycleAccessDelayed();
         void testGetRecycleAccessInterrupt();
+        void testAdd();
+        void testRecycleMultiple();
         
     private:
         void destroyDelayed(DataContainer & container);

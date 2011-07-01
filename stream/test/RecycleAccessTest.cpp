@@ -136,4 +136,45 @@ namespace stream
         t.interrupt();
         t.join();
     }
+    
+    void RecycleAccessTest::testAdd()
+    {
+        Data* data = new TestData();
+        
+        RecycleAccess access;
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
+        
+        {
+            DataContainer container = DataContainer(data);
+            access.add(container);
+        }
+        
+        CPPUNIT_ASSERT_EQUAL(data, access());
+        CPPUNIT_ASSERT(! TestData::wasDestructed);
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
+        
+        delete data;
+    }
+    
+    void RecycleAccessTest::testRecycleMultiple()
+    {
+        Data* data1 = new TestData();
+        Data* data2 = new TestData();
+        
+        RecycleAccess access;
+        {
+            DataContainer container1 = DataContainer(data1);
+            DataContainer container2 = DataContainer(data2);
+            
+            access.add(container1);
+            access.add(container2);
+        }
+
+        CPPUNIT_ASSERT_EQUAL(data2, access());
+        CPPUNIT_ASSERT_EQUAL(data1, access());
+        CPPUNIT_ASSERT_EQUAL((Data*)(0), access());
+        
+        delete data1;
+        delete data2;
+    }
 }

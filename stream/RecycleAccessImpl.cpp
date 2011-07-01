@@ -7,32 +7,44 @@
 namespace stream
 {
     RecycleAccessImpl::RecycleAccessImpl(DataContainer& data)
-      : m_isExpired(false),
-        m_data(0),
-        m_dataContainer(data.m_impl.get())
     {
-        m_dataContainer->getRecycleAccess(this);
+        add(data);
     }
-
-    void RecycleAccessImpl::recycle(Data* const data)
+    
+    void RecycleAccessImpl::add(DataContainer& data)
     {
         lock_t lock(m_mutex);
         
-        m_dataContainer = 0;
-        m_data = data;
+        DataContainerImpl* container = data.m_impl.get();
+        m_dataContainer.insert(container);
+        container->getRecycleAccess(this);
+    }
+
+    void RecycleAccessImpl::recycle(DataContainerImpl* const container)
+    {
+        lock_t lock(m_mutex);
+        
+        BOOST_ASSERT(m_dataContainer.count(container));
+        
+        m_dataContainer.erase(container);
+        m_data.push_back(container->data());
         m_cond.notify_all();
     }
 
     RecycleAccessImpl::~RecycleAccessImpl()
     {
-        if(m_dataContainer)
+        for(std::set<DataContainerImpl*>::iterator iter = m_dataContainer.begin();
+            iter != m_dataContainer.end();
+            ++iter)
         {
-            BOOST_ASSERT(! m_data);
-            m_dataContainer->returnRecycleAccess();
+            (*iter)->returnRecycleAccess();
         }
-        else
+        
+        for(std::deque<Data*>::iterator iter = m_data.begin();
+            iter != m_data.end();
+            ++iter)
         {
-            delete m_data;
+            delete *iter;
         }
     }
     
@@ -40,12 +52,12 @@ namespace stream
     {
         unique_lock_t lock(m_mutex);
         
-        if(m_isExpired)
+        if(m_dataContainer.empty() && m_data.empty())
             return 0;
         
         try
         {
-            while(! m_data)
+            while(m_data.empty())
                 m_cond.wait(lock);
         }
         catch(boost::thread_interrupted&)
@@ -53,9 +65,8 @@ namespace stream
             throw InterruptException();
         }
         
-        Data* value = m_data;
-        m_data = 0;
-        m_isExpired = true;
+        Data* value = m_data.front();
+        m_data.pop_front();
         return value;
     }
 } 
