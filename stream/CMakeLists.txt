@@ -40,6 +40,8 @@ set(SOURCES
     Stream.cpp
     Thread.cpp
     Try.cpp
+    XmlReader.cpp
+    XmlWriter.cpp
 )
 
 add_library(stream SHARED ${SOURCES})

@@ -1,5 +1,5 @@
 /* 
-*  Copyright @YEAR@ @AUTHOR@
+*  Copyright 2011 XXX
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,31 +14,34 @@
 *  limitations under the License.
 */
 
-#ifndef @PREPROCESSOR_MACRO_TEST@
-#define @PREPROCESSOR_MACRO_TEST@
+#ifndef STREAM_XMLREADERTEST_H
+#define STREAM_XMLREADERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace @PACKAGE@
+namespace stream
 {
-    class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+    class OperatorFactory;
+    
+    class XmlReaderTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (@CLASS@Test);
-        CPPUNIT_TEST(test);
+        CPPUNIT_TEST_SUITE (XmlReaderTest);
+        CPPUNIT_TEST(testRead);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        @CLASS@Test() {}
+        XmlReaderTest() : m_factory(0) {}
         
         void setUp();
         void tearDown();
 
     protected:
-        void test();
+        void testRead();
             
     private:
+        OperatorFactory* m_factory;
     };
 }
 
-#endif // @PREPROCESSOR_MACRO_TEST@
+#endif // STREAM_XMLREADERTEST_H

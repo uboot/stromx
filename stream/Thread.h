@@ -22,6 +22,8 @@ namespace stream
         Thread();
         ~Thread();
         
+        const std::string & name() const { return m_name; }
+        void setName(const std::string& name) { m_name = name; }
         const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
         
         void addNode(InputNode* const op);
@@ -37,6 +39,7 @@ namespace stream
         
         boost::thread* m_thread;
         std::vector<InputNode*> m_nodeSequence;
+        std::string m_name;
     };
 }
 

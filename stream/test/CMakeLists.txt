@@ -6,6 +6,8 @@ include_directories(
     ${PROJECT_BINARY_DIR}/..
 )
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/network.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(stream_test
     main.cpp
     ../DataContainerImpl.cpp
@@ -43,12 +45,17 @@ add_executable(stream_test
     ../Primitive.cpp
     ../DataType.cpp
     PrimitiveTest.cpp
+    ../Stream.cpp
     TestData.cpp
     ../Try.cpp
     TryTest.cpp
     ../WriteAccess.cpp
     ../WriteAccessImpl.cpp
     WriteAccessTest.cpp
+    ../XmlReader.cpp
+    XmlReaderTest.cpp
+    ../XmlWriter.cpp
+    XmlWriterTest.cpp
 )
 
 target_link_libraries(stream_test
