@@ -32,14 +32,11 @@ namespace stream
     
     Stream::~Stream()
     {
-        if (!m_threads.empty())
+        for(std::vector<Thread*>::iterator iter = m_threads.begin();
+            iter != m_threads.end();
+            ++iter) 
         {
-            for(std::vector<Thread*>::iterator iter = m_threads.begin();
-                iter != m_threads.end();
-                ++iter) 
-            {
-                (*iter)->stop();
-            }
+            delete (*iter);
         } 
     }
     
