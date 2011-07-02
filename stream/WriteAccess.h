@@ -23,13 +23,12 @@
 
 namespace stream
 {
-    class DataContainer;
     class Data;
     
     class WriteAccess
     {
     public:
-        WriteAccess(DataContainer& data);
+        WriteAccess(DataContainer data);
         
         Data* const operator()();
         

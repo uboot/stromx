@@ -2,9 +2,15 @@
 
 #include "Config.h"
 
+#include <stream/OperatorException.h>
+
+#include <typeinfo>
+
+using namespace stream;
+
 namespace @PACKAGE@
 {
-    const std::string @CLASS@::NAME("");
+    const std::string @CLASS@::NAME("@CLASS@");
     const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
     const Version @CLASS@::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
@@ -43,23 +49,23 @@ namespace @PACKAGE@
         
     }
     
-    const std::vector<stream::Description*> @CLASS@::setupInputs()
+    const std::vector<Description*> @CLASS@::setupInputs()
     {
-        std::vector<stream::Description*> inputs;
+        std::vector<Description*> inputs;
 
         return inputs;
     }
     
-    const std::vector<stream::Description*> @CLASS@::setupOutputs()
+    const std::vector<Description*> @CLASS@::setupOutputs()
     {
-        std::vector<stream::Description*> outputs;
+        std::vector<Description*> outputs;
         
         return outputs;
     }
     
-    const std::vector<stream::Parameter*> @CLASS@::setupParameters()
+    const std::vector<Parameter*> @CLASS@::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<Parameter*> parameters;
                                     
         return parameters;
     }

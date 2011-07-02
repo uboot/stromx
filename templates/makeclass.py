@@ -49,8 +49,8 @@ def main():
     if operator:
         process('Operator.h.in', className + '.h', author, className, package)
         process('Operator.cpp.in', className + '.cpp', author, className, package)
-        process('Operator.h.in', className + 'Test' + '.h', author, className, package)
-        process('Operator.cpp.in', className + 'Test' + '.cpp', author, className, package)
+        process('OperatorTest.h.in', className + 'Test' + '.h', author, className, package)
+        process('OperatorTest.cpp.in', className + 'Test' + '.cpp', author, className, package)
     else:
         process('Class.h.in', className + '.h', author, className, package)
         process('Class.cpp.in', className + '.cpp', author, className, package)

@@ -25,7 +25,6 @@
 #include <set>
 #include <deque>
 
-
 namespace stream
 {
     class Data;

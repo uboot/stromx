@@ -43,19 +43,29 @@ namespace base
     
     Image::Image(const std::string& filename)
     {
+        m_image = cvLoadImage(filename.c_str());
+        
+        if(! m_image)
+            throw stream::FileAccessException("Failed to load image '" + filename + "'.");
+            
+        getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
+        setDataType(dataTypeFromPixelType(pixelType()));
+    }
+    
+    Image::Image(const unsigned int size)
+    {
         try
         {
-            m_image = cvLoadImage(filename.c_str());
+            m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
             
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
-            setDataType(dataTypeFromPixelType(pixelType()));
+            setDataType(stream::DataType::MONO_8_IMAGE);
         }
         catch(cv::Exception& e)
         {
-            throw stream::FileAccessException("Failed to load image '" + filename + "'.");
+            throw stream::OutOfMemoryException("Failed to allocate image.");
         }
-    }
-    
+    }    
     
     void Image::getDataFromCvImage(const PixelType pixelType)
     {
@@ -78,6 +88,24 @@ namespace base
         catch(cv::Exception& e)
         {
             throw stream::OutOfMemoryException("Failed to create new image.");
+        }
+    }
+    
+    void Image::resize(const unsigned int size)
+    {
+        if(m_image)
+            cvReleaseImage(&m_image);
+        
+        try
+        {
+            m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
+            
+            getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
+            setDataType(stream::DataType::MONO_8_IMAGE);
+        }
+        catch(cv::Exception& e)
+        {
+            throw stream::OutOfMemoryException("Failed to allocate image.");
         }
     }
     

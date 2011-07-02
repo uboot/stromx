@@ -14,42 +14,37 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_IMAGETEST_H
-#define BASE_IMAGETEST_H
+#ifndef BASE_CAMERABUFFERTEST_H
+#define BASE_CAMERABUFFERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/OperatorWrapper.h>
+
 namespace base
 {
-    class Image;
-
-    class ImageTest : public CPPUNIT_NS :: TestFixture
+    namespace camera
     {
-        CPPUNIT_TEST_SUITE (ImageTest);
-        CPPUNIT_TEST (testImageFromUnknownFile);
-        CPPUNIT_TEST (testImageFromJpeg);
-        CPPUNIT_TEST (testImageRgb24);
-        CPPUNIT_TEST (testImageMono8);
-        CPPUNIT_TEST (testSaveJpeg);
-        CPPUNIT_TEST_SUITE_END ();
+        class CameraBufferTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (CameraBufferTest);
+            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ImageTest() : m_image(0) {}
+            CameraBufferTest() : m_operator(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testImageFromJpeg();
-            void testImageFromUnknownFile();
-            void testImageRgb24();
-            void testImageMono8();
-            void testSaveJpeg();
-            
+            void testExecute();
+                
         private:
-            Image* m_image;
-    };
+            stream::OperatorWrapper* m_operator;
+        };
+    }
 }
 
-#endif // BASE_IMAGETEST_H
+#endif // BASE_CAMERABUFFERTEST_H

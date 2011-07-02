@@ -20,6 +20,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/OperatorWrapper.h>
+
 namespace @PACKAGE@
 {
     class @CLASS@Test : public CPPUNIT_NS :: TestFixture

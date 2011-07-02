@@ -45,8 +45,8 @@ namespace stream
         const std::vector<Description*>& outputs() const { return m_outputs; }
         const std::vector<Parameter*>& parameters() const { return m_parameters; }
         
-        virtual void setParameter(unsigned int id, const Data& value) = 0;
-        virtual const Data& getParameter(unsigned int id) = 0;
+        virtual void setParameter(const unsigned int id, const Data& value) = 0;
+        virtual const Data& getParameter(const unsigned int id) = 0;
         
         virtual void execute(DataProvider& provider) = 0;
         virtual void activate() {}

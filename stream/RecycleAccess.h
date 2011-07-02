@@ -18,17 +18,19 @@
 #define STREAM_RECYCLEACCESS_H
 
 #include <boost/shared_ptr.hpp>
+
 #include "RecycleAccessImpl.h"
+#include "DataContainer.h"
 
 namespace stream
 {
     class RecycleAccess
     {
     public:
-        RecycleAccess(DataContainer& data);
+        RecycleAccess(DataContainer data);
         RecycleAccess() {}
         
-        void add(DataContainer& data);
+        void add(DataContainer data);
         Data* const operator()();
         
     private:

@@ -6,6 +6,8 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
 
+using namespace stream;
+
 namespace @PACKAGE@
 {
     void @CLASS@Test::setUp()
