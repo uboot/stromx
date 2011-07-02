@@ -1,0 +1,66 @@
+#include "@CLASS@.h"
+
+#include "Config.h"
+
+namespace @PACKAGE@
+{
+    const std::string @CLASS@::NAME("");
+    const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
+    const Version @CLASS@::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
+    
+    @CLASS@::@CLASS@()
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+    {
+    }
+
+    void @CLASS@::setParameter(unsigned int id, const Data& value)
+    {
+        try
+        {
+            switch(id)
+            {
+            default:
+                throw ParameterIdException(id, *this);
+            }
+        }
+        catch(std::bad_cast&)
+        {
+            throw ParameterTypeException(*parameters()[id], *this);
+        }
+    }
+
+    const Data& @CLASS@::getParameter(unsigned int id)
+    {
+        switch(id)
+        {
+        default:
+            throw ParameterIdException(id, *this);
+        }
+    }  
+    
+    void @CLASS@::execute(DataProvider& provider)
+    {
+        
+    }
+    
+    const std::vector<stream::Description*> @CLASS@::setupInputs()
+    {
+        std::vector<stream::Description*> inputs;
+
+        return inputs;
+    }
+    
+    const std::vector<stream::Description*> @CLASS@::setupOutputs()
+    {
+        std::vector<stream::Description*> outputs;
+        
+        return outputs;
+    }
+    
+    const std::vector<stream::Parameter*> @CLASS@::setupParameters()
+    {
+        std::vector<stream::Parameter*> parameters;
+                                    
+        return parameters;
+    }
+} 

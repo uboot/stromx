@@ -1,0 +1,24 @@
+#include "@CLASS@Test.h"
+
+#include <cppunit/TestAssert.h>
+
+#include <@PACKAGE@/@CLASS@.h>
+
+CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
+
+namespace @PACKAGE@
+{
+    void @CLASS@Test::setUp()
+    {
+        m_operator = new OperatorWrapper(new @CLASS@());
+    }
+
+    void @CLASS@Test::testExecute()
+    {
+    }
+
+    void @CLASS@Test::tearDown()
+    {
+        delete m_operator;
+    }
+}
