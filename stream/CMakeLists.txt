@@ -32,6 +32,7 @@ set(SOURCES
     InputNode.cpp
     Network.cpp
     Operator.cpp
+    OperatorFactory.cpp
     OperatorNode.cpp
     OperatorWrapper.cpp
     OutputNode.cpp
@@ -39,6 +40,8 @@ set(SOURCES
     Stream.cpp
     Thread.cpp
     Try.cpp
+    XmlReader.cpp
+    XmlWriter.cpp
 )
 
 add_library(stream SHARED ${SOURCES})

@@ -12,8 +12,8 @@
 
 namespace stream
 {
-    const std::string TestOperator::NAME("Test Operator");
-    const std::string TestOperator::PACKAGE("Test Package");
+    const std::string TestOperator::NAME("test");
+    const std::string TestOperator::PACKAGE("TestPackage");
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()
@@ -56,7 +56,6 @@ namespace stream
         Id2DataPair output2(OUTPUT_2, input2.data());
         provider.sendOutputData(output1 && output2);
     }
-
     
     const std::vector<Description*> TestOperator::setupInputs()
     {
@@ -86,6 +85,4 @@ namespace stream
                                        
         return parameters;
     }
-
-    
 }

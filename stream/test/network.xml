@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE  Stream [
+    <!ELEMENT Stream (Network, Thread*)>
+
+    <!ELEMENT Network (Operator*)>
+    <!ATTLIST Network
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Thread (InputNode*)>
+    <!ATTLIST Thread
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Operator (Parameter*, Input*)>
+    <!ATTLIST Operator
+        id NMTOKEN #REQUIRED
+        package CDATA #REQUIRED
+        type CDATA #REQUIRED
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Parameter (ImageFileName | Double | UInt32)>
+    <!ATTLIST Parameter
+        id NMTOKEN #REQUIRED
+    >
+    
+    <!ELEMENT Input EMPTY>
+    <!ATTLIST Input
+        id NMTOKEN #REQUIRED
+        operator NMTOKEN #REQUIRED
+        output NMTOKEN #REQUIRED
+    >
+    
+    <!ELEMENT InputNode EMPTY>
+    <!ATTLIST InputNode
+        operator NMTOKEN #REQUIRED
+        input NMTOKEN #REQUIRED
+    >
+
+    <!ELEMENT ImageFileName (#PCDATA)>
+    <!ELEMENT Double (#PCDATA)>
+    <!ELEMENT UInt32 (#PCDATA)>
+    
+]>
+
+<Stream>
+    <Network name="TestNetwork">
+        <Operator id="0" package="test" type="TestOperator" name="Number 1">
+            <Parameter id="0">
+                <UInt32>200</UInt32>
+            </Parameter>
+        </Operator>
+        <Operator id="1" package="test" type="TestOperator" name="Number 2">
+            <Parameter id="0">
+                <UInt32>250</UInt32>
+            </Parameter>
+            <Input id="0" operator="0" output="2"/>
+            <Input id="1" operator="0" output="3"/>
+        </Operator>
+        <Operator id="2" package="test" type="TestOperator" name="Number 3">
+            <Parameter id="0">
+                <UInt32>300</UInt32>
+            </Parameter>
+            <Input id="0" operator="1" output="2"/>
+            <Input id="1" operator="1" output="3"/>
+        </Operator>
+    </Network>
+    <Thread name="Processing thread">
+        <InputNode operator="1" input="0"/>
+        <InputNode operator="1" input="1"/>
+        <InputNode operator="2" input="0"/>
+        <InputNode operator="2" input="2"/>
+    </Thread> 
+</Stream>

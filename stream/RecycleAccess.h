@@ -28,6 +28,7 @@ namespace stream
         RecycleAccess(DataContainer& data);
         RecycleAccess() {}
         
+        void add(DataContainer& data);
         Data* const operator()();
         
     private:

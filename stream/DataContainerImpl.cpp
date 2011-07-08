@@ -106,7 +106,7 @@ namespace stream
         
         if(m_recycleAccess)
         {
-            m_recycleAccess->recycle(m_data);
+            m_recycleAccess->recycle(this);
             m_data = 0;
         }        
     }
