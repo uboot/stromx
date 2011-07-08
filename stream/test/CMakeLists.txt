@@ -47,6 +47,8 @@ add_executable(stream_test
     ../WriteAccess.cpp
     ../WriteAccessImpl.cpp
     WriteAccessTest.cpp
+    ../Stream.cpp
+    StreamTest.cpp
 )
 
 target_link_libraries(stream_test

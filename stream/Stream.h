@@ -29,14 +29,14 @@ namespace stream
     public:
         Stream(Network* const m_network);
         ~Stream();
-	Network* const network() const;
+        Network* const network() const;
         void addThread(Thread* const thr);
         void removeThread(Thread* const thr);
-	const std::vector<Thread*> & threads();
+        const std::vector<Thread*> & threads();
         
     private:
         Network* const m_network;
-	std::vector<Thread*> m_threads;
+        std::vector<Thread*> m_threads;
     };
 }
 

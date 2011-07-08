@@ -47,10 +47,43 @@ namespace stream
     
     void Stream::addThread(Thread* const thr)
     {
+        if (thr == 0)
+        {
+            throw ArgumentException("Invalid argument: Null pointer");
+        }
+        
+        for(std::vector<Thread*>::iterator iter = m_threads.begin();
+            iter != m_threads.end();
+            ++iter)
+        {
+            if ((*iter) == thr)
+            {
+                throw ArgumentException("Thread already exists");
+            }
+        }
+        
+        m_threads.push_back(thr);
     }
     
     void Stream::removeThread(Thread* const thr)
     {
+        if (thr == 0)
+        {
+            throw ArgumentException("Invalid argument: Null pointer");
+        }
+        
+        for(std::vector<Thread*>::iterator iter = m_threads.begin();
+            iter != m_threads.end();
+            ++iter)
+        {
+            if ((*iter) == thr)
+            {
+                m_threads.erase(iter);
+                return;
+            }
+        }
+        
+        throw ArgumentException("Thread does not exists");
     }
     
     const std::vector<Thread*> & Stream::threads()
