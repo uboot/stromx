@@ -54,20 +54,20 @@ namespace stream
 
     OperatorNode*const Network::addOperator(Operator*const op)
     {
-	for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
-	    iter != m_operators.end();
-	    ++iter)
-	{
-	    if ((*iter)->op()->info() == static_cast<OperatorInfo*>(op))
-	    {
+        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+            iter != m_operators.end();
+            ++iter)
+        {
+            if ((*iter)->op()->info() == static_cast<OperatorInfo*>(op))
+            {
             throw ArgumentException("Operator already exists");
-	    }
-	}
-	
-	OperatorWrapper* wrapper = new OperatorWrapper(op);
-    OperatorNode* node = new OperatorNode(wrapper);
-    m_operators.push_back(node);
-	return node;
+            }
+        }
+
+        OperatorWrapper* wrapper = new OperatorWrapper(op);
+        OperatorNode* node = new OperatorNode(wrapper);
+        m_operators.push_back(node);
+        return node;
     }
 
     void Network::removeOperator(OperatorNode*const op)
