@@ -111,14 +111,12 @@ namespace base
         
         Parameter* trigger = new Parameter(TRIGGER, DataType::TRIGGER);
         trigger->setName("Trigger");
-        trigger->setActiveAccessMode(Parameter::WRITE);
-        trigger->setInactiveAccessMode(Parameter::WRITE);
+        trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
         Parameter* active = new Parameter(ACTIVE, DataType::BOOL);
         active->setName("Active");
-        active->setActiveAccessMode(Parameter::WRITE);
-        active->setInactiveAccessMode(Parameter::WRITE);
+        active->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(active);
                                     
         return parameters;

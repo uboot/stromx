@@ -123,7 +123,7 @@ namespace stream
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->deactivate());
-        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INACTIVE, m_operatorWrapper->status());
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INITIALIZED, m_operatorWrapper->status());
         
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->deactivate());
         

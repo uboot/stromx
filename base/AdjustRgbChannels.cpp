@@ -146,20 +146,17 @@ namespace base
         
         NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataType::DOUBLE, Double(0.0), Double::MAX);
         red->setName("Red");
-        red->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        red->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        red->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(red);
         
         NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataType::DOUBLE, Double(0.0), Double::MAX);
         green->setName("Green");
-        green->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        green->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        green->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(green);
         
         NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataType::DOUBLE, Double(0.0), Double::MAX);
         blue->setName("Blue");
-        blue->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        blue->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        blue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(blue);
                                     
         return parameters;

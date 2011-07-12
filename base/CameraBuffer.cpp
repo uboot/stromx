@@ -118,14 +118,12 @@ namespace base
         
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
             numBuffers->setName("Number of buffers");
-            numBuffers->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-            numBuffers->setActiveAccessMode(stream::Parameter::READ);
+            numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataType::UINT_32);
             bufferSize->setName("Buffer size in bytes");
-            bufferSize->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-            bufferSize->setActiveAccessMode(stream::Parameter::READ);
+            bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
                                         
             return parameters;

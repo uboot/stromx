@@ -93,8 +93,7 @@ namespace base
         
         NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataType::UINT_32);
         size->setName("Size");
-        size->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        size->setActiveAccessMode(stream::Parameter::READ);
+        size->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(size);
                                     
         return parameters;

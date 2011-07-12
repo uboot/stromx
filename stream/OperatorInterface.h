@@ -15,7 +15,8 @@ namespace stream
     public:
         enum Status
         {
-            INACTIVE,
+            NONE,
+            INITIALIZED,
             ACTIVE,
             EXECUTING
         };

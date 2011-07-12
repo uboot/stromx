@@ -122,26 +122,22 @@ namespace base
         
         NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
         top->setName("Top");
-        top->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        top->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        top->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(top);
         
         NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
         left->setName("Left");
-        left->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        left->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        left->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(left);
         
         NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
         width->setName("Width");
-        width->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        width->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        width->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(width);
         
         NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
         height->setName("Height");
-        height->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        height->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        height->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(height);
                                     
         return parameters;

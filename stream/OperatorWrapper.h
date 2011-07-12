@@ -23,6 +23,7 @@ namespace stream
         
         const OperatorInfo* const info() const { return m_op; }
         
+        void initialize();
         void activate();
         void deactivate();
         

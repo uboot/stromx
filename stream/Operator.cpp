@@ -26,19 +26,42 @@ namespace stream
     Operator::Operator (const std::string & name,
                         const std::string & package,
                         const Version & version,
-                        const std::vector<Description*>& inputs,
-                        const std::vector<Description*>& outputs,
                         const std::vector<Parameter*>& parameters)
       : m_name(name),
         m_package(package),
         m_version(version),
-        m_inputs(inputs),
-        m_outputs(outputs),
         m_parameters(parameters)
+    {
+        validate(parameters);
+    }
+    
+    Operator::Operator (const std::string & name,
+                        const std::string & package,
+                        const Version & version)
+      : m_name(name),
+        m_package(package),
+        m_version(version)
+    {
+    }
+    
+    void Operator::initialize(const std::vector<stream::Description*>& inputs,
+                              const std::vector<stream::Description*>& outputs,
+                              const std::vector< stream::Parameter*>& parameters)
     {
         validate(inputs);
         validate(outputs);
-        validate(parameters);
+        
+        m_inputs = inputs;
+        m_outputs = outputs;
+        
+        for(std::vector<stream::Parameter*>::const_iterator iter = parameters.begin();
+            iter != parameters.end();
+            ++iter)
+        {
+            m_parameters.push_back(*iter);
+        }
+        
+        validate(m_parameters);
     }
     
     Operator::~Operator()
