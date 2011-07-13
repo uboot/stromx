@@ -52,20 +52,19 @@ namespace stream
 	m_status = INACTIVE;
     }
 
-    OperatorNode*const Network::addOperator(Operator*const op)
+    OperatorNode*const Network::addOperator(OperatorWrapper*const op)
     {
         for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            if ((*iter)->op()->info() == static_cast<OperatorInfo*>(op))
+            if ((*iter)->op()->info() == static_cast<const OperatorInfo*>(op->info()))
             {
-            throw ArgumentException("Operator already exists");
+                throw ArgumentException("Operator already exists");
             }
         }
 
-        OperatorWrapper* wrapper = new OperatorWrapper(op);
-        OperatorNode* node = new OperatorNode(wrapper);
+        OperatorNode* node = new OperatorNode(op);
         m_operators.push_back(node);
         return node;
     }

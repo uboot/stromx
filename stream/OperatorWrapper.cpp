@@ -13,9 +13,7 @@ namespace stream
 {
     OperatorWrapper::OperatorWrapper(Operator* const op)
       : m_op(op),
-        m_status(NONE),
-        m_inputMap(op->inputs()),
-        m_outputMap(op->outputs())
+        m_status(NONE)
     {
         if(!op)
             throw ArgumentException("Passed null pointer as operator.");
@@ -57,10 +55,14 @@ namespace stream
         if(m_status != NONE)
             throw InvalidStateException("Operator has already been initialized.");
         
+        m_op->initialize();
+        
+        m_inputMap = Id2DataMap(m_op->inputs());
+        m_outputMap = Id2DataMap(m_op->outputs());
+        
         BOOST_ASSERT(m_inputMap.isEmpty());
         BOOST_ASSERT(m_outputMap.isEmpty());
         
-        m_op->initialize();
         m_status = INITIALIZED;
     }
     
@@ -353,7 +355,6 @@ namespace stream
             case Parameter::NO_ACCESS:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
-            case Parameter::ACTIVATED_READ:
             case Parameter::ACTIVATED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
             }
@@ -366,13 +367,10 @@ namespace stream
             }
             break;
         case ACTIVE:
+        case EXECUTING:
             switch(param->accessMode())
             {
             case Parameter::NO_ACCESS:
-            case Parameter::NONE_READ:
-            case Parameter::NONE_WRITE:
-            case Parameter::INITIALIZED_READ:
-            case Parameter::INITIALIZED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
             }
             break;
@@ -394,7 +392,6 @@ namespace stream
             case Parameter::NONE_READ:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
-            case Parameter::ACTIVATED_READ:
             case Parameter::ACTIVATED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
             }
@@ -406,11 +403,11 @@ namespace stream
             case Parameter::NONE_READ:
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
-            case Parameter::ACTIVATED_READ:
                 throw ParameterAccessModeException(*param, *this->info());
             }
             break;
         case ACTIVE:
+        case EXECUTING:
             switch(param->accessMode())
             {
             case Parameter::NO_ACCESS:
@@ -418,7 +415,6 @@ namespace stream
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
-            case Parameter::ACTIVATED_READ:
                 throw ParameterAccessModeException(*param, *this->info());
             }
             break;

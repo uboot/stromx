@@ -17,6 +17,7 @@ namespace base
     void ConstImageTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new ConstImage());
+        m_operator->initialize();
         m_operator->activate();
         
         Image image("lenna.jpg");

@@ -20,6 +20,7 @@ namespace base
     void PeriodicDelayTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new PeriodicDelay());
+        m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));
         m_operator->setInputData(PeriodicDelay::INPUT, m_image);

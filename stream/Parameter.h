@@ -15,7 +15,6 @@ namespace stream
             NONE_WRITE,
             INITIALIZED_READ,
             INITIALIZED_WRITE,
-            ACTIVATED_READ,
             ACTIVATED_WRITE
         };
         

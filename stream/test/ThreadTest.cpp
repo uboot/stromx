@@ -22,6 +22,8 @@ namespace stream
         {
             m_operators.push_back(new TestOperator());
             OperatorWrapper* wrapper = new OperatorWrapper(m_operators.back());
+            wrapper->initialize();
+            
             m_operatorNodes.push_back(new OperatorNode(wrapper));
             wrapper->activate();
         }
@@ -49,7 +51,9 @@ namespace stream
         }
         
         m_container = DataContainer(new stream::None);
-        m_operatorNode = new OperatorNode(new OperatorWrapper(new TestOperator()));
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        wrapper->initialize();
+        m_operatorNode = new OperatorNode(wrapper);
         m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);
     }
     
@@ -127,8 +131,11 @@ namespace stream
 
     void ThreadTest::tearDown()
     {
-        m_thread->stop();
-        m_thread->join();
+        if(m_thread)
+        {
+            m_thread->stop();
+            m_thread->join();
+        }
         
         delete m_thread;
         

@@ -17,6 +17,7 @@ namespace stream
         CPPUNIT_TEST (testSetInputData);
         CPPUNIT_TEST (testGetOutputData);
         CPPUNIT_TEST (testClearOutputData);
+        CPPUNIT_TEST (testInitialize);
         CPPUNIT_TEST (testActivate);
         CPPUNIT_TEST (testDeactivate);
         CPPUNIT_TEST (testGetParameter);
@@ -33,6 +34,7 @@ namespace stream
         void testSetInputData();
         void testGetOutputData();
         void testClearOutputData();
+        void testInitialize();
         void testActivate();
         void testDeactivate();
         void testGetParameter();

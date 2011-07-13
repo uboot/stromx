@@ -16,6 +16,7 @@ namespace base
     void CameraTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new Camera());
+        m_operator->initialize();
         m_operator->activate();
     }
     

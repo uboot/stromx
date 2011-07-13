@@ -35,6 +35,13 @@ namespace stream
                  
         Operator(const std::string & name,
                  const std::string & package,
+                 const Version & version,
+                 const std::vector<Description*>& inputs,
+                 const std::vector<Description*>& outputs,
+                 const std::vector<Parameter*>& parameters);
+                 
+        Operator(const std::string & name,
+                 const std::string & package,
                  const Version & version);
                  
         virtual Operator* const clone() const = 0;
@@ -51,7 +58,7 @@ namespace stream
         virtual const Data& getParameter(const unsigned int id) = 0;
         
         virtual void execute(DataProvider& provider) = 0;
-        virtual void initialize() = 0;
+        virtual void initialize() {}
         virtual void activate() {}
         virtual void deactivate() {}
         

@@ -16,6 +16,7 @@ namespace base
     void QueueTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new Queue());
+        m_operator->initialize();
         m_operator->activate();
     }
     
