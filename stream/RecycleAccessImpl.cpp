@@ -69,4 +69,22 @@ namespace stream
         m_data.pop_front();
         return value;
     }
+    
+    Data*const RecycleAccessImpl::operator()(const unsigned int timeout)
+    {
+        // positive timeouts are currently not supported
+        BOOST_ASSERT(timeout == 0);
+        
+        unique_lock_t lock(m_mutex);
+        
+        if(m_dataContainer.empty() && m_data.empty())
+            return 0;
+        
+        if(m_data.empty())
+            throw Timeout();
+        
+        Data* value = m_data.front();
+        m_data.pop_front();
+        return value;
+    }
 } 

@@ -32,6 +32,7 @@ namespace stream
         
         void add(DataContainer data);
         Data* const operator()();
+        Data* const operator()(const unsigned int timeout);
         
     private:
         boost::shared_ptr<RecycleAccessImpl> m_impl;      

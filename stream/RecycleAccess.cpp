@@ -14,6 +14,15 @@ namespace stream
         
         return (*m_impl)();
     }
+
+    Data*const RecycleAccess::operator()(const unsigned int timeout)
+    {
+        if(! m_impl.get())
+            return 0;
+        
+        return (*m_impl)(timeout);
+    }
+    
     
     void RecycleAccess::add(DataContainer data)
     {
