@@ -23,7 +23,6 @@ namespace stream
         return (*m_impl)(timeout);
     }
     
-    
     void RecycleAccess::add(DataContainer data)
     {
         if(! m_impl.get())
@@ -31,5 +30,4 @@ namespace stream
         else
             m_impl->add(data);
     }
-
 } 

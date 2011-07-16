@@ -22,6 +22,8 @@ namespace stream
         CPPUNIT_TEST (testDeactivate);
         CPPUNIT_TEST (testGetParameter);
         CPPUNIT_TEST (testSetParameter);
+        CPPUNIT_TEST (testGetParameterStatusNone);
+        CPPUNIT_TEST (testSetParameterStatusNone);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -39,6 +41,8 @@ namespace stream
         void testDeactivate();
         void testGetParameter();
         void testSetParameter();
+        void testGetParameterStatusNone();
+        void testSetParameterStatusNone();
             
     private:
         void setInputDataDelayed(const unsigned int id); 

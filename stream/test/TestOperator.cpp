@@ -17,8 +17,9 @@ namespace stream
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()
-      : Operator(NAME, PACKAGE, VERSION),
+      : Operator(NAME, PACKAGE, VERSION, setupInitParameters()),
         m_sleepTime(100),
+        m_bufferSize(1000),
         m_numExecutes(0)
     {
     }
@@ -85,6 +86,16 @@ namespace stream
         std::vector<Parameter*> parameters;
         Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
         param->setAccessMode(Parameter::INITIALIZED_WRITE);
+        parameters.push_back(param);
+        
+        return parameters;
+    }
+    
+    const std::vector<Parameter*> TestOperator::setupInitParameters()
+    {
+        std::vector<Parameter*> parameters;
+        Parameter* param = new Parameter(BUFFER_SIZE, DataType::UINT_32);
+        param->setAccessMode(Parameter::NONE_WRITE);
         parameters.push_back(param);
                                        
         return parameters;

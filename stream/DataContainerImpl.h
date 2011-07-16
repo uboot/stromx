@@ -32,9 +32,11 @@ namespace stream
         ~DataContainerImpl();
         
         void getReadAccess();
+        void getReadAccess(const unsigned int timeout);
         void returnReadAccess();
         
         void getWriteAccess();
+        void getWriteAccess(const unsigned int timeout);
         void returnWriteAccess();
         
         void getRecycleAccess(Recycler* const recycler);

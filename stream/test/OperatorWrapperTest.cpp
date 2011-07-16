@@ -208,7 +208,7 @@ namespace stream
         const Data& value = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
         
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(1), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(-1), ParameterIdException);
     }
 
     void OperatorWrapperTest::testSetParameter()
@@ -222,10 +222,28 @@ namespace stream
         const Data& testValue = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
         
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(1, value), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(-1, value), ParameterIdException);
         
         UInt16 wrongType;
         CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, wrongType), ParameterTypeException);
+    }
+    
+    void OperatorWrapperTest::testGetParameterStatusNone()
+    {
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        
+        CPPUNIT_ASSERT_NO_THROW(wrapper->getParameter(TestOperator::BUFFER_SIZE));
+    }
+
+    void OperatorWrapperTest::testSetParameterStatusNone()
+    {
+        UInt32 value(2000);
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        
+        CPPUNIT_ASSERT_NO_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value));
+    
+        wrapper->initialize();
+        CPPUNIT_ASSERT_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value), ParameterAccessModeException);
     }
     
     void OperatorWrapperTest::tearDown ( void )

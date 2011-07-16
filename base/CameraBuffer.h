@@ -73,6 +73,7 @@ namespace base
             stream::RecycleAccess m_buffers;
             stream::UInt32 m_bufferSize;
             stream::UInt32 m_numBuffers;
+            unsigned int m_id;
         };
     }
 }

@@ -22,17 +22,23 @@ namespace stream
         network->setName("TestNetwork");
         
         OperatorWrapper* wrapper0 = new OperatorWrapper(new TestOperator());
+        wrapper0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
         wrapper0->initialize();
+        wrapper0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
         OperatorNode* op0 = network->addOperator(wrapper0);
         op0->setName("Number 1");
         
         OperatorWrapper* wrapper1 = new OperatorWrapper(new TestOperator());
+        wrapper1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
         wrapper1->initialize();
+        wrapper1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
         OperatorNode* op1 = network->addOperator(wrapper1);
         op1->setName("Number 2");
         
         OperatorWrapper* wrapper2 = new OperatorWrapper(new TestOperator());
+        wrapper2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
         wrapper2->initialize();
+        wrapper2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
         OperatorNode* op2 = network->addOperator(wrapper2);
         op2->setName("Number 3");
         
