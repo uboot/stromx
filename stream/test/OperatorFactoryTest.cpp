@@ -36,7 +36,7 @@ namespace stream
         
         // get the existing operator
         Operator* newOp;
-        CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("test", "TestOperator"));
+        CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "test"));
         CPPUNIT_ASSERT(newOp);
         
         delete newOp;
