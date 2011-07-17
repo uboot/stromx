@@ -36,7 +36,7 @@ namespace stream
         virtual const std::vector<const Operator*> & availableOperators() const;
         
     private:
-        std::vector<Operator*> m_operators;
+        std::vector<const Operator*> m_operators;
     };
 }
 

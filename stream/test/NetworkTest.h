@@ -37,4 +37,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_OUTPUTNODETEST_H
+#endif // STREAM_NETWORKTEST_H

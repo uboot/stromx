@@ -1,3 +1,20 @@
+/* 
+ *  Copyright 2011 Thomas Fidler
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+
 #include "Network.h"
 #include "OperatorInterface.h"
 #include "OperatorNode.h"
@@ -25,31 +42,31 @@ namespace stream
     
     void Network::activate()
     {
-	if (m_status == ACTIVE)
-	{
-	    throw InvalidStateException("Network already active");
-	}
-	
-	for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        if (m_status == ACTIVE)
+        {
+            throw InvalidStateException("Network already active");
+        }
+        
+        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
             (*iter)->op()->activate();
         }
         
-	m_status = ACTIVE;
+        m_status = ACTIVE;
     }
 
     void Network::deactivate()
     {
-	for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
             (*iter)->op()->deactivate();
         }
         
-	m_status = INACTIVE;
+        m_status = INACTIVE;
     }
 
     OperatorNode*const Network::addOperator(Operator*const op)
@@ -60,7 +77,7 @@ namespace stream
         {
             if ((*iter)->op()->info() == static_cast<OperatorInfo*>(op))
             {
-            throw ArgumentException("Operator already exists");
+                throw ArgumentException("Operator already exists");
             }
         }
 
@@ -83,26 +100,27 @@ namespace stream
         {
             if ((*iter) == op)
             {
+                (*iter)->op()->deactivate();
                 m_operators.erase(iter);
                 return;
             }
         }
-	
-	throw ArgumentException("Operator does not exist");
+        
+        throw ArgumentException("Operator does not exist");
     }
     
     OperatorNode* const Network::getOperator(const std::string & name)
     {
-	for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
-	    iter != m_operators.end();
-	    ++iter)
-	{
-	  if ((*iter)->name() == name)
-	  {
-	    return *iter;
-	  }
-	}  
-	
-	throw InvalidStateException("Operator does not exist");
+        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+            iter != m_operators.end();
+            ++iter)
+        {
+            if ((*iter)->name() == name)
+            {
+                return *iter;
+            }
+        }  
+        
+        throw InvalidStateException("Operator does not exist");
     }
 }

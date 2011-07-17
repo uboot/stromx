@@ -46,7 +46,7 @@ namespace stream
         
         OperatorNode* const addOperator(Operator* const op);
         void removeOperator(OperatorNode* const op);
-	OperatorNode* const getOperator(const std::string & name);
+        OperatorNode* const getOperator(const std::string & name);
         void activate();
         void deactivate();
                

@@ -34,6 +34,7 @@ namespace stream
     class StreamTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (StreamTest);
+        CPPUNIT_TEST(testInit);
         CPPUNIT_TEST(testNetwork);
 //         CPPUNIT_TEST(testAddThread);
 //         CPPUNIT_TEST(testRemoveThread);
@@ -47,6 +48,7 @@ namespace stream
         void tearDown();
 
     protected:
+        void testInit();
         void testNetwork();
 //         void testAddThread();
 //         void testRemoveThread();

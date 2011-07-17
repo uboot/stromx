@@ -27,9 +27,6 @@ namespace stream
 {
     void StreamTest::setUp()
     {
-        CPPUNIT_ASSERT_THROW(m_stream = new Stream(0),ArgumentException);
-        delete m_stream;
-        
         m_network = new Network();
         m_stream = new Stream(m_network);
     }
@@ -39,6 +36,12 @@ namespace stream
         delete m_network;
         delete m_stream;
     }
+
+    void StreamTest::testInit()
+    {
+        CPPUNIT_ASSERT_THROW(new Stream(0),ArgumentException);
+    }
+
 
     void StreamTest::testNetwork()
     {

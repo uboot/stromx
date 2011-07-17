@@ -1,4 +1,4 @@
-project(stream)
+ project(stream)
 
 set (STREAM_VERSION_MAJOR 0)
 set (STREAM_VERSION_MINOR 1)
