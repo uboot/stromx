@@ -7,6 +7,12 @@ namespace stream
 {
     OperatorFactory::~OperatorFactory()
     {
+        for(std::vector<const Operator*>::iterator iter = m_operators.begin();
+            iter != m_operators.end();
+            ++iter)
+        {
+            delete (*iter);
+        }
     }
 
     void OperatorFactory::registerOperator(const Operator*const op)
@@ -42,18 +48,14 @@ namespace stream
         {
             if((*iter)->name() == name && (*iter)->package() == package)
             {
-//                 Operator* temp_new_op = new Operator();
-//                 temp_new_op = (*iter)->clone();
-//                 if (temp_new_op == 0)
-//                 { 
-//                     throw ArgumentException("Invalid argument received: Null pointer. Cloning failed")
-//                 }
-//                 // How to implement deletetion of temp_new_op? Otherwise memory leak...
-//                 // Testing Null pointer implemented in function clone()?
-//                 return temp_new_op;
-                
-                //If testing on Null pointer is not required:
-                return (*iter)->clone();
+                Operator* newOp = 0;
+                newOp = (*iter)->clone();
+                if (newOp == 0)
+                { 
+                    throw ArgumentException("Invalid argument received: Null pointer. Cloning failed");
+                }
+
+                return newOp;
             }
         }
         
