@@ -34,6 +34,29 @@ namespace stream
         delete data;
     }
     
+    void RecycleAccessTest::testRecycleNoTimeout()
+    {
+        Data* data = new TestData();
+        
+        RecycleAccess access;
+        {
+            DataContainer container = DataContainer(data);
+            access = RecycleAccess(container);
+        }
+        
+        CPPUNIT_ASSERT_EQUAL(data, access(1000));
+        
+        delete data;
+    }
+    
+    void RecycleAccessTest::testRecycleTimeout()
+    {
+        DataContainer container = DataContainer(new TestData());
+        RecycleAccess access = RecycleAccess(container);
+        
+        CPPUNIT_ASSERT_THROW(access(1000), Timeout);
+    }
+    
     void RecycleAccessTest::testCopiedRecycle()
     {
         Data* data = new TestData();

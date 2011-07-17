@@ -26,9 +26,30 @@ namespace stream
     Operator::Operator (const std::string & name,
                         const std::string & package,
                         const Version & version,
-                        const std::vector<Description*>& inputs,
-                        const std::vector<Description*>& outputs,
                         const std::vector<Parameter*>& parameters)
+      : m_name(name),
+        m_package(package),
+        m_version(version),
+        m_parameters(parameters)
+    {
+        validate(parameters);
+    }
+    
+    Operator::Operator (const std::string & name,
+                        const std::string & package,
+                        const Version & version)
+      : m_name(name),
+        m_package(package),
+        m_version(version)
+    {
+    }
+    
+    Operator::Operator(const std::string& name,
+                       const std::string& package,
+                       const stream::Version& version,
+                       const std::vector< Description* >& inputs,
+                       const std::vector< Description* >& outputs,
+                       const std::vector< Parameter* >& parameters)
       : m_name(name),
         m_package(package),
         m_version(version),
@@ -38,7 +59,39 @@ namespace stream
     {
         validate(inputs);
         validate(outputs);
-        validate(parameters);
+    }
+
+    
+    void Operator::initialize(const std::vector<stream::Description*>& inputs,
+                              const std::vector<stream::Description*>& outputs,
+                              const std::vector< stream::Parameter*>& parameters)
+    {
+        for(std::vector<stream::Description*>::const_iterator iter = inputs.begin();
+            iter != inputs.end();
+            ++iter)
+        {
+            m_inputs.push_back(*iter);
+        }
+        
+        validate(inputs);
+        
+        for(std::vector<stream::Description*>::const_iterator iter = outputs.begin();
+            iter != outputs.end();
+            ++iter)
+        {
+            m_outputs.push_back(*iter);
+        }
+        
+        validate(outputs);
+        
+        for(std::vector<stream::Parameter*>::const_iterator iter = parameters.begin();
+            iter != parameters.end();
+            ++iter)
+        {
+            m_parameters.push_back(*iter);
+        }
+        
+        validate(m_parameters);
     }
     
     Operator::~Operator()

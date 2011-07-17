@@ -125,8 +125,7 @@ namespace base
         
         Parameter* period = new Parameter(PERIOD, DataType::UINT_32);
         period->setName("Period (milliseconds)");
-        period->setActiveAccessMode(Parameter::WRITE);
-        period->setInactiveAccessMode(Parameter::WRITE);
+        period->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(period);
                                     
         return parameters;

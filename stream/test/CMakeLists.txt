@@ -53,7 +53,7 @@ add_executable(stream_test
     ../WriteAccessImpl.cpp
     WriteAccessTest.cpp
     ../Stream.cpp
-    StreamTest.cpp
+    #StreamTest.cpp
     ../XmlReader.cpp
     XmlReaderTest.cpp
     ../XmlWriter.cpp

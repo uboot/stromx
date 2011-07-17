@@ -49,11 +49,17 @@
     <Network name="TestNetwork">
         <Operator id="0" package="test" type="TestOperator" name="Number 1">
             <Parameter id="0">
+                <UInt32>5000</UInt32>
+            </Parameter>
+            <Parameter id="1">
                 <UInt32>200</UInt32>
             </Parameter>
         </Operator>
         <Operator id="1" package="test" type="TestOperator" name="Number 2">
             <Parameter id="0">
+                <UInt32>6000</UInt32>
+            </Parameter>
+            <Parameter id="1">
                 <UInt32>250</UInt32>
             </Parameter>
             <Input id="0" operator="0" output="2"/>
@@ -61,6 +67,9 @@
         </Operator>
         <Operator id="2" package="test" type="TestOperator" name="Number 3">
             <Parameter id="0">
+                <UInt32>7000</UInt32>
+            </Parameter>
+            <Parameter id="1">
                 <UInt32>300</UInt32>
             </Parameter>
             <Input id="0" operator="1" output="2"/>

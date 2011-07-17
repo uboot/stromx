@@ -13,9 +13,7 @@ namespace stream
 {
     OperatorWrapper::OperatorWrapper(Operator* const op)
       : m_op(op),
-        m_status(INACTIVE),
-        m_inputMap(op->inputs()),
-        m_outputMap(op->outputs())
+        m_status(NONE)
     {
         if(!op)
             throw ArgumentException("Passed null pointer as operator.");
@@ -50,12 +48,31 @@ namespace stream
         } 
     }
     
+    void OperatorWrapper::initialize()
+    {
+        lock_t lock(m_mutex);
+        
+        if(m_status != NONE)
+            throw InvalidStateException("Operator has already been initialized.");
+        
+        m_op->initialize();
+        
+        m_inputMap = Id2DataMap(m_op->inputs());
+        m_outputMap = Id2DataMap(m_op->outputs());
+        
+        BOOST_ASSERT(m_inputMap.isEmpty());
+        BOOST_ASSERT(m_outputMap.isEmpty());
+        
+        m_status = INITIALIZED;
+    }
+    
+    
     void OperatorWrapper::activate()
     {
         lock_t lock(m_mutex);
         
-        if(m_status != INACTIVE)
-            throw InvalidStateException("Operator must be inactive.");
+        if(m_status != INITIALIZED)
+            throw InvalidStateException("Operator must be initialized.");
         
         BOOST_ASSERT(m_inputMap.isEmpty());
         BOOST_ASSERT(m_outputMap.isEmpty());
@@ -68,7 +85,7 @@ namespace stream
     {
         lock_t lock(m_mutex);
         
-        if(m_status == INACTIVE)
+        if(m_status == INITIALIZED)
             return;
         
         if(m_status == EXECUTING)
@@ -79,7 +96,7 @@ namespace stream
         m_inputMap.clear();
         m_outputMap.clear();
         
-        m_status = INACTIVE;
+        m_status = INITIALIZED;
     } 
     
     void OperatorWrapper::clearAllData()
@@ -332,14 +349,31 @@ namespace stream
         
         switch(status())
         {
-        case INACTIVE:
-            if(! (Parameter::READ & param->inactiveAccessMode()))
+        case NONE:
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
+            case Parameter::INITIALIZED_READ:
+            case Parameter::INITIALIZED_WRITE:
+            case Parameter::ACTIVATED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
+            }
+            break;
+        case INITIALIZED:
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
+                throw ParameterAccessModeException(*param, *this->info());
+            }
             break;
         case ACTIVE:
-            if(! (Parameter::READ & param->activeAccessMode()))
+        case EXECUTING:
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
                 throw ParameterAccessModeException(*param, *this->info());
-            break;           
+            }
+            break;
         default:
             BOOST_ASSERT(false);    
         }
@@ -351,15 +385,39 @@ namespace stream
         
         switch(status())
         {
-        case INACTIVE:
-            if(! (Parameter::WRITE & param->inactiveAccessMode()))
+        case NONE:
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
+            case Parameter::NONE_READ:
+            case Parameter::INITIALIZED_READ:
+            case Parameter::INITIALIZED_WRITE:
+            case Parameter::ACTIVATED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
+            }
+            break;
+        case INITIALIZED:
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
+            case Parameter::NONE_READ:
+            case Parameter::NONE_WRITE:
+            case Parameter::INITIALIZED_READ:
+                throw ParameterAccessModeException(*param, *this->info());
+            }
             break;
         case ACTIVE:
         case EXECUTING:
-            if(! (Parameter::WRITE & param->activeAccessMode()))
+            switch(param->accessMode())
+            {
+            case Parameter::NO_ACCESS:
+            case Parameter::NONE_READ:
+            case Parameter::NONE_WRITE:
+            case Parameter::INITIALIZED_READ:
+            case Parameter::INITIALIZED_WRITE:
                 throw ParameterAccessModeException(*param, *this->info());
-            break;           
+            }
+            break;
         default:
             BOOST_ASSERT(false);    
         }

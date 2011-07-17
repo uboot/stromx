@@ -19,6 +19,7 @@ namespace base
     void AdjustRgbChannelsTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new AdjustRgbChannels());
+        m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));
         m_operator->setInputData(AdjustRgbChannels::INPUT, image);

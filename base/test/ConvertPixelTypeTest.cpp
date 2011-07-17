@@ -18,6 +18,7 @@ namespace base
     void ConvertPixelTypeTest::setUp ( void )
     {
         m_operator = new OperatorWrapper(new ConvertPixelType());
+        m_operator->initialize();
         m_operator->activate();
         DataContainer source(new Image("lenna.jpg"));
         m_operator->setInputData(ConvertPixelType::SOURCE, source);

@@ -21,7 +21,7 @@ def main():
     package = ''
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "h:acp", ["help", "author=", "package=", "class="])
+        opts, args = getopt.getopt(sys.argv[1:], "h:oacp", ["help", "operator", "author=", "package=", "class="])
     except getopt.GetoptError, err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -29,10 +29,13 @@ def main():
         sys.exit(2)
     output = None
     verbose = False
+    operator = False;
     for o, a in opts:
         if o in ("-h", "--help"):
             usage()
             sys.exit()
+        elif o in ("-o", "--operator"):
+            operator = True
         elif o in ("-a", "--author"):
             author = a
         elif o in ("-p", "--package"):
@@ -43,13 +46,19 @@ def main():
             assert False, "unhandled option"
             usage()
 
-    process('Class.h.in', className + '.h', author, className, package)
-    process('Class.cpp.in', className + '.cpp', author, className, package)
-    process('ClassTest.h.in', className + 'Test' + '.h', author, className, package)
-    process('ClassTest.cpp.in', className + 'Test' + '.cpp', author, className, package)
+    if operator:
+        process('Operator.h.in', className + '.h', author, className, package)
+        process('Operator.cpp.in', className + '.cpp', author, className, package)
+        process('OperatorTest.h.in', className + 'Test' + '.h', author, className, package)
+        process('OperatorTest.cpp.in', className + 'Test' + '.cpp', author, className, package)
+    else:
+        process('Class.h.in', className + '.h', author, className, package)
+        process('Class.cpp.in', className + '.cpp', author, className, package)
+        process('ClassTest.h.in', className + 'Test' + '.h', author, className, package)
+        process('ClassTest.cpp.in', className + 'Test' + '.cpp', author, className, package)
 
 def usage():
-    print 'USAGE: python makeclass.py --author="Sean Connery" --package="stream" --class="Operator"'
+    print 'USAGE: python makeclass.py [--operator] --author="Sean Connery" --package="stream" --class="Operator"'
 
 def replace(text, author, className, package):
     year = str(datetime.date.today().year)

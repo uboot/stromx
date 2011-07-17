@@ -1,6 +1,7 @@
 #include "ImageTest.h"
 
 #include <base/Image.h>
+#include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -11,6 +12,11 @@ namespace base
     void ImageTest::setUp ( void )
     {
         m_image = 0;
+    }
+    
+    void ImageTest::testImageFromUnknownFile()
+    {
+        CPPUNIT_ASSERT_THROW(m_image = new Image("unknown.jpg"), stream::FileAccessException);
     }
     
     void ImageTest::testImageFromJpeg()

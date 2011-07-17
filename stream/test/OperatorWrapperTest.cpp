@@ -21,6 +21,7 @@ namespace stream
     {
         m_testOperator = new TestOperator();
         m_operatorWrapper = new OperatorWrapper(m_testOperator);
+        m_operatorWrapper->initialize();
         m_operatorWrapper->activate();
         Data* data = new stream::None;
         m_container = DataContainer(data);  
@@ -107,6 +108,15 @@ namespace stream
         t2.join();    
     }
     
+    void OperatorWrapperTest::testInitialize()
+    {
+        OperatorWrapper* operatorWrapper = new OperatorWrapper(new TestOperator());
+        CPPUNIT_ASSERT_EQUAL(OperatorInterface::NONE, operatorWrapper->status());
+        
+        CPPUNIT_ASSERT_NO_THROW(operatorWrapper->initialize());
+        CPPUNIT_ASSERT_EQUAL(OperatorInterface::INITIALIZED, operatorWrapper->status());
+    }
+    
     void OperatorWrapperTest::testActivate()
     {
         CPPUNIT_ASSERT_THROW(m_operatorWrapper->activate(), InvalidStateException);
@@ -123,7 +133,7 @@ namespace stream
         m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
         
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->deactivate());
-        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INACTIVE, m_operatorWrapper->status());
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INITIALIZED, m_operatorWrapper->status());
         
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->deactivate());
         
@@ -132,7 +142,6 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container));
     }
 
-    
     void OperatorWrapperTest::setInputDataDelayed ( const unsigned int id )
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
@@ -192,33 +201,49 @@ namespace stream
 
     void OperatorWrapperTest::testGetParameter()
     {
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME), ParameterAccessModeException);
+        CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME));
         
         m_operatorWrapper->deactivate();
         
         const Data& value = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
         
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(1), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(-1), ParameterIdException);
     }
 
     void OperatorWrapperTest::testSetParameter()
     {
         UInt32 value(2000);
-        CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value));
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME), ParameterAccessModeException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value), ParameterAccessModeException);
         
         m_operatorWrapper->deactivate();
         
+        CPPUNIT_ASSERT_NO_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value)); 
         const Data& testValue = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
         
-        m_operatorWrapper->activate();
-        
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(1, value), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(-1, value), ParameterIdException);
         
         UInt16 wrongType;
         CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, wrongType), ParameterTypeException);
+    }
+    
+    void OperatorWrapperTest::testGetParameterStatusNone()
+    {
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        
+        CPPUNIT_ASSERT_NO_THROW(wrapper->getParameter(TestOperator::BUFFER_SIZE));
+    }
+
+    void OperatorWrapperTest::testSetParameterStatusNone()
+    {
+        UInt32 value(2000);
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        
+        CPPUNIT_ASSERT_NO_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value));
+    
+        wrapper->initialize();
+        CPPUNIT_ASSERT_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value), ParameterAccessModeException);
     }
     
     void OperatorWrapperTest::tearDown ( void )

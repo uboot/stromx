@@ -23,13 +23,12 @@
 
 namespace stream
 {
-    class DataContainer;
     class Data;
     
     class ReadAccess
     {
     public:
-        ReadAccess(DataContainer& data);
+        ReadAccess(DataContainer data);
         
         const Data* const operator()();
         

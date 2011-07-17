@@ -23,7 +23,7 @@
 
 namespace stream
 {
-    class Operator;
+    class OperatorWrapper;
     class OperatorNode;
     class OperatorInterface;
     
@@ -44,7 +44,7 @@ namespace stream
         const Status status() { return m_status; }
         const std::vector<OperatorNode*> operators() { return m_operators; }
         
-        OperatorNode* const addOperator(Operator* const op);
+        OperatorNode* const addOperator(OperatorWrapper* const op);
         void removeOperator(OperatorNode* const op);
         OperatorNode* const getOperator(const std::string & name);
         void activate();

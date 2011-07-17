@@ -75,6 +75,14 @@ namespace stream
           : Exception(message)
         {}
     };
+    
+    class Timeout : public Exception
+    {
+    public:
+        Timeout(const std::string & message = "Timeout")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H

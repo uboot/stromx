@@ -25,7 +25,6 @@
 #include <set>
 #include <deque>
 
-
 namespace stream
 {
     class Data;
@@ -40,6 +39,7 @@ namespace stream
         
         void recycle(DataContainerImpl* const container);
         Data* const operator()();
+        Data* const operator()(const unsigned int timeout);
         void add(DataContainer& data);
         
     private:

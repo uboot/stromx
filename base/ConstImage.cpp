@@ -114,8 +114,7 @@ namespace base
         std::vector<stream::Parameter*> parameters;
         
         Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
-        image->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        image->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
                                     
         return parameters;

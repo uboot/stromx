@@ -17,6 +17,10 @@ namespace stream
         }
     }
     
+    Id2DataMap::Id2DataMap()
+    {
+    }
+    
     stream::DataContainer Id2DataMap::operator[](const unsigned int id) const
     {
         std::map<unsigned int, DataContainer>::const_iterator iter = m_map.find(id);

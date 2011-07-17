@@ -69,4 +69,31 @@ namespace stream
         m_data.pop_front();
         return value;
     }
+    
+    Data*const RecycleAccessImpl::operator()(const unsigned int timeout)
+    {
+        unique_lock_t lock(m_mutex);
+        
+        if(m_dataContainer.empty() && m_data.empty())
+            return 0;
+        
+        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
+        
+        try
+        {
+            while(m_data.empty())
+            {
+                if(! m_cond.timed_wait(lock, finish))
+                    throw Timeout();
+            }
+        }
+        catch(boost::thread_interrupted&)
+        {
+            throw InterruptException();
+        }
+        
+        Data* value = m_data.front();
+        m_data.pop_front();
+        return value;
+    }
 } 

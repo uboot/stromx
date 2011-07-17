@@ -22,10 +22,17 @@
 
 namespace stream
 {
+    class ReadAccess;
+    class WriteAccess;
+    class DataContainer;
+    class Data;
+    
     class ReadAccessTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ReadAccessTest);
         CPPUNIT_TEST(testReadAccess);
+        CPPUNIT_TEST(testReadAccessDelayed);
+        CPPUNIT_TEST(testReadAccessInterrupt);
         CPPUNIT_TEST(testReleaseReadAccess);
         CPPUNIT_TEST_SUITE_END ();
 
@@ -37,7 +44,15 @@ namespace stream
 
     protected:
         void testReadAccess();
+        void testReadAccessDelayed();
+        void testReadAccessInterrupt();
         void testReleaseReadAccess();
+
+    private:
+        void releaseDelayed(WriteAccess& access);
+        void readAccessInterrupt(DataContainer & container);
+        
+        Data* m_data;
     };
 }
 

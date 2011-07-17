@@ -2,7 +2,7 @@
 
 namespace stream
 {
-    RecycleAccess::RecycleAccess(DataContainer& data)
+    RecycleAccess::RecycleAccess(DataContainer data)
       : m_impl(new RecycleAccessImpl(data))
     {
     }
@@ -14,13 +14,20 @@ namespace stream
         
         return (*m_impl)();
     }
+
+    Data*const RecycleAccess::operator()(const unsigned int timeout)
+    {
+        if(! m_impl.get())
+            return 0;
+        
+        return (*m_impl)(timeout);
+    }
     
-    void RecycleAccess::add(DataContainer& data)
+    void RecycleAccess::add(DataContainer data)
     {
         if(! m_impl.get())
             m_impl = boost::shared_ptr<RecycleAccessImpl>(new RecycleAccessImpl(data));
         else
             m_impl->add(data);
     }
-
 } 

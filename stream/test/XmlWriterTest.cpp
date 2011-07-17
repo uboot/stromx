@@ -6,6 +6,7 @@
 
 #include <stream/XmlWriter.h>
 #include <stream/Network.h>
+#include <stream/OperatorWrapper.h>
 #include <stream/OperatorNode.h>
 #include <stream/InputNode.h>
 #include <stream/Thread.h>
@@ -20,13 +21,25 @@ namespace stream
         Network* network = new Network;
         network->setName("TestNetwork");
         
-        OperatorNode* op0 = network->addOperator(new TestOperator());
+        OperatorWrapper* wrapper0 = new OperatorWrapper(new TestOperator());
+        wrapper0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
+        wrapper0->initialize();
+        wrapper0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
+        OperatorNode* op0 = network->addOperator(wrapper0);
         op0->setName("Number 1");
         
-        OperatorNode* op1 = network->addOperator(new TestOperator());
+        OperatorWrapper* wrapper1 = new OperatorWrapper(new TestOperator());
+        wrapper1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
+        wrapper1->initialize();
+        wrapper1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
+        OperatorNode* op1 = network->addOperator(wrapper1);
         op1->setName("Number 2");
         
-        OperatorNode* op2 = network->addOperator(new TestOperator());
+        OperatorWrapper* wrapper2 = new OperatorWrapper(new TestOperator());
+        wrapper2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
+        wrapper2->initialize();
+        wrapper2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
+        OperatorNode* op2 = network->addOperator(wrapper2);
         op2->setName("Number 3");
         
         op1->getInputNode(TestOperator::INPUT_1)->connect(op0->getOutputNode(TestOperator::OUTPUT_1));

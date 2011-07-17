@@ -24,24 +24,33 @@ namespace stream
     void NetworkTest::testAddOperator()
     {
         Operator* op = new TestOperator();
+        OperatorWrapper* wrapper1 = new OperatorWrapper(op);
+        wrapper1->initialize();
         OperatorNode* node = 0;
         
-        CPPUNIT_ASSERT_NO_THROW(node = m_network->addOperator(op));
+        CPPUNIT_ASSERT_NO_THROW(node = m_network->addOperator(wrapper1));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_network->operators().size()));
         CPPUNIT_ASSERT_EQUAL(node, m_network->operators()[0]);
         
         // can not add the same operator again
-        CPPUNIT_ASSERT_THROW(node = m_network->addOperator(op), ArgumentException);
+        OperatorWrapper* wrapper2 = new OperatorWrapper(op);
+        CPPUNIT_ASSERT_THROW(node = m_network->addOperator(wrapper2), ArgumentException);
+        
+        // The pointer wrapper2 should be deleted her, however this results in an error because
+        // op has already been deleted. In other words this is deliberate memory leak.
     }
     
     void NetworkTest::testRemoveOperator()
     {
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(0), ArgumentException);
         
-        Operator* op = new TestOperator();
+        OperatorWrapper* op = new OperatorWrapper(new TestOperator());
+        op->initialize();
         OperatorNode* node = m_network->addOperator(op);
         
-        OperatorNode* testNode = new OperatorNode(new OperatorWrapper(new TestOperator));
+        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator);
+        wrapper->initialize();
+        OperatorNode* testNode = new OperatorNode(wrapper);
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(testNode), ArgumentException);
         delete testNode;
         
@@ -70,5 +79,4 @@ namespace stream
     {
         delete m_network;
     }
-
 }

@@ -128,8 +128,7 @@ namespace base
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
         pixelType->setName("Pixel type");
-        pixelType->setInactiveAccessMode(stream::Parameter::READ_WRITE);
-        pixelType->setActiveAccessMode(stream::Parameter::READ_WRITE);
+        pixelType->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));
         pixelType->add(EnumDescription(Enum(stream::Image::RGB_24), "RGB image 24-bit"));
         pixelType->add(EnumDescription(Enum(stream::Image::BGR_24), "BGR image 24-bit"));

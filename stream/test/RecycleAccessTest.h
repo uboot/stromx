@@ -33,6 +33,8 @@ namespace stream
         CPPUNIT_TEST(testRecycle);
         CPPUNIT_TEST(testNoRecycle);
         CPPUNIT_TEST(testDelayedRecycle);
+        CPPUNIT_TEST(testRecycleNoTimeout);
+        CPPUNIT_TEST(testRecycleTimeout);
         CPPUNIT_TEST(testCopiedRecycle);
         CPPUNIT_TEST(testRecycleInterrupt);
         CPPUNIT_TEST(testGetRecycleAccessDelayed);
@@ -52,6 +54,8 @@ namespace stream
         void testNoRecycle();
         void testDelayedRecycle();
         void testCopiedRecycle();
+        void testRecycleNoTimeout();
+        void testRecycleTimeout();
         void testRecycleInterrupt();
         void testGetRecycleAccessDelayed();
         void testGetRecycleAccessInterrupt();
