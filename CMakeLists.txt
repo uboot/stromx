@@ -7,6 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 include(UseDoxygen OPTIONAL)
 
 find_package(Boost 1.36.0)
+
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.36.0 COMPONENTS thread)
@@ -16,6 +17,8 @@ find_package(CppUnit)
 find_package(Threads)
 
 find_package(OpenCV2)
+
+find_package(XercesC)
 
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)

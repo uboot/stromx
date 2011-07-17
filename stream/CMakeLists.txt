@@ -54,11 +54,13 @@ set_target_properties(stream PROPERTIES
 )
 
 include_directories(
+    ${XERCESC_INCLUDE}
     ${Boost_INCLUDE_DIRS}
     ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(stream
     ${Boost_LIBRARIES}
+    ${XERCESC_LIBRARY}
     ${CMAKE_THREAD_LIBS_INIT}
 )
