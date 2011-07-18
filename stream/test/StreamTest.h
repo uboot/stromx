@@ -17,6 +17,8 @@
 #ifndef STREAM_STREAMTEST_H
 #define STREAM_STREAMTEST_H
 
+#include <vector>
+
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -24,6 +26,7 @@ namespace stream
 {
     class Stream;
     class Network;
+    class Thread;
    /* class OperatorWrapper;
     class TestOperator;
     class OperatorNode;
@@ -36,8 +39,8 @@ namespace stream
         CPPUNIT_TEST_SUITE (StreamTest);
         CPPUNIT_TEST(testInit);
         CPPUNIT_TEST(testNetwork);
-//         CPPUNIT_TEST(testAddThread);
-//         CPPUNIT_TEST(testRemoveThread);
+        CPPUNIT_TEST(testAddThread);
+        CPPUNIT_TEST(testRemoveThread);
 //         CPPUNIT_TEST(testThreads);
         CPPUNIT_TEST_SUITE_END ();
 
@@ -50,13 +53,14 @@ namespace stream
     protected:
         void testInit();
         void testNetwork();
-//         void testAddThread();
-//         void testRemoveThread();
+        void testAddThread();
+        void testRemoveThread();
 //         void testThreads();
             
     private:
         Stream* m_stream;
         Network* m_network;
+//         std::vector<Thread*> m_threads;
 //         std::vector<TestOperator*> m_operators;
 //         std::vector<OperatorNode*> m_operatorNodes;
 //         DataContainer m_container;
