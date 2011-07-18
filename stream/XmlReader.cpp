@@ -28,4 +28,4 @@ namespace stream
             throw InternalException("Failed to terminate Xerces-C.");
         }
     }
-} 
+}

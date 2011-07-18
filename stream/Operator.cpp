@@ -96,6 +96,8 @@ namespace stream
     
     Operator::~Operator()
     {
+        deactivate();
+        
         for(std::vector<Description*>::const_iterator iter = m_inputs.begin();
             iter != m_inputs.end();
             ++iter)

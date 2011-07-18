@@ -32,6 +32,10 @@ if(OpenCV2_FOUND)
     option(BUILD_BASE "Build base operators" ON)
 endif()
 
+if(XERCES_FOUND)
+    option(BUILD_XML_SUPPORT "Build XML persistence" ON)
+endif()
+
 if(BUILD_STREAM)
     add_subdirectory(stream)
 endif()

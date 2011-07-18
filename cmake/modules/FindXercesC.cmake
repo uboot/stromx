@@ -1,71 +1,106 @@
-# - Try to find Xerces-C
-# Once done this will define
+# 2011-07-18
+# Copied from http://coloapi.googlecode.com/svn-history/r8/trunk/build/modules/FindXerces.cmake
+
+# - Find XERCES
+# Find the native XERCES headers and libraries.
 #
-#  XERCESC_FOUND - system has Xerces-C
-#  XERCESC_INCLUDE - the Xerces-C include directory
-#  XERCESC_LIBRARY - Link these to use Xerces-C
-#  XERCESC_VERSION - Xerces-C found version
+#  XERCES_INCLUDE_DIR -  where to find XERCES.h, etc.
+#  XERCES_LIBRARIES    - List of libraries when using XERCES.
+#  XERCES_FOUND        - True if XERCES found.
 
-IF (XERCESC_INCLUDE AND XERCESC_LIBRARY)
-# in cache already
-SET(XERCESC_FIND_QUIETLY TRUE)
-ENDIF (XERCESC_INCLUDE AND XERCESC_LIBRARY)
+GET_FILENAME_COMPONENT(module_file_path ${CMAKE_CURRENT_LIST_FILE} PATH )
 
-FIND_PATH(
-XERCESC_INCLUDE
-NAMES xercesc/util/XercesVersion.hpp
-PATHS c:/Libs/xerces-c_2_8_0 ${XERCES_INCLUDE_DIR}
-PATH_SUFFIXES xercesc)
+# Look for the header file.
+FIND_PATH(XERCES_INCLUDE_DIR NAMES xercesc/sax2/Attributes.hpp
+                             PATHS $ENV{H3D_EXTERNAL_ROOT}/include
+                                   $ENV{H3D_ROOT}/../External/include
+                                   ../../External/include
+                                   ${module_file_path}/../../../External/include )
+MARK_AS_ADVANCED(XERCES_INCLUDE_DIR)
 
-MESSAGE( "xercesc/util/XercesVersion.hpp found at ${XERCESC_INCLUDE}" )
+# Look for the library.
+FIND_LIBRARY(XERCES_LIBRARY NAMES xerces-c xerces-c_2  
+                            PATHS $ENV{H3D_EXTERNAL_ROOT}/lib
+                                  $ENV{H3D_ROOT}/../External/lib
+                                  ../../External/lib
+                                  ${module_file_path}/../../../External/lib )
+MARK_AS_ADVANCED(XERCES_LIBRARY)
 
+SET( XERCES_LIBRARIES_FOUND 0 )
+SET( XERCES_STATIC_LIBRARIES_FOUND 0 )
 
-FIND_LIBRARY(
- XERCESC_LIBRARY
- NAMES xerces-c xerces-c_3 
- PATHS ${XERCES_LIBRARY_DIR})
+IF( WIN32 AND PREFER_STATIC_LIBRARIES )
+  SET( XERCES_STATIC_LIBRARY_NAME Xerces-c_static_2 )
+  IF( MSVC80 )
+    SET( XERCES_STATIC_LIBRARY_NAME xerces-c_static_2_vc8 )
+  ELSEIF( MSVC90 )
+    SET( XERCES_STATIC_LIBRARY_NAME xerces-c_static_2_vc9 )
+  ENDIF( MSVC80 )
+  FIND_LIBRARY( XERCES_STATIC_LIBRARY NAMES ${XERCES_STATIC_LIBRARY_NAME}
+                                         PATHS $ENV{H3D_EXTERNAL_ROOT}/lib
+                                         $ENV{H3D_ROOT}/../External/lib
+                                         ../../External/lib
+                                         ${module_file_path}/../../../External/lib )
+  MARK_AS_ADVANCED(XERCES_STATIC_LIBRARY)
+  
+  FIND_LIBRARY( XERCES_STATIC_DEBUG_LIBRARY NAMES ${XERCES_STATIC_LIBRARY_NAME}_d
+                                            PATHS $ENV{H3D_EXTERNAL_ROOT}/lib
+                                            $ENV{H3D_ROOT}/../External/lib
+                                            ../../External/lib
+                                            ${module_file_path}/../../../External/lib )
+  MARK_AS_ADVANCED(XERCES_STATIC_DEBUG_LIBRARY)
+  
+  IF( XERCES_STATIC_LIBRARY OR XERCES_STATIC_DEBUG_LIBRARY )
+    SET( XERCES_STATIC_LIBRARIES_FOUND 1 )
+  ENDIF( XERCES_STATIC_LIBRARY OR XERCES_STATIC_DEBUG_LIBRARY )
 
-IF (XERCESC_INCLUDE AND XERCESC_LIBRARY)
-SET(XERCESC_FOUND TRUE)
-ELSE (XERCESC_INCLUDE AND XERCESC_LIBRARY)
-SET(XERCESC_FOUND FALSE)
-ENDIF (XERCESC_INCLUDE AND XERCESC_LIBRARY)
+ENDIF( WIN32 AND PREFER_STATIC_LIBRARIES )
 
-IF(XERCESC_FOUND)
+IF( XERCES_LIBRARY OR XERCES_STATIC_LIBRARIES_FOUND )
+  SET( XERCES_LIBRARIES_FOUND 1 )
+ENDIF( XERCES_LIBRARY OR XERCES_STATIC_LIBRARIES_FOUND )
 
-FIND_PATH(XVERHPPPATH NAMES XercesVersion.hpp PATHS
- ${XERCESC_INCLUDE}/xercesc/util  NO_DEFAULT_PATH)
+# Copy the results to the output variables.
+IF(XERCES_INCLUDE_DIR AND XERCES_LIBRARIES_FOUND)
+  SET(XERCES_FOUND 1)
+  
+  IF( WIN32 AND PREFER_STATIC_LIBRARIES AND XERCES_STATIC_LIBRARIES_FOUND )
+    IF(XERCES_STATIC_LIBRARY)
+      SET(XERCES_LIBRARIES optimized ${XERCES_STATIC_LIBRARY} )
+    ELSE(XERCES_STATIC_LIBRARY)
+      SET(XERCES_LIBRARIES optimized ${XERCES_STATIC_LIBRARY_NAME} )
+      MESSAGE( STATUS, "Xerces static release libraries not found. Release build might not work." )
+    ENDIF(XERCES_STATIC_LIBRARY)
 
-IF ( ${XVERHPPPATH} STREQUAL XVERHPPPATH-NOTFOUND )
- SET(XERCES_VERSION "0")
-ELSE( ${XVERHPPPATH} STREQUAL XVERHPPPATH-NOTFOUND )
- FILE(READ ${XVERHPPPATH}/XercesVersion.hpp XVERHPP)
+    IF(XERCES_STATIC_DEBUG_LIBRARY)
+      SET(XERCES_LIBRARIES ${XERCES_LIBRARIES} debug ${XERCES_STATIC_DEBUG_LIBRARY} )
+    ELSE(XERCES_STATIC_DEBUG_LIBRARY)
+      SET(XERCES_LIBRARIES ${XERCES_LIBRARIES} debug ${XERCES_STATIC_LIBRARY_NAME}_d )
+      MESSAGE( STATUS, "Xerces static debug libraries not found. Debug build might not work." )
+    ENDIF(XERCES_STATIC_DEBUG_LIBRARY)
 
- STRING(REGEX MATCHALL "\n *#define XERCES_VERSION_MAJOR +[0-9]+" XVERMAJ
-   ${XVERHPP})
- STRING(REGEX MATCH "\n *#define XERCES_VERSION_MINOR +[0-9]+" XVERMIN
-   ${XVERHPP})
- STRING(REGEX MATCH "\n *#define XERCES_VERSION_REVISION +[0-9]+" XVERREV
-   ${XVERHPP})
+    SET(XERCES_LIBRARIES ${XERCES_LIBRARIES} ws2_32.lib )
+    SET( XML_LIBRARY 1 )
+  ELSE( WIN32 AND PREFER_STATIC_LIBRARIES AND XERCES_STATIC_LIBRARIES_FOUND )
+    SET(XERCES_LIBRARIES ${XERCES_LIBRARY})
+  ENDIF( WIN32 AND PREFER_STATIC_LIBRARIES AND XERCES_STATIC_LIBRARIES_FOUND )
 
- STRING(REGEX REPLACE "\n *#define XERCES_VERSION_MAJOR +" ""
-   XVERMAJ ${XVERMAJ})
- STRING(REGEX REPLACE "\n *#define XERCES_VERSION_MINOR +" ""
-   XVERMIN ${XVERMIN})
- STRING(REGEX REPLACE "\n *#define XERCES_VERSION_REVISION +" ""
-   XVERREV ${XVERREV})
+  SET(XERCES_INCLUDE_DIR ${XERCES_INCLUDE_DIR})
+ELSE(XERCES_INCLUDE_DIR AND XERCES_LIBRARIES_FOUND)
+  SET(XERCES_FOUND 0)
+  SET(XERCES_LIBRARIES)
+  SET(XERCES_INCLUDE_DIR)
+ENDIF(XERCES_INCLUDE_DIR AND XERCES_LIBRARIES_FOUND)
 
- SET(XERCESC_VERSION ${XVERMAJ}.${XVERMIN}.${XVERREV})
-
-ENDIF ( ${XVERHPPPATH} STREQUAL XVERHPPPATH-NOTFOUND )
-
-IF(NOT XERCESC_FIND_QUIETLY)
- MESSAGE(STATUS "Found Xerces-C: ${XERCESC_LIBRARY}")
- MESSAGE(STATUS "              : ${XERCESC_INCLUDE}")
- MESSAGE(STATUS "       Version: ${XERCESC_VERSION}")
-ENDIF(NOT XERCESC_FIND_QUIETLY)
-ELSE(XERCESC_FOUND)
-MESSAGE(FATAL_ERROR "Could not find Xerces-C !")
-ENDIF(XERCESC_FOUND)
-
-MARK_AS_ADVANCED(XERCESC_INCLUDE XERCESC_LIBRARY)
+# Report the results.
+IF(NOT XERCES_FOUND)
+  SET(XERCES_DIR_MESSAGE
+    "Xerces-c was not found. Make sure XERCES_LIBRARY and
+    XERCES_INCLUDE_DIR are set to the directory of your xerces lib and
+    include files. If you do not have Xerces x3d/xml files cannot be parsed.")
+  IF(Xerces_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "${XERCES_DIR_MESSAGE}")
+  ELSEIF(NOT Xerces_FIND_QUIETLY)
+    MESSAGE(STATUS "${XERCES_DIR_MESSAGE}")
+  ENDIF(Xerces_FIND_REQUIRED)
+ENDIF(NOT XERCES_FOUND)
