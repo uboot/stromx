@@ -28,7 +28,6 @@ namespace stream
 
 namespace base
 {
-    
     namespace camera
     {
         class CameraBuffer : public stream::Operator

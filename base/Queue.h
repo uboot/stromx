@@ -20,6 +20,8 @@
 #include <stream/Operator.h>
 #include <stream/Primitive.h>
 
+#include <deque>
+
 namespace stream
 {
     class DataContainer;
@@ -62,6 +64,8 @@ namespace base
         static const stream::Version VERSION;                       
         
         stream::UInt32 m_size;
+        
+        std::deque<stream::DataContainer> m_deque;
     };
 }
 

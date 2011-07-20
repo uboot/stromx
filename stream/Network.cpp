@@ -85,6 +85,15 @@ namespace stream
         m_operators.push_back(node);
         return node;
     }
+    
+    OperatorNode*const Network::addOperator(Operator*const op)
+    {
+        OperatorWrapper* wrapper = new OperatorWrapper(op);
+        wrapper->initialize();
+        return addOperator(wrapper);
+    }
+    
+    
 
     void Network::removeOperator(OperatorNode*const op)
     {

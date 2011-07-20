@@ -73,7 +73,6 @@ namespace base
             CPPUNIT_ASSERT(image);
         }
         
-        
         {
             m_operator->clearOutputData(PeriodicDelay::OUTPUT);
             m_operator->setInputData(PeriodicDelay::INPUT, m_image);

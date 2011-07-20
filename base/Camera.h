@@ -20,14 +20,11 @@
 #include <stream/Operator.h>
 #include <stream/Primitive.h>
 
-#include "Clip.h"
-#include "AdjustRgbChannels.h"
-#include "Trigger.h"
-#include "PeriodicDelay.h"
-
 namespace stream
 {
     class DataContainer;
+    class Network;
+    class OperatorNode;
 }
 
 namespace base
@@ -52,6 +49,7 @@ namespace base
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
+        virtual void initialize();
         virtual void activate();
         virtual void deactivate();
         
@@ -64,9 +62,17 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
         
-        Clip m_clip;
-        AdjustRgbChannels m_adjustRgbChannels;
-        Trigger m_trigger;
+        stream::Network* m_network;
+        
+        stream::OperatorNode* m_input;
+        stream::OperatorNode* m_clip;
+        stream::OperatorNode* m_adjustRgbChannels;
+        stream::OperatorNode* m_period;
+        stream::OperatorNode* m_trigger;
+        stream::OperatorNode* m_buffer;
+        stream::OperatorNode* m_pixelType;
+        stream::OperatorNode* m_imageQueue;
+        stream::OperatorNode* m_indexQueue;
     };
 }
 

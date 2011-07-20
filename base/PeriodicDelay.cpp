@@ -19,14 +19,13 @@ namespace base
     const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     PeriodicDelay::PeriodicDelay()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_isFirstRun(true)
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
     
     void PeriodicDelay::activate()
     {
-        m_isFirstRun = true;
+        m_nextTrigger = boost::get_system_time() + boost::posix_time::millisec(m_period);
     }
 
 
@@ -69,29 +68,19 @@ namespace base
         
         try
         {
-            if(m_isFirstRun)
-            {
-                boost::this_thread::sleep(boost::posix_time::millisec(m_period));
-                m_isFirstRun = false;
-            }
-            else
-            {
-                boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-                boost::posix_time::time_duration passedTime = now - m_lastExecute;
-                
-                if(passedTime.total_milliseconds() < m_period)
-                {
-                    UInt32 remainingMilliseconds(m_period - passedTime.total_milliseconds());
-                    boost::this_thread::sleep(boost::posix_time::millisec(remainingMilliseconds));
-                }
-            }
+            boost::this_thread::sleep(m_nextTrigger);
         }
         catch(boost::thread_interrupted&)
         {
             throw InterruptException();
         }
         
-        m_lastExecute = boost::posix_time::second_clock::local_time();
+        if(m_period)
+        {
+            unsigned int passedMs = (boost::get_system_time() - m_nextTrigger).total_milliseconds();
+            unsigned int numPeriods = passedMs / m_period;
+            m_nextTrigger += boost::posix_time::millisec(m_period * numPeriods);
+        }
         
         Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
         provider.sendOutputData( outputDataMapper);

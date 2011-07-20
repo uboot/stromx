@@ -60,7 +60,6 @@ namespace base
         provider.receiveInputData(inputDataMapper);
         
         
-        
         Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
         provider.sendOutputData( outputDataMapper);
     }

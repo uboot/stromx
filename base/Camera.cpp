@@ -5,8 +5,17 @@
 #include <stream/OperatorException.h>
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
-
 #include <stream/Id2DataPair.h>
+#include <stream/Network.h>
+
+#include "ConstImage.h"
+#include "AdjustRgbChannels.h"
+#include "PeriodicDelay.h"
+#include "Trigger.h"
+#include "Clip.h"
+#include "ConvertPixelType.h"
+#include "CameraBuffer.h"
+#include "Queue.h"
 
 using namespace stream;
 
@@ -24,7 +33,22 @@ namespace base
     
     Camera::~Camera()
     {
-
+        delete m_network;
+    }
+    
+    void Camera::initialize()
+    {
+        m_network = new Network();
+        
+        m_input = m_network->addOperator(new ConstImage);
+        m_adjustRgbChannels = m_network->addOperator(new AdjustRgbChannels);
+        m_clip = m_network->addOperator(new Clip);
+        m_buffer = m_network->addOperator(new camera::CameraBuffer);
+        m_period = m_network->addOperator(new PeriodicDelay);
+        m_trigger = m_network->addOperator(new Trigger);
+        m_pixelType = m_network->addOperator(new ConvertPixelType);
+        m_imageQueue = m_network->addOperator(new Queue);
+        m_indexQueue = m_network->addOperator(new Queue);
     }
 
     void Camera::setParameter(unsigned int id, const Data& value)

@@ -21,7 +21,7 @@
 #include <stream/Image.h>
 #include <stream/Primitive.h>
 
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/thread/thread.hpp>
 
 namespace stream
 {
@@ -66,8 +66,7 @@ namespace base
         static const stream::Version VERSION; 
         
         stream::UInt32 m_period;
-        bool m_isFirstRun;
-        boost::posix_time::ptime m_lastExecute;
+        boost::system_time m_nextTrigger;
     };
 }
 
