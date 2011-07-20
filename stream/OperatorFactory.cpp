@@ -52,7 +52,7 @@ namespace stream
                 newOp = (*iter)->clone();
                 if (newOp == 0)
                 { 
-                    throw ArgumentException("Invalid argument received: Null pointer. Cloning failed");
+                    throw InternalException("Invalid argument received: Null pointer. Cloning failed");
                 }
 
                 return newOp;

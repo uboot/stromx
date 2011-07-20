@@ -34,20 +34,12 @@ namespace stream
 
     void StreamTest::tearDown()
     {
-        delete m_network;
         delete m_stream;
     }
 
     void StreamTest::testInit()
     {
         CPPUNIT_ASSERT_THROW(new Stream(0),ArgumentException);
-    }
-
-
-    void StreamTest::testNetwork()
-    {
-        CPPUNIT_ASSERT_EQUAL(m_stream->network(),m_network);
-        CPPUNIT_ASSERT(m_stream->network() != 0);
     }
     
     void StreamTest::testAddThread()
@@ -60,8 +52,6 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[0]);
         
         CPPUNIT_ASSERT_THROW(m_stream->addThread(thr),ArgumentException);
-        
-        delete thr;
     }
     
     void StreamTest::testRemoveThread()
@@ -74,13 +64,8 @@ namespace stream
        
         CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr2),ArgumentException);
         CPPUNIT_ASSERT_NO_THROW(m_stream->removeThread(thr1));
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads().size()));
         
-//         delete thr1;
         delete thr2;
     }
-//     
-//     void testThreads()
-//     {
-//     }
 }
