@@ -40,9 +40,15 @@ set(SOURCES
     Stream.cpp
     Thread.cpp
     Try.cpp
-    XmlReader.cpp
-    XmlWriter.cpp
 )
+
+if(BUILD_XML_SUPPORT)
+    set(SOURCES
+        ${SOURCES}
+        XmlReader.cpp
+        XmlWriter.cpp
+        )
+endif()
 
 add_library(stream SHARED ${SOURCES})
 
@@ -54,11 +60,13 @@ set_target_properties(stream PROPERTIES
 )
 
 include_directories(
+    ${XERCES_INCLUDE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(stream
     ${Boost_LIBRARIES}
+    ${XERCES_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )

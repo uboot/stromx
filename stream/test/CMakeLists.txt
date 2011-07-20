@@ -62,6 +62,7 @@ add_executable(stream_test
 
 target_link_libraries(stream_test
     ${Boost_LIBRARIES}
+    ${XERCES_LIBRARIES}
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${CMAKE_THREAD_LIBS_INIT}

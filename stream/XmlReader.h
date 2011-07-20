@@ -27,15 +27,7 @@ namespace stream
     class XmlReader
     {
     public:
-        XmlReader(OperatorFactory* const factory)
-          : m_factory(factory)
-        {}
-        
-        Stream* const read(const std::string & filename);        
-             
-        
-    private:
-        OperatorFactory* m_factory;
+        static Stream* const read(const std::string & filename, const OperatorFactory* const factory);
     };
 }
 

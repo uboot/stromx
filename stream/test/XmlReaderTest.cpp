@@ -19,9 +19,7 @@ namespace stream
     
     void XmlReaderTest::testRead()
     {
-        XmlReader reader(m_factory);
-        
-        Stream* stream = reader.read("network.xml");
+        Stream* stream = XmlReader::read("network.xml", m_factory);
     }
 
     void XmlReaderTest::tearDown()
