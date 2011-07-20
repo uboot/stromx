@@ -78,7 +78,7 @@ namespace base
         if(m_period)
         {
             unsigned int passedMs = (boost::get_system_time() - m_nextTrigger).total_milliseconds();
-            unsigned int numPeriods = passedMs / m_period;
+            unsigned int numPeriods = passedMs / m_period + 1;
             m_nextTrigger += boost::posix_time::millisec(m_period * numPeriods);
         }
         
