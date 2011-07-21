@@ -28,7 +28,6 @@ namespace stream
             delete m_data;
         }
         
-        
         const unsigned int id() const { return m_id; }
         DataContainer & data() const { return *m_data; }
         

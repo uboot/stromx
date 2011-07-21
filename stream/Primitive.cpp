@@ -8,6 +8,12 @@ namespace stream
     const DataType & Bool::type() const { return DataType::BOOL; }
     
     template<>
+    const DataType & Int8::type() const { return DataType::INT_8; }
+    
+    template<>
+    const DataType & UInt8::type() const { return DataType::UINT_8; }
+    
+    template<>
     const DataType & Int16::type() const { return DataType::INT_16; }
     
     template<>

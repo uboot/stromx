@@ -7,8 +7,8 @@
 #include <stream/OperatorException.h>
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
-
 #include <stream/Id2DataPair.h>
+#include <stream/Try.h>
 
 using namespace stream;
 
@@ -20,7 +20,8 @@ namespace base
     const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Queue::Queue()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+        m_size(1)
     {
     }
 
@@ -31,6 +32,9 @@ namespace base
             switch(id)
             {
             case SIZE:
+                if(m_size == 0)
+                    throw ParameterValueException(*parameters()[SIZE], *this);
+                
                 m_size = dynamic_cast<const UInt32&>(value);
                 break;
             default:
@@ -56,12 +60,29 @@ namespace base
     
     void Queue::execute(DataProvider& provider)
     {
-        Id2DataPair inputDataMapper(INPUT);
-        provider.receiveInputData(inputDataMapper);
-        
-        
-        Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
-        provider.sendOutputData( outputDataMapper);
+        // if the queue is not full
+        if(m_deque.size() < m_size)
+        {
+            // try to get data from the input
+            Id2DataPair inputDataMapper(INPUT);
+            provider.receiveInputData(Try(inputDataMapper));
+            
+            // if there was data push it on the queue
+            if(! inputDataMapper.data().empty())
+                m_deque.push_back(inputDataMapper.data());
+        }
+            
+        // if the queue is not empty
+        if(m_deque.size() > 0)
+        {
+            // try to push data to the output
+            Id2DataPair outputDataMapper(OUTPUT, m_deque.front());
+            provider.sendOutputData(Try(outputDataMapper));
+            
+            // if this was successful delete the data from the queue
+            if(outputDataMapper.data().empty())
+                m_deque.pop_front();
+        }
     }
     
     const std::vector< Description* > Queue::setupInputs()
@@ -92,6 +113,7 @@ namespace base
         
         NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataType::UINT_32);
         size->setName("Size");
+        size->setMin(UInt32(1));
         size->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(size);
                                     

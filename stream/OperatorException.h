@@ -49,10 +49,10 @@ namespace stream
         unsigned int m_id;
     };
     
-    class ParameterTypeException : public OperatorException
+    class ParameterException : public OperatorException
     {
     public:
-        ParameterTypeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+        ParameterException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
           : OperatorException(op, message),
             m_parameter(param)
         {}
@@ -61,16 +61,28 @@ namespace stream
         const Parameter& m_parameter;
     };
     
-    class ParameterAccessModeException : public OperatorException
+    class ParameterTypeException : public ParameterException
+    {
+    public:
+        ParameterTypeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : ParameterException(param, op, message)
+        {}
+    };
+    
+    class ParameterValueException : public ParameterException
+    {
+    public:
+        ParameterValueException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : ParameterException(param, op, message)
+        {}
+    };
+    
+    class ParameterAccessModeException : public ParameterException
     {
     public:
         ParameterAccessModeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : OperatorException(op, message),
-            m_parameter(param)
+          : ParameterException(param, op, message)
         {}
-          
-    private:
-        const Parameter& m_parameter;
     };
     
     class InputException : public OperatorException
