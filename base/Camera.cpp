@@ -7,6 +7,8 @@
 #include <stream/DataProvider.h>
 #include <stream/Id2DataPair.h>
 #include <stream/Network.h>
+#include <stream/OperatorNode.h>
+#include <stream/InputNode.h>
 
 #include "ConstImage.h"
 #include "AdjustRgbChannels.h"
@@ -49,6 +51,16 @@ namespace base
         m_pixelType = m_network->addOperator(new ConvertPixelType);
         m_imageQueue = m_network->addOperator(new Queue);
         m_indexQueue = m_network->addOperator(new Queue);
+        
+        m_adjustRgbChannels->getInputNode(AdjustRgbChannels::INPUT)->connect(m_input->getOutputNode(ConstImage::OUTPUT));
+        m_clip->getInputNode(Clip::INPUT)->connect(m_adjustRgbChannels->getOutputNode(AdjustRgbChannels::OUTPUT));
+        m_trigger->getInputNode(Trigger::INPUT)->connect(m_clip->getOutputNode(Clip::OUTPUT));
+        m_period->getInputNode(PeriodicDelay::INPUT)->connect(m_trigger->getOutputNode(Trigger::OUTPUT));
+        m_buffer->getInputNode(camera::CameraBuffer::INPUT)->connect(m_period->getOutputNode(PeriodicDelay::OUTPUT));
+        m_pixelType->getInputNode(ConvertPixelType::SOURCE)->connect(m_buffer->getOutputNode(camera::CameraBuffer::OUTPUT));
+        m_pixelType->getInputNode(ConvertPixelType::DESTINATION)->connect(m_buffer->getOutputNode(camera::CameraBuffer::BUFFER));
+        m_imageQueue->getInputNode(Queue::INPUT)->connect(m_pixelType->getOutputNode(ConvertPixelType::OUTPUT));
+        m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(camera::CameraBuffer::ID));
     }
 
     void Camera::setParameter(unsigned int id, const Data& value)
