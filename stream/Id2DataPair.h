@@ -13,23 +13,22 @@ namespace stream
     public:
         Id2DataPair(const unsigned int id, DataContainer data)
           : m_id(id),
-            m_data(new DataContainer())
+            m_data(DataContainer())
         {
-            *m_data = data;
+            m_data = data;
         }
         
         Id2DataPair(const unsigned int id)
           : m_id(id),
-            m_data(new DataContainer())
+            m_data(DataContainer())
         {}
         
         ~Id2DataPair()
         {
-            delete m_data;
         }
         
         const unsigned int id() const { return m_id; }
-        DataContainer & data() const { return *m_data; }
+        DataContainer & data() const { return m_data; }
         
         virtual const bool trySet(const Id2DataMap& id2DataMap) const;
         virtual const bool tryGet(const Id2DataMap& id2DataMap) const;
@@ -38,7 +37,7 @@ namespace stream
     
     private:
         unsigned int m_id;
-        DataContainer* m_data;
+        mutable DataContainer m_data;
     }; 
     
    
