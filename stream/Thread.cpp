@@ -10,7 +10,8 @@
 namespace stream
 {
     Thread::Thread()
-      : m_thread(0)
+      : m_thread(0),
+        m_status(INACTIVE)
     {
     }
     
@@ -21,6 +22,9 @@ namespace stream
     
     void Thread::addNode(InputNode* const op)
     {
+        if(m_status != INACTIVE)
+            throw WrongState("Thread must be inactive.");
+        
         if(! op)
             throw ArgumentException("Passed null as input node.");
         
@@ -29,6 +33,9 @@ namespace stream
 
     void Thread::insertNode(const unsigned int position, InputNode* const op)
     {
+        if(m_status != INACTIVE)
+            throw WrongState("Thread must be inactive.");
+        
         if(position > m_nodeSequence.size())
             throw ArgumentException("Can only insert at an existing position of at the end of the node sequence.");
         
@@ -37,6 +44,9 @@ namespace stream
 
     void Thread::removeNode(const unsigned int position)
     {
+        if(m_status != INACTIVE)
+            throw WrongState("Thread must be inactive.");
+        
         if(position >= m_nodeSequence.size())
             throw ArgumentException("This position is occupied in the node sequence of this thread.");
         
@@ -45,28 +55,40 @@ namespace stream
 
     void Thread::start()
     {
-        if(m_thread)
-            throw InvalidStateException("Can not start thread because it is active.");
+        if(m_status != INACTIVE)
+            throw WrongState("Thread must be inactive.");
+        
+        BOOST_ASSERT(! m_thread);
         
         m_thread = new boost::thread(boost::bind(&Thread::loop, this));
+        
+        m_status = ACTIVE;
     }
 
     void Thread::stop()
     {
-        if(! m_thread)
+        if(m_status != ACTIVE)
             return;
         
+        BOOST_ASSERT(m_thread);
+        
         m_thread->interrupt();
+        
+        m_status = DEACTIVATING;
     }
 
     void Thread::join()
     {
-        if(! m_thread)
-            return;
+        if(m_status != DEACTIVATING)
+            throw WrongState("Thread must have been stopped.");
+        
+        BOOST_ASSERT(m_thread);
         
         m_thread->join();
         
         m_thread = 0;
+        
+        m_status = INACTIVE;
     }
     
     void Thread::loop()

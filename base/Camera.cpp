@@ -6,9 +6,14 @@
 #include <stream/DataContainer.h>
 #include <stream/DataProvider.h>
 #include <stream/Id2DataPair.h>
+#include <stream/Id2DataComposite.h>
 #include <stream/Network.h>
+#include <stream/Stream.h>
 #include <stream/OperatorNode.h>
 #include <stream/InputNode.h>
+#include <stream/EnumParameter.h>
+#include <stream/OperatorInterface.h>
+#include <stream/Trigger.h>
 
 #include "ConstImage.h"
 #include "AdjustRgbChannels.h"
@@ -18,6 +23,7 @@
 #include "ConvertPixelType.h"
 #include "CameraBuffer.h"
 #include "Queue.h"
+#include <stream/Thread.h>
 
 using namespace stream;
 
@@ -31,26 +37,27 @@ namespace base
     Camera::Camera()
       : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
+        // TODO: initialize all members
     }
     
     Camera::~Camera()
     {
-        delete m_network;
+        delete m_stream;
     }
     
     void Camera::initialize()
     {
-        m_network = new Network();
+        Network* network = new Network();
         
-        m_input = m_network->addOperator(new ConstImage);
-        m_adjustRgbChannels = m_network->addOperator(new AdjustRgbChannels);
-        m_clip = m_network->addOperator(new Clip);
-        m_buffer = m_network->addOperator(new camera::CameraBuffer);
-        m_period = m_network->addOperator(new PeriodicDelay);
-        m_trigger = m_network->addOperator(new Trigger);
-        m_pixelType = m_network->addOperator(new ConvertPixelType);
-        m_imageQueue = m_network->addOperator(new Queue);
-        m_indexQueue = m_network->addOperator(new Queue);
+        m_input = network->addOperator(new ConstImage);
+        m_adjustRgbChannels = network->addOperator(new AdjustRgbChannels);
+        m_clip = network->addOperator(new Clip);
+        m_buffer = network->addOperator(new camera::CameraBuffer);
+        m_period = network->addOperator(new PeriodicDelay);
+        m_trigger = network->addOperator(new Trigger);
+        m_pixelType = network->addOperator(new ConvertPixelType);
+        m_imageQueue = network->addOperator(new Queue);
+        m_indexQueue = network->addOperator(new Queue);
         
         m_adjustRgbChannels->getInputNode(AdjustRgbChannels::INPUT)->connect(m_input->getOutputNode(ConstImage::OUTPUT));
         m_clip->getInputNode(Clip::INPUT)->connect(m_adjustRgbChannels->getOutputNode(AdjustRgbChannels::OUTPUT));
@@ -60,7 +67,28 @@ namespace base
         m_pixelType->getInputNode(ConvertPixelType::SOURCE)->connect(m_buffer->getOutputNode(camera::CameraBuffer::OUTPUT));
         m_pixelType->getInputNode(ConvertPixelType::DESTINATION)->connect(m_buffer->getOutputNode(camera::CameraBuffer::BUFFER));
         m_imageQueue->getInputNode(Queue::INPUT)->connect(m_pixelType->getOutputNode(ConvertPixelType::OUTPUT));
-        m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(camera::CameraBuffer::ID));
+        m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(camera::CameraBuffer::INDEX));
+        
+        Thread* frameThread = new Thread();
+        frameThread->addNode(m_adjustRgbChannels->getInputNode(AdjustRgbChannels::INPUT));
+        frameThread->addNode(m_clip->getInputNode(Clip::INPUT));
+        frameThread->addNode(m_trigger->getInputNode(Trigger::INPUT));
+        frameThread->addNode(m_period->getInputNode(PeriodicDelay::INPUT));
+        frameThread->addNode(m_buffer->getInputNode(camera::CameraBuffer::INPUT));
+        
+        Thread* mainThread = new Thread();
+        mainThread->addNode(m_pixelType->getInputNode(ConvertPixelType::SOURCE));
+        mainThread->addNode(m_pixelType->getInputNode(ConvertPixelType::DESTINATION));
+        mainThread->addNode(m_imageQueue->getInputNode(Queue::INPUT));
+        mainThread->addNode(m_indexQueue->getInputNode(Queue::INPUT));
+        
+        m_stream = new Stream(network);
+        m_stream->addThread(frameThread);
+        m_stream->addThread(mainThread);
+        
+        // start with software trigger
+        m_trigger->op()->setParameter(Trigger::ACTIVE, Bool(true));
+        m_period->op()->setParameter(PeriodicDelay::PERIOD, UInt32(0));
     }
 
     void Camera::setParameter(unsigned int id, const Data& value)
@@ -68,7 +96,13 @@ namespace base
         try
         {
             switch(id)
-            {
+            {       
+            case TRIGGER:
+                m_trigger->op()->setParameter(Trigger::TRIGGER, stream::Trigger());
+                break;
+            case IMAGE:
+                m_input->op()->setParameter(ConstImage::IMAGE, value);
+                break;
             default:
                 throw ParameterIdException(id, *this);
             }
@@ -83,6 +117,10 @@ namespace base
     {
         switch(id)
         {
+        case TRIGGER:
+            return stream::Trigger();
+        case IMAGE:
+            return m_input->op()->getParameter(ConstImage::IMAGE);
         default:
             throw ParameterIdException(id, *this);
         }
@@ -90,15 +128,24 @@ namespace base
     
     void Camera::execute(DataProvider& provider)
     {
+        DataContainer image = m_imageQueue->op()->getOutputData(Queue::OUTPUT);
+        DataContainer index = m_indexQueue->op()->getOutputData(Queue::OUTPUT);
         
+        Id2DataPair imageMapper(OUTPUT, image);
+        Id2DataPair indexMapper(INDEX, index);
+        
+        provider.sendOutputData(imageMapper && indexMapper);
     }
     
     void Camera::activate()
     {
+        m_stream->start();
     }
 
     void Camera::deactivate()
     {
+        m_stream->stop();
+        m_stream->join();
     }
     
     const std::vector< Description* > Camera::setupInputs()
@@ -116,6 +163,10 @@ namespace base
         output->setName("Output");
         outputs.push_back(output);
         
+        Description* index = new Description(INDEX, DataType::UINT_32);
+        index->setName("Index");
+        outputs.push_back(index);
+        
         return outputs;
     }
     
@@ -126,6 +177,19 @@ namespace base
         Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
+        
+        EnumParameter* triggerMode = new EnumParameter(TRIGGER_MODE);
+        triggerMode->setName("Trigger mode");
+        triggerMode->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        triggerMode->add(EnumDescription(Enum(SOFTWARE), "Software trigger"));
+        triggerMode->add(EnumDescription(Enum(INTERNAL), "Internal"));
+        triggerMode->add(EnumDescription(Enum(EXTERNAL), "External"));
+        parameters.push_back(triggerMode);
+        
+        Parameter* trigger = new Parameter(TRIGGER, DataType::TRIGGER);
+        trigger->setName("Trigger");
+        trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        parameters.push_back(trigger);
                                     
         return parameters;
     }

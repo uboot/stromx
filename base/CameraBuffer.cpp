@@ -107,7 +107,7 @@ namespace base
                 
                 Id2DataPair outputMapper(OUTPUT, inputMapper.data());
                 Id2DataPair bufferMapper(BUFFER, bufferContainer);
-                Id2DataPair idMapper(ID, DataContainer(new UInt32(m_id)));
+                Id2DataPair idMapper(INDEX, DataContainer(new UInt32(m_id)));
                 
                 // send it to the output (together with the input image and the current index)
                 provider.sendOutputData(outputMapper && bufferMapper && idMapper);
@@ -142,7 +142,7 @@ namespace base
             buffer->setName("Buffer");
             outputs.push_back(buffer);
         
-            Description* index = new Description(ID, DataType::UINT_32);
+            Description* index = new Description(INDEX, DataType::UINT_32);
             index->setName("Index");
             outputs.push_back(index);
             

@@ -8,7 +8,7 @@ include_directories(
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/network.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(stream_test
+set(SOURCES
     main.cpp
     ../DataContainerImpl.cpp
     ../DataContainer.cpp
@@ -54,17 +54,28 @@ add_executable(stream_test
     WriteAccessTest.cpp
     ../Stream.cpp
     StreamTest.cpp
-    ../XmlReader.cpp
-    XmlReaderTest.cpp
-    ../XmlWriter.cpp
-    XmlWriterTest.cpp
 )
+
+if(BUILD_XML_SUPPORT)
+    set(SOURCES
+        ${SOURCES}
+        ../XmlReader.cpp
+        XmlReaderTest.cpp
+        ../XmlWriter.cpp
+        XmlWriterTest.cpp
+    )
+endif()
+
+add_executable(stream_test ${SOURCES})
 
 target_link_libraries(stream_test
     ${Boost_LIBRARIES}
-    ${XERCES_LIBRARIES}
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${CMAKE_THREAD_LIBS_INIT}
 )
+
+if(BUILD_XML_SUPPORT)
+    target_link_libraries(stream_test ${XERCES_LIBRARIES})
+endif()
 

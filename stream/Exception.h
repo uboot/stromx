@@ -28,11 +28,11 @@ namespace stream
         {}
     };  
     
-    class WrongIdException : public Exception
+    class WrongIdException : public ArgumentException
     {
     public:
         WrongIdException(const std::string & message = "WrongIdException")
-          : Exception(message)
+          : ArgumentException(message)
         {}
     };  
     

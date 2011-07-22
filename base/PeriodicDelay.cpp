@@ -66,17 +66,17 @@ namespace base
         Id2DataPair inputDataMapper(INPUT);
         provider.receiveInputData(inputDataMapper);
         
-        try
-        {
-            boost::this_thread::sleep(m_nextTrigger);
-        }
-        catch(boost::thread_interrupted&)
-        {
-            throw InterruptException();
-        }
-        
         if(m_period)
-        {
+        { 
+            try
+            {
+                boost::this_thread::sleep(m_nextTrigger);
+            }
+            catch(boost::thread_interrupted&)
+            {
+                throw InterruptException();
+            }
+        
             unsigned int passedMs = (boost::get_system_time() - m_nextTrigger).total_milliseconds();
             unsigned int numPeriods = passedMs / m_period + 1;
             m_nextTrigger += boost::posix_time::millisec(m_period * numPeriods);

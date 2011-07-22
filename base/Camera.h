@@ -25,6 +25,7 @@ namespace stream
     class DataContainer;
     class Network;
     class OperatorNode;
+    class Stream;
 }
 
 namespace base
@@ -34,12 +35,22 @@ namespace base
     public:
         enum OutputId
         {
-            OUTPUT
+            OUTPUT,
+            INDEX
         };
         
         enum ParameterId
         {
-            IMAGE
+            IMAGE,
+            TRIGGER_MODE,
+            TRIGGER
+        };
+        
+        enum TriggerMode
+        {
+            SOFTWARE,
+            INTERNAL,
+            EXTERNAL
         };
         
         Camera();
@@ -62,7 +73,7 @@ namespace base
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
         
-        stream::Network* m_network;
+        stream::Stream* m_stream;
         
         stream::OperatorNode* m_input;
         stream::OperatorNode* m_clip;

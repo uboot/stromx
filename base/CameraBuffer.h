@@ -42,7 +42,7 @@ namespace base
             {
                 OUTPUT,
                 BUFFER,
-                ID
+                INDEX
             };
             
             enum ParameterId

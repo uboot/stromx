@@ -7,10 +7,6 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread.hpp>
 
-namespace boost
-{
-    class thread;
-}
 
 namespace stream
 {
@@ -19,8 +15,17 @@ namespace stream
     class Thread
     {
     public:
+        enum Status
+        {
+            INACTIVE,
+            ACTIVE,
+            DEACTIVATING,
+        };
+        
         Thread();
         ~Thread();
+        
+        const Status status() const { return m_status; }
         
         const std::string & name() const { return m_name; }
         void setName(const std::string& name) { m_name = name; }
@@ -37,6 +42,7 @@ namespace stream
     private:
         void loop();
         
+        Status m_status;
         boost::thread* m_thread;
         std::vector<InputNode*> m_nodeSequence;
         std::string m_name;

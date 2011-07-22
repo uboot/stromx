@@ -88,7 +88,7 @@ namespace stream
     void ThreadTest::testStart()
     {
         CPPUNIT_ASSERT_NO_THROW(m_thread->start());
-        CPPUNIT_ASSERT_THROW(m_thread->start(), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(m_thread->start(), WrongState);
         
         m_operatorNodes[0]->op()->setInputData(TestOperator::INPUT_1, m_container);
         m_operatorNodes[0]->op()->setInputData(TestOperator::INPUT_2, m_container);
@@ -120,13 +120,13 @@ namespace stream
 
     void ThreadTest::testJoin()
     {
-        CPPUNIT_ASSERT_NO_THROW(m_thread->join());
+        CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
         
         m_thread->start();
         m_thread->stop();
         
         CPPUNIT_ASSERT_NO_THROW(m_thread->join());
-        CPPUNIT_ASSERT_NO_THROW(m_thread->join());
+        CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
     }
 
     void ThreadTest::tearDown()
@@ -134,7 +134,9 @@ namespace stream
         if(m_thread)
         {
             m_thread->stop();
-            m_thread->join();
+            
+            if(m_thread->status() == Thread::DEACTIVATING)
+                m_thread->join();
         }
         
         delete m_thread;

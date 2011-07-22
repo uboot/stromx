@@ -60,13 +60,20 @@ set_target_properties(stream PROPERTIES
 )
 
 include_directories(
-    ${XERCES_INCLUDE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${PROJECT_BINARY_DIR}
 )
 
+if(BUILD_XML_SUPPORT)
+    include_directories(${XERCES_INCLUDE_DIR})
+endif()
+
 target_link_libraries(stream
     ${Boost_LIBRARIES}
-    ${XERCES_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )
+
+if(BUILD_XML_SUPPORT)
+    target_link_libraries(stream ${XERCES_LIBRARIES})
+endif()
+
