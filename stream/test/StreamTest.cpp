@@ -17,6 +17,7 @@
 #include "StreamTest.h"
 #include <stream/Network.h>
 #include <stream/Stream.h>
+#include <stream/Thread.h>
 
 #include <cppunit/TestAssert.h> 
 #include <stream/Exception.h>
@@ -33,7 +34,6 @@ namespace stream
 
     void StreamTest::tearDown()
     {
-        delete m_network;
         delete m_stream;
     }
 
@@ -41,23 +41,31 @@ namespace stream
     {
         CPPUNIT_ASSERT_THROW(new Stream(0),ArgumentException);
     }
-
-
-    void StreamTest::testNetwork()
+    
+    void StreamTest::testAddThread()
     {
-        CPPUNIT_ASSERT_EQUAL(m_stream->network(),m_network);
-        CPPUNIT_ASSERT(m_stream->network() != 0);
+        CPPUNIT_ASSERT_THROW(m_stream->addThread(0),ArgumentException);
+        
+        Thread* const thr = new Thread();
+        CPPUNIT_ASSERT_NO_THROW(m_stream->addThread(thr));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
+        CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[0]);
+        
+        CPPUNIT_ASSERT_THROW(m_stream->addThread(thr),ArgumentException);
     }
-//     
-//     void testAddThread()
-//     {
-//     }
-//     
-//     void testRemoveThread()
-//     {
-//     }
-//     
-//     void testThreads()
-//     {
-//     }
+    
+    void StreamTest::testRemoveThread()
+    {
+        CPPUNIT_ASSERT_THROW(m_stream->removeThread(0),ArgumentException);
+        
+        Thread* const thr1 = new Thread();
+        Thread* const thr2 = new Thread();
+        m_stream->addThread(thr1);
+       
+        CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr2),ArgumentException);
+        CPPUNIT_ASSERT_NO_THROW(m_stream->removeThread(thr1));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads().size()));
+        
+        delete thr2;
+    }
 }

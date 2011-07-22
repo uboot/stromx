@@ -17,6 +17,7 @@
 #include "Stream.h"
 #include "Thread.h"
 #include "Exception.h"
+#include "Network.h"
 
 namespace stream
 {
@@ -37,7 +38,9 @@ namespace stream
             ++iter) 
         {
             delete (*iter);
-        } 
+        }
+        
+        delete m_network;
     }
     
     Network* const Stream::network() const

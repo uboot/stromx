@@ -108,7 +108,6 @@ namespace stream
         {
             if ((*iter) == op)
             {
-                (*iter)->op()->deactivate();
                 m_operators.erase(iter);
                 return;
             }
