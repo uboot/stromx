@@ -83,6 +83,14 @@ namespace stream
           : Exception(message)
         {}
     };
+    
+    class WrongState : public Exception
+    {
+    public:
+        WrongState(const std::string & message = "WrongState")
+          : Exception(message)
+        {}
+    };
 }
 
 #endif // STREAM_EXCEPTION_H
