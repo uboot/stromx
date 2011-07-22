@@ -27,16 +27,28 @@ namespace stream
     class Stream
     {
     public:
+        enum Status
+        {
+            INACTIVE,
+            ACTIVE,
+            DEACTIVATING,
+        };
+        
         Stream(Network* const m_network);
         ~Stream();
         Network* const network() const;
+        void start();
+        void join();
+        void stop();
         void addThread(Thread* const thr);
         void removeThread(Thread* const thr);
         const std::vector<Thread*> & threads();
+        const Status status();
         
     private:
         Network* const m_network;
         std::vector<Thread*> m_threads;
+        Status m_status;
     };
 }
 
