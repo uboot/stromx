@@ -37,8 +37,10 @@ namespace base
                 {
                 case BUFFER_SIZE:
                     m_bufferSize = dynamic_cast<const UInt32 &>(value);
+                    break;
                 case NUM_BUFFERS:
                     m_numBuffers = dynamic_cast<const UInt32 &>(value);
+                    break;
                 default:
                     throw ParameterIdException(id, *this);
                 }
@@ -51,6 +53,12 @@ namespace base
         
         void CameraBuffer::activate()
         {
+            Data* buffer = 0;
+            
+            // delete all remaining buffers in the recycling access
+            while(buffer = m_buffers())
+                delete buffer;
+            
             // allocate all buffers and add them to the recycler
             for(unsigned int i = 0; i < m_numBuffers; ++i)
                 m_buffers.add(DataContainer(new Image(m_bufferSize)));
@@ -60,11 +68,6 @@ namespace base
 
         void CameraBuffer::deactivate()
         {
-            Data* buffer = 0;
-            
-            // delete all buffers in the recycling access
-            while(buffer = m_buffers())
-                delete buffer;
         }
 
         const Data& CameraBuffer::getParameter(const unsigned int id)
@@ -112,11 +115,9 @@ namespace base
                 // send it to the output (together with the input image and the current index)
                 provider.sendOutputData(outputMapper && bufferMapper && idMapper);
             }
-            else
-            {
-                // increase the index but do not output any data
-                ++m_id;
-            }
+            
+            // increase the index
+            ++m_id;
         }
         
         const std::vector<Description*> CameraBuffer::setupInputs()

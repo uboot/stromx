@@ -12,6 +12,7 @@
 #include <stream/OperatorNode.h>
 #include <stream/InputNode.h>
 #include <stream/EnumParameter.h>
+#include <stream/NumericParameter.h>
 #include <stream/OperatorInterface.h>
 #include <stream/Trigger.h>
 
@@ -103,6 +104,14 @@ namespace base
             case IMAGE:
                 m_input->op()->setParameter(ConstImage::IMAGE, value);
                 break;
+            case NUM_BUFFERS:
+                m_buffer->op()->setParameter(camera::CameraBuffer::NUM_BUFFERS, value);
+                m_imageQueue->op()->setParameter(Queue::SIZE, value);
+                m_indexQueue->op()->setParameter(Queue::SIZE, value);
+                break;
+            case BUFFER_SIZE:
+                m_buffer->op()->setParameter(camera::CameraBuffer::BUFFER_SIZE, value);
+                break;
             default:
                 throw ParameterIdException(id, *this);
             }
@@ -121,6 +130,10 @@ namespace base
             return stream::Trigger();
         case IMAGE:
             return m_input->op()->getParameter(ConstImage::IMAGE);
+        case NUM_BUFFERS:
+            return m_buffer->op()->getParameter(camera::CameraBuffer::NUM_BUFFERS);
+        case BUFFER_SIZE:
+            return m_buffer->op()->getParameter(camera::CameraBuffer::BUFFER_SIZE);
         default:
             throw ParameterIdException(id, *this);
         }
@@ -190,6 +203,16 @@ namespace base
         trigger->setName("Trigger");
         trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
+        
+        NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
+        numBuffers->setName("Number of buffers");
+        numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(numBuffers);
+    
+        NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataType::UINT_32);
+        bufferSize->setName("Buffer size in bytes");
+        bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(bufferSize);
                                     
         return parameters;
     }

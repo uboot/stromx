@@ -58,6 +58,11 @@ namespace base
         }
     }  
     
+    void Queue::deactivate()
+    {
+        m_deque.clear();
+    }
+    
     void Queue::execute(DataProvider& provider)
     {
         // if the queue is not full
