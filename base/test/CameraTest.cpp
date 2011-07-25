@@ -30,23 +30,26 @@ namespace base
     
     void CameraTest::testExecute()
     {
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-        m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
-        DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-        DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-        UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
-        CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
+        {
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
+            DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+            DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
+            UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
+        }
         
         m_operator->clearOutputData(Camera::OUTPUT);
         m_operator->clearOutputData(Camera::INDEX);
         
-        
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-        m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
-        DataContainer imageContainer1 = m_operator->getOutputData(Camera::OUTPUT);
-        DataContainer indexContainer1 = m_operator->getOutputData(Camera::INDEX);
-        UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
-        CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
+        {
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
+            DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+            DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
+            UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
+        }
     }
     
     void CameraTest::tearDown ( void )

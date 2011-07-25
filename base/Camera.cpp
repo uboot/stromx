@@ -144,6 +144,9 @@ namespace base
         DataContainer image = m_imageQueue->op()->getOutputData(Queue::OUTPUT);
         DataContainer index = m_indexQueue->op()->getOutputData(Queue::OUTPUT);
         
+        m_imageQueue->op()->clearOutputData(Queue::OUTPUT);
+        m_indexQueue->op()->clearOutputData(Queue::OUTPUT);
+        
         Id2DataPair imageMapper(OUTPUT, image);
         Id2DataPair indexMapper(INDEX, index);
         
