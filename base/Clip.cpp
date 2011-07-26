@@ -78,17 +78,17 @@ namespace base
         
         DataContainer container = inputDataMapper.data();
         WriteAccess access(container);
-        Image* image = dynamic_cast<Image*>(access());
+        Image& image = dynamic_cast<Image&>(access());
         
         unsigned int top = m_top;
         unsigned int left = m_left;
         unsigned int height = m_height;
         unsigned int width = m_width;
         
-        adjustClipRegion(image->width(), image->height(), left, top, width, height);
+        adjustClipRegion(image.width(), image.height(), left, top, width, height);
         
-        uint8_t* data = image->data() + top * image->stride() + left * image->pixelSize();
-        image->initialize(width, height, image->stride(), data, image->pixelType());
+        uint8_t* data = image.data() + top * image.stride() + left * image.pixelSize();
+        image.initialize(width, height, image.stride(), data, image.pixelType());
         
         Id2DataPair outputDataMapper(OUTPUT, container);
         provider.sendOutputData( outputDataMapper);

@@ -28,7 +28,7 @@ namespace stream
         ReadAccessImpl(DataContainer& data);
         ~ReadAccessImpl();
         
-        const Data* const operator()();
+        const Data & operator()();
         
     private:
         DataContainer& m_data;

@@ -67,28 +67,28 @@ namespace base
         ReadAccess src(srcMapper.data());
         WriteAccess dest(destMapper.data());
         
-        const Image* srcImage = dynamic_cast<const Image*>(src());
-        Image* destImage = dynamic_cast<Image*>(dest());
+        const Image& srcImage = dynamic_cast<const Image&>(src());
+        Image& destImage = dynamic_cast<Image&>(dest());
         
         stream::Image::PixelType pixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
         
-        unsigned int destImageSize = srcImage->width() * srcImage->height() * getDestPixelSize(pixelType);
+        unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
         
-        if(destImage->size() < destImageSize)
+        if(destImage.size() < destImageSize)
             throw InputException(DESTINATION, *this, "Destination image is too small");
         
-        destImage->initialize(srcImage->width(), srcImage->height(), srcImage->width(), destImage->buffer(), pixelType);
+        destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width(), destImage.buffer(), pixelType);
         
-        cv::Mat inCvImage = getOpenCvMat(*srcImage);
-        cv::Mat outCvImage = getOpenCvMat(*destImage);
+        cv::Mat inCvImage = getOpenCvMat(srcImage);
+        cv::Mat outCvImage = getOpenCvMat(destImage);
         
-        if(pixelType == srcImage->pixelType())
+        if(pixelType == srcImage.pixelType())
         {
             inCvImage.copyTo(outCvImage);
         }
         else
         {
-            int code = getCvConversionCode(srcImage->pixelType(), pixelType);
+            int code = getCvConversionCode(srcImage.pixelType(), pixelType);
             cv::cvtColor(inCvImage, outCvImage, code);
         }
         

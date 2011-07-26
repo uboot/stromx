@@ -9,7 +9,7 @@ namespace stream
     {
     }
 
-    Data* const WriteAccess::operator()()
+    Data& WriteAccess::operator()()
     {
         return (*m_impl)();
     }

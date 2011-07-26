@@ -33,8 +33,7 @@ namespace base
         {
             DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             ReadAccess access(result);
-            const Image* image = dynamic_cast<const Image*>(access());
-            CPPUNIT_ASSERT(image);
+            const Image& image = dynamic_cast<const Image&>(access());
         }
         
         {
@@ -69,8 +68,7 @@ namespace base
         {
             DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             ReadAccess access(result);
-            const Image* image = dynamic_cast<const Image*>(access());
-            CPPUNIT_ASSERT(image);
+            const Image& image = dynamic_cast<const Image&>(access());
         }
         
         {

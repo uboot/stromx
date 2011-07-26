@@ -35,7 +35,7 @@ namespace base
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
+            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
             CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
         }
         
@@ -47,7 +47,7 @@ namespace base
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(*ReadAccess(indexContainer)());
+            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
             CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
         }
     }

@@ -30,6 +30,7 @@ namespace stream
     class ReadAccessTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ReadAccessTest);
+        CPPUNIT_TEST(testReadAccessEmpty);
         CPPUNIT_TEST(testReadAccess);
         CPPUNIT_TEST(testReadAccessDelayed);
         CPPUNIT_TEST(testReadAccessInterrupt);
@@ -43,6 +44,7 @@ namespace stream
         void tearDown() {}
 
     protected:
+        void testReadAccessEmpty();
         void testReadAccess();
         void testReadAccessDelayed();
         void testReadAccessInterrupt();

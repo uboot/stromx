@@ -28,7 +28,7 @@ namespace stream
         WriteAccessImpl(DataContainer& data);
         ~WriteAccessImpl();
         
-        Data* const operator()();
+        Data& operator()();
         
     private:
         DataContainer& m_data;

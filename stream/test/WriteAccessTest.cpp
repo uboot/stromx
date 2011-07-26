@@ -21,10 +21,16 @@ namespace stream
         {
             DataContainer container(data);
             WriteAccess access(container);
-            CPPUNIT_ASSERT_EQUAL(data, access());
+            CPPUNIT_ASSERT_EQUAL(data, &access());
         }
         
         CPPUNIT_ASSERT(TestData::wasDestructed);  
+    }
+    
+    void WriteAccessTest::testWriteAccessEmpty()
+    {
+        DataContainer container;
+        CPPUNIT_ASSERT_THROW(WriteAccess access(container), ArgumentException);
     }
     
     void WriteAccessTest::testReleaseWriteAccess()
@@ -36,7 +42,7 @@ namespace stream
         }
         
         WriteAccess access(container);
-        CPPUNIT_ASSERT_EQUAL(data, access());
+        CPPUNIT_ASSERT_EQUAL(data, &access());
     }
     
     void WriteAccessTest::testWriteAccessDelayed()
@@ -49,13 +55,13 @@ namespace stream
         }
         
         WriteAccess access(container);
-        CPPUNIT_ASSERT_EQUAL(m_data, access());
+        CPPUNIT_ASSERT_EQUAL(m_data, &access());
     }
     
     void WriteAccessTest::releaseDelayed(WriteAccess& access)
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
-        CPPUNIT_ASSERT_EQUAL(m_data, access());
+        CPPUNIT_ASSERT_EQUAL(m_data, &access());
     }
         
     void WriteAccessTest::writeAccessInterrupt(DataContainer& container)

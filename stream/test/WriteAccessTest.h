@@ -30,6 +30,7 @@ namespace stream
     {
         CPPUNIT_TEST_SUITE (WriteAccessTest);
         CPPUNIT_TEST(testWriteAccess);
+        CPPUNIT_TEST(testWriteAccessEmpty);
         CPPUNIT_TEST(testReleaseWriteAccess);
         CPPUNIT_TEST(testWriteAccessDelayed);
         CPPUNIT_TEST(testWriteAccessInterrupt);
@@ -42,6 +43,7 @@ namespace stream
         void tearDown() { m_data = 0; }
 
     protected:
+        void testWriteAccessEmpty();
         void testWriteAccess();
         void testReleaseWriteAccess();
         void testWriteAccessDelayed();

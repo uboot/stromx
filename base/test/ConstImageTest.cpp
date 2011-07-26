@@ -29,10 +29,9 @@ namespace base
         stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
         
         ReadAccess access = ReadAccess(result);
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT(image);
+        const Image& image = dynamic_cast<const Image&>(access());
         
-        image->save("ConstImageTest_testExecute.png");
+        image.save("ConstImageTest_testExecute.png");
     }
     
     void ConstImageTest::tearDown ( void )

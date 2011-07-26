@@ -36,7 +36,7 @@ namespace base
         DataContainer output2 = m_operator->getOutputData(Queue::OUTPUT);
         DataContainer output3 = m_operator->getOutputData(Queue::OUTPUT);
         
-        CPPUNIT_ASSERT_EQUAL(ReadAccess(input1)(), ReadAccess(output1)());
+        CPPUNIT_ASSERT_EQUAL(&ReadAccess(input1)(), &ReadAccess(output1)());
     }    
 
     void QueueTest::tearDown ( void )

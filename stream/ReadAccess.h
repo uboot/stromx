@@ -30,7 +30,7 @@ namespace stream
     public:
         ReadAccess(DataContainer data);
         
-        const Data* const operator()();
+        const Data & operator()();
         
     private:
         ReadAccess();

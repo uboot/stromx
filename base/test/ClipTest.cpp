@@ -34,11 +34,11 @@ namespace base
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
             
         ReadAccess access(result);
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image->width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image->height());
+        const Image& image = dynamic_cast<const Image&>(access());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image.height());
         
-        image->save("ClipTest_testExecute.png");
+        image.save("ClipTest_testExecute.png");
     }
     
     void ClipTest::testAdjustClipRegion1()
@@ -51,11 +51,11 @@ namespace base
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
         ReadAccess access(result);
         
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image->width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image->height());
+        const Image& image = dynamic_cast<const Image&>(access());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image.height());
         
-        image->save("ClipTest_testAdjustClipRegion1.png");
+        image.save("ClipTest_testAdjustClipRegion1.png");
     }
     
     void ClipTest::testAdjustClipRegion2()
@@ -68,9 +68,9 @@ namespace base
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
         ReadAccess access(result);
         
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image->width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image->height());
+        const Image& image = dynamic_cast<const Image&>(access());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.height());
     }
 
     void ClipTest::tearDown ( void )

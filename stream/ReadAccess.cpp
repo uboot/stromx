@@ -9,7 +9,7 @@ namespace stream
     {
     }
 
-    const Data* const ReadAccess::operator()()
+    const Data & ReadAccess::operator()()
     {
         return (*m_impl)();
     }

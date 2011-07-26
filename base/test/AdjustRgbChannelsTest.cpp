@@ -33,9 +33,9 @@ namespace base
         
         stream::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
         ReadAccess access(result);
-        const Image* image = dynamic_cast<const Image*>(access());
+        const Image& image = dynamic_cast<const Image&>(access());
         
-        image->save("AdjustRgbChannelsTest_testExecute.png");
+        image.save("AdjustRgbChannelsTest_testExecute.png");
     }
     
     void AdjustRgbChannelsTest::tearDown ( void )

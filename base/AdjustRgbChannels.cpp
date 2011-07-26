@@ -76,11 +76,11 @@ namespace base
         
         DataContainer container = inputDataMapper.data();
         WriteAccess access(container);
-        Image* image = dynamic_cast<Image*>(access());
+        Image& image = dynamic_cast<Image&>(access());
 
-        cv::Mat cvImage = getOpenCvMat(*image);
+        cv::Mat cvImage = getOpenCvMat(image);
         
-        switch(image->pixelType())
+        switch(image.pixelType())
         {
         case stream::Image::RGB_24:
         {

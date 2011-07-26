@@ -35,8 +35,7 @@ namespace base
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
         
         ReadAccess access(result);
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT(image);
+        const Image& image = dynamic_cast<const Image&>(access());
         
         m_operator->clearOutputData(Trigger::OUTPUT);
         m_operator->setInputData(Trigger::INPUT, m_image);
@@ -62,8 +61,7 @@ namespace base
         
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
         ReadAccess access(result);
-        const Image* image = dynamic_cast<const Image*>(access());
-        CPPUNIT_ASSERT(image);
+        const Image& image = dynamic_cast<const Image&>(access());
     }
     
     void TriggerTest::getOutputDataInterrupted()

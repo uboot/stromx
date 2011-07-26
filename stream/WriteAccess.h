@@ -30,7 +30,7 @@ namespace stream
     public:
         WriteAccess(DataContainer data);
         
-        Data* const operator()();
+        Data& operator()();
         
     private:
         WriteAccess();
