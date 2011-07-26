@@ -97,14 +97,6 @@ namespace stream
         m_outputMap.clear();
         
         m_status = INITIALIZED;
-    } 
-    
-    void OperatorWrapper::clearAllData()
-    {
-        lock_t lock(m_mutex);
-        
-        m_inputMap.clear();
-        m_outputMap.clear();
     }
     
     const Data& OperatorWrapper::getParameter(unsigned int id)

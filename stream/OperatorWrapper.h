@@ -42,7 +42,6 @@ namespace stream
         DataContainer getOutputData(const unsigned int id);
         void setInputData(const unsigned int id, DataContainer data);
         void clearOutputData(unsigned int id);
-        void clearAllData();
         
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
