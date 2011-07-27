@@ -7,6 +7,7 @@
 #include <stream/Trigger.h>
 #include <stream/OperatorWrapper.h>
 #include <stream/ReadAccess.h>
+#include <stream/Enum.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -25,11 +26,13 @@ namespace base
         m_operator->setParameter(Camera::IMAGE, image);
         m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
         m_operator->setParameter(Camera::BUFFER_SIZE, UInt32(image.size()));
-        m_operator->activate();
     }
     
-    void CameraTest::testExecute()
+    void CameraTest::testExecuteSoftwareTrigger()
     {
+        m_operator->setParameter(Camera::TRIGGER_MODE, Enum(Camera::SOFTWARE));
+        m_operator->activate();
+        
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
@@ -45,6 +48,30 @@ namespace base
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
+            DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+            DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
+            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
+        }
+    }
+    
+    void CameraTest::testExecuteInternalTrigger()
+    {
+        m_operator->setParameter(Camera::TRIGGER_MODE, Enum(Camera::INTERNAL));
+        m_operator->setParameter(Camera::FRAME_PERIOD, UInt32(1000));
+        m_operator->activate();
+        
+        {
+            DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+            DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
+            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
+        }
+        
+        m_operator->clearOutputData(Camera::OUTPUT);
+        m_operator->clearOutputData(Camera::INDEX);
+        
+        {
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
             UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());

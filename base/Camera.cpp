@@ -14,6 +14,7 @@
 #include <stream/EnumParameter.h>
 #include <stream/NumericParameter.h>
 #include <stream/OperatorInterface.h>
+#include <stream/OperatorException.h>
 #include <stream/Trigger.h>
 
 #include "ConstImage.h"
@@ -109,6 +110,32 @@ namespace base
                 m_imageQueue->op()->setParameter(Queue::SIZE, value);
                 m_indexQueue->op()->setParameter(Queue::SIZE, value);
                 break;
+            case TRIGGER_MODE:
+                int triggerMode;
+                try
+                {
+                    triggerMode = dynamic_cast<const Enum&>(value);
+                }
+                catch(std::bad_cast&)
+                {
+                    throw ParameterTypeException(*parameters()[TRIGGER_MODE], *this);
+                }
+                
+                switch(triggerMode)
+                {
+                case SOFTWARE:
+                    m_trigger->op()->setParameter(Trigger::ACTIVE, Bool(true));
+                    break;
+                case INTERNAL:
+                    m_trigger->op()->setParameter(Trigger::ACTIVE, Bool(false));
+                    break;
+                default:
+                    throw ParameterValueException(*parameters()[TRIGGER_MODE], *this);
+                }
+                break;
+            case FRAME_PERIOD:
+                m_period->op()->setParameter(PeriodicDelay::PERIOD, value);
+                break;
             case BUFFER_SIZE:
                 m_buffer->op()->setParameter(camera::CameraBuffer::BUFFER_SIZE, value);
                 break;
@@ -128,6 +155,18 @@ namespace base
         {
         case TRIGGER:
             return stream::Trigger();
+        case TRIGGER_MODE:
+        {
+            const Data& value = m_trigger->op()->getParameter(Trigger::ACTIVE);
+            const Bool& triggerActive = dynamic_cast<const Bool&>(value);
+            
+            if(triggerActive)
+                return Enum(SOFTWARE);
+            else
+                return Enum(INTERNAL);
+        }
+        case FRAME_PERIOD:
+            return m_period->op()->getParameter(PeriodicDelay::PERIOD);
         case IMAGE:
             return m_input->op()->getParameter(ConstImage::IMAGE);
         case NUM_BUFFERS:
@@ -206,6 +245,11 @@ namespace base
         trigger->setName("Trigger");
         trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
+        
+        NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataType::UINT_32);
+        framePeriod->setName("Frame period (milliseconds)");
+        framePeriod->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        parameters.push_back(framePeriod);
         
         NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
         numBuffers->setName("Number of buffers");

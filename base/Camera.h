@@ -44,8 +44,9 @@ namespace base
             IMAGE,
             TRIGGER_MODE,
             TRIGGER,
-	    BUFFER_SIZE,
-	    NUM_BUFFERS
+            FRAME_PERIOD,
+            BUFFER_SIZE,
+            NUM_BUFFERS
         };
         
         enum TriggerMode

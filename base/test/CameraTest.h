@@ -31,7 +31,8 @@ namespace base
     class CameraTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (CameraTest);
-        CPPUNIT_TEST (testExecute);
+        CPPUNIT_TEST (testExecuteSoftwareTrigger);
+        CPPUNIT_TEST (testExecuteInternalTrigger);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,7 +42,8 @@ namespace base
             void tearDown();
 
         protected:
-            void testExecute();
+            void testExecuteSoftwareTrigger();
+            void testExecuteInternalTrigger();
             
         private:
             stream::OperatorWrapper* m_operator;
