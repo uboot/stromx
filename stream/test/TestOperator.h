@@ -27,10 +27,10 @@ namespace stream
         const unsigned int numExecutes() { return m_numExecutes; }
         
     private:
-        static const std::vector<Description*> setupInputs();
-        static const std::vector<Description*> setupOutputs();
-        static const std::vector<Parameter*> setupInitParameters();
-        static const std::vector<Parameter*> setupParameters();
+        static const std::vector<const Description*> setupInputs();
+        static const std::vector<const Description*> setupOutputs();
+        static const std::vector<const Parameter*> setupInitParameters();
+        static const std::vector<const Parameter*> setupParameters();
         
         static const std::string NAME;
         static const std::string PACKAGE;

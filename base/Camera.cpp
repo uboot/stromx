@@ -118,7 +118,7 @@ namespace base
                 }
                 catch(std::bad_cast&)
                 {
-                    throw ParameterTypeException(*parameters()[TRIGGER_MODE], *this);
+                    throw ParameterTypeException(parameter(TRIGGER_MODE), *this);
                 }
                 
                 switch(triggerMode)
@@ -130,7 +130,7 @@ namespace base
                     m_trigger->op()->setParameter(Trigger::ACTIVE, Bool(false));
                     break;
                 default:
-                    throw ParameterValueException(*parameters()[TRIGGER_MODE], *this);
+                    throw ParameterValueException(parameter(TRIGGER_MODE), *this);
                 }
                 break;
             case FRAME_PERIOD:
@@ -203,16 +203,16 @@ namespace base
         m_stream->join();
     }
     
-    const std::vector< Description* > Camera::setupInputs()
+    const std::vector<const stream::Description*> Camera::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         return inputs;
     }
     
-    const std::vector< stream::Description* > Camera::setupOutputs()
+    const std::vector<const Description*> Camera::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::IMAGE);
         output->setName("Output");
@@ -225,9 +225,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > Camera::setupParameters()
+    const std::vector<const Parameter*> Camera::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);

@@ -50,7 +50,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw ParameterTypeException(parameter(id), *this);
         }
     }
 
@@ -94,9 +94,9 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description* > Clip::setupInputs()
+    const std::vector<const stream::Description*> Clip::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         Description* input = new Description(INPUT, DataType::IMAGE);
         input->setName("Input");
@@ -105,9 +105,9 @@ namespace base
         return inputs;
     }
     
-    const std::vector< stream::Description* > Clip::setupOutputs()
+    const std::vector<const Description*> Clip::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::IMAGE);
         output->setName("Output");
@@ -116,9 +116,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > Clip::setupParameters()
+    const std::vector<const Parameter*> Clip::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
         top->setName("Top");

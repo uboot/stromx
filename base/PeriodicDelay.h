@@ -57,9 +57,9 @@ namespace base
         virtual void activate();
         
     private:
-        static const std::vector<stream::Description*> setupInputs();
-        static const std::vector<stream::Description*> setupOutputs();
-        static const std::vector<stream::Parameter*> setupParameters();
+        static const std::vector<const stream::Description*> setupInputs();
+        static const std::vector<const stream::Description*> setupOutputs();
+        static const std::vector<const stream::Parameter*> setupParameters();
         
         static const std::string NAME;
         static const std::string PACKAGE;

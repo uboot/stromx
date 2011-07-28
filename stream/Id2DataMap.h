@@ -15,7 +15,7 @@ namespace stream
     {
     public:
         Id2DataMap();
-        Id2DataMap(const std::vector<Description*> & descriptions);
+        Id2DataMap(const std::vector<const Description*> & descriptions);
         
         DataContainer operator[](const unsigned int id) const;
         DataContainer& operator[](const unsigned int id);

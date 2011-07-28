@@ -15,7 +15,7 @@ namespace stream
 {
     void TryTest::setUp ( void )
     {
-        std::vector<Description*> descriptions;
+        std::vector<const Description*> descriptions;
         descriptions.push_back(new Description(0, DataType::NONE));
         descriptions.push_back(new Description(1, DataType::NONE));
         descriptions.push_back(new Description(2, DataType::NONE));

@@ -43,7 +43,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw ParameterTypeException(parameter(id), *this);
         }
     }
 
@@ -96,9 +96,9 @@ namespace base
         provider.sendOutputData( outputMapper);
     }
     
-    const std::vector< Description* > ConvertPixelType::setupInputs()
+    const std::vector<const stream::Description*> ConvertPixelType::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         Description* source = new Description(SOURCE, DataType::IMAGE);
         source->setName("Source");
@@ -111,9 +111,9 @@ namespace base
         return inputs;
     }
     
-    const std::vector< stream::Description* > ConvertPixelType::setupOutputs()
+    const std::vector<const Description*> ConvertPixelType::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::IMAGE);
         output->setName("Output");
@@ -122,9 +122,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > ConvertPixelType::setupParameters()
+    const std::vector<const Parameter*> ConvertPixelType::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
         pixelType->setName("Pixel type");

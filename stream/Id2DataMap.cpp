@@ -4,9 +4,9 @@
 
 namespace stream
 {
-    Id2DataMap::Id2DataMap(const std::vector<Description*> & descriptions)
+    Id2DataMap::Id2DataMap(const std::vector<const Description*> & descriptions)
     {
-        for(std::vector<Description*>::const_iterator iter = descriptions.begin();
+        for(std::vector<const Description*>::const_iterator iter = descriptions.begin();
             iter != descriptions.end();
             ++iter)
         {

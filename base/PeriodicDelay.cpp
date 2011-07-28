@@ -46,7 +46,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw ParameterTypeException(parameter(id), *this);
         }
     }
 
@@ -86,9 +86,9 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description* > PeriodicDelay::setupInputs()
+    const std::vector<const stream::Description*> PeriodicDelay::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         Description* input = new Description(OUTPUT, DataType::DATA);
         input->setName("Input");
@@ -97,9 +97,9 @@ namespace base
         return inputs;
     }
     
-    const std::vector< stream::Description* > PeriodicDelay::setupOutputs()
+    const std::vector<const Description*> PeriodicDelay::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::DATA);
         output->setName("Output");
@@ -108,9 +108,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > PeriodicDelay::setupParameters()
+    const std::vector<const Parameter*> PeriodicDelay::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         Parameter* period = new Parameter(PERIOD, DataType::UINT_32);
         period->setName("Period (milliseconds)");

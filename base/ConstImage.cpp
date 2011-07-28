@@ -47,7 +47,7 @@ namespace base
                 }
                 catch(std::bad_cast&)
                 {
-                    throw ParameterTypeException(*parameters()[id], *this);
+                    throw ParameterTypeException(parameter(id), *this);
                 }
                 break;
             }
@@ -57,7 +57,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw ParameterTypeException(parameter(id), *this);
         }
     }
 
@@ -91,16 +91,16 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector< Description* > ConstImage::setupInputs()
+    const std::vector<const stream::Description*> ConstImage::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         return inputs;
     }
     
-    const std::vector< stream::Description* > ConstImage::setupOutputs()
+    const std::vector<const Description*> ConstImage::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::IMAGE);
         output->setName("Output");
@@ -109,9 +109,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > ConstImage::setupParameters()
+    const std::vector<const Parameter*> ConstImage::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);

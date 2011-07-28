@@ -33,7 +33,7 @@ namespace base
             {
             case SIZE:
                 if(m_size == 0)
-                    throw ParameterValueException(*parameters()[SIZE], *this);
+                    throw ParameterValueException(parameter(SIZE), *this);
                 
                 m_size = dynamic_cast<const UInt32&>(value);
                 break;
@@ -43,7 +43,7 @@ namespace base
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw ParameterValueException(parameter(id), *this);
         }
     }
 
@@ -90,9 +90,9 @@ namespace base
         }
     }
     
-    const std::vector< Description* > Queue::setupInputs()
+    const std::vector<const stream::Description*> Queue::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         
         Description* input = new Description(INPUT, DataType::DATA);
         input->setName("Input");
@@ -101,9 +101,9 @@ namespace base
         return inputs;
     }
     
-    const std::vector< stream::Description* > Queue::setupOutputs()
+    const std::vector<const Description*> Queue::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         Description* output = new Description(OUTPUT, DataType::DATA);
         output->setName("Output");
@@ -112,9 +112,9 @@ namespace base
         return outputs;
     }
     
-    const std::vector< stream::Parameter* > Queue::setupParameters()
+    const std::vector<const Parameter*> Queue::setupParameters()
     {
-        std::vector<stream::Parameter*> parameters;
+        std::vector<const stream::Parameter*> parameters;
         
         NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataType::UINT_32);
         size->setName("Size");

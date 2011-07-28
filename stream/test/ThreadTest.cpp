@@ -41,7 +41,7 @@ namespace stream
         
         for(unsigned int i = 1; i < 3; ++i)
         {
-            for(std::vector<Description*>::const_iterator input = m_operatorNodes[i]->op()->info()->inputs().begin();
+            for(std::vector<const Description*>::const_iterator input = m_operatorNodes[i]->op()->info()->inputs().begin();
                 input != m_operatorNodes[i]->op()->info()->inputs().end();
                 ++input)
             {

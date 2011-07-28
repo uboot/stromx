@@ -320,7 +320,7 @@ namespace stream
     void OperatorWrapper::validateParameterId(const unsigned int id)
     {
         bool isValid = false;
-        for(std::vector<Parameter*>::const_iterator iter = info()->parameters().begin();
+        for(std::vector<const Parameter*>::const_iterator iter = info()->parameters().begin();
             iter != info()->parameters().end();
             ++iter)
         {

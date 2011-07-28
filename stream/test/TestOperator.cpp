@@ -63,27 +63,27 @@ namespace stream
         provider.sendOutputData(output1 && output2);
     }
     
-    const std::vector<Description*> TestOperator::setupInputs()
+    const std::vector<const Description*> TestOperator::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
         inputs.push_back(new Description(INPUT_1, DataType::NONE));
         inputs.push_back(new Description(INPUT_2, DataType::NONE));
         
         return inputs;
     }
     
-    const std::vector<Description*> TestOperator::setupOutputs()
+    const std::vector<const Description*> TestOperator::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         outputs.push_back(new Description(OUTPUT_1, DataType::NONE));
         outputs.push_back(new Description(OUTPUT_2, DataType::NONE));
         
         return outputs;
     }
     
-    const std::vector<Parameter*> TestOperator::setupParameters()
+    const std::vector<const Parameter*> TestOperator::setupParameters()
     {
-        std::vector<Parameter*> parameters;
+        std::vector<const Parameter*> parameters;
         Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
         param->setAccessMode(Parameter::INITIALIZED_WRITE);
         parameters.push_back(param);
@@ -91,9 +91,9 @@ namespace stream
         return parameters;
     }
     
-    const std::vector<Parameter*> TestOperator::setupInitParameters()
+    const std::vector<const Parameter*> TestOperator::setupInitParameters()
     {
-        std::vector<Parameter*> parameters;
+        std::vector<const Parameter*> parameters;
         Parameter* param = new Parameter(BUFFER_SIZE, DataType::UINT_32);
         param->setAccessMode(Parameter::NONE_WRITE);
         parameters.push_back(param);

@@ -47,7 +47,7 @@ namespace base
             }
             catch(std::bad_cast&)
             {
-                throw ParameterTypeException(*parameters()[id], *this);
+                throw ParameterTypeException(parameter(id), *this);
             }
         }
         
@@ -120,9 +120,9 @@ namespace base
             ++m_id;
         }
         
-        const std::vector<Description*> CameraBuffer::setupInputs()
+        const std::vector<const Description*> CameraBuffer::setupInputs()
         {
-            std::vector<Description*> inputs;
+            std::vector<const Description*> inputs;
         
             Description* input = new Description(INPUT, DataType::IMAGE);
             input->setName("Input");
@@ -131,9 +131,9 @@ namespace base
             return inputs;
         }
         
-        const std::vector<Description*> CameraBuffer::setupOutputs()
+        const std::vector<const Description*> CameraBuffer::setupOutputs()
         {
-            std::vector<Description*> outputs;
+            std::vector<const Description*> outputs;
         
             Description* output = new Description(OUTPUT, DataType::IMAGE);
             output->setName("Output");
@@ -150,9 +150,9 @@ namespace base
             return outputs;
         }
         
-        const std::vector<Parameter*> CameraBuffer::setupParameters()
+        const std::vector<const Parameter*> CameraBuffer::setupParameters()
         {
-            std::vector<Parameter*> parameters;
+            std::vector<const Parameter*> parameters;
         
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
             numBuffers->setName("Number of buffers");
