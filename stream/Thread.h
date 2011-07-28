@@ -7,20 +7,13 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread.hpp>
 
+#include "ThreadInterface.h"
 
 namespace stream
 {
-    class InputNode;
-    
-    class Thread
+    class Thread : public ThreadInterface
     {
     public:
-        enum Status
-        {
-            INACTIVE,
-            ACTIVE,
-            DEACTIVATING,
-        };
         
         Thread();
         ~Thread();
@@ -49,4 +42,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_NETWORK_H
+#endif // STREAM_THREAD_H

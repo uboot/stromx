@@ -12,9 +12,6 @@ namespace stream
     OperatorNode::OperatorNode(OperatorInterface*const op)
         : m_operator(op)
     {
-        if(op->status() != OperatorInterface::INITIALIZED)
-            throw ArgumentException("Operator must be initialized.");
-            
         for(std::vector<const Description*>::const_iterator iter = op->info()->inputs().begin();
             iter != op->info()->inputs().end();
             ++iter)
