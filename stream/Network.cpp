@@ -51,9 +51,7 @@ namespace stream
             iter != m_operators.end();
             ++iter)
         {
-            OperatorWrapper* wrapper = dynamic_cast<OperatorWrapper*>((*iter)->op());
-            BOOST_ASSERT(wrapper);
-            wrapper->activate();
+            (*iter)->op()->activate();
         }
         
         m_status = ACTIVE;
@@ -65,9 +63,7 @@ namespace stream
             iter != m_operators.end();
             ++iter)
         {
-            OperatorWrapper* wrapper = dynamic_cast<OperatorWrapper*>((*iter)->op());
-            BOOST_ASSERT(wrapper);
-            wrapper->deactivate();
+            (*iter)->op()->deactivate();
         }
         
         m_status = INACTIVE;
@@ -92,22 +88,13 @@ namespace stream
     
     OperatorNode*const Network::addOperator(Operator*const op)
     {
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
-            iter != m_operators.end();
-            ++iter)
-        {
-            if ((*iter)->op()->info() == op)
-            {
-                throw ArgumentException("Operator already exists");
-            }
-        }
-
         OperatorWrapper* wrapper = new OperatorWrapper(op);
-        OperatorNode* node = new OperatorNode(wrapper);
-        m_operators.push_back(node);
-        return node;
+        wrapper->initialize();
+        return addOperator(wrapper);
     }
     
+    
+
     void Network::removeOperator(OperatorNode*const op)
     {
         if (op == 0)

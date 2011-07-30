@@ -1,4 +1,4 @@
-#include "Thread.h"
+#include "ThreadImpl.h"
 
 #include "Exception.h"
 #include "InputNode.h"
@@ -9,18 +9,18 @@
 
 namespace stream
 {
-    Thread::Thread()
+    ThreadImpl::ThreadImpl()
       : m_thread(0),
         m_status(INACTIVE)
     {
     }
     
-    Thread::~Thread()
+    ThreadImpl::~ThreadImpl()
     {
         stop();
     }
     
-    void Thread::addNode(InputNode* const op)
+    void ThreadImpl::addNode(InputNode* const op)
     {
         if(m_status != INACTIVE)
             throw WrongState("Thread must be inactive.");
@@ -31,7 +31,7 @@ namespace stream
         m_nodeSequence.push_back(op);
     }
 
-    void Thread::insertNode(const unsigned int position, InputNode* const op)
+    void ThreadImpl::insertNode(const unsigned int position, InputNode* const op)
     {
         if(m_status != INACTIVE)
             throw WrongState("Thread must be inactive.");
@@ -42,7 +42,7 @@ namespace stream
         m_nodeSequence.insert(m_nodeSequence.begin() + position, op);
     }
 
-    void Thread::removeNode(const unsigned int position)
+    void ThreadImpl::removeNode(const unsigned int position)
     {
         if(m_status != INACTIVE)
             throw WrongState("Thread must be inactive.");
@@ -53,19 +53,19 @@ namespace stream
         m_nodeSequence.erase(m_nodeSequence.begin() + position);
     }
 
-    void Thread::start()
+    void ThreadImpl::start()
     {
         if(m_status != INACTIVE)
             throw WrongState("Thread must be inactive.");
         
         BOOST_ASSERT(! m_thread);
         
-        m_thread = new boost::thread(boost::bind(&Thread::loop, this));
+        m_thread = new boost::thread(boost::bind(&ThreadImpl::loop, this));
         
         m_status = ACTIVE;
     }
 
-    void Thread::stop()
+    void ThreadImpl::stop()
     {
         if(m_status != ACTIVE)
             return;
@@ -77,7 +77,7 @@ namespace stream
         m_status = DEACTIVATING;
     }
 
-    void Thread::join()
+    void ThreadImpl::join()
     {
         if(m_status != DEACTIVATING)
             throw WrongState("Thread must have been stopped.");
@@ -91,7 +91,7 @@ namespace stream
         m_status = INACTIVE;
     }
     
-    void Thread::loop()
+    void ThreadImpl::loop()
     {
         try
         {      

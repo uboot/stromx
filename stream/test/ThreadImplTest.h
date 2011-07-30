@@ -11,13 +11,13 @@ namespace stream
     class OperatorWrapper;
     class TestOperator;
     class OperatorNode;
-    class Thread;
+    class ThreadImpl;
     class DataContainer;
     class InputNode;
     
-    class ThreadTest : public CPPUNIT_NS :: TestFixture
+    class ThreadImplTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (ThreadTest);
+        CPPUNIT_TEST_SUITE (ThreadImplTest);
         CPPUNIT_TEST(testStart);
         CPPUNIT_TEST(testStop);
         CPPUNIT_TEST(testJoin);
@@ -27,7 +27,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        ThreadTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
+        ThreadImplTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
         
         void setUp();
         void tearDown();
@@ -45,7 +45,7 @@ namespace stream
         std::vector<TestOperator*> m_operators;
         std::vector<OperatorNode*> m_operatorNodes;
         DataContainer m_container;
-        Thread* m_thread;
+        ThreadImpl* m_thread;
         InputNode* m_node;
         OperatorNode* m_operatorNode;
     };

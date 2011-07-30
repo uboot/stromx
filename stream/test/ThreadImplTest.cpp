@@ -1,4 +1,4 @@
-#include "ThreadTest.h"
+#include "ThreadImplTest.h"
 
 #include "TestOperator.h"
 
@@ -6,17 +6,17 @@
 #include <stream/OperatorNode.h>
 #include <stream/None.h>
 #include <stream/InputNode.h>
-#include <stream/Thread.h>
+#include <stream/ThreadImpl.h>
 #include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>
 #include <boost/thread/thread.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stream::ThreadTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stream::ThreadImplTest);
 
 namespace stream
 {
-    void ThreadTest::setUp()
+    void ThreadImplTest::setUp()
     {
         for(unsigned int i = 0; i < 3; ++i)
         {
@@ -37,7 +37,7 @@ namespace stream
                 ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
         }
         
-        m_thread = new Thread();
+        m_thread = new ThreadImpl();
         
         for(unsigned int i = 1; i < 3; ++i)
         {
@@ -57,7 +57,7 @@ namespace stream
         m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);
     }
     
-    void ThreadTest::testAddOperator()
+    void ThreadImplTest::testAddOperator()
     {
         unsigned int numNodes = m_thread->nodeSequence().size();
         
@@ -66,7 +66,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[numNodes]);  
     }
 
-    void ThreadTest::testInsertOperator()
+    void ThreadImplTest::testInsertOperator()
     {
         unsigned int numNodes = m_thread->nodeSequence().size();
         
@@ -75,7 +75,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[0]);  
     }
 
-    void ThreadTest::testRemoveOperator()
+    void ThreadImplTest::testRemoveOperator()
     {
         m_thread->insertNode(0, m_node);
         unsigned int numNodes = m_thread->nodeSequence().size();
@@ -85,7 +85,7 @@ namespace stream
         CPPUNIT_ASSERT(m_node != m_thread->nodeSequence()[0]);  
     }
     
-    void ThreadTest::testStart()
+    void ThreadImplTest::testStart()
     {
         CPPUNIT_ASSERT_NO_THROW(m_thread->start());
         CPPUNIT_ASSERT_THROW(m_thread->start(), WrongState);
@@ -109,7 +109,7 @@ namespace stream
         }     
     }
 
-    void ThreadTest::testStop()
+    void ThreadImplTest::testStop()
     {
         CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
         
@@ -118,7 +118,7 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
     }
 
-    void ThreadTest::testJoin()
+    void ThreadImplTest::testJoin()
     {
         CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
         
@@ -129,7 +129,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
     }
 
-    void ThreadTest::tearDown()
+    void ThreadImplTest::tearDown()
     {
         if(m_thread)
         {

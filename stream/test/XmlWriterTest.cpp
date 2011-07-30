@@ -9,7 +9,7 @@
 #include <stream/OperatorWrapper.h>
 #include <stream/OperatorNode.h>
 #include <stream/InputNode.h>
-#include <stream/Thread.h>
+#include <stream/ThreadImpl.h>
 #include <stream/Stream.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::XmlWriterTest);
@@ -48,7 +48,7 @@ namespace stream
         op2->getInputNode(TestOperator::INPUT_1)->connect(op1->getOutputNode(TestOperator::OUTPUT_1));
         op2->getInputNode(TestOperator::INPUT_2)->connect(op1->getOutputNode(TestOperator::OUTPUT_2));
         
-        Thread* thread = new Thread();
+        ThreadImpl* thread = new ThreadImpl();
         thread->setName("Processing thread");
         
         thread->addNode(op1->getInputNode(TestOperator::INPUT_1));

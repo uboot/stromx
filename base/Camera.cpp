@@ -25,7 +25,7 @@
 #include "ConvertPixelType.h"
 #include "CameraBuffer.h"
 #include "Queue.h"
-#include <stream/Thread.h>
+#include <stream/ThreadImpl.h>
 
 using namespace stream;
 
@@ -71,14 +71,14 @@ namespace base
         m_imageQueue->getInputNode(Queue::INPUT)->connect(m_pixelType->getOutputNode(ConvertPixelType::OUTPUT));
         m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(camera::CameraBuffer::INDEX));
         
-        Thread* frameThread = new Thread();
+        ThreadImpl* frameThread = new ThreadImpl();
         frameThread->addNode(m_adjustRgbChannels->getInputNode(AdjustRgbChannels::INPUT));
         frameThread->addNode(m_clip->getInputNode(Clip::INPUT));
         frameThread->addNode(m_trigger->getInputNode(Trigger::INPUT));
         frameThread->addNode(m_period->getInputNode(PeriodicDelay::INPUT));
         frameThread->addNode(m_buffer->getInputNode(camera::CameraBuffer::INPUT));
         
-        Thread* mainThread = new Thread();
+        ThreadImpl* mainThread = new ThreadImpl();
         mainThread->addNode(m_pixelType->getInputNode(ConvertPixelType::SOURCE));
         mainThread->addNode(m_pixelType->getInputNode(ConvertPixelType::DESTINATION));
         mainThread->addNode(m_imageQueue->getInputNode(Queue::INPUT));
