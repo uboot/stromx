@@ -19,18 +19,25 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "DataContainerImpl.h"
+#include "impl/DataContainerImpl.h"
 
 namespace stream
 {
     class Data;
     class DataType;
     
+    namespace impl
+    {
+        class WriteAccessImpl;
+        class ReadAccessImpl;
+        class RecycleAccessImpl;
+    }
+    
     class DataContainer
     {
-        friend class WriteAccessImpl;
-        friend class ReadAccessImpl;
-        friend class RecycleAccessImpl;
+        friend class impl::WriteAccessImpl;
+        friend class impl::ReadAccessImpl;
+        friend class impl::RecycleAccessImpl;
         friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
@@ -43,7 +50,7 @@ namespace stream
         const bool empty() const { return m_impl.get() == 0; }
     private:
         
-        boost::shared_ptr<DataContainerImpl> m_impl;
+        boost::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     
     const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 

@@ -1,5 +1,5 @@
-#ifndef STREAM_THREADTEST_H
-#define STREAM_THREADTEST_H
+#ifndef STREAM_THREADIMPLTEST_H
+#define STREAM_THREADIMPLTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -51,4 +51,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_OUTPUTNODETEST_H
+#endif // STREAM_THREADIMPLTEST_H

@@ -15,13 +15,13 @@ endif()
 
 set(SOURCES
     DataContainer.cpp
-    DataContainerImpl.cpp
+    impl/DataContainerImpl.cpp
     ReadAccess.cpp
-    ReadAccessImpl.cpp
+    impl/ReadAccessImpl.cpp
     RecycleAccess.cpp
-    RecycleAccessImpl.cpp
+    impl/RecycleAccessImpl.cpp
     WriteAccess.cpp
-    WriteAccessImpl.cpp
+    impl/WriteAccessImpl.cpp
     DataType.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp

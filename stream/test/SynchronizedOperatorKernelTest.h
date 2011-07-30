@@ -1,5 +1,5 @@
-#ifndef STREAM_OPERATORWRAPPERTEST_H
-#define STREAM_OPERATORWRAPPERTEST_H
+#ifndef STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H
+#define STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -56,4 +56,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_OPERATORWRAPPERTEST_H
+#endif // STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H

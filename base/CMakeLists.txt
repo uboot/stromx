@@ -21,7 +21,7 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Camera.cpp
-    CameraBuffer.cpp
+    impl/CameraBuffer.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp

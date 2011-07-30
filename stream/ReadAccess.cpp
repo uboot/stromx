@@ -5,7 +5,7 @@
 namespace stream
 {
     ReadAccess::ReadAccess(DataContainer data)
-      : m_impl(new ReadAccessImpl(data))
+      : m_impl(new impl::ReadAccessImpl(data))
     {
     }
 

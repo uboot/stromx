@@ -17,7 +17,7 @@
 #ifndef STREAM_WRITEACCESS_H
 #define STREAM_WRITEACCESS_H
 
-#include "WriteAccessImpl.h"
+#include "impl/WriteAccessImpl.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -35,7 +35,7 @@ namespace stream
     private:
         WriteAccess();
 
-        boost::shared_ptr<WriteAccessImpl> m_impl;
+        boost::shared_ptr<impl::WriteAccessImpl> m_impl;
     };
 }
 

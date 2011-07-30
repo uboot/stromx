@@ -10,7 +10,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/network.xml DESTINATION ${CMAKE_CURRENT_BI
 
 set(SOURCES
     main.cpp
-    ../DataContainerImpl.cpp
+    ../impl/DataContainerImpl.cpp
     ../DataContainer.cpp
     DataContainerTest.cpp
     ../DataType.cpp
@@ -31,10 +31,10 @@ set(SOURCES
     InputNodeTest.cpp   
     ../OperatorNode.cpp
     ../ReadAccess.cpp
-    ../ReadAccessImpl.cpp
+    ../impl/ReadAccessImpl.cpp
     ReadAccessTest.cpp
     ../RecycleAccess.cpp
-    ../RecycleAccessImpl.cpp
+    ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
     ../ThreadImpl.cpp
     ThreadImplTest.cpp
@@ -50,7 +50,7 @@ set(SOURCES
     ../Try.cpp
     TryTest.cpp
     ../WriteAccess.cpp
-    ../WriteAccessImpl.cpp
+    ../impl/WriteAccessImpl.cpp
     WriteAccessTest.cpp
     ../Stream.cpp
     StreamTest.cpp

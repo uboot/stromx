@@ -3,7 +3,7 @@
 namespace stream
 {
     RecycleAccess::RecycleAccess(DataContainer data)
-      : m_impl(new RecycleAccessImpl(data))
+      : m_impl(new impl::RecycleAccessImpl(data))
     {
     }
 
@@ -26,7 +26,7 @@ namespace stream
     void RecycleAccess::add(DataContainer data)
     {
         if(! m_impl.get())
-            m_impl = boost::shared_ptr<RecycleAccessImpl>(new RecycleAccessImpl(data));
+            m_impl = boost::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));
         else
             m_impl->add(data);
     }

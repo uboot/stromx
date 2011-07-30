@@ -1,4 +1,7 @@
 /**
 \namespace base
 \brief Basic operators
+
+\namespace base::impl
+\brief Implementation of base
 */

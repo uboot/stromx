@@ -1,4 +1,7 @@
 /**
 \namespace stream
 \brief Core library
+
+\namespace stream::impl
+\brief Implementation of stream
 */

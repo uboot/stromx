@@ -17,7 +17,7 @@
 #ifndef STREAM_READACCESS_H
 #define STREAM_READACCESS_H
 
-#include "ReadAccessImpl.h"
+#include "impl/ReadAccessImpl.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -34,7 +34,7 @@ namespace stream
         
     private:
         ReadAccess();
-        boost::shared_ptr<ReadAccessImpl> m_impl;
+        boost::shared_ptr<impl::ReadAccessImpl> m_impl;
     };
 }
 

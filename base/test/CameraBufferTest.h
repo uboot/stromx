@@ -24,7 +24,7 @@
 
 namespace base
 {
-    namespace camera
+    namespace impl
     {
         class CameraBufferTest : public CPPUNIT_NS :: TestFixture
         {

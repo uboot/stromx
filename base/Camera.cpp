@@ -23,7 +23,7 @@
 #include "Trigger.h"
 #include "Clip.h"
 #include "ConvertPixelType.h"
-#include "CameraBuffer.h"
+#include "impl/CameraBuffer.h"
 #include "Queue.h"
 #include <stream/ThreadImpl.h>
 
@@ -54,7 +54,7 @@ namespace base
         m_input = network->addOperator(new ConstImage);
         m_adjustRgbChannels = network->addOperator(new AdjustRgbChannels);
         m_clip = network->addOperator(new Clip);
-        m_buffer = network->addOperator(new camera::CameraBuffer);
+        m_buffer = network->addOperator(new impl::CameraBuffer);
         m_period = network->addOperator(new PeriodicDelay);
         m_trigger = network->addOperator(new Trigger);
         m_pixelType = network->addOperator(new ConvertPixelType);
@@ -65,18 +65,18 @@ namespace base
         m_clip->getInputNode(Clip::INPUT)->connect(m_adjustRgbChannels->getOutputNode(AdjustRgbChannels::OUTPUT));
         m_trigger->getInputNode(Trigger::INPUT)->connect(m_clip->getOutputNode(Clip::OUTPUT));
         m_period->getInputNode(PeriodicDelay::INPUT)->connect(m_trigger->getOutputNode(Trigger::OUTPUT));
-        m_buffer->getInputNode(camera::CameraBuffer::INPUT)->connect(m_period->getOutputNode(PeriodicDelay::OUTPUT));
-        m_pixelType->getInputNode(ConvertPixelType::SOURCE)->connect(m_buffer->getOutputNode(camera::CameraBuffer::OUTPUT));
-        m_pixelType->getInputNode(ConvertPixelType::DESTINATION)->connect(m_buffer->getOutputNode(camera::CameraBuffer::BUFFER));
+        m_buffer->getInputNode(impl::CameraBuffer::INPUT)->connect(m_period->getOutputNode(PeriodicDelay::OUTPUT));
+        m_pixelType->getInputNode(ConvertPixelType::SOURCE)->connect(m_buffer->getOutputNode(impl::CameraBuffer::OUTPUT));
+        m_pixelType->getInputNode(ConvertPixelType::DESTINATION)->connect(m_buffer->getOutputNode(impl::CameraBuffer::BUFFER));
         m_imageQueue->getInputNode(Queue::INPUT)->connect(m_pixelType->getOutputNode(ConvertPixelType::OUTPUT));
-        m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(camera::CameraBuffer::INDEX));
+        m_indexQueue->getInputNode(Queue::INPUT)->connect(m_buffer->getOutputNode(impl::CameraBuffer::INDEX));
         
         ThreadImpl* frameThread = new ThreadImpl();
         frameThread->addNode(m_adjustRgbChannels->getInputNode(AdjustRgbChannels::INPUT));
         frameThread->addNode(m_clip->getInputNode(Clip::INPUT));
         frameThread->addNode(m_trigger->getInputNode(Trigger::INPUT));
         frameThread->addNode(m_period->getInputNode(PeriodicDelay::INPUT));
-        frameThread->addNode(m_buffer->getInputNode(camera::CameraBuffer::INPUT));
+        frameThread->addNode(m_buffer->getInputNode(impl::CameraBuffer::INPUT));
         
         ThreadImpl* mainThread = new ThreadImpl();
         mainThread->addNode(m_pixelType->getInputNode(ConvertPixelType::SOURCE));
@@ -106,7 +106,7 @@ namespace base
                 m_input->op()->setParameter(ConstImage::IMAGE, value);
                 break;
             case NUM_BUFFERS:
-                m_buffer->op()->setParameter(camera::CameraBuffer::NUM_BUFFERS, value);
+                m_buffer->op()->setParameter(impl::CameraBuffer::NUM_BUFFERS, value);
                 m_imageQueue->op()->setParameter(Queue::SIZE, value);
                 m_indexQueue->op()->setParameter(Queue::SIZE, value);
                 break;
@@ -137,7 +137,7 @@ namespace base
                 m_period->op()->setParameter(PeriodicDelay::PERIOD, value);
                 break;
             case BUFFER_SIZE:
-                m_buffer->op()->setParameter(camera::CameraBuffer::BUFFER_SIZE, value);
+                m_buffer->op()->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
                 break;
             default:
                 throw ParameterIdException(id, *this);
@@ -170,9 +170,9 @@ namespace base
         case IMAGE:
             return m_input->op()->getParameter(ConstImage::IMAGE);
         case NUM_BUFFERS:
-            return m_buffer->op()->getParameter(camera::CameraBuffer::NUM_BUFFERS);
+            return m_buffer->op()->getParameter(impl::CameraBuffer::NUM_BUFFERS);
         case BUFFER_SIZE:
-            return m_buffer->op()->getParameter(camera::CameraBuffer::BUFFER_SIZE);
+            return m_buffer->op()->getParameter(impl::CameraBuffer::BUFFER_SIZE);
         default:
             throw ParameterIdException(id, *this);
         }

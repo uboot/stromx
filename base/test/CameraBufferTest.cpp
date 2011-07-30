@@ -2,17 +2,17 @@
 
 #include <cppunit/TestAssert.h>
 
-#include <base/CameraBuffer.h>
+#include <base/impl/CameraBuffer.h>
 
 #include <stream/ReadAccess.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (base::camera::CameraBufferTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (base::impl::CameraBufferTest);
 
 using namespace stream;
 
 namespace base
 {
-    namespace camera
+    namespace impl
     {
         void CameraBufferTest::setUp()
         {

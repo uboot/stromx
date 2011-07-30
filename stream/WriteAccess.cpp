@@ -5,7 +5,7 @@
 namespace stream
 {
     WriteAccess::WriteAccess(DataContainer data)
-      : m_impl(new WriteAccessImpl(data))
+      : m_impl(new impl::WriteAccessImpl(data))
     {
     }
 

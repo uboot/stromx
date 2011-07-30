@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CAMERABUFFER_H
-#define BASE_CAMERABUFFER_H
+#ifndef BASE_IMPL_CAMERABUFFER_H
+#define BASE_IMPL_CAMERABUFFER_H
 
 #include <stream/OperatorKernel.h>
 #include <stream/RecycleAccess.h>
@@ -28,7 +28,7 @@ namespace stream
 
 namespace base
 {
-    namespace camera
+    namespace impl
     {
         class CameraBuffer : public stream::OperatorKernel
         {
@@ -77,4 +77,4 @@ namespace base
     }
 }
 
-#endif // BASE_CAMERABUFFER_H
+#endif // BASE_IMPL_CAMERABUFFER_H

@@ -14,25 +14,28 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_WRITEACCESSIMPL_H
-#define STREAM_WRITEACCESSIMPL_H
+#ifndef STREAM_IMPL_READACCESSIMPL_H
+#define STREAM_IMPL_READACCESSIMPL_H
 
 namespace stream
-{
+{    
     class DataContainer;
     class Data;
     
-    class WriteAccessImpl
+    namespace impl
     {
-    public:
-        WriteAccessImpl(DataContainer& data);
-        ~WriteAccessImpl();
-        
-        Data& operator()();
-        
-    private:
-        DataContainer& m_data;
-    }; 
+        class ReadAccessImpl
+        {
+        public:
+            ReadAccessImpl(DataContainer& data);
+            ~ReadAccessImpl();
+            
+            const Data & operator()();
+            
+        private:
+            DataContainer& m_data;
+        };
+    }
 }
 
-#endif // STREAM_WRITEACCESSIMPL_H
+#endif // STREAM_IMPL_READACCESSIMPL_H

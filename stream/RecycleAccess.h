@@ -19,7 +19,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "RecycleAccessImpl.h"
+#include "impl/RecycleAccessImpl.h"
 #include "DataContainer.h"
 
 namespace stream
@@ -35,7 +35,7 @@ namespace stream
         Data* const operator()(const unsigned int timeout);
         
     private:
-        boost::shared_ptr<RecycleAccessImpl> m_impl;      
+        boost::shared_ptr<impl::RecycleAccessImpl> m_impl;      
     };
 }
 

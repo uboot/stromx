@@ -17,7 +17,7 @@ using namespace stream;
 
 namespace base
 {
-    namespace camera
+    namespace impl
     {
         const std::string CameraBuffer::NAME("CameraBuffer");
         const std::string CameraBuffer::PACKAGE(PACKAGE_NAME);
