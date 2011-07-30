@@ -1,13 +1,13 @@
 #include "OperatorFactory.h"
 #include "Exception.h"
-#include "Operator.h"
+#include "OperatorKernel.h"
 
 
 namespace stream
 {
     OperatorFactory::~OperatorFactory()
     {
-        for(std::vector<const Operator*>::iterator iter = m_operators.begin();
+        for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
@@ -15,14 +15,14 @@ namespace stream
         }
     }
 
-    void OperatorFactory::registerOperator(const Operator*const op)
+    void OperatorFactory::registerOperator(const OperatorKernel*const op)
     {
         if(op == 0)
         {
             throw ArgumentException("Invalid argument: Null pointer.");
         }
         
-        for(std::vector<const Operator*>::iterator iter = m_operators.begin();
+        for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
@@ -35,20 +35,20 @@ namespace stream
         m_operators.push_back(op);
     }
 
-    const std::vector< const Operator*>& OperatorFactory::availableOperators() const
+    const std::vector< const OperatorKernel*>& OperatorFactory::availableOperators() const
     {
         return m_operators;
     }
 
-    Operator*const OperatorFactory::newOperator(const std::string& package, const std::string& name) const
+    OperatorKernel*const OperatorFactory::newOperator(const std::string& package, const std::string& name) const
     {
-        for(std::vector<const Operator*>::const_iterator iter = m_operators.begin();
+        for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
             if((*iter)->name() == name && (*iter)->package() == package)
             {
-                Operator* newOp = 0;
+                OperatorKernel* newOp = 0;
                 newOp = (*iter)->clone();
                 if (newOp == 0)
                 { 

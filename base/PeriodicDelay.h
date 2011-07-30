@@ -17,7 +17,7 @@
 #ifndef BASE_TIMEPERIOD_H
 #define BASE_TIMEPERIOD_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Image.h>
 #include <stream/Primitive.h>
 
@@ -30,7 +30,7 @@ namespace stream
 
 namespace base
 {
-    class PeriodicDelay : public stream::Operator
+    class PeriodicDelay : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -50,7 +50,7 @@ namespace base
         
         PeriodicDelay();
         
-        virtual Operator* const clone() const { return new PeriodicDelay; }
+        virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

@@ -37,7 +37,7 @@ namespace base
     const Version Camera::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Camera::Camera()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
         // TODO: initialize all members
     }

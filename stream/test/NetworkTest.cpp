@@ -23,7 +23,7 @@ namespace stream
 
     void NetworkTest::testAddOperator()
     {
-        Operator* op = new TestOperator();
+        OperatorKernel* op = new TestOperator();
         OperatorWrapper* wrapper1 = new OperatorWrapper(op);
         wrapper1->initialize();
         OperatorNode* node = 0;

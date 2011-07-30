@@ -17,7 +17,7 @@
 #ifndef BASE_CONVERTPIXELTYPE_H
 #define BASE_CONVERTPIXELTYPE_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
 #include <stream/RecycleAccess.h>
@@ -25,7 +25,7 @@
 
 namespace base
 {
-    class ConvertPixelType : public stream::Operator
+    class ConvertPixelType : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -46,7 +46,7 @@ namespace base
         
         ConvertPixelType();
         
-        virtual Operator* const clone() const { return new ConvertPixelType; }
+        virtual OperatorKernel* const clone() const { return new ConvertPixelType; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

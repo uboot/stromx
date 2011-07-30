@@ -19,7 +19,7 @@ namespace base
     const Version ConstImage::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     ConstImage::ConstImage()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_image(0)
     {
         m_image = new Image(0, 0, stream::Image::MONO_8);

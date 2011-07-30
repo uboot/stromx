@@ -101,7 +101,7 @@ namespace stream
                         ++node)
                 {
                     (*node)->setInputData();
-                    // TODO: handle exceptions in setInputData(), i.e. in Operator::execute()
+                    // TODO: handle exceptions in setInputData(), i.e. in OperatorKernel::execute()
                     
                     try
                     {

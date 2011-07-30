@@ -17,7 +17,7 @@
 #ifndef BASE_CONSTIMAGE_H
 #define BASE_CONSTIMAGE_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Image.h>
 #include <stream/Enum.h>
 #include <stream/RecycleAccess.h>
@@ -29,7 +29,7 @@ namespace stream
 
 namespace base
 {
-    class ConstImage : public stream::Operator
+    class ConstImage : public stream::OperatorKernel
     {
     public:
         enum OutputIds
@@ -45,7 +45,7 @@ namespace base
         ConstImage();
         virtual ~ConstImage();
         
-        virtual Operator* const clone() const { return new ConstImage; }
+        virtual OperatorKernel* const clone() const { return new ConstImage; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

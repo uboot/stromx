@@ -21,7 +21,7 @@ set(SOURCES
     Id2DataCompositeTest.cpp
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp
-    ../Operator.cpp
+    ../OperatorKernel.cpp
     TestOperator.cpp
     ../OperatorWrapper.cpp
     OperatorWrapperTest.cpp

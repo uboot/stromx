@@ -1,6 +1,6 @@
 #include "OperatorWrapper.h"
 
-#include "Operator.h"
+#include "OperatorKernel.h"
 #include "Exception.h"
 #include "Id2DataPair.h"
 #include "Data.h"
@@ -11,7 +11,7 @@
 
 namespace stream
 {
-    OperatorWrapper::OperatorWrapper(Operator* const op)
+    OperatorWrapper::OperatorWrapper(OperatorKernel* const op)
       : m_op(op),
         m_status(NONE)
     {
@@ -128,9 +128,9 @@ namespace stream
 
     void OperatorWrapper::receiveInputData(const Id2DataMapper& mapper)
     {   
-        BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from Operator::execute()
+        BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
         
-        // This function is called from Operator::execute which again is called by OperatorWrapper::execute().
+        // This function is called from OperatorKernel::execute which again is called by OperatorWrapper::execute().
         // OperatorWrapper::execute() lock the mutex which is unlocked here.
         m_mutex.unlock();
         
@@ -155,7 +155,7 @@ namespace stream
         if(! interruptExceptionWasThrown)
             m_cond.notify_all();
         
-        // lock again before entering Operator::execute()
+        // lock again before entering OperatorKernel::execute()
         m_mutex.lock();
         
         // rethrow exception if necessary
@@ -165,9 +165,9 @@ namespace stream
 
     void OperatorWrapper::sendOutputData(const stream::Id2DataMapper& mapper)
     {
-        BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from Operator::execute()
+        BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
         
-        // This function is called from Operator::execute which again is called by OperatorWrapper::execute().
+        // This function is called from OperatorKernel::execute which again is called by OperatorWrapper::execute().
         // OperatorWrapper::execute() lock the mutex which is unlocked here.
         m_mutex.unlock();
         
@@ -192,7 +192,7 @@ namespace stream
         if(! interruptExceptionWasThrown)
             m_cond.notify_all();
         
-        // lock again before entering Operator::execute()
+        // lock again before entering OperatorKernel::execute()
         m_mutex.lock();
         
         // rethrow exception if necessary

@@ -85,7 +85,7 @@ namespace stream
         return node;
     }
     
-    OperatorNode*const Network::addOperator(Operator*const op)
+    OperatorNode*const Network::addOperator(OperatorKernel*const op)
     {
         OperatorWrapper* wrapper = new OperatorWrapper(op);
         wrapper->initialize();

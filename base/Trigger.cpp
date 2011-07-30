@@ -17,7 +17,7 @@ namespace base
     const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Trigger::Trigger()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_active(true)
     {
     }

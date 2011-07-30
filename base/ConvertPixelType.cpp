@@ -23,7 +23,7 @@ namespace base
     const Version ConvertPixelType::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     ConvertPixelType::ConvertPixelType()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_pixelType(stream::Image::MONO_8)
     {
     }

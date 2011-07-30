@@ -17,14 +17,14 @@
 #ifndef BASE_CLIP_H
 #define BASE_CLIP_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
 #include <stream/RecycleAccess.h>
 
 
 namespace base
 {
-    class Clip : public stream::Operator
+    class Clip : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -48,7 +48,7 @@ namespace base
         
         Clip();
         
-        virtual Operator* const clone() const { return new Clip; }
+        virtual OperatorKernel* const clone() const { return new Clip; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

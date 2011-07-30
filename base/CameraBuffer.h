@@ -17,7 +17,7 @@
 #ifndef BASE_CAMERABUFFER_H
 #define BASE_CAMERABUFFER_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/RecycleAccess.h>
 #include <stream/Primitive.h>
 
@@ -30,7 +30,7 @@ namespace base
 {
     namespace camera
     {
-        class CameraBuffer : public stream::Operator
+        class CameraBuffer : public stream::OperatorKernel
         {
         public:
             enum InputId
@@ -53,7 +53,7 @@ namespace base
             
             CameraBuffer();
             
-            virtual Operator* const clone() const { return new CameraBuffer; }
+            virtual OperatorKernel* const clone() const { return new CameraBuffer; }
             virtual void setParameter(const unsigned int id, const stream::Data& value);
             virtual const stream::Data& getParameter(const unsigned int id);
             virtual void execute(stream::DataProvider& provider);

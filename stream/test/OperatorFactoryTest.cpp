@@ -28,14 +28,14 @@ namespace stream
     void OperatorFactoryTest::testNewOperator()
     {
         // add a test operator to the factory
-        Operator* op = new TestOperator;
+        OperatorKernel* op = new TestOperator;
         m_factory->registerOperator(op);
         
         // try to get an operator which does not exist in the factory
         CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), ArgumentException);
         
         // get the existing operator
-        Operator* newOp;
+        OperatorKernel* newOp;
         CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "test"));
         CPPUNIT_ASSERT(newOp);
         
@@ -48,17 +48,17 @@ namespace stream
         CPPUNIT_ASSERT_THROW(m_factory->registerOperator(0), ArgumentException);
         
         // add a new operator to the factory
-        Operator* op = new TestOperator;
+        OperatorKernel* op = new TestOperator;
         CPPUNIT_ASSERT_NO_THROW(m_factory->registerOperator(op));
         
         // test if it has been successfully added
         CPPUNIT_ASSERT_EQUAL(1, (int)m_factory->availableOperators().size());
-        CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_factory->availableOperators()[0]);
+        CPPUNIT_ASSERT_EQUAL((const OperatorKernel*)(op), m_factory->availableOperators()[0]);
         
         // now we try to add another operator of the same type
         // this should result in an exception, because an operator with the same name()
         // and package() has already been added to the factory
-        Operator* duplicateOp = new TestOperator;
+        OperatorKernel* duplicateOp = new TestOperator;
         CPPUNIT_ASSERT_THROW(m_factory->registerOperator(duplicateOp), ArgumentException);
         
         // delete duplicateOperator to avoid a memory leak

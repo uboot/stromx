@@ -17,7 +17,7 @@
 #ifndef BASE_QUEUE_H
 #define BASE_QUEUE_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
 
 #include <deque>
@@ -29,7 +29,7 @@ namespace stream
 
 namespace base
 {
-    class Queue : public stream::Operator
+    class Queue : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -49,7 +49,7 @@ namespace base
         
         Queue();
         
-        virtual Operator* const clone() const { return new Queue; }
+        virtual OperatorKernel* const clone() const { return new Queue; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void deactivate();

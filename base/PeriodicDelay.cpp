@@ -19,7 +19,7 @@ namespace base
     const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     PeriodicDelay::PeriodicDelay()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
     

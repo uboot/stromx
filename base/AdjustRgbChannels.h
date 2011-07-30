@@ -17,7 +17,7 @@
 #ifndef BASE_ADJUSTRGBCHANNELS_H
 #define BASE_ADJUSTRGBCHANNELS_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
 
 namespace stream
@@ -27,7 +27,7 @@ namespace stream
 
 namespace base
 {
-    class AdjustRgbChannels : public stream::Operator
+    class AdjustRgbChannels : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -48,7 +48,7 @@ namespace base
         
         AdjustRgbChannels();
         
-        virtual Operator* const clone() const { return new AdjustRgbChannels; }
+        virtual OperatorKernel* const clone() const { return new AdjustRgbChannels; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

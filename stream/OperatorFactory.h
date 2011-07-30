@@ -29,14 +29,14 @@ namespace stream
     public:
         virtual ~OperatorFactory();
         
-        virtual void registerOperator(const Operator* const op);
+        virtual void registerOperator(const OperatorKernel* const op);
         
-        virtual Operator* const newOperator(const std::string & package, const std::string & name) const;
+        virtual OperatorKernel* const newOperator(const std::string & package, const std::string & name) const;
         
-        virtual const std::vector<const Operator*> & availableOperators() const;
+        virtual const std::vector<const OperatorKernel*> & availableOperators() const;
         
     private:
-        std::vector<const Operator*> m_operators;
+        std::vector<const OperatorKernel*> m_operators;
     };
 }
 

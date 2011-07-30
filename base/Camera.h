@@ -17,7 +17,7 @@
 #ifndef BASE_CAMERA_H
 #define BASE_CAMERA_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
 
 namespace stream
@@ -30,7 +30,7 @@ namespace stream
 
 namespace base
 {
-    class Camera : public stream::Operator
+    class Camera : public stream::OperatorKernel
     {
     public:
         enum OutputId
@@ -59,7 +59,7 @@ namespace base
         Camera();
         virtual ~Camera();
         
-        virtual Operator* const clone() const { return new Camera; }
+        virtual OperatorKernel* const clone() const { return new Camera; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

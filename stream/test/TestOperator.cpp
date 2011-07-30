@@ -17,7 +17,7 @@ namespace stream
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()
-      : Operator(NAME, PACKAGE, VERSION, setupInitParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInitParameters()),
         m_sleepTime(100),
         m_bufferSize(1000),
         m_numExecutes(0)
@@ -26,7 +26,7 @@ namespace stream
     
     void TestOperator::initialize()
     {
-        Operator::initialize(setupInputs(), setupOutputs(), setupParameters());
+        OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
     }
 
     void TestOperator::setParameter(unsigned int id, const stream::Data& value)

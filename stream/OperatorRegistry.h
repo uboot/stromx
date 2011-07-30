@@ -19,11 +19,11 @@
 
 namespace stream
 {
-    class Operator;
+    class OperatorKernel;
     class OperatorRegistry
     {
     public:
-        virtual void registerOperator(const Operator* const op) = 0;
+        virtual void registerOperator(const OperatorKernel* const op) = 0;
     };
 }
 

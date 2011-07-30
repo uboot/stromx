@@ -4,14 +4,14 @@
 #include "DataProvider.h"
 #include "Id2DataMap.h"
 #include "Parameter.h"
-#include "Operator.h"
+#include "OperatorKernel.h"
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
 
 namespace stream
 {
-    class Operator;
+    class OperatorKernel;
     class Data;
     
     class OperatorWrapper : public DataProvider
@@ -25,7 +25,7 @@ namespace stream
             EXECUTING
         };
         
-        OperatorWrapper(Operator* const op);
+        OperatorWrapper(OperatorKernel* const op);
         virtual ~OperatorWrapper();
         
         const OperatorInfo* const info() const { return m_op; }
@@ -60,7 +60,7 @@ namespace stream
         void validateReadAccess(const unsigned int id);
         void validateParameterType(const unsigned int id, const DataType& type);
         
-        Operator* m_op;
+        OperatorKernel* m_op;
         Status m_status;
         boost::condition_variable_any m_cond;
         boost::mutex m_mutex;

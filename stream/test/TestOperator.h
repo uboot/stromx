@@ -1,12 +1,12 @@
 #ifndef STREAM_TESTOPERATOR_H
 #define STREAM_TESTOPERATOR_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
 
 namespace stream
 {
-    class TestOperator : public Operator
+    class TestOperator : public OperatorKernel
     {
     public:
         static const unsigned int INPUT_1 = 0;
@@ -18,7 +18,7 @@ namespace stream
         
         TestOperator();
         
-        virtual Operator* const clone() const { return new TestOperator; }
+        virtual OperatorKernel* const clone() const { return new TestOperator; }
         virtual void setParameter(unsigned int id, const Data& value);
         const Data& getParameter(unsigned int id);
         virtual void execute(DataProvider& provider);

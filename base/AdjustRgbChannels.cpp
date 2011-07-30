@@ -22,7 +22,7 @@ namespace base
     const Version AdjustRgbChannels::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     AdjustRgbChannels::AdjustRgbChannels()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_red(1.0),
         m_green(1.0),
         m_blue(1.0)

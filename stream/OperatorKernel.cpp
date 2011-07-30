@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#include "Operator.h"
+#include "OperatorKernel.h"
 
 #include "Exception.h"
 
@@ -23,7 +23,7 @@
 
 namespace stream
 {
-    Operator::Operator (const std::string & name,
+    OperatorKernel::OperatorKernel (const std::string & name,
                         const std::string & package,
                         const Version & version,
                         const std::vector<const Parameter*>& parameters)
@@ -35,7 +35,7 @@ namespace stream
         validate(parameters);
     }
     
-    Operator::Operator (const std::string & name,
+    OperatorKernel::OperatorKernel (const std::string & name,
                         const std::string & package,
                         const Version & version)
       : m_name(name),
@@ -44,7 +44,7 @@ namespace stream
     {
     }
     
-    Operator::Operator(const std::string& name,
+    OperatorKernel::OperatorKernel(const std::string& name,
                        const std::string& package,
                        const stream::Version& version,
                        const std::vector<const Description* >& inputs,
@@ -69,7 +69,7 @@ namespace stream
     }
 
     
-    void Operator::initialize(const std::vector<const stream::Description*>& inputs,
+    void OperatorKernel::initialize(const std::vector<const stream::Description*>& inputs,
                               const std::vector<const stream::Description*>& outputs,
                               const std::vector<const stream::Parameter*>& parameters)
     {
@@ -102,12 +102,12 @@ namespace stream
         validate(m_parameters);
     }
     
-    Parameter& Operator::parameter(const unsigned int id)
+    Parameter& OperatorKernel::parameter(const unsigned int id)
     {
         return const_cast<Parameter&>(parameter(id));
     }
     
-    const Parameter& Operator::parameter(const unsigned int id) const
+    const Parameter& OperatorKernel::parameter(const unsigned int id) const
     {
         std::map<unsigned int, const Parameter*>::const_iterator iter = m_parameterMap.find(id);
         if(iter == m_parameterMap.end())
@@ -116,7 +116,7 @@ namespace stream
         return *iter->second;
     }
     
-    Operator::~Operator()
+    OperatorKernel::~OperatorKernel()
     {
         deactivate();
         
@@ -142,7 +142,7 @@ namespace stream
         }
     }
 
-    void Operator::validate(const std::vector<const Description*>& descriptors)
+    void OperatorKernel::validate(const std::vector<const Description*>& descriptors)
     {
         std::set<unsigned int> ids;
         
@@ -155,7 +155,7 @@ namespace stream
         }
     }
     
-    void Operator::validate(const std::vector<const Parameter*>& descriptors)
+    void OperatorKernel::validate(const std::vector<const Parameter*>& descriptors)
     {
         std::set<unsigned int> ids;
         

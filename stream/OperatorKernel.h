@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATOR_H
-#define STREAM_OPERATOR_H
+#ifndef STREAM_OPERATORKERNEL_H
+#define STREAM_OPERATORKERNEL_H
 
 #include "OperatorInfo.h"
 
@@ -27,27 +27,27 @@ namespace stream
     class DataContainer;
     class DataProvider;
     
-    class Operator : public OperatorInfo
+    class OperatorKernel : public OperatorInfo
     {
     public:
-        Operator(const std::string & name,
+        OperatorKernel(const std::string & name,
                  const std::string & package,
                  const Version & version,
                  const std::vector<const Parameter*>& parameters);
                  
-        Operator(const std::string & name,
+        OperatorKernel(const std::string & name,
                  const std::string & package,
                  const Version & version,
                  const std::vector<const Description*>& inputs,
                  const std::vector<const Description*>& outputs,
                  const std::vector<const Parameter*>& parameters);
                  
-        Operator(const std::string & name,
+        OperatorKernel(const std::string & name,
                  const std::string & package,
                  const Version & version);
                  
-        virtual Operator* const clone() const = 0;
-        virtual ~Operator();
+        virtual OperatorKernel* const clone() const = 0;
+        virtual ~OperatorKernel();
         
         const std::string& name() const { return m_name; }
         const std::string& package() const { return m_package; }
@@ -86,4 +86,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_OPERATOR_H
+#endif // STREAM_OPERATORKERNEL_H

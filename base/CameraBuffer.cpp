@@ -24,7 +24,7 @@ namespace base
         const Version CameraBuffer::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
         
         CameraBuffer::CameraBuffer()
-          : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_id(0)
         {
         }

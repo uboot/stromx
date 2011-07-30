@@ -22,7 +22,7 @@ namespace base
     const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Clip::Clip()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 

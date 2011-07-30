@@ -20,7 +20,7 @@ namespace base
     const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Queue::Queue()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_size(1)
     {
     }

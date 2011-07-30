@@ -17,7 +17,7 @@
 #ifndef BASE_TRIGGER_H
 #define BASE_TRIGGER_H
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 #include <stream/Image.h>
 #include <stream/Primitive.h>
 
@@ -31,7 +31,7 @@ namespace stream
 
 namespace base
 {
-    class Trigger : public stream::Operator
+    class Trigger : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -52,7 +52,7 @@ namespace base
         
         Trigger();
         
-        virtual Operator* const clone() const { return new Trigger; }
+        virtual OperatorKernel* const clone() const { return new Trigger; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
