@@ -8,7 +8,10 @@
 
 namespace stream
 {
-    class Id2DataMap;
+    namespace impl
+    {
+        class Id2DataMap;
+    }
     
     class Id2DataCompositeTest : public CPPUNIT_NS :: TestFixture
     {
@@ -31,7 +34,7 @@ namespace stream
             void testGet();
             
         private:
-            Id2DataMap* m_map;
+            impl::Id2DataMap* m_map;
             DataContainer m_dataContainer; 
     };
 }

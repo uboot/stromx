@@ -57,8 +57,8 @@ namespace stream
         
         m_op->initialize();
         
-        m_inputMap = Id2DataMap(m_op->inputs());
-        m_outputMap = Id2DataMap(m_op->outputs());
+        m_inputMap = impl::Id2DataMap(m_op->inputs());
+        m_outputMap = impl::Id2DataMap(m_op->outputs());
         
         BOOST_ASSERT(m_inputMap.isEmpty());
         BOOST_ASSERT(m_outputMap.isEmpty());

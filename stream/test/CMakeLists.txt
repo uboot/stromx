@@ -15,7 +15,7 @@ set(SOURCES
     DataContainerTest.cpp
     ../DataType.cpp
     DataTypeTest.cpp
-    ../Id2DataMap.cpp
+    ../impl/Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp
     Id2DataCompositeTest.cpp

@@ -4,7 +4,7 @@
 
 namespace stream
 {
-    const bool Id2DataComposite::trySet(const Id2DataMap& id2DataMap) const
+    const bool Id2DataComposite::trySet(const impl::Id2DataMap& id2DataMap) const
     {
         switch(m_type)
         {
@@ -17,7 +17,7 @@ namespace stream
         } 
     }
     
-    const bool Id2DataComposite::tryGet(const Id2DataMap& id2DataMap) const
+    const bool Id2DataComposite::tryGet(const impl::Id2DataMap& id2DataMap) const
     {
         switch(m_type)
         {
@@ -30,7 +30,7 @@ namespace stream
         } 
     }
     
-    void Id2DataComposite::get(Id2DataMap& id2DataMap) const
+    void Id2DataComposite::get(impl::Id2DataMap& id2DataMap) const
     {
         switch(m_type)
         {
@@ -49,7 +49,7 @@ namespace stream
         }
     }
     
-    void Id2DataComposite::set(Id2DataMap& id2DataMap) const
+    void Id2DataComposite::set(impl::Id2DataMap& id2DataMap) const
     {
         switch(m_type)
         {

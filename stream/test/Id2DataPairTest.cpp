@@ -4,7 +4,7 @@
 #include <stream/Exception.h>
 #include <stream/Id2DataPair.h>
 #include <stream/DataContainer.h>
-#include <stream/Id2DataMap.h>
+#include <stream/impl/Id2DataMap.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -18,7 +18,7 @@ namespace stream
         descriptions.push_back(new Description(0, DataType::NONE));
         descriptions.push_back(new Description(1, DataType::NONE));
         descriptions.push_back(new Description(2, DataType::NONE));
-        m_map = new Id2DataMap(descriptions);
+        m_map = new impl::Id2DataMap(descriptions);
         m_dataContainer = DataContainer(new None());
     }
 

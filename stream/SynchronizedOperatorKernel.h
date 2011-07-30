@@ -2,7 +2,7 @@
 #define STREAM_SYNCHRONIZEDOPERATORKERNEL_H
 
 #include "DataProvider.h"
-#include "Id2DataMap.h"
+#include "impl/Id2DataMap.h"
 #include "Parameter.h"
 #include "OperatorKernel.h"
 
@@ -65,8 +65,8 @@ namespace stream
         boost::condition_variable_any m_cond;
         boost::mutex m_mutex;
         boost::mutex m_executeMutex;
-        Id2DataMap m_inputMap;
-        Id2DataMap m_outputMap;
+        impl::Id2DataMap m_inputMap;
+        impl::Id2DataMap m_outputMap;
     };
 }
 

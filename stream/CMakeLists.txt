@@ -25,7 +25,7 @@ set(SOURCES
     DataType.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp
-    Id2DataMap.cpp
+    impl/Id2DataMap.cpp
     Id2DataMapper.cpp
     Id2DataPair.cpp
     ImageWrapper.cpp

@@ -1,22 +1,22 @@
 #include "Id2DataPair.h"
 
 #include "Exception.h"
-#include "Id2DataMap.h"
 #include "DataContainer.h"
+#include "impl/Id2DataMap.h"
 
 namespace stream
 {      
-    const bool Id2DataPair::trySet(const Id2DataMap& id2DataMap) const
+    const bool Id2DataPair::trySet(const impl::Id2DataMap& id2DataMap) const
     {
         return id2DataMap[m_id].empty();   
     }
     
-    const bool Id2DataPair::tryGet(const Id2DataMap& id2DataMap) const
+    const bool Id2DataPair::tryGet(const impl::Id2DataMap& id2DataMap) const
     {
         return ! id2DataMap[m_id].empty();
     }
     
-    void Id2DataPair::get(stream::Id2DataMap& id2DataMap) const
+    void Id2DataPair::get(stream::impl::Id2DataMap& id2DataMap) const
     {
         if(! m_data.empty())
             throw InvalidStateException("Data has already been assigned to this ID-data pair");
@@ -28,7 +28,7 @@ namespace stream
         id2DataMap[m_id] = DataContainer();
     }
 
-    void Id2DataPair::set(stream::Id2DataMap& id2DataMap) const
+    void Id2DataPair::set(stream::impl::Id2DataMap& id2DataMap) const
     {
         if(m_data.empty())
             throw InvalidStateException("This ID-data pair contains no data");

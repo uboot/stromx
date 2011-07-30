@@ -6,7 +6,10 @@
 
 namespace stream
 {  
-    class Id2DataMap;
+    namespace impl
+    {
+        class Id2DataMap;
+    }
     
     class Id2DataPair : public Id2DataMapper
     {
@@ -30,10 +33,10 @@ namespace stream
         const unsigned int id() const { return m_id; }
         DataContainer & data() const { return m_data; }
         
-        virtual const bool trySet(const Id2DataMap& id2DataMap) const;
-        virtual const bool tryGet(const Id2DataMap& id2DataMap) const;
-        virtual void get(Id2DataMap& id2DataMap) const; 
-        virtual void set(Id2DataMap& id2DataMap) const;     
+        virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const;
+        virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const;
+        virtual void get(impl::Id2DataMap& id2DataMap) const; 
+        virtual void set(impl::Id2DataMap& id2DataMap) const;     
     
     private:
         unsigned int m_id;
