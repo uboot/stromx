@@ -34,7 +34,7 @@ set(SOURCES
     OperatorKernel.cpp
     OperatorFactory.cpp
     OperatorNode.cpp
-    OperatorWrapper.cpp
+    SynchronizedOperatorKernel.cpp
     OutputNode.cpp
     Primitive.cpp
     Stream.cpp

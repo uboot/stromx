@@ -2,7 +2,7 @@
 
 #include "TestOperator.h"
 
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/OperatorNode.h>
 #include <stream/None.h>
 #include <stream/InputNode.h>
@@ -21,7 +21,7 @@ namespace stream
         for(unsigned int i = 0; i < 3; ++i)
         {
             m_operators.push_back(new TestOperator());
-            OperatorWrapper* wrapper = new OperatorWrapper(m_operators.back());
+            SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(m_operators.back());
             wrapper->initialize();
             
             m_operatorNodes.push_back(new OperatorNode(wrapper));
@@ -51,7 +51,7 @@ namespace stream
         }
         
         m_container = DataContainer(new stream::None);
-        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator());
+        SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(new TestOperator());
         wrapper->initialize();
         m_operatorNode = new OperatorNode(wrapper);
         m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);

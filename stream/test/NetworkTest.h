@@ -9,7 +9,7 @@
 namespace stream
 {
     class Network;
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     
     class NetworkTest : public CPPUNIT_NS :: TestFixture
     {

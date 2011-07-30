@@ -4,7 +4,7 @@
 #include <base/Image.h>
 
 #include <stream/Trigger.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Exception.h>
 #include <stream/ReadAccess.h>
 
@@ -21,7 +21,7 @@ namespace base
 {
     void TriggerTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new Trigger());
+        m_operator = new SynchronizedOperatorKernel(new Trigger());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));

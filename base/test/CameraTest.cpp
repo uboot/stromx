@@ -5,7 +5,7 @@
 
 #include <stream/DataContainer.h>
 #include <stream/Trigger.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/ReadAccess.h>
 #include <stream/Enum.h>
 
@@ -21,7 +21,7 @@ namespace base
     {
         Image image("lenna.jpg");
         
-        m_operator = new OperatorWrapper(new Camera());
+        m_operator = new SynchronizedOperatorKernel(new Camera());
         m_operator->initialize();
         m_operator->setParameter(Camera::IMAGE, image);
         m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));

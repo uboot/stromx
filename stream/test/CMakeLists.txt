@@ -23,8 +23,8 @@ set(SOURCES
     Id2DataPairTest.cpp
     ../OperatorKernel.cpp
     TestOperator.cpp
-    ../OperatorWrapper.cpp
-    OperatorWrapperTest.cpp
+    ../SynchronizedOperatorKernel.cpp
+    SynchronizedOperatorKernelTest.cpp
     ../OutputNode.cpp
     OutputNodeTest.cpp
     ../InputNode.cpp

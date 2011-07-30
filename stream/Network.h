@@ -24,7 +24,7 @@
 namespace stream
 {
     class OperatorKernel;
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class OperatorNode;
     
     class Network
@@ -44,7 +44,7 @@ namespace stream
         const Status status() { return m_status; }
         const std::vector<OperatorNode*> operators() { return m_operators; }
         
-        OperatorNode* const addOperator(OperatorWrapper* const op);
+        OperatorNode* const addOperator(SynchronizedOperatorKernel* const op);
         OperatorNode* const addOperator(OperatorKernel* const op);
         void removeOperator(OperatorNode* const op);
         OperatorNode* const getOperator(const std::string & name);

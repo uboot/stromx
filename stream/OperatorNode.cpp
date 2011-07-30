@@ -1,7 +1,7 @@
 #include "OperatorNode.h"
 
 #include "Description.h"
-#include "OperatorWrapper.h"
+#include "SynchronizedOperatorKernel.h"
 #include "OperatorInfo.h"
 #include "InputNode.h"
 #include "OutputNode.h"
@@ -9,10 +9,10 @@
 
 namespace stream
 {
-    OperatorNode::OperatorNode(OperatorWrapper*const op)
+    OperatorNode::OperatorNode(SynchronizedOperatorKernel*const op)
         : m_operator(op)
     {
-        if(op->status() != OperatorWrapper::INITIALIZED)
+        if(op->status() != SynchronizedOperatorKernel::INITIALIZED)
             throw ArgumentException("Operator must be initialized.");
             
         for(std::vector<const Description*>::const_iterator iter = op->info()->inputs().begin();

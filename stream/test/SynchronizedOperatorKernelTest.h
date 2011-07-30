@@ -8,12 +8,12 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class TestOperator;
 
-    class OperatorWrapperTest : public CPPUNIT_NS :: TestFixture
+    class SynchronizedOperatorKernelTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (OperatorWrapperTest);
+        CPPUNIT_TEST_SUITE (SynchronizedOperatorKernelTest);
         CPPUNIT_TEST (testSetInputData);
         CPPUNIT_TEST (testGetOutputData);
         CPPUNIT_TEST (testClearOutputData);
@@ -27,7 +27,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        OperatorWrapperTest() : m_operatorWrapper(0), m_testOperator(0) {}
+        SynchronizedOperatorKernelTest() : m_operatorWrapper(0), m_testOperator(0) {}
         
         void setUp();
         void tearDown();
@@ -50,7 +50,7 @@ namespace stream
         void getOutputDataWithInterrupt(const unsigned id);
         void setInputDataWithInterrupt(const unsigned int id);
         
-        OperatorWrapper* m_operatorWrapper;
+        SynchronizedOperatorKernel* m_operatorWrapper;
         TestOperator* m_testOperator;
         DataContainer m_container;
     };

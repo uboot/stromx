@@ -20,7 +20,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 
 namespace base
 {
@@ -42,7 +42,7 @@ namespace base
             void testExecute();
                 
         private:
-            stream::OperatorWrapper* m_operator;
+            stream::SynchronizedOperatorKernel* m_operator;
         };
     }
 }

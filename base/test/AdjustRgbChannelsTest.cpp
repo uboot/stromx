@@ -4,7 +4,7 @@
 #include <base/Image.h>
 
 #include <stream/DataContainer.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
 
@@ -18,7 +18,7 @@ namespace base
 {
     void AdjustRgbChannelsTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new AdjustRgbChannels());
+        m_operator = new SynchronizedOperatorKernel(new AdjustRgbChannels());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));

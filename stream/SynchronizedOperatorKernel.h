@@ -1,5 +1,5 @@
-#ifndef STREAM_OPERATORWRAPPER_H
-#define STREAM_OPERATORWRAPPER_H
+#ifndef STREAM_SYNCHRONIZEDOPERATORKERNEL_H
+#define STREAM_SYNCHRONIZEDOPERATORKERNEL_H
 
 #include "DataProvider.h"
 #include "Id2DataMap.h"
@@ -14,7 +14,7 @@ namespace stream
     class OperatorKernel;
     class Data;
     
-    class OperatorWrapper : public DataProvider
+    class SynchronizedOperatorKernel : public DataProvider
     {
     public:    
         enum Status
@@ -25,8 +25,8 @@ namespace stream
             EXECUTING
         };
         
-        OperatorWrapper(OperatorKernel* const op);
-        virtual ~OperatorWrapper();
+        SynchronizedOperatorKernel(OperatorKernel* const op);
+        virtual ~SynchronizedOperatorKernel();
         
         const OperatorInfo* const info() const { return m_op; }
         
@@ -70,4 +70,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_OPERATORWRAPPER_H
+#endif // STREAM_SYNCHRONIZEDOPERATORKERNEL_H

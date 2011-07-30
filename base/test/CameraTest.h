@@ -22,7 +22,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class DataContainer;
 }
 
@@ -46,7 +46,7 @@ namespace base
             void testExecuteInternalTrigger();
             
         private:
-            stream::OperatorWrapper* m_operator;
+            stream::SynchronizedOperatorKernel* m_operator;
     };
 }
 

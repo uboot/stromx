@@ -3,7 +3,7 @@
 #include <base/ConstImage.h>
 #include <base/Image.h>
 #include <stream/DataContainer.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/ReadAccess.h>
 
 #include <cppunit/TestAssert.h>
@@ -16,7 +16,7 @@ namespace base
 {
     void ConstImageTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new ConstImage());
+        m_operator = new SynchronizedOperatorKernel(new ConstImage());
         m_operator->initialize();
         m_operator->activate();
         

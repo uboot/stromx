@@ -24,7 +24,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
 }
 
 namespace base
@@ -45,7 +45,7 @@ namespace base
             void testExecute();
             
         private:
-            stream::OperatorWrapper* m_operator;
+            stream::SynchronizedOperatorKernel* m_operator;
     };
 }
 

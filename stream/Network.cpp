@@ -17,7 +17,7 @@
 
 #include "Network.h"
 #include "OperatorNode.h"
-#include "OperatorWrapper.h"
+#include "SynchronizedOperatorKernel.h"
 #include "Exception.h"
 
 namespace stream
@@ -68,7 +68,7 @@ namespace stream
         m_status = INACTIVE;
     }
 
-    OperatorNode*const Network::addOperator(OperatorWrapper*const op)
+    OperatorNode*const Network::addOperator(SynchronizedOperatorKernel*const op)
     {
         for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
@@ -87,7 +87,7 @@ namespace stream
     
     OperatorNode*const Network::addOperator(OperatorKernel*const op)
     {
-        OperatorWrapper* wrapper = new OperatorWrapper(op);
+        SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(op);
         wrapper->initialize();
         return addOperator(wrapper);
     }

@@ -3,7 +3,7 @@
 #include <base/ConvertPixelType.h>
 #include <base/Image.h>
 #include <stream/DataContainer.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
 
@@ -17,7 +17,7 @@ namespace base
 {
     void ConvertPixelTypeTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new ConvertPixelType());
+        m_operator = new SynchronizedOperatorKernel(new ConvertPixelType());
         m_operator->initialize();
         m_operator->activate();
         DataContainer source(new Image("lenna.jpg"));

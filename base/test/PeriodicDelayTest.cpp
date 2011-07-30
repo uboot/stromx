@@ -3,7 +3,7 @@
 #include <base/PeriodicDelay.h>
 #include <base/Image.h>
 
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Exception.h>
 #include <stream/ReadAccess.h>
 
@@ -19,7 +19,7 @@ namespace base
 {
     void PeriodicDelayTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new PeriodicDelay());
+        m_operator = new SynchronizedOperatorKernel(new PeriodicDelay());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));

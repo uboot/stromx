@@ -4,7 +4,7 @@
 
 #include <stream/Network.h>
 #include <stream/Exception.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/OperatorNode.h>
 
 #include <cppunit/TestAssert.h>
@@ -24,7 +24,7 @@ namespace stream
     void NetworkTest::testAddOperator()
     {
         OperatorKernel* op = new TestOperator();
-        OperatorWrapper* wrapper1 = new OperatorWrapper(op);
+        SynchronizedOperatorKernel* wrapper1 = new SynchronizedOperatorKernel(op);
         wrapper1->initialize();
         OperatorNode* node = 0;
         
@@ -33,7 +33,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(node, m_network->operators()[0]);
         
         // can not add the same operator again
-        OperatorWrapper* wrapper2 = new OperatorWrapper(op);
+        SynchronizedOperatorKernel* wrapper2 = new SynchronizedOperatorKernel(op);
         CPPUNIT_ASSERT_THROW(node = m_network->addOperator(wrapper2), ArgumentException);
         
         // The pointer wrapper2 should be deleted her, however this results in an error because
@@ -44,11 +44,11 @@ namespace stream
     {
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(0), ArgumentException);
         
-        OperatorWrapper* op = new OperatorWrapper(new TestOperator());
+        SynchronizedOperatorKernel* op = new SynchronizedOperatorKernel(new TestOperator());
         op->initialize();
         OperatorNode* node = m_network->addOperator(op);
         
-        OperatorWrapper* wrapper = new OperatorWrapper(new TestOperator);
+        SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(new TestOperator);
         wrapper->initialize();
         OperatorNode* testNode = new OperatorNode(wrapper);
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(testNode), ArgumentException);

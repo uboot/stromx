@@ -13,7 +13,7 @@
 #include <stream/InputNode.h>
 #include <stream/EnumParameter.h>
 #include <stream/NumericParameter.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/OperatorException.h>
 #include <stream/Trigger.h>
 

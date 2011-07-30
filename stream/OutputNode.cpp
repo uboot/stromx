@@ -1,12 +1,12 @@
 #include "OutputNode.h"
 
 #include "Exception.h"
-#include "OperatorWrapper.h"
+#include "SynchronizedOperatorKernel.h"
 #include "DataContainer.h"
 
 namespace stream
 {
-    OutputNode::OutputNode(OperatorWrapper*const op, const unsigned int outputId)
+    OutputNode::OutputNode(SynchronizedOperatorKernel*const op, const unsigned int outputId)
       : m_operator(op),
         m_outputId(outputId),
         m_remainingCopies(0)

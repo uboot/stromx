@@ -8,7 +8,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class TestOperator;
     class OperatorNode;
     class ThreadImpl;

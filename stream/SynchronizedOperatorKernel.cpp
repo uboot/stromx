@@ -1,4 +1,4 @@
-#include "OperatorWrapper.h"
+#include "SynchronizedOperatorKernel.h"
 
 #include "OperatorKernel.h"
 #include "Exception.h"
@@ -11,7 +11,7 @@
 
 namespace stream
 {
-    OperatorWrapper::OperatorWrapper(OperatorKernel* const op)
+    SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
       : m_op(op),
         m_status(NONE)
     {
@@ -19,12 +19,12 @@ namespace stream
             throw ArgumentException("Passed null pointer as operator.");
     }
     
-    OperatorWrapper::~OperatorWrapper()
+    SynchronizedOperatorKernel::~SynchronizedOperatorKernel()
     {
         delete m_op;
     }
     
-    void OperatorWrapper::testForInterrupt()
+    void SynchronizedOperatorKernel::testForInterrupt()
     {
         try
         {
@@ -36,7 +36,7 @@ namespace stream
         } 
     }
     
-    void OperatorWrapper::sleep(const unsigned int microseconds)
+    void SynchronizedOperatorKernel::sleep(const unsigned int microseconds)
     {
         try
         {
@@ -48,7 +48,7 @@ namespace stream
         } 
     }
     
-    void OperatorWrapper::initialize()
+    void SynchronizedOperatorKernel::initialize()
     {
         lock_t lock(m_mutex);
         
@@ -67,7 +67,7 @@ namespace stream
     }
     
     
-    void OperatorWrapper::activate()
+    void SynchronizedOperatorKernel::activate()
     {
         lock_t lock(m_mutex);
         
@@ -81,7 +81,7 @@ namespace stream
         m_status = ACTIVE;
     }
     
-    void OperatorWrapper::deactivate()
+    void SynchronizedOperatorKernel::deactivate()
     {
         lock_t lock(m_mutex);
         
@@ -99,7 +99,7 @@ namespace stream
         m_status = INITIALIZED;
     }
     
-    const Data& OperatorWrapper::getParameter(unsigned int id)
+    const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
     {
         lock_t lock(m_executeMutex);
         
@@ -108,7 +108,7 @@ namespace stream
         return m_op->getParameter(id);
     }
         
-    void OperatorWrapper::setParameter(unsigned int id, const Data& value)
+    void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
     {
         validateParameterId(id);
         validateWriteAccess(id);
@@ -126,12 +126,12 @@ namespace stream
         }
     }
 
-    void OperatorWrapper::receiveInputData(const Id2DataMapper& mapper)
+    void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
     {   
         BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
         
-        // This function is called from OperatorKernel::execute which again is called by OperatorWrapper::execute().
-        // OperatorWrapper::execute() lock the mutex which is unlocked here.
+        // This function is called from OperatorKernel::execute which again is called by SynchronizedOperatorKernel::execute().
+        // SynchronizedOperatorKernel::execute() lock the mutex which is unlocked here.
         m_mutex.unlock();
         
         bool interruptExceptionWasThrown = false;
@@ -163,12 +163,12 @@ namespace stream
             throw InterruptException();
     }
 
-    void OperatorWrapper::sendOutputData(const stream::Id2DataMapper& mapper)
+    void SynchronizedOperatorKernel::sendOutputData(const stream::Id2DataMapper& mapper)
     {
         BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
         
-        // This function is called from OperatorKernel::execute which again is called by OperatorWrapper::execute().
-        // OperatorWrapper::execute() lock the mutex which is unlocked here.
+        // This function is called from OperatorKernel::execute which again is called by SynchronizedOperatorKernel::execute().
+        // SynchronizedOperatorKernel::execute() lock the mutex which is unlocked here.
         m_mutex.unlock();
         
         bool interruptExceptionWasThrown = false;
@@ -200,7 +200,7 @@ namespace stream
             throw InterruptException();   
     }
     
-    DataContainer OperatorWrapper::getOutputData(const unsigned int id)
+    DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
     {
         unique_lock_t lock(m_mutex);
         
@@ -229,7 +229,7 @@ namespace stream
         return m_outputMap[id];
     }
 
-    void OperatorWrapper::setInputData(const unsigned int id, DataContainer data)
+    void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
     {
         {
             unique_lock_t lock(m_mutex);
@@ -262,7 +262,7 @@ namespace stream
         m_cond.notify_all();
     }
     
-    void OperatorWrapper::clearOutputData(unsigned int id)
+    void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
     {
         {
             lock_t lock(m_mutex);
@@ -273,7 +273,7 @@ namespace stream
         m_cond.notify_all();
     }
     
-    void OperatorWrapper::execute()
+    void SynchronizedOperatorKernel::execute()
     {
         // m_mutex is locked if this function is called
         m_status = EXECUTING;
@@ -305,7 +305,7 @@ namespace stream
         // a signal is emitted in setInputData() and getOutputData()
     }
     
-    void OperatorWrapper::waitForSignal(unique_lock_t& lock)
+    void SynchronizedOperatorKernel::waitForSignal(unique_lock_t& lock)
     {
         try
         {
@@ -317,7 +317,7 @@ namespace stream
         } 
     }
     
-    void OperatorWrapper::validateParameterId(const unsigned int id)
+    void SynchronizedOperatorKernel::validateParameterId(const unsigned int id)
     {
         bool isValid = false;
         for(std::vector<const Parameter*>::const_iterator iter = info()->parameters().begin();
@@ -335,7 +335,7 @@ namespace stream
             throw ParameterIdException(id, *this->info());
     }
     
-    void OperatorWrapper::validateReadAccess(const unsigned int id)
+    void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
     {
         const Parameter* param = info()->parameters()[id];
         
@@ -371,7 +371,7 @@ namespace stream
         }
     }
     
-    void OperatorWrapper::validateWriteAccess(const unsigned int id)
+    void SynchronizedOperatorKernel::validateWriteAccess(const unsigned int id)
     {
         const Parameter* param = info()->parameters()[id];
         
@@ -415,7 +415,7 @@ namespace stream
         }
     }
     
-    void OperatorWrapper::validateParameterType(const unsigned int id, const stream::DataType& type)
+    void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const stream::DataType& type)
     {
         const Parameter* param = info()->parameters()[id];
         if(! type.is(param->type()))

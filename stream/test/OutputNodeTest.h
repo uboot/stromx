@@ -8,7 +8,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class OutputNode;
     class InputNode;
     
@@ -32,7 +32,7 @@ namespace stream
         void testRemoveConnectedInputs();
             
     private: 
-        OperatorWrapper* m_operatorWrapper;
+        SynchronizedOperatorKernel* m_operatorWrapper;
         DataContainer m_container;
         OutputNode* m_outputNode;
         InputNode* m_inputNode;

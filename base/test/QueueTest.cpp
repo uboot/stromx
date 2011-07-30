@@ -2,7 +2,7 @@
 
 #include <base/Queue.h>
 #include <stream/DataContainer.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Primitive.h>
 
 #include <cppunit/TestAssert.h>
@@ -16,7 +16,7 @@ namespace base
 {
     void QueueTest::setUp ( void )
     {
-        m_operator = new OperatorWrapper(new Queue());
+        m_operator = new SynchronizedOperatorKernel(new Queue());
         m_operator->initialize();
         m_operator->setParameter(Queue::SIZE, UInt32(3));
         m_operator->activate();

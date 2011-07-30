@@ -3,7 +3,7 @@
 #include "TestOperator.h"
 
 #include <stream/DataContainer.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/None.h>
 #include <stream/InputNode.h>
 #include <stream/OutputNode.h>
@@ -17,10 +17,10 @@ namespace stream
 {
     void InputNodeTest::setUp()
     {
-        m_operatorWrapper = new OperatorWrapper(new TestOperator());
+        m_operatorWrapper = new SynchronizedOperatorKernel(new TestOperator());
         m_operatorWrapper->initialize();
         m_operatorWrapper->activate();
-        m_sourceOperatorWrapper = new OperatorWrapper(new TestOperator());
+        m_sourceOperatorWrapper = new SynchronizedOperatorKernel(new TestOperator());
         m_sourceOperatorWrapper->initialize();
         m_sourceOperatorWrapper->activate();
         

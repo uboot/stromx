@@ -8,7 +8,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class InputNode;
     class OutputNode;
     
@@ -37,8 +37,8 @@ namespace stream
         void testSetInputData();
             
     private: 
-        OperatorWrapper* m_operatorWrapper;
-        OperatorWrapper* m_sourceOperatorWrapper;
+        SynchronizedOperatorKernel* m_operatorWrapper;
+        SynchronizedOperatorKernel* m_sourceOperatorWrapper;
         DataContainer m_container;
         InputNode* m_inputNode;
         OutputNode* m_sourceNode;

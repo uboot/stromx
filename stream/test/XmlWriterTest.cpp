@@ -6,7 +6,7 @@
 
 #include <stream/XmlWriter.h>
 #include <stream/Network.h>
-#include <stream/OperatorWrapper.h>
+#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/OperatorNode.h>
 #include <stream/InputNode.h>
 #include <stream/ThreadImpl.h>
@@ -21,21 +21,21 @@ namespace stream
         Network* network = new Network;
         network->setName("TestNetwork");
         
-        OperatorWrapper* wrapper0 = new OperatorWrapper(new TestOperator());
+        SynchronizedOperatorKernel* wrapper0 = new SynchronizedOperatorKernel(new TestOperator());
         wrapper0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
         wrapper0->initialize();
         wrapper0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
         OperatorNode* op0 = network->addOperator(wrapper0);
         op0->setName("Number 1");
         
-        OperatorWrapper* wrapper1 = new OperatorWrapper(new TestOperator());
+        SynchronizedOperatorKernel* wrapper1 = new SynchronizedOperatorKernel(new TestOperator());
         wrapper1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
         wrapper1->initialize();
         wrapper1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
         OperatorNode* op1 = network->addOperator(wrapper1);
         op1->setName("Number 2");
         
-        OperatorWrapper* wrapper2 = new OperatorWrapper(new TestOperator());
+        SynchronizedOperatorKernel* wrapper2 = new SynchronizedOperatorKernel(new TestOperator());
         wrapper2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
         wrapper2->initialize();
         wrapper2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));

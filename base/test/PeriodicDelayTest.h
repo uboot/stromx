@@ -24,7 +24,7 @@
 
 namespace stream
 {
-    class OperatorWrapper;
+    class SynchronizedOperatorKernel;
     class DataContainer;
 }
 
@@ -50,7 +50,7 @@ namespace base
         private:
             void getOutputDataInterrupted();
             
-            stream::OperatorWrapper* m_operator;
+            stream::SynchronizedOperatorKernel* m_operator;
             stream::DataContainer m_image;
     };
 }
