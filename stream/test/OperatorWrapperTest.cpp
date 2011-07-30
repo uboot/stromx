@@ -111,10 +111,10 @@ namespace stream
     void OperatorWrapperTest::testInitialize()
     {
         OperatorWrapper* operatorWrapper = new OperatorWrapper(new TestOperator());
-        CPPUNIT_ASSERT_EQUAL(OperatorInterface::NONE, operatorWrapper->status());
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::NONE, operatorWrapper->status());
         
         CPPUNIT_ASSERT_NO_THROW(operatorWrapper->initialize());
-        CPPUNIT_ASSERT_EQUAL(OperatorInterface::INITIALIZED, operatorWrapper->status());
+        CPPUNIT_ASSERT_EQUAL(OperatorWrapper::INITIALIZED, operatorWrapper->status());
     }
     
     void OperatorWrapperTest::testActivate()

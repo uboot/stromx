@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_THREADINTERFACE_H
-#define STREAM_THREADINTERFACE_H
+#ifndef STREAM_THREAD_H
+#define STREAM_THREAD_H
 
 namespace stream
 {
@@ -44,4 +44,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_THREADINTERFACE_H
+#endif // STREAM_THREAD_H

@@ -1,5 +1,5 @@
-#ifndef STREAM_THREAD_H
-#define STREAM_THREAD_H
+#ifndef STREAM_THREADIMPL_H
+#define STREAM_THREADIMPL_H
 
 #include <vector>
 #include <string>
@@ -42,4 +42,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_THREAD_H
+#endif // STREAM_THREADIMPL_H

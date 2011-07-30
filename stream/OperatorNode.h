@@ -6,25 +6,25 @@
 
 namespace stream
 {
-    class OperatorInterface;
+    class OperatorWrapper;
     class InputNode;
     class OutputNode;
     
     class OperatorNode
     {
     public:
-        OperatorNode(OperatorInterface* const op);
+        OperatorNode(OperatorWrapper* const op);
         ~OperatorNode();
         
         const std::string & name() const { return m_name; }
         void setName(const std::string & name) { m_name = name; }
         InputNode* const getInputNode(const unsigned int id);
         OutputNode* const getOutputNode(const unsigned int id);
-        OperatorInterface* const op() { return m_operator; }
+        OperatorWrapper* const op() { return m_operator; }
         
     private:
         std::string m_name;
-        OperatorInterface* m_operator;
+        OperatorWrapper* m_operator;
         std::map<unsigned int, OutputNode*> m_outputs;
         std::map<unsigned int, InputNode*> m_inputs;
     };

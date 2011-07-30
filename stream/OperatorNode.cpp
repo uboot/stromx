@@ -1,7 +1,7 @@
 #include "OperatorNode.h"
 
 #include "Description.h"
-#include "OperatorInterface.h"
+#include "OperatorWrapper.h"
 #include "OperatorInfo.h"
 #include "InputNode.h"
 #include "OutputNode.h"
@@ -9,10 +9,10 @@
 
 namespace stream
 {
-    OperatorNode::OperatorNode(OperatorInterface*const op)
+    OperatorNode::OperatorNode(OperatorWrapper*const op)
         : m_operator(op)
     {
-        if(op->status() != OperatorInterface::INITIALIZED)
+        if(op->status() != OperatorWrapper::INITIALIZED)
             throw ArgumentException("Operator must be initialized.");
             
         for(std::vector<const Description*>::const_iterator iter = op->info()->inputs().begin();

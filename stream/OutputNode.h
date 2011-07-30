@@ -6,14 +6,14 @@
 
 namespace stream
 {
-    class OperatorInterface;
+    class OperatorWrapper;
     class DataContainer;
     class InputNode;
     
     class OutputNode
     {
     public:
-        OutputNode(OperatorInterface* const op, const unsigned int outputId);
+        OutputNode(OperatorWrapper* const op, const unsigned int outputId);
         
         DataContainer getOutputData();
         void addConnectedInput(InputNode* const input);
@@ -23,7 +23,7 @@ namespace stream
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
         
-        OperatorInterface* m_operator;
+        OperatorWrapper* m_operator;
         unsigned int m_outputId;
         std::set<InputNode*> m_connectedInputs;
         unsigned int m_remainingCopies;

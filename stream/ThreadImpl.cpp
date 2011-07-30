@@ -2,7 +2,6 @@
 
 #include "Exception.h"
 #include "InputNode.h"
-#include "OperatorInterface.h"
 #include "OperatorInfo.h"
 
 #include <boost/bind.hpp>

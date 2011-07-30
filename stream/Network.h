@@ -26,7 +26,6 @@ namespace stream
     class Operator;
     class OperatorWrapper;
     class OperatorNode;
-    class OperatorInterface;
     
     class Network
     {

@@ -16,7 +16,6 @@
 
 
 #include "Network.h"
-#include "OperatorInterface.h"
 #include "OperatorNode.h"
 #include "OperatorWrapper.h"
 #include "Exception.h"

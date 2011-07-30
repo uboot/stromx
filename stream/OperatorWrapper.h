@@ -2,7 +2,6 @@
 #define STREAM_OPERATORWRAPPER_H
 
 #include "DataProvider.h"
-#include "OperatorInterface.h"
 #include "Id2DataMap.h"
 #include "Parameter.h"
 #include "Operator.h"
@@ -15,9 +14,17 @@ namespace stream
     class Operator;
     class Data;
     
-    class OperatorWrapper : public DataProvider, public OperatorInterface
+    class OperatorWrapper : public DataProvider
     {
     public:    
+        enum Status
+        {
+            NONE,
+            INITIALIZED,
+            ACTIVE,
+            EXECUTING
+        };
+        
         OperatorWrapper(Operator* const op);
         virtual ~OperatorWrapper();
         
@@ -33,7 +40,6 @@ namespace stream
         void testForInterrupt();
         void sleep(const unsigned int microseconds);
         
-        // OperatorInterface implementation
         const Status status() { return m_status; }
         
         void setParameter(unsigned int id, const Data& value);
