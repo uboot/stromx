@@ -10,7 +10,7 @@
 namespace stream
 {
     OperatorNode::OperatorNode(SynchronizedOperatorKernel*const op)
-        : m_operator(op)
+        : m_kernel(op)
     {
         if(op->status() != SynchronizedOperatorKernel::INITIALIZED)
             throw ArgumentException("Operator must be initialized.");
@@ -52,7 +52,7 @@ namespace stream
             delete iter->second;
         }
         
-        delete m_operator;
+        delete m_kernel;
     }
     
     InputNode*const OperatorNode::getInputNode(const unsigned int id)
