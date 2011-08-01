@@ -33,6 +33,8 @@ namespace stream
     {
         friend class Network;
         friend class OperatorFactory;
+        friend class ThreadTest;
+        friend class NetworkTest;
         
     public:
         enum Status

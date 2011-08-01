@@ -1,5 +1,5 @@
-#ifndef STREAM_THREADIMPLTEST_H
-#define STREAM_THREADIMPLTEST_H
+#ifndef STREAM_THREADTEST_H
+#define STREAM_THREADTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -10,14 +10,14 @@ namespace stream
 {
     class SynchronizedOperatorKernel;
     class TestOperator;
-    class OperatorNode;
-    class ThreadImpl;
+    class Operator;
+    class Thread;
     class DataContainer;
     class InputNode;
     
-    class ThreadImplTest : public CPPUNIT_NS :: TestFixture
+    class ThreadTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (ThreadImplTest);
+        CPPUNIT_TEST_SUITE (ThreadTest);
         CPPUNIT_TEST(testStart);
         CPPUNIT_TEST(testStop);
         CPPUNIT_TEST(testJoin);
@@ -27,7 +27,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        ThreadImplTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
+        ThreadTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
         
         void setUp();
         void tearDown();
@@ -43,12 +43,12 @@ namespace stream
             
     private: 
         std::vector<TestOperator*> m_operators;
-        std::vector<OperatorNode*> m_operatorNodes;
+        std::vector<Operator*> m_operatorNodes;
         DataContainer m_container;
-        ThreadImpl* m_thread;
+        Thread* m_thread;
         InputNode* m_node;
-        OperatorNode* m_operatorNode;
+        Operator* m_operatorNode;
     };
 }
 
-#endif // STREAM_THREADIMPLTEST_H
+#endif // STREAM_THREADTEST_H

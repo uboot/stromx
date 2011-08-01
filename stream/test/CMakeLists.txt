@@ -37,9 +37,9 @@ set(SOURCES
     ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
     ../Thread.cpp
-    #ThreadImplTest.cpp
+    ThreadTest.cpp
     ../Network.cpp
-    #NetworkTest.cpp
+    NetworkTest.cpp
     ../OperatorFactory.cpp
     OperatorFactoryTest.cpp
     ../Primitive.cpp

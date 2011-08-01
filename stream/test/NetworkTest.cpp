@@ -5,7 +5,7 @@
 #include <stream/Network.h>
 #include <stream/Exception.h>
 #include <stream/SynchronizedOperatorKernel.h>
-#include <stream/OperatorNode.h>
+#include <stream/Operator.h>
 
 #include <cppunit/TestAssert.h>
 #include <boost/thread/thread.hpp>
@@ -14,7 +14,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::NetworkTest);
 
 namespace stream
 {
-    class OperatorNode;
+    class Operator;
     
     void NetworkTest::setUp()
     {
@@ -26,7 +26,7 @@ namespace stream
         OperatorKernel* op = new TestOperator();
         SynchronizedOperatorKernel* wrapper1 = new SynchronizedOperatorKernel(op);
         wrapper1->initialize();
-        OperatorNode* node = 0;
+        Operator* node = 0;
         
         CPPUNIT_ASSERT_NO_THROW(node = m_network->addOperator(wrapper1));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_network->operators().size()));
@@ -46,11 +46,11 @@ namespace stream
         
         SynchronizedOperatorKernel* op = new SynchronizedOperatorKernel(new TestOperator());
         op->initialize();
-        OperatorNode* node = m_network->addOperator(op);
+        Operator* node = m_network->addOperator(op);
         
         SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(new TestOperator);
         wrapper->initialize();
-        OperatorNode* testNode = new OperatorNode(wrapper);
+        Operator* testNode = new Operator(wrapper);
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(testNode), ArgumentException);
         delete testNode;
         

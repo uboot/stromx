@@ -31,6 +31,7 @@ namespace stream
     {    
         friend class Stream;
         friend class StreamTest;
+        friend class ThreadTest;
         
     public:
         enum Status
@@ -51,7 +52,6 @@ namespace stream
         void addNode(InputNode* const op);
         void insertNode(const unsigned int position, InputNode* const op);
         void removeNode(const unsigned int position);
-        
                
     private:
         Thread();
