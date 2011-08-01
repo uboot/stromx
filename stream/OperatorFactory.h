@@ -24,6 +24,8 @@
 
 namespace stream
 {
+    class Operator;
+    
     class OperatorFactory : public OperatorRegistry
     {
     public:
@@ -32,6 +34,7 @@ namespace stream
         virtual void registerOperator(const OperatorKernel* const op);
         
         virtual OperatorKernel* const newOperator(const std::string & package, const std::string & name) const;
+        virtual Operator* const newOperator(OperatorKernel* const kernel) const;
         
         virtual const std::vector<const OperatorKernel*> & availableOperators() const;
         

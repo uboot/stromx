@@ -33,7 +33,6 @@ set(SOURCES
     Network.cpp
     OperatorKernel.cpp
     OperatorFactory.cpp
-    OperatorNode.cpp
     SynchronizedOperatorKernel.cpp
     OutputNode.cpp
     Primitive.cpp

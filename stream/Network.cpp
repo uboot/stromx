@@ -16,7 +16,7 @@
 
 
 #include "Network.h"
-#include "OperatorNode.h"
+#include "Operator.h"
 #include "SynchronizedOperatorKernel.h"
 #include "Exception.h"
 
@@ -29,7 +29,7 @@ namespace stream
     
     Network::~Network()
     {
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
@@ -46,11 +46,11 @@ namespace stream
             throw InvalidStateException("Network already active");
         }
         
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            (*iter)->op()->activate();
+            (*iter)->kernel()->activate();
         }
         
         m_status = ACTIVE;
@@ -58,34 +58,34 @@ namespace stream
 
     void Network::deactivate()
     {
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            (*iter)->op()->deactivate();
+            (*iter)->kernel()->deactivate();
         }
         
         m_status = INACTIVE;
     }
 
-    OperatorNode*const Network::addOperator(SynchronizedOperatorKernel*const op)
+    Operator*const Network::addOperator(SynchronizedOperatorKernel*const op)
     {
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            if ((*iter)->op()->info() == static_cast<const OperatorInfo*>(op->info()))
+            if ((*iter)->kernel()->info() == static_cast<const OperatorInfo*>(op->info()))
             {
                 throw ArgumentException("Operator already exists");
             }
         }
 
-        OperatorNode* node = new OperatorNode(op);
+        Operator* node = new Operator(op);
         m_operators.push_back(node);
         return node;
     }
     
-    OperatorNode*const Network::addOperator(OperatorKernel*const op)
+    Operator*const Network::addOperator(OperatorKernel*const op)
     {
         SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(op);
         wrapper->initialize();
@@ -94,14 +94,14 @@ namespace stream
     
     
 
-    void Network::removeOperator(OperatorNode*const op)
+    void Network::removeOperator(Operator*const op)
     {
         if (op == 0)
         {
             throw ArgumentException("Invalid argument: Null pointer");
         }
 
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
@@ -115,9 +115,9 @@ namespace stream
         throw ArgumentException("Operator does not exist");
     }
     
-    OperatorNode* const Network::getOperator(const std::string & name)
+    Operator* const Network::getOperator(const std::string & name)
     {
-        for(std::vector<OperatorNode*>::iterator iter = m_operators.begin();
+        for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {

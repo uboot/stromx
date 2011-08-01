@@ -1,6 +1,8 @@
 #include "OperatorFactory.h"
+
 #include "Exception.h"
 #include "OperatorKernel.h"
+#include "Operator.h"
 
 
 namespace stream
@@ -61,4 +63,10 @@ namespace stream
         
        throw ArgumentException("Invalid argument: Operator unknown. Register first unknown operator.");        
     }
+    
+    Operator*const OperatorFactory::newOperator(stream::OperatorKernel*const kernel) const
+    {
+        return new Operator(new SynchronizedOperatorKernel(kernel));
+    }
+
 } 

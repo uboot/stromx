@@ -25,7 +25,7 @@ namespace stream
 {
     class OperatorKernel;
     class SynchronizedOperatorKernel;
-    class OperatorNode;
+    class Operator;
     
     class Network
     {
@@ -42,19 +42,19 @@ namespace stream
         const std::string & name() { return m_name; }
         void setName(const std::string name) { m_name = name; }
         const Status status() { return m_status; }
-        const std::vector<OperatorNode*> operators() { return m_operators; }
+        const std::vector<Operator*> operators() { return m_operators; }
         
-        OperatorNode* const addOperator(SynchronizedOperatorKernel* const op);
-        OperatorNode* const addOperator(OperatorKernel* const op);
-        void removeOperator(OperatorNode* const op);
-        OperatorNode* const getOperator(const std::string & name);
+        Operator* const addOperator(SynchronizedOperatorKernel* const op);
+        Operator* const addOperator(OperatorKernel* const op);
+        void removeOperator(Operator* const op);
+        Operator* const getOperator(const std::string & name);
         void activate();
         void deactivate();
                
     private:
         std::string m_name; 
         Status m_status;
-        std::vector<OperatorNode*> m_operators;
+        std::vector<Operator*> m_operators;
     };
 }
 

@@ -1,4 +1,4 @@
-#include "OperatorNode.h"
+#include "Operator.h"
 
 #include "Description.h"
 #include "SynchronizedOperatorKernel.h"
@@ -9,7 +9,7 @@
 
 namespace stream
 {
-    OperatorNode::OperatorNode(SynchronizedOperatorKernel*const op)
+    Operator::Operator(SynchronizedOperatorKernel*const op)
         : m_kernel(op)
     {
         if(op->status() != SynchronizedOperatorKernel::INITIALIZED)
@@ -36,7 +36,7 @@ namespace stream
         }
     }
 
-    OperatorNode::~OperatorNode()
+    Operator::~Operator()
     {
         for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
             iter != m_inputs.end();
@@ -55,7 +55,7 @@ namespace stream
         delete m_kernel;
     }
     
-    InputNode*const OperatorNode::getInputNode(const unsigned int id)
+    InputNode*const Operator::getInputNode(const unsigned int id)
     {
         if(! m_inputs.count(id))
             throw ArgumentException("Input with this ID does not exist.");
@@ -63,7 +63,7 @@ namespace stream
         return m_inputs[id];
     }
 
-    OutputNode*const OperatorNode::getOutputNode(const unsigned int id)
+    OutputNode*const Operator::getOutputNode(const unsigned int id)
     {
         if(! m_outputs.count(id))
             throw ArgumentException("Output with this ID does not exist.");

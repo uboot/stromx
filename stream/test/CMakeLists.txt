@@ -29,7 +29,7 @@ set(SOURCES
     OutputNodeTest.cpp
     ../InputNode.cpp
     InputNodeTest.cpp   
-    ../OperatorNode.cpp
+    ../Operator.cpp
     ../ReadAccess.cpp
     ../impl/ReadAccessImpl.cpp
     ReadAccessTest.cpp
@@ -37,9 +37,9 @@ set(SOURCES
     ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
     ../ThreadImpl.cpp
-    ThreadImplTest.cpp
+    #ThreadImplTest.cpp
     ../Network.cpp
-    NetworkTest.cpp
+    #NetworkTest.cpp
     ../OperatorFactory.cpp
     OperatorFactoryTest.cpp
     ../Primitive.cpp
@@ -62,7 +62,7 @@ if(BUILD_XML_SUPPORT)
         ../XmlReader.cpp
         XmlReaderTest.cpp
         ../XmlWriter.cpp
-        XmlWriterTest.cpp
+        #XmlWriterTest.cpp
     )
 endif()
 

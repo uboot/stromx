@@ -19,14 +19,21 @@
 
 #include "DataContainer.h"
 
+#include "SynchronizedOperatorKernel.h"
+
 namespace stream
 {
     class OperatorInfo;
     class Id2DataMapper;
     class Data;
+    class InputNode;
+    class OutputNode;
     
     class Operator
     {
+        friend class Network;
+        friend class OperatorFactory;
+        
     public:
         enum Status
         {
@@ -36,17 +43,29 @@ namespace stream
             EXECUTING
         };
         
-        virtual ~Operator() {}
+        const std::string & name() const { return m_name; }
+        void setName(const std::string & name) { m_name = name; }
         
-        virtual const OperatorInfo* const info() const = 0;
-        virtual const Status status() = 0;
+        const OperatorInfo* const info() const { return m_kernel->info(); }
+        const Status status() { return Status(m_kernel->status()); }
+        void setParameter(unsigned int id, const Data& value) { m_kernel->setParameter(id, value); }
+        const Data& getParameter(unsigned int id) { return m_kernel->getParameter(id); }
+        DataContainer getOutputData(const unsigned int id) { return m_kernel->getOutputData(id); }
+        void setInputData(const unsigned int id, DataContainer data) { m_kernel->setInputData(id, data); }
+        void clearOutputData(unsigned int id) { m_kernel->clearOutputData(id); }
         
-        virtual void setParameter(unsigned int id, const Data& value) = 0;
-        virtual const Data& getParameter(unsigned int id) = 0;
+    private:
+        Operator(SynchronizedOperatorKernel* const op);
+        ~Operator();
         
-        virtual DataContainer getOutputData(const unsigned int id) = 0;
-        virtual void setInputData(const unsigned int id, DataContainer data) = 0;
-        virtual void clearOutputData(unsigned int id) = 0;
+        InputNode* const getInputNode(const unsigned int id);
+        OutputNode* const getOutputNode(const unsigned int id);
+        SynchronizedOperatorKernel* const kernel() { return m_kernel; }
+        
+        std::string m_name;
+        SynchronizedOperatorKernel* m_kernel;
+        std::map<unsigned int, OutputNode*> m_outputs;
+        std::map<unsigned int, InputNode*> m_inputs;
     };
 }
 
