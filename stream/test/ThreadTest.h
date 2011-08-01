@@ -42,7 +42,7 @@ namespace stream
         void testJoin();
             
     private: 
-        std::vector<TestOperator*> m_operators;
+        std::vector<TestOperator*> m_kernels;
         std::vector<Operator*> m_operatorNodes;
         DataContainer m_container;
         Thread* m_thread;

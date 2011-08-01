@@ -66,7 +66,7 @@ namespace stream
     
     Operator*const OperatorFactory::newOperator(stream::OperatorKernel*const kernel) const
     {
-        return new Operator(new SynchronizedOperatorKernel(kernel));
+        return new Operator(kernel);
     }
 
 } 

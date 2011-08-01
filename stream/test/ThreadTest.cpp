@@ -20,12 +20,14 @@ namespace stream
     {
         for(unsigned int i = 0; i < 3; ++i)
         {
-            m_operators.push_back(new TestOperator());
-            SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(m_operators.back());
-            wrapper->initialize();
+            TestOperator* kernel = new TestOperator();
+            m_kernels.push_back(kernel);
             
-            m_operatorNodes.push_back(new Operator(wrapper));
-            wrapper->activate();
+            Operator* op = new Operator(kernel);
+            op->initialize();
+            op->activate();
+            
+            m_operatorNodes.push_back(op);
         }
         
         for(unsigned int i = 0; i < 2; ++i)
@@ -51,9 +53,9 @@ namespace stream
         }
         
         m_container = DataContainer(new stream::None);
-        SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(new TestOperator());
-        wrapper->initialize();
-        m_operatorNode = new Operator(wrapper);
+        
+        m_operatorNode = new Operator(new TestOperator());
+        m_operatorNode->initialize();
         m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);
     }
     
@@ -101,8 +103,8 @@ namespace stream
         data = m_operatorNodes[2]->kernel()->getOutputData(TestOperator::OUTPUT_2);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
-        for(std::vector<TestOperator*>::const_iterator iter = m_operators.begin();
-            iter != m_operators.end();
+        for(std::vector<TestOperator*>::const_iterator iter = m_kernels.begin();
+            iter != m_kernels.end();
             ++iter)
         {
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (*iter)->numExecutes());

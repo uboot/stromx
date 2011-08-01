@@ -9,32 +9,9 @@
 
 namespace stream
 {
-    Operator::Operator(SynchronizedOperatorKernel*const op)
-        : m_kernel(op)
-    {
-        if(op->status() != SynchronizedOperatorKernel::INITIALIZED)
-            throw ArgumentException("Operator must be initialized.");
-            
-        for(std::vector<const Description*>::const_iterator iter = op->info()->inputs().begin();
-            iter != op->info()->inputs().end();
-            ++iter)
-        {
-            if(m_inputs.count((*iter)->id()))
-                throw ArgumentException("Two inputs with the same ID.");
-            
-            m_inputs[(*iter)->id()] = new InputNode(op, (*iter)->id());
-        }
-        
-        for(std::vector<const Description*>::const_iterator iter = op->info()->outputs().begin();
-            iter != op->info()->outputs().end();
-            ++iter)
-        {
-            if(m_outputs.count((*iter)->id()))
-                throw ArgumentException("Two outputs with the same ID.");
-            
-            m_outputs[(*iter)->id()] = new OutputNode(op, (*iter)->id());
-        }
-    }
+    Operator::Operator(OperatorKernel*const kernel)
+        : m_kernel(new SynchronizedOperatorKernel(kernel))
+    {}
 
     Operator::~Operator()
     {
@@ -53,6 +30,31 @@ namespace stream
         }
         
         delete m_kernel;
+    }
+    
+    void Operator::initialize()
+    {
+        m_kernel->initialize();
+        
+        for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
+            iter != m_kernel->info()->inputs().end();
+            ++iter)
+        {
+            if(m_inputs.count((*iter)->id()))
+                throw ArgumentException("Two inputs with the same ID.");
+            
+            m_inputs[(*iter)->id()] = new InputNode(m_kernel, (*iter)->id());
+        }
+        
+        for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->outputs().begin();
+            iter != m_kernel->info()->outputs().end();
+            ++iter)
+        {
+            if(m_outputs.count((*iter)->id()))
+                throw ArgumentException("Two outputs with the same ID.");
+            
+            m_outputs[(*iter)->id()] = new OutputNode(m_kernel, (*iter)->id());
+        }
     }
     
     InputNode*const Operator::getInputNode(const unsigned int id)

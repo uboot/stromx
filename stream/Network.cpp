@@ -67,14 +67,14 @@ namespace stream
         
         m_status = INACTIVE;
     }
-
-    Operator*const Network::addOperator(SynchronizedOperatorKernel*const op)
+    
+    Operator*const Network::addOperator(OperatorKernel*const op)
     {
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            if ((*iter)->kernel()->info() == static_cast<const OperatorInfo*>(op->info()))
+            if ((*iter)->kernel()->info() == static_cast<const OperatorInfo*>(op))
             {
                 throw ArgumentException("Operator already exists");
             }
@@ -85,15 +85,6 @@ namespace stream
         return node;
     }
     
-    Operator*const Network::addOperator(OperatorKernel*const op)
-    {
-        SynchronizedOperatorKernel* wrapper = new SynchronizedOperatorKernel(op);
-        wrapper->initialize();
-        return addOperator(wrapper);
-    }
-    
-    
-
     void Network::removeOperator(Operator*const op)
     {
         if (op == 0)

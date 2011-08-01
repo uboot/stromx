@@ -24,6 +24,7 @@
 namespace stream
 {
     class OperatorInfo;
+    class OperatorKernel;
     class Id2DataMapper;
     class Data;
     class InputNode;
@@ -55,14 +56,18 @@ namespace stream
         DataContainer getOutputData(const unsigned int id) { return m_kernel->getOutputData(id); }
         void setInputData(const unsigned int id, DataContainer data) { m_kernel->setInputData(id, data); }
         void clearOutputData(unsigned int id) { m_kernel->clearOutputData(id); }
+        void initialize();
+        
         
     private:
-        Operator(SynchronizedOperatorKernel* const op);
+        Operator(OperatorKernel* const kernel);
         ~Operator();
         
         InputNode* const getInputNode(const unsigned int id);
         OutputNode* const getOutputNode(const unsigned int id);
         SynchronizedOperatorKernel* const kernel() { return m_kernel; }
+        void activate(){ m_kernel->activate(); }
+        void deactivate(){ m_kernel->deactivate(); }
         
         std::string m_name;
         SynchronizedOperatorKernel* m_kernel;

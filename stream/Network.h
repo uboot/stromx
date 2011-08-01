@@ -44,7 +44,6 @@ namespace stream
         const Status status() { return m_status; }
         const std::vector<Operator*> operators() { return m_operators; }
         
-        Operator* const addOperator(SynchronizedOperatorKernel* const op);
         Operator* const addOperator(OperatorKernel* const op);
         void removeOperator(Operator* const op);
         Operator* const getOperator(const std::string & name);
