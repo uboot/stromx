@@ -26,7 +26,6 @@ namespace stream
 {
     class Stream;
     class Network;
-    class ThreadImpl;
     
     class StreamTest : public CPPUNIT_NS :: TestFixture
     {

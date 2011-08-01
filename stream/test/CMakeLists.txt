@@ -36,7 +36,7 @@ set(SOURCES
     ../RecycleAccess.cpp
     ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
-    ../ThreadImpl.cpp
+    ../Thread.cpp
     #ThreadImplTest.cpp
     ../Network.cpp
     #NetworkTest.cpp

@@ -37,7 +37,7 @@ set(SOURCES
     OutputNode.cpp
     Primitive.cpp
     Stream.cpp
-    ThreadImpl.cpp
+    Thread.cpp
     Try.cpp
 )
 

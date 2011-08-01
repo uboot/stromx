@@ -15,7 +15,8 @@
 */
 
 #include "Stream.h"
-#include "ThreadImpl.h"
+
+#include "Thread.h"
 #include "Exception.h"
 #include "Network.h"
 
@@ -34,7 +35,7 @@ namespace stream
     
     Stream::~Stream()
     {
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter) 
         {
@@ -57,7 +58,7 @@ namespace stream
         }
        
         m_network->activate();
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
@@ -75,7 +76,7 @@ namespace stream
         }
         
         m_status = DEACTIVATING;
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
@@ -90,7 +91,7 @@ namespace stream
             throw WrongState("Stream object not active. Can't use stop().");
         }
         
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
@@ -102,14 +103,14 @@ namespace stream
         m_status = INACTIVE;
     }
     
-    void Stream::addThread(ThreadImpl* const thr)
+    void Stream::addThread(Thread* const thr)
     {
         if (thr == 0)
         {
             throw ArgumentException("Invalid argument: Null pointer");
         }
         
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
@@ -122,14 +123,14 @@ namespace stream
         m_threads.push_back(thr);
     }
     
-    void Stream::removeThread(ThreadImpl* const thr)
+    void Stream::removeThread(Thread* const thr)
     {
         if (thr == 0)
         {
             throw ArgumentException("Invalid argument: Null pointer");
         }
         
-        for (std::vector<ThreadImpl*>::iterator iter = m_threads.begin();
+        for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
@@ -143,7 +144,7 @@ namespace stream
         throw ArgumentException("Thread does not exists");
     }
     
-    const std::vector<ThreadImpl*> & Stream::threads()
+    const std::vector<Thread*> & Stream::threads()
     {
         return m_threads;
     }

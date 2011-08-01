@@ -21,7 +21,7 @@
 
 namespace stream
 {
-    class ThreadImpl;
+    class Thread;
     class Network;
     
     class Stream
@@ -40,14 +40,14 @@ namespace stream
         void start();
         void join();
         void stop();
-        void addThread(ThreadImpl* const thr);
-        void removeThread(ThreadImpl* const thr);
-        const std::vector<ThreadImpl*> & threads();
+        void addThread(Thread* const thr);
+        void removeThread(Thread* const thr);
+        const std::vector<Thread*> & threads();
         const Status status();
         
     private:
         Network* const m_network;
-        std::vector<ThreadImpl*> m_threads;
+        std::vector<Thread*> m_threads;
         Status m_status;
     };
 }

@@ -17,12 +17,21 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
+#include <vector>
+#include <string>
+
+#include <boost/thread/mutex.hpp>
+#include <boost/thread.hpp>
+
 namespace stream
 {
     class InputNode;
     
     class Thread
-    {      
+    {    
+        friend class Stream;
+        friend class StreamTest;
+        
     public:
         enum Status
         {
@@ -31,16 +40,31 @@ namespace stream
             DEACTIVATING,
         };
         
-        virtual ~Thread() {}
-        virtual const Status status() const = 0;
+        ~Thread();
         
-        virtual const std::string & name() const = 0;
-        virtual void setName(const std::string& name) = 0;
-        virtual const std::vector<InputNode*> & nodeSequence() const = 0;
+        const Status status() const { return m_status; }
         
-        virtual void addNode(InputNode* const op) = 0;
-        virtual void insertNode(const unsigned int position, InputNode* const op) = 0;
-        virtual void removeNode(const unsigned int position) = 0;
+        const std::string & name() const { return m_name; }
+        void setName(const std::string& name) { m_name = name; }
+        const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
+        
+        void addNode(InputNode* const op);
+        void insertNode(const unsigned int position, InputNode* const op);
+        void removeNode(const unsigned int position);
+        
+               
+    private:
+        Thread();
+        void loop();
+        
+        void start();
+        void stop();
+        void join();
+        
+        Status m_status;
+        boost::thread* m_thread;
+        std::vector<InputNode*> m_nodeSequence;
+        std::string m_name;
     };
 }
 

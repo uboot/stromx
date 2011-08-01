@@ -15,9 +15,10 @@
 */
 
 #include "StreamTest.h"
+
 #include <stream/Network.h>
 #include <stream/Stream.h>
-#include <stream/ThreadImpl.h>
+#include <stream/Thread.h>
 
 #include <cppunit/TestAssert.h> 
 #include <stream/Exception.h>
@@ -46,7 +47,7 @@ namespace stream
     {
         CPPUNIT_ASSERT_THROW(m_stream->addThread(0),ArgumentException);
         
-        ThreadImpl* const thr = new ThreadImpl();
+        Thread* const thr = new Thread();
         CPPUNIT_ASSERT_NO_THROW(m_stream->addThread(thr));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
         CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[0]);
@@ -58,8 +59,8 @@ namespace stream
     {
         CPPUNIT_ASSERT_THROW(m_stream->removeThread(0),ArgumentException);
         
-        ThreadImpl* const thr1 = new ThreadImpl();
-        ThreadImpl* const thr2 = new ThreadImpl();
+        Thread* const thr1 = new Thread();
+        Thread* const thr2 = new Thread();
         m_stream->addThread(thr1);
        
         CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr2),ArgumentException);
