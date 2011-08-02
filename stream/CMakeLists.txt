@@ -38,6 +38,7 @@ set(SOURCES
     Primitive.cpp
     Stream.cpp
     Thread.cpp
+    ThreadImpl.cpp
     Try.cpp
 )
 

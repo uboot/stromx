@@ -17,21 +17,16 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
-#include <vector>
-#include <string>
+#include "ThreadImpl.h"
 
-#include <boost/thread/mutex.hpp>
-#include <boost/thread.hpp>
+#include "Network.h"
+#include "Node.h"
 
 namespace stream
 {
-    class InputNode;
-    
     class Thread
     {    
         friend class Stream;
-        friend class StreamTest;
-        friend class ThreadTest;
         
     public:
         enum Status
@@ -41,30 +36,27 @@ namespace stream
             DEACTIVATING,
         };
         
-        ~Thread();
-        
-        const Status status() const { return m_status; }
+        const Status status() const { return Status(m_thread.status()); }
         
         const std::string & name() const { return m_name; }
         void setName(const std::string& name) { m_name = name; }
-        const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
+        const std::vector<Node> & nodeSequence() const { return m_nodeSequence; }
         
-        void addNode(InputNode* const op);
-        void insertNode(const unsigned int position, InputNode* const op);
-        void removeNode(const unsigned int position);
+        void addNode(const Node & node);
+        void insertNode(const unsigned int position, const Node & node);
+        void removeNode(const Node & node);
                
     private:
-        Thread();
-        void loop();
+        Thread(const Network* const network);
         
-        void start();
-        void stop();
-        void join();
+        void start() { m_thread.start(); }
+        void stop() { m_thread.stop(); }
+        void join() { m_thread.join(); }
         
-        Status m_status;
-        boost::thread* m_thread;
-        std::vector<InputNode*> m_nodeSequence;
+        ThreadImpl m_thread;
         std::string m_name;
+        const Network* m_network;
+        std::vector<Node> m_nodeSequence;
     };
 }
 

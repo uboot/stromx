@@ -34,7 +34,7 @@ namespace stream
     {
         friend class Network;
         friend class OperatorFactory;
-        friend class ThreadTest;
+        friend class ThreadImplTest;
         friend class NetworkTest;
         
     public:
