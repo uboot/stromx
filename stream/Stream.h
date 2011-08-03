@@ -18,11 +18,14 @@
 #define STREAM_STREAM_H
 
 #include <vector> 
+#include <string>
+#include "Network.h"
 
 namespace stream
 {
     class Thread;
     class Network;
+    class Operator;
     
     class Stream
     {
@@ -34,18 +37,28 @@ namespace stream
             DEACTIVATING,
         };
         
-        Stream(Network* const m_network);
+        Stream();
         ~Stream();
-        Network* const network() const;
-        void start();
-        void join();
-        void stop();
-        void addThread(Thread* const thr);
+        const std::string & name() { return m_name; }
+        void setName(const std::string name) { m_name = name; }
+        
+        void addOperator(Operator* const op) { m_network->addOperator(op); }
+        
+        const std::vector<Operator*> operators() const { return m_network->operators(); }
+        void connect(const Node & target, const Node & source);
+        void disconnect(const Node & target);
+        
+        Thread* const addThread();
         void removeThread(Thread* const thr);
         const std::vector<Thread*> & threads();
         const Status status();
         
+        void start();
+        void join();
+        void stop();
+        
     private:
+        std::string m_name; 
         Network* const m_network;
         std::vector<Thread*> m_threads;
         Status m_status;

@@ -43,8 +43,8 @@ namespace stream
         
         for(unsigned int i = 1; i < 3; ++i)
         {
-            for(std::vector<const Description*>::const_iterator input = m_operatorNodes[i]->kernel()->info()->inputs().begin();
-                input != m_operatorNodes[i]->kernel()->info()->inputs().end();
+            for(std::vector<const Description*>::const_iterator input = m_operatorNodes[i]->info()->inputs().begin();
+                input != m_operatorNodes[i]->info()->inputs().end();
                 ++input)
             {
                 InputNode* inputNode = m_operatorNodes[i]->getInputNode((*input)->id());
@@ -92,15 +92,15 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_thread->start());
         CPPUNIT_ASSERT_THROW(m_thread->start(), WrongState);
         
-        m_operatorNodes[0]->kernel()->setInputData(TestOperator::INPUT_1, m_container);
-        m_operatorNodes[0]->kernel()->setInputData(TestOperator::INPUT_2, m_container);
+        m_operatorNodes[0]->setInputData(TestOperator::INPUT_1, m_container);
+        m_operatorNodes[0]->setInputData(TestOperator::INPUT_2, m_container);
         
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         
-        DataContainer data = m_operatorNodes[2]->kernel()->getOutputData(TestOperator::OUTPUT_1);
+        DataContainer data = m_operatorNodes[2]->getOutputData(TestOperator::OUTPUT_1);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
-        data = m_operatorNodes[2]->kernel()->getOutputData(TestOperator::OUTPUT_2);
+        data = m_operatorNodes[2]->getOutputData(TestOperator::OUTPUT_2);
         CPPUNIT_ASSERT_EQUAL(m_container, data);
         
         for(std::vector<TestOperator*>::const_iterator iter = m_kernels.begin();

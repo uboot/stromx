@@ -22,10 +22,15 @@
 
 namespace stream
 {
+    class Network;
+    class Thread;
+    
     class ThreadTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ThreadTest);
-        CPPUNIT_TEST(test);
+        CPPUNIT_TEST(testAddOperator);
+        CPPUNIT_TEST(testInsertOperator);
+        CPPUNIT_TEST(testRemoveOperator);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -33,11 +38,16 @@ namespace stream
         
         void setUp();
         void tearDown();
+        
 
     protected:
-        void test();
+        void testAddOperator();
+        void testInsertOperator();
+        void testRemoveOperator();
             
     private:
+        Network* m_network;
+        Thread* m_thread;
     };
 }
 

@@ -23,17 +23,22 @@ namespace stream
 
     void NetworkTest::testAddOperator()
     {
-        OperatorKernel* op = new TestOperator();
-        Operator* node = 0;
+        OperatorKernel* kernel = new TestOperator();
+        Operator* op1 = new Operator(kernel);
         
-        CPPUNIT_ASSERT_NO_THROW(node = m_network->addOperator(op));
+        // add an unitialized operator should throw an exception
+        CPPUNIT_ASSERT_THROW(m_network->addOperator(op1), ArgumentException);
+        
+        op1->initialize();
+        CPPUNIT_ASSERT_NO_THROW(m_network->addOperator(op1));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_network->operators().size()));
-        CPPUNIT_ASSERT_EQUAL(node, m_network->operators()[0]);
+        CPPUNIT_ASSERT_EQUAL(op1, m_network->operators()[0]);
         
         // can not add the same operator again
-        CPPUNIT_ASSERT_THROW(node = m_network->addOperator(op), ArgumentException);
+        Operator* op2 = new Operator(kernel);
+        CPPUNIT_ASSERT_THROW(m_network->addOperator(op2), ArgumentException);
         
-        // The pointer wrapper2 should be deleted her, however this results in an error because
+        // The pointer op2 should be deleted her, however this results in an error because
         // op has already been deleted. In other words this is deliberate memory leak.
     }
     
@@ -41,14 +46,15 @@ namespace stream
     {
         CPPUNIT_ASSERT_THROW(m_network->removeOperator(0), ArgumentException);
         
-        OperatorKernel* op = new TestOperator();
-        Operator* node = m_network->addOperator(op);
+        Operator* op = new Operator(new TestOperator());
+        op->initialize();
+        m_network->addOperator(op);
         
-        Operator* testNode = new Operator(new TestOperator());
-        CPPUNIT_ASSERT_THROW(m_network->removeOperator(testNode), ArgumentException);
-        delete testNode;
+        Operator* testOp = new Operator(new TestOperator());
+        CPPUNIT_ASSERT_THROW(m_network->removeOperator(testOp), ArgumentException);
+        delete testOp;
         
-        CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(node));
+        CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_network->operators().size()));
     }
 

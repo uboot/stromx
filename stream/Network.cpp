@@ -19,6 +19,7 @@
 #include "Operator.h"
 #include "SynchronizedOperatorKernel.h"
 #include "Exception.h"
+#include "Node.h"
 
 namespace stream
 {
@@ -50,7 +51,7 @@ namespace stream
             iter != m_operators.end();
             ++iter)
         {
-            (*iter)->kernel()->activate();
+            (*iter)->activate();
         }
         
         m_status = ACTIVE;
@@ -62,27 +63,28 @@ namespace stream
             iter != m_operators.end();
             ++iter)
         {
-            (*iter)->kernel()->deactivate();
+            (*iter)->deactivate();
         }
         
         m_status = INACTIVE;
     }
     
-    Operator*const Network::addOperator(OperatorKernel*const op)
+    void Network::addOperator(Operator* const op)
     {
+        if(op->status() != Operator::INITIALIZED)
+            throw ArgumentException("Operator must be initialized.");
+        
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            if ((*iter)->kernel()->info() == static_cast<const OperatorInfo*>(op))
+            if ((*iter)->info() == op->info())
             {
                 throw ArgumentException("Operator already exists");
             }
         }
 
-        Operator* node = new Operator(op);
-        m_operators.push_back(node);
-        return node;
+        m_operators.push_back(op);
     }
     
     void Network::removeOperator(Operator*const op)
@@ -119,5 +121,27 @@ namespace stream
         }  
         
         throw InvalidStateException("Operator does not exist");
+    }
+    
+    InputNode* Network::getInputNode(const Node & node) const
+    {
+        std::vector<Operator*>::const_iterator iter = 
+            std::find(m_operators.begin(), m_operators.end(), node.op());
+        
+        if(iter == m_operators.end())
+            throw ArgumentException("Operator is not part of the stream.");
+        
+        return (*iter)->getInputNode(node.id());
+    }
+    
+    OutputNode* Network::getOutputNode(const Node & node) const
+    {
+        std::vector<Operator*>::const_iterator iter = 
+            std::find(m_operators.begin(), m_operators.end(), node.op());
+        
+        if(iter == m_operators.end())
+            throw ArgumentException("Operator is not part of the stream.");
+        
+        return (*iter)->getOutputNode(node.id());
     }
 }

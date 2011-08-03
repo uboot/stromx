@@ -5,11 +5,10 @@
 #include <cppunit/TestAssert.h>
 
 #include <stream/XmlWriter.h>
-#include <stream/Network.h>
-#include <stream/SynchronizedOperatorKernel.h>
-#include <stream/OperatorNode.h>
-#include <stream/InputNode.h>
-#include <stream/ThreadImpl.h>
+#include <stream/OperatorFactory.h>
+#include <stream/Operator.h>
+#include <stream/Node.h>
+#include <stream/Thread.h>
 #include <stream/Stream.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::XmlWriterTest);
@@ -18,46 +17,43 @@ namespace stream
 {
     void XmlWriterTest::setUp()
     {
-        Network* network = new Network;
-        network->setName("TestNetwork");
+        Stream* stream = new Stream;
+        stream->setName("TestStream");
         
-        SynchronizedOperatorKernel* wrapper0 = new SynchronizedOperatorKernel(new TestOperator());
-        wrapper0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
-        wrapper0->initialize();
-        wrapper0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
-        OperatorNode* op0 = network->addOperator(wrapper0);
+        Operator* op0 = OperatorFactory::newOperator(new TestOperator);
+        op0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
+        op0->initialize();
+        op0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
         op0->setName("Number 1");
+        stream->addOperator(op0);
         
-        SynchronizedOperatorKernel* wrapper1 = new SynchronizedOperatorKernel(new TestOperator());
-        wrapper1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
-        wrapper1->initialize();
-        wrapper1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
-        OperatorNode* op1 = network->addOperator(wrapper1);
+        Operator* op1 = OperatorFactory::newOperator(new TestOperator);
+        op1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
+        op1->initialize();
+        op1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
         op1->setName("Number 2");
+        stream->addOperator(op1);
         
-        SynchronizedOperatorKernel* wrapper2 = new SynchronizedOperatorKernel(new TestOperator());
-        wrapper2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
-        wrapper2->initialize();
-        wrapper2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
-        OperatorNode* op2 = network->addOperator(wrapper2);
+        Operator* op2 = OperatorFactory::newOperator(new TestOperator);
+        op2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
+        op2->initialize();
+        op2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
         op2->setName("Number 3");
+        stream->addOperator(op2);
         
-        op1->getInputNode(TestOperator::INPUT_1)->connect(op0->getOutputNode(TestOperator::OUTPUT_1));
-        op1->getInputNode(TestOperator::INPUT_2)->connect(op0->getOutputNode(TestOperator::OUTPUT_2));
+        stream->connect(Node(op1, TestOperator::INPUT_1), Node(op0, TestOperator::OUTPUT_1));
+        stream->connect(Node(op1, TestOperator::INPUT_2), Node(op0, TestOperator::OUTPUT_2));
         
-        op2->getInputNode(TestOperator::INPUT_1)->connect(op1->getOutputNode(TestOperator::OUTPUT_1));
-        op2->getInputNode(TestOperator::INPUT_2)->connect(op1->getOutputNode(TestOperator::OUTPUT_2));
+        stream->connect(Node(op2, TestOperator::INPUT_1), Node(op1, TestOperator::OUTPUT_1));
+        stream->connect(Node(op2, TestOperator::INPUT_2), Node(op1, TestOperator::OUTPUT_2));
         
-        ThreadImpl* thread = new ThreadImpl();
+        Thread* thread = stream->addThread();
         thread->setName("Processing thread");
         
-        thread->addNode(op1->getInputNode(TestOperator::INPUT_1));
-        thread->addNode(op1->getInputNode(TestOperator::INPUT_2));
-        thread->addNode(op2->getInputNode(TestOperator::INPUT_1));
-        thread->addNode(op2->getInputNode(TestOperator::INPUT_2));
-        
-        m_stream = new Stream(network);
-        m_stream->addThread(thread);
+        thread->addNode(Node(op1, TestOperator::INPUT_1));
+        thread->addNode(Node(op1, TestOperator::INPUT_2));
+        thread->addNode(Node(op2, TestOperator::INPUT_1));
+        thread->addNode(Node(op2, TestOperator::INPUT_2));
     }
     
     void XmlWriterTest::testWrite()

@@ -29,18 +29,12 @@ namespace stream
 {
     void StreamTest::setUp()
     {
-        m_network = new Network();
-        m_stream = new Stream(m_network);
+        m_stream = new Stream();
     }
 
     void StreamTest::tearDown()
     {
         delete m_stream;
-    }
-
-    void StreamTest::testInit()
-    {
-        CPPUNIT_ASSERT_THROW(new Stream(0),ArgumentException);
     }
     
     void StreamTest::testAddThread()

@@ -44,7 +44,7 @@ namespace stream
         
         void addNode(const Node & node);
         void insertNode(const unsigned int position, const Node & node);
-        void removeNode(const Node & node);
+        void removeNode(const unsigned int position);
                
     private:
         Thread(const Network* const network);

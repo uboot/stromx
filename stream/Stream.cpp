@@ -19,11 +19,12 @@
 #include "Thread.h"
 #include "Exception.h"
 #include "Network.h"
+#include "InputNode.h"
 
 namespace stream
 {
-    Stream::Stream(Network* const network)
-      : m_network(network),
+    Stream::Stream()
+      : m_network(new Network()),
         m_threads(0),
         m_status(INACTIVE)
     {
@@ -43,11 +44,6 @@ namespace stream
         }
         
         delete m_network;
-    }
-    
-    Network* const Stream::network() const
-    {
-        return m_network;
     }
     
     void Stream::start()
@@ -103,24 +99,13 @@ namespace stream
         m_status = INACTIVE;
     }
     
-    void Stream::addThread(Thread* const thr)
+    Thread* const Stream::addThread()
     {
-        if (thr == 0)
-        {
-            throw ArgumentException("Invalid argument: Null pointer");
-        }
+        Thread* thread = new Thread(m_network);
         
-        for (std::vector<Thread*>::iterator iter = m_threads.begin();
-            iter != m_threads.end();
-            ++iter)
-        {
-            if ((*iter) == thr)
-            {
-                throw ArgumentException("Thread already exists");
-            }
-        }
+        m_threads.push_back(thread);
         
-        m_threads.push_back(thr);
+        return thread;
     }
     
     void Stream::removeThread(Thread* const thr)
@@ -153,6 +138,14 @@ namespace stream
     {
         return m_status;
     }
-
     
+    void Stream::connect(const stream::Node& target, const stream::Node& source)
+    {
+        m_network->getInputNode(target)->connect(m_network->getOutputNode(source));
+    }
+
+    void Stream::disconnect(const stream::Node& target)
+    {
+        m_network->getInputNode(target)->disconnect();
+    } 
 }

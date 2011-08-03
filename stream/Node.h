@@ -27,8 +27,8 @@ namespace stream
         Node(Operator* const op, const unsigned int id) : m_op(op), m_id(id)
         {}
         
-        Operator* const op() { return m_op; }
-        const unsigned int id() { return m_id; }
+        Operator* const op() const { return m_op; }
+        const unsigned int id() const { return m_id; }
         
     private:
         Operator* m_op;

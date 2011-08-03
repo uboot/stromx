@@ -38,6 +38,8 @@ set(SOURCES
     RecycleAccessTest.cpp
     ../ThreadImpl.cpp
     ThreadImplTest.cpp
+    ../Thread.cpp
+    ThreadTest.cpp
     ../Network.cpp
     NetworkTest.cpp
     ../OperatorFactory.cpp
@@ -62,7 +64,7 @@ if(BUILD_XML_SUPPORT)
         ../XmlReader.cpp
         XmlReaderTest.cpp
         ../XmlWriter.cpp
-        #XmlWriterTest.cpp
+        XmlWriterTest.cpp
     )
 endif()
 

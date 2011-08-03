@@ -16,4 +16,7 @@ namespace @PACKAGE@
     {
     }
 
+    void @CLASS@Test::test()
+    {
+    }
 }

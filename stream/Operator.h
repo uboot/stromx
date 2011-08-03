@@ -34,6 +34,8 @@ namespace stream
     {
         friend class Network;
         friend class OperatorFactory;
+        friend class Thread;
+        friend class ThreadTest;
         friend class ThreadImplTest;
         friend class NetworkTest;
         
@@ -58,14 +60,12 @@ namespace stream
         void clearOutputData(unsigned int id) { m_kernel->clearOutputData(id); }
         void initialize();
         
-        
     private:
         Operator(OperatorKernel* const kernel);
         ~Operator();
         
         InputNode* const getInputNode(const unsigned int id);
         OutputNode* const getOutputNode(const unsigned int id);
-        SynchronizedOperatorKernel* const kernel() { return m_kernel; }
         void activate(){ m_kernel->activate(); }
         void deactivate(){ m_kernel->deactivate(); }
         
