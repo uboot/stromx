@@ -31,6 +31,7 @@ set(SOURCES
     ImageWrapper.cpp
     InputNode.cpp
     Network.cpp
+    Operator.cpp
     OperatorKernel.cpp
     OperatorFactory.cpp
     SynchronizedOperatorKernel.cpp

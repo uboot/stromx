@@ -19,12 +19,12 @@
 
 #include <vector> 
 #include <string>
+
 #include "Network.h"
 
 namespace stream
 {
     class Thread;
-    class Network;
     class Operator;
     
     class Stream
@@ -45,8 +45,9 @@ namespace stream
         void addOperator(Operator* const op) { m_network->addOperator(op); }
         
         const std::vector<Operator*> operators() const { return m_network->operators(); }
-        void connect(const Node & target, const Node & source);
-        void disconnect(const Node & target);
+        void connect(Operator* const targetOp, const unsigned int inputId, 
+                     Operator* const sourceOp, const unsigned int outputId);
+        void disconnect(Operator* const targetOp, const unsigned int inputId);
         
         Thread* const addThread();
         void removeThread(Thread* const thr);

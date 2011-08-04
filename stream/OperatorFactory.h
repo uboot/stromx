@@ -37,8 +37,6 @@ namespace stream
         
         virtual const std::vector<const OperatorKernel*> & availableOperators() const;
         
-        static Operator* const newOperator(OperatorKernel* const kernel);
-        
     private:
         std::vector<const OperatorKernel*> m_operators;
     };

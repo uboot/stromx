@@ -23,10 +23,7 @@
 
 namespace stream
 {
-    class OperatorKernel;
-    class SynchronizedOperatorKernel;
     class Operator;
-    class Node;
     class InputNode;
     class OutputNode;
     
@@ -50,8 +47,8 @@ namespace stream
         Operator* const getOperator(const std::string & name);
         void activate();
         void deactivate();
-        InputNode* getInputNode(const Node & node) const;
-        OutputNode* getOutputNode(const Node & node) const;
+        InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
+        OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
                
     private:
         

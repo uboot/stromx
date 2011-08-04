@@ -42,8 +42,8 @@ namespace stream
         void setName(const std::string& name) { m_name = name; }
         const std::vector<Node> & nodeSequence() const { return m_nodeSequence; }
         
-        void addNode(const Node & node);
-        void insertNode(const unsigned int position, const Node & node);
+        void addNode(Operator* const op, const unsigned int inputId);
+        void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
         void removeNode(const unsigned int position);
                
     private:

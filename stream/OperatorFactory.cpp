@@ -63,10 +63,4 @@ namespace stream
         
        throw ArgumentException("Invalid argument: Operator unknown. Register first unknown operator.");        
     }
-    
-    Operator*const OperatorFactory::newOperator(stream::OperatorKernel*const kernel)
-    {
-        return new Operator(kernel);
-    }
-
 } 

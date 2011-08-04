@@ -17,14 +17,13 @@
 #ifndef BASE_CAMERA_H
 #define BASE_CAMERA_H
 
-#include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
+#include <stream/OperatorKernel.h>
 
 namespace stream
 {
     class DataContainer;
-    class Network;
-    class OperatorNode;
+    class Operator;
     class Stream;
 }
 
@@ -78,15 +77,15 @@ namespace base
         
         stream::Stream* m_stream;
         
-        stream::OperatorNode* m_input;
-        stream::OperatorNode* m_clip;
-        stream::OperatorNode* m_adjustRgbChannels;
-        stream::OperatorNode* m_period;
-        stream::OperatorNode* m_trigger;
-        stream::OperatorNode* m_buffer;
-        stream::OperatorNode* m_pixelType;
-        stream::OperatorNode* m_imageQueue;
-        stream::OperatorNode* m_indexQueue;
+        stream::Operator* m_input;
+        stream::Operator* m_clip;
+        stream::Operator* m_adjustRgbChannels;
+        stream::Operator* m_period;
+        stream::Operator* m_trigger;
+        stream::Operator* m_buffer;
+        stream::Operator* m_pixelType;
+        stream::Operator* m_imageQueue;
+        stream::Operator* m_indexQueue;
     };
 }
 

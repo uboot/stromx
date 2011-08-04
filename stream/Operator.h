@@ -33,9 +33,7 @@ namespace stream
     class Operator
     {
         friend class Network;
-        friend class OperatorFactory;
         friend class Thread;
-        friend class ThreadTest;
         friend class ThreadImplTest;
         friend class NetworkTest;
         
@@ -47,6 +45,8 @@ namespace stream
             ACTIVE,
             EXECUTING
         };
+        
+        Operator(OperatorKernel* const kernel);
         
         const std::string & name() const { return m_name; }
         void setName(const std::string & name) { m_name = name; }
@@ -61,7 +61,6 @@ namespace stream
         void initialize();
         
     private:
-        Operator(OperatorKernel* const kernel);
         ~Operator();
         
         InputNode* const getInputNode(const unsigned int id);

@@ -123,25 +123,25 @@ namespace stream
         throw InvalidStateException("Operator does not exist");
     }
     
-    InputNode* Network::getInputNode(const Node & node) const
+    InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
     {
         std::vector<Operator*>::const_iterator iter = 
-            std::find(m_operators.begin(), m_operators.end(), node.op());
+            std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
             throw ArgumentException("Operator is not part of the stream.");
         
-        return (*iter)->getInputNode(node.id());
+        return (*iter)->getInputNode(inputId);
     }
     
-    OutputNode* Network::getOutputNode(const Node & node) const
+    OutputNode* Network::getOutputNode(Operator* const op, const unsigned int outputId) const
     {
         std::vector<Operator*>::const_iterator iter = 
-            std::find(m_operators.begin(), m_operators.end(), node.op());
+            std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
             throw ArgumentException("Operator is not part of the stream.");
         
-        return (*iter)->getOutputNode(node.id());
+        return (*iter)->getOutputNode(outputId);
     }
 }

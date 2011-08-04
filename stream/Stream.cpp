@@ -139,13 +139,14 @@ namespace stream
         return m_status;
     }
     
-    void Stream::connect(const stream::Node& target, const stream::Node& source)
+    void Stream::connect(Operator* const targetOp, const unsigned int inputId, 
+                         Operator* const sourceOp, const unsigned int outputId)
     {
-        m_network->getInputNode(target)->connect(m_network->getOutputNode(source));
+        m_network->getInputNode(targetOp, inputId)->connect(m_network->getOutputNode(sourceOp, outputId));
     }
 
-    void Stream::disconnect(const stream::Node& target)
+    void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
     {
-        m_network->getInputNode(target)->disconnect();
+        m_network->getInputNode(targetOp, inputId)->disconnect();
     } 
 }
