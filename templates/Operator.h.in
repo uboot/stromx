@@ -17,11 +17,11 @@
 #ifndef @PREPROCESSOR_MACRO@
 #define @PREPROCESSOR_MACRO@
 
-#include <stream/Operator.h>
+#include <stream/OperatorKernel.h>
 
 namespace @PACKAGE@
 {
-    class @CLASS@ : public stream::Operator
+    class @CLASS@ : public stream::OperatorKernel
     {
     public:
         enum InputId
@@ -38,7 +38,7 @@ namespace @PACKAGE@
         
         @CLASS@();
         
-        virtual Operator* const clone() const { return new @CLASS@; }
+        virtual OperatorKernel* const clone() const { return new @CLASS@; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);

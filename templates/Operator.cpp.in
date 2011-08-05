@@ -15,7 +15,7 @@ namespace @PACKAGE@
     const Version @CLASS@::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     @CLASS@::@CLASS@()
-      : Operator(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
