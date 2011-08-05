@@ -108,20 +108,20 @@ namespace stream
         throw ArgumentException("Operator does not exist");
     }
     
-    Operator* const Network::getOperator(const std::string & name)
-    {
-        for(std::vector<Operator*>::iterator iter = m_operators.begin();
-            iter != m_operators.end();
-            ++iter)
-        {
-            if ((*iter)->name() == name)
-            {
-                return *iter;
-            }
-        }  
-        
-        throw InvalidStateException("Operator does not exist");
-    }
+//     Operator* const Network::getOperator(const std::string & name)
+//     {
+//         for(std::vector<Operator*>::iterator iter = m_operators.begin();
+//             iter != m_operators.end();
+//             ++iter)
+//         {
+//             if ((*iter)->name() == name)
+//             {
+//                 return *iter;
+//             }
+//         }  
+//         
+//         throw InvalidStateException("Operator does not exist");
+//     }
     
     InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
     {

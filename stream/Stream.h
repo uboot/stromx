@@ -39,12 +39,15 @@ namespace stream
         
         Stream();
         ~Stream();
-        const std::string & name() { return m_name; }
-        void setName(const std::string name) { m_name = name; }
-        
-        void addOperator(Operator* const op) { m_network->addOperator(op); }
-        
+        const std::string& name() const { return m_name; }
+        void setName(const std::string& name) { m_name = name; }
+        const Status& status() const { return m_status; }
         const std::vector<Operator*> operators() const { return m_network->operators(); }
+        
+        
+        void addOperator(Operator* const op);
+        void removeOperator(Operator* const op);
+        
         void connect(Operator* const targetOp, const unsigned int inputId, 
                      Operator* const sourceOp, const unsigned int outputId);
         void disconnect(Operator* const targetOp, const unsigned int inputId);

@@ -142,11 +142,43 @@ namespace stream
     void Stream::connect(Operator* const targetOp, const unsigned int inputId, 
                          Operator* const sourceOp, const unsigned int outputId)
     {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot connect operators within a running system.");
+        }
+        
         m_network->getInputNode(targetOp, inputId)->connect(m_network->getOutputNode(sourceOp, outputId));
     }
 
     void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
     {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot disconnect operators within a running system.");
+        }
+        
         m_network->getInputNode(targetOp, inputId)->disconnect();
-    } 
+    }
+    
+    void Stream::addOperator(Operator* const op)
+    {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot add operator to a running system.");
+        }
+        
+        m_network->addOperator(op); 
+    }
+    
+    void Stream::removeOperator(Operator* const op)
+    {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot remove operator from a running system.");
+        }
+        
+        m_network->removeOperator(op);
+    }
+
+    
 }

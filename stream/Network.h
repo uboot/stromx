@@ -44,7 +44,7 @@ namespace stream
         
         void addOperator(Operator* const op);
         void removeOperator(Operator* const op);
-        Operator* const getOperator(const std::string & name);
+//         Operator* const getOperator(const std::string & name);
         void activate();
         void deactivate();
         InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
