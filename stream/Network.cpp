@@ -17,7 +17,6 @@
 
 #include "Network.h"
 #include "Operator.h"
-#include "SynchronizedOperatorKernel.h"
 #include "Exception.h"
 #include "Node.h"
 
