@@ -79,6 +79,8 @@ namespace stream
             (*iter)->join();
         }
         
+        m_network->deactivate();
+        
         m_status = INACTIVE;
     }
 
@@ -95,8 +97,6 @@ namespace stream
         {
             (*iter)->stop();
         }
-        
-        m_network->deactivate();
         
         m_status = DEACTIVATING;
     }
