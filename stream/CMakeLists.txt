@@ -14,32 +14,32 @@ if(BUILD_TESTS)
 endif()
 
 set(SOURCES
-    DataContainer.cpp
     impl/DataContainerImpl.cpp
-    ReadAccess.cpp
     impl/ReadAccessImpl.cpp
-    RecycleAccess.cpp
     impl/RecycleAccessImpl.cpp
-    WriteAccess.cpp
     impl/WriteAccessImpl.cpp
+    impl/Id2DataMap.cpp
+    impl/InputNode.cpp
+    impl/SynchronizedOperatorKernel.cpp
+    impl/OutputNode.cpp
+    impl/ThreadImpl.cpp
+    DataContainer.cpp
+    ReadAccess.cpp
+    RecycleAccess.cpp
+    WriteAccess.cpp
     DataType.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp
-    impl/Id2DataMap.cpp
     Id2DataMapper.cpp
     Id2DataPair.cpp
     ImageWrapper.cpp
-    InputNode.cpp
     Network.cpp
     Operator.cpp
     OperatorKernel.cpp
     OperatorFactory.cpp
-    SynchronizedOperatorKernel.cpp
-    OutputNode.cpp
     Primitive.cpp
     Stream.cpp
     Thread.cpp
-    ThreadImpl.cpp
     Try.cpp
 )
 

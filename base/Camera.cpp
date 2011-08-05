@@ -23,7 +23,6 @@
 #include "ConvertPixelType.h"
 #include "impl/CameraBuffer.h"
 #include "Queue.h"
-#include <stream/ThreadImpl.h>
 
 using namespace stream;
 

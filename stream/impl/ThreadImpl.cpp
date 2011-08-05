@@ -1,8 +1,9 @@
 #include "ThreadImpl.h"
 
-#include "Exception.h"
+#include "../Exception.h"
+#include "../OperatorInfo.h"
+
 #include "InputNode.h"
-#include "OperatorInfo.h"
 
 #include <boost/bind.hpp>
 

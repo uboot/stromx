@@ -3,10 +3,10 @@
 #include "TestOperator.h"
 
 #include <stream/DataContainer.h>
-#include <stream/SynchronizedOperatorKernel.h>
+#include <stream/impl/SynchronizedOperatorKernel.h>
 #include <stream/None.h>
-#include <stream/OutputNode.h>
-#include <stream/InputNode.h>
+#include <stream/impl/OutputNode.h>
+#include <stream/impl/InputNode.h>
 #include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>

@@ -23,11 +23,11 @@ set(SOURCES
     Id2DataPairTest.cpp
     ../OperatorKernel.cpp
     TestOperator.cpp
-    ../SynchronizedOperatorKernel.cpp
+    ../impl/SynchronizedOperatorKernel.cpp
     SynchronizedOperatorKernelTest.cpp
-    ../OutputNode.cpp
+    ../impl/OutputNode.cpp
     OutputNodeTest.cpp
-    ../InputNode.cpp
+    ../impl/InputNode.cpp
     InputNodeTest.cpp   
     ../Operator.cpp
     ../ReadAccess.cpp
@@ -36,7 +36,7 @@ set(SOURCES
     ../RecycleAccess.cpp
     ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
-    ../ThreadImpl.cpp
+    ../impl/ThreadImpl.cpp
     ThreadImplTest.cpp
     ../Thread.cpp
     ThreadTest.cpp

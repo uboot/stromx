@@ -4,9 +4,10 @@
 #include <base/Image.h>
 
 #include <stream/Trigger.h>
-#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Exception.h>
 #include <stream/ReadAccess.h>
+
+#include <stream/impl/SynchronizedOperatorKernel.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>

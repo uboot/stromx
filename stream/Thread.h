@@ -17,10 +17,10 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
-#include "ThreadImpl.h"
-
 #include "Network.h"
 #include "Node.h"
+
+#include "impl/ThreadImpl.h"
 
 namespace stream
 {

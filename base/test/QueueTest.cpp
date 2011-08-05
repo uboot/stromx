@@ -2,11 +2,12 @@
 
 #include <base/Queue.h>
 #include <stream/DataContainer.h>
-#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/Primitive.h>
+#include <stream/ReadAccess.h>
+
+#include <stream/impl/SynchronizedOperatorKernel.h>
 
 #include <cppunit/TestAssert.h>
-#include <stream/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::QueueTest);
 

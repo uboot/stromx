@@ -1,11 +1,11 @@
 #include "SynchronizedOperatorKernel.h"
 
-#include "OperatorKernel.h"
-#include "Exception.h"
-#include "Id2DataPair.h"
-#include "Data.h"
-#include "DataContainer.h"
-#include "OperatorException.h"
+#include "../OperatorKernel.h"
+#include "../Exception.h"
+#include "../Id2DataPair.h"
+#include "../Data.h"
+#include "../DataContainer.h"
+#include "../OperatorException.h"
 
 #include <boost/thread/thread.hpp>
 

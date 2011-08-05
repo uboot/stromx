@@ -1,10 +1,11 @@
 #ifndef STREAM_SYNCHRONIZEDOPERATORKERNEL_H
 #define STREAM_SYNCHRONIZEDOPERATORKERNEL_H
 
-#include "DataProvider.h"
-#include "impl/Id2DataMap.h"
-#include "Parameter.h"
-#include "OperatorKernel.h"
+#include "../DataProvider.h"
+#include "../Parameter.h"
+#include "../OperatorKernel.h"
+
+#include "Id2DataMap.h"
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>

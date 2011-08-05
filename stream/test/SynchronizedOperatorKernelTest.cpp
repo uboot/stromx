@@ -2,11 +2,12 @@
 
 #include "TestOperator.h"
 
-#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/None.h>
 #include <stream/DataContainer.h>
 #include <stream/Exception.h>
 #include <stream/OperatorException.h>
+
+#include <stream/impl/SynchronizedOperatorKernel.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>

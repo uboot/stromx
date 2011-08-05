@@ -3,7 +3,7 @@
 #include <base/PeriodicDelay.h>
 #include <base/Image.h>
 
-#include <stream/SynchronizedOperatorKernel.h>
+#include <stream/impl/SynchronizedOperatorKernel.h>
 #include <stream/Exception.h>
 #include <stream/ReadAccess.h>
 

@@ -20,7 +20,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/SynchronizedOperatorKernel.h>
+#include <stream/impl/SynchronizedOperatorKernel.h>
 
 namespace base
 {

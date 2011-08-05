@@ -2,8 +2,9 @@
 
 #include "Exception.h"
 #include "Network.h"
-#include "InputNode.h"
 #include "Operator.h"
+
+#include "impl/InputNode.h"
 
 namespace stream
 {

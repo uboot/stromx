@@ -2,11 +2,11 @@
 
 #include "TestOperator.h"
 
-#include <stream/SynchronizedOperatorKernel.h>
+#include <stream/impl/SynchronizedOperatorKernel.h>
 #include <stream/Operator.h>
 #include <stream/None.h>
-#include <stream/InputNode.h>
-#include <stream/ThreadImpl.h>
+#include <stream/impl/InputNode.h>
+#include <stream/impl/ThreadImpl.h>
 #include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>

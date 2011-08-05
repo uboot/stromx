@@ -5,9 +5,10 @@
 
 #include <stream/DataContainer.h>
 #include <stream/Trigger.h>
-#include <stream/SynchronizedOperatorKernel.h>
 #include <stream/ReadAccess.h>
 #include <stream/Enum.h>
+
+#include <stream/impl/SynchronizedOperatorKernel.h>
 
 #include <cppunit/TestAssert.h>
 

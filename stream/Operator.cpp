@@ -1,11 +1,12 @@
 #include "Operator.h"
 
 #include "Description.h"
-#include "SynchronizedOperatorKernel.h"
 #include "OperatorInfo.h"
-#include "InputNode.h"
-#include "OutputNode.h"
 #include "Exception.h"
+
+#include "impl/InputNode.h"
+#include "impl/OutputNode.h"
+#include "impl/SynchronizedOperatorKernel.h"
 
 namespace stream
 {

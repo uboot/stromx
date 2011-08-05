@@ -19,7 +19,7 @@
 
 #include "DataContainer.h"
 
-#include "SynchronizedOperatorKernel.h"
+#include "impl/SynchronizedOperatorKernel.h"
 
 namespace stream
 {

@@ -1,9 +1,10 @@
 #include "InputNode.h"
 
+#include "../DataContainer.h"
+#include "../Exception.h"
+
 #include "OutputNode.h"
 #include "SynchronizedOperatorKernel.h"
-#include "DataContainer.h"
-#include "Exception.h"
 
 namespace stream
 {
