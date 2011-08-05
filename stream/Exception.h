@@ -20,58 +20,58 @@ namespace stream
         std::string m_message; 
     };  
     
-    class ArgumentException : public Exception
+    class InvalidArgument : public Exception
     {
     public:
-        ArgumentException(const std::string & message = "ArgumentException")
+        InvalidArgument(const std::string & message = "InvalidArgument")
           : Exception(message)
         {}
     };  
     
-    class WrongIdException : public ArgumentException
+    class WrongId : public InvalidArgument
     {
     public:
-        WrongIdException(const std::string & message = "WrongIdException")
-          : ArgumentException(message)
+        WrongId(const std::string & message = "WrongId")
+          : InvalidArgument(message)
         {}
     };  
     
-    class InvalidStateException : public Exception
+    class InvalidState : public Exception
     {
     public:
-        InvalidStateException(const std::string & message = "InvalidStateException")
+        InvalidState(const std::string & message = "InvalidState")
           : Exception(message)
         {}
     };
     
-    class InternalException : public Exception
+    class InternalError : public Exception
     {
     public:
-        InternalException(const std::string & message = "InternalException")
+        InternalError(const std::string & message = "InternalError")
           : Exception(message)
         {}
     };
     
-    class InterruptException : public Exception
+    class Interrupt : public Exception
     {
     public:
-        InterruptException(const std::string & message = "InterruptException")
+        Interrupt(const std::string & message = "Interrupt")
           : Exception(message)
         {}
     };
     
-    class FileAccessException : public Exception
+    class FileAccess : public Exception
     {
     public:
-        FileAccessException(const std::string & message = "FileAccessException")
+        FileAccess(const std::string & message = "FileAccess")
           : Exception(message)
         {}
     };
     
-    class OutOfMemoryException : public Exception
+    class OutOfMemory : public Exception
     {
     public:
-        OutOfMemoryException(const std::string & message = "OutOfMemoryException")
+        OutOfMemory(const std::string & message = "OutOfMemory")
           : Exception(message)
         {}
     };

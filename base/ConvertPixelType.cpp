@@ -38,12 +38,12 @@ namespace base
                 m_pixelType = dynamic_cast<const Enum &>(value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameter(id), *this);
+            throw WrongParameterType(parameter(id), *this);
         }
     }
 
@@ -54,7 +54,7 @@ namespace base
         case PIXEL_TYPE:
             return m_pixelType;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     
@@ -75,7 +75,7 @@ namespace base
         unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
         
         if(destImage.size() < destImageSize)
-            throw InputException(DESTINATION, *this, "Destination image is too small");
+            throw InputError(DESTINATION, *this, "Destination image is too small");
         
         destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width(), destImage.buffer(), pixelType);
         
@@ -151,7 +151,7 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_GRAY2BGR;
             default:
-                throw stream::ArgumentException("Unknown conversion.");   
+                throw stream::InvalidArgument("Unknown conversion.");   
             }
         case stream::Image::RGB_24:
             switch(outType)
@@ -159,7 +159,7 @@ namespace base
             case stream::Image::MONO_8:
                 return CV_RGB2GRAY;
             default:
-                throw stream::ArgumentException("Unknown conversion.");   
+                throw stream::InvalidArgument("Unknown conversion.");   
             }
         case stream::Image::BGR_24:
             switch(outType)
@@ -167,7 +167,7 @@ namespace base
             case stream::Image::MONO_8:
                 return CV_BGR2GRAY;
             default:
-                throw stream::ArgumentException("Unknown conversion.");   
+                throw stream::InvalidArgument("Unknown conversion.");   
             }
         case stream::Image::BAYERBG_8:
             switch(outType)
@@ -177,7 +177,7 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_BayerBG2BGR;
             default:
-                throw stream::ArgumentException("Unknown conversion.");   
+                throw stream::InvalidArgument("Unknown conversion.");   
             }
         case stream::Image::BAYERGB_8:
             switch(outType)
@@ -187,10 +187,10 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_BayerGB2BGR;
             default:
-                throw stream::ArgumentException("Unknown conversion.");   
+                throw stream::InvalidArgument("Unknown conversion.");   
             }
         default:
-            throw stream::ArgumentException("Unknown conversion.");
+            throw stream::InvalidArgument("Unknown conversion.");
         }         
     }
     
@@ -213,7 +213,7 @@ namespace base
         case stream::Image::BGR_48:
             return 6;
         default:
-            throw stream::ArgumentException("Unknown pixel type.");    
+            throw stream::InvalidArgument("Unknown pixel type.");    
         }  
     }
 } 

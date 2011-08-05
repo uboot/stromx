@@ -41,7 +41,7 @@ namespace stream
             ++iter)
         {
             if(m_inputs.count((*iter)->id()))
-                throw ArgumentException("Two inputs with the same ID.");
+                throw InvalidArgument("Two inputs with the same ID.");
             
             m_inputs[(*iter)->id()] = new InputNode(m_kernel, (*iter)->id());
         }
@@ -51,7 +51,7 @@ namespace stream
             ++iter)
         {
             if(m_outputs.count((*iter)->id()))
-                throw ArgumentException("Two outputs with the same ID.");
+                throw InvalidArgument("Two outputs with the same ID.");
             
             m_outputs[(*iter)->id()] = new OutputNode(m_kernel, (*iter)->id());
         }
@@ -60,7 +60,7 @@ namespace stream
     InputNode*const Operator::getInputNode(const unsigned int id)
     {
         if(! m_inputs.count(id))
-            throw ArgumentException("Input with this ID does not exist.");
+            throw InvalidArgument("Input with this ID does not exist.");
         
         return m_inputs[id];
     }
@@ -68,7 +68,7 @@ namespace stream
     OutputNode*const Operator::getOutputNode(const unsigned int id)
     {
         if(! m_outputs.count(id))
-            throw ArgumentException("Output with this ID does not exist.");
+            throw InvalidArgument("Output with this ID does not exist.");
         
         return m_outputs[id];
     }

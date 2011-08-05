@@ -45,12 +45,12 @@ namespace base
                 m_blue = dynamic_cast<const Double&>(value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }
 
@@ -65,7 +65,7 @@ namespace base
         case BLUE:
             return m_blue;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     
@@ -111,7 +111,7 @@ namespace base
             break;
         }
         default:
-            throw InputTypeException(INPUT, *this);
+            throw WrongInputType(INPUT, *this);
         }
         
         Id2DataPair outputDataMapper(OUTPUT, container);

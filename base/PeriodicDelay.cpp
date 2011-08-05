@@ -41,12 +41,12 @@ namespace base
                 break;
             }
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameter(id), *this);
+            throw WrongParameterType(parameter(id), *this);
         }
     }
 
@@ -57,7 +57,7 @@ namespace base
         case PERIOD:
             return m_period;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     
@@ -74,7 +74,7 @@ namespace base
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             }
         
             unsigned int passedMs = (boost::get_system_time() - m_nextTrigger).total_milliseconds();

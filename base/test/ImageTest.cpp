@@ -16,7 +16,7 @@ namespace base
     
     void ImageTest::testImageFromUnknownFile()
     {
-        CPPUNIT_ASSERT_THROW(m_image = new Image("unknown.jpg"), stream::FileAccessException);
+        CPPUNIT_ASSERT_THROW(m_image = new Image("unknown.jpg"), stream::FileAccess);
     }
     
     void ImageTest::testImageFromJpeg()

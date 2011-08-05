@@ -129,7 +129,7 @@ namespace base
                 }
                 catch(std::bad_cast&)
                 {
-                    throw ParameterTypeException(parameter(TRIGGER_MODE), *this);
+                    throw WrongParameterType(parameter(TRIGGER_MODE), *this);
                 }
                 
                 break;
@@ -146,7 +146,7 @@ namespace base
                 }
                 catch(std::bad_cast&)
                 {
-                    throw ParameterTypeException(parameter(TRIGGER_MODE), *this);
+                    throw WrongParameterType(parameter(TRIGGER_MODE), *this);
                 }
                 
                 switch(triggerMode)
@@ -158,7 +158,7 @@ namespace base
                     m_trigger->setParameter(Trigger::ACTIVE, Bool(false));
                     break;
                 default:
-                    throw ParameterValueException(parameter(TRIGGER_MODE), *this);
+                    throw WrongParameterValue(parameter(TRIGGER_MODE), *this);
                 }
                 break;
             case FRAME_PERIOD:
@@ -168,12 +168,12 @@ namespace base
                 m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw WrongParameterType(*parameters()[id], *this);
         }
     }
 
@@ -202,7 +202,7 @@ namespace base
         case BUFFER_SIZE:
             return m_buffer->getParameter(impl::CameraBuffer::BUFFER_SIZE);
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     

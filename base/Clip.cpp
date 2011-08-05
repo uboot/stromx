@@ -45,12 +45,12 @@ namespace base
                 m_height = dynamic_cast<const UInt32&>(value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameter(id), *this);
+            throw WrongParameterType(parameter(id), *this);
         }
     }
 
@@ -67,7 +67,7 @@ namespace base
         case HEIGHT:
             return m_height;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     

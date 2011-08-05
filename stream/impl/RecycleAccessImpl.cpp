@@ -16,7 +16,7 @@ namespace stream
         void RecycleAccessImpl::add(DataContainer& data)
         {
             if(data.empty())
-                throw ArgumentException("Data container is empty.");
+                throw InvalidArgument("Data container is empty.");
             
             lock_t lock(m_mutex);
             DataContainerImpl* container = data.m_impl.get();
@@ -66,7 +66,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             }
             
             Data* value = m_data.front();
@@ -93,7 +93,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             }
             
             Data* value = m_data.front();

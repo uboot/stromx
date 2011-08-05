@@ -16,7 +16,7 @@ namespace stream
         }
         catch(XMLException&)
         {
-            throw InternalException("Failed to initialize Xerces-C.");
+            throw InternalError("Failed to initialize Xerces-C.");
         }
         
         try
@@ -25,7 +25,7 @@ namespace stream
         }
         catch(XMLException&)
         {
-            throw InternalException("Failed to terminate Xerces-C.");
+            throw InternalError("Failed to terminate Xerces-C.");
         }
     }
 }

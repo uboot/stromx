@@ -20,7 +20,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_source)
-            throw InvalidStateException("Input node has already been connected.");
+            throw InvalidState("Input node has already been connected.");
         
         m_source = output;
         m_source->addConnectedInput(this);
@@ -29,7 +29,7 @@ namespace stream
     void InputNode::setInputData()
     {
         if(! m_source)
-            throw InvalidStateException("Input node has not been connected.");
+            throw InvalidState("Input node has not been connected.");
         
         DataContainer inputData = m_source->getOutputData();
         

@@ -38,7 +38,7 @@ namespace stream
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw WrongParameterType(*parameters()[id], *this);
         }
     }
 

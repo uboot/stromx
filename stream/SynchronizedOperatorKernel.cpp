@@ -16,7 +16,7 @@ namespace stream
         m_status(NONE)
     {
         if(!op)
-            throw ArgumentException("Passed null pointer as operator.");
+            throw InvalidArgument("Passed null pointer as operator.");
     }
     
     SynchronizedOperatorKernel::~SynchronizedOperatorKernel()
@@ -32,7 +32,7 @@ namespace stream
         }
         catch(boost::thread_interrupted&)
         {
-            throw InterruptException();
+            throw Interrupt();
         } 
     }
     
@@ -44,7 +44,7 @@ namespace stream
         }
         catch(boost::thread_interrupted&)
         {
-            throw InterruptException();
+            throw Interrupt();
         } 
     }
     
@@ -53,7 +53,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_status != NONE)
-            throw InvalidStateException("Operator has already been initialized.");
+            throw InvalidState("Operator has already been initialized.");
         
         m_op->initialize();
         
@@ -72,7 +72,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(m_status != INITIALIZED)
-            throw InvalidStateException("Operator must be initialized.");
+            throw InvalidState("Operator must be initialized.");
         
         BOOST_ASSERT(m_inputMap.isEmpty());
         BOOST_ASSERT(m_outputMap.isEmpty());
@@ -89,7 +89,7 @@ namespace stream
             return;
         
         if(m_status == EXECUTING)
-            throw InvalidStateException("Operator can not be deactivated while it is executing.");
+            throw InvalidState("Operator can not be deactivated while it is executing.");
         
         m_op->deactivate();
         
@@ -146,7 +146,7 @@ namespace stream
                 
                 get(mapper, m_inputMap);
             }
-            catch(InterruptException&)
+            catch(Interrupt&)
             {
                 interruptExceptionWasThrown = true;
             }   
@@ -160,7 +160,7 @@ namespace stream
         
         // rethrow exception if necessary
         if(interruptExceptionWasThrown)
-            throw InterruptException();
+            throw Interrupt();
     }
 
     void SynchronizedOperatorKernel::sendOutputData(const stream::Id2DataMapper& mapper)
@@ -183,7 +183,7 @@ namespace stream
                 
                 set(mapper, m_outputMap);
             }
-            catch(InterruptException&)
+            catch(Interrupt&)
             {
                 interruptExceptionWasThrown = true;
             }   
@@ -197,7 +197,7 @@ namespace stream
         
         // rethrow exception if necessary
         if(interruptExceptionWasThrown)
-            throw InterruptException();   
+            throw Interrupt();   
     }
     
     DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
@@ -207,7 +207,7 @@ namespace stream
         if( m_status != ACTIVE
             && m_status != EXECUTING)
         {
-            throw InvalidStateException("Can not get output data if operator is inactive.");
+            throw InvalidState("Can not get output data if operator is inactive.");
         }
     
         while(m_outputMap[id].empty())
@@ -236,7 +236,7 @@ namespace stream
         if( m_status != ACTIVE
             && m_status != EXECUTING)
         {
-            throw InvalidStateException("Can not get output data if operator is inactive.");
+            throw InvalidState("Can not get output data if operator is inactive.");
         }
     
         while(! m_inputMap[id].empty())
@@ -285,7 +285,7 @@ namespace stream
         {
             try
             {
-                dynamic_cast<InterruptException&>(e);
+                dynamic_cast<Interrupt&>(e);
                 interruptExceptionWasThrown = true;
             }
             catch(std::bad_cast&)
@@ -296,7 +296,7 @@ namespace stream
         m_status = ACTIVE;
         
         if(interruptExceptionWasThrown)
-            throw InterruptException();
+            throw Interrupt();
         
         // a signal is emitted in setInputData() and getOutputData()
     }
@@ -309,7 +309,7 @@ namespace stream
         }
         catch(boost::thread_interrupted&)
         {
-            throw InterruptException();
+            throw Interrupt();
         } 
     }
     
@@ -328,7 +328,7 @@ namespace stream
         }
         
         if(! isValid)
-            throw ParameterIdException(id, *this->info());
+            throw WrongParameterId(id, *this->info());
     }
     
     void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
@@ -344,14 +344,14 @@ namespace stream
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
             case Parameter::ACTIVATED_WRITE:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         case INITIALIZED:
             switch(param->accessMode())
             {
             case Parameter::NO_ACCESS:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         case ACTIVE:
@@ -359,7 +359,7 @@ namespace stream
             switch(param->accessMode())
             {
             case Parameter::NO_ACCESS:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         default:
@@ -381,7 +381,7 @@ namespace stream
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
             case Parameter::ACTIVATED_WRITE:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         case INITIALIZED:
@@ -391,7 +391,7 @@ namespace stream
             case Parameter::NONE_READ:
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         case ACTIVE:
@@ -403,7 +403,7 @@ namespace stream
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
-                throw ParameterAccessModeException(*param, *this->info());
+                throw ParameterAccessViolation(*param, *this->info());
             }
             break;
         default:
@@ -415,6 +415,6 @@ namespace stream
     {
         const Parameter* param = info()->parameters()[id];
         if(! type.is(param->type()))
-            throw ParameterTypeException(*param, *this->info());
+            throw WrongParameterType(*param, *this->info());
     }   
 }

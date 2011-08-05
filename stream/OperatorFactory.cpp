@@ -21,7 +21,7 @@ namespace stream
     {
         if(op == 0)
         {
-            throw ArgumentException("Invalid argument: Null pointer.");
+            throw InvalidArgument("Invalid argument: Null pointer.");
         }
         
         for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
@@ -30,7 +30,7 @@ namespace stream
         {
             if(op->name() == (*iter)->name() && op->package() == (*iter)->package())
             {
-                throw ArgumentException("Invalid argument: Operator already registered.");
+                throw InvalidArgument("Invalid argument: Operator already registered.");
             }
         }
         
@@ -54,13 +54,13 @@ namespace stream
                 newOp = (*iter)->clone();
                 if (newOp == 0)
                 { 
-                    throw InternalException("Invalid argument received: Null pointer. Cloning failed");
+                    throw InternalError("Invalid argument received: Null pointer. Cloning failed");
                 }
 
                 return newOp;
             }
         }
         
-       throw ArgumentException("Invalid argument: Operator unknown. Register first unknown operator.");        
+       throw InvalidArgument("Invalid argument: Operator unknown. Register first unknown operator.");        
     }
 } 

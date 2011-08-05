@@ -27,7 +27,7 @@ namespace stream
         Operator* op1 = new Operator(kernel);
         
         // add an unitialized operator should throw an exception
-        CPPUNIT_ASSERT_THROW(m_network->addOperator(op1), ArgumentException);
+        CPPUNIT_ASSERT_THROW(m_network->addOperator(op1), InvalidArgument);
         
         op1->initialize();
         CPPUNIT_ASSERT_NO_THROW(m_network->addOperator(op1));
@@ -36,7 +36,7 @@ namespace stream
         
         // can not add the same operator again
         Operator* op2 = new Operator(kernel);
-        CPPUNIT_ASSERT_THROW(m_network->addOperator(op2), ArgumentException);
+        CPPUNIT_ASSERT_THROW(m_network->addOperator(op2), InvalidArgument);
         
         // The pointer op2 should be deleted her, however this results in an error because
         // op has already been deleted. In other words this is deliberate memory leak.
@@ -44,14 +44,14 @@ namespace stream
     
     void NetworkTest::testRemoveOperator()
     {
-        CPPUNIT_ASSERT_THROW(m_network->removeOperator(0), ArgumentException);
+        CPPUNIT_ASSERT_THROW(m_network->removeOperator(0), InvalidArgument);
         
         Operator* op = new Operator(new TestOperator());
         op->initialize();
         m_network->addOperator(op);
         
         Operator* testOp = new Operator(new TestOperator());
-        CPPUNIT_ASSERT_THROW(m_network->removeOperator(testOp), ArgumentException);
+        CPPUNIT_ASSERT_THROW(m_network->removeOperator(testOp), InvalidArgument);
         delete testOp;
         
         CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op));
@@ -63,7 +63,7 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_network->activate());
         CPPUNIT_ASSERT_EQUAL(Network::ACTIVE, m_network->status());
         
-        CPPUNIT_ASSERT_THROW(m_network->activate(), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(m_network->activate(), InvalidState);
     }
 
     void NetworkTest::testDeactivate()

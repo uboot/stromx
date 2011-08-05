@@ -111,7 +111,7 @@ namespace stream
     {
         std::map<unsigned int, const Parameter*>::const_iterator iter = m_parameterMap.find(id);
         if(iter == m_parameterMap.end())
-            throw WrongIdException("No parameter with ID " + id);
+            throw WrongId("No parameter with ID " + id);
         
         return *iter->second;
     }
@@ -151,7 +151,7 @@ namespace stream
             ++iter)
         {
             if(ids.count((*iter)->id()))
-                throw ArgumentException("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                throw InvalidArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
     
@@ -164,7 +164,7 @@ namespace stream
             ++iter)
         {
             if(ids.count((*iter)->id()))
-                throw ArgumentException("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                throw InvalidArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
 }

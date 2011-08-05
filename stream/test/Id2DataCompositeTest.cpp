@@ -31,7 +31,7 @@ namespace stream
             Id2DataPair pair1(1, m_dataContainer);
             Id2DataPair pair2(2, m_dataContainer);
             
-            CPPUNIT_ASSERT_THROW(set(pair0 && (pair1 || pair2), *m_map), InvalidStateException);
+            CPPUNIT_ASSERT_THROW(set(pair0 && (pair1 || pair2), *m_map), InvalidState);
         }          
         
         {
@@ -103,7 +103,7 @@ namespace stream
             Id2DataPair pair1(1);
             Id2DataPair pair2(2);   
             
-            CPPUNIT_ASSERT_THROW(get(pair0 && (pair1 || pair2), *m_map), InvalidStateException);
+            CPPUNIT_ASSERT_THROW(get(pair0 && (pair1 || pair2), *m_map), InvalidState);
         }
         
         {

@@ -30,7 +30,7 @@ namespace stream
     {
         if (m_network == 0)
         {
-            throw ArgumentException("Invalid argument: Null pointer");
+            throw InvalidArgument("Invalid argument: Null pointer");
         }
     }
     
@@ -66,18 +66,19 @@ namespace stream
     
     void Stream::join()
     {
-        if (m_status != ACTIVE)
+        if (m_status != DEACTIVATING)
         {
-            throw WrongState("Stream object not active. Can't use join().");
+            throw WrongState("Stream object not deactivating. Can't use join().");
         }
         
-        m_status = DEACTIVATING;
         for (std::vector<Thread*>::iterator iter = m_threads.begin();
             iter != m_threads.end();
             ++iter)
         {
             (*iter)->join();
         }
+        
+        m_status = INACTIVE;
     }
 
     void Stream::stop()
@@ -94,9 +95,9 @@ namespace stream
             (*iter)->stop();
         }
         
-        this->join();
         m_network->deactivate();
-        m_status = INACTIVE;
+        
+        m_status = DEACTIVATING;
     }
     
     Thread* const Stream::addThread()
@@ -112,7 +113,7 @@ namespace stream
     {
         if (thr == 0)
         {
-            throw ArgumentException("Invalid argument: Null pointer");
+            throw InvalidArgument("Invalid argument: Null pointer");
         }
         
         for (std::vector<Thread*>::iterator iter = m_threads.begin();
@@ -126,7 +127,7 @@ namespace stream
             }
         }
         
-        throw ArgumentException("Thread does not exists");
+        throw InvalidArgument("Thread does not exists");
     }
     
     const std::vector<Thread*> & Stream::threads()

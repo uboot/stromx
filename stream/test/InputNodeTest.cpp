@@ -32,7 +32,7 @@ namespace stream
     void InputNodeTest::testConnect()
     {
         CPPUNIT_ASSERT_NO_THROW(m_inputNode->connect(m_sourceNode));
-        CPPUNIT_ASSERT_THROW(m_inputNode->connect(m_sourceNode), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(m_inputNode->connect(m_sourceNode), InvalidState);
     }
     
 void InputNodeTest::testDisconnect()

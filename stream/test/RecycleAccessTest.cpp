@@ -111,7 +111,7 @@ namespace stream
     
     void RecycleAccessTest::recycleInterrupt(RecycleAccess& access)
     {
-        CPPUNIT_ASSERT_THROW(access(), InterruptException);
+        CPPUNIT_ASSERT_THROW(access(), Interrupt);
     }
     
     void RecycleAccessTest::testRecycleInterrupt()
@@ -131,7 +131,7 @@ namespace stream
     
     void RecycleAccessTest::getAccessInterrupt(DataContainer& container)
     {
-        CPPUNIT_ASSERT_THROW(RecycleAccess access(container), InterruptException);
+        CPPUNIT_ASSERT_THROW(RecycleAccess access(container), Interrupt);
     }
     
     void RecycleAccessTest::releaseAccessDelayed(RecycleAccess& access)

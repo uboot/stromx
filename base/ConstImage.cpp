@@ -47,17 +47,17 @@ namespace base
                 }
                 catch(std::bad_cast&)
                 {
-                    throw ParameterTypeException(parameter(id), *this);
+                    throw WrongParameterType(parameter(id), *this);
                 }
                 break;
             }
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameter(id), *this);
+            throw WrongParameterType(parameter(id), *this);
         }
     }
 
@@ -68,7 +68,7 @@ namespace base
         case IMAGE:
             return *m_image;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     

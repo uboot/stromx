@@ -17,7 +17,7 @@ namespace stream
             m_data(data)
         {
             if(! data)
-                throw ArgumentException();
+                throw InvalidArgument();
         }
         
         void DataContainerImpl::getReadAccess()
@@ -31,7 +31,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             } 
             
             m_readAccessCounter++;
@@ -53,7 +53,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             } 
             
             m_readAccessCounter++;
@@ -87,7 +87,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             } 
                 
             m_writeAccess = true;
@@ -109,7 +109,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             } 
                 
             m_writeAccess = true;
@@ -128,7 +128,7 @@ namespace stream
         void DataContainerImpl::getRecycleAccess(Recycler*const recycler)
         {        
             if(! recycler)
-                throw ArgumentException();
+                throw InvalidArgument();
             
             unique_lock_t lock(m_mutex);
             
@@ -139,7 +139,7 @@ namespace stream
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             } 
                 
             m_recycleAccess = recycler;

@@ -33,17 +33,17 @@ namespace base
             {
             case SIZE:
                 if(m_size == 0)
-                    throw ParameterValueException(parameter(SIZE), *this);
+                    throw WrongParameterValue(parameter(SIZE), *this);
                 
                 m_size = dynamic_cast<const UInt32&>(value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterValueException(parameter(id), *this);
+            throw WrongParameterValue(parameter(id), *this);
         }
     }
 
@@ -54,7 +54,7 @@ namespace base
         case SIZE:
             return m_size;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     

@@ -44,7 +44,7 @@ namespace stream
     {
         if (m_status == ACTIVE)
         {
-            throw InvalidStateException("Network already active");
+            throw InvalidState("Network already active");
         }
         
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
@@ -72,7 +72,7 @@ namespace stream
     void Network::addOperator(Operator* const op)
     {
         if(op->status() != Operator::INITIALIZED)
-            throw ArgumentException("Operator must be initialized.");
+            throw InvalidArgument("Operator must be initialized.");
         
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
@@ -80,7 +80,7 @@ namespace stream
         {
             if ((*iter)->info() == op->info())
             {
-                throw ArgumentException("Operator already exists");
+                throw InvalidArgument("Operator already exists");
             }
         }
 
@@ -91,7 +91,7 @@ namespace stream
     {
         if (op == 0)
         {
-            throw ArgumentException("Invalid argument: Null pointer");
+            throw InvalidArgument("Invalid argument: Null pointer");
         }
 
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
@@ -105,7 +105,7 @@ namespace stream
             }
         }
         
-        throw ArgumentException("Operator does not exist");
+        throw InvalidArgument("Operator does not exist");
     }
     
     Operator* const Network::getOperator(const std::string & name)
@@ -120,7 +120,7 @@ namespace stream
             }
         }  
         
-        throw InvalidStateException("Operator does not exist");
+        throw InvalidState("Operator does not exist");
     }
     
     InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
@@ -129,7 +129,7 @@ namespace stream
             std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
-            throw ArgumentException("Operator is not part of the stream.");
+            throw InvalidArgument("Operator is not part of the stream.");
         
         return (*iter)->getInputNode(inputId);
     }
@@ -140,7 +140,7 @@ namespace stream
             std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
-            throw ArgumentException("Operator is not part of the stream.");
+            throw InvalidArgument("Operator is not part of the stream.");
         
         return (*iter)->getOutputNode(outputId);
     }

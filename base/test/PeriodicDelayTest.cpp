@@ -92,7 +92,7 @@ namespace base
     
     void PeriodicDelayTest::getOutputDataInterrupted()
     {
-        CPPUNIT_ASSERT_THROW(m_operator->getOutputData(PeriodicDelay::OUTPUT), InterruptException);
+        CPPUNIT_ASSERT_THROW(m_operator->getOutputData(PeriodicDelay::OUTPUT), Interrupt);
     }
     
     void PeriodicDelayTest::tearDown ( void )

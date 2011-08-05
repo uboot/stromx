@@ -66,7 +66,7 @@ namespace base
     
     void TriggerTest::getOutputDataInterrupted()
     {
-        CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Trigger::OUTPUT), InterruptException);
+        CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Trigger::OUTPUT), Interrupt);
     }
         
     void TriggerTest::triggerDelayed()

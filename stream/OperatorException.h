@@ -24,10 +24,10 @@ namespace stream
     class OperatorInfo;
     class Parameter;
     
-    class OperatorException : public Exception
+    class OperatorError : public Exception
     {
     protected:
-        OperatorException(const OperatorInfo& op, const std::string & message)
+        OperatorError(const OperatorInfo& op, const std::string & message)
           : Exception(message),
             m_operator(op)
         {}
@@ -37,11 +37,11 @@ namespace stream
                        
     };
     
-    class ParameterIdException : public OperatorException
+    class WrongParameterId : public OperatorError
     {
     public:
-        ParameterIdException(const unsigned int id, const OperatorInfo& op, const std::string & message = "")
-          : OperatorException(op, message),
+        WrongParameterId(const unsigned int id, const OperatorInfo& op, const std::string & message = "")
+          : OperatorError(op, message),
             m_id(id)
         {}
         
@@ -49,11 +49,11 @@ namespace stream
         unsigned int m_id;
     };
     
-    class ParameterException : public OperatorException
+    class ParameterError : public OperatorError
     {
     public:
-        ParameterException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : OperatorException(op, message),
+        ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : OperatorError(op, message),
             m_parameter(param)
         {}
           
@@ -61,35 +61,35 @@ namespace stream
         const Parameter& m_parameter;
     };
     
-    class ParameterTypeException : public ParameterException
+    class WrongParameterType : public ParameterError
     {
     public:
-        ParameterTypeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : ParameterException(param, op, message)
+        WrongParameterType(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : ParameterError(param, op, message)
         {}
     };
     
-    class ParameterValueException : public ParameterException
+    class WrongParameterValue : public ParameterError
     {
     public:
-        ParameterValueException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : ParameterException(param, op, message)
+        WrongParameterValue(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : ParameterError(param, op, message)
         {}
     };
     
-    class ParameterAccessModeException : public ParameterException
+    class ParameterAccessViolation : public ParameterError
     {
     public:
-        ParameterAccessModeException(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
-          : ParameterException(param, op, message)
+        ParameterAccessViolation(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+          : ParameterError(param, op, message)
         {}
     };
     
-    class InputException : public OperatorException
+    class InputError : public OperatorError
     {
     public:
-        InputException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
-          : OperatorException(op, message),
+        InputError(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+          : OperatorError(op, message),
             m_inputId(inputId)
         {}
           
@@ -97,11 +97,11 @@ namespace stream
         const unsigned int m_inputId;;
     };
     
-    class InputTypeException : public InputException
+    class WrongInputType : public InputError
     {
     public:
-        InputTypeException(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
-          : InputException(inputId, op, message)
+        WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+          : InputError(inputId, op, message)
         {}
     };
 }

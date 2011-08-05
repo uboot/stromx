@@ -25,16 +25,16 @@ namespace stream
     void Id2DataPairTest::testSet ( void )
     {
         Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_THROW(set(pair0, *m_map), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(set(pair0, *m_map), InvalidState);
         
         Id2DataPair pair1(0, m_dataContainer);
         CPPUNIT_ASSERT_NO_THROW(set(pair1,*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
         CPPUNIT_ASSERT(pair1.data().empty());
-        CPPUNIT_ASSERT_THROW(set(pair1,*m_map), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(set(pair1,*m_map), InvalidState);
         
         Id2DataPair pair3(10, m_dataContainer);
-        CPPUNIT_ASSERT_THROW(set(pair3,*m_map), WrongIdException);
+        CPPUNIT_ASSERT_THROW(set(pair3,*m_map), WrongId);
     }
     
     void Id2DataPairTest::testTryGet()
@@ -47,7 +47,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(true, tryGet(pair0,*m_map));
         
         Id2DataPair pair3(10);
-        CPPUNIT_ASSERT_THROW(tryGet(pair3,*m_map), WrongIdException);
+        CPPUNIT_ASSERT_THROW(tryGet(pair3,*m_map), WrongId);
     }
     
     void Id2DataPairTest::testTrySet()
@@ -60,7 +60,7 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(false, trySet(pair0, *m_map));
         
         Id2DataPair pair3(10);
-        CPPUNIT_ASSERT_THROW(trySet(pair3, *m_map), WrongIdException);
+        CPPUNIT_ASSERT_THROW(trySet(pair3, *m_map), WrongId);
     }
 
     void Id2DataPairTest::testGet ( void )
@@ -71,9 +71,9 @@ namespace stream
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
         CPPUNIT_ASSERT((*m_map)[0].empty());
         
-        CPPUNIT_ASSERT_THROW(get(pair0, *m_map), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(get(pair0, *m_map), InvalidState);
         Id2DataPair pair3(10);
-        CPPUNIT_ASSERT_THROW(get(pair3, *m_map), WrongIdException);
+        CPPUNIT_ASSERT_THROW(get(pair3, *m_map), WrongId);
     }
 
     void Id2DataPairTest::tearDown ( void )

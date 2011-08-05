@@ -11,7 +11,7 @@ namespace stream
         : m_data(data)
         {
             if(data.empty())
-                throw ArgumentException("Data container is empty.");
+                throw InvalidArgument("Data container is empty.");
             
             m_data.m_impl->getReadAccess();
         }

@@ -30,7 +30,7 @@ namespace stream
     void WriteAccessTest::testWriteAccessEmpty()
     {
         DataContainer container;
-        CPPUNIT_ASSERT_THROW(WriteAccess access(container), ArgumentException);
+        CPPUNIT_ASSERT_THROW(WriteAccess access(container), InvalidArgument);
     }
     
     void WriteAccessTest::testReleaseWriteAccess()
@@ -66,7 +66,7 @@ namespace stream
         
     void WriteAccessTest::writeAccessInterrupt(DataContainer& container)
     {
-        CPPUNIT_ASSERT_THROW(WriteAccess access(container), InterruptException);
+        CPPUNIT_ASSERT_THROW(WriteAccess access(container), Interrupt);
     }
     
     void WriteAccessTest::testWriteAccessInterrupt()

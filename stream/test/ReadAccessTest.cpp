@@ -19,7 +19,7 @@ namespace stream
     void ReadAccessTest::testReadAccessEmpty()
     {
         DataContainer container;
-        CPPUNIT_ASSERT_THROW(ReadAccess access(container), ArgumentException);
+        CPPUNIT_ASSERT_THROW(ReadAccess access(container), InvalidArgument);
     }
 
     void ReadAccessTest::testReadAccess()
@@ -70,7 +70,7 @@ namespace stream
         
     void ReadAccessTest::readAccessInterrupt(DataContainer& container)
     {
-        CPPUNIT_ASSERT_THROW(ReadAccess access(container), InterruptException);
+        CPPUNIT_ASSERT_THROW(ReadAccess access(container), Interrupt);
     }
     
     void ReadAccessTest::testReadAccessInterrupt()

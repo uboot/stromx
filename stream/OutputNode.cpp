@@ -17,10 +17,10 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(! input)
-            throw ArgumentException("Passed null as input.");
+            throw InvalidArgument("Passed null as input.");
         
         if(m_connectedInputs.count(input))
-            throw ArgumentException("Input node has already been connected to this output node.");
+            throw InvalidArgument("Input node has already been connected to this output node.");
         
         m_connectedInputs.insert(input);
     }
@@ -30,7 +30,7 @@ namespace stream
         lock_t lock(m_mutex);
         
         if(! m_connectedInputs.count(input))
-            throw ArgumentException("Input node is not connected to this output node.");
+            throw InvalidArgument("Input node is not connected to this output node.");
         
         m_connectedInputs.erase(input);
     }

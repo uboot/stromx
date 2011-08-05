@@ -38,12 +38,12 @@ namespace base
                 m_active = dynamic_cast<const Bool&>(value);
                 break;
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(parameter(id), *this);
+            throw WrongParameterType(parameter(id), *this);
         }
     }
 
@@ -52,11 +52,11 @@ namespace base
         switch(id)
         {
         case TRIGGER:
-            throw ParameterAccessModeException(parameter(id), *this);
+            throw ParameterAccessViolation(parameter(id), *this);
         case ACTIVE:
             return m_active;
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     
@@ -75,7 +75,7 @@ namespace base
             }
             catch(boost::thread_interrupted&)
             {
-                throw InterruptException();
+                throw Interrupt();
             }
         }
         

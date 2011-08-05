@@ -11,7 +11,7 @@ namespace stream
       : m_network(network)
     {
         if(! network)
-            throw ArgumentException("Passed null pointer as network.");
+            throw InvalidArgument("Passed null pointer as network.");
     }
         
     void Thread::addNode(Operator* const op, const unsigned int inputId)

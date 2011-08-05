@@ -60,7 +60,7 @@ namespace stream
         case stream::Image::BGR_48:
             return 3;
         default:
-            throw stream::ArgumentException("Unknown pixel type.");    
+            throw stream::InvalidArgument("Unknown pixel type.");    
         }
     }
     
@@ -81,7 +81,7 @@ namespace stream
         case stream::Image::BAYERGB_16:
             return 2;
         default:
-            throw stream::ArgumentException("Unknown pixel type.");    
+            throw stream::InvalidArgument("Unknown pixel type.");    
         }
     }
     
@@ -120,11 +120,11 @@ namespace stream
         
         // check row length
         if(width * pixelSize() > stride)
-            throw ArgumentException("Too small stride.");
+            throw InvalidArgument("Too small stride.");
         
         // check total data size
         unsigned int dataSize = stride * (height - 1) + width;
         if(data + dataSize > m_buffer + m_size)
-            throw ArgumentException("Too small buffer.");
+            throw InvalidArgument("Too small buffer.");
     }
 }

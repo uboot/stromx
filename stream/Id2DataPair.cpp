@@ -19,10 +19,10 @@ namespace stream
     void Id2DataPair::get(stream::impl::Id2DataMap& id2DataMap) const
     {
         if(! m_data.empty())
-            throw InvalidStateException("Data has already been assigned to this ID-data pair");
+            throw InvalidState("Data has already been assigned to this ID-data pair");
             
         if(id2DataMap[m_id].empty())
-            throw InvalidStateException("The requested output is empty");
+            throw InvalidState("The requested output is empty");
         
         m_data = id2DataMap[m_id];
         id2DataMap[m_id] = DataContainer();
@@ -31,10 +31,10 @@ namespace stream
     void Id2DataPair::set(stream::impl::Id2DataMap& id2DataMap) const
     {
         if(m_data.empty())
-            throw InvalidStateException("This ID-data pair contains no data");
+            throw InvalidState("This ID-data pair contains no data");
         
         if(! id2DataMap[m_id].empty())
-            throw InvalidStateException("Data has already been assigned to this input ID");
+            throw InvalidState("Data has already been assigned to this input ID");
         
         id2DataMap[m_id] = m_data;
         m_data = DataContainer();

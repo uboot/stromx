@@ -17,7 +17,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemoryException("Failed to create new image.");
+            throw stream::OutOfMemory("Failed to create new image.");
         }
     }
     
@@ -33,7 +33,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemoryException("Failed to create new image.");
+            throw stream::OutOfMemory("Failed to create new image.");
         }
         
         cv::Mat cvInImage = getOpenCvMat(image);
@@ -46,7 +46,7 @@ namespace base
         m_image = cvLoadImage(filename.c_str());
         
         if(! m_image)
-            throw stream::FileAccessException("Failed to load image '" + filename + "'.");
+            throw stream::FileAccess("Failed to load image '" + filename + "'.");
             
         getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
         setDataType(dataTypeFromPixelType(pixelType()));
@@ -63,7 +63,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemoryException("Failed to allocate image.");
+            throw stream::OutOfMemory("Failed to allocate image.");
         }
     }    
     
@@ -87,7 +87,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemoryException("Failed to create new image.");
+            throw stream::OutOfMemory("Failed to create new image.");
         }
     }
     
@@ -105,7 +105,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemoryException("Failed to allocate image.");
+            throw stream::OutOfMemory("Failed to allocate image.");
         }
     }
     
@@ -128,7 +128,7 @@ namespace base
             }
             catch(cv::Exception& e)
             {
-                throw stream::FileAccessException("Failed to save image '" + filename + "'.");
+                throw stream::FileAccess("Failed to save image '" + filename + "'.");
             }
             break;
         }
@@ -141,12 +141,12 @@ namespace base
             }
             catch(cv::Exception& e)
             {
-                throw stream::FileAccessException("Failed to save image '" + filename + "'.");
+                throw stream::FileAccess("Failed to save image '" + filename + "'.");
             }
         }
             break;
         default:
-            throw stream::ArgumentException("Unknown pixel type.");    
+            throw stream::InvalidArgument("Unknown pixel type.");    
         }         
     }
     
@@ -170,7 +170,7 @@ namespace base
         case stream::Image::BGR_24:
             return stream::DataType(stream::DataType::BGR_24_IMAGE);
         default:
-            throw stream::ArgumentException("Unknown pixel type.");  
+            throw stream::InvalidArgument("Unknown pixel type.");  
         }
     }
 
@@ -186,16 +186,16 @@ namespace base
             case 3:
                 return stream::Image::BGR_24;
             default:
-                throw stream::ArgumentException("Unknown combination of depth and number of channels.");
+                throw stream::InvalidArgument("Unknown combination of depth and number of channels.");
             }
         case 16:
             switch(numChannels)
             {
             default:
-                throw stream::ArgumentException("Unknown combination of depth and number of channels.");      
+                throw stream::InvalidArgument("Unknown combination of depth and number of channels.");      
             }
         default:
-            throw stream::ArgumentException("Unknown combination of depth and number of channels.");    
+            throw stream::InvalidArgument("Unknown combination of depth and number of channels.");    
         }         
     }
 }

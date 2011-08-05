@@ -72,7 +72,7 @@ namespace stream
         
         /*** Test 4 ***/
         m_operatorWrapper->deactivate();
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container), InvalidState);
     }
     
     void SynchronizedOperatorKernelTest::testClearOutputData()
@@ -119,7 +119,7 @@ namespace stream
     
     void SynchronizedOperatorKernelTest::testActivate()
     {
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->activate(), InvalidStateException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->activate(), InvalidState);
         
         m_operatorWrapper->deactivate();
         
@@ -156,12 +156,12 @@ namespace stream
     
     void SynchronizedOperatorKernelTest::getOutputDataWithInterrupt(const unsigned int id)
     {
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getOutputData(id), InterruptException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getOutputData(id), Interrupt);
     }
     
     void SynchronizedOperatorKernelTest::setInputDataWithInterrupt(const unsigned int id)
     {
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setInputData(id, m_container), InterruptException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setInputData(id, m_container), Interrupt);
     }
         
     void SynchronizedOperatorKernelTest::testGetOutputData()
@@ -196,7 +196,7 @@ namespace stream
         
         /*** Test 4 ***/
         m_operatorWrapper->deactivate();
-        CPPUNIT_ASSERT_THROW(data1 = m_operatorWrapper->getOutputData(TestOperator::OUTPUT_1), InvalidStateException);       
+        CPPUNIT_ASSERT_THROW(data1 = m_operatorWrapper->getOutputData(TestOperator::OUTPUT_1), InvalidState);       
     }
 
     void SynchronizedOperatorKernelTest::testGetParameter()
@@ -208,13 +208,13 @@ namespace stream
         const Data& value = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
         
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(-1), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->getParameter(-1), WrongParameterId);
     }
 
     void SynchronizedOperatorKernelTest::testSetParameter()
     {
         UInt32 value(2000);
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value), ParameterAccessModeException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, value), ParameterAccessViolation);
         
         m_operatorWrapper->deactivate();
         
@@ -222,10 +222,10 @@ namespace stream
         const Data& testValue = m_operatorWrapper->getParameter(TestOperator::SLEEP_TIME);
         CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
         
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(-1, value), ParameterIdException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(-1, value), WrongParameterId);
         
         UInt16 wrongType;
-        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, wrongType), ParameterTypeException);
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->setParameter(TestOperator::SLEEP_TIME, wrongType), WrongParameterType);
     }
     
     void SynchronizedOperatorKernelTest::testGetParameterStatusNone()
@@ -243,7 +243,7 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value));
     
         wrapper->initialize();
-        CPPUNIT_ASSERT_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value), ParameterAccessModeException);
+        CPPUNIT_ASSERT_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value), ParameterAccessViolation);
     }
     
     void SynchronizedOperatorKernelTest::tearDown ( void )

@@ -13,7 +13,7 @@ namespace stream
                 ++iter)
             {
                 if(m_map.count((*iter)->id()))
-                    throw ArgumentException("Two descriptors with the same ID");
+                    throw InvalidArgument("Two descriptors with the same ID");
                 
                 m_map[(*iter)->id()] = DataContainer();
             }
@@ -27,7 +27,7 @@ namespace stream
         {
             std::map<unsigned int, DataContainer>::const_iterator iter = m_map.find(id);
             if(iter == m_map.end())
-                throw WrongIdException("No data with ID " + id);
+                throw WrongId("No data with ID " + id);
             
             return iter->second;
         }
@@ -36,7 +36,7 @@ namespace stream
         {
             std::map<unsigned int, DataContainer>::iterator iter = m_map.find(id);
             if(iter == m_map.end())
-                throw WrongIdException("No data with ID " + id);
+                throw WrongId("No data with ID " + id);
             
             return iter->second;
         }
