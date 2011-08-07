@@ -46,9 +46,13 @@ namespace base
             IMAGE,
             TRIGGER_MODE,
             TRIGGER,
+            EXPOSURE,
             FRAME_PERIOD,
             BUFFER_SIZE,
             NUM_BUFFERS,
+            WHITE_BALANCE_RED,
+            WHITE_BALANCE_GREEN,
+            WHITE_BALANCE_BLUE,
             LEFT,
             TOP,
             WIDTH,
@@ -78,10 +82,14 @@ namespace base
         static const std::vector<const stream::Description*> setupInputs();
         static const std::vector<const stream::Description*> setupOutputs();
         const std::vector<const stream::Parameter*> setupParameters();
+        void setRgbParameters();
         
         static const std::string NAME;
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
+        
+        static const unsigned int WHITE_BALANCE_MAX = 10;
+        static const unsigned int BASE_EXPOSURE = 10;
         
         stream::Stream* m_stream;
         
@@ -102,6 +110,10 @@ namespace base
         
         unsigned int m_imageWidth;
         unsigned int m_imageHeight;
+        unsigned int m_exposure;
+        double m_wbRed;
+        double m_wbGreen;
+        double m_wbBlue;
     };
 }
 

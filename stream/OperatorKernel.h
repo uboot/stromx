@@ -55,6 +55,7 @@ namespace stream
         const std::vector<const Description*>& inputs() const { return m_inputs; }
         const std::vector<const Description*>& outputs() const { return m_outputs; }
         const std::vector<const Parameter*>& parameters() const { return m_parameters; }
+        const Parameter & parameter(const unsigned int id) const;
         
         virtual void setParameter(const unsigned int id, const Data& value) = 0;
         virtual const Data& getParameter(const unsigned int id) = 0;
@@ -70,7 +71,6 @@ namespace stream
                                 const std::vector<const Parameter*>& parameters);
         
         Parameter & parameter(const unsigned int id);
-        const Parameter & parameter(const unsigned int id) const;
         
     private:
         static void validate(const std::vector<const Description*>& descriptors);

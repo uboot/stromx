@@ -33,6 +33,13 @@ namespace stream
         m_parameters(parameters)
     {
         validate(parameters);
+        
+        for(std::vector<const stream::Parameter*>::const_iterator iter = parameters.begin();
+            iter != parameters.end();
+            ++iter)
+        {
+            m_parameterMap[(*iter)->id()] = *iter;
+        }
     }
     
     OperatorKernel::OperatorKernel (const std::string & name,
@@ -59,6 +66,7 @@ namespace stream
     {
         validate(inputs);
         validate(outputs);
+        validate(parameters);
         
         for(std::vector<const stream::Parameter*>::const_iterator iter = parameters.begin();
             iter != parameters.end();

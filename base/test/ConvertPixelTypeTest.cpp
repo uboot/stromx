@@ -62,6 +62,23 @@ namespace base
         image.save("ConverPixelTypeTest_testExecuteBayerBg8.png");
     }
     
+    void ConvertPixelTypeTest::testExecuteBayerRgb24()
+    {
+        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::RGB_24));
+        DataContainer destination(new Image(512, 500, stream::Image::BGR_24));
+        m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
+        
+        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        
+        ReadAccess access = ReadAccess(result);
+        const Image& image = dynamic_cast<const Image&>(access());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, image.pixelType());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
+        
+        image.save("ConverPixelTypeTest_testExecuteBayerRgb24.png");
+    }
+    
     void ConvertPixelTypeTest::tearDown ( void )
     {
         delete m_operator;

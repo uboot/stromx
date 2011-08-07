@@ -33,8 +33,10 @@ namespace base
         CPPUNIT_TEST_SUITE (CameraTest);
         CPPUNIT_TEST (testExecuteSoftwareTrigger);
         CPPUNIT_TEST (testExecuteInternalTrigger);
-        CPPUNIT_TEST (testAdjustROI);
+        CPPUNIT_TEST (testAdjustRoi);
         CPPUNIT_TEST (testAdjustPixelType);
+        CPPUNIT_TEST (testAdjustExposure);
+        CPPUNIT_TEST (testAdjustWhiteBalance);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -46,8 +48,10 @@ namespace base
         protected:
             void testExecuteSoftwareTrigger();
             void testExecuteInternalTrigger();
-            void testAdjustROI();
+            void testAdjustRoi();
             void testAdjustPixelType();
+            void testAdjustExposure();
+            void testAdjustWhiteBalance();
             
         private:
             stream::SynchronizedOperatorKernel* m_operator;

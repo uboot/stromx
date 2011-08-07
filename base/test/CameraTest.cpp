@@ -96,10 +96,10 @@ namespace base
         const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
         
         CPPUNIT_ASSERT_EQUAL(image.pixelType(), stream::Image::BAYERBG_8);
-        image.save("CameraTest_testAdjustPixelType.png");
+        image.save("CameraTest_testAdjustPixelTypeBayerBg8.png");
     }
 
-    void CameraTest::testAdjustROI()
+    void CameraTest::testAdjustRoi()
     {
         m_operator->setParameter(Camera::WIDTH, UInt32(319));
         m_operator->setParameter(Camera::LEFT, UInt32(51));
@@ -111,9 +111,33 @@ namespace base
         
         CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
         CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
-        image.save("CameraTest_testAdjustROI.png");
+        image.save("CameraTest_testAdjustRoi.png");
     }
     
+    void CameraTest::testAdjustExposure()
+    {
+        m_operator->setParameter(Camera::EXPOSURE, UInt32(5));
+        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
+        m_operator->activate();
+        DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        
+        image.save("CameraTest_testAdjustExposure.png");
+    }
+
+    void CameraTest::testAdjustWhiteBalance()
+    {
+        m_operator->setParameter(Camera::WHITE_BALANCE_RED, Double(2.0));
+        m_operator->setParameter(Camera::WHITE_BALANCE_GREEN, Double(1.0));
+        m_operator->setParameter(Camera::WHITE_BALANCE_BLUE, Double(0.0));
+        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
+        m_operator->activate();
+        DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
+        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        
+        image.save("CameraTest_testAdjustWhiteBalance.png");
+    }
+
     void CameraTest::tearDown ( void )
     {
         m_operator->deactivate();

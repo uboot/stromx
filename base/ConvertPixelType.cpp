@@ -73,11 +73,12 @@ namespace base
         stream::Image::PixelType pixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
         
         unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
+        unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
         
         if(destImage.size() < destImageSize)
             throw InputError(DESTINATION, *this, "Destination image is too small");
         
-        destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width(), destImage.buffer(), pixelType);
+        destImage.initialize(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
         
         if((srcImage.pixelType() == stream::Image::RGB_24 || srcImage.pixelType() == stream::Image::BGR_24)
            && (pixelType == stream::Image::BAYERBG_8 || pixelType == stream::Image::BAYERGB_8))
@@ -157,6 +158,8 @@ namespace base
             {
             case stream::Image::MONO_8:
                 return CV_RGB2GRAY;
+            case stream::Image::BGR_24:
+                return CV_RGB2BGR;
             default:
                 throw stream::InvalidArgument("Unknown conversion.");   
             }
@@ -165,6 +168,8 @@ namespace base
             {
             case stream::Image::MONO_8:
                 return CV_BGR2GRAY;
+            case stream::Image::RGB_24:
+                return CV_BGR2RGB;
             default:
                 throw stream::InvalidArgument("Unknown conversion.");   
             }

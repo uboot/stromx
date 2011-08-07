@@ -17,6 +17,7 @@ namespace stream
         virtual const std::vector<const Description*>& inputs() const = 0;
         virtual const std::vector<const Description*>& outputs() const = 0;
         virtual const std::vector<const Parameter*>& parameters() const = 0;
+        virtual const Parameter & parameter(const unsigned int id) const = 0;
     };
 }
 

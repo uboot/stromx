@@ -114,7 +114,7 @@ namespace stream
         validateWriteAccess(id);
         validateParameterType(id, value.type());
         
-        DataType parameterType = info()->parameters()[id]->type();
+        DataType parameterType = info()->parameter(id).type();
         if(parameterType.is(DataType::TRIGGER))
         {
             m_op->setParameter(id, value);
@@ -333,33 +333,33 @@ namespace stream
     
     void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
     {
-        const Parameter* param = info()->parameters()[id];
+        const Parameter& param = info()->parameter(id);
         
         switch(status())
         {
         case NONE:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
             case Parameter::ACTIVATED_WRITE:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         case INITIALIZED:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         case ACTIVE:
         case EXECUTING:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         default:
@@ -369,41 +369,41 @@ namespace stream
     
     void SynchronizedOperatorKernel::validateWriteAccess(const unsigned int id)
     {
-        const Parameter* param = info()->parameters()[id];
+        const Parameter& param = info()->parameter(id);
         
         switch(status())
         {
         case NONE:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
             case Parameter::NONE_READ:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
             case Parameter::ACTIVATED_WRITE:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         case INITIALIZED:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
             case Parameter::NONE_READ:
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         case ACTIVE:
         case EXECUTING:
-            switch(param->accessMode())
+            switch(param.accessMode())
             {
             case Parameter::NO_ACCESS:
             case Parameter::NONE_READ:
             case Parameter::NONE_WRITE:
             case Parameter::INITIALIZED_READ:
             case Parameter::INITIALIZED_WRITE:
-                throw ParameterAccessViolation(*param, *this->info());
+                throw ParameterAccessViolation(param, *this->info());
             }
             break;
         default:
@@ -413,8 +413,8 @@ namespace stream
     
     void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const stream::DataType& type)
     {
-        const Parameter* param = info()->parameters()[id];
-        if(! type.is(param->type()))
-            throw WrongParameterType(*param, *this->info());
+        const Parameter& param = info()->parameter(id);
+        if(! type.is(param.type()))
+            throw WrongParameterType(param, *this->info());
     }   
 }

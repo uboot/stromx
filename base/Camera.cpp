@@ -46,7 +46,11 @@ namespace base
         m_imageQueue(0),
         m_indexQueue(0),
         m_imageWidth(0),
-        m_imageHeight(0)
+        m_imageHeight(0),
+        m_exposure(BASE_EXPOSURE),
+        m_wbRed(1.0),
+        m_wbGreen(1.0),
+        m_wbBlue(1.0)
     {
         // TODO: initialize all members
     }
@@ -238,6 +242,54 @@ namespace base
                     throw WrongParameterType(parameter(HEIGHT), *this);
                 }
                 break;
+            case EXPOSURE:
+                try
+                {
+                    UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                    m_exposure = intValue;
+                    setRgbParameters();
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(EXPOSURE), *this);
+                }
+                break;
+            case WHITE_BALANCE_RED:
+                try
+                {
+                    Double fpValue = dynamic_cast<const Double &>(value);
+                    m_wbRed = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
+                    setRgbParameters();
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(EXPOSURE), *this);
+                }
+                break;
+            case WHITE_BALANCE_GREEN:
+                try
+                {
+                    Double fpValue = dynamic_cast<const Double &>(value);
+                    m_wbGreen = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
+                    setRgbParameters();
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(EXPOSURE), *this);
+                }
+                break;
+            case WHITE_BALANCE_BLUE:
+                try
+                {
+                    Double fpValue = dynamic_cast<const Double &>(value);
+                    m_wbBlue = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
+                    setRgbParameters();
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(EXPOSURE), *this);
+                }
+                break;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -280,6 +332,14 @@ namespace base
             return m_clip->getParameter(Clip::TOP);
         case LEFT:
             return m_clip->getParameter(Clip::LEFT);
+        case EXPOSURE:
+            return UInt32(m_exposure);
+        case WHITE_BALANCE_RED:
+            return Double(m_wbRed);
+        case WHITE_BALANCE_GREEN:
+            return Double(m_wbGreen);
+        case WHITE_BALANCE_BLUE:
+            return Double(m_wbBlue);
         default:
             throw WrongParameterId(id, *this);
         }
@@ -353,6 +413,32 @@ namespace base
         trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
+        NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE, DataType::UINT_32);
+        exposure->setName("Exposure (milliseconds)");
+        exposure->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        parameters.push_back(exposure);
+        
+        NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataType::DOUBLE);
+        wbRed->setName("White balance red");
+        wbRed->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbRed->setMin(Double(0));
+        wbRed->setMax(Double(WHITE_BALANCE_MAX));
+        parameters.push_back(wbRed);
+        
+        NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataType::DOUBLE);
+        wbGreen->setName("White balance green");
+        wbGreen->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbGreen->setMin(Double(0));
+        wbGreen->setMax(Double(WHITE_BALANCE_MAX));
+        parameters.push_back(wbGreen);
+        
+        NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataType::DOUBLE);
+        wbBlue->setName("White balance blue");
+        wbBlue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbBlue->setMin(Double(0));
+        wbBlue->setMax(Double(WHITE_BALANCE_MAX));
+        parameters.push_back(wbBlue);
+        
         NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataType::UINT_32);
         framePeriod->setName("Frame period (milliseconds)");
         framePeriod->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
@@ -399,5 +485,14 @@ namespace base
         parameters.push_back(pixelType);
                                     
         return parameters;
+    }
+    
+    void Camera::setRgbParameters()
+    {
+        double exposureCoeff = double(m_exposure) / double(BASE_EXPOSURE);
+        
+        m_adjustRgbChannels->setParameter(AdjustRgbChannels::RED, Double(exposureCoeff * m_wbRed));
+        m_adjustRgbChannels->setParameter(AdjustRgbChannels::GREEN, Double(exposureCoeff * m_wbGreen));
+        m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Double(exposureCoeff * m_wbBlue));
     }
 } 
