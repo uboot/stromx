@@ -13,19 +13,14 @@ namespace stream
         try
         {
             XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
-        }
-        catch(XMLException&)
-        {
-            throw InternalError("Failed to initialize Xerces-C.");
-        }
-        
-        try
-        {
+     
+            // use xerces-c
+            
             XMLPlatformUtils::Terminate();  // Terminate after release of memory
         }
         catch(XMLException&)
         {
-            throw InternalError("Failed to terminate Xerces-C.");
+            throw InternalError("Error in Xerces-C.");
         }
     }
 }
