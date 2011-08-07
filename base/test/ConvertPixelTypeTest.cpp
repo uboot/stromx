@@ -2,6 +2,7 @@
 
 #include <base/ConvertPixelType.h>
 #include <base/Image.h>
+
 #include <stream/DataContainer.h>
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
@@ -21,7 +22,9 @@ namespace base
         m_operator = new SynchronizedOperatorKernel(new ConvertPixelType());
         m_operator->initialize();
         m_operator->activate();
-        DataContainer source(new Image("lenna.jpg"));
+        Image* image = new Image("lenna.jpg");
+        image->initialize(499, 511, image->stride(), image->data(), image->pixelType());
+        DataContainer source(image);
         m_operator->setInputData(ConvertPixelType::SOURCE, source);
     }
     
@@ -36,10 +39,27 @@ namespace base
         ReadAccess access = ReadAccess(result);
         const Image& image = dynamic_cast<const Image&>(access());
         CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image.pixelType());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image.width());
-        CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image.height());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
         
         image.save("ConverPixelTypeTest_testExecuteMono8.png");
+    }
+    
+    void ConvertPixelTypeTest::testExecuteBayerBg8()
+    {
+        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::BAYERBG_8));
+        DataContainer destination(new Image(512, 500, stream::Image::MONO_8));
+        m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
+        
+        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        
+        ReadAccess access = ReadAccess(result);
+        const Image& image = dynamic_cast<const Image&>(access());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::BAYERBG_8, image.pixelType());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
+        
+        image.save("ConverPixelTypeTest_testExecuteBayerBg8.png");
     }
     
     void ConvertPixelTypeTest::tearDown ( void )

@@ -79,17 +79,16 @@ namespace base
         
         destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width(), destImage.buffer(), pixelType);
         
-        cv::Mat inCvImage = getOpenCvMat(srcImage);
-        cv::Mat outCvImage = getOpenCvMat(destImage);
-        
-        if(pixelType == srcImage.pixelType())
+        if((srcImage.pixelType() == stream::Image::RGB_24 || srcImage.pixelType() == stream::Image::BGR_24)
+           && (pixelType == stream::Image::BAYERBG_8 || pixelType == stream::Image::BAYERGB_8))
         {
-            inCvImage.copyTo(outCvImage);
+            // this case is not handled by OpenCV
+            rgbToBayer(srcImage, destImage);
         }
         else
         {
-            int code = getCvConversionCode(srcImage.pixelType(), pixelType);
-            cv::cvtColor(inCvImage, outCvImage, code);
+            // use OpenCV for conversion
+            openCvConversion(srcImage, destImage);
         }
         
         Id2DataPair outputMapper(OUTPUT, destMapper.data());
@@ -215,5 +214,69 @@ namespace base
         default:
             throw stream::InvalidArgument("Unknown pixel type.");    
         }  
+    }
+    
+    void ConvertPixelType::rgbToBayer(const stream::Image& inImage, stream::Image& outImage)
+    {
+        if(inImage.pixelSize() != stream::Image::RGB_24
+           && outImage.pixelType() != stream::Image::BAYERBG_8)
+        {
+            throw stream::InvalidArgument("Unknown pixel type.");    
+        }
+        
+        const uint8_t* inLine = inImage.data();
+        uint8_t* outLine = outImage.buffer();
+        
+        for(unsigned int y = 0; y < inImage.height(); ++y)
+        {
+            const uint8_t* in = inLine;
+            uint8_t* out = outLine;
+            
+            if(y % 2)
+            {
+                for(unsigned int x = 0; x < inImage.width(); ++x)
+                {
+                    if(x % 2)
+                        out[0] = in[0];
+                    else
+                        out[0] = in[1];
+                    
+                    in += 3;
+                    out += 1;
+                }
+            }
+            else
+            {
+                for(unsigned int x = 0; x < inImage.width(); ++x)
+                {
+                    if(x % 2)
+                        out[0] = in[1];
+                    else
+                        out[0] = in[2];
+                    
+                    in += 3;
+                    out += 1;
+                }
+            }
+            
+            inLine += inImage.stride();
+            outLine += outImage.stride();
+        }
+    }
+    
+    void ConvertPixelType::openCvConversion(const stream::Image& inImage, stream::Image& outImage)
+    {
+        cv::Mat inCvImage = getOpenCvMat(inImage);
+        cv::Mat outCvImage = getOpenCvMat(outImage);
+        
+        if(inImage.pixelType() == outImage.pixelType())
+        {
+            inCvImage.copyTo(outCvImage);
+        }
+        else
+        {
+            int code = getCvConversionCode(inImage.pixelType(), outImage.pixelType());
+            cv::cvtColor(inCvImage, outCvImage, code);
+        }
     }
 } 

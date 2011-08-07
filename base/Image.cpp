@@ -134,6 +134,8 @@ namespace base
         }
         case stream::Image::BGR_24:
         case stream::Image::MONO_8:
+        case stream::Image::BAYERBG_8:
+        case stream::Image::BAYERGB_8:
         {
             try
             {

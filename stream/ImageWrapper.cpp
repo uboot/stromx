@@ -116,8 +116,6 @@ namespace stream
         if(width == 0 || height == 0)
             return;
         
-        unsigned int dataPerPixel = depth(pixelType) * numChannels(pixelType);
-        
         // check row length
         if(width * pixelSize() > stride)
             throw InvalidArgument("Too small stride.");

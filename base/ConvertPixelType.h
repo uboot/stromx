@@ -61,7 +61,9 @@ namespace base
         static const stream::Version VERSION;   
         
         static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);
-        static const unsigned int getDestPixelSize(const stream::Image::PixelType pixelType);     
+        static const unsigned int getDestPixelSize(const stream::Image::PixelType pixelType);   
+        static void rgbToBayer(const stream::Image & inImage, stream::Image & outImage);  
+        static void openCvConversion(const stream::Image & inImage, stream::Image & outImage);
         
         stream::Enum m_pixelType;
     };

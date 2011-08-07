@@ -31,6 +31,7 @@ namespace base
     {
         CPPUNIT_TEST_SUITE (ConvertPixelTypeTest);
         CPPUNIT_TEST (testExecuteMono8);
+        CPPUNIT_TEST (testExecuteBayerBg8);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,6 +42,7 @@ namespace base
 
         protected:
             void testExecuteMono8();
+            void testExecuteBayerBg8();
             
         private:
             stream::SynchronizedOperatorKernel* m_operator;

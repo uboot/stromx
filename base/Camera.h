@@ -25,6 +25,9 @@ namespace stream
     class DataContainer;
     class Operator;
     class Stream;
+    
+    template<typename T>
+    class NumericParameter;
 }
 
 namespace base
@@ -74,7 +77,7 @@ namespace base
     private:
         static const std::vector<const stream::Description*> setupInputs();
         static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        const std::vector<const stream::Parameter*> setupParameters();
         
         static const std::string NAME;
         static const std::string PACKAGE;
@@ -91,6 +94,14 @@ namespace base
         stream::Operator* m_pixelType;
         stream::Operator* m_imageQueue;
         stream::Operator* m_indexQueue;
+        
+        stream::NumericParameter<stream::UInt32>* m_left;
+        stream::NumericParameter<stream::UInt32>* m_top;
+        stream::NumericParameter<stream::UInt32>* m_width;
+        stream::NumericParameter<stream::UInt32>* m_height;
+        
+        unsigned int m_imageWidth;
+        unsigned int m_imageHeight;
     };
 }
 

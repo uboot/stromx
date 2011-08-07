@@ -34,7 +34,19 @@ namespace base
     const Version Camera::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Camera::Camera()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+        m_stream(0),
+        m_input(0),
+        m_clip(0),
+        m_adjustRgbChannels(0),
+        m_period(0),
+        m_trigger(0),
+        m_buffer(0),
+        m_pixelType(0),
+        m_imageQueue(0),
+        m_indexQueue(0),
+        m_imageWidth(0),
+        m_imageHeight(0)
     {
         // TODO: initialize all members
     }
@@ -121,10 +133,19 @@ namespace base
                 try
                 {
                     const stream::Image& image = dynamic_cast<const stream::Image &>(value);
+                    
+                    m_imageWidth = image.width();
+                    m_imageHeight = image.height();
+                    
                     m_clip->setParameter(Clip::LEFT, UInt32(0));
                     m_clip->setParameter(Clip::TOP, UInt32(0));
-                    m_clip->setParameter(Clip::WIDTH, UInt32(image.width()));
-                    m_clip->setParameter(Clip::HEIGHT, UInt32(image.height()));
+                    m_clip->setParameter(Clip::WIDTH, UInt32(m_imageWidth));
+                    m_clip->setParameter(Clip::HEIGHT, UInt32(m_imageHeight));
+                    
+                    m_left->setMax(UInt32(0));
+                    m_top->setMax(UInt32(0));
+                    m_width->setMax(UInt32(m_imageWidth));
+                    m_height->setMax(UInt32(m_imageHeight));
                 }
                 catch(std::bad_cast&)
                 {
@@ -166,6 +187,57 @@ namespace base
             case BUFFER_SIZE:
                 m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
                 break;
+            case PIXEL_TYPE:
+                m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
+                break;
+            case LEFT:
+                m_clip->setParameter(Clip::LEFT, value);
+                try
+                {
+                    UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                    m_width->setMax(UInt32(m_imageWidth - intValue));
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(LEFT), *this);
+                }
+                break;
+            case TOP:
+                m_clip->setParameter(Clip::TOP, value);
+                try
+                {
+                    UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                    m_height->setMax(UInt32(m_imageHeight - intValue));
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(TOP), *this);
+                }
+                break;
+            case WIDTH:
+                m_clip->setParameter(Clip::WIDTH, value);
+                try
+                {
+                    UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                    m_left->setMax(UInt32(m_imageWidth - intValue));
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(WIDTH), *this);
+                }
+                break;
+            case HEIGHT:
+                m_clip->setParameter(Clip::HEIGHT, value);
+                try
+                {
+                    UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                    m_top->setMax(UInt32(m_imageHeight - intValue));
+                }
+                catch(std::bad_cast&)
+                {
+                    throw WrongParameterType(parameter(HEIGHT), *this);
+                }
+                break;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -200,6 +272,14 @@ namespace base
             return m_buffer->getParameter(impl::CameraBuffer::NUM_BUFFERS);
         case BUFFER_SIZE:
             return m_buffer->getParameter(impl::CameraBuffer::BUFFER_SIZE);
+        case WIDTH:
+            return m_clip->getParameter(Clip::WIDTH);
+        case HEIGHT:
+            return m_clip->getParameter(Clip::HEIGHT);
+        case TOP:
+            return m_clip->getParameter(Clip::TOP);
+        case LEFT:
+            return m_clip->getParameter(Clip::LEFT);
         default:
             throw WrongParameterId(id, *this);
         }
@@ -288,25 +368,25 @@ namespace base
         bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(bufferSize);
     
-        NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
-        width->setName("ROI width");
-        width->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
-        parameters.push_back(width);
+        m_width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
+        m_width->setName("ROI width");
+        m_width->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(m_width);
     
-        NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
-        height->setName("ROI height");
-        height->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
-        parameters.push_back(height);
+        m_height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
+        m_height->setName("ROI height");
+        m_height->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(m_height);
         
-        NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
-        top->setName("ROI top offset");
-        top->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
-        parameters.push_back(top);
+        m_top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
+        m_top->setName("ROI top offset");
+        m_top->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(m_top);
         
-        NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
-        left->setName("ROI left offset");
-        left->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
-        parameters.push_back(left);
+        m_left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
+        m_left->setName("ROI left offset");
+        m_left->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(m_left);
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
         pixelType->setName("Pixel type");
