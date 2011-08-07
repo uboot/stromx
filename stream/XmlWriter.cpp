@@ -16,36 +16,45 @@ namespace stream
             XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
             
             XMLCh tempStr[100];
-            XMLString::transcode("Range", tempStr, 99);
+            XMLString::transcode("", tempStr, 99);
             DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation(tempStr);
 
-            XMLString::transcode("root", tempStr, 99);
-            DOMDocument*   doc = impl->createDocument(0, tempStr, 0);
-            DOMElement*   root = doc->getDocumentElement();
+            XMLString::transcode("Stream", tempStr, 99);
+            DOMDocument* doc = impl->createDocument(0, tempStr, 0);
+            DOMElement* stream = doc->getDocumentElement();
 
-            XMLString::transcode("FirstElement", tempStr, 99);
-            DOMElement*   e1 = doc->createElement(tempStr);
-            root->appendChild(e1);
+            XMLString::transcode("Operator", tempStr, 99);
+            DOMElement* op = doc->createElement(tempStr);
+            stream->appendChild(op);
+            
+            XMLString::transcode("id", tempStr, 99);
+            DOMAttr* id = doc->createAttribute(tempStr);
+            XMLString::transcode("0", tempStr, 99);
+            id->setValue(tempStr);
+            op->setAttributeNode(id);
+            
+            XMLString::transcode("type", tempStr, 99);
+            DOMAttr* type = doc->createAttribute(tempStr);
+            XMLString::transcode("TestOperator", tempStr, 99);
+            type->setValue(tempStr);
+            op->setAttributeNode(type);
 
-            XMLString::transcode("SecondElement", tempStr, 99);
-            DOMElement*   e2 = doc->createElement(tempStr);
-            root->appendChild(e2);
+            XMLString::transcode("Parameter", tempStr, 99);
+            DOMElement* param = doc->createElement(tempStr);
+            op->appendChild(param);
 
-            XMLString::transcode("aTextNode", tempStr, 99);
-            DOMText*       textNode = doc->createTextNode(tempStr);
-            e1->appendChild(textNode);
-
-            // optionally, call release() to release the resource associated with the range after done
-            DOMRange* range = doc->createRange();
-            range->release();
-
-            // no need to release this returned object which is owned by implementation
-            XMLString::transcode("*", tempStr, 99);
-            DOMNodeList*    nodeList = doc->getElementsByTagName(tempStr);
+            XMLString::transcode("UInt32", tempStr, 99);
+            DOMElement* dataType = doc->createElement(tempStr);
+            param->appendChild(dataType);
+            
+            XMLString::transcode("5000", tempStr, 99);
+            DOMText* value = doc->createTextNode(tempStr);
+            dataType->appendChild(value);
             
             DOMLSSerializer* serializer = impl->createLSSerializer();
+            serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
             char* content = XMLString::transcode(serializer->writeToString(doc));
-            // std::cout << content;
+            std::cout << content << std::endl;
             XMLString::release(&content);
             serializer->release();
 
@@ -54,7 +63,11 @@ namespace stream
    
             XMLPlatformUtils::Terminate();  // Terminate after release of memory
         }
-        catch(XMLException&)
+        catch(DOMException& e)
+        {
+            throw InternalError("Error in Xerces-C.");
+        }
+        catch(XMLException& e)
         {
             throw InternalError("Error in Xerces-C.");
         }
