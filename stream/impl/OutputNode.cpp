@@ -2,12 +2,11 @@
 
 #include "../Exception.h"
 #include "../DataContainer.h"
-
-#include "SynchronizedOperatorKernel.h"
+#include "../Operator.h"
 
 namespace stream
 {
-    OutputNode::OutputNode(SynchronizedOperatorKernel*const op, const unsigned int outputId)
+    OutputNode::OutputNode(Operator*const op, const unsigned int outputId)
       : m_operator(op),
         m_outputId(outputId),
         m_remainingCopies(0)
@@ -16,10 +15,10 @@ namespace stream
     void OutputNode::addConnectedInput(InputNode*const input)
     {
         if(! input)
-            throw InvalidArgument("Passed null as input.");
+            throw WrongArgument("Passed null as input.");
         
         if(m_connectedInputs.count(input))
-            throw InvalidArgument("Input node has already been connected to this output node.");
+            throw WrongArgument("Input node has already been connected to this output node.");
         
         m_connectedInputs.insert(input);
     }

@@ -42,9 +42,9 @@ namespace stream
             ++iter)
         {
             if(m_inputs.count((*iter)->id()))
-                throw InvalidArgument("Two inputs with the same ID.");
+                throw WrongArgument("Two inputs with the same ID.");
             
-            m_inputs[(*iter)->id()] = new InputNode(m_kernel, (*iter)->id());
+            m_inputs[(*iter)->id()] = new InputNode(this, (*iter)->id());
         }
         
         for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->outputs().begin();
@@ -52,16 +52,16 @@ namespace stream
             ++iter)
         {
             if(m_outputs.count((*iter)->id()))
-                throw InvalidArgument("Two outputs with the same ID.");
+                throw WrongArgument("Two outputs with the same ID.");
             
-            m_outputs[(*iter)->id()] = new OutputNode(m_kernel, (*iter)->id());
+            m_outputs[(*iter)->id()] = new OutputNode(this, (*iter)->id());
         }
     }
     
     InputNode*const Operator::getInputNode(const unsigned int id)
     {
         if(! m_inputs.count(id))
-            throw InvalidArgument("Input with this ID does not exist.");
+            throw WrongArgument("Input with this ID does not exist.");
         
         return m_inputs[id];
     }
@@ -69,7 +69,7 @@ namespace stream
     OutputNode*const Operator::getOutputNode(const unsigned int id)
     {
         if(! m_outputs.count(id))
-            throw InvalidArgument("Output with this ID does not exist.");
+            throw WrongArgument("Output with this ID does not exist.");
         
         return m_outputs[id];
     }

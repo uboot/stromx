@@ -21,7 +21,7 @@ namespace stream
     {
         if(op == 0)
         {
-            throw InvalidArgument("Invalid argument: Null pointer.");
+            throw WrongArgument("Invalid argument: Null pointer.");
         }
         
         for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
@@ -30,7 +30,7 @@ namespace stream
         {
             if(op->name() == (*iter)->name() && op->package() == (*iter)->package())
             {
-                throw InvalidArgument("Invalid argument: Operator already registered.");
+                throw WrongArgument("Invalid argument: Operator already registered.");
             }
         }
         
@@ -61,6 +61,6 @@ namespace stream
             }
         }
         
-       throw InvalidArgument("Invalid argument: Operator unknown. Register first unknown operator.");        
+       throw WrongArgument("Invalid argument: Operator unknown. Register first unknown operator.");        
     }
 } 

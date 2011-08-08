@@ -13,7 +13,7 @@ namespace stream
                 ++iter)
             {
                 if(m_map.count((*iter)->id()))
-                    throw InvalidArgument("Two descriptors with the same ID");
+                    throw WrongArgument("Two descriptors with the same ID");
                 
                 m_map[(*iter)->id()] = DataContainer();
             }

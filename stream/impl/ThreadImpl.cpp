@@ -26,7 +26,7 @@ namespace stream
             throw WrongState("Thread must be inactive.");
         
         if(! op)
-            throw InvalidArgument("Passed null as input node.");
+            throw WrongArgument("Passed null as input node.");
         
         m_nodeSequence.push_back(op);
     }
@@ -37,7 +37,7 @@ namespace stream
             throw WrongState("Thread must be inactive.");
         
         if(position > m_nodeSequence.size())
-            throw InvalidArgument("Can only insert at an existing position of at the end of the node sequence.");
+            throw WrongArgument("Can only insert at an existing position of at the end of the node sequence.");
         
         m_nodeSequence.insert(m_nodeSequence.begin() + position, op);
     }
@@ -48,7 +48,7 @@ namespace stream
             throw WrongState("Thread must be inactive.");
         
         if(position >= m_nodeSequence.size())
-            throw InvalidArgument("No node at this position.");
+            throw WrongArgument("No node at this position.");
         
         m_nodeSequence.erase(m_nodeSequence.begin() + position);
     }

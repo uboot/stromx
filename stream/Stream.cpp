@@ -31,7 +31,7 @@ namespace stream
     {
         if (m_network == 0)
         {
-            throw InvalidArgument("Invalid argument: Null pointer");
+            throw WrongArgument("Invalid argument: Null pointer");
         }
     }
     
@@ -129,7 +129,7 @@ namespace stream
     {
         if (thr == 0)
         {
-            throw InvalidArgument("Invalid argument: Null pointer");
+            throw WrongArgument("Invalid argument: Null pointer");
         }
         
         for (std::vector<Thread*>::iterator iter = m_threads.begin();
@@ -143,7 +143,7 @@ namespace stream
             }
         }
         
-        throw InvalidArgument("Thread does not exists");
+        throw WrongArgument("Thread does not exists");
     }
     
     const std::vector<Thread*> & Stream::threads()

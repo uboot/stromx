@@ -53,7 +53,7 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_outputNode->addConnectedInput(m_inputNode));
         CPPUNIT_ASSERT_EQUAL(size_t(1), m_outputNode->connectedInputs().size());
         
-        CPPUNIT_ASSERT_THROW(m_outputNode->addConnectedInput(0), InvalidArgument);
+        CPPUNIT_ASSERT_THROW(m_outputNode->addConnectedInput(0), WrongArgument);
     }
 }
 

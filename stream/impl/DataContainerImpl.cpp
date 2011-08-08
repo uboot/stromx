@@ -17,7 +17,7 @@ namespace stream
             m_data(data)
         {
             if(! data)
-                throw InvalidArgument();
+                throw WrongArgument();
         }
         
         void DataContainerImpl::getReadAccess()
@@ -128,7 +128,7 @@ namespace stream
         void DataContainerImpl::getRecycleAccess(Recycler*const recycler)
         {        
             if(! recycler)
-                throw InvalidArgument();
+                throw WrongArgument();
             
             unique_lock_t lock(m_mutex);
             

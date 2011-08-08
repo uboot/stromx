@@ -159,7 +159,7 @@ namespace stream
             ++iter)
         {
             if(ids.count((*iter)->id()))
-                throw InvalidArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
     
@@ -172,7 +172,7 @@ namespace stream
             ++iter)
         {
             if(ids.count((*iter)->id()))
-                throw InvalidArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
         }
     }
 }

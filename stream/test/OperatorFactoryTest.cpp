@@ -32,7 +32,7 @@ namespace stream
         m_factory->registerOperator(op);
         
         // try to get an operator which does not exist in the factory
-        CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), InvalidArgument);
+        CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), WrongArgument);
         
         // get the existing operator
         OperatorKernel* newOp;
@@ -45,7 +45,7 @@ namespace stream
     void OperatorFactoryTest::testRegisterOperator()
     {
         // only non-zero input arguments are allowed
-        CPPUNIT_ASSERT_THROW(m_factory->registerOperator(0), InvalidArgument);
+        CPPUNIT_ASSERT_THROW(m_factory->registerOperator(0), WrongArgument);
         
         // add a new operator to the factory
         OperatorKernel* op = new TestOperator;
@@ -59,7 +59,7 @@ namespace stream
         // this should result in an exception, because an operator with the same name()
         // and package() has already been added to the factory
         OperatorKernel* duplicateOp = new TestOperator;
-        CPPUNIT_ASSERT_THROW(m_factory->registerOperator(duplicateOp), InvalidArgument);
+        CPPUNIT_ASSERT_THROW(m_factory->registerOperator(duplicateOp), WrongArgument);
         
         // delete duplicateOperator to avoid a memory leak
         // this is not necessary for op because it belongs to the factory

@@ -11,7 +11,7 @@ namespace stream
             ++iter)
         {
             if(iter->value() == description.value())
-                throw InvalidArgument("A description with this value has already been added.");
+                throw WrongArgument("A description with this value has already been added.");
         }
         
         m_descriptions.push_back(description);
@@ -29,6 +29,6 @@ namespace stream
             return;
         }
         
-        throw InvalidArgument("No description with this value exists.");
+        throw WrongArgument("No description with this value exists.");
     }
 }
