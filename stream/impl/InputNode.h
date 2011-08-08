@@ -13,7 +13,7 @@ namespace stream
         InputNode(Operator* const op, const unsigned int inputId);
         
         const unsigned int inputId() const { return m_inputId; }
-        const Operator* const op() { return m_operator; }
+        Operator* const op() { return m_operator; }
         const bool isConnected() const { return m_source == 0; }
         const OutputNode& source() const { return *m_source; }
         void connect(OutputNode* const output);
