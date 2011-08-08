@@ -35,6 +35,8 @@ namespace stream
         friend class Network;
         friend class Thread;
         friend class ThreadImplTest;
+        friend class InputNodeTest;
+        friend class OutputNodeTest;
         friend class NetworkTest;
         
     public:
