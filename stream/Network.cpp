@@ -19,11 +19,12 @@
 #include "Operator.h"
 #include "Exception.h"
 #include "Node.h"
+#include "impl/InputNode.h"
 
 namespace stream
 {
     Network::Network()
-        : m_status(INACTIVE)
+        :m_operators(0)
     {
     }
     
@@ -39,21 +40,25 @@ namespace stream
         m_operators.clear();
     }
     
+    void Network::connect(Operator* const targetOp, const unsigned int inputId, 
+                         Operator* const sourceOp, const unsigned int outputId)
+    { 
+        getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
+    }
+
+    void Network::disconnect(Operator* const targetOp, const unsigned int inputId)
+    {
+        getInputNode(targetOp, inputId)->disconnect();
+    }
+    
     void Network::activate()
     {
-        if (m_status == ACTIVE)
-        {
-            throw InvalidState("Network already active");
-        }
-        
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
             (*iter)->activate();
         }
-        
-        m_status = ACTIVE;
     }
 
     void Network::deactivate()
@@ -64,12 +69,16 @@ namespace stream
         {
             (*iter)->deactivate();
         }
-        
-        m_status = INACTIVE;
+
     }
     
     void Network::addOperator(Operator* const op)
     {
+        if (op == 0)
+        {
+            throw InvalidArgument("Invalid argument: Null pointer");
+        }
+        
         if(op->status() != Operator::INITIALIZED)
             throw InvalidArgument("Operator must be initialized.");
         
@@ -105,21 +114,6 @@ namespace stream
         }
         
         throw InvalidArgument("Operator does not exist");
-    }
-    
-    Operator* const Network::getOperator(const std::string & name)
-    {
-        for(std::vector<Operator*>::iterator iter = m_operators.begin();
-            iter != m_operators.end();
-            ++iter)
-        {
-            if ((*iter)->name() == name)
-            {
-                return *iter;
-            }
-        }  
-        
-        throw InvalidState("Operator does not exist");
     }
     
     InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const

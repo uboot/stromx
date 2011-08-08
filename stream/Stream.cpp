@@ -49,27 +49,41 @@ namespace stream
     
     void Stream::start()
     {
-        if (m_status == ACTIVE)
+        if (m_status != INACTIVE)
         {
-            throw WrongState("Stream object already active. Can't use start().");
+            throw WrongState("Stream object not inactive.");
         }
        
-        m_network->activate();
-        for (std::vector<Thread*>::iterator iter = m_threads.begin();
-            iter != m_threads.end();
-            ++iter)
+        try
         {
-            (*iter)->start();
+            m_network->activate();
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter)
+            {
+                (*iter)->start();
+            }
+            
+            m_status = ACTIVE;
         }
-        
-        m_status = ACTIVE;
+        catch(stream::Exception& e)
+        {
+            stop();
+            join();
+            throw e;
+        }
     }
     
     void Stream::join()
     {
+        if (m_status == INACTIVE)
+        {
+            return;
+        }
+        
         if (m_status != DEACTIVATING)
         {
-            throw WrongState("Stream object not deactivating. Can't use join().");
+            throw WrongState("Stream object not deactivating.");
         }
         
         for (std::vector<Thread*>::iterator iter = m_threads.begin();
@@ -77,6 +91,7 @@ namespace stream
             ++iter)
         {
             (*iter)->join();
+            BOOST_ASSERT((*iter)->status() == Thread::INACTIVE);
         }
         
         m_network->deactivate();
@@ -88,7 +103,7 @@ namespace stream
     {
         if (m_status != ACTIVE)
         {
-            throw WrongState("Stream object not active. Can't use stop().");
+            return;
         }
         
         for (std::vector<Thread*>::iterator iter = m_threads.begin();
@@ -136,19 +151,44 @@ namespace stream
         return m_threads;
     }
     
-    const stream::Stream::Status Stream::status()
-    {
-        return m_status;
-    }
-    
     void Stream::connect(Operator* const targetOp, const unsigned int inputId, 
                          Operator* const sourceOp, const unsigned int outputId)
     {
-        m_network->getInputNode(targetOp, inputId)->connect(m_network->getOutputNode(sourceOp, outputId));
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot connect operators within a running system.");
+        }
+        
+        m_network->connect(targetOp, inputId, sourceOp, outputId);
     }
 
     void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
     {
-        m_network->getInputNode(targetOp, inputId)->disconnect();
-    } 
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot disconnect operators within a running system.");
+        }
+        
+        m_network->disconnect(targetOp, inputId);
+    }
+    
+    void Stream::addOperator(Operator* const op)
+    {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot add operator to a running system.");
+        }
+        
+        m_network->addOperator(op); 
+    }
+    
+    void Stream::removeOperator(Operator* const op)
+    {
+        if (m_status != INACTIVE)
+        {
+            throw WrongState("Stream object active. Cannot remove operator from a running system.");
+        }
+        
+        m_network->removeOperator(op);
+    }  
 }

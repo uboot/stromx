@@ -23,15 +23,20 @@ namespace stream
 
     void NetworkTest::testAddOperator()
     {
+        //add nullpointer should throw an exception
+        CPPUNIT_ASSERT_THROW(m_network->addOperator(0), InvalidArgument);
+        
         OperatorKernel* kernel = new TestOperator();
         Operator* op1 = new Operator(kernel);
-        
         // add an unitialized operator should throw an exception
         CPPUNIT_ASSERT_THROW(m_network->addOperator(op1), InvalidArgument);
         
         op1->initialize();
+        // add initialized operator should not throw an exception;
         CPPUNIT_ASSERT_NO_THROW(m_network->addOperator(op1));
+        // size of vector containing all operators belonging to the network should be +1 
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_network->operators().size()));
+        
         CPPUNIT_ASSERT_EQUAL(op1, m_network->operators()[0]);
         
         // can not add the same operator again
@@ -60,23 +65,33 @@ namespace stream
 
     void NetworkTest::testActivate()
     {
+        Operator* op1 = new Operator(new TestOperator());
+        Operator* op2 = new Operator(new TestOperator());
+        op1->initialize();
+        op2->initialize();
+        m_network->addOperator(op1);
+        m_network->addOperator(op2);
         CPPUNIT_ASSERT_NO_THROW(m_network->activate());
-        CPPUNIT_ASSERT_EQUAL(Network::ACTIVE, m_network->status());
-        
-        CPPUNIT_ASSERT_THROW(m_network->activate(), InvalidState);
+        CPPUNIT_ASSERT_EQUAL(Operator::ACTIVE,op1->status());
+        CPPUNIT_ASSERT_EQUAL(Operator::ACTIVE,op2->status());
     }
 
     void NetworkTest::testDeactivate()
     {
         CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
-        
+        Operator* op1 = new Operator(new TestOperator());
+        Operator* op2 = new Operator(new TestOperator());
+        op1->initialize();
+        op2->initialize();
+        m_network->addOperator(op1);
+        m_network->addOperator(op2);
         m_network->activate();
         CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
-        CPPUNIT_ASSERT_EQUAL(Network::INACTIVE, m_network->status());
     }
 
     void NetworkTest::tearDown()
     {
         delete m_network;
+        
     }
 }
