@@ -16,10 +16,10 @@
 
 
 #include "Network.h"
-#include "Operator.h"
-#include "Exception.h"
-#include "Node.h"
-#include "impl/InputNode.h"
+#include "../Operator.h"
+#include "../Exception.h"
+#include "../Node.h"
+#include "InputNode.h"
 
 namespace stream
 {

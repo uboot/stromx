@@ -1,7 +1,7 @@
 #include "Thread.h"
 
 #include "Exception.h"
-#include "Network.h"
+#include "impl/Network.h"
 #include "Operator.h"
 
 #include "impl/InputNode.h"

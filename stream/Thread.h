@@ -17,7 +17,7 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
-#include "Network.h"
+#include "impl/Network.h"
 #include "Node.h"
 
 #include "impl/ThreadImpl.h"

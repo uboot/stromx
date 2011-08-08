@@ -20,7 +20,7 @@
 #include <vector> 
 #include <string>
 
-#include "Network.h"
+#include "impl/Network.h"
 
 namespace stream
 {
@@ -47,6 +47,7 @@ namespace stream
         
         void addOperator(Operator* const op);
         void removeOperator(Operator* const op);
+        const Node source(Operator* const targetOp, const unsigned int inputId) const;
         
         void connect(Operator* const targetOp, const unsigned int inputId, 
                      Operator* const sourceOp, const unsigned int outputId);

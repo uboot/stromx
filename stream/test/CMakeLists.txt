@@ -40,7 +40,7 @@ set(SOURCES
     ThreadImplTest.cpp
     ../Thread.cpp
     ThreadTest.cpp
-    ../Network.cpp
+    ../impl/Network.cpp
     NetworkTest.cpp
     ../OperatorFactory.cpp
     OperatorFactoryTest.cpp

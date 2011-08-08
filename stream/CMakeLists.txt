@@ -23,6 +23,7 @@ set(SOURCES
     impl/SynchronizedOperatorKernel.cpp
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
+    impl/Network.cpp
     DataContainer.cpp
     ReadAccess.cpp
     RecycleAccess.cpp
@@ -33,7 +34,6 @@ set(SOURCES
     Id2DataMapper.cpp
     Id2DataPair.cpp
     ImageWrapper.cpp
-    Network.cpp
     Operator.cpp
     OperatorKernel.cpp
     OperatorFactory.cpp

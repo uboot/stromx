@@ -17,7 +17,7 @@
 #include "Stream.h"
 
 #include "Exception.h"
-#include "Network.h"
+#include "impl/Network.h"
 #include "Thread.h"
 
 #include "impl/InputNode.h"

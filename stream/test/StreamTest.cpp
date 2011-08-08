@@ -16,7 +16,7 @@
 
 #include "StreamTest.h"
 
-#include <stream/Network.h>
+#include <stream/impl/Network.h>
 #include <stream/Stream.h>
 #include <stream/Thread.h>
 
