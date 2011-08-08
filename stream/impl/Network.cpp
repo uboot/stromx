@@ -20,6 +20,7 @@
 #include "../Exception.h"
 #include "../Node.h"
 #include "InputNode.h"
+#include "OutputNode.h"
 
 namespace stream
 {
@@ -114,6 +115,22 @@ namespace stream
         }
         
         throw WrongArgument("Operator does not exist");
+    }
+    
+    const Node Network::source(Operator* const targetOp, const unsigned int inputId) const
+    {
+        for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
+            iter != m_operators.end();
+            ++iter)
+        {
+            if ((*iter) == targetOp)
+            {
+                const OutputNode& node = targetOp->getInputNode(inputId)->source();
+                return Node(node.op(), node.outputId());
+            }
+        }
+        
+        throw WrongArgument("Unknown operator.");
     }
     
     InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const

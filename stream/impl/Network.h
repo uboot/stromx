@@ -21,6 +21,8 @@
 #include <string>
 #include <vector>
 
+#include "../Node.h"
+
 namespace stream
 {
     class Operator;
@@ -47,6 +49,7 @@ namespace stream
         
         void addOperator(Operator* const op);
         void removeOperator(Operator* const op);
+        const Node source(Operator* const targetOp, const unsigned int inputId) const;
 
         void activate();
         void deactivate();

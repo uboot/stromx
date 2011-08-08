@@ -15,8 +15,8 @@ namespace stream
     public:
         OutputNode(Operator* const op, const unsigned int outputId);
         
-        const unsigned int inputId() const { return m_outputId; }
-        const Operator* const op() { return m_operator; }
+        const unsigned int outputId() const { return m_outputId; }
+        Operator* const op() const { return m_operator; }
         DataContainer getOutputData();
         void addConnectedInput(InputNode* const input);
         void removeConnectedInput(InputNode* const input);
