@@ -151,7 +151,7 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_GRAY2BGR;
             default:
-                throw stream::InvalidArgument("Unknown conversion.");   
+                throw stream::WrongArgument("Unknown conversion.");   
             }
         case stream::Image::RGB_24:
             switch(outType)
@@ -161,7 +161,7 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_RGB2BGR;
             default:
-                throw stream::InvalidArgument("Unknown conversion.");   
+                throw stream::WrongArgument("Unknown conversion.");   
             }
         case stream::Image::BGR_24:
             switch(outType)
@@ -171,7 +171,7 @@ namespace base
             case stream::Image::RGB_24:
                 return CV_BGR2RGB;
             default:
-                throw stream::InvalidArgument("Unknown conversion.");   
+                throw stream::WrongArgument("Unknown conversion.");   
             }
         case stream::Image::BAYERBG_8:
             switch(outType)
@@ -181,7 +181,7 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_BayerBG2BGR;
             default:
-                throw stream::InvalidArgument("Unknown conversion.");   
+                throw stream::WrongArgument("Unknown conversion.");   
             }
         case stream::Image::BAYERGB_8:
             switch(outType)
@@ -191,10 +191,10 @@ namespace base
             case stream::Image::BGR_24:
                 return CV_BayerGB2BGR;
             default:
-                throw stream::InvalidArgument("Unknown conversion.");   
+                throw stream::WrongArgument("Unknown conversion.");   
             }
         default:
-            throw stream::InvalidArgument("Unknown conversion.");
+            throw stream::WrongArgument("Unknown conversion.");
         }         
     }
     
@@ -217,7 +217,7 @@ namespace base
         case stream::Image::BGR_48:
             return 6;
         default:
-            throw stream::InvalidArgument("Unknown pixel type.");    
+            throw stream::WrongArgument("Unknown pixel type.");    
         }  
     }
     
@@ -226,7 +226,7 @@ namespace base
         if(inImage.pixelSize() != stream::Image::RGB_24
            && outImage.pixelType() != stream::Image::BAYERBG_8)
         {
-            throw stream::InvalidArgument("Unknown pixel type.");    
+            throw stream::WrongArgument("Unknown pixel type.");    
         }
         
         const uint8_t* inLine = inImage.data();

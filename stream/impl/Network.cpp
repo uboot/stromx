@@ -76,11 +76,11 @@ namespace stream
     {
         if (op == 0)
         {
-            throw InvalidArgument("Invalid argument: Null pointer");
+            throw WrongArgument("Invalid argument: Null pointer");
         }
         
         if(op->status() != Operator::INITIALIZED)
-            throw InvalidArgument("Operator must be initialized.");
+            throw WrongArgument("Operator must be initialized.");
         
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
@@ -88,7 +88,7 @@ namespace stream
         {
             if ((*iter)->info() == op->info())
             {
-                throw InvalidArgument("Operator already exists");
+                throw WrongArgument("Operator already exists");
             }
         }
 
@@ -99,7 +99,7 @@ namespace stream
     {
         if (op == 0)
         {
-            throw InvalidArgument("Invalid argument: Null pointer");
+            throw WrongArgument("Invalid argument: Null pointer");
         }
 
         for(std::vector<Operator*>::iterator iter = m_operators.begin();
@@ -113,7 +113,7 @@ namespace stream
             }
         }
         
-        throw InvalidArgument("Operator does not exist");
+        throw WrongArgument("Operator does not exist");
     }
     
     InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
@@ -122,7 +122,7 @@ namespace stream
             std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
-            throw InvalidArgument("Operator is not part of the stream.");
+            throw WrongArgument("Operator is not part of the stream.");
         
         return (*iter)->getInputNode(inputId);
     }
@@ -133,7 +133,7 @@ namespace stream
             std::find(m_operators.begin(), m_operators.end(), op);
         
         if(iter == m_operators.end())
-            throw InvalidArgument("Operator is not part of the stream.");
+            throw WrongArgument("Operator is not part of the stream.");
         
         return (*iter)->getOutputNode(outputId);
     }

@@ -2,13 +2,13 @@
 
 #include "../DataContainer.h"
 #include "../Exception.h"
+#include "../Operator.h"
 
 #include "OutputNode.h"
-#include "SynchronizedOperatorKernel.h"
 
 namespace stream
 {
-    InputNode::InputNode(SynchronizedOperatorKernel* const op, const unsigned int inputId)
+    InputNode::InputNode(Operator* const op, const unsigned int inputId)
       : m_source(0),
         m_inputId(inputId),
         m_operator(op)

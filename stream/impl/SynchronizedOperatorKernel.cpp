@@ -16,7 +16,7 @@ namespace stream
         m_status(NONE)
     {
         if(!op)
-            throw InvalidArgument("Passed null pointer as operator.");
+            throw WrongArgument("Passed null pointer as operator.");
     }
     
     SynchronizedOperatorKernel::~SynchronizedOperatorKernel()

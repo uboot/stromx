@@ -6,15 +6,17 @@
 
 namespace stream
 {
-    class SynchronizedOperatorKernel;
+    class Operator;
     class DataContainer;
     class InputNode;
     
     class OutputNode
     {
     public:
-        OutputNode(SynchronizedOperatorKernel* const op, const unsigned int outputId);
+        OutputNode(Operator* const op, const unsigned int outputId);
         
+        const unsigned int inputId() const { return m_outputId; }
+        const Operator* const op() { return m_operator; }
         DataContainer getOutputData();
         void addConnectedInput(InputNode* const input);
         void removeConnectedInput(InputNode* const input);
@@ -23,7 +25,7 @@ namespace stream
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
         
-        SynchronizedOperatorKernel* m_operator;
+        Operator* m_operator;
         unsigned int m_outputId;
         std::set<InputNode*> m_connectedInputs;
         unsigned int m_remainingCopies;

@@ -24,7 +24,7 @@ namespace base
             cvType = CV_8UC1;
             break;
         default:
-            throw stream::InvalidArgument("Unknown pixel type.");
+            throw stream::WrongArgument("Unknown pixel type.");
         }
         
         uint8_t* data = const_cast<uint8_t*>(image.data());

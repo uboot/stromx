@@ -20,19 +20,19 @@ namespace stream
         std::string m_message; 
     };  
     
-    class InvalidArgument : public Exception
+    class WrongArgument : public Exception
     {
     public:
-        InvalidArgument(const std::string & message = "InvalidArgument")
+        WrongArgument(const std::string & message = "WrongArgument")
           : Exception(message)
         {}
     };  
     
-    class WrongId : public InvalidArgument
+    class WrongId : public WrongArgument
     {
     public:
         WrongId(const std::string & message = "WrongId")
-          : InvalidArgument(message)
+          : WrongArgument(message)
         {}
     };  
     
@@ -60,10 +60,10 @@ namespace stream
         {}
     };
     
-    class FileAccess : public Exception
+    class FileAccessFailed : public Exception
     {
     public:
-        FileAccess(const std::string & message = "FileAccess")
+        FileAccessFailed(const std::string & message = "FileAccessFailed")
           : Exception(message)
         {}
     };

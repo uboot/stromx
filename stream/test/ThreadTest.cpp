@@ -35,7 +35,7 @@ namespace stream
         Operator* op = new Operator(new TestOperator);
         op->initialize();
         
-        CPPUNIT_ASSERT_THROW(m_thread->addNode(op, TestOperator::INPUT_1), InvalidArgument);
+        CPPUNIT_ASSERT_THROW(m_thread->addNode(op, TestOperator::INPUT_1), WrongArgument);
         
         m_network->addOperator(op);
         CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(op, TestOperator::INPUT_1));
@@ -45,12 +45,23 @@ namespace stream
 
     void ThreadTest::testInsertOperator()
     {
+        Operator* op = new Operator(new TestOperator);
+        op->initialize();
+        
+        CPPUNIT_ASSERT_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1), WrongArgument);
+        
+        m_network->addOperator(op);
+        CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1));
+        CPPUNIT_ASSERT_EQUAL(op, m_thread->nodeSequence()[1].op());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->nodeSequence()[1].id());
     }
 
     void ThreadTest::testRemoveOperator()
     {
-
-}
+        CPPUNIT_ASSERT_THROW(m_thread->removeNode(3), WrongArgument);
+        CPPUNIT_ASSERT_NO_THROW(m_thread->removeNode(1));
+        CPPUNIT_ASSERT_EQUAL(1, int(m_thread->nodeSequence().size()));
+    }
 
     void ThreadTest::tearDown()
     {

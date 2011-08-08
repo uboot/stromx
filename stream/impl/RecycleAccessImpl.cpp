@@ -16,7 +16,7 @@ namespace stream
         void RecycleAccessImpl::add(DataContainer& data)
         {
             if(data.empty())
-                throw InvalidArgument("Data container is empty.");
+                throw WrongArgument("Data container is empty.");
             
             lock_t lock(m_mutex);
             DataContainerImpl* container = data.m_impl.get();
