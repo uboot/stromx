@@ -4,6 +4,7 @@
 
 #include <stream/Thread.h>
 #include <stream/Operator.h>
+#include <stream/Exception.h>
 
 #include "TestOperator.h"
 
@@ -29,7 +30,15 @@ namespace stream
     
     void ThreadTest::testAddOperator()
     {
+        Operator* op = new Operator(new TestOperator);
+        op->initialize();
         
+        CPPUNIT_ASSERT_THROW(m_thread->addNode(op, TestOperator::INPUT_1), InvalidArgument);
+        
+        m_network->addOperator(op);
+        CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(op, TestOperator::INPUT_1));
+        CPPUNIT_ASSERT_EQUAL(op, m_thread->nodeSequence()[0].op());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->nodeSequence()[0].id());
     }
 
     void ThreadTest::testInsertOperator()
