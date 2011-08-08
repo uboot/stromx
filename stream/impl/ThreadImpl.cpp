@@ -48,7 +48,7 @@ namespace stream
             throw WrongState("Thread must be inactive.");
         
         if(position >= m_nodeSequence.size())
-            throw InvalidArgument("This position is occupied in the node sequence of this thread.");
+            throw InvalidArgument("No node at this position.");
         
         m_nodeSequence.erase(m_nodeSequence.begin() + position);
     }
