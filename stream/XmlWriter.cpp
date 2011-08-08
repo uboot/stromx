@@ -3,6 +3,7 @@
 #include "Exception.h"
 
 #include <xercesc/dom/DOM.hpp>
+
 #include <iostream>
 
 using namespace xercesc;
@@ -14,7 +15,18 @@ namespace stream
         try
         {
             XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
-            
+        }
+        catch (const XMLException& toCatch)
+        {
+            char* message = XMLString::transcode(toCatch.getMessage());
+            std::cerr << "Error during initialization! :\n"
+                 << message << "\n";
+            XMLString::release(&message);
+            return;
+        }
+        
+        try
+        {
             XMLCh tempStr[100];
             XMLString::transcode("", tempStr, 99);
             DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation(tempStr);
@@ -60,8 +72,6 @@ namespace stream
 
             // done with the document, must call release() to release the entire document resources
             doc->release();
-   
-            XMLPlatformUtils::Terminate();  // Terminate after release of memory
         }
         catch(DOMException& e)
         {
@@ -70,6 +80,14 @@ namespace stream
         catch(XMLException& e)
         {
             throw InternalError("Error in Xerces-C.");
+        }
+                    
+        try
+        {
+            XMLPlatformUtils::Terminate();  // Terminate after release of memory
+        }
+        catch(XMLException&)
+        {
         }
     }
 } 
