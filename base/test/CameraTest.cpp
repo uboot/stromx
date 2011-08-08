@@ -40,6 +40,9 @@ namespace base
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
             UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
             CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
+            
+            const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+            image.save("CameraTest_testExecuteSoftwareTrigger.png");
         }
         
         m_operator->clearOutputData(Camera::OUTPUT);
@@ -53,6 +56,7 @@ namespace base
             UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
             CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
         }
+        
     }
     
     void CameraTest::testExecuteInternalTrigger()

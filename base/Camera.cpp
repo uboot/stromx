@@ -87,7 +87,6 @@ namespace base
         m_stream->connect(m_pixelType, ConvertPixelType::SOURCE, m_buffer, impl::CameraBuffer::OUTPUT);
         m_stream->connect(m_pixelType, ConvertPixelType::DESTINATION, m_buffer, impl::CameraBuffer::BUFFER);
         m_stream->connect(m_imageQueue, Queue::INPUT, m_pixelType, ConvertPixelType::OUTPUT);
-        m_stream->connect(m_imageQueue, Queue::INPUT, m_pixelType, ConvertPixelType::OUTPUT);
         m_stream->connect(m_indexQueue, Queue::INPUT, m_buffer, impl::CameraBuffer::INDEX);
         
         Thread* frameThread = m_stream->addThread();
@@ -119,6 +118,20 @@ namespace base
                 break;
             case IMAGE:
                 m_input->setParameter(ConstImage::IMAGE, value);
+                
+                try
+                {
+                    const stream::Image& image = dynamic_cast<const stream::Image &>(value);
+                    m_clip->setParameter(Clip::LEFT, UInt32(0));
+                    m_clip->setParameter(Clip::TOP, UInt32(0));
+                    m_clip->setParameter(Clip::WIDTH, UInt32(image.width()));
+                    m_clip->setParameter(Clip::HEIGHT, UInt32(image.height()));
+                }
+                catch(std::bad_cast&)
+                {
+                    throw ParameterTypeException(parameter(TRIGGER_MODE), *this);
+                }
+                
                 break;
             case NUM_BUFFERS:
                 m_buffer->setParameter(impl::CameraBuffer::NUM_BUFFERS, value);
@@ -275,6 +288,36 @@ namespace base
         bufferSize->setName("Buffer size in bytes");
         bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(bufferSize);
+    
+        NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
+        width->setName("ROI width");
+        width->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(width);
+    
+        NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
+        height->setName("ROI height");
+        height->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(height);
+        
+        NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
+        top->setName("ROI top offset");
+        top->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(top);
+        
+        NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
+        left->setName("ROI left offset");
+        left->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        parameters.push_back(left);
+        
+        EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
+        pixelType->setName("Pixel type");
+        pixelType->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));
+        pixelType->add(EnumDescription(Enum(stream::Image::RGB_24), "RGB image 24-bit"));
+        pixelType->add(EnumDescription(Enum(stream::Image::BGR_24), "BGR image 24-bit"));
+        pixelType->add(EnumDescription(Enum(stream::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
+        pixelType->add(EnumDescription(Enum(stream::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
+        parameters.push_back(pixelType);
                                     
         return parameters;
     }

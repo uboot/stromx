@@ -150,10 +150,10 @@ namespace stream
             {
                 interruptExceptionWasThrown = true;
             }   
+            
+            if(! interruptExceptionWasThrown)
+                m_cond.notify_all();
         }
-        
-        if(! interruptExceptionWasThrown)
-            m_cond.notify_all();
         
         // lock again before entering OperatorKernel::execute()
         m_mutex.lock();
@@ -187,10 +187,10 @@ namespace stream
             {
                 interruptExceptionWasThrown = true;
             }   
+            
+            if(! interruptExceptionWasThrown)
+                m_cond.notify_all();
         }
-        
-        if(! interruptExceptionWasThrown)
-            m_cond.notify_all();
         
         // lock again before entering OperatorKernel::execute()
         m_mutex.lock();
@@ -231,45 +231,41 @@ namespace stream
 
     void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
     {
-        {
-            unique_lock_t lock(m_mutex);
-            
-            if( m_status != ACTIVE
-                && m_status != EXECUTING)
-            {
-                throw InvalidStateException("Can not get output data if operator is inactive.");
-            }
+        unique_lock_t lock(m_mutex);
         
-            while(! m_inputMap[id].empty())
+        if( m_status != ACTIVE
+            && m_status != EXECUTING)
+        {
+            throw InvalidStateException("Can not get output data if operator is inactive.");
+        }
+    
+        while(! m_inputMap[id].empty())
+        {
+            // this section might throw an InterruptionException which will fall
+            // through to the calling function
+            if(m_status == ACTIVE)
             {
-                // this section might throw an InterruptionException which will fall
-                // through to the calling function
-                if(m_status == ACTIVE)
-                {
-                    // try to get some output data by executing
-                    execute();
-                }
-                else
-                {
-                    // wait for the situation to change
-                    waitForSignal(lock);
-                }
+                // try to get some output data by executing
+                execute();
             }
-            
-            m_inputMap[id] = data;
+            else
+            {
+                // wait for the situation to change
+                waitForSignal(lock);
+            }
         }
         
+        m_inputMap[id] = data;
+            
         m_cond.notify_all();
     }
     
     void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
     {
-        {
-            lock_t lock(m_mutex);
-            
-            m_outputMap[id] = DataContainer();
-        }
+        lock_t lock(m_mutex);
         
+        m_outputMap[id] = DataContainer();
+            
         m_cond.notify_all();
     }
     
