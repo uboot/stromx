@@ -41,8 +41,8 @@ namespace stream
         ~Stream();
         const std::string& name() const { return m_name; }
         void setName(const std::string& name) { m_name = name; }
-        const Status& status() const { return m_status; }
-        const std::vector<Operator*> operators() const { return m_network->operators(); }
+        const Status status() const { return m_status; }
+        const std::vector<Operator*>& operators() const { return m_network->operators(); }
         
         
         void addOperator(Operator* const op);
@@ -55,7 +55,6 @@ namespace stream
         Thread* const addThread();
         void removeThread(Thread* const thr);
         const std::vector<Thread*> & threads();
-        const Status status();
         
         void start();
         void join();

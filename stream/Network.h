@@ -37,22 +37,24 @@ namespace stream
         };
         
         Network();
-        virtual ~Network();
+        ~Network();
         
-        const Status status() { return m_status; }
-        const std::vector<Operator*> operators() const { return m_operators; }
+        const std::vector<Operator*>& operators() const { return m_operators; }
+              
+        void connect(Operator* const targetOp, const unsigned int inputId, 
+                     Operator* const sourceOp, const unsigned int outputId);
+        void disconnect(Operator* const targetOp, const unsigned int inputId);
         
         void addOperator(Operator* const op);
         void removeOperator(Operator* const op);
-//         Operator* const getOperator(const std::string & name);
+
         void activate();
         void deactivate();
+        
         InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
         OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
                
     private:
-        
-        Status m_status;
         std::vector<Operator*> m_operators;
     };
 }
