@@ -1,8 +1,6 @@
 #ifndef STREAM_INPUTNODE_H
 #define STREAM_INPUTNODE_H
 
-#include <boost/thread/mutex.hpp>
-
 namespace stream
 {
     class OutputNode;
@@ -23,13 +21,9 @@ namespace stream
         void setInputData();
         
     private:
-        typedef boost::lock_guard<boost::mutex> lock_t;
-        
         OutputNode *m_source;
         unsigned int m_inputId;
         SynchronizedOperatorKernel* m_operator;
-        
-        boost::mutex m_mutex;
     };
 }
 

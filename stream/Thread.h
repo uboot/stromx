@@ -36,6 +36,8 @@ namespace stream
             DEACTIVATING,
         };
         
+        Thread(const Network* const network);
+        
         const Status status() const { return Status(m_thread.status()); }
         
         const std::string & name() const { return m_name; }
@@ -47,8 +49,6 @@ namespace stream
         void removeNode(const unsigned int position);
                
     private:
-        Thread(const Network* const network);
-        
         void start() { m_thread.start(); }
         void stop() { m_thread.stop(); }
         void join() { m_thread.join(); }

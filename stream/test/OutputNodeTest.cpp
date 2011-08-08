@@ -45,7 +45,7 @@ namespace stream
     {
         m_outputNode->addConnectedInput(m_inputNode);
         CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(m_inputNode));
-        CPPUNIT_ASSERT_THROW(m_outputNode->removeConnectedInput(m_inputNode), InvalidArgument);
+        CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(m_inputNode));
     }
     
     void OutputNodeTest::testAddConnectedInputs()

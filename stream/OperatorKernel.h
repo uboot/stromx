@@ -29,6 +29,8 @@ namespace stream
     
     class OperatorKernel : public OperatorInfo
     {
+        friend class SynchronizedOperatorKernel;
+        
     public:
         OperatorKernel(const std::string & name,
                  const std::string & package,
@@ -57,15 +59,13 @@ namespace stream
         const std::vector<const Parameter*>& parameters() const { return m_parameters; }
         const Parameter & parameter(const unsigned int id) const;
         
+    protected:
         virtual void setParameter(const unsigned int id, const Data& value) = 0;
         virtual const Data& getParameter(const unsigned int id) = 0;
-        
         virtual void execute(DataProvider& provider) = 0;
         virtual void initialize() {}
         virtual void activate() {}
         virtual void deactivate() {}
-        
-    protected:
         virtual void initialize(const std::vector<const Description*>& inputs,
                                 const std::vector<const Description*>& outputs,
                                 const std::vector<const Parameter*>& parameters);

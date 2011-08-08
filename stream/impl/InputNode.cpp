@@ -18,8 +18,6 @@ namespace stream
 
     void InputNode::connect(OutputNode* const output)
     {
-        lock_t lock(m_mutex);
-        
         if(m_source)
             throw InvalidState("Input node has already been connected.");
         
@@ -39,8 +37,6 @@ namespace stream
     
     void InputNode::disconnect()
     {
-        lock_t lock(m_mutex);
-        
         if(m_source)
             m_source->removeConnectedInput(this);
         

@@ -23,11 +23,13 @@ namespace stream
         
         m_network->addOperator(op1);
         m_network->addOperator(op2);
+        
+        m_thread =  new Thread(m_network);
     }
     
     void ThreadTest::testAddOperator()
     {
-
+        
     }
 
     void ThreadTest::testInsertOperator()
@@ -42,5 +44,7 @@ namespace stream
 
     void ThreadTest::tearDown()
     {
+        delete m_thread;
+        delete m_network;
     }
 }

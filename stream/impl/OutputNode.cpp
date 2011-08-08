@@ -15,8 +15,6 @@ namespace stream
     
     void OutputNode::addConnectedInput(InputNode*const input)
     {
-        lock_t lock(m_mutex);
-        
         if(! input)
             throw InvalidArgument("Passed null as input.");
         
@@ -28,12 +26,8 @@ namespace stream
 
     void OutputNode::removeConnectedInput(stream::InputNode*const input)
     {
-        lock_t lock(m_mutex);
-        
-        if(! m_connectedInputs.count(input))
-            throw InvalidArgument("Input node is not connected to this output node.");
-        
-        m_connectedInputs.erase(input);
+        if(m_connectedInputs.count(input))
+            m_connectedInputs.erase(input);
     }
 
     DataContainer OutputNode::getOutputData()
