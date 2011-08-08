@@ -24,6 +24,7 @@ namespace stream
 {
     class Network;
     class Thread;
+    class Operator;
     
     class ThreadTest : public CPPUNIT_NS :: TestFixture
     {
@@ -48,6 +49,8 @@ namespace stream
     private:
         Network* m_network;
         Thread* m_thread;
+        Operator* m_op1;
+        Operator* m_op2;
     };
 }
 
