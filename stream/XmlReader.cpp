@@ -59,6 +59,42 @@ namespace stream
             std::cerr << "Unexpected Exception \n" ;
             return 0;
         }
+        
+        try
+        {
+            char tempStr[100];
+            XMLCh tempXmlStr[100];
+            
+            DOMDocument* doc = parser->getDocument();
+            
+            DOMElement* stream = doc->getDocumentElement();
+            
+            XMLString::transcode("name", tempXmlStr, 99);
+            const XMLCh* name = stream->getAttribute(tempXmlStr);
+            XMLString::transcode(name, tempStr, 99);
+            std::cout << tempStr << std::endl;
+            
+            XMLString::transcode("Operator", tempXmlStr, 99);
+            DOMNodeList* operators = stream->getElementsByTagName(tempXmlStr);
+            
+            XMLSize_t numOperators = operators->getLength();
+            
+            for(unsigned int i = 0; i < numOperators; ++i)
+            {
+                DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
+                XMLString::transcode("name", tempXmlStr, 99);
+                const XMLCh* name = op->getAttribute(tempXmlStr);
+                XMLString::transcode(name, tempStr, 99);
+                std::cout << tempStr << std::endl;
+                
+                XMLString::transcode("Parameter", tempXmlStr, 99);
+                DOMNodeList* parameters = op->getElementsByTagName(tempXmlStr);
+            }
+                
+        }
+        catch(XMLException&)
+        {
+        }
 
         delete parser;
         delete errHandler;
