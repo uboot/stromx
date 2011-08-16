@@ -40,7 +40,17 @@ namespace stromx
             class SynchronizedOperatorKernel;
         }
         
-        /** \brief Abstract operator */
+        /** \brief Abstract operator
+            
+            Operators are the core elements of a stream. The have inputs and outputs which
+            can be connected to other operators of the same stream. Moreover, it is possible
+            to access these inputs and outputs from outside to pass data to the stream or
+            obtain data from it.
+            
+            Moreover, each operator has a current status and a number of parameters. If the 
+            value of a specific parameter can be read or written dependes on the current status
+            of the operators.
+         */
         class Operator
         {
             friend class FactoryTest;
@@ -53,11 +63,16 @@ namespace stromx
             friend class Thread;
             
         public:
+            /** The possible states of an operator */
             enum Status
             {
+                /** The default status of an operator after instantiation */
                 NONE,
+                /** The is initialized but not ready to process data */
                 INITIALIZED,
+                /** The operator is ready to process data */
                 ACTIVE,
+                /** The operator is actively processing data */
                 EXECUTING
             };
             
