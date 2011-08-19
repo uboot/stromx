@@ -40,7 +40,6 @@ namespace stream
         Stream* const read(const std::string & filename);
         
     private:
-        static const unsigned int BUFFER_LENGTH = 100;
         
         struct ParameterPair
         {
@@ -66,10 +65,16 @@ namespace stream
             unsigned int outputId;
         };
         
-        static const OperatorPair readOperator(xercesc_3_0::DOMElement* const opElement, const Factory* const factory);
-        static const ParameterPair readParameter(xercesc_3_0::DOMElement* const paramElement, const Factory* const factory);
-        static void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
-        static const InputNode readInputNode(xercesc_3_0::DOMElement* const threadElement);
+        static const unsigned int BUFFER_LENGTH = 100;
+        
+        char m_tempStr[BUFFER_LENGTH];
+        XMLCh m_tempXmlStr[BUFFER_LENGTH];
+        std::string m_currentPath;
+        
+        const OperatorPair readOperator(xercesc_3_0::DOMElement* const opElement);
+        const ParameterPair readParameter(xercesc_3_0::DOMElement* const paramElement);
+        void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
+        const InputNode readInputNode(xercesc_3_0::DOMElement* const threadElement);
         
         const Factory* m_factory;
     };

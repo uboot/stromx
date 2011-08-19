@@ -2,6 +2,7 @@
 
 #include "Exception.h"
 #include "Factory.h"
+#include "Data.h"
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOM.hpp>
@@ -11,7 +12,7 @@
 
 #include <iostream>
 #include <boost/lexical_cast.hpp>
-#include "Data.h"
+#include <boost/filesystem.hpp>
 
 namespace stream
 {
@@ -19,6 +20,13 @@ namespace stream
     
     Stream*const XmlReader::read(const std::string & filename)
     {        
+        boost::filesystem::path filepath(filename);
+        boost::filesystem::path separator("/");
+        
+        m_currentPath = filepath.parent_path().directory_string();
+        
+        std::cout << m_currentPath << std::endl;
+        
         try
         {
             XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
@@ -111,46 +119,45 @@ namespace stream
         }
     }  
            
-    const XmlReader::OperatorPair XmlReader::readOperator(xercesc_3_0::DOMElement* const opElement, const Factory* const factory)
+    const XmlReader::OperatorPair XmlReader::readOperator(xercesc_3_0::DOMElement* const opElement)
     {
     }
     
-    const XmlReader::ParameterPair XmlReader::readParameter(xercesc_3_0::DOMElement* const paramElement, const Factory* const factory)
+    const XmlReader::ParameterPair XmlReader::readParameter(xercesc_3_0::DOMElement* const paramElement)
     {
-        char tempStr[BUFFER_LENGTH];
-        XMLCh tempXmlStr[BUFFER_LENGTH];
         const XMLCh* element = 0;
         const XMLCh* text = 0;
         ParameterPair pair;
         
-        XMLString::transcode("id", tempXmlStr, BUFFER_LENGTH - 1);
-        element = paramElement->getAttribute(tempXmlStr);
-        XMLString::transcode(element, tempStr, BUFFER_LENGTH - 1);
-        pair.id = boost::lexical_cast<unsigned int>(tempStr);
+        XMLString::transcode("id", m_tempXmlStr, BUFFER_LENGTH - 1);
+        element = paramElement->getAttribute(m_tempXmlStr);
+        XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
+        pair.id = boost::lexical_cast<unsigned int>(m_tempStr);
         
-        XMLString::transcode("Data", tempXmlStr, 99);
-        DOMNodeList* dataList = paramElement->getElementsByTagName(tempXmlStr);
+        XMLString::transcode("Data", m_tempXmlStr, 99);
+        DOMNodeList* dataList = paramElement->getElementsByTagName(m_tempXmlStr);
         
         if(dataList->getLength() > 0)
         {
             DOMElement* data = dynamic_cast<DOMElement*>(dataList->item(0));
             std::string package, type, dataString;
             
-            XMLString::transcode("type", tempXmlStr, BUFFER_LENGTH - 1);
-            element = paramElement->getAttribute(tempXmlStr);
-            XMLString::transcode(element, tempStr, BUFFER_LENGTH - 1);
-            type = tempStr;
+            XMLString::transcode("type", m_tempXmlStr, BUFFER_LENGTH - 1);
+            element = paramElement->getAttribute(m_tempXmlStr);
+            XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
+            type = m_tempStr;
             
-            XMLString::transcode("package", tempXmlStr, BUFFER_LENGTH - 1);
-            element = paramElement->getAttribute(tempXmlStr);
-            XMLString::transcode(element, tempStr, BUFFER_LENGTH - 1);
-            package = tempStr;
+            XMLString::transcode("package", m_tempXmlStr, BUFFER_LENGTH - 1);
+            element = paramElement->getAttribute(m_tempXmlStr);
+            XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
+            package = m_tempStr;
             
             text = data->getNodeValue();
-            XMLString::transcode(text, tempStr, BUFFER_LENGTH - 1);
-            dataString = tempStr;
+            XMLString::transcode(text, m_tempStr, BUFFER_LENGTH - 1);
+            dataString = m_tempStr;
             
-            pair.data = factory->newData(type, package);
+            pair.data = m_factory->newData(type, package);
+            pair.data->deserialize(dataString, m_currentPath);
         }
     }
     
