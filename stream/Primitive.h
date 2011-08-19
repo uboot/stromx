@@ -53,8 +53,7 @@ namespace stream
             return boost::lexical_cast<std::string>(m_value);
         }
         
-        virtual void deserialize(const std::string & data,
-                                 const std::string & name, const std::string & path)
+        virtual void deserialize(const std::string & data, const std::string & path)
         {
             m_value = boost::lexical_cast<val_t>(data);
         }
@@ -78,15 +77,13 @@ namespace stream
     template <>
     const std::string Int8::serialize(const std::string & name, const std::string & path) const;
     template <>
-    void Int8::deserialize(const std::string & data,
-                           const std::string & name, const std::string & path);
+    void Int8::deserialize(const std::string & data, const std::string & path);
     
     typedef Primitive<unsigned int, uint8_t> UInt8;
     template <>
     const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
     template <>
-    void UInt8::deserialize(const std::string & data,
-                            const std::string & name, const std::string & path);
+    void UInt8::deserialize(const std::string & data, const std::string & path);
     
     typedef Primitive<int, int16_t> Int16;
     typedef Primitive<unsigned int, uint16_t> UInt16;

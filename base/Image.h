@@ -25,6 +25,9 @@ namespace base
         
         virtual Data* const clone() const { return new Image; }
         
+        virtual const std::string serialize(const std::string & name, const std::string & path) const;
+        virtual void deserialize(const std::string & data, const std::string & path);
+        
         void open(const std::string& filename);
         void save(const std::string& filename) const;
         void resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType);

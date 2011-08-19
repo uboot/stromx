@@ -34,6 +34,8 @@ namespace base
         CPPUNIT_TEST (testImageMono8);
         CPPUNIT_TEST (testSaveJpeg);
         CPPUNIT_TEST (testImageDefault);
+        CPPUNIT_TEST (testSerialize);
+        CPPUNIT_TEST (testDeserialize);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -50,6 +52,8 @@ namespace base
             void testImageMono8();
             void testImageDefault();
             void testSaveJpeg();
+            void testSerialize();
+            void testDeserialize();
             
         private:
             Image* m_image;

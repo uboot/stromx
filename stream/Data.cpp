@@ -9,8 +9,8 @@ namespace stream
         throw SerializationError(*this, name, path);
     }
 
-    void Data::deserialize(const std::string& data, const std::string& name, const std::string& path)
+    void Data::deserialize(const std::string& data, const std::string& path)
     {
-        throw SerializationError(*this, name, path);
+        throw DeserializationError(*this, data, path);
     }
 }

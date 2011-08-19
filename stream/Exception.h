@@ -109,6 +109,22 @@ namespace stream
         const std::string& m_name;
         const std::string& m_path;
     };
+    
+    class DeserializationError : public Exception
+    {
+    public:
+        DeserializationError(const Data& data, const std::string & dataString, const std::string & path, const std::string & message = "DeserializationError")
+          : Exception(message),
+            m_data(data),
+            m_dataString(dataString),
+            m_path(path)
+        {}
+        
+    private:
+        const Data& m_data;
+        const std::string& m_dataString;
+        const std::string& m_path;
+    };
 }
 
 #endif // STREAM_EXCEPTION_H

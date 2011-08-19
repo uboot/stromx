@@ -73,8 +73,36 @@ namespace base
         {
             throw stream::OutOfMemory("Failed to allocate image.");
         }
-    }  
+    } 
     
+    const std::string Image::serialize(const std::string& name, const std::string& path) const
+    {
+        try
+        {
+            std::string filename = name + ".png";
+            std::string filepath = path + filename;
+            save(filepath);
+            return filename;
+        }
+        catch(stream::Exception&)
+        {
+            throw stream::SerializationError(*this, name, path);
+        }
+    }
+
+    void Image::deserialize(const std::string& data, const std::string& path)
+    {
+        try
+        {
+            std::string filepath = path + data;
+            open(filepath);
+        }
+        catch(stream::Exception&)
+        {
+            throw stream::DeserializationError(*this, data, path);
+        }
+    }
+
     void Image::open(const std::string& filename)
     {
         if(m_image)

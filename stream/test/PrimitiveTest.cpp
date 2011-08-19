@@ -14,7 +14,7 @@ namespace stream
         m_int32 = Int32(-235);
         CPPUNIT_ASSERT_EQUAL(std::string("-235"), m_int32.serialize("", ""));
         
-        m_int32.deserialize("-233", "", "");
+        m_int32.deserialize("-233", "");
         CPPUNIT_ASSERT_EQUAL(Int32(-233), m_int32);
     }
     
@@ -28,7 +28,7 @@ namespace stream
         m_uint32 = UInt32(235);
         CPPUNIT_ASSERT_EQUAL(std::string("235"), m_uint32.serialize("", ""));
         
-        m_uint32.deserialize("233", "", "");
+        m_uint32.deserialize("233", "");
         CPPUNIT_ASSERT_EQUAL(UInt32(233), m_uint32);
     }
     
@@ -40,7 +40,7 @@ namespace stream
         m_int8 = Int8(-35);
         CPPUNIT_ASSERT_EQUAL(std::string("-35"), m_int8.serialize("", ""));
         
-        m_int8.deserialize("-33", "", "");
+        m_int8.deserialize("-33", "");
         CPPUNIT_ASSERT_EQUAL(Int8(-33), m_int8);
     }
     
@@ -54,7 +54,7 @@ namespace stream
         m_uint8 = UInt8(235);
         CPPUNIT_ASSERT_EQUAL(std::string("235"), m_uint8.serialize("", ""));
         
-        m_uint8.deserialize("233", "", "");
+        m_uint8.deserialize("233", "");
         CPPUNIT_ASSERT_EQUAL(UInt8(233), m_uint8);
     } 
 }

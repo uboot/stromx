@@ -89,6 +89,23 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
     }
+    
+    void ImageTest::testSerialize()
+    {
+        m_image = new Image("lenna.jpg");
+
+        CPPUNIT_ASSERT_EQUAL(std::string("ImageTest_testSerialize.png"), m_image->serialize("ImageTest_testSerialize", "./"));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
+        
+    }
+        
+    void ImageTest::testDeserialize()
+    {
+        m_image = new Image();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_image->deserialize("ImageTest_testSerialize.png", "./"));
+    }
 
     void ImageTest::tearDown ( void )
     {

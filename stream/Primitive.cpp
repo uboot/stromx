@@ -33,8 +33,7 @@ namespace stream
     }
     
     template <>
-    void Int8::deserialize(const std::string & data,
-                           const std::string & name, const std::string & path)
+    void Int8::deserialize(const std::string & data, const std::string & path)
     {
         *this = Int8(boost::lexical_cast<int>(data));
     }
@@ -59,8 +58,7 @@ namespace stream
     }
     
     template <>
-    void UInt8::deserialize(const std::string & data,
-                           const std::string & name, const std::string & path)
+    void UInt8::deserialize(const std::string & data, const std::string & path)
     {
         *this = UInt8(boost::lexical_cast<int>(data));
     }
