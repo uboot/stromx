@@ -18,6 +18,7 @@ set(SOURCES
     ../impl/Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp
+    ../None.cpp
     Id2DataCompositeTest.cpp
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp

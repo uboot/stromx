@@ -34,12 +34,14 @@ set(SOURCES
     Id2DataMapper.cpp
     Id2DataPair.cpp
     ImageWrapper.cpp
+    None.cpp
     Operator.cpp
     OperatorKernel.cpp
     Factory.cpp
     Primitive.cpp
     Stream.cpp
     Thread.cpp
+    Trigger.cpp
     Try.cpp
 )
 

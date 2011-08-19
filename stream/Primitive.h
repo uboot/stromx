@@ -19,6 +19,8 @@
 
 #include "Description.h"
 #include "Data.h"
+#include "Version.h"
+#include "Config.h"
 
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
@@ -36,6 +38,10 @@ namespace stream
         explicit Primitive() : m_value(0) {}
         explicit Primitive(const repr_t value) : m_value(value) {}
         
+        virtual const std::string & name() const { return NAME; }
+        virtual const Version & version() const { return VERSION; }
+        virtual const std::string & package() const { return PACKAGE; }
+        
         virtual const DataType & type() const;
         
         operator repr_t() const { return m_value; }
@@ -44,6 +50,10 @@ namespace stream
         static const Primitive MAX;
         
     private:
+        static const std::string NAME;
+        static const std::string PACKAGE;
+        static const Version VERSION;
+        
         val_t m_value;
     };
     

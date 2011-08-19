@@ -18,11 +18,19 @@ namespace base
         Image(const unsigned int size);
         virtual ~Image();
         
+        virtual const stream::Version & version() const { return VERSION; }
+        virtual const std::string & name() const { return NAME; }
+        virtual const std::string & package() const { return PACKAGE; }
+        
         void save(const std::string& filename) const;
         void resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType);
         void resize(const unsigned int size);
         
     private:
+        static const std::string NAME;
+        static const std::string PACKAGE;
+        static const stream::Version VERSION;
+        
         static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
         static const stream::DataType dataTypeFromPixelType(const PixelType pixelType);
         

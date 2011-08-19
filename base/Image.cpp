@@ -1,11 +1,16 @@
 #include "Image.h"
 
+#include "Config.h"
 #include "Utilities.h"
 
 #include <stream/Exception.h>
 
 namespace base
 {
+    const std::string Image::NAME = "Image";
+    const std::string Image::PACKAGE = PACKAGE_NAME;
+    const stream::Version Image::VERSION = stream::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
+    
     Image::Image(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
     {
         try
