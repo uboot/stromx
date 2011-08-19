@@ -37,14 +37,14 @@ namespace stream
         const static DataType RGB_48_IMAGE;
         const static DataType BGR_48_IMAGE;
         
-        explicit DataType(const unsigned int typeId, const Version& version, const std::string & package, const std::string & name)
+        explicit DataType(const unsigned int typeId, const std::string & description)
           : m_typeId(typeId),
-            m_version(version),
-            m_package(package),
-            m_name(name)
+            m_description(description)
         {}
         
         ~DataType() {}
+        
+        const std::string & description() const { return m_description; }
         
         virtual const bool is(const DataType& type) const;
        
@@ -80,9 +80,7 @@ namespace stream
         };
         
         unsigned int m_typeId;
-        std::string m_name;
-        std::string m_package;
-        Version m_version;
+        std::string m_description;
     };
 }
 
