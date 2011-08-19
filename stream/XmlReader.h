@@ -18,16 +18,60 @@
 #define STREAM_XMLREADER_H
 
 #include <string>
+#include <xercesc/util/XercesDefs.hpp>
+
+namespace xercesc_3_0
+{
+    class DOMElement;
+}
 
 namespace stream
 {
     class Factory;
     class Stream;
+    class Data;
+    class Operator;
+    class Thread;
     
     class XmlReader
     {
     public:
-        static Stream* const read(const std::string & filename, const Factory* const factory);
+        XmlReader(const Factory* const factory) : m_factory(factory) {}
+        Stream* const read(const std::string & filename);
+        
+    private:
+        static const unsigned int BUFFER_LENGTH = 100;
+        
+        struct ParameterPair
+        {
+            ParameterPair() : id(0), data(0) {}
+            
+            unsigned int id;
+            Data* data;
+        };
+        
+        struct OperatorPair
+        {
+            OperatorPair() : id(0), data(0) {}
+            
+            unsigned int id;
+            Operator* data;
+        };
+        
+        struct InputNode
+        {
+            InputNode() : id(0), operatorId(0), outputId(0) {}
+            unsigned int id;
+            unsigned int operatorId;
+            unsigned int outputId;
+        };
+        
+        static const OperatorPair readOperator(xercesc_3_0::DOMElement* const opElement, const Factory* const factory);
+        static const ParameterPair readParameter(xercesc_3_0::DOMElement* const paramElement, const Factory* const factory);
+        static void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
+        static const InputNode readInputNode(xercesc_3_0::DOMElement* const threadElement);
+        
+        const Factory* m_factory;
     };
 }
 

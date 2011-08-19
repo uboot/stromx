@@ -15,11 +15,12 @@ namespace stream
     {
         m_factory = new Factory;
         m_factory->registerOperator(new TestOperator());
+        m_factory->registerData(new UInt32());
     }
     
     void XmlReaderTest::testRead()
     {
-        Stream* stream = XmlReader::read("stream.xml", m_factory);
+        Stream* stream = XmlReader(m_factory).read("stream.xml");
     }
 
     void XmlReaderTest::tearDown()

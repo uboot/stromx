@@ -57,7 +57,7 @@ namespace stream
     
     void XmlWriterTest::testWrite()
     {
-        XmlWriter::write("XmlWriterTest_testWrite.xml", *m_stream);
+        XmlWriter().write("XmlWriterTest_testWrite.xml", *m_stream);
     }
 
     void XmlWriterTest::tearDown()
