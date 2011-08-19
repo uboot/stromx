@@ -171,15 +171,10 @@ namespace base
             cv::Mat cvTempImage(tempImage.m_image);
             
             cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
-                      
-            try
-            {
-                cv::imwrite(filename, tempImage.m_image);
-            }
-            catch(cv::Exception& e)
-            {
+                  
+            if(! cv::imwrite(filename, tempImage.m_image))
                 throw stream::FileAccessFailed("Failed to save image '" + filename + "'.");
-            }
+                
             break;
         }
         case stream::Image::BGR_24:
@@ -187,16 +182,10 @@ namespace base
         case stream::Image::BAYERBG_8:
         case stream::Image::BAYERGB_8:
         {
-            try
-            {
-                cv::imwrite(filename, inImage);
-            }
-            catch(cv::Exception& e)
-            {
+            if(! cv::imwrite(filename, inImage))
                 throw stream::FileAccessFailed("Failed to save image '" + filename + "'.");
-            }
-        }
             break;
+        }
         default:
             throw stream::WrongArgument("Unknown pixel type.");    
         }         

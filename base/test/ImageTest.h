@@ -33,6 +33,7 @@ namespace base
         CPPUNIT_TEST (testImageRgb24);
         CPPUNIT_TEST (testImageMono8);
         CPPUNIT_TEST (testSaveJpeg);
+        CPPUNIT_TEST (testSaveUnknownDirectory);
         CPPUNIT_TEST (testImageDefault);
         CPPUNIT_TEST (testSerialize);
         CPPUNIT_TEST (testDeserialize);
@@ -52,6 +53,7 @@ namespace base
             void testImageMono8();
             void testImageDefault();
             void testSaveJpeg();
+            void testSaveUnknownDirectory();
             void testSerialize();
             void testDeserialize();
             

@@ -90,19 +90,28 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
     }
     
+    void ImageTest::testSaveUnknownDirectory()
+    {
+        m_image = new Image(200, 100, stream::Image::RGB_24);
+        CPPUNIT_ASSERT_THROW(m_image->save("unknown_dir/ImageTest_testSaveJpeg.jpg"), stream::FileAccessFailed);
+    }
+    
     void ImageTest::testSerialize()
     {
         m_image = new Image("lenna.jpg");
 
+        CPPUNIT_ASSERT_THROW(m_image->serialize("ImageTest_testSerialize", "unknown_dir/"), stream::SerializationError);
+        
         CPPUNIT_ASSERT_EQUAL(std::string("ImageTest_testSerialize.png"), m_image->serialize("ImageTest_testSerialize", "./"));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
-        
     }
         
     void ImageTest::testDeserialize()
     {
         m_image = new Image();
+        
+        CPPUNIT_ASSERT_THROW(m_image->deserialize("unknown.png", "./"), stream::DeserializationError);
         
         CPPUNIT_ASSERT_NO_THROW(m_image->deserialize("ImageTest_testSerialize.png", "./"));
     }
