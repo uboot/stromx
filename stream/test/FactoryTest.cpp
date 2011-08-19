@@ -4,6 +4,7 @@
 
 #include <stream/Factory.h>
 #include <stream/Exception.h>
+#include <stream/Operator.h>
 
 #include "TestOperator.h"
 
@@ -35,7 +36,7 @@ namespace stream
         CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), WrongArgument);
         
         // get the existing operator
-        OperatorKernel* newOp;
+        Operator* newOp;
         CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "test"));
         CPPUNIT_ASSERT(newOp);
         

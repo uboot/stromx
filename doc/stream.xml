@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+   <!-- validate: xmllint \-\-valid \-\-noout stream.xml
+                  (remove backslashes)
+   -->
+
+<!DOCTYPE  Stream [
+    <!ELEMENT Stream (Operator*, Thread*)>
+    <!ATTLIST Stream
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Thread (InputNode*)>
+    <!ATTLIST Thread
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Operator (Parameter*, Input*)>
+    <!ATTLIST Operator
+        id NMTOKEN #REQUIRED
+        package CDATA #REQUIRED
+        type CDATA #REQUIRED
+        name CDATA #IMPLIED
+    >
+    
+    <!ELEMENT Parameter (Data)>
+    <!ATTLIST Parameter
+        id NMTOKEN #REQUIRED
+    >
+    
+    <!ELEMENT Data (#PCDATA)>
+    <!ATTLIST Data
+        type CDATA #REQUIRED
+        package CDATA #REQUIRED
+    >
+    
+    <!ELEMENT Input EMPTY>
+    <!ATTLIST Input
+        id NMTOKEN #REQUIRED
+        operator NMTOKEN #REQUIRED
+        output NMTOKEN #REQUIRED
+    >
+    
+    <!ELEMENT InputNode EMPTY>
+    <!ATTLIST InputNode
+        operator NMTOKEN #REQUIRED
+        input NMTOKEN #REQUIRED
+    >
+]>
+
+<Stream name="Sample stream">
+    <Operator id="0" package="base" type="ConstImage" name="Source image">
+        <Parameter id="0">
+            <Data type="Image" package="base">lenna.png</Data>
+        </Parameter>
+    </Operator>
+    <Operator id="1" package="base" type="Clip" name="Clip image">
+        <Parameter id="0">
+            <Data type="UInt32" package="stream">200</Data>
+        </Parameter>
+        <Parameter id="1">
+            <Data type="UInt32" package="stream">210</Data>
+        </Parameter>
+        <Parameter id="2">
+            <Data type="UInt32" package="stream">100</Data>
+        </Parameter>
+        <Parameter id="3">
+            <Data type="UInt32" package="stream">90</Data>
+        </Parameter>
+        <Input id="0" operator="0" output="0"/>
+    </Operator>
+    <Operator id="2" package="base" type="AdjustRgbChannels" name="White balance">
+        <Parameter id="0">
+            <Data type="Double" package="stream">0.1</Data>
+        </Parameter>
+        <Parameter id="1">
+            <Data type="Double" package="stream">1.0</Data>
+        </Parameter>
+        <Parameter id="2">
+            <Data type="Double" package="stream">1.5</Data>
+        </Parameter>
+        <Input id="0" operator="1" output="0"/>
+    </Operator>
+    <Operator id="3" package="base" type="AdjustRgbChannels" name="Exposure">
+        <Parameter id="0">
+            <Data type="Double" package="stream">0.8</Data>
+        </Parameter>
+        <Parameter id="1">
+            <Data type="Double" package="stream">0.8</Data>
+        </Parameter>
+        <Parameter id="2">
+            <Data type="Double" package="stream">0.8</Data>
+        </Parameter>
+        <Input id="0" operator="2" output="0"/>
+    </Operator>
+    <Thread name="First processing thread">
+        <InputNode operator="1" input="0"/>
+        <InputNode operator="2" input="0"/>
+    </Thread> 
+    <Thread name="Second processing thread">
+        <InputNode operator="3" input="0"/>
+    </Thread> 
+</Stream>

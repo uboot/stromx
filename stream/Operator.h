@@ -38,6 +38,7 @@ namespace stream
         friend class InputNodeTest;
         friend class OutputNodeTest;
         friend class NetworkTest;
+        friend class FactoryTest;
         
     public:
         enum Status

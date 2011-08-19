@@ -33,9 +33,13 @@ namespace stream
         
         virtual void registerOperator(const OperatorKernel* const op);
         
-        virtual OperatorKernel* const newOperator(const std::string & package, const std::string & name) const;
+        virtual Operator* const newOperator(const std::string & package, const std::string & name) const;
         
         virtual const std::vector<const OperatorKernel*> & availableOperators() const;
+        
+        virtual void registerData(const Data* const data);
+        
+        virtual Data* const newData(const std::string & package, const std::string & name) const;
         
     private:
         std::vector<const OperatorKernel*> m_operators;

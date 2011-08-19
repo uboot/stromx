@@ -42,7 +42,7 @@ namespace stream
         return m_operators;
     }
 
-    OperatorKernel*const Factory::newOperator(const std::string& package, const std::string& name) const
+    Operator*const Factory::newOperator(const std::string& package, const std::string& name) const
     {
         for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
             iter != m_operators.end();
@@ -57,10 +57,20 @@ namespace stream
                     throw InternalError("Invalid argument received: Null pointer. Cloning failed");
                 }
 
-                return newOp;
+                return new Operator(newOp);
             }
         }
         
        throw WrongArgument("Invalid argument: Operator unknown. Register first unknown operator.");        
+    }
+    
+    void Factory::registerData(const stream::Data*const data)
+    {
+
+    }
+
+    Data*const Factory::newData(const std::string& package, const std::string& name) const
+    {
+        return 0;
     }
 } 
