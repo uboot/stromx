@@ -12,7 +12,6 @@ namespace stream
         ImageWrapper();
         
         virtual const DataType & type() const { return m_dataType; }
-        virtual void setDataType(const DataType& dataType);
         
         virtual uint8_t* const buffer() { return m_buffer; }
         
@@ -40,6 +39,8 @@ namespace stream
     protected:
         static const int numChannels(const PixelType pixelType);
         static const int depth(const PixelType pixelType);
+        
+        virtual void setDataType(const DataType& dataType);
         
         virtual void setSize(const unsigned int size);
         virtual void setBuffer(uint8_t* const buffer);

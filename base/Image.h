@@ -12,6 +12,7 @@ namespace base
     class Image : public stream::ImageWrapper
     {
     public:
+        Image();
         Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
         Image(const std::string & filename);
         Image(const stream::Image& image);
@@ -22,6 +23,9 @@ namespace base
         virtual const std::string & name() const { return NAME; }
         virtual const std::string & package() const { return PACKAGE; }
         
+        virtual Data* const clone() const { return new Image; }
+        
+        void open(const std::string& filename);
         void save(const std::string& filename) const;
         void resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType);
         void resize(const unsigned int size);

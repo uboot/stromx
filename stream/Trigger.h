@@ -32,6 +32,8 @@ namespace stream
         
         virtual const DataType & type() const { return DataType::TRIGGER; }
         
+        virtual Data* const clone() const { return new Trigger; }
+        
     private:
         static const std::string NAME;
         static const std::string PACKAGE;

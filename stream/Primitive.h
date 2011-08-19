@@ -44,6 +44,8 @@ namespace stream
         
         virtual const DataType & type() const;
         
+        virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
+        
         operator repr_t() const { return m_value; }
         
         static const Primitive MIN;

@@ -27,11 +27,13 @@ namespace base
     class ImageTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (ImageTest);
-        CPPUNIT_TEST (testImageFromUnknownFile);
-        CPPUNIT_TEST (testImageFromJpeg);
+        CPPUNIT_TEST (testOpenUnknownFile);
+        CPPUNIT_TEST (testOpenJpeg);
+        CPPUNIT_TEST (testImageFile);
         CPPUNIT_TEST (testImageRgb24);
         CPPUNIT_TEST (testImageMono8);
         CPPUNIT_TEST (testSaveJpeg);
+        CPPUNIT_TEST (testImageDefault);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,10 +43,12 @@ namespace base
             void tearDown();
 
         protected:
-            void testImageFromJpeg();
-            void testImageFromUnknownFile();
+            void testOpenJpeg();
+            void testOpenUnknownFile();
+            void testImageFile();
             void testImageRgb24();
             void testImageMono8();
+            void testImageDefault();
             void testSaveJpeg();
             
         private:

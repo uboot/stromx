@@ -46,8 +46,25 @@ namespace base
         cvInImage.copyTo(cvImage);
     }
     
-    Image::Image(const std::string& filename)
+    Image::Image()
+      : m_image(0)
     {
+        setSize(0);
+        initialize(0, 0, 0, 0, stream::Image::NONE);
+        setDataType(stream::DataType::IMAGE);
+    }
+    
+    Image::Image(const std::string& filename)
+      : m_image(0)
+    {
+        open(filename);
+    }
+    
+    void Image::open(const std::string& filename)
+    {
+        if(m_image)
+            cvReleaseImage(&m_image);
+        
         m_image = cvLoadImage(filename.c_str());
         
         if(! m_image)
@@ -166,6 +183,8 @@ namespace base
     {
         switch(pixelType)
         {
+        case stream::Image::NONE:
+            return stream::DataType(stream::DataType::IMAGE);
         case stream::Image::MONO_8:
             return stream::DataType(stream::DataType::MONO_8_IMAGE);
         case stream::Image::BAYERBG_8:

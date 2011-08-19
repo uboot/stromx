@@ -12,6 +12,7 @@ namespace stream
     public:
         enum PixelType
         {
+            NONE,
             MONO_8,
             MONO_16,
             RGB_24,
@@ -27,7 +28,6 @@ namespace stream
         virtual ~Image() {}
                                 
         virtual const DataType & type() const = 0;
-        virtual void setDataType(const DataType& dataType) = 0;
         
         virtual uint8_t* const buffer() = 0;
         
@@ -45,6 +45,9 @@ namespace stream
         
         virtual uint8_t* const data() = 0;
         virtual const uint8_t* const data() const = 0;
+        
+    protected:
+        virtual void setDataType(const DataType& dataType) = 0;
         
         virtual void initialize(const unsigned int width, 
                                 const unsigned int height, 

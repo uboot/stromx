@@ -16,6 +16,8 @@ namespace stream
         
         virtual const DataType & type() const { return DataType::NONE; }
         
+        virtual Data* const clone() const { return new None; }
+        
     private:
         static const std::string NAME;
         static const std::string PACKAGE;

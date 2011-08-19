@@ -117,7 +117,7 @@ namespace stream
             return;
         
         // check row length
-        if(width * pixelSize() > stride)
+        if(width * depth(pixelType) * numChannels(pixelType) > stride)
             throw WrongArgument("Too small stride.");
         
         // check total data size

@@ -14,12 +14,14 @@ namespace base
         m_image = 0;
     }
     
-    void ImageTest::testImageFromUnknownFile()
+    void ImageTest::testOpenUnknownFile()
     {
-        CPPUNIT_ASSERT_THROW(m_image = new Image("unknown.jpg"), stream::FileAccessFailed);
+        m_image = new Image();
+        
+        CPPUNIT_ASSERT_THROW(m_image->open("unknown.jpg"), stream::FileAccessFailed);
     }
     
-    void ImageTest::testImageFromJpeg()
+    void ImageTest::testImageFile()
     {
         CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna.jpg"));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
@@ -27,6 +29,28 @@ namespace base
         CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
         CPPUNIT_ASSERT_EQUAL(stream::Image::BGR_24, m_image->pixelType());
         CPPUNIT_ASSERT(m_image->data());
+    }
+    
+    void ImageTest::testOpenJpeg()
+    {
+        m_image = new Image();
+        
+        CPPUNIT_ASSERT_NO_THROW(m_image->open("lenna.jpg"));
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::BGR_24, m_image->pixelType());
+        CPPUNIT_ASSERT(m_image->data());
+    }
+    
+    void ImageTest::testImageDefault()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_image = new Image());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
+        CPPUNIT_ASSERT_EQUAL(stream::Image::NONE, m_image->pixelType());
+        CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
     }
     
     void ImageTest::testImageRgb24()

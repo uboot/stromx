@@ -17,6 +17,8 @@ namespace stream
         
         virtual const DataType & type() const { return DataType::NONE; }
         
+        virtual Data* const clone() const { return new TestData; }
+        
         static bool wasDestructed;
         
     private:
