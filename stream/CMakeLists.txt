@@ -28,6 +28,7 @@ set(SOURCES
     ReadAccess.cpp
     RecycleAccess.cpp
     WriteAccess.cpp
+    Data.cpp
     DataType.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp

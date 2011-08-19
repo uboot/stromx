@@ -17,6 +17,11 @@ namespace stream
         virtual const std::string & package() const = 0;
         
         virtual const DataType & type() const = 0;
+        
+        virtual const std::string serialize(const std::string & name, const std::string & path) const;
+        virtual void deserialize(const std::string & data,
+                                 const std::string & name, const std::string & path);
+        
         bool is(const DataType & t) const { return type().is(t); }
         
     protected:

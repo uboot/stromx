@@ -40,7 +40,7 @@ namespace stream
     class WrongParameterId : public OperatorError
     {
     public:
-        WrongParameterId(const unsigned int id, const OperatorInfo& op, const std::string & message = "")
+        WrongParameterId(const unsigned int id, const OperatorInfo& op, const std::string & message = "WrongParameterId")
           : OperatorError(op, message),
             m_id(id)
         {}
@@ -52,7 +52,7 @@ namespace stream
     class ParameterError : public OperatorError
     {
     public:
-        ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+        ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterError")
           : OperatorError(op, message),
             m_parameter(param)
         {}
@@ -64,7 +64,7 @@ namespace stream
     class WrongParameterType : public ParameterError
     {
     public:
-        WrongParameterType(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+        WrongParameterType(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterType")
           : ParameterError(param, op, message)
         {}
     };
@@ -72,7 +72,7 @@ namespace stream
     class WrongParameterValue : public ParameterError
     {
     public:
-        WrongParameterValue(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+        WrongParameterValue(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterValue")
           : ParameterError(param, op, message)
         {}
     };
@@ -80,7 +80,7 @@ namespace stream
     class ParameterAccessViolation : public ParameterError
     {
     public:
-        ParameterAccessViolation(const Parameter& param, const OperatorInfo& op, const std::string & message = "")
+        ParameterAccessViolation(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterAccessViolation")
           : ParameterError(param, op, message)
         {}
     };
@@ -88,7 +88,7 @@ namespace stream
     class InputError : public OperatorError
     {
     public:
-        InputError(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+        InputError(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "InputError")
           : OperatorError(op, message),
             m_inputId(inputId)
         {}
@@ -100,7 +100,7 @@ namespace stream
     class WrongInputType : public InputError
     {
     public:
-        WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "")
+        WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "WrongInputType")
           : InputError(inputId, op, message)
         {}
     };

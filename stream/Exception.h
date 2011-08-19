@@ -6,6 +6,8 @@
 
 namespace stream
 {
+    class Data;
+    
     class Exception : public std::exception
     {
     public:
@@ -90,6 +92,22 @@ namespace stream
         WrongState(const std::string & message = "WrongState")
           : Exception(message)
         {}
+    };
+    
+    class SerializationError : public Exception
+    {
+    public:
+        SerializationError(const Data& data, const std::string & name, const std::string & path, const std::string & message = "SerializationError")
+          : Exception(message),
+            m_data(data),
+            m_name(name),
+            m_path(path)
+        {}
+        
+    private:
+        const Data& m_data;
+        const std::string& m_name;
+        const std::string& m_path;
     };
 }
 

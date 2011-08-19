@@ -12,6 +12,7 @@ set(SOURCES
     main.cpp
     ../impl/DataContainerImpl.cpp
     ../DataContainer.cpp
+    ../Data.cpp
     DataContainerTest.cpp
     ../DataType.cpp
     DataTypeTest.cpp
