@@ -21,13 +21,13 @@
 
 namespace stream
 {
-    class OperatorFactory;
+    class Factory;
     class Stream;
     
     class XmlReader
     {
     public:
-        static Stream* const read(const std::string & filename, const OperatorFactory* const factory);
+        static Stream* const read(const std::string & filename, const Factory* const factory);
     };
 }
 

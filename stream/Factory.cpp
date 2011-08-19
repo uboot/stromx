@@ -1,4 +1,4 @@
-#include "OperatorFactory.h"
+#include "Factory.h"
 
 #include "Exception.h"
 #include "OperatorKernel.h"
@@ -7,7 +7,7 @@
 
 namespace stream
 {
-    OperatorFactory::~OperatorFactory()
+    Factory::~Factory()
     {
         for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
             iter != m_operators.end();
@@ -17,7 +17,7 @@ namespace stream
         }
     }
 
-    void OperatorFactory::registerOperator(const OperatorKernel*const op)
+    void Factory::registerOperator(const OperatorKernel*const op)
     {
         if(op == 0)
         {
@@ -37,12 +37,12 @@ namespace stream
         m_operators.push_back(op);
     }
 
-    const std::vector< const OperatorKernel*>& OperatorFactory::availableOperators() const
+    const std::vector< const OperatorKernel*>& Factory::availableOperators() const
     {
         return m_operators;
     }
 
-    OperatorKernel*const OperatorFactory::newOperator(const std::string& package, const std::string& name) const
+    OperatorKernel*const Factory::newOperator(const std::string& package, const std::string& name) const
     {
         for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
             iter != m_operators.end();

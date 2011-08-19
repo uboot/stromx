@@ -1,23 +1,23 @@
-#include "OperatorFactoryTest.h"
+#include "FactoryTest.h"
 
 #include <cppunit/TestAssert.h>
 
-#include <stream/OperatorFactory.h>
+#include <stream/Factory.h>
 #include <stream/Exception.h>
 
 #include "TestOperator.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stream::OperatorFactoryTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stream::FactoryTest);
 
 namespace stream
 {
-    void OperatorFactoryTest::setUp()
+    void FactoryTest::setUp()
     {
         // allocate a new empty factory
-        m_factory = new OperatorFactory;
+        m_factory = new Factory;
     }
 
-    void OperatorFactoryTest::tearDown()
+    void FactoryTest::tearDown()
     {
         // the factory automatically deletes all its operators
         // (cf. aggregation, i.e. the connection with the black diamond, in
@@ -25,7 +25,7 @@ namespace stream
         delete m_factory;
     }
     
-    void OperatorFactoryTest::testNewOperator()
+    void FactoryTest::testNewOperator()
     {
         // add a test operator to the factory
         OperatorKernel* op = new TestOperator;
@@ -42,7 +42,7 @@ namespace stream
         delete newOp;
     }
     
-    void OperatorFactoryTest::testRegisterOperator()
+    void FactoryTest::testRegisterOperator()
     {
         // only non-zero input arguments are allowed
         CPPUNIT_ASSERT_THROW(m_factory->registerOperator(0), WrongArgument);

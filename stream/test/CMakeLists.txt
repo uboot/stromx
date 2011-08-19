@@ -42,8 +42,8 @@ set(SOURCES
     ThreadTest.cpp
     ../impl/Network.cpp
     NetworkTest.cpp
-    ../OperatorFactory.cpp
-    OperatorFactoryTest.cpp
+    ../Factory.cpp
+    FactoryTest.cpp
     ../Primitive.cpp
     ../DataType.cpp
     PrimitiveTest.cpp

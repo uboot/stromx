@@ -14,7 +14,7 @@ namespace stream
 {
     using namespace xercesc;
     
-    Stream*const XmlReader::read(const std::string & filename, const OperatorFactory* const factory)
+    Stream*const XmlReader::read(const std::string & filename, const Factory* const factory)
     {        
         try
         {

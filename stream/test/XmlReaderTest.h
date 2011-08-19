@@ -22,7 +22,7 @@
 
 namespace stream
 {
-    class OperatorFactory;
+    class Factory;
     
     class XmlReaderTest : public CPPUNIT_NS :: TestFixture
     {
@@ -40,7 +40,7 @@ namespace stream
         void testRead();
             
     private:
-        OperatorFactory* m_factory;
+        Factory* m_factory;
     };
 }
 

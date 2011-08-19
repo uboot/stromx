@@ -21,7 +21,6 @@
 
 namespace stream
 {
-    class OperatorFactory;
     class Stream;
     
     class XmlWriter

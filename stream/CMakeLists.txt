@@ -36,7 +36,7 @@ set(SOURCES
     ImageWrapper.cpp
     Operator.cpp
     OperatorKernel.cpp
-    OperatorFactory.cpp
+    Factory.cpp
     Primitive.cpp
     Stream.cpp
     Thread.cpp

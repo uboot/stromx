@@ -14,17 +14,18 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATORREGISTRY_H
-#define STREAM_OPERATORREGISTRY_H
+#ifndef STREAM_REGISTRY_H
+#define STREAM_REGISTRY_H
 
 namespace stream
 {
     class OperatorKernel;
-    class OperatorRegistry
+    
+    class Registry
     {
     public:
         virtual void registerOperator(const OperatorKernel* const op) = 0;
     };
 }
 
-#endif // STREAM_OPERATORREGISTRY_H
+#endif // STREAM_REGISTRY_H

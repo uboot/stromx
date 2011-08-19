@@ -5,7 +5,7 @@
 #include <cppunit/TestAssert.h>
 
 #include <stream/XmlReader.h>
-#include <stream/OperatorFactory.h>
+#include <stream/Factory.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::XmlReaderTest);
 
@@ -13,7 +13,7 @@ namespace stream
 {
     void XmlReaderTest::setUp()
     {
-        m_factory = new OperatorFactory;
+        m_factory = new Factory;
         m_factory->registerOperator(new TestOperator());
     }
     

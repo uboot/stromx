@@ -14,32 +14,36 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATORFACTORY_H
-#define STREAM_OPERATORFACTORY_H
+#ifndef STREAM_FACTORYTEST_H
+#define STREAM_FACTORYTEST_H
 
-#include "OperatorRegistry.h"
-
-#include <string>
-#include <vector>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 namespace stream
 {
-    class Operator;
+    class Factory;
     
-    class OperatorFactory : public OperatorRegistry
+    class FactoryTest : public CPPUNIT_NS :: TestFixture
     {
+        CPPUNIT_TEST_SUITE (FactoryTest);
+        CPPUNIT_TEST(testRegisterOperator);
+        CPPUNIT_TEST(testNewOperator);
+        CPPUNIT_TEST_SUITE_END ();
+
     public:
-        virtual ~OperatorFactory();
+        FactoryTest () {}
         
-        virtual void registerOperator(const OperatorKernel* const op);
-        
-        virtual OperatorKernel* const newOperator(const std::string & package, const std::string & name) const;
-        
-        virtual const std::vector<const OperatorKernel*> & availableOperators() const;
-        
+        void setUp();
+        void tearDown();
+
+    protected:
+        void testRegisterOperator();
+        void testNewOperator();
+            
     private:
-        std::vector<const OperatorKernel*> m_operators;
+        Factory* m_factory;
     };
 }
 
-#endif // STREAM_OPERATORFACTORY_H
+#endif // STREAM_FACTORYTEST_H
