@@ -60,6 +60,21 @@ namespace base
         open(filename);
     }
     
+    Image::Image(const unsigned int size)
+    {
+        try
+        {
+            m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
+            
+            getDataFromCvImage(stream::Image::MONO_8);
+            setDataType(stream::DataType::IMAGE);
+        }
+        catch(cv::Exception& e)
+        {
+            throw stream::OutOfMemory("Failed to allocate image.");
+        }
+    }  
+    
     void Image::open(const std::string& filename)
     {
         if(m_image)
@@ -72,22 +87,7 @@ namespace base
             
         getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
         setDataType(dataTypeFromPixelType(pixelType()));
-    }
-    
-    Image::Image(const unsigned int size)
-    {
-        try
-        {
-            m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
-            
-            getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
-            setDataType(stream::DataType::MONO_8_IMAGE);
-        }
-        catch(cv::Exception& e)
-        {
-            throw stream::OutOfMemory("Failed to allocate image.");
-        }
-    }    
+    }  
     
     void Image::getDataFromCvImage(const PixelType pixelType)
     {

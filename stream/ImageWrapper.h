@@ -30,6 +30,8 @@ namespace stream
         virtual uint8_t* const data() { return m_data; }
         virtual const uint8_t* const data() const { return m_data; }
         
+        virtual void setDataType(const DataType& dataType);
+        
         virtual void initialize(const unsigned int width, 
                                 const unsigned int height, 
                                 const unsigned int stride, 
@@ -40,7 +42,6 @@ namespace stream
         static const int numChannels(const PixelType pixelType);
         static const int depth(const PixelType pixelType);
         
-        virtual void setDataType(const DataType& dataType);
         
         virtual void setSize(const unsigned int size);
         virtual void setBuffer(uint8_t* const buffer);

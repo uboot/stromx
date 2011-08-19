@@ -46,14 +46,13 @@ namespace stream
         virtual uint8_t* const data() = 0;
         virtual const uint8_t* const data() const = 0;
         
-    protected:
         virtual void setDataType(const DataType& dataType) = 0;
         
         virtual void initialize(const unsigned int width, 
                                 const unsigned int height, 
                                 const unsigned int stride, 
                                 uint8_t* const data, 
-                                const PixelType pixelType) = 0; 
+                                const PixelType pixelType) = 0;
     };
 }
 
