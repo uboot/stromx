@@ -26,6 +26,8 @@
 #include <stdint.h>
 #include <float.h>
 
+#include <boost/lexical_cast.hpp>
+
 namespace stream
 {
     template<typename data_t>
@@ -46,6 +48,17 @@ namespace stream
         
         virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
         
+        virtual const std::string serialize(const std::string & name, const std::string & path) const 
+        {
+            return boost::lexical_cast<std::string>(m_value);
+        }
+        
+        virtual void deserialize(const std::string & data,
+                                 const std::string & name, const std::string & path)
+        {
+            m_value = boost::lexical_cast<val_t>(data);
+        }
+        
         operator repr_t() const { return m_value; }
         
         static const Primitive MIN;
@@ -62,8 +75,19 @@ namespace stream
     typedef Primitive<bool, bool> Bool;
         
     typedef Primitive<int, int8_t> Int8;
+    template <>
+    const std::string Int8::serialize(const std::string & name, const std::string & path) const;
+    template <>
+    void Int8::deserialize(const std::string & data,
+                           const std::string & name, const std::string & path);
+    
     typedef Primitive<unsigned int, uint8_t> UInt8;
-        
+    template <>
+    const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
+    template <>
+    void UInt8::deserialize(const std::string & data,
+                            const std::string & name, const std::string & path);
+    
     typedef Primitive<int, int16_t> Int16;
     typedef Primitive<unsigned int, uint16_t> UInt16;
     
