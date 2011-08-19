@@ -27,6 +27,10 @@ namespace stream
         Enum(const unsigned int value) : UInt32(value) {}
         
         virtual const DataType & type() const { return DataType::ENUM; }
+        virtual const std::string & name() const { return NAME; }
+        
+    private:
+        static const std::string NAME;
     };
 }
 

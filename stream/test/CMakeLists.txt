@@ -6,7 +6,7 @@ include_directories(
     ${PROJECT_BINARY_DIR}/..
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/network.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
     main.cpp
