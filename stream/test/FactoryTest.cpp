@@ -7,6 +7,7 @@
 #include <stream/Operator.h>
 
 #include "TestOperator.h"
+#include "TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::FactoryTest);
 
@@ -37,10 +38,47 @@ namespace stream
         
         // get the existing operator
         Operator* newOp;
-        CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "test"));
+        CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "TestOperator"));
         CPPUNIT_ASSERT(newOp);
         
         delete newOp;
+    }
+    
+    void FactoryTest::testNewData()
+    {
+        // add a test data to the factory
+        Data* data = new TestData;
+        m_factory->registerData(data);
+        
+        // try to get data which does not exist in the factory
+        CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareData"), WrongArgument);
+        
+        // get the existing data
+        Data* newData;
+        CPPUNIT_ASSERT_NO_THROW(newData = m_factory->newData("TestPackage", "TestData"));
+        CPPUNIT_ASSERT(newData);
+        
+        delete newData;
+    }
+    
+    void FactoryTest::testRegisterData()
+    {
+        // only non-zero input arguments are allowed
+        CPPUNIT_ASSERT_THROW(m_factory->registerData(0), WrongArgument);
+        
+        // add a new data to the factory
+        Data* data = new TestData;
+        CPPUNIT_ASSERT_NO_THROW(m_factory->registerData(data));
+        
+        // now we try to add another data of the same type
+        // this should result in an exception, because a data with the same name()
+        // and package() has already been added to the factory
+        Data* duplicateData = new TestData;
+        CPPUNIT_ASSERT_THROW(m_factory->registerData(duplicateData), WrongArgument);
+        
+        // delete duplicateData to avoid a memory leak
+        // this is not necessary for data because it belongs to the factory
+        delete duplicateData;
     }
     
     void FactoryTest::testRegisterOperator()

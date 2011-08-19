@@ -16,7 +16,7 @@ using namespace stream;
 
 namespace base
 {
-    const std::string AdjustRgbChannels::NAME("Clip");
+    const std::string AdjustRgbChannels::NAME("AdjustRgbChannels");
     
     const std::string AdjustRgbChannels::PACKAGE(PACKAGE_NAME);
     const Version AdjustRgbChannels::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);

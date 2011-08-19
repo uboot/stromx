@@ -29,6 +29,8 @@ namespace stream
         CPPUNIT_TEST_SUITE (FactoryTest);
         CPPUNIT_TEST(testRegisterOperator);
         CPPUNIT_TEST(testNewOperator);
+        CPPUNIT_TEST(testRegisterData);
+        CPPUNIT_TEST(testNewData);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -40,6 +42,8 @@ namespace stream
     protected:
         void testRegisterOperator();
         void testNewOperator();
+        void testRegisterData();
+        void testNewData();
             
     private:
         Factory* m_factory;

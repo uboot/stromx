@@ -43,6 +43,7 @@ namespace stream
         
     private:
         std::vector<const OperatorKernel*> m_operators;
+        std::vector<const Data*> m_dataTypes;
     };
 }
 
