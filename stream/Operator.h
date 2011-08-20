@@ -50,6 +50,7 @@ namespace stream
         };
         
         Operator(OperatorKernel* const kernel);
+        ~Operator();
         
         const std::string & name() const { return m_name; }
         void setName(const std::string & name) { m_name = name; }
@@ -64,8 +65,6 @@ namespace stream
         void initialize();
         
     private:
-        ~Operator();
-        
         InputNode* const getInputNode(const unsigned int id);
         OutputNode* const getOutputNode(const unsigned int id);
         void activate(){ m_kernel->activate(); }

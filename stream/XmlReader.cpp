@@ -129,6 +129,11 @@ namespace stream
         return retValue;
     }  
     
+    XmlReader::~XmlReader()
+    {
+        cleanUp();
+    }
+    
     void XmlReader::readOperator(DOMElement*const opElement)
     {
         Xml2Str name(opElement->getAttribute(Str2Xml("name")));
@@ -152,11 +157,11 @@ namespace stream
         for(unsigned int i = 0; i < numParameters; ++i)
         {
             DOMElement* paramElement = dynamic_cast<DOMElement*>(parameters->item(i));
-            readParameter(paramElement, op);
+            readParameter(paramElement);
         }
     }
     
-    void XmlReader::readParameter(DOMElement*const paramElement, Operator* op)
+    void XmlReader::readParameter(DOMElement*const paramElement)
     {
         Xml2Str idStr(paramElement->getAttribute(Str2Xml("id")));
         
@@ -174,9 +179,10 @@ namespace stream
         DOMElement* dataElement = dynamic_cast<DOMElement*>(dataElements->item(0));
         Data* data = readData(dataElement);
         
-        op->setParameter(id, *data);
+        if(m_id2DataMap.count(id))
+            throw XmlError("Multiple parameters with the same ID.");
         
-        delete data;
+        m_id2DataMap[id] = data;
     }
     
     Data* XmlReader::readData(DOMElement*const dataElement)
@@ -231,6 +237,24 @@ namespace stream
     {
         m_stream = 0;
         m_currentPath = "";
+        
+        for(std::map<unsigned int, Operator*>::iterator iter = m_id2OperatorMap.begin();
+            iter != m_id2OperatorMap.end();
+            ++iter)
+        {
+            delete iter->second;
+        }
+                
         m_id2OperatorMap.clear();
+        
+        for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
+            iter != m_id2DataMap.end();
+            ++iter)
+        {
+            delete iter->second;
+        }
+                
+        m_id2DataMap.clear();
+        
     }
 }

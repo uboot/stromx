@@ -42,6 +42,8 @@ namespace stream
         XmlReader(const Factory* const factory)
           : m_factory(factory), m_stream(0) {}
           
+        ~XmlReader();
+          
         Stream* const read(const std::string & filename);
         
     private:
@@ -50,7 +52,7 @@ namespace stream
         std::string m_currentPath;
         
         void readOperator(xercesc_3_0::DOMElement* const opElement);
-        void readParameter(xercesc_3_0::DOMElement* const paramElement, Operator* op);
+        void readParameter(xercesc_3_0::DOMElement* const paramElement);
         void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
         void readInputNode(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
         Data* readData(xercesc_3_0::DOMElement* const dataElement);
@@ -59,6 +61,7 @@ namespace stream
         const Factory* m_factory;
         Stream* m_stream;
         std::map<unsigned int, Operator*> m_id2OperatorMap;
+        std::map<unsigned int, Data*> m_id2DataMap;
     };
 }
 
