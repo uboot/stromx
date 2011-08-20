@@ -238,13 +238,6 @@ namespace stream
         m_stream = 0;
         m_currentPath = "";
         
-        for(std::map<unsigned int, Operator*>::iterator iter = m_id2OperatorMap.begin();
-            iter != m_id2OperatorMap.end();
-            ++iter)
-        {
-            delete iter->second;
-        }
-                
         m_id2OperatorMap.clear();
         
         for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
