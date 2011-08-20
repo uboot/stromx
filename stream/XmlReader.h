@@ -34,6 +34,7 @@ namespace stream
     class Data;
     class Operator;
     class Thread;
+    class Data;
     
     class XmlReader
     {
@@ -52,6 +53,7 @@ namespace stream
         void readParameter(xercesc_3_0::DOMElement* const paramElement, Operator* op);
         void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
         void readInputNode(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
+        Data* readData(xercesc_3_0::DOMElement* const dataElement);
         void cleanUp();
         
         const Factory* m_factory;

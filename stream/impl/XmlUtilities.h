@@ -17,12 +17,22 @@
 #ifndef STREAM_IMPL_XMLUTILITES_H
 #define STREAM_IMPL_XMLUTILITES_H
 
+#include "../Exception.h"
+
 #include <xercesc/util/XMLString.hpp>
 
 namespace stream
 {
     namespace impl
     {
+        class XmlError : public Exception
+        {
+        public:
+            XmlError(const std::string & message = "XmlError")
+            : Exception(message)
+            {}
+        };
+    
         class Str2Xml
         {
         public:

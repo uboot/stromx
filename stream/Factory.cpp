@@ -89,7 +89,7 @@ namespace stream
             }
         }
         
-       throw WrongArgument("Invalid argument: Operator unknown. Register first unknown operator.");        
+       throw WrongArgument("Invalid argument: Operator (" + package + ", " + name + ") unknown. Register first unknown operator.");        
     }
 
     Data*const Factory::newData(const std::string& package, const std::string& name) const
@@ -111,6 +111,6 @@ namespace stream
             }
         }
         
-       throw WrongArgument("Invalid argument: Data unknown. Register first unknown data.");        
+       throw WrongArgument("Invalid argument: Data (" + package + ", " + name + ") unknown. Register first unknown data.");        
     }
 } 
