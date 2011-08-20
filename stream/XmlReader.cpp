@@ -3,6 +3,9 @@
 #include "Exception.h"
 #include "Factory.h"
 #include "Data.h"
+#include "Stream.h"
+
+#include "impl/XmlUtilities.h"
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOM.hpp>
@@ -17,15 +20,13 @@
 namespace stream
 {
     using namespace xercesc;
-    
+    using namespace impl;
+
     Stream*const XmlReader::read(const std::string & filename)
-    {        
-        boost::filesystem::path filepath(filename);
-        boost::filesystem::path separator("/");
+    {    
+        cleanUp();
         
-        m_currentPath = filepath.parent_path().directory_string();
-        
-        std::cout << m_currentPath << std::endl;
+        m_currentPath = computePath(filename);
         
         try
         {
@@ -34,10 +35,10 @@ namespace stream
         catch (const XMLException& toCatch)
         {
             char* message = XMLString::transcode(toCatch.getMessage());
-            std::cerr << "Error during initialization! :\n"
-                 << message << "\n";
+            
+            FileAccessFailed ex(filename, "Failed to initialize xerces-c: " + std::string(message));
             XMLString::release(&message);
-            return 0;
+            throw ex;
         }
     
         XercesDOMParser* parser = new XercesDOMParser();
@@ -49,41 +50,45 @@ namespace stream
 
         const char* xmlFile = filename.c_str();
 
-        try {
+        try
+        {
             parser->parse(xmlFile);
         }
-        catch (const XMLException& toCatch) {
+        catch (const XMLException& toCatch)
+        {
             char* message = XMLString::transcode(toCatch.getMessage());
-            std::cerr << "Exception message is: \n"
-                << message << "\n";
+            
+            FileAccessFailed ex(filename, "XML exception: " + std::string(message));
             XMLString::release(&message);
-            return 0;
+            throw ex;
         }
-        catch (const DOMException& toCatch) {
+        catch (const DOMException& toCatch)
+        {
             char* message = XMLString::transcode(toCatch.msg);
-            std::cerr << "Exception message is: \n"
-                << message << "\n";
+            
+            FileAccessFailed ex(filename, "DOM exception: " + std::string(message));
             XMLString::release(&message);
-            return 0;
+            throw ex;
         }
-        catch (...) {
-            std::cerr << "Unexpected Exception \n" ;
-            return 0;
+        catch (...)
+        {
+            throw FileAccessFailed(filename, "Unexpected exception.");
         }
         
         try
         {
-            char tempStr[100];
-            XMLCh tempXmlStr[100];
+            m_stream = new Stream();
             
             DOMDocument* doc = parser->getDocument();
-            
             DOMElement* stream = doc->getDocumentElement();
             
-            XMLString::transcode("name", tempXmlStr, 99);
-            const XMLCh* name = stream->getAttribute(tempXmlStr);
-            XMLString::transcode(name, tempStr, 99);
-            std::cout << tempStr << std::endl;
+            Xml2Str name(stream->getAttribute(Str2Xml("name")));
+            
+            /*m_xmlStr = XMLString::transcode("name");
+            value = stream->getAttribute(m_xmlStr);
+            char* m_str = XMLString::transcode(value);
+            m_stream->setName(m_str);
+            releaseStrings();
             
             XMLString::transcode("Operator", tempXmlStr, 99);
             DOMNodeList* operators = stream->getElementsByTagName(tempXmlStr);
@@ -100,11 +105,13 @@ namespace stream
                 
                 XMLString::transcode("Parameter", tempXmlStr, 99);
                 DOMNodeList* parameters = op->getElementsByTagName(tempXmlStr);
-            }
+            }*/
                 
         }
         catch(XMLException&)
         {
+            delete m_stream;
+            throw FileAccessFailed(filename, "Failed to read XML file.");
         }
 
         delete parser;
@@ -117,55 +124,31 @@ namespace stream
         catch(XMLException&)
         {
         }
+        
+        Stream* retValue = m_stream;
+        
+        cleanUp();
+        
+        return retValue;
     }  
-           
-    const XmlReader::OperatorPair XmlReader::readOperator(xercesc_3_0::DOMElement* const opElement)
+    
+    const std::string XmlReader::computePath(const std::string& filename)
     {
+        boost::filesystem::path filepath(filename);
+        boost::filesystem::path parentpath = filepath.parent_path();
+        std::string pathSeparator;
+        
+        if(! parentpath.empty())
+            pathSeparator = boost::filesystem::path("/").file_string();
+    
+        
+        return parentpath.file_string() + pathSeparator;
     }
     
-    const XmlReader::ParameterPair XmlReader::readParameter(xercesc_3_0::DOMElement* const paramElement)
+    void XmlReader::cleanUp()
     {
-        const XMLCh* element = 0;
-        const XMLCh* text = 0;
-        ParameterPair pair;
-        
-        XMLString::transcode("id", m_tempXmlStr, BUFFER_LENGTH - 1);
-        element = paramElement->getAttribute(m_tempXmlStr);
-        XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
-        pair.id = boost::lexical_cast<unsigned int>(m_tempStr);
-        
-        XMLString::transcode("Data", m_tempXmlStr, 99);
-        DOMNodeList* dataList = paramElement->getElementsByTagName(m_tempXmlStr);
-        
-        if(dataList->getLength() > 0)
-        {
-            DOMElement* data = dynamic_cast<DOMElement*>(dataList->item(0));
-            std::string package, type, dataString;
-            
-            XMLString::transcode("type", m_tempXmlStr, BUFFER_LENGTH - 1);
-            element = paramElement->getAttribute(m_tempXmlStr);
-            XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
-            type = m_tempStr;
-            
-            XMLString::transcode("package", m_tempXmlStr, BUFFER_LENGTH - 1);
-            element = paramElement->getAttribute(m_tempXmlStr);
-            XMLString::transcode(element, m_tempStr, BUFFER_LENGTH - 1);
-            package = m_tempStr;
-            
-            text = data->getNodeValue();
-            XMLString::transcode(text, m_tempStr, BUFFER_LENGTH - 1);
-            dataString = m_tempStr;
-            
-            pair.data = m_factory->newData(type, package);
-            pair.data->deserialize(dataString, m_currentPath);
-        }
-    }
-    
-    void XmlReader::readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread)
-    {
-    }
-    
-    const XmlReader::InputNode XmlReader::readInputNode(xercesc_3_0::DOMElement* const threadElement)
-    {
+        m_stream = 0;
+        m_currentPath = "";
+        m_id2OperatorMap.clear();
     }
 }

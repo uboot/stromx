@@ -18,6 +18,8 @@
 #define STREAM_XMLREADER_H
 
 #include <string>
+#include <map>
+
 #include <xercesc/util/XercesDefs.hpp>
 
 namespace xercesc_3_0
@@ -36,47 +38,25 @@ namespace stream
     class XmlReader
     {
     public:
-        XmlReader(const Factory* const factory) : m_factory(factory) {}
+        XmlReader(const Factory* const factory)
+          : m_factory(factory), m_stream(0) {}
+          
         Stream* const read(const std::string & filename);
         
     private:
+        static const std::string computePath(const std::string & filename);
         
-        struct ParameterPair
-        {
-            ParameterPair() : id(0), data(0) {}
-            
-            unsigned int id;
-            Data* data;
-        };
-        
-        struct OperatorPair
-        {
-            OperatorPair() : id(0), data(0) {}
-            
-            unsigned int id;
-            Operator* data;
-        };
-        
-        struct InputNode
-        {
-            InputNode() : id(0), operatorId(0), outputId(0) {}
-            unsigned int id;
-            unsigned int operatorId;
-            unsigned int outputId;
-        };
-        
-        static const unsigned int BUFFER_LENGTH = 100;
-        
-        char m_tempStr[BUFFER_LENGTH];
-        XMLCh m_tempXmlStr[BUFFER_LENGTH];
         std::string m_currentPath;
         
-        const OperatorPair readOperator(xercesc_3_0::DOMElement* const opElement);
-        const ParameterPair readParameter(xercesc_3_0::DOMElement* const paramElement);
+        void readOperator(xercesc_3_0::DOMElement* const opElement);
+        void readParameter(xercesc_3_0::DOMElement* const paramElement, Operator* op);
         void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
-        const InputNode readInputNode(xercesc_3_0::DOMElement* const threadElement);
+        void readInputNode(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
+        void cleanUp();
         
         const Factory* m_factory;
+        Stream* m_stream;
+        std::map<unsigned int, Operator*> m_id2OperatorMap;
     };
 }
 

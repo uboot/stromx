@@ -63,6 +63,7 @@ set(SOURCES
 if(BUILD_XML_SUPPORT)
     set(SOURCES
         ${SOURCES}
+        ../impl/XmlUtilities.cpp
         ../XmlReader.cpp
         XmlReaderTest.cpp
         ../XmlWriter.cpp

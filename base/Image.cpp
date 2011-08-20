@@ -111,7 +111,7 @@ namespace base
         m_image = cvLoadImage(filename.c_str());
         
         if(! m_image)
-            throw stream::FileAccessFailed("Failed to load image '" + filename + "'.");
+            throw stream::FileAccessFailed(filename, "Failed to load image.");
             
         getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
         setDataType(dataTypeFromPixelType(pixelType()));
@@ -173,7 +173,7 @@ namespace base
             cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
                   
             if(! cv::imwrite(filename, tempImage.m_image))
-                throw stream::FileAccessFailed("Failed to save image '" + filename + "'.");
+                throw stream::FileAccessFailed(filename, "Failed to save image.");
                 
             break;
         }
@@ -183,7 +183,7 @@ namespace base
         case stream::Image::BAYERGB_8:
         {
             if(! cv::imwrite(filename, inImage))
-                throw stream::FileAccessFailed("Failed to save image '" + filename + "'.");
+                throw stream::FileAccessFailed(filename, "Failed to save image.");
             break;
         }
         default:

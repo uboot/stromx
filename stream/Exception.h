@@ -65,9 +65,13 @@ namespace stream
     class FileAccessFailed : public Exception
     {
     public:
-        FileAccessFailed(const std::string & message = "FileAccessFailed")
-          : Exception(message)
+        FileAccessFailed(const std::string & filename, const std::string & message = "FileAccessFailed")
+          : Exception(message),
+            m_filename(filename)
         {}
+        
+    private:
+        const std::string & m_filename;
     };
     
     class OutOfMemory : public Exception
