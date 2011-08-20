@@ -16,7 +16,7 @@ namespace stream
             m_data.m_impl->getReadAccess();
         }
 
-        const Data & ReadAccessImpl::operator()()
+        const Data & ReadAccessImpl::operator()() const
         {
             return *m_data.m_impl->data();
         }
