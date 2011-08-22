@@ -154,10 +154,45 @@ namespace stream
         DOMNodeList* parameters = opElement->getElementsByTagName(Str2Xml("Parameter"));
         XMLSize_t numParameters = parameters->getLength();
         
+        // read the parameters
         for(unsigned int i = 0; i < numParameters; ++i)
         {
             DOMElement* paramElement = dynamic_cast<DOMElement*>(parameters->item(i));
             readParameter(paramElement);
+        }
+    
+        // parameters before initializing
+        for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
+            iter != m_id2DataMap.end();)
+        {
+            const Parameter & param = op->info()->parameter(iter->first);
+            
+            if(param.accessMode() == Parameter::NONE_WRITE)
+            {
+                op->setParameter(iter->first, *iter->second);
+                
+                delete iter->second;
+                std::map<unsigned int, Data*>::iterator toDelete = iter++;
+                m_id2DataMap.erase(toDelete);
+            }
+            else
+            {
+                iter++;
+            }
+        }
+        
+        // initialize
+        op->initialize();
+        
+        // parameters before initializing
+        for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
+            iter != m_id2DataMap.end();)
+        {
+            op->setParameter(iter->first, *iter->second);
+                
+            delete iter->second;
+            std::map<unsigned int, Data*>::iterator toDelete = iter++;
+            m_id2DataMap.erase(toDelete);
         }
     }
     
@@ -205,6 +240,7 @@ namespace stream
             
             dataString = std::string(Xml2Str(node->getNodeValue()));
         }
+            // parameters before initializing
         
         Data* data = m_factory->newData(std::string(package), std::string(type));
         
@@ -227,7 +263,7 @@ namespace stream
         boost::filesystem::path parentpath = filepath.parent_path();
         std::string pathSeparator;
         
-        if(! parentpath.empty())
+        if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
             pathSeparator = boost::filesystem::path("/").file_string();
     
         return parentpath.file_string() + pathSeparator;

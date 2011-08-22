@@ -38,6 +38,8 @@ namespace stream
     
     class XmlReader
     {
+        friend class XmlReaderTest;
+        
     public:
         XmlReader(const Factory* const factory)
           : m_factory(factory), m_stream(0) {}

@@ -28,6 +28,7 @@ namespace stream
     {
         CPPUNIT_TEST_SUITE (XmlReaderTest);
         CPPUNIT_TEST(testRead);
+        CPPUNIT_TEST(testComputePath);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -38,6 +39,7 @@ namespace stream
 
     protected:
         void testRead();
+        void testComputePath();
             
     private:
         Factory* m_factory;
