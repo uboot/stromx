@@ -17,7 +17,7 @@ using namespace stream;
 
 namespace base
 {
-    const std::string ConvertPixelType::TYPE("Convert pixel type");
+    const std::string ConvertPixelType::TYPE("ConvertPixelType");
     
     const std::string ConvertPixelType::PACKAGE(PACKAGE_NAME);
     const Version ConvertPixelType::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
