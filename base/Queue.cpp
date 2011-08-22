@@ -14,13 +14,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string Queue::NAME("Queue");
+    const std::string Queue::TYPE("Queue");
     
     const std::string Queue::PACKAGE(PACKAGE_NAME);
     const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Queue::Queue()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_size(1)
     {
     }

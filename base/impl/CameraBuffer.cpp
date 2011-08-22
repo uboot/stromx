@@ -19,12 +19,12 @@ namespace base
 {
     namespace impl
     {
-        const std::string CameraBuffer::NAME("CameraBuffer");
+        const std::string CameraBuffer::TYPE("CameraBuffer");
         const std::string CameraBuffer::PACKAGE(PACKAGE_NAME);
         const Version CameraBuffer::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
         
         CameraBuffer::CameraBuffer()
-          : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_id(0)
         {
         }

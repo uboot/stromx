@@ -16,13 +16,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string AdjustRgbChannels::NAME("AdjustRgbChannels");
+    const std::string AdjustRgbChannels::TYPE("AdjustRgbChannels");
     
     const std::string AdjustRgbChannels::PACKAGE(PACKAGE_NAME);
     const Version AdjustRgbChannels::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     AdjustRgbChannels::AdjustRgbChannels()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_red(1.0),
         m_green(1.0),
         m_blue(1.0)

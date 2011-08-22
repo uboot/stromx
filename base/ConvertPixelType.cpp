@@ -17,13 +17,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string ConvertPixelType::NAME("Convert pixel type");
+    const std::string ConvertPixelType::TYPE("Convert pixel type");
     
     const std::string ConvertPixelType::PACKAGE(PACKAGE_NAME);
     const Version ConvertPixelType::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     ConvertPixelType::ConvertPixelType()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_pixelType(stream::Image::MONO_8)
     {
     }

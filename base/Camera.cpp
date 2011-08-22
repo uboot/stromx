@@ -28,13 +28,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string Camera::NAME("Camera");
+    const std::string Camera::TYPE("Camera");
     
     const std::string Camera::PACKAGE(PACKAGE_NAME);
     const Version Camera::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Camera::Camera()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_stream(0),
         m_input(0),
         m_clip(0),

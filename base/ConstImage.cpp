@@ -13,13 +13,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string ConstImage::NAME("Constant image source");
+    const std::string ConstImage::TYPE("Constant image source");
     
     const std::string ConstImage::PACKAGE(PACKAGE_NAME);
     const Version ConstImage::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     ConstImage::ConstImage()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_image(0)
     {
         m_image = new Image(0, 0, stream::Image::MONO_8);

@@ -11,13 +11,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string Trigger::NAME("Trigger");
+    const std::string Trigger::TYPE("Trigger");
     
     const std::string Trigger::PACKAGE(PACKAGE_NAME);
     const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Trigger::Trigger()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_active(true)
     {
     }

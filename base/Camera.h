@@ -84,7 +84,7 @@ namespace base
         const std::vector<const stream::Parameter*> setupParameters();
         void setRgbParameters();
         
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const stream::Version VERSION; 
         

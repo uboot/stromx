@@ -7,7 +7,7 @@
 
 namespace base
 {
-    const std::string Image::NAME = "Image";
+    const std::string Image::TYPE = "Image";
     const std::string Image::PACKAGE = PACKAGE_NAME;
     const stream::Version Image::VERSION = stream::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
     

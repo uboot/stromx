@@ -33,6 +33,6 @@
         <InputNode operator="1" input="0"/>
         <InputNode operator="1" input="1"/>
         <InputNode operator="2" input="0"/>
-        <InputNode operator="2" input="2"/>
+        <InputNode operator="2" input="1"/>
     </Thread> 
 </Stream>

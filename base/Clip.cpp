@@ -16,13 +16,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string Clip::NAME("Clip");
+    const std::string Clip::TYPE("Clip");
     
     const std::string Clip::PACKAGE(PACKAGE_NAME);
     const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Clip::Clip()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 

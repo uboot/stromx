@@ -13,13 +13,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string PeriodicDelay::NAME("PeriodicDelay");
+    const std::string PeriodicDelay::TYPE("PeriodicDelay");
     
     const std::string PeriodicDelay::PACKAGE(PACKAGE_NAME);
     const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     PeriodicDelay::PeriodicDelay()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
     
