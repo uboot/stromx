@@ -32,7 +32,7 @@ namespace stream
         static const std::vector<const Parameter*> setupInitParameters();
         static const std::vector<const Parameter*> setupParameters();
         
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const Version VERSION;
         

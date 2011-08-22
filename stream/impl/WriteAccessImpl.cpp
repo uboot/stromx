@@ -16,7 +16,7 @@ namespace stream
             m_data.m_impl->getWriteAccess();
         }
 
-        Data& WriteAccessImpl::operator()()
+        Data& WriteAccessImpl::operator()() const
         {
             return *m_data.m_impl->data();
         }

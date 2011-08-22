@@ -36,7 +36,7 @@ namespace stream
             iter != m_operators.end();
             ++iter)
         {
-            if(op->name() == (*iter)->name() && op->package() == (*iter)->package())
+            if(op->type() == (*iter)->type() && op->package() == (*iter)->package())
             {
                 throw WrongArgument("Invalid argument: Operator already registered.");
             }
@@ -70,13 +70,13 @@ namespace stream
         return m_operators;
     }
 
-    Operator*const Factory::newOperator(const std::string& package, const std::string& name) const
+    Operator*const Factory::newOperator(const std::string& package, const std::string& type) const
     {
         for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
             iter != m_operators.end();
             ++iter)
         {
-            if((*iter)->name() == name && (*iter)->package() == package)
+            if((*iter)->type() == type && (*iter)->package() == package)
             {
                 OperatorKernel* newOp = 0;
                 newOp = (*iter)->clone();
@@ -89,7 +89,7 @@ namespace stream
             }
         }
         
-       throw WrongArgument("Invalid argument: Operator (" + package + ", " + name + ") unknown. Register first unknown operator.");        
+       throw WrongArgument("Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
     }
 
     Data*const Factory::newData(const std::string& package, const std::string& name) const

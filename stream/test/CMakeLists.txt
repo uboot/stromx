@@ -13,51 +13,51 @@ set(SOURCES
     ../impl/DataContainerImpl.cpp
     ../DataContainer.cpp
     ../Data.cpp
-    #DataContainerTest.cpp
+    DataContainerTest.cpp
     ../DataType.cpp
-    #DataTypeTest.cpp
+    DataTypeTest.cpp
     ../impl/Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp
     ../None.cpp
-    #Id2DataCompositeTest.cpp
+    Id2DataCompositeTest.cpp
     ../Id2DataPair.cpp
-    #Id2DataPairTest.cpp
+    Id2DataPairTest.cpp
     ../OperatorKernel.cpp
     TestOperator.cpp
     ../impl/SynchronizedOperatorKernel.cpp
-    #SynchronizedOperatorKernelTest.cpp
+    SynchronizedOperatorKernelTest.cpp
     ../impl/OutputNode.cpp
-    #OutputNodeTest.cpp
+    OutputNodeTest.cpp
     ../impl/InputNode.cpp
-    #InputNodeTest.cpp   
+    InputNodeTest.cpp   
     ../Operator.cpp
     ../ReadAccess.cpp
     ../impl/ReadAccessImpl.cpp
-    #ReadAccessTest.cpp
+    ReadAccessTest.cpp
     ../RecycleAccess.cpp
     ../impl/RecycleAccessImpl.cpp
-    #RecycleAccessTest.cpp
+    RecycleAccessTest.cpp
     ../impl/ThreadImpl.cpp
-    #ThreadImplTest.cpp
+    ThreadImplTest.cpp
     ../Thread.cpp
-    #ThreadTest.cpp
+    ThreadTest.cpp
     ../impl/Network.cpp
-    #NetworkTest.cpp
+    NetworkTest.cpp
     ../Factory.cpp
-    #FactoryTest.cpp
+    FactoryTest.cpp
     ../Primitive.cpp
     ../DataType.cpp
-    #PrimitiveTest.cpp
+    PrimitiveTest.cpp
     ../Stream.cpp
     TestData.cpp
     ../Try.cpp
-    #TryTest.cpp
+    TryTest.cpp
     ../WriteAccess.cpp
     ../impl/WriteAccessImpl.cpp
-    #WriteAccessTest.cpp
+    WriteAccessTest.cpp
     ../Stream.cpp
-    #StreamTest.cpp
+    StreamTest.cpp
 )
 
 if(BUILD_XML_SUPPORT)

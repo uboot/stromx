@@ -58,7 +58,7 @@ namespace stream
         const OperatorInfo* const info() const { return m_kernel->info(); }
         const Status status() { return Status(m_kernel->status()); }
         void setParameter(unsigned int id, const Data& value) { m_kernel->setParameter(id, value); }
-        const Data& getParameter(unsigned int id) { return m_kernel->getParameter(id); }
+        const Data& getParameter(unsigned int id) const { return m_kernel->getParameter(id); }
         DataContainer getOutputData(const unsigned int id) { return m_kernel->getOutputData(id); }
         void setInputData(const unsigned int id, DataContainer data) { m_kernel->setInputData(id, data); }
         void clearOutputData(unsigned int id) { m_kernel->clearOutputData(id); }

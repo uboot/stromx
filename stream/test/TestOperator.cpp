@@ -12,12 +12,12 @@
 
 namespace stream
 {
-    const std::string TestOperator::NAME("TestOperator");
+    const std::string TestOperator::TYPE("TestOperator");
     const std::string TestOperator::PACKAGE("TestPackage");
     const Version TestOperator::VERSION(0, 1);
     
     TestOperator::TestOperator()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInitParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
         m_sleepTime(100),
         m_bufferSize(1000),
         m_numExecutes(0)

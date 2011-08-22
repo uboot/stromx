@@ -32,26 +32,26 @@ namespace stream
         friend class SynchronizedOperatorKernel;
         
     public:
-        OperatorKernel(const std::string & name,
+        OperatorKernel(const std::string & type,
                  const std::string & package,
                  const Version & version,
                  const std::vector<const Parameter*>& parameters);
                  
-        OperatorKernel(const std::string & name,
+        OperatorKernel(const std::string & type,
                  const std::string & package,
                  const Version & version,
                  const std::vector<const Description*>& inputs,
                  const std::vector<const Description*>& outputs,
                  const std::vector<const Parameter*>& parameters);
                  
-        OperatorKernel(const std::string & name,
+        OperatorKernel(const std::string & type,
                  const std::string & package,
                  const Version & version);
                  
         virtual OperatorKernel* const clone() const = 0;
         virtual ~OperatorKernel();
         
-        const std::string& name() const { return m_name; }
+        const std::string& type() const { return m_type; }
         const std::string& package() const { return m_package; }
         const Version& version() const { return m_version; }
         const std::vector<const Description*>& inputs() const { return m_inputs; }
@@ -76,7 +76,7 @@ namespace stream
         static void validate(const std::vector<const Description*>& descriptors);
         static void validate(const std::vector<const Parameter*>& descriptors);
         
-        std::string m_name;
+        std::string m_type;
         std::string m_package;
         Version m_version;
         std::vector<const Description*> m_inputs;

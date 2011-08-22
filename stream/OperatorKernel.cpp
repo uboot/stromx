@@ -23,11 +23,11 @@
 
 namespace stream
 {
-    OperatorKernel::OperatorKernel (const std::string & name,
+    OperatorKernel::OperatorKernel (const std::string & type,
                         const std::string & package,
                         const Version & version,
                         const std::vector<const Parameter*>& parameters)
-      : m_name(name),
+      : m_type(type),
         m_package(package),
         m_version(version),
         m_parameters(parameters)
@@ -42,22 +42,22 @@ namespace stream
         }
     }
     
-    OperatorKernel::OperatorKernel (const std::string & name,
+    OperatorKernel::OperatorKernel (const std::string & type,
                         const std::string & package,
                         const Version & version)
-      : m_name(name),
+      : m_type(type),
         m_package(package),
         m_version(version)
     {
     }
     
-    OperatorKernel::OperatorKernel(const std::string& name,
+    OperatorKernel::OperatorKernel(const std::string& type,
                        const std::string& package,
                        const stream::Version& version,
                        const std::vector<const Description* >& inputs,
                        const std::vector<const Description* >& outputs,
                        const std::vector<const Parameter* >& parameters)
-      : m_name(name),
+      : m_type(type),
         m_package(package),
         m_version(version),
         m_inputs(inputs),
