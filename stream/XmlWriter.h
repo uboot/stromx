@@ -27,6 +27,8 @@ namespace stream
     {
     public:
         void write(const std::string & filename, Stream& stream);
+    private:
+        static const std::string computePath(const std::string & filename);
     };
 }
 

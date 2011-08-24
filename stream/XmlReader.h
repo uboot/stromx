@@ -21,11 +21,7 @@
 #include <map>
 
 #include <xercesc/util/XercesDefs.hpp>
-
-namespace xercesc_3_0
-{
-    class DOMElement;
-}
+#include <xercesc/dom/DOM.hpp>
 
 namespace stream
 {
@@ -53,11 +49,11 @@ namespace stream
         
         std::string m_currentPath;
         
-        void readOperator(xercesc_3_0::DOMElement* const opElement);
-        void readParameter(xercesc_3_0::DOMElement* const paramElement);
-        void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
-        void readInputNode(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
-        Data* readData(xercesc_3_0::DOMElement* const dataElement);
+        void readOperator(xercesc::DOMElement* const opElement);
+        void readParameter(xercesc::DOMElement* const paramElement);
+        void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
+        void readInputNode(xercesc::DOMElement* const threadElement, Thread* const thread);
+        Data* readData(xercesc::DOMElement* const dataElement);
         void cleanUp();
         
         const Factory* m_factory;
