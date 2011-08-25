@@ -37,7 +37,7 @@ namespace stream
         
         virtual const std::vector<const OperatorKernel*> & availableOperators() const;
         
-        virtual void registerData(const Data* const data);
+        virtual void registerData(const Data* const type);
         
         virtual Data* const newData(const std::string & package, const std::string & name) const;
         

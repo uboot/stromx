@@ -26,11 +26,11 @@ namespace stream
     public:
         Enum(const unsigned int value) : UInt32(value) {}
         
-        virtual const DataVariant & type() const { return DataVariant::ENUM; }
-        virtual const std::string & name() const { return NAME; }
+        virtual const DataVariant & variant() const { return DataVariant::ENUM; }
+        virtual const std::string & type() const { return TYPE; }
         
     private:
-        static const std::string NAME;
+        static const std::string TYPE;
     };
 }
 

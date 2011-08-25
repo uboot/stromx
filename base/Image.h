@@ -20,7 +20,7 @@ namespace base
         virtual ~Image();
         
         virtual const stream::Version & version() const { return VERSION; }
-        virtual const std::string & name() const { return TYPE; }
+        virtual const std::string & type() const { return TYPE; }
         virtual const std::string & package() const { return PACKAGE; }
         
         virtual Data* const clone() const { return new Image; }

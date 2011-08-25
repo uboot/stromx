@@ -20,7 +20,7 @@
 
 namespace stream
 {
-    const std::string Trigger::NAME = "Trigger";
+    const std::string Trigger::TYPE = "Trigger";
     const std::string Trigger::PACKAGE = PACKAGE_NAME;
     const Version Trigger::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
 }

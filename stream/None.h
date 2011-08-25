@@ -27,7 +27,7 @@ namespace stream
         None() {}
         
         virtual const Version & version() const { return VERSION; }
-        virtual const std::string & name() const { return NAME; }
+        virtual const std::string & type() const { return TYPE; }
         virtual const std::string & package() const { return PACKAGE; }
         
         virtual const DataVariant & variant() const { return DataVariant::NONE; }
@@ -35,7 +35,7 @@ namespace stream
         virtual Data* const clone() const { return new None; }
         
     private:
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const Version VERSION;
     };
