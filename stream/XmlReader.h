@@ -1,18 +1,18 @@
 /* 
-*  Copyright 2011 XXX
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*/
+ *  Copyright 2011 Matthias Fuchs
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 
 #ifndef STREAM_XMLREADER_H
 #define STREAM_XMLREADER_H
@@ -21,11 +21,7 @@
 #include <map>
 
 #include <xercesc/util/XercesDefs.hpp>
-
-namespace xercesc_3_0
-{
-    class DOMElement;
-}
+#include <xercesc/dom/DOM.hpp>
 
 namespace stream
 {
@@ -53,13 +49,13 @@ namespace stream
         
         std::string m_currentPath;
         
-        void readOperator(xercesc_3_0::DOMElement* const opElement);
-        void readOperatorInputs(xercesc_3_0::DOMElement* const opElement);
-        void readParameter(xercesc_3_0::DOMElement* const paramElement);
-        void readThread(xercesc_3_0::DOMElement* const threadElement, Thread* const thread);
-        void readInputNode(xercesc_3_0::DOMElement* const inputNodeElement, Thread* const thread);
-        void readInput(xercesc_3_0::DOMElement* const inputElement, Operator* const op);
-        Data* readData(xercesc_3_0::DOMElement* const dataElement);
+        void readOperator(xercesc::DOMElement* const opElement);
+        void readOperatorInputs(xercesc::DOMElement* const opElement);
+        void readParameter(xercesc::DOMElement* const paramElement);
+        void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
+        void readInputNode(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
+        void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
+        Data* readData(xercesc::DOMElement* const dataElement);
         void cleanUp();
         
         const Factory* m_factory;
