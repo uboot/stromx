@@ -15,7 +15,6 @@
  */
 
 #include "DataContainer.h"
-
 #include "Recycler.h"
 
 namespace stream

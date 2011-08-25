@@ -17,9 +17,8 @@
 #ifndef STREAM_DATATYPE_H
 #define STREAM_DATATYPE_H
 
-#include "Version.h"
-
 #include <string>
+#include "Version.h"
 
 namespace stream
 {

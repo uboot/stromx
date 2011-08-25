@@ -45,7 +45,7 @@ namespace stream
         virtual void get(impl::Id2DataMap& id2DataMap) const; 
         virtual void set(impl::Id2DataMap& id2DataMap) const;
         
-    private:
+    private:  
         const Id2DataMapper& m_lhs;
         const Id2DataMapper& m_rhs;
         NodeType m_type;

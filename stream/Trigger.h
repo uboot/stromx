@@ -41,4 +41,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_ENUM_H
+#endif // STREAM_TRIGGER_H

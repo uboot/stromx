@@ -15,7 +15,6 @@
  */
 
 #include "EnumParameter.h"
-
 #include "Exception.h"
 
 namespace stream

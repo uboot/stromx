@@ -18,7 +18,6 @@
 #define STREAM_DATACONTAINER_H
 
 #include <boost/shared_ptr.hpp>
-
 #include "impl/DataContainerImpl.h"
 
 namespace stream
@@ -28,9 +27,9 @@ namespace stream
     
     namespace impl
     {
-        class WriteAccessImpl;
         class ReadAccessImpl;
         class RecycleAccessImpl;
+        class WriteAccessImpl;
     }
     
     class DataContainer
@@ -48,8 +47,8 @@ namespace stream
         
         const DataType & type();
         const bool empty() const { return m_impl.get() == 0; }
-    private:
         
+    private:
         boost::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     

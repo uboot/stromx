@@ -17,10 +17,9 @@
 #ifndef STREAM_ENUMPARAMETER_H
 #define STREAM_ENUMPARAMETER_H
 
-#include "Parameter.h"
-#include "Enum.h"
-
 #include <vector>
+#include "Enum.h"
+#include "Parameter.h"
 
 namespace stream
 {
@@ -47,7 +46,7 @@ namespace stream
           : Parameter(id, DataType::ENUM)
         {}
         
-        virtual std::vector<EnumDescription> & descriptions() { return m_descriptions; }
+        virtual const std::vector<EnumDescription> & descriptions() const { return m_descriptions; }
         
         virtual void add(const EnumDescription & description);
         virtual void remove(const EnumDescription & description);     
@@ -56,6 +55,5 @@ namespace stream
         std::vector<EnumDescription> m_descriptions;
     };
 }
-
 
 #endif // STREAM_ENUMPARAMETER_H

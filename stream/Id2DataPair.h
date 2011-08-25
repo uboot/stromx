@@ -17,8 +17,8 @@
 #ifndef STREAM_ID2DATAPAIR_H
 #define STREAM_ID2DATAPAIR_H
 
-#include "Id2DataMapper.h"
 #include "DataContainer.h"
+#include "Id2DataMapper.h"
 
 namespace stream
 {  
@@ -33,21 +33,17 @@ namespace stream
         Id2DataPair(const unsigned int id, DataContainer data)
           : m_id(id),
             m_data(DataContainer())
-        {
-            m_data = data;
-        }
+        { m_data = data; }
         
         Id2DataPair(const unsigned int id)
           : m_id(id),
             m_data(DataContainer())
         {}
         
-        ~Id2DataPair()
-        {
-        }
+        ~Id2DataPair() {}
         
         const unsigned int id() const { return m_id; }
-        DataContainer & data() const { return m_data; }
+        const DataContainer & data() const { return m_data; }
         
         virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const;
         virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const;
@@ -58,8 +54,6 @@ namespace stream
         unsigned int m_id;
         mutable DataContainer m_data;
     }; 
-    
-   
 }
 
 #endif // STREAM_ID2DATAPAIR_H

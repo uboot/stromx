@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_INPUTNODE_H
-#define STREAM_INPUTNODE_H
+#ifndef STREAM_IMPL_INPUTNODE_H
+#define STREAM_IMPL_INPUTNODE_H
 
 namespace stream
 {
@@ -43,4 +43,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_INPUTNODE_H
+#endif // STREAM_IMPL_INPUTNODE_H

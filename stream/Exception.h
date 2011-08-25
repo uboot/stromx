@@ -17,8 +17,8 @@
 #ifndef STREAM_EXCEPTION_H
 #define STREAM_EXCEPTION_H
 
-#include <string>
 #include <exception>
+#include <string>
 
 namespace stream
 {

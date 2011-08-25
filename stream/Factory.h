@@ -17,10 +17,9 @@
 #ifndef STREAM_FACTORY_H
 #define STREAM_FACTORY_H
 
-#include "Registry.h"
-
 #include <string>
 #include <vector>
+#include "Registry.h"
 
 namespace stream
 {
@@ -31,14 +30,11 @@ namespace stream
     public:
         virtual ~Factory();
         
-        virtual void registerOperator(const OperatorKernel* const op);
+        virtual void registerOperator(const OperatorKernel* const op);      
+        virtual Operator* const newOperator(const std::string & package, const std::string & name) const;      
+        virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
         
-        virtual Operator* const newOperator(const std::string & package, const std::string & name) const;
-        
-        virtual const std::vector<const OperatorKernel*> & availableOperators() const;
-        
-        virtual void registerData(const Data* const data);
-        
+        virtual void registerData(const Data* const data);        
         virtual Data* const newData(const std::string & package, const std::string & name) const;
         
     private:

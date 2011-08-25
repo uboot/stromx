@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_THREADIMPL_H
-#define STREAM_THREADIMPL_H
+#ifndef STREAM_IMPL_THREADIMPL_H
+#define STREAM_IMPL_THREADIMPL_H
 
 #include <vector>
 #include <string>
@@ -60,4 +60,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_THREADIMPL_H
+#endif // STREAM_IMPL_THREADIMPL_H

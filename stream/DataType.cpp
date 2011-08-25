@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "DataType.h"
-
 #include "Config.h"
+#include "DataType.h"
 
 namespace stream
 {
