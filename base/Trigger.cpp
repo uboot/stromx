@@ -87,7 +87,7 @@ namespace base
     {
         std::vector<const Description*> inputs;
         
-        Description* input = new Description(OUTPUT, DataType::DATA);
+        Description* input = new Description(OUTPUT, DataVariant::DATA);
         input->setName("Input");
         inputs.push_back(input);
         
@@ -98,7 +98,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::DATA);
+        Description* output = new Description(OUTPUT, DataVariant::DATA);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -109,12 +109,12 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        Parameter* trigger = new Parameter(TRIGGER, DataType::TRIGGER);
+        Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
         trigger->setName("Trigger");
         trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
-        Parameter* active = new Parameter(ACTIVE, DataType::BOOL);
+        Parameter* active = new Parameter(ACTIVE, DataVariant::BOOL);
         active->setName("Active");
         active->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(active);

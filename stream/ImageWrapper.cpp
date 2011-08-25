@@ -28,7 +28,7 @@ namespace stream
         m_stride(0),
         m_pixelType(MONO_8),
         m_data(0),
-        m_dataType(DataType::MONO_8_IMAGE)
+        m_variant(DataVariant::MONO_8_IMAGE)
     {
     }
     
@@ -40,13 +40,13 @@ namespace stream
         m_stride(0),
         m_pixelType(MONO_8),
         m_data(0),
-        m_dataType(DataType::MONO_8_IMAGE)
+        m_variant(DataVariant::MONO_8_IMAGE)
     {
     }
      
-    void ImageWrapper::setDataType(const stream::DataType& dataType)
+    void ImageWrapper::setVariant(const stream::DataVariant& variant)
     {
-        m_dataType = dataType;
+        m_variant = variant;
     }
     
     void ImageWrapper::setSize(const unsigned int size)

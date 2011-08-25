@@ -44,7 +44,7 @@ namespace stream
         virtual const Version & version() const { return VERSION; }
         virtual const std::string & package() const { return PACKAGE; }
         
-        virtual const DataType & type() const;
+        virtual const DataVariant & variant() const;
         
         virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
         

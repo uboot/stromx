@@ -14,8 +14,8 @@ set(SOURCES
     ../DataContainer.cpp
     ../Data.cpp
     DataContainerTest.cpp
-    ../DataType.cpp
-    DataTypeTest.cpp
+    ../DataVariant.cpp
+    DataVariantTest.cpp
     ../impl/Id2DataMap.cpp
     ../Id2DataMapper.cpp
     ../Id2DataComposite.cpp
@@ -47,7 +47,6 @@ set(SOURCES
     ../Factory.cpp
     FactoryTest.cpp
     ../Primitive.cpp
-    ../DataType.cpp
     PrimitiveTest.cpp
     ../Stream.cpp
     TestData.cpp

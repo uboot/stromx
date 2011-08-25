@@ -39,7 +39,7 @@ namespace base
         static const stream::Version VERSION;
         
         static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-        static const stream::DataType dataTypeFromPixelType(const PixelType pixelType);
+        static const stream::DataVariant dataTypeFromPixelType(const PixelType pixelType);
         
         void getDataFromCvImage(const PixelType pixelType);
         

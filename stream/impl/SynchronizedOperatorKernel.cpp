@@ -128,10 +128,10 @@ namespace stream
     {
         validateParameterId(id);
         validateWriteAccess(id);
-        validateParameterType(id, value.type());
+        validateParameterType(id, value.variant());
         
-        DataType parameterType = info()->parameter(id).type();
-        if(parameterType.is(DataType::TRIGGER))
+        DataVariant parameterType = info()->parameter(id).type();
+        if(parameterType.is(DataVariant::TRIGGER))
         {
             m_op->setParameter(id, value);
         }
@@ -427,7 +427,7 @@ namespace stream
         }
     }
     
-    void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const stream::DataType& type)
+    void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const stream::DataVariant& type)
     {
         const Parameter& param = info()->parameter(id);
         if(! type.is(param.type()))

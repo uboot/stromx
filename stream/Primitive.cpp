@@ -21,7 +21,7 @@
 namespace stream
 {
     template<>
-    const DataType & Bool::type() const { return DataType::BOOL; }
+    const DataVariant & Bool::variant() const { return DataVariant::BOOL; }
     template<>
     const std::string Bool::NAME = "Bool";
     template<>
@@ -30,7 +30,7 @@ namespace stream
     const Version Bool::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & Int8::type() const { return DataType::INT_8; }
+    const DataVariant & Int8::variant() const { return DataVariant::INT_8; }
     template<>
     const std::string Int8::NAME = "Int8";
     template<>
@@ -55,7 +55,7 @@ namespace stream
     }
     
     template<>
-    const DataType & UInt8::type() const { return DataType::UINT_8; }
+    const DataVariant & UInt8::variant() const { return DataVariant::UINT_8; }
     template<>
     const std::string UInt8::NAME = "UInt8";
     template<>
@@ -80,7 +80,7 @@ namespace stream
     }
     
     template<>
-    const DataType & Int16::type() const { return DataType::INT_16; }
+    const DataVariant & Int16::variant() const { return DataVariant::INT_16; }
     template<>
     const std::string Int16::NAME = "Int16";
     template<>
@@ -89,7 +89,7 @@ namespace stream
     const Version Int16::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & UInt16::type() const { return DataType::UINT_16; }
+    const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
     template<>
     const std::string UInt16::NAME = "UInt16";
     template<>
@@ -98,7 +98,7 @@ namespace stream
     const Version UInt16::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & Int32::type() const { return DataType::INT_32; }
+    const DataVariant & Int32::variant() const { return DataVariant::INT_32; }
     template<>
     const std::string Int32::NAME = "Int32";
     template<>
@@ -111,7 +111,7 @@ namespace stream
     const Version Int32::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & UInt32::type() const { return DataType::UINT_32; }
+    const DataVariant & UInt32::variant() const { return DataVariant::UINT_32; }
     template<>
     const std::string UInt32::NAME = "UInt32";
     template<>
@@ -124,7 +124,7 @@ namespace stream
     const Version UInt32::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & Float::type() const { return DataType::FLOAT; }
+    const DataVariant & Float::variant() const { return DataVariant::FLOAT; }
     template<>
     const std::string Float::NAME = "Float";
     template<>
@@ -137,7 +137,7 @@ namespace stream
     const Version Float::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
     
     template<>
-    const DataType & Double::type() const { return DataType::DOUBLE; }
+    const DataVariant & Double::variant() const { return DataVariant::DOUBLE; }
     template<>
     const std::string Double::NAME = "Double";
     template<>

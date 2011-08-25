@@ -102,7 +102,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        Description* output = new Description(OUTPUT, DataVariant::IMAGE);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -113,7 +113,7 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
+        Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
                                     

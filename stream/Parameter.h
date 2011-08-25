@@ -34,7 +34,7 @@ namespace stream
             ACTIVATED_WRITE
         };
         
-        Parameter(const unsigned int id, const DataType& type)
+        Parameter(const unsigned int id, const DataVariant& type)
           : Description(id, type),
             m_access(NO_ACCESS)
         {}

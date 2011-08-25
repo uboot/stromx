@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATATYPE_H
-#define STREAM_DATATYPE_H
+#ifndef STREAM_DATAVARIANT_H
+#define STREAM_DATAVARIANT_H
 
 #include "Version.h"
 
@@ -23,46 +23,46 @@
 
 namespace stream
 {
-    class DataType
+    class DataVariant
     {
     public:
-        const static DataType NONE;
-        const static DataType DATA;
-        const static DataType TRIGGER;
-        const static DataType BOOL;
-        const static DataType ENUM;
-        const static DataType INT;
-        const static DataType UINT;
-        const static DataType INT_8;
-        const static DataType UINT_8;
-        const static DataType INT_16;
-        const static DataType UINT_16;
-        const static DataType INT_32;
-        const static DataType UINT_32;
-        const static DataType FLOAT;
-        const static DataType DOUBLE;
-        const static DataType IMAGE;
-        const static DataType MONO_IMAGE;
-        const static DataType RGB_IMAGE;
-        const static DataType MONO_8_IMAGE;
-        const static DataType RGB_24_IMAGE;
-        const static DataType BGR_24_IMAGE;
-        const static DataType BAYERBG_8_IMAGE;
-        const static DataType BAYERGB_8_IMAGE;
-        const static DataType MONO_16_IMAGE;
-        const static DataType RGB_48_IMAGE;
-        const static DataType BGR_48_IMAGE;
+        const static DataVariant NONE;
+        const static DataVariant DATA;
+        const static DataVariant TRIGGER;
+        const static DataVariant BOOL;
+        const static DataVariant ENUM;
+        const static DataVariant INT;
+        const static DataVariant UINT;
+        const static DataVariant INT_8;
+        const static DataVariant UINT_8;
+        const static DataVariant INT_16;
+        const static DataVariant UINT_16;
+        const static DataVariant INT_32;
+        const static DataVariant UINT_32;
+        const static DataVariant FLOAT;
+        const static DataVariant DOUBLE;
+        const static DataVariant IMAGE;
+        const static DataVariant MONO_IMAGE;
+        const static DataVariant RGB_IMAGE;
+        const static DataVariant MONO_8_IMAGE;
+        const static DataVariant RGB_24_IMAGE;
+        const static DataVariant BGR_24_IMAGE;
+        const static DataVariant BAYERBG_8_IMAGE;
+        const static DataVariant BAYERGB_8_IMAGE;
+        const static DataVariant MONO_16_IMAGE;
+        const static DataVariant RGB_48_IMAGE;
+        const static DataVariant BGR_48_IMAGE;
         
-        explicit DataType(const unsigned int typeId, const std::string & description)
+        explicit DataVariant(const unsigned int typeId, const std::string & description)
           : m_typeId(typeId),
             m_description(description)
         {}
         
-        ~DataType() {}
+        ~DataVariant() {}
         
         const std::string & description() const { return m_description; }
         
-        virtual const bool is(const DataType& type) const;
+        virtual const bool is(const DataVariant& type) const;
        
     private: 
         enum Types
@@ -100,4 +100,4 @@ namespace stream
     };
 }
 
-#endif // STREAM_DATATYPE_H
+#endif // STREAM_DATAVARIANT_H

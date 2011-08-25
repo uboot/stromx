@@ -82,8 +82,8 @@ namespace stream
     const std::vector<const Description*> TestOperator::setupInputs()
     {
         std::vector<const Description*> inputs;
-        inputs.push_back(new Description(INPUT_1, DataType::NONE));
-        inputs.push_back(new Description(INPUT_2, DataType::NONE));
+        inputs.push_back(new Description(INPUT_1, DataVariant::NONE));
+        inputs.push_back(new Description(INPUT_2, DataVariant::NONE));
         
         return inputs;
     }
@@ -91,8 +91,8 @@ namespace stream
     const std::vector<const Description*> TestOperator::setupOutputs()
     {
         std::vector<const Description*> outputs;
-        outputs.push_back(new Description(OUTPUT_1, DataType::NONE));
-        outputs.push_back(new Description(OUTPUT_2, DataType::NONE));
+        outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
+        outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
         
         return outputs;
     }
@@ -100,7 +100,7 @@ namespace stream
     const std::vector<const Parameter*> TestOperator::setupParameters()
     {
         std::vector<const Parameter*> parameters;
-        Parameter* param = new Parameter(SLEEP_TIME, DataType::UINT_32);
+        Parameter* param = new Parameter(SLEEP_TIME, DataVariant::UINT_32);
         param->setAccessMode(Parameter::INITIALIZED_WRITE);
         parameters.push_back(param);
         
@@ -110,7 +110,7 @@ namespace stream
     const std::vector<const Parameter*> TestOperator::setupInitParameters()
     {
         std::vector<const Parameter*> parameters;
-        Parameter* param = new Parameter(BUFFER_SIZE, DataType::UINT_32);
+        Parameter* param = new Parameter(BUFFER_SIZE, DataVariant::UINT_32);
         param->setAccessMode(Parameter::NONE_WRITE);
         parameters.push_back(param);
                                        

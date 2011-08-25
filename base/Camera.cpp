@@ -381,11 +381,11 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        Description* output = new Description(OUTPUT, DataVariant::IMAGE);
         output->setName("Output");
         outputs.push_back(output);
         
-        Description* index = new Description(INDEX, DataType::UINT_32);
+        Description* index = new Description(INDEX, DataVariant::UINT_32);
         index->setName("Index");
         outputs.push_back(index);
         
@@ -396,7 +396,7 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
+        Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
         
@@ -408,68 +408,68 @@ namespace base
         triggerMode->add(EnumDescription(Enum(EXTERNAL), "External"));
         parameters.push_back(triggerMode);
         
-        Parameter* trigger = new Parameter(TRIGGER, DataType::TRIGGER);
+        Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
         trigger->setName("Trigger");
         trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
-        NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE, DataType::UINT_32);
+        NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE, DataVariant::UINT_32);
         exposure->setName("Exposure (milliseconds)");
         exposure->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(exposure);
         
-        NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataType::DOUBLE);
+        NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataVariant::DOUBLE);
         wbRed->setName("White balance red");
         wbRed->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         wbRed->setMin(Double(0));
         wbRed->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbRed);
         
-        NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataType::DOUBLE);
+        NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataVariant::DOUBLE);
         wbGreen->setName("White balance green");
         wbGreen->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         wbGreen->setMin(Double(0));
         wbGreen->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbGreen);
         
-        NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataType::DOUBLE);
+        NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataVariant::DOUBLE);
         wbBlue->setName("White balance blue");
         wbBlue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         wbBlue->setMin(Double(0));
         wbBlue->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbBlue);
         
-        NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataType::UINT_32);
+        NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataVariant::UINT_32);
         framePeriod->setName("Frame period (milliseconds)");
         framePeriod->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(framePeriod);
         
-        NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
+        NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
         numBuffers->setName("Number of buffers");
         numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(numBuffers);
     
-        NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataType::UINT_32);
+        NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
         bufferSize->setName("Buffer size in bytes");
         bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(bufferSize);
     
-        m_width = new NumericParameter<UInt32>(WIDTH, DataType::UINT_32);
+        m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
         m_width->setName("ROI width");
         m_width->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_width);
     
-        m_height = new NumericParameter<UInt32>(HEIGHT, DataType::UINT_32);
+        m_height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
         m_height->setName("ROI height");
         m_height->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_height);
         
-        m_top = new NumericParameter<UInt32>(TOP, DataType::UINT_32);
+        m_top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
         m_top->setName("ROI top offset");
         m_top->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_top);
         
-        m_left = new NumericParameter<UInt32>(LEFT, DataType::UINT_32);
+        m_left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
         m_left->setName("ROI left offset");
         m_left->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_left);

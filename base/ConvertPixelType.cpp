@@ -100,11 +100,11 @@ namespace base
     {
         std::vector<const Description*> inputs;
         
-        Description* source = new Description(SOURCE, DataType::IMAGE);
+        Description* source = new Description(SOURCE, DataVariant::IMAGE);
         source->setName("Source");
         inputs.push_back(source);
         
-        Description* destination = new Description(DESTINATION, DataType::IMAGE);
+        Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
         destination->setName("Destination");
         inputs.push_back(destination);
         
@@ -115,7 +115,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        Description* output = new Description(OUTPUT, DataVariant::IMAGE);
         output->setName("Output");
         outputs.push_back(output);
         

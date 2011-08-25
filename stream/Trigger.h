@@ -30,7 +30,7 @@ namespace stream
         virtual const std::string & name() const { return NAME; }
         virtual const std::string & package() const { return PACKAGE; }
         
-        virtual const DataType & type() const { return DataType::TRIGGER; }
+        virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
         
         virtual Data* const clone() const { return new Trigger; }
         

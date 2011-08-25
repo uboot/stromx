@@ -27,7 +27,7 @@ namespace stream
         ImageWrapper(const unsigned int size, uint8_t* const buffer);
         ImageWrapper();
         
-        virtual const DataType & type() const { return m_dataType; }
+        virtual const DataVariant & variant() const { return m_variant; }
         
         virtual uint8_t* const buffer() { return m_buffer; }
         
@@ -46,7 +46,7 @@ namespace stream
         virtual uint8_t* const data() { return m_data; }
         virtual const uint8_t* const data() const { return m_data; }
         
-        virtual void setDataType(const DataType& dataType);
+        virtual void setVariant(const DataVariant& variant);
         
         virtual void initialize(const unsigned int width, 
                                 const unsigned int height, 
@@ -76,7 +76,7 @@ namespace stream
         PixelType m_pixelType;
         uint8_t* m_data;
         uint8_t* m_buffer;
-        DataType m_dataType;
+        DataVariant m_variant;
     };
 }
 
