@@ -90,10 +90,18 @@ namespace stream
             DOMNodeList* operators = stream->getElementsByTagName(Str2Xml("Operator"));
             XMLSize_t numOperators = operators->getLength();
             
+            // read the operators
             for(unsigned int i = 0; i < numOperators; ++i)
             {
                 DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
                 readOperator(op);
+            }
+            
+            // read the inputs of each operator
+            for(unsigned int i = 0; i < numOperators; ++i)
+            {
+                DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
+                readOperatorInputs(op);
             }
             
             DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
@@ -222,16 +230,21 @@ namespace stream
         m_stream->addOperator(op);
     }
     
-    void XmlReader::readOperatorInputs(DOMElement*const opElement, Operator*const op)
+    void XmlReader::readOperatorInputs(DOMElement*const opElement)
     {
-        DOMNodeList* inputs = opElement->getElementsByTagName(Str2Xml("Inputs"));
+        Xml2Str idStr(opElement->getAttribute(Str2Xml("id")));
+        unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
+        
+        BOOST_ASSERT(m_id2OperatorMap.count(id));
+        
+        DOMNodeList* inputs = opElement->getElementsByTagName(Str2Xml("Input"));
         XMLSize_t numInputs = inputs->getLength();
         
         // read the parameters
         for(unsigned int i = 0; i < numInputs; ++i)
         {
             DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
-            readInput(inputElement,op);
+            readInput(inputElement, m_id2OperatorMap[id]);
         }
     }
     
@@ -340,7 +353,22 @@ namespace stream
     
     void XmlReader::readInput(DOMElement*const inputElement, Operator*const op)
     {
-
+        Xml2Str opIdStr(inputElement->getAttribute(Str2Xml("operator")));
+        Xml2Str inputIdStr(inputElement->getAttribute(Str2Xml("id")));
+        Xml2Str outputIdStr(inputElement->getAttribute(Str2Xml("output")));
+        
+        unsigned int opId = boost::lexical_cast<unsigned int>(std::string(opIdStr));
+        unsigned int inputId = boost::lexical_cast<unsigned int>(std::string(inputIdStr));
+        unsigned int outputId = boost::lexical_cast<unsigned int>(std::string(outputIdStr));
+        
+        std::map<unsigned int, Operator*>::iterator idOpPair = m_id2OperatorMap.find(opId);
+        
+        if(idOpPair == m_id2OperatorMap.end())
+            throw XmlError("No source operator with ID " + std::string(opIdStr) + ".");
+        
+        Operator* source = idOpPair->second;
+        
+        m_stream->connect(op, inputId, source, outputId);
     }
     
     void XmlReader::cleanUp()
