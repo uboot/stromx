@@ -26,6 +26,8 @@
 
 namespace stream
 {
+    using namespace impl;
+    
     Operator::Operator(OperatorKernel*const kernel)
         : m_kernel(new SynchronizedOperatorKernel(kernel))
     {}

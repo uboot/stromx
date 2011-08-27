@@ -19,7 +19,7 @@ namespace base
 {
     void ConvertPixelTypeTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new ConvertPixelType());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new ConvertPixelType());
         m_operator->initialize();
         m_operator->activate();
         Image* image = new Image("lenna.jpg");

@@ -19,7 +19,7 @@ namespace base
 {
     void PeriodicDelayTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new PeriodicDelay());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new PeriodicDelay());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));

@@ -76,7 +76,7 @@ namespace stream
         void deactivate(){ m_kernel->deactivate(); }
         
         std::string m_name;
-        SynchronizedOperatorKernel* m_kernel;
+        impl::SynchronizedOperatorKernel* m_kernel;
         std::map<unsigned int, OutputNode*> m_outputs;
         std::map<unsigned int, InputNode*> m_inputs;
     };

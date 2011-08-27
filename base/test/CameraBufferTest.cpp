@@ -16,7 +16,7 @@ namespace base
     {
         void CameraBufferTest::setUp()
         {
-            m_operator = new SynchronizedOperatorKernel(new CameraBuffer());
+            m_operator = new stream::impl::SynchronizedOperatorKernel(new CameraBuffer());
             m_operator->initialize();
             m_operator->setParameter(CameraBuffer::NUM_BUFFERS, UInt32(1));
             m_operator->activate();
