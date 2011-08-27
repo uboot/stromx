@@ -34,6 +34,8 @@ namespace stream
         CPPUNIT_TEST(testRemoveOperator);
         CPPUNIT_TEST(testActivate);
         CPPUNIT_TEST(testDeactivate);
+        CPPUNIT_TEST(testRemoveConnectedOperator);
+        CPPUNIT_TEST(testSource);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -45,8 +47,10 @@ namespace stream
     protected:
         void testAddOperator();
         void testRemoveOperator();
+        void testRemoveConnectedOperator();
         void testActivate();
         void testDeactivate();
+        void testSource();
             
     private: 
         Network* m_network;

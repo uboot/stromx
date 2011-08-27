@@ -109,6 +109,31 @@ namespace stream
         {
             if ((*iter) == op)
             {
+                // disconnect from all sources
+                for(std::vector<const Description*>::const_iterator desc = op->info()->inputs().begin();
+                    desc != op->info()->inputs().end();
+                    ++desc)
+                {
+                    disconnect(op, (*desc)->id());
+                }
+                
+                
+                // disconnect all targets
+                for(std::vector<const Description*>::const_iterator desc = op->info()->outputs().begin();
+                    desc != op->info()->outputs().end();
+                    ++desc)
+                {
+                    const OutputNode* output = op->getOutputNode((*desc)->id());
+                    
+                    // for each output disconnect each connected input
+                    for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
+                        input != output->connectedInputs().end();
+                        ++input)
+                    {
+                        (*input)->disconnect();
+                    } 
+                }
+                    
                 m_operators.erase(iter);
                 return;
             }
@@ -125,8 +150,12 @@ namespace stream
         {
             if ((*iter) == targetOp)
             {
-                const OutputNode& node = targetOp->getInputNode(inputId)->source();
-                return Node(node.op(), node.outputId());
+                const InputNode* input = targetOp->getInputNode(inputId);
+                
+                if(input->isConnected())
+                    return Node(input->source().op(), input->source().outputId());
+                else
+                    return Node();
             }
         }
         

@@ -30,8 +30,8 @@ namespace stream
         
         const unsigned int inputId() const { return m_inputId; }
         Operator* const op() const { return m_operator; }
-        const bool isConnected() const { return m_source == 0; }
-        const OutputNode& source() const { return *m_source; }
+        const bool isConnected() const { return m_source != 0; }
+        const OutputNode& source() const;
         void connect(OutputNode* const output);
         void disconnect();
         void setInputData();

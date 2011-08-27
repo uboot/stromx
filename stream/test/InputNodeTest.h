@@ -31,6 +31,7 @@ namespace stream
     class InputNodeTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (InputNodeTest);
+        CPPUNIT_TEST(testSource);
         CPPUNIT_TEST(testConnect);
         CPPUNIT_TEST(testDisconnect);
         CPPUNIT_TEST(testSetInputData);
@@ -48,6 +49,7 @@ namespace stream
         void tearDown();
 
     protected:
+        void testSource();
         void testConnect();
         void testDisconnect();
         void testSetInputData();

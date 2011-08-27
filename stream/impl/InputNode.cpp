@@ -41,6 +41,14 @@ namespace stream
         m_source->addConnectedInput(this);
     }
     
+    const stream::OutputNode& InputNode::source() const
+    {
+        if(! m_source)
+            throw InvalidState("Input node is not connected.");
+        else
+            return *m_source;
+    }
+    
     void InputNode::setInputData()
     {
         if(! m_source)

@@ -78,6 +78,53 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op));
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_network->operators().size()));
     }
+    
+    void NetworkTest::testRemoveConnectedOperator()
+    {
+        Operator* op0 = new Operator(new TestOperator);
+        op0->initialize();
+        m_network->addOperator(op0);
+        
+        Operator* op1 = new Operator(new TestOperator);
+        op1->initialize();
+        m_network->addOperator(op1);
+        
+        Operator* op2 = new Operator(new TestOperator);
+        op2->initialize();
+        m_network->addOperator(op2);
+        
+        m_network->connect(op1, TestOperator::INPUT_1, op0, TestOperator::OUTPUT_1);
+        m_network->connect(op1, TestOperator::INPUT_2, op0, TestOperator::OUTPUT_2);
+        
+        m_network->connect(op2, TestOperator::INPUT_1, op1, TestOperator::OUTPUT_1);
+        m_network->connect(op2, TestOperator::INPUT_2, op1, TestOperator::OUTPUT_2);
+        
+        CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op1));
+        CPPUNIT_ASSERT(m_network->source(op2, TestOperator::INPUT_1).empty());
+        CPPUNIT_ASSERT(m_network->source(op2, TestOperator::INPUT_2).empty());
+    }
+   
+    void NetworkTest::testSource()
+    {
+        Operator* op0 = new Operator(new TestOperator);
+        op0->initialize();
+        m_network->addOperator(op0);
+        
+        Operator* op1 = new Operator(new TestOperator);
+        op1->initialize();
+        m_network->addOperator(op1);
+        
+        Node node;
+        CPPUNIT_ASSERT_NO_THROW(node = m_network->source(op1, TestOperator::INPUT_1));
+        CPPUNIT_ASSERT(node.empty());
+        
+        m_network->connect(op1, TestOperator::INPUT_1, op0, TestOperator::OUTPUT_1);
+        m_network->connect(op1, TestOperator::INPUT_2, op0, TestOperator::OUTPUT_2);
+        
+        CPPUNIT_ASSERT_NO_THROW(node = m_network->source(op1, TestOperator::INPUT_1));
+        CPPUNIT_ASSERT_EQUAL(op0, node.op());
+        CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_1), node.id());
+    }
 
     void NetworkTest::testActivate()
     {

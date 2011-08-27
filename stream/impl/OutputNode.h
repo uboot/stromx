@@ -36,7 +36,7 @@ namespace stream
         DataContainer getOutputData();
         void addConnectedInput(InputNode* const input);
         void removeConnectedInput(InputNode* const input);
-        const std::set<InputNode*> connectedInputs() const { return m_connectedInputs; }
+        const std::set<InputNode*> & connectedInputs() const { return m_connectedInputs; }
         
     private:
         typedef boost::lock_guard<boost::mutex> lock_t;
