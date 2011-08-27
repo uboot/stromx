@@ -22,7 +22,10 @@
 
 namespace stream
 {
-    class Network;
+    namespace impl
+    {
+        class Network;
+    }
     class Thread;
     class Operator;
     
@@ -47,7 +50,7 @@ namespace stream
         void testRemoveOperator();
             
     private:
-        Network* m_network;
+        impl::Network* m_network;
         Thread* m_thread;
         Operator* m_op1;
         Operator* m_op2;

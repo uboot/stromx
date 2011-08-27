@@ -36,7 +36,7 @@ namespace stream
             DEACTIVATING,
         };
         
-        Thread(const Network* const network);
+        Thread(const impl::Network* const network);
         
         const Status status() const { return Status(m_thread.status()); }
         
@@ -55,7 +55,7 @@ namespace stream
         
         ThreadImpl m_thread;
         std::string m_name;
-        const Network* m_network;
+        const impl::Network* m_network;
         std::vector<Node> m_nodeSequence;
     };
 }

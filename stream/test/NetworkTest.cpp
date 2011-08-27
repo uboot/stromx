@@ -30,6 +30,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::NetworkTest);
 
 namespace stream
 {
+    using namespace impl;
+    
     class Operator;
     
     void NetworkTest::setUp()

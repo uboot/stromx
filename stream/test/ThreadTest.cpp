@@ -30,7 +30,7 @@ namespace stream
 {
     void ThreadTest::setUp()
     {
-        m_network = new Network();
+        m_network = new impl::Network();
         
         Operator* m_op1 = new Operator(new TestOperator);
         Operator* m_op2 = new Operator(new TestOperator);

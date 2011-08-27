@@ -25,7 +25,7 @@
 namespace stream
 {
     Stream::Stream()
-      : m_network(new Network()),
+      : m_network(new impl::Network()),
         m_threads(0),
         m_status(INACTIVE)
     {

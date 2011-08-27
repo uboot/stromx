@@ -63,7 +63,7 @@ namespace stream
         
     private:
         std::string m_name; 
-        Network* const m_network;
+        impl::Network* const m_network;
         std::vector<Thread*> m_threads;
         Status m_status;
     };

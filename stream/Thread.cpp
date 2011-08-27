@@ -24,7 +24,7 @@
 
 namespace stream
 {
-    Thread::Thread(const stream::Network*const network)
+    Thread::Thread(const stream::impl::Network*const network)
       : m_network(network)
     {
         if(! network)

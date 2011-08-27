@@ -24,7 +24,11 @@
 
 namespace stream
 {
-    class Network;
+    namespace impl
+    {
+        class Network;
+    }
+    
     class SynchronizedOperatorKernel;
     
     class NetworkTest : public CPPUNIT_NS :: TestFixture
@@ -53,7 +57,7 @@ namespace stream
         void testSource();
             
     private: 
-        Network* m_network;
+        impl::Network* m_network;
     };
 }
 

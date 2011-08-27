@@ -30,9 +30,14 @@ namespace stream
     class InputNode;
     class OutputNode;
     
+    namespace impl
+    {
+        class Network;
+    }
+    
     class Operator
     {
-        friend class Network;
+        friend class impl::Network;
         friend class Thread;
         friend class ThreadImplTest;
         friend class InputNodeTest;
