@@ -54,7 +54,7 @@ namespace stream
     
     const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
     const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
-    std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+//     std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
 #endif // STREAM_DATACONTAINER_H
