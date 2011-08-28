@@ -19,8 +19,6 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "impl/DataContainerImpl.h"
-
 namespace stream
 {
     class Data;
@@ -31,6 +29,7 @@ namespace stream
         class WriteAccessImpl;
         class ReadAccessImpl;
         class RecycleAccessImpl;
+        class DataContainerImpl;
     }
     
     class DataContainer

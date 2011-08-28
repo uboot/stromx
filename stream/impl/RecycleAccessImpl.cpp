@@ -20,6 +20,8 @@
 #include "../DataContainer.h"
 #include "../Exception.h"
 
+#include "DataContainerImpl.h"
+
 namespace stream
 {
     namespace impl

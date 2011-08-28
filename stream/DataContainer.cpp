@@ -18,6 +18,8 @@
 
 #include "Recycler.h"
 
+#include "impl/DataContainerImpl.h"
+
 namespace stream
 {
     DataContainer::DataContainer(Data* const data)
