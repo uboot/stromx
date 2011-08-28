@@ -24,6 +24,8 @@
 
 namespace stream
 {
+    using namespace impl;
+    
     Thread::Thread(const stream::impl::Network*const network)
       : m_network(network)
     {

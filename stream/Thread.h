@@ -17,9 +17,9 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
-#include "impl/Network.h"
 #include "Node.h"
 
+#include "impl/Network.h"
 #include "impl/ThreadImpl.h"
 
 namespace stream
@@ -53,7 +53,7 @@ namespace stream
         void stop() { m_thread.stop(); }
         void join() { m_thread.join(); }
         
-        ThreadImpl m_thread;
+        impl::ThreadImpl m_thread;
         std::string m_name;
         const impl::Network* m_network;
         std::vector<Node> m_nodeSequence;

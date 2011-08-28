@@ -27,12 +27,12 @@ namespace stream
     class OperatorKernel;
     class Id2DataMapper;
     class Data;
-    class InputNode;
-    class OutputNode;
     
     namespace impl
     {
         class Network;
+        class InputNode;
+        class OutputNode;
     }
     
     class Operator
@@ -70,15 +70,15 @@ namespace stream
         void initialize();
         
     private:
-        InputNode* const getInputNode(const unsigned int id);
-        OutputNode* const getOutputNode(const unsigned int id);
+        impl::InputNode* const getInputNode(const unsigned int id);
+        impl::OutputNode* const getOutputNode(const unsigned int id);
         void activate(){ m_kernel->activate(); }
         void deactivate(){ m_kernel->deactivate(); }
         
         std::string m_name;
         impl::SynchronizedOperatorKernel* m_kernel;
-        std::map<unsigned int, OutputNode*> m_outputs;
-        std::map<unsigned int, InputNode*> m_inputs;
+        std::map<unsigned int, impl::OutputNode*> m_outputs;
+        std::map<unsigned int, impl::InputNode*> m_inputs;
     };
 }
 

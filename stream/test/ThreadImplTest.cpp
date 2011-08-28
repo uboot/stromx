@@ -32,6 +32,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::ThreadImplTest);
 
 namespace stream
 {
+    using namespace impl;
+    
     void ThreadImplTest::setUp()
     {
         for(unsigned int i = 0; i < 3; ++i)

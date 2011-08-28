@@ -25,8 +25,12 @@
 namespace stream
 {
     class Operator;
-    class InputNode;
-    class OutputNode;
+    
+    namespace impl
+    {
+        class OutputNode;
+        class InputNode;
+    }
     
     class InputNodeTest : public CPPUNIT_NS :: TestFixture
     {
@@ -58,8 +62,8 @@ namespace stream
         Operator* m_operatorWrapper;
         Operator* m_sourceOperatorWrapper;
         DataContainer m_container;
-        InputNode* m_inputNode;
-        OutputNode* m_sourceNode;
+        impl::InputNode* m_inputNode;
+        impl::OutputNode* m_sourceNode;
         
     };
 }

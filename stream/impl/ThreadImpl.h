@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_THREADIMPL_H
-#define STREAM_THREADIMPL_H
+#ifndef STREAM_IMPL_THREADIMPL_H
+#define STREAM_IMPL_THREADIMPL_H
 
 #include <vector>
 #include <string>
@@ -25,39 +25,42 @@
 
 namespace stream
 {
-    class InputNode;
-    
-    class ThreadImpl
-    {    
-    public:
-        enum Status
-        {
-            INACTIVE,
-            ACTIVE,
-            DEACTIVATING,
+    namespace impl
+    {
+        class InputNode;
+        
+        class ThreadImpl
+        {    
+        public:
+            enum Status
+            {
+                INACTIVE,
+                ACTIVE,
+                DEACTIVATING,
+            };
+            
+            ThreadImpl();
+            ~ThreadImpl();
+            
+            const Status status() const { return m_status; }
+            const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
+            
+            void addNode(InputNode* const op);
+            void insertNode(const unsigned int position, InputNode* const op);
+            void removeNode(const unsigned int position);
+            
+            void start();
+            void stop();
+            void join();
+                
+        private:
+            void loop();
+            
+            Status m_status;
+            boost::thread* m_thread;
+            std::vector<InputNode*> m_nodeSequence;
         };
-        
-        ThreadImpl();
-        ~ThreadImpl();
-        
-        const Status status() const { return m_status; }
-        const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
-        
-        void addNode(InputNode* const op);
-        void insertNode(const unsigned int position, InputNode* const op);
-        void removeNode(const unsigned int position);
-        
-        void start();
-        void stop();
-        void join();
-               
-    private:
-        void loop();
-        
-        Status m_status;
-        boost::thread* m_thread;
-        std::vector<InputNode*> m_nodeSequence;
-    };
+    }
 }
 
-#endif // STREAM_THREADIMPL_H
+#endif // STREAM_IMPL_THREADIMPL_H

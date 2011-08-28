@@ -27,9 +27,13 @@ namespace stream
     class SynchronizedOperatorKernel;
     class TestOperator;
     class Operator;
-    class ThreadImpl;
     class DataContainer;
-    class InputNode;
+    
+    namespace impl
+    {
+        class ThreadImpl;
+        class InputNode;
+    };
     
     class ThreadImplTest : public CPPUNIT_NS :: TestFixture
     {
@@ -61,8 +65,8 @@ namespace stream
         std::vector<TestOperator*> m_kernels;
         std::vector<Operator*> m_operatorNodes;
         DataContainer m_container;
-        ThreadImpl* m_thread;
-        InputNode* m_node;
+        impl::ThreadImpl* m_thread;
+        impl::InputNode* m_node;
         Operator* m_operatorNode;
     };
 }

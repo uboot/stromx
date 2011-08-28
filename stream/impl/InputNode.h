@@ -14,33 +14,37 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_INPUTNODE_H
-#define STREAM_INPUTNODE_H
+#ifndef STREAM_IMPL_INPUTNODE_H
+#define STREAM_IMPL_INPUTNODE_H
 
 namespace stream
 {
-    class OutputNode;
     class DataContainer;
     class Operator;
     
-    class InputNode
+    namespace impl
     {
-    public:
-        InputNode(Operator* const op, const unsigned int inputId);
-        
-        const unsigned int inputId() const { return m_inputId; }
-        Operator* const op() const { return m_operator; }
-        const bool isConnected() const { return m_source != 0; }
-        const OutputNode& source() const;
-        void connect(OutputNode* const output);
-        void disconnect();
-        void setInputData();
-        
-    private:
-        OutputNode *m_source;
-        unsigned int m_inputId;
-        Operator* m_operator;
-    };
+        class OutputNode;
+    
+        class InputNode
+        {
+        public:
+            InputNode(Operator* const op, const unsigned int inputId);
+            
+            const unsigned int inputId() const { return m_inputId; }
+            Operator* const op() const { return m_operator; }
+            const bool isConnected() const { return m_source != 0; }
+            const OutputNode& source() const;
+            void connect(OutputNode* const output);
+            void disconnect();
+            void setInputData();
+            
+        private:
+            OutputNode *m_source;
+            unsigned int m_inputId;
+            Operator* m_operator;
+        };
+    }
 }
 
-#endif // STREAM_INPUTNODE_H
+#endif // STREAM_IMPL_INPUTNODE_H

@@ -15,8 +15,8 @@
 */
 
 
-#ifndef STREAM_NETWORK_H
-#define STREAM_NETWORK_H
+#ifndef STREAM_IMPL_NETWORK_H
+#define STREAM_IMPL_NETWORK_H
 
 #include <string>
 #include <vector>
@@ -26,11 +26,12 @@
 namespace stream
 {
     class Operator;
-    class InputNode;
-    class OutputNode;
     
     namespace impl
     {
+        class InputNode;
+        class OutputNode;
+    
         class Network
         {
         public:
@@ -65,4 +66,4 @@ namespace stream
     }
 }
 
-#endif // STREAM_NETWORK_H
+#endif // STREAM_IMPL_NETWORK_H

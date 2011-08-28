@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_SYNCHRONIZEDOPERATORKERNEL_H
-#define STREAM_SYNCHRONIZEDOPERATORKERNEL_H
+#ifndef STREAM_IMPL_SYNCHRONIZEDOPERATORKERNEL_H
+#define STREAM_IMPL_SYNCHRONIZEDOPERATORKERNEL_H
 
 #include "../DataProvider.h"
 #include "../Parameter.h"
@@ -90,4 +90,4 @@ namespace stream
     }
 }
 
-#endif // STREAM_SYNCHRONIZEDOPERATORKERNEL_H
+#endif // STREAM_IMPL_SYNCHRONIZEDOPERATORKERNEL_H

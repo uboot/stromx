@@ -31,6 +31,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::OutputNodeTest);
 
 namespace stream
 {
+    using namespace impl;
+    
     void OutputNodeTest::setUp()
     {
         m_operatorWrapper = new Operator(new TestOperator());
