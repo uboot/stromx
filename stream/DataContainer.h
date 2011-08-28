@@ -47,8 +47,8 @@ namespace stream
         
         const DataVariant & type();
         const bool empty() const { return m_impl.get() == 0; }
-    private:
         
+    private:
         boost::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     
