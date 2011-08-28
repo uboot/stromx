@@ -47,14 +47,14 @@ namespace stream
         
         const DataVariant & type();
         const bool empty() const { return m_impl.get() == 0; }
-        
     private:
+        
         boost::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     
     const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
     const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
-//     std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+    std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
 #endif // STREAM_DATACONTAINER_H

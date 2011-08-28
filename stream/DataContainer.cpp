@@ -42,5 +42,13 @@ namespace stream
     {
         return ! (lhs == rhs);
     }
+    
+    std::ostream& operator<<(std::ostream& out, const stream::DataContainer& container)
+    {
+        if(! container.m_impl.get())
+            out << 0;
+        else
+            out << container.m_impl->data();
+    }
 }
  
