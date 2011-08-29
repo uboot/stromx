@@ -14,13 +14,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string Queue::NAME("Queue");
+    const std::string Queue::TYPE("Queue");
     
     const std::string Queue::PACKAGE(PACKAGE_NAME);
     const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     Queue::Queue()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_size(1)
     {
     }
@@ -94,7 +94,7 @@ namespace base
     {
         std::vector<const Description*> inputs;
         
-        Description* input = new Description(INPUT, DataType::DATA);
+        Description* input = new Description(INPUT, DataVariant::DATA);
         input->setName("Input");
         inputs.push_back(input);
         
@@ -105,7 +105,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::DATA);
+        Description* output = new Description(OUTPUT, DataVariant::DATA);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -116,7 +116,7 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataType::UINT_32);
+        NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataVariant::UINT_32);
         size->setName("Size");
         size->setMin(UInt32(1));
         size->setAccessMode(stream::Parameter::INITIALIZED_WRITE);

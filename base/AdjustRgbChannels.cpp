@@ -16,13 +16,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string AdjustRgbChannels::NAME("AdjustRgbChannels");
+    const std::string AdjustRgbChannels::TYPE("AdjustRgbChannels");
     
     const std::string AdjustRgbChannels::PACKAGE(PACKAGE_NAME);
     const Version AdjustRgbChannels::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     AdjustRgbChannels::AdjustRgbChannels()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_red(1.0),
         m_green(1.0),
         m_blue(1.0)
@@ -122,7 +122,7 @@ namespace base
     {
         std::vector<const Description*> inputs;
         
-        Description* input = new Description(INPUT, DataType::RGB_IMAGE);
+        Description* input = new Description(INPUT, DataVariant::RGB_IMAGE);
         input->setName("Input");
         inputs.push_back(input);
         
@@ -133,7 +133,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::RGB_IMAGE);
+        Description* output = new Description(OUTPUT, DataVariant::RGB_IMAGE);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -144,17 +144,17 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataType::DOUBLE, Double(0.0), Double::MAX);
+        NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         red->setName("Red");
         red->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(red);
         
-        NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataType::DOUBLE, Double(0.0), Double::MAX);
+        NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         green->setName("Green");
         green->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(green);
         
-        NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataType::DOUBLE, Double(0.0), Double::MAX);
+        NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         blue->setName("Blue");
         blue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(blue);

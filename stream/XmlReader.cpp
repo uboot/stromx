@@ -21,6 +21,7 @@
 #include "Data.h"
 #include "Stream.h"
 #include "Operator.h"
+#include "Thread.h"
 
 #include "impl/XmlUtilities.h"
 
@@ -104,10 +105,28 @@ namespace stream
             DOMNodeList* operators = stream->getElementsByTagName(Str2Xml("Operator"));
             XMLSize_t numOperators = operators->getLength();
             
+            // read the operators
             for(unsigned int i = 0; i < numOperators; ++i)
             {
                 DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
                 readOperator(op);
+            }
+            
+            // read the inputs of each operator
+            for(unsigned int i = 0; i < numOperators; ++i)
+            {
+                DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
+                readOperatorInputs(op);
+            }
+            
+            DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
+            XMLSize_t numThreads = threads->getLength();
+            
+            for(unsigned int i = 0; i < numThreads; ++i)
+            {
+                DOMElement* threadElement = dynamic_cast<DOMElement*>(threads->item(i));
+                Thread* thread = m_stream->addThread();
+                readThread(threadElement, thread);
             }
         }
         catch(xercesc::XMLException&)
@@ -176,38 +195,71 @@ namespace stream
             readParameter(paramElement);
         }
     
-        // parameters before initializing
-        for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
-            iter != m_id2DataMap.end();)
+        // set parameters before initialization
+        for(std::vector<const Parameter*>::const_iterator iter = op->info()->parameters().begin();
+            iter != op->info()->parameters().end();
+            ++iter)
         {
-            const Parameter & param = op->info()->parameter(iter->first);
-            
-            if(param.accessMode() == Parameter::NONE_WRITE)
-            {
-                op->setParameter(iter->first, *iter->second);
+            if((*iter)->accessMode() != Parameter::NONE_WRITE)
+                continue;
                 
-                delete iter->second;
-                std::map<unsigned int, Data*>::iterator toDelete = iter++;
-                m_id2DataMap.erase(toDelete);
-            }
-            else
-            {
-                iter++;
-            }
+            std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
+            
+            if(idDataPair == m_id2DataMap.end())
+                continue;
+            
+            op->setParameter(idDataPair->first, *idDataPair->second);
+            
+            delete idDataPair->second;
+            m_id2DataMap.erase(idDataPair);
         }
         
         // initialize
         op->initialize();
-        
-        // parameters before initializing
-        for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
-            iter != m_id2DataMap.end();)
+    
+        // set parameters after initialization
+        for(std::vector<const Parameter*>::const_iterator iter = op->info()->parameters().begin();
+            iter != op->info()->parameters().end();
+            ++iter)
         {
-            op->setParameter(iter->first, *iter->second);
+            if((*iter)->accessMode() != Parameter::INITIALIZED_WRITE
+                &&  (*iter)->accessMode() != Parameter::ACTIVATED_WRITE)
+            {
+                continue;
+            }
                 
-            delete iter->second;
-            std::map<unsigned int, Data*>::iterator toDelete = iter++;
-            m_id2DataMap.erase(toDelete);
+            std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
+            
+            if(idDataPair == m_id2DataMap.end())
+                continue;
+            
+            op->setParameter(idDataPair->first, *idDataPair->second);
+            
+            delete idDataPair->second;
+            m_id2DataMap.erase(idDataPair);
+        }
+        
+        if(! m_id2DataMap.empty())
+            throw XmlError("Not all parameters of operator '" + op->name() + "' could be set.");
+        
+        m_stream->addOperator(op);
+    }
+    
+    void XmlReader::readOperatorInputs(DOMElement*const opElement)
+    {
+        Xml2Str idStr(opElement->getAttribute(Str2Xml("id")));
+        unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
+        
+        BOOST_ASSERT(m_id2OperatorMap.count(id));
+        
+        DOMNodeList* inputs = opElement->getElementsByTagName(Str2Xml("Input"));
+        XMLSize_t numInputs = inputs->getLength();
+        
+        // read the parameters
+        for(unsigned int i = 0; i < numInputs; ++i)
+        {
+            DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
+            readInput(inputElement, m_id2OperatorMap[id]);
         }
     }
     
@@ -230,7 +282,7 @@ namespace stream
         Data* data = readData(dataElement);
         
         if(m_id2DataMap.count(id))
-            throw XmlError("Multiple parameters with the same ID.");
+            throw XmlError("Multiple parameters with the same ID " + boost::lexical_cast<std::string>(id) + ".");
         
         m_id2DataMap[id] = data;
     }
@@ -255,7 +307,6 @@ namespace stream
             
             dataString = std::string(Xml2Str(node->getNodeValue()));
         }
-            // parameters before initializing
         
         Data* data = m_factory->newData(std::string(package), std::string(type));
         
@@ -284,6 +335,57 @@ namespace stream
         return parentpath.file_string() + pathSeparator;
     }
     
+    void XmlReader::readThread(DOMElement*const threadElement, Thread*const thread)
+    {
+        Xml2Str type(threadElement->getAttribute(Str2Xml("name")));
+        thread->setName(std::string(type));
+        
+        DOMNodeList* inputs = threadElement->getElementsByTagName(Str2Xml("InputNode"));
+        XMLSize_t numInputs = inputs->getLength();
+        
+        for(unsigned int i = 0; i < numInputs; ++i)
+        {
+            DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
+            readInputNode(inputElement, thread);
+        }
+    }
+    
+    void XmlReader::readInputNode(DOMElement*const inputNodeElement, Thread*const thread)
+    {
+        Xml2Str opIdStr(inputNodeElement->getAttribute(Str2Xml("operator")));
+        Xml2Str inputIdStr(inputNodeElement->getAttribute(Str2Xml("input")));
+        
+        unsigned int opId = boost::lexical_cast<unsigned int>(std::string(opIdStr));
+        unsigned int inputId = boost::lexical_cast<unsigned int>(std::string(inputIdStr));
+        
+        std::map<unsigned int, Operator*>::iterator idOpPair = m_id2OperatorMap.find(opId);
+        
+        if(idOpPair == m_id2OperatorMap.end())
+            throw XmlError("No operator with ID " + std::string(opIdStr) + ".");
+        
+        thread->addNode(idOpPair->second, inputId);
+    }
+    
+    void XmlReader::readInput(DOMElement*const inputElement, Operator*const op)
+    {
+        Xml2Str opIdStr(inputElement->getAttribute(Str2Xml("operator")));
+        Xml2Str inputIdStr(inputElement->getAttribute(Str2Xml("id")));
+        Xml2Str outputIdStr(inputElement->getAttribute(Str2Xml("output")));
+        
+        unsigned int opId = boost::lexical_cast<unsigned int>(std::string(opIdStr));
+        unsigned int inputId = boost::lexical_cast<unsigned int>(std::string(inputIdStr));
+        unsigned int outputId = boost::lexical_cast<unsigned int>(std::string(outputIdStr));
+        
+        std::map<unsigned int, Operator*>::iterator idOpPair = m_id2OperatorMap.find(opId);
+        
+        if(idOpPair == m_id2OperatorMap.end())
+            throw XmlError("No source operator with ID " + std::string(opIdStr) + ".");
+        
+        Operator* source = idOpPair->second;
+        
+        m_stream->connect(op, inputId, source, outputId);
+    }
+    
     void XmlReader::cleanUp()
     {
         m_stream = 0;
@@ -299,6 +401,5 @@ namespace stream
         }
                 
         m_id2DataMap.clear();
-        
     }
 }

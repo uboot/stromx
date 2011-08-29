@@ -75,7 +75,7 @@ namespace stream
         void validateParameterId(const unsigned int id);
         void validateWriteAccess(const unsigned int id);
         void validateReadAccess(const unsigned int id);
-        void validateParameterType(const unsigned int id, const DataType& type);
+        void validateParameterType(const unsigned int id, const DataVariant& type);
         
         OperatorKernel* m_op;
         Status m_status;

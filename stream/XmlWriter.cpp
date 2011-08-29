@@ -142,7 +142,7 @@ namespace stream
                     //Create attribute type of current parameter param (one for each parameter possible)
                     XMLString::transcode("type", tempStr, 99);
                     DOMAttr* type_data = doc->createAttribute(tempStr);
-                    XMLString::transcode((*iter_op)->getParameter((*iter_param)->id()).name().c_str(), tempStr, 99);
+                    XMLString::transcode((*iter_op)->getParameter((*iter_param)->id()).type().c_str(), tempStr, 99);
                     type_data->setValue(tempStr);
                     data->setAttributeNode(type_data);
                     

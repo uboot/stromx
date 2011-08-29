@@ -13,13 +13,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string ConstImage::NAME("Constant image source");
+    const std::string ConstImage::TYPE("ConstImage");
     
     const std::string ConstImage::PACKAGE(PACKAGE_NAME);
     const Version ConstImage::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     ConstImage::ConstImage()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_image(0)
     {
         m_image = new Image(0, 0, stream::Image::MONO_8);
@@ -102,7 +102,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::IMAGE);
+        Description* output = new Description(OUTPUT, DataVariant::IMAGE);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -113,7 +113,7 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        Parameter* image = new Parameter(IMAGE, DataType::IMAGE);
+        Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
         image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
                                     

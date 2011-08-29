@@ -70,7 +70,7 @@ namespace stream
             iter != m_dataTypes.end();
             ++iter)
         {
-            if(data->name() == (*iter)->name() && data->package() == (*iter)->package())
+            if(data->type() == (*iter)->type() && data->package() == (*iter)->package())
             {
                 throw WrongArgument("Invalid argument: Data already registered.");
             }
@@ -101,13 +101,13 @@ namespace stream
        throw WrongArgument("Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
     }
 
-    Data*const Factory::newData(const std::string& package, const std::string& name) const
+    Data*const Factory::newData(const std::string& package, const std::string& type) const
     {
         for(std::vector<const Data*>::const_iterator iter = m_dataTypes.begin();
             iter != m_dataTypes.end();
             ++iter)
         {
-            if((*iter)->name() == name && (*iter)->package() == package)
+            if((*iter)->type() == type && (*iter)->package() == package)
             {
                 Data* newData = 0;
                 newData = (*iter)->clone();
@@ -120,6 +120,6 @@ namespace stream
             }
         }
         
-       throw WrongArgument("Invalid argument: Data (" + package + ", " + name + ") unknown. Register first unknown data.");        
+       throw WrongArgument("Invalid argument: Data (" + package + ", " + type + ") unknown. Register first unknown data.");        
     }
 } 

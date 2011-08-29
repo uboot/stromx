@@ -43,7 +43,7 @@ namespace stream
     {
     public:
         EnumParameter(const unsigned int id)
-          : Parameter(id, DataType::ENUM)
+          : Parameter(id, DataVariant::ENUM)
         {}
         
         virtual const std::vector<EnumDescription> & descriptions() const { return m_descriptions; }

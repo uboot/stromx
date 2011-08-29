@@ -23,7 +23,7 @@
 namespace stream
 {
     class Data;
-    class DataType;
+    class DataVariant;
     
     namespace impl
     {
@@ -45,7 +45,7 @@ namespace stream
         DataContainer() {}
         explicit DataContainer(stream::Data*const data);
         
-        const DataType & type();
+        const DataVariant & type();
         const bool empty() const { return m_impl.get() == 0; }
         
     private:

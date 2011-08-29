@@ -7,7 +7,7 @@
 
 namespace base
 {
-    const std::string Image::NAME = "Image";
+    const std::string Image::TYPE = "Image";
     const std::string Image::PACKAGE = PACKAGE_NAME;
     const stream::Version Image::VERSION = stream::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
     
@@ -18,7 +18,7 @@ namespace base
             m_image = cvCreateImage(cv::Size(width, height), depth(pixelType) * 8, numChannels(pixelType));
             
             getDataFromCvImage(pixelType);
-            setDataType(dataTypeFromPixelType(pixelType));
+            setVariant(dataTypeFromPixelType(pixelType));
         }
         catch(cv::Exception& e)
         {
@@ -34,7 +34,7 @@ namespace base
                                     depth(image.pixelType()) * 8, numChannels(image.pixelType()));
             
             getDataFromCvImage(image.pixelType());
-            setDataType(image.type());
+            setVariant(image.variant());
         }
         catch(cv::Exception& e)
         {
@@ -51,7 +51,7 @@ namespace base
     {
         setSize(0);
         initialize(0, 0, 0, 0, stream::Image::NONE);
-        setDataType(stream::DataType::IMAGE);
+        setVariant(stream::DataVariant::IMAGE);
     }
     
     Image::Image(const std::string& filename)
@@ -67,7 +67,7 @@ namespace base
             m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
             
             getDataFromCvImage(stream::Image::MONO_8);
-            setDataType(stream::DataType::IMAGE);
+            setVariant(stream::DataVariant::IMAGE);
         }
         catch(cv::Exception& e)
         {
@@ -114,7 +114,7 @@ namespace base
             throw stream::FileAccessFailed(filename, "Failed to load image.");
             
         getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
-        setDataType(dataTypeFromPixelType(pixelType()));
+        setVariant(dataTypeFromPixelType(pixelType()));
     }  
     
     void Image::getDataFromCvImage(const PixelType pixelType)
@@ -133,7 +133,7 @@ namespace base
         {
             m_image = cvCreateImage(cv::Size(width, height), depth(pixelType), numChannels(pixelType));
             getDataFromCvImage(pixelType);
-            setDataType(dataTypeFromPixelType(pixelType));
+            setVariant(dataTypeFromPixelType(pixelType));
         }
         catch(cv::Exception& e)
         {
@@ -151,7 +151,7 @@ namespace base
             m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
             
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
-            setDataType(stream::DataType::MONO_8_IMAGE);
+            setVariant(stream::DataVariant::MONO_8_IMAGE);
         }
         catch(cv::Exception& e)
         {
@@ -196,22 +196,22 @@ namespace base
         cvReleaseImage(&m_image);
     }
 
-    const stream::DataType Image::dataTypeFromPixelType(const stream::Image::PixelType pixelType)
+    const stream::DataVariant Image::dataTypeFromPixelType(const stream::Image::PixelType pixelType)
     {
         switch(pixelType)
         {
         case stream::Image::NONE:
-            return stream::DataType(stream::DataType::IMAGE);
+            return stream::DataVariant(stream::DataVariant::IMAGE);
         case stream::Image::MONO_8:
-            return stream::DataType(stream::DataType::MONO_8_IMAGE);
+            return stream::DataVariant(stream::DataVariant::MONO_8_IMAGE);
         case stream::Image::BAYERBG_8:
-            return stream::DataType(stream::DataType::BAYERBG_8_IMAGE);
+            return stream::DataVariant(stream::DataVariant::BAYERBG_8_IMAGE);
         case stream::Image::BAYERGB_8:
-            return stream::DataType(stream::DataType::BAYERGB_8_IMAGE);
+            return stream::DataVariant(stream::DataVariant::BAYERGB_8_IMAGE);
         case stream::Image::RGB_24:
-            return stream::DataType(stream::DataType::RGB_24_IMAGE);
+            return stream::DataVariant(stream::DataVariant::RGB_24_IMAGE);
         case stream::Image::BGR_24:
-            return stream::DataType(stream::DataType::BGR_24_IMAGE);
+            return stream::DataVariant(stream::DataVariant::BGR_24_IMAGE);
         default:
             throw stream::WrongArgument("Unknown pixel type.");  
         }

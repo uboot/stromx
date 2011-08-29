@@ -27,15 +27,15 @@ namespace stream
         Trigger() {}
         
         virtual const Version & version() const { return VERSION; }
-        virtual const std::string & name() const { return NAME; }
+        virtual const std::string & type() const { return TYPE; }
         virtual const std::string & package() const { return PACKAGE; }
         
-        virtual const DataType & type() const { return DataType::TRIGGER; }
+        virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
         
         virtual Data* const clone() const { return new Trigger; }
         
     private:
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const Version VERSION;
     };

@@ -40,11 +40,11 @@ namespace stream
         explicit Primitive() : m_value(0) {}
         explicit Primitive(const repr_t value) : m_value(value) {}
         
-        virtual const std::string & name() const { return NAME; }
+        virtual const std::string & type() const { return TYPE; }
         virtual const Version & version() const { return VERSION; }
         virtual const std::string & package() const { return PACKAGE; }
         
-        virtual const DataType & type() const;
+        virtual const DataVariant & variant() const;
         
         virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
         
@@ -64,7 +64,7 @@ namespace stream
         static const Primitive MAX;
         
     private:
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const Version VERSION;
         

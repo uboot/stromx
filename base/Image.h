@@ -20,7 +20,7 @@ namespace base
         virtual ~Image();
         
         virtual const stream::Version & version() const { return VERSION; }
-        virtual const std::string & name() const { return NAME; }
+        virtual const std::string & type() const { return TYPE; }
         virtual const std::string & package() const { return PACKAGE; }
         
         virtual Data* const clone() const { return new Image; }
@@ -34,12 +34,12 @@ namespace base
         void resize(const unsigned int size);
         
     private:
-        static const std::string NAME;
+        static const std::string TYPE;
         static const std::string PACKAGE;
         static const stream::Version VERSION;
         
         static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-        static const stream::DataType dataTypeFromPixelType(const PixelType pixelType);
+        static const stream::DataVariant dataTypeFromPixelType(const PixelType pixelType);
         
         void getDataFromCvImage(const PixelType pixelType);
         

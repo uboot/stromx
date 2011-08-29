@@ -13,13 +13,13 @@ using namespace stream;
 
 namespace base
 {
-    const std::string PeriodicDelay::NAME("PeriodicDelay");
+    const std::string PeriodicDelay::TYPE("PeriodicDelay");
     
     const std::string PeriodicDelay::PACKAGE(PACKAGE_NAME);
     const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     PeriodicDelay::PeriodicDelay()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
     
@@ -90,7 +90,7 @@ namespace base
     {
         std::vector<const Description*> inputs;
         
-        Description* input = new Description(OUTPUT, DataType::DATA);
+        Description* input = new Description(OUTPUT, DataVariant::DATA);
         input->setName("Input");
         inputs.push_back(input);
         
@@ -101,7 +101,7 @@ namespace base
     {
         std::vector<const Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataType::DATA);
+        Description* output = new Description(OUTPUT, DataVariant::DATA);
         output->setName("Output");
         outputs.push_back(output);
         
@@ -112,7 +112,7 @@ namespace base
     {
         std::vector<const stream::Parameter*> parameters;
         
-        Parameter* period = new Parameter(PERIOD, DataType::UINT_32);
+        Parameter* period = new Parameter(PERIOD, DataVariant::UINT_32);
         period->setName("Period (milliseconds)");
         period->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
         parameters.push_back(period);

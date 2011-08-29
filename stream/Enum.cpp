@@ -18,5 +18,5 @@
 
 namespace stream
 {
-    const std::string Enum::NAME = "Enum";
+    const std::string Enum::TYPE = "Enum";
 }

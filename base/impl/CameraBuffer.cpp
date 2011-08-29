@@ -19,12 +19,12 @@ namespace base
 {
     namespace impl
     {
-        const std::string CameraBuffer::NAME("CameraBuffer");
+        const std::string CameraBuffer::TYPE("CameraBuffer");
         const std::string CameraBuffer::PACKAGE(PACKAGE_NAME);
         const Version CameraBuffer::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
         
         CameraBuffer::CameraBuffer()
-          : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_id(0)
         {
         }
@@ -124,7 +124,7 @@ namespace base
         {
             std::vector<const Description*> inputs;
         
-            Description* input = new Description(INPUT, DataType::IMAGE);
+            Description* input = new Description(INPUT, DataVariant::IMAGE);
             input->setName("Input");
             inputs.push_back(input);
             
@@ -135,15 +135,15 @@ namespace base
         {
             std::vector<const Description*> outputs;
         
-            Description* output = new Description(OUTPUT, DataType::IMAGE);
+            Description* output = new Description(OUTPUT, DataVariant::IMAGE);
             output->setName("Output");
             outputs.push_back(output);
         
-            Description* buffer = new Description(BUFFER, DataType::IMAGE);
+            Description* buffer = new Description(BUFFER, DataVariant::IMAGE);
             buffer->setName("Buffer");
             outputs.push_back(buffer);
         
-            Description* index = new Description(INDEX, DataType::UINT_32);
+            Description* index = new Description(INDEX, DataVariant::UINT_32);
             index->setName("Index");
             outputs.push_back(index);
             
@@ -154,12 +154,12 @@ namespace base
         {
             std::vector<const Parameter*> parameters;
         
-            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataType::UINT_32);
+            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
             numBuffers->setName("Number of buffers");
             numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
             parameters.push_back(numBuffers);
         
-            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataType::UINT_32);
+            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
             bufferSize->setName("Buffer size in bytes");
             bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
