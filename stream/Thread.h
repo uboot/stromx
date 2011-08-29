@@ -19,14 +19,21 @@
 
 #include "Node.h"
 
-#include "impl/Network.h"
-#include "impl/ThreadImpl.h"
+#include <string>
+#include <vector>
 
 namespace stream
 {
+    namespace impl
+    {
+        class Network;
+        class ThreadImpl;
+    }
+    
     class Thread
     {    
         friend class Stream;
+        friend class ThreadTest;
         
     public:
         enum Status
@@ -36,24 +43,26 @@ namespace stream
             DEACTIVATING,
         };
         
-        Thread(const impl::Network* const network);
+        virtual ~Thread();
         
-        const Status status() const { return Status(m_thread.status()); }
+        const Status status() const;
         
-        const std::string & name() const { return m_name; }
-        void setName(const std::string& name) { m_name = name; }
-        const std::vector<Node> & nodeSequence() const { return m_nodeSequence; }
+        const std::string & name() const;
+        void setName(const std::string& name);
+        const std::vector<Node> & nodeSequence() const;
         
         void addNode(Operator* const op, const unsigned int inputId);
         void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
         void removeNode(const unsigned int position);
                
     private:
-        void start() { m_thread.start(); }
-        void stop() { m_thread.stop(); }
-        void join() { m_thread.join(); }
+        Thread(const impl::Network* const network);
         
-        impl::ThreadImpl m_thread;
+        void start();
+        void stop();
+        void join();
+        
+        impl::ThreadImpl* m_thread;
         std::string m_name;
         const impl::Network* m_network;
         std::vector<Node> m_nodeSequence;

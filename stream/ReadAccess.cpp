@@ -16,7 +16,7 @@
 
 #include "ReadAccess.h"
 
-#include "DataContainer.h"
+#include "impl/ReadAccessImpl.h"
 
 namespace stream
 {

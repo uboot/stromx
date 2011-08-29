@@ -16,7 +16,7 @@
 
 #include "WriteAccess.h"
 
-#include "DataContainer.h"
+#include "impl/WriteAccessImpl.h"
 
 namespace stream
 {

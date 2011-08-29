@@ -21,6 +21,7 @@
 #include "Thread.h"
 
 #include "impl/InputNode.h"
+#include "boost/assert.hpp"
 
 namespace stream
 {

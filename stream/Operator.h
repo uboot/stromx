@@ -18,8 +18,10 @@
 #define STREAM_OPERATOR_H
 
 #include "DataContainer.h"
+#include "OperatorInfo.h"
 
-#include "impl/SynchronizedOperatorKernel.h"
+#include <map>
+#include <string>
 
 namespace stream
 {
@@ -33,6 +35,7 @@ namespace stream
         class Network;
         class InputNode;
         class OutputNode;
+        class SynchronizedOperatorKernel;
     }
     
     class Operator
@@ -60,20 +63,20 @@ namespace stream
         const std::string & name() const { return m_name; }
         void setName(const std::string & name) { m_name = name; }
         
-        const OperatorInfo* const info() const { return m_kernel->info(); }
-        const Status status() { return Status(m_kernel->status()); }
-        void setParameter(unsigned int id, const Data& value) { m_kernel->setParameter(id, value); }
-        const Data& getParameter(unsigned int id) const { return m_kernel->getParameter(id); }
-        DataContainer getOutputData(const unsigned int id) { return m_kernel->getOutputData(id); }
-        void setInputData(const unsigned int id, DataContainer data) { m_kernel->setInputData(id, data); }
-        void clearOutputData(unsigned int id) { m_kernel->clearOutputData(id); }
+        const OperatorInfo* const info() const;
+        const Status status();
+        void setParameter(unsigned int id, const Data& value);
+        const Data& getParameter(unsigned int id) const;
+        DataContainer getOutputData(const unsigned int id);
+        void setInputData(const unsigned int id, DataContainer data);
+        void clearOutputData(unsigned int id);
         void initialize();
         
     private:
         impl::InputNode* const getInputNode(const unsigned int id);
         impl::OutputNode* const getOutputNode(const unsigned int id);
-        void activate(){ m_kernel->activate(); }
-        void deactivate(){ m_kernel->deactivate(); }
+        void activate();
+        void deactivate();
         
         std::string m_name;
         impl::SynchronizedOperatorKernel* m_kernel;

@@ -16,14 +16,17 @@
 
 
 #include "Network.h"
-#include "../Operator.h"
-#include "../Exception.h"
-#include "../Node.h"
 #include "InputNode.h"
 #include "OutputNode.h"
 
+#include "../Operator.h"
+#include "../Exception.h"
+#include "../Node.h"
+
 namespace stream
 {
+    class Description;
+    
     namespace impl
     {
         Network::Network()

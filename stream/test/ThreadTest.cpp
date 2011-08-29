@@ -23,6 +23,7 @@
 #include <stream/Exception.h>
 
 #include "TestOperator.h"
+#include "../impl/Network.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stream::ThreadTest);
 

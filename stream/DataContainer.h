@@ -18,6 +18,7 @@
 #define STREAM_DATACONTAINER_H
 
 #include <boost/shared_ptr.hpp>
+#include <ostream>
 
 namespace stream
 {

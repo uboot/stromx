@@ -16,6 +16,8 @@
 
 #include "RecycleAccess.h"
 
+#include "impl/RecycleAccessImpl.h"
+
 namespace stream
 {
     RecycleAccess::RecycleAccess(DataContainer data)

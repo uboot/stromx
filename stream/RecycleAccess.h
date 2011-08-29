@@ -19,11 +19,18 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "impl/RecycleAccessImpl.h"
 #include "DataContainer.h"
 
 namespace stream
 {
+    namespace impl
+    {
+        class RecycleAccessImpl;
+    }
+    
+    class DataContainer;
+    class Data;
+    
     class RecycleAccess
     {
     public:

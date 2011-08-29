@@ -22,6 +22,7 @@
 #include "Stream.h"
 #include "Operator.h"
 #include "Thread.h"
+#include "Parameter.h"
 
 #include "impl/XmlUtilities.h"
 

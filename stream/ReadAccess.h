@@ -17,13 +17,19 @@
 #ifndef STREAM_READACCESS_H
 #define STREAM_READACCESS_H
 
-#include "impl/ReadAccessImpl.h"
-
 #include <boost/shared_ptr.hpp>
+
+#include "DataContainer.h"
 
 namespace stream
 {
     class Data;
+    class DataContainer;
+    
+    namespace impl
+    {
+        class ReadAccessImpl;
+    }
     
     class ReadAccess
     {

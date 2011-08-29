@@ -17,12 +17,18 @@
 #ifndef STREAM_WRITEACCESS_H
 #define STREAM_WRITEACCESS_H
 
-#include "impl/WriteAccessImpl.h"
-
 #include <boost/shared_ptr.hpp>
+
+#include "DataContainer.h"
 
 namespace stream
 {
+     namespace impl
+    {
+        class WriteAccessImpl;
+    }
+    
+    class DataContainer;
     class Data;
     
     class WriteAccess
