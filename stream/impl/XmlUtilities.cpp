@@ -16,6 +16,9 @@
 
 #include "XmlUtilities.h"
 
+
+#include <boost/filesystem.hpp>
+
     
 namespace stream
 {
@@ -51,6 +54,18 @@ namespace stream
         Str2Xml::operator const XMLCh*()
         {
             return m_xmlStr;
+        }
+        
+        const std::string XmlUtilities::computePath(const std::string& filename)
+        {
+            boost::filesystem::path filepath(filename);
+            boost::filesystem::path parentpath = filepath.parent_path();
+            std::string pathSeparator;
+            
+            if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
+                pathSeparator = boost::filesystem::path("/").file_string();
+        
+            return parentpath.file_string() + pathSeparator;
         }
     }
 }

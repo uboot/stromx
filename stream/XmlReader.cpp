@@ -33,7 +33,6 @@
 
 #include <iostream>
 #include <boost/lexical_cast.hpp>
-#include <boost/filesystem.hpp>
 
 namespace stream
 {
@@ -44,7 +43,7 @@ namespace stream
     {    
         cleanUp();
         
-        m_currentPath = computePath(filename);
+        m_currentPath = impl::XmlUtilities::computePath(filename);
         
         try
         {
@@ -322,18 +321,6 @@ namespace stream
         }
         
         return data;
-    }
-
-    const std::string XmlReader::computePath(const std::string& filename)
-    {
-        boost::filesystem::path filepath(filename);
-        boost::filesystem::path parentpath = filepath.parent_path();
-        std::string pathSeparator;
-        
-        if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
-            pathSeparator = boost::filesystem::path("/").file_string();
-    
-        return parentpath.file_string() + pathSeparator;
     }
     
     void XmlReader::readThread(DOMElement*const threadElement, Thread*const thread)
