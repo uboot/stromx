@@ -159,10 +159,10 @@ namespace stream
                 
                 try
                 {
-                    while(! tryGet(mapper, m_inputMap))
+                    while(! mapper.tryGet(m_inputMap))
                         waitForSignal(lock);
                     
-                    get(mapper, m_inputMap);
+                    mapper.get(m_inputMap);
                 }
                 catch(Interrupt&)
                 {
@@ -196,10 +196,10 @@ namespace stream
                 
                 try
                 {
-                    while(! trySet(mapper, m_outputMap))
+                    while(! mapper.trySet(m_outputMap))
                         waitForSignal(lock);
                     
-                    set(mapper, m_outputMap);
+                    mapper.set(m_outputMap);
                 }
                 catch(Interrupt&)
                 {
