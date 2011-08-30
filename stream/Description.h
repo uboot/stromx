@@ -17,8 +17,8 @@
 #ifndef STREAM_DESCRIPTOR_H
 #define STREAM_DESCRIPTOR_H
 
-#include "DataVariant.h"
 #include <string>
+#include "DataVariant.h"
 
 namespace stream
 {

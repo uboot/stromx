@@ -14,10 +14,9 @@
  *  limitations under the License.
  */
 
-#include "Id2DataPair.h"
-
-#include "Exception.h"
 #include "DataContainer.h"
+#include "Exception.h"
+#include "Id2DataPair.h"
 #include "impl/Id2DataMap.h"
 
 namespace stream

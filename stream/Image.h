@@ -17,9 +17,8 @@
 #ifndef STREAM_IMAGE_H
 #define STREAM_IMAGE_H
 
-#include "Data.h"
-
 #include <stdint.h>
+#include "Data.h"
 
 namespace stream
 {
@@ -42,19 +41,13 @@ namespace stream
         };
         
         virtual ~Image() {}
-        
+
         virtual uint8_t* const buffer() = 0;
-        
         virtual const unsigned int size() const = 0;
-        
         virtual const unsigned int width() const = 0;
-        
         virtual const unsigned int height() const = 0;
-        
         virtual const unsigned int stride() const = 0;
-        
         virtual const PixelType pixelType() const = 0;
-        
         virtual const unsigned int pixelSize() const = 0;
         
         virtual uint8_t* const data() = 0;

@@ -15,7 +15,6 @@
  */
 
 #include "Data.h"
-
 #include "Exception.h"
 
 namespace stream

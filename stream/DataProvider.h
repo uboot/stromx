@@ -19,10 +19,10 @@
 
 namespace stream
 {
+    class Data;
     class DataContainer;
     class Id2DataMapper;
-    class Data;
-    
+  
     class DataProvider
     {
     public:

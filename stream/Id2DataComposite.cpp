@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Id2DataComposite.h"
-
 #include <boost/assert.hpp>
+#include "Id2DataComposite.h"
 
 namespace stream
 {

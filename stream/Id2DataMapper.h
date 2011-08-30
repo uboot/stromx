@@ -34,7 +34,6 @@ namespace stream
         virtual void get(impl::Id2DataMap& id2DataMap) const = 0; 
         virtual void set(impl::Id2DataMap& id2DataMap) const = 0; 
     };
-
 }
 
 #endif // STREAM_ID2DATAMAPPER_H

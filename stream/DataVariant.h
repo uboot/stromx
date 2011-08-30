@@ -17,9 +17,8 @@
 #ifndef STREAM_DATAVARIANT_H
 #define STREAM_DATAVARIANT_H
 
-#include "Version.h"
-
 #include <string>
+#include "Version.h"
 
 namespace stream
 {

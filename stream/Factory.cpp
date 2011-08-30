@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
-#include "Factory.h"
-
-#include "Exception.h"
-#include "OperatorKernel.h"
-#include "Operator.h"
 #include "Data.h"
-
+#include "Exception.h"
+#include "Factory.h"
+#include "Operator.h"
+#include "OperatorKernel.h"
 
 namespace stream
 {
@@ -79,11 +77,6 @@ namespace stream
         }
         
         m_dataTypes.push_back(data);
-    }
-
-    const std::vector< const OperatorKernel*>& Factory::availableOperators() const
-    {
-        return m_operators;
     }
 
     Operator*const Factory::newOperator(const std::string& package, const std::string& type) const

@@ -27,8 +27,8 @@ namespace stream
     
     namespace impl
     {
-        class WriteAccessImpl;
         class ReadAccessImpl;
+        class WriteAccessImpl;
         class RecycleAccessImpl;
         class DataContainerImpl;
     }
@@ -38,6 +38,7 @@ namespace stream
         friend class impl::WriteAccessImpl;
         friend class impl::ReadAccessImpl;
         friend class impl::RecycleAccessImpl;
+        
         friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
@@ -48,8 +49,8 @@ namespace stream
         
         const DataVariant & type();
         const bool empty() const { return m_impl.get() == 0; }
-    private:
         
+    private:
         boost::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     

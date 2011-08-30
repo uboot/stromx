@@ -38,7 +38,7 @@ namespace stream
         virtual const std::string serialize(const std::string & name, const std::string & path) const;
         virtual void deserialize(const std::string & data, const std::string & path);
         
-        bool is(const DataVariant & t) const { return variant().is(t); }
+        const bool is(const DataVariant & t) const { return variant().is(t); }
         
     protected:
         Data() {} 
