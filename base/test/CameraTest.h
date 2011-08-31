@@ -22,7 +22,11 @@
 
 namespace stream
 {
-    class SynchronizedOperatorKernel;
+    namespace impl
+    {
+        class SynchronizedOperatorKernel;
+    }
+    
     class DataContainer;
 }
 
@@ -54,7 +58,7 @@ namespace base
             void testAdjustWhiteBalance();
             
         private:
-            stream::SynchronizedOperatorKernel* m_operator;
+            stream::impl::SynchronizedOperatorKernel* m_operator;
     };
 }
 

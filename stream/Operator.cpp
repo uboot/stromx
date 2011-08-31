@@ -26,6 +26,8 @@
 
 namespace stream
 {
+    using namespace impl;
+    
     Operator::Operator(OperatorKernel*const kernel)
         : m_kernel(new SynchronizedOperatorKernel(kernel))
     {}
@@ -47,6 +49,41 @@ namespace stream
         }
         
         delete m_kernel;
+    }
+    
+    const OperatorInfo* const Operator::info() const
+    { 
+        return m_kernel->info(); 
+    }
+    
+    const Operator::Status Operator::status()
+    { 
+        return Status(m_kernel->status());
+    }
+    
+    void Operator::setParameter(unsigned int id, const Data& value)
+    { 
+        m_kernel->setParameter(id, value);
+    }
+    
+    const Data& Operator::getParameter(unsigned int id) const
+    { 
+        return m_kernel->getParameter(id); 
+    }
+    
+    DataContainer Operator::getOutputData(const unsigned int id)
+    { 
+        return m_kernel->getOutputData(id); 
+    }
+    
+    void Operator::setInputData(const unsigned int id, DataContainer data)
+    {
+        m_kernel->setInputData(id, data);
+    }
+    
+    void Operator::clearOutputData(unsigned int id)
+    {
+        m_kernel->clearOutputData(id);
     }
     
     void Operator::initialize()
@@ -90,4 +127,13 @@ namespace stream
         return m_outputs[id];
     }
 
+    void Operator::activate()
+    { 
+        m_kernel->activate(); 
+    }
+    
+    void Operator::deactivate()
+    {
+        m_kernel->deactivate();
+    }
 }

@@ -27,11 +27,6 @@ namespace stream
     class Id2DataMapper
     { 
     public:
-        friend bool trySet(const Id2DataMapper& mapper, const impl::Id2DataMap& id2DataMap);
-        friend bool tryGet(const Id2DataMapper& mapper, const impl::Id2DataMap& id2DataMap);
-        friend void get(const Id2DataMapper& mapper, impl::Id2DataMap& id2DataMap); 
-        friend void set(const Id2DataMapper& mapper, impl::Id2DataMap& id2DataMap); 
-        
         virtual ~Id2DataMapper() {}
         
         virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const = 0;

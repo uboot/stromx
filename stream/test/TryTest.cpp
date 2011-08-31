@@ -42,43 +42,43 @@ namespace stream
     void TryTest::testSet ( void )
     {
         Id2DataPair pair0(0, m_dataContainer);
-        CPPUNIT_ASSERT_NO_THROW(set(Try(pair0), *m_map));
+        CPPUNIT_ASSERT_NO_THROW((Try(pair0)).set(*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
         CPPUNIT_ASSERT(pair0.data().empty());
         
         Id2DataPair pair1(0, m_dataContainer);
-        CPPUNIT_ASSERT_NO_THROW(set(Try(pair1), *m_map));
+        CPPUNIT_ASSERT_NO_THROW((Try(pair1)).set(*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());  
     }
     
     void TryTest::testTryGet()
     {
         Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_EQUAL(true, tryGet(Try(pair0),*m_map));
+        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
         
         (*m_map)[0] = m_dataContainer;
-        CPPUNIT_ASSERT_EQUAL(true, tryGet(Try(pair0),*m_map));
+        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
     }
     
     void TryTest::testTrySet()
     {
         Id2DataPair pair0(0, m_dataContainer);
-        CPPUNIT_ASSERT_EQUAL(true, trySet(Try(pair0), *m_map));
+        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
         
         (*m_map)[0] = m_dataContainer;
-        CPPUNIT_ASSERT_EQUAL(true, trySet(Try(pair0), *m_map));
+        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
     }
 
     void TryTest::testGet ( void )
     {
         (*m_map)[0] = m_dataContainer;
         Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_NO_THROW(get(Try(pair0), *m_map));
+        CPPUNIT_ASSERT_NO_THROW((Try(pair0)).get(*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
         CPPUNIT_ASSERT((*m_map)[0].empty());
         
         Id2DataPair pair1(0);
-        CPPUNIT_ASSERT_NO_THROW(get(Try(pair1), *m_map));
+        CPPUNIT_ASSERT_NO_THROW((Try(pair1)).get(*m_map));
         CPPUNIT_ASSERT(pair1.data().empty());
     }
 

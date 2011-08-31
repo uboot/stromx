@@ -56,6 +56,12 @@ namespace stream
         private:
             char* m_str;
         };
+        
+        class XmlUtilities
+        {
+        public:
+            static const std::string computePath(const std::string & filename);
+        };
     }
 }
 

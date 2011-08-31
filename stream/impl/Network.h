@@ -26,40 +26,44 @@
 namespace stream
 {
     class Operator;
-    class InputNode;
-    class OutputNode;
     
-    class Network
+    namespace impl
     {
-    public:
-        enum Status
+        class InputNode;
+        class OutputNode;
+    
+        class Network
         {
-            INACTIVE,
-            ACTIVE
-        };
-        
-        Network();
-        ~Network();
-        
-        const std::vector<Operator*>& operators() const { return m_operators; }
-              
-        void connect(Operator* const targetOp, const unsigned int inputId, 
-                     Operator* const sourceOp, const unsigned int outputId);
-        void disconnect(Operator* const targetOp, const unsigned int inputId);
-        
-        void addOperator(Operator* const op);
-        void removeOperator(Operator* const op);
-        const Node source(Operator* const targetOp, const unsigned int inputId) const;
+        public:
+            enum Status
+            {
+                INACTIVE,
+                ACTIVE
+            };
+            
+            Network();
+            ~Network();
+            
+            const std::vector<Operator*>& operators() const { return m_operators; }
+                
+            void connect(Operator* const targetOp, const unsigned int inputId, 
+                        Operator* const sourceOp, const unsigned int outputId);
+            void disconnect(Operator* const targetOp, const unsigned int inputId);
+            
+            void addOperator(Operator* const op);
+            void removeOperator(Operator* const op);
+            const Node source(Operator* const targetOp, const unsigned int inputId) const;
 
-        void activate();
-        void deactivate();
-        
-        InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
-        OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
-               
-    private:
-        std::vector<Operator*> m_operators;
-    };
+            void activate();
+            void deactivate();
+            
+            InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
+            OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
+                
+        private:
+            std::vector<Operator*> m_operators;
+        };
+    }
 }
 
 #endif // STREAM_IMPL_NETWORK_H

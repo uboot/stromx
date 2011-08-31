@@ -34,6 +34,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::SynchronizedOperatorKernelTest);
 
 namespace stream
 {
+    using namespace impl;
+    
     void SynchronizedOperatorKernelTest::setUp ( void )
     {
         m_testOperator = new TestOperator();

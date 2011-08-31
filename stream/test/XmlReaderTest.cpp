@@ -38,14 +38,6 @@ namespace stream
     {
         Stream* stream = XmlReader(m_factory).read("stream.xml");
     }
-    
-    void XmlReaderTest::testComputePath()
-    {
-        CPPUNIT_ASSERT_EQUAL(std::string(""), XmlReader::computePath("test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("/"), XmlReader::computePath("/test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("dir/"), XmlReader::computePath("dir/test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("/dir/"), XmlReader::computePath("/dir/test.xml"));
-    }
 
     void XmlReaderTest::tearDown()
     {

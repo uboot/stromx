@@ -14,34 +14,28 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_XMLREADERTEST_H
-#define STREAM_XMLREADERTEST_H
+#ifndef STREAM_XMLUTILITIESTEST_H
+#define STREAM_XMLUTILITIESTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 namespace stream
 {
-    class Factory;
-    
-    class XmlReaderTest : public CPPUNIT_NS :: TestFixture
+    class XmlUtilitiesTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (XmlReaderTest);
-        CPPUNIT_TEST(testRead);
+        CPPUNIT_TEST_SUITE (XmlUtilitiesTest);
+        CPPUNIT_TEST(testComputePath);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        XmlReaderTest() : m_factory(0) {}
         
-        void setUp();
-        void tearDown();
+        void setUp() {}
+        void tearDown() {}
 
     protected:
-        void testRead();
-            
-    private:
-        Factory* m_factory;
+        void testComputePath();
     };
 }
 
-#endif // STREAM_XMLREADERTEST_H
+#endif // STREAM_XMLUTILITIESTEST_H

@@ -25,24 +25,12 @@
 #include "Operator.h"
 #include "Thread.h"
 #include "Data.h"
-#include <boost/filesystem.hpp>
+#include "impl/XmlUtilities.h"
 
 using namespace xercesc;
 
 namespace stream
 {
-    const std::string XmlWriter::computePath(const std::string& filename)
-    {
-        boost::filesystem::path filepath(filename);
-        boost::filesystem::path parentpath = filepath.parent_path();
-        std::string pathSeparator;
-        
-        if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
-            pathSeparator = boost::filesystem::path("/").file_string();
-    
-        return parentpath.file_string() + pathSeparator;
-    }
-    
     const unsigned int XmlWriter::translateOperatorPointerToID(const Operator* const pointer) const
     {
         unsigned int count_op = 0;
@@ -186,7 +174,7 @@ namespace stream
                     std::string str = stream.name() + 
                                         "_" + "op" + boost::lexical_cast<std::string>(count_op) + 
                                         "_" + "parameter" + boost::lexical_cast<std::string>((*iter_param)->id());
-                    XMLString::transcode((*iter_op)->getParameter((*iter_param)->id()).serialize(str, computePath(filename)).c_str(), tempStr, 99);
+                    XMLString::transcode((*iter_op)->getParameter((*iter_param)->id()).serialize(str, impl::XmlUtilities::computePath(filename)).c_str(), tempStr, 99);
                     DOMText* value = doc->createTextNode(tempStr);
                     data->appendChild(value);
                 }

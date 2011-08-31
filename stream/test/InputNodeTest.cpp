@@ -31,6 +31,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stream::InputNodeTest);
 
 namespace stream
 {
+    using namespace impl;
+    
     void InputNodeTest::setUp()
     {
         m_operatorWrapper = new Operator(new TestOperator());
@@ -51,14 +53,22 @@ namespace stream
         CPPUNIT_ASSERT_THROW(m_inputNode->connect(m_sourceNode), InvalidState);
     }
     
-void InputNodeTest::testDisconnect()
-{
-    CPPUNIT_ASSERT_NO_THROW(m_inputNode->disconnect());
-    
-    m_inputNode->connect(m_sourceNode);
-    CPPUNIT_ASSERT_NO_THROW(m_inputNode->disconnect());
-    CPPUNIT_ASSERT_NO_THROW(m_inputNode->connect(m_sourceNode));
-}
+    void InputNodeTest::testSource()
+    {
+        CPPUNIT_ASSERT_THROW(m_inputNode->source(), InvalidState);
+        
+        m_inputNode->connect(m_sourceNode);
+        CPPUNIT_ASSERT_EQUAL((const OutputNode*)(m_sourceNode), &(m_inputNode->source()));
+    }
+
+    void InputNodeTest::testDisconnect()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_inputNode->disconnect());
+        
+        m_inputNode->connect(m_sourceNode);
+        CPPUNIT_ASSERT_NO_THROW(m_inputNode->disconnect());
+        CPPUNIT_ASSERT_NO_THROW(m_inputNode->connect(m_sourceNode));
+    }
 
     void InputNodeTest::testSetInputData()
     {

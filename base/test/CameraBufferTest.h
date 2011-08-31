@@ -42,7 +42,7 @@ namespace base
             void testExecute();
                 
         private:
-            stream::SynchronizedOperatorKernel* m_operator;
+            stream::impl::SynchronizedOperatorKernel* m_operator;
         };
     }
 }

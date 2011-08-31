@@ -18,7 +18,7 @@ namespace base
 {
     void ClipTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new Clip());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new Clip());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));

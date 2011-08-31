@@ -19,7 +19,7 @@ namespace base
 {
     void AdjustRgbChannelsTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new AdjustRgbChannels());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new AdjustRgbChannels());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));

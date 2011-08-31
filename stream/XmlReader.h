@@ -45,8 +45,6 @@ namespace stream
         Stream* const read(const std::string & filename);
         
     private:
-        static const std::string computePath(const std::string & filename);
-        
         std::string m_currentPath;
         
         void readOperator(xercesc::DOMElement* const opElement);

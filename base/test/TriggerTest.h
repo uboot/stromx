@@ -24,7 +24,10 @@
 
 namespace stream
 {
-    class SynchronizedOperatorKernel;
+    namespace impl
+    {
+        class SynchronizedOperatorKernel;
+    }
 }
 
 namespace base
@@ -50,7 +53,7 @@ namespace base
             void triggerDelayed ();
             void getOutputDataInterrupted();
     
-            stream::SynchronizedOperatorKernel* m_operator;
+            stream::impl::SynchronizedOperatorKernel* m_operator;
             stream::DataContainer m_image;
     };
 }

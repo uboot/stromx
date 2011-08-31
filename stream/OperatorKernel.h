@@ -27,9 +27,14 @@ namespace stream
     class DataContainer;
     class DataProvider;
     
+    namespace impl
+    {
+        class SynchronizedOperatorKernel;
+    }
+    
     class OperatorKernel : public OperatorInfo
     {
-        friend class SynchronizedOperatorKernel;
+        friend class impl::SynchronizedOperatorKernel;
         
     public:
         OperatorKernel(const std::string & type,

@@ -18,7 +18,7 @@
 #define STREAM_DATACONTAINER_H
 
 #include <boost/shared_ptr.hpp>
-#include "impl/DataContainerImpl.h"
+#include <ostream>
 
 namespace stream
 {
@@ -28,8 +28,9 @@ namespace stream
     namespace impl
     {
         class ReadAccessImpl;
-        class RecycleAccessImpl;
         class WriteAccessImpl;
+        class RecycleAccessImpl;
+        class DataContainerImpl;
     }
     
     class DataContainer
@@ -37,6 +38,7 @@ namespace stream
         friend class impl::WriteAccessImpl;
         friend class impl::ReadAccessImpl;
         friend class impl::RecycleAccessImpl;
+        
         friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);

@@ -17,37 +17,84 @@
 #include "Thread.h"
 
 #include "Exception.h"
-#include "impl/Network.h"
 #include "Operator.h"
 
 #include "impl/InputNode.h"
+#include "impl/Network.h"
+#include "impl/ThreadImpl.h"
 
 namespace stream
 {
-    Thread::Thread(const stream::Network*const network)
-      : m_network(network)
+    using namespace impl;
+    
+    Thread::Thread(const stream::impl::Network*const network)
+      : m_network(network),
+        m_thread(0)
     {
         if(! network)
             throw WrongArgument("Passed null pointer as network.");
+        
+        m_thread = new impl::ThreadImpl;
+    }
+    
+    Thread::~Thread()
+    {
+        delete m_thread;
+    }
+    
+    const Thread::Status Thread::status() const 
+    { 
+        return Status(m_thread->status());
+    }
+    
+    const std::string & Thread::name() const
+    {
+        return m_name; 
+    }
+    
+    void Thread::setName(const std::string& name)
+    { 
+        m_name = name; 
+    }
+    
+    const std::vector<Node> & Thread::nodeSequence() const
+    { 
+        return m_nodeSequence;
+        
+    }
+    
+    void Thread::start()
+    {
+        m_thread->start();
+    }
+    
+    void Thread::stop()
+    {
+        m_thread->stop(); 
+    }
+    
+    void Thread::join()
+    { 
+        m_thread->join();
     }
         
     void Thread::addNode(Operator* const op, const unsigned int inputId)
     {
         InputNode* inputNode = m_network->getInputNode(op, inputId);
-        m_thread.addNode(inputNode);
+        m_thread->addNode(inputNode);
         m_nodeSequence.push_back(Node(op, inputId));
     }
 
     void Thread::insertNode(const unsigned int position, Operator* const op, const unsigned int inputId)
     {
         InputNode* inputNode = m_network->getInputNode(op, inputId);
-        m_thread.insertNode(position, inputNode);
+        m_thread->insertNode(position, inputNode);
         m_nodeSequence.insert(m_nodeSequence.begin() + position, Node(op, inputId));
     }
 
     void Thread::removeNode(const unsigned int position)
     {
-        m_thread.removeNode(position);
+        m_thread->removeNode(position);
         m_nodeSequence.erase(m_nodeSequence.begin() + position);
     }
 } 

@@ -22,7 +22,7 @@ namespace base
 {
     void TriggerTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new Trigger());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new Trigger());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));

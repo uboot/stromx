@@ -24,7 +24,10 @@
 
 namespace stream
 {
-    class SynchronizedOperatorKernel;
+    namespace impl
+    {
+        class SynchronizedOperatorKernel;
+    }
     class TestOperator;
 
     class SynchronizedOperatorKernelTest : public CPPUNIT_NS :: TestFixture
@@ -66,7 +69,7 @@ namespace stream
         void getOutputDataWithInterrupt(const unsigned id);
         void setInputDataWithInterrupt(const unsigned int id);
         
-        SynchronizedOperatorKernel* m_operatorWrapper;
+        impl::SynchronizedOperatorKernel* m_operatorWrapper;
         TestOperator* m_testOperator;
         DataContainer m_container;
     };

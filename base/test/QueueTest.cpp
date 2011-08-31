@@ -17,7 +17,7 @@ namespace base
 {
     void QueueTest::setUp ( void )
     {
-        m_operator = new SynchronizedOperatorKernel(new Queue());
+        m_operator = new stream::impl::SynchronizedOperatorKernel(new Queue());
         m_operator->initialize();
         m_operator->setParameter(Queue::SIZE, UInt32(3));
         m_operator->activate();

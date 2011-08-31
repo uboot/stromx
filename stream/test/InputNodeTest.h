@@ -25,12 +25,17 @@
 namespace stream
 {
     class Operator;
-    class InputNode;
-    class OutputNode;
+    
+    namespace impl
+    {
+        class OutputNode;
+        class InputNode;
+    }
     
     class InputNodeTest : public CPPUNIT_NS :: TestFixture
     {
         CPPUNIT_TEST_SUITE (InputNodeTest);
+        CPPUNIT_TEST(testSource);
         CPPUNIT_TEST(testConnect);
         CPPUNIT_TEST(testDisconnect);
         CPPUNIT_TEST(testSetInputData);
@@ -48,6 +53,7 @@ namespace stream
         void tearDown();
 
     protected:
+        void testSource();
         void testConnect();
         void testDisconnect();
         void testSetInputData();
@@ -56,8 +62,8 @@ namespace stream
         Operator* m_operatorWrapper;
         Operator* m_sourceOperatorWrapper;
         DataContainer m_container;
-        InputNode* m_inputNode;
-        OutputNode* m_sourceNode;
+        impl::InputNode* m_inputNode;
+        impl::OutputNode* m_sourceNode;
         
     };
 }

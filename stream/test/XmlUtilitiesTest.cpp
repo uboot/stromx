@@ -14,27 +14,23 @@
  *  limitations under the License.
  */
 
-#include "Id2DataMapper.h"
+#include "XmlUtilitiesTest.h"
+
+#include <cppunit/TestAssert.h>
+
+#include <stream/impl/XmlUtilities.h>
+
+CPPUNIT_TEST_SUITE_REGISTRATION (stream::XmlUtilitiesTest);
 
 namespace stream
 {
-    bool trySet(const Id2DataMapper& mapper, const impl::Id2DataMap& id2DataMap)
-    {
-        return mapper.trySet(id2DataMap);
-    }  
+    using namespace impl;
     
-    bool tryGet(const Id2DataMapper& mapper, const impl::Id2DataMap& id2DataMap)
+    void XmlUtilitiesTest::testComputePath()
     {
-        return mapper.tryGet(id2DataMap);
-    }
-    
-    void get(const Id2DataMapper& mapper, impl::Id2DataMap& id2DataMap)
-    {
-        return mapper.get(id2DataMap);    
-    }
-    
-    void set(const Id2DataMapper& mapper, impl::Id2DataMap& id2DataMap)
-    {
-        return mapper.set(id2DataMap);
+        CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computePath("test.xml"));
+        CPPUNIT_ASSERT_EQUAL(std::string("/"), XmlUtilities::computePath("/test.xml"));
+        CPPUNIT_ASSERT_EQUAL(std::string("dir/"), XmlUtilities::computePath("dir/test.xml"));
+        CPPUNIT_ASSERT_EQUAL(std::string("/dir/"), XmlUtilities::computePath("/dir/test.xml"));
     }
 }

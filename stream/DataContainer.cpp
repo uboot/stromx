@@ -17,6 +17,8 @@
 #include "DataContainer.h"
 #include "Recycler.h"
 
+#include "impl/DataContainerImpl.h"
+
 namespace stream
 {
     DataContainer::DataContainer(Data* const data)
@@ -47,7 +49,5 @@ namespace stream
         else
             out << container.m_impl->data();
     }
-
-
 }
  
