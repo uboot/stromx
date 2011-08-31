@@ -18,6 +18,8 @@
 #define STREAM_XMLWRITER_H
 
 #include <string>
+#include "Operator.h"
+#include "Stream.h"
 
 namespace stream
 {
@@ -26,9 +28,14 @@ namespace stream
     class XmlWriter
     {
     public:
+        XmlWriter() : m_stream(0) {}
+        ~XmlWriter() {};
         void write(const std::string & filename, Stream& stream);
     private:
         static const std::string computePath(const std::string & filename);
+        const unsigned int translateOperatorPointerToID(const Operator* const pointer) const;
+        
+        Stream* m_stream;
     };
 }
 

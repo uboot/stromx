@@ -22,8 +22,8 @@
 #include <xercesc/dom/DOM.hpp>
 
 #include <iostream>
-#include "Stream.h"
 #include "Operator.h"
+#include "Thread.h"
 #include "Data.h"
 #include <boost/filesystem.hpp>
 
@@ -43,8 +43,36 @@ namespace stream
         return parentpath.file_string() + pathSeparator;
     }
     
+    const unsigned int XmlWriter::translateOperatorPointerToID(const Operator* const pointer) const
+    {
+        unsigned int count_op = 0;
+        for(std::vector<Operator*>::const_iterator iter_op = m_stream->operators().begin();
+                iter_op != m_stream->operators().end();
+                ++iter_op, ++count_op)
+        {
+            if ((*iter_op) == pointer)
+            {
+                return count_op;
+            }
+            
+            throw InternalError("Operator does not exist.");
+        }
+    }
+   
     void XmlWriter::write(const std::string& filename, Stream& stream)
     {
+        if (filename.empty())
+        {
+            throw WrongArgument("Invalid file name.");
+        }
+        
+        if (&stream == 0)
+        {
+            throw WrongArgument("Invalid argument: Null pointer.");
+        }
+        
+        m_stream = &stream;
+        
         try
         {
             XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
@@ -162,8 +190,54 @@ namespace stream
                     DOMText* value = doc->createTextNode(tempStr);
                     data->appendChild(value);
                 }
-                    
                 
+                //Add input branches (tree structure: stream:operator:input)
+                //Processed for each input belonging to current operator op (multiple entries for each operator possible)
+                for(std::vector<const Description*>::const_iterator iter_in = (*iter_op)->info()->inputs().begin();
+                    iter_in != (*iter_op)->info()->inputs().end();
+                    ++iter_in)
+                {
+                    //Create branches only for connected operators
+//                     if (m_stream->source((*iter_op),(*iter_in)->id()))
+                    
+                    //Create current input entry in being child of current operator op (one for each parameter possible)
+                    XMLString::transcode("Input", tempStr, 99);
+                    DOMElement* in = doc->createElement(tempStr);
+                    op->appendChild(in);
+                    
+                    //Create attribute id of current input in (one for each input possible)
+                    XMLString::transcode("id", tempStr, 99);
+                    DOMAttr* id = doc->createAttribute(tempStr);
+                    XMLString::transcode(boost::lexical_cast<std::string>((*iter_in)->id()).c_str(), tempStr, 99);
+                    id->setValue(tempStr);
+                    in->setAttributeNode(id);
+                    
+//                     //Create attribute operator of current input in (one for each input possible)
+//                     XMLString::transcode("operator", tempStr, 99);
+//                     DOMAttr* op = doc->createAttribute(tempStr);
+//                     unsigned int out_op_id = translateOperatorPointerToID(m_stream->source((*iter_op),(*iter_in)->id()).op());
+//                     XMLString::transcode(boost::lexical_cast<std::string>(out_op_id).c_str(), tempStr, 99);
+//                     op->setValue(tempStr);
+//                     in->setAttributeNode(op);
+                }
+                
+            }
+            
+            for(std::vector<Thread*>::const_iterator iter_thr = stream.threads().begin();
+                iter_thr != stream.threads().end();
+                ++iter_thr)
+            {
+                //Create current thread entry thr being child of stream (one for each thread possible)
+                XMLString::transcode("Thread", tempStr, 99);
+                DOMElement* thr = doc->createElement(tempStr);
+                Stream->appendChild(thr);
+                
+                //Create attribute name of current thread thr (one for each thread possible)
+                XMLString::transcode("name", tempStr, 99);
+                DOMAttr* name_thr = doc->createAttribute(tempStr);
+                XMLString::transcode((*iter_thr)->name().c_str(), tempStr, 99);
+                name_thr->setValue(tempStr);
+                thr->setAttributeNode(name_thr);
             }
             
             DOMLSSerializer* serializer = impl->createLSSerializer();
