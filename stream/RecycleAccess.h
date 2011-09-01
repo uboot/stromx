@@ -17,9 +17,9 @@
 #ifndef STREAM_RECYCLEACCESS_H
 #define STREAM_RECYCLEACCESS_H
 
-#include <boost/shared_ptr.hpp>
-
 #include "DataContainer.h"
+
+#include <tr1/memory>
 
 namespace stream
 {
@@ -42,7 +42,7 @@ namespace stream
         Data* const operator()(const unsigned int timeout);
         
     private:
-        boost::shared_ptr<impl::RecycleAccessImpl> m_impl;      
+        std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      
     };
 }
 

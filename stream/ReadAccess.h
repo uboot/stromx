@@ -17,9 +17,9 @@
 #ifndef STREAM_READACCESS_H
 #define STREAM_READACCESS_H
 
-#include <boost/shared_ptr.hpp>
-
 #include "DataContainer.h"
+
+#include <tr1/memory>
 
 namespace stream
 {
@@ -40,7 +40,7 @@ namespace stream
         
     private:
         ReadAccess();
-        boost::shared_ptr<impl::ReadAccessImpl> m_impl;
+        std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
     };
 }
 

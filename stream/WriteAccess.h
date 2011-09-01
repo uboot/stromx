@@ -17,9 +17,9 @@
 #ifndef STREAM_WRITEACCESS_H
 #define STREAM_WRITEACCESS_H
 
-#include <boost/shared_ptr.hpp>
-
 #include "DataContainer.h"
+
+#include <tr1/memory>
 
 namespace stream
 {
@@ -41,7 +41,7 @@ namespace stream
     private:
         WriteAccess();
 
-        boost::shared_ptr<impl::WriteAccessImpl> m_impl;
+        std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
     };
 }
 
