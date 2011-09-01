@@ -20,6 +20,7 @@
 #include "Thread.h"
 #include "Registry.h"
 #include "Primitive.h"
+#include "Enum.h"
 #include "None.h"
 
 #include "impl/Network.h"
@@ -220,6 +221,8 @@ void registerStream(stream::Registry*const registry)
     
     registry->registerData(new Int32);
     registry->registerData(new UInt32);
+    
+    registry->registerData(new Enum);
     
     registry->registerData(new None);
 }

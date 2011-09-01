@@ -24,6 +24,7 @@ namespace stream
     class Enum : public UInt32
     {
     public:
+        Enum() : UInt32() {}
         Enum(const unsigned int value) : UInt32(value) {}
         
         virtual const DataVariant & variant() const { return DataVariant::ENUM; }
