@@ -11,6 +11,8 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINA
 add_executable(base_test
     ../AdjustRgbChannels.cpp
     AdjustRgbChannelsTest.cpp
+    ../Base.cpp
+    BaseTest.cpp
     ../impl/CameraBuffer.cpp
     CameraBufferTest.cpp
     ../Camera.cpp
