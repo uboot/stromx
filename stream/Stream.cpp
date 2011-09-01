@@ -17,10 +17,14 @@
 #include "Stream.h"
 
 #include "Exception.h"
-#include "impl/Network.h"
 #include "Thread.h"
+#include "Registry.h"
+#include "Primitive.h"
+#include "None.h"
 
+#include "impl/Network.h"
 #include "impl/InputNode.h"
+
 #include "boost/assert.hpp"
 
 namespace stream
@@ -197,5 +201,26 @@ namespace stream
     {
         m_network->source(targetOp, inputId);
     }
-
 }
+
+void registerStream(stream::Registry*const registry)
+{
+    if(! registry)
+        throw stream::WrongArgument("Passed null pointer.");
+    
+    using namespace stream;
+    
+    registry->registerData(new Bool);
+    
+    registry->registerData(new Int8);
+    registry->registerData(new UInt8);
+    
+    registry->registerData(new Int16);
+    registry->registerData(new UInt16);
+    
+    registry->registerData(new Int32);
+    registry->registerData(new UInt32);
+    
+    registry->registerData(new None);
+}
+

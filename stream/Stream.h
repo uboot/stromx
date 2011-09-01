@@ -26,6 +26,7 @@ namespace stream
 {
     class Thread;
     class Operator;
+    class Registry;
     
     class Stream
     {
@@ -67,6 +68,11 @@ namespace stream
         std::vector<Thread*> m_threads;
         Status m_status;
     };
+}
+    
+extern "C"
+{
+    void registerStream(stream::Registry* const registry);
 }
 
 

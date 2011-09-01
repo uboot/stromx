@@ -20,6 +20,7 @@ include_directories(
 
 set(SOURCES
     AdjustRgbChannels.cpp
+    Base.cpp
     Camera.cpp
     impl/CameraBuffer.cpp
     Clip.cpp
