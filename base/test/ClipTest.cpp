@@ -6,7 +6,7 @@
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -18,7 +18,7 @@ namespace base
 {
     void ClipTest::setUp ( void )
     {
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new Clip());
+        m_operator = new stream::OperatorTester(new Clip());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));

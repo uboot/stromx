@@ -18,7 +18,7 @@
 
 #include "TestOperator.h"
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 #include <stream/Operator.h>
 #include <stream/None.h>
 #include <stream/impl/InputNode.h>

@@ -14,37 +14,21 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CAMERABUFFERTEST_H
-#define BASE_CAMERABUFFERTEST_H
+#ifndef STREAM_OPERATORTESTER_H
+#define STREAM_OPERATORTESTER_H
 
-#include <cppunit/TestFixture.h>
-#include <cppunit/extensions/HelperMacros.h>
+#include "Operator.h"
 
 namespace stream
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class CameraBufferTest : public CPPUNIT_NS :: TestFixture
+    class OperatorTester : public Operator
     {
-        CPPUNIT_TEST_SUITE (CameraBufferTest);
-        CPPUNIT_TEST(testExecute);
-        CPPUNIT_TEST_SUITE_END ();
-
     public:
-        CameraBufferTest() : m_operator(0) {}
+        OperatorTester(OperatorKernel* const kernel) : Operator(kernel) {}
         
-        void setUp();
-        void tearDown();
-
-    protected:
-        void testExecute();
-            
-    private:
-        stream::OperatorTester* m_operator;
+        void activate() { Operator::activate(); }
+        void deactivate()  { Operator::deactivate(); }
     };
 }
 
-#endif // BASE_CAMERABUFFERTEST_H
+#endif // STREAM_OPERATORTESTER_H

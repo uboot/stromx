@@ -8,9 +8,10 @@
 #include <stream/ReadAccess.h>
 #include <stream/Enum.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
+#include <boost/thread.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::CameraTest);
 
@@ -22,7 +23,7 @@ namespace base
     {
         Image image("lenna.jpg");
         
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new Camera());
+        m_operator = new stream::OperatorTester(new Camera());
         m_operator->initialize();
         m_operator->setParameter(Camera::IMAGE, image);
         m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));

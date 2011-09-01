@@ -22,10 +22,7 @@
 
 namespace stream
 {
-    namespace impl
-    {
-        class SynchronizedOperatorKernel;
-    }
+    class OperatorTester;
 }
 
 namespace base
@@ -50,7 +47,7 @@ namespace base
             void testAdjustClipRegion2();
             
         private:
-            stream::impl::SynchronizedOperatorKernel* m_operator;
+            stream::OperatorTester* m_operator;
     };
 }
 

@@ -5,7 +5,7 @@
 #include <stream/DataContainer.h>
 #include <stream/ReadAccess.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -17,7 +17,7 @@ namespace base
 {
     void ConstImageTest::setUp ( void )
     {
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new ConstImage());
+        m_operator = new stream::OperatorTester(new ConstImage());
         m_operator->initialize();
         m_operator->activate();
         

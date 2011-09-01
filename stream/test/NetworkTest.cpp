@@ -20,7 +20,7 @@
 
 #include <stream/impl/Network.h>
 #include <stream/Exception.h>
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 #include <stream/Operator.h>
 
 #include <cppunit/TestAssert.h>

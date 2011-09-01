@@ -24,10 +24,7 @@
 
 namespace stream
 {
-    namespace impl
-    {
-        class SynchronizedOperatorKernel;
-    }
+    class OperatorTester;
 }
 
 namespace base
@@ -48,7 +45,7 @@ namespace base
             void testExecute();
             
         private:
-            stream::impl::SynchronizedOperatorKernel* m_operator;
+            stream::OperatorTester* m_operator;
     };
 }
 

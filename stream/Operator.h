@@ -42,6 +42,7 @@ namespace stream
     {
         friend class impl::Network;
         friend class Thread;
+        friend class OperatorTester;
         friend class ThreadImplTest;
         friend class InputNodeTest;
         friend class OutputNodeTest;
@@ -58,7 +59,7 @@ namespace stream
         };
         
         Operator(OperatorKernel* const kernel);
-        ~Operator();
+        virtual ~Operator();
         
         const std::string & name() const { return m_name; }
         void setName(const std::string & name) { m_name = name; }
