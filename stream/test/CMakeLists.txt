@@ -64,6 +64,7 @@ if(BUILD_XML_SUPPORT)
         ../impl/XmlUtilities.cpp
         XmlUtilitiesTest.cpp
         ../XmlReader.cpp
+        ../impl/XmlReaderImpl.cpp
         XmlReaderTest.cpp
         ../XmlWriter.cpp
         XmlWriterTest.cpp

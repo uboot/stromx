@@ -18,48 +18,28 @@
 #define STREAM_XMLREADER_H
 
 #include <string>
-#include <map>
-
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
 
 namespace stream
 {
     class Factory;
     class Stream;
-    class Data;
-    class Operator;
-    class Thread;
-    class Data;
+    
+    namespace impl
+    {
+        class XmlReaderImpl;
+    }
     
     class XmlReader
     {
-        friend class XmlReaderTest;
-        
     public:
         XmlReader(const Factory* const factory)
-          : m_factory(factory), m_stream(0) {}
-          
-        ~XmlReader();
+          : m_factory(factory) 
+        {}
           
         Stream* const read(const std::string & filename);
         
     private:
-        std::string m_currentPath;
-        
-        void readOperator(xercesc::DOMElement* const opElement);
-        void readOperatorInputs(xercesc::DOMElement* const opElement);
-        void readParameter(xercesc::DOMElement* const paramElement);
-        void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
-        void readInputNode(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
-        void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
-        Data* readData(xercesc::DOMElement* const dataElement);
-        void cleanUp();
-        
         const Factory* m_factory;
-        Stream* m_stream;
-        std::map<unsigned int, Operator*> m_id2OperatorMap;
-        std::map<unsigned int, Data*> m_id2DataMap;
     };
 }
 

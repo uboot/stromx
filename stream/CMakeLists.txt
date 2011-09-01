@@ -24,6 +24,7 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    impl/XmlReaderImpl.cpp
     impl/XmlUtilities.cpp
     DataContainer.cpp
     ReadAccess.cpp
