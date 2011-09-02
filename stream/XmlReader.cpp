@@ -22,7 +22,7 @@ namespace stream
 {
     Stream*const XmlReader::read(const std::string& filename)
     {
-        XmlReaderImpl impl(m_factory);
+        impl::XmlReaderImpl impl(m_factory);
         
         return impl.read(filename);
     }
