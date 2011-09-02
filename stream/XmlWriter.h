@@ -18,6 +18,8 @@
 #define STREAM_XMLWRITER_H
 
 #include <string>
+#include <xercesc/dom/DOM.hpp>
+#include "impl/XmlUtilities.h"
 #include "Operator.h"
 #include "Stream.h"
 
@@ -28,14 +30,19 @@ namespace stream
     class XmlWriter
     {
     public:
-        XmlWriter() : m_stream(0) {}
+        XmlWriter();
         ~XmlWriter() {};
         void write(const std::string & filename, Stream& stream);
         
     private:
-        const unsigned int translateOperatorPointerToID(const Operator* const pointer) const;
+        const unsigned int translateOperatorPointerToID(const Operator* const op) const;
+        void createThreadBranches(const std::vector<Thread*> thr);
         
         Stream* m_stream;
+        XMLCh m_tempStr[100];
+        xercesc::DOMImplementation* m_impl;
+        xercesc::DOMDocument* m_doc;
+        xercesc::DOMElement* m_Stream;
     };
 }
 
