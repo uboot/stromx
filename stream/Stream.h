@@ -56,7 +56,7 @@ namespace stream
         
         Thread* const addThread();
         void removeThread(Thread* const thr);
-        const std::vector<Thread*> & threads();
+        const std::vector<Thread*> & threads() const;
         
         void start();
         void join();

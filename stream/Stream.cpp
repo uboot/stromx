@@ -152,7 +152,7 @@ namespace stream
         throw WrongArgument("Thread does not exists");
     }
     
-    const std::vector<Thread*> & Stream::threads()
+    const std::vector<Thread*> & Stream::threads() const
     {
         return m_threads;
     }

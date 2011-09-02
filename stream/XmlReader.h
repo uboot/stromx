@@ -24,11 +24,6 @@ namespace stream
     class Factory;
     class Stream;
     
-    namespace impl
-    {
-        class XmlReaderImpl;
-    }
-    
     class XmlReader
     {
     public:
