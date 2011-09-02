@@ -61,9 +61,6 @@ namespace stream
         parser->setValidationScheme(XercesDOMParser::Val_Always);
         parser->setDoNamespaces(true);    // optional
 
-        ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
-        parser->setErrorHandler(errHandler);
-
         const char* xmlFile = filename.c_str();
 
         try
@@ -145,7 +142,6 @@ namespace stream
         }
 
         delete parser;
-        delete errHandler;
             
         try
         {
