@@ -4,15 +4,11 @@ include_directories(
     ..
 )
 
-set(SOURCES
-    simple_stream.cpp
+add_executable(simple
+    simple.cpp
 )
 
-add_executable(simple_stream
-    simple_stream.cpp
-)
-
-target_link_libraries(simple_stream
+target_link_libraries(simple
     stream
     stream_base
 )
