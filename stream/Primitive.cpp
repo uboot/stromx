@@ -16,6 +16,8 @@
 
 #include "Primitive.h"
 
+#include "Config.h"
+
 #include <float.h>
 
 namespace stream

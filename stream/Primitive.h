@@ -20,7 +20,6 @@
 #include "Description.h"
 #include "Data.h"
 #include "Version.h"
-#include "Config.h"
 
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
