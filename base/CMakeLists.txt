@@ -25,6 +25,7 @@ set(SOURCES
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
+    Counter.cpp
     Image.cpp
     Queue.cpp
     PeriodicDelay.cpp

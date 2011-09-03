@@ -24,6 +24,8 @@ add_executable(base_test
     ConvertPixelTypeTest.cpp
     ../ConstImage.cpp
     ConstImageTest.cpp
+    ../Counter.cpp
+    CounterTest.cpp
     ../Image.cpp
     ImageTest.cpp
     main.cpp

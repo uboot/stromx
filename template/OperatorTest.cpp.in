@@ -2,6 +2,8 @@
 
 #include <cppunit/TestAssert.h>
 
+#include <stream/OperatorTester.h>
+
 #include <@PACKAGE@/@CLASS@.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
@@ -12,7 +14,7 @@ namespace @PACKAGE@
 {
     void @CLASS@Test::setUp()
     {
-        m_operator = new OperatorWrapper(new @CLASS@());
+        m_operator = new OperatorTester(new @CLASS@());
     }
 
     void @CLASS@Test::testExecute()

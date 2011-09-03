@@ -20,7 +20,10 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/OperatorWrapper.h>
+namespace stream
+{
+    class OperatorTester;
+}
 
 namespace @PACKAGE@
 {
@@ -40,7 +43,7 @@ namespace @PACKAGE@
         void testExecute();
             
     private:
-        stream::OperatorWrapper* m_operator;
+        stream::OperatorTester* m_operator;
     };
 }
 

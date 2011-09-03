@@ -10,12 +10,12 @@ using namespace stream;
 
 namespace @PACKAGE@
 {
-    const std::string @CLASS@::NAME("@CLASS@");
+    const std::string @CLASS@::TYPE("@CLASS@");
     const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
     const Version @CLASS@::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
     
     @CLASS@::@CLASS@()
-      : OperatorKernel(NAME, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
@@ -26,12 +26,12 @@ namespace @PACKAGE@
             switch(id)
             {
             default:
-                throw ParameterIdException(id, *this);
+                throw WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw ParameterTypeException(*parameters()[id], *this);
+            throw WrongParameterType(*parameters()[id], *this);
         }
     }
 
@@ -40,7 +40,7 @@ namespace @PACKAGE@
         switch(id)
         {
         default:
-            throw ParameterIdException(id, *this);
+            throw WrongParameterId(id, *this);
         }
     }  
     
@@ -49,23 +49,23 @@ namespace @PACKAGE@
         
     }
     
-    const std::vector<Description*> @CLASS@::setupInputs()
+    const std::vector<const Description*> @CLASS@::setupInputs()
     {
-        std::vector<Description*> inputs;
+        std::vector<const Description*> inputs;
 
         return inputs;
     }
     
-    const std::vector<Description*> @CLASS@::setupOutputs()
+    const std::vector<const Description*> @CLASS@::setupOutputs()
     {
-        std::vector<Description*> outputs;
+        std::vector<const Description*> outputs;
         
         return outputs;
     }
     
-    const std::vector<Parameter*> @CLASS@::setupParameters()
+    const std::vector<const Parameter*> @CLASS@::setupParameters()
     {
-        std::vector<Parameter*> parameters;
+        std::vector<const Parameter*> parameters;
                                     
         return parameters;
     }
