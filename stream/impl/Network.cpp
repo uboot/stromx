@@ -46,8 +46,8 @@ namespace stream
             m_operators.clear();
         }
         
-        void Network::connect(Operator* const targetOp, const unsigned int inputId, 
-                            Operator* const sourceOp, const unsigned int outputId)
+        void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
+                              Operator* const targetOp, const unsigned int inputId)
         { 
             getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
         }

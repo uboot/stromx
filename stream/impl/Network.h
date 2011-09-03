@@ -46,8 +46,8 @@ namespace stream
             
             const std::vector<Operator*>& operators() const { return m_operators; }
                 
-            void connect(Operator* const targetOp, const unsigned int inputId, 
-                        Operator* const sourceOp, const unsigned int outputId);
+            void connect(Operator* const sourceOp, const unsigned int outputId, 
+                         Operator* const targetOp, const unsigned int inputId);
             void disconnect(Operator* const targetOp, const unsigned int inputId);
             
             void addOperator(Operator* const op);

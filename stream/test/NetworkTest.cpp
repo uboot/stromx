@@ -95,11 +95,11 @@ namespace stream
         op2->initialize();
         m_network->addOperator(op2);
         
-        m_network->connect(op1, TestOperator::INPUT_1, op0, TestOperator::OUTPUT_1);
-        m_network->connect(op1, TestOperator::INPUT_2, op0, TestOperator::OUTPUT_2);
+        m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
+        m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
         
-        m_network->connect(op2, TestOperator::INPUT_1, op1, TestOperator::OUTPUT_1);
-        m_network->connect(op2, TestOperator::INPUT_2, op1, TestOperator::OUTPUT_2);
+        m_network->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
+        m_network->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
         
         CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op1));
         CPPUNIT_ASSERT(m_network->source(op2, TestOperator::INPUT_1).empty());
@@ -120,8 +120,8 @@ namespace stream
         CPPUNIT_ASSERT_NO_THROW(node = m_network->source(op1, TestOperator::INPUT_1));
         CPPUNIT_ASSERT(node.empty());
         
-        m_network->connect(op1, TestOperator::INPUT_1, op0, TestOperator::OUTPUT_1);
-        m_network->connect(op1, TestOperator::INPUT_2, op0, TestOperator::OUTPUT_2);
+        m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
+        m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
         
         CPPUNIT_ASSERT_NO_THROW(node = m_network->source(op1, TestOperator::INPUT_1));
         CPPUNIT_ASSERT_EQUAL(op0, node.op());

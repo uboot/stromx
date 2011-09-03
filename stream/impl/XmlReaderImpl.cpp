@@ -370,7 +370,7 @@ namespace stream
             
             Operator* source = idOpPair->second;
             
-            m_stream->connect(op, inputId, source, outputId);
+            m_stream->connect(source, outputId, op, inputId);
         }
     }
 }

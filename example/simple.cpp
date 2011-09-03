@@ -21,7 +21,7 @@ int main (int argc, char* argv[])
     stream->addOperator(source);
     stream->addOperator(timer);
     
-    stream->connect(timer, base::PeriodicDelay::INPUT, source, base::ConstImage::OUTPUT);
+    stream->connect(source, base::ConstImage::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
     Thread* thread = stream->addThread();
     thread->addNode(timer, base::PeriodicDelay::INPUT);

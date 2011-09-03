@@ -50,8 +50,8 @@ namespace stream
         void removeOperator(Operator* const op);
         const Node source(Operator* const targetOp, const unsigned int inputId) const;
         
-        void connect(Operator* const targetOp, const unsigned int inputId, 
-                     Operator* const sourceOp, const unsigned int outputId);
+        void connect(Operator* const sourceOp, const unsigned int outputId, 
+                     Operator* const targetOp, const unsigned int inputId);
         void disconnect(Operator* const targetOp, const unsigned int inputId);
         
         Thread* const addThread();

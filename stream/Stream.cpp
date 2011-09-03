@@ -157,15 +157,15 @@ namespace stream
         return m_threads;
     }
     
-    void Stream::connect(Operator* const targetOp, const unsigned int inputId, 
-                         Operator* const sourceOp, const unsigned int outputId)
+    void Stream::connect(Operator* const sourceOp, const unsigned int outputId,
+                         Operator* const targetOp, const unsigned int inputId)
     {
         if (m_status != INACTIVE)
         {
             throw WrongState("Stream object active. Cannot connect operators within a running system.");
         }
         
-        m_network->connect(targetOp, inputId, sourceOp, outputId);
+        m_network->connect(sourceOp, outputId, targetOp, inputId);
     }
 
     void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
