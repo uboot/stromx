@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Stream name="">
-    <Operator id="0" package="Base" type="Counter" name=""/>
-    <Operator id="1" package="Base" type="PeriodicDelay" name="">
+<Stream>
+    <Operator id="0" package="Base" type="Counter"/>
+    <Operator id="1" package="Base" type="PeriodicDelay">
         <Parameter id="0">
             <Data type="UInt32" package="Stream">1000</Data>
         </Parameter>
