@@ -13,7 +13,13 @@ target_link_libraries(simple
     stream_base
 )
 
-set_target_properties(stream_base PROPERTIES
-    VERSION ${VERSION_STRING}
-    SOVERSION ${VERSION_STRING}
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+add_executable(file
+    file.cpp
+)
+
+target_link_libraries(file
+    stream
+    stream_base
 )

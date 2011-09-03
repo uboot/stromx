@@ -1,25 +1,23 @@
 #include <stream/Stream.h>
 #include <stream/Operator.h>
 #include <stream/Thread.h>
+#include <stream/ReadAccess.h>
 
-#include <base/Image.h>
-#include <base/ConstImage.h>
+#include <base/Counter.h>
 #include <base/PeriodicDelay.h>
+
+#include <iostream>
 
 
 int main (int argc, char* argv[])
 {
     using namespace stream;
     
-    // set up a image filled with constant gray 128
-    base::Image image(100, 200, Image::MONO_8);
-    memset(image.data(), 128, image.size());
-    
     // create an empty stream object
     Stream* stream = new Stream();
     
     // allocate and initialize the source operator
-    Operator* source = new Operator(new base::ConstImage);
+    Operator* source = new Operator(new base::Counter);
     source->initialize();
     
     // allocate and initialize a timer operator
@@ -30,14 +28,11 @@ int main (int argc, char* argv[])
     stream->addOperator(source);
     stream->addOperator(timer);
     
-    // set the source image to the previously filled gray area
-    source->setParameter(base::ConstImage::IMAGE, image);
-    
-    // the timer will allow one image every second to pass
+    // the timer will allow one number per second to pass
     timer->setParameter(base::PeriodicDelay::PERIOD, UInt32(1000));
     
     // connect the source to the timer
-    stream->connect(source, base::ConstImage::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    stream->connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
     // add a thread to the stream
     Thread* thread = stream->addThread();
@@ -53,11 +48,14 @@ int main (int argc, char* argv[])
     {
         // wait for output data
         DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
+        ReadAccess access(data);
+        const UInt32 & count = dynamic_cast<const UInt32 &>(access());
         
-        // clear the output to make the image buffer available for recycling 
+        // print the received number
+        std::cout << "Received " <<  (unsigned int)(count) << std::endl;
+        
+        // clear the output 
         timer->clearOutputData(base::PeriodicDelay::OUTPUT);
-        
-        std::cout << "Received image " << i << std::endl;
     }
     
     // tell the stream to stop
