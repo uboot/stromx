@@ -1,3 +1,5 @@
+![Logo](logo/strom-logo-rgb-text.svg)
+
 Welcome to Strom
 ================
 
