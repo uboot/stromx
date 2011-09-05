@@ -222,6 +222,8 @@ void registerStream(stream::Registry*const registry)
     registry->registerData(new Int32);
     registry->registerData(new UInt32);
     
+    registry->registerData(new Double);
+    
     registry->registerData(new Enum);
     
     registry->registerData(new None);
