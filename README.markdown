@@ -1,6 +1,4 @@
-![Logo](logo/strom-logo-rgb-text.svg)
-
-Welcome to Strom
+![Logo](https://github.com/uboot/strom/raw/master/logo/strom-logo-rgb-text-67x102.png) <br> <br> Welcome to Strom!
 ================
 
 Getting Started
