@@ -1,0 +1,5 @@
+digraph strom
+{
+    node [shape=box, fontname=Helvetica, style="rounded,filled", color=blue fillcolor=red]
+    Counter -> PeriodicDelay
+}
