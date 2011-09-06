@@ -3,12 +3,11 @@
 <Stream>
     <Operator id="0" package="Base" type="Counter"/>
     <Operator id="1" package="Base" type="Counter"/>
-    <Operator id="2" package="Math" type="AddAndMultiply">
+    <Operator id="2" package="Math" type="Add">
         <Parameter id="0">
-            <Data type="Double" package="Stream">2.0</Data>
+            <Data type="UInt32" package="Stream">2</Data>
         </Parameter>
         <Input id="0" operator="0" output="0"/>
-        <Input id="1" operator="1" output="0"/>
     </Operator>
     <Operator id="3" package="Base" type="PeriodicDelay">
         <Parameter id="0">

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef MATH_ADDANDMULTIPLY_H
-#define MATH_ADDANDMULTIPLY_H
+#ifndef MATH_ADD_H
+#define MATH_ADD_H
 
 #include <stream/OperatorKernel.h>
 #include <stream/Primitive.h>
@@ -27,13 +27,12 @@ namespace stream
 
 namespace math
 {
-    class AddAndMultiply : public stream::OperatorKernel
+    class Add : public stream::OperatorKernel
     {
     public:
         enum InputId
         {
-            INPUT_1,
-            INPUT_2
+            INPUT
         };
         
         enum OutputId
@@ -43,12 +42,12 @@ namespace math
         
         enum ParameterId
         {
-            COEFFICIENT
+            OFFSET
         };
         
-        AddAndMultiply();
+        Add();
         
-        virtual OperatorKernel* const clone() const { return new AddAndMultiply; }
+        virtual OperatorKernel* const clone() const { return new Add; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
         virtual const stream::Data& getParameter(unsigned int id);
         virtual void execute(stream::DataProvider& provider);
@@ -62,10 +61,8 @@ namespace math
         static const std::string PACKAGE;
         static const stream::Version VERSION;                         
         
-        stream::Double m_coefficient;
-        
-        const double extractDouble(const stream::DataContainer& dataContainer);
+        stream::UInt32 m_offset;
     };
 }
 
-#endif // MATH_ADDANDMULTIPLY_H
+#endif // MATH_ADD_H

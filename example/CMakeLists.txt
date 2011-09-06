@@ -17,7 +17,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINAR
 
 add_executable(file
     file.cpp
-    math/AddAndMultiply.cpp
 )
 
 target_link_libraries(file
@@ -29,7 +28,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/operator.xml DESTINATION ${CMAKE_CURRENT_B
 
 add_executable(operator
     operator.cpp
-    math/AddAndMultiply.cpp
+    math/Add.cpp
 )
 
 target_link_libraries(operator

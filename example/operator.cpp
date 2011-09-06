@@ -23,7 +23,7 @@
 
 #include <base/Base.h>
 
-#include "math/AddAndMultiply.h"
+#include "math/Add.h"
 
 #include <iostream>
 
@@ -36,20 +36,20 @@ int main (int argc, char* argv[])
     registerStream(factory);
     registerBase(factory);
     
-    OperatorKernel* op = new math::AddAndMultiply;
+    OperatorKernel* op = new math::Add;
     factory->registerOperator(op);
     
     Stream* stream = XmlReader(factory).read("operator.xml");
     
     stream->start();
     
-    Operator* timer = stream->operators()[3];
+    Operator* timer = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
         DataContainer data = timer->getOutputData(0);
         ReadAccess access(data);
-        const Double & count = dynamic_cast<const Double &>(access());
+        const UInt32 & count = dynamic_cast<const UInt32 &>(access());
         timer->clearOutputData(0);
         
         std::cout << "Received " <<  (unsigned int)(count) << std::endl;
