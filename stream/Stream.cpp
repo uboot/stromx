@@ -200,7 +200,7 @@ namespace stream
     
     const Node Stream::source(const Operator*const targetOp, const unsigned int inputId) const
     {
-        m_network->source(targetOp, inputId);
+        return m_network->source(targetOp, inputId);
     }
 }
 
