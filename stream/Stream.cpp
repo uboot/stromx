@@ -198,7 +198,7 @@ namespace stream
         m_network->removeOperator(op);
     }
     
-    const Node Stream::source(Operator*const targetOp, const unsigned int inputId) const
+    const Node Stream::source(const Operator*const targetOp, const unsigned int inputId) const
     {
         m_network->source(targetOp, inputId);
     }

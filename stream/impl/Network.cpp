@@ -147,7 +147,7 @@ namespace stream
             throw WrongArgument("Operator does not exist");
         }
         
-        const Node Network::source(Operator* const targetOp, const unsigned int inputId) const
+        const Node Network::source(const Operator* const targetOp, const unsigned int inputId) const
         {
             for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
                 iter != m_operators.end();
@@ -155,7 +155,7 @@ namespace stream
             {
                 if ((*iter) == targetOp)
                 {
-                    const InputNode* input = targetOp->getInputNode(inputId);
+                    const InputNode* input = (*iter)->getInputNode(inputId);
                     
                     if(input->isConnected())
                         return Node(input->source().op(), input->source().outputId());
