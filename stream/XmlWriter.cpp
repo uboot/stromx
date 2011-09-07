@@ -21,8 +21,8 @@ namespace stream
 {
     void XmlWriter::write(const std::string& filename, Stream& stream)
     {
-        impl::XmlWriterImpl impl();
+        impl::XmlWriterImpl impl;
         
-        impl.write(filename);
+        impl.write(filename, stream);
     }
 }

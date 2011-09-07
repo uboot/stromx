@@ -22,7 +22,6 @@
 namespace stream
 {
     class Stream;
-    class XmlWriterImpl;
     
     class XmlWriter
     {

@@ -17,12 +17,13 @@
 #ifndef STREAM_XMLWRITERIMPL_H
 #define STREAM_XMLWRITERIMPL_H
 
-#include <string>
 #include <xercesc/dom/DOM.hpp>
-#include "XmlUtilities.h"
+#include <string>
+#include "../Node.h"
 #include "../Operator.h"
+#include "../Parameter.h"
 #include "../Stream.h"
-
+#include "XmlUtilities.h"
 namespace stream
 {
     class Stream;
@@ -38,10 +39,14 @@ namespace stream
             
         private:
             const unsigned int translateOperatorPointerToID(const Operator* const op) const;
-            void createThreadBranches(const std::vector<Thread*> thr);
+            void createThreads(const std::vector<Thread*> thr);
+            void createInputNodes(const std::vector<Node> inNodes, xercesc::DOMElement* const thr);
+            void createOperators(const std::vector<Operator*> operators);
+            void createParameters(const std::vector<const Parameter*> parameters, const Operator* const currOp, xercesc::DOMElement* const op);
+            void createData(const Parameter* const parameter, const Operator* const currOp, xercesc::DOMElement* const param);
             
             Stream* m_stream;
-            XMLCh m_tempStr[100];
+            std::string m_filename;
             xercesc::DOMImplementation* m_impl;
             xercesc::DOMDocument* m_doc;
             xercesc::DOMElement* m_Stream;
