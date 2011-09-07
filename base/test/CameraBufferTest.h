@@ -20,31 +20,31 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+namespace stream
+{
+    class OperatorTester;
+}
 
 namespace base
 {
-    namespace impl
+    class CameraBufferTest : public CPPUNIT_NS :: TestFixture
     {
-        class CameraBufferTest : public CPPUNIT_NS :: TestFixture
-        {
-            CPPUNIT_TEST_SUITE (CameraBufferTest);
-            CPPUNIT_TEST(testExecute);
-            CPPUNIT_TEST_SUITE_END ();
+        CPPUNIT_TEST_SUITE (CameraBufferTest);
+        CPPUNIT_TEST(testExecute);
+        CPPUNIT_TEST_SUITE_END ();
 
-        public:
-            CameraBufferTest() : m_operator(0) {}
+    public:
+        CameraBufferTest() : m_operator(0) {}
+        
+        void setUp();
+        void tearDown();
+
+    protected:
+        void testExecute();
             
-            void setUp();
-            void tearDown();
-
-        protected:
-            void testExecute();
-                
-        private:
-            stream::impl::SynchronizedOperatorKernel* m_operator;
-        };
-    }
+    private:
+        stream::OperatorTester* m_operator;
+    };
 }
 
 #endif // BASE_CAMERABUFFERTEST_H

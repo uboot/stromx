@@ -2,7 +2,6 @@ project(base)
 
 set (BASE_VERSION_MAJOR 0)
 set (BASE_VERSION_MINOR 1)
-set (PACKAGE_NAME "\"Base\"")
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -20,11 +19,13 @@ include_directories(
 
 set(SOURCES
     AdjustRgbChannels.cpp
+    Base.cpp
     Camera.cpp
     impl/CameraBuffer.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
+    Counter.cpp
     Image.cpp
     Queue.cpp
     PeriodicDelay.cpp

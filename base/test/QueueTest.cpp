@@ -5,7 +5,7 @@
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -17,7 +17,7 @@ namespace base
 {
     void QueueTest::setUp ( void )
     {
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new Queue());
+        m_operator = new stream::OperatorTester(new Queue());
         m_operator->initialize();
         m_operator->setParameter(Queue::SIZE, UInt32(3));
         m_operator->activate();

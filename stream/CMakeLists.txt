@@ -2,7 +2,6 @@ project(stream)
 
 set (STREAM_VERSION_MAJOR 0)
 set (STREAM_VERSION_MINOR 1)
-set (PACKAGE_NAME "\"Stream\"")
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -24,6 +23,7 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    impl/XmlReaderImpl.cpp
     impl/XmlUtilities.cpp
     impl/XmlWriterImpl.cpp
     DataContainer.cpp

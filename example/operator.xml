@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Stream>
+    <Operator id="0" package="Base" type="Counter"/>
+    <Operator id="1" package="Base" type="Counter"/>
+    <Operator id="2" package="Math" type="Add">
+        <Parameter id="0">
+            <Data type="UInt32" package="Stream">2</Data>
+        </Parameter>
+        <Input id="0" operator="0" output="0"/>
+    </Operator>
+    <Operator id="3" package="Base" type="PeriodicDelay">
+        <Parameter id="0">
+            <Data type="UInt32" package="Stream">1000</Data>
+        </Parameter>
+        <Input id="0" operator="2" output="0"/>
+    </Operator>
+    <Thread name="">
+        <InputNode operator="2" input="0"/>
+        <InputNode operator="2" input="1"/>
+        <InputNode operator="3" input="0"/>
+    </Thread> 
+</Stream>

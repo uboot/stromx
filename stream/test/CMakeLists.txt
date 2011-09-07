@@ -48,6 +48,7 @@ set(SOURCES
     ../Primitive.cpp
     PrimitiveTest.cpp
     ../Stream.cpp
+    ../Enum.cpp
     TestData.cpp
     ../Try.cpp
     TryTest.cpp
@@ -64,6 +65,7 @@ if(BUILD_XML_SUPPORT)
         ../impl/XmlUtilities.cpp
         XmlUtilitiesTest.cpp
         ../XmlReader.cpp
+        ../impl/XmlReaderImpl.cpp
         XmlReaderTest.cpp
         ../XmlWriter.cpp
         XmlWriterTest.cpp

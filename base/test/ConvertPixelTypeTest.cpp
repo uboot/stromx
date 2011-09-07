@@ -7,7 +7,7 @@
 #include <stream/Primitive.h>
 #include <stream/ReadAccess.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -19,7 +19,7 @@ namespace base
 {
     void ConvertPixelTypeTest::setUp ( void )
     {
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new ConvertPixelType());
+        m_operator = new stream::OperatorTester(new ConvertPixelType());
         m_operator->initialize();
         m_operator->activate();
         Image* image = new Image("lenna.jpg");

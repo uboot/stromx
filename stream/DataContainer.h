@@ -17,7 +17,7 @@
 #ifndef STREAM_DATACONTAINER_H
 #define STREAM_DATACONTAINER_H
 
-#include <boost/shared_ptr.hpp>
+#include <tr1/memory>
 #include <ostream>
 
 namespace stream
@@ -51,7 +51,7 @@ namespace stream
         const bool empty() const { return m_impl.get() == 0; }
         
     private:
-        boost::shared_ptr<impl::DataContainerImpl> m_impl;
+        std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
     };     
     
     const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 

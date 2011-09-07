@@ -7,7 +7,7 @@
 #include <stream/Exception.h>
 #include <stream/ReadAccess.h>
 
-#include <stream/impl/SynchronizedOperatorKernel.h>
+#include <stream/OperatorTester.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
@@ -22,7 +22,7 @@ namespace base
 {
     void TriggerTest::setUp ( void )
     {
-        m_operator = new stream::impl::SynchronizedOperatorKernel(new Trigger());
+        m_operator = new stream::OperatorTester(new Trigger());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));

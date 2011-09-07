@@ -17,10 +17,15 @@
 #include "Stream.h"
 
 #include "Exception.h"
-#include "impl/Network.h"
 #include "Thread.h"
+#include "Registry.h"
+#include "Primitive.h"
+#include "Enum.h"
+#include "None.h"
 
+#include "impl/Network.h"
 #include "impl/InputNode.h"
+
 #include "boost/assert.hpp"
 
 namespace stream
@@ -147,20 +152,20 @@ namespace stream
         throw WrongArgument("Thread does not exists");
     }
     
-    const std::vector<Thread*> & Stream::threads()
+    const std::vector<Thread*> & Stream::threads() const
     {
         return m_threads;
     }
     
-    void Stream::connect(Operator* const targetOp, const unsigned int inputId, 
-                         Operator* const sourceOp, const unsigned int outputId)
+    void Stream::connect(Operator* const sourceOp, const unsigned int outputId,
+                         Operator* const targetOp, const unsigned int inputId)
     {
         if (m_status != INACTIVE)
         {
             throw WrongState("Stream object active. Cannot connect operators within a running system.");
         }
         
-        m_network->connect(targetOp, inputId, sourceOp, outputId);
+        m_network->connect(sourceOp, outputId, targetOp, inputId);
     }
 
     void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
@@ -193,9 +198,34 @@ namespace stream
         m_network->removeOperator(op);
     }
     
-    const Node Stream::source(Operator*const targetOp, const unsigned int inputId) const
+    const Node Stream::source(const Operator*const targetOp, const unsigned int inputId) const
     {
-        m_network->source(targetOp, inputId);
+        return m_network->source(targetOp, inputId);
     }
-
 }
+
+void registerStream(stream::Registry*const registry)
+{
+    if(! registry)
+        throw stream::WrongArgument("Passed null pointer.");
+    
+    using namespace stream;
+    
+    registry->registerData(new Bool);
+    
+    registry->registerData(new Int8);
+    registry->registerData(new UInt8);
+    
+    registry->registerData(new Int16);
+    registry->registerData(new UInt16);
+    
+    registry->registerData(new Int32);
+    registry->registerData(new UInt32);
+    
+    registry->registerData(new Double);
+    
+    registry->registerData(new Enum);
+    
+    registry->registerData(new None);
+}
+
