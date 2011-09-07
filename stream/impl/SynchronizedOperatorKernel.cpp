@@ -68,7 +68,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::initialize()
         {
-            lock_t lock(m_mutex);
+            lock_t lock(m_statusMutex);
             
             if(m_status != NONE)
                 throw InvalidState("Operator has already been initialized.");
@@ -87,7 +87,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::activate()
         {
-            lock_t lock(m_mutex);
+            lock_t lock(m_statusMutex);
             
             if(m_status != INITIALIZED)
                 throw InvalidState("Operator must be initialized.");
@@ -101,7 +101,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::deactivate()
         {
-            lock_t lock(m_mutex);
+            lock_t lock(m_statusMutex);
             
             if(m_status == INITIALIZED)
                 return;
@@ -119,7 +119,10 @@ namespace stream
         
         const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
         {
-            lock_t lock(m_executeMutex);
+            unique_lock_t lock(m_statusMutex);
+            
+            while(m_status == EXECUTING)
+                waitForSignal(m_statusCond, lock);
             
             validateParameterId(id);
             validateReadAccess(id);
@@ -128,53 +131,51 @@ namespace stream
             
         void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
         {
+            unique_lock_t lock(m_statusMutex);
+            
             validateParameterId(id);
-            validateWriteAccess(id);
             validateParameterType(id, value.variant());
             
             DataVariant parameterType = info()->parameter(id).type();
             if(parameterType.is(DataVariant::TRIGGER))
             {
+                validateWriteAccess(id);
+                
                 m_op->setParameter(id, value);
             }
             else
             {
-                lock_t lock(m_executeMutex);
+                while(m_status == EXECUTING)
+                    waitForSignal(m_statusCond, lock);
+                
+                validateWriteAccess(id);
+                
                 m_op->setParameter(id, value);
             }
         }
 
         void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
         {   
-            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
+            unique_lock_t lock(m_dataMutex);
             
-            // This function is called from OperatorKernel::execute which again is called by SynchronizedOperatorKernel::execute().
-            // SynchronizedOperatorKernel::execute() lock the mutex which is unlocked here.
-            m_mutex.unlock();
+            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
             
             bool interruptExceptionWasThrown = false;
             
+            try
             {
-                unique_lock_t lock(m_mutex);
+                while(! mapper.tryGet(m_inputMap))
+                    waitForSignal(m_dataCond, lock);
                 
-                try
-                {
-                    while(! mapper.tryGet(m_inputMap))
-                        waitForSignal(lock);
-                    
-                    mapper.get(m_inputMap);
-                }
-                catch(Interrupt&)
-                {
-                    interruptExceptionWasThrown = true;
-                }   
-                
-                if(! interruptExceptionWasThrown)
-                    m_cond.notify_all();
+                mapper.get(m_inputMap);
             }
+            catch(Interrupt&)
+            {
+                interruptExceptionWasThrown = true;
+            }   
             
-            // lock again before entering OperatorKernel::execute()
-            m_mutex.lock();
+            if(! interruptExceptionWasThrown)
+                m_dataCond.notify_all();
             
             // rethrow exception if necessary
             if(interruptExceptionWasThrown)
@@ -183,35 +184,26 @@ namespace stream
 
         void SynchronizedOperatorKernel::sendOutputData(const stream::Id2DataMapper& mapper)
         {
-            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
+            unique_lock_t lock(m_dataMutex);
             
-            // This function is called from OperatorKernel::execute which again is called by SynchronizedOperatorKernel::execute().
-            // SynchronizedOperatorKernel::execute() lock the mutex which is unlocked here.
-            m_mutex.unlock();
+            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
             
             bool interruptExceptionWasThrown = false;
             
+            try
             {
-                unique_lock_t lock(m_mutex);
+                while(! mapper.trySet(m_outputMap))
+                    waitForSignal(m_dataCond, lock);
                 
-                try
-                {
-                    while(! mapper.trySet(m_outputMap))
-                        waitForSignal(lock);
-                    
-                    mapper.set(m_outputMap);
-                }
-                catch(Interrupt&)
-                {
-                    interruptExceptionWasThrown = true;
-                }   
-                
-                if(! interruptExceptionWasThrown)
-                    m_cond.notify_all();
+                mapper.set(m_outputMap);
             }
+            catch(Interrupt&)
+            {
+                interruptExceptionWasThrown = true;
+            }   
             
-            // lock again before entering OperatorKernel::execute()
-            m_mutex.lock();
+            if(! interruptExceptionWasThrown)
+                m_dataCond.notify_all();
             
             // rethrow exception if necessary
             if(interruptExceptionWasThrown)
@@ -220,110 +212,109 @@ namespace stream
         
         DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
         {
-            unique_lock_t lock(m_mutex);
+            unique_lock_t lock(m_dataMutex);
             
-            if( m_status != ACTIVE
-                && m_status != EXECUTING)
-            {
-                throw InvalidState("Can not get output data if operator is inactive.");
-            }
-        
             while(m_outputMap[id].empty())
             {
-                // this section might throw an InterruptionException which will fall
-                // through to the calling function
-                if(m_status == ACTIVE)
+                bool success = false;
                 {
-                    // try to get some output data by executing
-                    execute();
+                    lock.unlock();
+                    
+                    // this section might throw an InterruptionException which will fall
+                    // through to the calling function
+                    success = tryExecute();
+                    
+                    lock.lock();
                 }
-                else
-                {
-                    // wait for the situation to change
-                    waitForSignal(lock);
-                }
+                
+                if(! success)
+                    waitForSignal(m_dataCond, lock);
             }
+                
+            m_dataCond.notify_all();
             
             return m_outputMap[id];
         }
 
         void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
         {
-            unique_lock_t lock(m_mutex);
+            unique_lock_t lock(m_dataMutex);
             
-            if( m_status != ACTIVE
-                && m_status != EXECUTING)
-            {
-                throw InvalidState("Can not get output data if operator is inactive.");
-            }
-        
             while(! m_inputMap[id].empty())
             {
-                // this section might throw an InterruptionException which will fall
-                // through to the calling function
-                if(m_status == ACTIVE)
+                bool success = false;
                 {
-                    // try to get some output data by executing
-                    execute();
+                    lock.unlock();
+                    
+                    // this section might throw an InterruptionException which will fall
+                    // through to the calling function
+                    success = tryExecute();
+                    
+                    lock.lock();
                 }
-                else
-                {
-                    // wait for the situation to change
-                    waitForSignal(lock);
-                }
+                
+                if(! success)
+                    waitForSignal(m_dataCond, lock);
             }
+                
+            m_dataCond.notify_all();
             
             m_inputMap[id] = data;
-                
-            m_cond.notify_all();
         }
         
         void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
         {
-            lock_t lock(m_mutex);
+            lock_t lock(m_dataMutex);
             
             m_outputMap[id] = DataContainer();
                 
-            m_cond.notify_all();
+            m_dataCond.notify_all();
         }
         
-        void SynchronizedOperatorKernel::execute()
+        bool SynchronizedOperatorKernel::tryExecute()
         {
-            // m_mutex is locked if this function is called
-            m_status = EXECUTING;
+            {
+                lock_t lock(m_statusMutex);
+                
+                if(m_status == EXECUTING)
+                    return false;
+                else
+                    m_status = EXECUTING;
+            }
             
             bool interruptExceptionWasThrown = false;
             
             try
             {
-                lock_t lock(m_executeMutex);
                 m_op->execute(*this);
+            }
+            catch(Interrupt &)
+            {
+                lock_t lock(m_statusMutex);
+                m_status = ACTIVE;
+                m_statusCond.notify_all();
+                
+                throw;
             }
             catch(std::exception &e)
             {
-                try
-                {
-                    dynamic_cast<Interrupt&>(e);
-                    interruptExceptionWasThrown = true;
-                }
-                catch(std::bad_cast&)
-                {
-                }
+                // ignore exceptions
             }
             
-            m_status = ACTIVE;
-            
-            if(interruptExceptionWasThrown)
-                throw Interrupt();
-            
-            // a signal is emitted in setInputData() and getOutputData()
+            {
+                lock_t lock(m_statusMutex);
+                m_status = ACTIVE;
+                m_statusCond.notify_all();
+            }
+     
+            return true;
         }
         
-        void SynchronizedOperatorKernel::waitForSignal(unique_lock_t& lock)
+        void SynchronizedOperatorKernel::waitForSignal(boost::condition_variable & condition, unique_lock_t& lock)
         {
             try
             {
-                m_cond.wait(lock);
+                condition.wait(lock);
             }
             catch(boost::thread_interrupted&)
             {

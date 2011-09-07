@@ -39,7 +39,7 @@ int main (int argc, char* argv[])
     timer->initialize();
     stream.addOperator(timer);
     
-    timer->setParameter(base::PeriodicDelay::PERIOD, UInt32(5000));
+    timer->setParameter(base::PeriodicDelay::PERIOD, UInt32(1000));
     
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     

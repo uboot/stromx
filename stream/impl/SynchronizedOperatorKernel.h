@@ -72,8 +72,8 @@ namespace stream
             typedef boost::lock_guard<boost::mutex> lock_t;
             typedef boost::unique_lock<boost::mutex> unique_lock_t;
             
-            void execute();
-            void waitForSignal(unique_lock_t& lock);
+            bool tryExecute();
+            void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock);
             void validateParameterId(const unsigned int id);
             void validateWriteAccess(const unsigned int id);
             void validateReadAccess(const unsigned int id);
@@ -81,9 +81,10 @@ namespace stream
             
             OperatorKernel* m_op;
             Status m_status;
-            boost::condition_variable_any m_cond;
-            boost::mutex m_mutex;
-            boost::mutex m_executeMutex;
+            boost::condition_variable m_statusCond;
+            boost::condition_variable m_dataCond;
+            boost::mutex m_dataMutex;
+            boost::mutex m_statusMutex;
             impl::Id2DataMap m_inputMap;
             impl::Id2DataMap m_outputMap;
         };
