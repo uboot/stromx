@@ -39,11 +39,12 @@ namespace stream
             
         private:
             const unsigned int translateOperatorPointerToID(const Operator* const op) const;
-            void createThreads(const std::vector<Thread*> thr);
-            void createInputNodes(const std::vector<Node> inNodes, xercesc::DOMElement* const thr);
+            void createThreads(const std::vector<Thread*> threads);
+            void createInputNodes(const Thread* const currThr, xercesc::DOMElement* const thrElement);
             void createOperators(const std::vector<Operator*> operators);
-            void createParameters(const std::vector<const Parameter*> parameters, const Operator* const currOp, xercesc::DOMElement* const op);
-            void createData(const Parameter* const parameter, const Operator* const currOp, xercesc::DOMElement* const param);
+            void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
+            void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
+            void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
             
             Stream* m_stream;
             std::string m_filename;

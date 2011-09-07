@@ -48,8 +48,6 @@ namespace stream
             try
             {
                 m_impl = DOMImplementationRegistry::getDOMImplementation(Str2Xml(""));
-                m_doc = m_impl->createDocument(0, Str2Xml("Stream"), 0);
-                m_Stream = m_doc->getDocumentElement();
             }
             catch(DOMException& e)
             {
@@ -77,96 +75,135 @@ namespace stream
             throw InternalError("Operator does not exist.");
         }
         
-        void XmlWriterImpl::createInputNodes(const std::vector<Node> inNodes, DOMElement* const thread)
+        void XmlWriterImpl::createInputNodes(const Thread* const currThr, DOMElement* const thrElement)
         {
             //Add InputNode branches (tree structure: Stream:Thread:InputNode)
             //Processed for each InputNode belonging to Thread (multiple entries for each Thread possible)
-            for(std::vector<Node>::const_iterator iter_inNodes = inNodes.begin();
-                iter_inNodes != inNodes.end();
+            for(std::vector<Node>::const_iterator iter_inNodes = currThr->nodeSequence().begin();
+                iter_inNodes != currThr->nodeSequence().end();
                 ++iter_inNodes)
             {
                 //Create current InputNode being child of Thread 
-                DOMElement* inNode = m_doc->createElement(Str2Xml("InputNode"));
-                thread->appendChild(inNode);
+                DOMElement* inNodeElement = m_doc->createElement(Str2Xml("InputNode"));
+                thrElement->appendChild(inNodeElement);
                 
                 //Create attribute operator of current InputNode (one for each InputNode possible)
                 DOMAttr* opAttr = m_doc->createAttribute(Str2Xml("operator"));
                 unsigned int opId = translateOperatorPointerToID((*iter_inNodes).op());
                 opAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(opId).c_str()));
-                inNode->setAttributeNode(opAttr);
+                inNodeElement->setAttributeNode(opAttr);
                 
                 //Create attribute input of current InputNode (one for each InputNode possible)
                 DOMAttr* inputAttr = m_doc->createAttribute(Str2Xml("input"));
                 inputAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_inNodes).id()).c_str()));
-                inNode->setAttributeNode(inputAttr);
+                inNodeElement->setAttributeNode(inputAttr);
             }
         }
         
         void XmlWriterImpl::createThreads(const std::vector<Thread*> threads)
         {
+            //Add Thread branches (tree structure: Stream:Thread)
+            //Processed for each thread belonging to the stream object (multiple entries for stream possible)
             for(std::vector<Thread*>::const_iterator iter_thr = threads.begin();
                     iter_thr != threads.end();
                     ++iter_thr)
             {
                 //Create current Thread being child of Stream (one for each Thread possible)
-                DOMElement* thr = m_doc->createElement(Str2Xml("Thread"));
-                m_Stream->appendChild(thr);
+                DOMElement* thrElement = m_doc->createElement(Str2Xml("Thread"));
+                m_Stream->appendChild(thrElement);
                 
                 //Create attribute name of Thread (one for each Thread possible)
                 DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
                 nameAttr->setValue(Str2Xml((*iter_thr)->name().c_str()));
-                thr->setAttributeNode(nameAttr);
+                thrElement->setAttributeNode(nameAttr);
                 
                 //Create InputNodes of Thread (multiple entries for each Thread possible)
-                createInputNodes((*iter_thr)->nodeSequence(), thr);
+                createInputNodes((*iter_thr), thrElement);
             }
         }
         
-        void XmlWriterImpl::createParameters(const std::vector<const Parameter*> parameters, const Operator* const currOp, DOMElement* const op)
+        void XmlWriterImpl::createParameters(const Operator* const currOp, DOMElement* const opElement)
         {
             //Add parameter branches (tree structure: stream:operator:parameter)
-            //Processed for each parameter belonging to current operator op (multiple entries for each operator possible)
-            for(std::vector<const Parameter*>::const_iterator iter_param = parameters.begin();
-                        iter_param != parameters.end();
-                        ++iter_param)
+            //Processed for each parameter belonging to current operator currOp (multiple entries for each operator possible)
+            for(std::vector<const Parameter*>::const_iterator iter_par = currOp->info()->parameters().begin();
+                        iter_par != currOp->info()->parameters().end();
+                        ++iter_par)
             {
                 //Create current parameter entry param being child of current operator op (one for each parameter possible)
-                DOMElement* param = m_doc->createElement(Str2Xml("Parameter"));
-                op->appendChild(param);
+                DOMElement* parElement = m_doc->createElement(Str2Xml("Parameter"));
+                opElement->appendChild(parElement);
                 
                 //Create attribute id of current parameter param (one for each parameter possible)
                 DOMAttr* id = m_doc->createAttribute(Str2Xml("id"));
-                id->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_param)->id()).c_str()));
-                param->setAttributeNode(id);
+                id->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_par)->id()).c_str()));
+                parElement->setAttributeNode(id);
                 
-                createData(*iter_param, currOp, param);
+                createData(*iter_par, currOp, parElement);
             }
         }
         
-        void XmlWriterImpl::createData(const Parameter*const parameter, const Operator*const currOp, DOMElement*const param)
+        void XmlWriterImpl::createData(const Parameter*const currPar, const Operator*const currOp, DOMElement*const parElement)
         {
             //Add Data branch
             //Create Data entry data being child of current param (one for each parameter possible)
-            DOMElement* data = m_doc->createElement(Str2Xml("Data"));
-            param->appendChild(data);
+            DOMElement* dataElement = m_doc->createElement(Str2Xml("Data"));
+            parElement->appendChild(dataElement);
             
             //Create attribute type of current parameter param (one for each parameter possible)
-            DOMAttr* type_data = m_doc->createAttribute(Str2Xml("type"));
-            type_data->setValue(Str2Xml(currOp->getParameter(parameter->id()).type().c_str()));
-            data->setAttributeNode(type_data);
+            DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
+            typeAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).type().c_str()));
+            dataElement->setAttributeNode(typeAttr);
             
             //Create attribute package of current parameter param (one for each parameter possible)
-            DOMAttr* package_data = m_doc->createAttribute(Str2Xml("package"));
-            package_data->setValue(Str2Xml(currOp->getParameter(parameter->id()).package().c_str()));
-            data->setAttributeNode(package_data);
+            DOMAttr* packageAttr = m_doc->createAttribute(Str2Xml("package"));
+            packageAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).package().c_str()));
+            dataElement->setAttributeNode(packageAttr);
             
             //Create value of current parameter param (one for each parameter possible)
             //First, create unique input parameter name for function Data::serialize()
             std::string str = m_stream->name() + 
                                 "_" + "op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
-                                "_" + "parameter" + boost::lexical_cast<std::string>(parameter->id());
-            DOMText* value = m_doc->createTextNode(Str2Xml(currOp->getParameter(parameter->id()).serialize(str, impl::XmlUtilities::computePath(m_filename)).c_str()));
-            data->appendChild(value);
+                                "_" + "parameter" + boost::lexical_cast<std::string>(currPar->id());
+            DOMText* value = m_doc->createTextNode(Str2Xml(currOp->getParameter(currPar->id()).serialize(str, impl::XmlUtilities::computePath(m_filename)).c_str()));
+            dataElement->appendChild(value);
+        }
+        
+        void XmlWriterImpl::createInputs(const stream::Operator*const currOp, DOMElement*const opElement)
+        {
+            for(std::vector<const Description*>::const_iterator iter_in = currOp->info()->inputs().begin();
+                iter_in != currOp->info()->inputs().end();
+                ++iter_in)
+            {
+                //Get the source node
+                Node node = m_stream->source(currOp, (*iter_in)->id());
+                
+                //Create Input only for connected operators
+                if (! node.empty())
+                {
+                    //Create Input entry in being child of current operator op (one for each parameter possible)
+                    DOMElement* inElement = m_doc->createElement(Str2Xml("Input"));
+                    opElement->appendChild(inElement);
+                    
+                    //Create attribute id of current input in (one for each input possible)
+                    DOMAttr* idAttr = m_doc->createAttribute(Str2Xml("id"));
+                    idAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_in)->id()).c_str()));
+                    inElement->setAttributeNode(idAttr);
+                    
+                    //Get the id of the source operator
+                    unsigned sourceOp = translateOperatorPointerToID(node.op());
+                    
+                    //Write the id of the source operator
+                    DOMAttr* opAttr = m_doc->createAttribute(Str2Xml("operator"));
+                    opAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(sourceOp).c_str()));
+                    inElement->setAttributeNode(opAttr);
+                    
+                    //Write the id of the output
+                    DOMAttr* outAttr = m_doc->createAttribute(Str2Xml("output"));
+                    outAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(node.id()).c_str()));
+                    inElement->setAttributeNode(outAttr);
+                }
+            }
         }
         
         void XmlWriterImpl::createOperators(const std::vector<Operator*> operators)
@@ -178,30 +215,31 @@ namespace stream
                 ++iter_op)
             {
                 //Create current operator entry op being child of stream (one for each operator possible)
-                DOMElement* op = m_doc->createElement(Str2Xml("Operator"));
-                m_Stream->appendChild(op);
+                DOMElement* opElement = m_doc->createElement(Str2Xml("Operator"));
+                m_Stream->appendChild(opElement);
                 
                 //Create attribute id of current operator op (one for each operator possible)
-                DOMAttr* id = m_doc->createAttribute(Str2Xml("id"));
-                id->setValue(Str2Xml(boost::lexical_cast<std::string>(translateOperatorPointerToID(*iter_op)).c_str()));
-                op->setAttributeNode(id);
+                DOMAttr* idAttr = m_doc->createAttribute(Str2Xml("id"));
+                idAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(translateOperatorPointerToID(*iter_op)).c_str()));
+                opElement->setAttributeNode(idAttr);
                 
                 //Create attribute package of current operator op (one for each operator possible)
-                DOMAttr* package = m_doc->createAttribute(Str2Xml("package"));
-                package->setValue(Str2Xml((*iter_op)->info()->package().c_str()));
-                op->setAttributeNode(package);
+                DOMAttr* packAttr = m_doc->createAttribute(Str2Xml("package"));
+                packAttr->setValue(Str2Xml((*iter_op)->info()->package().c_str()));
+                opElement->setAttributeNode(packAttr);
                 
                 //Create attribute type of current operator op (one for each operator possible)
-                DOMAttr* type_op = m_doc->createAttribute(Str2Xml("type"));
-                type_op->setValue(Str2Xml((*iter_op)->info()->type().c_str()));
-                op->setAttributeNode(type_op);
+                DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
+                typeAttr->setValue(Str2Xml((*iter_op)->info()->type().c_str()));
+                opElement->setAttributeNode(typeAttr);
                 
-                //Create attribute name
-                DOMAttr* name_op = m_doc->createAttribute(Str2Xml("name"));
-                name_op->setValue(Str2Xml((*iter_op)->name().c_str()));
-                op->setAttributeNode(name_op);
+                //Create attribute name of current operator op (one for each operator possible)
+                DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
+                nameAttr->setValue(Str2Xml((*iter_op)->name().c_str()));
+                opElement->setAttributeNode(nameAttr);
                 
-                createParameters((*iter_op)->info()->parameters(), (*iter_op), op);
+                createParameters((*iter_op), opElement);
+                createInputs((*iter_op), opElement);
             }
         }
     
@@ -222,52 +260,18 @@ namespace stream
             
             try
             {
-    //             XMLCh tempStr[100];
-    //             XMLString::transcode("", tempStr, 99);
-    //             DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation(tempStr);
-    // 
-    //             XMLString::transcode("Stream", tempStr, 99); 
-    //             DOMDocument* doc = impl->createDocument(0, tempStr, 0);
-    //             DOMElement* Stream = doc->getDocumentElement();
-                DOMAttr* name = m_doc->createAttribute(Str2Xml("name"));
-                name->setValue(Str2Xml(m_stream->name().c_str()));
-                m_Stream->setAttributeNode(name);
+                //Create Stream branch
+                m_doc = m_impl->createDocument(0, Str2Xml("Stream"), 0);
+                m_Stream = m_doc->getDocumentElement();
                 
-
-                    
-// // //                     //Add input branches (tree structure: stream:operator:input)
-// // //                     //Processed for each input belonging to current operator op (multiple entries for each operator possible)
-// // //                     for(std::vector<const Description*>::const_iterator iter_in = (*iter_op)->info()->inputs().begin();
-// // //                         iter_in != (*iter_op)->info()->inputs().end();
-// // //                         ++iter_in)
-// // //                     {
-// // //                         //Create branches only for connected operators
-// // //                         if (! m_stream->source((*iter_op),(*iter_in)->id()).empty())
-// // //                         {
-// // //                         
-// // //                         //Create current input entry in being child of current operator op (one for each parameter possible)
-// // //                         XMLString::transcode("Input", m_tempStr, 99);
-// // //                         DOMElement* in = m_doc->createElement(m_tempStr);
-// // //                         op->appendChild(in);
-// // //                         
-// // //                         //Create attribute id of current input in (one for each input possible)
-// // //                         XMLString::transcode("id", m_tempStr, 99);
-// // //                         DOMAttr* id = m_doc->createAttribute(m_tempStr);
-// // //                         XMLString::transcode(boost::lexical_cast<std::string>((*iter_in)->id()).c_str(), m_tempStr, 99);
-// // //                         id->setValue(m_tempStr);
-// // //                         in->setAttributeNode(id);
-// // //                         
-// // // //                         //Create attribute operator of current input in (one for each input possible)
-// // // //                         DOMAttr* op = m_doc->createAttribute(Str2Xml("operator"));
-// // // //                         unsigned int out_op_id = translateOperatorPointerToID(m_stream->source((*iter_op),(*iter_in)->id()).op());
-// // // //                         XMLString::transcode(boost::lexical_cast<std::string>(out_op_id).c_str(), m_tempStr, 99);
-// // // //                         op->setValue(m_tempStr);
-// // // //                         in->setAttributeNode(op);
-// // // //                         }
-// // // //                     }
-                    
-// // // //                 }
+                //Create attribute name of Stream
+                DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
+                nameAttr->setValue(Str2Xml(m_stream->name().c_str()));
+                m_Stream->setAttributeNode(nameAttr);
+                
+                //Create Operators of Stream (multiple entries for Stream possible)
                 createOperators(m_stream->operators());
+                //Create Threads of Stream (multiple entries for Stream possible)
                 createThreads(m_stream->threads());
                 
                 DOMLSSerializer* serializer = m_impl->createLSSerializer();
