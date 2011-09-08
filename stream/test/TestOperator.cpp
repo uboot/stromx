@@ -49,8 +49,17 @@ namespace stream
     {
         try
         {
-            const UInt32& v = dynamic_cast<const UInt32&>(value);
-            m_sleepTime = v;
+            switch(id)
+            {
+            case BUFFER_SIZE:
+                m_bufferSize = dynamic_cast<const UInt32&>(value);
+                break;
+            case SLEEP_TIME:
+                m_sleepTime= dynamic_cast<const UInt32&>(value);
+                break;
+            default:
+                throw WrongParameterId(id, *this);
+            }
         }
         catch(std::bad_cast&)
         {
@@ -60,7 +69,15 @@ namespace stream
 
     const Data& TestOperator::getParameter(unsigned int id)
     {
-        return m_sleepTime;
+        switch(id)
+        {
+        case BUFFER_SIZE:
+            return m_bufferSize;
+        case SLEEP_TIME:
+            return m_sleepTime;
+        default:
+            throw WrongParameterId(id, *this);
+        }
     }  
     
     void TestOperator::execute(DataProvider& provider)

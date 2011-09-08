@@ -88,7 +88,7 @@ namespace stream
         
         t3.interrupt();
         t3.join();
-        
+                
         /*** Test 4 ***/
         m_operatorWrapper->deactivate();
         CPPUNIT_ASSERT_THROW(m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container), InvalidState);
@@ -125,6 +125,10 @@ namespace stream
         
         t1.join();
         t2.join();    
+        
+        /*** Test 3 ***/
+        m_operatorWrapper->deactivate();
+        CPPUNIT_ASSERT_THROW(m_operatorWrapper->clearOutputData(TestOperator::INPUT_1), InvalidState);
     }
     
     void SynchronizedOperatorKernelTest::testInitialize()
@@ -215,7 +219,7 @@ namespace stream
         
         /*** Test 4 ***/
         m_operatorWrapper->deactivate();
-        CPPUNIT_ASSERT_THROW(data1 = m_operatorWrapper->getOutputData(TestOperator::OUTPUT_1), InvalidState);       
+        CPPUNIT_ASSERT_THROW(data1 = m_operatorWrapper->getOutputData(TestOperator::OUTPUT_1), InvalidState);  
     }
 
     void SynchronizedOperatorKernelTest::testGetParameter()
