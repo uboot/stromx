@@ -30,7 +30,7 @@ namespace stream
 {
     namespace impl
     {
-        XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_impl(0), m_doc(0), m_Stream(0), m_filename("")
+        XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_impl(0), m_doc(0), m_strElement(0), m_filename("")
         {
             try
             {
@@ -110,7 +110,7 @@ namespace stream
             {
                 //Create current Thread being child of Stream (one for each Thread possible)
                 DOMElement* thrElement = m_doc->createElement(Str2Xml("Thread"));
-                m_Stream->appendChild(thrElement);
+                m_strElement->appendChild(thrElement);
                 
                 //Create attribute name of Thread (one for each Thread possible)
                 DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
@@ -216,7 +216,7 @@ namespace stream
             {
                 //Create current operator entry op being child of stream (one for each operator possible)
                 DOMElement* opElement = m_doc->createElement(Str2Xml("Operator"));
-                m_Stream->appendChild(opElement);
+                m_strElement->appendChild(opElement);
                 
                 //Create attribute id of current operator op (one for each operator possible)
                 DOMAttr* idAttr = m_doc->createAttribute(Str2Xml("id"));
@@ -262,12 +262,12 @@ namespace stream
             {
                 //Create Stream branch
                 m_doc = m_impl->createDocument(0, Str2Xml("Stream"), 0);
-                m_Stream = m_doc->getDocumentElement();
+                m_strElement = m_doc->getDocumentElement();
                 
                 //Create attribute name of Stream
                 DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
                 nameAttr->setValue(Str2Xml(m_stream->name().c_str()));
-                m_Stream->setAttributeNode(nameAttr);
+                m_strElement->setAttributeNode(nameAttr);
                 
                 //Create Operators of Stream (multiple entries for Stream possible)
                 createOperators(m_stream->operators());

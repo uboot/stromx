@@ -50,7 +50,7 @@ namespace stream
             std::string m_filename;
             xercesc::DOMImplementation* m_impl;
             xercesc::DOMDocument* m_doc;
-            xercesc::DOMElement* m_Stream;
+            xercesc::DOMElement* m_strElement;
         };
     }
 }
