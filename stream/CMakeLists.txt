@@ -25,6 +25,7 @@ set(SOURCES
     impl/Network.cpp
     impl/XmlReaderImpl.cpp
     impl/XmlUtilities.cpp
+    impl/XmlWriterImpl.cpp
     DataContainer.cpp
     ReadAccess.cpp
     RecycleAccess.cpp

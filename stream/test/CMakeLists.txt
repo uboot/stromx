@@ -69,6 +69,7 @@ if(BUILD_XML_SUPPORT)
         XmlReaderTest.cpp
         ../XmlWriter.cpp
         XmlWriterTest.cpp
+        ../impl/XmlWriterImpl.cpp
     )
 endif()
 
