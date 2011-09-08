@@ -250,11 +250,6 @@ namespace stream
                 throw WrongArgument("Invalid file name.");
             }
             
-            if (&stream == 0)
-            {
-                throw WrongArgument("Invalid argument: Null pointer.");
-            }
-            
             m_stream = &stream;
             m_filename = filename;
             
