@@ -78,13 +78,13 @@ namespace stream
             void validateWriteAccess(const unsigned int id);
             void validateReadAccess(const unsigned int id);
             void validateParameterType(const unsigned int id, const DataVariant& type);
+            void validateDataAccess();
             
             OperatorKernel* m_op;
             Status m_status;
             boost::condition_variable m_statusCond;
             boost::condition_variable m_dataCond;
-            boost::mutex m_dataMutex;
-            boost::mutex m_statusMutex;
+            boost::mutex m_mutex;
             impl::Id2DataMap m_inputMap;
             impl::Id2DataMap m_outputMap;
         };

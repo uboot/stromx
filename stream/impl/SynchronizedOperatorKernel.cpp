@@ -30,7 +30,7 @@ namespace stream
     namespace impl
     {
         SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
-        : m_op(op),
+          : m_op(op),
             m_status(NONE)
         {
             if(!op)
@@ -68,7 +68,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::initialize()
         {
-            lock_t lock(m_statusMutex);
+            lock_t lock(m_mutex);
             
             if(m_status != NONE)
                 throw InvalidState("Operator has already been initialized.");
@@ -87,7 +87,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::activate()
         {
-            lock_t lock(m_statusMutex);
+            lock_t lock(m_mutex);
             
             if(m_status != INITIALIZED)
                 throw InvalidState("Operator must be initialized.");
@@ -101,7 +101,7 @@ namespace stream
         
         void SynchronizedOperatorKernel::deactivate()
         {
-            lock_t lock(m_statusMutex);
+            lock_t lock(m_mutex);
             
             if(m_status == INITIALIZED)
                 return;
@@ -119,7 +119,7 @@ namespace stream
         
         const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
         {
-            unique_lock_t lock(m_statusMutex);
+            unique_lock_t lock(m_mutex);
             
             while(m_status == EXECUTING)
                 waitForSignal(m_statusCond, lock);
@@ -131,7 +131,7 @@ namespace stream
             
         void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
         {
-            unique_lock_t lock(m_statusMutex);
+            unique_lock_t lock(m_mutex);
             
             validateParameterId(id);
             validateParameterType(id, value.variant());
@@ -156,7 +156,7 @@ namespace stream
 
         void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
         {   
-            unique_lock_t lock(m_dataMutex);
+            unique_lock_t lock(m_mutex);
             
             BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
             
@@ -184,7 +184,7 @@ namespace stream
 
         void SynchronizedOperatorKernel::sendOutputData(const stream::Id2DataMapper& mapper)
         {
-            unique_lock_t lock(m_dataMutex);
+            unique_lock_t lock(m_mutex);
             
             BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
             
@@ -210,9 +210,18 @@ namespace stream
                 throw Interrupt();   
         }
         
+    void SynchronizedOperatorKernel::validateDataAccess()
+    {
+        if( m_status != ACTIVE
+            && m_status != EXECUTING)
+        {
+            throw InvalidState("Operator must be active to access data.");
+        }
+    }
+        
         DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
         {
-            unique_lock_t lock(m_dataMutex);
+            unique_lock_t lock(m_mutex);
             
             while(m_outputMap[id].empty())
             {
@@ -224,21 +233,23 @@ namespace stream
                     // through to the calling function
                     success = tryExecute();
                     
+                    m_dataCond.notify_all();
+                    
                     lock.lock();
                 }
                 
                 if(! success)
                     waitForSignal(m_dataCond, lock);
             }
-                
-            m_dataCond.notify_all();
+            
+            validateDataAccess();
             
             return m_outputMap[id];
         }
 
         void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
         {
-            unique_lock_t lock(m_dataMutex);
+            unique_lock_t lock(m_mutex);
             
             while(! m_inputMap[id].empty())
             {
@@ -256,7 +267,9 @@ namespace stream
                 if(! success)
                     waitForSignal(m_dataCond, lock);
             }
-                
+            
+            validateDataAccess();
+            
             m_dataCond.notify_all();
             
             m_inputMap[id] = data;
@@ -264,7 +277,9 @@ namespace stream
         
         void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
         {
-            lock_t lock(m_dataMutex);
+            lock_t lock(m_mutex);
+            
+            validateDataAccess();
             
             m_outputMap[id] = DataContainer();
                 
@@ -274,7 +289,9 @@ namespace stream
         bool SynchronizedOperatorKernel::tryExecute()
         {
             {
-                lock_t lock(m_statusMutex);
+                lock_t lock(m_mutex);
+                
+                validateDataAccess();
                 
                 if(m_status == EXECUTING)
                     return false;
@@ -290,7 +307,7 @@ namespace stream
             }
             catch(Interrupt &)
             {
-                lock_t lock(m_statusMutex);
+                lock_t lock(m_mutex);
                 m_status = ACTIVE;
                 m_statusCond.notify_all();
                 
@@ -302,7 +319,7 @@ namespace stream
             }
             
             {
-                lock_t lock(m_statusMutex);
+                lock_t lock(m_mutex);
                 m_status = ACTIVE;
                 m_statusCond.notify_all();
             }
