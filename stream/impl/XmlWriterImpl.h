@@ -35,7 +35,7 @@ namespace stream
         public:
             XmlWriterImpl();
             ~XmlWriterImpl() {};
-            void write(const std::string & filename, Stream& stream);
+            void write(const std::string & filename, const Stream& stream);
             
         private:
             const unsigned int translateOperatorPointerToID(const Operator* const op) const;
@@ -46,7 +46,7 @@ namespace stream
             void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
             void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
             
-            Stream* m_stream;
+            const Stream* m_stream;
             std::string m_filename;
             xercesc::DOMImplementation* m_impl;
             xercesc::DOMDocument* m_doc;

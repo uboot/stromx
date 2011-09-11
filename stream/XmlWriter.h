@@ -26,7 +26,7 @@ namespace stream
     class XmlWriter
     {
     public:
-        void write(const std::string& filename, Stream& stream);
+        void write(const std::string& filename, const Stream& stream);
     };
 }
 

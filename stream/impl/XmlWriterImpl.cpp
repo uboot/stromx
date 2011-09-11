@@ -238,12 +238,19 @@ namespace stream
                 nameAttr->setValue(Str2Xml((*iter_op)->name().c_str()));
                 opElement->setAttributeNode(nameAttr);
                 
+                //Create attribute version of current operator op (one for each operator possible)
+                DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                std::string str = boost::lexical_cast<std::string>((*iter_op)->info()->version().major()) + 
+                                  "." + boost::lexical_cast<std::string>((*iter_op)->info()->version().minor());
+                verAttr->setValue(Str2Xml(str.c_str()));
+                opElement->setAttributeNode(verAttr);
+                
                 createParameters((*iter_op), opElement);
                 createInputs((*iter_op), opElement);
             }
         }
     
-        void XmlWriterImpl::write(const std::string& filename, Stream& stream)
+        void XmlWriterImpl::write(const std::string& filename, const Stream& stream)
         {
             if (filename.empty())
             {
