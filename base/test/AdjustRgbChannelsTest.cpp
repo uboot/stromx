@@ -33,8 +33,8 @@ namespace base
         m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
         
         stream::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         image.save("AdjustRgbChannelsTest_testExecute.png");
     }

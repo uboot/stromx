@@ -20,10 +20,10 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stream/WriteAccess.h>
+
 namespace stream
 {
-    class ReadAccess;
-    class WriteAccess;
     class DataContainer;
     class Data;
     
@@ -32,6 +32,8 @@ namespace stream
         CPPUNIT_TEST_SUITE (ReadAccessTest);
         CPPUNIT_TEST(testReadAccessEmpty);
         CPPUNIT_TEST(testReadAccess);
+        CPPUNIT_TEST(testReadAccessCast);
+        CPPUNIT_TEST(testReadAccessWrongCast);
         CPPUNIT_TEST(testReadAccessDelayed);
         CPPUNIT_TEST(testReadAccessInterrupt);
         CPPUNIT_TEST(testReleaseReadAccess);
@@ -46,12 +48,14 @@ namespace stream
     protected:
         void testReadAccessEmpty();
         void testReadAccess();
+        void testReadAccessCast();
+        void testReadAccessWrongCast();
         void testReadAccessDelayed();
         void testReadAccessInterrupt();
         void testReleaseReadAccess();
 
     private:
-        void releaseDelayed(WriteAccess& access);
+        void releaseDelayed(WriteAccess<>& access);
         void readAccessInterrupt(DataContainer & container);
         
         Data* m_data;

@@ -20,8 +20,8 @@
 
 #include <stream/DataContainer.h>
 #include <stream/ReadAccess.h>
-#include <stream/WriteAccess.h>
 #include <stream/Exception.h>
+#include <stream/None.h>
 
 #include <cppunit/TestAssert.h>
 
@@ -35,7 +35,7 @@ namespace stream
     void ReadAccessTest::testReadAccessEmpty()
     {
         DataContainer container;
-        CPPUNIT_ASSERT_THROW(ReadAccess access(container), WrongArgument);
+        CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), WrongArgument);
     }
 
     void ReadAccessTest::testReadAccess()
@@ -43,14 +43,32 @@ namespace stream
         Data* data = new TestData;
         {
             DataContainer container(data);
-            ReadAccess access1(container);
+            ReadAccess<> access1(container);
             CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access1());
             
-            ReadAccess access2(container);
+            ReadAccess<> access2(container);
             CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access2());
         }
         
         CPPUNIT_ASSERT(TestData::wasDestructed);  
+    }
+
+    void ReadAccessTest::testReadAccessCast()
+    {
+        Data* data = new TestData;
+        DataContainer container(data);
+        ReadAccess<TestData> access1(container);
+        
+        CPPUNIT_ASSERT_NO_THROW(access1());
+    }
+
+    void ReadAccessTest::testReadAccessWrongCast()
+    {
+        Data* data = new None;
+        DataContainer container(data);
+        ReadAccess<TestData> access1(container);
+        
+        CPPUNIT_ASSERT_THROW(access1(), BadCast);
     }
     
     void ReadAccessTest::testReleaseReadAccess()
@@ -58,10 +76,10 @@ namespace stream
         Data* data = new TestData;
         DataContainer container(data);
         {
-            ReadAccess access(container);
+            ReadAccess<> access(container);
         }
         
-        WriteAccess access(container);
+        WriteAccess<> access(container);
         CPPUNIT_ASSERT_EQUAL(data, &access());
     }
     
@@ -71,14 +89,14 @@ namespace stream
         DataContainer container(m_data);
         
         {
-            boost::thread t(boost::bind(&ReadAccessTest::releaseDelayed, this, _1), WriteAccess(container));
+            boost::thread t(boost::bind(&ReadAccessTest::releaseDelayed, this, _1), WriteAccess<>(container));
         }
         
-        ReadAccess access(container);
+        ReadAccess<> access(container);
         CPPUNIT_ASSERT_EQUAL((const Data*)(m_data), &access());
     }
     
-    void ReadAccessTest::releaseDelayed(WriteAccess& access)
+    void ReadAccessTest::releaseDelayed(WriteAccess<>& access)
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         CPPUNIT_ASSERT_EQUAL(m_data, &access());
@@ -86,14 +104,14 @@ namespace stream
         
     void ReadAccessTest::readAccessInterrupt(DataContainer& container)
     {
-        CPPUNIT_ASSERT_THROW(ReadAccess access(container), Interrupt);
+        CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), Interrupt);
     }
     
     void ReadAccessTest::testReadAccessInterrupt()
     {
         {
             DataContainer container = DataContainer(new TestData());
-            WriteAccess access(container);
+            WriteAccess<> access(container);
             boost::thread t(boost::bind(&ReadAccessTest::readAccessInterrupt, this, _1), container);
             
             t.interrupt();

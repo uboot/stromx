@@ -18,6 +18,7 @@
 #define STREAM_RECYCLEACCESS_H
 
 #include "DataContainer.h"
+#include "Exception.h"
 
 #include <tr1/memory>
 
@@ -38,7 +39,9 @@ namespace stream
         RecycleAccess() {}
         
         void add(DataContainer data);
+        
         Data* const operator()();
+        
         Data* const operator()(const unsigned int timeout);
         
     private:

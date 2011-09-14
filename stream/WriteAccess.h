@@ -18,25 +18,37 @@
 #define STREAM_WRITEACCESS_H
 
 #include "DataContainer.h"
+#include "Exception.h"
+
+#include "impl/WriteAccessImpl.h"
 
 #include <tr1/memory>
 
 namespace stream
 {
-     namespace impl
-    {
-        class WriteAccessImpl;
-    }
-    
     class DataContainer;
     class Data;
     
+    template<typename data_t = Data>
     class WriteAccess
     {
     public:
-        WriteAccess(DataContainer data);
+        WriteAccess(DataContainer data)
+          : m_impl(new impl::WriteAccessImpl(data))
+        {
+        }
         
-        Data& operator()();
+        data_t & operator()()
+        {
+            try
+            {
+                return dynamic_cast<data_t &>((*m_impl)());
+            }
+            catch(std::bad_cast &)
+            {
+                throw BadCast();
+            }
+        }
         
     private:
         WriteAccess();

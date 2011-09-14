@@ -48,11 +48,10 @@ int main (int argc, char* argv[])
     for(unsigned int i = 0; i < 5; ++i)
     {
         DataContainer data = timer->getOutputData(0);
-        ReadAccess access(data);
-        const UInt32 & count = dynamic_cast<const UInt32 &>(access());
+        ReadAccess<UInt32> count(data);
         timer->clearOutputData(0);
         
-        std::cout << "Received " <<  (unsigned int)(count) << std::endl;
+        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
     }
     
     stream->stop();

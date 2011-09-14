@@ -64,11 +64,11 @@ namespace base
         Id2DataPair destMapper(DESTINATION);
         provider.receiveInputData(srcMapper && destMapper);
         
-        ReadAccess src(srcMapper.data());
-        WriteAccess dest(destMapper.data());
+        ReadAccess<Image> src(srcMapper.data());
+        WriteAccess<Image> dest(destMapper.data());
         
-        const Image& srcImage = dynamic_cast<const Image&>(src());
-        Image& destImage = dynamic_cast<Image&>(dest());
+        const Image& srcImage = src();
+        Image& destImage = dest();
         
         stream::Image::PixelType pixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
         

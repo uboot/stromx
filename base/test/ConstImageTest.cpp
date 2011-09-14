@@ -29,8 +29,8 @@ namespace base
     {
         stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         image.save("ConstImageTest_testExecute.png");
     }

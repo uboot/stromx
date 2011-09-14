@@ -18,6 +18,9 @@
 #define STREAM_READACCESS_H
 
 #include "DataContainer.h"
+#include "Exception.h"
+
+#include "impl/ReadAccessImpl.h"
 
 #include <tr1/memory>
 
@@ -26,17 +29,26 @@ namespace stream
     class Data;
     class DataContainer;
     
-    namespace impl
-    {
-        class ReadAccessImpl;
-    }
-    
+    template<typename data_t = Data>
     class ReadAccess
     {
     public:
-        ReadAccess(DataContainer data);
+        ReadAccess(DataContainer data)
+          : m_impl(new impl::ReadAccessImpl(data))
+        {
+        }
         
-        const Data & operator()();
+        const data_t & operator()()
+        {
+            try
+            {
+                return dynamic_cast<const data_t &>((*m_impl)());
+            }
+            catch(std::bad_cast &)
+            {
+                throw BadCast();
+            }
+        }
         
     private:
         ReadAccess();

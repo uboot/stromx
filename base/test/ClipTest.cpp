@@ -34,8 +34,8 @@ namespace base
 
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
             
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image.height());
         
@@ -50,9 +50,9 @@ namespace base
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-        ReadAccess access(result);
+        ReadAccess<Image> access(result);
         
-        const Image& image = dynamic_cast<const Image&>(access());
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image.height());
         
@@ -67,9 +67,9 @@ namespace base
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
         stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-        ReadAccess access(result);
+        ReadAccess<Image> access(result);
         
-        const Image& image = dynamic_cast<const Image&>(access());
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.height());
     }

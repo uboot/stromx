@@ -19,6 +19,7 @@
 
 #include "DataContainer.h"
 #include "OperatorInfo.h"
+#include "Exception.h"
 
 #include <map>
 #include <string>
@@ -68,6 +69,20 @@ namespace stream
         const Status status();
         void setParameter(unsigned int id, const Data& value);
         const Data& getParameter(unsigned int id) const;
+        
+        template<typename data_t>
+        const data_t& getParameter(unsigned int id) const
+        {
+            try
+            {
+                return dynamic_cast<const data_t &>(getParameter(id));
+            }
+            catch(std::bad_cast &)
+            {
+                throw BadCast();
+            }
+        }
+        
         DataContainer getOutputData(const unsigned int id);
         void setInputData(const unsigned int id, DataContainer data);
         void clearOutputData(unsigned int id);

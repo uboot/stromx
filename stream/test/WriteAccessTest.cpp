@@ -19,7 +19,7 @@
 #include "TestData.h"
 
 #include <stream/DataContainer.h>
-#include <stream/WriteAccess.h>
+#include <stream/None.h>
 #include <stream/Exception.h>
 
 #include <cppunit/TestAssert.h>
@@ -36,17 +36,36 @@ namespace stream
         Data* data = new TestData;
         {
             DataContainer container(data);
-            WriteAccess access(container);
+            WriteAccess<> access(container);
             CPPUNIT_ASSERT_EQUAL(data, &access());
         }
         
         CPPUNIT_ASSERT(TestData::wasDestructed);  
     }
     
+    void WriteAccessTest::testWriteAccessCast()
+    {
+        Data* data = new TestData;
+        
+        DataContainer container(data);
+        WriteAccess<TestData> access(container);
+        CPPUNIT_ASSERT_NO_THROW(access());
+    }
+    
+    
+    void WriteAccessTest::testWriteAccessWrongCast()
+    {
+        Data* data = new None;
+        
+        DataContainer container(data);
+        WriteAccess<TestData> access(container);
+        CPPUNIT_ASSERT_THROW(access(), BadCast);
+    }
+    
     void WriteAccessTest::testWriteAccessEmpty()
     {
         DataContainer container;
-        CPPUNIT_ASSERT_THROW(WriteAccess access(container), WrongArgument);
+        CPPUNIT_ASSERT_THROW(WriteAccess<> access(container), WrongArgument);
     }
     
     void WriteAccessTest::testReleaseWriteAccess()
@@ -54,10 +73,10 @@ namespace stream
         Data* data = new TestData;
         DataContainer container(data);
         {
-            WriteAccess access(container);
+            WriteAccess<> access(container);
         }
         
-        WriteAccess access(container);
+        WriteAccess<> access(container);
         CPPUNIT_ASSERT_EQUAL(data, &access());
     }
     
@@ -67,14 +86,14 @@ namespace stream
         DataContainer container(m_data);
         
         {
-            boost::thread t(boost::bind(&WriteAccessTest::releaseDelayed, this, _1), WriteAccess(container));
+            boost::thread t(boost::bind(&WriteAccessTest::releaseDelayed, this, _1), WriteAccess<>(container));
         }
         
-        WriteAccess access(container);
+        WriteAccess<> access(container);
         CPPUNIT_ASSERT_EQUAL(m_data, &access());
     }
     
-    void WriteAccessTest::releaseDelayed(WriteAccess& access)
+    void WriteAccessTest::releaseDelayed(WriteAccess<>& access)
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
         CPPUNIT_ASSERT_EQUAL(m_data, &access());
@@ -82,14 +101,14 @@ namespace stream
         
     void WriteAccessTest::writeAccessInterrupt(DataContainer& container)
     {
-        CPPUNIT_ASSERT_THROW(WriteAccess access(container), Interrupt);
+        CPPUNIT_ASSERT_THROW(WriteAccess<> access(container), Interrupt);
     }
     
     void WriteAccessTest::testWriteAccessInterrupt()
     {
         {
             DataContainer container = DataContainer(new TestData());
-            WriteAccess access(container);
+            WriteAccess<> access(container);
             boost::thread t(boost::bind(&WriteAccessTest::writeAccessInterrupt, this, _1), container);
             
             t.interrupt();

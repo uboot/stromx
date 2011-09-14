@@ -31,10 +31,9 @@ set(SOURCES
     ../impl/InputNode.cpp
     InputNodeTest.cpp   
     ../Operator.cpp
-    ../ReadAccess.cpp
     ../impl/ReadAccessImpl.cpp
-    ReadAccessTest.cpp
     ../RecycleAccess.cpp
+    ReadAccessTest.cpp
     ../impl/RecycleAccessImpl.cpp
     RecycleAccessTest.cpp
     ../impl/ThreadImpl.cpp
@@ -52,7 +51,6 @@ set(SOURCES
     TestData.cpp
     ../Try.cpp
     TryTest.cpp
-    ../WriteAccess.cpp
     ../impl/WriteAccessImpl.cpp
     WriteAccessTest.cpp
     ../Stream.cpp

@@ -106,6 +106,14 @@ namespace stream
         {}
     };
     
+    class BadCast : public Exception
+    {
+    public:
+        BadCast(const std::string & message = "BadCast")
+          : Exception(message)
+        {}
+    };
+    
     class WrongState : public Exception
     {
     public:

@@ -36,8 +36,8 @@ namespace base
         
         stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
@@ -53,8 +53,8 @@ namespace base
         
         stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL(stream::Image::BAYERBG_8, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
@@ -70,8 +70,8 @@ namespace base
         
         stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());

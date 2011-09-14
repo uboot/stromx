@@ -35,8 +35,8 @@ namespace base
         boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
         
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         m_operator->clearOutputData(Trigger::OUTPUT);
         m_operator->setInputData(Trigger::INPUT, m_image);
@@ -61,8 +61,8 @@ namespace base
         m_operator->setParameter(Trigger::ACTIVE, Bool(false));
         
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
     }
     
     void TriggerTest::getOutputDataInterrupted()

@@ -56,10 +56,9 @@ namespace math
         Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
         
-        ReadAccess access(inputMapper.data());
-        const UInt32 & input = dynamic_cast<const UInt32 &>(access());
+        ReadAccess<UInt32> input(inputMapper.data());
         
-        Data* result = new UInt32((unsigned int)(input) + (unsigned int)(m_offset));
+        Data* result = new UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
         
         DataContainer outContainer(result);
        

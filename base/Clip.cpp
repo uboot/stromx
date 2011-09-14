@@ -77,8 +77,8 @@ namespace base
         provider.receiveInputData(inputDataMapper);
         
         DataContainer container = inputDataMapper.data();
-        WriteAccess access(container);
-        Image& image = dynamic_cast<Image&>(access());
+        WriteAccess<Image> access(container);
+        Image& image = access();
         
         unsigned int top = m_top;
         unsigned int left = m_left;

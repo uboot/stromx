@@ -44,10 +44,10 @@ namespace base
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            UInt32 index = ReadAccess<UInt32>(indexContainer)();
             CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
             
-            const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+            const Image & image = ReadAccess<Image>(imageContainer)();
             image.save("CameraTest_testExecuteSoftwareTrigger.png");
         }
         
@@ -59,7 +59,7 @@ namespace base
             m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            UInt32 index = ReadAccess<UInt32>(indexContainer)();
             CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
         }
         
@@ -74,7 +74,7 @@ namespace base
         {
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            UInt32 index = ReadAccess<UInt32>(indexContainer)();
             CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
         }
         
@@ -84,7 +84,7 @@ namespace base
         {
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
-            UInt32 index = dynamic_cast<const UInt32 &>(ReadAccess(indexContainer)());
+            UInt32 index = ReadAccess<UInt32>(indexContainer)();
             CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
         }
     }
@@ -94,7 +94,7 @@ namespace base
         m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::BAYERBG_8));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        const Image & image = ReadAccess<Image>(imageContainer)();
         
         CPPUNIT_ASSERT_EQUAL(image.pixelType(), stream::Image::BAYERBG_8);
         image.save("CameraTest_testAdjustPixelTypeBayerBg8.png");
@@ -108,7 +108,7 @@ namespace base
         m_operator->setParameter(Camera::TOP, UInt32(46));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        const Image & image = ReadAccess<Image>(imageContainer)();
         
         CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
         CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
@@ -121,7 +121,7 @@ namespace base
         m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        const Image & image = ReadAccess<Image>(imageContainer)();
         
         image.save("CameraTest_testAdjustExposure.png");
     }
@@ -134,7 +134,7 @@ namespace base
         m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-        const Image & image = dynamic_cast<const Image &>(ReadAccess(imageContainer)());
+        const Image & image = ReadAccess<Image>(imageContainer)();
         
         image.save("CameraTest_testAdjustWhiteBalance.png");
     }
