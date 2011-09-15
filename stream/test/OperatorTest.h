@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H
-#define STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H
+#ifndef STREAM_OPERATORTEST_H
+#define STREAM_OPERATORTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -24,15 +24,12 @@
 
 namespace stream
 {
-    namespace impl
-    {
-        class SynchronizedOperatorKernel;
-    }
+    class OperatorTester;
     class TestOperator;
 
-    class SynchronizedOperatorKernelTest : public CPPUNIT_NS :: TestFixture
+    class OperatorTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (SynchronizedOperatorKernelTest);
+        CPPUNIT_TEST_SUITE (OperatorTest);
         CPPUNIT_TEST (testSetInputData);
         CPPUNIT_TEST (testGetOutputData);
         CPPUNIT_TEST (testClearOutputData);
@@ -46,7 +43,7 @@ namespace stream
         CPPUNIT_TEST_SUITE_END ();
 
     public:
-        SynchronizedOperatorKernelTest() : m_operatorWrapper(0), m_testOperator(0) {}
+        OperatorTest() : m_operator(0), m_testOperator(0) {}
         
         void setUp();
         void tearDown();
@@ -69,10 +66,10 @@ namespace stream
         void getOutputDataWithInterrupt(const unsigned id);
         void setInputDataWithInterrupt(const unsigned int id);
         
-        impl::SynchronizedOperatorKernel* m_operatorWrapper;
+        OperatorTester* m_operator;
         TestOperator* m_testOperator;
         DataContainer m_container;
     };
 }
 
-#endif // STREAM_SYNCHRONIZEDOPERATORKERNELTEST_H
+#endif // STREAM_OPERATORTEST_H

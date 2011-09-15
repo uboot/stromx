@@ -25,12 +25,12 @@ set(SOURCES
     ../OperatorKernel.cpp
     TestOperator.cpp
     ../impl/SynchronizedOperatorKernel.cpp
-    SynchronizedOperatorKernelTest.cpp
+    ../Operator.cpp
+    OperatorTest.cpp
     ../impl/OutputNode.cpp
     OutputNodeTest.cpp
     ../impl/InputNode.cpp
-    InputNodeTest.cpp   
-    ../Operator.cpp
+    InputNodeTest.cpp
     ../impl/ReadAccessImpl.cpp
     ../RecycleAccess.cpp
     ReadAccessTest.cpp
