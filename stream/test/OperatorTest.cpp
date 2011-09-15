@@ -234,6 +234,16 @@ namespace stream
         CPPUNIT_ASSERT_THROW(m_operator->getParameter(-1), WrongParameterId);
     }
 
+    void OperatorTest::testGetParameterCast()
+    {
+        CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter<UInt32>(TestOperator::SLEEP_TIME));
+    }
+    
+    void OperatorTest::testGetParameterWrongCast()
+    {
+        CPPUNIT_ASSERT_THROW(m_operator->getParameter<UInt16>(TestOperator::SLEEP_TIME), BadCast);
+    }
+
     void OperatorTest::testSetParameter()
     {
         UInt32 value(2000);

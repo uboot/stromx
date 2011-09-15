@@ -37,6 +37,8 @@ namespace stream
         CPPUNIT_TEST (testActivate);
         CPPUNIT_TEST (testDeactivate);
         CPPUNIT_TEST (testGetParameter);
+        CPPUNIT_TEST (testGetParameterCast);
+        CPPUNIT_TEST (testGetParameterWrongCast);
         CPPUNIT_TEST (testSetParameter);
         CPPUNIT_TEST (testGetParameterStatusNone);
         CPPUNIT_TEST (testSetParameterStatusNone);
@@ -56,6 +58,8 @@ namespace stream
         void testActivate();
         void testDeactivate();
         void testGetParameter();
+        void testGetParameterCast();
+        void testGetParameterWrongCast();
         void testSetParameter();
         void testGetParameterStatusNone();
         void testSetParameterStatusNone();
