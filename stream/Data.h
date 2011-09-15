@@ -18,6 +18,9 @@
 #define STREAM_DATA_H
 
 #include "DataVariant.h"
+#include "Exception.h"
+
+#include <typeinfo>
 
 namespace stream
 {
@@ -43,6 +46,25 @@ namespace stream
     protected:
         Data() {} 
     };
+    
+    template<typename data_t>
+    data_t data_cast(Data & data)
+    {
+        try
+        {
+            return dynamic_cast<data_t>(data);
+        }
+        catch(std::bad_cast &)
+        {
+            throw BadCast();
+        }
+    }
+    
+    template<typename data_t>
+    data_t data_cast(Data * data)
+    {
+        return dynamic_cast<data_t>(data);
+    }
 }
 
 #endif // STREAM_DATA_H

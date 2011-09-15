@@ -10,9 +10,10 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.xml DESTINATION ${CMAKE_CURRENT_BIN
 
 set(SOURCES
     main.cpp
+    ../Data.cpp
+    DataTest.cpp
     ../impl/DataContainerImpl.cpp
     ../DataContainer.cpp
-    ../Data.cpp
     DataContainerTest.cpp
     ../DataVariant.cpp
     DataVariantTest.cpp
