@@ -41,6 +41,7 @@ set(SOURCES
     Factory.cpp
     Primitive.cpp
     Stream.cpp
+    Strom.cpp
     Thread.cpp
     Trigger.cpp
     Try.cpp

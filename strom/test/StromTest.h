@@ -14,40 +14,34 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_BASETEST_H
-#define BASE_BASETEST_H
+#ifndef STROM_STROMTEST_H
+#define STROM_STROMTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <strom/DataVariant.h>
 
 namespace strom
 {
     class Factory;
-}
-
-namespace base
-{
-    class Image;
-
-    class BaseTest : public CPPUNIT_NS :: TestFixture
+    
+    class StromTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (BaseTest);
-        CPPUNIT_TEST (testRegisterBase);
+        CPPUNIT_TEST_SUITE (StromTest);
+        CPPUNIT_TEST(testRegisterStrom);
         CPPUNIT_TEST_SUITE_END ();
 
-        public:
-            BaseTest() : m_factory(0) {}
+    public:
+        StromTest() {}
+        
+        void setUp();
+        void tearDown();
+        
+    protected:
+        void testRegisterStrom();
             
-            void setUp();
-            void tearDown();
-
-        protected:
-            void testRegisterBase();
-            
-        private:
-            strom::Factory* m_factory;
+    private:
+        strom::Factory* m_factory;
     };
 }
 
-#endif // BASE_BASETEST_H
+#endif // STROM_STROMTEST_H

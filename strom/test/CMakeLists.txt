@@ -56,6 +56,8 @@ set(SOURCES
     WriteAccessTest.cpp
     ../Stream.cpp
     StreamTest.cpp
+    ../Strom.cpp
+    StromTest.cpp
 )
 
 if(BUILD_XML_SUPPORT)

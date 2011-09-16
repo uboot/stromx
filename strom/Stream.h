@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_STROM_H
-#define STROM_STROM_H
+#ifndef STROM_STREAM_H
+#define STROM_STREAM_H
 
 #include <vector> 
 #include <string>
@@ -69,11 +69,5 @@ namespace strom
         Status m_status;
     };
 }
-    
-extern "C"
-{
-    void registerStream(strom::Registry* const registry);
-}
 
-
-#endif // STROM_STROM_H
+#endif // STROM_STREAM_H

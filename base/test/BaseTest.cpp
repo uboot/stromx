@@ -1,7 +1,7 @@
 #include "BaseTest.h"
 
 #include <strom/Factory.h>
-#include <strom/Stream.h>
+#include <strom/Strom.h>
 #include <strom/Operator.h>
 #include <strom/Data.h>
 
@@ -29,16 +29,6 @@ namespace base
         
         strom::Data* data = 0;
         CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Base", "Image"));
-        CPPUNIT_ASSERT(data);
-        delete data;
-    }
-
-    void BaseTest::testRegisterStream()
-    {
-        CPPUNIT_ASSERT_NO_THROW(registerStream(m_factory));
-        
-        strom::Data* data = 0;
-        CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Strom", "UInt32"));
         CPPUNIT_ASSERT(data);
         delete data;
     }

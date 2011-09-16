@@ -1,7 +1,7 @@
 /**
-\namespace stream
+\namespace strom
 \brief Core library
 
-\namespace stream::impl
+\namespace strom::impl
 \brief Implementation of stream
 */

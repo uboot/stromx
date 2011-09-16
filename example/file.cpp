@@ -17,6 +17,7 @@
 #include <strom/Factory.h>
 #include <strom/XmlReader.h>
 #include <strom/Stream.h>
+#include <strom/Strom.h>
 #include <strom/Operator.h>
 #include <strom/Primitive.h>
 #include <strom/ReadAccess.h>
@@ -31,7 +32,7 @@ int main (int argc, char* argv[])
    
     Factory* factory = new Factory;
     
-    registerStream(factory);
+    registerStrom(factory);
     registerBase(factory);
     
     Stream* strom = XmlReader(factory).read("file.xml");
