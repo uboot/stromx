@@ -9,8 +9,8 @@ add_executable(simple
 )
 
 target_link_libraries(simple
-    stream
-    stream_base
+    strom
+    strom_base
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -20,8 +20,8 @@ add_executable(file
 )
 
 target_link_libraries(file
-    stream
-    stream_base
+    strom
+    strom_base
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/operator.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -32,6 +32,6 @@ add_executable(operator
 )
 
 target_link_libraries(operator
-    stream
-    stream_base
+    strom
+    strom_base
 )

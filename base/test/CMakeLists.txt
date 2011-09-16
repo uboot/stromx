@@ -44,5 +44,5 @@ target_link_libraries(base_test
     ${CMAKE_THREAD_LIBS_INIT}
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
-    stream
+    strom
 )

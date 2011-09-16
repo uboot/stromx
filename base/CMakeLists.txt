@@ -36,16 +36,16 @@ set(SOURCES
 
 include_directories(${OpenCV_ROOT_DIR})
 
-add_library(stream_base SHARED ${SOURCES})
+add_library(strom_base SHARED ${SOURCES})
 
 set(VERSION_STRING "${BASE_VERSION_MAJOR}.${BASE_VERSION_MINOR}")
 
-set_target_properties(stream_base PROPERTIES
+set_target_properties(strom_base PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
 )
 
-target_link_libraries(stream_base
+target_link_libraries(strom_base
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
 )

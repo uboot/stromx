@@ -1,4 +1,4 @@
-project(stream_test)
+project(strom_test)
 
 include_directories(
     ../..
@@ -72,9 +72,9 @@ if(BUILD_XML_SUPPORT)
     )
 endif()
 
-add_executable(stream_test ${SOURCES})
+add_executable(strom_test ${SOURCES})
 
-target_link_libraries(stream_test
+target_link_libraries(strom_test
     ${Boost_LIBRARIES}
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
@@ -82,6 +82,6 @@ target_link_libraries(stream_test
 )
 
 if(BUILD_XML_SUPPORT)
-    target_link_libraries(stream_test ${XERCES_LIBRARIES})
+    target_link_libraries(strom_test ${XERCES_LIBRARIES})
 endif()
 
