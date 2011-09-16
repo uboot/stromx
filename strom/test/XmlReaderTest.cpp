@@ -36,7 +36,7 @@ namespace strom
     
     void XmlReaderTest::testRead()
     {
-        Stream* strom = XmlReader(m_factory).read("strom.xml");
+        Stream* stream = XmlReader(m_factory).read("stream.xml");
     }
 
     void XmlReaderTest::tearDown()
