@@ -1,14 +1,14 @@
 #include "Add.h"
 
-#include <stream/Primitive.h>
-#include <stream/OperatorException.h>
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/Id2DataComposite.h>
-#include <stream/ReadAccess.h>
+#include <strom/Primitive.h>
+#include <strom/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/Id2DataComposite.h>
+#include <strom/ReadAccess.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace math
 {
@@ -66,7 +66,7 @@ namespace math
         provider.sendOutputData(output);
     }
     
-    const std::vector<const stream::Description*> Add::setupInputs()
+    const std::vector<const strom::Description*> Add::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -90,11 +90,11 @@ namespace math
     
     const std::vector<const Parameter*> Add::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         Parameter* offset = new Parameter(OFFSET, DataVariant::UINT_32);
         offset->setName("Offset");
-        offset->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        offset->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     
         return parameters;

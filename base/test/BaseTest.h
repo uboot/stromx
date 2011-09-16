@@ -19,9 +19,9 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <stream/DataVariant.h>
+#include <strom/DataVariant.h>
 
-namespace stream
+namespace strom
 {
     class Factory;
 }
@@ -48,7 +48,7 @@ namespace base
             void testRegisterStream();
             
         private:
-            stream::Factory* m_factory;
+            strom::Factory* m_factory;
     };
 }
 

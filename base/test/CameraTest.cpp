@@ -3,19 +3,19 @@
 #include <base/Camera.h>
 #include <base/Image.h>
 
-#include <stream/DataContainer.h>
-#include <stream/Trigger.h>
-#include <stream/ReadAccess.h>
-#include <stream/Enum.h>
+#include <strom/DataContainer.h>
+#include <strom/Trigger.h>
+#include <strom/ReadAccess.h>
+#include <strom/Enum.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 #include <boost/thread.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::CameraTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -23,7 +23,7 @@ namespace base
     {
         Image image("lenna.jpg");
         
-        m_operator = new stream::OperatorTester(new Camera());
+        m_operator = new strom::OperatorTester(new Camera());
         m_operator->initialize();
         m_operator->setParameter(Camera::IMAGE, image);
         m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
@@ -41,7 +41,7 @@ namespace base
         
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
-            m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
+            m_operator->setParameter(Camera::TRIGGER, strom::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
             UInt32 index = ReadAccess<UInt32>(indexContainer)();
@@ -56,7 +56,7 @@ namespace base
         
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
-            m_operator->setParameter(Camera::TRIGGER, stream::Trigger());
+            m_operator->setParameter(Camera::TRIGGER, strom::Trigger());
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
             UInt32 index = ReadAccess<UInt32>(indexContainer)();
@@ -91,12 +91,12 @@ namespace base
     
     void CameraTest::testAdjustPixelType()
     {
-        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::BAYERBG_8));
+        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(strom::Image::BAYERBG_8));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
         const Image & image = ReadAccess<Image>(imageContainer)();
         
-        CPPUNIT_ASSERT_EQUAL(image.pixelType(), stream::Image::BAYERBG_8);
+        CPPUNIT_ASSERT_EQUAL(image.pixelType(), strom::Image::BAYERBG_8);
         image.save("CameraTest_testAdjustPixelTypeBayerBg8.png");
     }
 
@@ -118,7 +118,7 @@ namespace base
     void CameraTest::testAdjustExposure()
     {
         m_operator->setParameter(Camera::EXPOSURE, UInt32(5));
-        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
+        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(strom::Image::RGB_24));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
         const Image & image = ReadAccess<Image>(imageContainer)();
@@ -131,7 +131,7 @@ namespace base
         m_operator->setParameter(Camera::WHITE_BALANCE_RED, Double(2.0));
         m_operator->setParameter(Camera::WHITE_BALANCE_GREEN, Double(1.0));
         m_operator->setParameter(Camera::WHITE_BALANCE_BLUE, Double(0.0));
-        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(stream::Image::RGB_24));
+        m_operator->setParameter(Camera::PIXEL_TYPE, Enum(strom::Image::RGB_24));
         m_operator->activate();
         DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
         const Image & image = ReadAccess<Image>(imageContainer)();

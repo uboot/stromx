@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#include <stream/Stream.h>
-#include <stream/Operator.h>
-#include <stream/Thread.h>
-#include <stream/ReadAccess.h>
+#include <strom/Stream.h>
+#include <strom/Operator.h>
+#include <strom/Thread.h>
+#include <strom/ReadAccess.h>
 
 #include <base/Counter.h>
 #include <base/PeriodicDelay.h>
@@ -27,26 +27,26 @@
 
 int main (int argc, char* argv[])
 {
-    using namespace stream;
+    using namespace strom;
     
-    Stream stream;
+    Stream strom;
     
     Operator* source = new Operator(new base::Counter);
     source->initialize();
-    stream.addOperator(source);
+    strom.addOperator(source);
     
     Operator* timer = new Operator(new base::PeriodicDelay);
     timer->initialize();
-    stream.addOperator(timer);
+    strom.addOperator(timer);
     
     timer->setParameter(base::PeriodicDelay::PERIOD, UInt32(1000));
     
-    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    strom.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
-    Thread* thread = stream.addThread();
+    Thread* thread = strom.addThread();
     thread->addNode(timer, base::PeriodicDelay::INPUT);
     
-    stream.start();
+    strom.start();
     
     for(unsigned int i = 0; i < 5; ++i)
     {
@@ -57,6 +57,6 @@ int main (int argc, char* argv[])
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
     }
     
-    stream.stop();
-    stream.join();
+    strom.stop();
+    strom.join();
 }

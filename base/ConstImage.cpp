@@ -4,12 +4,12 @@
 #include "Image.h"
 #include "Utilities.h"
 
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/OperatorException.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -22,7 +22,7 @@ namespace base
       : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
         m_image(0)
     {
-        m_image = new Image(0, 0, stream::Image::MONO_8);
+        m_image = new Image(0, 0, strom::Image::MONO_8);
     }
     
     ConstImage::~ConstImage()
@@ -42,7 +42,7 @@ namespace base
                 
                 try
                 {
-                    const stream::Image& image = dynamic_cast<const stream::Image&>(value);
+                    const strom::Image& image = dynamic_cast<const strom::Image&>(value);
                     m_image = new Image(image);
                 }
                 catch(std::bad_cast&)
@@ -91,7 +91,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector<const stream::Description*> ConstImage::setupInputs()
+    const std::vector<const strom::Description*> ConstImage::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -111,10 +111,10 @@ namespace base
     
     const std::vector<const Parameter*> ConstImage::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
-        image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        image->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
                                     
         return parameters;

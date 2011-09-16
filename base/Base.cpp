@@ -1,7 +1,7 @@
 #include "Base.h"
 
-#include <stream/Registry.h>
-#include <stream/Exception.h>
+#include <strom/Registry.h>
+#include <strom/Exception.h>
 
 #include "Image.h"
 #include "AdjustRgbChannels.h"
@@ -14,10 +14,10 @@
 #include "Queue.h"
 #include "Trigger.h"
 
-void registerBase(stream::Registry*const registry)
+void registerBase(strom::Registry*const registry)
 {
     if(! registry)
-        throw stream::WrongArgument("Passed null pointer.");
+        throw strom::WrongArgument("Passed null pointer.");
     
     using namespace base;
     

@@ -3,15 +3,15 @@
 #include "Config.h"
 #include "Utilities.h"
 
-#include <stream/Exception.h>
+#include <strom/Exception.h>
 
 namespace base
 {
     const std::string Image::TYPE = "Image";
     const std::string Image::PACKAGE = PACKAGE_NAME;
-    const stream::Version Image::VERSION = stream::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
+    const strom::Version Image::VERSION = strom::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
     
-    Image::Image(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
+    Image::Image(const unsigned int width, const unsigned int height, const strom::Image::PixelType pixelType)
     {
         try
         {
@@ -22,11 +22,11 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemory("Failed to create new image.");
+            throw strom::OutOfMemory("Failed to create new image.");
         }
     }
     
-    Image::Image(const stream::Image& image)
+    Image::Image(const strom::Image& image)
     {
         try
         {
@@ -38,7 +38,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemory("Failed to create new image.");
+            throw strom::OutOfMemory("Failed to create new image.");
         }
         
         cv::Mat cvInImage = getOpenCvMat(image);
@@ -50,8 +50,8 @@ namespace base
       : m_image(0)
     {
         setSize(0);
-        initialize(0, 0, 0, 0, stream::Image::NONE);
-        setVariant(stream::DataVariant::IMAGE);
+        initialize(0, 0, 0, 0, strom::Image::NONE);
+        setVariant(strom::DataVariant::IMAGE);
     }
     
     Image::Image(const std::string& filename)
@@ -66,12 +66,12 @@ namespace base
         {
             m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
             
-            getDataFromCvImage(stream::Image::MONO_8);
-            setVariant(stream::DataVariant::IMAGE);
+            getDataFromCvImage(strom::Image::MONO_8);
+            setVariant(strom::DataVariant::IMAGE);
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemory("Failed to allocate image.");
+            throw strom::OutOfMemory("Failed to allocate image.");
         }
     } 
     
@@ -84,9 +84,9 @@ namespace base
             save(filepath);
             return filename;
         }
-        catch(stream::Exception&)
+        catch(strom::Exception&)
         {
-            throw stream::SerializationError(*this, name, path);
+            throw strom::SerializationError(*this, name, path);
         }
     }
 
@@ -97,9 +97,9 @@ namespace base
             std::string filepath = path + data;
             open(filepath);
         }
-        catch(stream::Exception&)
+        catch(strom::Exception&)
         {
-            throw stream::DeserializationError(*this, data, path);
+            throw strom::DeserializationError(*this, data, path);
         }
     }
 
@@ -111,7 +111,7 @@ namespace base
         m_image = cvLoadImage(filename.c_str());
         
         if(! m_image)
-            throw stream::FileAccessFailed(filename, "Failed to load image.");
+            throw strom::FileAccessFailed(filename, "Failed to load image.");
             
         getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
         setVariant(dataTypeFromPixelType(pixelType()));
@@ -124,7 +124,7 @@ namespace base
         initialize(m_image->width, m_image->height, m_image->widthStep, (uint8_t*)(m_image->imageData), pixelType);
     }
     
-    void Image::resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType)
+    void Image::resize(const unsigned int width, const unsigned int height, const strom::Image::PixelType pixelType)
     {
         if(m_image)
             cvReleaseImage(&m_image);
@@ -137,7 +137,7 @@ namespace base
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemory("Failed to create new image.");
+            throw strom::OutOfMemory("Failed to create new image.");
         }
     }
     
@@ -151,11 +151,11 @@ namespace base
             m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
             
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
-            setVariant(stream::DataVariant::MONO_8_IMAGE);
+            setVariant(strom::DataVariant::MONO_8_IMAGE);
         }
         catch(cv::Exception& e)
         {
-            throw stream::OutOfMemory("Failed to allocate image.");
+            throw strom::OutOfMemory("Failed to allocate image.");
         }
     }
     
@@ -165,7 +165,7 @@ namespace base
         
         switch(pixelType())
         {
-        case stream::Image::RGB_24:
+        case strom::Image::RGB_24:
         {
             Image tempImage(width(), height(), BGR_24);
             cv::Mat cvTempImage(tempImage.m_image);
@@ -173,21 +173,21 @@ namespace base
             cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
                   
             if(! cv::imwrite(filename, tempImage.m_image))
-                throw stream::FileAccessFailed(filename, "Failed to save image.");
+                throw strom::FileAccessFailed(filename, "Failed to save image.");
                 
             break;
         }
-        case stream::Image::BGR_24:
-        case stream::Image::MONO_8:
-        case stream::Image::BAYERBG_8:
-        case stream::Image::BAYERGB_8:
+        case strom::Image::BGR_24:
+        case strom::Image::MONO_8:
+        case strom::Image::BAYERBG_8:
+        case strom::Image::BAYERGB_8:
         {
             if(! cv::imwrite(filename, inImage))
-                throw stream::FileAccessFailed(filename, "Failed to save image.");
+                throw strom::FileAccessFailed(filename, "Failed to save image.");
             break;
         }
         default:
-            throw stream::WrongArgument("Unknown pixel type.");    
+            throw strom::WrongArgument("Unknown pixel type.");    
         }         
     }
     
@@ -196,28 +196,28 @@ namespace base
         cvReleaseImage(&m_image);
     }
 
-    const stream::DataVariant Image::dataTypeFromPixelType(const stream::Image::PixelType pixelType)
+    const strom::DataVariant Image::dataTypeFromPixelType(const strom::Image::PixelType pixelType)
     {
         switch(pixelType)
         {
-        case stream::Image::NONE:
-            return stream::DataVariant(stream::DataVariant::IMAGE);
-        case stream::Image::MONO_8:
-            return stream::DataVariant(stream::DataVariant::MONO_8_IMAGE);
-        case stream::Image::BAYERBG_8:
-            return stream::DataVariant(stream::DataVariant::BAYERBG_8_IMAGE);
-        case stream::Image::BAYERGB_8:
-            return stream::DataVariant(stream::DataVariant::BAYERGB_8_IMAGE);
-        case stream::Image::RGB_24:
-            return stream::DataVariant(stream::DataVariant::RGB_24_IMAGE);
-        case stream::Image::BGR_24:
-            return stream::DataVariant(stream::DataVariant::BGR_24_IMAGE);
+        case strom::Image::NONE:
+            return strom::DataVariant(strom::DataVariant::IMAGE);
+        case strom::Image::MONO_8:
+            return strom::DataVariant(strom::DataVariant::MONO_8_IMAGE);
+        case strom::Image::BAYERBG_8:
+            return strom::DataVariant(strom::DataVariant::BAYERBG_8_IMAGE);
+        case strom::Image::BAYERGB_8:
+            return strom::DataVariant(strom::DataVariant::BAYERGB_8_IMAGE);
+        case strom::Image::RGB_24:
+            return strom::DataVariant(strom::DataVariant::RGB_24_IMAGE);
+        case strom::Image::BGR_24:
+            return strom::DataVariant(strom::DataVariant::BGR_24_IMAGE);
         default:
-            throw stream::WrongArgument("Unknown pixel type.");  
+            throw strom::WrongArgument("Unknown pixel type.");  
         }
     }
 
-    const stream::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
+    const strom::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
     {
         switch(depth)
         {
@@ -225,20 +225,20 @@ namespace base
             switch(numChannels)
             {
             case 1:
-                return stream::Image::MONO_8;
+                return strom::Image::MONO_8;
             case 3:
-                return stream::Image::BGR_24;
+                return strom::Image::BGR_24;
             default:
-                throw stream::WrongArgument("Unknown combination of depth and number of channels.");
+                throw strom::WrongArgument("Unknown combination of depth and number of channels.");
             }
         case 16:
             switch(numChannels)
             {
             default:
-                throw stream::WrongArgument("Unknown combination of depth and number of channels.");      
+                throw strom::WrongArgument("Unknown combination of depth and number of channels.");      
             }
         default:
-            throw stream::WrongArgument("Unknown combination of depth and number of channels.");    
+            throw strom::WrongArgument("Unknown combination of depth and number of channels.");    
         }         
     }
 }

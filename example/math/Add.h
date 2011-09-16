@@ -17,17 +17,17 @@
 #ifndef MATH_ADD_H
 #define MATH_ADD_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Primitive.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Primitive.h>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
 }
 
 namespace math
 {
-    class Add : public stream::OperatorKernel
+    class Add : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -48,20 +48,20 @@ namespace math
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id);
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(unsigned int id);
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;                         
+        static const strom::Version VERSION;                         
         
-        stream::UInt32 m_offset;
+        strom::UInt32 m_offset;
     };
 }
 

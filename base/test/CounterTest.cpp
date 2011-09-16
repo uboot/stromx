@@ -2,15 +2,15 @@
 
 #include <cppunit/TestAssert.h>
 
-#include <stream/OperatorTester.h>
-#include <stream/DataContainer.h>
-#include <stream/ReadAccess.h>
+#include <strom/OperatorTester.h>
+#include <strom/DataContainer.h>
+#include <strom/ReadAccess.h>
 
 #include <base/Counter.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::CounterTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {

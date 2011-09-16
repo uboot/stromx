@@ -17,14 +17,14 @@
 #ifndef BASE_CLIP_H
 #define BASE_CLIP_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Primitive.h>
-#include <stream/RecycleAccess.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Primitive.h>
+#include <strom/RecycleAccess.h>
 
 
 namespace base
 {
-    class Clip : public stream::OperatorKernel
+    class Clip : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -49,27 +49,27 @@ namespace base
         Clip();
         
         virtual OperatorKernel* const clone() const { return new Clip; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id);
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(unsigned int id);
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const strom::Version VERSION;
         
         void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
                               unsigned int & left, unsigned int & top,
                               unsigned int & width, unsigned int & height);                           
         
-        stream::UInt32 m_top;
-        stream::UInt32 m_left;
-        stream::UInt32 m_width;
-        stream::UInt32 m_height;
+        strom::UInt32 m_top;
+        strom::UInt32 m_left;
+        strom::UInt32 m_width;
+        strom::UInt32 m_height;
     };
 }
 

@@ -17,20 +17,20 @@
 #ifndef BASE_TIMEPERIOD_H
 #define BASE_TIMEPERIOD_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Image.h>
-#include <stream/Primitive.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Image.h>
+#include <strom/Primitive.h>
 
 #include <boost/thread/thread.hpp>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
 }
 
 namespace base
 {
-    class PeriodicDelay : public stream::OperatorKernel
+    class PeriodicDelay : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -51,21 +51,21 @@ namespace base
         PeriodicDelay();
         
         virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id);
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(unsigned int id);
+        virtual void execute(strom::DataProvider& provider);
         virtual void activate();
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION; 
+        static const strom::Version VERSION; 
         
-        stream::UInt32 m_period;
+        strom::UInt32 m_period;
         boost::system_time m_nextTrigger;
     };
 }

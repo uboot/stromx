@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#include <stream/Factory.h>
-#include <stream/XmlReader.h>
-#include <stream/Stream.h>
-#include <stream/Operator.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/Factory.h>
+#include <strom/XmlReader.h>
+#include <strom/Stream.h>
+#include <strom/Operator.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
 #include <base/Base.h>
 
@@ -27,18 +27,18 @@
 
 int main (int argc, char* argv[])
 {
-    using namespace stream;
+    using namespace strom;
    
     Factory* factory = new Factory;
     
     registerStream(factory);
     registerBase(factory);
     
-    Stream* stream = XmlReader(factory).read("file.xml");
+    Stream* strom = XmlReader(factory).read("file.xml");
     
-    stream->start();
+    strom->start();
     
-    Operator* timer = stream->operators()[1];
+    Operator* timer = strom->operators()[1];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
@@ -49,8 +49,8 @@ int main (int argc, char* argv[])
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
     }
     
-    stream->stop();
-    stream->join();
+    strom->stop();
+    strom->join();
     
-    delete stream;
+    delete strom;
 }

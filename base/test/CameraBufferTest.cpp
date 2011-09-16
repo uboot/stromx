@@ -4,12 +4,12 @@
 
 #include <base/impl/CameraBuffer.h>
 
-#include <stream/ReadAccess.h>
-#include <stream/OperatorTester.h>
+#include <strom/ReadAccess.h>
+#include <strom/OperatorTester.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::CameraBufferTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -17,7 +17,7 @@ namespace base
     
     void CameraBufferTest::setUp()
     {
-        m_operator = new stream::OperatorTester(new CameraBuffer());
+        m_operator = new strom::OperatorTester(new CameraBuffer());
         m_operator->initialize();
         m_operator->setParameter(CameraBuffer::NUM_BUFFERS, UInt32(1));
         m_operator->activate();

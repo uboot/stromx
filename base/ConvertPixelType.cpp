@@ -4,16 +4,16 @@
 #include "Image.h"
 #include "Utilities.h"
 
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/Id2DataComposite.h>
-#include <stream/OperatorException.h>
-#include <stream/EnumParameter.h>
-#include <stream/ReadAccess.h>
-#include <stream/WriteAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/Id2DataComposite.h>
+#include <strom/OperatorException.h>
+#include <strom/EnumParameter.h>
+#include <strom/ReadAccess.h>
+#include <strom/WriteAccess.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -24,7 +24,7 @@ namespace base
     
     ConvertPixelType::ConvertPixelType()
       : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-        m_pixelType(stream::Image::MONO_8)
+        m_pixelType(strom::Image::MONO_8)
     {
     }
 
@@ -70,7 +70,7 @@ namespace base
         const Image& srcImage = src();
         Image& destImage = dest();
         
-        stream::Image::PixelType pixelType = stream::Image::PixelType((unsigned int)(m_pixelType));
+        strom::Image::PixelType pixelType = strom::Image::PixelType((unsigned int)(m_pixelType));
         
         unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
         unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
@@ -80,8 +80,8 @@ namespace base
         
         destImage.initialize(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
         
-        if((srcImage.pixelType() == stream::Image::RGB_24 || srcImage.pixelType() == stream::Image::BGR_24)
-           && (pixelType == stream::Image::BAYERBG_8 || pixelType == stream::Image::BAYERGB_8))
+        if((srcImage.pixelType() == strom::Image::RGB_24 || srcImage.pixelType() == strom::Image::BGR_24)
+           && (pixelType == strom::Image::BAYERBG_8 || pixelType == strom::Image::BAYERGB_8))
         {
             // this case is not handled by OpenCV
             rgbToBayer(srcImage, destImage);
@@ -96,7 +96,7 @@ namespace base
         provider.sendOutputData( outputMapper);
     }
     
-    const std::vector<const stream::Description*> ConvertPixelType::setupInputs()
+    const std::vector<const strom::Description*> ConvertPixelType::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -124,109 +124,109 @@ namespace base
     
     const std::vector<const Parameter*> ConvertPixelType::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
         pixelType->setName("Pixel type");
-        pixelType->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
-        pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::RGB_24), "RGB image 24-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BGR_24), "BGR image 24-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
+        pixelType->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
+        pixelType->add(EnumDescription(Enum(strom::Image::MONO_8), "Mono image 8-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::RGB_24), "RGB image 24-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BGR_24), "BGR image 24-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
         parameters.push_back(pixelType);
                                     
         return parameters;
     }
     
-    const int ConvertPixelType::getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType)
+    const int ConvertPixelType::getCvConversionCode(const strom::Image::PixelType inType, const strom::Image::PixelType outType)
     {
         switch(inType)
         {
-        case stream::Image::MONO_8:
+        case strom::Image::MONO_8:
             switch(outType)
             {
-            case stream::Image::RGB_24:
+            case strom::Image::RGB_24:
                 return CV_GRAY2RGB;
-            case stream::Image::BGR_24:
+            case strom::Image::BGR_24:
                 return CV_GRAY2BGR;
             default:
-                throw stream::WrongArgument("Unknown conversion.");   
+                throw strom::WrongArgument("Unknown conversion.");   
             }
-        case stream::Image::RGB_24:
+        case strom::Image::RGB_24:
             switch(outType)
             {
-            case stream::Image::MONO_8:
+            case strom::Image::MONO_8:
                 return CV_RGB2GRAY;
-            case stream::Image::BGR_24:
+            case strom::Image::BGR_24:
                 return CV_RGB2BGR;
             default:
-                throw stream::WrongArgument("Unknown conversion.");   
+                throw strom::WrongArgument("Unknown conversion.");   
             }
-        case stream::Image::BGR_24:
+        case strom::Image::BGR_24:
             switch(outType)
             {
-            case stream::Image::MONO_8:
+            case strom::Image::MONO_8:
                 return CV_BGR2GRAY;
-            case stream::Image::RGB_24:
+            case strom::Image::RGB_24:
                 return CV_BGR2RGB;
             default:
-                throw stream::WrongArgument("Unknown conversion.");   
+                throw strom::WrongArgument("Unknown conversion.");   
             }
-        case stream::Image::BAYERBG_8:
+        case strom::Image::BAYERBG_8:
             switch(outType)
             {
-            case stream::Image::RGB_24:
+            case strom::Image::RGB_24:
                 return CV_BayerBG2RGB;
-            case stream::Image::BGR_24:
+            case strom::Image::BGR_24:
                 return CV_BayerBG2BGR;
             default:
-                throw stream::WrongArgument("Unknown conversion.");   
+                throw strom::WrongArgument("Unknown conversion.");   
             }
-        case stream::Image::BAYERGB_8:
+        case strom::Image::BAYERGB_8:
             switch(outType)
             {
-            case stream::Image::RGB_24:
+            case strom::Image::RGB_24:
                 return CV_BayerGB2RGB;
-            case stream::Image::BGR_24:
+            case strom::Image::BGR_24:
                 return CV_BayerGB2BGR;
             default:
-                throw stream::WrongArgument("Unknown conversion.");   
+                throw strom::WrongArgument("Unknown conversion.");   
             }
         default:
-            throw stream::WrongArgument("Unknown conversion.");
+            throw strom::WrongArgument("Unknown conversion.");
         }         
     }
     
-    const unsigned int ConvertPixelType::getDestPixelSize(const stream::Image::PixelType pixelType)
+    const unsigned int ConvertPixelType::getDestPixelSize(const strom::Image::PixelType pixelType)
     {
         switch(pixelType)
         {
-        case stream::Image::MONO_8:
-        case stream::Image::MONO_16:
-        case stream::Image::BAYERBG_8:
-        case stream::Image::BAYERGB_8:
+        case strom::Image::MONO_8:
+        case strom::Image::MONO_16:
+        case strom::Image::BAYERBG_8:
+        case strom::Image::BAYERGB_8:
             return 1;
-        case stream::Image::BAYERBG_16:
-        case stream::Image::BAYERGB_16:
+        case strom::Image::BAYERBG_16:
+        case strom::Image::BAYERGB_16:
             return 2;
-        case stream::Image::RGB_24:
-        case stream::Image::BGR_24:
+        case strom::Image::RGB_24:
+        case strom::Image::BGR_24:
             return 3;
-        case stream::Image::RGB_48:
-        case stream::Image::BGR_48:
+        case strom::Image::RGB_48:
+        case strom::Image::BGR_48:
             return 6;
         default:
-            throw stream::WrongArgument("Unknown pixel type.");    
+            throw strom::WrongArgument("Unknown pixel type.");    
         }  
     }
     
-    void ConvertPixelType::rgbToBayer(const stream::Image& inImage, stream::Image& outImage)
+    void ConvertPixelType::rgbToBayer(const strom::Image& inImage, strom::Image& outImage)
     {
-        if(inImage.pixelSize() != stream::Image::RGB_24
-           && outImage.pixelType() != stream::Image::BAYERBG_8)
+        if(inImage.pixelSize() != strom::Image::RGB_24
+           && outImage.pixelType() != strom::Image::BAYERBG_8)
         {
-            throw stream::WrongArgument("Unknown pixel type.");    
+            throw strom::WrongArgument("Unknown pixel type.");    
         }
         
         const uint8_t* inLine = inImage.data();
@@ -269,7 +269,7 @@ namespace base
         }
     }
     
-    void ConvertPixelType::openCvConversion(const stream::Image& inImage, stream::Image& outImage)
+    void ConvertPixelType::openCvConversion(const strom::Image& inImage, strom::Image& outImage)
     {
         cv::Mat inCvImage = getOpenCvMat(inImage);
         cv::Mat outCvImage = getOpenCvMat(outImage);

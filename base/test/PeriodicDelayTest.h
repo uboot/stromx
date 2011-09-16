@@ -20,9 +20,9 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stream/DataContainer.h>
+#include <strom/DataContainer.h>
 
-namespace stream
+namespace strom
 {
     class OperatorTester;
     class DataContainer;
@@ -50,8 +50,8 @@ namespace base
         private:
             void getOutputDataInterrupted();
             
-            stream::OperatorTester* m_operator;
-            stream::DataContainer m_image;
+            strom::OperatorTester* m_operator;
+            strom::DataContainer m_image;
     };
 }
 

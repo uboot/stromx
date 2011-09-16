@@ -20,7 +20,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
     class OperatorTester;
@@ -54,7 +54,7 @@ namespace base
             void testAdjustWhiteBalance();
             
         private:
-            stream::OperatorTester* m_operator;
+            strom::OperatorTester* m_operator;
     };
 }
 
