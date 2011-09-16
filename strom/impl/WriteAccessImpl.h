@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_WRITEACCESSIMPL_H
-#define STREAM_IMPL_WRITEACCESSIMPL_H
+#ifndef STROM_IMPL_WRITEACCESSIMPL_H
+#define STROM_IMPL_WRITEACCESSIMPL_H
 
 namespace strom
 {
@@ -38,4 +38,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_WRITEACCESSIMPL_H
+#endif // STROM_IMPL_WRITEACCESSIMPL_H

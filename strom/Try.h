@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_TRY_H
-#define STREAM_TRY_H
+#ifndef STROM_TRY_H
+#define STROM_TRY_H
 
 #include "Id2DataMapper.h"
 
@@ -38,4 +38,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_TRY_H
+#endif // STROM_TRY_H

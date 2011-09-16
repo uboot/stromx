@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_NETWORKTEST_H
-#define STREAM_NETWORKTEST_H
+#ifndef STROM_NETWORKTEST_H
+#define STROM_NETWORKTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -61,4 +61,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_NETWORKTEST_H
+#endif // STROM_NETWORKTEST_H

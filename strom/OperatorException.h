@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATOREXCEPTI0N_H
-#define STREAM_OPERATOREXCEPTI0N_H
+#ifndef STROM_OPERATOREXCEPTI0N_H
+#define STROM_OPERATOREXCEPTI0N_H
 
 #include "Exception.h"
 
@@ -106,4 +106,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OPERATOREXCEPTI0N_H
+#endif // STROM_OPERATOREXCEPTI0N_H

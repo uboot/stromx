@@ -22,5 +22,5 @@ namespace strom
 {
     const std::string None::TYPE = "None";
     const std::string None::PACKAGE = PACKAGE_NAME;
-    const Version None::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
+    const Version None::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
 }

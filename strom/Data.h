@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATA_H
-#define STREAM_DATA_H
+#ifndef STROM_DATA_H
+#define STROM_DATA_H
 
 #include "DataVariant.h"
 #include "Exception.h"
@@ -67,4 +67,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_DATA_H
+#endif // STROM_DATA_H

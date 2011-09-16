@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_IMPL_ID2DATAMAP_H
-#define STREAM_IMPL_ID2DATAMAP_H
+#ifndef STROM_IMPL_ID2DATAMAP_H
+#define STROM_IMPL_ID2DATAMAP_H
 
 
 #include "../Description.h"
@@ -46,4 +46,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_ID2DATAMAP_H
+#endif // STROM_IMPL_ID2DATAMAP_H

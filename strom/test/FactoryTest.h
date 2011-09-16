@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_FACTORYTEST_H
-#define STREAM_FACTORYTEST_H
+#ifndef STROM_FACTORYTEST_H
+#define STROM_FACTORYTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -50,4 +50,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_FACTORYTEST_H
+#endif // STROM_FACTORYTEST_H

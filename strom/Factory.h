@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_FACTORY_H
-#define STREAM_FACTORY_H
+#ifndef STROM_FACTORY_H
+#define STROM_FACTORY_H
 
 #include <string>
 #include <vector>
@@ -43,4 +43,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_FACTORY_H
+#endif // STROM_FACTORY_H

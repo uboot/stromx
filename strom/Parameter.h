@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_PARAMETER_H
-#define STREAM_PARAMETER_H
+#ifndef STROM_PARAMETER_H
+#define STROM_PARAMETER_H
 
 #include "Description.h"
 
@@ -48,4 +48,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_PARAMETER_H
+#endif // STROM_PARAMETER_H

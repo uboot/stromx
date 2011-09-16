@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_READACCESSIMPL_H
-#define STREAM_IMPL_READACCESSIMPL_H
+#ifndef STROM_IMPL_READACCESSIMPL_H
+#define STROM_IMPL_READACCESSIMPL_H
 
 namespace strom
 {    
@@ -38,4 +38,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_READACCESSIMPL_H
+#endif // STROM_IMPL_READACCESSIMPL_H

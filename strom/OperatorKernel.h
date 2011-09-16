@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATORKERNEL_H
-#define STREAM_OPERATORKERNEL_H
+#ifndef STROM_OPERATORKERNEL_H
+#define STROM_OPERATORKERNEL_H
 
 #include "OperatorInfo.h"
 
@@ -91,4 +91,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OPERATORKERNEL_H
+#endif // STROM_OPERATORKERNEL_H

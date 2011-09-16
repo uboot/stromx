@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_RECYCLER_H
-#define STREAM_RECYCLER_H
+#ifndef STROM_RECYCLER_H
+#define STROM_RECYCLER_H
 
 namespace strom
 {
@@ -31,4 +31,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_RECYCLER_H
+#endif // STROM_RECYCLER_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_TRIGGER_H
-#define STREAM_TRIGGER_H
+#ifndef STROM_TRIGGER_H
+#define STROM_TRIGGER_H
 
 #include "Data.h"
 
@@ -41,4 +41,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_TRIGGER_H
+#endif // STROM_TRIGGER_H

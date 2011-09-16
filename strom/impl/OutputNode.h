@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_IMPL_OUTPUTNODE_H
-#define STREAM_IMPL_OUTPUTNODE_H
+#ifndef STROM_IMPL_OUTPUTNODE_H
+#define STROM_IMPL_OUTPUTNODE_H
 
 #include <boost/thread/mutex.hpp>
 #include <set>
@@ -54,4 +54,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_OUTPUTNODE_H
+#endif // STROM_IMPL_OUTPUTNODE_H

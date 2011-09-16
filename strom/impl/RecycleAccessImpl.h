@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_RECYCLEACCESSIMPL_H
-#define STREAM_IMPL_RECYCLEACCESSIMPL_H
+#ifndef STROM_IMPL_RECYCLEACCESSIMPL_H
+#define STROM_IMPL_RECYCLEACCESSIMPL_H
 
 #include "../Recycler.h"
 
@@ -60,4 +60,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_RECYCLEACCESSIMPL_H
+#endif // STROM_IMPL_RECYCLEACCESSIMPL_H

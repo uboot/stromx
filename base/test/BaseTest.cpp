@@ -38,7 +38,7 @@ namespace base
         CPPUNIT_ASSERT_NO_THROW(registerStream(m_factory));
         
         strom::Data* data = 0;
-        CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Stream", "UInt32"));
+        CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("STROM_VERSION_MINOR", "UInt32"));
         CPPUNIT_ASSERT(data);
         delete data;
     }

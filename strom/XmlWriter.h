@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_XMLWRITER_H
-#define STREAM_XMLWRITER_H
+#ifndef STROM_XMLWRITER_H
+#define STROM_XMLWRITER_H
 
 #include <string>
 
@@ -26,8 +26,8 @@ namespace strom
     class XmlWriter
     {
     public:
-        void write(const std::string& filename, const Stream& strom);
+        void write(const std::string& filename, const Stream& stream);
     };
 }
 
-#endif // STREAM_XMLWRITER_H
+#endif // STROM_XMLWRITER_H

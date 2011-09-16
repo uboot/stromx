@@ -1,7 +1,7 @@
 project(stream)
 
-set (STREAM_VERSION_MAJOR 0)
-set (STREAM_VERSION_MINOR 1)
+set (STROM_VERSION_MAJOR 0)
+set (STROM_VERSION_MINOR 1)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -56,7 +56,7 @@ endif()
 
 add_library(stream SHARED ${SOURCES})
 
-set(VERSION_STRING "${STREAM_VERSION_MAJOR}.${STREAM_VERSION_MINOR}")
+set(VERSION_STRING "${STROM_VERSION_MAJOR}.${STROM_VERSION_MINOR}")
 
 set_target_properties(stream PROPERTIES
     VERSION ${VERSION_STRING}

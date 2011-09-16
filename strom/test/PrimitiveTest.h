@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_PRIMITIVETEST_H
-#define STREAM_PRIMITIVETEST_H
+#ifndef STROM_PRIMITIVETEST_H
+#define STROM_PRIMITIVETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -53,4 +53,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_PRIMITIVETEST_H
+#endif // STROM_PRIMITIVETEST_H

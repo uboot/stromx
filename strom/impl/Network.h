@@ -15,8 +15,8 @@
 */
 
 
-#ifndef STREAM_IMPL_NETWORK_H
-#define STREAM_IMPL_NETWORK_H
+#ifndef STROM_IMPL_NETWORK_H
+#define STROM_IMPL_NETWORK_H
 
 #include <string>
 #include <vector>
@@ -66,4 +66,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_NETWORK_H
+#endif // STROM_IMPL_NETWORK_H

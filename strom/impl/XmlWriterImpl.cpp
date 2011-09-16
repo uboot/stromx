@@ -250,14 +250,14 @@ namespace strom
             }
         }
     
-        void XmlWriterImpl::write(const std::string& filename, const Stream& strom)
+        void XmlWriterImpl::write(const std::string& filename, const Stream& stream)
         {
             if (filename.empty())
             {
                 throw WrongArgument("Invalid file name.");
             }
             
-            m_stream = &strom;
+            m_stream = &stream;
             m_filename = filename;
             
             try

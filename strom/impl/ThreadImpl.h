@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_THREADIMPL_H
-#define STREAM_IMPL_THREADIMPL_H
+#ifndef STROM_IMPL_THREADIMPL_H
+#define STROM_IMPL_THREADIMPL_H
 
 #include <vector>
 #include <string>
@@ -63,4 +63,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_THREADIMPL_H
+#endif // STROM_IMPL_THREADIMPL_H

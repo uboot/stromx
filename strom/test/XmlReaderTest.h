@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_XMLREADERTEST_H
-#define STREAM_XMLREADERTEST_H
+#ifndef STROM_XMLREADERTEST_H
+#define STROM_XMLREADERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -44,4 +44,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_XMLREADERTEST_H
+#endif // STROM_XMLREADERTEST_H

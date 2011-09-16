@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_REGISTRY_H
-#define STREAM_REGISTRY_H
+#ifndef STROM_REGISTRY_H
+#define STROM_REGISTRY_H
 
 namespace strom
 {
@@ -30,4 +30,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_REGISTRY_H
+#endif // STROM_REGISTRY_H

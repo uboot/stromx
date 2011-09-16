@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_ID2DATACOMPOSITE_H
-#define STREAM_ID2DATACOMPOSITE_H
+#ifndef STROM_ID2DATACOMPOSITE_H
+#define STROM_ID2DATACOMPOSITE_H
 
 #include "Id2DataMapper.h"
 
@@ -56,4 +56,4 @@ namespace strom
 
 }
 
-#endif // STREAM_ID2DATACOMPOSITE_H
+#endif // STROM_ID2DATACOMPOSITE_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATAVARIANT_H
-#define STREAM_DATAVARIANT_H
+#ifndef STROM_DATAVARIANT_H
+#define STROM_DATAVARIANT_H
 
 #include <string>
 #include "Version.h"
@@ -99,4 +99,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_DATAVARIANT_H
+#endif // STROM_DATAVARIANT_H

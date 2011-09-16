@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_OPERATORTESTER_H
-#define STREAM_OPERATORTESTER_H
+#ifndef STROM_OPERATORTESTER_H
+#define STROM_OPERATORTESTER_H
 
 #include "Operator.h"
 
@@ -31,4 +31,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OPERATORTESTER_H
+#endif // STROM_OPERATORTESTER_H

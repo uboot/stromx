@@ -94,12 +94,12 @@ namespace strom
                 m_stream = new Stream();
                 
                 DOMDocument* doc = parser->getDocument();
-                DOMElement* strom = doc->getDocumentElement();
+                DOMElement* stream = doc->getDocumentElement();
                 
-                Xml2Str name(strom->getAttribute(Str2Xml("name")));
+                Xml2Str name(stream->getAttribute(Str2Xml("name")));
                 m_stream->setName(std::string(name));
                 
-                DOMNodeList* operators = strom->getElementsByTagName(Str2Xml("Operator"));
+                DOMNodeList* operators = stream->getElementsByTagName(Str2Xml("Operator"));
                 XMLSize_t numOperators = operators->getLength();
                 
                 // read the operators
@@ -116,7 +116,7 @@ namespace strom
                     readOperatorInputs(op);
                 }
                 
-                DOMNodeList* threads = strom->getElementsByTagName(Str2Xml("Thread"));
+                DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
                 XMLSize_t numThreads = threads->getLength();
                 
                 for(unsigned int i = 0; i < numThreads; ++i)

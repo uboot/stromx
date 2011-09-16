@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_XMLUTILITIESTEST_H
-#define STREAM_XMLUTILITIESTEST_H
+#ifndef STROM_XMLUTILITIESTEST_H
+#define STROM_XMLUTILITIESTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -38,4 +38,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_XMLUTILITIESTEST_H
+#endif // STROM_XMLUTILITIESTEST_H

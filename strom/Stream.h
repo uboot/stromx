@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_STREAM_H
-#define STREAM_STREAM_H
+#ifndef STROM_STROM_H
+#define STROM_STROM_H
 
 #include <vector> 
 #include <string>
@@ -76,4 +76,4 @@ extern "C"
 }
 
 
-#endif // STREAM_STREAM_H
+#endif // STROM_STROM_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_NONE_H
-#define STREAM_NONE_H
+#ifndef STROM_NONE_H
+#define STROM_NONE_H
 
 #include "Data.h"
 
@@ -41,4 +41,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_NONE_H
+#endif // STROM_NONE_H

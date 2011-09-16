@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_OPERATORTEST_H
-#define STREAM_OPERATORTEST_H
+#ifndef STROM_OPERATORTEST_H
+#define STROM_OPERATORTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -76,4 +76,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OPERATORTEST_H
+#endif // STROM_OPERATORTEST_H

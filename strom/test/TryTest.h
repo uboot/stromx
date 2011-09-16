@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_TRYTEST_H
-#define STREAM_TRYTEST_H
+#ifndef STROM_TRYTEST_H
+#define STROM_TRYTEST_H
 
 #include <strom/DataContainer.h>
 
@@ -56,4 +56,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_TRYTEST_H
+#endif // STROM_TRYTEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_XMLUTILITES_H
-#define STREAM_IMPL_XMLUTILITES_H
+#ifndef STROM_IMPL_XMLUTILITES_H
+#define STROM_IMPL_XMLUTILITES_H
 
 #include "../Exception.h"
 
@@ -65,4 +65,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_XMLUTILITES_H
+#endif // STROM_IMPL_XMLUTILITES_H

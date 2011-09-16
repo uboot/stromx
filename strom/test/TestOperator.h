@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_TESTOPERATOR_H
-#define STREAM_TESTOPERATOR_H
+#ifndef STROM_TESTOPERATOR_H
+#define STROM_TESTOPERATOR_H
 
 #include <strom/OperatorKernel.h>
 #include <strom/Primitive.h>
@@ -59,4 +59,4 @@ namespace strom
 }
 
 
-#endif // STREAM_TESTOPERATOR_H
+#endif // STROM_TESTOPERATOR_H

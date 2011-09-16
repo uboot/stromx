@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_XMLWRITERIMPL_H
-#define STREAM_XMLWRITERIMPL_H
+#ifndef STROM_XMLWRITERIMPL_H
+#define STROM_XMLWRITERIMPL_H
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
@@ -35,7 +35,7 @@ namespace strom
         public:
             XmlWriterImpl();
             ~XmlWriterImpl() {};
-            void write(const std::string & filename, const Stream& strom);
+            void write(const std::string & filename, const Stream& stream);
             
         private:
             const unsigned int translateOperatorPointerToID(const Operator* const op) const;
@@ -55,4 +55,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_XMLWRITERIMPL_H
+#endif // STROM_XMLWRITERIMPL_H

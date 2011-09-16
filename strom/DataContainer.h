@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_DATACONTAINER_H
-#define STREAM_DATACONTAINER_H
+#ifndef STROM_DATACONTAINER_H
+#define STROM_DATACONTAINER_H
 
 #include <tr1/memory>
 #include <ostream>
@@ -59,4 +59,4 @@ namespace strom
     std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
-#endif // STREAM_DATACONTAINER_H
+#endif // STROM_DATACONTAINER_H

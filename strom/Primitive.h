@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_PRIMITIVE_H
-#define STREAM_PRIMITIVE_H
+#ifndef STROM_PRIMITIVE_H
+#define STROM_PRIMITIVE_H
 
 #include "Description.h"
 #include "Data.h"
@@ -94,4 +94,4 @@ namespace strom
     typedef Primitive<double, double> Double;
 }
 
-#endif // STREAM_PRIMITIVE_H
+#endif // STROM_PRIMITIVE_H

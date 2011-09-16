@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_THREADTEST_H
-#define STREAM_THREADTEST_H
+#ifndef STROM_THREADTEST_H
+#define STROM_THREADTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -57,4 +57,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_THREADTEST_H
+#endif // STROM_THREADTEST_H

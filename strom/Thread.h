@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_THREAD_H
-#define STREAM_THREAD_H
+#ifndef STROM_THREAD_H
+#define STROM_THREAD_H
 
 #include "Node.h"
 
@@ -69,4 +69,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_THREAD_H
+#endif // STROM_THREAD_H

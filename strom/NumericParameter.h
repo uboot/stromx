@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_NUMERICPARAMETER_H
-#define STREAM_NUMERICPARAMETER_H
+#ifndef STROM_NUMERICPARAMETER_H
+#define STROM_NUMERICPARAMETER_H
 
 #include "Parameter.h"
 
@@ -60,4 +60,4 @@ namespace strom
 }
 
 
-#endif // STREAM_NUMERICPARAMETER_H
+#endif // STROM_NUMERICPARAMETER_H

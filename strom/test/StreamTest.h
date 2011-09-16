@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_STREAMTEST_H
-#define STREAM_STREAMTEST_H
+#ifndef STROM_STREAMTEST_H
+#define STROM_STREAMTEST_H
 
 #include <vector>
 
@@ -50,4 +50,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_STREAMTEST_H 
+#endif // STROM_STREAMTEST_H 

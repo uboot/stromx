@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_IMPL_INPUTNODE_H
-#define STREAM_IMPL_INPUTNODE_H
+#ifndef STROM_IMPL_INPUTNODE_H
+#define STROM_IMPL_INPUTNODE_H
 
 namespace strom
 {
@@ -47,4 +47,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_INPUTNODE_H
+#endif // STROM_IMPL_INPUTNODE_H

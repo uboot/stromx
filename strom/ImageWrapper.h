@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_IMAGEWRAPPER_H
-#define STREAM_IMAGEWRAPPER_H
+#ifndef STROM_IMAGEWRAPPER_H
+#define STROM_IMAGEWRAPPER_H
 
 #include "Image.h"
 
@@ -80,4 +80,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_IMAGEWRAPPER_H
+#endif // STROM_IMAGEWRAPPER_H

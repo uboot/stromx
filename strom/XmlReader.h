@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_XMLREADER_H
-#define STREAM_XMLREADER_H
+#ifndef STROM_XMLREADER_H
+#define STROM_XMLREADER_H
 
 #include <string>
 
@@ -38,4 +38,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_XMLREADER_H
+#endif // STROM_XMLREADER_H

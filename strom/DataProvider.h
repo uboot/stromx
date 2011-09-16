@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATAPROVIDER_H
-#define STREAM_DATAPROVIDER_H
+#ifndef STROM_DATAPROVIDER_H
+#define STROM_DATAPROVIDER_H
 
 namespace strom
 {
@@ -36,4 +36,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_DATAPROVIDER_H
+#endif // STROM_DATAPROVIDER_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_IMAGE_H
-#define STREAM_IMAGE_H
+#ifndef STROM_IMAGE_H
+#define STROM_IMAGE_H
 
 #include <stdint.h>
 #include "Data.h"
@@ -63,4 +63,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_IMAGE_H
+#endif // STROM_IMAGE_H

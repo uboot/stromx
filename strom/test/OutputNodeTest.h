@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_OUTPUTNODETEST_H
-#define STREAM_OUTPUTNODETEST_H
+#ifndef STROM_OUTPUTNODETEST_H
+#define STROM_OUTPUTNODETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -59,4 +59,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OUTPUTNODETEST_H
+#endif // STROM_OUTPUTNODETEST_H

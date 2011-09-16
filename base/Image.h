@@ -1,5 +1,5 @@
-#ifndef STREAM_IMAGEIMPL_H
-#define STREAM_IMAGEIMPL_H
+#ifndef STROM_IMAGEIMPL_H
+#define STROM_IMAGEIMPL_H
 
 #include <strom/ImageWrapper.h>
 
@@ -47,4 +47,4 @@ namespace base
     };
 }
 
-#endif // STREAM_IMAGEIMPL_H
+#endif // STROM_IMAGEIMPL_H

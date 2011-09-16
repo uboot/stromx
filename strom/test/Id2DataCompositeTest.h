@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_ID2DATACOMPOSITETEST_H
-#define STREAM_ID2DATACOMPOSITETEST_H
+#ifndef STROM_ID2DATACOMPOSITETEST_H
+#define STROM_ID2DATACOMPOSITETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -55,4 +55,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_ID2DATACOMPOSITETEST_H
+#endif // STROM_ID2DATACOMPOSITETEST_H

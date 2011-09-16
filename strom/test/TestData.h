@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_TESTDATA_H
-#define STREAM_TESTDATA_H
+#ifndef STROM_TESTDATA_H
+#define STROM_TESTDATA_H
 
 #include <strom/Data.h>
 
@@ -44,4 +44,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_TESTDATA_H
+#endif // STROM_TESTDATA_H

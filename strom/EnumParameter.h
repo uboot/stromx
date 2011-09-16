@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_ENUMPARAMETER_H
-#define STREAM_ENUMPARAMETER_H
+#ifndef STROM_ENUMPARAMETER_H
+#define STROM_ENUMPARAMETER_H
 
 #include <vector>
 #include "Enum.h"
@@ -56,4 +56,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_ENUMPARAMETER_H
+#endif // STROM_ENUMPARAMETER_H

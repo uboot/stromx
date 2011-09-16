@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_WRITEACCESS_H
-#define STREAM_WRITEACCESS_H
+#ifndef STROM_WRITEACCESS_H
+#define STROM_WRITEACCESS_H
 
 #include "DataContainer.h"
 #include "Exception.h"
@@ -57,4 +57,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_WRITEACCESS_H
+#endif // STROM_WRITEACCESS_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_READACCESSTEST_H
-#define STREAM_READACCESSTEST_H
+#ifndef STROM_READACCESSTEST_H
+#define STROM_READACCESSTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -62,4 +62,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_READACCESSTEST_H
+#endif // STROM_READACCESSTEST_H

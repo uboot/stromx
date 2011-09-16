@@ -19,10 +19,10 @@
 
 namespace strom
 {
-    void XmlWriter::write(const std::string& filename, const Stream& strom)
+    void XmlWriter::write(const std::string& filename, const Stream& stream)
     {
         impl::XmlWriterImpl impl;
         
-        impl.write(filename, strom);
+        impl.write(filename, stream);
     }
 }

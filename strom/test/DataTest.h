@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_DATATEST_H
-#define STREAM_DATATEST_H
+#ifndef STROM_DATATEST_H
+#define STROM_DATATEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -43,4 +43,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_DATATEST_H
+#endif // STROM_DATATEST_H

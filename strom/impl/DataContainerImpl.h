@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_IMPL_DATACONTAINERIMPL_H
-#define STREAM_IMPL_DATACONTAINERIMPL_H
+#ifndef STROM_IMPL_DATACONTAINERIMPL_H
+#define STROM_IMPL_DATACONTAINERIMPL_H
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
@@ -63,4 +63,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_IMPL_DATACONTAINERIMPL_H
+#endif // STROM_IMPL_DATACONTAINERIMPL_H

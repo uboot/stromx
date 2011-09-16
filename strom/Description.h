@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DESCRIPTOR_H
-#define STREAM_DESCRIPTOR_H
+#ifndef STROM_DESCRIPTOR_H
+#define STROM_DESCRIPTOR_H
 
 #include <string>
 #include "DataVariant.h"
@@ -45,4 +45,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_DESCRIPTOR_H
+#endif // STROM_DESCRIPTOR_H

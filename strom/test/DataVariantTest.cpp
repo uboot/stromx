@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATAVARIANTTEST_H
-#define STREAM_DATAVARIANTTEST_H
+#ifndef STROM_DATAVARIANTTEST_H
+#define STROM_DATAVARIANTTEST_H
 
 #include "DataVariantTest.h"
 
@@ -56,4 +56,4 @@ namespace strom
     }
 }
 
-#endif // STREAM_DATAVARIANTTEST_H
+#endif // STROM_DATAVARIANTTEST_H

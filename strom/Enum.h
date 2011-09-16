@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_ENUM_H
-#define STREAM_ENUM_H
+#ifndef STROM_ENUM_H
+#define STROM_ENUM_H
 
 #include "Primitive.h"
 
@@ -35,4 +35,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_ENUM_H
+#endif // STROM_ENUM_H

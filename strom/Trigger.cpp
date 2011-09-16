@@ -22,5 +22,5 @@ namespace strom
 {
     const std::string Trigger::TYPE = "Trigger";
     const std::string Trigger::PACKAGE = PACKAGE_NAME;
-    const Version Trigger::VERSION = Version(STREAM_VERSION_MAJOR, STREAM_VERSION_MINOR);
+    const Version Trigger::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
 }

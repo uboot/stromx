@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_DATACONTAINERTEST_H
-#define STREAM_DATACONTAINERTEST_H
+#ifndef STROM_DATACONTAINERTEST_H
+#define STROM_DATACONTAINERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -49,4 +49,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_DATACONTAINERTEST_H
+#endif // STROM_DATACONTAINERTEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_RECYCLEACCESSTEST_H
-#define STREAM_RECYCLEACCESSTEST_H
+#ifndef STROM_RECYCLEACCESSTEST_H
+#define STROM_RECYCLEACCESSTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -70,4 +70,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_RECYCLEACCESSTEST_H
+#endif // STROM_RECYCLEACCESSTEST_H

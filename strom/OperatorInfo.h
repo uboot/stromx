@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_OPERATORINFO_H
-#define STREAM_OPERATORINFO_H
+#ifndef STROM_OPERATORINFO_H
+#define STROM_OPERATORINFO_H
 
 #include "Parameter.h"
 #include "Version.h"
@@ -37,4 +37,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_OPERATORINFO_H
+#endif // STROM_OPERATORINFO_H

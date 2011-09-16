@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_NODE_H
-#define STREAM_NODE_H
+#ifndef STROM_NODE_H
+#define STROM_NODE_H
 
 namespace strom
 {
@@ -41,4 +41,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_NODE_H
+#endif // STROM_NODE_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STREAM_RECYCLEACCESS_H
-#define STREAM_RECYCLEACCESS_H
+#ifndef STROM_RECYCLEACCESS_H
+#define STROM_RECYCLEACCESS_H
 
 #include "DataContainer.h"
 #include "Exception.h"
@@ -49,4 +49,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_RECYCLEACCESS_H
+#endif // STROM_RECYCLEACCESS_H

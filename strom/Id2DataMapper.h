@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_ID2DATAMAPPER_H
-#define STREAM_ID2DATAMAPPER_H
+#ifndef STROM_ID2DATAMAPPER_H
+#define STROM_ID2DATAMAPPER_H
 
 namespace strom
 {
@@ -36,4 +36,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_ID2DATAMAPPER_H
+#endif // STROM_ID2DATAMAPPER_H

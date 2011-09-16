@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STREAM_INPUTNODETEST_H
-#define STREAM_INPUTNODETEST_H
+#ifndef STROM_INPUTNODETEST_H
+#define STROM_INPUTNODETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -68,4 +68,4 @@ namespace strom
     };
 }
 
-#endif // STREAM_INPUTNODETEST_H
+#endif // STROM_INPUTNODETEST_H
