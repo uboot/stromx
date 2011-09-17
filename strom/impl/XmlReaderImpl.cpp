@@ -27,6 +27,7 @@
 #include "XmlUtilities.h"
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
@@ -39,7 +40,74 @@ namespace strom
 {
     namespace impl
     {
+        const std::string XmlReaderImpl::DTD =
+" \
+<?xml version='1.0' encoding='UTF-8' ?> \
+\
+<!DOCTYPE  Stream [ \
+    <!ELEMENT Stream (Operator*, Thread*)> \
+    <!ATTLIST Stream \
+        name CDATA #IMPLIED \
+    > \
+    \
+    <!ELEMENT Thread (InputNode*)> \
+    <!ATTLIST Thread \
+        name CDATA #IMPLIED \
+    > \
+    \
+    <!ELEMENT Operator (Parameter*, Input*)> \
+    <!ATTLIST Operator \
+        id NMTOKEN #REQUIRED \
+        package CDATA #REQUIRED \
+        type CDATA #REQUIRED \
+        name CDATA #IMPLIED \
+        version CDATA #IMPLIED \
+    > \
+    \
+    <!ELEMENT Parameter (Data)> \
+    <!ATTLIST Parameter \
+        id NMTOKEN #REQUIRED \
+    > \
+    \
+    <!ELEMENT Data (#PCDATA)> \
+    <!ATTLIST Data \
+        type CDATA #REQUIRED \
+        package CDATA #REQUIRED \
+        version CDATA #IMPLIED \
+    > \
+    \
+    <!ELEMENT Input EMPTY> \
+    <!ATTLIST Input \
+        id NMTOKEN #REQUIRED \
+        operator NMTOKEN #REQUIRED \
+        output NMTOKEN #REQUIRED \
+    > \
+    \
+    <!ELEMENT InputNode EMPTY> \
+    <!ATTLIST InputNode \
+        operator NMTOKEN #REQUIRED \
+        input NMTOKEN #REQUIRED \
+    > \
+]> \
+";
         using namespace xercesc;
+        
+        namespace
+        {
+            class XercesErrorHandler : public HandlerBase
+            {
+            public:
+                XercesErrorHandler(const std::string & filename) : m_filename(filename) {}
+                
+                virtual void error (const SAXParseException &exc)
+                {
+//                     throw FileAccessFailed(m_filename, "XML file is not valid.");
+                }
+                
+            private:
+                std::string m_filename;
+            };
+        }
 
         Stream*const XmlReaderImpl::read(const std::string & filename)
         {    
@@ -58,7 +126,17 @@ namespace strom
                 throw ex;
             }
         
+            ErrorHandler* errHandler = (ErrorHandler*) new XercesErrorHandler(filename);
+            
             XercesDOMParser* parser = new XercesDOMParser();
+            
+//             MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "Id");
+//             if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
+//             {
+//                 throw InternalError("Failed to load DTD.");
+//             }
+
+            parser->setErrorHandler(errHandler);
             parser->setValidationScheme(XercesDOMParser::Val_Always);
             parser->setDoNamespaces(true);    // optional
 
@@ -94,6 +172,10 @@ namespace strom
                 m_stream = new Stream();
                 
                 DOMDocument* doc = parser->getDocument();
+                
+                if(! doc)
+                    throw FileAccessFailed(filename, "Failed to read file.");
+                
                 DOMElement* stream = doc->getDocumentElement();
                 
                 Xml2Str name(stream->getAttribute(Str2Xml("name")));
@@ -134,7 +216,7 @@ namespace strom
             catch(strom::Exception& e)
             {
                 delete m_stream;
-                throw FileAccessFailed(filename, e.what());
+                throw;
             }
             catch(boost::bad_lexical_cast e)
             {

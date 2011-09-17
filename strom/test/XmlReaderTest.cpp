@@ -38,6 +38,16 @@ namespace strom
     {
         Stream* stream = XmlReader(m_factory).read("stream.xml");
     }
+    
+    void XmlReaderTest::testReadWrongFile()
+    {
+        CPPUNIT_ASSERT_THROW(XmlReader(m_factory).read("wrongfile.xml"), FileAccessFailed);
+    }
+    
+    void XmlReaderTest::testReadInvalidFile()
+    {
+        CPPUNIT_ASSERT_THROW(XmlReader(m_factory).read("invalid.xml"), FileAccessFailed);
+    }
 
     void XmlReaderTest::tearDown()
     {

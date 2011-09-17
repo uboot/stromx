@@ -28,6 +28,8 @@ namespace strom
     {
         CPPUNIT_TEST_SUITE (XmlReaderTest);
         CPPUNIT_TEST(testRead);
+        CPPUNIT_TEST(testReadWrongFile);
+        CPPUNIT_TEST(testReadInvalidFile);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -38,6 +40,8 @@ namespace strom
 
     protected:
         void testRead();
+        void testReadWrongFile();
+        void testReadInvalidFile();
             
     private:
         Factory* m_factory;

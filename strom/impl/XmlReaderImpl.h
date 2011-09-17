@@ -45,7 +45,7 @@ namespace strom
             Stream* const read(const std::string & filename);
             
         private:
-            std::string m_currentPath;
+            static const std::string DTD;
             
             void readOperator(xercesc::DOMElement* const opElement);
             void readOperatorInputs(xercesc::DOMElement* const opElement);
@@ -55,6 +55,7 @@ namespace strom
             void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
             Data* readData(xercesc::DOMElement* const dataElement);
             
+            std::string m_currentPath;
             const Factory* m_factory;
             Stream* m_stream;
             std::map<unsigned int, Operator*> m_id2OperatorMap;
