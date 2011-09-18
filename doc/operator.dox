@@ -6,7 +6,7 @@ This page introduces the user to the topic.
 - \ref operator_implement
 - \ref operator_deploy
 
-\section operator_declare Declaring the package
+\section operator_declare Declaring the operator
 
 \code
 #ifndef MATH_ADD_H
@@ -63,7 +63,7 @@ namespace math
 #endif // MATH_ADD_H
 \endcode
 
-\section operator_implement Implementing the package
+\section operator_implement Implementing the operator
 
 \code
 #include "Add.h"
@@ -170,7 +170,7 @@ namespace math
 } 
 \endcode
 
-\section operator_deploy Deploying the package
+\section operator_deploy Deploying the operator
 
 \code
 #include <strom/Factory.h>
