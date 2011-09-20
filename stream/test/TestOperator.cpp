@@ -67,7 +67,7 @@ namespace stream
         }
     }
 
-    const Data& TestOperator::getParameter(unsigned int id)
+    const Data& TestOperator::getParameter(const unsigned int id) const
     {
         switch(id)
         {

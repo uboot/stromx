@@ -40,7 +40,7 @@ namespace math
         }
     }
 
-    const Data& Add::getParameter(unsigned int id)
+    const Data& Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {

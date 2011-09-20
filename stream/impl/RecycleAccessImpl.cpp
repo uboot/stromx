@@ -26,12 +26,12 @@ namespace stream
 {
     namespace impl
     {
-        RecycleAccessImpl::RecycleAccessImpl(DataContainer& data)
+        RecycleAccessImpl::RecycleAccessImpl(const DataContainer& data)
         {
             add(data);
         }
         
-        void RecycleAccessImpl::add(DataContainer& data)
+        void RecycleAccessImpl::add(const DataContainer& data)
         {
             if(data.empty())
                 throw WrongArgument("Data container is empty.");

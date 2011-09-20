@@ -17,15 +17,14 @@
 #ifndef STREAM_PRIMITIVE_H
 #define STREAM_PRIMITIVE_H
 
-#include "Description.h"
-#include "Data.h"
-#include "Version.h"
-
 #define __STDC_LIMIT_MACROS
-#include <stdint.h>
-#include <float.h>
 
 #include <boost/lexical_cast.hpp>
+#include <stdint.h>
+#include <float.h>
+#include "Data.h"
+#include "Description.h"
+#include "Version.h"
 
 namespace stream
 {

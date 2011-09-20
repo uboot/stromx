@@ -17,10 +17,9 @@
 #ifndef STREAM_OPERATORINFO_H
 #define STREAM_OPERATORINFO_H
 
+#include <vector>
 #include "Parameter.h"
 #include "Version.h"
-
-#include <vector>
 
 namespace stream
 {

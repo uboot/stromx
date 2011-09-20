@@ -19,8 +19,8 @@
 
 namespace stream
 {
-    class DataContainer;
     class Data;
+    class DataContainer;
     
     namespace impl
     {

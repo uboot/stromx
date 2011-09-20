@@ -47,7 +47,7 @@ namespace base
         }
     }
 
-    const Data& ConvertPixelType::getParameter(unsigned int id)
+    const Data& ConvertPixelType::getParameter(const unsigned int id) const
     {
         switch(id)
         {

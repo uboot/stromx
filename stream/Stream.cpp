@@ -14,19 +14,16 @@
 *  limitations under the License.
 */
 
-#include "Stream.h"
-
-#include "Exception.h"
-#include "Thread.h"
-#include "Registry.h"
-#include "Primitive.h"
-#include "Enum.h"
-#include "None.h"
-
-#include "impl/Network.h"
-#include "impl/InputNode.h"
-
 #include "boost/assert.hpp"
+#include "Enum.h"
+#include "Exception.h"
+#include "impl/InputNode.h"
+#include "impl/Network.h"
+#include "None.h"
+#include "Primitive.h"
+#include "Registry.h"
+#include "Stream.h"
+#include "Thread.h"
 
 namespace stream
 {

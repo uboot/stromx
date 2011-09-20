@@ -17,10 +17,9 @@
 #ifndef STREAM_THREAD_H
 #define STREAM_THREAD_H
 
-#include "Node.h"
-
 #include <string>
 #include <vector>
+#include "Node.h"
 
 namespace stream
 {

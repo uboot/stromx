@@ -70,7 +70,7 @@ namespace base
         {
         }
 
-        const Data& CameraBuffer::getParameter(const unsigned int id)
+        const Data& CameraBuffer::getParameter(const unsigned int id) const
         {
             switch(id)
             {

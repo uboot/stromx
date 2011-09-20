@@ -17,26 +17,25 @@
 #ifndef STREAM_WRITEACCESS_H
 #define STREAM_WRITEACCESS_H
 
-#include "DataContainer.h"
-
 #include <tr1/memory>
+#include "DataContainer.h"
 
 namespace stream
 {
-     namespace impl
+    namespace impl
     {
         class WriteAccessImpl;
     }
     
-    class DataContainer;
     class Data;
+    class DataContainer;
     
     class WriteAccess
     {
     public:
         WriteAccess(DataContainer data);
         
-        Data& operator()();
+        Data& operator()() const;
         
     private:
         WriteAccess();

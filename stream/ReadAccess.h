@@ -17,9 +17,8 @@
 #ifndef STREAM_READACCESS_H
 #define STREAM_READACCESS_H
 
-#include "DataContainer.h"
-
 #include <tr1/memory>
+#include "DataContainer.h"
 
 namespace stream
 {

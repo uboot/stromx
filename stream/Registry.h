@@ -19,8 +19,8 @@
 
 namespace stream
 {
-    class OperatorKernel;
     class Data;
+    class OperatorKernel;
     
     class Registry
     {

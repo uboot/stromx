@@ -47,7 +47,7 @@ namespace base
         }
     }
 
-    const Data& Trigger::getParameter(unsigned int id)
+    const Data& Trigger::getParameter(const unsigned int id) const
     {
         switch(id)
         {

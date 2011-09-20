@@ -49,7 +49,7 @@ namespace math
         
         virtual OperatorKernel* const clone() const { return new Add; }
         virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id);
+        virtual const stream::Data& getParameter(const unsigned int id) const;
         virtual void execute(stream::DataProvider& provider);
         
     private:

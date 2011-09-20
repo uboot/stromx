@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "WriteAccess.h"
-
 #include "impl/WriteAccessImpl.h"
+#include "WriteAccess.h"
 
 namespace stream
 {
@@ -25,7 +24,7 @@ namespace stream
     {
     }
 
-    Data& WriteAccess::operator()()
+    Data& WriteAccess::operator()() const
     {
         return (*m_impl)();
     }

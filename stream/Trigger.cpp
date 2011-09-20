@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Trigger.h"
-
 #include "Config.h"
+#include "Trigger.h"
 
 namespace stream
 {

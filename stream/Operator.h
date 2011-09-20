@@ -17,37 +17,36 @@
 #ifndef STREAM_OPERATOR_H
 #define STREAM_OPERATOR_H
 
+#include <map>
+#include <string>
 #include "DataContainer.h"
 #include "OperatorInfo.h"
 
-#include <map>
-#include <string>
-
 namespace stream
 {
+    class Data;
+    class Id2DataMapper;
     class OperatorInfo;
     class OperatorKernel;
-    class Id2DataMapper;
-    class Data;
     
     namespace impl
     {
-        class Network;
         class InputNode;
+        class Network;
         class OutputNode;
         class SynchronizedOperatorKernel;
     }
     
     class Operator
     {
-        friend class impl::Network;
-        friend class Thread;
-        friend class OperatorTester;
-        friend class ThreadImplTest;
-        friend class InputNodeTest;
-        friend class OutputNodeTest;
-        friend class NetworkTest;
         friend class FactoryTest;
+        friend class impl::Network;
+        friend class InputNodeTest;
+        friend class NetworkTest;
+        friend class OperatorTester;
+        friend class OutputNodeTest;
+        friend class ThreadImplTest;
+        friend class Thread;
         
     public:
         enum Status
@@ -65,12 +64,12 @@ namespace stream
         void setName(const std::string & name) { m_name = name; }
         
         const OperatorInfo* const info() const;
-        const Status status();
-        void setParameter(unsigned int id, const Data& value);
-        const Data& getParameter(unsigned int id) const;
-        DataContainer getOutputData(const unsigned int id);
-        void setInputData(const unsigned int id, DataContainer data);
-        void clearOutputData(unsigned int id);
+        const Status status() const;
+        void setParameter(const unsigned int id, const Data& value);
+        const Data& getParameter(const unsigned int id) const;
+        const DataContainer getOutputData(const unsigned int id) const;
+        void setInputData(const unsigned int id, const DataContainer data);
+        void clearOutputData(const unsigned int id);
         void initialize();
         
     private:

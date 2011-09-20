@@ -17,9 +17,8 @@
 #ifndef STREAM_RECYCLEACCESS_H
 #define STREAM_RECYCLEACCESS_H
 
-#include "DataContainer.h"
-
 #include <tr1/memory>
+#include "DataContainer.h"
 
 namespace stream
 {
@@ -28,18 +27,18 @@ namespace stream
         class RecycleAccessImpl;
     }
     
-    class DataContainer;
     class Data;
+    class DataContainer;
     
     class RecycleAccess
     {
     public:
-        RecycleAccess(DataContainer data);
+        RecycleAccess(const DataContainer data);
         RecycleAccess() {}
         
-        void add(DataContainer data);
-        Data* const operator()();
-        Data* const operator()(const unsigned int timeout);
+        void add(const DataContainer data);
+        Data* const operator()() const;
+        Data* const operator()(const unsigned int timeout) const;
         
     private:
         std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      

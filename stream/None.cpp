@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "None.h"
-
 #include "Config.h"
+#include "None.h"
 
 namespace stream
 {

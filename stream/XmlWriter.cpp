@@ -19,7 +19,7 @@
 
 namespace stream
 {
-    void XmlWriter::write(const std::string& filename, const Stream& stream)
+    void XmlWriter::write(const std::string& filename, const Stream& stream) const
     {
         impl::XmlWriterImpl impl;
         

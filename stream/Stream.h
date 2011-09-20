@@ -17,17 +17,16 @@
 #ifndef STREAM_STREAM_H
 #define STREAM_STREAM_H
 
-#include <vector> 
 #include <string>
-
+#include <vector> 
 #include "impl/Network.h"
 
 namespace stream
 {
-    class Thread;
     class Operator;
     class Registry;
-    
+    class Thread;
+	
     class Stream
     {
     public:

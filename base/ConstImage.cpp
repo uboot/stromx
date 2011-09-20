@@ -61,7 +61,7 @@ namespace base
         }
     }
 
-    const Data& ConstImage::getParameter(unsigned int id)
+    const Data& ConstImage::getParameter(unsigned int id) const
     {
         switch(id)
         {

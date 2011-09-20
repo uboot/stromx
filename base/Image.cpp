@@ -172,7 +172,7 @@ namespace base
             
             cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
                   
-            if(! cv::imwrite(filename, tempImage.m_image))
+            if(! cv::imwrite(filename, cv::Mat(tempImage.m_image)))
                 throw stream::FileAccessFailed(filename, "Failed to save image.");
                 
             break;

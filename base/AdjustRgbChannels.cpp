@@ -54,7 +54,7 @@ namespace base
         }
     }
 
-    const Data& AdjustRgbChannels::getParameter(unsigned int id)
+    const Data& AdjustRgbChannels::getParameter(const unsigned int id) const
     {
         switch(id)
         {

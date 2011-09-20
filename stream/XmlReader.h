@@ -31,7 +31,7 @@ namespace stream
           : m_factory(factory) 
         {}
           
-        Stream* const read(const std::string & filename);
+        Stream* const read(const std::string & filename) const;
         
     private:
         const Factory* m_factory;
