@@ -35,11 +35,11 @@ int main (int argc, char* argv[])
     registerStrom(factory);
     registerBase(factory);
     
-    Stream* strom = XmlReader(factory).read("file.xml");
+    Stream* stream = XmlReader(factory).read("file.xml");
     
-    strom->start();
+    stream->start();
     
-    Operator* timer = strom->operators()[1];
+    Operator* timer = stream->operators()[1];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
@@ -50,8 +50,8 @@ int main (int argc, char* argv[])
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
     }
     
-    strom->stop();
-    strom->join();
+    stream->stop();
+    stream->join();
     
-    delete strom;
+    delete stream;
 }
