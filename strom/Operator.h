@@ -89,8 +89,8 @@ namespace strom
         void initialize();
         
     private:
-        impl::InputNode* const getInputNode(const unsigned int id);
-        impl::OutputNode* const getOutputNode(const unsigned int id);
+        impl::InputNode* const getInputNode(const unsigned int id) const;
+        impl::OutputNode* const getOutputNode(const unsigned int id) const;
         void activate();
         void deactivate();
         

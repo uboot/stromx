@@ -27,31 +27,29 @@
 
 int main (int argc, char* argv[])
 {
-    using namespace strom;
+    strom::Stream stream;
     
-    Stream stream;
-    
-    Operator* source = new Operator(new base::Counter);
+    strom::Operator* source = new strom::Operator(new base::Counter);
     source->initialize();
     stream.addOperator(source);
     
-    Operator* timer = new Operator(new base::PeriodicDelay);
+    strom::Operator* timer = new strom::Operator(new base::PeriodicDelay);
     timer->initialize();
     stream.addOperator(timer);
     
-    timer->setParameter(base::PeriodicDelay::PERIOD, UInt32(1000));
+    timer->setParameter(base::PeriodicDelay::PERIOD, strom::UInt32(1000));
     
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
-    Thread* thread = stream.addThread();
+    strom::Thread* thread = stream.addThread();
     thread->addNode(timer, base::PeriodicDelay::INPUT);
     
     stream.start();
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
-        ReadAccess<UInt32> count(data);
+        strom::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
+        strom::ReadAccess<strom::UInt32> count(data);
         timer->clearOutputData(base::PeriodicDelay::OUTPUT);
         
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;

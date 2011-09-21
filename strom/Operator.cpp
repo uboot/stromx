@@ -111,20 +111,24 @@ namespace strom
         }
     }
     
-    InputNode*const Operator::getInputNode(const unsigned int id)
+    InputNode*const Operator::getInputNode(const unsigned int id) const
     {
-        if(! m_inputs.count(id))
+        std::map<unsigned int, impl::InputNode*>::const_iterator iter = m_inputs.find(id);
+        
+        if(iter == m_inputs.end())
             throw WrongArgument("Input with this ID does not exist.");
         
-        return m_inputs[id];
+        return iter->second;
     }
 
-    OutputNode*const Operator::getOutputNode(const unsigned int id)
+    OutputNode*const Operator::getOutputNode(const unsigned int id) const
     {
-        if(! m_outputs.count(id))
+        std::map<unsigned int, impl::OutputNode*>::const_iterator iter = m_outputs.find(id);
+        
+        if(iter == m_outputs.end())
             throw WrongArgument("Output with this ID does not exist.");
         
-        return m_outputs[id];
+        return iter->second;
     }
 
     void Operator::activate()
