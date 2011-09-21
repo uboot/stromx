@@ -8,91 +8,89 @@
 #include <strom/Id2DataComposite.h>
 #include <strom/ReadAccess.h>
 
-using namespace strom;
-
 namespace math
 {
     const std::string Add::TYPE("Add");
     const std::string Add::PACKAGE("Math");
-    const Version Add::VERSION(1, 0);
+    const strom::Version Add::VERSION(1, 0);
     
     Add::Add()
       : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
     {
     }
 
-    void Add::setParameter(unsigned int id, const Data& value)
+    void Add::setParameter(unsigned int id, const strom::Data& value)
     {
         try
         {
             switch(id)
             {
             case OFFSET:
-                m_offset = dynamic_cast<const UInt32&>(value);
+                m_offset = dynamic_cast<const strom::UInt32&>(value);
                 break;
             default:
-                throw WrongParameterId(id, *this);
+                throw strom::WrongParameterId(id, *this);
             }
         }
         catch(std::bad_cast&)
         {
-            throw WrongParameterId(id, *this);
+            throw strom::WrongParameterId(id, *this);
         }
     }
 
-    const Data& Add::getParameter(unsigned int id)
+    const strom::Data& Add::getParameter(unsigned int id)
     {
         switch(id)
         {
         case OFFSET:
             return m_offset;
         default:
-            throw WrongParameterId(id, *this);
+            throw strom::WrongParameterId(id, *this);
         }
     }  
     
-    void Add::execute(DataProvider& provider)
+    void Add::execute(strom::DataProvider& provider)
     {
-        Id2DataPair inputMapper(INPUT);
+        strom::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
         
-        ReadAccess<UInt32> input(inputMapper.data());
+        strom::ReadAccess<strom::UInt32> input(inputMapper.data());
         
-        Data* result = new UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        strom::Data* result = new strom::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
         
-        DataContainer outContainer(result);
+        strom::DataContainer outContainer(result);
        
-        Id2DataPair output(OUTPUT, outContainer);
+        strom::Id2DataPair output(OUTPUT, outContainer);
         provider.sendOutputData(output);
     }
     
     const std::vector<const strom::Description*> Add::setupInputs()
     {
-        std::vector<const Description*> inputs;
+        std::vector<const strom::Description*> inputs;
         
-        Description* input = new Description(INPUT, DataVariant::UINT_32);
+        strom::Description* input = new strom::Description(INPUT, strom::DataVariant::UINT_32);
         input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const Description*> Add::setupOutputs()
+    const std::vector<const strom::Description*> Add::setupOutputs()
     {
-        std::vector<const Description*> outputs;
+        std::vector<const strom::Description*> outputs;
         
-        Description* output = new Description(OUTPUT, DataVariant::UINT_32);
+        strom::Description* output = new strom::Description(OUTPUT, strom::DataVariant::UINT_32);
         output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector<const Parameter*> Add::setupParameters()
+    const std::vector<const strom::Parameter*> Add::setupParameters()
     {
         std::vector<const strom::Parameter*> parameters;
         
-        Parameter* offset = new Parameter(OFFSET, DataVariant::UINT_32);
+        strom::Parameter* offset = new strom::Parameter(OFFSET, strom::DataVariant::UINT_32);
         offset->setName("Offset");
         offset->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);

@@ -41,54 +41,50 @@ namespace strom
     namespace impl
     {
         const std::string XmlReaderImpl::DTD =
-" \
-<?xml version='1.0' encoding='UTF-8' ?> \
+"\
+<!ELEMENT Stream (Operator*, Thread*)> \
+<!ATTLIST Stream \
+    name CDATA #IMPLIED \
+> \
 \
-<!DOCTYPE  Stream [ \
-    <!ELEMENT Stream (Operator*, Thread*)> \
-    <!ATTLIST Stream \
-        name CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Thread (InputNode*)> \
-    <!ATTLIST Thread \
-        name CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Operator (Parameter*, Input*)> \
-    <!ATTLIST Operator \
-        id NMTOKEN #REQUIRED \
-        package CDATA #REQUIRED \
-        type CDATA #REQUIRED \
-        name CDATA #IMPLIED \
-        version CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Parameter (Data)> \
-    <!ATTLIST Parameter \
-        id NMTOKEN #REQUIRED \
-    > \
-    \
-    <!ELEMENT Data (#PCDATA)> \
-    <!ATTLIST Data \
-        type CDATA #REQUIRED \
-        package CDATA #REQUIRED \
-        version CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Input EMPTY> \
-    <!ATTLIST Input \
-        id NMTOKEN #REQUIRED \
-        operator NMTOKEN #REQUIRED \
-        output NMTOKEN #REQUIRED \
-    > \
-    \
-    <!ELEMENT InputNode EMPTY> \
-    <!ATTLIST InputNode \
-        operator NMTOKEN #REQUIRED \
-        input NMTOKEN #REQUIRED \
-    > \
-]> \
+<!ELEMENT Thread (InputNode*)> \
+<!ATTLIST Thread \
+    name CDATA #IMPLIED \
+> \
+\
+<!ELEMENT Operator (Parameter*, Input*)> \
+<!ATTLIST Operator \
+    id NMTOKEN #REQUIRED \
+    package CDATA #REQUIRED \
+    type CDATA #REQUIRED \
+    name CDATA #IMPLIED \
+    version CDATA #REQUIRED \
+> \
+\
+<!ELEMENT Parameter (Data)> \
+<!ATTLIST Parameter \
+    id NMTOKEN #REQUIRED \
+> \
+\
+<!ELEMENT Data (#PCDATA)> \
+<!ATTLIST Data \
+    type CDATA #REQUIRED \
+    package CDATA #REQUIRED \
+    version CDATA #REQUIRED \
+> \
+\
+<!ELEMENT Input EMPTY> \
+<!ATTLIST Input \
+    id NMTOKEN #REQUIRED \
+    operator NMTOKEN #REQUIRED \
+    output NMTOKEN #REQUIRED \
+> \
+\
+<!ELEMENT InputNode EMPTY> \
+<!ATTLIST InputNode \
+    operator NMTOKEN #REQUIRED \
+    input NMTOKEN #REQUIRED \
+> \
 ";
         using namespace xercesc;
         
@@ -101,7 +97,7 @@ namespace strom
                 
                 virtual void error (const SAXParseException &exc)
                 {
-//                     throw FileAccessFailed(m_filename, "XML file is not valid.");
+                    // throw FileAccessFailed(m_filename, "XML file is not valid.");
                 }
                 
             private:
@@ -111,30 +107,17 @@ namespace strom
 
         Stream*const XmlReaderImpl::read(const std::string & filename)
         {    
-            m_currentPath = impl::XmlUtilities::computePath(filename);
-            
-            try
-            {
-                XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
-            }
-            catch (const XMLException& toCatch)
-            {
-                char* message = XMLString::transcode(toCatch.getMessage());
-                
-                FileAccessFailed ex(filename, "Failed to initialize xerces-c: " + std::string(message));
-                XMLString::release(&message);
-                throw ex;
-            }
-        
             ErrorHandler* errHandler = (ErrorHandler*) new XercesErrorHandler(filename);
+            
+            m_currentPath = impl::XmlUtilities::computePath(filename);
             
             XercesDOMParser* parser = new XercesDOMParser();
             
-//             MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "Id");
-//             if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
-//             {
-//                 throw InternalError("Failed to load DTD.");
-//             }
+            MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
+            if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
+            {
+                throw InternalError("Failed to load DTD.");
+            }
 
             parser->setErrorHandler(errHandler);
             parser->setValidationScheme(XercesDOMParser::Val_Always);
@@ -225,7 +208,31 @@ namespace strom
             }
 
             delete parser;
+            
+            return m_stream;
+        }  
+        
+        XmlReaderImpl::XmlReaderImpl(const strom::Factory*const factory)
+        : m_factory(factory),
+          m_stream(0)
+        {
+            try
+            {
+                XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
+            }
+            catch (const XMLException& toCatch)
+            {
+                char* message = XMLString::transcode(toCatch.getMessage());
                 
+                InternalError ex("Failed to initialize xerces-c: " + std::string(message));
+                XMLString::release(&message);
+                throw ex;
+            }
+        }
+
+        
+        XmlReaderImpl::~XmlReaderImpl()
+        {  
             try
             {
                 XMLPlatformUtils::Terminate();  // Terminate after release of memory
@@ -234,13 +241,6 @@ namespace strom
             {
             }
             
-            Stream* retValue = m_stream;
-            
-            return retValue;
-        }  
-        
-        XmlReaderImpl::~XmlReaderImpl()
-        {
             for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
                 iter != m_id2DataMap.end();
                 ++iter)

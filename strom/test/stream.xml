@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Strom name="TestStrom">
-    <Operator id="0" package="TestPackage" type="TestOperator" name="Number 1">
+<Stream name="TestStrom">
+    <Operator id="0" package="TestPackage" type="TestOperator" version="0.1" name="Number 1">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom">5000</Data>
+            <Data type="UInt32" package="Strom" version="0.1">5000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Strom">200</Data>
+            <Data type="UInt32" package="Strom" version="0.1">200</Data>
         </Parameter>
     </Operator>
-    <Operator id="1" package="TestPackage" type="TestOperator" name="Number 2">
+    <Operator id="1" package="TestPackage" type="TestOperator" version="0.1" name="Number 2">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom">6000</Data>
+            <Data type="UInt32" package="Strom" version="0.1">6000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Strom">250</Data>
+            <Data type="UInt32" package="Strom" version="0.1">250</Data>
         </Parameter>
         <Input id="0" operator="0" output="2"/>
         <Input id="1" operator="0" output="3"/>
     </Operator>
-    <Operator id="2" package="TestPackage" type="TestOperator" name="Number 3">
+    <Operator id="2" package="TestPackage" type="TestOperator" version="0.1" name="Number 3">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom">7000</Data>
+            <Data type="UInt32" package="Strom" version="0.1">7000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Strom">300</Data>
+            <Data type="UInt32" package="Strom" version="0.1">300</Data>
         </Parameter>
         <Input id="0" operator="1" output="2"/>
         <Input id="1" operator="1" output="3"/>
@@ -35,4 +35,4 @@
         <InputNode operator="2" input="0"/>
         <InputNode operator="2" input="1"/>
     </Thread> 
-</Strom>
+</Stream>

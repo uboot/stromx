@@ -28,23 +28,21 @@
 
 int main (int argc, char* argv[])
 {
-    using namespace strom;
-   
-    Factory* factory = new Factory;
+    strom::Factory* factory = new strom::Factory;
     
     registerStrom(factory);
     registerBase(factory);
     
-    Stream* stream = XmlReader(factory).read("file.xml");
+    strom::Stream* stream = strom::XmlReader(factory).read("file.xml");
     
     stream->start();
     
-    Operator* timer = stream->operators()[1];
+    strom::Operator* timer = stream->operators()[1];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        DataContainer data = timer->getOutputData(0);
-        ReadAccess<UInt32> count(data);
+        strom::DataContainer data = timer->getOutputData(0);
+        strom::ReadAccess<strom::UInt32> count(data);
         timer->clearOutputData(0);
         
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;

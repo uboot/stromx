@@ -21,7 +21,7 @@
         package CDATA #REQUIRED
         type CDATA #REQUIRED
         name CDATA #IMPLIED
-        version CDATA #IMPLIED
+        version CDATA #REQUIRED
     >
     
     <!ELEMENT Parameter (Data)>
@@ -33,7 +33,7 @@
     <!ATTLIST Data
         type CDATA #REQUIRED
         package CDATA #REQUIRED
-        version CDATA #IMPLIED
+        version CDATA #REQUIRED
     >
     
     <!ELEMENT Input EMPTY>
@@ -56,7 +56,7 @@
             <Data type="Image" package="Base" version="0.1">lenna.png</Data>
         </Parameter>
     </Operator>
-    <Operator id="1" package="Base" type="Clip" name="Clip image">
+    <Operator id="1" package="Base" type="Clip" version="0.1" name="Clip image">
         <Parameter id="0">
             <Data type="UInt32" package="Stream" version="0.1">200</Data>
         </Parameter>
