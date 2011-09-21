@@ -36,14 +36,13 @@ As usual the program starts be including the required header files. Strom uses a
 
 The first four headers are part of the strom core library. This library provides all infrastructure for streams, operator and threads but does not contain any operators. The operators which are used in the example are part of the strom base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
-
 \code
 int main (int argc, char* argv[])
 {
     strom::Stream stream;
 \endcode
 
-The program starts by creating an empty stream object which will populated with operators and threads in the following code.
+The program starts by creating an empty stream object which will populated with operators and threads in the following.
 
 \code
     strom::Operator* source = new strom::Operator(new base::Counter);
@@ -55,16 +54,16 @@ The program starts by creating an empty stream object which will populated with 
     stream.addOperator(timer);
 \endcode
 
-First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input nodes. This is the reason why only initialized operator can be added to a stream. Note that when an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not clean it up because the stream will take care of that.
+First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input nodes. This is the reason why only initialized operator can be added to a stream. Note that when an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
 \code
     timer->setParameter(base::PeriodicDelay::PERIOD, strom::UInt32(1000));
 \endcode
 
-In the next step the time delay of the timer operator is set to one second. 
+In the next step the time delay of the timer operator is set to one second. All data passed as parameter to the function strom::Operator::setParameter must be derived from strom::Data. Versions of primitive data types which are derived from strom::Data are defined in strom::Primitive. Here strom::UInt32 is used which obviously wraps a 32-bit unsigned integer.
 
 \note
-Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of \em PeriodicCounter the access mode is Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
+Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of base::PeriodicCounter the access mode is strom::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
 
 \code    
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
@@ -90,11 +89,19 @@ This step starts all threads (i.e. is one in our case) of the stream. The thread
     {
         strom::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
         strom::ReadAccess<strom::UInt32> count(data);
-        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
-        
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
+
+        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
     }
 \endcode
+
+Each iteration of the loop start by obtaining the current data at the output of \c timer. If data is present at the output function stream::Operator::getOutputData() returns it immediately, otherwise it blocks until data arrives. The data arrives packaged in a <em>data container</em>. Data containers are basically references to data objects and can be easily copied and therefore moved from one part of the stream to another. They are implemented via shared pointers and make sure the data inside them is deleted as soon nobody holds any referenece (i.e. no containers exist anymore) to it.
+As there real world counterparts data containers do not only faciliate the transport of data, they also protect it in the sense that they do not allow direct access to the data inside them.To actually read the data stored in the data container the <em>read accessor</em> \c count has to be constructed around the container. It allows reading \c data using the () operator as in the next line of the loop. 
+
+\note
+As the existence of a read accessor suggests there is also a class strom::WriteAccess which allows to write to data stored in a data container. While data can be read simultaneously by many threads, i.e. many strom::ReadAccess objects can exist at the same time, a write access can only exist exclusively at a time. If a strom::WriteAccess is constructed while there exist still any other read or write accesses the constructur blocks until all other accesses are released. If the write access is successfully allocated it is guaranteed to have exclusive write access rights while it exists. Other threads can only access the data after the write access goes out of scope or is deleted. This is can be convenient in situation where data should be rather shared than copied such as the simultaneous processing of large image data.
+
+Finally the output of \c timer has be be cleared. Otherwise the data there would block \c counter from depositing new data and would eventually obstruct the complete stream.
     
 \code  
     stream.stop();
@@ -102,5 +109,7 @@ This step starts all threads (i.e. is one in our case) of the stream. The thread
 }
 \endcode
 
-Now you can proceed to \ref file.
+After the output of the stream has been received a couple of times the stream is ordered to stop. While strom::Stream::stop() is an asynchronous method, joining the stream waits until each thread has come to halt and the stream is inactive.
+
+In this tutorial a stream was assembled by calling respective library functions. However, it can be more convenient to write down the layout of the stream in an XML file and atomatically build it from this file. This is illustrated in the next tutorial \ref file.
 */

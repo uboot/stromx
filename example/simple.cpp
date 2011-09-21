@@ -50,9 +50,9 @@ int main (int argc, char* argv[])
     {
         strom::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
         strom::ReadAccess<strom::UInt32> count(data);
-        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
-        
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
+        
+        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
     }
     
     stream.stop();

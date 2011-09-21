@@ -48,9 +48,9 @@ int main (int argc, char* argv[])
     {
         strom::DataContainer data = timer->getOutputData(0);
         strom::ReadAccess<strom::UInt32> count(data);
-        timer->clearOutputData(0);
-        
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
+        
+        timer->clearOutputData(0);
     }
     
     stream->stop();
