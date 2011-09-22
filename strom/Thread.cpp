@@ -14,14 +14,12 @@
  *  limitations under the License.
  */
 
-#include "Thread.h"
-
 #include "Exception.h"
-#include "Operator.h"
-
 #include "impl/InputNode.h"
 #include "impl/Network.h"
 #include "impl/ThreadImpl.h"
+#include "Operator.h"
+#include "Thread.h"
 
 namespace strom
 {

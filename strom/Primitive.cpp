@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-#include "Primitive.h"
-
-#include "Config.h"
 
 #include <float.h>
+#include "Config.h"
+#include "Primitive.h"
+
 
 namespace strom
 {

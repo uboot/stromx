@@ -24,10 +24,14 @@ namespace strom
     class Node
     {
     public:
-        Node(Operator* const op, const unsigned int id) : m_op(op), m_id(id)
+        Node(Operator* const op, const unsigned int id)
+          : m_op(op),
+            m_id(id)
         {}
         
-        Node() : m_op(0), m_id(0)
+        Node()
+          : m_op(0), 
+            m_id(0)
         {}
         
         Operator* const op() const { return m_op; }

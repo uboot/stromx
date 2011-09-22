@@ -47,7 +47,7 @@ namespace base
         }
     }
 
-    const Data& Queue::getParameter(unsigned int id)
+    const Data& Queue::getParameter(const unsigned int id) const
     {
         switch(id)
         {

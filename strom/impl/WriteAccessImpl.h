@@ -19,8 +19,8 @@
 
 namespace strom
 {
-    class DataContainer;
     class Data;
+    class DataContainer;
     
     namespace impl
     {

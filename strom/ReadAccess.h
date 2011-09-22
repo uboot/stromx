@@ -17,12 +17,10 @@
 #ifndef STROM_READACCESS_H
 #define STROM_READACCESS_H
 
+#include <tr1/memory>
 #include "DataContainer.h"
 #include "Exception.h"
-
 #include "impl/ReadAccessImpl.h"
-
-#include <tr1/memory>
 
 namespace strom
 {

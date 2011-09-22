@@ -300,7 +300,7 @@ namespace base
         }
     }
 
-    const Data& Camera::getParameter(unsigned int id)
+    const Data& Camera::getParameter(unsigned int id) const
     {
         switch(id)
         {

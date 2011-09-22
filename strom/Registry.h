@@ -19,8 +19,8 @@
 
 namespace strom
 {
-    class OperatorKernel;
     class Data;
+    class OperatorKernel;
     
     class Registry
     {

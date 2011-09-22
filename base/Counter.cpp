@@ -39,7 +39,7 @@ namespace base
         }
     }
 
-    const Data& Counter::getParameter(unsigned int id)
+    const Data& Counter::getParameter(const unsigned int id) const
     {
         switch(id)
         {

@@ -38,7 +38,7 @@ namespace math
         }
     }
 
-    const strom::Data& Add::getParameter(unsigned int id)
+    const strom::Data& Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {

@@ -14,13 +14,12 @@
  *  limitations under the License.
  */
 
-#include "XmlReader.h"
-
 #include "impl/XmlReaderImpl.h"
+#include "XmlReader.h"
 
 namespace strom
 {
-    Stream*const XmlReader::read(const std::string& filename)
+    Stream*const XmlReader::read(const std::string& filename) const
     {
         impl::XmlReaderImpl impl(m_factory);
         

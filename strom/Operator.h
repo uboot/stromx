@@ -17,38 +17,37 @@
 #ifndef STROM_OPERATOR_H
 #define STROM_OPERATOR_H
 
-#include "DataContainer.h"
-#include "OperatorInfo.h"
-#include "Exception.h"
-
 #include <map>
 #include <string>
+#include "DataContainer.h"
+#include "Exception.h"
+#include "OperatorInfo.h"
 
 namespace strom
 {
+    class Data;
+    class Id2DataMapper;
     class OperatorInfo;
     class OperatorKernel;
-    class Id2DataMapper;
-    class Data;
     
     namespace impl
     {
-        class Network;
         class InputNode;
+        class Network;
         class OutputNode;
         class SynchronizedOperatorKernel;
     }
     
     class Operator
     {
-        friend class impl::Network;
-        friend class Thread;
-        friend class OperatorTester;
-        friend class ThreadImplTest;
-        friend class InputNodeTest;
-        friend class OutputNodeTest;
-        friend class NetworkTest;
         friend class FactoryTest;
+        friend class impl::Network;
+        friend class InputNodeTest;
+        friend class NetworkTest;
+        friend class OperatorTester;
+        friend class OutputNodeTest;
+        friend class ThreadImplTest;
+        friend class Thread;
         
     public:
         enum Status
@@ -66,9 +65,9 @@ namespace strom
         void setName(const std::string & name) { m_name = name; }
         
         const OperatorInfo* const info() const;
-        const Status status();
-        void setParameter(unsigned int id, const Data& value);
-        const Data& getParameter(unsigned int id) const;
+        const Status status() const;
+        void setParameter(const unsigned int id, const Data& value);
+        const Data& getParameter(const unsigned int id) const;
         
         template<typename data_t>
         const data_t& getParameter(unsigned int id) const
@@ -83,9 +82,9 @@ namespace strom
             }
         }
         
-        DataContainer getOutputData(const unsigned int id);
-        void setInputData(const unsigned int id, DataContainer data);
-        void clearOutputData(unsigned int id);
+        const DataContainer getOutputData(const unsigned int id) const;
+        void setInputData(const unsigned int id, const DataContainer data);
+        void clearOutputData(const unsigned int id);
         void initialize();
         
     private:

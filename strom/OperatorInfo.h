@@ -17,10 +17,9 @@
 #ifndef STROM_OPERATORINFO_H
 #define STROM_OPERATORINFO_H
 
+#include <vector>
 #include "Parameter.h"
 #include "Version.h"
-
-#include <vector>
 
 namespace strom
 {

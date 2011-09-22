@@ -54,7 +54,7 @@ namespace base
         }
     }
 
-    const Data& Clip::getParameter(unsigned int id)
+    const Data& Clip::getParameter(const unsigned int id) const
     {
         switch(id)
         {

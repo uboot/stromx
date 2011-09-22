@@ -17,9 +17,8 @@
 #ifndef STROM_OPERATORKERNEL_H
 #define STROM_OPERATORKERNEL_H
 
-#include "OperatorInfo.h"
-
 #include <map>
+#include "OperatorInfo.h"
 
 namespace strom
 {
@@ -66,7 +65,7 @@ namespace strom
         
     protected:
         virtual void setParameter(const unsigned int id, const Data& value) = 0;
-        virtual const Data& getParameter(const unsigned int id) = 0;
+        virtual const Data& getParameter(const unsigned int id) const = 0;
         virtual void execute(DataProvider& provider) = 0;
         virtual void initialize() {}
         virtual void activate() {}

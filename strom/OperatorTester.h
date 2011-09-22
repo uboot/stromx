@@ -24,7 +24,9 @@ namespace strom
     class OperatorTester : public Operator
     {
     public:
-        OperatorTester(OperatorKernel* const kernel) : Operator(kernel) {}
+        OperatorTester(OperatorKernel* const kernel) 
+          : Operator(kernel)
+        {}
         
         void activate() { Operator::activate(); }
         void deactivate()  { Operator::deactivate(); }

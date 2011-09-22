@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-#include "ImageWrapper.h"
 
 #include "Exception.h"
+#include "ImageWrapper.h"
 
 namespace strom
 {

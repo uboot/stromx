@@ -37,13 +37,13 @@ namespace strom
         class RecycleAccessImpl : public Recycler
         {
         public:
-            RecycleAccessImpl(DataContainer& data);
+            RecycleAccessImpl(const DataContainer& data);
             ~RecycleAccessImpl();    
             
             void recycle(impl::DataContainerImpl* const container);
             Data* const operator()();
             Data* const operator()(const unsigned int timeout);
-            void add(DataContainer& data);
+            void add(const DataContainer& data);
             
         private:
             RecycleAccessImpl();

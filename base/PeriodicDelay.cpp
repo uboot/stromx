@@ -50,7 +50,7 @@ namespace base
         }
     }
 
-    const Data& PeriodicDelay::getParameter(unsigned int id)
+    const Data& PeriodicDelay::getParameter(const unsigned int id) const
     {
         switch(id)
         {

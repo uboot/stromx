@@ -17,17 +17,15 @@
 #ifndef STROM_WRITEACCESS_H
 #define STROM_WRITEACCESS_H
 
+#include <tr1/memory>
 #include "DataContainer.h"
 #include "Exception.h"
-
 #include "impl/WriteAccessImpl.h"
-
-#include <tr1/memory>
 
 namespace strom
 {
-    class DataContainer;
     class Data;
+    class DataContainer;
     
     template<typename data_t = Data>
     class WriteAccess

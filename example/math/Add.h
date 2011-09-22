@@ -49,7 +49,7 @@ namespace math
         
         virtual OperatorKernel* const clone() const { return new Add; }
         virtual void setParameter(unsigned int id, const strom::Data& value);
-        virtual const strom::Data& getParameter(unsigned int id);
+        virtual const strom::Data& getParameter(const unsigned int id) const;
         virtual void execute(strom::DataProvider& provider);
         
     private:

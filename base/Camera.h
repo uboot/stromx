@@ -72,7 +72,7 @@ namespace base
         
         virtual OperatorKernel* const clone() const { return new Camera; }
         virtual void setParameter(unsigned int id, const strom::Data& value);
-        virtual const strom::Data& getParameter(unsigned int id);
+        virtual const strom::Data& getParameter(unsigned int id) const;
         virtual void execute(strom::DataProvider& provider);
         virtual void initialize();
         virtual void activate();
