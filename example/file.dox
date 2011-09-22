@@ -1,6 +1,6 @@
 /** \page file File
 
-This page introduces the user to the topic.
+In this tutorial the very same stream as in \ref simple is constructed. However, this time it is deserialized from an XML file instead of manually assembled by strom library functions. The XML file which encodes this stream looks as follows:
 
 \code
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -19,6 +19,8 @@ This page introduces the user to the topic.
 </Stream>
 \endcode
 
+Each operator and each data type is identified by the a combination of \em package and \em name. This allows the use of operator and data types which are defined in third party packages not known to the strom core library. The code which reads this XML file is explained in the following.
+
 \code
 #include <strom/Factory.h>
 #include <strom/XmlReader.h>
@@ -31,14 +33,22 @@ This page introduces the user to the topic.
 #include <base/Base.h>
 
 #include <iostream>
+\endcode
 
+Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the core library are required. On the other hand it is important to note that the inclusion of the operator headers in the base library is not required anymore. The file base/Base.h is the only header which is needed from this library.
+
+\code
 int main (int argc, char* argv[])
 {
-    strom::Factory* factory = new strom::Factory;
-    
+    strom::Factory factory;  
+ 
     registerStrom(factory);
     registerBase(factory);
-    
+\endcode
+
+As a first step a factory 
+
+\code
     strom::Stream* stream = strom::XmlReader(factory).read("file.xml");
     
     stream->start();

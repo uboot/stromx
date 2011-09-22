@@ -37,7 +37,7 @@ namespace strom
         class XmlReaderImpl
         {
         public:
-            XmlReaderImpl(const Factory* const factory);
+            XmlReaderImpl(const Factory& factory);
             
             ~XmlReaderImpl();
             
@@ -55,7 +55,7 @@ namespace strom
             Data* readData(xercesc::DOMElement* const dataElement);
             
             std::string m_currentPath;
-            const Factory* m_factory;
+            const Factory& m_factory;
             Stream* m_stream;
             std::map<unsigned int, Operator*> m_id2OperatorMap;
             std::map<unsigned int, Data*> m_id2DataMap;

@@ -27,14 +27,14 @@ namespace strom
     class XmlReader
     {
     public:
-        XmlReader(const Factory* const factory)
+        XmlReader(const Factory& factory)
           : m_factory(factory) 
         {}
           
         Stream* const read(const std::string & filename);
         
     private:
-        const Factory* m_factory;
+        const Factory& m_factory;
     };
 }
 

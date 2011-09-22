@@ -30,13 +30,13 @@
 
 int main (int argc, char* argv[])
 {
-    strom::Factory* factory = new strom::Factory;
+    strom::Factory factory;
     
     registerStrom(factory);
     registerBase(factory);
     
     strom::OperatorKernel* op = new math::Add;
-    factory->registerOperator(op);
+    factory.registerOperator(op);
     
     strom::Stream* stream = strom::XmlReader(factory).read("operator.xml");
     

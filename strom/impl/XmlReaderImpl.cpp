@@ -212,7 +212,7 @@ namespace strom
             return m_stream;
         }  
         
-        XmlReaderImpl::XmlReaderImpl(const strom::Factory*const factory)
+        XmlReaderImpl::XmlReaderImpl(const strom::Factory& factory)
         : m_factory(factory),
           m_stream(0)
         {
@@ -261,7 +261,7 @@ namespace strom
             if(m_id2OperatorMap.count(id))
                 throw XmlError("Multiple operators with the same ID.");
             
-            Operator* op = m_factory->newOperator(std::string(package), std::string(type));
+            Operator* op = m_factory.newOperator(std::string(package), std::string(type));
             op->setName(std::string(name));
             
             m_id2OperatorMap[id] = op;
@@ -389,7 +389,7 @@ namespace strom
                 dataString = std::string(Xml2Str(node->getNodeValue()));
             }
             
-            Data* data = m_factory->newData(std::string(package), std::string(type));
+            Data* data = m_factory.newData(std::string(package), std::string(type));
             
             try
             {

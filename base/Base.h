@@ -24,7 +24,7 @@ namespace strom
 
 extern "C"
 {
-    void registerBase(strom::Registry* const registry);
+    void registerBase(strom::Registry& registry);
 }
 
 #endif // BASE_H

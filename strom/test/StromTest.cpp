@@ -34,7 +34,7 @@ namespace strom
     
     void StromTest::testRegisterStrom()
     {
-        CPPUNIT_ASSERT_NO_THROW(registerStrom(m_factory));
+        CPPUNIT_ASSERT_NO_THROW(registerStrom(*m_factory));
         
         strom::Data* data = 0;
         CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Strom", "UInt32"));

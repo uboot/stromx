@@ -6,13 +6,13 @@
 
 The operator \em Counter has the single output node \em OUTPUT which is connected to the only input node (fittingly called \em INPUT) of \em PeriodicDelay. This means that every output data which is produced at the output of \em PeriodicDelay will be transported to the input of \em Counter. Data which is transported to an input will stay there and \em block this input until its operator starts to process the data.
 
-However operators in \em strom are \em passive objects, i.e. they do not process any data on their own but need a \em thread which \em executes them. Besides operators, threads are the second important building blocks of a stream. Each input node of an operator can be assigned to a thread. When activated the thread visits each of its input node sequentially and starts again with the first when they last node has been reached. When a thread visits an input node of an operator it acts according to the following two steps:
+However operators in \em strom are \em passive objects, i.e. they do not process any data on their own but need a \em thread which \em executes them. Besides operators, threads are the second important building block of a stream. Each input node of an operator can be assigned to a thread. When activated the thread visits each of its input node sequentially and starts over with the first when they last node has been reached. When a thread visits an input node of an operator it acts according to the following two steps:
 
 - The thread looks up to which output the input is connected. If there is no data at this output the thread \em executes the operator to which the output belongs to. This should produce some data at the output in question.
 
-- Now the thread moves the data which was either present at the output of the source operator or has been produced by executing the source operator and passes it to the input node which it currently visits. However, it could happen that data has already assigned to this node, i.e. the input node is blocked. In this case the thread will execute the operator of the input node hoping that this improves the situation.
+- Now the thread takes the data which was either present at the output of the source operator or has been produced by executing the source operator and passes it to the input node which it currently visits. It can however happen that data has already assigned to this node, i.e. the input node is blocked. In this case the thread will execute the operator of the input node hoping that the blocking data will be processed and free its space for the new data.
 
-In other words, the process of transporting data from input nodes to output nodes implicitely executes the operators of these nodes to make sure (1) that there is enough data at the outputs and (2) that the data at the inputs is removed in time.
+In other words, the process of transporting data from output nodes to input nodes implicitely executes the operators of these nodes to make sure (1) that there is enough data at the outputs and (2) that the data at the inputs is removed in time.
 
 \note
 Not every input node must be assigned to a thread. However, if data is required at an input which is not part of a thread the input must be fed manually by the user by calling strom::Operator::setInputData(). Something similar holds for outputs which are not connected to inputs (more accurate, to inputs which are assigned to a thread). If data is waiting at such an output (which prevents the operator from being executed) it can be removed by the client using strom::Operator::clearOutputData().
@@ -34,7 +34,7 @@ In the following, the source code of \em simple.cpp is printed with comments und
 
 As usual the program starts be including the required header files. Strom uses a fine grained approach to the inclusion of headers, i.e. only the necessary headers are included by the library headers and forward declarations are used wherever possible. As a consequence the headers of all classes which are used in the code are included here.
 
-The first four headers are part of the strom core library. This library provides all infrastructure for streams, operator and threads but does not contain any operators. The operators which are used in the example are part of the strom base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
+The first four headers are part of the strom core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are part of the strom base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
 \code
 int main (int argc, char* argv[])
@@ -54,7 +54,7 @@ The program starts by creating an empty stream object which will populated with 
     stream.addOperator(timer);
 \endcode
 
-First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input nodes. This is the reason why only initialized operator can be added to a stream. Note that when an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
+First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input nodes. This is the reason why only initialized operator can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
 \code
     timer->setParameter(base::PeriodicDelay::PERIOD, strom::UInt32(1000));
@@ -82,7 +82,7 @@ Now the operating thread is added to the stream. In the next line the input node
     stream.start();
 \endcode
 
-This step starts all threads (i.e. is one in our case) of the stream. The thread starts to process its input nodes immediately. As mentioned in the introduction it implicitely executes the operators in the stream and moves processed data to the output of \em timer. The following loop gets this data from the output and writes it to the standard input.
+This step starts all threads (i.e. is one in our case) of the stream. The thread begins to process its input nodes immediately. As mentioned in the introduction it executes the operators in the stream and moves processed data to the output of \em timer. The following loop gets this data from the final output and writes it to the standard input.
    
 \code   
     for(unsigned int i = 0; i < 5; ++i)
@@ -95,11 +95,11 @@ This step starts all threads (i.e. is one in our case) of the stream. The thread
     }
 \endcode
 
-Each iteration of the loop start by obtaining the current data at the output of \c timer. If data is present at the output function stream::Operator::getOutputData() returns it immediately, otherwise it blocks until data arrives. The data arrives packaged in a <em>data container</em>. Data containers are basically references to data objects and can be easily copied and therefore moved from one part of the stream to another. They are implemented via shared pointers and make sure the data inside them is deleted as soon nobody holds any referenece (i.e. no containers exist anymore) to it.
-As there real world counterparts data containers do not only faciliate the transport of data, they also protect it in the sense that they do not allow direct access to the data inside them.To actually read the data stored in the data container the <em>read accessor</em> \c count has to be constructed around the container. It allows reading \c data using the () operator as in the next line of the loop. 
+Each iteration of the loop starts by obtaining the current data at the output of \c timer. If data is present at the output function stream::Operator::getOutputData() returns it immediately, otherwise it blocks until data arrives. The data is packaged in a <em>data container</em>. Data containers are basically references to data objects and can be easily copied and therefore moved from one part of the stream to another. They are implemented via shared pointers and make sure the data inside them is deleted as soon nobody holds any referenece (i.e. no containers exist anymore) to it.
+As their real world counterparts data containers do not only faciliate the transport of data, they also protect it in the sense that they do not allow direct access to the data inside them.To actually read the data stored in the data container a <em>read accessor</em> \c count has to be constructed around the container. It allows reading \c data using the () operator as in the next line of the loop. 
 
 \note
-As the existence of a read accessor suggests there is also a class strom::WriteAccess which allows to write to data stored in a data container. While data can be read simultaneously by many threads, i.e. many strom::ReadAccess objects can exist at the same time, a write access can only exist exclusively at a time. If a strom::WriteAccess is constructed while there exist still any other read or write accesses the constructur blocks until all other accesses are released. If the write access is successfully allocated it is guaranteed to have exclusive write access rights while it exists. Other threads can only access the data after the write access goes out of scope or is deleted. This is can be convenient in situation where data should be rather shared than copied such as the simultaneous processing of large image data.
+As the existence of a read accessor suggests there is also a class strom::WriteAccess which allows to write to data stored in a data container. While data can be read simultaneously by many threads, i.e. many strom::ReadAccess objects can exist at the same time, only one write access can exist exclusively at a time. If a strom::WriteAccess is constructed while other read or write access objects for the same data container exist the constructur blocks until all other accesses are released. If the write access is successfully allocated it is guaranteed to have exclusive write access rights. Other threads can only access the data after the write access goes out of scope or is deleted. This is can be convenient in situations where data should be rather shared than copied such as in case of simultaneous processing of large image data.
 
 Finally the output of \c timer has be be cleared. Otherwise the data there would block \c counter from depositing new data and would eventually obstruct the complete stream.
     

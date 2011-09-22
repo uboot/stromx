@@ -24,7 +24,7 @@ namespace strom
 
 extern "C"
 {
-    void registerStrom(strom::Registry* const registry);
+    void registerStrom(strom::Registry& registry);
 }
 
 #endif // STROM_H

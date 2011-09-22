@@ -14,22 +14,19 @@
 #include "Queue.h"
 #include "Trigger.h"
 
-void registerBase(strom::Registry*const registry)
+void registerBase(strom::Registry& registry)
 {
-    if(! registry)
-        throw strom::WrongArgument("Passed null pointer.");
-    
     using namespace base;
     
-    registry->registerData(new Image);
+    registry.registerData(new Image);
     
-    registry->registerOperator(new AdjustRgbChannels);
-    registry->registerOperator(new Camera);
-    registry->registerOperator(new Clip);
-    registry->registerOperator(new ConstImage);
-    registry->registerOperator(new ConvertPixelType);
-    registry->registerOperator(new Counter);
-    registry->registerOperator(new PeriodicDelay);
-    registry->registerOperator(new Queue);
-    registry->registerOperator(new Trigger);
+    registry.registerOperator(new AdjustRgbChannels);
+    registry.registerOperator(new Camera);
+    registry.registerOperator(new Clip);
+    registry.registerOperator(new ConstImage);
+    registry.registerOperator(new ConvertPixelType);
+    registry.registerOperator(new Counter);
+    registry.registerOperator(new PeriodicDelay);
+    registry.registerOperator(new Queue);
+    registry.registerOperator(new Trigger);
 }
