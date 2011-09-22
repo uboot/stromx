@@ -17,10 +17,10 @@
 #ifndef BASE_CAMERA_H
 #define BASE_CAMERA_H
 
-#include <stream/Primitive.h>
-#include <stream/OperatorKernel.h>
+#include <strom/Primitive.h>
+#include <strom/OperatorKernel.h>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
     class Operator;
@@ -32,7 +32,7 @@ namespace stream
 
 namespace base
 {
-    class Camera : public stream::OperatorKernel
+    class Camera : public strom::OperatorKernel
     {
     public:
         enum OutputId
@@ -71,42 +71,42 @@ namespace base
         virtual ~Camera();
         
         virtual OperatorKernel* const clone() const { return new Camera; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id) const;
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(unsigned int id) const;
+        virtual void execute(strom::DataProvider& provider);
         virtual void initialize();
         virtual void activate();
         virtual void deactivate();
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        const std::vector<const strom::Parameter*> setupParameters();
         void setRgbParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION; 
+        static const strom::Version VERSION; 
         
         static const unsigned int WHITE_BALANCE_MAX = 10;
         static const unsigned int BASE_EXPOSURE = 10;
         
-        stream::Stream* m_stream;
+        strom::Stream* m_stream;
         
-        stream::Operator* m_input;
-        stream::Operator* m_clip;
-        stream::Operator* m_adjustRgbChannels;
-        stream::Operator* m_period;
-        stream::Operator* m_trigger;
-        stream::Operator* m_buffer;
-        stream::Operator* m_pixelType;
-        stream::Operator* m_imageQueue;
-        stream::Operator* m_indexQueue;
+        strom::Operator* m_input;
+        strom::Operator* m_clip;
+        strom::Operator* m_adjustRgbChannels;
+        strom::Operator* m_period;
+        strom::Operator* m_trigger;
+        strom::Operator* m_buffer;
+        strom::Operator* m_pixelType;
+        strom::Operator* m_imageQueue;
+        strom::Operator* m_indexQueue;
         
-        stream::NumericParameter<stream::UInt32>* m_left;
-        stream::NumericParameter<stream::UInt32>* m_top;
-        stream::NumericParameter<stream::UInt32>* m_width;
-        stream::NumericParameter<stream::UInt32>* m_height;
+        strom::NumericParameter<strom::UInt32>* m_left;
+        strom::NumericParameter<strom::UInt32>* m_top;
+        strom::NumericParameter<strom::UInt32>* m_width;
+        strom::NumericParameter<strom::UInt32>* m_height;
         
         unsigned int m_imageWidth;
         unsigned int m_imageHeight;

@@ -20,7 +20,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace stream
+namespace strom
 {
     class OperatorTester;
 }
@@ -47,7 +47,7 @@ namespace base
             void testExecuteBayerRgb24();
             
         private:
-            stream::OperatorTester* m_operator;
+            strom::OperatorTester* m_operator;
     };
 }
 

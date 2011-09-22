@@ -17,17 +17,17 @@
 #ifndef BASE_ADJUSTRGBCHANNELS_H
 #define BASE_ADJUSTRGBCHANNELS_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Primitive.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Primitive.h>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
 }
 
 namespace base
 {
-    class AdjustRgbChannels : public stream::OperatorKernel
+    class AdjustRgbChannels : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -49,22 +49,22 @@ namespace base
         AdjustRgbChannels();
         
         virtual OperatorKernel* const clone() const { return new AdjustRgbChannels; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(const unsigned int id) const;
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(const unsigned int id) const;
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;                         
+        static const strom::Version VERSION;                         
         
-        stream::Double m_red;
-        stream::Double m_green;
-        stream::Double m_blue;
+        strom::Double m_red;
+        strom::Double m_green;
+        strom::Double m_blue;
     };
 }
 

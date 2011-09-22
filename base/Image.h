@@ -1,7 +1,7 @@
-#ifndef STREAM_IMAGEIMPL_H
-#define STREAM_IMAGEIMPL_H
+#ifndef STROM_IMAGEIMPL_H
+#define STROM_IMAGEIMPL_H
 
-#include <stream/ImageWrapper.h>
+#include <strom/ImageWrapper.h>
 
 #include <string>
 #include <opencv2/opencv.hpp>
@@ -9,17 +9,17 @@
 
 namespace base
 {
-    class Image : public stream::ImageWrapper
+    class Image : public strom::ImageWrapper
     {
     public:
         Image();
         Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
         Image(const std::string & filename);
-        Image(const stream::Image& image);
+        Image(const strom::Image& image);
         Image(const unsigned int size);
         virtual ~Image();
         
-        virtual const stream::Version & version() const { return VERSION; }
+        virtual const strom::Version & version() const { return VERSION; }
         virtual const std::string & type() const { return TYPE; }
         virtual const std::string & package() const { return PACKAGE; }
         
@@ -30,16 +30,16 @@ namespace base
         
         void open(const std::string& filename);
         void save(const std::string& filename) const;
-        void resize(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType);
+        void resize(const unsigned int width, const unsigned int height, const strom::Image::PixelType pixelType);
         void resize(const unsigned int size);
         
     private:
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;
+        static const strom::Version VERSION;
         
         static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-        static const stream::DataVariant dataTypeFromPixelType(const PixelType pixelType);
+        static const strom::DataVariant dataTypeFromPixelType(const PixelType pixelType);
         
         void getDataFromCvImage(const PixelType pixelType);
         
@@ -47,4 +47,4 @@ namespace base
     };
 }
 
-#endif // STREAM_IMAGEIMPL_H
+#endif // STROM_IMAGEIMPL_H

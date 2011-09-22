@@ -17,14 +17,14 @@
 #ifndef BASE_H
 #define BASE_H
 
-namespace stream
+namespace strom
 {
     class Registry;
 }
 
 extern "C"
 {
-    void registerBase(stream::Registry* const registry);
+    void registerBase(strom::Registry* const registry);
 }
 
 #endif // BASE_H

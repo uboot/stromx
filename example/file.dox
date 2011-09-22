@@ -1,0 +1,65 @@
+/** \page file File
+
+This page introduces the user to the topic.
+
+\code
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Stream>
+    <Operator id="0" package="Base" type="Counter" version="0.1"/>
+    <Operator id="1" package="Base" type="PeriodicDelay" version="0.1">
+        <Parameter id="0">
+            <Data type="UInt32" package="Strom" version="0.1">1000</Data>
+        </Parameter>
+        <Input id="0" operator="0" output="0"/>
+    </Operator>
+    <Thread>
+        <InputNode operator="1" input="0"/>
+    </Thread> 
+</Stream>
+\endcode
+
+\code
+#include <strom/Factory.h>
+#include <strom/XmlReader.h>
+#include <strom/Stream.h>
+#include <strom/Strom.h>
+#include <strom/Operator.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
+
+#include <base/Base.h>
+
+#include <iostream>
+
+int main (int argc, char* argv[])
+{
+    strom::Factory* factory = new strom::Factory;
+    
+    registerStrom(factory);
+    registerBase(factory);
+    
+    strom::Stream* stream = strom::XmlReader(factory).read("file.xml");
+    
+    stream->start();
+    
+    strom::Operator* timer = stream->operators()[1];
+    
+    for(unsigned int i = 0; i < 5; ++i)
+    {
+        strom::DataContainer data = timer->getOutputData(0);
+        strom::ReadAccess<strom::UInt32> count(data);
+        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
+        
+        timer->clearOutputData(0);
+    }
+    
+    stream->stop();
+    stream->join();
+    
+    delete stream;
+}
+\endcode
+
+Now you can proceed to \ref operator.
+*/

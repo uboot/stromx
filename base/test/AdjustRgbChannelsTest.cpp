@@ -3,23 +3,23 @@
 #include <base/AdjustRgbChannels.h>
 #include <base/Image.h>
 
-#include <stream/DataContainer.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::AdjustRgbChannelsTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void AdjustRgbChannelsTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new AdjustRgbChannels());
+        m_operator = new strom::OperatorTester(new AdjustRgbChannels());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));
@@ -32,9 +32,9 @@ namespace base
         m_operator->setParameter(AdjustRgbChannels::GREEN, Double(1.0));
         m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
         
-        stream::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        strom::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         image.save("AdjustRgbChannelsTest_testExecute.png");
     }

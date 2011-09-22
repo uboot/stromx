@@ -2,14 +2,14 @@
 
 #include "Config.h"
 
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/OperatorException.h>
 
 #include <boost/thread/mutex.hpp>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -86,7 +86,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector<const stream::Description*> PeriodicDelay::setupInputs()
+    const std::vector<const strom::Description*> PeriodicDelay::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -110,11 +110,11 @@ namespace base
     
     const std::vector<const Parameter*> PeriodicDelay::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         Parameter* period = new Parameter(PERIOD, DataVariant::UINT_32);
         period->setName("Period (milliseconds)");
-        period->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        period->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(period);
                                     
         return parameters;

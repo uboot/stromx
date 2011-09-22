@@ -2,22 +2,22 @@
 
 #include <base/ConstImage.h>
 #include <base/Image.h>
-#include <stream/DataContainer.h>
-#include <stream/ReadAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::ConstImageTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void ConstImageTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new ConstImage());
+        m_operator = new strom::OperatorTester(new ConstImage());
         m_operator->initialize();
         m_operator->activate();
         
@@ -27,10 +27,10 @@ namespace base
     
     void ConstImageTest::testExecute()
     {
-        stream::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
+        strom::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         image.save("ConstImageTest_testExecute.png");
     }

@@ -1,23 +1,23 @@
 #include "QueueTest.h"
 
 #include <base/Queue.h>
-#include <stream/DataContainer.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::QueueTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void QueueTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new Queue());
+        m_operator = new strom::OperatorTester(new Queue());
         m_operator->initialize();
         m_operator->setParameter(Queue::SIZE, UInt32(3));
         m_operator->activate();
@@ -37,7 +37,7 @@ namespace base
         DataContainer output2 = m_operator->getOutputData(Queue::OUTPUT);
         DataContainer output3 = m_operator->getOutputData(Queue::OUTPUT);
         
-        CPPUNIT_ASSERT_EQUAL(&ReadAccess(input1)(), &ReadAccess(output1)());
+        CPPUNIT_ASSERT_EQUAL(&ReadAccess<>(input1)(), &ReadAccess<>(output1)());
     }    
 
     void QueueTest::tearDown ( void )

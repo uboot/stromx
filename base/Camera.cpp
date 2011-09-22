@@ -2,18 +2,18 @@
 
 #include "Config.h"
 
-#include <stream/OperatorException.h>
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/Id2DataComposite.h>
-#include <stream/Stream.h>
-#include <stream/Thread.h>
-#include <stream/EnumParameter.h>
-#include <stream/NumericParameter.h>
-#include <stream/OperatorException.h>
-#include <stream/Trigger.h>
-#include <stream/Operator.h>
+#include <strom/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/Id2DataComposite.h>
+#include <strom/Stream.h>
+#include <strom/Thread.h>
+#include <strom/EnumParameter.h>
+#include <strom/NumericParameter.h>
+#include <strom/OperatorException.h>
+#include <strom/Trigger.h>
+#include <strom/Operator.h>
 
 #include "ConstImage.h"
 #include "AdjustRgbChannels.h"
@@ -24,7 +24,7 @@
 #include "impl/CameraBuffer.h"
 #include "Queue.h"
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -129,14 +129,14 @@ namespace base
             switch(id)
             {       
             case TRIGGER:
-                m_trigger->setParameter(Trigger::TRIGGER, stream::Trigger());
+                m_trigger->setParameter(Trigger::TRIGGER, strom::Trigger());
                 break;
             case IMAGE:
                 m_input->setParameter(ConstImage::IMAGE, value);
                 
                 try
                 {
-                    const stream::Image& image = dynamic_cast<const stream::Image &>(value);
+                    const strom::Image& image = dynamic_cast<const strom::Image &>(value);
                     
                     m_imageWidth = image.width();
                     m_imageHeight = image.height();
@@ -305,7 +305,7 @@ namespace base
         switch(id)
         {
         case TRIGGER:
-            return stream::Trigger();
+            return strom::Trigger();
         case TRIGGER_MODE:
         {
             const Data& value = m_trigger->getParameter(Trigger::ACTIVE);
@@ -370,7 +370,7 @@ namespace base
         m_stream->join();
     }
     
-    const std::vector<const stream::Description*> Camera::setupInputs()
+    const std::vector<const strom::Description*> Camera::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -394,15 +394,15 @@ namespace base
     
     const std::vector<const Parameter*> Camera::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
-        image->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        image->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(image);
         
         EnumParameter* triggerMode = new EnumParameter(TRIGGER_MODE);
         triggerMode->setName("Trigger mode");
-        triggerMode->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        triggerMode->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         triggerMode->add(EnumDescription(Enum(SOFTWARE), "Software trigger"));
         triggerMode->add(EnumDescription(Enum(INTERNAL), "Internal"));
         triggerMode->add(EnumDescription(Enum(EXTERNAL), "External"));
@@ -410,78 +410,78 @@ namespace base
         
         Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
         trigger->setName("Trigger");
-        trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        trigger->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
         NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE, DataVariant::UINT_32);
         exposure->setName("Exposure (milliseconds)");
-        exposure->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        exposure->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(exposure);
         
         NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataVariant::DOUBLE);
         wbRed->setName("White balance red");
-        wbRed->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbRed->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         wbRed->setMin(Double(0));
         wbRed->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbRed);
         
         NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataVariant::DOUBLE);
         wbGreen->setName("White balance green");
-        wbGreen->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbGreen->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         wbGreen->setMin(Double(0));
         wbGreen->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbGreen);
         
         NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataVariant::DOUBLE);
         wbBlue->setName("White balance blue");
-        wbBlue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        wbBlue->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         wbBlue->setMin(Double(0));
         wbBlue->setMax(Double(WHITE_BALANCE_MAX));
         parameters.push_back(wbBlue);
         
         NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataVariant::UINT_32);
         framePeriod->setName("Frame period (milliseconds)");
-        framePeriod->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        framePeriod->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(framePeriod);
         
         NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
         numBuffers->setName("Number of buffers");
-        numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        numBuffers->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(numBuffers);
     
         NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
         bufferSize->setName("Buffer size in bytes");
-        bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        bufferSize->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(bufferSize);
     
         m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
         m_width->setName("ROI width");
-        m_width->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        m_width->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_width);
     
         m_height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
         m_height->setName("ROI height");
-        m_height->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        m_height->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_height);
         
         m_top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
         m_top->setName("ROI top offset");
-        m_top->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        m_top->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_top);
         
         m_left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
         m_left->setName("ROI left offset");
-        m_left->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        m_left->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(m_left);
         
         EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
         pixelType->setName("Pixel type");
-        pixelType->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
-        pixelType->add(EnumDescription(Enum(stream::Image::MONO_8), "Mono image 8-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::RGB_24), "RGB image 24-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BGR_24), "BGR image 24-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
-        pixelType->add(EnumDescription(Enum(stream::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
+        pixelType->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
+        pixelType->add(EnumDescription(Enum(strom::Image::MONO_8), "Mono image 8-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::RGB_24), "RGB image 24-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BGR_24), "BGR image 24-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
+        pixelType->add(EnumDescription(Enum(strom::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
         parameters.push_back(pixelType);
                                     
         return parameters;

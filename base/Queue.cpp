@@ -2,15 +2,15 @@
 
 #include "Config.h"
 
-#include <stream/NumericParameter.h>
-#include <stream/Primitive.h>
-#include <stream/OperatorException.h>
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/Try.h>
+#include <strom/NumericParameter.h>
+#include <strom/Primitive.h>
+#include <strom/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/Try.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -90,7 +90,7 @@ namespace base
         }
     }
     
-    const std::vector<const stream::Description*> Queue::setupInputs()
+    const std::vector<const strom::Description*> Queue::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -114,12 +114,12 @@ namespace base
     
     const std::vector<const Parameter*> Queue::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataVariant::UINT_32);
         size->setName("Size");
         size->setMin(UInt32(1));
-        size->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+        size->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
         parameters.push_back(size);
                                     
         return parameters;

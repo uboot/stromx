@@ -19,9 +19,9 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <stream/DataVariant.h>
+#include <strom/DataVariant.h>
 
-namespace stream
+namespace strom
 {
     class Factory;
 }
@@ -34,7 +34,6 @@ namespace base
     {
         CPPUNIT_TEST_SUITE (BaseTest);
         CPPUNIT_TEST (testRegisterBase);
-        CPPUNIT_TEST (testRegisterStream);
         CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -45,10 +44,9 @@ namespace base
 
         protected:
             void testRegisterBase();
-            void testRegisterStream();
             
         private:
-            stream::Factory* m_factory;
+            strom::Factory* m_factory;
     };
 }
 

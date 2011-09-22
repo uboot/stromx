@@ -3,11 +3,11 @@
 #include <base/Trigger.h>
 #include <base/Image.h>
 
-#include <stream/Trigger.h>
-#include <stream/Exception.h>
-#include <stream/ReadAccess.h>
+#include <strom/Trigger.h>
+#include <strom/Exception.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
@@ -16,13 +16,13 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::TriggerTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void TriggerTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new Trigger());
+        m_operator = new strom::OperatorTester(new Trigger());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));
@@ -35,8 +35,8 @@ namespace base
         boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
         
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         
         m_operator->clearOutputData(Trigger::OUTPUT);
         m_operator->setInputData(Trigger::INPUT, m_image);
@@ -61,8 +61,8 @@ namespace base
         m_operator->setParameter(Trigger::ACTIVE, Bool(false));
         
         DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
     }
     
     void TriggerTest::getOutputDataInterrupted()
@@ -73,7 +73,7 @@ namespace base
     void TriggerTest::triggerDelayed()
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
-        m_operator->setParameter(Trigger::TRIGGER, stream::Trigger());
+        m_operator->setParameter(Trigger::TRIGGER, strom::Trigger());
     }
 
     void TriggerTest::tearDown ( void )

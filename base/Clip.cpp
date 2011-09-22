@@ -4,15 +4,15 @@
 #include "Image.h"
 #include "Utilities.h"
 
-#include <stream/NumericParameter.h>
-#include <stream/Primitive.h>
-#include <stream/OperatorException.h>
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/WriteAccess.h>
-#include <stream/Id2DataPair.h>
+#include <strom/NumericParameter.h>
+#include <strom/Primitive.h>
+#include <strom/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/WriteAccess.h>
+#include <strom/Id2DataPair.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -77,8 +77,8 @@ namespace base
         provider.receiveInputData(inputDataMapper);
         
         DataContainer container = inputDataMapper.data();
-        WriteAccess access(container);
-        Image& image = dynamic_cast<Image&>(access());
+        WriteAccess<Image> access(container);
+        Image& image = access();
         
         unsigned int top = m_top;
         unsigned int left = m_left;
@@ -94,7 +94,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector<const stream::Description*> Clip::setupInputs()
+    const std::vector<const strom::Description*> Clip::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -118,26 +118,26 @@ namespace base
     
     const std::vector<const Parameter*> Clip::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
         top->setName("Top");
-        top->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        top->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(top);
         
         NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
         left->setName("Left");
-        left->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        left->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(left);
         
         NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
         width->setName("Width");
-        width->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        width->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(width);
         
         NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
         height->setName("Height");
-        height->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        height->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(height);
                                     
         return parameters;

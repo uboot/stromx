@@ -17,19 +17,19 @@
 #ifndef BASE_CONSTIMAGE_H
 #define BASE_CONSTIMAGE_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Image.h>
-#include <stream/Enum.h>
-#include <stream/RecycleAccess.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Image.h>
+#include <strom/Enum.h>
+#include <strom/RecycleAccess.h>
 
-namespace stream
+namespace strom
 {
     class Image;
 }
 
 namespace base
 {
-    class ConstImage : public stream::OperatorKernel
+    class ConstImage : public strom::OperatorKernel
     {
     public:
         enum OutputIds
@@ -46,21 +46,21 @@ namespace base
         virtual ~ConstImage();
         
         virtual OperatorKernel* const clone() const { return new ConstImage; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id) const;
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(unsigned int id) const;
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;   
+        static const strom::Version VERSION;   
         
-        stream::Image* m_image;
-        stream::RecycleAccess m_imageAccess;
+        strom::Image* m_image;
+        strom::RecycleAccess m_imageAccess;
     };
 }
 

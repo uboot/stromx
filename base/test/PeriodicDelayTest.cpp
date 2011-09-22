@@ -3,9 +3,9 @@
 #include <base/PeriodicDelay.h>
 #include <base/Image.h>
 
-#include <stream/OperatorTester.h>
-#include <stream/Exception.h>
-#include <stream/ReadAccess.h>
+#include <strom/OperatorTester.h>
+#include <strom/Exception.h>
+#include <strom/ReadAccess.h>
 
 #include <boost/thread.hpp>
 
@@ -13,13 +13,13 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::PeriodicDelayTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void PeriodicDelayTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new PeriodicDelay());
+        m_operator = new strom::OperatorTester(new PeriodicDelay());
         m_operator->initialize();
         m_operator->activate();
         m_image = DataContainer(new Image("lenna.jpg"));
@@ -28,12 +28,12 @@ namespace base
     
     void PeriodicDelayTest::testExecute()
     {
-        m_operator->setParameter(PeriodicDelay::PERIOD, stream::UInt32(1000));
+        m_operator->setParameter(PeriodicDelay::PERIOD, strom::UInt32(1000));
         
         {
             DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-            ReadAccess access(result);
-            const Image& image = dynamic_cast<const Image&>(access());
+            ReadAccess<Image> access(result);
+            const Image& image = access();
         }
         
         {
@@ -63,12 +63,12 @@ namespace base
     
     void PeriodicDelayTest::testExecuteZeroPeriod()
     {
-        m_operator->setParameter(PeriodicDelay::PERIOD, stream::UInt32(0));
+        m_operator->setParameter(PeriodicDelay::PERIOD, strom::UInt32(0));
         
         {
             DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-            ReadAccess access(result);
-            const Image& image = dynamic_cast<const Image&>(access());
+            ReadAccess<Image> access(result);
+            const Image& image = access();
         }
         
         {

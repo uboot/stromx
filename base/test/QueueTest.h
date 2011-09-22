@@ -20,7 +20,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace stream
+namespace strom
 {
     class OperatorTester;
     class DataContainer;
@@ -44,7 +44,7 @@ namespace base
             void testExecute();
             
         private:
-            stream::OperatorTester* m_operator;
+            strom::OperatorTester* m_operator;
     };
 }
 

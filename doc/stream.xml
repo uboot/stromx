@@ -21,6 +21,7 @@
         package CDATA #REQUIRED
         type CDATA #REQUIRED
         name CDATA #IMPLIED
+        version CDATA #REQUIRED
     >
     
     <!ELEMENT Parameter (Data)>
@@ -32,6 +33,7 @@
     <!ATTLIST Data
         type CDATA #REQUIRED
         package CDATA #REQUIRED
+        version CDATA #REQUIRED
     >
     
     <!ELEMENT Input EMPTY>
@@ -49,47 +51,47 @@
 ]>
 
 <Stream name="Sample stream">
-    <Operator id="0" package="Base" type="ConstImage" name="Source image">
+    <Operator id="0" package="Base" type="ConstImage" version="0.1" name="Source image">
         <Parameter id="0">
-            <Data type="Image" package="Base">lenna.png</Data>
+            <Data type="Image" package="Base" version="0.1">lenna.png</Data>
         </Parameter>
     </Operator>
-    <Operator id="1" package="Base" type="Clip" name="Clip image">
+    <Operator id="1" package="Base" type="Clip" version="0.1" name="Clip image">
         <Parameter id="0">
-            <Data type="UInt32" package="Stream">200</Data>
+            <Data type="UInt32" package="Stream" version="0.1">200</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Stream">210</Data>
+            <Data type="UInt32" package="Stream" version="0.1">210</Data>
         </Parameter>
         <Parameter id="2">
-            <Data type="UInt32" package="Stream">100</Data>
+            <Data type="UInt32" package="Stream" version="0.1">100</Data>
         </Parameter>
         <Parameter id="3">
-            <Data type="UInt32" package="Stream">90</Data>
+            <Data type="UInt32" package="Stream" version="0.1">90</Data>
         </Parameter>
         <Input id="0" operator="0" output="0"/>
     </Operator>
-    <Operator id="2" package="Base" type="AdjustRgbChannels" name="White balance">
+    <Operator id="2" package="Base" type="AdjustRgbChannels" version="0.1" name="White balance">
         <Parameter id="0">
-            <Data type="Double" package="Stream">0.1</Data>
+            <Data type="Double" package="Stream" version="0.1">0.1</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="Double" package="Stream">1.0</Data>
+            <Data type="Double" package="Stream" version="0.1">1.0</Data>
         </Parameter>
         <Parameter id="2">
-            <Data type="Double" package="Stream">1.5</Data>
+            <Data type="Double" package="Stream" version="0.1">1.5</Data>
         </Parameter>
         <Input id="0" operator="1" output="0"/>
     </Operator>
-    <Operator id="3" package="Base" type="AdjustRgbChannels" name="Exposure">
+    <Operator id="3" package="Base" type="AdjustRgbChannels" version="0.1" name="Exposure">
         <Parameter id="0">
-            <Data type="Double" package="Stream">0.8</Data>
+            <Data type="Double" package="Stream" version="0.1">0.8</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="Double" package="Stream">0.8</Data>
+            <Data type="Double" package="Stream" version="0.1">0.8</Data>
         </Parameter>
         <Parameter id="2">
-            <Data type="Double" package="Stream">0.8</Data>
+            <Data type="Double" package="Stream" version="0.1">0.8</Data>
         </Parameter>
         <Input id="0" operator="2" output="0"/>
     </Operator>

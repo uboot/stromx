@@ -19,9 +19,9 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <stream/Image.h>
+#include <strom/Image.h>
 
-namespace stream
+namespace strom
 {
     class Image;
     class DataContainer;
@@ -31,8 +31,8 @@ namespace base
 {
     class Image;
     
-    cv::Mat getOpenCvMat(const stream::Image& image);
-    void adjustImage(const unsigned int width, const unsigned int height, const stream::Image::PixelType pixelType,
+    cv::Mat getOpenCvMat(const strom::Image& image);
+    void adjustImage(const unsigned int width, const unsigned int height, const strom::Image::PixelType pixelType,
                      base::Image*& image);
 };
 

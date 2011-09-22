@@ -2,12 +2,12 @@
 
 #include "Config.h"
 
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/OperatorException.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -83,7 +83,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector<const stream::Description*> Trigger::setupInputs()
+    const std::vector<const strom::Description*> Trigger::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -107,16 +107,16 @@ namespace base
     
     const std::vector<const Parameter*> Trigger::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
         trigger->setName("Trigger");
-        trigger->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        trigger->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(trigger);
         
         Parameter* active = new Parameter(ACTIVE, DataVariant::BOOL);
         active->setName("Active");
-        active->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        active->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(active);
                                     
         return parameters;

@@ -17,15 +17,15 @@
 #ifndef BASE_CONVERTPIXELTYPE_H
 #define BASE_CONVERTPIXELTYPE_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Image.h>
-#include <stream/Enum.h>
-#include <stream/RecycleAccess.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Image.h>
+#include <strom/Enum.h>
+#include <strom/RecycleAccess.h>
 
 
 namespace base
 {
-    class ConvertPixelType : public stream::OperatorKernel
+    class ConvertPixelType : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -47,25 +47,25 @@ namespace base
         ConvertPixelType();
         
         virtual OperatorKernel* const clone() const { return new ConvertPixelType; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(const unsigned int id) const;
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(const unsigned int id) const;
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION;   
+        static const strom::Version VERSION;   
         
-        static const int getCvConversionCode(const stream::Image::PixelType inType, const stream::Image::PixelType outType);
-        static const unsigned int getDestPixelSize(const stream::Image::PixelType pixelType);   
-        static void rgbToBayer(const stream::Image & inImage, stream::Image & outImage);  
-        static void openCvConversion(const stream::Image & inImage, stream::Image & outImage);
+        static const int getCvConversionCode(const strom::Image::PixelType inType, const strom::Image::PixelType outType);
+        static const unsigned int getDestPixelSize(const strom::Image::PixelType pixelType);   
+        static void rgbToBayer(const strom::Image & inImage, strom::Image & outImage);  
+        static void openCvConversion(const strom::Image & inImage, strom::Image & outImage);
         
-        stream::Enum m_pixelType;
+        strom::Enum m_pixelType;
     };
 }
 

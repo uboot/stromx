@@ -1,4 +1,4 @@
-project(stream)
+project(strom)
 
 cmake_minimum_required(VERSION 2.8)
 
@@ -37,7 +37,7 @@ if(XERCES_FOUND)
 endif()
 
 if(BUILD_STREAM)
-    add_subdirectory(stream)
+    add_subdirectory(strom)
 endif()
 
 if(BUILD_BASE)

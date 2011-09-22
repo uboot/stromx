@@ -14,12 +14,13 @@
 *  limitations under the License.
 */
 
-#include <stream/Factory.h>
-#include <stream/XmlReader.h>
-#include <stream/Stream.h>
-#include <stream/Operator.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/Factory.h>
+#include <strom/XmlReader.h>
+#include <strom/Stream.h>
+#include <strom/Strom.h>
+#include <strom/Operator.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
 #include <base/Base.h>
 
@@ -29,30 +30,27 @@
 
 int main (int argc, char* argv[])
 {
-    using namespace stream;
-   
-    Factory* factory = new Factory;
+    strom::Factory* factory = new strom::Factory;
     
-    registerStream(factory);
+    registerStrom(factory);
     registerBase(factory);
     
-    OperatorKernel* op = new math::Add;
+    strom::OperatorKernel* op = new math::Add;
     factory->registerOperator(op);
     
-    Stream* stream = XmlReader(factory).read("operator.xml");
+    strom::Stream* stream = strom::XmlReader(factory).read("operator.xml");
     
     stream->start();
     
-    Operator* timer = stream->operators()[2];
+    strom::Operator* timer = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        DataContainer data = timer->getOutputData(0);
-        ReadAccess access(data);
-        const UInt32 & count = dynamic_cast<const UInt32 &>(access());
-        timer->clearOutputData(0);
+        strom::DataContainer data = timer->getOutputData(0);
+        strom::ReadAccess<strom::UInt32> count(data);
+        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
-        std::cout << "Received " <<  (unsigned int)(count) << std::endl;
+        timer->clearOutputData(0);
     }
     
     stream->stop();

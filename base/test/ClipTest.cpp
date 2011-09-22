@@ -2,23 +2,23 @@
 
 #include <base/Clip.h>
 #include <base/Image.h>
-#include <stream/DataContainer.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::ClipTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void ClipTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new Clip());
+        m_operator = new strom::OperatorTester(new Clip());
         m_operator->initialize();
         m_operator->activate();
         DataContainer image(new Image("lenna.jpg"));
@@ -32,10 +32,10 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
 
-        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+        strom::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
             
-        ReadAccess access(result);
-        const Image& image = dynamic_cast<const Image&>(access());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image.height());
         
@@ -49,10 +49,10 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
-        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-        ReadAccess access(result);
+        strom::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+        ReadAccess<Image> access(result);
         
-        const Image& image = dynamic_cast<const Image&>(access());
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image.height());
         
@@ -66,10 +66,10 @@ namespace base
         m_operator->setParameter(Clip::WIDTH, UInt32(100));
         m_operator->setParameter(Clip::HEIGHT, UInt32(90));
         
-        stream::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-        ReadAccess access(result);
+        strom::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+        ReadAccess<Image> access(result);
         
-        const Image& image = dynamic_cast<const Image&>(access());
+        const Image& image = access();
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.height());
     }

@@ -17,11 +17,11 @@
 #ifndef BASE_IMPL_CAMERABUFFER_H
 #define BASE_IMPL_CAMERABUFFER_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/RecycleAccess.h>
-#include <stream/Primitive.h>
+#include <strom/OperatorKernel.h>
+#include <strom/RecycleAccess.h>
+#include <strom/Primitive.h>
 
-namespace stream
+namespace strom
 {
     class Data;
 }
@@ -30,7 +30,7 @@ namespace base
 {
     namespace impl
     {
-        class CameraBuffer : public stream::OperatorKernel
+        class CameraBuffer : public strom::OperatorKernel
         {
         public:
             enum InputId
@@ -54,24 +54,24 @@ namespace base
             CameraBuffer();
             
             virtual OperatorKernel* const clone() const { return new CameraBuffer; }
-            virtual void setParameter(const unsigned int id, const stream::Data& value);
-            virtual const stream::Data& getParameter(const unsigned int id) const;
-            virtual void execute(stream::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const strom::Data& value);
+            virtual const strom::Data& getParameter(const unsigned int id) const;
+            virtual void execute(strom::DataProvider& provider);
             virtual void activate();
             virtual void deactivate();
             
         private:
-            static const std::vector<const stream::Description*> setupInputs();
-            static const std::vector<const stream::Description*> setupOutputs();
-            static const std::vector<const stream::Parameter*> setupParameters();
+            static const std::vector<const strom::Description*> setupInputs();
+            static const std::vector<const strom::Description*> setupOutputs();
+            static const std::vector<const strom::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const stream::Version VERSION;
+            static const strom::Version VERSION;
             
-            stream::RecycleAccess m_buffers;
-            stream::UInt32 m_bufferSize;
-            stream::UInt32 m_numBuffers;
+            strom::RecycleAccess m_buffers;
+            strom::UInt32 m_bufferSize;
+            strom::UInt32 m_numBuffers;
             unsigned int m_id;
         };
     }

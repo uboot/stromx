@@ -2,14 +2,14 @@
 
 #include "Config.h"
 
-#include <stream/OperatorException.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
+#include <strom/OperatorException.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
 
 #include <typeinfo>
 
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {

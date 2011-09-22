@@ -3,23 +3,23 @@
 #include <base/ConvertPixelType.h>
 #include <base/Image.h>
 
-#include <stream/DataContainer.h>
-#include <stream/Primitive.h>
-#include <stream/ReadAccess.h>
+#include <strom/DataContainer.h>
+#include <strom/Primitive.h>
+#include <strom/ReadAccess.h>
 
-#include <stream/OperatorTester.h>
+#include <strom/OperatorTester.h>
 
 #include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (base::ConvertPixelTypeTest);
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
     void ConvertPixelTypeTest::setUp ( void )
     {
-        m_operator = new stream::OperatorTester(new ConvertPixelType());
+        m_operator = new strom::OperatorTester(new ConvertPixelType());
         m_operator->initialize();
         m_operator->activate();
         Image* image = new Image("lenna.jpg");
@@ -30,15 +30,15 @@ namespace base
     
     void ConvertPixelTypeTest::testExecuteMono8()
     {
-        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::MONO_8));
-        DataContainer destination(new Image(512, 500, stream::Image::BAYERBG_8));
+        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(strom::Image::MONO_8));
+        DataContainer destination(new Image(512, 500, strom::Image::BAYERBG_8));
         m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
         
-        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        strom::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
-        CPPUNIT_ASSERT_EQUAL(stream::Image::MONO_8, image.pixelType());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
+        CPPUNIT_ASSERT_EQUAL(strom::Image::MONO_8, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
         
@@ -47,15 +47,15 @@ namespace base
     
     void ConvertPixelTypeTest::testExecuteBayerBg8()
     {
-        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::BAYERBG_8));
-        DataContainer destination(new Image(512, 500, stream::Image::MONO_8));
+        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(strom::Image::BAYERBG_8));
+        DataContainer destination(new Image(512, 500, strom::Image::MONO_8));
         m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
         
-        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        strom::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
-        CPPUNIT_ASSERT_EQUAL(stream::Image::BAYERBG_8, image.pixelType());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
+        CPPUNIT_ASSERT_EQUAL(strom::Image::BAYERBG_8, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
         
@@ -64,15 +64,15 @@ namespace base
     
     void ConvertPixelTypeTest::testExecuteBayerRgb24()
     {
-        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(stream::Image::RGB_24));
-        DataContainer destination(new Image(512, 500, stream::Image::BGR_24));
+        m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(strom::Image::RGB_24));
+        DataContainer destination(new Image(512, 500, strom::Image::BGR_24));
         m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
         
-        stream::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+        strom::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
         
-        ReadAccess access = ReadAccess(result);
-        const Image& image = dynamic_cast<const Image&>(access());
-        CPPUNIT_ASSERT_EQUAL(stream::Image::RGB_24, image.pixelType());
+        ReadAccess<Image> access(result);
+        const Image& image = access();
+        CPPUNIT_ASSERT_EQUAL(strom::Image::RGB_24, image.pixelType());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
         CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
         

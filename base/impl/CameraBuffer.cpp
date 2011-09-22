@@ -2,18 +2,18 @@
 
 #include "Config.h"
 
-#include <stream/OperatorException.h>
-#include <stream/NumericParameter.h>
-#include <stream/DataContainer.h>
-#include <stream/Id2DataPair.h>
-#include <stream/Id2DataComposite.h>
-#include <stream/DataProvider.h>
+#include <strom/OperatorException.h>
+#include <strom/NumericParameter.h>
+#include <strom/DataContainer.h>
+#include <strom/Id2DataPair.h>
+#include <strom/Id2DataComposite.h>
+#include <strom/DataProvider.h>
 
 #include <base/Image.h>
 
 #include <typeinfo>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -156,12 +156,12 @@ namespace base
         
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
             numBuffers->setName("Number of buffers");
-            numBuffers->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+            numBuffers->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
             bufferSize->setName("Buffer size in bytes");
-            bufferSize->setAccessMode(stream::Parameter::INITIALIZED_WRITE);
+            bufferSize->setAccessMode(strom::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
                                         
             return parameters;

@@ -17,21 +17,21 @@
 #ifndef BASE_TRIGGER_H
 #define BASE_TRIGGER_H
 
-#include <stream/OperatorKernel.h>
-#include <stream/Image.h>
-#include <stream/Primitive.h>
+#include <strom/OperatorKernel.h>
+#include <strom/Image.h>
+#include <strom/Primitive.h>
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-namespace stream
+namespace strom
 {
     class DataContainer;
 }
 
 namespace base
 {
-    class Trigger : public stream::OperatorKernel
+    class Trigger : public strom::OperatorKernel
     {
     public:
         enum InputId
@@ -53,24 +53,24 @@ namespace base
         Trigger();
         
         virtual OperatorKernel* const clone() const { return new Trigger; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(const unsigned int id) const;
-        virtual void execute(stream::DataProvider& provider);
+        virtual void setParameter(unsigned int id, const strom::Data& value);
+        virtual const strom::Data& getParameter(const unsigned int id) const;
+        virtual void execute(strom::DataProvider& provider);
         
     private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
+        static const std::vector<const strom::Description*> setupInputs();
+        static const std::vector<const strom::Description*> setupOutputs();
+        static const std::vector<const strom::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stream::Version VERSION; 
+        static const strom::Version VERSION; 
         
         typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
         boost::condition_variable_any m_cond;
         boost::mutex m_mutex;
-        stream::Bool m_active;
+        strom::Bool m_active;
     };
 }
 

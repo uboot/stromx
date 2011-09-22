@@ -4,15 +4,15 @@
 #include "Image.h"
 #include "Utilities.h"
 
-#include <stream/NumericParameter.h>
-#include <stream/Primitive.h>
-#include <stream/OperatorException.h>
-#include <stream/DataContainer.h>
-#include <stream/DataProvider.h>
-#include <stream/Id2DataPair.h>
-#include <stream/WriteAccess.h>
+#include <strom/NumericParameter.h>
+#include <strom/Primitive.h>
+#include <strom/OperatorException.h>
+#include <strom/DataContainer.h>
+#include <strom/DataProvider.h>
+#include <strom/Id2DataPair.h>
+#include <strom/WriteAccess.h>
 
-using namespace stream;
+using namespace strom;
 
 namespace base
 {
@@ -75,14 +75,14 @@ namespace base
         provider.receiveInputData(inputDataMapper);
         
         DataContainer container = inputDataMapper.data();
-        WriteAccess access(container);
-        Image& image = dynamic_cast<Image&>(access());
+        WriteAccess<Image> access(container);
+        Image& image = access();
 
         cv::Mat cvImage = getOpenCvMat(image);
         
         switch(image.pixelType())
         {
-        case stream::Image::RGB_24:
+        case strom::Image::RGB_24:
         {
             typedef cv::Vec<unsigned char, 3> pixel_t;
 
@@ -96,7 +96,7 @@ namespace base
             }
             break;
         }
-        case stream::Image::BGR_24:
+        case strom::Image::BGR_24:
         {
             typedef cv::Vec<unsigned char, 3> pixel_t;
 
@@ -118,7 +118,7 @@ namespace base
         provider.sendOutputData( outputDataMapper);
     }
     
-    const std::vector<const stream::Description*> AdjustRgbChannels::setupInputs()
+    const std::vector<const strom::Description*> AdjustRgbChannels::setupInputs()
     {
         std::vector<const Description*> inputs;
         
@@ -142,21 +142,21 @@ namespace base
     
     const std::vector<const Parameter*> AdjustRgbChannels::setupParameters()
     {
-        std::vector<const stream::Parameter*> parameters;
+        std::vector<const strom::Parameter*> parameters;
         
         NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         red->setName("Red");
-        red->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        red->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(red);
         
         NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         green->setName("Green");
-        green->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        green->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(green);
         
         NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataVariant::DOUBLE, Double(0.0), Double::MAX);
         blue->setName("Blue");
-        blue->setAccessMode(stream::Parameter::ACTIVATED_WRITE);
+        blue->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
         parameters.push_back(blue);
                                     
         return parameters;
