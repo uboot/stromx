@@ -1,6 +1,6 @@
 /** \page file File
 
-In this tutorial the very same stream as in \ref simple is constructed. However, this time it is deserialized from an XML file instead of manually assembled by strom library functions. The XML file which encodes this stream looks as follows:
+In this tutorial the very same stream as in \ref simple is constructed. However, this time it is deserialized from an XML file instead of manually assembled by \em strom library functions. The XML file which encodes this stream looks as follows:
 
 \code
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -19,7 +19,11 @@ In this tutorial the very same stream as in \ref simple is constructed. However,
 </Stream>
 \endcode
 
-Each operator and each data type is identified by the a combination of \em package and \em name. This allows the use of operator and data types which are defined in third party packages not known to the strom core library. The code which reads this XML file is explained in the following.
+A stream is described as a list of all its operators and its threads. Each operator must be assigned a unique ID which is used to refer to the same operator when defining connections between operators and when assiging operator nodes to threads. The type of an operator is identified by the a combination of \em package and \em type. This allows the use of operators which are defined in third party packages but are not known to the \em strom core library. Parameters of operators can be set by the respective \em Parameter element. This element contains exactly one \em Data element which contains the value of the parameter. The type of the data is also specified by the combination of \em package and \em type. Again this allows allows to set parameters whose type is defined in an external library and thus not know to strom core.
+
+In addition to parameters the \em Operator element contains a list of its inputs and the outputs these inputs are connected to. As in program in the previous tutorial input and output nodes are identified by the operator the belong to (via the operator ID) and the ID of the respective input or output. In the above example the input \c 0 of the second operator (ID \c 1) is connected to the output \c 0 of the first operator (ID \c 1).
+
+The same principle holds for the list of input node elements of a \em Thread element. Here, the only thread in the stream operates the input node \c 0 of the operator with ID \c 1. The code which reads this XML file is explained in the following:
 
 \code
 #include <strom/Factory.h>
@@ -35,7 +39,7 @@ Each operator and each data type is identified by the a combination of \em packa
 #include <iostream>
 \endcode
 
-Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the core library are required. On the other hand it is important to note that the inclusion of the operator headers in the base library is not required anymore. The file base/Base.h is the only header which is needed from this library.
+Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the core library are required. On the other hand, the inclusion of the operator headers in the \em base library is not required anymore. The file base/Base.h is the only one which is needed from this library.
 
 \code
 int main (int argc, char* argv[])
@@ -46,15 +50,26 @@ int main (int argc, char* argv[])
     registerBase(factory);
 \endcode
 
-As a first step a factory 
+As a first step a <em>strom factory</em> is instantiated. The factory will be used to instantiate all operators and data types which appear in the XML file. After construction the factory is empty, i.e. it does not know any operator or data type. Only after registering a <em>strom package</em> the factory can produce operators or data types from this package.
+
+\note
+If the above way of registering a package is used the package must be known at compile time. However, a package can be used even later if the library which contains its code is loaded dynamically during program execution. If the package \em MyPackage was loaded this way then the function <code>registerMyPackage()</code> would have to be called to allow the import of XML files which use \em MyPackage.
 
 \code
     strom::Stream* stream = strom::XmlReader(factory).read("file.xml");
     
     stream->start();
-    
+\endcode
+
+In the next step a stream is instantiated according the XML file using a strom::XmlReader. Note that the previously configured factory is passed to the constructor of strom::XmlReader. This way it knows which classes to instantiate if operators or data types are defined by combinations of package and type names. Because the complete configuration of the stream is given in the file the stream is ready to be started after it has been read. In other words, all operators have automatically been initialized, the connections between them have been established and each thread has been informed about its input nodes.
+
+\code   
     strom::Operator* timer = stream->operators()[1];
-    
+\endcode
+
+So far a stream was build and started without knowing anything about its internal structure. To have a look at the processed data a specific operator must obviously be addressed. The above line obtains a pointer to the second operator in the stream. Note that \em second refers to the zero-based position of the operator in the XML file not its ID there.
+
+\code 
     for(unsigned int i = 0; i < 5; ++i)
     {
         strom::DataContainer data = timer->getOutputData(0);
@@ -71,5 +86,7 @@ As a first step a factory
 }
 \endcode
 
-Now you can proceed to \ref operator.
+The rest of the code is exactly the same as in the previous example.
+
+This program illustrates that it is possible to define and operate a stream without knowledge of the exact data types of its operators and their parameters. It is only necessary to either link to the library which contains these types or to dynamically load this library at runtime. In other words, the \em strom core is designed work with any operator which are defined in external packages. The tutorial \ref operator shows how to implement such an operator in a custom package.
 */
