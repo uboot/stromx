@@ -1,0 +1,5 @@
+digraph strom
+{
+    node [shape = box, fontname = Helvetica, style = "rounded"]
+    "Counter" -> "Add" -> "PeriodicDelay" [headlabel = "INPUT", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+}

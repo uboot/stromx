@@ -1,10 +1,14 @@
 /** \page operator Operator
 
-This page introduces the user to the topic.
-
 - \ref operator_declare
 - \ref operator_implement
 - \ref operator_deploy
+
+In this example the stream in previous examples shall be extended by an operator \em Add which adds to a constant to number processed:
+
+\image html example/operator.png
+
+However such an operator is not defined in \em base which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em Math.
 
 \section operator_declare Declaring the operator
 
