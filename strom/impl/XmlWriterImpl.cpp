@@ -150,15 +150,22 @@ namespace strom
             DOMElement* dataElement = m_doc->createElement(Str2Xml("Data"));
             parElement->appendChild(dataElement);
             
-            //Create attribute type of current parameter param (one for each parameter possible)
+            //Create attribute type of data (one for each data possible)
             DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
             typeAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).type().c_str()));
             dataElement->setAttributeNode(typeAttr);
             
-            //Create attribute package of current parameter param (one for each parameter possible)
+            //Create attribute package of data (one for each data possible)
             DOMAttr* packageAttr = m_doc->createAttribute(Str2Xml("package"));
             packageAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).package().c_str()));
             dataElement->setAttributeNode(packageAttr);
+            
+            //Create attribute version of data (one for each data possible)
+            DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+            std::string str1 = boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().major()) + 
+                                "." + boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().minor());
+            verAttr->setValue(Str2Xml(str1.c_str()));
+            dataElement->setAttributeNode(verAttr);
             
             //Create value of current parameter param (one for each parameter possible)
             //First, create unique input parameter name for function Data::serialize()
