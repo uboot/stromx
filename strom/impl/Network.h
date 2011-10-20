@@ -52,7 +52,7 @@ namespace strom
             
             void addOperator(Operator* const op);
             void removeOperator(Operator* const op);
-            const Node source(const Operator* const targetOp, const unsigned int inputId) const;
+            const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
 
             void activate();
             void deactivate();

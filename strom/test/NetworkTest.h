@@ -39,7 +39,7 @@ namespace strom
         CPPUNIT_TEST(testActivate);
         CPPUNIT_TEST(testDeactivate);
         CPPUNIT_TEST(testRemoveConnectedOperator);
-        CPPUNIT_TEST(testSource);
+        CPPUNIT_TEST(testConnectionSource);
         CPPUNIT_TEST_SUITE_END ();
 
     public:
@@ -54,7 +54,7 @@ namespace strom
         void testRemoveConnectedOperator();
         void testActivate();
         void testDeactivate();
-        void testSource();
+        void testConnectionSource();
             
     private: 
         impl::Network* m_network;

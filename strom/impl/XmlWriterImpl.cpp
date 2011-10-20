@@ -176,7 +176,7 @@ namespace strom
                 ++iter_in)
             {
                 //Get the source node
-                Node node = m_stream->source(currOp, (*iter_in)->id());
+                Node node = m_stream->connectionSource(currOp, (*iter_in)->id());
                 
                 //Create Input only for connected operators
                 if (! node.empty())

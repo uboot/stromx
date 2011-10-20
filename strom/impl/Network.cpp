@@ -147,7 +147,7 @@ namespace strom
             throw WrongArgument("Operator does not exist");
         }
         
-        const Node Network::source(const Operator* const targetOp, const unsigned int inputId) const
+        const Node Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
         {
             for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
                 iter != m_operators.end();

@@ -195,9 +195,9 @@ namespace strom
         m_network->removeOperator(op);
     }
     
-    const Node Stream::source(const Operator*const targetOp, const unsigned int inputId) const
+    const Node Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
     {
-        return m_network->source(targetOp, inputId);
+        return m_network->connectionSource(targetOp, inputId);
     }
 }
 
