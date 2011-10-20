@@ -64,8 +64,8 @@ namespace strom
         const Parameter & parameter(const unsigned int id) const;
         
     protected:
-        virtual void setParameter(const unsigned int id, const Data& value) = 0;
-        virtual const Data& getParameter(const unsigned int id) const = 0;
+        virtual void setParameter(const unsigned int id, const Data& value) {};
+        virtual const Data& getParameter(const unsigned int id) const {};
         virtual void execute(DataProvider& provider) = 0;
         virtual void initialize() {}
         virtual void activate() {}

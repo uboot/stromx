@@ -8,9 +8,13 @@ In this example the stream in previous examples shall be extended by an operator
 
 \image html example/operator.png
 
-However such an operator is not defined in the package \em base which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em math.
+However such an operator is not defined in the package \em Base which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em Math.
 
 \section operator_declare Declaring the operator
+
+A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernel do not have to be aware of multiple threads which access them. All concurrent accesses are handled by the strom::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.
+
+The new operator kernel is declared in the header file <em>Add.h</em>:
 
 \code
 #ifndef MATH_ADD_H
@@ -28,6 +32,12 @@ namespace math
 {
     class Add : public strom::OperatorKernel
     {
+\endcode
+
+The kernel will be a member of the package \em Math and is therefore added to the namespace \em math.
+Operator kernels are derived from strom::OperatorKernel which is the common base class of all operator kernels. 
+
+\code
     public:
         enum InputId
         {
@@ -44,13 +54,23 @@ namespace math
             OFFSET
         };
         
+\endcode
+
+Each input, output and parameter of the operator is identified by an ID. Here each of these IDs is 0, but any other value is possible as long as it is unique within its category (inputs, outputs, parameters).
+
+\code
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
+        virtual void execute(strom::DataProvider& provider);
+
         virtual void setParameter(unsigned int id, const strom::Data& value);
         virtual const strom::Data& getParameter(unsigned int id);
-        virtual void execute(strom::DataProvider& provider);
-        
+\endcode
+
+First the default constructor is declared. The functions strom::OperatorKernel::clone() and strom::OperatorKernel::execute() are abstract in strom::OperatorKernel and must be defined in each custom operator kernel. Because \em Add has one parameter the following functions to read and write parameters must be implemented.
+
+\code
     private:
         static const std::vector<const strom::Description*> setupInputs();
         static const std::vector<const strom::Description*> setupOutputs();
@@ -66,6 +86,8 @@ namespace math
 
 #endif // MATH_ADD_H
 \endcode
+
+The subsequent private declarations are for internal use only and will be explained when used in the implementation of \em Add.
 
 \section operator_implement Implementing the operator
 
