@@ -63,13 +63,14 @@ namespace strom
         const std::vector<const Parameter*>& parameters() const { return m_parameters; }
         const Parameter & parameter(const unsigned int id) const;
         
-    protected:
         virtual void setParameter(const unsigned int id, const Data& value) {};
         virtual const Data& getParameter(const unsigned int id) const {};
         virtual void execute(DataProvider& provider) = 0;
         virtual void initialize() {}
         virtual void activate() {}
         virtual void deactivate() {}
+        
+    protected:
         virtual void initialize(const std::vector<const Description*>& inputs,
                                 const std::vector<const Description*>& outputs,
                                 const std::vector<const Parameter*>& parameters);

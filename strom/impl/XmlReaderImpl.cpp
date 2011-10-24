@@ -41,7 +41,7 @@ namespace strom
     namespace impl
     {
         const std::string XmlReaderImpl::DTD =
-"\
+" \
 <!ELEMENT Stream (Operator*, Thread*)> \
 <!ATTLIST Stream \
     name CDATA #IMPLIED \
@@ -97,7 +97,7 @@ namespace strom
                 
                 virtual void error (const SAXParseException &exc)
                 {
-                    // throw FileAccessFailed(m_filename, "XML file is not valid.");
+                    throw FileAccessFailed(m_filename, "XML file is not valid.");
                 }
                 
             private:
@@ -120,7 +120,7 @@ namespace strom
             }
 
             parser->setErrorHandler(errHandler);
-            parser->setValidationScheme(XercesDOMParser::Val_Always);
+            parser->setValidationScheme(XercesDOMParser::Val_Auto);
             parser->setDoNamespaces(true);    // optional
 
             const char* xmlFile = filename.c_str();
