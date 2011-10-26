@@ -33,6 +33,7 @@ namespace strom
         class DataContainerImpl;
     }
     
+    /** \brief Container which manages the life-cycle of data objects */
     class DataContainer
     {
         friend class impl::WriteAccessImpl;

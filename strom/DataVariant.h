@@ -22,6 +22,7 @@
 
 namespace strom
 {
+    /** \brief %Description of a data type */
     class DataVariant
     {
     public:

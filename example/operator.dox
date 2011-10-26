@@ -156,7 +156,9 @@ Moreover, the constructor of strom::OperatorKernel accepts vectors of descriptio
     }
 \endcode
 
-Each initialization function allocates an empty vector which contains pointers to strom::Description objects (in the case of inputs and outputs) or strom::Parameter objects (for parameters). Input and output descriptions only contain their ID and names. Parameters additionally provide information about their access mode. Here strom::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of strom::Parameter to describe specific types of parameters in more detail. One example is strom::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
+Each initialization function allocates an empty vector which contains pointers to strom::Description objects (in the case of inputs and outputs) or strom::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it is simply the type of the data stored for this parameter.
+
+Parameters additionally provide information about their access mode. Here strom::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of strom::Parameter to describe specific types of parameters in more detail. One example is strom::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
 
 \code
     Add::Add()
@@ -221,6 +223,9 @@ As mentioned above operator kernels do not have to be thread-safe. It is guarant
 
 The actual work done by \em Add happens in \c execute(). There the input data is processed and the result is passed to the operator output. The input data is obtained from a strom::DataProvider object. To request the data of an specific input a strom::Id2DataPair object \c inputMapper is instantiated with the ID of the input in question. The data provider looks up the corresponding input and waits for input data. If the data arrives it stores in \c inputMapper.
 
+\note
+The above procedure to obtain the input data of the operator via data mappers might appear complicated at first sight. However, this approach allows for more flexible strategies to get input data. Consider e.g. an operator which has two inputs but requires only data from one of them at a time. If \c inputMapper1 and \c inputMapper2 map to the respective inputs, the call <tt>provider.receiveInputData(inputMapper1 || inputMapper2)</tt> returns as soon as one of the inputs received some data. On the other hand, <tt>provider.receiveInputData(inputMapper1 && inputMapper2)</tt> waits until both inputs received their data. More complicated expressions of data mappers can be built by combining strom::operator&&, strom::operator|| and strom::Try.
+
 \code
         strom::ReadAccess<strom::UInt32> input(inputMapper.data());
 
@@ -238,9 +243,39 @@ The member strom::Id2DataPair::data() returns a strom::DataContainer object. As 
 } 
 \endcode
 
-
+To send the result data to the output it is packed into a DataContainer and paired with the ID of the respective output. The data provider is responsible to send the data container to the corresponding output. As in the case of strom::DataProvider::receiveInputData(), the function strom::DataProvider::sendOutputData() accepts expressions strom::Id2DataPair objects together with strom::operator&&, strom::operator|| and strom::Try.
 
 \section operator_deploy Deploying the operator
+
+Finally, the new operator should be used as a part of a stream. This is simply done by adapting the file which defines the layout of the stream. 
+
+\code
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Stream>
+    <Operator id="0" package="Base" type="Counter"/>
+    <Operator id="1" package="Base" type="Counter"/>
+    <Operator id="2" package="Math" type="Add">
+        <Parameter id="0">
+            <Data type="UInt32" package="Strom">2</Data>
+        </Parameter>
+        <Input id="0" operator="0" output="0"/>
+    </Operator>
+    <Operator id="3" package="Base" type="PeriodicDelay">
+        <Parameter id="0">
+            <Data type="UInt32" package="Strom">1000</Data>
+        </Parameter>
+        <Input id="0" operator="2" output="0"/>
+    </Operator>
+    <Thread name="">
+        <InputNode operator="2" input="0"/>
+        <InputNode operator="2" input="0"/>
+        <InputNode operator="3" input="0"/>
+    </Thread> 
+</Stream>
+\endcode 
+
+The program which runs the stream is almost identical to the one in the previous tutorial. The only extra step which has to be taken is the registration of the operator \em Add with the factory. 
 
 \code
 #include <strom/Factory.h>
@@ -265,10 +300,17 @@ int main (int argc, char* argv[])
     
     registerStrom(factory);
     registerBase(factory);
-    
+
     OperatorKernel* op = new math::Add;
     factory->registerOperator(op);
-    
+\endcode 
+
+To register a single operator one object of its class has to be instantiated and passed to the factory.
+
+\note
+If the package \em Math contained more operators and was built as separate shared object it would make sense to define a function \c registerMath() in the shared object which registers all its operators.
+
+\code 
     Stream* stream = XmlReader(factory).read("operator.xml");
     
     stream->start();
@@ -290,5 +332,7 @@ int main (int argc, char* argv[])
     delete stream;
 }
 \endcode
+
+Using the presented technique allows to convert single steps of a data processing pipeline to \em strom operator. These operators can then be combined arbitrarily to form new processing networks. In a similar fashion it is possible to define custom data types by subclassing strom::Data.
 
 */

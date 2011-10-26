@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief %Description of an operator parameter */
     class Parameter : public Description
     {
     public:

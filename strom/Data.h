@@ -26,6 +26,7 @@ namespace strom
 {
     class Version;
     
+    /** \brief Abstract base class of all data objects */
     class Data
     {
     public:

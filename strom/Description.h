@@ -22,6 +22,7 @@
 
 namespace strom
 {
+    /** \brief %Description of an operator input or output */
     class Description
     {
     public:
