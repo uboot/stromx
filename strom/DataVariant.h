@@ -22,7 +22,7 @@
 
 namespace strom
 {
-    /** \brief %Description of a data type */
+    /** \brief %Description of a data variant */
     class DataVariant
     {
     public:
@@ -53,8 +53,9 @@ namespace strom
         const static DataVariant RGB_48_IMAGE;
         const static DataVariant BGR_48_IMAGE;
         
-        explicit DataVariant(const unsigned int typeId, const std::string & description)
-          : m_typeId(typeId),
+        explicit DataVariant(const unsigned int id, const std::string & package, const std::string & description)
+          : m_id(id),
+            m_package(package),
             m_description(description)
         {}
         
@@ -63,6 +64,10 @@ namespace strom
         const std::string & description() const { return m_description; }
         
         virtual const bool is(const DataVariant& type) const;
+        
+    protected:
+        const unsigned int id() const { return m_id; }
+        const std::string & package() const { return m_package; }
        
     private: 
         enum Types
@@ -95,7 +100,8 @@ namespace strom
             BGR_48_IMAGE_ID
         };
         
-        unsigned int m_typeId;
+        unsigned int m_id;
+        std::string m_package;
         std::string m_description;
     };
 }

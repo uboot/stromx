@@ -22,9 +22,9 @@
 
 namespace strom
 {
-    class DataTypeTest : public CPPUNIT_NS :: TestFixture
+    class DataVariantTest : public CPPUNIT_NS :: TestFixture
     {
-        CPPUNIT_TEST_SUITE (DataTypeTest);
+        CPPUNIT_TEST_SUITE (DataVariantTest);
         CPPUNIT_TEST (testIntTypes);
         CPPUNIT_TEST (testImageTypes);
         CPPUNIT_TEST_SUITE_END ();

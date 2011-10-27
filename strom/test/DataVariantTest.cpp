@@ -23,11 +23,11 @@
 
 #include <cppunit/TestAssert.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (strom::DataTypeTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (strom::DataVariantTest);
 
 namespace strom
 {
-    void DataTypeTest::testImageTypes()
+    void DataVariantTest::testImageTypes()
     {
         CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.is(DataVariant::IMAGE));
         CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::IMAGE));
@@ -42,7 +42,7 @@ namespace strom
         CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::MONO_IMAGE));
     }
 
-    void DataTypeTest::testIntTypes()
+    void DataVariantTest::testIntTypes()
     {
         CPPUNIT_ASSERT(DataVariant::UINT.is(DataVariant::INT));
         CPPUNIT_ASSERT(DataVariant::UINT_8.is(DataVariant::UINT));
