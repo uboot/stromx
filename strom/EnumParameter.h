@@ -23,6 +23,7 @@
 
 namespace strom
 {
+    /** \brief %Description of an enumeration parameter */
     class EnumDescription
     {
     public:
