@@ -47,7 +47,7 @@ namespace strom
             Id2DataPair pair1(1, m_dataContainer);
             Id2DataPair pair2(2, m_dataContainer);
             
-            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), InvalidState);
+            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
         }          
         
         {
@@ -119,7 +119,7 @@ namespace strom
             Id2DataPair pair1(1);
             Id2DataPair pair2(2);   
             
-            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), InvalidState);
+            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
         }
         
         {

@@ -25,7 +25,7 @@ namespace strom
 {
     class Operator;
     
-    /** \brief Factory of operator and data objects */
+    /** \brief %Factory of operator and data objects */
     class Factory : public Registry
     {
     public:

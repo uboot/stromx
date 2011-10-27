@@ -23,6 +23,7 @@
 
 namespace strom
 {
+    /** \brief Meta-information about an operator */
     class OperatorInfo
     {
     public:

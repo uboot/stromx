@@ -24,7 +24,7 @@ namespace strom
 {
     class Data;
     
-    /** \brief Base class of all %strom exceptions */
+    /** \brief Abstract %strom exception */
     class Exception : public std::exception
     {
     public:
@@ -58,10 +58,10 @@ namespace strom
     };  
     
     /** \brief The current state does not allow a specific operation */
-    class InvalidState : public Exception
+    class WrongState : public Exception
     {
     public:
-        InvalidState(const std::string & message = "InvalidState")
+        WrongState(const std::string & message = "WrongState")
           : Exception(message)
         {}
     };
@@ -124,14 +124,7 @@ namespace strom
         {}
     };
     
-    class WrongState : public Exception
-    {
-    public:
-        WrongState(const std::string & message = "WrongState")
-          : Exception(message)
-        {}
-    };
-    
+    /** \brief %Data could not be serialized */
     class SerializationError : public Exception
     {
     public:
@@ -148,6 +141,7 @@ namespace strom
         const std::string& m_path;
     };
     
+    /** \brief %Data could not be deserialized */
     class DeserializationError : public Exception
     {
     public:

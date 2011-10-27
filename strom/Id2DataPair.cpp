@@ -34,10 +34,10 @@ namespace strom
     void Id2DataPair::get(strom::impl::Id2DataMap& id2DataMap) const
     {
         if(! m_data.empty())
-            throw InvalidState("Data has already been assigned to this ID-data pair");
+            throw WrongState("Data has already been assigned to this ID-data pair");
             
         if(id2DataMap[m_id].empty())
-            throw InvalidState("The requested output is empty");
+            throw WrongState("The requested output is empty");
         
         m_data = id2DataMap[m_id];
         id2DataMap[m_id] = DataContainer();
@@ -46,10 +46,10 @@ namespace strom
     void Id2DataPair::set(strom::impl::Id2DataMap& id2DataMap) const
     {
         if(m_data.empty())
-            throw InvalidState("This ID-data pair contains no data");
+            throw WrongState("This ID-data pair contains no data");
         
         if(! id2DataMap[m_id].empty())
-            throw InvalidState("Data has already been assigned to this input ID");
+            throw WrongState("Data has already been assigned to this input ID");
         
         id2DataMap[m_id] = m_data;
         m_data = DataContainer();

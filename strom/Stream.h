@@ -27,6 +27,7 @@ namespace strom
     class Registry;
     class Thread;
 	
+    /** \brief The core data processing pipeline of strom */
     class Stream
     {
     public:

@@ -308,7 +308,7 @@ int main (int argc, char* argv[])
 To register a single operator one object of its class has to be instantiated and passed to the factory.
 
 \note
-If the package \em Math contained more operators and was built as separate shared object it would make sense to define a function \c registerMath() in the shared object which registers all its operators.
+If the package \em Math contained more operators and was built as separate shared object it would make sense to define a function \c registerMath() in the shared object which registered all operators in \em Math.
 
 \code 
     Stream* stream = XmlReader(factory).read("operator.xml");

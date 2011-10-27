@@ -22,6 +22,7 @@ namespace strom
     class Data;
     class OperatorKernel;
     
+    /** \brief Abstract registry of operator and data objects */
     class Registry
     {
     public:

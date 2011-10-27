@@ -31,6 +31,7 @@ namespace strom
         class SynchronizedOperatorKernel;
     }
     
+    /** \brief Abstract operator kernel */
     class OperatorKernel : public OperatorInfo
     {
         friend class impl::SynchronizedOperatorKernel;

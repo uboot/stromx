@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief %Operator with utility functions for unit testing */
     class OperatorTester : public Operator
     {
     public:

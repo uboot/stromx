@@ -41,13 +41,13 @@ namespace strom
     void Id2DataPairTest::testSet ( void )
     {
         Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_THROW(pair0.set(*m_map), InvalidState);
+        CPPUNIT_ASSERT_THROW(pair0.set(*m_map), WrongState);
         
         Id2DataPair pair1(0, m_dataContainer);
         CPPUNIT_ASSERT_NO_THROW(pair1.set(*m_map));
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
         CPPUNIT_ASSERT(pair1.data().empty());
-        CPPUNIT_ASSERT_THROW(pair1.set(*m_map), InvalidState);
+        CPPUNIT_ASSERT_THROW(pair1.set(*m_map), WrongState);
         
         Id2DataPair pair3(10, m_dataContainer);
         CPPUNIT_ASSERT_THROW(pair3.set(*m_map), WrongId);
@@ -87,7 +87,7 @@ namespace strom
         CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
         CPPUNIT_ASSERT((*m_map)[0].empty());
         
-        CPPUNIT_ASSERT_THROW(pair0.get(*m_map), InvalidState);
+        CPPUNIT_ASSERT_THROW(pair0.get(*m_map), WrongState);
         Id2DataPair pair3(10);
         CPPUNIT_ASSERT_THROW(pair3.get(*m_map), WrongId);
     }

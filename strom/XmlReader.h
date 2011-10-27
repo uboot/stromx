@@ -24,6 +24,7 @@ namespace strom
     class Factory;
     class Stream;
     
+    /** \brief Reader for XML encoded streams */
     class XmlReader
     {
     public:

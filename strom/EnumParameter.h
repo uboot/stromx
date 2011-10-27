@@ -23,7 +23,7 @@
 
 namespace strom
 {
-    /** \brief %Description of an enumeration parameter */
+    /** \brief %Description of an enumeration value */
     class EnumDescription
     {
     public:
@@ -40,6 +40,7 @@ namespace strom
         std::string m_description;
     };
     
+    /** \brief %Description of an enumeration parameter */
     class EnumParameter : public Parameter
     {
     public:

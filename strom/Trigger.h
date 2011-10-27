@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief Special data value for trigger signals */
     class Trigger : public Data
     {
     public:

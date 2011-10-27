@@ -71,7 +71,7 @@ namespace strom
             lock_t lock(m_mutex);
             
             if(m_status != NONE)
-                throw InvalidState("Operator has already been initialized.");
+                throw WrongState("Operator has already been initialized.");
             
             m_op->initialize();
             
@@ -90,7 +90,7 @@ namespace strom
             lock_t lock(m_mutex);
             
             if(m_status != INITIALIZED)
-                throw InvalidState("Operator must be initialized.");
+                throw WrongState("Operator must be initialized.");
             
             BOOST_ASSERT(m_inputMap.isEmpty());
             BOOST_ASSERT(m_outputMap.isEmpty());
@@ -107,7 +107,7 @@ namespace strom
                 return;
             
             if(m_status == EXECUTING)
-                throw InvalidState("Operator can not be deactivated while it is executing.");
+                throw WrongState("Operator can not be deactivated while it is executing.");
             
             m_op->deactivate();
             
@@ -215,7 +215,7 @@ namespace strom
         if( m_status != ACTIVE
             && m_status != EXECUTING)
         {
-            throw InvalidState("Operator must be active to access data.");
+            throw WrongState("Operator must be active to access data.");
         }
     }
         

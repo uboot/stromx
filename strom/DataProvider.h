@@ -23,6 +23,7 @@ namespace strom
     class DataContainer;
     class Id2DataMapper;
   
+    /** \brief Provider of functions to receive and send data */
     class DataProvider
     {
     public:
