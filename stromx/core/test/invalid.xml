@@ -2,6 +2,5 @@
 
 <Strom name="TestStrom">
     <Operator id="0" package="TestPackage" type="TestOperator" name="Number 1">
-    <Thread name="Processing thread">
-    </Thread> 
+    <Thread name="Processing thread"/>
 </Strom>

@@ -18,16 +18,12 @@
 #define MATH_ADD_H
 
 #include <stromx/core/OperatorKernel.h>
+#include <stromx/core/DataContainer.h>
 #include <stromx/core/Primitive.h>
-
-namespace core
-{
-    class DataContainer;
-}
 
 namespace math
 {
-    class Add : public core::OperatorKernel
+    class Add : public stromx::core::OperatorKernel
     {
     public:
         enum InputId
@@ -48,21 +44,21 @@ namespace math
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
-        virtual void execute(core::DataProvider& provider);
+        virtual void execute(stromx::core::DataProvider& provider);
         
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id) const;
+        virtual void setParameter(unsigned int id, const stromx::core::Data& value);
+        virtual const stromx::core::Data& getParameter(const unsigned int id) const;
         
     private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
+        static const std::vector<const stromx::core::Description*> setupInputs();
+        static const std::vector<const stromx::core::Description*> setupOutputs();
+        static const std::vector<const stromx::core::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const core::Version VERSION;                         
+        static const stromx::core::Version VERSION;                         
         
-        core::UInt32 m_offset;
+        stromx::core::UInt32 m_offset;
     };
 }
 

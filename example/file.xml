@@ -4,7 +4,7 @@
     <Operator id="0" package="Base" type="Counter" version="0.1"/>
     <Operator id="1" package="Base" type="PeriodicDelay" version="0.1">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom" version="0.1">1000</Data>
+            <Data type="UInt32" package="Core" version="0.1">1000</Data>
         </Parameter>
         <Input id="0" operator="0" output="0"/>
     </Operator>

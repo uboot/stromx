@@ -24,6 +24,7 @@
 
 #include <iostream>
 
+using namespace stromx;
 
 int main (int argc, char* argv[])
 {

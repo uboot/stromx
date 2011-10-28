@@ -17,7 +17,7 @@
 #include <stromx/core/Factory.h>
 #include <stromx/core/XmlReader.h>
 #include <stromx/core/Stream.h>
-#include <stromx/core/Strom.h>
+#include <stromx/core/Core.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
@@ -26,11 +26,13 @@
 
 #include <iostream>
 
+using namespace stromx;
+
 int main (int argc, char* argv[])
 {
     core::Factory factory;
     
-    registerStrom(factory);
+    registerCore(factory);
     registerBase(factory);
     
     core::Stream* stream = core::XmlReader(factory).read("file.xml");

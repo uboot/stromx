@@ -23,11 +23,6 @@ The new operator kernel is declared in the header file <em>Add.h</em>:
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 
-namespace core
-{
-    class DataContainer;
-}
-
 namespace math
 {
     class Add : public core::OperatorKernel
@@ -253,24 +248,22 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Stream>
-    <Operator id="0" package="Base" type="Counter"/>
-    <Operator id="1" package="Base" type="Counter"/>
-    <Operator id="2" package="Math" type="Add">
+    <Operator id="0" package="Base" type="Counter" version="0.1"/>
+    <Operator id="1" package="Math" type="Add" version="1.0">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom">2</Data>
+            <Data type="UInt32" package="Core" version="0.1">2</Data>
         </Parameter>
         <Input id="0" operator="0" output="0"/>
     </Operator>
-    <Operator id="3" package="Base" type="PeriodicDelay">
+    <Operator id="2" package="Base" type="PeriodicDelay">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom">1000</Data>
+            <Data type="UInt32" package="Core" version="0.1">1000</Data>
         </Parameter>
-        <Input id="0" operator="2" output="0"/>
+        <Input id="0" operator="1" output="0"/>
     </Operator>
     <Thread name="">
+        <InputNode operator="1" input="0"/>
         <InputNode operator="2" input="0"/>
-        <InputNode operator="2" input="0"/>
-        <InputNode operator="3" input="0"/>
     </Thread> 
 </Stream>
 \endcode 
@@ -281,7 +274,7 @@ The program which runs the stream is almost identical to the one in the previous
 #include <stromx/core/Factory.h>
 #include <stromx/core/XmlReader.h>
 #include <stromx/core/Stream.h>
-#include <stromx/core/Strom.h>
+#include <stromx/core/Core.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
@@ -299,7 +292,7 @@ int main (int argc, char* argv[])
    
     Factory* factory = new Factory;
     
-    registerStrom(factory);
+    registerCore(factory);
     registerBase(factory);
 
     OperatorKernel* op = new math::Add;

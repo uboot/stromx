@@ -39,7 +39,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(registerCore(*m_factory));
             
             core::Data* data = 0;
-            CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Strom", "UInt32"));
+            CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Core", "UInt32"));
             CPPUNIT_ASSERT(data);
             delete data;
         }

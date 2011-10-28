@@ -9,7 +9,7 @@ In this tutorial the very same stream as in \ref simple is constructed. However,
     <Operator id="0" package="Base" type="Counter" version="0.1"/>
     <Operator id="1" package="Base" type="PeriodicDelay" version="0.1">
         <Parameter id="0">
-            <Data type="UInt32" package="Strom" version="0.1">1000</Data>
+            <Data type="UInt32" package="Core" version="0.1">1000</Data>
         </Parameter>
         <Input id="0" operator="0" output="0"/>
     </Operator>
@@ -29,7 +29,7 @@ The same principle holds for the list of input node elements of a \em Thread ele
 #include <stromx/core/Factory.h>
 #include <stromx/core/XmlReader.h>
 #include <stromx/core/Stream.h>
-#include <stromx/core/Strom.h>
+#include <stromx/core/Core.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
@@ -47,7 +47,7 @@ int main (int argc, char* argv[])
 {
     core::Factory factory;  
  
-    registerStrom(factory);
+    registerCore(factory);
     registerBase(factory);
 \endcode
 

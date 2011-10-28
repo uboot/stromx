@@ -34,7 +34,7 @@ In the following, the source code of \em simple.cpp is printed with comments und
 #include <iostream>
 \endcode
 
-As usual the program starts be including the required header files. Strom uses a fine grained approach to the inclusion of headers, i.e. only the necessary headers are included by the library headers and forward declarations are used wherever possible. As a consequence the headers of all classes which are used in the code are included here.
+As usual the program starts be including the required header files. Stromx uses a fine grained approach to the inclusion of headers, i.e. only the necessary headers are included by the library headers and forward declarations are used wherever possible. As a consequence the headers of all classes which are used in the code are included here.
 
 The first four headers are part of the core core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are part of the core base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
