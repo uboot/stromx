@@ -21,52 +21,55 @@
 #include <vector>
 #include "Node.h"
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class Network;
-        class ThreadImpl;
-    }
-    
-    /** \brief A thread which visits input nodes */
-    class Thread
-    {    
-        friend class Stream;
-        friend class ThreadTest;
-        
-    public:
-        enum Status
+        namespace impl
         {
-            INACTIVE,
-            ACTIVE,
-            DEACTIVATING,
+            class Network;
+            class ThreadImpl;
+        }
+        
+        /** \brief A thread which visits input nodes */
+        class Thread
+        {    
+            friend class Stream;
+            friend class ThreadTest;
+            
+        public:
+            enum Status
+            {
+                INACTIVE,
+                ACTIVE,
+                DEACTIVATING,
+            };
+            
+            virtual ~Thread();
+            
+            const Status status() const;
+            
+            const std::string & name() const;
+            void setName(const std::string& name);
+            const std::vector<Node> & nodeSequence() const;
+            
+            void addNode(Operator* const op, const unsigned int inputId);
+            void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
+            void removeNode(const unsigned int position);
+                
+        private:
+            Thread(const impl::Network* const network);
+            
+            void start();
+            void stop();
+            void join();
+            
+            impl::ThreadImpl* m_thread;
+            std::string m_name;
+            const impl::Network* m_network;
+            std::vector<Node> m_nodeSequence;
         };
-        
-        virtual ~Thread();
-        
-        const Status status() const;
-        
-        const std::string & name() const;
-        void setName(const std::string& name);
-        const std::vector<Node> & nodeSequence() const;
-        
-        void addNode(Operator* const op, const unsigned int inputId);
-        void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
-        void removeNode(const unsigned int position);
-               
-    private:
-        Thread(const impl::Network* const network);
-        
-        void start();
-        void stop();
-        void join();
-        
-        impl::ThreadImpl* m_thread;
-        std::string m_name;
-        const impl::Network* m_network;
-        std::vector<Node> m_nodeSequence;
-    };
+    }
 }
 
 #endif // STROM_THREAD_H

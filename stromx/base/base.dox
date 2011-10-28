@@ -1,4 +1,4 @@
 /**
-\namespace base
+\namespace stromx::base
 \brief Basic operators
 */

@@ -17,33 +17,36 @@
 #ifndef STROM_IMPL_INPUTNODE_H
 #define STROM_IMPL_INPUTNODE_H
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    class Operator;
-    
-    namespace impl
+    namespace core
     {
-        class OutputNode;
-    
-        class InputNode
+        class DataContainer;
+        class Operator;
+        
+        namespace impl
         {
-        public:
-            InputNode(Operator* const op, const unsigned int inputId);
-            
-            const unsigned int inputId() const { return m_inputId; }
-            Operator* const op() const { return m_operator; }
-            const bool isConnected() const { return m_source != 0; }
-            const OutputNode& source() const;
-            void connect(OutputNode* const output);
-            void disconnect();
-            void setInputData();
-            
-        private:
-            OutputNode *m_source;
-            unsigned int m_inputId;
-            Operator* m_operator;
-        };
+            class OutputNode;
+        
+            class InputNode
+            {
+            public:
+                InputNode(Operator* const op, const unsigned int inputId);
+                
+                const unsigned int inputId() const { return m_inputId; }
+                Operator* const op() const { return m_operator; }
+                const bool isConnected() const { return m_source != 0; }
+                const OutputNode& source() const;
+                void connect(OutputNode* const output);
+                void disconnect();
+                void setInputData();
+                
+            private:
+                OutputNode *m_source;
+                unsigned int m_inputId;
+                Operator* m_operator;
+            };
+        }
     }
 }
 

@@ -17,33 +17,36 @@
 #include "EnumParameter.h"
 #include "Exception.h"
 
-namespace core
-{   
-    void EnumParameter::add(const core::EnumDescription& description)
-    {
-        for(std::vector<EnumDescription>::const_iterator iter = m_descriptions.begin();
-            iter != m_descriptions.end();
-            ++iter)
+namespace stromx
+{
+    namespace core
+    {   
+        void EnumParameter::add(const core::EnumDescription& description)
         {
-            if(iter->value() == description.value())
-                throw WrongArgument("A description with this value has already been added.");
-        }
-        
-        m_descriptions.push_back(description);
-    }
-
-    void EnumParameter::remove(const core::EnumDescription& description)
-    {
-        for(std::vector<EnumDescription>::iterator iter = m_descriptions.begin();
-            iter != m_descriptions.end();
-            ++iter)
-        {
-            if(iter->value() == description.value())
-                m_descriptions.erase(iter);
+            for(std::vector<EnumDescription>::const_iterator iter = m_descriptions.begin();
+                iter != m_descriptions.end();
+                ++iter)
+            {
+                if(iter->value() == description.value())
+                    throw WrongArgument("A description with this value has already been added.");
+            }
             
-            return;
+            m_descriptions.push_back(description);
         }
-        
-        throw WrongArgument("No description with this value exists.");
+
+        void EnumParameter::remove(const core::EnumDescription& description)
+        {
+            for(std::vector<EnumDescription>::iterator iter = m_descriptions.begin();
+                iter != m_descriptions.end();
+                ++iter)
+            {
+                if(iter->value() == description.value())
+                    m_descriptions.erase(iter);
+                
+                return;
+            }
+            
+            throw WrongArgument("No description with this value exists.");
+        }
     }
 }

@@ -26,72 +26,75 @@
 #include "Description.h"
 #include "Version.h"
 
-namespace core
+namespace stromx
 {
-    template<typename data_t>
-    class NumericParameter;
-    
-    /** \brief %Primitive data value */
-    template <class repr_t, class val_t>
-    class Primitive : public Data
+    namespace core
     {
-    public:
-        explicit Primitive() : m_value(0) {}
-        explicit Primitive(const repr_t value) : m_value(value) {}
+        template<typename data_t>
+        class NumericParameter;
         
-        virtual const std::string & type() const { return TYPE; }
-        virtual const Version & version() const { return VERSION; }
-        virtual const std::string & package() const { return PACKAGE; }
-        
-        virtual const DataVariant & variant() const;
-        
-        virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
-        
-        virtual const std::string serialize(const std::string & name, const std::string & path) const 
+        /** \brief %Primitive data value */
+        template <class repr_t, class val_t>
+        class Primitive : public Data
         {
-            return boost::lexical_cast<std::string>(m_value);
-        }
+        public:
+            explicit Primitive() : m_value(0) {}
+            explicit Primitive(const repr_t value) : m_value(value) {}
+            
+            virtual const std::string & type() const { return TYPE; }
+            virtual const Version & version() const { return VERSION; }
+            virtual const std::string & package() const { return PACKAGE; }
+            
+            virtual const DataVariant & variant() const;
+            
+            virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
+            
+            virtual const std::string serialize(const std::string & name, const std::string & path) const 
+            {
+                return boost::lexical_cast<std::string>(m_value);
+            }
+            
+            virtual void deserialize(const std::string & data, const std::string & path)
+            {
+                m_value = boost::lexical_cast<val_t>(data);
+            }
+            
+            operator repr_t() const { return m_value; }
+            
+            static const Primitive MIN;
+            static const Primitive MAX;
+            
+        private:
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const Version VERSION;
+            
+            val_t m_value;
+        };
         
-        virtual void deserialize(const std::string & data, const std::string & path)
-        {
-            m_value = boost::lexical_cast<val_t>(data);
-        }
+        typedef Primitive<bool, bool> Bool;
+            
+        typedef Primitive<int, int8_t> Int8;
+        template <>
+        const std::string Int8::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        void Int8::deserialize(const std::string & data, const std::string & path);
         
-        operator repr_t() const { return m_value; }
+        typedef Primitive<unsigned int, uint8_t> UInt8;
+        template <>
+        const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        void UInt8::deserialize(const std::string & data, const std::string & path);
         
-        static const Primitive MIN;
-        static const Primitive MAX;
+        typedef Primitive<int, int16_t> Int16;
+        typedef Primitive<unsigned int, uint16_t> UInt16;
         
-    private:
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const Version VERSION;
+        typedef Primitive<int, int32_t> Int32;
+        typedef Primitive<unsigned int, uint32_t> UInt32;
         
-        val_t m_value;
-    };
-    
-    typedef Primitive<bool, bool> Bool;
-        
-    typedef Primitive<int, int8_t> Int8;
-    template <>
-    const std::string Int8::serialize(const std::string & name, const std::string & path) const;
-    template <>
-    void Int8::deserialize(const std::string & data, const std::string & path);
-    
-    typedef Primitive<unsigned int, uint8_t> UInt8;
-    template <>
-    const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
-    template <>
-    void UInt8::deserialize(const std::string & data, const std::string & path);
-    
-    typedef Primitive<int, int16_t> Int16;
-    typedef Primitive<unsigned int, uint16_t> UInt16;
-    
-    typedef Primitive<int, int32_t> Int32;
-    typedef Primitive<unsigned int, uint32_t> UInt32;
-    
-    typedef Primitive<double, float> Float;
-    typedef Primitive<double, double> Double;
+        typedef Primitive<double, float> Float;
+        typedef Primitive<double, double> Double;
+    }
 }
-
+    
 #endif // STROM_PRIMITIVE_H

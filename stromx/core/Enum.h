@@ -19,21 +19,24 @@
 
 #include "Primitive.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief Value of an enumeration */
-    class Enum : public UInt32
+    namespace core
     {
-    public:
-        Enum() : UInt32() {}
-        Enum(const unsigned int value) : UInt32(value) {}
-        
-        virtual const DataVariant & variant() const { return DataVariant::ENUM; }
-        virtual const std::string & type() const { return TYPE; }
-        
-    private:
-        static const std::string TYPE;
-    };
+        /** \brief Value of an enumeration */
+        class Enum : public UInt32
+        {
+        public:
+            Enum() : UInt32() {}
+            Enum(const unsigned int value) : UInt32(value) {}
+            
+            virtual const DataVariant & variant() const { return DataVariant::ENUM; }
+            virtual const std::string & type() const { return TYPE; }
+            
+        private:
+            static const std::string TYPE;
+        };
+    }
 }
 
 #endif // STROM_ENUM_H

@@ -21,158 +21,161 @@
 #include <set>
 #include <boost/lexical_cast.hpp>
 
-namespace core
+namespace stromx
 {
-    OperatorKernel::OperatorKernel (const std::string & type,
-                        const std::string & package,
-                        const Version & version,
-                        const std::vector<const Parameter*>& parameters)
-      : m_type(type),
-        m_package(package),
-        m_version(version),
-        m_parameters(parameters)
+    namespace core
     {
-        validate(parameters);
-        
-        for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
-            iter != parameters.end();
-            ++iter)
+        OperatorKernel::OperatorKernel (const std::string & type,
+                            const std::string & package,
+                            const Version & version,
+                            const std::vector<const Parameter*>& parameters)
+        : m_type(type),
+            m_package(package),
+            m_version(version),
+            m_parameters(parameters)
         {
-            m_parameterMap[(*iter)->id()] = *iter;
+            validate(parameters);
+            
+            for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
+                iter != parameters.end();
+                ++iter)
+            {
+                m_parameterMap[(*iter)->id()] = *iter;
+            }
         }
-    }
-    
-    OperatorKernel::OperatorKernel (const std::string & type,
-                        const std::string & package,
-                        const Version & version)
-      : m_type(type),
-        m_package(package),
-        m_version(version)
-    {
-    }
-    
-    OperatorKernel::OperatorKernel(const std::string& type,
-                       const std::string& package,
-                       const core::Version& version,
-                       const std::vector<const Description* >& inputs,
-                       const std::vector<const Description* >& outputs,
-                       const std::vector<const Parameter* >& parameters)
-      : m_type(type),
-        m_package(package),
-        m_version(version),
-        m_inputs(inputs),
-        m_outputs(outputs),
-        m_parameters(parameters)
-    {
-        validate(inputs);
-        validate(outputs);
-        validate(parameters);
         
-        for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
-            iter != parameters.end();
-            ++iter)
+        OperatorKernel::OperatorKernel (const std::string & type,
+                            const std::string & package,
+                            const Version & version)
+        : m_type(type),
+            m_package(package),
+            m_version(version)
         {
-            m_parameterMap[(*iter)->id()] = *iter;
         }
-    }
+        
+        OperatorKernel::OperatorKernel(const std::string& type,
+                        const std::string& package,
+                        const core::Version& version,
+                        const std::vector<const Description* >& inputs,
+                        const std::vector<const Description* >& outputs,
+                        const std::vector<const Parameter* >& parameters)
+        : m_type(type),
+            m_package(package),
+            m_version(version),
+            m_inputs(inputs),
+            m_outputs(outputs),
+            m_parameters(parameters)
+        {
+            validate(inputs);
+            validate(outputs);
+            validate(parameters);
+            
+            for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
+                iter != parameters.end();
+                ++iter)
+            {
+                m_parameterMap[(*iter)->id()] = *iter;
+            }
+        }
 
-    
-    void OperatorKernel::initialize(const std::vector<const core::Description*>& inputs,
-                              const std::vector<const core::Description*>& outputs,
-                              const std::vector<const core::Parameter*>& parameters)
-    {
-        for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
-            iter != inputs.end();
-            ++iter)
+        
+        void OperatorKernel::initialize(const std::vector<const core::Description*>& inputs,
+                                const std::vector<const core::Description*>& outputs,
+                                const std::vector<const core::Parameter*>& parameters)
         {
-            m_inputs.push_back(*iter);
+            for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
+                iter != inputs.end();
+                ++iter)
+            {
+                m_inputs.push_back(*iter);
+            }
+            
+            validate(inputs);
+            
+            for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
+                iter != outputs.end();
+                ++iter)
+            {
+                m_outputs.push_back(*iter);
+            }
+            
+            validate(outputs);
+            
+            for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
+                iter != parameters.end();
+                ++iter)
+            {
+                m_parameters.push_back(*iter);
+                m_parameterMap[(*iter)->id()] = *iter;
+            }
+            
+            validate(m_parameters);
         }
         
-        validate(inputs);
-        
-        for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
-            iter != outputs.end();
-            ++iter)
+        Parameter& OperatorKernel::parameter(const unsigned int id)
         {
-            m_outputs.push_back(*iter);
+            return const_cast<Parameter&>(parameter(id));
         }
         
-        validate(outputs);
-        
-        for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
-            iter != parameters.end();
-            ++iter)
+        const Parameter& OperatorKernel::parameter(const unsigned int id) const
         {
-            m_parameters.push_back(*iter);
-            m_parameterMap[(*iter)->id()] = *iter;
+            std::map<unsigned int, const Parameter*>::const_iterator iter = m_parameterMap.find(id);
+            if(iter == m_parameterMap.end())
+                throw WrongId("No parameter with ID " + id);
+            
+            return *iter->second;
         }
         
-        validate(m_parameters);
-    }
-    
-    Parameter& OperatorKernel::parameter(const unsigned int id)
-    {
-        return const_cast<Parameter&>(parameter(id));
-    }
-    
-    const Parameter& OperatorKernel::parameter(const unsigned int id) const
-    {
-        std::map<unsigned int, const Parameter*>::const_iterator iter = m_parameterMap.find(id);
-        if(iter == m_parameterMap.end())
-            throw WrongId("No parameter with ID " + id);
-        
-        return *iter->second;
-    }
-    
-    OperatorKernel::~OperatorKernel()
-    {
-        deactivate();
-        
-        for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
-            iter != m_inputs.end();
-            ++iter)
+        OperatorKernel::~OperatorKernel()
         {
-            delete *iter;
+            deactivate();
+            
+            for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                ++iter)
+            {
+                delete *iter;
+            }
+            
+            for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                delete *iter;
+            }
+            
+            for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
+                iter != m_parameters.end();
+                ++iter)
+            {
+                delete *iter;
+            }
         }
-        
-        for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
-            iter != m_outputs.end();
-            ++iter)
-        {
-            delete *iter;
-        }
-        
-        for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
-            iter != m_parameters.end();
-            ++iter)
-        {
-            delete *iter;
-        }
-    }
 
-    void OperatorKernel::validate(const std::vector<const Description*>& descriptors)
-    {
-        std::set<unsigned int> ids;
-        
-        for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
-            iter != descriptors.end();
-            ++iter)
+        void OperatorKernel::validate(const std::vector<const Description*>& descriptors)
         {
-            if(ids.count((*iter)->id()))
-                throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+            std::set<unsigned int> ids;
+            
+            for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
+                iter != descriptors.end();
+                ++iter)
+            {
+                if(ids.count((*iter)->id()))
+                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+            }
         }
-    }
-    
-    void OperatorKernel::validate(const std::vector<const Parameter*>& descriptors)
-    {
-        std::set<unsigned int> ids;
         
-        for(std::vector<const Parameter*>::const_iterator iter = descriptors.begin();
-            iter != descriptors.end();
-            ++iter)
+        void OperatorKernel::validate(const std::vector<const Parameter*>& descriptors)
         {
-            if(ids.count((*iter)->id()))
-                throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+            std::set<unsigned int> ids;
+            
+            for(std::vector<const Parameter*>::const_iterator iter = descriptors.begin();
+                iter != descriptors.end();
+                ++iter)
+            {
+                if(ids.count((*iter)->id()))
+                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+            }
         }
     }
 }

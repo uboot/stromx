@@ -21,27 +21,30 @@
 #include <vector>
 #include "Registry.h"
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    
-    /** \brief %Factory of operator and data objects */
-    class Factory : public Registry
+    namespace core
     {
-    public:
-        virtual ~Factory();
+        class Operator;
         
-        virtual void registerOperator(const OperatorKernel* const op);      
-        virtual Operator* const newOperator(const std::string & package, const std::string & name) const;      
-        virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
-        
-        virtual void registerData(const Data* const data);        
-        virtual Data* const newData(const std::string & package, const std::string & name) const;
-        
-    private:
-        std::vector<const OperatorKernel*> m_operators;
-        std::vector<const Data*> m_dataTypes;
-    };
+        /** \brief %Factory of operator and data objects */
+        class Factory : public Registry
+        {
+        public:
+            virtual ~Factory();
+            
+            virtual void registerOperator(const OperatorKernel* const op);      
+            virtual Operator* const newOperator(const std::string & package, const std::string & name) const;      
+            virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
+            
+            virtual void registerData(const Data* const data);        
+            virtual Data* const newData(const std::string & package, const std::string & name) const;
+            
+        private:
+            std::vector<const OperatorKernel*> m_operators;
+            std::vector<const Data*> m_dataTypes;
+        };
+    }
 }
 
 #endif // STROM_FACTORY_H

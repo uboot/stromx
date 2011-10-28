@@ -18,34 +18,37 @@
 
 #include "impl/RecycleAccessImpl.h"
 
-namespace core
+namespace stromx
 {
-    RecycleAccess::RecycleAccess(const DataContainer data)
-      : m_impl(new impl::RecycleAccessImpl(data))
+    namespace core
     {
-    }
+        RecycleAccess::RecycleAccess(const DataContainer data)
+        : m_impl(new impl::RecycleAccessImpl(data))
+        {
+        }
 
-    Data*const RecycleAccess::operator()() const
-    {
-        if(! m_impl.get())
-            return 0;
-        
-        return (*m_impl)();
-    }
+        Data*const RecycleAccess::operator()() const
+        {
+            if(! m_impl.get())
+                return 0;
+            
+            return (*m_impl)();
+        }
 
-    Data*const RecycleAccess::operator()(const unsigned int timeout) const
-    {
-        if(! m_impl.get())
-            return 0;
+        Data*const RecycleAccess::operator()(const unsigned int timeout) const
+        {
+            if(! m_impl.get())
+                return 0;
+            
+            return (*m_impl)(timeout);
+        }
         
-        return (*m_impl)(timeout);
-    }
-    
-    void RecycleAccess::add(const DataContainer data)
-    {
-        if(! m_impl.get())
-            m_impl = std::tr1::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));
-        else
-            m_impl->add(data);
-    }
-} 
+        void RecycleAccess::add(const DataContainer data)
+        {
+            if(! m_impl.get())
+                m_impl = std::tr1::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));
+            else
+                m_impl->add(data);
+        }
+    } 
+}

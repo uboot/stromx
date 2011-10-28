@@ -21,53 +21,56 @@
 #include <vector> 
 #include "impl/Network.h"
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    class Registry;
-    class Thread;
-	
-    /** \brief The core data processing pipeline of core */
-    class Stream
+    namespace core
     {
-    public:
-        enum Status
+        class Operator;
+        class Registry;
+        class Thread;
+        
+        /** \brief The core data processing pipeline of core */
+        class Stream
         {
-            INACTIVE,
-            ACTIVE,
-            DEACTIVATING,
+        public:
+            enum Status
+            {
+                INACTIVE,
+                ACTIVE,
+                DEACTIVATING,
+            };
+            
+            Stream();
+            ~Stream();
+            const std::string& name() const { return m_name; }
+            void setName(const std::string& name) { m_name = name; }
+            const Status status() const { return m_status; }
+            const std::vector<Operator*>& operators() const { return m_network->operators(); }
+            
+            
+            void addOperator(Operator* const op);
+            void removeOperator(Operator* const op);
+            
+            void connect(Operator* const sourceOp, const unsigned int outputId, 
+                        Operator* const targetOp, const unsigned int inputId);
+            void disconnect(Operator* const targetOp, const unsigned int inputId);
+            const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+            
+            Thread* const addThread();
+            void removeThread(Thread* const thr);
+            const std::vector<Thread*> & threads() const;
+            
+            void start();
+            void join();
+            void stop();
+            
+        private:
+            std::string m_name; 
+            impl::Network* const m_network;
+            std::vector<Thread*> m_threads;
+            Status m_status;
         };
-        
-        Stream();
-        ~Stream();
-        const std::string& name() const { return m_name; }
-        void setName(const std::string& name) { m_name = name; }
-        const Status status() const { return m_status; }
-        const std::vector<Operator*>& operators() const { return m_network->operators(); }
-        
-        
-        void addOperator(Operator* const op);
-        void removeOperator(Operator* const op);
-        
-        void connect(Operator* const sourceOp, const unsigned int outputId, 
-                     Operator* const targetOp, const unsigned int inputId);
-        void disconnect(Operator* const targetOp, const unsigned int inputId);
-        const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
-        
-        Thread* const addThread();
-        void removeThread(Thread* const thr);
-        const std::vector<Thread*> & threads() const;
-        
-        void start();
-        void join();
-        void stop();
-        
-    private:
-        std::string m_name; 
-        impl::Network* const m_network;
-        std::vector<Thread*> m_threads;
-        Status m_status;
-    };
+    }
 }
 
 #endif // STROM_STREAM_H

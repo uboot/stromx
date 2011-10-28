@@ -17,9 +17,12 @@
 #include "Config.h"
 #include "None.h"
 
-namespace core
+namespace stromx
 {
-    const std::string None::TYPE = "None";
-    const std::string None::PACKAGE = PACKAGE_NAME;
-    const Version None::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
+    namespace core
+    {
+        const std::string None::TYPE = "None";
+        const std::string None::PACKAGE = PACKAGE_NAME;
+        const Version None::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
+    }
 }

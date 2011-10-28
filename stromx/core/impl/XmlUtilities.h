@@ -21,47 +21,50 @@
 
 #include <xercesc/util/XMLString.hpp>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class XmlError : public Exception
+        namespace impl
         {
-        public:
-            XmlError(const std::string & message = "XmlError")
-            : Exception(message)
-            {}
-        };
-    
-        class Str2Xml
-        {
-        public:
-            explicit Str2Xml(const char* const str);
-            ~Str2Xml();
-            
-            operator const XMLCh*();
-            
-        private:
-            XMLCh* m_xmlStr;
-        };
+            class XmlError : public Exception
+            {
+            public:
+                XmlError(const std::string & message = "XmlError")
+                : Exception(message)
+                {}
+            };
         
-        class Xml2Str
-        {
-        public:
-            explicit Xml2Str(const XMLCh* const str);
-            ~Xml2Str();
+            class Str2Xml
+            {
+            public:
+                explicit Str2Xml(const char* const str);
+                ~Str2Xml();
+                
+                operator const XMLCh*();
+                
+            private:
+                XMLCh* m_xmlStr;
+            };
             
-            operator const char*();
+            class Xml2Str
+            {
+            public:
+                explicit Xml2Str(const XMLCh* const str);
+                ~Xml2Str();
+                
+                operator const char*();
+                
+            private:
+                char* m_str;
+            };
             
-        private:
-            char* m_str;
-        };
-        
-        class XmlUtilities
-        {
-        public:
-            static const std::string computePath(const std::string & filename);
-        };
+            class XmlUtilities
+            {
+            public:
+                static const std::string computePath(const std::string & filename);
+            };
+        }
     }
 }
 

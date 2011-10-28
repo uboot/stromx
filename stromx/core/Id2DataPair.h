@@ -20,41 +20,44 @@
 #include "DataContainer.h"
 #include "Id2DataMapper.h"
 
-namespace core
-{  
-    namespace impl
-    {
-        class Id2DataMap;
+namespace stromx
+{
+    namespace core
+    {  
+        namespace impl
+        {
+            class Id2DataMap;
+        }
+        
+        /** \brief A direct map of one ID to one data object */
+        class Id2DataPair : public Id2DataMapper
+        {
+        public:
+            Id2DataPair(const unsigned int id, DataContainer data)
+            : m_id(id),
+                m_data(DataContainer())
+            { m_data = data; }
+            
+            Id2DataPair(const unsigned int id)
+            : m_id(id),
+                m_data(DataContainer())
+            {}
+            
+            ~Id2DataPair() {}
+            
+            const unsigned int id() const { return m_id; }
+            const DataContainer & data() const { return m_data; }
+            
+            virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const;
+            virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const;
+            virtual void get(impl::Id2DataMap& id2DataMap) const; 
+            virtual void set(impl::Id2DataMap& id2DataMap) const;     
+        
+        private:
+            unsigned int m_id;
+            mutable DataContainer m_data;
+        }; 
     }
-    
-    /** \brief A direct map of one ID to one data object */
-    class Id2DataPair : public Id2DataMapper
-    {
-    public:
-        Id2DataPair(const unsigned int id, DataContainer data)
-          : m_id(id),
-            m_data(DataContainer())
-        { m_data = data; }
-        
-        Id2DataPair(const unsigned int id)
-          : m_id(id),
-            m_data(DataContainer())
-        {}
-        
-        ~Id2DataPair() {}
-        
-        const unsigned int id() const { return m_id; }
-        const DataContainer & data() const { return m_data; }
-        
-        virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const;
-        virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const;
-        virtual void get(impl::Id2DataMap& id2DataMap) const; 
-        virtual void set(impl::Id2DataMap& id2DataMap) const;     
-    
-    private:
-        unsigned int m_id;
-        mutable DataContainer m_data;
-    }; 
 }
 
 #endif // STROM_ID2DATAPAIR_H

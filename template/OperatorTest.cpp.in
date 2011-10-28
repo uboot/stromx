@@ -2,27 +2,28 @@
 
 #include <cppunit/TestAssert.h>
 
-#include <stream/OperatorTester.h>
+#include <stromx/core/OperatorTester.h>
 
-#include <@PACKAGE@/@CLASS@.h>
+#include <stromx/@PACKAGE@/@CLASS@.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::@PACKAGE@::@CLASS@Test);
 
-using namespace stream;
-
-namespace @PACKAGE@
+namespace stromx
 {
-    void @CLASS@Test::setUp()
+    namespace @PACKAGE@
     {
-        m_operator = new OperatorTester(new @CLASS@());
-    }
+        void @CLASS@Test::setUp()
+        {
+            m_operator = new core::OperatorTester(new @CLASS@());
+        }
 
-    void @CLASS@Test::testExecute()
-    {
-    }
+        void @CLASS@Test::testExecute()
+        {
+        }
 
-    void @CLASS@Test::tearDown()
-    {
-        delete m_operator;
+        void @CLASS@Test::tearDown()
+        {
+            delete m_operator;
+        }
     }
 }

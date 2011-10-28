@@ -20,44 +20,47 @@
 #include <tr1/memory>
 #include <ostream>
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataVariant;
-    
-    namespace impl
+    namespace core
     {
-        class ReadAccessImpl;
-        class WriteAccessImpl;
-        class RecycleAccessImpl;
-        class DataContainerImpl;
+        class Data;
+        class DataVariant;
+        
+        namespace impl
+        {
+            class ReadAccessImpl;
+            class WriteAccessImpl;
+            class RecycleAccessImpl;
+            class DataContainerImpl;
+        }
+        
+        /** \brief Container which manages the life-cycle of data objects */
+        class DataContainer
+        {
+            friend class impl::WriteAccessImpl;
+            friend class impl::ReadAccessImpl;
+            friend class impl::RecycleAccessImpl;
+            
+            friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+            friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+            friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+            
+        public:
+            DataContainer() {}
+            explicit DataContainer(core::Data*const data);
+            
+            const DataVariant & type();
+            const bool empty() const { return m_impl.get() == 0; }
+            
+        private:
+            std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
+        };     
+        
+        const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        std::ostream& operator<< (std::ostream& out, const DataContainer & container);
     }
-    
-    /** \brief Container which manages the life-cycle of data objects */
-    class DataContainer
-    {
-        friend class impl::WriteAccessImpl;
-        friend class impl::ReadAccessImpl;
-        friend class impl::RecycleAccessImpl;
-        
-        friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
-        friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
-        friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
-        
-    public:
-        DataContainer() {}
-        explicit DataContainer(core::Data*const data);
-        
-        const DataVariant & type();
-        const bool empty() const { return m_impl.get() == 0; }
-        
-    private:
-        std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
-    };     
-    
-    const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
-    const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
-    std::ostream& operator<< (std::ostream& out, const DataContainer & container);
 }
 
 #endif // STROM_DATACONTAINER_H

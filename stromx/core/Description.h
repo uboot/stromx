@@ -20,30 +20,33 @@
 #include <string>
 #include "DataVariant.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief %Description of an operator input or output */
-    class Description
+    namespace core
     {
-    public:
-        Description(const unsigned int id, const DataVariant& type)
-          : m_id(id),
-            m_type(type)
-        {}
-        
-        virtual ~Description() {}
-        
-        const std::string & name() const { return m_name; }
-        const unsigned int id() const { return m_id; }
-        const DataVariant & type() const { return m_type; }
-        
-        void setName(const std::string & name) { m_name = name; }
-        
-    private:
-        std::string m_name;
-        unsigned int m_id;
-        DataVariant m_type;
-    };
+        /** \brief %Description of an operator input or output */
+        class Description
+        {
+        public:
+            Description(const unsigned int id, const DataVariant& type)
+            : m_id(id),
+                m_type(type)
+            {}
+            
+            virtual ~Description() {}
+            
+            const std::string & name() const { return m_name; }
+            const unsigned int id() const { return m_id; }
+            const DataVariant & type() const { return m_type; }
+            
+            void setName(const std::string & name) { m_name = name; }
+            
+        private:
+            std::string m_name;
+            unsigned int m_id;
+            DataVariant m_type;
+        };
+    }
 }
 
 #endif // STROM_DESCRIPTOR_H

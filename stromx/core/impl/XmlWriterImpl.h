@@ -24,34 +24,38 @@
 #include "../Parameter.h"
 #include "../Stream.h"
 #include "XmlUtilities.h"
-namespace core
+
+namespace stromx
 {
-    class Stream;
-    
-    namespace impl
+    namespace core
     {
-        class XmlWriterImpl
+        class Stream;
+        
+        namespace impl
         {
-        public:
-            XmlWriterImpl();
-            ~XmlWriterImpl() {};
-            void write(const std::string & filename, const Stream& stream);
-            
-        private:
-            const unsigned int translateOperatorPointerToID(const Operator* const op) const;
-            void createThreads(const std::vector<Thread*> threads);
-            void createInputNodes(const Thread* const currThr, xercesc::DOMElement* const thrElement);
-            void createOperators(const std::vector<Operator*> operators);
-            void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
-            void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
-            void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
-            
-            const Stream* m_stream;
-            std::string m_filename;
-            xercesc::DOMImplementation* m_impl;
-            xercesc::DOMDocument* m_doc;
-            xercesc::DOMElement* m_strElement;
-        };
+            class XmlWriterImpl
+            {
+            public:
+                XmlWriterImpl();
+                ~XmlWriterImpl() {};
+                void write(const std::string & filename, const Stream& stream);
+                
+            private:
+                const unsigned int translateOperatorPointerToID(const Operator* const op) const;
+                void createThreads(const std::vector<Thread*> threads);
+                void createInputNodes(const Thread* const currThr, xercesc::DOMElement* const thrElement);
+                void createOperators(const std::vector<Operator*> operators);
+                void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
+                void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
+                void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
+                
+                const Stream* m_stream;
+                std::string m_filename;
+                xercesc::DOMImplementation* m_impl;
+                xercesc::DOMDocument* m_doc;
+                xercesc::DOMElement* m_strElement;
+            };
+        }
     }
 }
 

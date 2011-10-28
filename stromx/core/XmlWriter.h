@@ -19,16 +19,19 @@
 
 #include <string>
 
-namespace core
+namespace stromx
 {
-    class Stream;
-    
-    /** \brief Writer for XML encoded streams */
-    class XmlWriter
+        namespace core
     {
-    public:
-        void write(const std::string& filename, const Stream& stream) const;
-    };
+        class Stream;
+        
+        /** \brief Writer for XML encoded streams */
+        class XmlWriter
+        {
+        public:
+            void write(const std::string& filename, const Stream& stream) const;
+        };
+    }
 }
 
 #endif // STROM_XMLWRITER_H

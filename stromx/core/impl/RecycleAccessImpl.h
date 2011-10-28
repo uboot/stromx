@@ -25,38 +25,41 @@
 #include <set>
 #include <deque>
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-   
-    namespace impl
+    namespace core
     {
-        class DataContainerImpl;
+        class Data;
+        class DataContainer;
     
-        class RecycleAccessImpl : public Recycler
+        namespace impl
         {
-        public:
-            RecycleAccessImpl(const DataContainer& data);
-            ~RecycleAccessImpl();    
-            
-            void recycle(impl::DataContainerImpl* const container);
-            Data* const operator()();
-            Data* const operator()(const unsigned int timeout);
-            void add(const DataContainer& data);
-            
-        private:
-            RecycleAccessImpl();
-            
-            typedef boost::lock_guard<boost::mutex> lock_t;
-            typedef boost::unique_lock<boost::mutex> unique_lock_t;
-            
-            boost::mutex m_mutex;
-            boost::condition_variable_any m_cond;
+            class DataContainerImpl;
+        
+            class RecycleAccessImpl : public Recycler
+            {
+            public:
+                RecycleAccessImpl(const DataContainer& data);
+                ~RecycleAccessImpl();    
+                
+                void recycle(impl::DataContainerImpl* const container);
+                Data* const operator()();
+                Data* const operator()(const unsigned int timeout);
+                void add(const DataContainer& data);
+                
+            private:
+                RecycleAccessImpl();
+                
+                typedef boost::lock_guard<boost::mutex> lock_t;
+                typedef boost::unique_lock<boost::mutex> unique_lock_t;
+                
+                boost::mutex m_mutex;
+                boost::condition_variable_any m_cond;
 
-            std::deque<Data*> m_data;
-            std::set<DataContainerImpl*> m_dataContainer;
-        };
+                std::deque<Data*> m_data;
+                std::set<DataContainerImpl*> m_dataContainer;
+            };
+        }
     }
 }
 

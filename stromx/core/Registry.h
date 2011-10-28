@@ -17,18 +17,21 @@
 #ifndef STROM_REGISTRY_H
 #define STROM_REGISTRY_H
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class OperatorKernel;
-    
-    /** \brief Abstract registry of operator and data objects */
-    class Registry
+    namespace core
     {
-    public:
-        virtual void registerOperator(const OperatorKernel* const op) = 0;       
-        virtual void registerData(const Data* const data) = 0;
-    };
+        class Data;
+        class OperatorKernel;
+        
+        /** \brief Abstract registry of operator and data objects */
+        class Registry
+        {
+        public:
+            virtual void registerOperator(const OperatorKernel* const op) = 0;       
+            virtual void registerData(const Data* const data) = 0;
+        };
+    }
 }
 
 #endif // STROM_REGISTRY_H

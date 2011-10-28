@@ -19,27 +19,30 @@
 
 #include "Data.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief Undefined and empty data object */
-    class None : public Data
+    namespace core
     {
-    public:
-        None() {}
-        
-        virtual const Version & version() const { return VERSION; }
-        virtual const std::string & type() const { return TYPE; }
-        virtual const std::string & package() const { return PACKAGE; }
-        
-        virtual const DataVariant & variant() const { return DataVariant::NONE; }
-        
-        virtual Data* const clone() const { return new None; }
-        
-    private:
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const Version VERSION;
-    };
+        /** \brief Undefined and empty data object */
+        class None : public Data
+        {
+        public:
+            None() {}
+            
+            virtual const Version & version() const { return VERSION; }
+            virtual const std::string & type() const { return TYPE; }
+            virtual const std::string & package() const { return PACKAGE; }
+            
+            virtual const DataVariant & variant() const { return DataVariant::NONE; }
+            
+            virtual Data* const clone() const { return new None; }
+            
+        private:
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const Version VERSION;
+        };
+    }
 }
 
 #endif // STROM_NONE_H

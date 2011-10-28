@@ -23,46 +23,49 @@
 
 #include "../Node.h"
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    
-    namespace impl
+    namespace core
     {
-        class InputNode;
-        class OutputNode;
-    
-        class Network
+        class Operator;
+        
+        namespace impl
         {
-        public:
-            enum Status
+            class InputNode;
+            class OutputNode;
+        
+            class Network
             {
-                INACTIVE,
-                ACTIVE
-            };
-            
-            Network();
-            ~Network();
-            
-            const std::vector<Operator*>& operators() const { return m_operators; }
+            public:
+                enum Status
+                {
+                    INACTIVE,
+                    ACTIVE
+                };
                 
-            void connect(Operator* const sourceOp, const unsigned int outputId, 
-                         Operator* const targetOp, const unsigned int inputId);
-            void disconnect(Operator* const targetOp, const unsigned int inputId);
-            
-            void addOperator(Operator* const op);
-            void removeOperator(Operator* const op);
-            const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+                Network();
+                ~Network();
+                
+                const std::vector<Operator*>& operators() const { return m_operators; }
+                    
+                void connect(Operator* const sourceOp, const unsigned int outputId, 
+                            Operator* const targetOp, const unsigned int inputId);
+                void disconnect(Operator* const targetOp, const unsigned int inputId);
+                
+                void addOperator(Operator* const op);
+                void removeOperator(Operator* const op);
+                const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
 
-            void activate();
-            void deactivate();
-            
-            InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
-            OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
+                void activate();
+                void deactivate();
                 
-        private:
-            std::vector<Operator*> m_operators;
-        };
+                InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
+                OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
+                    
+            private:
+                std::vector<Operator*> m_operators;
+            };
+        }
     }
 }
 

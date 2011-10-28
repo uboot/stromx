@@ -17,12 +17,15 @@
 #include "impl/XmlWriterImpl.h"
 #include "XmlWriter.h"
 
-namespace core
+namespace stromx
 {
-    void XmlWriter::write(const std::string& filename, const Stream& stream) const
+    namespace core
     {
-        impl::XmlWriterImpl impl;
-        
-        impl.write(filename, stream);
+        void XmlWriter::write(const std::string& filename, const Stream& stream) const
+        {
+            impl::XmlWriterImpl impl;
+            
+            impl.write(filename, stream);
+        }
     }
 }

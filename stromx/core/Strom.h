@@ -17,14 +17,17 @@
 #ifndef STROM_H
 #define STROM_H
 
-namespace core
+namespace stromx
 {
-    class Registry;
+    namespace core
+    {
+        class Registry;
+    }
 }
 
 extern "C"
 {
-    void registerStrom(core::Registry& registry);
+    void registerStrom(stromx::core::Registry& registry);
 }
 
 #endif // STROM_H

@@ -17,24 +17,27 @@
 #ifndef STROM_DATAPROVIDER_H
 #define STROM_DATAPROVIDER_H
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-    class Id2DataMapper;
-  
-    /** \brief Provider of functions to receive and send data */
-    class DataProvider
+    namespace core
     {
-    public:
-        virtual ~DataProvider() {}
-        
-        virtual void testForInterrupt() = 0;
-        virtual void sleep(const unsigned int microseconds) = 0;
-        
-        virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
-        virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
-    };
+        class Data;
+        class DataContainer;
+        class Id2DataMapper;
+    
+        /** \brief Provider of functions to receive and send data */
+        class DataProvider
+        {
+        public:
+            virtual ~DataProvider() {}
+            
+            virtual void testForInterrupt() = 0;
+            virtual void sleep(const unsigned int microseconds) = 0;
+            
+            virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
+            virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
+        };
+    }
 }
 
 #endif // STROM_DATAPROVIDER_H

@@ -22,37 +22,40 @@
 #include "Exception.h"
 #include "impl/ReadAccessImpl.h"
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-    
-    /** \brief Read access to a data container */
-    template<typename data_t = Data>
-    class ReadAccess
+    namespace core
     {
-    public:
-        ReadAccess(DataContainer data)
-          : m_impl(new impl::ReadAccessImpl(data))
-        {
-        }
+        class Data;
+        class DataContainer;
         
-        const data_t & operator()()
+        /** \brief Read access to a data container */
+        template<typename data_t = Data>
+        class ReadAccess
         {
-            try
+        public:
+            ReadAccess(DataContainer data)
+            : m_impl(new impl::ReadAccessImpl(data))
             {
-                return dynamic_cast<const data_t &>((*m_impl)());
             }
-            catch(std::bad_cast &)
+            
+            const data_t & operator()()
             {
-                throw BadCast();
+                try
+                {
+                    return dynamic_cast<const data_t &>((*m_impl)());
+                }
+                catch(std::bad_cast &)
+                {
+                    throw BadCast();
+                }
             }
-        }
-        
-    private:
-        ReadAccess();
-        std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
-    };
+            
+        private:
+            ReadAccess();
+            std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
+        };
+    }
 }
 
 #endif // STROM_READACCESS_H

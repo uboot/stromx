@@ -22,9 +22,9 @@
 #include "None.h"
 #include "Exception.h"
 
-void registerStrom(core::Registry& registry)
+void registerStrom(stromx::core::Registry& registry)
 {
-    using namespace core;
+    using namespace stromx::core;
     
     registry.registerData(new Bool);
     

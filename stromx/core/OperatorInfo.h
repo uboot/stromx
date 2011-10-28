@@ -21,20 +21,23 @@
 #include "Parameter.h"
 #include "Version.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief Meta-information about an operator */
-    class OperatorInfo
+    namespace core
     {
-    public:
-        virtual const std::string& type() const = 0;
-        virtual const std::string& package() const = 0;
-        virtual const Version& version() const = 0;
-        virtual const std::vector<const Description*>& inputs() const = 0;
-        virtual const std::vector<const Description*>& outputs() const = 0;
-        virtual const std::vector<const Parameter*>& parameters() const = 0;
-        virtual const Parameter & parameter(const unsigned int id) const = 0;
-    };
+        /** \brief Meta-information about an operator */
+        class OperatorInfo
+        {
+        public:
+            virtual const std::string& type() const = 0;
+            virtual const std::string& package() const = 0;
+            virtual const Version& version() const = 0;
+            virtual const std::vector<const Description*>& inputs() const = 0;
+            virtual const std::vector<const Description*>& outputs() const = 0;
+            virtual const std::vector<const Parameter*>& parameters() const = 0;
+            virtual const Parameter & parameter(const unsigned int id) const = 0;
+        };
+    }
 }
 
 #endif // STROM_OPERATORINFO_H

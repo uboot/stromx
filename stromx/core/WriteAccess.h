@@ -22,38 +22,41 @@
 #include "Exception.h"
 #include "impl/WriteAccessImpl.h"
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-    
-    /** \brief Write access to a data container */
-    template<typename data_t = Data>
-    class WriteAccess
+        namespace core
     {
-    public:
-        WriteAccess(DataContainer data)
-          : m_impl(new impl::WriteAccessImpl(data))
-        {
-        }
+        class Data;
+        class DataContainer;
         
-        data_t & operator()()
+        /** \brief Write access to a data container */
+        template<typename data_t = Data>
+        class WriteAccess
         {
-            try
+        public:
+            WriteAccess(DataContainer data)
+            : m_impl(new impl::WriteAccessImpl(data))
             {
-                return dynamic_cast<data_t &>((*m_impl)());
             }
-            catch(std::bad_cast &)
+            
+            data_t & operator()()
             {
-                throw BadCast();
+                try
+                {
+                    return dynamic_cast<data_t &>((*m_impl)());
+                }
+                catch(std::bad_cast &)
+                {
+                    throw BadCast();
+                }
             }
-        }
-        
-    private:
-        WriteAccess();
+            
+        private:
+            WriteAccess();
 
-        std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
-    };
+            std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
+        };
+    }
 }
 
 #endif // STROM_WRITEACCESS_H

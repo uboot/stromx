@@ -16,7 +16,10 @@
 
 #include "Enum.h"
 
-namespace core
+namespace stromx
 {
-    const std::string Enum::TYPE = "Enum";
+    namespace core
+    {
+        const std::string Enum::TYPE = "Enum";
+    }
 }

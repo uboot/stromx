@@ -23,170 +23,173 @@
 #include "../Exception.h"
 #include "../Node.h"
 
-namespace core
+namespace stromx
 {
-    class Description;
-    
-    namespace impl
+    namespace core
     {
-        Network::Network()
-            :m_operators(0)
-        {
-        }
+        class Description;
         
-        Network::~Network()
+        namespace impl
         {
-            for(std::vector<Operator*>::iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
+            Network::Network()
+                :m_operators(0)
             {
-                delete *iter;
-            }
-
-            m_operators.clear();
-        }
-        
-        void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
-                              Operator* const targetOp, const unsigned int inputId)
-        { 
-            getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
-        }
-
-        void Network::disconnect(Operator* const targetOp, const unsigned int inputId)
-        {
-            getInputNode(targetOp, inputId)->disconnect();
-        }
-        
-        void Network::activate()
-        {
-            for(std::vector<Operator*>::iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
-            {
-                (*iter)->activate();
-            }
-        }
-
-        void Network::deactivate()
-        {
-            for(std::vector<Operator*>::iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
-            {
-                (*iter)->deactivate();
-            }
-
-        }
-        
-        void Network::addOperator(Operator* const op)
-        {
-            if (op == 0)
-            {
-                throw WrongArgument("Invalid argument: Null pointer");
             }
             
-            if(op->status() != Operator::INITIALIZED)
-                throw WrongArgument("Operator must be initialized.");
-            
-            for(std::vector<Operator*>::iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
+            Network::~Network()
             {
-                if ((*iter)->info() == op->info())
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
                 {
-                    throw WrongArgument("Operator already exists");
+                    delete *iter;
+                }
+
+                m_operators.clear();
+            }
+            
+            void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
+                                Operator* const targetOp, const unsigned int inputId)
+            { 
+                getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
+            }
+
+            void Network::disconnect(Operator* const targetOp, const unsigned int inputId)
+            {
+                getInputNode(targetOp, inputId)->disconnect();
+            }
+            
+            void Network::activate()
+            {
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
+                {
+                    (*iter)->activate();
                 }
             }
 
-            m_operators.push_back(op);
-        }
-        
-        void Network::removeOperator(Operator*const op)
-        {
-            if (op == 0)
+            void Network::deactivate()
             {
-                throw WrongArgument("Invalid argument: Null pointer");
-            }
-
-            for(std::vector<Operator*>::iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
-            {
-                if ((*iter) == op)
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
                 {
-                    // disconnect from all sources
-                    for(std::vector<const Description*>::const_iterator desc = op->info()->inputs().begin();
-                        desc != op->info()->inputs().end();
-                        ++desc)
+                    (*iter)->deactivate();
+                }
+
+            }
+            
+            void Network::addOperator(Operator* const op)
+            {
+                if (op == 0)
+                {
+                    throw WrongArgument("Invalid argument: Null pointer");
+                }
+                
+                if(op->status() != Operator::INITIALIZED)
+                    throw WrongArgument("Operator must be initialized.");
+                
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
+                {
+                    if ((*iter)->info() == op->info())
                     {
-                        disconnect(op, (*desc)->id());
+                        throw WrongArgument("Operator already exists");
                     }
-                    
-                    
-                    // disconnect all targets
-                    for(std::vector<const Description*>::const_iterator desc = op->info()->outputs().begin();
-                        desc != op->info()->outputs().end();
-                        ++desc)
+                }
+
+                m_operators.push_back(op);
+            }
+            
+            void Network::removeOperator(Operator*const op)
+            {
+                if (op == 0)
+                {
+                    throw WrongArgument("Invalid argument: Null pointer");
+                }
+
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
+                {
+                    if ((*iter) == op)
                     {
-                        const OutputNode* output = op->getOutputNode((*desc)->id());
-                        
-                        // for each output disconnect each connected input
-                        for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
-                            input != output->connectedInputs().end();
-                            ++input)
+                        // disconnect from all sources
+                        for(std::vector<const Description*>::const_iterator desc = op->info()->inputs().begin();
+                            desc != op->info()->inputs().end();
+                            ++desc)
                         {
-                            (*input)->disconnect();
-                        } 
-                    }
+                            disconnect(op, (*desc)->id());
+                        }
                         
-                    m_operators.erase(iter);
-                    return;
+                        
+                        // disconnect all targets
+                        for(std::vector<const Description*>::const_iterator desc = op->info()->outputs().begin();
+                            desc != op->info()->outputs().end();
+                            ++desc)
+                        {
+                            const OutputNode* output = op->getOutputNode((*desc)->id());
+                            
+                            // for each output disconnect each connected input
+                            for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
+                                input != output->connectedInputs().end();
+                                ++input)
+                            {
+                                (*input)->disconnect();
+                            } 
+                        }
+                            
+                        m_operators.erase(iter);
+                        return;
+                    }
                 }
+                
+                throw WrongArgument("Operator does not exist");
             }
             
-            throw WrongArgument("Operator does not exist");
-        }
-        
-        const Node Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
-        {
-            for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
-                iter != m_operators.end();
-                ++iter)
+            const Node Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
             {
-                if ((*iter) == targetOp)
+                for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
                 {
-                    const InputNode* input = (*iter)->getInputNode(inputId);
-                    
-                    if(input->isConnected())
-                        return Node(input->source().op(), input->source().outputId());
-                    else
-                        return Node();
+                    if ((*iter) == targetOp)
+                    {
+                        const InputNode* input = (*iter)->getInputNode(inputId);
+                        
+                        if(input->isConnected())
+                            return Node(input->source().op(), input->source().outputId());
+                        else
+                            return Node();
+                    }
                 }
+                
+                throw WrongArgument("Unknown operator.");
             }
             
-            throw WrongArgument("Unknown operator.");
-        }
-        
-        InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
-        {
-            std::vector<Operator*>::const_iterator iter = 
-                std::find(m_operators.begin(), m_operators.end(), op);
+            InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
+            {
+                std::vector<Operator*>::const_iterator iter = 
+                    std::find(m_operators.begin(), m_operators.end(), op);
+                
+                if(iter == m_operators.end())
+                    throw WrongArgument("Operator is not part of the core.");
+                
+                return (*iter)->getInputNode(inputId);
+            }
             
-            if(iter == m_operators.end())
-                throw WrongArgument("Operator is not part of the core.");
-            
-            return (*iter)->getInputNode(inputId);
-        }
-        
-        OutputNode* Network::getOutputNode(Operator* const op, const unsigned int outputId) const
-        {
-            std::vector<Operator*>::const_iterator iter = 
-                std::find(m_operators.begin(), m_operators.end(), op);
-            
-            if(iter == m_operators.end())
-                throw WrongArgument("Operator is not part of the core.");
-            
-            return (*iter)->getOutputNode(outputId);
+            OutputNode* Network::getOutputNode(Operator* const op, const unsigned int outputId) const
+            {
+                std::vector<Operator*>::const_iterator iter = 
+                    std::find(m_operators.begin(), m_operators.end(), op);
+                
+                if(iter == m_operators.end())
+                    throw WrongArgument("Operator is not part of the core.");
+                
+                return (*iter)->getOutputNode(outputId);
+            }
         }
     }
 }

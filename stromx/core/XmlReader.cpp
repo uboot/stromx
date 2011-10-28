@@ -17,12 +17,15 @@
 #include "impl/XmlReaderImpl.h"
 #include "XmlReader.h"
 
-namespace core
+namespace stromx
 {
-    Stream*const XmlReader::read(const std::string& filename) const
+    namespace core
     {
-        impl::XmlReaderImpl impl(m_factory);
-        
-        return impl.read(filename);
+        Stream*const XmlReader::read(const std::string& filename) const
+        {
+            impl::XmlReaderImpl impl(m_factory);
+            
+            return impl.read(filename);
+        }
     }
 }

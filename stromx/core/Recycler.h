@@ -17,19 +17,22 @@
 #ifndef STROM_RECYCLER_H
 #define STROM_RECYCLER_H
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class DataContainerImpl;
+        namespace impl
+        {
+            class DataContainerImpl;
+        }
+        
+        /** \brief Abstract receiver of recycled objects */
+        class Recycler
+        {
+        public:
+            virtual void recycle(impl::DataContainerImpl* const container) = 0;
+        };
     }
-    
-    /** \brief Abstract receiver of recycled objects */
-    class Recycler
-    {
-    public:
-        virtual void recycle(impl::DataContainerImpl* const container) = 0;
-    };
 }
-
+    
 #endif // STROM_RECYCLER_H

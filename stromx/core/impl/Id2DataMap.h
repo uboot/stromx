@@ -23,26 +23,29 @@
 #include <vector>
 #include <map>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    
-    namespace impl
+    namespace core
     {
-        class Id2DataMap
+        class DataContainer;
+        
+        namespace impl
         {
-        public:
-            Id2DataMap();
-            Id2DataMap(const std::vector<const Description*> & descriptions);
-            
-            DataContainer operator[](const unsigned int id) const;
-            DataContainer& operator[](const unsigned int id);
-            void clear();
-            const bool isEmpty() const;
-            
-        private:
-            std::map<unsigned int, DataContainer> m_map;
-        };
+            class Id2DataMap
+            {
+            public:
+                Id2DataMap();
+                Id2DataMap(const std::vector<const Description*> & descriptions);
+                
+                DataContainer operator[](const unsigned int id) const;
+                DataContainer& operator[](const unsigned int id);
+                void clear();
+                const bool isEmpty() const;
+                
+            private:
+                std::map<unsigned int, DataContainer> m_map;
+            };
+        }
     }
 }
 

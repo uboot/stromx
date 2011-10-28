@@ -20,46 +20,49 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class Recycler;
-    
-    namespace impl
+    namespace core
     {
-        class DataContainerImpl
+        class Data;
+        class Recycler;
+        
+        namespace impl
         {
-        public:
-            DataContainerImpl(Data* const data);
-            ~DataContainerImpl();
-            
-            void getReadAccess();
-            void getReadAccess(const unsigned int timeout);
-            void returnReadAccess();
-            
-            void getWriteAccess();
-            void getWriteAccess(const unsigned int timeout);
-            void returnWriteAccess();
-            
-            void getRecycleAccess(Recycler* const recycler);
-            void returnRecycleAccess();
-            
-            Data* const data() const { return m_data; }
-            
-        private:
-            typedef boost::lock_guard<boost::mutex> lock_t;
-            typedef boost::unique_lock<boost::mutex> unique_lock_t;
-            
-            boost::mutex m_mutex;
-            boost::condition_variable_any m_cond;
-            
-            void recycle();
-            
-            unsigned int m_readAccessCounter;
-            bool m_writeAccess;
-            Recycler* m_recycleAccess;
-            Data* m_data;
-        };
+            class DataContainerImpl
+            {
+            public:
+                DataContainerImpl(Data* const data);
+                ~DataContainerImpl();
+                
+                void getReadAccess();
+                void getReadAccess(const unsigned int timeout);
+                void returnReadAccess();
+                
+                void getWriteAccess();
+                void getWriteAccess(const unsigned int timeout);
+                void returnWriteAccess();
+                
+                void getRecycleAccess(Recycler* const recycler);
+                void returnRecycleAccess();
+                
+                Data* const data() const { return m_data; }
+                
+            private:
+                typedef boost::lock_guard<boost::mutex> lock_t;
+                typedef boost::unique_lock<boost::mutex> unique_lock_t;
+                
+                boost::mutex m_mutex;
+                boost::condition_variable_any m_cond;
+                
+                void recycle();
+                
+                unsigned int m_readAccessCounter;
+                bool m_writeAccess;
+                Recycler* m_recycleAccess;
+                Data* m_data;
+            };
+        }
     }
 }
 

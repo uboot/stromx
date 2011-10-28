@@ -17,33 +17,36 @@
 #ifndef STROM_NODE_H
 #define STROM_NODE_H
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    
-    /** \brief Identifier of a node of an operator */
-    class Node
+    namespace core
     {
-    public:
-        Node(Operator* const op, const unsigned int id)
-          : m_op(op),
-            m_id(id)
-        {}
+        class Operator;
         
-        Node()
-          : m_op(0), 
-            m_id(0)
-        {}
-        
-        Operator* const op() const { return m_op; }
-        const unsigned int id() const { return m_id; }
-        
-        const bool empty() const { return m_op == 0; }
-        
-    private:
-        Operator* m_op;
-        unsigned int m_id;
-    };
+        /** \brief Identifier of a node of an operator */
+        class Node
+        {
+        public:
+            Node(Operator* const op, const unsigned int id)
+            : m_op(op),
+                m_id(id)
+            {}
+            
+            Node()
+            : m_op(0), 
+                m_id(0)
+            {}
+            
+            Operator* const op() const { return m_op; }
+            const unsigned int id() const { return m_id; }
+            
+            const bool empty() const { return m_op == 0; }
+            
+        private:
+            Operator* m_op;
+            unsigned int m_id;
+        };
+    }
 }
 
 #endif // STROM_NODE_H

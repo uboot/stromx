@@ -20,52 +20,55 @@
 #include <boost/filesystem.hpp>
 
     
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        using namespace xercesc;
-        
-        Xml2Str::Xml2Str(const XMLCh* const str)
+        namespace impl
         {
-            m_str = XMLString::transcode(str);
-        }
-
-        Xml2Str::~Xml2Str()
-        {
-            XMLString::release(&m_str);
-        }
-
-        Xml2Str::operator const char*()
-        {
-            return m_str;
-        }
-        
-        Str2Xml::Str2Xml(const char* const str)
-        {
-            m_xmlStr = XMLString::transcode(str);
-        }
-
-        Str2Xml::~Str2Xml()
-        {
-            XMLString::release(&m_xmlStr);
-        }
-
-        Str2Xml::operator const XMLCh*()
-        {
-            return m_xmlStr;
-        }
-        
-        const std::string XmlUtilities::computePath(const std::string& filename)
-        {
-            boost::filesystem::path filepath(filename);
-            boost::filesystem::path parentpath = filepath.parent_path();
-            std::string pathSeparator;
+            using namespace xercesc;
             
-            if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
-                pathSeparator = boost::filesystem::path("/").file_string();
-        
-            return parentpath.file_string() + pathSeparator;
+            Xml2Str::Xml2Str(const XMLCh* const str)
+            {
+                m_str = XMLString::transcode(str);
+            }
+
+            Xml2Str::~Xml2Str()
+            {
+                XMLString::release(&m_str);
+            }
+
+            Xml2Str::operator const char*()
+            {
+                return m_str;
+            }
+            
+            Str2Xml::Str2Xml(const char* const str)
+            {
+                m_xmlStr = XMLString::transcode(str);
+            }
+
+            Str2Xml::~Str2Xml()
+            {
+                XMLString::release(&m_xmlStr);
+            }
+
+            Str2Xml::operator const XMLCh*()
+            {
+                return m_xmlStr;
+            }
+            
+            const std::string XmlUtilities::computePath(const std::string& filename)
+            {
+                boost::filesystem::path filepath(filename);
+                boost::filesystem::path parentpath = filepath.parent_path();
+                std::string pathSeparator;
+                
+                if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
+                    pathSeparator = boost::filesystem::path("/").file_string();
+            
+                return parentpath.file_string() + pathSeparator;
+            }
         }
     }
 }

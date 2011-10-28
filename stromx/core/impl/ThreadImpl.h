@@ -23,43 +23,46 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread.hpp>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class InputNode;
-        
-        class ThreadImpl
-        {    
-        public:
-            enum Status
-            {
-                INACTIVE,
-                ACTIVE,
-                DEACTIVATING,
-            };
+        namespace impl
+        {
+            class InputNode;
             
-            ThreadImpl();
-            ~ThreadImpl();
-            
-            const Status status() const { return m_status; }
-            const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
-            
-            void addNode(InputNode* const op);
-            void insertNode(const unsigned int position, InputNode* const op);
-            void removeNode(const unsigned int position);
-            
-            void start();
-            void stop();
-            void join();
+            class ThreadImpl
+            {    
+            public:
+                enum Status
+                {
+                    INACTIVE,
+                    ACTIVE,
+                    DEACTIVATING,
+                };
                 
-        private:
-            void loop();
-            
-            Status m_status;
-            boost::thread* m_thread;
-            std::vector<InputNode*> m_nodeSequence;
-        };
+                ThreadImpl();
+                ~ThreadImpl();
+                
+                const Status status() const { return m_status; }
+                const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
+                
+                void addNode(InputNode* const op);
+                void insertNode(const unsigned int position, InputNode* const op);
+                void removeNode(const unsigned int position);
+                
+                void start();
+                void stop();
+                void join();
+                    
+            private:
+                void loop();
+                
+                Status m_status;
+                boost::thread* m_thread;
+                std::vector<InputNode*> m_nodeSequence;
+            };
+        }
     }
 }
 

@@ -17,11 +17,14 @@
 #ifndef @PREPROCESSOR_MACRO@
 #define @PREPROCESSOR_MACRO@
 
-namespace @PACKAGE@
+namespace stromx
 {
-    class @CLASS@
+    namespace @PACKAGE@
     {
-    };
+        class @CLASS@
+        {
+        };
+    }
 }
 
 #endif // @PREPROCESSOR_MACRO@

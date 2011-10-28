@@ -2,21 +2,24 @@
 
 #include <cppunit/TestAssert.h>
 
-#include <@PACKAGE@/@CLASS@.h>
+#include <stromx/@PACKAGE@/@CLASS@.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (@PACKAGE@::@CLASS@Test);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::@PACKAGE@::@CLASS@Test);
 
-namespace @PACKAGE@
+namespace stromx
 {
-    void @CLASS@Test::setUp()
+    namespace @PACKAGE@
     {
-    }
+        void @CLASS@Test::setUp()
+        {
+        }
 
-    void @CLASS@Test::tearDown()
-    {
-    }
+        void @CLASS@Test::tearDown()
+        {
+        }
 
-    void @CLASS@Test::test()
-    {
+        void @CLASS@Test::test()
+        {
+        }
     }
 }

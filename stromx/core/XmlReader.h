@@ -19,24 +19,27 @@
 
 #include <string>
 
-namespace core
+namespace stromx
 {
-    class Factory;
-    class Stream;
-    
-    /** \brief Reader for XML encoded streams */
-    class XmlReader
+    namespace core
     {
-    public:
-        XmlReader(const Factory& factory)
-          : m_factory(factory) 
-        {}
-          
-        Stream* const read(const std::string & filename) const;
+        class Factory;
+        class Stream;
         
-    private:
-        const Factory& m_factory;
-    };
+        /** \brief Reader for XML encoded streams */
+        class XmlReader
+        {
+        public:
+            XmlReader(const Factory& factory)
+            : m_factory(factory) 
+            {}
+            
+            Stream* const read(const std::string & filename) const;
+            
+        private:
+            const Factory& m_factory;
+        };
+    }
 }
 
 #endif // STROM_XMLREADER_H

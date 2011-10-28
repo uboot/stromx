@@ -22,62 +22,65 @@
 
 #include <typeinfo>
 
-namespace core
+namespace stromx
 {
-    class Version;
-    
-    /** \brief Abstract data object */
-    class Data
+    namespace core
     {
-    public:
-        virtual ~Data() {}
+        class Version;
         
-        virtual const Version & version() const = 0;
-        virtual const std::string & type() const = 0;
-        virtual const std::string & package() const = 0;
-        virtual const DataVariant & variant() const = 0;
+        /** \brief Abstract data object */
+        class Data
+        {
+        public:
+            virtual ~Data() {}
+            
+            virtual const Version & version() const = 0;
+            virtual const std::string & type() const = 0;
+            virtual const std::string & package() const = 0;
+            virtual const DataVariant & variant() const = 0;
+            
+            virtual Data* const clone() const = 0;
+            
+            virtual const std::string serialize(const std::string & name, const std::string & path) const;
+            virtual void deserialize(const std::string & data, const std::string & path);
+            
+            const bool is(const DataVariant & t) const { return variant().is(t); }
+            
+        protected:
+            Data() {} 
+        };
         
-        virtual Data* const clone() const = 0;
+        template<typename data_t>
+        data_t data_cast(Data & data)
+        {
+            try
+            {
+                return dynamic_cast<data_t>(data);
+            }
+            catch(std::bad_cast &)
+            {
+                throw BadCast();
+            }
+        }
         
-        virtual const std::string serialize(const std::string & name, const std::string & path) const;
-        virtual void deserialize(const std::string & data, const std::string & path);
+        template<typename data_t>
+        data_t data_cast(const Data & data)
+        {
+            try
+            {
+                return dynamic_cast<const data_t>(data);
+            }
+            catch(std::bad_cast &)
+            {
+                throw BadCast();
+            }
+        }
         
-        const bool is(const DataVariant & t) const { return variant().is(t); }
-        
-    protected:
-        Data() {} 
-    };
-    
-    template<typename data_t>
-    data_t data_cast(Data & data)
-    {
-        try
+        template<typename data_t>
+        data_t data_cast(Data * data)
         {
             return dynamic_cast<data_t>(data);
         }
-        catch(std::bad_cast &)
-        {
-            throw BadCast();
-        }
-    }
-    
-    template<typename data_t>
-    data_t data_cast(const Data & data)
-    {
-        try
-        {
-            return dynamic_cast<const data_t>(data);
-        }
-        catch(std::bad_cast &)
-        {
-            throw BadCast();
-        }
-    }
-    
-    template<typename data_t>
-    data_t data_cast(Data * data)
-    {
-        return dynamic_cast<data_t>(data);
     }
 }
 

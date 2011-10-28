@@ -17,24 +17,27 @@
 #ifndef STROM_VERSION_H
 #define STROM_VERSION_H
 
-namespace core
+namespace stromx
 {
-    /** \brief A version of an operator or data type */
-    class Version
+    namespace core
     {
-    public:
-        Version(const unsigned int major, const unsigned int minor)
-          : m_major(major),
-            m_minor(minor)
-        {}
-        
-        const unsigned int major() const { return m_major; }
-        const unsigned int minor() const { return m_minor; }
+        /** \brief A version of an operator or data type */
+        class Version
+        {
+        public:
+            Version(const unsigned int major, const unsigned int minor)
+            : m_major(major),
+                m_minor(minor)
+            {}
             
-    private:
-        unsigned int m_major;
-        unsigned int m_minor;
-    };
+            const unsigned int major() const { return m_major; }
+            const unsigned int minor() const { return m_minor; }
+                
+        private:
+            unsigned int m_major;
+            unsigned int m_minor;
+        };
+    }
 }
 
 #endif // STROM_VERSION_H

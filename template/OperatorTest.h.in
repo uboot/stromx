@@ -20,31 +20,34 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace stream
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace @PACKAGE@
-{
-    class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (@CLASS@Test);
-        CPPUNIT_TEST(testExecute);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-    public:
-        @CLASS@Test() : m_operator(0) {}
-        
-        void setUp();
-        void tearDown();
+    namespace @PACKAGE@
+    {
+        class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (@CLASS@Test);
+            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testExecute();
+        public:
+            @CLASS@Test() : m_operator(0) {}
             
-    private:
-        stream::OperatorTester* m_operator;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testExecute();
+                
+        private:
+            stream::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // @PREPROCESSOR_MACRO_TEST@

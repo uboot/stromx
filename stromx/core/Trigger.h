@@ -19,27 +19,30 @@
 
 #include "Data.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief Special data value for trigger signals */
-    class Trigger : public Data
+    namespace core
     {
-    public:
-        Trigger() {}
-        
-        virtual const Version & version() const { return VERSION; }
-        virtual const std::string & type() const { return TYPE; }
-        virtual const std::string & package() const { return PACKAGE; }
-        
-        virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
-        
-        virtual Data* const clone() const { return new Trigger; }
-        
-    private:
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const Version VERSION;
-    };
+        /** \brief Special data value for trigger signals */
+        class Trigger : public Data
+        {
+        public:
+            Trigger() {}
+            
+            virtual const Version & version() const { return VERSION; }
+            virtual const std::string & type() const { return TYPE; }
+            virtual const std::string & package() const { return PACKAGE; }
+            
+            virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
+            
+            virtual Data* const clone() const { return new Trigger; }
+            
+        private:
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const Version VERSION;
+        };
+    }
 }
 
 #endif // STROM_TRIGGER_H

@@ -19,34 +19,37 @@
 
 #include "Description.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief %Description of parameter */
-    class Parameter : public Description
+    namespace core
     {
-    public:
-        enum AccessMode
+        /** \brief %Description of parameter */
+        class Parameter : public Description
         {
-            NO_ACCESS,
-            NONE_READ,
-            NONE_WRITE,
-            INITIALIZED_READ,
-            INITIALIZED_WRITE,
-            ACTIVATED_WRITE
+        public:
+            enum AccessMode
+            {
+                NO_ACCESS,
+                NONE_READ,
+                NONE_WRITE,
+                INITIALIZED_READ,
+                INITIALIZED_WRITE,
+                ACTIVATED_WRITE
+            };
+            
+            Parameter(const unsigned int id, const DataVariant& type)
+            : Description(id, type),
+                m_access(NO_ACCESS)
+            {}
+            
+            const AccessMode accessMode() const { return m_access; }
+            
+            void setAccessMode(const AccessMode mode) { m_access = mode; }
+            
+        private:
+            AccessMode m_access;
         };
-        
-        Parameter(const unsigned int id, const DataVariant& type)
-          : Description(id, type),
-            m_access(NO_ACCESS)
-        {}
-        
-        const AccessMode accessMode() const { return m_access; }
-        
-        void setAccessMode(const AccessMode mode) { m_access = mode; }
-        
-    private:
-        AccessMode m_access;
-    };
+    }
 }
 
 #endif // STROM_PARAMETER_H

@@ -23,43 +23,46 @@
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
 
-namespace core
+namespace stromx
 {
-    class Factory;
-    class Stream;
-    class Data;
-    class Operator;
-    class Thread;
-    class Data;
-    
-    namespace impl
+        namespace core
     {
-        class XmlReaderImpl
+        class Factory;
+        class Stream;
+        class Data;
+        class Operator;
+        class Thread;
+        class Data;
+        
+        namespace impl
         {
-        public:
-            XmlReaderImpl(const Factory& factory);
-            
-            ~XmlReaderImpl();
-            
-            Stream* const read(const std::string & filename);
-            
-        private:
-            static const std::string DTD;
-            
-            void readOperator(xercesc::DOMElement* const opElement);
-            void readOperatorInputs(xercesc::DOMElement* const opElement);
-            void readParameter(xercesc::DOMElement* const paramElement);
-            void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
-            void readInputNode(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
-            void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
-            Data* readData(xercesc::DOMElement* const dataElement);
-            
-            std::string m_currentPath;
-            const Factory& m_factory;
-            Stream* m_stream;
-            std::map<unsigned int, Operator*> m_id2OperatorMap;
-            std::map<unsigned int, Data*> m_id2DataMap;
-        };
+            class XmlReaderImpl
+            {
+            public:
+                XmlReaderImpl(const Factory& factory);
+                
+                ~XmlReaderImpl();
+                
+                Stream* const read(const std::string & filename);
+                
+            private:
+                static const std::string DTD;
+                
+                void readOperator(xercesc::DOMElement* const opElement);
+                void readOperatorInputs(xercesc::DOMElement* const opElement);
+                void readParameter(xercesc::DOMElement* const paramElement);
+                void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
+                void readInputNode(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
+                void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
+                Data* readData(xercesc::DOMElement* const dataElement);
+                
+                std::string m_currentPath;
+                const Factory& m_factory;
+                Stream* m_stream;
+                std::map<unsigned int, Operator*> m_id2OperatorMap;
+                std::map<unsigned int, Data*> m_id2DataMap;
+            };
+        }
     }
 }
 

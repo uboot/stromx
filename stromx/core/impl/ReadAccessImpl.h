@@ -17,24 +17,27 @@
 #ifndef STROM_IMPL_READACCESSIMPL_H
 #define STROM_IMPL_READACCESSIMPL_H
 
-namespace core
-{    
-    class DataContainer;
-    class Data;
-    
-    namespace impl
-    {
-        class ReadAccessImpl
+namespace stromx
+{
+    namespace core
+    {    
+        class DataContainer;
+        class Data;
+        
+        namespace impl
         {
-        public:
-            ReadAccessImpl(DataContainer& data);
-            ~ReadAccessImpl();
-            
-            const Data & operator()() const;
-            
-        private:
-            DataContainer& m_data;
-        };
+            class ReadAccessImpl
+            {
+            public:
+                ReadAccessImpl(DataContainer& data);
+                ~ReadAccessImpl();
+                
+                const Data & operator()() const;
+                
+            private:
+                DataContainer& m_data;
+            };
+        }
     }
 }
 

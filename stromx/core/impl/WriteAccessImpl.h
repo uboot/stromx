@@ -17,24 +17,27 @@
 #ifndef STROM_IMPL_WRITEACCESSIMPL_H
 #define STROM_IMPL_WRITEACCESSIMPL_H
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-    
-    namespace impl
+    namespace core
     {
-        class WriteAccessImpl
+        class Data;
+        class DataContainer;
+        
+        namespace impl
         {
-        public:
-            WriteAccessImpl(DataContainer& data);
-            ~WriteAccessImpl();
-            
-            Data& operator()() const;
-            
-        private:
-            DataContainer& m_data;
-        }; 
+            class WriteAccessImpl
+            {
+            public:
+                WriteAccessImpl(DataContainer& data);
+                ~WriteAccessImpl();
+                
+                Data& operator()() const;
+                
+            private:
+                DataContainer& m_data;
+            }; 
+        }
     }
 }
 

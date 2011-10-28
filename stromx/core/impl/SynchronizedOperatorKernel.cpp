@@ -25,423 +25,426 @@
 
 #include <boost/thread/thread.hpp>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
-          : m_op(op),
-            m_status(NONE)
+        namespace impl
         {
-            if(!op)
-                throw WrongArgument("Passed null pointer as operator.");
-        }
-        
-        SynchronizedOperatorKernel::~SynchronizedOperatorKernel()
-        {
-            delete m_op;
-        }
-        
-        void SynchronizedOperatorKernel::testForInterrupt()
-        {
-            try
+            SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
+            : m_op(op),
+                m_status(NONE)
             {
-                boost::this_thread::interruption_point();
+                if(!op)
+                    throw WrongArgument("Passed null pointer as operator.");
             }
-            catch(boost::thread_interrupted&)
+            
+            SynchronizedOperatorKernel::~SynchronizedOperatorKernel()
             {
-                throw Interrupt();
-            } 
-        }
-        
-        void SynchronizedOperatorKernel::sleep(const unsigned int microseconds)
-        {
-            try
-            {
-                boost::this_thread::sleep(boost::posix_time::microseconds(1));
+                delete m_op;
             }
-            catch(boost::thread_interrupted&)
+            
+            void SynchronizedOperatorKernel::testForInterrupt()
             {
-                throw Interrupt();
-            } 
-        }
-        
-        void SynchronizedOperatorKernel::initialize()
-        {
-            lock_t lock(m_mutex);
+                try
+                {
+                    boost::this_thread::interruption_point();
+                }
+                catch(boost::thread_interrupted&)
+                {
+                    throw Interrupt();
+                } 
+            }
             
-            if(m_status != NONE)
-                throw WrongState("Operator has already been initialized.");
-            
-            m_op->initialize();
-            
-            m_inputMap = impl::Id2DataMap(m_op->inputs());
-            m_outputMap = impl::Id2DataMap(m_op->outputs());
-            
-            BOOST_ASSERT(m_inputMap.isEmpty());
-            BOOST_ASSERT(m_outputMap.isEmpty());
-            
-            m_status = INITIALIZED;
-        }
-        
-        
-        void SynchronizedOperatorKernel::activate()
-        {
-            lock_t lock(m_mutex);
-            
-            if(m_status != INITIALIZED)
-                throw WrongState("Operator must be initialized.");
-            
-            BOOST_ASSERT(m_inputMap.isEmpty());
-            BOOST_ASSERT(m_outputMap.isEmpty());
-            
-            m_op->activate();
-            m_status = ACTIVE;
-        }
-        
-        void SynchronizedOperatorKernel::deactivate()
-        {
-            lock_t lock(m_mutex);
-            
-            if(m_status == INITIALIZED)
-                return;
-            
-            if(m_status == EXECUTING)
-                throw WrongState("Operator can not be deactivated while it is executing.");
-            
-            m_op->deactivate();
-            
-            m_inputMap.clear();
-            m_outputMap.clear();
-            
-            m_status = INITIALIZED;
-        }
-        
-        const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
-        {
-            unique_lock_t lock(m_mutex);
-            
-            while(m_status == EXECUTING)
-                waitForSignal(m_statusCond, lock);
-            
-            validateParameterId(id);
-            validateReadAccess(id);
-            return m_op->getParameter(id);
-        }
-            
-        void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
-        {
-            unique_lock_t lock(m_mutex);
-            
-            validateParameterId(id);
-            validateParameterType(id, value.variant());
-            
-            DataVariant parameterType = info()->parameter(id).type();
-            if(parameterType.is(DataVariant::TRIGGER))
+            void SynchronizedOperatorKernel::sleep(const unsigned int microseconds)
             {
-                validateWriteAccess(id);
+                try
+                {
+                    boost::this_thread::sleep(boost::posix_time::microseconds(1));
+                }
+                catch(boost::thread_interrupted&)
+                {
+                    throw Interrupt();
+                } 
+            }
+            
+            void SynchronizedOperatorKernel::initialize()
+            {
+                lock_t lock(m_mutex);
                 
-                m_op->setParameter(id, value);
+                if(m_status != NONE)
+                    throw WrongState("Operator has already been initialized.");
+                
+                m_op->initialize();
+                
+                m_inputMap = impl::Id2DataMap(m_op->inputs());
+                m_outputMap = impl::Id2DataMap(m_op->outputs());
+                
+                BOOST_ASSERT(m_inputMap.isEmpty());
+                BOOST_ASSERT(m_outputMap.isEmpty());
+                
+                m_status = INITIALIZED;
             }
-            else
+            
+            
+            void SynchronizedOperatorKernel::activate()
             {
+                lock_t lock(m_mutex);
+                
+                if(m_status != INITIALIZED)
+                    throw WrongState("Operator must be initialized.");
+                
+                BOOST_ASSERT(m_inputMap.isEmpty());
+                BOOST_ASSERT(m_outputMap.isEmpty());
+                
+                m_op->activate();
+                m_status = ACTIVE;
+            }
+            
+            void SynchronizedOperatorKernel::deactivate()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status == INITIALIZED)
+                    return;
+                
+                if(m_status == EXECUTING)
+                    throw WrongState("Operator can not be deactivated while it is executing.");
+                
+                m_op->deactivate();
+                
+                m_inputMap.clear();
+                m_outputMap.clear();
+                
+                m_status = INITIALIZED;
+            }
+            
+            const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
+            {
+                unique_lock_t lock(m_mutex);
+                
                 while(m_status == EXECUTING)
                     waitForSignal(m_statusCond, lock);
                 
-                validateWriteAccess(id);
-                
-                m_op->setParameter(id, value);
+                validateParameterId(id);
+                validateReadAccess(id);
+                return m_op->getParameter(id);
             }
-        }
-
-        void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
-        {   
-            unique_lock_t lock(m_mutex);
-            
-            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
-            
-            bool interruptExceptionWasThrown = false;
-            
-            try
-            {
-                while(! mapper.tryGet(m_inputMap))
-                    waitForSignal(m_dataCond, lock);
                 
-                mapper.get(m_inputMap);
-            }
-            catch(Interrupt&)
+            void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
             {
-                interruptExceptionWasThrown = true;
-            }   
-            
-            if(! interruptExceptionWasThrown)
-                m_dataCond.notify_all();
-            
-            // rethrow exception if necessary
-            if(interruptExceptionWasThrown)
-                throw Interrupt();
-        }
-
-        void SynchronizedOperatorKernel::sendOutputData(const core::Id2DataMapper& mapper)
-        {
-            unique_lock_t lock(m_mutex);
-            
-            BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
-            
-            bool interruptExceptionWasThrown = false;
-            
-            try
-            {
-                while(! mapper.trySet(m_outputMap))
-                    waitForSignal(m_dataCond, lock);
+                unique_lock_t lock(m_mutex);
                 
-                mapper.set(m_outputMap);
-            }
-            catch(Interrupt&)
-            {
-                interruptExceptionWasThrown = true;
-            }   
-            
-            if(! interruptExceptionWasThrown)
-                m_dataCond.notify_all();
-            
-            // rethrow exception if necessary
-            if(interruptExceptionWasThrown)
-                throw Interrupt();   
-        }
-        
-    void SynchronizedOperatorKernel::validateDataAccess()
-    {
-        if( m_status != ACTIVE
-            && m_status != EXECUTING)
-        {
-            throw WrongState("Operator must be active to access data.");
-        }
-    }
-        
-        DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
-        {
-            unique_lock_t lock(m_mutex);
-            
-            while(m_outputMap[id].empty())
-            {
-                bool success = false;
+                validateParameterId(id);
+                validateParameterType(id, value.variant());
+                
+                DataVariant parameterType = info()->parameter(id).type();
+                if(parameterType.is(DataVariant::TRIGGER))
                 {
-                    lock.unlock();
+                    validateWriteAccess(id);
                     
-                    // this section might throw an InterruptionException which will fall
-                    // through to the calling function
-                    success = tryExecute();
+                    m_op->setParameter(id, value);
+                }
+                else
+                {
+                    while(m_status == EXECUTING)
+                        waitForSignal(m_statusCond, lock);
                     
+                    validateWriteAccess(id);
+                    
+                    m_op->setParameter(id, value);
+                }
+            }
+
+            void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
+            {   
+                unique_lock_t lock(m_mutex);
+                
+                BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
+                
+                bool interruptExceptionWasThrown = false;
+                
+                try
+                {
+                    while(! mapper.tryGet(m_inputMap))
+                        waitForSignal(m_dataCond, lock);
+                    
+                    mapper.get(m_inputMap);
+                }
+                catch(Interrupt&)
+                {
+                    interruptExceptionWasThrown = true;
+                }   
+                
+                if(! interruptExceptionWasThrown)
                     m_dataCond.notify_all();
-                    
-                    lock.lock();
-                }
                 
-                if(! success)
-                    waitForSignal(m_dataCond, lock);
+                // rethrow exception if necessary
+                if(interruptExceptionWasThrown)
+                    throw Interrupt();
             }
-            
-            validateDataAccess();
-            
-            return m_outputMap[id];
-        }
 
-        void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
-        {
-            unique_lock_t lock(m_mutex);
-            
-            while(! m_inputMap[id].empty())
+            void SynchronizedOperatorKernel::sendOutputData(const core::Id2DataMapper& mapper)
             {
-                bool success = false;
-                {
-                    lock.unlock();
-                    
-                    // this section might throw an InterruptionException which will fall
-                    // through to the calling function
-                    success = tryExecute();
-                    
-                    lock.lock();
-                }
+                unique_lock_t lock(m_mutex);
                 
-                if(! success)
-                    waitForSignal(m_dataCond, lock);
+                BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
+                
+                bool interruptExceptionWasThrown = false;
+                
+                try
+                {
+                    while(! mapper.trySet(m_outputMap))
+                        waitForSignal(m_dataCond, lock);
+                    
+                    mapper.set(m_outputMap);
+                }
+                catch(Interrupt&)
+                {
+                    interruptExceptionWasThrown = true;
+                }   
+                
+                if(! interruptExceptionWasThrown)
+                    m_dataCond.notify_all();
+                
+                // rethrow exception if necessary
+                if(interruptExceptionWasThrown)
+                    throw Interrupt();   
             }
             
-            validateDataAccess();
-            
-            m_dataCond.notify_all();
-            
-            m_inputMap[id] = data;
-        }
-        
-        void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
+        void SynchronizedOperatorKernel::validateDataAccess()
         {
-            lock_t lock(m_mutex);
+            if( m_status != ACTIVE
+                && m_status != EXECUTING)
+            {
+                throw WrongState("Operator must be active to access data.");
+            }
+        }
             
-            validateDataAccess();
-            
-            m_outputMap[id] = DataContainer();
+            DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
+            {
+                unique_lock_t lock(m_mutex);
                 
-            m_dataCond.notify_all();
-        }
-        
-        bool SynchronizedOperatorKernel::tryExecute()
-        {
+                while(m_outputMap[id].empty())
+                {
+                    bool success = false;
+                    {
+                        lock.unlock();
+                        
+                        // this section might throw an InterruptionException which will fall
+                        // through to the calling function
+                        success = tryExecute();
+                        
+                        m_dataCond.notify_all();
+                        
+                        lock.lock();
+                    }
+                    
+                    if(! success)
+                        waitForSignal(m_dataCond, lock);
+                }
+                
+                validateDataAccess();
+                
+                return m_outputMap[id];
+            }
+
+            void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
+            {
+                unique_lock_t lock(m_mutex);
+                
+                while(! m_inputMap[id].empty())
+                {
+                    bool success = false;
+                    {
+                        lock.unlock();
+                        
+                        // this section might throw an InterruptionException which will fall
+                        // through to the calling function
+                        success = tryExecute();
+                        
+                        lock.lock();
+                    }
+                    
+                    if(! success)
+                        waitForSignal(m_dataCond, lock);
+                }
+                
+                validateDataAccess();
+                
+                m_dataCond.notify_all();
+                
+                m_inputMap[id] = data;
+            }
+            
+            void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
             {
                 lock_t lock(m_mutex);
                 
                 validateDataAccess();
                 
-                if(m_status == EXECUTING)
-                    return false;
-                else
-                    m_status = EXECUTING;
+                m_outputMap[id] = DataContainer();
+                    
+                m_dataCond.notify_all();
             }
             
-            bool interruptExceptionWasThrown = false;
-            
-            try
+            bool SynchronizedOperatorKernel::tryExecute()
             {
-                m_op->execute(*this);
-            }
-            catch(Interrupt &)
-            {
-                lock_t lock(m_mutex);
-                m_status = ACTIVE;
-                m_statusCond.notify_all();
+                {
+                    lock_t lock(m_mutex);
+                    
+                    validateDataAccess();
+                    
+                    if(m_status == EXECUTING)
+                        return false;
+                    else
+                        m_status = EXECUTING;
+                }
                 
-                throw;
-            }
-            catch(std::exception &e)
-            {
-                // ignore exceptions
+                bool interruptExceptionWasThrown = false;
+                
+                try
+                {
+                    m_op->execute(*this);
+                }
+                catch(Interrupt &)
+                {
+                    lock_t lock(m_mutex);
+                    m_status = ACTIVE;
+                    m_statusCond.notify_all();
+                    
+                    throw;
+                }
+                catch(std::exception &e)
+                {
+                    // ignore exceptions
+                }
+                
+                {
+                    lock_t lock(m_mutex);
+                    m_status = ACTIVE;
+                    m_statusCond.notify_all();
+                }
+        
+                return true;
             }
             
+            void SynchronizedOperatorKernel::waitForSignal(boost::condition_variable & condition, unique_lock_t& lock)
             {
-                lock_t lock(m_mutex);
-                m_status = ACTIVE;
-                m_statusCond.notify_all();
-            }
-     
-            return true;
-        }
-        
-        void SynchronizedOperatorKernel::waitForSignal(boost::condition_variable & condition, unique_lock_t& lock)
-        {
-            try
-            {
-                condition.wait(lock);
-            }
-            catch(boost::thread_interrupted&)
-            {
-                throw Interrupt();
-            } 
-        }
-        
-        void SynchronizedOperatorKernel::validateParameterId(const unsigned int id)
-        {
-            bool isValid = false;
-            for(std::vector<const Parameter*>::const_iterator iter = info()->parameters().begin();
-                iter != info()->parameters().end();
-                ++iter)
-            {
-                if((*iter)->id() == id)
+                try
                 {
-                    isValid = true;
+                    condition.wait(lock);
+                }
+                catch(boost::thread_interrupted&)
+                {
+                    throw Interrupt();
+                } 
+            }
+            
+            void SynchronizedOperatorKernel::validateParameterId(const unsigned int id)
+            {
+                bool isValid = false;
+                for(std::vector<const Parameter*>::const_iterator iter = info()->parameters().begin();
+                    iter != info()->parameters().end();
+                    ++iter)
+                {
+                    if((*iter)->id() == id)
+                    {
+                        isValid = true;
+                        break;
+                    }
+                }
+                
+                if(! isValid)
+                    throw WrongParameterId(id, *this->info());
+            }
+            
+            void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
+            {
+                const Parameter& param = info()->parameter(id);
+                
+                switch(status())
+                {
+                case NONE:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                    case Parameter::INITIALIZED_READ:
+                    case Parameter::INITIALIZED_WRITE:
+                    case Parameter::ACTIVATED_WRITE:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
                     break;
+                case INITIALIZED:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
+                    break;
+                case ACTIVE:
+                case EXECUTING:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
+                    break;
+                default:
+                    BOOST_ASSERT(false);    
                 }
             }
             
-            if(! isValid)
-                throw WrongParameterId(id, *this->info());
-        }
-        
-        void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
-        {
-            const Parameter& param = info()->parameter(id);
-            
-            switch(status())
+            void SynchronizedOperatorKernel::validateWriteAccess(const unsigned int id)
             {
-            case NONE:
-                switch(param.accessMode())
+                const Parameter& param = info()->parameter(id);
+                
+                switch(status())
                 {
-                case Parameter::NO_ACCESS:
-                case Parameter::INITIALIZED_READ:
-                case Parameter::INITIALIZED_WRITE:
-                case Parameter::ACTIVATED_WRITE:
-                    throw ParameterAccessViolation(param, *this->info());
+                case NONE:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                    case Parameter::NONE_READ:
+                    case Parameter::INITIALIZED_READ:
+                    case Parameter::INITIALIZED_WRITE:
+                    case Parameter::ACTIVATED_WRITE:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
+                    break;
+                case INITIALIZED:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                    case Parameter::NONE_READ:
+                    case Parameter::NONE_WRITE:
+                    case Parameter::INITIALIZED_READ:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
+                    break;
+                case ACTIVE:
+                case EXECUTING:
+                    switch(param.accessMode())
+                    {
+                    case Parameter::NO_ACCESS:
+                    case Parameter::NONE_READ:
+                    case Parameter::NONE_WRITE:
+                    case Parameter::INITIALIZED_READ:
+                    case Parameter::INITIALIZED_WRITE:
+                        throw ParameterAccessViolation(param, *this->info());
+                    }
+                    break;
+                default:
+                    BOOST_ASSERT(false);    
                 }
-                break;
-            case INITIALIZED:
-                switch(param.accessMode())
-                {
-                case Parameter::NO_ACCESS:
-                    throw ParameterAccessViolation(param, *this->info());
-                }
-                break;
-            case ACTIVE:
-            case EXECUTING:
-                switch(param.accessMode())
-                {
-                case Parameter::NO_ACCESS:
-                    throw ParameterAccessViolation(param, *this->info());
-                }
-                break;
-            default:
-                BOOST_ASSERT(false);    
             }
-        }
-        
-        void SynchronizedOperatorKernel::validateWriteAccess(const unsigned int id)
-        {
-            const Parameter& param = info()->parameter(id);
             
-            switch(status())
+            void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const core::DataVariant& type)
             {
-            case NONE:
-                switch(param.accessMode())
-                {
-                case Parameter::NO_ACCESS:
-                case Parameter::NONE_READ:
-                case Parameter::INITIALIZED_READ:
-                case Parameter::INITIALIZED_WRITE:
-                case Parameter::ACTIVATED_WRITE:
-                    throw ParameterAccessViolation(param, *this->info());
-                }
-                break;
-            case INITIALIZED:
-                switch(param.accessMode())
-                {
-                case Parameter::NO_ACCESS:
-                case Parameter::NONE_READ:
-                case Parameter::NONE_WRITE:
-                case Parameter::INITIALIZED_READ:
-                    throw ParameterAccessViolation(param, *this->info());
-                }
-                break;
-            case ACTIVE:
-            case EXECUTING:
-                switch(param.accessMode())
-                {
-                case Parameter::NO_ACCESS:
-                case Parameter::NONE_READ:
-                case Parameter::NONE_WRITE:
-                case Parameter::INITIALIZED_READ:
-                case Parameter::INITIALIZED_WRITE:
-                    throw ParameterAccessViolation(param, *this->info());
-                }
-                break;
-            default:
-                BOOST_ASSERT(false);    
-            }
+                const Parameter& param = info()->parameter(id);
+                if(! type.is(param.type()))
+                    throw WrongParameterType(param, *this->info());
+            }  
         }
-        
-        void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const core::DataVariant& type)
-        {
-            const Parameter& param = info()->parameter(id);
-            if(! type.is(param.type()))
-                throw WrongParameterType(param, *this->info());
-        }  
     }
 }

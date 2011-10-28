@@ -20,52 +20,55 @@
 #include "../DataContainer.h"
 #include "../Operator.h"
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        OutputNode::OutputNode(Operator*const op, const unsigned int outputId)
-        : m_operator(op),
-            m_outputId(outputId),
-            m_remainingCopies(0)
-        {}
-        
-        void OutputNode::addConnectedInput(InputNode*const input)
+        namespace impl
         {
-            if(! input)
-                throw WrongArgument("Passed null as input.");
+            OutputNode::OutputNode(Operator*const op, const unsigned int outputId)
+            : m_operator(op),
+                m_outputId(outputId),
+                m_remainingCopies(0)
+            {}
             
-            if(m_connectedInputs.count(input))
-                throw WrongArgument("Input node has already been connected to this output node.");
-            
-            m_connectedInputs.insert(input);
-        }
-
-        void OutputNode::removeConnectedInput(InputNode*const input)
-        {
-            if(m_connectedInputs.count(input))
-                m_connectedInputs.erase(input);
-        }
-
-        DataContainer OutputNode::getOutputData()
-        {
-            DataContainer value = m_operator->getOutputData(m_outputId);
-            
-            // the data has been obtained
-            // now make sure the connection counter is adapted in an atomic operation
+            void OutputNode::addConnectedInput(InputNode*const input)
             {
-                lock_t lock(m_mutex);
+                if(! input)
+                    throw WrongArgument("Passed null as input.");
                 
-                if(! m_remainingCopies)
+                if(m_connectedInputs.count(input))
+                    throw WrongArgument("Input node has already been connected to this output node.");
+                
+                m_connectedInputs.insert(input);
+            }
+
+            void OutputNode::removeConnectedInput(InputNode*const input)
+            {
+                if(m_connectedInputs.count(input))
+                    m_connectedInputs.erase(input);
+            }
+
+            DataContainer OutputNode::getOutputData()
+            {
+                DataContainer value = m_operator->getOutputData(m_outputId);
+                
+                // the data has been obtained
+                // now make sure the connection counter is adapted in an atomic operation
                 {
-                    m_operator->clearOutputData(m_outputId);
-                    m_remainingCopies = m_connectedInputs.size();
+                    lock_t lock(m_mutex);
+                    
+                    if(! m_remainingCopies)
+                    {
+                        m_operator->clearOutputData(m_outputId);
+                        m_remainingCopies = m_connectedInputs.size();
+                    }
+                    
+                    m_remainingCopies--; 
                 }
                 
-                m_remainingCopies--; 
+                return value;
             }
-            
-            return value;
         }
     }
 }

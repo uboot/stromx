@@ -17,9 +17,12 @@
 #include "Config.h"
 #include "Trigger.h"
 
-namespace core
+namespace stromx
 {
-    const std::string Trigger::TYPE = "Trigger";
-    const std::string Trigger::PACKAGE = PACKAGE_NAME;
-    const Version Trigger::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
+    namespace core
+    {
+        const std::string Trigger::TYPE = "Trigger";
+        const std::string Trigger::PACKAGE = PACKAGE_NAME;
+        const Version Trigger::VERSION = Version(STROM_VERSION_MAJOR, STROM_VERSION_MINOR);
+    }
 }

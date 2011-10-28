@@ -19,19 +19,22 @@
 
 #include "Operator.h"
 
-namespace core
+namespace stromx
 {
-    /** \brief %Operator with utility functions for unit testing */
-    class OperatorTester : public Operator
+    namespace core
     {
-    public:
-        OperatorTester(OperatorKernel* const kernel) 
-          : Operator(kernel)
-        {}
-        
-        void activate() { Operator::activate(); }
-        void deactivate()  { Operator::deactivate(); }
-    };
+        /** \brief %Operator with utility functions for unit testing */
+        class OperatorTester : public Operator
+        {
+        public:
+            OperatorTester(OperatorKernel* const kernel) 
+            : Operator(kernel)
+            {}
+            
+            void activate() { Operator::activate(); }
+            void deactivate()  { Operator::deactivate(); }
+        };
+    }
 }
 
 #endif // STROM_OPERATORTESTER_H

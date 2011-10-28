@@ -21,30 +21,33 @@
 #include "DataContainer.h"
 #include "Exception.h"
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class RecycleAccessImpl;
+        namespace impl
+        {
+            class RecycleAccessImpl;
+        }
+        
+        class Data;
+        class DataContainer;
+        
+        /** \brief Recycle access to a data container */
+        class RecycleAccess
+        {
+        public:
+            RecycleAccess(const DataContainer data);
+            RecycleAccess() {}
+            
+            void add(const DataContainer data);  
+            Data* const operator()() const;  
+            Data* const operator()(const unsigned int timeout) const;
+            
+        private:
+            std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      
+        };
     }
-    
-    class Data;
-    class DataContainer;
-    
-    /** \brief Recycle access to a data container */
-    class RecycleAccess
-    {
-    public:
-        RecycleAccess(const DataContainer data);
-        RecycleAccess() {}
-        
-        void add(const DataContainer data);  
-        Data* const operator()() const;  
-        Data* const operator()(const unsigned int timeout) const;
-        
-    private:
-        std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      
-    };
 }
 
 #endif // STROM_RECYCLEACCESS_H
