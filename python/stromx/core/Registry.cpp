@@ -14,26 +14,32 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Operator.h>
+#include <stromx/core/Registry.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Data.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportOperator()
-{       
-    enum_<Operator::Status>("OperatorStatus")
-        .value("NONE", Operator::NONE)
-        .value("INITIALIZED", Operator::INITIALIZED)
-        .value("ACTIVE", Operator::ACTIVE)
-        .value("EXECUTING", Operator::EXECUTING)
-        ;
-        
-    class_<Operator>("Operator", no_init)
-        .def("status", &Operator::status)
-        .def("name", &Operator::name, return_value_policy<boost::python::copy_const_reference>())
-        .def("setName", &Operator::setName)
-        .def("initialize", &Operator::initialize)
+struct RegistryWrap : Registry, wrapper<Registry>
+{
+    void registerOperator(const OperatorKernel* const op)
+    {
+        this->get_override("registerOperator")();
+    }
+    
+    void registerData(const Data* const data)
+    {
+        this->get_override("registerData")();
+    }
+};
+
+void exportRegistry()
+{          
+    class_<RegistryWrap, boost::noncopyable>("Registry")
+        .def("registerOperator", pure_virtual(&Registry::registerOperator))
+        .def("registerData", pure_virtual(&Registry::registerData))
     ;
 }

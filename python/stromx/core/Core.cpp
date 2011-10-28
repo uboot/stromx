@@ -16,15 +16,22 @@
 
 #include <boost/python.hpp>
 
+#include <stromx/core/Core.h>
+#include <stromx/core/Registry.h>
+
 void exportFactory();
 void exportOperator();
+void exportRegistry();
 void exportStream();
 
 BOOST_PYTHON_MODULE(libcore)
 {
     using namespace boost::python;
     
-    exportFactory();
+    def("registerCore", registerCore);
+    
     exportOperator();
+    exportRegistry();
+    exportFactory();
     exportStream();
 }
