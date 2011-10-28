@@ -1,4 +1,4 @@
-project(base)
+project(stromx_base)
 
 set (BASE_VERSION_MAJOR 0)
 set (BASE_VERSION_MINOR 1)
@@ -36,16 +36,16 @@ set(SOURCES
 
 include_directories(${OpenCV_ROOT_DIR})
 
-add_library(strom_base SHARED ${SOURCES})
+add_library(stromx_base SHARED ${SOURCES})
 
 set(VERSION_STRING "${BASE_VERSION_MAJOR}.${BASE_VERSION_MINOR}")
 
-set_target_properties(strom_base PROPERTIES
+set_target_properties(stromx_base PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
 )
 
-target_link_libraries(strom_base
+target_link_libraries(stromx_base
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
 )

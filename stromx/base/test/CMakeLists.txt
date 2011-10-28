@@ -1,4 +1,4 @@
-project(base_test)
+project(stromx_base_test)
 
 include_directories(
     ../../..
@@ -8,7 +8,7 @@ include_directories(
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(base_test
+add_executable(stromx_base_test
     ../AdjustRgbChannels.cpp
     AdjustRgbChannelsTest.cpp
     ../Base.cpp
@@ -37,12 +37,12 @@ add_executable(base_test
     TriggerTest.cpp
 )
 
-target_link_libraries(base_test 
+target_link_libraries(stromx_base_test 
     ${Boost_LIBRARIES}
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${CMAKE_THREAD_LIBS_INIT}
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
-    strom
+    stromx_core
 )

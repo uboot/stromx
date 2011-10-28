@@ -1,4 +1,4 @@
-project(strom)
+project(stromx_core)
 
 set (STROM_VERSION_MAJOR 0)
 set (STROM_VERSION_MINOR 1)
@@ -55,11 +55,11 @@ if(BUILD_XML_SUPPORT)
         )
 endif()
 
-add_library(strom SHARED ${SOURCES})
+add_library(stromx_core SHARED ${SOURCES})
 
 set(VERSION_STRING "${STROM_VERSION_MAJOR}.${STROM_VERSION_MINOR}")
 
-set_target_properties(strom PROPERTIES
+set_target_properties(stromx_core PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
 )
@@ -73,12 +73,12 @@ if(BUILD_XML_SUPPORT)
     include_directories(${XERCES_INCLUDE_DIR})
 endif()
 
-target_link_libraries(strom
+target_link_libraries(stromx_core
     ${Boost_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )
 
 if(BUILD_XML_SUPPORT)
-    target_link_libraries(strom ${XERCES_LIBRARIES})
+    target_link_libraries(stromx_core ${XERCES_LIBRARIES})
 endif()
 
