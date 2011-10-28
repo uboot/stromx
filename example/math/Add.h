@@ -17,17 +17,17 @@
 #ifndef MATH_ADD_H
 #define MATH_ADD_H
 
-#include <strom/OperatorKernel.h>
-#include <strom/Primitive.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Primitive.h>
 
-namespace strom
+namespace core
 {
     class DataContainer;
 }
 
 namespace math
 {
-    class Add : public strom::OperatorKernel
+    class Add : public core::OperatorKernel
     {
     public:
         enum InputId
@@ -48,21 +48,21 @@ namespace math
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
-        virtual void execute(strom::DataProvider& provider);
+        virtual void execute(core::DataProvider& provider);
         
-        virtual void setParameter(unsigned int id, const strom::Data& value);
-        virtual const strom::Data& getParameter(const unsigned int id) const;
+        virtual void setParameter(unsigned int id, const core::Data& value);
+        virtual const core::Data& getParameter(const unsigned int id) const;
         
     private:
-        static const std::vector<const strom::Description*> setupInputs();
-        static const std::vector<const strom::Description*> setupOutputs();
-        static const std::vector<const strom::Parameter*> setupParameters();
+        static const std::vector<const core::Description*> setupInputs();
+        static const std::vector<const core::Description*> setupOutputs();
+        static const std::vector<const core::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const strom::Version VERSION;                         
+        static const core::Version VERSION;                         
         
-        strom::UInt32 m_offset;
+        core::UInt32 m_offset;
     };
 }
 

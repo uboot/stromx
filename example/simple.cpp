@@ -14,42 +14,42 @@
 *  limitations under the License.
 */
 
-#include <strom/Stream.h>
-#include <strom/Operator.h>
-#include <strom/Thread.h>
-#include <strom/ReadAccess.h>
+#include <stromx/core/Stream.h>
+#include <stromx/core/Operator.h>
+#include <stromx/core/Thread.h>
+#include <stromx/core/ReadAccess.h>
 
-#include <base/Counter.h>
-#include <base/PeriodicDelay.h>
+#include <stromx/base/Counter.h>
+#include <stromx/base/PeriodicDelay.h>
 
 #include <iostream>
 
 
 int main (int argc, char* argv[])
 {
-    strom::Stream stream;
+    core::Stream stream;
     
-    strom::Operator* source = new strom::Operator(new base::Counter);
+    core::Operator* source = new core::Operator(new base::Counter);
     source->initialize();
     stream.addOperator(source);
     
-    strom::Operator* timer = new strom::Operator(new base::PeriodicDelay);
+    core::Operator* timer = new core::Operator(new base::PeriodicDelay);
     timer->initialize();
     stream.addOperator(timer);
     
-    timer->setParameter(base::PeriodicDelay::PERIOD, strom::UInt32(1000));
+    timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));
     
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
-    strom::Thread* thread = stream.addThread();
+    core::Thread* thread = stream.addThread();
     thread->addNode(timer, base::PeriodicDelay::INPUT);
     
     stream.start();
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        strom::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
-        strom::ReadAccess<strom::UInt32> count(data);
+        core::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
+        core::ReadAccess<core::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
         timer->clearOutputData(base::PeriodicDelay::OUTPUT);

@@ -25,7 +25,7 @@ if(CPPUNIT_FOUND)
 endif()
 
 if(Boost_FOUND)
-    set(BUILD_STREAM true)
+    set(BUILD_CORE true)
 endif()
 
 if(OpenCV2_FOUND)
@@ -36,11 +36,11 @@ if(XERCES_FOUND)
     option(BUILD_XML_SUPPORT "Build XML persistence" ON)
 endif()
 
-if(BUILD_STREAM)
-    add_subdirectory(strom)
+if(BUILD_CORE)
+    add_subdirectory(stromx/core)
 endif()
 
 if(BUILD_BASE)
-   add_subdirectory(base)
+   add_subdirectory(stromx/base)
    add_subdirectory(example)
 endif()

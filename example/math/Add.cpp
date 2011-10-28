@@ -1,48 +1,48 @@
 #include "Add.h"
 
-#include <strom/Primitive.h>
-#include <strom/OperatorException.h>
-#include <strom/DataContainer.h>
-#include <strom/DataProvider.h>
-#include <strom/Id2DataPair.h>
-#include <strom/Id2DataComposite.h>
-#include <strom/ReadAccess.h>
+#include <stromx/core/Primitive.h>
+#include <stromx/core/OperatorException.h>
+#include <stromx/core/DataContainer.h>
+#include <stromx/core/DataProvider.h>
+#include <stromx/core/Id2DataPair.h>
+#include <stromx/core/Id2DataComposite.h>
+#include <stromx/core/ReadAccess.h>
 
 namespace math
 {
     const std::string Add::TYPE("Add");
     const std::string Add::PACKAGE("Math");
-    const strom::Version Add::VERSION(1, 0);
+    const core::Version Add::VERSION(1, 0);
     
-    const std::vector<const strom::Description*> Add::setupInputs()
+    const std::vector<const core::Description*> Add::setupInputs()
     {
-        std::vector<const strom::Description*> inputs;
+        std::vector<const core::Description*> inputs;
         
-        strom::Description* input = new strom::Description(INPUT, strom::DataVariant::UINT_32);
+        core::Description* input = new core::Description(INPUT, core::DataVariant::UINT_32);
         input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const strom::Description*> Add::setupOutputs()
+    const std::vector<const core::Description*> Add::setupOutputs()
     {
-        std::vector<const strom::Description*> outputs;
+        std::vector<const core::Description*> outputs;
         
-        strom::Description* output = new strom::Description(OUTPUT, strom::DataVariant::UINT_32);
+        core::Description* output = new core::Description(OUTPUT, core::DataVariant::UINT_32);
         output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector<const strom::Parameter*> Add::setupParameters()
+    const std::vector<const core::Parameter*> Add::setupParameters()
     {
-        std::vector<const strom::Parameter*> parameters;
+        std::vector<const core::Parameter*> parameters;
         
-        strom::Parameter* offset = new strom::Parameter(OFFSET, strom::DataVariant::UINT_32);
+        core::Parameter* offset = new core::Parameter(OFFSET, core::DataVariant::UINT_32);
         offset->setName("Offset");
-        offset->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
+        offset->setAccessMode(core::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     
         return parameters;
@@ -53,48 +53,48 @@ namespace math
     {
     }
     
-    void Add::setParameter(unsigned int id, const strom::Data& value)
+    void Add::setParameter(unsigned int id, const core::Data& value)
     {
         try
         {
             switch(id)
             {
             case OFFSET:
-                m_offset = strom::data_cast<const strom::UInt32&>(value);
+                m_offset = core::data_cast<const core::UInt32&>(value);
                 break;
             default:
-                throw strom::WrongParameterId(id, *this);
+                throw core::WrongParameterId(id, *this);
             }
         }
-        catch(strom::BadCast&)
+        catch(core::BadCast&)
         {
-            throw strom::WrongParameterId(id, *this);
+            throw core::WrongParameterId(id, *this);
         }
     }
 
-    const strom::Data& Add::getParameter(const unsigned int id) const
+    const core::Data& Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {
         case OFFSET:
             return m_offset;
         default:
-            throw strom::WrongParameterId(id, *this);
+            throw core::WrongParameterId(id, *this);
         }
     }  
     
-    void Add::execute(strom::DataProvider& provider)
+    void Add::execute(core::DataProvider& provider)
     {
-        strom::Id2DataPair inputMapper(INPUT);
+        core::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
         
-        strom::ReadAccess<strom::UInt32> input(inputMapper.data());
+        core::ReadAccess<core::UInt32> input(inputMapper.data());
         
-        strom::Data* result = new strom::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        core::Data* result = new core::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
         
-        strom::DataContainer outContainer(result);
+        core::DataContainer outContainer(result);
        
-        strom::Id2DataPair output(OUTPUT, outContainer);
+        core::Id2DataPair output(OUTPUT, outContainer);
         provider.sendOutputData(output);
     }
 } 

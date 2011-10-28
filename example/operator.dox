@@ -12,7 +12,7 @@ However such an operator is not defined in the package \em Base which provided a
 
 \section operator_declare Declaring the operator
 
-A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernels do not have to be thread-safe. All concurrent accesses are handled by the strom::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.
+A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernels do not have to be thread-safe. All concurrent accesses are handled by the core::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.
 
 The new operator kernel is declared in the header file <em>Add.h</em>:
 
@@ -20,23 +20,23 @@ The new operator kernel is declared in the header file <em>Add.h</em>:
 #ifndef MATH_ADD_H
 #define MATH_ADD_H
 
-#include <strom/OperatorKernel.h>
-#include <strom/Primitive.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Primitive.h>
 
-namespace strom
+namespace core
 {
     class DataContainer;
 }
 
 namespace math
 {
-    class Add : public strom::OperatorKernel
+    class Add : public core::OperatorKernel
     {
 \endcode
 
 The kernel will be a member of the package \em Math. It seems to be a good practice to add all operators of a package to a common namespace which in this case is consequently called \em math.
 
-All operator kernels are derived from strom::OperatorKernel.
+All operator kernels are derived from core::OperatorKernel.
 
 \code
     public:
@@ -63,25 +63,25 @@ Each input, output and parameter of the operator is identified by an ID. Here ea
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
-        virtual void execute(strom::DataProvider& provider);
+        virtual void execute(core::DataProvider& provider);
 
-        virtual void setParameter(unsigned int id, const strom::Data& value);
-        virtual const strom::Data& getParameter(unsigned int id);
+        virtual void setParameter(unsigned int id, const core::Data& value);
+        virtual const core::Data& getParameter(unsigned int id);
 \endcode
 
-First the default constructor is declared. The functions strom::OperatorKernel::clone() and strom::OperatorKernel::execute() are abstract in strom::OperatorKernel and must be defined in each custom operator kernel. The subsequent functions must be implemented to support reading and writing the paramter of  \em Add.
+First the default constructor is declared. The functions core::OperatorKernel::clone() and core::OperatorKernel::execute() are abstract in core::OperatorKernel and must be defined in each custom operator kernel. The subsequent functions must be implemented to support reading and writing the paramter of  \em Add.
 
 \code
     private:
-        static const std::vector<const strom::Description*> setupInputs();
-        static const std::vector<const strom::Description*> setupOutputs();
-        static const std::vector<const strom::Parameter*> setupParameters();
+        static const std::vector<const core::Description*> setupInputs();
+        static const std::vector<const core::Description*> setupOutputs();
+        static const std::vector<const core::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const strom::Version VERSION;                         
+        static const core::Version VERSION;                         
         
-        strom::UInt32 m_offset;
+        core::UInt32 m_offset;
     };
 }
 
@@ -96,17 +96,17 @@ The operatorar \em Add is implemented in <em>Add.cpp</em>.
 \code
 #include "Add.h"
 
-#include <strom/Primitive.h>
-#include <strom/OperatorException.h>
-#include <strom/DataContainer.h>
-#include <strom/DataProvider.h>
-#include <strom/Id2DataPair.h>
-#include <strom/Id2DataComposite.h>
-#include <strom/ReadAccess.h>
+#include <stromx/core/Primitive.h>
+#include <stromx/core/OperatorException.h>
+#include <stromx/core/DataContainer.h>
+#include <stromx/core/DataProvider.h>
+#include <stromx/core/Id2DataPair.h>
+#include <stromx/core/Id2DataComposite.h>
+#include <stromx/core/ReadAccess.h>
 
 \endcode
 
-First all necessary headers are included. The subsequent \em using allows to access the members of the \em strom library without the prefix \c strom::
+First all necessary headers are included. The subsequent \em using allows to access the members of the \em core library without the prefix \c core::
 
 \code
 namespace math
@@ -116,49 +116,49 @@ namespace math
     const Version Add::VERSION(1, 0);
 \endcode
 
-Each operator kernel provides exports its type, the package it belongs to and its version. This information must be the same for each instance of specific operator class and is naturally stored in static variables. This data will be passed to the constructor of strom::OperatorKernel.
+Each operator kernel provides exports its type, the package it belongs to and its version. This information must be the same for each instance of specific operator class and is naturally stored in static variables. This data will be passed to the constructor of core::OperatorKernel.
 
-Moreover, the constructor of strom::OperatorKernel accepts vectors of descriptions of the inputs, outputs and parameters of the operator kernel. These descriptions are \em not required to be the same for each instance of a specific operator class and can change during the lifetime of operator objects. As a consequence they can not be static variables but must be allocated for each class instance. The following helper functions take care of this allocations. In the case of \em Add the initial descriptions are the same for each class instance. Thus, the initialization functions can be static.
+Moreover, the constructor of core::OperatorKernel accepts vectors of descriptions of the inputs, outputs and parameters of the operator kernel. These descriptions are \em not required to be the same for each instance of a specific operator class and can change during the lifetime of operator objects. As a consequence they can not be static variables but must be allocated for each class instance. The following helper functions take care of this allocations. In the case of \em Add the initial descriptions are the same for each class instance. Thus, the initialization functions can be static.
 
 \code
-    const std::vector<const strom::Description*> Add::setupInputs()
+    const std::vector<const core::Description*> Add::setupInputs()
     {
-        std::vector<const strom::Description*> inputs;
+        std::vector<const core::Description*> inputs;
         
-        strom::Description* input = new strom::Description(INPUT, strom::DataVariant::UINT_32);
+        core::Description* input = new core::Description(INPUT, core::DataVariant::UINT_32);
         input->setName("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const strom::Description*> Add::setupOutputs()
+    const std::vector<const core::Description*> Add::setupOutputs()
     {
-        std::vector<const strom::Description*> outputs;
+        std::vector<const core::Description*> outputs;
         
-        strom::Description* output = new strom::Description(OUTPUT, strom::DataVariant::UINT_32);
+        core::Description* output = new core::Description(OUTPUT, core::DataVariant::UINT_32);
         output->setName("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector<const strom::Parameter*> Add::setupParameters()
+    const std::vector<const core::Parameter*> Add::setupParameters()
     {
-        std::vector<const strom::Parameter*> parameters;
+        std::vector<const core::Parameter*> parameters;
         
-        strom::Parameter* offset = new strom::Parameter(OFFSET, strom::DataVariant::UINT_32);
+        core::Parameter* offset = new core::Parameter(OFFSET, core::DataVariant::UINT_32);
         offset->setName("Offset");
-        offset->setAccessMode(strom::Parameter::ACTIVATED_WRITE);
+        offset->setAccessMode(core::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     
         return parameters;
     }
 \endcode
 
-Each initialization function allocates an empty vector which contains pointers to strom::Description objects (in the case of inputs and outputs) or strom::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
+Each initialization function allocates an empty vector which contains pointers to core::Description objects (in the case of inputs and outputs) or core::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
 
-Parameters additionally provide information about their access mode. Here strom::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of strom::Parameter to describe specific types of parameters in more detail. One example is strom::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
+Parameters additionally provide information about their access mode. Here core::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of core::Parameter to describe specific types of parameters in more detail. One example is core::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
 
 \code
     Add::Add()
@@ -170,41 +170,41 @@ Parameters additionally provide information about their access mode. Here strom:
 The constructor of \em Add simply passes all information which was setup above to the constructor of operator kernel.
 
 \note
-Not all inputs, outputs and parameters have to be passed to the constructor of strom::OperatorKernel. There exists the possibility to add further information during initialization of the operator (by overloading strom::OperatorKernel::initialize()). This means that an operator can be set up in a two stage process. After instantiation (but before initialization) some parameter descriptions are allocated and the corresponding parameters can be set. Depending on the value of these parameters the operators assigns further inputs, outputs and parameters to itself during initialization.
+Not all inputs, outputs and parameters have to be passed to the constructor of core::OperatorKernel. There exists the possibility to add further information during initialization of the operator (by overloading core::OperatorKernel::initialize()). This means that an operator can be set up in a two stage process. After instantiation (but before initialization) some parameter descriptions are allocated and the corresponding parameters can be set. Depending on the value of these parameters the operators assigns further inputs, outputs and parameters to itself during initialization.
 An example is an operator which merges several inputs to one output. After instantation the operator has no inputs but a parameter which defines the number of inputs. Only during initialization these inputs are actually allocated.
 
 \code
-    void Add::setParameter(unsigned int id, const strom::Data& value)
+    void Add::setParameter(unsigned int id, const core::Data& value)
     {
         try
         {
             switch(id)
             {
             case OFFSET:
-                m_offset = strom::data_cast<const strom::UInt32&>(value);
+                m_offset = core::data_cast<const core::UInt32&>(value);
                 break;
             default:
-                throw strom::WrongParameterId(id, *this);
+                throw core::WrongParameterId(id, *this);
             }
         }
-        catch(strom::BadCast&)
+        catch(core::BadCast&)
         {
-            throw strom::WrongParameterId(id, *this);
+            throw core::WrongParameterId(id, *this);
         }
     }
 \endcode
 
-The parameter \em Add supports only one parameter. To support more parameter further \c case statements have to be added to the \c switch statement. The value of the parameter \c OFFSET is internally stored as member of type strom::UInt32. Because the parameter \c value is of type strom::Data it must be down-casted to the correct type. The function strom::data_cast() works exactly as dynamic_cast() but throws a strom::BadCast instead of std::bad_cast.
+The parameter \em Add supports only one parameter. To support more parameter further \c case statements have to be added to the \c switch statement. The value of the parameter \c OFFSET is internally stored as member of type core::UInt32. Because the parameter \c value is of type core::Data it must be down-casted to the correct type. The function core::data_cast() works exactly as dynamic_cast() but throws a core::BadCast instead of std::bad_cast.
 
 \code
-    const strom::Data& Add::getParameter(const unsigned int id) const
+    const core::Data& Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {
         case OFFSET:
             return m_offset;
         default:
-            throw strom::WrongParameterId(id, *this);
+            throw core::WrongParameterId(id, *this);
         }
     }  
 \endcode
@@ -212,38 +212,38 @@ The parameter \em Add supports only one parameter. To support more parameter fur
 The functions to read a parameter follows the same pattern as writing it.
 
 \note
-As mentioned above operator kernels do not have to be thread-safe. It is guaranteed that strom::OperatorKernel::getParameter() and strom::OperatorKernel::setParameter() are never called during execution of the operator.
+As mentioned above operator kernels do not have to be thread-safe. It is guaranteed that core::OperatorKernel::getParameter() and core::OperatorKernel::setParameter() are never called during execution of the operator.
 
 \code
-    void Add::execute(strom::DataProvider& provider)
+    void Add::execute(core::DataProvider& provider)
     {
-        strom::Id2DataPair inputMapper(INPUT);
+        core::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
 \endcode
 
-The actual work done by \em Add happens in \c execute(). There the input data is processed and the result is passed to the operator output. The input data is obtained from a strom::DataProvider object. To request the data of an specific input a strom::Id2DataPair object \c inputMapper is instantiated with the ID of the input in question. The data provider looks up the corresponding input and waits for input data. If the data arrives it stores in \c inputMapper.
+The actual work done by \em Add happens in \c execute(). There the input data is processed and the result is passed to the operator output. The input data is obtained from a core::DataProvider object. To request the data of an specific input a core::Id2DataPair object \c inputMapper is instantiated with the ID of the input in question. The data provider looks up the corresponding input and waits for input data. If the data arrives it stores in \c inputMapper.
 
 \note
-The above procedure to obtain the input data of the operator via data mappers might appear complicated at first sight. However, this approach allows for more flexible strategies to get input data. Consider e.g. an operator which has two inputs but requires only data from one of them at a time. If \c inputMapper1 and \c inputMapper2 map to the respective inputs, the call <tt>provider.receiveInputData(inputMapper1 || inputMapper2)</tt> returns as soon as one of the inputs received some data. On the other hand, <tt>provider.receiveInputData(inputMapper1 && inputMapper2)</tt> waits until both inputs received their data. More complicated expressions of data mappers can be built by combining strom::operator&&, strom::operator|| and strom::Try.
+The above procedure to obtain the input data of the operator via data mappers might appear complicated at first sight. However, this approach allows for more flexible strategies to get input data. Consider e.g. an operator which has two inputs but requires only data from one of them at a time. If \c inputMapper1 and \c inputMapper2 map to the respective inputs, the call <tt>provider.receiveInputData(inputMapper1 || inputMapper2)</tt> returns as soon as one of the inputs received some data. On the other hand, <tt>provider.receiveInputData(inputMapper1 && inputMapper2)</tt> waits until both inputs received their data. More complicated expressions of data mappers can be built by combining core::operator&&, core::operator|| and core::Try.
 
 \code
-        strom::ReadAccess<strom::UInt32> input(inputMapper.data());
+        core::ReadAccess<core::UInt32> input(inputMapper.data());
 
-        strom::Data* result = new strom::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        core::Data* result = new core::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
 \endcode
 
-The member strom::Id2DataPair::data() returns a strom::DataContainer object. As in the previous examples a strom::ReadAccess is needed to extract the actual data from the data container. In the next step the output value is computed and stored in an strom::UInt32 object. The output data is passed to subsequent operators or to the client of the library \em without copying the data. I.e. the object must be allocated on the heap because it should stay alive even if it leaves the scope of \c Add::execute(). 
+The member core::Id2DataPair::data() returns a core::DataContainer object. As in the previous examples a core::ReadAccess is needed to extract the actual data from the data container. In the next step the output value is computed and stored in an core::UInt32 object. The output data is passed to subsequent operators or to the client of the library \em without copying the data. I.e. the object must be allocated on the heap because it should stay alive even if it leaves the scope of \c Add::execute(). 
         
 \code
-        strom::DataContainer outContainer(result);
+        core::DataContainer outContainer(result);
        
-        strom::Id2DataPair output(OUTPUT, outContainer);
+        core::Id2DataPair output(OUTPUT, outContainer);
         provider.sendOutputData(output);
     }
 } 
 \endcode
 
-To send the result data to the output it is packed into a DataContainer and paired with the ID of the respective output. The data provider is responsible to send the data container to the corresponding output. As in the case of strom::DataProvider::receiveInputData(), the function strom::DataProvider::sendOutputData() accepts expressions strom::Id2DataPair objects together with strom::operator&&, strom::operator|| and strom::Try.
+To send the result data to the output it is packed into a DataContainer and paired with the ID of the respective output. The data provider is responsible to send the data container to the corresponding output. As in the case of core::DataProvider::receiveInputData(), the function core::DataProvider::sendOutputData() accepts expressions core::Id2DataPair objects together with core::operator&&, core::operator|| and core::Try.
 
 \section operator_deploy Deploying the operator
 
@@ -278,15 +278,16 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 The program which runs the stream is almost identical to the one in the previous tutorial. The only extra step which has to be taken is the registration of the operator \em Add with the factory. 
 
 \code
-#include <strom/Factory.h>
-#include <strom/XmlReader.h>
-#include <strom/Stream.h>
-#include <strom/Strom.h>
-#include <strom/Operator.h>
-#include <strom/Primitive.h>
-#include <strom/ReadAccess.h>
+#include <stromx/core/Factory.h>
+#include <stromx/core/XmlReader.h>
+#include <stromx/core/Stream.h>
+#include <stromx/core/Strom.h>
+#include <stromx/core/Operator.h>
+#include <stromx/core/Primitive.h>
+#include <stromx/core/ReadAccess.h>
 
-#include <base/Base.h>
+
+#include <stromx/base/Base.h>
 
 #include "math/Add.h"
 
@@ -294,7 +295,7 @@ The program which runs the stream is almost identical to the one in the previous
 
 int main (int argc, char* argv[])
 {
-    using namespace strom;
+    using namespace core;
    
     Factory* factory = new Factory;
     
@@ -333,8 +334,8 @@ If the package \em Math contained more operators and was built as separate share
 }
 \endcode
 
-Using the presented technique allows to convert single steps of a data processing pipeline to \em strom operator. These operators can then be combined arbitrarily to form new processing networks.
+Using the presented technique allows to convert single steps of a data processing pipeline to \em core operator. These operators can then be combined arbitrarily to form new processing networks.
 
-It is possible to define custom data types in a similar fashion by subclassing strom::Data and strom::DataVariant.
+It is possible to define custom data types in a similar fashion by subclassing core::Data and core::DataVariant.
 
 */

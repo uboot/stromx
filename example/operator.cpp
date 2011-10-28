@@ -14,15 +14,15 @@
 *  limitations under the License.
 */
 
-#include <strom/Factory.h>
-#include <strom/XmlReader.h>
-#include <strom/Stream.h>
-#include <strom/Strom.h>
-#include <strom/Operator.h>
-#include <strom/Primitive.h>
-#include <strom/ReadAccess.h>
+#include <stromx/core/Factory.h>
+#include <stromx/core/XmlReader.h>
+#include <stromx/core/Stream.h>
+#include <stromx/core/Strom.h>
+#include <stromx/core/Operator.h>
+#include <stromx/core/Primitive.h>
+#include <stromx/core/ReadAccess.h>
 
-#include <base/Base.h>
+#include <stromx/base/Base.h>
 
 #include "math/Add.h"
 
@@ -30,24 +30,24 @@
 
 int main (int argc, char* argv[])
 {
-    strom::Factory factory;
+    core::Factory factory;
     
     registerStrom(factory);
     registerBase(factory);
     
-    strom::OperatorKernel* op = new math::Add;
+    core::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);
     
-    strom::Stream* stream = strom::XmlReader(factory).read("operator.xml");
+    core::Stream* stream = core::XmlReader(factory).read("operator.xml");
     
     stream->start();
     
-    strom::Operator* timer = stream->operators()[2];
+    core::Operator* timer = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        strom::DataContainer data = timer->getOutputData(0);
-        strom::ReadAccess<strom::UInt32> count(data);
+        core::DataContainer data = timer->getOutputData(0);
+        core::ReadAccess<core::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
         timer->clearOutputData(0);
