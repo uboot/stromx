@@ -17,14 +17,17 @@
 #ifndef BASE_H
 #define BASE_H
 
-namespace core
+namespace stromx
 {
-    class Registry;
+    namespace core
+    {
+        class Registry;
+    }
 }
 
 extern "C"
 {
-    void registerBase(core::Registry& registry);
+    void registerBase(stromx::core::Registry& registry);
 }
 
 #endif // BASE_H

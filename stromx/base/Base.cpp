@@ -14,9 +14,9 @@
 #include "Queue.h"
 #include "Trigger.h"
 
-void registerBase(core::Registry& registry)
+void registerBase(stromx::core::Registry& registry)
 {
-    using namespace base;
+    using namespace stromx::base;
     
     registry.registerData(new Image);
     

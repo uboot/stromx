@@ -22,46 +22,49 @@
 #include <stromx/core/Enum.h>
 #include <stromx/core/RecycleAccess.h>
 
-namespace core
+namespace stromx
 {
-    class Image;
-}
-
-namespace base
-{
-    class ConstImage : public core::OperatorKernel
+    namespace core
     {
-    public:
-        enum OutputIds
+        class Image;
+    }
+
+    namespace base
+    {
+        class ConstImage : public core::OperatorKernel
         {
-            OUTPUT
+        public:
+            enum OutputIds
+            {
+                OUTPUT
+            };
+            
+            enum ParameterIds
+            {
+                IMAGE
+            };
+            
+            ConstImage();
+            virtual ~ConstImage();
+            
+            virtual OperatorKernel* const clone() const { return new ConstImage; }
+            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(unsigned int id) const;
+            virtual void execute(core::DataProvider& provider);
+            
+        private:
+            static const std::vector<const core::Description*> setupInputs();
+            static const std::vector<const core::Description*> setupOutputs();
+            static const std::vector<const core::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;   
+            
+            core::Image* m_image;
+            core::RecycleAccess m_imageAccess;
         };
-        
-        enum ParameterIds
-        {
-            IMAGE
-        };
-        
-        ConstImage();
-        virtual ~ConstImage();
-        
-        virtual OperatorKernel* const clone() const { return new ConstImage; }
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(unsigned int id) const;
-        virtual void execute(core::DataProvider& provider);
-        
-    private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const core::Version VERSION;   
-        
-        core::Image* m_image;
-        core::RecycleAccess m_imageAccess;
-    };
+    }
 }
 
 #endif // BASE_CONSTIMAGE_H

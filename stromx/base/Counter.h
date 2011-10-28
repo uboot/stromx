@@ -20,35 +20,38 @@
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 
-namespace base
+namespace stromx
 {
-    class Counter : public core::OperatorKernel
+    namespace base
     {
-    public:
-        enum OutputId
+        class Counter : public core::OperatorKernel
         {
-            OUTPUT
+        public:
+            enum OutputId
+            {
+                OUTPUT
+            };
+            
+            Counter();
+            
+            virtual OperatorKernel* const clone() const { return new Counter; }
+            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual void execute(core::DataProvider& provider);
+            virtual void activate();
+            
+        private:
+            static const std::vector<const core::Description*> setupInputs();
+            static const std::vector<const core::Description*> setupOutputs();
+            static const std::vector<const core::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;
+            
+            unsigned int m_counter;
         };
-        
-        Counter();
-        
-        virtual OperatorKernel* const clone() const { return new Counter; }
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id) const;
-        virtual void execute(core::DataProvider& provider);
-        virtual void activate();
-        
-    private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const core::Version VERSION;
-        
-        unsigned int m_counter;
-    };
+    }
 }
 
 #endif // BASE_COUNTER_H

@@ -20,52 +20,55 @@
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-}
-
-namespace base
-{
-    class AdjustRgbChannels : public core::OperatorKernel
+    namespace core
     {
-    public:
-        enum InputId
+        class DataContainer;
+    }
+
+    namespace base
+    {
+        class AdjustRgbChannels : public core::OperatorKernel
         {
-            INPUT
+        public:
+            enum InputId
+            {
+                INPUT
+            };
+            enum OutputId
+            {
+                OUTPUT
+            };
+            
+            enum ParameterId
+            {
+                RED,
+                GREEN,
+                BLUE
+            };
+            
+            AdjustRgbChannels();
+            
+            virtual OperatorKernel* const clone() const { return new AdjustRgbChannels; }
+            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual void execute(core::DataProvider& provider);
+            
+        private:
+            static const std::vector<const core::Description*> setupInputs();
+            static const std::vector<const core::Description*> setupOutputs();
+            static const std::vector<const core::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;                         
+            
+            core::Double m_red;
+            core::Double m_green;
+            core::Double m_blue;
         };
-        enum OutputId
-        {
-            OUTPUT
-        };
-        
-        enum ParameterId
-        {
-            RED,
-            GREEN,
-            BLUE
-        };
-        
-        AdjustRgbChannels();
-        
-        virtual OperatorKernel* const clone() const { return new AdjustRgbChannels; }
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id) const;
-        virtual void execute(core::DataProvider& provider);
-        
-    private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const core::Version VERSION;                         
-        
-        core::Double m_red;
-        core::Double m_green;
-        core::Double m_blue;
-    };
+    }
 }
 
 #endif // BASE_ADJUSTRGBCHANNELS_H

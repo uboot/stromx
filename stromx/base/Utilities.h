@@ -21,19 +21,22 @@
 
 #include <stromx/core/Image.h>
 
-namespace core
+namespace stromx
 {
-    class Image;
-    class DataContainer;
-}
+    namespace core
+    {
+        class Image;
+        class DataContainer;
+    }
 
-namespace base
-{
-    class Image;
-    
-    cv::Mat getOpenCvMat(const core::Image& image);
-    void adjustImage(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType,
-                     base::Image*& image);
-};
+    namespace base
+    {
+        class Image;
+        
+        cv::Mat getOpenCvMat(const core::Image& image);
+        void adjustImage(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType,
+                        base::Image*& image);
+    };
+}
 
 #endif // BASE_UTILITIES_H

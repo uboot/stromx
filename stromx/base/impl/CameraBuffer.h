@@ -21,59 +21,62 @@
 #include <stromx/core/RecycleAccess.h>
 #include <stromx/core/Primitive.h>
 
-namespace core
+namespace stromx
 {
-    class Data;
-}
-
-namespace base
-{
-    namespace impl
+    namespace core
     {
-        class CameraBuffer : public core::OperatorKernel
+        class Data;
+    }
+
+    namespace base
+    {
+        namespace impl
         {
-        public:
-            enum InputId
+            class CameraBuffer : public core::OperatorKernel
             {
-                INPUT
+            public:
+                enum InputId
+                {
+                    INPUT
+                };
+                
+                enum OutputId
+                {
+                    OUTPUT,
+                    BUFFER,
+                    INDEX
+                };
+                
+                enum ParameterId
+                {
+                    NUM_BUFFERS,
+                    BUFFER_SIZE
+                };
+                
+                CameraBuffer();
+                
+                virtual OperatorKernel* const clone() const { return new CameraBuffer; }
+                virtual void setParameter(const unsigned int id, const core::Data& value);
+                virtual const core::Data& getParameter(const unsigned int id) const;
+                virtual void execute(core::DataProvider& provider);
+                virtual void activate();
+                virtual void deactivate();
+                
+            private:
+                static const std::vector<const core::Description*> setupInputs();
+                static const std::vector<const core::Description*> setupOutputs();
+                static const std::vector<const core::Parameter*> setupParameters();
+                
+                static const std::string TYPE;
+                static const std::string PACKAGE;
+                static const core::Version VERSION;
+                
+                core::RecycleAccess m_buffers;
+                core::UInt32 m_bufferSize;
+                core::UInt32 m_numBuffers;
+                unsigned int m_id;
             };
-            
-            enum OutputId
-            {
-                OUTPUT,
-                BUFFER,
-                INDEX
-            };
-            
-            enum ParameterId
-            {
-                NUM_BUFFERS,
-                BUFFER_SIZE
-            };
-            
-            CameraBuffer();
-            
-            virtual OperatorKernel* const clone() const { return new CameraBuffer; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
-            virtual void activate();
-            virtual void deactivate();
-            
-        private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
-            
-            static const std::string TYPE;
-            static const std::string PACKAGE;
-            static const core::Version VERSION;
-            
-            core::RecycleAccess m_buffers;
-            core::UInt32 m_bufferSize;
-            core::UInt32 m_numBuffers;
-            unsigned int m_id;
-        };
+        }
     }
 }
 

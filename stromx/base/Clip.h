@@ -21,56 +21,58 @@
 #include <stromx/core/Primitive.h>
 #include <stromx/core/RecycleAccess.h>
 
-
-namespace base
+namespace stromx
 {
-    class Clip : public core::OperatorKernel
+    namespace base
     {
-    public:
-        enum InputId
+        class Clip : public core::OperatorKernel
         {
-            INPUT
+        public:
+            enum InputId
+            {
+                INPUT
+            };
+            
+            enum OutputId
+            {
+                OUTPUT
+            };
+            
+            enum ParameterId
+            {
+                TOP,
+                LEFT,
+                WIDTH,
+                HEIGHT,
+                NUM_PARAMS
+            };
+            
+            Clip();
+            
+            virtual OperatorKernel* const clone() const { return new Clip; }
+            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual void execute(core::DataProvider& provider);
+            
+        private:
+            static const std::vector<const core::Description*> setupInputs();
+            static const std::vector<const core::Description*> setupOutputs();
+            static const std::vector<const core::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;
+            
+            void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
+                                unsigned int & left, unsigned int & top,
+                                unsigned int & width, unsigned int & height);                           
+            
+            core::UInt32 m_top;
+            core::UInt32 m_left;
+            core::UInt32 m_width;
+            core::UInt32 m_height;
         };
-        
-        enum OutputId
-        {
-            OUTPUT
-        };
-        
-        enum ParameterId
-        {
-            TOP,
-            LEFT,
-            WIDTH,
-            HEIGHT,
-            NUM_PARAMS
-        };
-        
-        Clip();
-        
-        virtual OperatorKernel* const clone() const { return new Clip; }
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id) const;
-        virtual void execute(core::DataProvider& provider);
-        
-    private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const core::Version VERSION;
-        
-        void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
-                              unsigned int & left, unsigned int & top,
-                              unsigned int & width, unsigned int & height);                           
-        
-        core::UInt32 m_top;
-        core::UInt32 m_left;
-        core::UInt32 m_width;
-        core::UInt32 m_height;
-    };
+    }
 }
 
 #endif // BASE_CLIP_H

@@ -22,52 +22,55 @@
 
 #include <deque>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-}
-
-namespace base
-{
-    class Queue : public core::OperatorKernel
+    namespace core
     {
-    public:
-        enum InputId
+        class DataContainer;
+    }
+
+    namespace base
+    {
+        class Queue : public core::OperatorKernel
         {
-            INPUT
+        public:
+            enum InputId
+            {
+                INPUT
+            };
+            
+            enum OutputId
+            {
+                OUTPUT
+            };
+            
+            enum ParameterId
+            {
+                SIZE
+            };
+            
+            Queue();
+            
+            virtual OperatorKernel* const clone() const { return new Queue; }
+            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual void deactivate();
+            virtual void execute(core::DataProvider& provider);
+            
+        private:
+            static const std::vector<const core::Description*> setupInputs();
+            static const std::vector<const core::Description*> setupOutputs();
+            static const std::vector<const core::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;                       
+            
+            core::UInt32 m_size;
+            
+            std::deque<core::DataContainer> m_deque;
         };
-        
-        enum OutputId
-        {
-            OUTPUT
-        };
-        
-        enum ParameterId
-        {
-            SIZE
-        };
-        
-        Queue();
-        
-        virtual OperatorKernel* const clone() const { return new Queue; }
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id) const;
-        virtual void deactivate();
-        virtual void execute(core::DataProvider& provider);
-        
-    private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const core::Version VERSION;                       
-        
-        core::UInt32 m_size;
-        
-        std::deque<core::DataContainer> m_deque;
-    };
+    }
 }
 
 #endif // BASE_QUEUE_H
