@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_OPERATORTESTER_H
-#define STROM_OPERATORTESTER_H
+#ifndef STROMX_CORE_OPERATORTESTER_H
+#define STROMX_CORE_OPERATORTESTER_H
 
 #include "Operator.h"
 
@@ -37,4 +37,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OPERATORTESTER_H
+#endif // STROMX_CORE_OPERATORTESTER_H

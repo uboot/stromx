@@ -1,5 +1,5 @@
-#ifndef STROM_IMAGEIMPL_H
-#define STROM_IMAGEIMPL_H
+#ifndef STROMX_CORE_IMAGEIMPL_H
+#define STROMX_CORE_IMAGEIMPL_H
 
 #include <stromx/core/ImageWrapper.h>
 
@@ -49,4 +49,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMAGEIMPL_H
+#endif // STROMX_CORE_IMAGEIMPL_H

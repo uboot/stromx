@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_XMLUTILITIESTEST_H
-#define STROM_XMLUTILITIESTEST_H
+#ifndef STROMX_CORE_XMLUTILITIESTEST_H
+#define STROMX_CORE_XMLUTILITIESTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -41,4 +41,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_XMLUTILITIESTEST_H
+#endif // STROMX_CORE_XMLUTILITIESTEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_IMPL_CAMERABUFFER_H
-#define BASE_IMPL_CAMERABUFFER_H
+#ifndef STROMX_BASE_IMPL_CAMERABUFFER_H
+#define STROMX_BASE_IMPL_CAMERABUFFER_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/RecycleAccess.h>
@@ -80,4 +80,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_IMPL_CAMERABUFFER_H
+#endif // STROMX_BASE_IMPL_CAMERABUFFER_H

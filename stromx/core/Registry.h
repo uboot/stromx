@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_REGISTRY_H
-#define STROM_REGISTRY_H
+#ifndef STROMX_CORE_REGISTRY_H
+#define STROMX_CORE_REGISTRY_H
 
 namespace stromx
 {
@@ -34,4 +34,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_REGISTRY_H
+#endif // STROMX_CORE_REGISTRY_H

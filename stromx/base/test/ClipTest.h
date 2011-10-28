@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIPTEST_H
-#define BASE_CLIPTEST_H
+#ifndef STROMX_BASE_CLIPTEST_H
+#define STROMX_BASE_CLIPTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -54,4 +54,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_CLIPTEST_H
+#endif // STROMX_BASE_CLIPTEST_H

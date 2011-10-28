@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CAMERATEST_H
-#define BASE_CAMERATEST_H
+#ifndef STROMX_BASE_CAMERATEST_H
+#define STROMX_BASE_CAMERATEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -61,4 +61,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_CAMERATEST_H
+#endif // STROMX_BASE_CAMERATEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CONSTIMAGE_H
-#define BASE_CONSTIMAGE_H
+#ifndef STROMX_BASE_CONSTIMAGE_H
+#define STROMX_BASE_CONSTIMAGE_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
@@ -67,4 +67,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_CONSTIMAGE_H
+#endif // STROMX_BASE_CONSTIMAGE_H

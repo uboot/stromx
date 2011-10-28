@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_DATAVARIANTTEST_H
-#define STROM_DATAVARIANTTEST_H
+#ifndef STROMX_CORE_DATAVARIANTTEST_H
+#define STROMX_CORE_DATAVARIANTTEST_H
 
 #include "DataVariantTest.h"
 
@@ -59,4 +59,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DATAVARIANTTEST_H
+#endif // STROMX_CORE_DATAVARIANTTEST_H

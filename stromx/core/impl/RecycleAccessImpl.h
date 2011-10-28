@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_IMPL_RECYCLEACCESSIMPL_H
-#define STROM_IMPL_RECYCLEACCESSIMPL_H
+#ifndef STROMX_CORE_IMPL_RECYCLEACCESSIMPL_H
+#define STROMX_CORE_IMPL_RECYCLEACCESSIMPL_H
 
 #include "../Recycler.h"
 
@@ -63,4 +63,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_RECYCLEACCESSIMPL_H
+#endif // STROMX_CORE_IMPL_RECYCLEACCESSIMPL_H

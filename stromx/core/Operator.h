@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_OPERATOR_H
-#define STROM_OPERATOR_H
+#ifndef STROMX_CORE_OPERATOR_H
+#define STROMX_CORE_OPERATOR_H
 
 #include <map>
 #include <string>
@@ -104,4 +104,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OPERATOR_H
+#endif // STROMX_CORE_OPERATOR_H

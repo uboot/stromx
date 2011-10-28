@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_READACCESS_H
-#define STROM_READACCESS_H
+#ifndef STROMX_CORE_READACCESS_H
+#define STROMX_CORE_READACCESS_H
 
 #include <tr1/memory>
 #include "DataContainer.h"
@@ -58,4 +58,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_READACCESS_H
+#endif // STROMX_CORE_READACCESS_H

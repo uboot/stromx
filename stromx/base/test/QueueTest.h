@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_QUEUETEST_H
-#define BASE_QUEUETEST_H
+#ifndef STROMX_BASE_QUEUETEST_H
+#define STROMX_BASE_QUEUETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -51,4 +51,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_QUEUETEST_H
+#endif // STROMX_BASE_QUEUETEST_H

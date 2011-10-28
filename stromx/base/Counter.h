@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_COUNTER_H
-#define BASE_COUNTER_H
+#ifndef STROMX_BASE_COUNTER_H
+#define STROMX_BASE_COUNTER_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
@@ -54,4 +54,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_COUNTER_H
+#endif // STROMX_BASE_COUNTER_H

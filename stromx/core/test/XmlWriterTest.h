@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_XMLWRITERTEST_H
-#define STROM_XMLWRITERTEST_H
+#ifndef STROMX_CORE_XMLWRITERTEST_H
+#define STROMX_CORE_XMLWRITERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -47,4 +47,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_XMLWRITERTEST_H
+#endif // STROMX_CORE_XMLWRITERTEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_QUEUE_H
-#define BASE_QUEUE_H
+#ifndef STROMX_BASE_QUEUE_H
+#define STROMX_BASE_QUEUE_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
@@ -73,4 +73,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_QUEUE_H
+#endif // STROMX_BASE_QUEUE_H

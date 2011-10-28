@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CONVERTPIXELTYPE_H
-#define BASE_CONVERTPIXELTYPE_H
+#ifndef STROMX_BASE_CONVERTPIXELTYPE_H
+#define STROMX_BASE_CONVERTPIXELTYPE_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
@@ -71,4 +71,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_CONVERTPIXELTYPE_H
+#endif // STROMX_BASE_CONVERTPIXELTYPE_H

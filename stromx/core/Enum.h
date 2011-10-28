@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_ENUM_H
-#define STROM_ENUM_H
+#ifndef STROMX_CORE_ENUM_H
+#define STROMX_CORE_ENUM_H
 
 #include "Primitive.h"
 
@@ -39,4 +39,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_ENUM_H
+#endif // STROMX_CORE_ENUM_H

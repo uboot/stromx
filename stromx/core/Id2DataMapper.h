@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_ID2DATAMAPPER_H
-#define STROM_ID2DATAMAPPER_H
+#ifndef STROMX_CORE_ID2DATAMAPPER_H
+#define STROMX_CORE_ID2DATAMAPPER_H
 
 namespace stromx
 {
@@ -40,4 +40,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_ID2DATAMAPPER_H
+#endif // STROMX_CORE_ID2DATAMAPPER_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_PRIMITIVETEST_H
-#define STROM_PRIMITIVETEST_H
+#ifndef STROMX_CORE_PRIMITIVETEST_H
+#define STROMX_CORE_PRIMITIVETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -56,4 +56,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_PRIMITIVETEST_H
+#endif // STROMX_CORE_PRIMITIVETEST_H

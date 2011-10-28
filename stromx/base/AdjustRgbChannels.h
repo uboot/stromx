@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_ADJUSTRGBCHANNELS_H
-#define BASE_ADJUSTRGBCHANNELS_H
+#ifndef STROMX_BASE_ADJUSTRGBCHANNELS_H
+#define STROMX_BASE_ADJUSTRGBCHANNELS_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
@@ -71,4 +71,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_ADJUSTRGBCHANNELS_H
+#endif // STROMX_BASE_ADJUSTRGBCHANNELS_H

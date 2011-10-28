@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_XMLWRITER_H
-#define STROM_XMLWRITER_H
+#ifndef STROMX_CORE_XMLWRITER_H
+#define STROMX_CORE_XMLWRITER_H
 
 #include <string>
 
@@ -34,4 +34,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_XMLWRITER_H
+#endif // STROMX_CORE_XMLWRITER_H

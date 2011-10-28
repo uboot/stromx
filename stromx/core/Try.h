@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_TRY_H
-#define STROM_TRY_H
+#ifndef STROMX_CORE_TRY_H
+#define STROMX_CORE_TRY_H
 
 #include "Id2DataMapper.h"
 
@@ -42,4 +42,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_TRY_H
+#endif // STROMX_CORE_TRY_H

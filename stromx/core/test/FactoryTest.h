@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_FACTORYTEST_H
-#define STROM_FACTORYTEST_H
+#ifndef STROMX_CORE_FACTORYTEST_H
+#define STROMX_CORE_FACTORYTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -53,4 +53,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_FACTORYTEST_H
+#endif // STROMX_CORE_FACTORYTEST_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_H
-#define BASE_H
+#ifndef STROMX_BASE_H
+#define STROMX_BASE_H
 
 namespace stromx
 {
@@ -30,4 +30,4 @@ extern "C"
     void registerBase(stromx::core::Registry& registry);
 }
 
-#endif // BASE_H
+#endif // STROMX_BASE_H

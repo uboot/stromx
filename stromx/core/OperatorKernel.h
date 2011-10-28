@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_OPERATORKERNEL_H
-#define STROM_OPERATORKERNEL_H
+#ifndef STROMX_CORE_OPERATORKERNEL_H
+#define STROMX_CORE_OPERATORKERNEL_H
 
 #include <map>
 #include "OperatorInfo.h"
@@ -95,4 +95,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OPERATORKERNEL_H
+#endif // STROMX_CORE_OPERATORKERNEL_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_VERSION_H
-#define STROM_VERSION_H
+#ifndef STROMX_CORE_VERSION_H
+#define STROMX_CORE_VERSION_H
 
 namespace stromx
 {
@@ -40,4 +40,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_VERSION_H
+#endif // STROMX_CORE_VERSION_H

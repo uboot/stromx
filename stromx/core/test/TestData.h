@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_TESTDATA_H
-#define STROM_TESTDATA_H
+#ifndef STROMX_CORE_TESTDATA_H
+#define STROMX_CORE_TESTDATA_H
 
 #include <stromx/core/Data.h>
 
@@ -47,4 +47,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_TESTDATA_H
+#endif // STROMX_CORE_TESTDATA_H

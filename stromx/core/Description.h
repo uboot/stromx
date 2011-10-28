@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_DESCRIPTOR_H
-#define STROM_DESCRIPTOR_H
+#ifndef STROMX_CORE_DESCRIPTOR_H
+#define STROMX_CORE_DESCRIPTOR_H
 
 #include <string>
 #include "DataVariant.h"
@@ -49,4 +49,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DESCRIPTOR_H
+#endif // STROMX_CORE_DESCRIPTOR_H

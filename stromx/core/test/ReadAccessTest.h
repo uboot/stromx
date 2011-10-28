@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_READACCESSTEST_H
-#define STROM_READACCESSTEST_H
+#ifndef STROMX_CORE_READACCESSTEST_H
+#define STROMX_CORE_READACCESSTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -65,4 +65,4 @@ namespace stromx
     }
 }
     
-#endif // STROM_READACCESSTEST_H
+#endif // STROMX_CORE_READACCESSTEST_H

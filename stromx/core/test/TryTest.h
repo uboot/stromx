@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_TRYTEST_H
-#define STROM_TRYTEST_H
+#ifndef STROMX_CORE_TRYTEST_H
+#define STROMX_CORE_TRYTEST_H
 
 #include <stromx/core/DataContainer.h>
 
@@ -59,4 +59,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_TRYTEST_H
+#endif // STROMX_CORE_TRYTEST_H

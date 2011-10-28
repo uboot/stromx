@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_RECYCLEACCESS_H
-#define STROM_RECYCLEACCESS_H
+#ifndef STROMX_CORE_RECYCLEACCESS_H
+#define STROMX_CORE_RECYCLEACCESS_H
 
 #include <tr1/memory>
 #include "DataContainer.h"
@@ -50,4 +50,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_RECYCLEACCESS_H
+#endif // STROMX_CORE_RECYCLEACCESS_H

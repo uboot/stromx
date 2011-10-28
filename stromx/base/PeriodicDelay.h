@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_TIMEPERIOD_H
-#define BASE_TIMEPERIOD_H
+#ifndef STROMX_BASE_TIMEPERIOD_H
+#define STROMX_BASE_TIMEPERIOD_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
@@ -73,4 +73,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_TIMEPERIOD_H
+#endif // STROMX_BASE_TIMEPERIOD_H

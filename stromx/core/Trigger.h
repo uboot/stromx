@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_TRIGGER_H
-#define STROM_TRIGGER_H
+#ifndef STROMX_CORE_TRIGGER_H
+#define STROMX_CORE_TRIGGER_H
 
 #include "Data.h"
 
@@ -45,4 +45,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_TRIGGER_H
+#endif // STROMX_CORE_TRIGGER_H

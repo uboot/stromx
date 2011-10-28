@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_STREAMTEST_H
-#define STROM_STREAMTEST_H
+#ifndef STROMX_CORE_STREAMTEST_H
+#define STROMX_CORE_STREAMTEST_H
 
 #include <vector>
 
@@ -53,4 +53,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_STREAMTEST_H 
+#endif // STROMX_CORE_STREAMTEST_H 

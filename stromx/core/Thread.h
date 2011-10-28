@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_THREAD_H
-#define STROM_THREAD_H
+#ifndef STROMX_CORE_THREAD_H
+#define STROMX_CORE_THREAD_H
 
 #include <string>
 #include <vector>
@@ -72,4 +72,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_THREAD_H
+#endif // STROMX_CORE_THREAD_H

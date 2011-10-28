@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_FACTORY_H
-#define STROM_FACTORY_H
+#ifndef STROMX_CORE_FACTORY_H
+#define STROMX_CORE_FACTORY_H
 
 #include <string>
 #include <vector>
@@ -47,4 +47,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_FACTORY_H
+#endif // STROMX_CORE_FACTORY_H

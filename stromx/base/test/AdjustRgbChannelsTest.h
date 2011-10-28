@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_ADJUSTRGBCHANNELSTEST_H
-#define BASE_ADJUSTRGBCHANNELSTEST_H
+#ifndef STROMX_BASE_ADJUSTRGBCHANNELSTEST_H
+#define STROMX_BASE_ADJUSTRGBCHANNELSTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -52,4 +52,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_ADJUSTRGBCHANNELSTEST_H
+#endif // STROMX_BASE_ADJUSTRGBCHANNELSTEST_H

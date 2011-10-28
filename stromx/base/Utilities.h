@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_UTILITIES_H
-#define BASE_UTILITIES_H
+#ifndef STROMX_BASE_UTILITIES_H
+#define STROMX_BASE_UTILITIES_H
 
 #include <opencv2/opencv.hpp>
 
@@ -39,4 +39,4 @@ namespace stromx
     };
 }
 
-#endif // BASE_UTILITIES_H
+#endif // STROMX_BASE_UTILITIES_H

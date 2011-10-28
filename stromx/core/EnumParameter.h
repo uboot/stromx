@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_ENUMPARAMETER_H
-#define STROM_ENUMPARAMETER_H
+#ifndef STROMX_CORE_ENUMPARAMETER_H
+#define STROMX_CORE_ENUMPARAMETER_H
 
 #include <vector>
 #include "Enum.h"
@@ -61,4 +61,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_ENUMPARAMETER_H
+#endif // STROMX_CORE_ENUMPARAMETER_H

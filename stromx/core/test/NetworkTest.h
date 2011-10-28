@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_NETWORKTEST_H
-#define STROM_NETWORKTEST_H
+#ifndef STROMX_CORE_NETWORKTEST_H
+#define STROMX_CORE_NETWORKTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -64,4 +64,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_NETWORKTEST_H
+#endif // STROMX_CORE_NETWORKTEST_H

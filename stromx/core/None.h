@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_NONE_H
-#define STROM_NONE_H
+#ifndef STROMX_CORE_NONE_H
+#define STROMX_CORE_NONE_H
 
 #include "Data.h"
 
@@ -45,4 +45,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_NONE_H
+#endif // STROMX_CORE_NONE_H

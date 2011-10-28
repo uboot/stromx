@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_IMAGE_H
-#define STROM_IMAGE_H
+#ifndef STROMX_CORE_IMAGE_H
+#define STROMX_CORE_IMAGE_H
 
 #include <stdint.h>
 #include "Data.h"
@@ -67,4 +67,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMAGE_H
+#endif // STROMX_CORE_IMAGE_H

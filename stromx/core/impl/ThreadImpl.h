@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_IMPL_THREADIMPL_H
-#define STROM_IMPL_THREADIMPL_H
+#ifndef STROMX_CORE_IMPL_THREADIMPL_H
+#define STROMX_CORE_IMPL_THREADIMPL_H
 
 #include <vector>
 #include <string>
@@ -66,4 +66,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_THREADIMPL_H
+#endif // STROMX_CORE_IMPL_THREADIMPL_H

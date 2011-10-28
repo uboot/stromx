@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_IMPL_DATACONTAINERIMPL_H
-#define STROM_IMPL_DATACONTAINERIMPL_H
+#ifndef STROMX_CORE_IMPL_DATACONTAINERIMPL_H
+#define STROMX_CORE_IMPL_DATACONTAINERIMPL_H
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
@@ -66,4 +66,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_DATACONTAINERIMPL_H
+#endif // STROMX_CORE_IMPL_DATACONTAINERIMPL_H

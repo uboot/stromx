@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_PRIMITIVE_H
-#define STROM_PRIMITIVE_H
+#ifndef STROMX_CORE_PRIMITIVE_H
+#define STROMX_CORE_PRIMITIVE_H
 
 #define __STDC_LIMIT_MACROS
 
@@ -97,4 +97,4 @@ namespace stromx
     }
 }
     
-#endif // STROM_PRIMITIVE_H
+#endif // STROMX_CORE_PRIMITIVE_H

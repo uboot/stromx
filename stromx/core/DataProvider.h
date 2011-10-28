@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_DATAPROVIDER_H
-#define STROM_DATAPROVIDER_H
+#ifndef STROMX_CORE_DATAPROVIDER_H
+#define STROMX_CORE_DATAPROVIDER_H
 
 namespace stromx
 {
@@ -40,4 +40,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DATAPROVIDER_H
+#endif // STROMX_CORE_DATAPROVIDER_H

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_XMLREADERTEST_H
-#define STROM_XMLREADERTEST_H
+#ifndef STROMX_CORE_XMLREADERTEST_H
+#define STROMX_CORE_XMLREADERTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -51,4 +51,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_XMLREADERTEST_H
+#endif // STROMX_CORE_XMLREADERTEST_H

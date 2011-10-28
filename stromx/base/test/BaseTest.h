@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_BASETEST_H
-#define BASE_BASETEST_H
+#ifndef STROMX_BASE_BASETEST_H
+#define STROMX_BASE_BASETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -53,4 +53,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_BASETEST_H
+#endif // STROMX_BASE_BASETEST_H

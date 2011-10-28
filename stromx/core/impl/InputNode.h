@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_IMPL_INPUTNODE_H
-#define STROM_IMPL_INPUTNODE_H
+#ifndef STROMX_CORE_IMPL_INPUTNODE_H
+#define STROMX_CORE_IMPL_INPUTNODE_H
 
 namespace stromx
 {
@@ -50,4 +50,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_INPUTNODE_H
+#endif // STROMX_CORE_IMPL_INPUTNODE_H

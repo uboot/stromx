@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CLIP_H
-#define BASE_CLIP_H
+#ifndef STROMX_BASE_CLIP_H
+#define STROMX_BASE_CLIP_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
@@ -75,4 +75,4 @@ namespace stromx
     }
 }
 
-#endif // BASE_CLIP_H
+#endif // STROMX_BASE_CLIP_H

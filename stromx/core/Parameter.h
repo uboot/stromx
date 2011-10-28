@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_PARAMETER_H
-#define STROM_PARAMETER_H
+#ifndef STROMX_CORE_PARAMETER_H
+#define STROMX_CORE_PARAMETER_H
 
 #include "Description.h"
 
@@ -52,4 +52,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_PARAMETER_H
+#endif // STROMX_CORE_PARAMETER_H

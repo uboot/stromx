@@ -15,8 +15,8 @@
 */
 
 
-#ifndef STROM_IMPL_NETWORK_H
-#define STROM_IMPL_NETWORK_H
+#ifndef STROMX_CORE_IMPL_NETWORK_H
+#define STROMX_CORE_IMPL_NETWORK_H
 
 #include <string>
 #include <vector>
@@ -69,4 +69,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_NETWORK_H
+#endif // STROMX_CORE_IMPL_NETWORK_H

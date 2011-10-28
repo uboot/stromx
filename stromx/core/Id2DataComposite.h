@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_ID2DATACOMPOSITE_H
-#define STROM_ID2DATACOMPOSITE_H
+#ifndef STROMX_CORE_ID2DATACOMPOSITE_H
+#define STROMX_CORE_ID2DATACOMPOSITE_H
 
 #include "Id2DataMapper.h"
 
@@ -59,4 +59,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_ID2DATACOMPOSITE_H
+#endif // STROMX_CORE_ID2DATACOMPOSITE_H

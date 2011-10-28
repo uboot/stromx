@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_OPERATORINFO_H
-#define STROM_OPERATORINFO_H
+#ifndef STROMX_CORE_OPERATORINFO_H
+#define STROMX_CORE_OPERATORINFO_H
 
 #include <vector>
 #include "Parameter.h"
@@ -40,4 +40,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OPERATORINFO_H
+#endif // STROMX_CORE_OPERATORINFO_H

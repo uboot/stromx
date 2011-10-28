@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_OPERATORTEST_H
-#define STROM_OPERATORTEST_H
+#ifndef STROMX_CORE_OPERATORTEST_H
+#define STROMX_CORE_OPERATORTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -79,4 +79,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OPERATORTEST_H
+#endif // STROMX_CORE_OPERATORTEST_H

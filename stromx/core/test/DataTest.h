@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_DATATEST_H
-#define STROM_DATATEST_H
+#ifndef STROMX_CORE_DATATEST_H
+#define STROMX_CORE_DATATEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -46,4 +46,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DATATEST_H
+#endif // STROMX_CORE_DATATEST_H

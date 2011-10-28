@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_IMAGEWRAPPER_H
-#define STROM_IMAGEWRAPPER_H
+#ifndef STROMX_CORE_IMAGEWRAPPER_H
+#define STROMX_CORE_IMAGEWRAPPER_H
 
 #include "Image.h"
 
@@ -84,4 +84,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMAGEWRAPPER_H
+#endif // STROMX_CORE_IMAGEWRAPPER_H

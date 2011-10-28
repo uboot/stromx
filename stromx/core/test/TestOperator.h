@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_TESTOPERATOR_H
-#define STROM_TESTOPERATOR_H
+#ifndef STROMX_CORE_TESTOPERATOR_H
+#define STROMX_CORE_TESTOPERATOR_H
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
@@ -61,4 +61,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_TESTOPERATOR_H
+#endif // STROMX_CORE_TESTOPERATOR_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef BASE_CAMERA_H
-#define BASE_CAMERA_H
+#ifndef STROMX_BASE_CAMERA_H
+#define STROMX_BASE_CAMERA_H
 
 #include <stromx/core/Primitive.h>
 #include <stromx/core/OperatorKernel.h>
@@ -120,4 +120,4 @@ namespace stromx
     }
 }
     
-#endif // BASE_CAMERA_H
+#endif // STROMX_BASE_CAMERA_H

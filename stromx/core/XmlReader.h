@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_XMLREADER_H
-#define STROM_XMLREADER_H
+#ifndef STROMX_CORE_XMLREADER_H
+#define STROMX_CORE_XMLREADER_H
 
 #include <string>
 
@@ -42,4 +42,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_XMLREADER_H
+#endif // STROMX_CORE_XMLREADER_H

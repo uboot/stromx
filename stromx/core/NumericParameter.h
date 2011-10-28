@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_NUMERICPARAMETER_H
-#define STROM_NUMERICPARAMETER_H
+#ifndef STROMX_CORE_NUMERICPARAMETER_H
+#define STROMX_CORE_NUMERICPARAMETER_H
 
 #include "Parameter.h"
 
@@ -63,4 +63,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_NUMERICPARAMETER_H
+#endif // STROMX_CORE_NUMERICPARAMETER_H

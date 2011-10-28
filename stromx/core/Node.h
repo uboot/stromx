@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_NODE_H
-#define STROM_NODE_H
+#ifndef STROMX_CORE_NODE_H
+#define STROMX_CORE_NODE_H
 
 namespace stromx
 {
@@ -49,4 +49,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_NODE_H
+#endif // STROMX_CORE_NODE_H

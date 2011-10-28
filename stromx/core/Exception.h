@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_EXCEPTION_H
-#define STROM_EXCEPTION_H
+#ifndef STROMX_CORE_EXCEPTION_H
+#define STROMX_CORE_EXCEPTION_H
 
 #include <exception>
 #include <string>
@@ -162,4 +162,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_EXCEPTION_H
+#endif // STROMX_CORE_EXCEPTION_H

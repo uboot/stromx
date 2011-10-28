@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_IMPL_READACCESSIMPL_H
-#define STROM_IMPL_READACCESSIMPL_H
+#ifndef STROMX_CORE_IMPL_READACCESSIMPL_H
+#define STROMX_CORE_IMPL_READACCESSIMPL_H
 
 namespace stromx
 {
@@ -41,4 +41,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_READACCESSIMPL_H
+#endif // STROMX_CORE_IMPL_READACCESSIMPL_H

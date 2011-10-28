@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_IMPL_ID2DATAMAP_H
-#define STROM_IMPL_ID2DATAMAP_H
+#ifndef STROMX_CORE_IMPL_ID2DATAMAP_H
+#define STROMX_CORE_IMPL_ID2DATAMAP_H
 
 
 #include "../Description.h"
@@ -49,4 +49,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_ID2DATAMAP_H
+#endif // STROMX_CORE_IMPL_ID2DATAMAP_H

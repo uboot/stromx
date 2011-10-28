@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_IMPL_OUTPUTNODE_H
-#define STROM_IMPL_OUTPUTNODE_H
+#ifndef STROMX_CORE_IMPL_OUTPUTNODE_H
+#define STROMX_CORE_IMPL_OUTPUTNODE_H
 
 #include <boost/thread/mutex.hpp>
 #include <set>
@@ -57,4 +57,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_IMPL_OUTPUTNODE_H
+#endif // STROMX_CORE_IMPL_OUTPUTNODE_H

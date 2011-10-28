@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_DATACONTAINER_H
-#define STROM_DATACONTAINER_H
+#ifndef STROMX_CORE_DATACONTAINER_H
+#define STROMX_CORE_DATACONTAINER_H
 
 #include <tr1/memory>
 #include <ostream>
@@ -63,4 +63,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DATACONTAINER_H
+#endif // STROMX_CORE_DATACONTAINER_H

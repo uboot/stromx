@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_THREADTEST_H
-#define STROM_THREADTEST_H
+#ifndef STROMX_CORE_THREADTEST_H
+#define STROMX_CORE_THREADTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -60,4 +60,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_THREADTEST_H
+#endif // STROMX_CORE_THREADTEST_H

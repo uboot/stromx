@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_ID2DATACOMPOSITETEST_H
-#define STROM_ID2DATACOMPOSITETEST_H
+#ifndef STROMX_CORE_ID2DATACOMPOSITETEST_H
+#define STROMX_CORE_ID2DATACOMPOSITETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -58,4 +58,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_ID2DATACOMPOSITETEST_H
+#endif // STROMX_CORE_ID2DATACOMPOSITETEST_H

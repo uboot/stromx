@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_DATAVARIANT_H
-#define STROM_DATAVARIANT_H
+#ifndef STROMX_CORE_DATAVARIANT_H
+#define STROMX_CORE_DATAVARIANT_H
 
 #include <string>
 #include "Version.h"
@@ -109,4 +109,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_DATAVARIANT_H
+#endif // STROMX_CORE_DATAVARIANT_H

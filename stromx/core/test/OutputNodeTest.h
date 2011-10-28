@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROM_OUTPUTNODETEST_H
-#define STROM_OUTPUTNODETEST_H
+#ifndef STROMX_CORE_OUTPUTNODETEST_H
+#define STROMX_CORE_OUTPUTNODETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -62,4 +62,4 @@ namespace stromx
     }
 }
 
-#endif // STROM_OUTPUTNODETEST_H
+#endif // STROMX_CORE_OUTPUTNODETEST_H
