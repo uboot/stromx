@@ -14,25 +14,25 @@
 *  limitations under the License.
 */
 
-#include "StromTest.h"
+#include "CoreTest.h"
 
 #include <cppunit/TestAssert.h>
 
-#include <stromx/core/Strom.h>
+#include <stromx/core/Core.h>
 #include <stromx/core/Factory.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/Data.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::StromTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (core::CoreTest);
 
 namespace core
 {
-    void StromTest::setUp ( void )
+    void CoreTest::setUp ( void )
     {
         m_factory = new core::Factory;
     }
     
-    void StromTest::testRegisterStrom()
+    void CoreTest::testRegisterCore()
     {
         CPPUNIT_ASSERT_NO_THROW(registerStrom(*m_factory));
         
@@ -42,7 +42,7 @@ namespace core
         delete data;
     }
     
-    void StromTest::tearDown ( void )
+    void CoreTest::tearDown ( void )
     {
         delete m_factory;
     }

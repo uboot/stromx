@@ -14,20 +14,34 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_H
-#define STROM_H
+#ifndef STROM_STROMTEST_H
+#define STROM_STROMTEST_H
 
-namespace stromx
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
+
+namespace core
 {
-    namespace core
+    class Factory;
+    
+    class CoreTest : public CPPUNIT_NS :: TestFixture
     {
-        class Registry;
-    }
+        CPPUNIT_TEST_SUITE (CoreTest);
+        CPPUNIT_TEST(testRegisterCore);
+        CPPUNIT_TEST_SUITE_END ();
+
+    public:
+        StromTest() {}
+        
+        void setUp();
+        void tearDown();
+        
+    protected:
+        void testRegisterCore();
+            
+    private:
+        core::Factory* m_factory;
+    };
 }
 
-extern "C"
-{
-    void registerStrom(stromx::core::Registry& registry);
-}
-
-#endif // STROM_H
+#endif // STROM_STROMTEST_H
