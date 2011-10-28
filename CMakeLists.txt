@@ -44,3 +44,14 @@ if(BUILD_BASE)
    add_subdirectory(stromx/base)
    add_subdirectory(example)
 endif()
+
+find_package(Boost 1.36.0 COMPONENTS thread filesystem python)
+find_package(PythonLibs)
+
+if(Boost_FOUND AND PYTHON_INCLUDE_PATH)
+    set(BUILD_PYTHON true)
+endif()
+
+if(BUILD_PYTHON)
+    add_subdirectory(python)
+endif()
