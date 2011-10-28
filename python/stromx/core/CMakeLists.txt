@@ -6,6 +6,7 @@ set(SOURCES
     Factory.cpp
     Registry.cpp
     Stream.cpp
+    Version.cpp
 )
 
 add_library(core SHARED ${SOURCES})

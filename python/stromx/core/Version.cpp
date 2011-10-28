@@ -14,26 +14,17 @@
 *  limitations under the License.
 */
 
+#include <stromx/core/Version.h>
+
 #include <boost/python.hpp>
 
-#include <stromx/core/Core.h>
-#include <stromx/core/Registry.h>
+using namespace boost::python;
+using namespace stromx::core;
 
-void exportFactory();
-void exportOperator();
-void exportRegistry();
-void exportStream();
-void exportVersion();    
-
-BOOST_PYTHON_MODULE(libcore)
-{
-    using namespace boost::python;
-    
-    def("registerCore", registerCore);
-    
-    exportOperator();
-    exportRegistry();
-    exportFactory();
-    exportStream();
-    exportVersion();    
+void exportVersion()
+{       
+    class_<Version>("Version", no_init)
+        .def("major", &Version::major)
+        .def("minor", &Version::minor)
+    ;
 }

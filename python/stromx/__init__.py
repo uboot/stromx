@@ -14,4 +14,4 @@
 #  limitations under the License.
 #
 
-__all__ = ["core"]
+__all__ = ["core", "base"]
