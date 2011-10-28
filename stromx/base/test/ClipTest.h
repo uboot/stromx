@@ -20,35 +20,38 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class ClipTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (ClipTest);
-        CPPUNIT_TEST (testExecute);
-        CPPUNIT_TEST (testAdjustClipRegion1);
-        CPPUNIT_TEST (testAdjustClipRegion2);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-        public:
-            ClipTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class ClipTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ClipTest);
+            CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testAdjustClipRegion1);
+            CPPUNIT_TEST (testAdjustClipRegion2);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecute();
-            void testAdjustClipRegion1();
-            void testAdjustClipRegion2();
-            
-        private:
-            core::OperatorTester* m_operator;
-    };
+            public:
+                ClipTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecute();
+                void testAdjustClipRegion1();
+                void testAdjustClipRegion2();
+                
+            private:
+                core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_CLIPTEST_H

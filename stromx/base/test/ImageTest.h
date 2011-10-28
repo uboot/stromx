@@ -20,46 +20,49 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace base
+namespace stromx
 {
-    class Image;
-
-    class ImageTest : public CPPUNIT_NS :: TestFixture
+    namespace base
     {
-        CPPUNIT_TEST_SUITE (ImageTest);
-        CPPUNIT_TEST (testOpenUnknownFile);
-        CPPUNIT_TEST (testOpenJpeg);
-        CPPUNIT_TEST (testImageFile);
-        CPPUNIT_TEST (testImageRgb24);
-        CPPUNIT_TEST (testImageMono8);
-        CPPUNIT_TEST (testSaveJpeg);
-        CPPUNIT_TEST (testSaveUnknownDirectory);
-        CPPUNIT_TEST (testImageDefault);
-        CPPUNIT_TEST (testSerialize);
-        CPPUNIT_TEST (testDeserialize);
-        CPPUNIT_TEST_SUITE_END ();
+        class Image;
 
-        public:
-            ImageTest() : m_image(0) {}
-            
-            void setUp();
-            void tearDown();
+        class ImageTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ImageTest);
+            CPPUNIT_TEST (testOpenUnknownFile);
+            CPPUNIT_TEST (testOpenJpeg);
+            CPPUNIT_TEST (testImageFile);
+            CPPUNIT_TEST (testImageRgb24);
+            CPPUNIT_TEST (testImageMono8);
+            CPPUNIT_TEST (testSaveJpeg);
+            CPPUNIT_TEST (testSaveUnknownDirectory);
+            CPPUNIT_TEST (testImageDefault);
+            CPPUNIT_TEST (testSerialize);
+            CPPUNIT_TEST (testDeserialize);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testOpenJpeg();
-            void testOpenUnknownFile();
-            void testImageFile();
-            void testImageRgb24();
-            void testImageMono8();
-            void testImageDefault();
-            void testSaveJpeg();
-            void testSaveUnknownDirectory();
-            void testSerialize();
-            void testDeserialize();
-            
-        private:
-            Image* m_image;
-    };
+            public:
+                ImageTest() : m_image(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testOpenJpeg();
+                void testOpenUnknownFile();
+                void testImageFile();
+                void testImageRgb24();
+                void testImageMono8();
+                void testImageDefault();
+                void testSaveJpeg();
+                void testSaveUnknownDirectory();
+                void testSerialize();
+                void testDeserialize();
+                
+            private:
+                Image* m_image;
+        };
+    }
 }
 
 #endif // BASE_IMAGETEST_H

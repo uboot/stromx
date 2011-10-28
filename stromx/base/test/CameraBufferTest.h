@@ -20,31 +20,34 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class CameraBufferTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (CameraBufferTest);
-        CPPUNIT_TEST(testExecute);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-    public:
-        CameraBufferTest() : m_operator(0) {}
-        
-        void setUp();
-        void tearDown();
+    namespace base
+    {
+        class CameraBufferTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (CameraBufferTest);
+            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testExecute();
+        public:
+            CameraBufferTest() : m_operator(0) {}
             
-    private:
-        core::OperatorTester* m_operator;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testExecute();
+                
+        private:
+            core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_CAMERABUFFERTEST_H

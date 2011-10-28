@@ -20,32 +20,35 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-    class DataContainer;
-}
-
-namespace base
-{
-    class QueueTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (QueueTest);
-        CPPUNIT_TEST (testExecute);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+        class DataContainer;
+    }
 
-        public:
-            QueueTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class QueueTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (QueueTest);
+            CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecute();
-            
-        private:
-            core::OperatorTester* m_operator;
-    };
+            public:
+                QueueTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecute();
+                
+            private:
+                core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_QUEUETEST_H

@@ -20,31 +20,34 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class CounterTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (CounterTest);
-        CPPUNIT_TEST(testExecute);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-    public:
-        CounterTest() : m_operator(0) {}
-        
-        void setUp();
-        void tearDown();
+    namespace base
+    {
+        class CounterTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (CounterTest);
+            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testExecute();
+        public:
+            CounterTest() : m_operator(0) {}
             
-    private:
-        core::OperatorTester* m_operator;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testExecute();
+                
+        private:
+            core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_COUNTERTEST_H

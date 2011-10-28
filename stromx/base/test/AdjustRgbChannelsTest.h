@@ -22,31 +22,34 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class AdjustRgbChannelsTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (AdjustRgbChannelsTest);
-        CPPUNIT_TEST (testExecute);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-        public:
-            AdjustRgbChannelsTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class AdjustRgbChannelsTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (AdjustRgbChannelsTest);
+            CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecute();
-            
-        private:
-            core::OperatorTester* m_operator;
-    };
+            public:
+                AdjustRgbChannelsTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecute();
+                
+            private:
+                core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_ADJUSTRGBCHANNELSTEST_H

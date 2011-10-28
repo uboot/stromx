@@ -22,37 +22,40 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class TriggerTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (TriggerTest);
-        CPPUNIT_TEST (testExecuteActive);
-        CPPUNIT_TEST (testExecuteInactive);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-        public:
-            TriggerTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class TriggerTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (TriggerTest);
+            CPPUNIT_TEST (testExecuteActive);
+            CPPUNIT_TEST (testExecuteInactive);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecuteActive();
-            void testExecuteInactive();
-            
-        private:
-            void triggerDelayed ();
-            void getOutputDataInterrupted();
-    
-            core::OperatorTester* m_operator;
-            core::DataContainer m_image;
-    };
+            public:
+                TriggerTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecuteActive();
+                void testExecuteInactive();
+                
+            private:
+                void triggerDelayed ();
+                void getOutputDataInterrupted();
+        
+                core::OperatorTester* m_operator;
+                core::DataContainer m_image;
+        };
+    }
 }
 
 #endif // BASE_TRIGGERTEST_H

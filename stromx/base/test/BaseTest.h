@@ -21,33 +21,36 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <stromx/core/DataVariant.h>
 
-namespace core
+namespace stromx
 {
-    class Factory;
-}
-
-namespace base
-{
-    class Image;
-
-    class BaseTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (BaseTest);
-        CPPUNIT_TEST (testRegisterBase);
-        CPPUNIT_TEST_SUITE_END ();
+        class Factory;
+    }
 
-        public:
-            BaseTest() : m_factory(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class Image;
 
-        protected:
-            void testRegisterBase();
-            
-        private:
-            core::Factory* m_factory;
-    };
+        class BaseTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (BaseTest);
+            CPPUNIT_TEST (testRegisterBase);
+            CPPUNIT_TEST_SUITE_END ();
+
+            public:
+                BaseTest() : m_factory(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testRegisterBase();
+                
+            private:
+                core::Factory* m_factory;
+        };
+    }
 }
 
 #endif // BASE_BASETEST_H

@@ -9,38 +9,41 @@
 
 #include <stromx/base/Counter.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (base::CounterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::CounterTest);
 
-using namespace core;
-
-namespace base
+namespace stromx
 {
-    void CounterTest::setUp()
-    {
-        m_operator = new OperatorTester(new Counter());
-        m_operator->initialize();
-        m_operator->activate();
-    }
+    using namespace core;
 
-    void CounterTest::testExecute()
+    namespace base
     {
-        DataContainer data = m_operator->getOutputData(base::Counter::OUTPUT);
-        CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
-        
-        m_operator->clearOutputData(base::Counter::OUTPUT);
-        
-        data = m_operator->getOutputData(base::Counter::OUTPUT);
-        CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess<UInt32>(data)());
-        
-        m_operator->deactivate();
-        m_operator->activate();
-        
-        data = m_operator->getOutputData(base::Counter::OUTPUT);
-        CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
-    }
+        void CounterTest::setUp()
+        {
+            m_operator = new OperatorTester(new Counter());
+            m_operator->initialize();
+            m_operator->activate();
+        }
 
-    void CounterTest::tearDown()
-    {
-        delete m_operator;
+        void CounterTest::testExecute()
+        {
+            DataContainer data = m_operator->getOutputData(base::Counter::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
+            
+            m_operator->clearOutputData(base::Counter::OUTPUT);
+            
+            data = m_operator->getOutputData(base::Counter::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess<UInt32>(data)());
+            
+            m_operator->deactivate();
+            m_operator->activate();
+            
+            data = m_operator->getOutputData(base::Counter::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
+        }
+
+        void CounterTest::tearDown()
+        {
+            delete m_operator;
+        }
     }
 }

@@ -20,35 +20,38 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-}
-
-namespace base
-{
-    class ConvertPixelTypeTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (ConvertPixelTypeTest);
-        CPPUNIT_TEST (testExecuteMono8);
-        CPPUNIT_TEST (testExecuteBayerBg8);
-        CPPUNIT_TEST (testExecuteBayerRgb24);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+    }
 
-        public:
-            ConvertPixelTypeTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class ConvertPixelTypeTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ConvertPixelTypeTest);
+            CPPUNIT_TEST (testExecuteMono8);
+            CPPUNIT_TEST (testExecuteBayerBg8);
+            CPPUNIT_TEST (testExecuteBayerRgb24);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecuteMono8();
-            void testExecuteBayerBg8();
-            void testExecuteBayerRgb24();
-            
-        private:
-            core::OperatorTester* m_operator;
-    };
+            public:
+                ConvertPixelTypeTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecuteMono8();
+                void testExecuteBayerBg8();
+                void testExecuteBayerRgb24();
+                
+            private:
+                core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_CONVERTPIXELTYPETEST_H

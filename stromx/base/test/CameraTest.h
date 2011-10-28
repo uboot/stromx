@@ -20,42 +20,45 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    class OperatorTester;
-}
-
-namespace base
-{
-    class CameraTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (CameraTest);
-        CPPUNIT_TEST (testExecuteSoftwareTrigger);
-        CPPUNIT_TEST (testExecuteInternalTrigger);
-        CPPUNIT_TEST (testAdjustRoi);
-        CPPUNIT_TEST (testAdjustPixelType);
-        CPPUNIT_TEST (testAdjustExposure);
-        CPPUNIT_TEST (testAdjustWhiteBalance);
-        CPPUNIT_TEST_SUITE_END ();
+        class DataContainer;
+        class OperatorTester;
+    }
 
-        public:
-            CameraTest() : m_operator(0) {}
-            
-            void setUp();
-            void tearDown();
+    namespace base
+    {
+        class CameraTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (CameraTest);
+            CPPUNIT_TEST (testExecuteSoftwareTrigger);
+            CPPUNIT_TEST (testExecuteInternalTrigger);
+            CPPUNIT_TEST (testAdjustRoi);
+            CPPUNIT_TEST (testAdjustPixelType);
+            CPPUNIT_TEST (testAdjustExposure);
+            CPPUNIT_TEST (testAdjustWhiteBalance);
+            CPPUNIT_TEST_SUITE_END ();
 
-        protected:
-            void testExecuteSoftwareTrigger();
-            void testExecuteInternalTrigger();
-            void testAdjustRoi();
-            void testAdjustPixelType();
-            void testAdjustExposure();
-            void testAdjustWhiteBalance();
-            
-        private:
-            core::OperatorTester* m_operator;
-    };
+            public:
+                CameraTest() : m_operator(0) {}
+                
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testExecuteSoftwareTrigger();
+                void testExecuteInternalTrigger();
+                void testAdjustRoi();
+                void testAdjustPixelType();
+                void testAdjustExposure();
+                void testAdjustWhiteBalance();
+                
+            private:
+                core::OperatorTester* m_operator;
+        };
+    }
 }
 
 #endif // BASE_CAMERATEST_H
