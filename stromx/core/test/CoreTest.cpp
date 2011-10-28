@@ -23,27 +23,30 @@
 #include <stromx/core/Operator.h>
 #include <stromx/core/Data.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::CoreTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::CoreTest);
 
-namespace core
+namespace stromx
 {
-    void CoreTest::setUp ( void )
+    namespace core
     {
-        m_factory = new core::Factory;
-    }
-    
-    void CoreTest::testRegisterCore()
-    {
-        CPPUNIT_ASSERT_NO_THROW(registerStrom(*m_factory));
+        void CoreTest::setUp ( void )
+        {
+            m_factory = new core::Factory;
+        }
         
-        core::Data* data = 0;
-        CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Strom", "UInt32"));
-        CPPUNIT_ASSERT(data);
-        delete data;
-    }
-    
-    void CoreTest::tearDown ( void )
-    {
-        delete m_factory;
+        void CoreTest::testRegisterCore()
+        {
+            CPPUNIT_ASSERT_NO_THROW(registerCore(*m_factory));
+            
+            core::Data* data = 0;
+            CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Strom", "UInt32"));
+            CPPUNIT_ASSERT(data);
+            delete data;
+        }
+        
+        void CoreTest::tearDown ( void )
+        {
+            delete m_factory;
+        }
     }
 }

@@ -26,111 +26,114 @@
 #include <boost/thread/thread.hpp>
 
 
-namespace core
+namespace stromx
 {
-    const std::string TestOperator::TYPE("TestOperator");
-    const std::string TestOperator::PACKAGE("TestPackage");
-    const Version TestOperator::VERSION(0, 1);
-    
-    TestOperator::TestOperator()
-      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-        m_sleepTime(100),
-        m_bufferSize(1000),
-        m_numExecutes(0)
+    namespace core
     {
-    }
-    
-    void TestOperator::initialize()
-    {
-        OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
-    }
+        const std::string TestOperator::TYPE("TestOperator");
+        const std::string TestOperator::PACKAGE("TestPackage");
+        const Version TestOperator::VERSION(0, 1);
+        
+        TestOperator::TestOperator()
+        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
+            m_sleepTime(100),
+            m_bufferSize(1000),
+            m_numExecutes(0)
+        {
+        }
+        
+        void TestOperator::initialize()
+        {
+            OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
+        }
 
-    void TestOperator::setParameter(unsigned int id, const core::Data& value)
-    {
-        try
+        void TestOperator::setParameter(unsigned int id, const core::Data& value)
+        {
+            try
+            {
+                switch(id)
+                {
+                case BUFFER_SIZE:
+                    m_bufferSize = dynamic_cast<const UInt32&>(value);
+                    break;
+                case SLEEP_TIME:
+                    m_sleepTime= dynamic_cast<const UInt32&>(value);
+                    break;
+                default:
+                    throw WrongParameterId(id, *this);
+                }
+            }
+            catch(std::bad_cast&)
+            {
+                throw WrongParameterType(*parameters()[id], *this);
+            }
+        }
+
+        const Data& TestOperator::getParameter(const unsigned int id) const
         {
             switch(id)
             {
             case BUFFER_SIZE:
-                m_bufferSize = dynamic_cast<const UInt32&>(value);
-                break;
+                return m_bufferSize;
             case SLEEP_TIME:
-                m_sleepTime= dynamic_cast<const UInt32&>(value);
-                break;
+                return m_sleepTime;
             default:
                 throw WrongParameterId(id, *this);
             }
-        }
-        catch(std::bad_cast&)
+        }  
+        
+        void TestOperator::execute(DataProvider& provider)
         {
-            throw WrongParameterType(*parameters()[id], *this);
+            Id2DataPair input1(INPUT_1);
+            Id2DataPair input2(INPUT_2);
+            
+            provider.receiveInputData(input1 && input2);
+            
+            // execute...
+            m_numExecutes++;
+            boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
+            
+            Id2DataPair output1(OUTPUT_1, input1.data());
+            Id2DataPair output2(OUTPUT_2, input2.data());
+            provider.sendOutputData(output1 && output2);
         }
-    }
-
-    const Data& TestOperator::getParameter(const unsigned int id) const
-    {
-        switch(id)
+        
+        const std::vector<const Description*> TestOperator::setupInputs()
         {
-        case BUFFER_SIZE:
-            return m_bufferSize;
-        case SLEEP_TIME:
-            return m_sleepTime;
-        default:
-            throw WrongParameterId(id, *this);
+            std::vector<const Description*> inputs;
+            inputs.push_back(new Description(INPUT_1, DataVariant::NONE));
+            inputs.push_back(new Description(INPUT_2, DataVariant::NONE));
+            
+            return inputs;
         }
-    }  
-    
-    void TestOperator::execute(DataProvider& provider)
-    {
-        Id2DataPair input1(INPUT_1);
-        Id2DataPair input2(INPUT_2);
         
-        provider.receiveInputData(input1 && input2);
+        const std::vector<const Description*> TestOperator::setupOutputs()
+        {
+            std::vector<const Description*> outputs;
+            outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
+            outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
+            
+            return outputs;
+        }
         
-        // execute...
-        m_numExecutes++;
-        boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
+        const std::vector<const Parameter*> TestOperator::setupParameters()
+        {
+            std::vector<const Parameter*> parameters;
+            Parameter* param = new Parameter(SLEEP_TIME, DataVariant::UINT_32);
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            return parameters;
+        }
         
-        Id2DataPair output1(OUTPUT_1, input1.data());
-        Id2DataPair output2(OUTPUT_2, input2.data());
-        provider.sendOutputData(output1 && output2);
-    }
-    
-    const std::vector<const Description*> TestOperator::setupInputs()
-    {
-        std::vector<const Description*> inputs;
-        inputs.push_back(new Description(INPUT_1, DataVariant::NONE));
-        inputs.push_back(new Description(INPUT_2, DataVariant::NONE));
-        
-        return inputs;
-    }
-    
-    const std::vector<const Description*> TestOperator::setupOutputs()
-    {
-        std::vector<const Description*> outputs;
-        outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
-        outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
-        
-        return outputs;
-    }
-    
-    const std::vector<const Parameter*> TestOperator::setupParameters()
-    {
-        std::vector<const Parameter*> parameters;
-        Parameter* param = new Parameter(SLEEP_TIME, DataVariant::UINT_32);
-        param->setAccessMode(Parameter::INITIALIZED_WRITE);
-        parameters.push_back(param);
-        
-        return parameters;
-    }
-    
-    const std::vector<const Parameter*> TestOperator::setupInitParameters()
-    {
-        std::vector<const Parameter*> parameters;
-        Parameter* param = new Parameter(BUFFER_SIZE, DataVariant::UINT_32);
-        param->setAccessMode(Parameter::NONE_WRITE);
-        parameters.push_back(param);
-                                       
-        return parameters;
+        const std::vector<const Parameter*> TestOperator::setupInitParameters()
+        {
+            std::vector<const Parameter*> parameters;
+            Parameter* param = new Parameter(BUFFER_SIZE, DataVariant::UINT_32);
+            param->setAccessMode(Parameter::NONE_WRITE);
+            parameters.push_back(param);
+                                        
+            return parameters;
+        }
     }
 }

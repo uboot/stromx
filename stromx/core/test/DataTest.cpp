@@ -23,31 +23,34 @@
 #include <stromx/core/Data.h>
 #include <stromx/core/None.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::DataTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataTest);
 
-namespace core
+namespace stromx
 {
-    void DataTest::testCastReference()
+    namespace core
     {
-        TestData testData;
-        Data & data(testData);
+        void DataTest::testCastReference()
+        {
+            TestData testData;
+            Data & data(testData);
+            
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData &>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData &>(data));
+            
+            CPPUNIT_ASSERT_THROW(data_cast<None &>(data), BadCast);
+            CPPUNIT_ASSERT_THROW(data_cast<const None &>(data), BadCast);
+        }
         
-        CPPUNIT_ASSERT_NO_THROW(data_cast<TestData &>(data));
-        CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData &>(data));
-        
-        CPPUNIT_ASSERT_THROW(data_cast<None &>(data), BadCast);
-        CPPUNIT_ASSERT_THROW(data_cast<const None &>(data), BadCast);
-    }
-    
-    void DataTest::testCastPointer()
-    {
-        TestData testData;
-        Data* data = &testData;
-        
-        CPPUNIT_ASSERT_NO_THROW(data_cast<TestData *>(data));
-        CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData *>(data));
-        
-        CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None *>(data));
-        CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<const None *>(data));
+        void DataTest::testCastPointer()
+        {
+            TestData testData;
+            Data* data = &testData;
+            
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData *>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData *>(data));
+            
+            CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None *>(data));
+            CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<const None *>(data));
+        }
     }
 }

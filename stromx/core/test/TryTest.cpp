@@ -25,65 +25,68 @@
 
 #include <cppunit/TestAssert.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::TryTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::TryTest);
 
-namespace core
+namespace stromx
 {
-    void TryTest::setUp ( void )
+    namespace core
     {
-        std::vector<const Description*> descriptions;
-        descriptions.push_back(new Description(0, DataVariant::NONE));
-        descriptions.push_back(new Description(1, DataVariant::NONE));
-        descriptions.push_back(new Description(2, DataVariant::NONE));
-        m_map = new impl::Id2DataMap(descriptions);
-        m_dataContainer = DataContainer(new None());
-    }
+        void TryTest::setUp ( void )
+        {
+            std::vector<const Description*> descriptions;
+            descriptions.push_back(new Description(0, DataVariant::NONE));
+            descriptions.push_back(new Description(1, DataVariant::NONE));
+            descriptions.push_back(new Description(2, DataVariant::NONE));
+            m_map = new impl::Id2DataMap(descriptions);
+            m_dataContainer = DataContainer(new None());
+        }
 
-    void TryTest::testSet ( void )
-    {
-        Id2DataPair pair0(0, m_dataContainer);
-        CPPUNIT_ASSERT_NO_THROW((Try(pair0)).set(*m_map));
-        CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
-        CPPUNIT_ASSERT(pair0.data().empty());
+        void TryTest::testSet ( void )
+        {
+            Id2DataPair pair0(0, m_dataContainer);
+            CPPUNIT_ASSERT_NO_THROW((Try(pair0)).set(*m_map));
+            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+            CPPUNIT_ASSERT(pair0.data().empty());
+            
+            Id2DataPair pair1(0, m_dataContainer);
+            CPPUNIT_ASSERT_NO_THROW((Try(pair1)).set(*m_map));
+            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());  
+        }
         
-        Id2DataPair pair1(0, m_dataContainer);
-        CPPUNIT_ASSERT_NO_THROW((Try(pair1)).set(*m_map));
-        CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());  
-    }
-    
-    void TryTest::testTryGet()
-    {
-        Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
+        void TryTest::testTryGet()
+        {
+            Id2DataPair pair0(0);
+            CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
+            
+            (*m_map)[0] = m_dataContainer;
+            CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
+        }
         
-        (*m_map)[0] = m_dataContainer;
-        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
-    }
-    
-    void TryTest::testTrySet()
-    {
-        Id2DataPair pair0(0, m_dataContainer);
-        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
-        
-        (*m_map)[0] = m_dataContainer;
-        CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
-    }
+        void TryTest::testTrySet()
+        {
+            Id2DataPair pair0(0, m_dataContainer);
+            CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
+            
+            (*m_map)[0] = m_dataContainer;
+            CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
+        }
 
-    void TryTest::testGet ( void )
-    {
-        (*m_map)[0] = m_dataContainer;
-        Id2DataPair pair0(0);
-        CPPUNIT_ASSERT_NO_THROW((Try(pair0)).get(*m_map));
-        CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-        CPPUNIT_ASSERT((*m_map)[0].empty());
-        
-        Id2DataPair pair1(0);
-        CPPUNIT_ASSERT_NO_THROW((Try(pair1)).get(*m_map));
-        CPPUNIT_ASSERT(pair1.data().empty());
-    }
+        void TryTest::testGet ( void )
+        {
+            (*m_map)[0] = m_dataContainer;
+            Id2DataPair pair0(0);
+            CPPUNIT_ASSERT_NO_THROW((Try(pair0)).get(*m_map));
+            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
+            CPPUNIT_ASSERT((*m_map)[0].empty());
+            
+            Id2DataPair pair1(0);
+            CPPUNIT_ASSERT_NO_THROW((Try(pair1)).get(*m_map));
+            CPPUNIT_ASSERT(pair1.data().empty());
+        }
 
-    void TryTest::tearDown ( void )
-    {
-        delete m_map;
+        void TryTest::tearDown ( void )
+        {
+            delete m_map;
+        }
     }
 }

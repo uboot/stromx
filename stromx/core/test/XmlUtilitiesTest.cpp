@@ -20,17 +20,20 @@
 
 #include <stromx/core/impl/XmlUtilities.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::XmlUtilitiesTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlUtilitiesTest);
 
-namespace core
+namespace stromx
 {
-    using namespace impl;
-    
-    void XmlUtilitiesTest::testComputePath()
+    namespace core
     {
-        CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computePath("test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("/"), XmlUtilities::computePath("/test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("dir/"), XmlUtilities::computePath("dir/test.xml"));
-        CPPUNIT_ASSERT_EQUAL(std::string("/dir/"), XmlUtilities::computePath("/dir/test.xml"));
+        using namespace impl;
+        
+        void XmlUtilitiesTest::testComputePath()
+        {
+            CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computePath("test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("/"), XmlUtilities::computePath("/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("dir/"), XmlUtilities::computePath("dir/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("/dir/"), XmlUtilities::computePath("/dir/test.xml"));
+        }
     }
 }

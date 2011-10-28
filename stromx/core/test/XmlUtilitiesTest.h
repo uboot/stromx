@@ -20,22 +20,25 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class XmlUtilitiesTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (XmlUtilitiesTest);
-        CPPUNIT_TEST(testComputePath);
-        CPPUNIT_TEST_SUITE_END ();
+        class XmlUtilitiesTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (XmlUtilitiesTest);
+            CPPUNIT_TEST(testComputePath);
+            CPPUNIT_TEST_SUITE_END ();
 
-    public:
-        
-        void setUp() {}
-        void tearDown() {}
+        public:
+            
+            void setUp() {}
+            void tearDown() {}
 
-    protected:
-        void testComputePath();
-    };
+        protected:
+            void testComputePath();
+        };
+    }
 }
 
 #endif // STROM_XMLUTILITIESTEST_H

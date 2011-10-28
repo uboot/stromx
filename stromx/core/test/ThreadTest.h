@@ -20,41 +20,44 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class Network;
-    }
-    class Thread;
-    class Operator;
-    
-    class ThreadTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (ThreadTest);
-        CPPUNIT_TEST(testAddOperator);
-        CPPUNIT_TEST(testInsertOperator);
-        CPPUNIT_TEST(testRemoveOperator);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        ThreadTest() {}
+        namespace impl
+        {
+            class Network;
+        }
+        class Thread;
+        class Operator;
         
-        void setUp();
-        void tearDown();
-        
+        class ThreadTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ThreadTest);
+            CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testInsertOperator);
+            CPPUNIT_TEST(testRemoveOperator);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testAddOperator();
-        void testInsertOperator();
-        void testRemoveOperator();
+        public:
+            ThreadTest() {}
             
-    private:
-        impl::Network* m_network;
-        Thread* m_thread;
-        Operator* m_op1;
-        Operator* m_op2;
-    };
+            void setUp();
+            void tearDown();
+            
+
+        protected:
+            void testAddOperator();
+            void testInsertOperator();
+            void testRemoveOperator();
+                
+        private:
+            impl::Network* m_network;
+            Thread* m_thread;
+            Operator* m_op1;
+            Operator* m_op2;
+        };
+    }
 }
 
 #endif // STROM_THREADTEST_H

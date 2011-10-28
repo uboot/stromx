@@ -22,32 +22,35 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class Stream;
-    class Network;
-    
-    class StreamTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (StreamTest);
-        CPPUNIT_TEST(testAddThread);
-        CPPUNIT_TEST(testRemoveThread);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        StreamTest() {}
+        class Stream;
+        class Network;
         
-        void setUp();
-        void tearDown();
+        class StreamTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (StreamTest);
+            CPPUNIT_TEST(testAddThread);
+            CPPUNIT_TEST(testRemoveThread);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testAddThread();
-        void testRemoveThread();
+        public:
+            StreamTest() {}
             
-    private:
-        Stream* m_stream;
-        Network* m_network;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testAddThread();
+            void testRemoveThread();
+                
+        private:
+            Stream* m_stream;
+            Network* m_network;
+        };
+    }
 }
 
 #endif // STROM_STREAMTEST_H 

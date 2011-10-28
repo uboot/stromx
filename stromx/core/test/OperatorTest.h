@@ -22,58 +22,61 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class OperatorTester;
-    class TestOperator;
-
-    class OperatorTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (OperatorTest);
-        CPPUNIT_TEST (testSetInputData);
-        CPPUNIT_TEST (testGetOutputData);
-        CPPUNIT_TEST (testClearOutputData);
-        CPPUNIT_TEST (testInitialize);
-        CPPUNIT_TEST (testActivate);
-        CPPUNIT_TEST (testDeactivate);
-        CPPUNIT_TEST (testGetParameter);
-        CPPUNIT_TEST (testGetParameterCast);
-        CPPUNIT_TEST (testGetParameterWrongCast);
-        CPPUNIT_TEST (testSetParameter);
-        CPPUNIT_TEST (testGetParameterStatusNone);
-        CPPUNIT_TEST (testSetParameterStatusNone);
-        CPPUNIT_TEST_SUITE_END ();
+        class OperatorTester;
+        class TestOperator;
 
-    public:
-        OperatorTest() : m_operator(0), m_testOperator(0) {}
-        
-        void setUp();
-        void tearDown();
+        class OperatorTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (OperatorTest);
+            CPPUNIT_TEST (testSetInputData);
+            CPPUNIT_TEST (testGetOutputData);
+            CPPUNIT_TEST (testClearOutputData);
+            CPPUNIT_TEST (testInitialize);
+            CPPUNIT_TEST (testActivate);
+            CPPUNIT_TEST (testDeactivate);
+            CPPUNIT_TEST (testGetParameter);
+            CPPUNIT_TEST (testGetParameterCast);
+            CPPUNIT_TEST (testGetParameterWrongCast);
+            CPPUNIT_TEST (testSetParameter);
+            CPPUNIT_TEST (testGetParameterStatusNone);
+            CPPUNIT_TEST (testSetParameterStatusNone);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testSetInputData();
-        void testGetOutputData();
-        void testClearOutputData();
-        void testInitialize();
-        void testActivate();
-        void testDeactivate();
-        void testGetParameter();
-        void testGetParameterCast();
-        void testGetParameterWrongCast();
-        void testSetParameter();
-        void testGetParameterStatusNone();
-        void testSetParameterStatusNone();
+        public:
+            OperatorTest() : m_operator(0), m_testOperator(0) {}
             
-    private:
-        void setInputDataDelayed(const unsigned int id); 
-        void clearOutputDataDelayed(const unsigned int id); 
-        void getOutputDataWithInterrupt(const unsigned id);
-        void setInputDataWithInterrupt(const unsigned int id);
-        
-        OperatorTester* m_operator;
-        TestOperator* m_testOperator;
-        DataContainer m_container;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testSetInputData();
+            void testGetOutputData();
+            void testClearOutputData();
+            void testInitialize();
+            void testActivate();
+            void testDeactivate();
+            void testGetParameter();
+            void testGetParameterCast();
+            void testGetParameterWrongCast();
+            void testSetParameter();
+            void testGetParameterStatusNone();
+            void testSetParameterStatusNone();
+                
+        private:
+            void setInputDataDelayed(const unsigned int id); 
+            void clearOutputDataDelayed(const unsigned int id); 
+            void getOutputDataWithInterrupt(const unsigned id);
+            void setInputDataWithInterrupt(const unsigned int id);
+            
+            OperatorTester* m_operator;
+            TestOperator* m_testOperator;
+            DataContainer m_container;
+        };
+    }
 }
 
 #endif // STROM_OPERATORTEST_H

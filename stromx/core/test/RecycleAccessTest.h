@@ -22,52 +22,55 @@
 
 #include <stromx/core/RecycleAccess.h>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    class RecycleAccess;
-    
-    class RecycleAccessTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (RecycleAccessTest);
-        CPPUNIT_TEST(testRecycle);
-        CPPUNIT_TEST(testNoRecycle);
-        CPPUNIT_TEST(testDelayedRecycle);
-        CPPUNIT_TEST(testRecycleNoTimeout);
-        CPPUNIT_TEST(testRecycleTimeout);
-        CPPUNIT_TEST(testCopiedRecycle);
-        CPPUNIT_TEST(testRecycleInterrupt);
-        CPPUNIT_TEST(testGetRecycleAccessDelayed);
-        CPPUNIT_TEST(testGetRecycleAccessInterrupt);
-        CPPUNIT_TEST(testAdd);
-        CPPUNIT_TEST(testRecycleMultiple);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        RecycleAccessTest () {}
+        class DataContainer;
+        class RecycleAccess;
         
-        void setUp() {}
-        void tearDown() {}
+        class RecycleAccessTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (RecycleAccessTest);
+            CPPUNIT_TEST(testRecycle);
+            CPPUNIT_TEST(testNoRecycle);
+            CPPUNIT_TEST(testDelayedRecycle);
+            CPPUNIT_TEST(testRecycleNoTimeout);
+            CPPUNIT_TEST(testRecycleTimeout);
+            CPPUNIT_TEST(testCopiedRecycle);
+            CPPUNIT_TEST(testRecycleInterrupt);
+            CPPUNIT_TEST(testGetRecycleAccessDelayed);
+            CPPUNIT_TEST(testGetRecycleAccessInterrupt);
+            CPPUNIT_TEST(testAdd);
+            CPPUNIT_TEST(testRecycleMultiple);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testRecycle();
-        void testNoRecycle();
-        void testDelayedRecycle();
-        void testCopiedRecycle();
-        void testRecycleNoTimeout();
-        void testRecycleTimeout();
-        void testRecycleInterrupt();
-        void testGetRecycleAccessDelayed();
-        void testGetRecycleAccessInterrupt();
-        void testAdd();
-        void testRecycleMultiple();
-        
-    private:
-        void destroyDelayed(DataContainer & container);
-        void recycleInterrupt(RecycleAccess & access);
-        void releaseAccessDelayed(RecycleAccess & access);
-        void getAccessInterrupt(DataContainer & container);
-    };
+        public:
+            RecycleAccessTest () {}
+            
+            void setUp() {}
+            void tearDown() {}
+
+        protected:
+            void testRecycle();
+            void testNoRecycle();
+            void testDelayedRecycle();
+            void testCopiedRecycle();
+            void testRecycleNoTimeout();
+            void testRecycleTimeout();
+            void testRecycleInterrupt();
+            void testGetRecycleAccessDelayed();
+            void testGetRecycleAccessInterrupt();
+            void testAdd();
+            void testRecycleMultiple();
+            
+        private:
+            void destroyDelayed(DataContainer & container);
+            void recycleInterrupt(RecycleAccess & access);
+            void releaseAccessDelayed(RecycleAccess & access);
+            void getAccessInterrupt(DataContainer & container);
+        };
+    }
 }
 
 #endif // STROM_RECYCLEACCESSTEST_H

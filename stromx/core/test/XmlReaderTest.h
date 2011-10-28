@@ -20,32 +20,35 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class Factory;
-    
-    class XmlReaderTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (XmlReaderTest);
-        CPPUNIT_TEST(testRead);
-        CPPUNIT_TEST(testReadWrongFile);
-        CPPUNIT_TEST(testReadInvalidFile);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        XmlReaderTest() : m_factory(0) {}
+        class Factory;
         
-        void setUp();
-        void tearDown();
+        class XmlReaderTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (XmlReaderTest);
+            CPPUNIT_TEST(testRead);
+            CPPUNIT_TEST(testReadWrongFile);
+            CPPUNIT_TEST(testReadInvalidFile);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testRead();
-        void testReadWrongFile();
-        void testReadInvalidFile();
+        public:
+            XmlReaderTest() : m_factory(0) {}
             
-    private:
-        Factory* m_factory;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testRead();
+            void testReadWrongFile();
+            void testReadInvalidFile();
+                
+        private:
+            Factory* m_factory;
+        };
+    }
 }
 
 #endif // STROM_XMLREADERTEST_H

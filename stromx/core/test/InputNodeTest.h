@@ -22,50 +22,53 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    
-    namespace impl
+    namespace core
     {
-        class OutputNode;
-        class InputNode;
-    }
-    
-    class InputNodeTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (InputNodeTest);
-        CPPUNIT_TEST(testSource);
-        CPPUNIT_TEST(testConnect);
-        CPPUNIT_TEST(testDisconnect);
-        CPPUNIT_TEST(testSetInputData);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        InputNodeTest() 
-          : m_operatorWrapper(0),
-            m_sourceOperatorWrapper(0),
-            m_inputNode(0),
-            m_sourceNode(0)
-        {}
+        class Operator;
         
-        void setUp();
-        void tearDown();
+        namespace impl
+        {
+            class OutputNode;
+            class InputNode;
+        }
+        
+        class InputNodeTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (InputNodeTest);
+            CPPUNIT_TEST(testSource);
+            CPPUNIT_TEST(testConnect);
+            CPPUNIT_TEST(testDisconnect);
+            CPPUNIT_TEST(testSetInputData);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testSource();
-        void testConnect();
-        void testDisconnect();
-        void testSetInputData();
+        public:
+            InputNodeTest() 
+            : m_operatorWrapper(0),
+                m_sourceOperatorWrapper(0),
+                m_inputNode(0),
+                m_sourceNode(0)
+            {}
             
-    private: 
-        Operator* m_operatorWrapper;
-        Operator* m_sourceOperatorWrapper;
-        DataContainer m_container;
-        impl::InputNode* m_inputNode;
-        impl::OutputNode* m_sourceNode;
-        
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testSource();
+            void testConnect();
+            void testDisconnect();
+            void testSetInputData();
+                
+        private: 
+            Operator* m_operatorWrapper;
+            Operator* m_sourceOperatorWrapper;
+            DataContainer m_container;
+            impl::InputNode* m_inputNode;
+            impl::OutputNode* m_sourceNode;
+            
+        };
+    }
 }
 
 #endif // STROM_INPUTNODETEST_H

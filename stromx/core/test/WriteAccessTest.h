@@ -22,44 +22,47 @@
 
 #include <stromx/core/WriteAccess.h>
 
-namespace core
+namespace stromx
 {
-    class Data;
-    class DataContainer;
-    
-    class WriteAccessTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (WriteAccessTest);
-        CPPUNIT_TEST(testWriteAccess);
-        CPPUNIT_TEST(testWriteAccessCast);
-        CPPUNIT_TEST(testWriteAccessWrongCast);
-        CPPUNIT_TEST(testWriteAccessEmpty);
-        CPPUNIT_TEST(testReleaseWriteAccess);
-        CPPUNIT_TEST(testWriteAccessDelayed);
-        CPPUNIT_TEST(testWriteAccessInterrupt);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        WriteAccessTest () : m_data(0) {}
+        class Data;
+        class DataContainer;
         
-        void setUp() {}
-        void tearDown() { m_data = 0; }
+        class WriteAccessTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (WriteAccessTest);
+            CPPUNIT_TEST(testWriteAccess);
+            CPPUNIT_TEST(testWriteAccessCast);
+            CPPUNIT_TEST(testWriteAccessWrongCast);
+            CPPUNIT_TEST(testWriteAccessEmpty);
+            CPPUNIT_TEST(testReleaseWriteAccess);
+            CPPUNIT_TEST(testWriteAccessDelayed);
+            CPPUNIT_TEST(testWriteAccessInterrupt);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testWriteAccessEmpty();
-        void testWriteAccess();
-        void testWriteAccessCast();
-        void testWriteAccessWrongCast();
-        void testReleaseWriteAccess();
-        void testWriteAccessDelayed();
-        void testWriteAccessInterrupt();
+        public:
+            WriteAccessTest () : m_data(0) {}
             
-    private:
-        void releaseDelayed(WriteAccess<>& access);
-        void writeAccessInterrupt(DataContainer & container);
-        
-        Data* m_data;
-    };
+            void setUp() {}
+            void tearDown() { m_data = 0; }
+
+        protected:
+            void testWriteAccessEmpty();
+            void testWriteAccess();
+            void testWriteAccessCast();
+            void testWriteAccessWrongCast();
+            void testReleaseWriteAccess();
+            void testWriteAccessDelayed();
+            void testWriteAccessInterrupt();
+                
+        private:
+            void releaseDelayed(WriteAccess<>& access);
+            void writeAccessInterrupt(DataContainer & container);
+            
+            Data* m_data;
+        };
+    }
 }
 
 #endif // STROM_WRITEACCESSTEST_H

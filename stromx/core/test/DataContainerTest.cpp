@@ -27,70 +27,71 @@
 #include <cppunit/TestAssert.h>
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::DataContainerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataContainerTest);
 
-namespace core
+namespace stromx
 {
-    void DataContainerTest::testDestroy()
+    namespace core
     {
+        void DataContainerTest::testDestroy()
         {
-            DataContainer copy;
             {
-                DataContainer container(new TestData());
-                copy = container;
+                DataContainer copy;
+                {
+                    DataContainer container(new TestData());
+                    copy = container;
+                    CPPUNIT_ASSERT(! TestData::wasDestructed);
+                }
+                
                 CPPUNIT_ASSERT(! TestData::wasDestructed);
             }
             
-            CPPUNIT_ASSERT(! TestData::wasDestructed);
+            CPPUNIT_ASSERT(TestData::wasDestructed);
         }
         
-        CPPUNIT_ASSERT(TestData::wasDestructed);
-    }
-    
-    void DataContainerTest::testDestroyDelayed()
-    {
+        void DataContainerTest::testDestroyDelayed()
         {
-            DataContainer container(new TestData());
-            boost::thread t(boost::bind(&DataContainerTest::destroyDelayed, this, _1), container);
-            CPPUNIT_ASSERT(! TestData::wasDestructed);
-            
-            t.join();
-            CPPUNIT_ASSERT(! TestData::wasDestructed);
+            {
+                DataContainer container(new TestData());
+                boost::thread t(boost::bind(&DataContainerTest::destroyDelayed, this, _1), container);
+                CPPUNIT_ASSERT(! TestData::wasDestructed);
+                
+                t.join();
+                CPPUNIT_ASSERT(! TestData::wasDestructed);
+            }
+            CPPUNIT_ASSERT(TestData::wasDestructed);
         }
-        CPPUNIT_ASSERT(TestData::wasDestructed);
-    }
-    
-    void DataContainerTest::destroyDelayed(DataContainer& container)
-    {
-        boost::this_thread::sleep(boost::posix_time::seconds(1));
-    }
-    
-    void DataContainerTest::testComparison()
-    {
-        Data* data = new TestData();
         
-        DataContainer container1(data);
-        DataContainer container2 = container1;
-        CPPUNIT_ASSERT(container1 == container2);
+        void DataContainerTest::destroyDelayed(DataContainer& container)
+        {
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+        }
         
-        DataContainer container3;
-        DataContainer container4;
-        CPPUNIT_ASSERT(container3 == container4);
-        CPPUNIT_ASSERT(container1 != container3);
+        void DataContainerTest::testComparison()
+        {
+            Data* data = new TestData();
+            
+            DataContainer container1(data);
+            DataContainer container2 = container1;
+            CPPUNIT_ASSERT(container1 == container2);
+            
+            DataContainer container3;
+            DataContainer container4;
+            CPPUNIT_ASSERT(container3 == container4);
+            CPPUNIT_ASSERT(container1 != container3);
+        }
+        
+        void DataContainerTest::testEmpty()
+        {
+            DataContainer container;
+            CPPUNIT_ASSERT(container.empty());
+            
+            Data* data = new TestData();
+            container = DataContainer(data);
+            CPPUNIT_ASSERT(! container.empty());
+            
+            container = DataContainer();
+            CPPUNIT_ASSERT(container.empty());
+        }
     }
-    
-    void DataContainerTest::testEmpty()
-    {
-        DataContainer container;
-        CPPUNIT_ASSERT(container.empty());
-        
-        Data* data = new TestData();
-        container = DataContainer(data);
-        CPPUNIT_ASSERT(! container.empty());
-        
-        container = DataContainer();
-        CPPUNIT_ASSERT(container.empty());
-    }
-
-
 }

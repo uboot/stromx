@@ -20,28 +20,31 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class Stream;
-    
-    class XmlWriterTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (XmlWriterTest);
-        CPPUNIT_TEST(testWrite);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        XmlWriterTest() : m_stream(0) {}
+        class Stream;
         
-        void setUp();
-        void tearDown();
+        class XmlWriterTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (XmlWriterTest);
+            CPPUNIT_TEST(testWrite);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testWrite();
+        public:
+            XmlWriterTest() : m_stream(0) {}
             
-    private:
-        Stream* m_stream;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testWrite();
+                
+        private:
+            Stream* m_stream;
+        };
+    }
 }
 
 #endif // STROM_XMLWRITERTEST_H

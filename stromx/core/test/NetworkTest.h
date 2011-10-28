@@ -22,43 +22,46 @@
 
 #include <stromx/core/None.h>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class Network;
-    }
-    
-    class SynchronizedOperatorKernel;
-    
-    class NetworkTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (NetworkTest);
-        CPPUNIT_TEST(testAddOperator);
-        CPPUNIT_TEST(testRemoveOperator);
-        CPPUNIT_TEST(testActivate);
-        CPPUNIT_TEST(testDeactivate);
-        CPPUNIT_TEST(testRemoveConnectedOperator);
-        CPPUNIT_TEST(testConnectionSource);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        NetworkTest() : m_network(0) {}
+        namespace impl
+        {
+            class Network;
+        }
         
-        void setUp();
-        void tearDown();
+        class SynchronizedOperatorKernel;
+        
+        class NetworkTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (NetworkTest);
+            CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testRemoveOperator);
+            CPPUNIT_TEST(testActivate);
+            CPPUNIT_TEST(testDeactivate);
+            CPPUNIT_TEST(testRemoveConnectedOperator);
+            CPPUNIT_TEST(testConnectionSource);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testAddOperator();
-        void testRemoveOperator();
-        void testRemoveConnectedOperator();
-        void testActivate();
-        void testDeactivate();
-        void testConnectionSource();
+        public:
+            NetworkTest() : m_network(0) {}
             
-    private: 
-        impl::Network* m_network;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testAddOperator();
+            void testRemoveOperator();
+            void testRemoveConnectedOperator();
+            void testActivate();
+            void testDeactivate();
+            void testConnectionSource();
+                
+        private: 
+            impl::Network* m_network;
+        };
+    }
 }
 
 #endif // STROM_NETWORKTEST_H

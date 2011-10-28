@@ -25,140 +25,143 @@
 
 #include <cppunit/TestAssert.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::Id2DataCompositeTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::Id2DataCompositeTest);
 
-namespace core
+namespace stromx
 {
-    void Id2DataCompositeTest::setUp ( void )
+    namespace core
     {
-        std::vector<const Description*> descriptions;
-        descriptions.push_back(new Description(0, DataVariant::NONE));
-        descriptions.push_back(new Description(1, DataVariant::NONE));
-        descriptions.push_back(new Description(2, DataVariant::NONE));
-        m_map = new impl::Id2DataMap(descriptions);
-        m_dataContainer = DataContainer(new None());
-    }
-
-    void Id2DataCompositeTest::testSet ( void )
-    {
+        void Id2DataCompositeTest::setUp ( void )
         {
-            (*m_map)[0] = m_dataContainer;
-            Id2DataPair pair0(0, m_dataContainer);
-            Id2DataPair pair1(1, m_dataContainer);
-            Id2DataPair pair2(2, m_dataContainer);
-            
-            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
-        }          
-        
-        {
-            (*m_map)[0] = m_dataContainer;
-            (*m_map)[1] = DataContainer();
-            (*m_map)[2] = DataContainer();
-            Id2DataPair pair0(0, m_dataContainer);
-            Id2DataPair pair1(1, m_dataContainer);
-            Id2DataPair pair2(2, m_dataContainer);
-            
-            CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
-            CPPUNIT_ASSERT(pair1.data().empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[2]);
-            CPPUNIT_ASSERT(pair2.data().empty());
-        }         
-        
-        {
-            (*m_map)[0] = DataContainer();
-            (*m_map)[1] = m_dataContainer;
-            (*m_map)[2] = DataContainer();
-            Id2DataPair pair0(0, m_dataContainer);
-            Id2DataPair pair1(1, m_dataContainer);
-            Id2DataPair pair2(2, m_dataContainer);
-            
-            CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
-            CPPUNIT_ASSERT(pair0.data().empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
-            CPPUNIT_ASSERT((*m_map)[2].empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
+            std::vector<const Description*> descriptions;
+            descriptions.push_back(new Description(0, DataVariant::NONE));
+            descriptions.push_back(new Description(1, DataVariant::NONE));
+            descriptions.push_back(new Description(2, DataVariant::NONE));
+            m_map = new impl::Id2DataMap(descriptions);
+            m_dataContainer = DataContainer(new None());
         }
-    }
-    
-    void Id2DataCompositeTest::testTryGet()
-    {
-        Id2DataPair pair0(0);
-        Id2DataPair pair1(1);
-        Id2DataPair pair2(2);
-        (*m_map)[1] = m_dataContainer;
-        (*m_map)[2] = m_dataContainer;
-        
-        CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).tryGet(*m_map));
-        CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).tryGet(*m_map));
-        CPPUNIT_ASSERT_EQUAL(false, (pair0 && (pair1 || pair2)).tryGet(*m_map));
-    }
-    
-    void Id2DataCompositeTest::testTrySet()
-    {
-        Id2DataPair pair0(0, m_dataContainer);
-        Id2DataPair pair1(1, m_dataContainer);
-        Id2DataPair pair2(2, m_dataContainer);
-        (*m_map)[0] = m_dataContainer;
-        
-        CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).trySet(*m_map));
-        CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).trySet(*m_map));
-        CPPUNIT_ASSERT_EQUAL(false, (pair0 && (pair1 || pair2)).trySet(*m_map));
-    }
 
-    void Id2DataCompositeTest::testGet ( void )
-    {
+        void Id2DataCompositeTest::testSet ( void )
         {
-            (*m_map)[1] = m_dataContainer;
-            (*m_map)[2] = m_dataContainer;
-            Id2DataPair pair0(0);
-            Id2DataPair pair1(1);
-            Id2DataPair pair2(2);   
+            {
+                (*m_map)[0] = m_dataContainer;
+                Id2DataPair pair0(0, m_dataContainer);
+                Id2DataPair pair1(1, m_dataContainer);
+                Id2DataPair pair2(2, m_dataContainer);
+                
+                CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
+            }          
             
-            CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
+            {
+                (*m_map)[0] = m_dataContainer;
+                (*m_map)[1] = DataContainer();
+                (*m_map)[2] = DataContainer();
+                Id2DataPair pair0(0, m_dataContainer);
+                Id2DataPair pair1(1, m_dataContainer);
+                Id2DataPair pair2(2, m_dataContainer);
+                
+                CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT(pair1.data().empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[2]);
+                CPPUNIT_ASSERT(pair2.data().empty());
+            }         
+            
+            {
+                (*m_map)[0] = DataContainer();
+                (*m_map)[1] = m_dataContainer;
+                (*m_map)[2] = DataContainer();
+                Id2DataPair pair0(0, m_dataContainer);
+                Id2DataPair pair1(1, m_dataContainer);
+                Id2DataPair pair2(2, m_dataContainer);
+                
+                CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+                CPPUNIT_ASSERT(pair0.data().empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
+                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
+            }
         }
         
+        void Id2DataCompositeTest::testTryGet()
         {
-            (*m_map)[0] = DataContainer();
-            (*m_map)[1] = m_dataContainer;
-            (*m_map)[2] = m_dataContainer;
             Id2DataPair pair0(0);
             Id2DataPair pair1(1);
             Id2DataPair pair2(2);
+            (*m_map)[1] = m_dataContainer;
+            (*m_map)[2] = m_dataContainer;
             
-            CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
-            CPPUNIT_ASSERT((*m_map)[0].empty());
-            CPPUNIT_ASSERT(pair0.data().empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
-            CPPUNIT_ASSERT(pair1.data().empty());
-            CPPUNIT_ASSERT((*m_map)[2].empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
+            CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).tryGet(*m_map));
+            CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).tryGet(*m_map));
+            CPPUNIT_ASSERT_EQUAL(false, (pair0 && (pair1 || pair2)).tryGet(*m_map));
         }
         
+        void Id2DataCompositeTest::testTrySet()
         {
+            Id2DataPair pair0(0, m_dataContainer);
+            Id2DataPair pair1(1, m_dataContainer);
+            Id2DataPair pair2(2, m_dataContainer);
             (*m_map)[0] = m_dataContainer;
-            (*m_map)[1] = m_dataContainer;
-            (*m_map)[2] = DataContainer();
-            Id2DataPair pair0(0);
-            Id2DataPair pair1(1);
-            Id2DataPair pair2(2);
             
-            CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
-            CPPUNIT_ASSERT((*m_map)[0].empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-            CPPUNIT_ASSERT((*m_map)[1].empty());
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
-            CPPUNIT_ASSERT((*m_map)[2].empty());
-            CPPUNIT_ASSERT(pair2.data().empty());
+            CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).trySet(*m_map));
+            CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).trySet(*m_map));
+            CPPUNIT_ASSERT_EQUAL(false, (pair0 && (pair1 || pair2)).trySet(*m_map));
         }
-    }
 
-    void Id2DataCompositeTest::tearDown ( void )
-    {
-        delete m_map;
+        void Id2DataCompositeTest::testGet ( void )
+        {
+            {
+                (*m_map)[1] = m_dataContainer;
+                (*m_map)[2] = m_dataContainer;
+                Id2DataPair pair0(0);
+                Id2DataPair pair1(1);
+                Id2DataPair pair2(2);   
+                
+                CPPUNIT_ASSERT_THROW((pair0 && (pair1 || pair2)).set(*m_map), WrongState);
+            }
+            
+            {
+                (*m_map)[0] = DataContainer();
+                (*m_map)[1] = m_dataContainer;
+                (*m_map)[2] = m_dataContainer;
+                Id2DataPair pair0(0);
+                Id2DataPair pair1(1);
+                Id2DataPair pair2(2);
+                
+                CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
+                CPPUNIT_ASSERT((*m_map)[0].empty());
+                CPPUNIT_ASSERT(pair0.data().empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT(pair1.data().empty());
+                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
+            }
+            
+            {
+                (*m_map)[0] = m_dataContainer;
+                (*m_map)[1] = m_dataContainer;
+                (*m_map)[2] = DataContainer();
+                Id2DataPair pair0(0);
+                Id2DataPair pair1(1);
+                Id2DataPair pair2(2);
+                
+                CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
+                CPPUNIT_ASSERT((*m_map)[0].empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
+                CPPUNIT_ASSERT((*m_map)[1].empty());
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
+                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT(pair2.data().empty());
+            }
+        }
+
+        void Id2DataCompositeTest::tearDown ( void )
+        {
+            delete m_map;
+        }
     }
 }

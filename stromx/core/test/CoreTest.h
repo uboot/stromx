@@ -20,28 +20,31 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class Factory;
-    
-    class CoreTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (CoreTest);
-        CPPUNIT_TEST(testRegisterCore);
-        CPPUNIT_TEST_SUITE_END ();
+        class Factory;
+        
+        class CoreTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (CoreTest);
+            CPPUNIT_TEST(testRegisterCore);
+            CPPUNIT_TEST_SUITE_END ();
 
-    public:
-        StromTest() {}
-        
-        void setUp();
-        void tearDown();
-        
-    protected:
-        void testRegisterCore();
+        public:
+            CoreTest() {}
             
-    private:
-        core::Factory* m_factory;
-    };
+            void setUp();
+            void tearDown();
+            
+        protected:
+            void testRegisterCore();
+                
+        private:
+            core::Factory* m_factory;
+        };
+    }
 }
 
 #endif // STROM_STROMTEST_H

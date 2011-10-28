@@ -22,38 +22,41 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    namespace impl
+    namespace core
     {
-        class Id2DataMap;
+        namespace impl
+        {
+            class Id2DataMap;
+        }
+        class DataContainer;
+        
+        class TryTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (TryTest);
+            CPPUNIT_TEST (testTrySet);
+            CPPUNIT_TEST (testTryGet);
+            CPPUNIT_TEST (testSet);
+            CPPUNIT_TEST (testGet);
+            CPPUNIT_TEST_SUITE_END ();
+
+            public:
+                TryTest() : m_map(0) {}
+                void setUp();
+                void tearDown();
+
+            protected:
+                void testTrySet();
+                void testTryGet();
+                void testSet();
+                void testGet();
+                
+            private:
+                impl::Id2DataMap* m_map;
+                DataContainer m_dataContainer; 
+        };
     }
-    class DataContainer;
-    
-    class TryTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (TryTest);
-        CPPUNIT_TEST (testTrySet);
-        CPPUNIT_TEST (testTryGet);
-        CPPUNIT_TEST (testSet);
-        CPPUNIT_TEST (testGet);
-        CPPUNIT_TEST_SUITE_END ();
-
-        public:
-            TryTest() : m_map(0) {}
-            void setUp();
-            void tearDown();
-
-        protected:
-            void testTrySet();
-            void testTryGet();
-            void testSet();
-            void testGet();
-            
-        private:
-            impl::Id2DataMap* m_map;
-            DataContainer m_dataContainer; 
-    };
 }
 
 #endif // STROM_TRYTEST_H

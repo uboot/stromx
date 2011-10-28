@@ -22,53 +22,56 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class SynchronizedOperatorKernel;
-    class TestOperator;
-    class Operator;
-    class DataContainer;
-    
-    namespace impl
+    namespace core
     {
-        class ThreadImpl;
-        class InputNode;
-    };
-    
-    class ThreadImplTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (ThreadImplTest);
-        CPPUNIT_TEST(testStart);
-        CPPUNIT_TEST(testStop);
-        CPPUNIT_TEST(testJoin);
-        CPPUNIT_TEST(testAddOperator);
-        CPPUNIT_TEST(testInsertOperator);
-        CPPUNIT_TEST(testRemoveOperator);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        ThreadImplTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
+        class SynchronizedOperatorKernel;
+        class TestOperator;
+        class Operator;
+        class DataContainer;
         
-        void setUp();
-        void tearDown();
-
-    protected:
-        void testAddOperator();
-        void testInsertOperator();
-        void testRemoveOperator();
+        namespace impl
+        {
+            class ThreadImpl;
+            class InputNode;
+        };
         
-        void testStart();
-        void testStop();
-        void testJoin();
+        class ThreadImplTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ThreadImplTest);
+            CPPUNIT_TEST(testStart);
+            CPPUNIT_TEST(testStop);
+            CPPUNIT_TEST(testJoin);
+            CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testInsertOperator);
+            CPPUNIT_TEST(testRemoveOperator);
+            CPPUNIT_TEST_SUITE_END ();
+
+        public:
+            ThreadImplTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
             
-    private: 
-        std::vector<TestOperator*> m_kernels;
-        std::vector<Operator*> m_operatorNodes;
-        DataContainer m_container;
-        impl::ThreadImpl* m_thread;
-        impl::InputNode* m_node;
-        Operator* m_operatorNode;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testAddOperator();
+            void testInsertOperator();
+            void testRemoveOperator();
+            
+            void testStart();
+            void testStop();
+            void testJoin();
+                
+        private: 
+            std::vector<TestOperator*> m_kernels;
+            std::vector<Operator*> m_operatorNodes;
+            DataContainer m_container;
+            impl::ThreadImpl* m_thread;
+            impl::InputNode* m_node;
+            Operator* m_operatorNode;
+        };
+    }
 }
 
 #endif // STROM_THREADIMPLTEST_H

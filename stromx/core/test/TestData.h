@@ -19,29 +19,32 @@
 
 #include <stromx/core/Data.h>
 
-namespace core
+namespace stromx
 {
-    class TestData : public Data
+    namespace core
     {
-    public:
-        TestData() { wasDestructed = false; }
-        ~TestData() { wasDestructed = true; }
-        
-        virtual const Version & version() const { return VERSION; }
-        virtual const std::string & type() const { return TYPE; }
-        virtual const std::string & package() const { return PACKAGE; }
-        
-        virtual const DataVariant & variant() const { return DataVariant::NONE; }
-        
-        virtual Data* const clone() const { return new TestData; }
-        
-        static bool wasDestructed;
-        
-    private:
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const Version VERSION;
-    };
+        class TestData : public Data
+        {
+        public:
+            TestData() { wasDestructed = false; }
+            ~TestData() { wasDestructed = true; }
+            
+            virtual const Version & version() const { return VERSION; }
+            virtual const std::string & type() const { return TYPE; }
+            virtual const std::string & package() const { return PACKAGE; }
+            
+            virtual const DataVariant & variant() const { return DataVariant::NONE; }
+            
+            virtual Data* const clone() const { return new TestData; }
+            
+            static bool wasDestructed;
+            
+        private:
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const Version VERSION;
+        };
+    }
 }
 
 #endif // STROM_TESTDATA_H

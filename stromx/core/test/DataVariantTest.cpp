@@ -23,36 +23,39 @@
 
 #include <cppunit/TestAssert.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::DataVariantTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataVariantTest);
 
-namespace core
+namespace stromx
 {
-    void DataVariantTest::testImageTypes()
+    namespace core
     {
-        CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.is(DataVariant::IMAGE));
-        CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::IMAGE));
-        CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::RGB_IMAGE));
-        
-        CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_IMAGE));
-        CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_24_IMAGE));
-        CPPUNIT_ASSERT(! DataVariant::RGB_IMAGE.is(DataVariant::RGB_24_IMAGE));
-        
-        CPPUNIT_ASSERT(DataVariant::MONO_IMAGE.is(DataVariant::IMAGE));
-        CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::IMAGE));
-        CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::MONO_IMAGE));
-    }
+        void DataVariantTest::testImageTypes()
+        {
+            CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.is(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::RGB_IMAGE));
+            
+            CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_24_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::RGB_IMAGE.is(DataVariant::RGB_24_IMAGE));
+            
+            CPPUNIT_ASSERT(DataVariant::MONO_IMAGE.is(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::MONO_IMAGE));
+        }
 
-    void DataVariantTest::testIntTypes()
-    {
-        CPPUNIT_ASSERT(DataVariant::UINT.is(DataVariant::INT));
-        CPPUNIT_ASSERT(DataVariant::UINT_8.is(DataVariant::UINT));
-        CPPUNIT_ASSERT(DataVariant::UINT_16.is(DataVariant::UINT));
-        CPPUNIT_ASSERT(DataVariant::UINT_32.is(DataVariant::UINT));
-        
-        CPPUNIT_ASSERT(! DataVariant::INT.is(DataVariant::UINT));
-        CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_8));
-        CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_16));
-        CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_32));
+        void DataVariantTest::testIntTypes()
+        {
+            CPPUNIT_ASSERT(DataVariant::UINT.is(DataVariant::INT));
+            CPPUNIT_ASSERT(DataVariant::UINT_8.is(DataVariant::UINT));
+            CPPUNIT_ASSERT(DataVariant::UINT_16.is(DataVariant::UINT));
+            CPPUNIT_ASSERT(DataVariant::UINT_32.is(DataVariant::UINT));
+            
+            CPPUNIT_ASSERT(! DataVariant::INT.is(DataVariant::UINT));
+            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_8));
+            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_16));
+            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_32));
+        }
     }
 }
 

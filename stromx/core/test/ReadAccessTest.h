@@ -22,44 +22,47 @@
 
 #include <stromx/core/WriteAccess.h>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    class Data;
-    
-    class ReadAccessTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (ReadAccessTest);
-        CPPUNIT_TEST(testReadAccessEmpty);
-        CPPUNIT_TEST(testReadAccess);
-        CPPUNIT_TEST(testReadAccessCast);
-        CPPUNIT_TEST(testReadAccessWrongCast);
-        CPPUNIT_TEST(testReadAccessDelayed);
-        CPPUNIT_TEST(testReadAccessInterrupt);
-        CPPUNIT_TEST(testReleaseReadAccess);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        ReadAccessTest () {}
+        class DataContainer;
+        class Data;
         
-        void setUp() {}
-        void tearDown() {}
+        class ReadAccessTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (ReadAccessTest);
+            CPPUNIT_TEST(testReadAccessEmpty);
+            CPPUNIT_TEST(testReadAccess);
+            CPPUNIT_TEST(testReadAccessCast);
+            CPPUNIT_TEST(testReadAccessWrongCast);
+            CPPUNIT_TEST(testReadAccessDelayed);
+            CPPUNIT_TEST(testReadAccessInterrupt);
+            CPPUNIT_TEST(testReleaseReadAccess);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testReadAccessEmpty();
-        void testReadAccess();
-        void testReadAccessCast();
-        void testReadAccessWrongCast();
-        void testReadAccessDelayed();
-        void testReadAccessInterrupt();
-        void testReleaseReadAccess();
+        public:
+            ReadAccessTest () {}
+            
+            void setUp() {}
+            void tearDown() {}
 
-    private:
-        void releaseDelayed(WriteAccess<>& access);
-        void readAccessInterrupt(DataContainer & container);
-        
-        Data* m_data;
-    };
+        protected:
+            void testReadAccessEmpty();
+            void testReadAccess();
+            void testReadAccessCast();
+            void testReadAccessWrongCast();
+            void testReadAccessDelayed();
+            void testReadAccessInterrupt();
+            void testReleaseReadAccess();
+
+        private:
+            void releaseDelayed(WriteAccess<>& access);
+            void readAccessInterrupt(DataContainer & container);
+            
+            Data* m_data;
+        };
+    }
 }
-
+    
 #endif // STROM_READACCESSTEST_H

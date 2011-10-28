@@ -20,33 +20,36 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class DataContainer;
-    
-    class DataContainerTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (DataContainerTest);
-        CPPUNIT_TEST (testDestroy);
-        CPPUNIT_TEST (testDestroyDelayed);
-        CPPUNIT_TEST (testComparison);
-        CPPUNIT_TEST (testEmpty);
-        CPPUNIT_TEST_SUITE_END ();
+        class DataContainer;
+        
+        class DataContainerTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (DataContainerTest);
+            CPPUNIT_TEST (testDestroy);
+            CPPUNIT_TEST (testDestroyDelayed);
+            CPPUNIT_TEST (testComparison);
+            CPPUNIT_TEST (testEmpty);
+            CPPUNIT_TEST_SUITE_END ();
 
-        public:
-            DataContainerTest() {}
-            
-            void setUp() {}
-            void tearDown() {}
+            public:
+                DataContainerTest() {}
+                
+                void setUp() {}
+                void tearDown() {}
 
-        protected:
-            void testDestroy();
-            void testDestroyDelayed();
-            void testComparison();
-            void testEmpty();
-        private:
-            void destroyDelayed(DataContainer & container);
-    };
+            protected:
+                void testDestroy();
+                void testDestroyDelayed();
+                void testComparison();
+                void testEmpty();
+            private:
+                void destroyDelayed(DataContainer & container);
+        };
+    }
 }
 
 #endif // STROM_DATACONTAINERTEST_H

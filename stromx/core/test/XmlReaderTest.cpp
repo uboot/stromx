@@ -23,34 +23,37 @@
 #include <stromx/core/XmlReader.h>
 #include <stromx/core/Factory.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::XmlReaderTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlReaderTest);
 
-namespace core
+namespace stromx
 {
-    void XmlReaderTest::setUp()
+    namespace core
     {
-        m_factory = new Factory;
-        m_factory->registerOperator(new TestOperator());
-        m_factory->registerData(new UInt32());
-    }
-    
-    void XmlReaderTest::testRead()
-    {
-        Stream* stream = XmlReader(*m_factory).read("stream.xml");
-    }
-    
-    void XmlReaderTest::testReadWrongFile()
-    {
-        CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("wrongfile.xml"), FileAccessFailed);
-    }
-    
-    void XmlReaderTest::testReadInvalidFile()
-    {
-        CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("invalid.xml"), FileAccessFailed);
-    }
+        void XmlReaderTest::setUp()
+        {
+            m_factory = new Factory;
+            m_factory->registerOperator(new TestOperator());
+            m_factory->registerData(new UInt32());
+        }
+        
+        void XmlReaderTest::testRead()
+        {
+            Stream* stream = XmlReader(*m_factory).read("stream.xml");
+        }
+        
+        void XmlReaderTest::testReadWrongFile()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("wrongfile.xml"), FileAccessFailed);
+        }
+        
+        void XmlReaderTest::testReadInvalidFile()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("invalid.xml"), FileAccessFailed);
+        }
 
-    void XmlReaderTest::tearDown()
-    {
-        delete m_factory;
+        void XmlReaderTest::tearDown()
+        {
+            delete m_factory;
+        }
     }
 }

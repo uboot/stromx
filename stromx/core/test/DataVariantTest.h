@@ -20,23 +20,26 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace core
+namespace stromx
 {
-    class DataVariantTest : public CPPUNIT_NS :: TestFixture
+    namespace core
     {
-        CPPUNIT_TEST_SUITE (DataVariantTest);
-        CPPUNIT_TEST (testIntTypes);
-        CPPUNIT_TEST (testImageTypes);
-        CPPUNIT_TEST_SUITE_END ();
+        class DataVariantTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (DataVariantTest);
+            CPPUNIT_TEST (testIntTypes);
+            CPPUNIT_TEST (testImageTypes);
+            CPPUNIT_TEST_SUITE_END ();
 
-        public:
-            void setUp() {}
-            void tearDown() {}
+            public:
+                void setUp() {}
+                void tearDown() {}
 
-        protected:
-            void testIntTypes();
-            void testImageTypes();
-    };
+            protected:
+                void testIntTypes();
+                void testImageTypes();
+        };
+    }
 }
 
 #endif // STROM_DATATYPETEST_H

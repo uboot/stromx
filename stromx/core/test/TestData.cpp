@@ -18,11 +18,14 @@
 
 #include "Config.h"
 
-namespace core
+namespace stromx
 {
-    bool TestData::wasDestructed = false;
-    
-    const std::string TestData::TYPE = "TestData";
-    const std::string TestData::PACKAGE = "TestPackage";
-    const Version TestData::VERSION = Version(0, 1);
+    namespace core
+    {
+        bool TestData::wasDestructed = false;
+        
+        const std::string TestData::TYPE = "TestData";
+        const std::string TestData::PACKAGE = "TestPackage";
+        const Version TestData::VERSION = Version(0, 1);
+    }
 }

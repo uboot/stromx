@@ -14,36 +14,20 @@
 *  limitations under the License.
 */
 
-#ifndef STROM_DATATEST_H
-#define STROM_DATATEST_H
-
-#include <cppunit/TestFixture.h>
-#include <cppunit/extensions/HelperMacros.h>
+#ifndef CORE_H
+#define CORE_H
 
 namespace stromx
 {
     namespace core
     {
-        class DataTest : public CPPUNIT_NS :: TestFixture
-        {
-            CPPUNIT_TEST_SUITE (DataTest);
-            CPPUNIT_TEST(testCastReference);
-            CPPUNIT_TEST(testCastPointer);
-            CPPUNIT_TEST_SUITE_END ();
-
-        public:
-            DataTest() {}
-            
-            void setUp() {}
-            void tearDown() {}
-
-        protected:
-            void testCastReference();
-            void testCastPointer();
-                
-        private:
-        };
+        class Registry;
     }
 }
 
-#endif // STROM_DATATEST_H
+extern "C"
+{
+    void registerCore(stromx::core::Registry& registry);
+}
+
+#endif // CORE_H

@@ -22,41 +22,44 @@
 
 #include <stromx/core/DataContainer.h>
 
-namespace core
+namespace stromx
 {
-    class Operator;
-    
-    namespace impl
+    namespace core
     {
-        class OutputNode;
-        class InputNode;
-    }
-    
-    class OutputNodeTest : public CPPUNIT_NS :: TestFixture
-    {
-        CPPUNIT_TEST_SUITE (OutputNodeTest);
-        CPPUNIT_TEST(testGetOutputData);
-        CPPUNIT_TEST(testAddConnectedInputs);
-        CPPUNIT_TEST(testRemoveConnectedInputs);
-        CPPUNIT_TEST_SUITE_END ();
-
-    public:
-        OutputNodeTest() : m_operatorWrapper(0), m_outputNode(0) {}
+        class Operator;
         
-        void setUp();
-        void tearDown();
+        namespace impl
+        {
+            class OutputNode;
+            class InputNode;
+        }
+        
+        class OutputNodeTest : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (OutputNodeTest);
+            CPPUNIT_TEST(testGetOutputData);
+            CPPUNIT_TEST(testAddConnectedInputs);
+            CPPUNIT_TEST(testRemoveConnectedInputs);
+            CPPUNIT_TEST_SUITE_END ();
 
-    protected:
-        void testGetOutputData();;
-        void testAddConnectedInputs();
-        void testRemoveConnectedInputs();
+        public:
+            OutputNodeTest() : m_operatorWrapper(0), m_outputNode(0) {}
             
-    private: 
-        Operator* m_operatorWrapper;
-        DataContainer m_container;
-        impl::OutputNode* m_outputNode;
-        impl::InputNode* m_inputNode;
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void testGetOutputData();;
+            void testAddConnectedInputs();
+            void testRemoveConnectedInputs();
+                
+        private: 
+            Operator* m_operatorWrapper;
+            DataContainer m_container;
+            impl::OutputNode* m_outputNode;
+            impl::InputNode* m_inputNode;
+        };
+    }
 }
 
 #endif // STROM_OUTPUTNODETEST_H

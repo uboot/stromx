@@ -23,44 +23,47 @@
 #include <cppunit/TestAssert.h> 
 #include <stromx/core/Exception.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (core::StreamTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::StreamTest);
 
-namespace core
+namespace stromx
 {
-    void StreamTest::setUp()
+    namespace core
     {
-        m_stream = new Stream();
-    }
+        void StreamTest::setUp()
+        {
+            m_stream = new Stream();
+        }
 
-    void StreamTest::tearDown()
-    {
-        delete m_stream;
-    }
-    
-    void StreamTest::testAddThread()
-    {
-//         CPPUNIT_ASSERT_THROW(m_stream->addThread(0),WrongArgument);
-//         
-//         Thread* const thr = new Thread();
-//         CPPUNIT_ASSERT_NO_THROW(m_stream->addThread(thr));
-//         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
-//         CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[0]);
-//         
-//         CPPUNIT_ASSERT_THROW(m_stream->addThread(thr),WrongArgument);
-    }
-    
-    void StreamTest::testRemoveThread()
-    {
-//         CPPUNIT_ASSERT_THROW(m_stream->removeThread(0),WrongArgument);
-//         
-//         Thread* const thr1 = new Thread();
-//         Thread* const thr2 = new Thread();
-//         m_stream->addThread(thr1);
-//        
-//         CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr2),WrongArgument);
-//         CPPUNIT_ASSERT_NO_THROW(m_stream->removeThread(thr1));
-//         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads().size()));
-//         
-//         delete thr2;
+        void StreamTest::tearDown()
+        {
+            delete m_stream;
+        }
+        
+        void StreamTest::testAddThread()
+        {
+    //         CPPUNIT_ASSERT_THROW(m_stream->addThread(0),WrongArgument);
+    //         
+    //         Thread* const thr = new Thread();
+    //         CPPUNIT_ASSERT_NO_THROW(m_stream->addThread(thr));
+    //         CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
+    //         CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[0]);
+    //         
+    //         CPPUNIT_ASSERT_THROW(m_stream->addThread(thr),WrongArgument);
+        }
+        
+        void StreamTest::testRemoveThread()
+        {
+    //         CPPUNIT_ASSERT_THROW(m_stream->removeThread(0),WrongArgument);
+    //         
+    //         Thread* const thr1 = new Thread();
+    //         Thread* const thr2 = new Thread();
+    //         m_stream->addThread(thr1);
+    //        
+    //         CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr2),WrongArgument);
+    //         CPPUNIT_ASSERT_NO_THROW(m_stream->removeThread(thr1));
+    //         CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads().size()));
+    //         
+    //         delete thr2;
+        }
     }
 }
