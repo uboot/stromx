@@ -14,27 +14,25 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Stream.h>
+#include <stromx/core/Parameter.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportStream()
-{    
-    enum_<Stream::Status>("StreamStatus")
-        .value("INACTIVE", Stream::INACTIVE)
-        .value("ACTIVE", Stream::ACTIVE)
-        .value("DEACTIVATING", Stream::DEACTIVATING)
+void exportParameter()
+{          
+    enum_<Parameter::AccessMode>("ParameterAccessMode")
+        .value("NO_ACCESS", Parameter::NO_ACCESS)
+        .value("NONE_READ", Parameter::NONE_READ)
+        .value("NONE_WRITE", Parameter::NONE_WRITE)
+        .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
+        .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
+        .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
         ;
         
-    class_<Stream>("Stream")
-        .def("name", &Stream::name, return_value_policy<copy_const_reference>())
-        .def("setName", &Stream::setName)
-        .def("status", &Stream::status)
-        .def("start", &Stream::start)
-        .def("stop", &Stream::stop)
-        .def("join", &Stream::join)
+    class_<Parameter, bases<Description> >("Parameter", no_init)
+        .def("accessMode", &Parameter::accessMode)
     ;
 }

@@ -138,7 +138,7 @@ namespace stromx
                 validateParameterId(id);
                 validateParameterType(id, value.variant());
                 
-                DataVariant parameterType = info()->parameter(id).type();
+                DataVariant parameterType = info()->parameter(id).variant();
                 if(parameterType.is(DataVariant::TRIGGER))
                 {
                     validateWriteAccess(id);
@@ -442,7 +442,7 @@ namespace stromx
             void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const core::DataVariant& type)
             {
                 const Parameter& param = info()->parameter(id);
-                if(! type.is(param.type()))
+                if(! type.is(param.variant()))
                     throw WrongParameterType(param, *this->info());
             }  
         }

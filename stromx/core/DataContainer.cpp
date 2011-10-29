@@ -24,7 +24,7 @@ namespace stromx
     namespace core
     {
         DataContainer::DataContainer(Data* const data)
-        : m_impl(new impl::DataContainerImpl(data))
+          : m_impl(new impl::DataContainerImpl(data))
         {
         }
         

@@ -20,6 +20,10 @@
 #include <stromx/core/Registry.h>
 
 void exportFactory();
+void exportData();
+void exportDataContainer();
+void exportDataVariant();
+void exportDescription();
 void exportOperator();
 void exportRegistry();
 void exportStream();
@@ -31,6 +35,8 @@ BOOST_PYTHON_MODULE(libcore)
     
     def("registerCore", registerCore);
     
+    exportDataVariant();
+    exportDescription();
     exportOperator();
     exportRegistry();
     exportFactory();

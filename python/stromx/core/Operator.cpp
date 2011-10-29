@@ -32,8 +32,14 @@ void exportOperator()
         
     class_<Operator>("Operator", no_init)
         .def("status", &Operator::status)
-        .def("name", &Operator::name, return_value_policy<boost::python::copy_const_reference>())
+        .def("name", &Operator::name, return_value_policy<copy_const_reference>())
         .def("setName", &Operator::setName)
         .def("initialize", &Operator::initialize)
+        .def("getOutputData", &Operator::getOutputData)
+        .def("setInputData", &Operator::setInputData)
+        .def("clearOutputData", &Operator::clearOutputData)
     ;
 }
+
+            
+

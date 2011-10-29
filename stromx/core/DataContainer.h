@@ -50,7 +50,6 @@ namespace stromx
             DataContainer() {}
             explicit DataContainer(core::Data*const data);
             
-            const DataVariant & type();
             const bool empty() const { return m_impl.get() == 0; }
             
         private:

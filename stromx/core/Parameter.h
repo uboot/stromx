@@ -23,7 +23,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of parameter */
+        /** \brief %Description of a parameter */
         class Parameter : public Description
         {
         public:
@@ -37,8 +37,8 @@ namespace stromx
                 ACTIVATED_WRITE
             };
             
-            Parameter(const unsigned int id, const DataVariant& type)
-            : Description(id, type),
+            Parameter(const unsigned int id, const DataVariant& variant)
+            : Description(id, variant),
                 m_access(NO_ACCESS)
             {}
             

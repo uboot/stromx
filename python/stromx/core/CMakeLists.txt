@@ -2,8 +2,13 @@ project(python_core)
 
 set(SOURCES
     Core.cpp
-    Operator.cpp
+    Data.cpp
+    DataContainer.cpp
+    DataVariant.cpp
+    Description.cpp
     Factory.cpp
+    Operator.cpp
+    Parameter.cpp
     Registry.cpp
     Stream.cpp
     Version.cpp

@@ -14,27 +14,18 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Stream.h>
+#include <stromx/core/Description.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportStream()
-{    
-    enum_<Stream::Status>("StreamStatus")
-        .value("INACTIVE", Stream::INACTIVE)
-        .value("ACTIVE", Stream::ACTIVE)
-        .value("DEACTIVATING", Stream::DEACTIVATING)
-        ;
-        
-    class_<Stream>("Stream")
-        .def("name", &Stream::name, return_value_policy<copy_const_reference>())
-        .def("setName", &Stream::setName)
-        .def("status", &Stream::status)
-        .def("start", &Stream::start)
-        .def("stop", &Stream::stop)
-        .def("join", &Stream::join)
+void exportDescription()
+{         
+    class_<Description>("Description", no_init)
+        .def("name", &Description::name, return_value_policy<copy_const_reference>())
+        .def("id", &Description::id)
+        .def("variant", &Description::variant, return_internal_reference<>())
     ;
 }
