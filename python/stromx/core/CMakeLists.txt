@@ -24,8 +24,8 @@ target_link_libraries(core
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-find_file(python_base_EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libcore.so)
+find_file(python_core_EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libcore.so)
 
-if(python_base_EXISTS)
+if(python_core_EXISTS)
     file(COPY ${CMAKE_CURRENT_BINARY_DIR}/libcore.so DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 endif()
