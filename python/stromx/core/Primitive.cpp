@@ -21,29 +21,30 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{   
+    template <class repr_t, class val_t>
+    void primitive(const char* name)
+    {
+        class_<val_t, bases<Data> >(name)
+            .def(init<>())
+            .def(init<repr_t>())
+            .def("get", &val_t::get)
+            .def("data_cast", &data_cast<val_t &>, return_internal_reference<1>())
+            .staticmethod("data_cast")
+        ;
+    }
+}
+
 void exportPrimitive()
 {
-    class_<Bool, bases<Data> >("Bool")
-        .def(init<>())
-        .def(init<bool>())
-        .def("get", &Bool::get)
-        .def("data_cast", &data_cast<Bool &>, return_internal_reference<1>())
-        .staticmethod("data_cast")
-    ;
-    
-    class_<Int8, bases<Data> >("Int8")
-        .def(init<>())
-        .def(init<int>())
-        .def("get", &Int8::get)
-        .def("data_cast", &data_cast<Int8 &>, return_internal_reference<1>())
-        .staticmethod("data_cast")
-    ;
-    
-    class_<UInt32, bases<Data> >("UInt32")
-        .def(init<>())
-        .def(init<unsigned int>())
-        .def("get", &UInt32::get)
-        .def("data_cast", &data_cast<UInt32 &>, return_internal_reference<1>())
-        .staticmethod("data_cast")
-    ;
+    primitive<bool, Bool>("Bool");
+    primitive<int, Int8>("Int8");
+    primitive<unsigned int, UInt8>("UInt8");
+    primitive<int, Int16>("Int16");
+    primitive<unsigned int, UInt16>("UInt16");
+    primitive<int, Int32>("Int32");
+    primitive<unsigned int, UInt32>("UInt32");
+    primitive<double, Float>("Float");
+    primitive<float, Double>("Double");
 }
