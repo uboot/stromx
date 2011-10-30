@@ -40,7 +40,8 @@ namespace stromx
             class SynchronizedOperatorKernel;
         }
         
-        /** \brief Abstract operator
+        /**
+         * \brief Abstract operator
          * 
          * Operators are the core elements of a stream. The have inputs and outputs which
          * can be connected to other operators of the same stream. Moreover, it is possible

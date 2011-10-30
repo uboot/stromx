@@ -25,16 +25,49 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief Meta-information about an operator */
+        /**
+         * \brief Meta-information about an operator
+         * 
+         * This class contains all the information how to use an operator without 
+         * looking at its API documentaion. This information reaches its final status
+         * only after Operator::initialize() is called.
+         */
         class OperatorInfo
         {
         public:
+            /** Returns the type. In general this is the name of the class of its implementation. */
             virtual const std::string& type() const = 0;
+            
+            /** Returns the package the operator belongs to */
             virtual const std::string& package() const = 0;
+            
+            /** Returns the version of the operator */
             virtual const Version& version() const = 0;
+            
+            /**
+             * Returns a list of the inputs of the operator. This list can
+             * change when Operator::initialize() is called.
+             */
             virtual const std::vector<const Description*>& inputs() const = 0;
+            
+            /**
+             * Returns a list of the outputs of the operator. This list can
+             * change when Operator::initialize() is called. After that it is
+             * constant.
+             */
             virtual const std::vector<const Description*>& outputs() const = 0;
+            
+            /**
+             * Returns a list of the parameters of the operator. This list can only
+             * change when Operator::initialize() is called. After that it is
+             * constant with exception of the properties (however, not their ID and data
+             * variant) of the single parameters.
+             */
             virtual const std::vector<const Parameter*>& parameters() const = 0;
+            
+            /**
+             * Returns the parameter description of the parameter \c id
+             */
             virtual const Parameter & parameter(const unsigned int id) const = 0;
         };
     }
