@@ -24,10 +24,12 @@ void exportData();
 void exportDataContainer();
 void exportDataVariant();
 void exportDescription();
+void exportException();
 void exportOperator();
+void exportPrimitive();
 void exportRegistry();
 void exportStream();
-void exportVersion();    
+void exportVersion();
 
 BOOST_PYTHON_MODULE(libcore)
 {
@@ -35,9 +37,13 @@ BOOST_PYTHON_MODULE(libcore)
     
     def("registerCore", registerCore);
     
+    exportData();
+    exportDataContainer();
     exportDataVariant();
     exportDescription();
+    exportException();
     exportOperator();
+    exportPrimitive();
     exportRegistry();
     exportFactory();
     exportStream();

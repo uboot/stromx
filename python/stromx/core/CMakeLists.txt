@@ -6,8 +6,10 @@ set(SOURCES
     DataContainer.cpp
     DataVariant.cpp
     Description.cpp
+    Exception.cpp
     Factory.cpp
     Operator.cpp
+    Primitive.cpp
     Parameter.cpp
     Registry.cpp
     Stream.cpp

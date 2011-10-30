@@ -59,7 +59,9 @@ namespace stromx
                 m_value = boost::lexical_cast<val_t>(data);
             }
             
-            operator repr_t() const { return m_value; }
+            const repr_t get() const {  return m_value; }
+            
+            operator repr_t() const { return get(); }
             
             static const Primitive MIN;
             static const Primitive MAX;
