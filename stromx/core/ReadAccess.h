@@ -39,7 +39,7 @@ namespace stromx
             {
             }
             
-            const data_t & operator()()
+            const data_t & get()
             {
                 try
                 {
@@ -50,6 +50,8 @@ namespace stromx
                     throw BadCast();
                 }
             }
+            
+            const data_t & operator()() { return get(); }
             
         private:
             ReadAccess();

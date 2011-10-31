@@ -49,7 +49,7 @@ find_package(Boost 1.36.0 COMPONENTS thread filesystem python)
 find_package(PythonLibs)
 
 if(Boost_FOUND AND PYTHON_INCLUDE_PATH)
-    set(BUILD_PYTHON true)
+    option(BUILD_PYTHON "Build Python wrapper" ON)
 endif()
 
 if(BUILD_PYTHON)

@@ -14,18 +14,17 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/DataVariant.h>
+#include <stromx/core/ReadAccess.h>
+#include <stromx/core/Data.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportDataVariant()
-{         
-    class_<DataVariant>("DataVariant", no_init)
-        .def_readonly("NONE", DataVariant::NONE)
-        .def("description", &DataVariant::description, return_value_policy<copy_const_reference>())
-        .def("is", &DataVariant::is)
+void exportReadAccess()
+{       
+    class_<ReadAccess<> >("ReadAccess", init<DataContainer>())
+        .def("get", &ReadAccess<>::get, return_internal_reference<>())
     ;
 }

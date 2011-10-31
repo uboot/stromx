@@ -1,11 +1,16 @@
+project(python_core)
+
 if(BUILD_CORE)
     add_subdirectory(core)
-
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    set (AVAILABLE_PACKAGES "\"core\"")
 endif()
 
 if(BUILD_BASE)
     add_subdirectory(base)
-
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    set (AVAILABLE_PACKAGES "\"core\", \"base\"")
 endif()
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/__init__.py.in"
+  "${PROJECT_BINARY_DIR}/__init__.py"
+)

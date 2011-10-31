@@ -11,9 +11,11 @@ set(SOURCES
     Operator.cpp
     Primitive.cpp
     Parameter.cpp
+    ReadAccess.cpp
     Registry.cpp
     Stream.cpp
     Version.cpp
+    WriteAccess.cpp
 )
 
 add_library(core SHARED ${SOURCES})

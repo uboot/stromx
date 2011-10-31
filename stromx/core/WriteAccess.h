@@ -39,7 +39,7 @@ namespace stromx
             {
             }
             
-            data_t & operator()()
+            data_t & get()
             {
                 try
                 {
@@ -50,6 +50,8 @@ namespace stromx
                     throw BadCast();
                 }
             }
+            
+            data_t & operator()() { return get(); }
             
         private:
             WriteAccess();
