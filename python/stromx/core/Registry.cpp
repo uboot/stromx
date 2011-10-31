@@ -23,18 +23,21 @@
 using namespace boost::python;
 using namespace stromx::core;
 
-struct RegistryWrap : Registry, wrapper<Registry>
+namespace
 {
-    void registerOperator(const OperatorKernel* const op)
+    struct RegistryWrap : Registry, wrapper<Registry>
     {
-        this->get_override("registerOperator")();
-    }
-    
-    void registerData(const Data* const data)
-    {
-        this->get_override("registerData")();
-    }
-};
+        void registerOperator(const OperatorKernel* const op)
+        {
+            this->get_override("registerOperator")();
+        }
+        
+        void registerData(const Data* const data)
+        {
+            this->get_override("registerData")();
+        }
+    };
+}
 
 void exportRegistry()
 {          

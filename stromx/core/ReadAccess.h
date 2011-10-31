@@ -35,11 +35,11 @@ namespace stromx
         {
         public:
             ReadAccess(DataContainer data)
-            : m_impl(new impl::ReadAccessImpl(data))
+              : m_impl(new impl::ReadAccessImpl(data))
             {
             }
             
-            const data_t & get()
+            const data_t & get() const
             {
                 try
                 {
@@ -51,7 +51,7 @@ namespace stromx
                 }
             }
             
-            const data_t & operator()() { return get(); }
+            const data_t & operator()() const { return get(); }
             
         private:
             ReadAccess();

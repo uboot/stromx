@@ -44,7 +44,7 @@ namespace stromx
             virtual const std::string serialize(const std::string & name, const std::string & path) const;
             virtual void deserialize(const std::string & data, const std::string & path);
             
-            const bool is(const DataVariant & t) const { return variant().is(t); }
+            const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }
             
         protected:
             Data() {} 

@@ -21,33 +21,36 @@
 using namespace boost::python;
 using namespace stromx::core;
 
-struct DataWrap : Data, wrapper<Data>
+namespace
 {
-    const Version & version() const
+    struct DataWrap : Data, wrapper<Data>
     {
-        return this->get_override("version")();
-    }
-    
-    const std::string & type() const
-    {
-        return this->get_override("type")();
-    }
-    
-    const std::string & package() const
-    {
-        return this->get_override("package")();
-    }
-    
-    const DataVariant & variant() const
-    {
-        return this->get_override("variant")();
-    }
-    
-    Data* const clone() const
-    {
-        return this->get_override("clone")();
-    }
-};
+        const Version & version() const
+        {
+            return this->get_override("version")();
+        }
+        
+        const std::string & type() const
+        {
+            return this->get_override("type")();
+        }
+        
+        const std::string & package() const
+        {
+            return this->get_override("package")();
+        }
+        
+        const DataVariant & variant() const
+        {
+            return this->get_override("variant")();
+        }
+        
+        Data* const clone() const
+        {
+            return this->get_override("clone")();
+        }
+    };
+}
 
 void exportData()
 {                 
@@ -56,6 +59,6 @@ void exportData()
         .def("type", pure_virtual(&Data::type), return_internal_reference<>())
         .def("package", pure_virtual(&Data::package), return_internal_reference<>())
         .def("variant", pure_virtual(&Data::variant), return_internal_reference<>())
-        .def("is", &Data::is)
+        .def("isVariant", &Data::isVariant)
     ;
 }

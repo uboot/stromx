@@ -65,7 +65,7 @@ namespace stromx
             
             const std::string & description() const { return m_description; }
             
-            virtual const bool is(const DataVariant& type) const;
+            virtual const bool isVariant(const DataVariant& type) const;
             
         protected:
             const unsigned int id() const { return m_id; }

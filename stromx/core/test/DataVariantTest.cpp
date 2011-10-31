@@ -2,15 +2,15 @@
  *  Copyright 2011 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
+ *  you may not use thisVariant file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  disVarianttributed under the License isVariant disVarianttributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
+ *  See the License for the specific language governing permisVariantsions and
  *  limitations under the License.
  */
 
@@ -31,30 +31,30 @@ namespace stromx
     {
         void DataVariantTest::testImageTypes()
         {
-            CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.is(DataVariant::IMAGE));
-            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::IMAGE));
-            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.is(DataVariant::RGB_IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.isVariant(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.isVariant(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.isVariant(DataVariant::RGB_IMAGE));
             
-            CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_IMAGE));
-            CPPUNIT_ASSERT(! DataVariant::IMAGE.is(DataVariant::RGB_24_IMAGE));
-            CPPUNIT_ASSERT(! DataVariant::RGB_IMAGE.is(DataVariant::RGB_24_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::IMAGE.isVariant(DataVariant::RGB_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::IMAGE.isVariant(DataVariant::RGB_24_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::RGB_IMAGE.isVariant(DataVariant::RGB_24_IMAGE));
             
-            CPPUNIT_ASSERT(DataVariant::MONO_IMAGE.is(DataVariant::IMAGE));
-            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::IMAGE));
-            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.is(DataVariant::MONO_IMAGE));
+            CPPUNIT_ASSERT(DataVariant::MONO_IMAGE.isVariant(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.isVariant(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.isVariant(DataVariant::MONO_IMAGE));
         }
 
         void DataVariantTest::testIntTypes()
         {
-            CPPUNIT_ASSERT(DataVariant::UINT.is(DataVariant::INT));
-            CPPUNIT_ASSERT(DataVariant::UINT_8.is(DataVariant::UINT));
-            CPPUNIT_ASSERT(DataVariant::UINT_16.is(DataVariant::UINT));
-            CPPUNIT_ASSERT(DataVariant::UINT_32.is(DataVariant::UINT));
+            CPPUNIT_ASSERT(DataVariant::UINT.isVariant(DataVariant::INT));
+            CPPUNIT_ASSERT(DataVariant::UINT_8.isVariant(DataVariant::UINT));
+            CPPUNIT_ASSERT(DataVariant::UINT_16.isVariant(DataVariant::UINT));
+            CPPUNIT_ASSERT(DataVariant::UINT_32.isVariant(DataVariant::UINT));
             
-            CPPUNIT_ASSERT(! DataVariant::INT.is(DataVariant::UINT));
-            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_8));
-            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_16));
-            CPPUNIT_ASSERT(! DataVariant::UINT.is(DataVariant::UINT_32));
+            CPPUNIT_ASSERT(! DataVariant::INT.isVariant(DataVariant::UINT));
+            CPPUNIT_ASSERT(! DataVariant::UINT.isVariant(DataVariant::UINT_8));
+            CPPUNIT_ASSERT(! DataVariant::UINT.isVariant(DataVariant::UINT_16));
+            CPPUNIT_ASSERT(! DataVariant::UINT.isVariant(DataVariant::UINT_32));
         }
     }
 }

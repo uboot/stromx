@@ -16,6 +16,7 @@
 
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataVariant.h>
+#include <stromx/core/Data.h>
 
 #include <boost/python.hpp>
 
@@ -24,7 +25,7 @@ using namespace stromx::core;
 
 void exportDataContainer()
 {       
-    class_<DataContainer>("DataContainer")
+    class_<DataContainer>("DataContainer", init<Data*>())
         .def("empty", &DataContainer::empty)
     ;
 }

@@ -26,6 +26,6 @@ void exportDataVariant()
     class_<DataVariant>("DataVariant", no_init)
         .def_readonly("NONE", DataVariant::NONE)
         .def("description", &DataVariant::description, return_value_policy<copy_const_reference>())
-        .def("is", &DataVariant::is)
+        .def("isVariant", &DataVariant::isVariant)
     ;
 }

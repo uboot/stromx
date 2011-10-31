@@ -39,7 +39,7 @@ namespace stromx
             {
             }
             
-            data_t & get()
+            data_t & get() const
             {
                 try
                 {
@@ -51,7 +51,7 @@ namespace stromx
                 }
             }
             
-            data_t & operator()() { return get(); }
+            data_t & operator()() const { return get(); }
             
         private:
             WriteAccess();

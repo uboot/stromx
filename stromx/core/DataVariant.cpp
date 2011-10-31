@@ -2,15 +2,15 @@
  *  Copyright 2011 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
+ *  you may not use thisVariant file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  disVarianttributed under the License isVariant disVarianttributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
+ *  See the License for the specific language governing permisVariantsions and
  *  limitations under the License.
  */
 
@@ -49,39 +49,39 @@ namespace stromx
         const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, PACKAGE_NAME, "RGB image 48-bit");
         const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, PACKAGE_NAME, "BGR image 48-bit");
             
-        const bool DataVariant::is(const core::DataVariant& type) const
+        const bool DataVariant::isVariant(const core::DataVariant& variant) const
         {
-            if(type.package() != package())
+            if(variant.package() != package())
                 return false;
             
-            if(type.id() == DATA_ID)
+            if(variant.id() == DATA_ID)
                 return true;
             
-            if(type.id() == id())
+            if(variant.id() == id())
                 return true;
             
-            switch(type.id())
+            switch(variant.id())
             {
             case UINT_ID:
-                return is(UINT_8) 
-                    || is(UINT_16) 
-                    || is(UINT_32);
+                return isVariant(UINT_8) 
+                    || isVariant(UINT_16) 
+                    || isVariant(UINT_32);
             case INT_ID:
-                return is(UINT)
-                    || is(INT_8) 
-                    || is(INT_16) 
-                    || is(INT_32);
+                return isVariant(UINT)
+                    || isVariant(INT_8) 
+                    || isVariant(INT_16) 
+                    || isVariant(INT_32);
             case IMAGE_ID:
-                return is(MONO_IMAGE)
-                    || is(RGB_IMAGE);
+                return isVariant(MONO_IMAGE)
+                    || isVariant(RGB_IMAGE);
             case MONO_IMAGE_ID:
-                return is(MONO_8_IMAGE)
-                    || is(MONO_16_IMAGE);
+                return isVariant(MONO_8_IMAGE)
+                    || isVariant(MONO_16_IMAGE);
             case RGB_IMAGE_ID:
-                return is(RGB_24_IMAGE)
-                    || is(BGR_24_IMAGE)
-                    || is(RGB_48_IMAGE)
-                    || is(BGR_48_IMAGE);
+                return isVariant(RGB_24_IMAGE)
+                    || isVariant(BGR_24_IMAGE)
+                    || isVariant(RGB_48_IMAGE)
+                    || isVariant(BGR_48_IMAGE);
             default:
                 return false;
             }
