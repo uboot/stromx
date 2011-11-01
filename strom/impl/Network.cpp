@@ -14,14 +14,12 @@
  *  limitations under the License.
  */
 
-
-#include "Network.h"
 #include "InputNode.h"
+#include "Network.h"
 #include "OutputNode.h"
-
-#include "../Operator.h"
 #include "../Exception.h"
 #include "../Node.h"
+#include "../Operator.h"
 
 namespace strom
 {
@@ -47,12 +45,12 @@ namespace strom
         }
         
         void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
-                              Operator* const targetOp, const unsigned int inputId)
+                              Operator* const targetOp, const unsigned int inputId) const
         { 
             getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
         }
 
-        void Network::disconnect(Operator* const targetOp, const unsigned int inputId)
+        void Network::disconnect(Operator* const targetOp, const unsigned int inputId) const
         {
             getInputNode(targetOp, inputId)->disconnect();
         }

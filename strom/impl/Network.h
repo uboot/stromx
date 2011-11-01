@@ -20,7 +20,6 @@
 
 #include <string>
 #include <vector>
-
 #include "../Node.h"
 
 namespace strom
@@ -47,8 +46,8 @@ namespace strom
             const std::vector<Operator*>& operators() const { return m_operators; }
                 
             void connect(Operator* const sourceOp, const unsigned int outputId, 
-                         Operator* const targetOp, const unsigned int inputId);
-            void disconnect(Operator* const targetOp, const unsigned int inputId);
+                         Operator* const targetOp, const unsigned int inputId) const;
+            void disconnect(Operator* const targetOp, const unsigned int inputId) const;
             
             void addOperator(Operator* const op);
             void removeOperator(Operator* const op);

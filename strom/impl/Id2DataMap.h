@@ -17,11 +17,9 @@
 #ifndef STROM_IMPL_ID2DATAMAP_H
 #define STROM_IMPL_ID2DATAMAP_H
 
-
-#include "../Description.h"
-
-#include <vector>
 #include <map>
+#include <vector>
+#include "../Description.h"
 
 namespace strom
 {
