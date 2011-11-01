@@ -19,6 +19,7 @@
 
 namespace strom
 {
+    /** \brief A version of an operator or data type */
     class Version
     {
     public:

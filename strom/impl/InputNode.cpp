@@ -34,7 +34,7 @@ namespace strom
         void InputNode::connect(OutputNode* const output)
         {
             if(m_source)
-                throw InvalidState("Input node has already been connected.");
+                throw WrongState("Input node has already been connected.");
             
             m_source = output;
             m_source->addConnectedInput(this);
@@ -43,7 +43,7 @@ namespace strom
         const OutputNode& InputNode::source() const
         {
             if(! m_source)
-                throw InvalidState("Input node is not connected.");
+                throw WrongState("Input node is not connected.");
             else
                 return *m_source;
         }
@@ -51,7 +51,7 @@ namespace strom
         void InputNode::setInputData()
         {
             if(! m_source)
-                throw InvalidState("Input node has not been connected.");
+                throw WrongState("Input node has not been connected.");
             
             DataContainer inputData = m_source->getOutputData();
             

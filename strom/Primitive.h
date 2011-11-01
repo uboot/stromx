@@ -31,6 +31,7 @@ namespace strom
     template<typename data_t>
     class NumericParameter;
     
+    /** \brief %Primitive data value */
     template <class repr_t, class val_t>
     class Primitive : public Data
     {

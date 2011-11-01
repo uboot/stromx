@@ -48,9 +48,10 @@ namespace math
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
+        virtual void execute(strom::DataProvider& provider);
+        
         virtual void setParameter(unsigned int id, const strom::Data& value);
         virtual const strom::Data& getParameter(const unsigned int id) const;
-        virtual void execute(strom::DataProvider& provider);
         
     private:
         static const std::vector<const strom::Description*> setupInputs();

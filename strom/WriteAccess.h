@@ -27,6 +27,7 @@ namespace strom
     class Data;
     class DataContainer;
     
+    /** \brief Write access to a data container */
     template<typename data_t = Data>
     class WriteAccess
     {

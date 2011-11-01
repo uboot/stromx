@@ -27,6 +27,7 @@ namespace strom
         class Id2DataMap;
     }
     
+    /** \brief A direct map of one ID to one data object */
     class Id2DataPair : public Id2DataMapper
     {
     public:

@@ -21,6 +21,7 @@ namespace strom
 {
     class Operator;
     
+    /** \brief Identifier of a node of an operator */
     class Node
     {
     public:

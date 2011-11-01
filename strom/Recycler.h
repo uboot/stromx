@@ -24,6 +24,7 @@ namespace strom
         class DataContainerImpl;
     }
     
+    /** \brief Abstract receiver of recycled objects */
     class Recycler
     {
     public:

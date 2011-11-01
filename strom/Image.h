@@ -22,6 +22,7 @@
 
 namespace strom
 {
+    /** \brief Abstract image */
     class Image : public Data
     {
     public:

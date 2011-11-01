@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief A composite expression of two ID-to-data mappers */
     class Id2DataComposite : public Id2DataMapper
     {
     private:

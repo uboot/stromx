@@ -23,6 +23,7 @@ namespace strom
 {
     class Data;
     
+    /** \brief %Description of a numeric parameter */
     template<typename data_t>
     class NumericParameter : public Parameter
     {

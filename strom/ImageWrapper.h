@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief Concrete image without memory management */
     class ImageWrapper : public Image
     {
     public:

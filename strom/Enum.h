@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief Value of an enumeration */
     class Enum : public UInt32
     {
     public:

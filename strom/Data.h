@@ -26,6 +26,7 @@ namespace strom
 {
     class Version;
     
+    /** \brief Abstract data object */
     class Data
     {
     public:
@@ -53,6 +54,19 @@ namespace strom
         try
         {
             return dynamic_cast<data_t>(data);
+        }
+        catch(std::bad_cast &)
+        {
+            throw BadCast();
+        }
+    }
+    
+    template<typename data_t>
+    data_t data_cast(const Data & data)
+    {
+        try
+        {
+            return dynamic_cast<const data_t>(data);
         }
         catch(std::bad_cast &)
         {

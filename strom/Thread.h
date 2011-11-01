@@ -29,6 +29,7 @@ namespace strom
         class ThreadImpl;
     }
     
+    /** \brief A thread which visits input nodes */
     class Thread
     {    
         friend class Stream;

@@ -24,6 +24,7 @@ namespace strom
 {
     class Data;
     
+    /** \brief Abstract %strom exception */
     class Exception : public std::exception
     {
     public:
@@ -38,6 +39,7 @@ namespace strom
         std::string m_message; 
     };  
     
+    /** \brief A wrong argument was passed to a function */
     class WrongArgument : public Exception
     {
     public:
@@ -46,6 +48,7 @@ namespace strom
         {}
     };  
     
+    /** \brief An object was identified by a wrong ID */
     class WrongId : public WrongArgument
     {
     public:
@@ -54,14 +57,16 @@ namespace strom
         {}
     };  
     
-    class InvalidState : public Exception
+    /** \brief The current state does not allow a specific operation */
+    class WrongState : public Exception
     {
     public:
-        InvalidState(const std::string & message = "InvalidState")
+        WrongState(const std::string & message = "WrongState")
           : Exception(message)
         {}
     };
     
+    /** \brief An internal, unexpected error occurred */
     class InternalError : public Exception
     {
     public:
@@ -70,6 +75,7 @@ namespace strom
         {}
     };
     
+    /** \brief The current thread was stopped */
     class Interrupt : public Exception
     {
     public:
@@ -78,6 +84,7 @@ namespace strom
         {}
     };
     
+    /** \brief An error occurred during file access */
     class FileAccessFailed : public Exception
     {
     public:
@@ -90,6 +97,7 @@ namespace strom
         const std::string & m_filename;
     };
     
+    /** \brief Not enought memory */
     class OutOfMemory : public Exception
     {
     public:
@@ -98,6 +106,7 @@ namespace strom
         {}
     };
     
+    /** \brief An operation timed out */
     class Timeout : public Exception
     {
     public:
@@ -106,6 +115,7 @@ namespace strom
         {}
     };
     
+    /** \brief An impossible cast was attempted */
     class BadCast : public Exception
     {
     public:
@@ -114,14 +124,7 @@ namespace strom
         {}
     };
     
-    class WrongState : public Exception
-    {
-    public:
-        WrongState(const std::string & message = "WrongState")
-          : Exception(message)
-        {}
-    };
-    
+    /** \brief %Data could not be serialized */
     class SerializationError : public Exception
     {
     public:
@@ -138,6 +141,7 @@ namespace strom
         const std::string& m_path;
     };
     
+    /** \brief %Data could not be deserialized */
     class DeserializationError : public Exception
     {
     public:

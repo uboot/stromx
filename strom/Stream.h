@@ -27,6 +27,7 @@ namespace strom
     class Registry;
     class Thread;
 	
+    /** \brief The core data processing pipeline of strom */
     class Stream
     {
     public:
@@ -47,11 +48,11 @@ namespace strom
         
         void addOperator(Operator* const op);
         void removeOperator(Operator* const op);
-        const Node source(const Operator* const targetOp, const unsigned int inputId) const;
         
         void connect(Operator* const sourceOp, const unsigned int outputId, 
                      Operator* const targetOp, const unsigned int inputId);
         void disconnect(Operator* const targetOp, const unsigned int inputId);
+        const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
         
         Thread* const addThread();
         void removeThread(Thread* const thr);

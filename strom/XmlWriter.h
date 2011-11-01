@@ -23,6 +23,7 @@ namespace strom
 {
     class Stream;
     
+    /** \brief Writer for XML encoded streams */
     class XmlWriter
     {
     public:

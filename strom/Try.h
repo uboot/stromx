@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief %Operator which renders ID-to-data maps optional  */
     class Try : public Id2DataMapper
     {
     public:

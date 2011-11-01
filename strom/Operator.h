@@ -38,6 +38,7 @@ namespace strom
         class SynchronizedOperatorKernel;
     }
     
+    /** \brief Abstract operator */
     class Operator
     {
         friend class FactoryTest;

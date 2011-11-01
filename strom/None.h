@@ -21,6 +21,7 @@
 
 namespace strom
 {
+    /** \brief Undefined and empty data object */
     class None : public Data
     {
     public:

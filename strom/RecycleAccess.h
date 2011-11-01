@@ -31,6 +31,7 @@ namespace strom
     class Data;
     class DataContainer;
     
+    /** \brief Recycle access to a data container */
     class RecycleAccess
     {
     public:
