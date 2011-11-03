@@ -23,6 +23,8 @@ The new operator kernel is declared in the header file <em>Add.h</em>:
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 
+using namespace stromx;
+
 namespace math
 {
     class Add : public core::OperatorKernel
@@ -285,6 +287,8 @@ The program which runs the stream is almost identical to the one in the previous
 #include "math/Add.h"
 
 #include <iostream>
+
+using namespace stromx;
 
 int main (int argc, char* argv[])
 {

@@ -39,6 +39,8 @@ As usual the program starts be including the required header files. Stromx uses 
 The first four headers are part of the core core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are part of the core base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
 \code
+using namespace stromx;
+
 int main (int argc, char* argv[])
 {
     core::Stream stream;

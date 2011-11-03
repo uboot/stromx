@@ -43,6 +43,8 @@ The same principle holds for the list of input node elements of a \em Thread ele
 Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the core library are required. On the other hand, the inclusion of the operator headers in the \em base library is not required anymore. The file base/Base.h is the only one which is needed from this library.
 
 \code
+using namespace stromx;
+
 int main (int argc, char* argv[])
 {
     core::Factory factory;  
