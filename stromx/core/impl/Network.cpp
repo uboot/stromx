@@ -14,14 +14,12 @@
  *  limitations under the License.
  */
 
-
-#include "Network.h"
 #include "InputNode.h"
+#include "Network.h"
 #include "OutputNode.h"
-
-#include "../Operator.h"
 #include "../Exception.h"
 #include "../Node.h"
+#include "../Operator.h"
 
 namespace stromx
 {

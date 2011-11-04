@@ -15,12 +15,10 @@
  */
 
 #include "InputNode.h"
-
+#include "OutputNode.h"
 #include "../DataContainer.h"
 #include "../Exception.h"
 #include "../Operator.h"
-
-#include "OutputNode.h"
 
 namespace stromx
 {

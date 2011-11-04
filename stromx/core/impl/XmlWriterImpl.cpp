@@ -105,7 +105,7 @@ namespace stromx
             void XmlWriterImpl::createThreads(const std::vector<Thread*> threads)
             {
                 //Add Thread branches (tree structure: Stream:Thread)
-                //Processed for each thread belonging to the core object (multiple entries for core possible)
+                //Processed for each thread belonging to the strom object (multiple entries for strom possible)
                 for(std::vector<Thread*>::const_iterator iter_thr = threads.begin();
                         iter_thr != threads.end();
                         ++iter_thr)
@@ -126,7 +126,7 @@ namespace stromx
             
             void XmlWriterImpl::createParameters(const Operator* const currOp, DOMElement* const opElement)
             {
-                //Add parameter branches (tree structure: core:operator:parameter)
+                //Add parameter branches (tree structure: strom:operator:parameter)
                 //Processed for each parameter belonging to current operator currOp (multiple entries for each operator possible)
                 for(std::vector<const Parameter*>::const_iterator iter_par = currOp->info()->parameters().begin();
                             iter_par != currOp->info()->parameters().end();
@@ -152,15 +152,22 @@ namespace stromx
                 DOMElement* dataElement = m_doc->createElement(Str2Xml("Data"));
                 parElement->appendChild(dataElement);
                 
-                //Create attribute type of current parameter param (one for each parameter possible)
+                //Create attribute type of data (one for each data possible)
                 DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
                 typeAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).type().c_str()));
                 dataElement->setAttributeNode(typeAttr);
                 
-                //Create attribute package of current parameter param (one for each parameter possible)
+                //Create attribute package of data (one for each data possible)
                 DOMAttr* packageAttr = m_doc->createAttribute(Str2Xml("package"));
                 packageAttr->setValue(Str2Xml(currOp->getParameter(currPar->id()).package().c_str()));
                 dataElement->setAttributeNode(packageAttr);
+                
+                //Create attribute version of data (one for each data possible)
+                DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                std::string str1 = boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().major()) + 
+                                    "." + boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().minor());
+                verAttr->setValue(Str2Xml(str1.c_str()));
+                dataElement->setAttributeNode(verAttr);
                 
                 //Create value of current parameter param (one for each parameter possible)
                 //First, create unique input parameter name for function Data::serialize()
@@ -171,7 +178,7 @@ namespace stromx
                 dataElement->appendChild(value);
             }
             
-            void XmlWriterImpl::createInputs(const core::Operator*const currOp, DOMElement*const opElement)
+            void XmlWriterImpl::createInputs(const Operator*const currOp, DOMElement*const opElement)
             {
                 for(std::vector<const Description*>::const_iterator iter_in = currOp->info()->inputs().begin();
                     iter_in != currOp->info()->inputs().end();
@@ -210,13 +217,13 @@ namespace stromx
             
             void XmlWriterImpl::createOperators(const std::vector<Operator*> operators)
             {
-                //Add operator branches (tree structure: core:operator)
-                //Processed for each operator belonging to the core object (multiple entries for core possible)
+                //Add operator branches (tree structure: strom:operator)
+                //Processed for each operator belonging to the strom object (multiple entries for strom possible)
                 for(std::vector<Operator*>::const_iterator iter_op = operators.begin();
                     iter_op != operators.end();
                     ++iter_op)
                 {
-                    //Create current operator entry op being child of core (one for each operator possible)
+                    //Create current operator entry op being child of strom (one for each operator possible)
                     DOMElement* opElement = m_doc->createElement(Str2Xml("Operator"));
                     m_strElement->appendChild(opElement);
                     

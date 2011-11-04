@@ -157,7 +157,7 @@ namespace stromx
         }
         
         void Stream::connect(Operator* const sourceOp, const unsigned int outputId,
-                            Operator* const targetOp, const unsigned int inputId)
+                            Operator* const targetOp, const unsigned int inputId) const
         {
             if (m_status != INACTIVE)
             {
@@ -167,7 +167,7 @@ namespace stromx
             m_network->connect(sourceOp, outputId, targetOp, inputId);
         }
 
-        void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
+        void Stream::disconnect(Operator* const targetOp, const unsigned int inputId) const
         {
             if (m_status != INACTIVE)
             {
