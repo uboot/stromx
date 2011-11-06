@@ -27,7 +27,6 @@ namespace stromx
     namespace core
     {
         class Data;
-        class DataContainer;
         
         /** \brief Read access to a data container */
         template<typename data_t = Data>

@@ -32,7 +32,7 @@ void exportFactory()
     class_<Factory, bases<Registry> >("Factory")
         .def("registerOperator", &Factory::registerOperator)
         .def("registerData", &Factory::registerData)
-        .def("newOperator", reinterpret_cast<newOperatorType>(&Factory::newOperator), return_value_policy<manage_new_object>())
-        .def("newData", reinterpret_cast<newDataType>(&Factory::newData), return_value_policy<manage_new_object>())
+        .def("newOperator", reinterpret_cast<newOperatorType>(&Factory::newOperator), return_internal_reference<>())
+        .def("newData", reinterpret_cast<newDataType>(&Factory::newData), return_internal_reference<>())
     ;
 }
