@@ -18,14 +18,37 @@
 #include <stromx/core/DataVariant.h>
 #include <stromx/core/Data.h>
 
+#include <auto_ptr.h>
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{
+    class DataContainerWrap : public DataContainer
+    {
+    public:
+        DataContainerWrap(std::auto_ptr<Data> data)
+          : DataContainer(data.get())
+        {
+            data.release();
+        } 
+    };
+    
+    DataContainerWrap* allocate(std::auto_ptr<Data> data)
+    {
+        return new DataContainerWrap(data);
+    }
+}
+
+
 void exportDataContainer()
 {       
-    class_<DataContainer>("DataContainer", init<Data*>())
-        .def("empty", &DataContainer::empty)
+    class_<DataContainerWrap>("DataContainer", no_init)
+        .def("__init__", make_constructor(&allocate))
+        .def("empty", &DataContainerWrap::empty)
     ;
+    
+    implicitly_convertible<DataContainerWrap, DataContainer>();
 }

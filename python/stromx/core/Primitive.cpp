@@ -23,16 +23,28 @@ using namespace stromx::core;
 
 namespace
 {   
-    template <class repr_t, class val_t>
+    template <class repr_t, class primitive_t>
+    std::auto_ptr<primitive_t> allocate(const repr_t value)
+    {
+        return std::auto_ptr<primitive_t>(new primitive_t(value));
+    }
+    
+    template <class primitive_t>
+    std::auto_ptr<primitive_t> allocate()
+    {
+        return std::auto_ptr<primitive_t>(new primitive_t());
+    }
+    
+    template <class repr_t, class primitive_t>
     void primitive(const char* name)
     {
-        class_<val_t, bases<Data> >(name)
-            .def(init<>())
-            .def(init<repr_t>())
-            .def("get", &val_t::get)
-            .def("data_cast", &data_cast<val_t &>, return_internal_reference<1>())
-            .staticmethod("data_cast")
+        class_<primitive_t, bases<Data>, std::auto_ptr<primitive_t> >(name, no_init)
+            .def("__init__", make_constructor(&allocate<primitive_t>))
+            .def("__init__", make_constructor(&allocate<repr_t, primitive_t>))
+            .def("get", &primitive_t::get)
         ;
+        
+        implicitly_convertible< std::auto_ptr<primitive_t>, std::auto_ptr<Data> >();
     }
 }
 

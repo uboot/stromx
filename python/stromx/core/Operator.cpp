@@ -30,7 +30,7 @@ void exportOperator()
         .value("EXECUTING", Operator::EXECUTING)
         ;
         
-    class_<Operator>("Operator", no_init)
+    class_<Operator, std::auto_ptr<Operator> >("Operator", no_init)
         .def("status", &Operator::status)
         .def("name", &Operator::name, return_value_policy<copy_const_reference>())
         .def("setName", &Operator::setName)
