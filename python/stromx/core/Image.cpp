@@ -133,6 +133,6 @@ void exportImage()
         .def("height", pure_virtual(&Image::height))
         .def("stride", pure_virtual(&Image::stride))
         .def("pixelSize", pure_virtual(&Image::pixelSize))
-        .def("data", pure_virtual(reinterpret_cast<unsigned int (Image::*)()>(static_cast<uint8_t* const(Image::*)()>(&Image::data))))
+        .def("_data", pure_virtual(reinterpret_cast<unsigned int (Image::*)()>(static_cast<uint8_t* const(Image::*)()>(&Image::data))))
     ;
 }

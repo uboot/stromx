@@ -15,3 +15,13 @@
 #
 
 from libcore import *
+
+from ctypes import pythonapi
+from ctypes import py_object
+
+def dataToPyBuffer(self):
+    f = pythonapi.PyBuffer_FromMemory
+    f.restype = py_object
+    return pythonapi.PyBuffer_FromMemory(self._data(), self.size())
+   
+Image.data = dataToPyBuffer

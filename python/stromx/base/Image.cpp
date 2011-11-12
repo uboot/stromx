@@ -17,6 +17,7 @@
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataVariant.h>
 #include <stromx/core/Data.h>
+#include <stromx/core/Image.h>
 
 #include <stromx/base/Image.h>
 
@@ -27,17 +28,23 @@ using namespace boost::python;
 using namespace stromx::core;
 
 namespace
-{   
-    std::auto_ptr<stromx::base::Image> allocate(const std::string & filename)
+{  
+    std::auto_ptr<stromx::base::Image> allocateFromDimension(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
+    {
+        return std::auto_ptr<stromx::base::Image>(new stromx::base::Image(width, height, pixelType));
+    }
+    
+    std::auto_ptr<stromx::base::Image> allocateFromFile(const std::string & filename)
     {
         return std::auto_ptr<stromx::base::Image>(new stromx::base::Image(filename));
-    }
+    } 
 }
 
 void exportImage()
 {
     class_<stromx::base::Image, bases<Data, Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
-        .def("__init__", make_constructor(&allocate))
+        .def("__init__", make_constructor(&allocateFromFile))
+        .def("__init__", make_constructor(&allocateFromDimension))
      ;
      
     implicitly_convertible< std::auto_ptr<stromx::base::Image>, std::auto_ptr<Data> >();
