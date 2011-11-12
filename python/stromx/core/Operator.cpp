@@ -15,6 +15,7 @@
 */
 
 #include <stromx/core/Operator.h>
+#include <stromx/core/Data.h>
 
 #include <boost/python.hpp>
 
@@ -48,6 +49,8 @@ void exportOperator()
         .def("name", &Operator::name, return_value_policy<copy_const_reference>())
         .def("setName", &Operator::setName)
         .def("initialize", &Operator::initialize)
+        .def("getParameter", static_cast<const Data& (Operator::*)(const unsigned int) const>(&Operator::getParameter), return_internal_reference<>())
+        .def("setParameter", &Operator::setParameter)
         .def("getOutputData", &Operator::getOutputData)
         .def("setInputData", &Operator::setInputData)
         .def("clearOutputData", &Operator::clearOutputData)

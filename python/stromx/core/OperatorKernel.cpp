@@ -41,17 +41,7 @@ namespace
       
 void exportOperatorKernel()
 {      
-    stromx::python::exportConstPtrVector<Description>("DescriptionVector");
-    stromx::python::exportConstPtrVector<Parameter>("ParameterVector");
-      
-    class_<OperatorKernelWrap, boost::noncopyable>("OperatorKernel", no_init)
-        .def("type", &OperatorKernelWrap::type, return_value_policy<copy_const_reference>())
-        .def("package", &OperatorKernelWrap::package, return_value_policy<copy_const_reference>())
-        .def("version", &OperatorKernelWrap::version, return_internal_reference<>())
-        .def("inputs", &OperatorKernelWrap::inputs, return_internal_reference<>())
-        .def("outputs", &OperatorKernelWrap::outputs, return_internal_reference<>())
-        .def("parameters", &OperatorKernelWrap::parameters, return_internal_reference<>())
-        .def("parameter", static_cast<const Parameter &(OperatorKernelWrap::*)(const unsigned int) const>(&OperatorKernelWrap::parameter), return_internal_reference<>())
+    class_<OperatorKernelWrap, bases<OperatorInfo>, boost::noncopyable>("OperatorKernel", no_init)
     ;
 }
 

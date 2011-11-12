@@ -10,6 +10,7 @@ set(SOURCES
     Factory.cpp
     Image.cpp
     Operator.cpp
+    OperatorInfo.cpp
     OperatorKernel.cpp
     Primitive.cpp
     Parameter.cpp

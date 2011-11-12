@@ -41,7 +41,6 @@ namespace stromx
             ;
             
             implicitly_convertible< std::auto_ptr<operator_t>, std::auto_ptr<OperatorKernel> >();
-            implicitly_convertible< std::auto_ptr<operator_t>, std::auto_ptr<OperatorInfo> >();
         }
     }
 }
