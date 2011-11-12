@@ -38,17 +38,17 @@ namespace stromx
         
         void XmlReaderTest::testRead()
         {
-            Stream* stream = XmlReader(*m_factory).read("stream.xml");
+            Stream* stream = XmlReader().read("stream.xml", *m_factory);
         }
         
         void XmlReaderTest::testReadWrongFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("wrongfile.xml"), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().read("wrongfile.xml", *m_factory), FileAccessFailed);
         }
         
         void XmlReaderTest::testReadInvalidFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader(*m_factory).read("invalid.xml"), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().read("invalid.xml", *m_factory), FileAccessFailed);
         }
 
         void XmlReaderTest::tearDown()

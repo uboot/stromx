@@ -26,6 +26,7 @@ void exportDataVariant();
 void exportDescription();
 void exportException();
 void exportImage();
+void exportNode();
 void exportOperator();
 void exportOperatorInfo();
 void exportOperatorKernel();
@@ -36,6 +37,8 @@ void exportRegistry();
 void exportStream();
 void exportVersion();
 void exportWriteAccess();
+void exportXmlReader();
+void exportXmlWriter();
 
 BOOST_PYTHON_MODULE(libcore)
 {
@@ -49,6 +52,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportDescription();
     exportException();
     exportImage();
+    exportNode();
     exportOperator();
     exportOperatorInfo();
     exportOperatorKernel();
@@ -60,4 +64,6 @@ BOOST_PYTHON_MODULE(libcore)
     exportStream();
     exportVersion();    
     exportWriteAccess();
+    exportXmlReader();
+    exportXmlWriter();
 }

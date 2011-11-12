@@ -30,14 +30,7 @@ namespace stromx
         class XmlReader
         {
         public:
-            XmlReader(const Factory& factory)
-            : m_factory(factory) 
-            {}
-            
-            Stream* const read(const std::string & filename) const;
-            
-        private:
-            const Factory& m_factory;
+            Stream* const read(const std::string & filename, const Factory& factory) const;
         };
     }
 }

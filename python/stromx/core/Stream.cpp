@@ -20,22 +20,17 @@
 #include <stromx/core/Operator.h>
 
 #include <boost/python.hpp>
-#include <vector>
 
 using namespace boost::python;
 using namespace stromx::core;
 
 namespace
 {
-    class StreamWrap : public Stream
+    void addOperatorWrap(Stream& stream, std::auto_ptr<Operator> op)
     {
-    public:
-        void addOperator(std::auto_ptr<Operator> op)
-        {
-            Stream::addOperator(op.get());
-            op.release();
-        }
-    };
+        stream.addOperator(op.get());
+        op.release();
+    }
 }
 
 void exportStream()
@@ -48,15 +43,18 @@ void exportStream()
         .value("DEACTIVATING", Stream::DEACTIVATING)
     ;
         
-    class_<StreamWrap>("Stream")
-        .def("name", &StreamWrap::name, return_value_policy<copy_const_reference>())
-        .def("setName", &StreamWrap::setName)
-        .def("status", &StreamWrap::status)
-        .def("operators", &StreamWrap::operators, return_internal_reference<>())
-        .def("addOperator", &StreamWrap::addOperator)
-        .def("removeOperator", &StreamWrap::removeOperator)
-        .def("start", &StreamWrap::start)
-        .def("stop", &StreamWrap::stop)
-        .def("join", &StreamWrap::join)
+    class_<Stream>("Stream")
+        .def("name", &Stream::name, return_value_policy<copy_const_reference>())
+        .def("setName", &Stream::setName)
+        .def("status", &Stream::status)
+        .def("operators", &Stream::operators, return_internal_reference<>())
+        .def("addOperator", &addOperatorWrap)
+        .def("removeOperator", &Stream::removeOperator)
+        .def("connect", &Stream::connect)
+        .def("disconnect", &Stream::disconnect)
+        .def("connectionSource", &Stream::connectionSource)
+        .def("start", &Stream::start)
+        .def("stop", &Stream::stop)
+        .def("join", &Stream::join)
     ;
 }

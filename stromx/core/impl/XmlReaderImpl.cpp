@@ -215,8 +215,8 @@ namespace stromx
             }  
             
             XmlReaderImpl::XmlReaderImpl(const core::Factory& factory)
-            : m_factory(factory),
-            m_stream(0)
+              : m_factory(factory),
+                m_stream(0)
             {
                 try
                 {

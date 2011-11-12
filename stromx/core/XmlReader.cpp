@@ -21,9 +21,9 @@ namespace stromx
 {
     namespace core
     {
-        Stream*const XmlReader::read(const std::string& filename) const
+        Stream*const XmlReader::read(const std::string& filename, const Factory& factory) const
         {
-            impl::XmlReaderImpl impl(m_factory);
+            impl::XmlReaderImpl impl(factory);
             
             return impl.read(filename);
         }

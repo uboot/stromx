@@ -14,6 +14,8 @@
 *  limitations under the License.
 */
 
+#include "ExportVector.h"
+
 #include <stromx/core/Operator.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Factory.h>
@@ -27,31 +29,27 @@ using namespace stromx::core;
 
 namespace
 {
-    class FactoryWrap : public Factory
+    std::auto_ptr<Operator> newOperatorWrap(const Factory & factory, const std::string & package, const std::string & name)
     {
-    public:
-        virtual std::auto_ptr<Operator> newOperatorWrap(const std::string & package, const std::string & name) const
-        {
-            return std::auto_ptr<Operator>(newOperator(package, name));
-        }
+        return std::auto_ptr<Operator>(factory.newOperator(package, name));
+    }
         
-        virtual std::auto_ptr<Data> newDataWrap(const std::string & package, const std::string & name) const
-        {
-            return std::auto_ptr<Data>(newData(package, name));
-        }
-    };  
+    std::auto_ptr<Data> newDataWrap(const Factory & factory, const std::string & package, const std::string & name)
+    {
+        return std::auto_ptr<Data>(factory.newData(package, name));
+    } 
 }
 
 
 void exportFactory()
 {          
-    typedef Operator* (Factory::*newOperatorType)(const std::string & package, const std::string & name) const; 
-    typedef Data* (Factory::*newDataType)(const std::string & package, const std::string & name) const; 
+    stromx::python::exportConstPtrVector<OperatorKernel>("OperatorKernelVector");
     
-    class_<FactoryWrap, bases<Registry> >("Factory")
-        .def("registerOperator", &FactoryWrap::registerOperator)
-        .def("registerData", &FactoryWrap::registerData)
-        .def("newOperator", &FactoryWrap::newOperatorWrap)
-        .def("newData", &FactoryWrap::newDataWrap)
+    class_<Factory, bases<Registry> >("Factory")
+        .def("registerOperator", &Factory::registerOperator)
+        .def("registerData", &Factory::registerData)
+        .def("newOperator", &newOperatorWrap)
+        .def("newData", &newDataWrap)
+        .def("availableOperators", &Factory::availableOperators, return_internal_reference<>())
     ;
 }

@@ -53,6 +53,7 @@ namespace stromx
             };
             
             Trigger();
+            Trigger(const Trigger & op) : OperatorKernel(op) {}
             
             virtual OperatorKernel* const clone() const { return new Trigger; }
             virtual void setParameter(unsigned int id, const core::Data& value);

@@ -9,6 +9,7 @@ set(SOURCES
     Exception.cpp
     Factory.cpp
     Image.cpp
+    Node.cpp
     Operator.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp
@@ -19,6 +20,8 @@ set(SOURCES
     Stream.cpp
     Version.cpp
     WriteAccess.cpp
+    XmlReader.cpp
+    XmlWriter.cpp
 )
 
 add_library(core SHARED ${SOURCES})

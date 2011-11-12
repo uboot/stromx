@@ -35,7 +35,7 @@ int main (int argc, char* argv[])
     registerCore(factory);
     registerBase(factory);
     
-    core::Stream* stream = core::XmlReader(factory).read("file.xml");
+    core::Stream* stream = core::XmlReader().read("file.xml", factory);
     
     stream->start();
     
