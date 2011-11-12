@@ -27,7 +27,7 @@ void exportDescription();
 void exportException();
 void exportImage();
 void exportOperator();
-void exportOperatorInfo();
+void exportOperatorKernel();
 void exportPrimitive();
 void exportReadAccess();
 void exportRegistry();
@@ -48,7 +48,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportException();
     exportImage();
     exportOperator();
-    exportOperatorInfo();
+    exportOperatorKernel();
     exportPrimitive();
     exportReadAccess();
     exportRegistry();

@@ -36,7 +36,7 @@ namespace stromx
         template <class operator_t>
         void exportOperatorKernel(const char* const name)
         {
-            class_<operator_t, bases<OperatorKernel> >(name, no_init)
+            class_<operator_t, bases<OperatorKernel>, std::auto_ptr<operator_t> >(name, no_init)
                 .def("__init__", make_constructor(&allocate<operator_t>))
             ;
             

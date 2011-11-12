@@ -24,17 +24,31 @@ namespace stromx
     namespace python
     {
         template <class T>
-        typename std::vector<T>::reference getItem(std::vector<T> v, typename std::vector<T>::size_type i)
+        T* getConstItem(std::vector<const T*> v, typename std::vector<const T*>::size_type i)
+        {
+            return const_cast<T *>(v.at(i));
+        }
+        
+        template <class T>
+        void exportConstPtrVector(const char* const name)
+        {
+            class_< std::vector<const T*> >(name, no_init)
+                .def("__len__", &std::vector<const T*>::size)
+                .def("__getitem__", &getConstItem<T>, return_internal_reference<>())
+            ;
+        }
+        template <class T>
+        T* getItem(std::vector<T*> v, typename std::vector<T*>::size_type i)
         {
             return v.at(i);
         }
         
         template <class T>
-        void exportVector(const char* const name)
+        void exportPtrVector(const char* const name)
         {
-            class_< std::vector<T> >(name, no_init)
-                .def("__len__", &std::vector<T>::size)
-                .def("__getitem__", &getItem<T>, return_value_policy<copy_non_const_reference>())
+            class_< std::vector<T*> >(name, no_init)
+                .def("__len__", &std::vector<T*>::size)
+                .def("__getitem__", &getItem<T>, return_internal_reference<>())
             ;
         }
     }

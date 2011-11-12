@@ -90,7 +90,8 @@ namespace stromx
 
             /**
              * Returns a list of the inputs of the operator. This list can
-             * change when OperatorKernel::initialize() is called.
+             * change when OperatorKernel::initialize() is called. After that it is
+             * constant.
              */
             const std::vector<const Description*>& inputs() const { return m_inputs; }
             

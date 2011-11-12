@@ -14,4 +14,6 @@
 #  limitations under the License.
 #
 
+import stromx.core
+
 from libbase import *
