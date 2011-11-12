@@ -128,8 +128,8 @@ namespace stromx
             {
                 //Add parameter branches (tree structure: strom:operator:parameter)
                 //Processed for each parameter belonging to current operator currOp (multiple entries for each operator possible)
-                for(std::vector<const Parameter*>::const_iterator iter_par = currOp->info()->parameters().begin();
-                            iter_par != currOp->info()->parameters().end();
+                for(std::vector<const Parameter*>::const_iterator iter_par = currOp->info().parameters().begin();
+                            iter_par != currOp->info().parameters().end();
                             ++iter_par)
                 {
                     //Create current parameter entry param being child of current operator op (one for each parameter possible)
@@ -180,8 +180,8 @@ namespace stromx
             
             void XmlWriterImpl::createInputs(const Operator*const currOp, DOMElement*const opElement)
             {
-                for(std::vector<const Description*>::const_iterator iter_in = currOp->info()->inputs().begin();
-                    iter_in != currOp->info()->inputs().end();
+                for(std::vector<const Description*>::const_iterator iter_in = currOp->info().inputs().begin();
+                    iter_in != currOp->info().inputs().end();
                     ++iter_in)
                 {
                     //Get the source node
@@ -234,12 +234,12 @@ namespace stromx
                     
                     //Create attribute package of current operator op (one for each operator possible)
                     DOMAttr* packAttr = m_doc->createAttribute(Str2Xml("package"));
-                    packAttr->setValue(Str2Xml((*iter_op)->info()->package().c_str()));
+                    packAttr->setValue(Str2Xml((*iter_op)->info().package().c_str()));
                     opElement->setAttributeNode(packAttr);
                     
                     //Create attribute type of current operator op (one for each operator possible)
                     DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
-                    typeAttr->setValue(Str2Xml((*iter_op)->info()->type().c_str()));
+                    typeAttr->setValue(Str2Xml((*iter_op)->info().type().c_str()));
                     opElement->setAttributeNode(typeAttr);
                     
                     //Create attribute name of current operator op (one for each operator possible)
@@ -249,8 +249,8 @@ namespace stromx
                     
                     //Create attribute version of current operator op (one for each operator possible)
                     DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                    std::string str = boost::lexical_cast<std::string>((*iter_op)->info()->version().major()) + 
-                                    "." + boost::lexical_cast<std::string>((*iter_op)->info()->version().minor());
+                    std::string str = boost::lexical_cast<std::string>((*iter_op)->info().version().major()) + 
+                                    "." + boost::lexical_cast<std::string>((*iter_op)->info().version().minor());
                     verAttr->setValue(Str2Xml(str.c_str()));
                     opElement->setAttributeNode(verAttr);
                     

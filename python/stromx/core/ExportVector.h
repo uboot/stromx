@@ -14,29 +14,28 @@
 *  limitations under the License.
 */
 
-#include "../core/ExportOperatorKernel.h"
-
 #include <boost/python.hpp>
+#include <vector>
 
-#include <stromx/core/Registry.h>
-#include <stromx/base/Base.h>
-#include <stromx/base/ConstImage.h>
-#include <stromx/base/AdjustRgbChannels.h>
-#include <stromx/base/Camera.h>
-
-void exportImage();
-
-using namespace stromx::core;
 using namespace boost::python;
-using namespace stromx::base;
-    
-BOOST_PYTHON_MODULE(libbase)
+
+namespace stromx
 {
-    def("registerBase", registerBase);
-    
-    exportImage();
-    
-    stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
-    stromx::python::exportOperatorKernel<AdjustRgbChannels>("AdjustRgbChannels");
-    stromx::python::exportOperatorKernel<Camera>("Camera");
+    namespace python
+    {
+        template <class T>
+        typename std::vector<T>::reference getItem(std::vector<T> v, typename std::vector<T>::size_type i)
+        {
+            return v.at(i);
+        }
+        
+        template <class T>
+        void exportVector(const char* const name)
+        {
+            class_< std::vector<T> >(name, no_init)
+                .def("__len__", &std::vector<T>::size)
+                .def("__getitem__", &getItem<T>, return_value_policy<copy_non_const_reference>())
+            ;
+        }
+    }
 }

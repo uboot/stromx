@@ -21,6 +21,16 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{
+    std::auto_ptr<Operator> allocate(std::auto_ptr<OperatorKernel> kernel)
+    {
+        std::auto_ptr<Operator> op(new Operator(kernel.get()));
+        kernel.release();
+        return op;
+    }
+}
+      
 void exportOperator()
 {       
     enum_<Operator::Status>("OperatorStatus")
@@ -30,8 +40,11 @@ void exportOperator()
         .value("EXECUTING", Operator::EXECUTING)
         ;
         
+      
     class_<Operator, std::auto_ptr<Operator> >("Operator", no_init)
+        .def("__init__", make_constructor(&allocate))
         .def("status", &Operator::status)
+        .def("info", &Operator::info, return_internal_reference<>())
         .def("name", &Operator::name, return_value_policy<copy_const_reference>())
         .def("setName", &Operator::setName)
         .def("initialize", &Operator::initialize)

@@ -279,8 +279,8 @@ namespace stromx
                 }
             
                 // set parameters before initialization
-                for(std::vector<const Parameter*>::const_iterator iter = op->info()->parameters().begin();
-                    iter != op->info()->parameters().end();
+                for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
+                    iter != op->info().parameters().end();
                     ++iter)
                 {
                     if((*iter)->accessMode() != Parameter::NONE_WRITE)
@@ -301,8 +301,8 @@ namespace stromx
                 op->initialize();
             
                 // set parameters after initialization
-                for(std::vector<const Parameter*>::const_iterator iter = op->info()->parameters().begin();
-                    iter != op->info()->parameters().end();
+                for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
+                    iter != op->info().parameters().end();
                     ++iter)
                 {
                     if((*iter)->accessMode() != Parameter::INITIALIZED_WRITE

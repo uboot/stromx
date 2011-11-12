@@ -53,9 +53,9 @@ namespace stromx
             delete m_kernel;
         }
         
-        const OperatorInfo* const Operator::info() const
+        const OperatorInfo& Operator::info() const
         { 
-            return m_kernel->info(); 
+            return *m_kernel->info(); 
         }
         
         const Operator::Status Operator::status() const

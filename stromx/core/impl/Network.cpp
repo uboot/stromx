@@ -92,7 +92,7 @@ namespace stromx
                     iter != m_operators.end();
                     ++iter)
                 {
-                    if ((*iter)->info() == op->info())
+                    if (&(*iter)->info() == &op->info())
                     {
                         throw WrongArgument("Operator already exists");
                     }
@@ -115,8 +115,8 @@ namespace stromx
                     if ((*iter) == op)
                     {
                         // disconnect from all sources
-                        for(std::vector<const Description*>::const_iterator desc = op->info()->inputs().begin();
-                            desc != op->info()->inputs().end();
+                        for(std::vector<const Description*>::const_iterator desc = op->info().inputs().begin();
+                            desc != op->info().inputs().end();
                             ++desc)
                         {
                             disconnect(op, (*desc)->id());
@@ -124,8 +124,8 @@ namespace stromx
                         
                         
                         // disconnect all targets
-                        for(std::vector<const Description*>::const_iterator desc = op->info()->outputs().begin();
-                            desc != op->info()->outputs().end();
+                        for(std::vector<const Description*>::const_iterator desc = op->info().outputs().begin();
+                            desc != op->info().outputs().end();
                             ++desc)
                         {
                             const OutputNode* output = op->getOutputNode((*desc)->id());

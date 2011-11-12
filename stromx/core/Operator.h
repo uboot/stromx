@@ -100,7 +100,7 @@ namespace stromx
              * Returns information about the inputs, outputs and parameters
              * of the operator
              */
-            const OperatorInfo* const info() const;
+            const OperatorInfo& info() const;
             
             /** Returns the current status of the operator */
             const Status status() const;
