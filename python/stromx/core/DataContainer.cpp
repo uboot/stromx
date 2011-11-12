@@ -26,29 +26,20 @@ using namespace stromx::core;
 
 namespace
 {
-    class DataContainerWrap : public DataContainer
+    DataContainer* allocate(std::auto_ptr<Data> data)
     {
-    public:
-        DataContainerWrap(std::auto_ptr<Data> data)
-          : DataContainer(data.get())
-        {
-            data.release();
-        } 
-    };
-    
-    DataContainerWrap* allocate(std::auto_ptr<Data> data)
-    {
-        return new DataContainerWrap(data);
+        Data* dataPtr = data.get();
+        data.release();
+        
+        return new DataContainer(dataPtr);
     }
 }
 
 
 void exportDataContainer()
 {       
-    class_<DataContainerWrap>("DataContainer", no_init)
+    class_<DataContainer>("DataContainer", no_init)
         .def("__init__", make_constructor(&allocate))
-        .def("empty", &DataContainerWrap::empty)
+        .def("empty", &DataContainer::empty)
     ;
-    
-    implicitly_convertible<DataContainerWrap, DataContainer>();
 }

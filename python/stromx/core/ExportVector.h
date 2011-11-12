@@ -34,6 +34,7 @@ namespace stromx
         {
             class_< std::vector<const T*> >(name, no_init)
                 .def("__len__", &std::vector<const T*>::size)
+                .def("__iter__", iterator< std::vector<const T*> >())
                 .def("__getitem__", &getConstItem<T>, return_internal_reference<>())
             ;
         }
@@ -48,6 +49,7 @@ namespace stromx
         {
             class_< std::vector<T*> >(name, no_init)
                 .def("__len__", &std::vector<T*>::size)
+                .def("__iter__", iterator< std::vector<T*> >())
                 .def("__getitem__", &getItem<T>, return_internal_reference<>())
             ;
         }
