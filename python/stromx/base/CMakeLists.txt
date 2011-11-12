@@ -2,6 +2,7 @@ project(python_base)
 
 set(SOURCES
     Base.cpp
+    Image.cpp
 )
 
 add_library(base SHARED ${SOURCES})

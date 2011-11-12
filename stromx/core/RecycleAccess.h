@@ -41,8 +41,10 @@ namespace stromx
             RecycleAccess() {}
             
             void add(const DataContainer data);  
-            Data* const operator()() const;  
-            Data* const operator()(const unsigned int timeout) const;
+            Data* const operator()() const { return get(); }
+            Data* const get() const;  
+            Data* const operator()(const unsigned int timeout) const { return get(timeout); }
+            Data* const get(const unsigned int timeout) const;
             
         private:
             std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      

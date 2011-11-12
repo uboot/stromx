@@ -25,6 +25,7 @@ void exportDataContainer();
 void exportDataVariant();
 void exportDescription();
 void exportException();
+void exportImage();
 void exportOperator();
 void exportPrimitive();
 void exportReadAccess();
@@ -44,6 +45,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportDataVariant();
     exportDescription();
     exportException();
+    exportImage();
     exportOperator();
     exportPrimitive();
     exportReadAccess();

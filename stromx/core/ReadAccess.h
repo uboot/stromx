@@ -42,7 +42,7 @@ namespace stromx
             {
                 try
                 {
-                    return dynamic_cast<const data_t &>((*m_impl)());
+                    return dynamic_cast<const data_t &>(m_impl->get());
                 }
                 catch(std::bad_cast &)
                 {

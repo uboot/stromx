@@ -19,9 +19,13 @@
 #include <stromx/base/Base.h>
 #include <stromx/core/Registry.h>
 
+void exportImage();
+
 BOOST_PYTHON_MODULE(libbase)
 {
     using namespace boost::python;
     
     def("registerBase", registerBase);
+    
+    exportImage();
 }

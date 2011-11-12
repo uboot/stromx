@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_IMPL_READACCESSIMPL_H
 #define STROMX_CORE_IMPL_READACCESSIMPL_H
 
+#include "../DataContainer.h"
+
 namespace stromx
 {
     namespace core
@@ -32,10 +34,10 @@ namespace stromx
                 ReadAccessImpl(DataContainer& data);
                 ~ReadAccessImpl();
                 
-                const Data & operator()() const;
+                const Data & get() const;
                 
             private:
-                DataContainer& m_data;
+                DataContainer m_data;
             };
         }
     }

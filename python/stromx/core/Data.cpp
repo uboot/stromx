@@ -56,8 +56,8 @@ void exportData()
 {                 
     class_<DataWrap, boost::noncopyable>("Data")
         .def("version", pure_virtual(&Data::version), return_internal_reference<>())
-        .def("type", pure_virtual(&Data::type), return_internal_reference<>())
-        .def("package", pure_virtual(&Data::package), return_internal_reference<>())
+        .def("type", pure_virtual(&Data::type), return_value_policy<copy_const_reference>())
+        .def("package", pure_virtual(&Data::package), return_value_policy<copy_const_reference>())
         .def("variant", pure_virtual(&Data::variant), return_internal_reference<>())
         .def("isVariant", &Data::isVariant)
     ;

@@ -36,7 +36,7 @@ namespace stromx
                 m_data.m_impl->getWriteAccess();
             }
 
-            Data& WriteAccessImpl::operator()() const
+            Data& WriteAccessImpl::get() const
             {
                 return *m_data.m_impl->data();
             }

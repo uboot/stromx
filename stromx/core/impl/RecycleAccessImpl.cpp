@@ -72,7 +72,7 @@ namespace stromx
                 }
             }
             
-            Data*const RecycleAccessImpl::operator()()
+            Data*const RecycleAccessImpl::get()
             {
                 unique_lock_t lock(m_mutex);
                 
@@ -94,7 +94,7 @@ namespace stromx
                 return value;
             }
             
-            Data*const RecycleAccessImpl::operator()(const unsigned int timeout)
+            Data*const RecycleAccessImpl::get(const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 

@@ -27,20 +27,20 @@ namespace stromx
         {
         }
 
-        Data*const RecycleAccess::operator()() const
+        Data*const RecycleAccess::get() const
         {
             if(! m_impl.get())
                 return 0;
             
-            return (*m_impl)();
+            return m_impl->get();
         }
 
-        Data*const RecycleAccess::operator()(const unsigned int timeout) const
+        Data*const RecycleAccess::get(const unsigned int timeout) const
         {
             if(! m_impl.get())
                 return 0;
             
-            return (*m_impl)(timeout);
+            return m_impl->get(timeout);
         }
         
         void RecycleAccess::add(const DataContainer data)

@@ -32,7 +32,7 @@ namespace stromx
                 WriteAccessImpl(DataContainer& data);
                 ~WriteAccessImpl();
                 
-                Data& operator()() const;
+                Data& get() const;
                 
             private:
                 DataContainer& m_data;

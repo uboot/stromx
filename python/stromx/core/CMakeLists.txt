@@ -8,6 +8,7 @@ set(SOURCES
     Description.cpp
     Exception.cpp
     Factory.cpp
+    Image.cpp
     Operator.cpp
     Primitive.cpp
     Parameter.cpp

@@ -36,7 +36,7 @@ namespace stromx
                 m_data.m_impl->getReadAccess();
             }
 
-            const Data & ReadAccessImpl::operator()() const
+            const Data & ReadAccessImpl::get() const
             {
                 return *m_data.m_impl->data();
             }

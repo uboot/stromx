@@ -11,7 +11,7 @@ namespace stromx
     {
         const std::string Image::TYPE = "Image";
         const std::string Image::PACKAGE = PACKAGE_NAME;
-        const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MAJOR);
+        const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
         
         Image::Image(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
         {

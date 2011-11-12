@@ -45,6 +45,7 @@ namespace
         ;
         
         implicitly_convertible< std::auto_ptr<primitive_t>, std::auto_ptr<Data> >();
+        implicitly_convertible< primitive_t, repr_t >();
     }
 }
 

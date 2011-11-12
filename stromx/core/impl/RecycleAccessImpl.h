@@ -43,8 +43,8 @@ namespace stromx
                 ~RecycleAccessImpl();    
                 
                 void recycle(impl::DataContainerImpl* const container);
-                Data* const operator()();
-                Data* const operator()(const unsigned int timeout);
+                Data* const get();
+                Data* const get(const unsigned int timeout);
                 void add(const DataContainer& data);
                 
             private:
