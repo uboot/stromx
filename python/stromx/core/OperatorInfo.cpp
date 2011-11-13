@@ -66,8 +66,8 @@ namespace
       
 void exportOperatorInfo()
 {      
-    stromx::python::exportConstPtrVector<Description>("DescriptionVector");
-    stromx::python::exportConstPtrVector<Parameter>("ParameterVector");
+    stromx::python::exportVector<const Description*>("DescriptionVector");
+    stromx::python::exportVector<const Parameter*>("ParameterVector");
       
     class_<OperatorInfoWrap, boost::noncopyable>("OperatorInfo", no_init)
         .def("type", pure_virtual(&OperatorInfo::type), return_value_policy<copy_const_reference>())

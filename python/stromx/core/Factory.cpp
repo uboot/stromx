@@ -43,7 +43,7 @@ namespace
 
 void exportFactory()
 {          
-    stromx::python::exportConstPtrVector<OperatorKernel>("OperatorKernelVector");
+    stromx::python::exportVector<const OperatorKernel*>("OperatorKernelVector");
     
     class_<Factory, bases<Registry> >("Factory")
         .def("registerOperator", &Factory::registerOperator)

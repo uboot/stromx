@@ -38,8 +38,8 @@ namespace
 
 void exportStream()
 {    
-    stromx::python::exportPtrVector<Operator>("OperatorVector");
-    stromx::python::exportPtrVector<Thread>("ThreadVector");
+    stromx::python::exportVector<Operator*>("OperatorVector");
+    stromx::python::exportVector<Thread*>("ThreadVector");
     
     enum_<Stream::Status>("StreamStatus")
         .value("INACTIVE", Stream::INACTIVE)
