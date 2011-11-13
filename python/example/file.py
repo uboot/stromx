@@ -16,6 +16,26 @@
 #  limitations under the License.
 #
 
-import stromx.core
+from stromx import *
 
-from libbase import *
+factory = core.Factory()
+
+core.registerCore(factory)
+base.registerBase(factory)
+
+stream = core.XmlReader().read("file.xml", factory)
+
+stream.start()
+
+timer = stream.operators()[1]
+
+for i in range(5):
+    data = timer.getOutputData(0)
+    count = core.ReadAccess(data)
+    print "Received {0}".format(count.get().get())
+    del count
+    
+    timer.clearOutputData(0)
+
+stream.stop()
+stream.join()

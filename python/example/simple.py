@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#
 #  Copyright 2011 Matthias Fuchs
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +15,34 @@
 #  limitations under the License.
 #
 
-import stromx.core
+from stromx import *
 
-from libbase import *
+stream = core.Stream()
+
+source = core.Operator(base.Counter())
+source.initialize()
+source = stream.addOperator(source)
+
+timer = core.Operator(base.PeriodicDelay())
+timer.initialize()
+timer = stream.addOperator(timer)
+
+timer.setParameter(0, core.UInt32(1000))
+
+stream.connect(source, 0, timer, 0)
+
+thread = stream.addThread()
+thread.addNode(timer, 0)
+
+stream.start()
+
+for i in range(5):
+    data = timer.getOutputData(0)
+    count = core.ReadAccess(data)
+    print "Received {0}".format(count.get().get())
+    del count
+    
+    timer.clearOutputData(0)
+
+stream.stop()
+stream.join()

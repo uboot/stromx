@@ -27,10 +27,12 @@ using namespace stromx::core;
 
 namespace
 {
-    void addOperatorWrap(Stream& stream, std::auto_ptr<Operator> op)
+    Operator* addOperatorWrap(Stream& stream, std::auto_ptr<Operator> op)
     {
-        stream.addOperator(op.get());
+        Operator* opPtr = op.get();
+        stream.addOperator(opPtr);
         op.release();
+        return opPtr;
     }
 }
 
@@ -50,7 +52,7 @@ void exportStream()
         .def("setName", &Stream::setName)
         .def("status", &Stream::status)
         .def("operators", &Stream::operators, return_internal_reference<>())
-        .def("addOperator", &addOperatorWrap)
+        .def("addOperator", &addOperatorWrap, return_internal_reference<>())
         .def("removeOperator", &Stream::removeOperator)
         .def("connect", &Stream::connect)
         .def("disconnect", &Stream::disconnect)

@@ -43,7 +43,7 @@ namespace stromx
         {
             class_< std::vector<T*> >(name, no_init)
                 .def("__len__", &std::vector<T*>::size)
-                .def("__getitem__", static_cast< typename std::vector<T*>::reference (std::vector<T*>::*)(typename std::vector<T*>::size_type)>(&std::vector<T*>::at), return_internal_reference<>())
+                .def< typename std::vector<T*>::reference (std::vector<T*>::*)(typename std::vector<T*>::size_type)>("__getitem__", &std::vector<T*>::at, return_internal_reference<>())
             ;
         }
         
@@ -52,7 +52,7 @@ namespace stromx
         {
             class_< std::vector<T> >(name, no_init)
                 .def("__len__", &std::vector<T>::size)
-                .def("__getitem__", static_cast< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>(&std::vector<T>::at), return_internal_reference<>())
+                .def< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>("__getitem__", &std::vector<T>::at, return_internal_reference<>())
             ;
         }
     }
