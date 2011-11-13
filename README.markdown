@@ -1,4 +1,4 @@
-![Logo](https://github.com/uboot/strom/raw/master/logo/strom-logo-rgb-text-67x102.png) <br> <br> Welcome to stromx!
+![Logo](https://github.com/uboot/stromx/raw/master/logo/strom-logo-rgb-text-67x102.png) <br> <br> Welcome to stromx!
 ================
 
 Getting Started
