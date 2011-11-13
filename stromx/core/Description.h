@@ -24,10 +24,20 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of an operator input or output */
+        /** \brief %Description of an operator input, output or parameter
+         * 
+         * Instances of this class describe either an input node, an output node
+         * or a parameter of an operator. Each of these objects has an ID and a 
+         * data variant. In case of input and output nodes the data variant describes
+         * data of which type can be passed to an input node or is to be expected from
+         * an output node. In case of parameter it characterizes the data type of the 
+         * respective paramter. In addition, a Description can have a name which is 
+         * purely informal and does not have any influence on its behavior.
+         */
         class Description
         {
         public:
+            /** Constructs a description */
             Description(const unsigned int id, const DataVariant& variant)
             : m_id(id),
               m_variant(variant)
@@ -35,10 +45,16 @@ namespace stromx
             
             virtual ~Description() {}
             
+            /** Returns the name */
             const std::string & name() const { return m_name; }
+            
+            /** Returns the ID */
             const unsigned int id() const { return m_id; }
+            
+            /** Returns the data variant */
             const DataVariant & variant() const { return m_variant; }
             
+            /** Sets the name */
             void setName(const std::string & name) { m_name = name; }
             
         private:
