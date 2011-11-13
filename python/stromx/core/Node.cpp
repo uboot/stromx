@@ -14,8 +14,6 @@
 *  limitations under the License.
 */
 
-#include "ExportVector.h"
-
 #include <stromx/core/Node.h>
 #include <stromx/core/Operator.h>
 

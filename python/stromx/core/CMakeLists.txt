@@ -18,6 +18,7 @@ set(SOURCES
     ReadAccess.cpp
     Registry.cpp
     Stream.cpp
+    Thread.cpp
     Version.cpp
     WriteAccess.cpp
     XmlReader.cpp

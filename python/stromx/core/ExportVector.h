@@ -34,14 +34,8 @@ namespace stromx
         {
             class_< std::vector<const T*> >(name, no_init)
                 .def("__len__", &std::vector<const T*>::size)
-                .def("__iter__", iterator< std::vector<const T*> >())
                 .def("__getitem__", &getConstItem<T>, return_internal_reference<>())
             ;
-        }
-        template <class T>
-        T* getItem(std::vector<T*> v, typename std::vector<T*>::size_type i)
-        {
-            return v.at(i);
         }
         
         template <class T>
@@ -49,8 +43,16 @@ namespace stromx
         {
             class_< std::vector<T*> >(name, no_init)
                 .def("__len__", &std::vector<T*>::size)
-                .def("__iter__", iterator< std::vector<T*> >())
-                .def("__getitem__", &getItem<T>, return_internal_reference<>())
+                .def("__getitem__", static_cast< typename std::vector<T*>::reference (std::vector<T*>::*)(typename std::vector<T*>::size_type)>(&std::vector<T*>::at), return_internal_reference<>())
+            ;
+        }
+        
+        template <class T>
+        void exportVector(const char* const name)
+        {
+            class_< std::vector<T> >(name, no_init)
+                .def("__len__", &std::vector<T>::size)
+                .def("__getitem__", static_cast< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>(&std::vector<T>::at), return_internal_reference<>())
             ;
         }
     }

@@ -31,3 +31,21 @@ def _printOperatorKernel(self):
 
 OperatorInfo.__repr__ = _printOperatorKernel
 
+def _printVector(self):
+    string = "["
+    for i in range(len(self)):
+        string += str(self[i])
+        if(i < len(self) - 1):
+            string += ", "
+    string += "]"
+    return string
+   
+def _extendVectorClass(vectorClass):
+    vectorClass.__repr__ = _printVector
+    
+_extendVectorClass(OperatorVector)
+_extendVectorClass(OperatorKernelVector)
+_extendVectorClass(DescriptionVector)
+_extendVectorClass(ParameterVector)
+_extendVectorClass(ThreadVector)
+_extendVectorClass(NodeVector)

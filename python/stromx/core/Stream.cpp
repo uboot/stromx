@@ -18,6 +18,7 @@
 
 #include <stromx/core/Stream.h>
 #include <stromx/core/Operator.h>
+#include <stromx/core/Thread.h>
 
 #include <boost/python.hpp>
 
@@ -36,6 +37,7 @@ namespace
 void exportStream()
 {    
     stromx::python::exportPtrVector<Operator>("OperatorVector");
+    stromx::python::exportPtrVector<Thread>("ThreadVector");
     
     enum_<Stream::Status>("StreamStatus")
         .value("INACTIVE", Stream::INACTIVE)
@@ -53,6 +55,9 @@ void exportStream()
         .def("connect", &Stream::connect)
         .def("disconnect", &Stream::disconnect)
         .def("connectionSource", &Stream::connectionSource)
+        .def("addThread", reinterpret_cast<Thread* (Stream::*)()>(&Stream::addThread), return_internal_reference<>())
+        .def("removeThread", &Stream::removeThread)
+        .def("threads", &Stream::threads, return_internal_reference<>())
         .def("start", &Stream::start)
         .def("stop", &Stream::stop)
         .def("join", &Stream::join)

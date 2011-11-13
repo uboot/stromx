@@ -35,6 +35,7 @@ void exportPrimitive();
 void exportReadAccess();
 void exportRegistry();
 void exportStream();
+void exportThread();
 void exportVersion();
 void exportWriteAccess();
 void exportXmlReader();
@@ -62,6 +63,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportRegistry();
     exportFactory();
     exportStream();
+    exportThread();
     exportVersion();    
     exportWriteAccess();
     exportXmlReader();
