@@ -25,16 +25,49 @@ namespace stromx
         class DataContainer;
         class Id2DataMapper;
     
-        /** \brief Provider of functions to receive and send data */
+        /** \brief Provider of functions to receive and send data
+         *
+         * Data providers are passed as parameter to OperatorKernel::execute() and
+         * provides ways for the executing kernel to communicate with its 
+         * surroundings.
+         */
         class DataProvider
         {
         public:
             virtual ~DataProvider() {}
             
+            /**
+             * Throws Interrupt if the stream this operator belongs to has been stopped.
+             * If this is the case the current OperatorKernel::execute() must be 
+             * exited as soon as possible.
+             * This function should be called regularly during a longer computation
+             * in OperatorKernel::execute() to ensure that a stream can be stopped
+             * within a reasonable amount of time.
+             * \throws Interrupt 
+             */
             virtual void testForInterrupt() = 0;
+            
+            /**
+             * Sleep for the given amount of microseconds. The function
+             * throws Interrup if the stream has been stopped while sleeping.
+             * \throws Interrupt
+             */
             virtual void sleep(const unsigned int microseconds) = 0;
             
+            /**
+             * Receives input data from the provider. The functions waits until
+             * the requirements formulated in \c mapper have are fulfilled.
+             * If the stream is stopped during waiting Interrupt is thrown. 
+             * \throws Interrupt
+             */
             virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
+            
+            /**
+             * Sends input data from the provider. The functions waits until
+             * the requirements formulated in \c mapper have are fulfilled.
+             * If the stream is stopped during waiting Interrupt is thrown. 
+             * \throws Interrupt
+             */
             virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
         };
     }

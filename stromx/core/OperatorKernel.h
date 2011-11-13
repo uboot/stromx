@@ -47,31 +47,6 @@ namespace stromx
             
         public:
             /**
-             * Constructs an operator kernel
-             */
-            OperatorKernel(const std::string & type,
-                    const std::string & package,
-                    const Version & version,
-                    const std::vector<const Parameter*>& parameters);
-                
-            /**
-             * Constructs an operator kernel
-             */    
-            OperatorKernel(const std::string & type,
-                    const std::string & package,
-                    const Version & version,
-                    const std::vector<const Description*>& inputs,
-                    const std::vector<const Description*>& outputs,
-                    const std::vector<const Parameter*>& parameters);
-             
-            /**
-             * Constructs an operator kernel
-             */       
-            OperatorKernel(const std::string & type,
-                    const std::string & package,
-                    const Version & version);
-            
-            /**
              * Returns a copy of the operator, i.e. a object of the same type is
              * allocated and returned. The current status of the operator is \em not
              * reproduced.
@@ -120,6 +95,10 @@ namespace stromx
             /** Gets the current value of the parameter \c id */
             virtual const Data& getParameter(const unsigned int id) const {};
             
+            /**
+             * Executes the operator
+             * \param provider Provides the input data for the execution and accepts its results
+             */
             virtual void execute(DataProvider& provider) = 0;
             
             /** 
@@ -142,10 +121,41 @@ namespace stromx
             virtual void deactivate() {}
             
         protected:
+            /**
+             * Constructs an operator kernel
+             */
+            OperatorKernel(const std::string & type,
+                    const std::string & package,
+                    const Version & version,
+                    const std::vector<const Parameter*>& parameters);
+                
+            /**
+             * Constructs an operator kernel
+             */    
+            OperatorKernel(const std::string & type,
+                    const std::string & package,
+                    const Version & version,
+                    const std::vector<const Description*>& inputs,
+                    const std::vector<const Description*>& outputs,
+                    const std::vector<const Parameter*>& parameters);
+             
+            /**
+             * Constructs an operator kernel
+             */       
+            OperatorKernel(const std::string & type,
+                    const std::string & package,
+                    const Version & version);
+            /**
+             * Initializes an operator kernel. Must only be called from
+             * OperatorKernel::initialize() and overloads of this function
+             */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
                                     const std::vector<const Parameter*>& parameters);
             
+            /**
+             * Returns the parameter \c id
+             */
             Parameter & parameter(const unsigned int id);
             
         private:

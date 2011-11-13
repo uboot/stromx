@@ -47,17 +47,32 @@ namespace stromx
             friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
             
         public:
+            /**
+             * Constructs an empty data container
+             */
             DataContainer() {}
+            
+            /**
+             * Constructs a data container holding \c data
+             * \param data A non-zero pointer to a Data object
+             * \param throws WrongArgument
+             */
             explicit DataContainer(core::Data*const data);
             
+            /** Returns whether to DataContainer holds any data */
             const bool empty() const { return m_impl.get() == 0; }
             
         private:
             std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
         };     
         
+        /** Returns \c true if the addresses in \c lhs and \c rhs are the same */
         const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        
+        /** Returns \c true if the addresses in \c lhs and \c rhs are not the same */
         const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        
+        /** Returns the address of the data held by \c container */
         std::ostream& operator<< (std::ostream& out, const DataContainer & container);
     }
 }
