@@ -62,6 +62,11 @@ namespace stromx
             const repr_t get() const {  return m_value; }
             
             operator repr_t() const { return get(); }
+            const Primitive operator=(const repr_t value)
+            { 
+                m_value = val_t(value);
+                return *this;
+            }
             
             static const Primitive MIN;
             static const Primitive MAX;

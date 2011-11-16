@@ -20,6 +20,7 @@
 #include <stromx/core/Primitive.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Trigger.h>
+#include <stromx/core/Enum.h>
 
 namespace stromx
 {
@@ -112,13 +113,15 @@ namespace stromx
             core::NumericParameter<core::UInt32>* m_height;
 
 			core::Trigger m_valueTrigger;
+            core::Enum m_valueSoftware;
+            core::Enum m_valueInternal;
             
-            unsigned int m_imageWidth;
-            unsigned int m_imageHeight;
-            unsigned int m_exposure;
-            double m_wbRed;
-            double m_wbGreen;
-            double m_wbBlue;
+            core::UInt32 m_imageWidth;
+            core::UInt32 m_imageHeight;
+            core::UInt32 m_exposure;
+            core::Double m_wbRed;
+            core::Double m_wbGreen;
+            core::Double m_wbBlue;
         };
     }
 }

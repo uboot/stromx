@@ -35,9 +35,6 @@ set(SOURCES
     Utilities.cpp
 )
 
-
-include_directories(${OpenCV_ROOT_DIR})
-
 add_library(stromx_base SHARED ${SOURCES})
 
 set(VERSION_STRING "${BASE_VERSION_MAJOR}.${BASE_VERSION_MINOR}")

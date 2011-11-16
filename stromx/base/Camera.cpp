@@ -51,7 +51,9 @@ namespace stromx
             m_exposure(BASE_EXPOSURE),
             m_wbRed(1.0),
             m_wbGreen(1.0),
-            m_wbBlue(1.0)
+            m_wbBlue(1.0),
+            m_valueInternal(INTERNAL),
+            m_valueSoftware(SOFTWARE)
         {
             // TODO: initialize all members
         }
@@ -313,9 +315,9 @@ namespace stromx
                 const Bool& triggerActive = dynamic_cast<const Bool&>(value);
                 
                 if(triggerActive)
-                    return Enum(SOFTWARE);
+                    return m_valueSoftware;
                 else
-                    return Enum(INTERNAL);
+                    return m_valueInternal;
             }
             case FRAME_PERIOD:
                 return m_period->getParameter(PeriodicDelay::PERIOD);
@@ -334,13 +336,13 @@ namespace stromx
             case LEFT:
                 return m_clip->getParameter(Clip::LEFT);
             case EXPOSURE:
-                return UInt32(m_exposure);
+                return m_exposure;
             case WHITE_BALANCE_RED:
-                return Double(m_wbRed);
+                return m_wbRed;
             case WHITE_BALANCE_GREEN:
-                return Double(m_wbGreen);
+                return m_wbGreen;
             case WHITE_BALANCE_BLUE:
-                return Double(m_wbBlue);
+                return m_wbBlue;
             default:
                 throw WrongParameterId(id, *this);
             }

@@ -1,7 +1,7 @@
 project(stromx_core)
 
-set (STROM_VERSION_MAJOR 0)
-set (STROM_VERSION_MINOR 1)
+set (STROMX_VERSION_MAJOR 0)
+set (STROMX_VERSION_MINOR 1)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
@@ -57,7 +57,7 @@ endif()
 
 add_library(stromx_core SHARED ${SOURCES})
 
-set(VERSION_STRING "${STROM_VERSION_MAJOR}.${STROM_VERSION_MINOR}")
+set(VERSION_STRING "${STROMX_VERSION_MAJOR}.${STROMX_VERSION_MINOR}")
 
 set_target_properties(stromx_core PROPERTIES
     VERSION ${VERSION_STRING}
