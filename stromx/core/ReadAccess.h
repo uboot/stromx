@@ -17,7 +17,7 @@
 #ifndef STROMX_CORE_READACCESS_H
 #define STROMX_CORE_READACCESS_H
 
-#include <tr1/memory>
+#include <memory>
 #include "DataContainer.h"
 #include "Exception.h"
 #include "impl/ReadAccessImpl.h"
@@ -54,7 +54,7 @@ namespace stromx
             
         private:
             ReadAccess();
-            std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
+            std::shared_ptr<impl::ReadAccessImpl> m_impl;
         };
     }
 }

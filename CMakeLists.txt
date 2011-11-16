@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
+if(CMAKE_COMPILER_IS_GNUCXX)
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 include(UseDoxygen OPTIONAL)
 
 find_package(Boost 1.36.0)

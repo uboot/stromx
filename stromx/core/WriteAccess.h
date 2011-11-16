@@ -17,7 +17,7 @@
 #ifndef STROMX_CORE_WRITEACCESS_H
 #define STROMX_CORE_WRITEACCESS_H
 
-#include <tr1/memory>
+#include <memory>
 #include "DataContainer.h"
 #include "Exception.h"
 #include "impl/WriteAccessImpl.h"
@@ -56,7 +56,7 @@ namespace stromx
         private:
             WriteAccess();
 
-            std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
+            std::shared_ptr<impl::WriteAccessImpl> m_impl;
         };
     }
 }

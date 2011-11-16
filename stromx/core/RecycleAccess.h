@@ -17,7 +17,7 @@
 #ifndef STROMX_CORE_RECYCLEACCESS_H
 #define STROMX_CORE_RECYCLEACCESS_H
 
-#include <tr1/memory>
+#include <memory>
 #include "DataContainer.h"
 #include "Exception.h"
 
@@ -47,7 +47,7 @@ namespace stromx
             Data* const get(const unsigned int timeout) const;
             
         private:
-            std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      
+            std::shared_ptr<impl::RecycleAccessImpl> m_impl;      
         };
     }
 }
