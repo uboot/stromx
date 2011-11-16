@@ -46,7 +46,7 @@ namespace math
         virtual OperatorKernel* const clone() const { return new Add; }
         virtual void execute(stromx::core::DataProvider& provider);
         
-        virtual void setParameter(unsigned int id, const stromx::core::Data& value);
+        virtual void setParameter(const unsigned int id, const stromx::core::Data& value);
         virtual const stromx::core::Data& getParameter(const unsigned int id) const;
         
     private:

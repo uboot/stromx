@@ -315,7 +315,7 @@ namespace stromx
                     
                     throw;
                 }
-                catch(std::exception &e)
+                catch(std::exception &)
                 {
                     // ignore exceptions
                 }

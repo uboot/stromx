@@ -126,6 +126,15 @@ namespace stromx
             {}
         };
         
+        /** \brief A function which is not implemented was called */
+        class NotImplemented : public Exception
+        {
+        public:
+            NotImplemented(const std::string & message = "NotImplemented")
+              : Exception(message)
+            {}
+        };
+        
         /** \brief %Data could not be serialized */
         class SerializationError : public Exception
         {

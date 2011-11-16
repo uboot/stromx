@@ -112,18 +112,23 @@ namespace stromx
             validate(m_parameters);
         }
         
-        Parameter& OperatorKernel::parameter(const unsigned int id)
-        {
-            return const_cast<Parameter&>(parameter(id));
-        }
-        
-        const Parameter& OperatorKernel::parameter(const unsigned int id) const
+        const Parameter & OperatorKernel::findParameter(const unsigned int id) const
         {
             std::map<unsigned int, const Parameter*>::const_iterator iter = m_parameterMap.find(id);
             if(iter == m_parameterMap.end())
                 throw WrongId("No parameter with ID " + id);
             
             return *iter->second;
+        }
+        
+        Parameter& OperatorKernel::parameter(const unsigned int id)
+        {
+            return const_cast<Parameter &>(findParameter(id));
+        }
+        
+        const Parameter& OperatorKernel::parameter(const unsigned int id) const
+        {
+            return findParameter(id);
         }
         
         OperatorKernel::~OperatorKernel()

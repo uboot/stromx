@@ -19,6 +19,7 @@
 
 #include <map>
 #include "OperatorInfo.h"
+#include "Exception.h"
 
 namespace stromx
 {
@@ -90,10 +91,10 @@ namespace stromx
             const Parameter & parameter(const unsigned int id) const;
             
             /** Sets a parameter \c id to \c value */
-            virtual void setParameter(const unsigned int id, const Data& value) {};
+            virtual void setParameter(const unsigned int id, const Data& value) { throw NotImplemented(); };
             
             /** Gets the current value of the parameter \c id */
-            virtual const Data& getParameter(const unsigned int id) const {};
+            virtual const Data& getParameter(const unsigned int id) const { throw NotImplemented(); };
             
             /**
              * Executes the operator
@@ -161,6 +162,7 @@ namespace stromx
         private:
             static void validate(const std::vector<const Description*>& descriptors);
             static void validate(const std::vector<const Parameter*>& descriptors);
+            const Parameter & findParameter(const unsigned int id) const;
             
             std::string m_type;
             std::string m_package;

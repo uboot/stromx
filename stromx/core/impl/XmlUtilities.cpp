@@ -65,9 +65,9 @@ namespace stromx
                 std::string pathSeparator;
                 
                 if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
-                    pathSeparator = boost::filesystem::path("/").file_string();
+                    pathSeparator = boost::filesystem::path("/").string();
             
-                return parentpath.file_string() + pathSeparator;
+                return parentpath.string() + pathSeparator;
             }
         }
     }

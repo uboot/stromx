@@ -35,7 +35,7 @@ namespace stromx
             Counter();
             
             virtual OperatorKernel* const clone() const { return new Counter; }
-            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
             virtual void activate();

@@ -55,7 +55,7 @@ namespace stromx
             /**
              * Constructs a data container holding \c data
              * \param data A non-zero pointer to a Data object
-             * \param throws WrongArgument
+             * \throws WrongArgument
              */
             explicit DataContainer(core::Data*const data);
             

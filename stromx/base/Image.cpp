@@ -22,7 +22,7 @@ namespace stromx
                 getDataFromCvImage(pixelType);
                 setVariant(dataTypeFromPixelType(pixelType));
             }
-            catch(cv::Exception& e)
+            catch(cv::Exception&)
             {
                 throw core::OutOfMemory("Failed to create new image.");
             }
@@ -38,7 +38,7 @@ namespace stromx
                 getDataFromCvImage(image.pixelType());
                 setVariant(image.variant());
             }
-            catch(cv::Exception& e)
+            catch(cv::Exception&)
             {
                 throw core::OutOfMemory("Failed to create new image.");
             }
@@ -71,7 +71,7 @@ namespace stromx
                 getDataFromCvImage(core::Image::MONO_8);
                 setVariant(core::DataVariant::IMAGE);
             }
-            catch(cv::Exception& e)
+            catch(cv::Exception&)
             {
                 throw core::OutOfMemory("Failed to allocate image.");
             }
@@ -137,7 +137,7 @@ namespace stromx
                 getDataFromCvImage(pixelType);
                 setVariant(dataTypeFromPixelType(pixelType));
             }
-            catch(cv::Exception& e)
+            catch(cv::Exception&)
             {
                 throw core::OutOfMemory("Failed to create new image.");
             }
@@ -155,7 +155,7 @@ namespace stromx
                 getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
                 setVariant(core::DataVariant::MONO_8_IMAGE);
             }
-            catch(cv::Exception& e)
+            catch(cv::Exception&)
             {
                 throw core::OutOfMemory("Failed to allocate image.");
             }
@@ -234,11 +234,7 @@ namespace stromx
                     throw core::WrongArgument("Unknown combination of depth and number of channels.");
                 }
             case 16:
-                switch(numChannels)
-                {
-                default:
-                    throw core::WrongArgument("Unknown combination of depth and number of channels.");      
-                }
+                throw core::WrongArgument("Unknown combination of depth and number of channels.");      
             default:
                 throw core::WrongArgument("Unknown combination of depth and number of channels.");    
             }         

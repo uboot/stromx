@@ -12,7 +12,6 @@
 #include <stromx/core/EnumParameter.h>
 #include <stromx/core/NumericParameter.h>
 #include <stromx/core/OperatorException.h>
-#include <stromx/core/Trigger.h>
 #include <stromx/core/Operator.h>
 
 #include "ConstImage.h"
@@ -307,7 +306,7 @@ namespace stromx
             switch(id)
             {
             case TRIGGER:
-                return core::Trigger();
+                return m_valueTrigger;
             case TRIGGER_MODE:
             {
                 const Data& value = m_trigger->getParameter(Trigger::ACTIVE);

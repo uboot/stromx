@@ -62,8 +62,8 @@ Each input, output and parameter of the operator is identified by an ID. Here ea
         virtual OperatorKernel* const clone() const { return new Add; }
         virtual void execute(core::DataProvider& provider);
 
-        virtual void setParameter(unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(unsigned int id);
+        virtual void setParameter(const unsigned int id, const core::Data& value);
+        virtual const core::Data& getParameter(const unsigned int id);
 \endcode
 
 First the default constructor is declared. The functions core::OperatorKernel::clone() and core::OperatorKernel::execute() are abstract in core::OperatorKernel and must be defined in each custom operator kernel. The subsequent functions must be implemented to support reading and writing the paramter of  \em Add.

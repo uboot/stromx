@@ -50,6 +50,8 @@ namespace stromx
                 out << 0;
             else
                 out << container.m_impl->data();
+
+            return out;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace stromx
                     throw Interrupt();
                 }
             
-                unsigned int passedMs = (boost::get_system_time() - m_nextTrigger).total_milliseconds();
+                unsigned int passedMs = static_cast<unsigned int>((boost::get_system_time() - m_nextTrigger).total_milliseconds());
                 unsigned int numPeriods = passedMs / m_period + 1;
                 m_nextTrigger += boost::posix_time::millisec(m_period * numPeriods);
             }

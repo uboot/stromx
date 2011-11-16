@@ -49,5 +49,5 @@ BOOST_PYTHON_MODULE(libbase)
     stromx::python::exportOperatorKernel<Counter>("Counter");
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
     stromx::python::exportOperatorKernel<Queue>("Queue");
-    stromx::python::exportOperatorKernel<Trigger>("Trigger");
+    stromx::python::exportOperatorKernel<stromx::base::Trigger>("Trigger");
 }

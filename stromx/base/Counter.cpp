@@ -26,27 +26,12 @@ namespace stromx
 
         void Counter::setParameter(unsigned int id, const Data& value)
         {
-            try
-            {
-                switch(id)
-                {
-                default:
-                    throw WrongParameterId(id, *this);
-                }
-            }
-            catch(std::bad_cast&)
-            {
-                throw WrongParameterType(*parameters()[id], *this);
-            }
+            throw WrongParameterId(id, *this);
         }
 
         const Data& Counter::getParameter(const unsigned int id) const
         {
-            switch(id)
-            {
-            default:
-                throw WrongParameterId(id, *this);
-            }
+            throw WrongParameterId(id, *this);
         } 
         
         void Counter::activate()

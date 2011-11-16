@@ -19,16 +19,12 @@
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
+#include <stromx/core/DataContainer.h>
 
 #include <deque>
 
 namespace stromx
 {
-    namespace core
-    {
-        class DataContainer;
-    }
-
     namespace base
     {
         class Queue : public core::OperatorKernel
@@ -52,7 +48,7 @@ namespace stromx
             Queue();
             
             virtual OperatorKernel* const clone() const { return new Queue; }
-            virtual void setParameter(unsigned int id, const core::Data& value);
+            virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
             virtual void deactivate();
             virtual void execute(core::DataProvider& provider);

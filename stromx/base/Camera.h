@@ -19,6 +19,7 @@
 
 #include <stromx/core/Primitive.h>
 #include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Trigger.h>
 
 namespace stromx
 {
@@ -73,8 +74,8 @@ namespace stromx
             virtual ~Camera();
             
             virtual OperatorKernel* const clone() const { return new Camera; }
-            virtual void setParameter(unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(unsigned int id) const;
+            virtual void setParameter(const unsigned int id, const core::Data& value);
+            virtual const core::Data& getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
             virtual void initialize();
             virtual void activate();
@@ -109,6 +110,8 @@ namespace stromx
             core::NumericParameter<core::UInt32>* m_top;
             core::NumericParameter<core::UInt32>* m_width;
             core::NumericParameter<core::UInt32>* m_height;
+
+			core::Trigger m_valueTrigger;
             
             unsigned int m_imageWidth;
             unsigned int m_imageHeight;
