@@ -301,8 +301,6 @@ namespace stromx
                         m_status = EXECUTING;
                 }
                 
-                bool interruptExceptionWasThrown = false;
-                
                 try
                 {
                     m_op->execute(*this);
@@ -373,6 +371,8 @@ namespace stromx
                     case Parameter::INITIALIZED_WRITE:
                     case Parameter::ACTIVATED_WRITE:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 case INITIALIZED:
@@ -380,6 +380,8 @@ namespace stromx
                     {
                     case Parameter::NO_ACCESS:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 case ACTIVE:
@@ -388,6 +390,8 @@ namespace stromx
                     {
                     case Parameter::NO_ACCESS:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 default:
@@ -410,6 +414,8 @@ namespace stromx
                     case Parameter::INITIALIZED_WRITE:
                     case Parameter::ACTIVATED_WRITE:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 case INITIALIZED:
@@ -420,6 +426,8 @@ namespace stromx
                     case Parameter::NONE_WRITE:
                     case Parameter::INITIALIZED_READ:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 case ACTIVE:
@@ -432,6 +440,8 @@ namespace stromx
                     case Parameter::INITIALIZED_READ:
                     case Parameter::INITIALIZED_WRITE:
                         throw ParameterAccessViolation(param, *this->info());
+                    default:
+                        ;
                     }
                     break;
                 default:

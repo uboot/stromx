@@ -30,8 +30,8 @@ namespace stromx
         namespace impl
         {
             ThreadImpl::ThreadImpl()
-            : m_thread(0),
-                m_status(INACTIVE)
+              : m_status(INACTIVE),
+                m_thread(0)
             {
             }
             

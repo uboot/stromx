@@ -49,7 +49,7 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testGetOutputData();;
+            void testGetOutputData();
             void testAddConnectedInputs();
             void testRemoveConnectedInputs();
                 

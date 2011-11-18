@@ -35,7 +35,7 @@ namespace stromx
         {
             class ThreadImpl;
             class InputNode;
-        };
+        }
         
         class ThreadImplTest : public CPPUNIT_NS :: TestFixture
         {
@@ -49,7 +49,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ThreadImplTest() : m_thread(0), m_operatorNode(0), m_node(0) {}
+            ThreadImplTest() : m_thread(0), m_node(0), m_operatorNode(0) {}
             
             void setUp();
             void tearDown();

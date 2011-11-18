@@ -28,8 +28,8 @@ namespace stromx
         using namespace impl;
         
         Thread::Thread(const core::impl::Network*const network)
-        : m_network(network),
-            m_thread(0)
+          : m_thread(0),
+            m_network(network)
         {
             if(! network)
                 throw WrongArgument("Passed null pointer as network.");

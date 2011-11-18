@@ -39,6 +39,7 @@ namespace stromx
         void XmlReaderTest::testRead()
         {
             Stream* stream = XmlReader().read("stream.xml", *m_factory);
+            delete stream;
         }
         
         void XmlReaderTest::testReadWrongFile()

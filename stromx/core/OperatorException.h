@@ -103,7 +103,7 @@ namespace stromx
             {}
             
         private:
-            const unsigned int m_inputId;;
+            const unsigned int m_inputId;
         };
         
         /** \brief Tried to set the input to data of the wrong type */

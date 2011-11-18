@@ -36,7 +36,7 @@ namespace stromx
         cv::Mat getOpenCvMat(const core::Image& image);
         void adjustImage(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType,
                         base::Image*& image);
-    };
+    }
 }
 
 #endif // STROMX_BASE_UTILITIES_H

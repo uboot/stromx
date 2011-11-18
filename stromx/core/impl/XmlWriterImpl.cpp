@@ -32,7 +32,7 @@ namespace stromx
     {
         namespace impl
         {
-            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_impl(0), m_doc(0), m_strElement(0), m_filename("")
+            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_strElement(0)
             {
                 try
                 {

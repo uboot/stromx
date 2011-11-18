@@ -23,25 +23,25 @@ namespace stromx
     namespace core
     {
         ImageWrapper::ImageWrapper(const unsigned int size, uint8_t* const buffer)
-        : m_size(size),
-            m_buffer(buffer),
-            m_width(0),
+          : m_width(0),
             m_height(0),
             m_stride(0),
+            m_size(size),
             m_pixelType(MONO_8),
             m_data(0),
+            m_buffer(buffer),
             m_variant(DataVariant::MONO_8_IMAGE)
         {
         }
         
         ImageWrapper::ImageWrapper()
-        : m_size(0),
-            m_buffer(0),
-            m_width(0),
+          : m_width(0),
             m_height(0),
             m_stride(0),
+            m_size(0),
             m_pixelType(MONO_8),
             m_data(0),
+            m_buffer(0),
             m_variant(DataVariant::MONO_8_IMAGE)
         {
         }

@@ -38,7 +38,7 @@ namespace stromx
                 {
                     INACTIVE,
                     ACTIVE,
-                    DEACTIVATING,
+                    DEACTIVATING
                 };
                 
                 ThreadImpl();

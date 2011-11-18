@@ -37,7 +37,7 @@ namespace stromx
             {
                 INACTIVE,
                 ACTIVE,
-                DEACTIVATING,
+                DEACTIVATING
             };
             
             Stream();

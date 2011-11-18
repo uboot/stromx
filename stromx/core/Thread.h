@@ -42,7 +42,7 @@ namespace stromx
             {
                 INACTIVE,
                 ACTIVE,
-                DEACTIVATING,
+                DEACTIVATING
             };
             
             virtual ~Thread();
