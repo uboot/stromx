@@ -18,7 +18,7 @@
 #include <stromx/core/DataVariant.h>
 #include <stromx/core/Data.h>
 
-#include <auto_ptr.h>
+#include <memory>
 #include <boost/python.hpp>
 
 using namespace boost::python;

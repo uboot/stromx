@@ -21,7 +21,7 @@
 
 #include <stromx/base/Image.h>
 
-#include <auto_ptr.h>
+#include <memory>
 #include <boost/python.hpp>
 
 using namespace boost::python;
