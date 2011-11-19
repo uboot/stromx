@@ -40,7 +40,7 @@ namespace stromx
             DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
             
             ReadAccess<Image> access(result);
-            const Image& image = access();
+            access();
             
             m_operator->clearOutputData(Trigger::OUTPUT);
             m_operator->setInputData(Trigger::INPUT, m_image);
@@ -66,7 +66,7 @@ namespace stromx
             
             DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
             ReadAccess<Image> access(result);
-            const Image& image = access();
+            access();
         }
         
         void TriggerTest::getOutputDataInterrupted()

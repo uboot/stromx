@@ -58,7 +58,7 @@ namespace stromx
                 Data* buffer = 0;
                 
                 // delete all remaining buffers in the recycling access
-                while(buffer = m_buffers())
+                while((buffer = m_buffers()))
                     delete buffer;
                 
                 // allocate all buffers and add them to the recycler

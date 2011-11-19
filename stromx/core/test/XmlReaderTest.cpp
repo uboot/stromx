@@ -21,6 +21,7 @@
 #include <cppunit/TestAssert.h>
 
 #include <stromx/core/XmlReader.h>
+#include <stromx/core/Stream.h>
 #include <stromx/core/Factory.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlReaderTest);

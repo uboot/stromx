@@ -37,7 +37,7 @@ namespace stromx
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
                 ReadAccess<Image> access(result);
-                const Image& image = access();
+                access();
             }
             
             {
@@ -72,7 +72,7 @@ namespace stromx
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
                 ReadAccess<Image> access(result);
-                const Image& image = access();
+                access();
             }
             
             {

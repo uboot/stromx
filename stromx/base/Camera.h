@@ -111,10 +111,6 @@ namespace stromx
             core::NumericParameter<core::UInt32>* m_top;
             core::NumericParameter<core::UInt32>* m_width;
             core::NumericParameter<core::UInt32>* m_height;
-
-			core::Trigger m_valueTrigger;
-            core::Enum m_valueSoftware;
-            core::Enum m_valueInternal;
             
             core::UInt32 m_imageWidth;
             core::UInt32 m_imageHeight;
@@ -122,6 +118,10 @@ namespace stromx
             core::Double m_wbRed;
             core::Double m_wbGreen;
             core::Double m_wbBlue;
+
+            core::Trigger m_valueTrigger;
+            core::Enum m_valueInternal;
+            core::Enum m_valueSoftware;
         };
     }
 }
