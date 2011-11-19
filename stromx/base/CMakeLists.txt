@@ -16,7 +16,7 @@ include_directories(
     ../..
     ${PROJECT_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
-	${OpenCV2_ROOT_DIR}
+	${OpenCV2_INCLUDE_DIR}
 )
 
 set(SOURCES

@@ -10,7 +10,7 @@ add_library(base SHARED ${SOURCES})
 include_directories(
     ../../..
     ${Boost_INCLUDE_DIRS}
-	${OpenCV2_ROOT_DIR}
+	${OpenCV2_INCLUDE_DIR}
     ${PYTHON_INCLUDE_DIRS}
 )
 
