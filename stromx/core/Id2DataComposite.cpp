@@ -31,6 +31,7 @@ namespace stromx
                 return m_lhs.trySet(id2DataMap) || m_rhs.trySet(id2DataMap);
             default:
                 BOOST_ASSERT(false);
+                return false;
             } 
         }
         
@@ -64,7 +65,6 @@ namespace stromx
                 break;
             default:
                 BOOST_ASSERT(false);
-                return false;
             }
         }
         
