@@ -31,7 +31,7 @@ namespace stromx
         template<>
         const std::string Bool::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Bool::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Bool::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & Int8::variant() const { return DataVariant::INT_8; }
@@ -44,7 +44,7 @@ namespace stromx
         template<>
         const std::string Int8::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Int8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Int8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
         const std::string Int8::serialize(const std::string & name, const std::string & path) const
@@ -69,7 +69,7 @@ namespace stromx
         template<>
         const std::string UInt8::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version UInt8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version UInt8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
         const std::string UInt8::serialize(const std::string & name, const std::string & path) const
@@ -90,7 +90,7 @@ namespace stromx
         template<>
         const std::string Int16::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Int16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Int16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
@@ -99,7 +99,7 @@ namespace stromx
         template<>
         const std::string UInt16::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version UInt16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version UInt16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & Int32::variant() const { return DataVariant::INT_32; }
@@ -112,7 +112,7 @@ namespace stromx
         template<>
         const std::string Int32::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Int32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Int32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & UInt32::variant() const { return DataVariant::UINT_32; }
@@ -125,7 +125,7 @@ namespace stromx
         template<>
         const std::string UInt32::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version UInt32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version UInt32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & Float::variant() const { return DataVariant::FLOAT; }
@@ -138,7 +138,7 @@ namespace stromx
         template<>
         const std::string Float::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Float::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Float::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template<>
         const DataVariant & Double::variant() const { return DataVariant::DOUBLE; }
@@ -151,7 +151,7 @@ namespace stromx
         template<>
         const std::string Double::PACKAGE = PACKAGE_NAME;
         template<>
-        const Version Double::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR);
+        const Version Double::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
     }
 }
 

@@ -28,7 +28,12 @@ namespace stromx
         class Registry
         {
         public:
-            virtual void registerOperator(const OperatorKernel* const op) = 0;       
+            /** Registers an operator kernel with the registry. The registry assumes
+             *  ownership of \op. */
+            virtual void registerOperator(const OperatorKernel* const op) = 0; 
+            
+            /** Registers a data object with the registry. The registry assumes 
+             *  ownership of \data. */
             virtual void registerData(const Data* const data) = 0;
         };
     }

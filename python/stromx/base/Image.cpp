@@ -45,6 +45,9 @@ void exportImage()
     class_<stromx::base::Image, bases<Data, Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
+        .def("save", &stromx::base::Image::save)
+        .def("open", &stromx::base::Image::open)
+        .def<void (stromx::base::Image::*)(const unsigned int, const unsigned int, const Image::PixelType)>("resize", &stromx::base::Image::resize)
      ;
      
     implicitly_convertible< std::auto_ptr<stromx::base::Image>, std::auto_ptr<Data> >();

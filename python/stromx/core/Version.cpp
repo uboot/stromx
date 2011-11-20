@@ -26,5 +26,6 @@ void exportVersion()
     class_<Version>("Version", no_init)
         .def("major", &Version::major)
         .def("minor", &Version::minor)
+        .def("patch", &Version::patch)
     ;
 }

@@ -118,6 +118,21 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize("ImageTest_testSerialize.png", "./"));
         }
+        
+        void ImageTest::testResizeBuffer()
+        {
+            m_image = new Image();
+            CPPUNIT_ASSERT_NO_THROW(m_image->resize(300, 200, core::Image::BGR_24));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(300), m_image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->height());
+        }
+
+        void ImageTest::testResizeDimension()
+        {
+            m_image = new Image();
+            CPPUNIT_ASSERT_NO_THROW(m_image->resize(1024));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->size());
+        }
 
         void ImageTest::tearDown ( void )
         {

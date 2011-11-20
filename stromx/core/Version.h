@@ -25,17 +25,26 @@ namespace stromx
         class Version
         {
         public:
-            Version(const unsigned int major, const unsigned int minor)
-            : m_major(major),
-                m_minor(minor)
+            /** Constructs a version object */
+            Version(const unsigned int major, const unsigned int minor, const unsigned int patch)
+              : m_major(major),
+                m_minor(minor),
+                m_patch(patch)
             {}
             
+            /** Returns the major version number */
             const unsigned int major() const { return m_major; }
+            
+            /** Returns the minor version number */
             const unsigned int minor() const { return m_minor; }
+            
+            /** Returns the patch level */
+            const unsigned int patch() const { return m_patch; }
                 
         private:
             unsigned int m_major;
             unsigned int m_minor;
+            unsigned int m_patch;
         };
     }
 }

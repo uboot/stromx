@@ -39,6 +39,8 @@ namespace stromx
             CPPUNIT_TEST (testImageDefault);
             CPPUNIT_TEST (testSerialize);
             CPPUNIT_TEST (testDeserialize);
+            CPPUNIT_TEST (testResizeDimension);
+            CPPUNIT_TEST (testResizeBuffer);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -58,6 +60,8 @@ namespace stromx
                 void testSaveUnknownDirectory();
                 void testSerialize();
                 void testDeserialize();
+                void testResizeDimension();
+                void testResizeBuffer();
                 
             private:
                 Image* m_image;

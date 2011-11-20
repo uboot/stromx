@@ -24,12 +24,12 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of an operator input, output or parameter
+        /** \brief %Description of an ID to DataVariant map
          * 
-         * Instances of this class describe either an input node, an output node
-         * or a parameter of an operator. Each of these objects has an ID and a 
-         * data variant. In case of input and output nodes the data variant describes
-         * data of which type can be passed to an input node or is to be expected from
+         * Instances of this class describe associate an ID with a data variant.
+         * Input nodes, output nodes and parameters of operators are characterized
+         * by such a description. In case of input and output nodes the data variant defines
+         * which data type can be passed to an input node or is to be expected from
          * an output node. In case of parameter it characterizes the data type of the 
          * respective paramter. In addition, a Description can have a name which is 
          * purely informal and does not have any influence on its behavior.

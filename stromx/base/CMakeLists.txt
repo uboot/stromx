@@ -2,6 +2,7 @@ project(stromx_base)
 
 set (BASE_VERSION_MAJOR 0)
 set (BASE_VERSION_MINOR 1)
+set (BASE_VERSION_PATCH 0)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"

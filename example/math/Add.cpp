@@ -13,7 +13,7 @@ namespace math
 {
     const std::string Add::TYPE("Add");
     const std::string Add::PACKAGE("Math");
-    const core::Version Add::VERSION(1, 0);
+    const core::Version Add::VERSION(1, 0, 0);
     
     const std::vector<const core::Description*> Add::setupInputs()
     {

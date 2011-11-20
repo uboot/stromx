@@ -16,7 +16,7 @@ namespace stromx
     {
         const std::string Counter::TYPE("Counter");
         const std::string Counter::PACKAGE(PACKAGE_NAME);
-        const Version Counter::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR);
+        const Version Counter::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Counter::Counter()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

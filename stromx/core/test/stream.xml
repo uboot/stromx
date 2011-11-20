@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Stream name="TestStrom">
-    <Operator id="0" package="TestPackage" type="TestOperator" version="0.1" name="Number 1">
+    <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0.0" name="Number 1">
         <Parameter id="0">
-            <Data type="UInt32" package="Core" version="0.1">5000</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">5000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Core" version="0.1">200</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">200</Data>
         </Parameter>
     </Operator>
-    <Operator id="1" package="TestPackage" type="TestOperator" version="0.1" name="Number 2">
+    <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 2">
         <Parameter id="0">
-            <Data type="UInt32" package="Core" version="0.1">6000</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">6000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Core" version="0.1">250</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">250</Data>
         </Parameter>
         <Input id="0" operator="0" output="2"/>
         <Input id="1" operator="0" output="3"/>
     </Operator>
-    <Operator id="2" package="TestPackage" type="TestOperator" version="0.1" name="Number 3">
+    <Operator id="2" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 3">
         <Parameter id="0">
-            <Data type="UInt32" package="Core" version="0.1">7000</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">7000</Data>
         </Parameter>
         <Parameter id="1">
-            <Data type="UInt32" package="Core" version="0.1">300</Data>
+            <Data type="UInt32" package="Core" version="0.1.0">300</Data>
         </Parameter>
         <Input id="0" operator="1" output="2"/>
         <Input id="1" operator="1" output="3"/>
