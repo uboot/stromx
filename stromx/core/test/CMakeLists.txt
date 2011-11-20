@@ -2,6 +2,7 @@ project(stromx_core_test)
 
 include_directories(
     ../../..
+    ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIR}
     ${PROJECT_BINARY_DIR}/..
 )
@@ -73,6 +74,8 @@ if(BUILD_XML_SUPPORT)
         XmlWriterTest.cpp
         ../impl/XmlWriterImpl.cpp
     )
+
+    include_directories(${XERCES_INCLUDE_DIR})
 endif()
 
 add_executable(stromx_core_test ${SOURCES})
