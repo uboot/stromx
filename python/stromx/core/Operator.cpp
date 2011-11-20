@@ -16,6 +16,7 @@
 
 #include <stromx/core/Operator.h>
 #include <stromx/core/Data.h>
+#include <stromx/core/OperatorKernel.h>
 
 #include <boost/python.hpp>
 

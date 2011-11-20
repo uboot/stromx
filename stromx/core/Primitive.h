@@ -39,7 +39,7 @@ namespace stromx
         {
         public:
             explicit Primitive() : m_value(0) {}
-            explicit Primitive(const repr_t value) : m_value(value) {}
+            explicit Primitive(const repr_t value) : m_value(val_t(value)) {}
             
             virtual const std::string & type() const { return TYPE; }
             virtual const Version & version() const { return VERSION; }

@@ -198,12 +198,12 @@ namespace stromx
                     delete m_stream;
                     throw FileAccessFailed(filename, "Failed to read XML file.");
                 }
-                catch(core::Exception& e)
+                catch(core::Exception&)
                 {
                     delete m_stream;
                     throw;
                 }
-                catch(boost::bad_lexical_cast e)
+                catch(boost::bad_lexical_cast & e)
                 {
                     delete m_stream;
                     throw FileAccessFailed(filename, e.what());

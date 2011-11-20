@@ -51,11 +51,11 @@ namespace stromx
                 {
                     m_impl = DOMImplementationRegistry::getDOMImplementation(Str2Xml(""));
                 }
-                catch(DOMException& e)
+                catch(DOMException&)
                 {
                     throw InternalError("Error in Xerces-C.");
                 }
-                catch(XMLException& e)
+                catch(XMLException&)
                 {
                     throw InternalError("Error in Xerces-C.");
                 }
@@ -295,11 +295,11 @@ namespace stromx
                     // done with the document, must call release() to release the entire document resources
                     m_doc->release();
                 }
-                catch(DOMException& e)
+                catch(DOMException&)
                 {
                     throw InternalError("Error in Xerces-C.");
                 }
-                catch(XMLException& e)
+                catch(XMLException&)
                 {
                     throw InternalError("Error in Xerces-C.");
                 }
