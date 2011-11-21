@@ -40,10 +40,8 @@ add_executable(stromx_base_test
 )
 
 target_link_libraries(stromx_base_test 
-    ${Boost_LIBRARIES}
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
-    ${CMAKE_THREAD_LIBS_INIT}
     ${OpenCV2_CORE_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
     stromx_core

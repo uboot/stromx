@@ -54,7 +54,7 @@ namespace stromx
             
         private:
             ReadAccess();
-            std::shared_ptr<impl::ReadAccessImpl> m_impl;
+            std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
         };
     }
 }

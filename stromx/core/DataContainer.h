@@ -17,7 +17,12 @@
 #ifndef STROMX_CORE_DATACONTAINER_H
 #define STROMX_CORE_DATACONTAINER_H
 
-#include <memory>
+#ifdef __GNUG__
+    #include <tr1/memory>
+#else
+    #include <memory>
+#endif
+
 #include <ostream>
 
 namespace stromx
@@ -63,7 +68,7 @@ namespace stromx
             const bool empty() const { return m_impl.get() == 0; }
             
         private:
-            std::shared_ptr<impl::DataContainerImpl> m_impl;
+            std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
         };     
         
         /** Returns \c true if the addresses in \c lhs and \c rhs are the same */

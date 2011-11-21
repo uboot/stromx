@@ -46,7 +46,7 @@ namespace stromx
         void RecycleAccess::add(const DataContainer data)
         {
             if(! m_impl.get())
-                m_impl = std::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));
+                m_impl = std::tr1::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));
             else
                 m_impl->add(data);
         }
