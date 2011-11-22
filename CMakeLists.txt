@@ -9,13 +9,17 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 #   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pedantic -Wall -Wextra")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
+if(MSVC)
+    add_definitions(/DBOOST_ALL_DYN_LINK /DCPPUNIT_DLL)
+endif(MSVC)
+
 include(UseDoxygen OPTIONAL)
 
 find_package(Boost 1.36.0)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.36.0 COMPONENTS thread filesystem)
+find_package(Boost 1.36.0 COMPONENTS thread filesystem date_time system)
 
 find_package(CppUnit)
 
