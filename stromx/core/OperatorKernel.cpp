@@ -59,7 +59,7 @@ namespace stromx
                         const std::vector<const Description* >& inputs,
                         const std::vector<const Description* >& outputs,
                         const std::vector<const Parameter* >& parameters)
-        : m_type(type),
+          : m_type(type),
             m_package(package),
             m_version(version),
             m_inputs(inputs),
