@@ -16,6 +16,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <iostream>
+#include <fstream>
 
 #include "../Data.h"
 #include "../Exception.h"
@@ -290,7 +291,21 @@ namespace stromx
                     DOMLSSerializer* serializer = m_impl->createLSSerializer();
                     serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
                     char* content = XMLString::transcode(serializer->writeToString(m_doc));
-                    std::cout << content << std::endl;
+                    std::ofstream xmlFile;
+                    xmlFile.open(filename.c_str());
+                    if (xmlFile.is_open())
+                    {
+                        xmlFile << content << std::endl;
+                        xmlFile.close();
+                        if (!xmlFile.good())
+                        {
+                            throw FileAccessFailed("Error during file access");
+                        }
+                    }
+                    else
+                    {
+                        throw FileAccessFailed("Could not open XML file.");
+                    }
                     XMLString::release(&content);
                     serializer->release();
 
