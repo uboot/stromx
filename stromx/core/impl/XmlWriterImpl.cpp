@@ -18,6 +18,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "Config.h"
 #include "../Data.h"
 #include "../Exception.h"
 #include "../Node.h"
@@ -274,9 +275,24 @@ namespace stromx
                 
                 try
                 {
+                    //Create comment
+                   
+                    
+                    //Create Stromx branch
+                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), 0);                    
+                    m_stromxElement = m_doc->getDocumentElement();
+                    
+                    //Create attribute version of Stromx
+                    DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                    std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
+                    verAttr->setValue(Str2Xml(str.c_str()));
+                    m_stromxElement->setAttributeNode(verAttr);
+                    
                     //Create Stream branch
-                    m_doc = m_impl->createDocument(0, Str2Xml("Stream"), 0);
-                    m_strElement = m_doc->getDocumentElement();
+                    m_strElement = m_doc->createElement(Str2Xml("Stream"));
+                    m_stromxElement->appendChild(m_strElement);
                     
                     //Create attribute name of Stream
                     DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
