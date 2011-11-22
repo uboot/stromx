@@ -75,6 +75,10 @@ namespace stromx
         
         void XmlWriterTest::testWrite()
         {
+            //Attempt to write to filesystem without neccessary permission
+            CPPUNIT_ASSERT_THROW(XmlWriter().write("/root/test/XmlWriterTest_testWrite.xml", *m_stream), FileAccessFailed);
+            //Attempt to write to filesystem where access is guaranteed (hopefully: it is written to the subdirectory where
+            //the test was initiated
             XmlWriter().write("XmlWriterTest_testWrite.xml", *m_stream);
         }
 
