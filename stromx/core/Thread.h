@@ -32,7 +32,7 @@ namespace stromx
         }
         
         /** \brief A thread which visits input nodes */
-        class Thread
+        class STROMX_CORE_API Thread
         {    
             friend class Stream;
             friend class ThreadTest;

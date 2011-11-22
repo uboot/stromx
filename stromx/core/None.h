@@ -24,7 +24,7 @@ namespace stromx
     namespace core
     {
         /** \brief Undefined and empty data object */
-        class None : public Data
+        class STROMX_CORE_API None : public Data
         {
         public:
             None() {}

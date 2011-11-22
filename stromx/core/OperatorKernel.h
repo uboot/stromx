@@ -42,7 +42,7 @@ namespace stromx
          * It is never directly used in a stream but serves as a base class for the 
          * implementation of custom operators. 
          */
-        class OperatorKernel : public OperatorInfo
+        class STROMX_CORE_API OperatorKernel : public OperatorInfo
         {
             friend class impl::SynchronizedOperatorKernel;
             

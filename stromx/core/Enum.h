@@ -24,7 +24,7 @@ namespace stromx
     namespace core
     {
         /** \brief Value of an enumeration */
-        class Enum : public UInt32
+        class STROMX_CORE_API Enum : public UInt32
         {
         public:
             Enum() : UInt32() {}

@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_DATACONTAINER_H
 #define STROMX_CORE_DATACONTAINER_H
 
+#include "Config.h"
+
 #ifdef __GNUG__
     #include <tr1/memory>
 #else
@@ -41,7 +43,7 @@ namespace stromx
         }
         
         /** \brief Container which manages the life-cycle of data objects */
-        class DataContainer
+        class STROMX_CORE_API DataContainer
         {
             friend class impl::WriteAccessImpl;
             friend class impl::ReadAccessImpl;

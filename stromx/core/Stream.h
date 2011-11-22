@@ -36,7 +36,7 @@ namespace stromx
         }
         
         /** \brief The core data processing pipeline of core */
-        class Stream
+        class STROMX_CORE_API Stream
         {
         public:
             enum Status

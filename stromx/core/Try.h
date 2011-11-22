@@ -24,7 +24,7 @@ namespace stromx
     namespace core
     {
         /** \brief %Operator which renders ID-to-data maps optional  */
-        class Try : public Id2DataMapper
+        class STROMX_CORE_API Try : public Id2DataMapper
         {
         public:
             Try(const Id2DataMapper& mapper)

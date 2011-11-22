@@ -1,6 +1,6 @@
 #include "CameraBuffer.h"
 
-#include "Config.h"
+#include "../Config.h"
 
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/NumericParameter.h>

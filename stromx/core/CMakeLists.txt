@@ -6,7 +6,7 @@ set (STROMX_VERSION_PATCH 0)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_BINARY_DIR}/Config.h"
+  "${PROJECT_SOURCE_DIR}/Config.h"
 )
 
 if(BUILD_TESTS)
@@ -67,7 +67,6 @@ set_target_properties(stromx_core PROPERTIES
 
 include_directories(
     ${Boost_INCLUDE_DIRS}
-    ${PROJECT_BINARY_DIR}
 )
 
 if(BUILD_XML_SUPPORT)

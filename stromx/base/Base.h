@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_H
 #define STROMX_BASE_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -27,7 +29,7 @@ namespace stromx
 
 extern "C"
 {
-    void registerBase(stromx::core::Registry& registry);
+    STROMX_BASE_API void registerBase(stromx::core::Registry& registry);
 }
 
 #endif // STROMX_BASE_H
