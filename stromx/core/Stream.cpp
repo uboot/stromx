@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#include "boost/assert.hpp" //
-#include "Enum.h" //
+#include "boost/assert.hpp"
+#include "Enum.h"
 #include "Exception.h"
 #include "impl/InputNode.h"
 #include "impl/Network.h"
@@ -50,6 +50,11 @@ namespace stromx
             }
             
             delete m_network;
+        }
+        
+        const std::vector<Operator*>& Stream::operators() const
+        { 
+            return m_network->operators();
         }
         
         void Stream::start()

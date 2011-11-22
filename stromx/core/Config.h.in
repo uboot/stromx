@@ -18,3 +18,14 @@
 #define STROMX_VERSION_MINOR @STROMX_VERSION_MINOR@
 #define STROMX_VERSION_PATCH @STROMX_VERSION_PATCH@
 #define PACKAGE_NAME "Core"
+
+#ifdef WIN32
+    #ifdef stromx_core_EXPORT
+        #define STROMX_CORE_API __declspec(dllexport)
+    #else
+        #define STROMX_CORE_API __declspec(dllimport)
+    #endif // stromx_base_EXPORT
+#else
+    #define STROMX_CORE_API
+#endif // WIN32
+
