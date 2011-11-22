@@ -17,6 +17,9 @@
 #ifndef STROMX_CORE_IMPL_WRITEACCESSIMPL_H
 #define STROMX_CORE_IMPL_WRITEACCESSIMPL_H
 
+#include "../DataContainer.h"
+#include "../Core.h"
+
 namespace stromx
 {
     namespace core
@@ -26,7 +29,7 @@ namespace stromx
         
         namespace impl
         {
-            class WriteAccessImpl
+            class STROMX_CORE_API WriteAccessImpl
             {
             public:
                 WriteAccessImpl(DataContainer& data);

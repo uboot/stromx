@@ -28,7 +28,7 @@ namespace stromx
         class Operator;
         
         /** \brief %Factory of operator and data objects */
-        class Factory : public Registry
+        class STROMX_CORE_API Factory : public Registry
         {
         public:
             virtual ~Factory();

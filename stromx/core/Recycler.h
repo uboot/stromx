@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_RECYCLER_H
 #define STROMX_CORE_RECYCLER_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -27,7 +29,7 @@ namespace stromx
         }
         
         /** \brief Abstract receiver of recycled objects */
-        class Recycler
+        class STROMX_CORE_API Recycler
         {
         public:
             virtual void recycle(impl::DataContainerImpl* const container) = 0;

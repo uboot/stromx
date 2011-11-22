@@ -18,6 +18,7 @@
 #define STROMX_CORE_ENUMPARAMETER_H
 
 #include <vector>
+#include "Config.h"
 #include "Enum.h"
 #include "Parameter.h"
 
@@ -43,7 +44,7 @@ namespace stromx
         };
         
         /** \brief %Description of an enumeration parameter */
-        class EnumParameter : public Parameter
+        class STROMX_CORE_API EnumParameter : public Parameter
         {
         public:
             EnumParameter(const unsigned int id)

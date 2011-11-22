@@ -18,6 +18,7 @@
 #define STROMX_CORE_XMLREADER_H
 
 #include <string>
+#include "Config.h"
 
 namespace stromx
 {
@@ -27,7 +28,7 @@ namespace stromx
         class Stream;
         
         /** \brief Reader for XML encoded streams */
-        class XmlReader
+        class STROMX_CORE_API XmlReader
         {
         public:
             Stream* const read(const std::string & filename, const Factory& factory) const;

@@ -24,7 +24,7 @@ namespace stromx
         namespace core
     {
         /** \brief Concrete image without memory management */
-        class ImageWrapper : public Image
+        class STROMX_CORE_API ImageWrapper : public Image
         {
         public:
             ImageWrapper(const unsigned int size, uint8_t* const buffer);

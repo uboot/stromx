@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_DATA_H
 #define STROMX_CORE_DATA_H
 
+#include "Config.h"
 #include "DataVariant.h"
 #include "Exception.h"
 
@@ -29,7 +30,7 @@ namespace stromx
         class Version;
         
         /** \brief Abstract data object */
-        class Data
+        class STROMX_CORE_API Data
         {
         public:
             virtual ~Data() {}

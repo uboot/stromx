@@ -39,7 +39,7 @@ namespace stromx
         class DataContainer;
         
         /** \brief Recycle access to a data container */
-        class RecycleAccess
+        class STROMX_CORE_API RecycleAccess
         {
         public:
             RecycleAccess(const DataContainer data);

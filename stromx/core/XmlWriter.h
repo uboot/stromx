@@ -26,7 +26,7 @@ namespace stromx
         class Stream;
         
         /** \brief Writer for XML encoded streams */
-        class XmlWriter
+        class STROMX_CORE_API XmlWriter
         {
         public:
             void write(const std::string& filename, const Stream& stream) const;

@@ -18,6 +18,7 @@
 #define STROMX_CORE_DESCRIPTOR_H
 
 #include <string>
+#include "Config.h"
 #include "DataVariant.h"
 
 namespace stromx
@@ -34,7 +35,7 @@ namespace stromx
          * respective paramter. In addition, a Description can have a name which is 
          * purely informal and does not have any influence on its behavior.
          */
-        class Description
+        class STROMX_CORE_API Description
         {
         public:
             /** Constructs a description */

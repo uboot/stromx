@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_ID2DATACOMPOSITE_H
 #define STROMX_CORE_ID2DATACOMPOSITE_H
 
+#include "Config.h"
 #include "Id2DataMapper.h"
 
 namespace stromx
@@ -24,7 +25,7 @@ namespace stromx
     namespace core
     {
         /** \brief A composite expression of two ID-to-data mappers */
-        class Id2DataComposite : public Id2DataMapper
+        class STROMX_CORE_API Id2DataComposite : public Id2DataMapper
         {
         private:
             enum NodeType
@@ -34,8 +35,8 @@ namespace stromx
             };
             
         public:
-            friend const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
-            friend const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
+            STROMX_CORE_API friend const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
+            STROMX_CORE_API friend const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
             
             Id2DataComposite(const Id2DataMapper& lhs, const Id2DataMapper& rhs, const NodeType type)
             : m_lhs(lhs),
@@ -54,8 +55,8 @@ namespace stromx
             NodeType m_type;
         };
         
-        const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
-        const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
+        STROMX_CORE_API const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
+        STROMX_CORE_API const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
     }
 }
 

@@ -78,9 +78,9 @@ namespace stromx
             
             val_t m_value;
         };
-        
+
         typedef Primitive<bool, bool> Bool;
-            
+        
         typedef Primitive<int, int8_t> Int8;
         template <>
         const std::string Int8::serialize(const std::string & name, const std::string & path) const;
@@ -101,6 +101,15 @@ namespace stromx
         
         typedef Primitive<double, float> Float;
         typedef Primitive<double, double> Double;
+
+        template class STROMX_CORE_API Primitive<bool, bool>;
+        template class STROMX_CORE_API Primitive<int, int8_t>;    
+        template class STROMX_CORE_API Primitive<unsigned int, uint8_t>; 
+        template class STROMX_CORE_API Primitive<int, int16_t>;   
+        template class STROMX_CORE_API Primitive<int, int32_t>;   
+        template class STROMX_CORE_API Primitive<unsigned int, uint32_t>;   
+        template class STROMX_CORE_API Primitive<double, float>;   
+        template class STROMX_CORE_API Primitive<double, double>;   
     }
 }
     

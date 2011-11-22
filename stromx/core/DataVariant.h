@@ -18,6 +18,7 @@
 #define STROMX_CORE_DATAVARIANT_H
 
 #include <string>
+#include "Config.h"
 #include "Version.h"
 
 namespace stromx
@@ -25,7 +26,7 @@ namespace stromx
     namespace core
     {
         /** \brief %Description of a data variant */
-        class DataVariant
+        class STROMX_CORE_API DataVariant
         {
         public:
             const static DataVariant NONE;

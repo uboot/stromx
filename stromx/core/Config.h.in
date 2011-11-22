@@ -14,18 +14,22 @@
 *  limitations under the License.
 */
 
+#ifndef STROMX_CORE_CONFIG_H
+#define STROMX_CORE_CONFIG_H
+
 #define STROMX_VERSION_MAJOR @STROMX_VERSION_MAJOR@
 #define STROMX_VERSION_MINOR @STROMX_VERSION_MINOR@
 #define STROMX_VERSION_PATCH @STROMX_VERSION_PATCH@
 #define PACKAGE_NAME "Core"
 
 #ifdef WIN32
-    #ifdef stromx_core_EXPORT
+    #ifdef stromx_core_EXPORTS
         #define STROMX_CORE_API __declspec(dllexport)
     #else
         #define STROMX_CORE_API __declspec(dllimport)
-    #endif // stromx_base_EXPORT
+    #endif // stromx_core_EXPORTS
 #else
     #define STROMX_CORE_API
 #endif // WIN32
 
+#endif // STROMX_CORE_CONFIG_H

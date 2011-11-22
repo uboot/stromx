@@ -18,6 +18,7 @@
 #define STROMX_CORE_IMPL_READACCESSIMPL_H
 
 #include "../DataContainer.h"
+#include "../Core.h"
 
 namespace stromx
 {
@@ -28,7 +29,7 @@ namespace stromx
         
         namespace impl
         {
-            class ReadAccessImpl
+            class STROMX_CORE_API ReadAccessImpl
             {
             public:
                 ReadAccessImpl(DataContainer& data);

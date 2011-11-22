@@ -29,7 +29,7 @@ namespace stromx
          * parameter descriptions store information about the access mode
          * of a given parameter.
          */
-        class Parameter : public Description
+        class STROMX_CORE_API Parameter : public Description
         {
         public:
             enum AccessMode
