@@ -18,7 +18,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Config.h"
+#include "../Config.h"
 #include "../Data.h"
 #include "../Exception.h"
 #include "../Node.h"

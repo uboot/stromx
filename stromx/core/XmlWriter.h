@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_XMLWRITER_H
 #define STROMX_CORE_XMLWRITER_H
 
+#include "Config.h"
 #include <string>
 
 namespace stromx

@@ -110,7 +110,7 @@ namespace math
 {
     const std::string Add::TYPE("Add");
     const std::string Add::PACKAGE("Math");
-    const Version Add::VERSION(1, 0);
+    const Version Add::VERSION(1, 0, 0);
 \endcode
 
 Each operator kernel provides exports its type, the package it belongs to and its version. This information must be the same for each instance of specific operator class and is naturally stored in static variables. This data will be passed to the constructor of core::OperatorKernel.
@@ -249,25 +249,27 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 \code
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Stream>
-    <Operator id="0" package="Base" type="Counter" version="0.1"/>
-    <Operator id="1" package="Math" type="Add" version="1.0">
-        <Parameter id="0">
-            <Data type="UInt32" package="Core" version="0.1">2</Data>
-        </Parameter>
-        <Input id="0" operator="0" output="0"/>
-    </Operator>
-    <Operator id="2" package="Base" type="PeriodicDelay">
-        <Parameter id="0">
-            <Data type="UInt32" package="Core" version="0.1">1000</Data>
-        </Parameter>
-        <Input id="0" operator="1" output="0"/>
-    </Operator>
-    <Thread name="">
-        <InputNode operator="1" input="0"/>
-        <InputNode operator="2" input="0"/>
-    </Thread> 
-</Stream>
+<Stromx version="0.1.0">
+    <Stream>
+        <Operator id="0" package="Base" type="Counter" version="0.1.0"/>
+        <Operator id="1" package="Math" type="Add" version="1.0.0">
+            <Parameter id="0">
+                <Data type="UInt32" package="Core" version="0.1.0">2</Data>
+            </Parameter>
+            <Input id="0" operator="0" output="0"/>
+        </Operator>
+        <Operator id="2" package="Base" type="PeriodicDelay">
+            <Parameter id="0">
+                <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
+            </Parameter>
+            <Input id="0" operator="1" output="0"/>
+        </Operator>
+        <Thread name="">
+            <InputNode operator="1" input="0"/>
+            <InputNode operator="2" input="0"/>
+        </Thread> 
+    </Stream>
+</Stromx>
 \endcode 
 
 The program which runs the stream is almost identical to the one in the previous tutorial. The only extra step which has to be taken is the registration of the operator \em Add with the factory. 

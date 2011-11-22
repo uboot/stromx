@@ -22,32 +22,32 @@ namespace stromx
 {
     namespace core
     {
-        const DataVariant DataVariant::NONE = DataVariant(NONE_ID, PACKAGE_NAME, "None");
-        const DataVariant DataVariant::DATA = DataVariant(DATA_ID, PACKAGE_NAME, "Data");
-        const DataVariant DataVariant::TRIGGER = DataVariant(TRIGGER_ID, PACKAGE_NAME, "Trigger");
-        const DataVariant DataVariant::BOOL = DataVariant(BOOL_ID, PACKAGE_NAME, "Bool");
-        const DataVariant DataVariant::ENUM = DataVariant(ENUM_ID, PACKAGE_NAME, "Enum");
-        const DataVariant DataVariant::INT = DataVariant(INT_ID, PACKAGE_NAME, "Int");
-        const DataVariant DataVariant::UINT = DataVariant(UINT_ID, PACKAGE_NAME, "UInt");
-        const DataVariant DataVariant::INT_8 = DataVariant(INT_8_ID, PACKAGE_NAME, "Int8");
-        const DataVariant DataVariant::UINT_8 = DataVariant(UINT_8_ID, PACKAGE_NAME, "UInt8");
-        const DataVariant DataVariant::INT_16 = DataVariant(INT_16_ID, PACKAGE_NAME, "Int16");
-        const DataVariant DataVariant::UINT_16 = DataVariant(UINT_16_ID, PACKAGE_NAME, "UInt16");
-        const DataVariant DataVariant::INT_32 = DataVariant(INT_32_ID, PACKAGE_NAME, "Int32");
-        const DataVariant DataVariant::UINT_32 = DataVariant(UINT_32_ID, PACKAGE_NAME, "UInt32");
-        const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, PACKAGE_NAME, "Float");
-        const DataVariant DataVariant::DOUBLE = DataVariant(DOUBLE_ID, PACKAGE_NAME, "Double");
-        const DataVariant DataVariant::IMAGE = DataVariant(IMAGE_ID, PACKAGE_NAME, "Image");
-        const DataVariant DataVariant::MONO_IMAGE = DataVariant(MONO_IMAGE_ID, PACKAGE_NAME, "Mono image");
-        const DataVariant DataVariant::RGB_IMAGE = DataVariant(RGB_IMAGE_ID, PACKAGE_NAME, "RGB image");
-        const DataVariant DataVariant::MONO_8_IMAGE = DataVariant(MONO_8_IMAGE_ID, PACKAGE_NAME, "Mono image 8-bit");
-        const DataVariant DataVariant::RGB_24_IMAGE = DataVariant(RGB_24_IMAGE_ID, PACKAGE_NAME, "RGB image 24-bit");
-        const DataVariant DataVariant::BGR_24_IMAGE = DataVariant(BGR_24_IMAGE_ID, PACKAGE_NAME, "BGR image 24-bit");
-        const DataVariant DataVariant::BAYERBG_8_IMAGE = DataVariant(BAYERBG_8_IMAGE_ID, PACKAGE_NAME, "Bayer BG image 8-bit");
-        const DataVariant DataVariant::BAYERGB_8_IMAGE = DataVariant(BAYERGB_8_IMAGE_ID, PACKAGE_NAME, "Bayer GB image 8-bit");
-        const DataVariant DataVariant::MONO_16_IMAGE = DataVariant(MONO_16_IMAGE_ID, PACKAGE_NAME, "Mono image 16-bit");
-        const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, PACKAGE_NAME, "RGB image 48-bit");
-        const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, PACKAGE_NAME, "BGR image 48-bit");
+        const DataVariant DataVariant::NONE = DataVariant(NONE_ID, CORE_PACKAGE_NAME, "None");
+        const DataVariant DataVariant::DATA = DataVariant(DATA_ID, CORE_PACKAGE_NAME, "Data");
+        const DataVariant DataVariant::TRIGGER = DataVariant(TRIGGER_ID, CORE_PACKAGE_NAME, "Trigger");
+        const DataVariant DataVariant::BOOL = DataVariant(BOOL_ID, CORE_PACKAGE_NAME, "Bool");
+        const DataVariant DataVariant::ENUM = DataVariant(ENUM_ID, CORE_PACKAGE_NAME, "Enum");
+        const DataVariant DataVariant::INT = DataVariant(INT_ID, CORE_PACKAGE_NAME, "Int");
+        const DataVariant DataVariant::UINT = DataVariant(UINT_ID, CORE_PACKAGE_NAME, "UInt");
+        const DataVariant DataVariant::INT_8 = DataVariant(INT_8_ID, CORE_PACKAGE_NAME, "Int8");
+        const DataVariant DataVariant::UINT_8 = DataVariant(UINT_8_ID, CORE_PACKAGE_NAME, "UInt8");
+        const DataVariant DataVariant::INT_16 = DataVariant(INT_16_ID, CORE_PACKAGE_NAME, "Int16");
+        const DataVariant DataVariant::UINT_16 = DataVariant(UINT_16_ID, CORE_PACKAGE_NAME, "UInt16");
+        const DataVariant DataVariant::INT_32 = DataVariant(INT_32_ID, CORE_PACKAGE_NAME, "Int32");
+        const DataVariant DataVariant::UINT_32 = DataVariant(UINT_32_ID, CORE_PACKAGE_NAME, "UInt32");
+        const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, CORE_PACKAGE_NAME, "Float");
+        const DataVariant DataVariant::DOUBLE = DataVariant(DOUBLE_ID, CORE_PACKAGE_NAME, "Double");
+        const DataVariant DataVariant::IMAGE = DataVariant(IMAGE_ID, CORE_PACKAGE_NAME, "Image");
+        const DataVariant DataVariant::MONO_IMAGE = DataVariant(MONO_IMAGE_ID, CORE_PACKAGE_NAME, "Mono image");
+        const DataVariant DataVariant::RGB_IMAGE = DataVariant(RGB_IMAGE_ID, CORE_PACKAGE_NAME, "RGB image");
+        const DataVariant DataVariant::MONO_8_IMAGE = DataVariant(MONO_8_IMAGE_ID, CORE_PACKAGE_NAME, "Mono image 8-bit");
+        const DataVariant DataVariant::RGB_24_IMAGE = DataVariant(RGB_24_IMAGE_ID, CORE_PACKAGE_NAME, "RGB image 24-bit");
+        const DataVariant DataVariant::BGR_24_IMAGE = DataVariant(BGR_24_IMAGE_ID, CORE_PACKAGE_NAME, "BGR image 24-bit");
+        const DataVariant DataVariant::BAYERBG_8_IMAGE = DataVariant(BAYERBG_8_IMAGE_ID, CORE_PACKAGE_NAME, "Bayer BG image 8-bit");
+        const DataVariant DataVariant::BAYERGB_8_IMAGE = DataVariant(BAYERGB_8_IMAGE_ID, CORE_PACKAGE_NAME, "Bayer GB image 8-bit");
+        const DataVariant DataVariant::MONO_16_IMAGE = DataVariant(MONO_16_IMAGE_ID, CORE_PACKAGE_NAME, "Mono image 16-bit");
+        const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, CORE_PACKAGE_NAME, "RGB image 48-bit");
+        const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, CORE_PACKAGE_NAME, "BGR image 48-bit");
             
         const bool DataVariant::isVariant(const core::DataVariant& variant) const
         {
