@@ -23,7 +23,9 @@
 #define STROMX_CORE_PACKAGE_NAME "Core"
 
 #ifdef WIN32
-    #ifndef STROMX_CORE_STATIC
+    #ifdef STROMX_CORE_STATIC
+        #define STROMX_CORE_API
+    #else
         #ifdef stromx_core_EXPORTS
             #define STROMX_CORE_API __declspec(dllexport)
         #else

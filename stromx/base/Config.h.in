@@ -23,7 +23,9 @@
 #define STROMX_BASE_PACKAGE_NAME "Base"
 
 #ifdef WIN32
-    #ifndef STROMX_BASE_STATIC
+    #ifdef STROMX_BASE_STATIC
+        #define STROMX_BASE_API
+    #else
         #ifdef stromx_base_EXPORTS
             #define STROMX_BASE_API __declspec(dllexport)
         #else
