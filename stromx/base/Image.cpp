@@ -10,7 +10,7 @@ namespace stromx
     namespace base
     {
         const std::string Image::TYPE = "Image";
-        const std::string Image::PACKAGE = BASE_PACKAGE_NAME;
+        const std::string Image::PACKAGE = STROMX_BASE_PACKAGE_NAME;
         const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Image::Image(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)

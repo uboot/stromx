@@ -15,7 +15,7 @@ namespace stromx
     {
         const std::string Trigger::TYPE("Trigger");
         
-        const std::string Trigger::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string Trigger::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Trigger::Trigger()

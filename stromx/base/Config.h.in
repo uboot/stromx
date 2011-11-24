@@ -20,14 +20,16 @@
 #define BASE_VERSION_MAJOR @BASE_VERSION_MAJOR@
 #define BASE_VERSION_MINOR @BASE_VERSION_MINOR@
 #define BASE_VERSION_PATCH @BASE_VERSION_PATCH@
-#define BASE_PACKAGE_NAME "Base"
+#define STROMX_BASE_PACKAGE_NAME "Base"
 
 #ifdef WIN32
-    #ifdef stromx_base_EXPORTS
-        #define STROMX_BASE_API __declspec(dllexport)
-    #else
-        #define STROMX_BASE_API __declspec(dllimport)
-    #endif // stromx_base_EXPORTS
+    #ifndef STROMX_BASE_STATIC
+        #ifdef stromx_base_EXPORTS
+            #define STROMX_BASE_API __declspec(dllexport)
+        #else
+            #define STROMX_BASE_API __declspec(dllimport)
+        #endif // stromx_base_EXPORTS
+    #endif // STROMX_BASE_STATIC
 #else
     #define STROMX_BASE_API
 #endif // WIN32

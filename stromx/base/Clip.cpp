@@ -20,7 +20,7 @@ namespace stromx
     {
         const std::string Clip::TYPE("Clip");
         
-        const std::string Clip::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string Clip::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version Clip::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Clip::Clip()

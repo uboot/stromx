@@ -1,5 +1,9 @@
 project(stromx_base_test)
 
+if(MSVC)
+    add_definitions(/DSTROMX_BASE_STATIC)
+endif(MSVC)
+
 include_directories(
     ../../..
     ${Boost_INCLUDE_DIRS}

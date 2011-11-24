@@ -1,4 +1,8 @@
 project(stromx_core_test)
+    
+if(MSVC)
+    add_definitions(/DSTROMX_CORE_STATIC)
+endif(MSVC)
 
 include_directories(
     ../../..
