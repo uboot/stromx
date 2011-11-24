@@ -44,6 +44,11 @@ namespace stromx
         {
             const std::string XmlReaderImpl::DTD =
     " \
+    <!ELEMENT Stromx (Stream)> \
+    <!ATTLIST Stromx \
+        version CDATA #IMPLIED \
+    > \
+    \
     <!ELEMENT Stream (Operator*, Thread*)> \
     <!ATTLIST Stream \
         name CDATA #IMPLIED \
@@ -99,6 +104,7 @@ namespace stromx
                     
                     virtual void error (const SAXParseException &exc)
                     {
+                        std::string msg(Xml2Str(exc.getMessage()));
                         throw FileAccessFailed(m_filename, "XML file is not valid.");
                     }
                     
@@ -115,14 +121,16 @@ namespace stromx
                 
                 XercesDOMParser* parser = new XercesDOMParser();
                 
-                MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
-                if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
-                {
-                    throw InternalError("Failed to load DTD.");
-                }
-
+//                 MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
+//                 if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
+//                 {
+//                     throw InternalError("Failed to load DTD.");
+//                 }
+                
+                parser->loadGrammar("stromx.dtd", Grammar::DTDGrammarType, true);
+                parser->useCachedGrammarInParse(true);
                 parser->setErrorHandler(errHandler);
-                parser->setValidationScheme(XercesDOMParser::Val_Auto);
+                parser->setValidationScheme(XercesDOMParser::Val_Always);
                 parser->setDoNamespaces(true);    // optional
 
                 const char* xmlFile = filename.c_str();

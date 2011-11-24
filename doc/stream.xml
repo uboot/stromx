@@ -2,6 +2,7 @@
 
    <!-- validate: xmllint \-\-valid \-\-noout stream.xml
                   (remove backslashes)
+                  xmllint \-\-dtdvalid stromx.dtd \-\-noout stream.xml
    -->
 
 <!DOCTYPE  Stromx [
