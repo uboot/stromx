@@ -79,6 +79,7 @@ namespace stromx
             val_t m_value;
         };
 
+
         typedef Primitive<bool, bool> Bool;
         
         typedef Primitive<int, int8_t> Int8;

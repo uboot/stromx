@@ -25,7 +25,7 @@ namespace stromx
     {
         class OperatorInfo;
 
-        class STROMX_CORE_API Parameter;
+        class Parameter;
         
         /** \brief Abstract error in connection with a specified operator */
         class OperatorError : public Exception
@@ -42,7 +42,7 @@ namespace stromx
         };
         
         /** \brief A parameter with this ID does not exist */
-        class STROMX_CORE_API WrongParameterId : public OperatorError
+        class WrongParameterId : public OperatorError
         {
         public:
             WrongParameterId(const unsigned int id, const OperatorInfo& op, const std::string & message = "WrongParameterId")
@@ -55,7 +55,7 @@ namespace stromx
         };
         
         /** \brief General error in connection with a specified parameter */
-        class STROMX_CORE_API ParameterError : public OperatorError
+        class ParameterError : public OperatorError
         {
         public:
             ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterError")
@@ -68,7 +68,7 @@ namespace stromx
         };
         
         /** \brief Tried to set a parameter to data of the wrong type */
-        class STROMX_CORE_API WrongParameterType : public ParameterError
+        class WrongParameterType : public ParameterError
         {
         public:
             WrongParameterType(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterType")
@@ -77,7 +77,7 @@ namespace stromx
         };
         
         /** \brief Tried to set a parameter to a wrong value */
-        class STROMX_CORE_API WrongParameterValue : public ParameterError
+        class WrongParameterValue : public ParameterError
         {
         public:
             WrongParameterValue(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterValue")
@@ -86,7 +86,7 @@ namespace stromx
         };
         
         /** \brief Tried to violate the parameter access mode */
-        class STROMX_CORE_API ParameterAccessViolation : public ParameterError
+        class ParameterAccessViolation : public ParameterError
         {
         public:
             ParameterAccessViolation(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterAccessViolation")
@@ -95,7 +95,7 @@ namespace stromx
         };
         
         /** \brief General error in connection with an operator input */
-        class STROMX_CORE_API InputError : public OperatorError
+        class InputError : public OperatorError
         {
         public:
             InputError(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "InputError")
@@ -108,7 +108,7 @@ namespace stromx
         };
         
         /** \brief Tried to set the input to data of the wrong type */
-        class STROMX_CORE_API WrongInputType : public InputError
+        class WrongInputType : public InputError
         {
         public:
             WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "WrongInputType")
