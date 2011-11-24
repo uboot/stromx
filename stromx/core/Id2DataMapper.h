@@ -29,7 +29,7 @@ namespace stromx
         }
         
         /** \brief Abstract base class of ID-to-data mappers */
-        class Id2DataMapper
+        class STROMX_CORE_API Id2DataMapper
         { 
         public:
             virtual ~Id2DataMapper() {}

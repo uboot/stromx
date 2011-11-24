@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_CONVERTPIXELTYPE_H
 #define STROMX_BASE_CONVERTPIXELTYPE_H
 
+#include "Config.h"
+
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Enum.h>
@@ -26,7 +28,7 @@ namespace stromx
 {
     namespace base
     {
-        class ConvertPixelType : public core::OperatorKernel
+        class STROMX_BASE_API ConvertPixelType : public core::OperatorKernel
         {
         public:
             enum InputId

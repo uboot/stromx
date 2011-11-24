@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_CLIP_H
 #define STROMX_BASE_CLIP_H
 
+#include "Config.h"
+
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/RecycleAccess.h>
@@ -25,7 +27,7 @@ namespace stromx
 {
     namespace base
     {
-        class Clip : public core::OperatorKernel
+        class STROMX_BASE_API Clip : public core::OperatorKernel
         {
         public:
             enum InputId

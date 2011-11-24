@@ -10,7 +10,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(MSVC)
-    add_definitions(/DBOOST_ALL_DYN_LINK /DCPPUNIT_DLL)
+    add_definitions(/DBOOST_ALL_DYN_LINK)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
 endif(MSVC)
 

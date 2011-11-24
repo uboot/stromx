@@ -1,6 +1,5 @@
 #include "ConstImage.h"
 
-#include "Config.h"
 #include "Image.h"
 #include "Utilities.h"
 

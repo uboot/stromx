@@ -1,6 +1,5 @@
 #include "ConvertPixelType.h"
 
-#include "Config.h"
 #include "Image.h"
 #include "Utilities.h"
 

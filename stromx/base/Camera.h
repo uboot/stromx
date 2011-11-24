@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_CAMERA_H
 #define STROMX_BASE_CAMERA_H
 
+#include "Config.h"
+
 #include <stromx/core/Primitive.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Trigger.h>
@@ -36,7 +38,7 @@ namespace stromx
 
     namespace base
     {
-        class Camera : public core::OperatorKernel
+        class STROMX_BASE_API Camera : public core::OperatorKernel
         {
         public:
             enum OutputId

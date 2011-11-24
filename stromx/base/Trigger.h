@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_TRIGGER_H
 #define STROMX_BASE_TRIGGER_H
 
+#include "Config.h"
+
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
@@ -33,7 +35,7 @@ namespace stromx
 
     namespace base
     {
-        class Trigger : public core::OperatorKernel
+        class STROMX_BASE_API Trigger : public core::OperatorKernel
         {
         public:
             enum InputId

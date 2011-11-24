@@ -1,6 +1,5 @@
 #include "Image.h"
 
-#include "Config.h"
 #include "Utilities.h"
 
 #include <stromx/core/Exception.h>

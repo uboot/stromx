@@ -1,6 +1,8 @@
 #ifndef STROMX_CORE_IMAGEIMPL_H
 #define STROMX_CORE_IMAGEIMPL_H
 
+#include "Config.h"
+
 #include <stromx/core/ImageWrapper.h>
 
 #include <string>
@@ -10,7 +12,7 @@ namespace stromx
 {
     namespace base
     {
-        class Image : public core::ImageWrapper
+        class STROMX_BASE_API Image : public core::ImageWrapper
         {
         public:
             Image();

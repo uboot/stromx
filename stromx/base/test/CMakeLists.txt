@@ -46,6 +46,7 @@ target_link_libraries(stromx_base_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${OpenCV2_CORE_LIBRARY}
+    ${OpenCV2_IMGPROC_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
     stromx_core
 )

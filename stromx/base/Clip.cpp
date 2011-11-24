@@ -1,6 +1,5 @@
 #include "Clip.h"
 
-#include "Config.h"
 #include "Image.h"
 #include "Utilities.h"
 

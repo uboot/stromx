@@ -1,7 +1,5 @@
 #include "Trigger.h"
 
-#include "Config.h"
-
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
 #include <stromx/core/Id2DataPair.h>

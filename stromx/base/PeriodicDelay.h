@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_TIMEPERIOD_H
 #define STROMX_BASE_TIMEPERIOD_H
 
+#include "Config.h"
+
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
@@ -32,7 +34,7 @@ namespace stromx
 
     namespace base
     {
-        class PeriodicDelay : public core::OperatorKernel
+        class STROMX_BASE_API PeriodicDelay : public core::OperatorKernel
         {
         public:
             enum InputId

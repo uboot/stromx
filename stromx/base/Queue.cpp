@@ -1,7 +1,5 @@
 #include "Queue.h"
 
-#include "Config.h"
-
 #include <stromx/core/NumericParameter.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/OperatorException.h>

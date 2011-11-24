@@ -17,6 +17,8 @@
 #ifndef STROMX_BASE_CONSTIMAGE_H
 #define STROMX_BASE_CONSTIMAGE_H
 
+#include "Config.h"
+
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Enum.h>
@@ -31,7 +33,7 @@ namespace stromx
 
     namespace base
     {
-        class ConstImage : public core::OperatorKernel
+        class STROMX_BASE_API ConstImage : public core::OperatorKernel
         {
         public:
             enum OutputIds

@@ -81,27 +81,43 @@ namespace stromx
 
 
         typedef Primitive<bool, bool> Bool;
+        template<>
+        STROMX_CORE_API const DataVariant & Bool::variant() const;
         
         typedef Primitive<int, int8_t> Int8;
+        template<>
+        STROMX_CORE_API const DataVariant & Int8::variant() const;
         template <>
-        const std::string Int8::serialize(const std::string & name, const std::string & path) const;
+        STROMX_CORE_API const std::string Int8::serialize(const std::string & name, const std::string & path) const;
         template <>
-        void Int8::deserialize(const std::string & data, const std::string & path);
+        STROMX_CORE_API void Int8::deserialize(const std::string & data, const std::string & path);
         
         typedef Primitive<unsigned int, uint8_t> UInt8;
+        template<>
+        STROMX_CORE_API const DataVariant & UInt8::variant() const;
         template <>
-        const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
+        STROMX_CORE_API const std::string UInt8::serialize(const std::string & name, const std::string & path) const;
         template <>
-        void UInt8::deserialize(const std::string & data, const std::string & path);
+        STROMX_CORE_API void UInt8::deserialize(const std::string & data, const std::string & path);
         
         typedef Primitive<int, int16_t> Int16;
+        template<>
+        STROMX_CORE_API const DataVariant & Int16::variant() const;
+
         typedef Primitive<unsigned int, uint16_t> UInt16;
+        template<>
+        STROMX_CORE_API const DataVariant & UInt16::variant() const;
         
         typedef Primitive<int, int32_t> Int32;
         typedef Primitive<unsigned int, uint32_t> UInt32;
         
         typedef Primitive<double, float> Float;
+        template<>
+        STROMX_CORE_API const DataVariant & Float::variant() const;
+
         typedef Primitive<double, double> Double;
+        template<>
+        STROMX_CORE_API const DataVariant & Double::variant() const;
 
         template class STROMX_CORE_API Primitive<bool, bool>;
         template class STROMX_CORE_API Primitive<int, int8_t>;    
