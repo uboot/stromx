@@ -11,7 +11,7 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(MSVC)
     add_definitions(/DBOOST_ALL_DYN_LINK)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251 /wd4275 /wd4661")
 endif(MSVC)
 
 include(UseDoxygen OPTIONAL)

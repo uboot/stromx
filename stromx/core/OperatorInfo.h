@@ -32,7 +32,7 @@ namespace stromx
          * looking at its API documentaion. This information reaches its final status
          * only after Operator::initialize() is called.
          */
-        class STROMX_CORE_API OperatorInfo
+        class OperatorInfo
         {
         public:
             /** Returns the type. In general this is the name of the class of its implementation. */

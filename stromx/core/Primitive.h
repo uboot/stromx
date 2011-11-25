@@ -35,7 +35,7 @@ namespace stromx
         
         /** \brief %Primitive data value */
         template <class repr_t, class val_t>
-        class Primitive : public Data
+        class STROMX_CORE_API Primitive : public Data
         {
         public:
             explicit Primitive() : m_value(0) {}
@@ -123,6 +123,7 @@ namespace stromx
         template class STROMX_CORE_API Primitive<int, int8_t>;    
         template class STROMX_CORE_API Primitive<unsigned int, uint8_t>; 
         template class STROMX_CORE_API Primitive<int, int16_t>;   
+        template class STROMX_CORE_API Primitive<unsigned int, uint16_t>;   
         template class STROMX_CORE_API Primitive<int, int32_t>;   
         template class STROMX_CORE_API Primitive<unsigned int, uint32_t>;   
         template class STROMX_CORE_API Primitive<double, float>;   

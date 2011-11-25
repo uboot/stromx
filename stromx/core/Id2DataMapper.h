@@ -17,8 +17,6 @@
 #ifndef STROMX_CORE_ID2DATAMAPPER_H
 #define STROMX_CORE_ID2DATAMAPPER_H
 
-#include "Config.h"
-
 namespace stromx
 {
     namespace core
@@ -29,7 +27,7 @@ namespace stromx
         }
         
         /** \brief Abstract base class of ID-to-data mappers */
-        class STROMX_CORE_API Id2DataMapper
+        class Id2DataMapper
         { 
         public:
             virtual ~Id2DataMapper() {}
