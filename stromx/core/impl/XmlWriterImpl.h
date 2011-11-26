@@ -53,6 +53,7 @@ namespace stromx
                 std::string m_filename;
                 xercesc::DOMImplementation* m_impl;
                 xercesc::DOMDocument* m_doc;
+                xercesc::DOMComment* m_comment;
                 xercesc::DOMElement* m_stromxElement;
                 xercesc::DOMElement* m_strElement;
             };

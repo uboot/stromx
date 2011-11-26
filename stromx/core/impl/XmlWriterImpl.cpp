@@ -34,7 +34,7 @@ namespace stromx
     {
         namespace impl
         {
-            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_strElement(0)
+            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_comment(0), m_stromxElement(0), m_strElement(0)
             {
                 try
                 {
@@ -275,13 +275,17 @@ namespace stromx
                 
                 try
                 {
+
+                    //Create document
+                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), 0);
+                     
                     //Create comment
-                   
+                    m_comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
+                    m_doc->appendChild(m_comment); 
                     
-                    //Create Stromx branch
-                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), 0);                    
-                    m_stromxElement = m_doc->getDocumentElement();
-                    
+                    //Create Stromx branch           
+                    m_stromxElement = m_doc->getDocumentElement();              
+                
                     //Create attribute version of Stromx
                     DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
                     std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
