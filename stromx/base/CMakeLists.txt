@@ -6,7 +6,7 @@ set (BASE_VERSION_PATCH 0)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_BINARY_DIR}/Config.h"
+  "${PROJECT_SOURCE_DIR}/Config.h"
 )
 
 if(BUILD_TESTS)
@@ -15,7 +15,6 @@ endif()
 
 include_directories(
     ../..
-    ${PROJECT_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
 	${OpenCV2_INCLUDE_DIR}
 )
@@ -46,6 +45,9 @@ set_target_properties(stromx_base PROPERTIES
 )
 
 target_link_libraries(stromx_base
+    ${Boost_LIBRARIES}
     ${OpenCV2_CORE_LIBRARY}
+    ${OpenCV2_IMGPROC_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
+    stromx_core
 )

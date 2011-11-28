@@ -25,7 +25,7 @@ namespace stromx
     namespace core
     {
         /** \brief Abstract image */
-        class Image : public Data
+        class STROMX_CORE_API Image : public Data
         {
         public:
             enum PixelType

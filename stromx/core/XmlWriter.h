@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_XMLWRITER_H
 #define STROMX_CORE_XMLWRITER_H
 
+#include "Config.h"
 #include <string>
 
 namespace stromx
@@ -26,7 +27,7 @@ namespace stromx
         class Stream;
         
         /** \brief Writer for XML encoded streams */
-        class XmlWriter
+        class STROMX_CORE_API XmlWriter
         {
         public:
             void write(const std::string& filename, const Stream& stream) const;

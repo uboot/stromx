@@ -18,7 +18,7 @@ namespace stromx
     {
         const std::string Queue::TYPE("Queue");
         
-        const std::string Queue::PACKAGE(PACKAGE_NAME);
+        const std::string Queue::PACKAGE(BASE_PACKAGE_NAME);
         const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Queue::Queue()

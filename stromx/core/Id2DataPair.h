@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_ID2DATAPAIR_H
 #define STROMX_CORE_ID2DATAPAIR_H
 
+#include "Config.h"
 #include "DataContainer.h"
 #include "Id2DataMapper.h"
 
@@ -30,7 +31,7 @@ namespace stromx
         }
         
         /** \brief A direct map of one ID to one data object */
-        class Id2DataPair : public Id2DataMapper
+        class STROMX_CORE_API Id2DataPair : public Id2DataMapper
         {
         public:
             Id2DataPair(const unsigned int id, DataContainer data)

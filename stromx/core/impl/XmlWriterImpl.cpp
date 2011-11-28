@@ -16,7 +16,9 @@
 
 #include <boost/lexical_cast.hpp>
 #include <iostream>
+#include <fstream>
 
+#include "../Config.h"
 #include "../Data.h"
 #include "../Exception.h"
 #include "../Node.h"
@@ -32,7 +34,7 @@ namespace stromx
     {
         namespace impl
         {
-            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_strElement(0)
+            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_stromxElement(0), m_strElement(0)
             {
                 try
                 {
@@ -273,9 +275,30 @@ namespace stromx
                 
                 try
                 {
+                    //Create document type
+                    DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
+                    
+                    //Create document
+                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+                                        
+                    //Create comment
+                    DOMComment* comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
+                    m_doc->appendChild(comment); 
+                    
+                    //Create Stromx branch           
+                    m_stromxElement = m_doc->getDocumentElement();              
+                
+                    //Create attribute version of Stromx
+                    DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                    std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
+                    verAttr->setValue(Str2Xml(str.c_str()));
+                    m_stromxElement->setAttributeNode(verAttr);
+                    
                     //Create Stream branch
-                    m_doc = m_impl->createDocument(0, Str2Xml("Stream"), 0);
-                    m_strElement = m_doc->getDocumentElement();
+                    m_strElement = m_doc->createElement(Str2Xml("Stream"));
+                    m_stromxElement->appendChild(m_strElement);
                     
                     //Create attribute name of Stream
                     DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
@@ -290,7 +313,21 @@ namespace stromx
                     DOMLSSerializer* serializer = m_impl->createLSSerializer();
                     serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
                     char* content = XMLString::transcode(serializer->writeToString(m_doc));
-                    std::cout << content << std::endl;
+                    std::ofstream xmlFile;
+                    xmlFile.open(filename.c_str());
+                    if (xmlFile.is_open())
+                    {
+                        xmlFile << content << std::endl;
+                        xmlFile.close();
+                        if (!xmlFile.good())
+                        {
+                            throw FileAccessFailed("Error during file access");
+                        }
+                    }
+                    else
+                    {
+                        throw FileAccessFailed("Could not open XML file.");
+                    }
                     XMLString::release(&content);
                     serializer->release();
 

@@ -17,7 +17,7 @@ namespace stromx
     {
         const std::string ConstImage::TYPE("ConstImage");
         
-        const std::string ConstImage::PACKAGE(PACKAGE_NAME);
+        const std::string ConstImage::PACKAGE(BASE_PACKAGE_NAME);
         const Version ConstImage::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         ConstImage::ConstImage()

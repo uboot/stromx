@@ -5,7 +5,6 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIR}
 	${OpenCV2_INCLUDE_DIR}
-    ${PROJECT_BINARY_DIR}/..
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

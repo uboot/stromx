@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Strom name="TestStrom">
+<Stream name="TestStrom">
     <Operator id="0" package="TestPackage" type="TestOperator" name="Number 1">
     <Thread name="Processing thread"/>
-</Strom>
+</Stream>

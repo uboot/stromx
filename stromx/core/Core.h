@@ -17,6 +17,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -27,7 +29,7 @@ namespace stromx
 
 extern "C"
 {
-    void registerCore(stromx::core::Registry& registry);
+    STROMX_CORE_API void registerCore(stromx::core::Registry& registry);
 }
 
 #endif // CORE_H

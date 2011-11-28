@@ -16,8 +16,6 @@
 
 #include "TestData.h"
 
-#include "Config.h"
-
 namespace stromx
 {
     namespace core

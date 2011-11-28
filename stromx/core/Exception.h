@@ -19,6 +19,7 @@
 
 #include <exception>
 #include <string>
+#include "Config.h"
 
 namespace stromx
 {
@@ -27,7 +28,7 @@ namespace stromx
         class Data;
         
         /** \brief Abstract %core exception */
-        class Exception : public std::exception
+        class STROMX_CORE_API Exception : public std::exception
         {
         public:
             virtual ~Exception() throw() {}
@@ -42,7 +43,7 @@ namespace stromx
         };  
         
         /** \brief A wrong argument was passed to a function */
-        class WrongArgument : public Exception
+        class STROMX_CORE_API WrongArgument : public Exception
         {
         public:
             WrongArgument(const std::string & message = "WrongArgument")
@@ -51,7 +52,7 @@ namespace stromx
         };  
         
         /** \brief An object was identified by a wrong ID */
-        class WrongId : public WrongArgument
+        class STROMX_CORE_API WrongId : public WrongArgument
         {
         public:
             WrongId(const std::string & message = "WrongId")
@@ -60,7 +61,7 @@ namespace stromx
         };  
         
         /** \brief The current state does not allow a specific operation */
-        class WrongState : public Exception
+        class STROMX_CORE_API WrongState : public Exception
         {
         public:
             WrongState(const std::string & message = "WrongState")
@@ -69,7 +70,7 @@ namespace stromx
         };
         
         /** \brief An internal, unexpected error occurred */
-        class InternalError : public Exception
+        class STROMX_CORE_API InternalError : public Exception
         {
         public:
             InternalError(const std::string & message = "InternalError")
@@ -78,7 +79,7 @@ namespace stromx
         };
         
         /** \brief The current thread was stopped */
-        class Interrupt : public Exception
+        class STROMX_CORE_API Interrupt : public Exception
         {
         public:
             Interrupt(const std::string & message = "Interrupt")
@@ -87,7 +88,7 @@ namespace stromx
         };
         
         /** \brief An error occurred during file access */
-        class FileAccessFailed : public Exception
+        class STROMX_CORE_API FileAccessFailed : public Exception
         {
         public:
             FileAccessFailed(const std::string & filename, const std::string & message = "FileAccessFailed")
@@ -100,7 +101,7 @@ namespace stromx
         };
         
         /** \brief Not enought memory */
-        class OutOfMemory : public Exception
+        class STROMX_CORE_API OutOfMemory : public Exception
         {
         public:
             OutOfMemory(const std::string & message = "OutOfMemory")
@@ -109,7 +110,7 @@ namespace stromx
         };
         
         /** \brief An operation timed out */
-        class Timeout : public Exception
+        class STROMX_CORE_API Timeout : public Exception
         {
         public:
             Timeout(const std::string & message = "Timeout")
@@ -118,7 +119,7 @@ namespace stromx
         };
         
         /** \brief An impossible cast was attempted */
-        class BadCast : public Exception
+        class STROMX_CORE_API BadCast : public Exception
         {
         public:
             BadCast(const std::string & message = "BadCast")
@@ -127,7 +128,7 @@ namespace stromx
         };
         
         /** \brief A function which is not implemented was called */
-        class NotImplemented : public Exception
+        class STROMX_CORE_API NotImplemented : public Exception
         {
         public:
             NotImplemented(const std::string & message = "NotImplemented")
@@ -136,7 +137,7 @@ namespace stromx
         };
         
         /** \brief %Data could not be serialized */
-        class SerializationError : public Exception
+        class STROMX_CORE_API SerializationError : public Exception
         {
         public:
             SerializationError(const Data& data, const std::string & name, const std::string & path, const std::string & message = "SerializationError")
@@ -153,7 +154,7 @@ namespace stromx
         };
         
         /** \brief %Data could not be deserialized */
-        class DeserializationError : public Exception
+        class STROMX_CORE_API DeserializationError : public Exception
         {
         public:
             DeserializationError(const Data& data, const std::string & dataString, const std::string & path, const std::string & message = "DeserializationError")

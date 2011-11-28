@@ -52,7 +52,7 @@ namespace stromx
          * value of a specific parameter can be read or written dependes on the current status
          * of the operators.
          */
-        class Operator
+        class STROMX_CORE_API Operator
         {
             friend class FactoryTest;
             friend class impl::Network;

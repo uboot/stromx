@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_NODE_H
 #define STROMX_CORE_NODE_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -24,7 +26,7 @@ namespace stromx
         class Operator;
         
         /** \brief Identifier of a node of an operator */
-        class Node
+        class STROMX_CORE_API Node
         {
         public:
             Node(Operator* const op, const unsigned int id)

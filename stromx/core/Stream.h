@@ -19,7 +19,8 @@
 
 #include <string>
 #include <vector> 
-#include "impl/Network.h"
+
+#include "Node.h"
 
 namespace stromx
 {
@@ -29,8 +30,13 @@ namespace stromx
         class Registry;
         class Thread;
         
+        namespace impl
+        {
+            class Network;
+        }
+        
         /** \brief The core data processing pipeline of core */
-        class Stream
+        class STROMX_CORE_API Stream
         {
         public:
             enum Status
@@ -45,7 +51,7 @@ namespace stromx
             const std::string& name() const { return m_name; }
             void setName(const std::string& name) { m_name = name; }
             const Status status() const { return m_status; }
-            const std::vector<Operator*>& operators() const { return m_network->operators(); }
+            const std::vector<Operator*>& operators() const;
                 
             void connect(Operator* const sourceOp, const unsigned int outputId, 
                          Operator* const targetOp, const unsigned int inputId) const;

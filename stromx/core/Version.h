@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_VERSION_H
 #define STROMX_CORE_VERSION_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core

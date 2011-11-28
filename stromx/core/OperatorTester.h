@@ -24,7 +24,7 @@ namespace stromx
     namespace core
     {
         /** \brief %Operator with utility functions for unit testing */
-        class OperatorTester : public Operator
+        class STROMX_CORE_API OperatorTester : public Operator
         {
         public:
             OperatorTester(OperatorKernel* const kernel) 
