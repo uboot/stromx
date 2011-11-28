@@ -27,7 +27,7 @@ namespace stromx
     {
         namespace impl
         {
-            ReadAccessImpl::ReadAccessImpl(DataContainer& data)
+            ReadAccessImpl::ReadAccessImpl(const DataContainer& data)
               : m_data(data)
             {
                 if(data.empty())

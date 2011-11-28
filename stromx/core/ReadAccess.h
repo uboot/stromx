@@ -33,7 +33,7 @@ namespace stromx
         class ReadAccess
         {
         public:
-            ReadAccess(DataContainer data)
+            ReadAccess(const DataContainer & data)
               : m_impl(new impl::ReadAccessImpl(data))
             {
             }

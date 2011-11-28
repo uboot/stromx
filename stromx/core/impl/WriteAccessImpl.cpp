@@ -27,7 +27,7 @@ namespace stromx
     {   
         namespace impl
         {
-            WriteAccessImpl::WriteAccessImpl(DataContainer& data)
+            WriteAccessImpl::WriteAccessImpl(const DataContainer& data)
             : m_data(data)
             {
                 if(data.empty())
