@@ -1,61 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
    <!-- validate: xmllint \-\-valid \-\-noout stream.xml
                   (remove backslashes)
                   xmllint \-\-dtdvalid stromx.dtd \-\-noout stream.xml
    -->
-
-<!DOCTYPE  Stromx [
-    <!ELEMENT Stromx (Stream)>
-    <!ATTLIST Stromx
-        version CDATA #IMPLIED
-    >
-    
-    <!ELEMENT Stream (Operator*, Thread*)>
-    <!ATTLIST Stream
-        name CDATA #IMPLIED
-    >
-    
-    <!ELEMENT Thread (InputNode*)>
-    <!ATTLIST Thread
-        name CDATA #IMPLIED
-    >
-    
-    <!ELEMENT Operator (Parameter*, Input*)>
-    <!ATTLIST Operator
-        id NMTOKEN #REQUIRED
-        package CDATA #REQUIRED
-        type CDATA #REQUIRED
-        name CDATA #IMPLIED
-        version CDATA #REQUIRED
-    >
-    
-    <!ELEMENT Parameter (Data)>
-    <!ATTLIST Parameter
-        id NMTOKEN #REQUIRED
-    >
-    
-    <!ELEMENT Data (#PCDATA)>
-    <!ATTLIST Data
-        type CDATA #REQUIRED
-        package CDATA #REQUIRED
-        version CDATA #REQUIRED
-    >
-    
-    <!ELEMENT Input EMPTY>
-    <!ATTLIST Input
-        id NMTOKEN #REQUIRED
-        operator NMTOKEN #REQUIRED
-        output NMTOKEN #REQUIRED
-    >
-    
-    <!ELEMENT InputNode EMPTY>
-    <!ATTLIST InputNode
-        operator NMTOKEN #REQUIRED
-        input NMTOKEN #REQUIRED
-    >
-]>
-
 
 <Stromx version="0.1.0">
     <Stream name="Sample stream">

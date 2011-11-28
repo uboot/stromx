@@ -46,8 +46,6 @@ namespace stromx
                 Stream* const read(const std::string & filename);
                 
             private:
-                static const std::string DTD;
-                
                 void readOperator(xercesc::DOMElement* const opElement);
                 void readOperatorInputs(xercesc::DOMElement* const opElement);
                 void readParameter(xercesc::DOMElement* const paramElement);

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
 <Stromx version="0.1.0">
     <Stream>
@@ -9,7 +10,7 @@
             </Parameter>
             <Input id="0" operator="0" output="0"/>
         </Operator>
-        <Operator id="2" package="Base" type="PeriodicDelay">
+        <Operator id="2" package="Base" type="PeriodicDelay" version="0.1.0">
             <Parameter id="0">
                 <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
             </Parameter>
