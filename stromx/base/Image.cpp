@@ -172,8 +172,9 @@ namespace stromx
                 cv::Mat cvTempImage(tempImage.m_image);
                 
                 cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
-                    
-                if(! cvSaveImage(filename.c_str(), &IplImage(cvTempImage)))
+                
+                IplImage iplTempImg(cvTempImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 
                 break;
@@ -183,7 +184,8 @@ namespace stromx
             case core::Image::BAYERBG_8:
             case core::Image::BAYERGB_8:
             {
-                if(! cvSaveImage(filename.c_str(), &IplImage(inImage)))
+                IplImage iplTempImg(inImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }
