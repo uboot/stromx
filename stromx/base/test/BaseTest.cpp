@@ -21,7 +21,7 @@ namespace stromx
         
         void BaseTest::testRegisterBase()
         {
-            CPPUNIT_ASSERT_NO_THROW(registerBase(*m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxRegisterBase(*m_factory));
             
             core::Operator* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("Base", "Camera"));
