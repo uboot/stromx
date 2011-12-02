@@ -2,7 +2,6 @@ project(example)
 
 include_directories(
     ..
-    ${Boost_INCLUDE_DIRS}
 )
 
 add_executable(simple

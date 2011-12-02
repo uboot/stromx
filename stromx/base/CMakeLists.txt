@@ -15,6 +15,7 @@ endif()
 
 include_directories(
     ../..
+    ${Boost_INCLUDE_DIRS}
 	${OpenCV2_INCLUDE_DIR}
 )
 
