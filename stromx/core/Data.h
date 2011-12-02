@@ -55,7 +55,7 @@ namespace stromx
             virtual Data* const clone() const = 0;
             
             /**
-             * Serializs this data object to a string. Additionally, some extra data can be stored
+             * Serializes this data object to a string. Additionally, some extra data can be stored
              * in the file <code>path/name.[ext]</code> where the file extension \c ext can be chosen.
              */
             virtual const std::string serialize(const std::string & name, const std::string & path) const;
