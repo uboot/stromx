@@ -19,7 +19,6 @@
 
 #define __STDC_LIMIT_MACROS
 
-#include <boost/lexical_cast.hpp>
 #include <stdint.h>
 #include <float.h>
 #include "Data.h"
@@ -49,15 +48,9 @@ namespace stromx
             
             virtual Data* const clone() const { return new Primitive<repr_t, val_t>(); }
             
-            virtual const std::string serialize(const std::string & name, const std::string & path) const 
-            {
-                return boost::lexical_cast<std::string>(m_value);
-            }
+            virtual const std::string serialize(const std::string & name, const std::string & path) const;
             
-            virtual void deserialize(const std::string & data, const std::string & path)
-            {
-                m_value = boost::lexical_cast<val_t>(data);
-            }
+            virtual void deserialize(const std::string & data, const std::string & path);
             
             const repr_t get() const {  return m_value; }
             
@@ -83,6 +76,10 @@ namespace stromx
         typedef Primitive<bool, bool> Bool;
         template<>
         STROMX_CORE_API const DataVariant & Bool::variant() const;
+        template <>
+        STROMX_CORE_API const std::string Bool::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void Bool::deserialize(const std::string & data, const std::string & path);
         
         typedef Primitive<int, int8_t> Int8;
         template<>
@@ -103,21 +100,50 @@ namespace stromx
         typedef Primitive<int, int16_t> Int16;
         template<>
         STROMX_CORE_API const DataVariant & Int16::variant() const;
+        template <>
+        STROMX_CORE_API const std::string Int16::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void Int16::deserialize(const std::string & data, const std::string & path);
 
         typedef Primitive<unsigned int, uint16_t> UInt16;
         template<>
         STROMX_CORE_API const DataVariant & UInt16::variant() const;
+        template <>
+        STROMX_CORE_API const std::string UInt16::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void UInt16::deserialize(const std::string & data, const std::string & path);
         
         typedef Primitive<int, int32_t> Int32;
+        template<>
+        STROMX_CORE_API const DataVariant & Int32::variant() const;
+        template <>
+        STROMX_CORE_API const std::string Int32::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void Int32::deserialize(const std::string & data, const std::string & path);
+        
         typedef Primitive<unsigned int, uint32_t> UInt32;
+        template<>
+        STROMX_CORE_API const DataVariant & UInt32::variant() const;
+        template <>
+        STROMX_CORE_API const std::string UInt32::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void UInt32::deserialize(const std::string & data, const std::string & path);
         
         typedef Primitive<double, float> Float;
         template<>
         STROMX_CORE_API const DataVariant & Float::variant() const;
+        template <>
+        STROMX_CORE_API const std::string Float::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void Float::deserialize(const std::string & data, const std::string & path);
 
         typedef Primitive<double, double> Double;
         template<>
         STROMX_CORE_API const DataVariant & Double::variant() const;
+        template <>
+        STROMX_CORE_API const std::string Double::serialize(const std::string & name, const std::string & path) const;
+        template <>
+        STROMX_CORE_API void Double::deserialize(const std::string & data, const std::string & path);
 
         template class STROMX_CORE_API Primitive<bool, bool>;
         template class STROMX_CORE_API Primitive<int, int8_t>;    

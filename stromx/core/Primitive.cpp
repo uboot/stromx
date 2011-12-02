@@ -16,7 +16,7 @@
 
 
 #include <float.h>
-
+#include <boost/lexical_cast.hpp>
 #include "Config.h"
 #include "Primitive.h"
 
@@ -33,6 +33,18 @@ namespace stromx
         template<>
         const Version Bool::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
+        template <>
+        const std::string Bool::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void Bool::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<bool>(data);
+        }
+        
         template<>
         const DataVariant & Int8::variant() const { return DataVariant::INT_8; }
         template<>
@@ -45,7 +57,7 @@ namespace stromx
         const std::string Int8::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
         const Version Int8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
-        
+
         template <>
         const std::string Int8::serialize(const std::string & name, const std::string & path) const
         {
@@ -92,6 +104,18 @@ namespace stromx
         template<>
         const Version Int16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
+        template <>
+        const std::string Int16::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void Int16::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<int16_t>(data);
+        }
+        
         template<>
         const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
         template<>
@@ -100,6 +124,18 @@ namespace stromx
         const std::string UInt16::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
         const Version UInt16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        
+        template <>
+        const std::string UInt16::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void UInt16::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<uint16_t>(data);
+        }
         
         template<>
         const DataVariant & Int32::variant() const { return DataVariant::INT_32; }
@@ -114,6 +150,18 @@ namespace stromx
         template<>
         const Version Int32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
+        template <>
+        const std::string Int32::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void Int32::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<int32_t>(data);
+        }
+        
         template<>
         const DataVariant & UInt32::variant() const { return DataVariant::UINT_32; }
         template<>
@@ -126,6 +174,18 @@ namespace stromx
         const std::string UInt32::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
         const Version UInt32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        
+        template <>
+        const std::string UInt32::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void UInt32::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<uint32_t>(data);
+        }
         
         template<>
         const DataVariant & Float::variant() const { return DataVariant::FLOAT; }
@@ -140,6 +200,18 @@ namespace stromx
         template<>
         const Version Float::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
+        template <>
+        const std::string Float::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void Float::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<float>(data);
+        }
+        
         template<>
         const DataVariant & Double::variant() const { return DataVariant::DOUBLE; }
         template<>
@@ -152,6 +224,18 @@ namespace stromx
         const std::string Double::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
         const Version Double::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+    
+        template <>
+        const std::string Double::serialize(const std::string & name, const std::string & path) const
+        {
+            return boost::lexical_cast<std::string>(*this);
+        }
+        
+        template <>
+        void Double::deserialize(const std::string & data, const std::string & path)
+        {
+            *this = boost::lexical_cast<double>(data);
+        }
     }
 }
 

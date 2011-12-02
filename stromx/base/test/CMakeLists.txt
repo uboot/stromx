@@ -6,7 +6,6 @@ endif(MSVC)
 
 include_directories(
     ../../..
-    ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIR}
 	${OpenCV2_INCLUDE_DIR}
 )
