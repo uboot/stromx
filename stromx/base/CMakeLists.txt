@@ -50,3 +50,15 @@ target_link_libraries(stromx_base
     ${OpenCV2_HIGHGUI_LIBRARY}
     stromx_core
 )
+
+install (TARGETS stromx_base
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib/static
+)
+
+install(DIRECTORY . 
+    DESTINATION include/stromx/base
+    FILES_MATCHING PATTERN "*.h"
+    PATTERN "test*" EXCLUDE
+)
