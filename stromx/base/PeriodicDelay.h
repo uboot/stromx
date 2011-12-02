@@ -18,7 +18,6 @@
 #define STROMX_BASE_TIMEPERIOD_H
 
 #include "Config.h"
-
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
@@ -56,6 +55,7 @@ namespace stromx
             };
             
             PeriodicDelay();
+            PeriodicDelay(const PeriodicDelay & op);
             virtual ~PeriodicDelay();
             
             virtual OperatorKernel* const clone() const { return new PeriodicDelay; }

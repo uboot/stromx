@@ -18,13 +18,9 @@
 #define STROMX_BASE_TRIGGER_H
 
 #include "Config.h"
-
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
-
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
 
 namespace stromx
 {
@@ -35,6 +31,11 @@ namespace stromx
 
     namespace base
     {
+        namespace impl
+        {
+            struct BoostConditionVariable;
+        }
+        
         class STROMX_BASE_API Trigger : public core::OperatorKernel
         {
         public:
@@ -55,7 +56,8 @@ namespace stromx
             };
             
             Trigger();
-            Trigger(const Trigger & op) : OperatorKernel(op) {}
+            Trigger(const Trigger & op);
+            virtual ~Trigger();
             
             virtual OperatorKernel* const clone() const { return new Trigger; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
@@ -71,10 +73,7 @@ namespace stromx
             static const std::string PACKAGE;
             static const core::Version VERSION; 
             
-            typedef boost::unique_lock<boost::mutex> unique_lock_t;
-            
-            boost::condition_variable_any m_cond;
-            boost::mutex m_mutex;
+            impl::BoostConditionVariable* m_cond;
             core::Bool m_active;
         };
     }

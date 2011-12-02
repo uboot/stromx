@@ -1,7 +1,7 @@
 #include "Image.h"
 
 #include "Utilities.h"
-
+#include <opencv2/opencv.hpp>
 #include <stromx/core/Exception.h>
 
 namespace stromx
