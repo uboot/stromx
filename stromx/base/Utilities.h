@@ -18,7 +18,6 @@
 #define STROMX_BASE_UTILITIES_H
 
 #include <opencv2/opencv.hpp>
-
 #include <stromx/core/Image.h>
 
 namespace stromx

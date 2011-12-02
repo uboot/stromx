@@ -1,11 +1,9 @@
 #ifndef STROMX_CORE_IMAGEIMPL_H
 #define STROMX_CORE_IMAGEIMPL_H
 
-#include "Config.h"
-
-#include <stromx/core/ImageWrapper.h>
-
 #include <string>
+#include <stromx/core/ImageWrapper.h>
+#include "Config.h"
 
 struct _IplImage;
 

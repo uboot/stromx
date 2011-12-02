@@ -17,10 +17,10 @@
 #ifndef STROMX_BASE_TIMEPERIOD_H
 #define STROMX_BASE_TIMEPERIOD_H
 
-#include "Config.h"
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
+#include "Config.h"
 
 namespace stromx
 {

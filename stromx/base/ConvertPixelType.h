@@ -17,12 +17,11 @@
 #ifndef STROMX_BASE_CONVERTPIXELTYPE_H
 #define STROMX_BASE_CONVERTPIXELTYPE_H
 
-#include "Config.h"
-
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/Enum.h>
 #include <stromx/core/RecycleAccess.h>
+#include "Config.h"
 
 namespace stromx
 {

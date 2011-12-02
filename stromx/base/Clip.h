@@ -17,11 +17,10 @@
 #ifndef STROMX_BASE_CLIP_H
 #define STROMX_BASE_CLIP_H
 
-#include "Config.h"
-
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/RecycleAccess.h>
+#include "Config.h"
 
 namespace stromx
 {
