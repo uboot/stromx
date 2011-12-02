@@ -23,8 +23,6 @@
 #include <stromx/core/Image.h>
 #include <stromx/core/Primitive.h>
 
-#include <boost/thread/thread.hpp>
-
 namespace stromx
 {
     namespace core
@@ -34,6 +32,11 @@ namespace stromx
 
     namespace base
     {
+        namespace impl
+        {
+            struct BoostSystemTime;
+        }
+        
         class STROMX_BASE_API PeriodicDelay : public core::OperatorKernel
         {
         public:
@@ -53,6 +56,7 @@ namespace stromx
             };
             
             PeriodicDelay();
+            virtual ~PeriodicDelay();
             
             virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
@@ -70,7 +74,7 @@ namespace stromx
             static const core::Version VERSION; 
             
             core::UInt32 m_period;
-            boost::system_time m_nextTrigger;
+            impl::BoostSystemTime* m_nextTrigger;
         };
     }
 }

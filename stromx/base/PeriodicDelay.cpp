@@ -6,6 +6,7 @@
 #include <stromx/core/OperatorException.h>
 
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 
 namespace stromx
 {
@@ -13,19 +14,33 @@ namespace stromx
     
     namespace base
     {
+        namespace impl
+        {
+            struct BoostSystemTime
+            {
+                boost::system_time m_time;
+            };
+        }
+        
         const std::string PeriodicDelay::TYPE("PeriodicDelay");
         
         const std::string PeriodicDelay::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         PeriodicDelay::PeriodicDelay()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_nextTrigger(new impl::BoostSystemTime)
         {
+        }
+        
+        PeriodicDelay::~PeriodicDelay()
+        {
+            delete m_nextTrigger;
         }
         
         void PeriodicDelay::activate()
         {
-            m_nextTrigger = boost::get_system_time() + boost::posix_time::millisec(m_period);
+            m_nextTrigger->m_time = boost::get_system_time() + boost::posix_time::millisec(m_period);
         }
 
 
@@ -70,16 +85,16 @@ namespace stromx
             { 
                 try
                 {
-                    boost::this_thread::sleep(m_nextTrigger);
+                    boost::this_thread::sleep(m_nextTrigger->m_time);
                 }
                 catch(boost::thread_interrupted&)
                 {
                     throw Interrupt();
                 }
             
-                unsigned int passedMs = (unsigned int)((boost::get_system_time() - m_nextTrigger).total_milliseconds());
+                unsigned int passedMs = (unsigned int)((boost::get_system_time() - m_nextTrigger->m_time).total_milliseconds());
                 unsigned int numPeriods = passedMs / m_period + 1;
-                m_nextTrigger += boost::posix_time::millisec(m_period * numPeriods);
+                m_nextTrigger->m_time += boost::posix_time::millisec(m_period * numPeriods);
             }
             
             Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
