@@ -27,7 +27,10 @@ namespace stromx
         class STROMX_CORE_API Enum : public UInt32
         {
         public:
+            /** Constructs an enumeration value and initializes it to 0 */
             Enum() : UInt32() {}
+            
+            /** Constructs an enumeration value and initializes it to \c value */
             Enum(const unsigned int value) : UInt32(value) {}
             
             virtual const DataVariant & variant() const { return DataVariant::ENUM; }
