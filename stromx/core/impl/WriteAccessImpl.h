@@ -25,20 +25,19 @@ namespace stromx
     namespace core
     {
         class Data;
-        class DataContainer;
         
         namespace impl
         {
             class STROMX_CORE_API WriteAccessImpl
             {
             public:
-                WriteAccessImpl(DataContainer& data);
+                WriteAccessImpl(const DataContainer & data);
                 ~WriteAccessImpl();
                 
                 Data& get() const;
                 
             private:
-                DataContainer& m_data;
+                DataContainer m_data;
             }; 
         }
     }

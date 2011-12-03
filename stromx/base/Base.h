@@ -29,7 +29,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_BASE_API void registerBase(stromx::core::Registry& registry);
+    STROMX_BASE_API void stromxRegisterBase(stromx::core::Registry& registry);
 }
 
 #endif // STROMX_BASE_H

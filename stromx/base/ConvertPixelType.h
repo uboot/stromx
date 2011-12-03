@@ -21,12 +21,13 @@
 #include <stromx/core/Image.h>
 #include <stromx/core/Enum.h>
 #include <stromx/core/RecycleAccess.h>
+#include "Config.h"
 
 namespace stromx
 {
     namespace base
     {
-        class ConvertPixelType : public core::OperatorKernel
+        class STROMX_BASE_API ConvertPixelType : public core::OperatorKernel
         {
         public:
             enum InputId

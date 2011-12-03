@@ -22,7 +22,7 @@ namespace stromx
     namespace core
     {
         const std::string None::TYPE = "None";
-        const std::string None::PACKAGE = CORE_PACKAGE_NAME;
+        const std::string None::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         const Version None::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
     }
 }

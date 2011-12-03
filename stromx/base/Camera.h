@@ -21,6 +21,7 @@
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Trigger.h>
 #include <stromx/core/Enum.h>
+#include "Config.h"
 
 namespace stromx
 {
@@ -36,7 +37,7 @@ namespace stromx
 
     namespace base
     {
-        class Camera : public core::OperatorKernel
+        class STROMX_BASE_API Camera : public core::OperatorKernel
         {
         public:
             enum OutputId

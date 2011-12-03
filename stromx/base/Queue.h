@@ -17,17 +17,17 @@
 #ifndef STROMX_BASE_QUEUE_H
 #define STROMX_BASE_QUEUE_H
 
+#include <deque>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/DataContainer.h>
-
-#include <deque>
+#include "Config.h"
 
 namespace stromx
 {
     namespace base
     {
-        class Queue : public core::OperatorKernel
+        class STROMX_BASE_API Queue : public core::OperatorKernel
         {
         public:
             enum InputId

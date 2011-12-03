@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_TRY_H
 #define STROMX_CORE_TRY_H
 
+#include "Config.h"
 #include "Id2DataMapper.h"
 
 namespace stromx

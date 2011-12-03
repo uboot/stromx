@@ -1,7 +1,5 @@
 #include "Counter.h"
 
-#include "Config.h"
-
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/DataProvider.h>
 #include <stromx/core/Id2DataPair.h>
@@ -15,7 +13,7 @@ namespace stromx
     namespace base
     {
         const std::string Counter::TYPE("Counter");
-        const std::string Counter::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string Counter::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version Counter::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Counter::Counter()

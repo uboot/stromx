@@ -1,7 +1,5 @@
 #include "Camera.h"
 
-#include "Config.h"
-
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
@@ -31,7 +29,7 @@ namespace stromx
     {
         const std::string Camera::TYPE("Camera");
         
-        const std::string Camera::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string Camera::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version Camera::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Camera::Camera()

@@ -19,6 +19,7 @@
 
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
+#include "Config.h"
 
 namespace stromx
 {
@@ -29,7 +30,7 @@ namespace stromx
 
     namespace base
     {
-        class AdjustRgbChannels : public core::OperatorKernel
+        class STROMX_BASE_API AdjustRgbChannels : public core::OperatorKernel
         {
         public:
             enum InputId

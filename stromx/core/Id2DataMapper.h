@@ -17,8 +17,6 @@
 #ifndef STROMX_CORE_ID2DATAMAPPER_H
 #define STROMX_CORE_ID2DATAMAPPER_H
 
-#include "Config.h"
-
 namespace stromx
 {
     namespace core

@@ -24,7 +24,6 @@ namespace stromx
 {
     namespace core
     {    
-        class DataContainer;
         class Data;
         
         namespace impl
@@ -32,7 +31,7 @@ namespace stromx
             class STROMX_CORE_API ReadAccessImpl
             {
             public:
-                ReadAccessImpl(DataContainer& data);
+                ReadAccessImpl(const DataContainer& data);
                 ~ReadAccessImpl();
                 
                 const Data & get() const;

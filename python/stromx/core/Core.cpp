@@ -45,7 +45,7 @@ BOOST_PYTHON_MODULE(libcore)
 {
     using namespace boost::python;
     
-    def("registerCore", registerCore);
+    def("registerCore", stromxRegisterCore);
     
     exportData();
     exportDataContainer();

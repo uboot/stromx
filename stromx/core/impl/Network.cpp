@@ -132,10 +132,12 @@ namespace stromx
                             
                             // for each output disconnect each connected input
                             for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
-                                input != output->connectedInputs().end();
-                                ++input)
+                                input != output->connectedInputs().end(); )
                             {
-                                (*input)->disconnect();
+                                std::set<InputNode*>::iterator thisInput = input;
+                                ++input;
+
+                                (*thisInput)->disconnect();
                             } 
                         }
                             

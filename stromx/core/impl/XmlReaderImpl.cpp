@@ -42,56 +42,63 @@ namespace stromx
     {
         namespace impl
         {
-            const std::string XmlReaderImpl::DTD =
-    " \
-    <!ELEMENT Stream (Operator*, Thread*)> \
-    <!ATTLIST Stream \
-        name CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Thread (InputNode*)> \
-    <!ATTLIST Thread \
-        name CDATA #IMPLIED \
-    > \
-    \
-    <!ELEMENT Operator (Parameter*, Input*)> \
-    <!ATTLIST Operator \
-        id NMTOKEN #REQUIRED \
-        package CDATA #REQUIRED \
-        type CDATA #REQUIRED \
-        name CDATA #IMPLIED \
-        version CDATA #REQUIRED \
-    > \
-    \
-    <!ELEMENT Parameter (Data)> \
-    <!ATTLIST Parameter \
-        id NMTOKEN #REQUIRED \
-    > \
-    \
-    <!ELEMENT Data (#PCDATA)> \
-    <!ATTLIST Data \
-        type CDATA #REQUIRED \
-        package CDATA #REQUIRED \
-        version CDATA #REQUIRED \
-    > \
-    \
-    <!ELEMENT Input EMPTY> \
-    <!ATTLIST Input \
-        id NMTOKEN #REQUIRED \
-        operator NMTOKEN #REQUIRED \
-        output NMTOKEN #REQUIRED \
-    > \
-    \
-    <!ELEMENT InputNode EMPTY> \
-    <!ATTLIST InputNode \
-        operator NMTOKEN #REQUIRED \
-        input NMTOKEN #REQUIRED \
-    > \
-    ";
-            using namespace xercesc;
+           using namespace xercesc;
             
             namespace
             {
+                 const std::string DTD =
+" \
+<!ELEMENT Stromx (Stream)> \
+<!ATTLIST Stromx \
+    version CDATA #IMPLIED \
+> \
+\
+<!ELEMENT Stream (Operator*, Thread*)> \
+<!ATTLIST Stream \
+    name CDATA #IMPLIED \
+> \
+\
+<!ELEMENT Thread (InputNode*)> \
+<!ATTLIST Thread \
+    name CDATA #IMPLIED \
+> \
+\
+<!ELEMENT Operator (Parameter*, Input*)> \
+<!ATTLIST Operator \
+    id NMTOKEN #REQUIRED \
+    package CDATA #REQUIRED \
+    type CDATA #REQUIRED \
+    name CDATA #IMPLIED \
+    version CDATA #REQUIRED \
+> \
+\
+<!ELEMENT Parameter (Data)> \
+<!ATTLIST Parameter \
+    id NMTOKEN #REQUIRED \
+> \
+\
+<!ELEMENT Data (#PCDATA)> \
+<!ATTLIST Data \
+    type CDATA #REQUIRED \
+    package CDATA #REQUIRED \
+    version CDATA #REQUIRED \
+> \
+\
+<!ELEMENT Input EMPTY> \
+<!ATTLIST Input \
+    id NMTOKEN #REQUIRED \
+    operator NMTOKEN #REQUIRED \
+    output NMTOKEN #REQUIRED \
+> \
+\
+<!ELEMENT InputNode EMPTY> \
+<!ATTLIST InputNode \
+    operator NMTOKEN #REQUIRED \
+    input NMTOKEN #REQUIRED \
+> \
+"
+                ;
+            
                 class XercesErrorHandler : public HandlerBase
                 {
                 public:
@@ -105,25 +112,30 @@ namespace stromx
                 private:
                     std::string m_filename;
                 };
+                
+                class XercesEntityResolver : public HandlerBase
+                {
+                public:
+                    virtual InputSource* resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId)
+                    {
+                        InputSource* grammar = new MemBufInputSource(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
+                        return grammar;
+                    }
+                };
             }
 
             Stream*const XmlReaderImpl::read(const std::string & filename)
             {    
-                ErrorHandler* errHandler = (ErrorHandler*) new XercesErrorHandler(filename);
+                std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
+                std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
                 
                 m_currentPath = impl::XmlUtilities::computePath(filename);
                 
                 XercesDOMParser* parser = new XercesDOMParser();
-                
-                MemBufInputSource grammar(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
-                if (! parser->loadGrammar(grammar, Grammar::DTDGrammarType))
-                {
-                    throw InternalError("Failed to load DTD.");
-                }
 
-                parser->setErrorHandler(errHandler);
-                parser->setValidationScheme(XercesDOMParser::Val_Auto);
-                parser->setDoNamespaces(true);    // optional
+                parser->setErrorHandler(errHandler.get());
+                parser->setEntityResolver(entityResolver.get());
+                parser->setValidationScheme(XercesDOMParser::Val_Always);
 
                 const char* xmlFile = filename.c_str();
 
@@ -146,6 +158,10 @@ namespace stromx
                     FileAccessFailed ex(filename, "DOM exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
+                }
+                catch (FileAccessFailed& e)
+                {
+                    throw e;
                 }
                 catch (...)
                 {

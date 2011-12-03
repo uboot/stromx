@@ -1,9 +1,13 @@
 project(stromx_base_test)
 
+if(MSVC)
+    add_definitions(/DSTROMX_BASE_STATIC)
+endif(MSVC)
+
 include_directories(
     ../../..
-    ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIRS}
 	${OpenCV2_INCLUDE_DIR}
 )
 
@@ -42,6 +46,7 @@ target_link_libraries(stromx_base_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${OpenCV2_CORE_LIBRARY}
+    ${OpenCV2_IMGPROC_LIBRARY}
     ${OpenCV2_HIGHGUI_LIBRARY}
     stromx_core
 )

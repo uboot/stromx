@@ -14,7 +14,7 @@
 #include "Queue.h"
 #include "Trigger.h"
 
-void registerBase(stromx::core::Registry& registry)
+void stromxRegisterBase(stromx::core::Registry& registry)
 {
     using namespace stromx::base;
     

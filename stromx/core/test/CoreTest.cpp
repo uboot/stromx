@@ -36,7 +36,7 @@ namespace stromx
         
         void CoreTest::testRegisterCore()
         {
-            CPPUNIT_ASSERT_NO_THROW(registerCore(*m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxRegisterCore(*m_factory));
             
             core::Data* data = 0;
             CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Core", "UInt32"));

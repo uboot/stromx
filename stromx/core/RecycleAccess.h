@@ -42,7 +42,7 @@ namespace stromx
         class STROMX_CORE_API RecycleAccess
         {
         public:
-            RecycleAccess(const DataContainer data);
+            RecycleAccess(const DataContainer & data);
             RecycleAccess() {}
             
             void add(const DataContainer data);  

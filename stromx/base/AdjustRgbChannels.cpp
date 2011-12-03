@@ -1,6 +1,5 @@
 #include "AdjustRgbChannels.h"
 
-#include "Config.h"
 #include "Image.h"
 #include "Utilities.h"
 
@@ -19,8 +18,7 @@ namespace stromx
     namespace base
     {
         const std::string AdjustRgbChannels::TYPE("AdjustRgbChannels");
-        
-        const std::string AdjustRgbChannels::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string AdjustRgbChannels::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version AdjustRgbChannels::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         AdjustRgbChannels::AdjustRgbChannels()

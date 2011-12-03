@@ -5,12 +5,13 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall")
-#   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pedantic -Wall -Wextra")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall")
+#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pedantic -Wall -Wextra")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(MSVC)
-    add_definitions(/DBOOST_ALL_DYN_LINK /DCPPUNIT_DLL)
+    add_definitions(/DBOOST_ALL_DYN_LINK)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251 /wd4275 /wd4661")
 endif(MSVC)
 
 include(UseDoxygen OPTIONAL)

@@ -22,7 +22,7 @@ namespace stromx
 {
     namespace core
     {
-        RecycleAccess::RecycleAccess(const DataContainer data)
+        RecycleAccess::RecycleAccess(const DataContainer & data)
         : m_impl(new impl::RecycleAccessImpl(data))
         {
         }

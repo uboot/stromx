@@ -31,11 +31,11 @@ namespace stromx
         {
         public:
             /** Registers an operator kernel with the registry. The registry assumes
-             *  ownership of \op. */
+             *  ownership of \c op. */
             virtual void registerOperator(const OperatorKernel* const op) = 0; 
             
             /** Registers a data object with the registry. The registry assumes 
-             *  ownership of \data. */
+             *  ownership of \c data. */
             virtual void registerData(const Data* const data) = 0;
         };
     }

@@ -1,6 +1,5 @@
 #include "ConvertPixelType.h"
 
-#include "Config.h"
 #include "Image.h"
 #include "Utilities.h"
 
@@ -21,7 +20,7 @@ namespace stromx
     {
         const std::string ConvertPixelType::TYPE("ConvertPixelType");
         
-        const std::string ConvertPixelType::PACKAGE(BASE_PACKAGE_NAME);
+        const std::string ConvertPixelType::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version ConvertPixelType::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         ConvertPixelType::ConvertPixelType()

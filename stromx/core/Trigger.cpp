@@ -22,7 +22,7 @@ namespace stromx
     namespace core
     {
         const std::string Trigger::TYPE = "Trigger";
-        const std::string Trigger::PACKAGE = CORE_PACKAGE_NAME;
+        const std::string Trigger::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         const Version Trigger::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
     }
 }

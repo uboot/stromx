@@ -22,7 +22,6 @@ IF(WIN32)
         "$ENV{OpenCV_ROOT_DIR}"
         "$ENV{SystemDrive}/OpenCV2.3"                     # Windows: OpenCV 2.3 default installation dir (expected future revision)
         "$ENV{SystemDrive}/OpenCV2.2"                     # Windows: OpenCV 2.2 default installation dir
-        "$ENV{SystemDrive}/opencv/build"                  # Windows: OpenCV superpack
         "$ENV{SystemDrive}/Program Files/OpenCV2.3"       # 32 bit ProgramFiles dir on Win32;  64 bit ProgramFiles dir on Win64 (expected future revision)
         "$ENV{SystemDrive}/Program Files/OpenCV2.2"       # 32 bit ProgramFiles dir on Win32;  64 bit ProgramFiles dir on Win64
         "$ENV{SystemDrive}/Program Files (x86)/OpenCV2.3" # 32 bit ProgramFiles dir on Win64 (expected future revision)
@@ -46,7 +45,7 @@ FIND_PATH(OpenCV2_ROOT_DIR
 
 # absolute path to all libraries 
 IF(WIN32)
-    SET(OPENCV2_LIBRARY_SEARCH_PATHS "${OpenCV2_ROOT_DIR}/lib" "${OpenCV2_ROOT_DIR}/x86/vc10/lib")
+    SET(OPENCV2_LIBRARY_SEARCH_PATHS "${OpenCV2_ROOT_DIR}/lib")
 ELSE(WIN32)
     SET(OPENCV2_LIBRARY_SEARCH_PATHS "${OpenCV2_ROOT_DIR}/lib")
 ENDIF(WIN32)
@@ -93,6 +92,9 @@ IF(WIN32)
     FIND_LIBRARY(OpenCV2_GPU_LIBRARY
                  NAMES opencv_gpu231 opencv_gpu230 opencv_gpu220
                  PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
+    FIND_LIBRARY(OpenCV2_FFMPEG_LIBRARY
+                 NAMES opencv_ffmpeg231 opencv_ffmpeg230 opencv_ffmpeg220
+                 PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
     FIND_LIBRARY(OpenCV2_TS_LIBRARY
                  NAMES opencv_ts231 opencv_ts230 opencv_ts220
                  PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
@@ -129,12 +131,6 @@ SET(OpenCV2_LIBRARIES
     ${OpenCV2_VIDEO_LIBRARY}
     ${OpenCV2_GPU_LIBRARY}
     )
-IF(WIN32)
-    SET(OpenCV2_LIBRARIES
-        ${OpenCV2_LIBRARIES}
-        ${OpenCV2_TS_LIBRARY}
-        )
-ENDIF(WIN32)
 
 SET(OpenCV2_FOUND ON)
 IF(NOT EXISTS ${OpenCV2_INCLUDE_DIR}/opencv2)
@@ -150,11 +146,6 @@ MARK_AS_ADVANCED(FORCE
                  OpenCV2_ROOT_DIR
                  OpenCV2_INCLUDE_DIR
                  )
-IF(WIN32)
-    MARK_AS_ADVANCED(FORCE
-                     OpenCV2_TS_LIBRARY
-                     )
-ENDIF(WIN32)
 
 # display help message
 IF(NOT OpenCV2_FOUND)

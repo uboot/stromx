@@ -1,8 +1,7 @@
 #include "Image.h"
 
-#include "Config.h"
 #include "Utilities.h"
-
+#include <opencv2/opencv.hpp>
 #include <stromx/core/Exception.h>
 
 namespace stromx
@@ -10,7 +9,7 @@ namespace stromx
     namespace base
     {
         const std::string Image::TYPE = "Image";
-        const std::string Image::PACKAGE = BASE_PACKAGE_NAME;
+        const std::string Image::PACKAGE = STROMX_BASE_PACKAGE_NAME;
         const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Image::Image(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
@@ -173,8 +172,9 @@ namespace stromx
                 cv::Mat cvTempImage(tempImage.m_image);
                 
                 cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
-                    
-                if(! cv::imwrite(filename, cv::Mat(tempImage.m_image)))
+                
+                IplImage iplTempImg(cvTempImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 
                 break;
@@ -184,7 +184,8 @@ namespace stromx
             case core::Image::BAYERBG_8:
             case core::Image::BAYERGB_8:
             {
-                if(! cv::imwrite(filename, inImage))
+                IplImage iplTempImg(inImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }

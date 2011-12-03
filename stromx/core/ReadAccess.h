@@ -18,7 +18,6 @@
 #define STROMX_CORE_READACCESS_H
 
 #include <memory>
-#include "DataContainer.h"
 #include "Exception.h"
 #include "impl/ReadAccessImpl.h"
 
@@ -33,7 +32,7 @@ namespace stromx
         class ReadAccess
         {
         public:
-            ReadAccess(DataContainer data)
+            ReadAccess(const DataContainer & data)
               : m_impl(new impl::ReadAccessImpl(data))
             {
             }

@@ -22,7 +22,7 @@ namespace stromx
         namespace impl
         {
             const std::string CameraBuffer::TYPE("CameraBuffer");
-            const std::string CameraBuffer::PACKAGE(BASE_PACKAGE_NAME);
+            const std::string CameraBuffer::PACKAGE(STROMX_BASE_PACKAGE_NAME);
             const Version CameraBuffer::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
             
             CameraBuffer::CameraBuffer()

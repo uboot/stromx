@@ -27,7 +27,7 @@ namespace stromx
     {
         /** \brief %Description of an ID to DataVariant map
          * 
-         * Instances of this class describe associate an ID with a data variant.
+         * Instances of this class associate an ID with a data variant.
          * Input nodes, output nodes and parameters of operators are characterized
          * by such a description. In case of input and output nodes the data variant defines
          * which data type can be passed to an input node or is to be expected from
@@ -35,7 +35,7 @@ namespace stromx
          * respective paramter. In addition, a Description can have a name which is 
          * purely informal and does not have any influence on its behavior.
          */
-        class STROMX_CORE_API Description
+        class Description
         {
         public:
             /** Constructs a description */

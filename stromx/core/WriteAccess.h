@@ -39,7 +39,7 @@ namespace stromx
         class WriteAccess
         {
         public:
-            WriteAccess(DataContainer data)
+            WriteAccess(const DataContainer & data)
             : m_impl(new impl::WriteAccessImpl(data))
             {
             }
