@@ -37,14 +37,6 @@ namespace stromx
         {
         }
         
-        Trigger::Trigger(const stromx::base::Trigger& op)
-          : OperatorKernel(op),
-            m_cond(new impl::BoostConditionVariable),
-            m_active(true)
-        {
-
-        }
-        
         Trigger::~Trigger()
         {
             delete m_cond;

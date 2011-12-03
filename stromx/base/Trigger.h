@@ -56,7 +56,6 @@ namespace stromx
             };
             
             Trigger();
-            Trigger(const Trigger & op);
             virtual ~Trigger();
             
             virtual OperatorKernel* const clone() const { return new Trigger; }
@@ -65,6 +64,8 @@ namespace stromx
             virtual void execute(core::DataProvider& provider);
             
         private:
+            Trigger(const Trigger &);
+            
             static const std::vector<const core::Description*> setupInputs();
             static const std::vector<const core::Description*> setupOutputs();
             static const std::vector<const core::Parameter*> setupParameters();

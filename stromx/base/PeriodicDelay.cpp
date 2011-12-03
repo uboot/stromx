@@ -33,13 +33,6 @@ namespace stromx
         {
         }
         
-        PeriodicDelay::PeriodicDelay(const PeriodicDelay& op)
-          : OperatorKernel(op),
-            m_nextTrigger(new impl::BoostSystemTime)
-        {
-
-        }
-        
         PeriodicDelay::~PeriodicDelay()
         {
             delete m_nextTrigger;

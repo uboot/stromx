@@ -55,7 +55,6 @@ namespace stromx
             };
             
             PeriodicDelay();
-            PeriodicDelay(const PeriodicDelay & op);
             virtual ~PeriodicDelay();
             
             virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
@@ -65,6 +64,8 @@ namespace stromx
             virtual void activate();
             
         private:
+            PeriodicDelay(const PeriodicDelay &);
+            
             static const std::vector<const core::Description*> setupInputs();
             static const std::vector<const core::Description*> setupOutputs();
             static const std::vector<const core::Parameter*> setupParameters();
