@@ -18,7 +18,6 @@
 #define STROMX_CORE_READACCESS_H
 
 #include <memory>
-#include "DataContainer.h"
 #include "Exception.h"
 #include "impl/ReadAccessImpl.h"
 

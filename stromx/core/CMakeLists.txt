@@ -12,7 +12,7 @@ configure_file (
 if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
-
+   
 set(SOURCES
     impl/DataContainerImpl.cpp
     impl/ReadAccessImpl.cpp
@@ -81,4 +81,16 @@ target_link_libraries(stromx_core
 if(BUILD_XML_SUPPORT)
     target_link_libraries(stromx_core ${XERCES_LIBRARIES})
 endif()
+
+install (TARGETS stromx_core 
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib/static
+)
+
+install(DIRECTORY . 
+    DESTINATION include/stromx/core
+    FILES_MATCHING PATTERN "*.h"
+    PATTERN "test*" EXCLUDE
+)
 

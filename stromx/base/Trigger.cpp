@@ -5,21 +5,49 @@
 #include <stromx/core/Id2DataPair.h>
 #include <stromx/core/OperatorException.h>
 
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
+
 namespace stromx
 {
     using namespace core;
 
     namespace base
     {
+        typedef boost::unique_lock<boost::mutex> unique_lock_t;
+        
+        namespace impl
+        {
+            struct BoostConditionVariable
+            {
+                boost::condition_variable_any m_cond;
+                boost::mutex m_mutex;
+            };
+        }
+        
         const std::string Trigger::TYPE("Trigger");
         
         const std::string Trigger::PACKAGE(STROMX_BASE_PACKAGE_NAME);
         const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Trigger::Trigger()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_cond(new impl::BoostConditionVariable),
             m_active(true)
         {
+        }
+        
+        Trigger::Trigger(const stromx::base::Trigger& op)
+          : OperatorKernel(op),
+            m_cond(new impl::BoostConditionVariable),
+            m_active(true)
+        {
+
+        }
+        
+        Trigger::~Trigger()
+        {
+            delete m_cond;
         }
 
         void Trigger::setParameter(unsigned int id, const Data& value)
@@ -31,7 +59,7 @@ namespace stromx
                 case TRIGGER:
                 {
                     // trigger
-                    m_cond.notify_all();
+                    m_cond->m_cond.notify_all();
                     break;
                 }
                 case ACTIVE:
@@ -70,8 +98,8 @@ namespace stromx
                 try
                 {
                     // wait for trigger
-                    unique_lock_t lock(m_mutex);
-                    m_cond.wait(lock);
+                    unique_lock_t lock(m_cond->m_mutex);
+                    m_cond->m_cond.wait(lock);
                 }
                 catch(boost::thread_interrupted&)
                 {

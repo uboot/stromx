@@ -34,8 +34,8 @@ int main (int argc, char* argv[])
 {
     core::Factory factory;
     
-    registerCore(factory);
-    registerBase(factory);
+    stromxRegisterCore(factory);
+    stromxRegisterBase(factory);
     
     core::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);

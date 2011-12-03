@@ -26,6 +26,7 @@
 #endif
 
 #include <ostream>
+#include "Config.h"
 
 namespace stromx
 {
@@ -38,8 +39,8 @@ namespace stromx
         {
             class ReadAccessImpl;
             class WriteAccessImpl;
-            class RecycleAccessImpl;
             class DataContainerImpl;
+            class RecycleAccessImpl;
         }
         
         /** \brief Container which manages the life-cycle of data objects */
@@ -49,9 +50,9 @@ namespace stromx
             friend class impl::ReadAccessImpl;
             friend class impl::RecycleAccessImpl;
             
-            friend const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
-            friend const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
-            friend std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+            friend STROMX_CORE_API const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+            friend STROMX_CORE_API const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+            friend STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataContainer & container);
             
         public:
             /**
@@ -74,13 +75,13 @@ namespace stromx
         };     
         
         /** Returns \c true if the addresses in \c lhs and \c rhs are the same */
-        const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        STROMX_CORE_API const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         
         /** Returns \c true if the addresses in \c lhs and \c rhs are not the same */
-        const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        STROMX_CORE_API const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         
         /** Returns the address of the data held by \c container */
-        std::ostream& operator<< (std::ostream& out, const DataContainer & container);
+        STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataContainer & container);
     }
 }
 

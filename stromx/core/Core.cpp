@@ -22,7 +22,7 @@
 #include "None.h"
 #include "Exception.h"
 
-void registerCore(stromx::core::Registry& registry)
+void stromxRegisterCore(stromx::core::Registry& registry)
 {
     using namespace stromx::core;
     

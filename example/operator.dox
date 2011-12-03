@@ -298,8 +298,8 @@ int main (int argc, char* argv[])
    
     Factory* factory = new Factory;
     
-    registerCore(factory);
-    registerBase(factory);
+    stromxRegisterCore(factory);
+    stromxRegisterBase(factory);
 
     OperatorKernel* op = new math::Add;
     factory->registerOperator(op);

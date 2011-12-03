@@ -37,7 +37,7 @@ using namespace stromx::base;
     
 BOOST_PYTHON_MODULE(libbase)
 {
-    def("registerBase", registerBase);
+    def("registerBase", stromxRegisterBase);
     
     exportImage();
     

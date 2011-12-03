@@ -51,8 +51,8 @@ int main (int argc, char* argv[])
 {
     core::Factory factory;  
  
-    registerCore(factory);
-    registerBase(factory);
+    stromxRegisterCore(factory);
+    stromxRegisterBase(factory);
 \endcode
 
 As a first step a <em>core factory</em> is instantiated. The factory will be used to instantiate all operators and data types which appear in the XML file. After construction the factory is empty, i.e. it does not know any operator or data type. Only after registering a <em>core package</em> the factory can produce operators or data types from this package.

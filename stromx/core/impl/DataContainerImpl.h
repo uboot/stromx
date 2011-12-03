@@ -19,6 +19,7 @@
 
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
+#include "../Config.h"
 
 namespace stromx
 {

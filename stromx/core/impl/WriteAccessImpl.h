@@ -25,7 +25,6 @@ namespace stromx
     namespace core
     {
         class Data;
-        class DataContainer;
         
         namespace impl
         {

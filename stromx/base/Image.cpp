@@ -1,7 +1,7 @@
 #include "Image.h"
 
 #include "Utilities.h"
-
+#include <opencv2/opencv.hpp>
 #include <stromx/core/Exception.h>
 
 namespace stromx
@@ -172,8 +172,9 @@ namespace stromx
                 cv::Mat cvTempImage(tempImage.m_image);
                 
                 cv::cvtColor(inImage, cvTempImage, CV_RGB2BGR); 
-                    
-                if(! cv::imwrite(filename, cv::Mat(tempImage.m_image)))
+                
+                IplImage iplTempImg(cvTempImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 
                 break;
@@ -183,7 +184,8 @@ namespace stromx
             case core::Image::BAYERBG_8:
             case core::Image::BAYERGB_8:
             {
-                if(! cv::imwrite(filename, inImage))
+                IplImage iplTempImg(inImage);
+                if(! cvSaveImage(filename.c_str(), &iplTempImg))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }

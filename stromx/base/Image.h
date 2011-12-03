@@ -1,12 +1,11 @@
 #ifndef STROMX_CORE_IMAGEIMPL_H
 #define STROMX_CORE_IMAGEIMPL_H
 
+#include <string>
+#include <stromx/core/ImageWrapper.h>
 #include "Config.h"
 
-#include <stromx/core/ImageWrapper.h>
-
-#include <string>
-#include <opencv2/opencv.hpp>
+struct _IplImage;
 
 namespace stromx
 {
@@ -46,7 +45,7 @@ namespace stromx
             
             void getDataFromCvImage(const PixelType pixelType);
             
-            IplImage* m_image;
+            _IplImage* m_image;
         };
     }
 }
