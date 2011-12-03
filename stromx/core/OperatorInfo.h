@@ -38,10 +38,10 @@ namespace stromx
             /** Returns the type. In general this is the name of the class of its implementation. */
             virtual const std::string& type() const = 0;
             
-            /** Returns the package the operator belongs to */
+            /** Returns the package the operator belongs to. */
             virtual const std::string& package() const = 0;
             
-            /** Returns the version of the operator */
+            /** Returns the version of the operator. */
             virtual const Version& version() const = 0;
             
             /**
@@ -66,7 +66,7 @@ namespace stromx
             virtual const std::vector<const Parameter*>& parameters() const = 0;
             
             /**
-             * Returns the parameter description of the parameter \c id
+             * Returns the parameter description of the parameter \c id.
              */
             virtual const Parameter & parameter(const unsigned int id) const = 0;
         };

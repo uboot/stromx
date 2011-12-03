@@ -27,7 +27,7 @@ namespace stromx
 
         class Parameter;
         
-        /** \brief Abstract error in connection with a specified operator */
+        /** \brief Abstract error in connection with a specified operator. */
         class OperatorError : public Exception
         {
         protected:
@@ -41,7 +41,7 @@ namespace stromx
                         
         };
         
-        /** \brief A parameter with this ID does not exist */
+        /** \brief A parameter with this ID does not exist. */
         class WrongParameterId : public OperatorError
         {
         public:
@@ -54,7 +54,7 @@ namespace stromx
             unsigned int m_id;
         };
         
-        /** \brief General error in connection with a specified parameter */
+        /** \brief General error in connection with a specified parameter. */
         class ParameterError : public OperatorError
         {
         public:
@@ -67,7 +67,7 @@ namespace stromx
             const Parameter& m_parameter;
         };
         
-        /** \brief Tried to set a parameter to data of the wrong type */
+        /** \brief Tried to set a parameter to data of the wrong type. */
         class WrongParameterType : public ParameterError
         {
         public:
@@ -76,7 +76,7 @@ namespace stromx
             {}
         };
         
-        /** \brief Tried to set a parameter to a wrong value */
+        /** \brief Tried to set a parameter to a wrong value. */
         class WrongParameterValue : public ParameterError
         {
         public:
@@ -85,7 +85,7 @@ namespace stromx
             {}
         };
         
-        /** \brief Tried to violate the parameter access mode */
+        /** \brief Tried to violate the parameter access mode. */
         class ParameterAccessViolation : public ParameterError
         {
         public:
@@ -94,7 +94,7 @@ namespace stromx
             {}
         };
         
-        /** \brief General error in connection with an operator input */
+        /** \brief General error in connection with an operator input. */
         class InputError : public OperatorError
         {
         public:
@@ -107,7 +107,7 @@ namespace stromx
             const unsigned int m_inputId;
         };
         
-        /** \brief Tried to set the input to data of the wrong type */
+        /** \brief Tried to set the input to data of the wrong type. */
         class WrongInputType : public InputError
         {
         public:

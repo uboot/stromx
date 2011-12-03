@@ -35,16 +35,16 @@ namespace stromx
         public:
             virtual ~Data() {}
             
-            /** Returns the version of the class of this data object */
+            /** Returns the version of the class of this data object. */
             virtual const Version & version() const = 0;
             
-            /** Returns the name of the class of this data object */
+            /** Returns the name of the class of this data object. */
             virtual const std::string & type() const = 0;
             
-            /** Returns the package of the class of this data object */
+            /** Returns the package of the class of this data object. */
             virtual const std::string & package() const = 0;
             
-            /** Returns the data variant of this data object */
+            /** Returns the data variant of this data object. */
             virtual const DataVariant & variant() const = 0;
             
             /**

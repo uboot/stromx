@@ -25,7 +25,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of an ID to DataVariant map
+        /** \brief %Description of an ID to DataVariant map.
          * 
          * Instances of this class associate an ID with a data variant.
          * Input nodes, output nodes and parameters of operators are characterized
@@ -38,7 +38,7 @@ namespace stromx
         class Description
         {
         public:
-            /** Constructs a description */
+            /** Constructs a description. */
             Description(const unsigned int id, const DataVariant& variant)
             : m_id(id),
               m_variant(variant)
@@ -46,16 +46,16 @@ namespace stromx
             
             virtual ~Description() {}
             
-            /** Returns the name */
+            /** Returns the name. */
             const std::string & name() const { return m_name; }
             
-            /** Returns the ID */
+            /** Returns the ID. */
             const unsigned int id() const { return m_id; }
             
-            /** Returns the data variant */
+            /** Returns the data variant. */
             const DataVariant & variant() const { return m_variant; }
             
-            /** Sets the name */
+            /** Sets the name. */
             void setName(const std::string & name) { m_name = name; }
             
         private:

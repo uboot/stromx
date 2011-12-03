@@ -35,7 +35,7 @@ namespace stromx
             class Network;
         }
         
-        /** \brief The core data processing pipeline of core */
+        /** \brief The core data processing pipeline of core. */
         class STROMX_CORE_API Stream
         {
         public:

@@ -26,7 +26,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of an enumeration value */
+        /** \brief %Description of an enumeration value. */
         class EnumDescription
         {
         public:

@@ -43,7 +43,7 @@ namespace stromx
             class RecycleAccessImpl;
         }
         
-        /** \brief Container which manages the life-cycle of data objects */
+        /** \brief Container which manages the life-cycle of data objects. */
         class STROMX_CORE_API DataContainer
         {
             friend class impl::WriteAccessImpl;
@@ -56,31 +56,31 @@ namespace stromx
             
         public:
             /**
-             * Constructs an empty data container
+             * Constructs an empty data container.
              */
             DataContainer() {}
             
             /**
-             * Constructs a data container holding \c data
+             * Constructs a data container holding \c data.
              * \param data A non-zero pointer to a Data object
              * \throws WrongArgument
              */
             explicit DataContainer(core::Data*const data);
             
-            /** Returns whether to DataContainer holds any data */
+            /** Returns whether to DataContainer holds any data. */
             const bool empty() const { return m_impl.get() == 0; }
             
         private:
             std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
         };     
         
-        /** Returns \c true if the addresses in \c lhs and \c rhs are the same */
+        /** Returns \c true if the addresses in \c lhs and \c rhs are the same. */
         STROMX_CORE_API const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         
-        /** Returns \c true if the addresses in \c lhs and \c rhs are not the same */
+        /** Returns \c true if the addresses in \c lhs and \c rhs are not the same. */
         STROMX_CORE_API const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         
-        /** Returns the address of the data held by \c container */
+        /** Returns the address of the data held by \c container. */
         STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataContainer & container);
     }
 }

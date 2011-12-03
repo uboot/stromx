@@ -31,30 +31,62 @@ namespace stromx
             class ThreadImpl;
         }
         
-        /** \brief A thread which visits input nodes */
+        /** 
+         * \brief A thread which visits input nodes.
+         * 
+         * A thread visits a given list of operator inputs. For each input 
+         * in the list it obtains the input data from the connected output and
+         * passes it to the input. When data is passed as input to an operator
+         * or output data is obtained from the operator the operator is implicitely
+         * executed.
+         */
         class STROMX_CORE_API Thread
         {    
             friend class Stream;
             friend class ThreadTest;
             
         public:
+            /** The possible states of a thread. */
             enum Status
             {
+                /** The thread is inactive. */
                 INACTIVE,
+                /** The thread is active. */
                 ACTIVE,
+                /** The thread was stopped and is waiting to become inactive. */
                 DEACTIVATING
             };
             
             virtual ~Thread();
             
+            /** Returns the current state of the thread. */
             const Status status() const;
             
+            /** Returns the name of the thread. */
             const std::string & name() const;
+            
+            /** Sets the name of the thread. */
             void setName(const std::string& name);
+            
+            /** Returns a list of the operator inputs which are assigned to this thread. */
             const std::vector<Node> & nodeSequence() const;
             
+            /** 
+             * Adds the input \c inputId of the operator \c op to the list of currently
+             * visited inputs. 
+             */
             void addNode(Operator* const op, const unsigned int inputId);
+            
+            /** 
+             * Inserts the input \c inputId of the operator \c op into the list of currently
+             * visited inputs at \c position.
+             */
             void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
+            
+            /** 
+             * Removes the input at \c position from the list of currently
+             * visited inputs.
+             */
             void removeNode(const unsigned int position);
                 
         private:

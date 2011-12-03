@@ -26,7 +26,7 @@ namespace stromx
     {
         class Stream;
         
-        /** \brief Writer for XML encoded streams */
+        /** \brief Writer for XML encoded streams. */
         class STROMX_CORE_API XmlWriter
         {
         public:

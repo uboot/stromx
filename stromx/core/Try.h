@@ -24,7 +24,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Operator which renders ID-to-data maps optional  */
+        /** \brief %Operator which renders ID-to-data maps optional.  */
         class STROMX_CORE_API Try : public Id2DataMapper
         {
         public:

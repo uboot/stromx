@@ -23,7 +23,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief Special data value for trigger signals */
+        /** \brief Special data value for trigger signals. */
         class STROMX_CORE_API Trigger : public Data
         {
         public:

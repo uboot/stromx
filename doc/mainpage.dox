@@ -10,7 +10,7 @@ Some general info.
 The main concepts of \em core are illustrated in three examples. \em Simple shows how
 to build and operate a stream using only library functions. In \em file instead of
 assembling the stream with multiple function calls in the code it is loaded from an
-XML file. Finally, \em operator shows how to implement and use a proprietary \em core
+XML file. Finally, \em operator shows how to implement and use a proprietary \em stromx
 operator.
 
 - \subpage simple

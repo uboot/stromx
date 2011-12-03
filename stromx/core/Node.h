@@ -25,7 +25,7 @@ namespace stromx
     {
         class Operator;
         
-        /** \brief Identifier of a node of an operator */
+        /** \brief Identifier of a node of an operator. */
         class STROMX_CORE_API Node
         {
         public:

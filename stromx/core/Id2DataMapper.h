@@ -26,7 +26,7 @@ namespace stromx
             class Id2DataMap; 
         }
         
-        /** \brief Abstract base class of ID-to-data mappers */
+        /** \brief Abstract base class of ID-to-data mappers. */
         class Id2DataMapper
         { 
         public:

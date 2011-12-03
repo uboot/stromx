@@ -23,7 +23,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Operator with utility functions for unit testing */
+        /** \brief %Operator with utility functions for unit testing. */
         class OperatorTester : public Operator
         {
         public:

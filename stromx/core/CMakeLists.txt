@@ -85,7 +85,7 @@ endif()
 install (TARGETS stromx_core 
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib/static
+    ARCHIVE DESTINATION lib
 )
 
 install(DIRECTORY . 

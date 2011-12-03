@@ -27,18 +27,24 @@ namespace stromx
     {
         class Operator;
         
-        /** \brief %Factory of operator and data objects */
+        /** \brief %Factory of operator and data objects. */
         class STROMX_CORE_API Factory : public Registry
         {
         public:
             virtual ~Factory();
             
-            virtual void registerOperator(const OperatorKernel* const op);      
-            virtual Operator* const newOperator(const std::string & package, const std::string & name) const;      
-            virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
+            virtual void registerOperator(const OperatorKernel* const op);  
             
-            virtual void registerData(const Data* const data);        
+            virtual void registerData(const Data* const data);   
+            
+            /** Allocates and returns a new operator. */
+            virtual Operator* const newOperator(const std::string & package, const std::string & name) const;      
+            
+            /** Allocates and returns a new data object. */
             virtual Data* const newData(const std::string & package, const std::string & name) const;
+            
+            /** Returns a list of the operators registered with the factory. */
+            virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
             
         private:
             std::vector<const OperatorKernel*> m_operators;
