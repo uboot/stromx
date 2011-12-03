@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_XMLWRITERIMPL_H
-#define STROMX_CORE_XMLWRITERIMPL_H
+#ifndef STROMX_CORE_IMPL_XMLWRITERIMPL_H
+#define STROMX_CORE_IMPL_XMLWRITERIMPL_H
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
@@ -60,4 +60,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CORE_XMLWRITERIMPL_H
+#endif // STROMX_CORE_IMPL_XMLWRITERIMPL_H
