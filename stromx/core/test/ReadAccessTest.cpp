@@ -14,19 +14,15 @@
  *  limitations under the License.
  */
 
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+#include <cppunit/TestAssert.h>
 #include "ReadAccessTest.h"
-
 #include "TestData.h"
-
 #include <stromx/core/DataContainer.h>
-#include <stromx/core/ReadAccess.h>
 #include <stromx/core/Exception.h>
 #include <stromx/core/None.h>
-
-#include <cppunit/TestAssert.h>
-
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
+#include <stromx/core/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ReadAccessTest);
 

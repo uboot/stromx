@@ -14,14 +14,12 @@
 *  limitations under the License.
 */
 
-#include "CoreTest.h"
-
 #include <cppunit/TestAssert.h>
-
+#include "CoreTest.h"
 #include <stromx/core/Core.h>
+#include <stromx/core/Data.h>
 #include <stromx/core/Factory.h>
 #include <stromx/core/Operator.h>
-#include <stromx/core/Data.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::CoreTest);
 

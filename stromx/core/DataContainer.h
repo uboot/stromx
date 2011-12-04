@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_DATACONTAINER_H
 #define STROMX_CORE_DATACONTAINER_H
 
+#include <ostream>
 #include "Config.h"
 
 #ifdef __GNUG__
@@ -24,9 +25,6 @@
 #else
     #include <memory>
 #endif
-
-#include <ostream>
-#include "Config.h"
 
 namespace stromx
 {

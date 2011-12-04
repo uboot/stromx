@@ -17,11 +17,10 @@
 #ifndef STROMX_CORE_IMPL_THREADIMPL_H
 #define STROMX_CORE_IMPL_THREADIMPL_H
 
-#include <vector>
-#include <string>
-
-#include <boost/thread/mutex.hpp>
 #include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <string>
+#include <vector>
 
 namespace stromx
 {

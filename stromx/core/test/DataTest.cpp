@@ -14,12 +14,9 @@
 *  limitations under the License.
 */
 
-#include "DataTest.h"
-
 #include <cppunit/TestAssert.h>
-
+#include "DataTest.h"
 #include "TestData.h"
-
 #include <stromx/core/Data.h>
 #include <stromx/core/None.h>
 

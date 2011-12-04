@@ -17,9 +17,8 @@
 #ifndef STROMX_CORE_IMPL_XMLUTILITES_H
 #define STROMX_CORE_IMPL_XMLUTILITES_H
 
-#include "../Exception.h"
-
 #include <xercesc/util/XMLString.hpp>
+#include "../Exception.h"
 
 namespace stromx
 {

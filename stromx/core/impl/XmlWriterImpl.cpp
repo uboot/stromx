@@ -15,16 +15,16 @@
  */
 
 #include <boost/lexical_cast.hpp>
-#include <iostream>
 #include <fstream>
-
+#include <iostream>
+#include "XmlWriterImpl.h"
 #include "../Config.h"
 #include "../Data.h"
 #include "../Exception.h"
 #include "../Node.h"
 #include "../Operator.h"
 #include "../Thread.h"
-#include "XmlWriterImpl.h"
+
 
 using namespace xercesc;
 

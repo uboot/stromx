@@ -16,7 +16,6 @@
 
 #include "DataContainer.h"
 #include "Recycler.h"
-
 #include "impl/DataContainerImpl.h"
 
 namespace stromx

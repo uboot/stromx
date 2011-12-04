@@ -14,12 +14,12 @@
  *  limitations under the License.
  */
 
+#include "DataContainerImpl.h"
 #include "ReadAccessImpl.h"
-
 #include "../DataContainer.h"
 #include "../Exception.h"
 
-#include "DataContainerImpl.h"
+
 
 namespace stromx
 {

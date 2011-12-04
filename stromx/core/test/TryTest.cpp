@@ -14,16 +14,14 @@
  *  limitations under the License.
  */
 
+#include <cppunit/TestAssert.h>
 #include "TryTest.h"
-
-#include <stromx/core/None.h>
+#include <stromx/core/DataContainer.h>
 #include <stromx/core/Exception.h>
 #include <stromx/core/Id2DataPair.h>
+#include <stromx/core/None.h>
 #include <stromx/core/Try.h>
-#include <stromx/core/DataContainer.h>
 #include <stromx/core/impl/Id2DataMap.h>
-
-#include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::TryTest);
 

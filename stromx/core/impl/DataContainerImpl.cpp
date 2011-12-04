@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
+#include <boost/assert.hpp>
 #include "DataContainerImpl.h"
-
+#include "../Data.h"
 #include "../Exception.h"
 #include "../Recycler.h"
-#include "../Data.h"
-
-#include <boost/assert.hpp>
 
 namespace stromx
 {

@@ -17,14 +17,12 @@
 #ifndef STROMX_CORE_IMPL_SYNCHRONIZEDOPERATORKERNEL_H
 #define STROMX_CORE_IMPL_SYNCHRONIZEDOPERATORKERNEL_H
 
-#include "../DataProvider.h"
-#include "../Parameter.h"
-#include "../OperatorKernel.h"
-
-#include "Id2DataMap.h"
-
-#include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
+#include <boost/thread/mutex.hpp>
+#include "Id2DataMap.h"
+#include "../DataProvider.h"
+#include "../OperatorKernel.h"
+#include "../Parameter.h"
 
 namespace stromx
 {

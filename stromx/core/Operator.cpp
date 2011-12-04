@@ -14,12 +14,10 @@
  *  limitations under the License.
  */
 
-#include "Operator.h"
-
 #include "Description.h"
-#include "OperatorInfo.h"
 #include "Exception.h"
-
+#include "Operator.h"
+#include "OperatorInfo.h"
 #include "impl/InputNode.h"
 #include "impl/OutputNode.h"
 #include "impl/SynchronizedOperatorKernel.h"

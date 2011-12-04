@@ -14,7 +14,6 @@
  *  limitations under the License.
  */
 
-
 #include "Exception.h"
 #include "ImageWrapper.h"
 

@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_DATATYPETEST_H
-#define STROMX_CORE_DATATYPETEST_H
+#ifndef STROMX_CORE_DATAVARIANTTEST_H
+#define STROMX_CORE_DATAVARIANTTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
 
 namespace stromx
 {
@@ -42,4 +42,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CORE_DATATYPETEST_H
+#endif // STROMX_CORE_DATAVARIANTTEST_H

@@ -17,10 +17,9 @@
 #ifndef STROMX_CORE_STREAMTEST_H
 #define STROMX_CORE_STREAMTEST_H
 
-#include <vector>
-
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <vector>
 
 namespace stromx
 {
