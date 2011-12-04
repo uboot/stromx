@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include "../Node.h"
+#include "../Output.h"
 
 namespace stromx
 {
@@ -54,7 +54,7 @@ namespace stromx
                 
                 void addOperator(Operator* const op);
                 void removeOperator(Operator* const op);
-                const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+                const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
 
                 void activate();
                 void deactivate();

@@ -202,7 +202,7 @@ namespace stromx
             m_network->removeOperator(op);
         }
         
-        const Node Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
+        const Output Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
         {
             return m_network->connectionSource(targetOp, inputId);
         }

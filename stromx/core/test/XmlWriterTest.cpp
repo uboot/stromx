@@ -22,7 +22,7 @@
 
 #include <stromx/core/XmlWriter.h>
 #include <stromx/core/Operator.h>
-#include <stromx/core/Node.h>
+#include <stromx/core/Input.h>
 #include <stromx/core/Thread.h>
 #include <stromx/core/Stream.h>
 

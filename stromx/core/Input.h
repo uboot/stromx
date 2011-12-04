@@ -14,18 +14,28 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Node.h>
-#include <stromx/core/Operator.h>
+#ifndef STROMX_CORE_INPUT_H
+#define STROMX_CORE_INPUT_H
 
-#include <boost/python.hpp>
+#include "Connector.h"
 
-using namespace boost::python;
-using namespace stromx::core;
-
-void exportNode()
-{    
-    class_<Node>("Node")
-        .def("id", reinterpret_cast<unsigned int (Node::*)() const>(&Node::id))
-        .def("op", reinterpret_cast<Operator* (Node::*)() const>(&Node::op), return_internal_reference<>())
-    ;
+namespace stromx
+{
+    namespace core
+    {
+        /** \brief Identifier of an output of an operator. */
+        class Input : public Connector
+        {
+        public:
+            Input(Operator* const op, const unsigned int id)
+              : Connector(Connector::INPUT, op, id)
+            {}
+            
+            Input()
+              : Connector(Connector::INPUT, 0, 0)
+            {}
+        };
+    }
 }
+
+#endif // STROMX_CORE_INPUT_H

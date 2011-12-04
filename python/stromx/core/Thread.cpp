@@ -32,7 +32,7 @@ void exportThread()
         .value("DEACTIVATING", Thread::DEACTIVATING)
         ;
         
-    stromx::python::exportVector<Node>("NodeVector");
+    stromx::python::exportVector<Input>("InputVector");
       
     class_<Thread, boost::noncopyable>("Thread", no_init)
         .def("status", &Thread::status)

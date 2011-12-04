@@ -18,7 +18,6 @@
 #include "Network.h"
 #include "OutputNode.h"
 #include "../Exception.h"
-#include "../Node.h"
 #include "../Operator.h"
 
 namespace stromx
@@ -149,7 +148,7 @@ namespace stromx
                 throw WrongArgument("Operator does not exist");
             }
             
-            const Node Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
+            const Output Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
             {
                 for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
                     iter != m_operators.end();
@@ -160,9 +159,9 @@ namespace stromx
                         const InputNode* input = (*iter)->getInputNode(inputId);
                         
                         if(input->isConnected())
-                            return Node(input->source().op(), input->source().outputId());
+                            return Output(input->source().op(), input->source().outputId());
                         else
-                            return Node();
+                            return Output();
                     }
                 }
                 

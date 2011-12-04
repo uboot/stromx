@@ -9,7 +9,7 @@ set(SOURCES
     Exception.cpp
     Factory.cpp
     Image.cpp
-    Node.cpp
+    Connector.cpp
     Operator.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp
