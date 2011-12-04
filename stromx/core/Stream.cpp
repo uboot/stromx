@@ -169,7 +169,7 @@ namespace stromx
                 throw WrongState("Stream object active. Cannot connect operators within a running system.");
             }
             
-            m_network->connect(sourceOp, outputId, targetOp, inputId);
+            m_network->connect(Output(sourceOp, outputId), Input(targetOp, inputId));
         }
 
         void Stream::disconnect(Operator* const targetOp, const unsigned int inputId) const
@@ -179,7 +179,7 @@ namespace stromx
                 throw WrongState("Stream object active. Cannot disconnect operators within a running system.");
             }
             
-            m_network->disconnect(targetOp, inputId);
+            m_network->disconnect(Input(targetOp, inputId));
         }
         
         void Stream::addOperator(Operator* const op)
@@ -202,9 +202,9 @@ namespace stromx
             m_network->removeOperator(op);
         }
         
-        const Node Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
+        const Output Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
         {
-            return m_network->connectionSource(targetOp, inputId);
+            return m_network->connectionSource(Input(targetOp, inputId));
         }
     }
 }

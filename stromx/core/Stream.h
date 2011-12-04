@@ -18,8 +18,9 @@
 #define STROMX_CORE_STREAM_H
 
 #include <string>
-#include <vector> 
-#include "Node.h"
+#include <vector>
+#include "Config.h"
+#include "Output.h"
 
 namespace stromx
 {
@@ -55,7 +56,7 @@ namespace stromx
             void connect(Operator* const sourceOp, const unsigned int outputId, 
                          Operator* const targetOp, const unsigned int inputId) const;
             void disconnect(Operator* const targetOp, const unsigned int inputId) const;
-            const Node connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+            const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             void addOperator(Operator* const op);
             void removeOperator(Operator* const op);

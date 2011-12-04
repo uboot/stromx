@@ -21,7 +21,7 @@
 #include "../Config.h"
 #include "../Data.h"
 #include "../Exception.h"
-#include "../Node.h"
+#include "../Input.h"
 #include "../Operator.h"
 #include "../Thread.h"
 
@@ -83,7 +83,7 @@ namespace stromx
             {
                 //Add InputNode branches (tree structure: Stream:Thread:InputNode)
                 //Processed for each InputNode belonging to Thread (multiple entries for each Thread possible)
-                for(std::vector<Node>::const_iterator iter_inNodes = currThr->nodeSequence().begin();
+                for(std::vector<Input>::const_iterator iter_inNodes = currThr->nodeSequence().begin();
                     iter_inNodes != currThr->nodeSequence().end();
                     ++iter_inNodes)
                 {
@@ -188,7 +188,7 @@ namespace stromx
                     ++iter_in)
                 {
                     //Get the source node
-                    Node node = m_stream->connectionSource(currOp, (*iter_in)->id());
+                    Output node = m_stream->connectionSource(currOp, (*iter_in)->id());
                     
                     //Create Input only for connected operators
                     if (! node.empty())

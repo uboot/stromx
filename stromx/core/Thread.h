@@ -19,7 +19,8 @@
 
 #include <string>
 #include <vector>
-#include "Node.h"
+#include "Config.h"
+#include "Input.h"
 
 namespace stromx
 {
@@ -69,7 +70,7 @@ namespace stromx
             void setName(const std::string& name);
             
             /** Returns a list of the operator inputs which are assigned to this thread. */
-            const std::vector<Node> & nodeSequence() const;
+            const std::vector<Input> & nodeSequence() const;
             
             /** 
              * Adds the input \c inputId of the operator \c op to the list of currently
@@ -99,7 +100,7 @@ namespace stromx
             impl::ThreadImpl* m_thread;
             std::string m_name;
             const impl::Network* m_network;
-            std::vector<Node> m_nodeSequence;
+            std::vector<Input> m_nodeSequence;
         };
     }
 }

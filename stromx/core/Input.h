@@ -14,41 +14,30 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_NODE_H
-#define STROMX_CORE_NODE_H
+#ifndef STROMX_CORE_INPUT_H
+#define STROMX_CORE_INPUT_H
 
-#include "Config.h"
+#include "Connector.h"
 
 namespace stromx
 {
     namespace core
     {
-        class Operator;
-        
-        /** \brief Identifier of a node of an operator. */
-        class STROMX_CORE_API Node
+        /** \brief Identifier of an output of an operator. */
+        class Input : public Connector
         {
         public:
-            Node(Operator* const op, const unsigned int id)
-            : m_op(op),
-                m_id(id)
+            Input(const Operator* const op, const unsigned int id)
+              : Connector(Connector::INPUT, op, id)
             {}
             
-            Node()
-            : m_op(0), 
-                m_id(0)
+            Input()
+              : Connector(Connector::INPUT, 0, 0)
             {}
             
-            Operator* const op() const { return m_op; }
-            const unsigned int id() const { return m_id; }
-            
-            const bool empty() const { return m_op == 0; }
-            
-        private:
-            Operator* m_op;
-            unsigned int m_id;
+            virtual const Type type() const { return INPUT; }
         };
     }
 }
 
-#endif // STROMX_CORE_NODE_H
+#endif // STROMX_CORE_INPUT_H

@@ -57,7 +57,7 @@ namespace stromx
             m_name = name; 
         }
         
-        const std::vector<Node> & Thread::nodeSequence() const
+        const std::vector<Input> & Thread::nodeSequence() const
         { 
             return m_nodeSequence;
             
@@ -80,16 +80,16 @@ namespace stromx
             
         void Thread::addNode(Operator* const op, const unsigned int inputId)
         {
-            InputNode* inputNode = m_network->getInputNode(op, inputId);
+            InputNode* inputNode = m_network->getInputNode(Input(op, inputId));
             m_thread->addNode(inputNode);
-            m_nodeSequence.push_back(Node(op, inputId));
+            m_nodeSequence.push_back(Input(op, inputId));
         }
 
         void Thread::insertNode(const unsigned int position, Operator* const op, const unsigned int inputId)
         {
-            InputNode* inputNode = m_network->getInputNode(op, inputId);
+            InputNode* inputNode = m_network->getInputNode(Input(op, inputId));
             m_thread->insertNode(position, inputNode);
-            m_nodeSequence.insert(m_nodeSequence.begin() + position, Node(op, inputId));
+            m_nodeSequence.insert(m_nodeSequence.begin() + position, Input(op, inputId));
         }
 
         void Thread::removeNode(const unsigned int position)
