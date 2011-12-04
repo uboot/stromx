@@ -17,9 +17,9 @@
 #ifndef STROMX_BASE_ADJUSTRGBCHANNELS_H
 #define STROMX_BASE_ADJUSTRGBCHANNELS_H
 
+#include "Config.h"
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
-#include "Config.h"
 
 namespace stromx
 {

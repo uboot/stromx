@@ -14,13 +14,13 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TIMEPERIOD_H
-#define STROMX_BASE_TIMEPERIOD_H
+#ifndef STROMX_BASE_PERIODICDELAY_H
+#define STROMX_BASE_PERIODICDELAY_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/Primitive.h>
 #include "Config.h"
+#include <stromx/core/Image.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Primitive.h>
 
 namespace stromx
 {
@@ -80,4 +80,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_TIMEPERIOD_H
+#endif // STROMX_BASE_PERIODICDELAY_H

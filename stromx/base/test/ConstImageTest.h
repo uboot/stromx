@@ -17,8 +17,8 @@
 #ifndef STROMX_BASE_CONSTIMAGETEST_H
 #define STROMX_BASE_CONSTIMAGETEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
 
 namespace stromx
 {

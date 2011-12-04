@@ -14,12 +14,11 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TIMEPERIODTEST_H
-#define STROMX_BASE_TIMEPERIODTEST_H
+#ifndef STROMX_BASE_PERIODICDELAYTEST_H
+#define STROMX_BASE_PERIODICDELAYTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
 #include <stromx/core/DataContainer.h>
 
 namespace stromx
@@ -58,4 +57,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_TRIGGERTEST_H
+#endif // STROMX_BASE_PERIODICDELAYTEST_H

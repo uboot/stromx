@@ -18,10 +18,10 @@
 #define STROMX_BASE_QUEUE_H
 
 #include <deque>
+#include "Config.h"
+#include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
-#include <stromx/core/DataContainer.h>
-#include "Config.h"
 
 namespace stromx
 {
