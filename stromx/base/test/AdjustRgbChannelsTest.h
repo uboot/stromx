@@ -17,9 +17,8 @@
 #ifndef STROMX_BASE_ADJUSTRGBCHANNELSTEST_H
 #define STROMX_BASE_ADJUSTRGBCHANNELSTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
+#include <cppunit/TestFixture.h>
 #include <stromx/core/DataContainer.h>
 
 namespace stromx

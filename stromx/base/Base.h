@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_H
-#define STROMX_BASE_H
+#ifndef STROMX_BASE_BASE_H
+#define STROMX_BASE_BASE_H
 
 #include "Config.h"
 
@@ -32,4 +32,4 @@ extern "C"
     STROMX_BASE_API void stromxRegisterBase(stromx::core::Registry& registry);
 }
 
-#endif // STROMX_BASE_H
+#endif // STROMX_BASE_BASE_H
