@@ -16,14 +16,14 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h>
+#include "TestOperator.h"
+#include "ThreadImplTest.h"
 #include <stromx/core/Exception.h>
-#include <stromx/core/impl/InputNode.h>
-#include <stromx/core/impl/ThreadImpl.h>
 #include <stromx/core/None.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/OperatorTester.h>
-#include "TestOperator.h"
-#include "ThreadImplTest.h"
+#include <stromx/core/impl/InputNode.h>
+#include <stromx/core/impl/ThreadImpl.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ThreadImplTest);
 

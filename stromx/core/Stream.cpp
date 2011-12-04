@@ -17,13 +17,13 @@
 #include <boost/assert.hpp>
 #include "Enum.h"
 #include "Exception.h"
-#include "impl/InputNode.h"
-#include "impl/Network.h"
 #include "None.h"
 #include "Primitive.h"
 #include "Registry.h"
 #include "Stream.h"
 #include "Thread.h"
+#include "impl/InputNode.h"
+#include "impl/Network.h"
 
 namespace stromx
 {

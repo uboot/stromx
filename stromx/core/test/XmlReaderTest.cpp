@@ -15,11 +15,11 @@
  */
 
 #include <cppunit/TestAssert.h>
+#include "TestOperator.h"
+#include "XmlReaderTest.h"
 #include <stromx/core/Factory.h>
 #include <stromx/core/Stream.h>
 #include <stromx/core/XmlReader.h>
-#include "TestOperator.h"
-#include "XmlReaderTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlReaderTest);
 

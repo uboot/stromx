@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#include "impl/XmlWriterImpl.h"
 #include "XmlWriter.h"
+#include "impl/XmlWriterImpl.h"
 
 namespace stromx
 {

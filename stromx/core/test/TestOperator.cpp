@@ -16,12 +16,12 @@
 
 #include <boost/thread/thread.hpp>
 #include <typeinfo>
+#include "TestOperator.h"
 #include <stromx/core/DataProvider.h>
 #include <stromx/core/Id2DataComposite.h>
 #include <stromx/core/Id2DataPair.h>
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/Primitive.h>
-#include "TestOperator.h"
 
 namespace stromx
 {

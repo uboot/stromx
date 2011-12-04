@@ -17,9 +17,9 @@
 #include <cppunit/TestAssert.h> 
 #include "StreamTest.h"
 #include <stromx/core/Exception.h>
-#include <stromx/core/impl/Network.h>
 #include <stromx/core/Stream.h>
 #include <stromx/core/Thread.h>
+#include <stromx/core/impl/Network.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::StreamTest);
 

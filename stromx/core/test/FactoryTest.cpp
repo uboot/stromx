@@ -16,11 +16,11 @@
 
 #include <cppunit/TestAssert.h>
 #include "FactoryTest.h"
+#include "TestData.h"
+#include "TestOperator.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/Factory.h>
 #include <stromx/core/Operator.h>
-#include "TestData.h"
-#include "TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::FactoryTest);
 

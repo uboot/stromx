@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "impl/XmlReaderImpl.h"
 #include "XmlReader.h"
+#include "impl/XmlReaderImpl.h"
 
 namespace stromx
 {

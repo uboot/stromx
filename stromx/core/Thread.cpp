@@ -15,11 +15,11 @@
  */
 
 #include "Exception.h"
+#include "Operator.h"
+#include "Thread.h"
 #include "impl/InputNode.h"
 #include "impl/Network.h"
 #include "impl/ThreadImpl.h"
-#include "Operator.h"
-#include "Thread.h"
 
 namespace stromx
 {

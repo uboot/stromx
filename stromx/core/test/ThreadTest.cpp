@@ -17,12 +17,13 @@
 
 
 #include <cppunit/TestAssert.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/Thread.h>
 #include "TestOperator.h"
 #include "ThreadTest.h"
 #include "../impl/Network.h"
+#include <stromx/core/Exception.h>
+#include <stromx/core/Operator.h>
+#include <stromx/core/Thread.h>
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ThreadTest);
 
