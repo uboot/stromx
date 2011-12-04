@@ -70,7 +70,8 @@ In the next step the time delay of the timer operator is set to one second. All 
 Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of base::PeriodicCounter the access mode is core::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
 
 \code    
-    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    stream.connect(core::Output(source, base::Counter::OUTPUT),
+                   core::Input(timer, base::PeriodicDelay::INPUT));
 \endcode
 
 This line connects the output of the counter to the input of the \c timer operator. Note that input and output nodes are identified by the operator the belong to (\c source and \c timer) and their IDs (base::Counter::OUTPUT and base::PeriodicDelay::INPUT).

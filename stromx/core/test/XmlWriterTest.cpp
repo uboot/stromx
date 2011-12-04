@@ -57,11 +57,11 @@ namespace stromx
             op2->setName("Number 3");
             m_stream->addOperator(op2);
             
-            m_stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            m_stream->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
+            m_stream->connect(Output(op0, TestOperator::OUTPUT_1), Input(op1, TestOperator::INPUT_1));
+            m_stream->connect(Output(op0, TestOperator::OUTPUT_2), Input(op1, TestOperator::INPUT_2));
             
-            m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
-            m_stream->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
+            m_stream->connect(Output(op1, TestOperator::OUTPUT_1), Input(op2, TestOperator::INPUT_1));
+            m_stream->connect(Output(op1, TestOperator::OUTPUT_2), Input(op2, TestOperator::INPUT_2));
             
             Thread* thread = m_stream->addThread();
             thread->setName("Processing thread");

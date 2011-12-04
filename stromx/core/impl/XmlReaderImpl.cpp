@@ -466,7 +466,7 @@ namespace stromx
                 
                 Operator* source = idOpPair->second;
                 
-                m_stream->connect(source, outputId, op, inputId);
+                m_stream->connect(Output(source, outputId), Input(op, inputId));
             }
         }
     }

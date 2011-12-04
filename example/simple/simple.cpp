@@ -40,7 +40,8 @@ int main (int argc, char* argv[])
     
     timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));
     
-    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    stream.connect(core::Output(source, base::Counter::OUTPUT),
+                   core::Input(timer, base::PeriodicDelay::INPUT));
     
     core::Thread* thread = stream.addThread();
     thread->addNode(core::Input(timer, base::PeriodicDelay::INPUT));

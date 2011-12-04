@@ -50,10 +50,10 @@ namespace stromx
                     
                 void connect(const Output & source, const Input & target);
                 void disconnect(const Input & target);
+                const Output connectionSource(const Input & target) const;
                 
                 void addOperator(Operator* const op);
                 void removeOperator(Operator* const op);
-                const Output connectionSource(const Input & target) const;
 
                 void activate();
                 void deactivate();
