@@ -14,12 +14,10 @@
 *  limitations under the License.
 */
 
-#include "OperatorKernel.h"
-
-#include "Exception.h"
-
-#include <set>
 #include <boost/lexical_cast.hpp>
+#include <set>
+#include "Exception.h"
+#include "OperatorKernel.h"
 
 namespace stromx
 {

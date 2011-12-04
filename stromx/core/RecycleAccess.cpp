@@ -15,8 +15,9 @@
  */
 
 #include <memory>
-#include "RecycleAccess.h"
 #include "impl/RecycleAccessImpl.h"
+#include "RecycleAccess.h"
+
 
 namespace stromx
 {

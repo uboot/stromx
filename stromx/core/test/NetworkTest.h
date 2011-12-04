@@ -17,9 +17,8 @@
 #ifndef STROMX_CORE_NETWORKTEST_H
 #define STROMX_CORE_NETWORKTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
+#include <cppunit/TestFixture.h>
 #include <stromx/core/None.h>
 
 namespace stromx

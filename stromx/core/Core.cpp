@@ -15,12 +15,11 @@
 */
 
 #include "Core.h"
-
-#include "Registry.h"
-#include "Primitive.h"
 #include "Enum.h"
-#include "None.h"
 #include "Exception.h"
+#include "None.h"
+#include "Primitive.h"
+#include "Registry.h"
 
 void stromxRegisterCore(stromx::core::Registry& registry)
 {

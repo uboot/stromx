@@ -14,14 +14,9 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_DATAVARIANTTEST_H
-#define STROMX_CORE_DATAVARIANTTEST_H
-
-#include "DataVariantTest.h"
-
-#include <stromx/core/DataVariant.h>
-
 #include <cppunit/TestAssert.h>
+#include "DataVariantTest.h"
+#include <stromx/core/DataVariant.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataVariantTest);
 
@@ -58,5 +53,3 @@ namespace stromx
         }
     }
 }
-
-#endif // STROMX_CORE_DATAVARIANTTEST_H

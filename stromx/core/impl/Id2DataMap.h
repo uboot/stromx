@@ -17,11 +17,9 @@
 #ifndef STROMX_CORE_IMPL_ID2DATAMAP_H
 #define STROMX_CORE_IMPL_ID2DATAMAP_H
 
-
-#include "../Description.h"
-
-#include <vector>
 #include <map>
+#include <vector>
+#include "../Description.h"
 
 namespace stromx
 {

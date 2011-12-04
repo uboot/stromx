@@ -15,7 +15,6 @@
  */
 
 #include "OutputNode.h"
-
 #include "../Exception.h"
 #include "../DataContainer.h"
 #include "../Operator.h"

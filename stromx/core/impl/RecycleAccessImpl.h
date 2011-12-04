@@ -17,13 +17,11 @@
 #ifndef STROMX_CORE_IMPL_RECYCLEACCESSIMPL_H
 #define STROMX_CORE_IMPL_RECYCLEACCESSIMPL_H
 
-#include "../Recycler.h"
-
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
-
-#include <set>
 #include <deque>
+#include <set>
+#include "../Recycler.h"
 
 namespace stromx
 {

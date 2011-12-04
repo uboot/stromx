@@ -14,18 +14,13 @@
  *  limitations under the License.
  */
 
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+#include <cppunit/TestAssert.h>
 #include "DataContainerTest.h"
-
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/Exception.h>
-
 #include "TestData.h"
-
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
-
-#include <cppunit/TestAssert.h>
-
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataContainerTest);
 

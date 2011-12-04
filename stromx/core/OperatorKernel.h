@@ -18,8 +18,8 @@
 #define STROMX_CORE_OPERATORKERNEL_H
 
 #include <map>
-#include "OperatorInfo.h"
 #include "Exception.h"
+#include "OperatorInfo.h"
 
 namespace stromx
 {

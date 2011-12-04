@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Try.h"
-
 #include <boost/assert.hpp>
+#include "Try.h"
 
 namespace stromx
 {

@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#include "boost/assert.hpp"
+#include <boost/assert.hpp>
 #include "Enum.h"
 #include "Exception.h"
 #include "impl/InputNode.h"

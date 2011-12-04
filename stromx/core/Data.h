@@ -17,11 +17,10 @@
 #ifndef STROMX_CORE_DATA_H
 #define STROMX_CORE_DATA_H
 
+#include <typeinfo>
 #include "Config.h"
 #include "DataVariant.h"
 #include "Exception.h"
-
-#include <typeinfo>
 
 namespace stromx
 {

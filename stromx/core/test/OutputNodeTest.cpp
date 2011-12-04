@@ -14,18 +14,15 @@
  *  limitations under the License.
  */
 
-#include "OutputNodeTest.h"
-
-#include "TestOperator.h"
-
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/None.h>
-#include <stromx/core/impl/OutputNode.h>
-#include <stromx/core/impl/InputNode.h>
-#include <stromx/core/Exception.h>
-
 #include <cppunit/TestAssert.h>
+#include "OutputNodeTest.h"
+#include <stromx/core/DataContainer.h>
+#include <stromx/core/Exception.h>
+#include <stromx/core/impl/InputNode.h>
+#include <stromx/core/impl/OutputNode.h>
+#include <stromx/core/None.h>
+#include <stromx/core/Operator.h>
+#include "TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::OutputNodeTest);
 

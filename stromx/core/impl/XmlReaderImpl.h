@@ -17,11 +17,10 @@
 #ifndef STROMX_CORE_IMPL_XMLREADERIMPL_H
 #define STROMX_CORE_IMPL_XMLREADERIMPL_H
 
-#include <string>
-#include <map>
-
-#include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XercesDefs.hpp>
+#include <map>
+#include <string>
 
 namespace stromx
 {

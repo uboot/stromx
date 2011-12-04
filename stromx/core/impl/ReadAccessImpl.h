@@ -17,8 +17,8 @@
 #ifndef STROMX_CORE_IMPL_READACCESSIMPL_H
 #define STROMX_CORE_IMPL_READACCESSIMPL_H
 
-#include "../DataContainer.h"
 #include "../Core.h"
+#include "../DataContainer.h"
 
 namespace stromx
 {

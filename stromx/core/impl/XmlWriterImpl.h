@@ -19,11 +19,11 @@
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
+#include "XmlUtilities.h"
 #include "../Node.h"
 #include "../Operator.h"
 #include "../Parameter.h"
 #include "../Stream.h"
-#include "XmlUtilities.h"
 
 namespace stromx
 {
