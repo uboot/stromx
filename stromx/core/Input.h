@@ -27,7 +27,7 @@ namespace stromx
         class Input : public Connector
         {
         public:
-            Input(const Operator* const op, const unsigned int id)
+            Input(Operator* const op, const unsigned int id)
               : Connector(Connector::INPUT, op, id)
             {}
             

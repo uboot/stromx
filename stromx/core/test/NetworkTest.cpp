@@ -123,7 +123,7 @@ namespace stromx
             m_network->connect(Output(op0, TestOperator::OUTPUT_2), Input(op1, TestOperator::INPUT_2));
             
             CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(Input(op1, TestOperator::INPUT_1)));
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(op0), source.op());
+            CPPUNIT_ASSERT_EQUAL(op0, source.op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_1), source.id());
         }
 

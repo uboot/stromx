@@ -204,7 +204,7 @@ namespace stromx
         
         const Output Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
         {
-            return m_network->connectionSource(Input(targetOp, inputId));
+            return m_network->connectionSource(Input(const_cast<Operator*>(targetOp), inputId));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace stromx
         class Output : public Connector
         {
         public:
-            Output(const Operator* const op, const unsigned int id)
+            Output(Operator* const op, const unsigned int id)
               : Connector(Connector::OUTPUT, op, id)
             {}
             
