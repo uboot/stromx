@@ -97,15 +97,15 @@ namespace stromx
             op2->initialize();
             m_network->addOperator(op2);
             
-            m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
+            m_network->connect(Output(op0, TestOperator::OUTPUT_1), Input(op1, TestOperator::INPUT_1));
+            m_network->connect(Output(op0, TestOperator::OUTPUT_2), Input(op1, TestOperator::INPUT_2));
             
-            m_network->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
-            m_network->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
+            m_network->connect(Output(op1, TestOperator::OUTPUT_1), Input(op2, TestOperator::INPUT_1));
+            m_network->connect(Output(op1, TestOperator::OUTPUT_2), Input(op2, TestOperator::INPUT_2));
             
             CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op1));
-            CPPUNIT_ASSERT(m_network->connectionSource(op2, TestOperator::INPUT_1).empty());
-            CPPUNIT_ASSERT(m_network->connectionSource(op2, TestOperator::INPUT_2).empty());
+            CPPUNIT_ASSERT(m_network->connectionSource(Input(op2, TestOperator::INPUT_1)).empty());
+            CPPUNIT_ASSERT(m_network->connectionSource(Input(op2, TestOperator::INPUT_2)).empty());
         }
     
         void NetworkTest::testConnectionSource()
@@ -119,14 +119,14 @@ namespace stromx
             m_network->addOperator(op1);
             
             Output source;
-            CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(op1, TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(Input(op1, TestOperator::INPUT_1)));
             CPPUNIT_ASSERT(source.empty());
             
-            m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
+            m_network->connect(Output(op0, TestOperator::OUTPUT_1), Input(op1, TestOperator::INPUT_1));
+            m_network->connect(Output(op0, TestOperator::OUTPUT_2), Input(op1, TestOperator::INPUT_2));
             
-            CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(op1, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL(op0, source.op());
+            CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(Input(op1, TestOperator::INPUT_1)));
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(op0), source.op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_1), source.id());
         }
 

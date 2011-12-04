@@ -45,15 +45,14 @@ namespace stromx
                 m_operators.clear();
             }
             
-            void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
-                                Operator* const targetOp, const unsigned int inputId)
+            void Network::connect(const Output & source, const Input & target)
             { 
-                getInputNode(targetOp, inputId)->connect(getOutputNode(sourceOp, outputId));
+                getInputNode(target)->connect(getOutputNode(source));
             }
 
-            void Network::disconnect(Operator* const targetOp, const unsigned int inputId)
+            void Network::disconnect(const Input & target)
             {
-                getInputNode(targetOp, inputId)->disconnect();
+                getInputNode(target)->disconnect();
             }
             
             void Network::activate()
@@ -118,7 +117,7 @@ namespace stromx
                             desc != op->info().inputs().end();
                             ++desc)
                         {
-                            disconnect(op, (*desc)->id());
+                            disconnect(Input(op, (*desc)->id()));
                         }
                         
                         
@@ -148,15 +147,15 @@ namespace stromx
                 throw WrongArgument("Operator does not exist");
             }
             
-            const Output Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
+            const Output Network::connectionSource(const Input & target) const
             {
                 for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
                     iter != m_operators.end();
                     ++iter)
                 {
-                    if ((*iter) == targetOp)
+                    if ((*iter) == target.op())
                     {
-                        const InputNode* input = (*iter)->getInputNode(inputId);
+                        const InputNode* input = (*iter)->getInputNode(target.id());
                         
                         if(input->isConnected())
                             return Output(input->source().op(), input->source().outputId());
@@ -168,26 +167,26 @@ namespace stromx
                 throw WrongArgument("Unknown operator.");
             }
             
-            InputNode* Network::getInputNode(Operator* const op, const unsigned int inputId) const
+            InputNode* Network::getInputNode(const Input & input) const
             {
                 std::vector<Operator*>::const_iterator iter = 
-                    std::find(m_operators.begin(), m_operators.end(), op);
+                    std::find(m_operators.begin(), m_operators.end(), input.op());
                 
                 if(iter == m_operators.end())
                     throw WrongArgument("Operator is not part of the core.");
                 
-                return (*iter)->getInputNode(inputId);
+                return (*iter)->getInputNode(input.id());
             }
             
-            OutputNode* Network::getOutputNode(Operator* const op, const unsigned int outputId) const
+            OutputNode* Network::getOutputNode(const Output & output) const
             {
                 std::vector<Operator*>::const_iterator iter = 
-                    std::find(m_operators.begin(), m_operators.end(), op);
+                    std::find(m_operators.begin(), m_operators.end(), output.op());
                 
                 if(iter == m_operators.end())
                     throw WrongArgument("Operator is not part of the core.");
                 
-                return (*iter)->getOutputNode(outputId);
+                return (*iter)->getOutputNode(output.id());
             }
         }
     }

@@ -22,6 +22,7 @@
 #include <vector>
 
 #include "../Output.h"
+#include "../Input.h"
 
 namespace stromx
 {
@@ -48,19 +49,18 @@ namespace stromx
                 
                 const std::vector<Operator*>& operators() const { return m_operators; }
                     
-                void connect(Operator* const sourceOp, const unsigned int outputId, 
-                            Operator* const targetOp, const unsigned int inputId);
-                void disconnect(Operator* const targetOp, const unsigned int inputId);
+                void connect(const Output & source, const Input & target);
+                void disconnect(const Input & target);
                 
                 void addOperator(Operator* const op);
                 void removeOperator(Operator* const op);
-                const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+                const Output connectionSource(const Input & target) const;
 
                 void activate();
                 void deactivate();
                 
-                InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
-                OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
+                InputNode* getInputNode(const Input & input) const;
+                OutputNode* getOutputNode(const Output & output) const;
                     
             private:
                 std::vector<Operator*> m_operators;
