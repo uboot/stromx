@@ -34,6 +34,8 @@ namespace stromx
             Input()
               : Connector(Connector::INPUT, 0, 0)
             {}
+            
+            virtual const Type type() const { return INPUT; }
         };
     }
 }

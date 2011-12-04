@@ -25,9 +25,10 @@ using namespace stromx::core;
 
 void exportConnector()
 {
-    class_<Connector>("Connector", boost::python::no_init)
+    class_<Connector, boost::noncopyable>("Connector", boost::python::no_init)
         .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
         .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
+        .def("empty", reinterpret_cast<bool (Connector::*)() const>(&Connector::empty))
     ;
     
     class_<Output, bases<Connector> >("Output", init<Operator*, unsigned int>())
