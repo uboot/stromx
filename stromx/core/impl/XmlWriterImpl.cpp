@@ -79,28 +79,28 @@ namespace stromx
                 throw InternalError("Operator does not exist.");
             }
             
-            void XmlWriterImpl::createInputNodes(const Thread* const currThr, DOMElement* const thrElement)
+            void XmlWriterImpl::createInputConnectors(const Thread* const currThr, DOMElement* const thrElement)
             {
-                //Add InputNode branches (tree structure: Stream:Thread:InputNode)
-                //Processed for each InputNode belonging to Thread (multiple entries for each Thread possible)
-                for(std::vector<Input>::const_iterator iter_inNodes = currThr->nodeSequence().begin();
-                    iter_inNodes != currThr->nodeSequence().end();
-                    ++iter_inNodes)
+                //Add InputConnector branches (tree structure: Stream:Thread:InputConnector)
+                //Processed for each InputConnector belonging to Thread (multiple entries for each Thread possible)
+                for(std::vector<Input>::const_iterator iter_inConnectors = currThr->inputSequence().begin();
+                    iter_inConnectors != currThr->inputSequence().end();
+                    ++iter_inConnectors)
                 {
                     //Create current InputNode being child of Thread 
-                    DOMElement* inNodeElement = m_doc->createElement(Str2Xml("InputNode"));
-                    thrElement->appendChild(inNodeElement);
+                    DOMElement* inConnectorElement = m_doc->createElement(Str2Xml("InputConnector"));
+                    thrElement->appendChild(inConnectorElement);
                     
                     //Create attribute operator of current InputNode (one for each InputNode possible)
                     DOMAttr* opAttr = m_doc->createAttribute(Str2Xml("operator"));
-                    unsigned int opId = translateOperatorPointerToID((*iter_inNodes).op());
+                    unsigned int opId = translateOperatorPointerToID((*iter_inConnectors).op());
                     opAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(opId).c_str()));
-                    inNodeElement->setAttributeNode(opAttr);
+                    inConnectorElement->setAttributeNode(opAttr);
                     
                     //Create attribute input of current InputNode (one for each InputNode possible)
                     DOMAttr* inputAttr = m_doc->createAttribute(Str2Xml("input"));
-                    inputAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_inNodes).id()).c_str()));
-                    inNodeElement->setAttributeNode(inputAttr);
+                    inputAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_inConnectors).id()).c_str()));
+                    inConnectorElement->setAttributeNode(inputAttr);
                 }
             }
             
@@ -122,7 +122,7 @@ namespace stromx
                     thrElement->setAttributeNode(nameAttr);
                     
                     //Create InputNodes of Thread (multiple entries for each Thread possible)
-                    createInputNodes((*iter_thr), thrElement);
+                    createInputConnectors((*iter_thr), thrElement);
                 }
             }
             

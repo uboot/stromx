@@ -78,30 +78,30 @@ namespace stromx
         
         void ThreadImplTest::testAddOperator()
         {
-            unsigned int numNodes = m_thread->nodeSequence().size();
+            unsigned int numNodes = m_thread->inputSequence().size();
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(m_node));
-            CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->nodeSequence().size()));
-            CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[numNodes]);  
+            CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL(m_node, m_thread->inputSequence()[numNodes]);  
         }
 
         void ThreadImplTest::testInsertOperator()
         {
-            unsigned int numNodes = m_thread->nodeSequence().size();
+            unsigned int numNodes = m_thread->inputSequence().size();
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(0, m_node));
-            CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->nodeSequence().size()));
-            CPPUNIT_ASSERT_EQUAL(m_node, m_thread->nodeSequence()[0]);  
+            CPPUNIT_ASSERT_EQUAL(numNodes + 1, (unsigned int)(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL(m_node, m_thread->inputSequence()[0]);  
         }
 
         void ThreadImplTest::testRemoveOperator()
         {
             m_thread->insertNode(0, m_node);
-            unsigned int numNodes = m_thread->nodeSequence().size();
+            unsigned int numNodes = m_thread->inputSequence().size();
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeNode(0));
-            CPPUNIT_ASSERT_EQUAL(numNodes - 1, (unsigned int)(m_thread->nodeSequence().size()));
-            CPPUNIT_ASSERT(m_node != m_thread->nodeSequence()[0]);  
+            CPPUNIT_ASSERT_EQUAL(numNodes - 1, (unsigned int)(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT(m_node != m_thread->inputSequence()[0]);  
         }
         
         void ThreadImplTest::testStart()

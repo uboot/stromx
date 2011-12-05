@@ -43,7 +43,7 @@ namespace stromx
         {
             Id2DataPair pair0(0, m_dataContainer);
             CPPUNIT_ASSERT_NO_THROW((Try(pair0)).set(*m_map));
-            CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+            CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(0));
             CPPUNIT_ASSERT(pair0.data().empty());
             
             Id2DataPair pair1(0, m_dataContainer);
@@ -56,7 +56,7 @@ namespace stromx
             Id2DataPair pair0(0);
             CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
             
-            (*m_map)[0] = m_dataContainer;
+            m_map->set(0, m_dataContainer);
             CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).tryGet(*m_map));
         }
         
@@ -65,17 +65,17 @@ namespace stromx
             Id2DataPair pair0(0, m_dataContainer);
             CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
             
-            (*m_map)[0] = m_dataContainer;
+            m_map->set(0, m_dataContainer);
             CPPUNIT_ASSERT_EQUAL(true, (Try(pair0)).trySet(*m_map));
         }
 
         void TryTest::testGet ( void )
         {
-            (*m_map)[0] = m_dataContainer;
+            m_map->set(0, m_dataContainer);
             Id2DataPair pair0(0);
             CPPUNIT_ASSERT_NO_THROW((Try(pair0)).get(*m_map));
             CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-            CPPUNIT_ASSERT((*m_map)[0].empty());
+            CPPUNIT_ASSERT(m_map->get(0).empty());
             
             Id2DataPair pair1(0);
             CPPUNIT_ASSERT_NO_THROW((Try(pair1)).get(*m_map));

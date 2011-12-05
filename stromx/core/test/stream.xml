@@ -32,10 +32,10 @@
             <Input id="1" operator="1" output="3"/>
         </Operator>
         <Thread name="Processing thread">
-            <InputNode operator="1" input="0"/>
-            <InputNode operator="1" input="1"/>
-            <InputNode operator="2" input="0"/>
-            <InputNode operator="2" input="1"/>
+            <InputConnector operator="1" input="0"/>
+            <InputConnector operator="1" input="1"/>
+            <InputConnector operator="2" input="0"/>
+            <InputConnector operator="2" input="1"/>
         </Thread> 
     </Stream>
 </Stromx>

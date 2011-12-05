@@ -1,21 +1,21 @@
 /** \page simple Simple
 
-\em Streams are the main objects of the \em core library. All other objects belong either directly or indirectly to a stream. A stream consists of operators each of which can have several inputs and several outputs. An example of a very simple stream is given in the following image:
+\em Streams are the main objects of the \em core library. All other objects belong either directly or indirectly to a stream. A stream consists of operators each of which can have several input and output \em connectors. An example of a very simple stream is given in the following image:
 
 \image html example/simple/simple.png
 
-The operator \em Counter has the single output node \em OUTPUT which is connected to the only input node (fittingly called \em INPUT) of \em PeriodicDelay. This means that every output data which is produced at the output of \em PeriodicDelay will be transported to the input of \em Counter. Data which is transported to an input will stay there and \em block this input until its operator starts to process the data.
+The operator \em Counter has the single output \em OUTPUT which is connected to the only input connector (fittingly called \em INPUT) of \em PeriodicDelay. This means that every output data which is produced at the output of \em PeriodicDelay will be transported to the input of \em Counter. Data which is transported to an input will stay there and \em block this input until its operator starts to process the data.
 
-However operators in \em core are \em passive objects, i.e. they do not process any data on their own but need a \em thread which \em executes them. Besides operators, threads are the second important building block of a stream. Each input node of an operator can be assigned to a thread. When activated the thread visits each of its input node sequentially and starts over with the first when they last node has been reached. When a thread visits an input node of an operator it acts according to the following two steps:
+However operators in \em core are \em passive objects, i.e. they do not process any data on their own but need a \em thread which \em executes them. Besides operators, threads are the second important building block of a stream. Each input connector of an operator can be assigned to a thread. When activated the thread visits each of its input connector sequentially and starts over with the first when they last connector has been reached. When a thread visits an input connector of an operator it acts according to the following two steps:
 
 - The thread looks up to which output the input is connected. If there is no data at this output the thread \em executes the operator to which the output belongs to. This should produce some data at the output in question.
 
-- Now the thread takes the data which was either present at the output of the source operator or has been produced by executing the source operator and passes it to the input node which it currently visits. It can however happen that data has already assigned to this node, i.e. the input node is blocked. In this case the thread will execute the operator of the input node hoping that the blocking data will be processed and free its space for the new data.
+- Now the thread takes the data which was either present at the output of the source operator or has been produced by executing the source operator and passes it to the input connector which it currently visits. It can however happen that data has already assigned to this connector, i.e. the input connector is blocked. In this case the thread will execute the operator of the input connector hoping that the blocking data will be processed and free its space for the new data.
 
-In other words, the process of transporting data from output nodes to input nodes implicitely executes the operators of these nodes to make sure (1) that there is enough data at the outputs and (2) that the data at the inputs is removed in time.
+In other words, the process of transporting data from output connectors to input connectors implicitely executes the operators of these connectors to make sure (1) that there is enough data at the outputs and (2) that the data at the inputs is removed in time.
 
 \note
-Not every input node must be assigned to a thread. However, if data is required at an input which is not part of a thread the input must be fed manually by the user by calling core::Operator::setInputData(). Something similar holds for outputs which are not connected to inputs (more accurate, to inputs which are assigned to a thread). If data is waiting at such an output (which prevents the operator from being executed) it can be removed by the client using core::Operator::clearOutputData().
+Not every input connector must be assigned to a thread. However, if data is required at an input which is not part of a thread the input must be fed manually by the user by calling core::Operator::setInputData(). Something similar holds for outputs which are not connected to inputs (more accurate, to inputs which are assigned to a thread). If data is waiting at such an output (which prevents the operator from being executed) it can be removed by the client using core::Operator::clearOutputData().
 
 The \em simple tutorial assembles the stream in the image above and operates it. The \em Counter operator in the stream simply pushes an integer to its output each time it is executed. With each call it increments the integer by one. The \em PeriodicDelay operator simple passes data at its input to its output. However, it makes sure that new data appears at the output at most once within a certain amount of time (one second in this example). In this sense it acts as a timer, which delays the transport of data by predefined timespan.
 In the following, the source code of \em simple.cpp is printed with comments under each part.
@@ -58,7 +58,7 @@ The program starts by creating an empty stream object which will populated with 
     stream.addOperator(timer);
 \endcode
 
-First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input nodes. This is the reason why only initialized operator can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
+First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operator can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
 \code
     timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));
@@ -73,20 +73,20 @@ Each parameter has an access mode which controls when the associated value can b
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
 \endcode
 
-This line connects the output of the counter to the input of the \c timer operator. Note that input and output nodes are identified by the operator the belong to (\c source and \c timer) and their IDs (base::Counter::OUTPUT and base::PeriodicDelay::INPUT).
+This line connects the output of the counter to the input of the \c timer operator. Note that input and output connectors are identified by the operator the belong to (\c source and \c timer) and their IDs (base::Counter::OUTPUT and base::PeriodicDelay::INPUT).
   
 \code  
     core::Thread* thread = stream.addThread();
     thread->addNode(timer, base::PeriodicDelay::INPUT);
 \endcode
 
-Now the operating thread is added to the stream. In the next line the input node of \em timer is added as the only input node which is operated by \em thread. As before the input node is addressed by its operator and its ID.
+Now the operating thread is added to the stream. In the next line the input connector of \em timer is added as the only input connector which is operated by \em thread. As before the input connector is addressed by its operator and its ID.
 
 \code
     stream.start();
 \endcode
 
-This step starts all threads (i.e. is one in our case) of the stream. The thread begins to process its input nodes immediately. As mentioned in the introduction it executes the operators in the stream and moves processed data to the output of \em timer. The following loop gets this data from the final output and writes it to the standard input.
+This step starts all threads (i.e. is one in our case) of the stream. The thread begins to process its input connectors immediately. As mentioned in the introduction it executes the operators in the stream and moves processed data to the output of \em timer. The following loop gets this data from the final output and writes it to the standard input.
    
 \code   
     for(unsigned int i = 0; i < 5; ++i)

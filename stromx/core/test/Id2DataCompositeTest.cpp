@@ -42,7 +42,7 @@ namespace stromx
         void Id2DataCompositeTest::testSet ( void )
         {
             {
-                (*m_map)[0] = m_dataContainer;
+                m_map->set(0, m_dataContainer);
                 Id2DataPair pair0(0, m_dataContainer);
                 Id2DataPair pair1(1, m_dataContainer);
                 Id2DataPair pair2(2, m_dataContainer);
@@ -51,36 +51,36 @@ namespace stromx
             }          
             
             {
-                (*m_map)[0] = m_dataContainer;
-                (*m_map)[1] = DataContainer();
-                (*m_map)[2] = DataContainer();
+                m_map->set(0, m_dataContainer);
+                m_map->set(1, DataContainer());
+                m_map->set(2, DataContainer());
                 Id2DataPair pair0(0, m_dataContainer);
                 Id2DataPair pair1(1, m_dataContainer);
                 Id2DataPair pair2(2, m_dataContainer);
                 
                 CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(0));
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(1));
                 CPPUNIT_ASSERT(pair1.data().empty());
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[2]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(2));
                 CPPUNIT_ASSERT(pair2.data().empty());
             }         
             
             {
-                (*m_map)[0] = DataContainer();
-                (*m_map)[1] = m_dataContainer;
-                (*m_map)[2] = DataContainer();
+                m_map->set(0, DataContainer());
+                m_map->set(1, m_dataContainer);
+                m_map->set(2, DataContainer());
                 Id2DataPair pair0(0, m_dataContainer);
                 Id2DataPair pair1(1, m_dataContainer);
                 Id2DataPair pair2(2, m_dataContainer);
                 
                 CPPUNIT_ASSERT_NO_THROW((pair0 || (pair1 && pair2)).set(*m_map));
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[0]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(0));
                 CPPUNIT_ASSERT(pair0.data().empty());
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(1));
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
-                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT(m_map->get(2).empty());
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
             }
         }
@@ -90,8 +90,8 @@ namespace stromx
             Id2DataPair pair0(0);
             Id2DataPair pair1(1);
             Id2DataPair pair2(2);
-            (*m_map)[1] = m_dataContainer;
-            (*m_map)[2] = m_dataContainer;
+            m_map->set(1, m_dataContainer);
+            m_map->set(2, m_dataContainer);
             
             CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).tryGet(*m_map));
             CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).tryGet(*m_map));
@@ -103,7 +103,7 @@ namespace stromx
             Id2DataPair pair0(0, m_dataContainer);
             Id2DataPair pair1(1, m_dataContainer);
             Id2DataPair pair2(2, m_dataContainer);
-            (*m_map)[0] = m_dataContainer;
+            m_map->set(0, m_dataContainer);
             
             CPPUNIT_ASSERT_EQUAL(false, (pair0 && pair1 && pair2).trySet(*m_map));
             CPPUNIT_ASSERT_EQUAL(true, ((pair0 && pair1) || pair2).trySet(*m_map));
@@ -113,8 +113,8 @@ namespace stromx
         void Id2DataCompositeTest::testGet ( void )
         {
             {
-                (*m_map)[1] = m_dataContainer;
-                (*m_map)[2] = m_dataContainer;
+                m_map->set(1, m_dataContainer);
+                m_map->set(2, m_dataContainer);
                 Id2DataPair pair0(0);
                 Id2DataPair pair1(1);
                 Id2DataPair pair2(2);   
@@ -123,36 +123,36 @@ namespace stromx
             }
             
             {
-                (*m_map)[0] = DataContainer();
-                (*m_map)[1] = m_dataContainer;
-                (*m_map)[2] = m_dataContainer;
+                m_map->set(0, DataContainer());
+                m_map->set(1, m_dataContainer);
+                m_map->set(2, m_dataContainer);
                 Id2DataPair pair0(0);
                 Id2DataPair pair1(1);
                 Id2DataPair pair2(2);
                 
                 CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
-                CPPUNIT_ASSERT((*m_map)[0].empty());
+                CPPUNIT_ASSERT(m_map->get(0).empty());
                 CPPUNIT_ASSERT(pair0.data().empty());
-                CPPUNIT_ASSERT_EQUAL(m_dataContainer, (*m_map)[1]);
+                CPPUNIT_ASSERT_EQUAL(m_dataContainer, m_map->get(1));
                 CPPUNIT_ASSERT(pair1.data().empty());
-                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT(m_map->get(2).empty());
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair2.data());
             }
             
             {
-                (*m_map)[0] = m_dataContainer;
-                (*m_map)[1] = m_dataContainer;
-                (*m_map)[2] = DataContainer();
+                m_map->set(0, m_dataContainer);
+                m_map->set(1, m_dataContainer);
+                m_map->set(2, DataContainer());
                 Id2DataPair pair0(0);
                 Id2DataPair pair1(1);
                 Id2DataPair pair2(2);
                 
                 CPPUNIT_ASSERT_NO_THROW(((pair0 && pair1) || pair2).get(*m_map));
-                CPPUNIT_ASSERT((*m_map)[0].empty());
+                CPPUNIT_ASSERT(m_map->get(0).empty());
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair0.data());
-                CPPUNIT_ASSERT((*m_map)[1].empty());
+                CPPUNIT_ASSERT(m_map->get(1).empty());
                 CPPUNIT_ASSERT_EQUAL(m_dataContainer, pair1.data());
-                CPPUNIT_ASSERT((*m_map)[2].empty());
+                CPPUNIT_ASSERT(m_map->get(2).empty());
                 CPPUNIT_ASSERT(pair2.data().empty());
             }
         }

@@ -41,8 +41,7 @@ void exportOperator()
         .value("ACTIVE", Operator::ACTIVE)
         .value("EXECUTING", Operator::EXECUTING)
         ;
-        
-      
+         
     class_<Operator, std::auto_ptr<Operator> >("Operator", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("status", &Operator::status)
