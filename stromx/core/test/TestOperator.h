@@ -17,8 +17,8 @@
 #ifndef STROMX_CORE_TESTOPERATOR_H
 #define STROMX_CORE_TESTOPERATOR_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include "../OperatorKernel.h"
+#include "../Primitive.h"
 
 namespace stromx
 {

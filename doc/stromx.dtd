@@ -8,7 +8,7 @@
     name CDATA #IMPLIED
 >
 
-<!ELEMENT Thread (InputNode*)>
+<!ELEMENT Thread (InputConnector*)>
 <!ATTLIST Thread
     name CDATA #IMPLIED
 >
@@ -41,8 +41,8 @@
     output NMTOKEN #REQUIRED
 >
 
-<!ELEMENT InputNode EMPTY>
-<!ATTLIST InputNode
+<!ELEMENT InputConnector EMPTY>
+<!ATTLIST InputConnector
     operator NMTOKEN #REQUIRED
     input NMTOKEN #REQUIRED
 >

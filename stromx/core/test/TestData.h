@@ -17,7 +17,7 @@
 #ifndef STROMX_CORE_TESTDATA_H
 #define STROMX_CORE_TESTDATA_H
 
-#include <stromx/core/Data.h>
+#include "../Data.h"
 
 namespace stromx
 {

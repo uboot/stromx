@@ -49,7 +49,7 @@ namespace stromx
                 void readOperatorInputs(xercesc::DOMElement* const opElement);
                 void readParameter(xercesc::DOMElement* const paramElement);
                 void readThread(xercesc::DOMElement* const threadElement, Thread* const thread);
-                void readInputNode(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
+                void readInputConnector(xercesc::DOMElement* const inputNodeElement, Thread* const thread);
                 void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
                 Data* readData(xercesc::DOMElement* const dataElement);
                 

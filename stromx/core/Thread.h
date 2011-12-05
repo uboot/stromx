@@ -70,7 +70,7 @@ namespace stromx
             void setName(const std::string& name);
             
             /** Returns a list of the operator inputs which are assigned to this thread. */
-            const std::vector<Input> & nodeSequence() const;
+            const std::vector<Input> & inputSequence() const;
             
             /** 
              * Adds the input \c inputId of the operator \c op to the list of currently
@@ -100,7 +100,7 @@ namespace stromx
             impl::ThreadImpl* m_thread;
             std::string m_name;
             const impl::Network* m_network;
-            std::vector<Input> m_nodeSequence;
+            std::vector<Input> m_inputSequence;
         };
     }
 }

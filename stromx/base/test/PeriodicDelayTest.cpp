@@ -17,8 +17,8 @@
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include "PeriodicDelayTest.h"
-#include <stromx/base/Image.h>
-#include <stromx/base/PeriodicDelay.h>
+#include "../Image.h"
+#include "../PeriodicDelay.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>

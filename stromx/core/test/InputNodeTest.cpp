@@ -17,12 +17,12 @@
 #include <cppunit/TestAssert.h>
 #include "InputNodeTest.h"
 #include "TestOperator.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/None.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/impl/InputNode.h>
-#include <stromx/core/impl/OutputNode.h>
+#include "../DataContainer.h"
+#include "../Exception.h"
+#include "../None.h"
+#include "../Operator.h"
+#include "../impl/InputNode.h"
+#include "../impl/OutputNode.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::InputNodeTest);
 

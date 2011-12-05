@@ -19,9 +19,9 @@
 #include <cppunit/TestAssert.h>
 #include "TestData.h"
 #include "WriteAccessTest.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/None.h>
+#include "../DataContainer.h"
+#include "../Exception.h"
+#include "../None.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::WriteAccessTest);

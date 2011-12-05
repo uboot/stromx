@@ -17,8 +17,8 @@
             <Input id="0" operator="1" output="0"/>
         </Operator>
         <Thread name="">
-            <InputNode operator="1" input="0"/>
-            <InputNode operator="2" input="0"/>
+            <InputConnector operator="1" input="0"/>
+            <InputConnector operator="2" input="0"/>
         </Thread> 
     </Stream>
 </Stromx>

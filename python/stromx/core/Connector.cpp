@@ -23,12 +23,29 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{
+    struct ConnectorWrap : Connector, wrapper<Connector>
+    {
+        const Connector::Type type() const
+        {
+            return this->get_override("type")();
+        }
+    };
+}
+
 void exportConnector()
 {
-    class_<Connector, boost::noncopyable>("Connector", boost::python::no_init)
+    enum_<Connector::Type>("ConnectorType")
+        .value("INPUT", Connector::INPUT)
+        .value("OUTPUT", Connector::OUTPUT)
+    ;
+        
+    class_<ConnectorWrap, boost::noncopyable>("Connector", boost::python::no_init)
         .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
         .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
         .def("empty", reinterpret_cast<bool (Connector::*)() const>(&Connector::empty))
+        .def("type", pure_virtual(reinterpret_cast<Connector::Type (Connector::*)() const>(&Connector::type)))
     ;
     
     class_<Output, bases<Connector> >("Output", init<Operator*, unsigned int>())

@@ -30,7 +30,7 @@ namespace stromx
         namespace impl
         {
             SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
-            : m_op(op),
+              : m_op(op),
                 m_status(NONE)
             {
                 if(!op)
@@ -78,8 +78,8 @@ namespace stromx
                 m_inputMap = impl::Id2DataMap(m_op->inputs());
                 m_outputMap = impl::Id2DataMap(m_op->outputs());
                 
-                BOOST_ASSERT(m_inputMap.isEmpty());
-                BOOST_ASSERT(m_outputMap.isEmpty());
+                BOOST_ASSERT(m_inputMap.empty());
+                BOOST_ASSERT(m_outputMap.empty());
                 
                 m_status = INITIALIZED;
             }
@@ -92,8 +92,8 @@ namespace stromx
                 if(m_status != INITIALIZED)
                     throw WrongState("Operator must be initialized.");
                 
-                BOOST_ASSERT(m_inputMap.isEmpty());
-                BOOST_ASSERT(m_outputMap.isEmpty());
+                BOOST_ASSERT(m_inputMap.empty());
+                BOOST_ASSERT(m_outputMap.empty());
                 
                 m_op->activate();
                 m_status = ACTIVE;
@@ -223,7 +223,7 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
-                while(m_outputMap[id].empty())
+                while(m_outputMap.get(id).empty())
                 {
                     bool success = false;
                     {
@@ -244,14 +244,14 @@ namespace stromx
                 
                 validateDataAccess();
                 
-                return m_outputMap[id];
+                return m_outputMap.get(id);
             }
 
             void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
             {
                 unique_lock_t lock(m_mutex);
                 
-                while(! m_inputMap[id].empty())
+                while(! m_inputMap.get(id).empty())
                 {
                     bool success = false;
                     {
@@ -272,7 +272,7 @@ namespace stromx
                 
                 m_dataCond.notify_all();
                 
-                m_inputMap[id] = data;
+                m_inputMap.set(id, data);
             }
             
             void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
@@ -281,7 +281,7 @@ namespace stromx
                 
                 validateDataAccess();
                 
-                m_outputMap[id] = DataContainer();
+                m_outputMap.set(id, DataContainer());
                     
                 m_dataCond.notify_all();
             }

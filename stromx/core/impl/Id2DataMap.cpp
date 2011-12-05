@@ -41,7 +41,7 @@ namespace stromx
             {
             }
             
-            core::DataContainer Id2DataMap::operator[](const unsigned int id) const
+            const DataContainer & Id2DataMap::get(const unsigned int id) const
             {
                 std::map<unsigned int, DataContainer>::const_iterator iter = m_map.find(id);
                 if(iter == m_map.end())
@@ -50,13 +50,13 @@ namespace stromx
                 return iter->second;
             }
             
-            DataContainer & Id2DataMap::operator[](const unsigned int id)
+            void Id2DataMap::set(const unsigned int id, DataContainer data)
             {
                 std::map<unsigned int, DataContainer>::iterator iter = m_map.find(id);
                 if(iter == m_map.end())
                     throw WrongId("No data with ID " + id);
                 
-                return iter->second;
+                iter->second = data;
             }
             
             void Id2DataMap::clear()
@@ -69,7 +69,7 @@ namespace stromx
                 }       
             }
             
-            const bool Id2DataMap::isEmpty() const
+            const bool Id2DataMap::empty() const
             {
                 bool value = true;
                 for(std::map<unsigned int, DataContainer>::const_iterator iter = m_map.begin();

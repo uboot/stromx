@@ -44,7 +44,7 @@ namespace stromx
                 ~ThreadImpl();
                 
                 const Status status() const { return m_status; }
-                const std::vector<InputNode*> & nodeSequence() const { return m_nodeSequence; }
+                const std::vector<InputNode*> & inputSequence() const { return m_inputSequence; }
                 
                 void addNode(InputNode* const op);
                 void insertNode(const unsigned int position, InputNode* const op);
@@ -59,7 +59,7 @@ namespace stromx
                 
                 Status m_status;
                 boost::thread* m_thread;
-                std::vector<InputNode*> m_nodeSequence;
+                std::vector<InputNode*> m_inputSequence;
             };
         }
     }

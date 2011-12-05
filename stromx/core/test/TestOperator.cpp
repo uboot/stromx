@@ -17,11 +17,11 @@
 #include <boost/thread/thread.hpp>
 #include <typeinfo>
 #include "TestOperator.h"
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/Primitive.h>
+#include "../DataProvider.h"
+#include "../Id2DataComposite.h"
+#include "../Id2DataPair.h"
+#include "../OperatorException.h"
+#include "../Primitive.h"
 
 namespace stromx
 {

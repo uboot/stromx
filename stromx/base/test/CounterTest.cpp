@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "CounterTest.h"
-#include <stromx/base/Counter.h>
+#include "../Counter.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>

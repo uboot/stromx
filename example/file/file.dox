@@ -21,11 +21,11 @@ In this tutorial the very same stream as in \ref simple is constructed. However,
 </Stromx>
 \endcode
 
-A stream is described as a list of all its operators and its threads. Each operator must be assigned a unique ID which is used to refer to the same operator when defining connections between operators and when assiging operator nodes to threads. The type of an operator is identified by the a combination of \em package and \em type. This allows the use of operators which are defined in third party packages but are not known to the \em core core library. Parameters of operators can be set by the respective \em Parameter element. This element contains exactly one \em Data element which contains the value of the parameter. The type of the data is also specified by the combination of \em package and \em type. Again this allows allows to set parameters whose type is defined in an external library and thus not know to core core.
+A stream is described as a list of all its operators and its threads. Each operator must be assigned a unique ID which is used to refer to the same operator when defining connections between operators and when assiging operator connectors to threads. The type of an operator is identified by the a combination of \em package and \em type. This allows the use of operators which are defined in third party packages but are not known to the \em core core library. Parameters of operators can be set by the respective \em Parameter element. This element contains exactly one \em Data element which contains the value of the parameter. The type of the data is also specified by the combination of \em package and \em type. Again this allows allows to set parameters whose type is defined in an external library and thus not know to core core.
 
-In addition to parameters the \em Operator element contains a list of its inputs and the outputs these inputs are connected to. As in program in the previous tutorial input and output nodes are identified by the operator the belong to (via the operator ID) and the ID of the respective input or output. In the above example the input \c 0 of the second operator (ID \c 1) is connected to the output \c 0 of the first operator (ID \c 1).
+In addition to parameters the \em Operator element contains a list of its inputs and the outputs these inputs are connected to. As in program in the previous tutorial input and output connectors are identified by the operator the belong to (via the operator ID) and the ID of the respective input or output. In the above example the input \c 0 of the second operator (ID \c 1) is connected to the output \c 0 of the first operator (ID \c 1).
 
-The same principle holds for the list of input node elements of a \em Thread element. Here, the only thread in the stream operates the input node \c 0 of the operator with ID \c 1. The code which reads this XML file is explained in the following:
+The same principle holds for the list of input connector elements of a \em Thread element. Here, the only thread in the stream operates the input connector \c 0 of the operator with ID \c 1. The code which reads this XML file is explained in the following:
 
 \code
 #include <stromx/core/Factory.h>
@@ -66,7 +66,7 @@ If the above way of registering a package is used the package must be known at c
     stream->start();
 \endcode
 
-In the next step a stream is instantiated according the XML file using a core::XmlReader. Note that the previously configured factory is passed to the constructor of core::XmlReader. This way it knows which classes to instantiate if operators or data types are defined by combinations of package and type names. Because the complete configuration of the stream is given in the file the stream is ready to be started after it has been read. In other words, all operators have automatically been initialized, the connections between them have been established and each thread has been informed about its input nodes.
+In the next step a stream is instantiated according the XML file using a core::XmlReader. Note that the previously configured factory is passed to the constructor of core::XmlReader. This way it knows which classes to instantiate if operators or data types are defined by combinations of package and type names. Because the complete configuration of the stream is given in the file the stream is ready to be started after it has been read. In other words, all operators have automatically been initialized, the connections between them have been established and each thread has been informed about its input connectors.
 
 \code   
     core::Operator* timer = stream->operators()[1];

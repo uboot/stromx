@@ -43,7 +43,7 @@ namespace stromx
             private:
                 const unsigned int translateOperatorPointerToID(const Operator* const op) const;
                 void createThreads(const std::vector<Thread*> threads);
-                void createInputNodes(const Thread* const currThr, xercesc::DOMElement* const thrElement);
+                void createInputConnectors(const Thread* const currThr, xercesc::DOMElement* const thrElement);
                 void createOperators(const std::vector<Operator*> operators);
                 void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);

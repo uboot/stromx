@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "CameraBufferTest.h"
-#include <stromx/base/impl/CameraBuffer.h>
+#include "../impl/CameraBuffer.h"
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>
 

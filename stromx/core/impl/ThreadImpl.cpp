@@ -45,7 +45,7 @@ namespace stromx
                 if(! op)
                     throw WrongArgument("Passed null as input node.");
                 
-                m_nodeSequence.push_back(op);
+                m_inputSequence.push_back(op);
             }
 
             void ThreadImpl::insertNode(const unsigned int position, InputNode* const op)
@@ -53,10 +53,10 @@ namespace stromx
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
                 
-                if(position > m_nodeSequence.size())
+                if(position > m_inputSequence.size())
                     throw WrongArgument("Can only insert at an existing position of at the end of the node sequence.");
                 
-                m_nodeSequence.insert(m_nodeSequence.begin() + position, op);
+                m_inputSequence.insert(m_inputSequence.begin() + position, op);
             }
 
             void ThreadImpl::removeNode(const unsigned int position)
@@ -64,10 +64,10 @@ namespace stromx
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
                 
-                if(position >= m_nodeSequence.size())
+                if(position >= m_inputSequence.size())
                     throw WrongArgument("No node at this position.");
                 
-                m_nodeSequence.erase(m_nodeSequence.begin() + position);
+                m_inputSequence.erase(m_inputSequence.begin() + position);
             }
 
             void ThreadImpl::start()
@@ -114,8 +114,8 @@ namespace stromx
                 {      
                     while(true)
                     {
-                        for(std::vector<InputNode*>::iterator node = m_nodeSequence.begin();
-                                node != m_nodeSequence.end();
+                        for(std::vector<InputNode*>::iterator node = m_inputSequence.begin();
+                                node != m_inputSequence.end();
                                 ++node)
                         {
                             (*node)->setInputData();

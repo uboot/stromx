@@ -16,8 +16,8 @@
 
 #include <cppunit/TestAssert.h>
 #include "ConstImageTest.h"
-#include <stromx/base/ConstImage.h>
-#include <stromx/base/Image.h>
+#include "../ConstImage.h"
+#include "../Image.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>

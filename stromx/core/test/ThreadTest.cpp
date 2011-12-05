@@ -20,9 +20,9 @@
 #include "TestOperator.h"
 #include "ThreadTest.h"
 #include "../impl/Network.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/Thread.h>
+#include "../Exception.h"
+#include "../Operator.h"
+#include "../Thread.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ThreadTest);
@@ -58,8 +58,8 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL(op, m_thread->nodeSequence()[2].op());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->nodeSequence()[2].id());
+            CPPUNIT_ASSERT_EQUAL(op, m_thread->inputSequence()[2].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[2].id());
         }
 
         void ThreadTest::testInsertOperator()
@@ -71,15 +71,15 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL(op, m_thread->nodeSequence()[1].op());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->nodeSequence()[1].id());
+            CPPUNIT_ASSERT_EQUAL(op, m_thread->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[1].id());
         }
 
         void ThreadTest::testRemoveOperator()
         {
             CPPUNIT_ASSERT_THROW(m_thread->removeNode(3), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeNode(1));
-            CPPUNIT_ASSERT_EQUAL(1, int(m_thread->nodeSequence().size()));
+            CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
         }
 
         void ThreadTest::tearDown()

@@ -16,8 +16,8 @@
 
 #include <cppunit/TestAssert.h>
 #include "ClipTest.h"
-#include <stromx/base/Clip.h>
-#include <stromx/base/Image.h>
+#include "../Clip.h"
+#include "../Image.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>

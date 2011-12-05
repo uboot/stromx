@@ -25,12 +25,12 @@ namespace stromx
     {      
         const bool Id2DataPair::trySet(const impl::Id2DataMap& id2DataMap) const
         {
-            return id2DataMap[m_id].empty();   
+            return id2DataMap.get(m_id).empty();   
         }
         
         const bool Id2DataPair::tryGet(const impl::Id2DataMap& id2DataMap) const
         {
-            return ! id2DataMap[m_id].empty();
+            return ! id2DataMap.get(m_id).empty();
         }
         
         void Id2DataPair::get(core::impl::Id2DataMap& id2DataMap) const
@@ -38,11 +38,11 @@ namespace stromx
             if(! m_data.empty())
                 throw WrongState("Data has already been assigned to this ID-data pair");
                 
-            if(id2DataMap[m_id].empty())
+            if(id2DataMap.get(m_id).empty())
                 throw WrongState("The requested output is empty");
             
-            m_data = id2DataMap[m_id];
-            id2DataMap[m_id] = DataContainer();
+            m_data = id2DataMap.get(m_id);
+            id2DataMap.set(m_id, DataContainer());
         }
 
         void Id2DataPair::set(core::impl::Id2DataMap& id2DataMap) const
@@ -50,10 +50,10 @@ namespace stromx
             if(m_data.empty())
                 throw WrongState("This ID-data pair contains no data");
             
-            if(! id2DataMap[m_id].empty())
+            if(! id2DataMap.get(m_id).empty())
                 throw WrongState("Data has already been assigned to this input ID");
             
-            id2DataMap[m_id] = m_data;
+            id2DataMap.set(m_id, m_data);
             m_data = DataContainer();
         }
     }

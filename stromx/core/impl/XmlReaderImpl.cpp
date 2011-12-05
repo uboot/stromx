@@ -54,7 +54,7 @@ namespace stromx
     name CDATA #IMPLIED \
 > \
 \
-<!ELEMENT Thread (InputNode*)> \
+<!ELEMENT Thread (InputConnector*)> \
 <!ATTLIST Thread \
     name CDATA #IMPLIED \
 > \
@@ -87,8 +87,8 @@ namespace stromx
     output NMTOKEN #REQUIRED \
 > \
 \
-<!ELEMENT InputNode EMPTY> \
-<!ATTLIST InputNode \
+<!ELEMENT InputConnector EMPTY> \
+<!ATTLIST InputConnector \
     operator NMTOKEN #REQUIRED \
     input NMTOKEN #REQUIRED \
 > \
@@ -423,17 +423,17 @@ namespace stromx
                 Xml2Str type(threadElement->getAttribute(Str2Xml("name")));
                 thread->setName(std::string(type));
                 
-                DOMNodeList* inputs = threadElement->getElementsByTagName(Str2Xml("InputNode"));
+                DOMNodeList* inputs = threadElement->getElementsByTagName(Str2Xml("InputConnector"));
                 XMLSize_t numInputs = inputs->getLength();
                 
                 for(unsigned int i = 0; i < numInputs; ++i)
                 {
                     DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
-                    readInputNode(inputElement, thread);
+                    readInputConnector(inputElement, thread);
                 }
             }
             
-            void XmlReaderImpl::readInputNode(DOMElement*const inputNodeElement, Thread*const thread)
+            void XmlReaderImpl::readInputConnector(DOMElement*const inputNodeElement, Thread*const thread)
             {
                 Xml2Str opIdStr(inputNodeElement->getAttribute(Str2Xml("operator")));
                 Xml2Str inputIdStr(inputNodeElement->getAttribute(Str2Xml("input")));

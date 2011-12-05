@@ -35,10 +35,11 @@ namespace stromx
                 Id2DataMap();
                 Id2DataMap(const std::vector<const Description*> & descriptions);
                 
-                DataContainer operator[](const unsigned int id) const;
-                DataContainer& operator[](const unsigned int id);
+                
+                const DataContainer & get(const unsigned int id) const;
+                void set(const unsigned int id, DataContainer data);
                 void clear();
-                const bool isEmpty() const;
+                const bool empty() const;
                 
             private:
                 std::map<unsigned int, DataContainer> m_map;
