@@ -18,12 +18,12 @@
 #include <cppunit/TestAssert.h>
 #include "TestOperator.h"
 #include "ThreadImplTest.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/None.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/impl/InputNode.h>
-#include <stromx/core/impl/ThreadImpl.h>
+#include "../Exception.h"
+#include "../None.h"
+#include "../Operator.h"
+#include "../OperatorTester.h"
+#include "../impl/InputNode.h"
+#include "../impl/ThreadImpl.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ThreadImplTest);
 

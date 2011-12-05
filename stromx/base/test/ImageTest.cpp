@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "ImageTest.h"
-#include <stromx/base/Image.h>
+#include "../Image.h"
 #include <stromx/core/Exception.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ImageTest);

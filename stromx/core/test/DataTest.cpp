@@ -17,8 +17,8 @@
 #include <cppunit/TestAssert.h>
 #include "DataTest.h"
 #include "TestData.h"
-#include <stromx/core/Data.h>
-#include <stromx/core/None.h>
+#include "../Data.h"
+#include "../None.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DataTest);
 

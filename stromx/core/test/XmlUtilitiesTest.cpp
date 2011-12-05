@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "XmlUtilitiesTest.h"
-#include <stromx/core/impl/XmlUtilities.h>
+#include "../impl/XmlUtilities.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlUtilitiesTest);
 

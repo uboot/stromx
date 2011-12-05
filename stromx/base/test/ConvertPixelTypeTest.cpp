@@ -16,8 +16,8 @@
 
 #include <cppunit/TestAssert.h>
 #include "ConvertPixelTypeTest.h"
-#include <stromx/base/ConvertPixelType.h>
-#include <stromx/base/Image.h>
+#include "../ConvertPixelType.h"
+#include "../Image.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>

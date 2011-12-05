@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "QueueTest.h"
-#include <stromx/base/Queue.h>
+#include "../Queue.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>

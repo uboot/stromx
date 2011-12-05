@@ -19,10 +19,10 @@
 #include <cppunit/TestAssert.h>
 #include "ReadAccessTest.h"
 #include "TestData.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/None.h>
-#include <stromx/core/ReadAccess.h>
+#include "../DataContainer.h"
+#include "../Exception.h"
+#include "../None.h"
+#include "../ReadAccess.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ReadAccessTest);
 

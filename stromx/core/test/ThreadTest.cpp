@@ -20,9 +20,9 @@
 #include "TestOperator.h"
 #include "ThreadTest.h"
 #include "../impl/Network.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/Thread.h>
+#include "../Exception.h"
+#include "../Operator.h"
+#include "../Thread.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ThreadTest);

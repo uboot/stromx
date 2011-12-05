@@ -17,8 +17,8 @@
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include "CameraTest.h"
-#include <stromx/base/Camera.h>
-#include <stromx/base/Image.h>
+#include "../Camera.h"
+#include "../Image.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/Enum.h>
 #include <stromx/core/OperatorTester.h>

@@ -18,10 +18,10 @@
 #include <cppunit/TestAssert.h>
 #include "NetworkTest.h"
 #include "TestOperator.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/impl/Network.h>
+#include "../Exception.h"
+#include "../Operator.h"
+#include "../OperatorTester.h"
+#include "../impl/Network.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::NetworkTest);
 

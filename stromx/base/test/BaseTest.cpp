@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "BaseTest.h"
-#include <stromx/base/Base.h>
+#include "../Base.h"
 #include <stromx/core/Data.h>
 #include <stromx/core/Factory.h>
 #include <stromx/core/Operator.h>
