@@ -14,16 +14,14 @@
  *  limitations under the License.
  */
 
-#include "Id2DataCompositeTest.h"
-
-#include <stromx/core/None.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/impl/Id2DataMap.h>
-#include <stromx/core/Id2DataComposite.h>
-
 #include <cppunit/TestAssert.h>
+#include "Id2DataCompositeTest.h"
+#include <stromx/core/DataContainer.h>
+#include <stromx/core/Exception.h>
+#include <stromx/core/Id2DataComposite.h>
+#include <stromx/core/Id2DataPair.h>
+#include <stromx/core/None.h>
+#include <stromx/core/impl/Id2DataMap.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::Id2DataCompositeTest);
 

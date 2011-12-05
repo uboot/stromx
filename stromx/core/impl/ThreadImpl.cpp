@@ -14,14 +14,11 @@
  *  limitations under the License.
  */
 
+#include <boost/bind.hpp>
+#include "InputNode.h"
 #include "ThreadImpl.h"
-
 #include "../Exception.h"
 #include "../OperatorInfo.h"
-
-#include "InputNode.h"
-
-#include <boost/bind.hpp>
 
 namespace stromx
 {

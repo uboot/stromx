@@ -17,10 +17,9 @@
 #ifndef STROMX_CORE_TRYTEST_H
 #define STROMX_CORE_TRYTEST_H
 
-#include <stromx/core/DataContainer.h>
-
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <stromx/core/DataContainer.h>
 
 namespace stromx
 {

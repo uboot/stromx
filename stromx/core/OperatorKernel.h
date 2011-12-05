@@ -18,8 +18,8 @@
 #define STROMX_CORE_OPERATORKERNEL_H
 
 #include <map>
-#include "OperatorInfo.h"
 #include "Exception.h"
+#include "OperatorInfo.h"
 
 namespace stromx
 {
@@ -35,7 +35,7 @@ namespace stromx
         }
         
         /**
-         * \brief Abstract operator kernel
+         * \brief Abstract operator kernel.
          * 
          * An operator kernel implements an operator in its raw form, i.e. without
          * the infrastructure code which is necessary to be a node in a stream network.
@@ -58,10 +58,10 @@ namespace stromx
             /** Returns the type. In general this is the name of the class of its implementation. */
             const std::string& type() const { return m_type; }
             
-            /** Returns the package the operator belongs to */
+            /** Returns the package the operator belongs to. */
             const std::string& package() const { return m_package; }
             
-            /** Returns the version of the operator */
+            /** Returns the version of the operator. */
             const Version& version() const { return m_version; }
 
             /**
@@ -85,20 +85,18 @@ namespace stromx
              */
             const std::vector<const Parameter*>& parameters() const { return m_parameters; }
             
-            /**
-             * Returns the parameter description of the parameter \c id
-             */
+            /** Returns the parameter description of the parameter \c id. */
             const Parameter & parameter(const unsigned int id) const;
             
-            /** Sets a parameter \c id to \c value */
+            /** Sets a parameter \c id to \c value. */
             virtual void setParameter(const unsigned int id, const Data& value) { throw NotImplemented(); };
             
-            /** Gets the current value of the parameter \c id */
+            /** Gets the current value of the parameter \c id. */
             virtual const Data& getParameter(const unsigned int id) const { throw NotImplemented(); };
             
             /**
-             * Executes the operator
-             * \param provider Provides the input data for the execution and accepts its results
+             * Executes the operator.
+             * \param provider Provides the input data for the execution and accepts its results.
              */
             virtual void execute(DataProvider& provider) = 0;
             
@@ -117,13 +115,13 @@ namespace stromx
 
             /** 
              * Deactivates the operator, i.e. returns its state to the same as before
-             * activation
+             * activation.
              */
             virtual void deactivate() {}
             
         protected:
             /**
-             * Constructs an operator kernel
+             * Constructs an operator kernel.
              */
             OperatorKernel(const std::string & type,
                     const std::string & package,
@@ -131,7 +129,7 @@ namespace stromx
                     const std::vector<const Parameter*>& parameters);
                 
             /**
-             * Constructs an operator kernel
+             * Constructs an operator kernel.
              */    
             OperatorKernel(const std::string & type,
                     const std::string & package,
@@ -141,21 +139,21 @@ namespace stromx
                     const std::vector<const Parameter*>& parameters);
              
             /**
-             * Constructs an operator kernel
+             * Constructs an operator kernel.
              */       
             OperatorKernel(const std::string & type,
                     const std::string & package,
                     const Version & version);
             /**
              * Initializes an operator kernel. Must only be called from
-             * OperatorKernel::initialize() and overloads of this function
+             * OperatorKernel::initialize() and overloads of this function.
              */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
                                     const std::vector<const Parameter*>& parameters);
             
             /**
-             * Returns the parameter \c id
+             * Returns the parameter \c id.
              */
             Parameter & parameter(const unsigned int id);
             

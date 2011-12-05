@@ -24,7 +24,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief Abstract image */
+        /** \brief Abstract image. */
         class STROMX_CORE_API Image : public Data
         {
         public:
@@ -45,24 +45,51 @@ namespace stromx
             
             virtual ~Image() {}
 
+            /** 
+             * Returns the address of the buffer of the image. This is not necessarily
+             * a pointer to the image data which can be located at a different position
+             * in the buffer.
+             */
             virtual uint8_t* const buffer() = 0;
+            
+            /** Returns the size of the buffer. */
             virtual const unsigned int size() const = 0;
+            
+            /** Returns the width of the image. */
             virtual const unsigned int width() const = 0;
+            
+            /** Returns the height of the image. */
             virtual const unsigned int height() const = 0;
+            
+            /** Returns the size of a line in the image in bytes. */
             virtual const unsigned int stride() const = 0;
+            
+            /** Returns the type of the pixel data of the image. */
             virtual const PixelType pixelType() const = 0;
+            
+            /** Returns the size of a single pixel in bytes. */
             virtual const unsigned int pixelSize() const = 0;
             
+            /** Returns the address of the image data. */
             virtual uint8_t* const data() = 0;
+            
+            /** Returns the address of the image data as a constant pointer. */
             virtual const uint8_t* const data() const = 0;
             
+            /** Sets the data variant. */
             virtual void setVariant(const DataVariant& variant) = 0;
             
+            /** 
+             * Initializes the image to the given data. Note that this function does not
+             * change the image buffer but merely changes the description of the data
+             * contained in the image buffer.
+             */
             virtual void initialize(const unsigned int width, 
                                     const unsigned int height, 
                                     const unsigned int stride, 
                                     uint8_t* const data, 
                                     const PixelType pixelType) = 0;
+        protected:
         };
     }
 }

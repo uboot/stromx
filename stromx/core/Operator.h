@@ -64,21 +64,21 @@ namespace stromx
             friend class Thread;
             
         public:
-            /** The possible states of an operator */
+            /** The possible states of an operator. */
             enum Status
             {
-                /** The default status of an operator after instantiation */
+                /** The default status of an operator after instantiation. */
                 NONE,
-                /** The is initialized but not ready to process data */
+                /** The is initialized but not ready to process data. */
                 INITIALIZED,
-                /** The operator is ready to process data */
+                /** The operator is ready to process data. */
                 ACTIVE,
-                /** The operator is actively processing data */
+                /** The operator is actively processing data. */
                 EXECUTING
             };
             
             /** 
-             * Constructs an operator from an operator kernel
+             * Constructs an operator from an operator kernel.
              * 
              * \param kernel The operator deletes \c kernel upon its destruction.
              */
@@ -86,7 +86,7 @@ namespace stromx
             
             virtual ~Operator();
             
-            /** Returns the name of the operator */
+            /** Returns the name of the operator. */
             const std::string & name() const { return m_name; }
             
             /** 
@@ -98,24 +98,24 @@ namespace stromx
             
             /** 
              * Returns information about the inputs, outputs and parameters
-             * of the operator
+             * of the operator.
              */
             const OperatorInfo& info() const;
             
-            /** Returns the current status of the operator */
+            /** Returns the current status of the operator. */
             const Status status() const;
             
-            /** Sets a parameter \c id to \c value */
+            /** Sets a parameter \c id to \c value. */
             void setParameter(const unsigned int id, const Data& value);
             
-            /** Gets the current value of the parameter \c id */
+            /** Gets the current value of the parameter \c id. */
             const Data& getParameter(const unsigned int id) const;
             
             /** 
              * Obtains the current value of the parameter \c id and 
-             * attempts to cast it to \c data_t
+             * attempts to cast it to \c data_t.
              * 
-             * \throw BadCast If the value can not be casted to \c data_t
+             * \throw BadCast If the value can not be casted to \c data_t.
              */
             template<typename data_t>
             const data_t& getParameter(unsigned int id) const
@@ -144,7 +144,7 @@ namespace stromx
              */
             void setInputData(const unsigned int id, const DataContainer data);
             
-            /** Removes any output data from the output \c id */
+            /** Removes any output data from the output \c id. */
             void clearOutputData(const unsigned int id);
             
             /** 
@@ -152,7 +152,7 @@ namespace stromx
              * After a successful call the status is INITIALIZED and can
              * never be set back to NONE.
              * 
-             * \throws WrongState If the status is not NONE
+             * \throws WrongState If the status is not NONE.
              */
             void initialize();
             

@@ -14,13 +14,13 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TIMEPERIOD_H
-#define STROMX_BASE_TIMEPERIOD_H
+#ifndef STROMX_BASE_PERIODICDELAY_H
+#define STROMX_BASE_PERIODICDELAY_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/Primitive.h>
 #include "Config.h"
+#include <stromx/core/Image.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Primitive.h>
 
 namespace stromx
 {
@@ -55,7 +55,6 @@ namespace stromx
             };
             
             PeriodicDelay();
-            PeriodicDelay(const PeriodicDelay & op);
             virtual ~PeriodicDelay();
             
             virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
@@ -65,6 +64,8 @@ namespace stromx
             virtual void activate();
             
         private:
+            PeriodicDelay(const PeriodicDelay &);
+            
             static const std::vector<const core::Description*> setupInputs();
             static const std::vector<const core::Description*> setupOutputs();
             static const std::vector<const core::Parameter*> setupParameters();
@@ -79,4 +80,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_TIMEPERIOD_H
+#endif // STROMX_BASE_PERIODICDELAY_H

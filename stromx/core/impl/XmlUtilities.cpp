@@ -14,12 +14,9 @@
  *  limitations under the License.
  */
 
+#include <boost/filesystem.hpp>
 #include "XmlUtilities.h"
 
-
-#include <boost/filesystem.hpp>
-
-    
 namespace stromx
 {
     namespace core

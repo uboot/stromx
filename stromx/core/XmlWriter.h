@@ -17,8 +17,8 @@
 #ifndef STROMX_CORE_XMLWRITER_H
 #define STROMX_CORE_XMLWRITER_H
 
-#include "Config.h"
 #include <string>
+#include "Config.h"
 
 namespace stromx
 {
@@ -26,7 +26,7 @@ namespace stromx
     {
         class Stream;
         
-        /** \brief Writer for XML encoded streams */
+        /** \brief Writer for XML encoded streams. */
         class STROMX_CORE_API XmlWriter
         {
         public:

@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
+#include "DataContainerImpl.h"
 #include "RecycleAccessImpl.h"
-
 #include "../Data.h"
 #include "../DataContainer.h"
 #include "../Exception.h"
 
-#include "DataContainerImpl.h"
+
 
 namespace stromx
 {

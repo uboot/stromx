@@ -14,16 +14,13 @@
  *  limitations under the License.
  */
 
-#include "FactoryTest.h"
-
 #include <cppunit/TestAssert.h>
-
-#include <stromx/core/Factory.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/Operator.h>
-
-#include "TestOperator.h"
+#include "FactoryTest.h"
 #include "TestData.h"
+#include "TestOperator.h"
+#include <stromx/core/Exception.h>
+#include <stromx/core/Factory.h>
+#include <stromx/core/Operator.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::FactoryTest);
 

@@ -28,7 +28,7 @@ namespace stromx
             class DataContainerImpl;
         }
         
-        /** \brief Abstract receiver of recycled objects */
+        /** \brief Abstract receiver of recycled objects. */
         class STROMX_CORE_API Recycler
         {
         public:

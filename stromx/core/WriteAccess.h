@@ -34,16 +34,27 @@ namespace stromx
         class Data;
         class DataContainer;
         
-        /** \brief Write access to a data container */
+        /** 
+         * \brief Write access to a data container.
+         * 
+         * A read access allows to read and change the content of a data container
+         * which contains data of the type \c data_t.
+         */
         template<typename data_t = Data>
         class WriteAccess
         {
         public:
+            /** 
+             * Constructs a write access from a data container. This functions
+             * waits until write access is possible, i.e. until no other
+             * read or write access  to \c data exists.
+             */
             WriteAccess(const DataContainer & data)
             : m_impl(new impl::WriteAccessImpl(data))
             {
             }
             
+            /** Returns a reference to the content of the data container. */
             data_t & get() const
             {
                 try
@@ -56,6 +67,7 @@ namespace stromx
                 }
             }
             
+            /** Returns a reference to the content of the data container. */
             data_t & operator()() const { return get(); }
             
         private:

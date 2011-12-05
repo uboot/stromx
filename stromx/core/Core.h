@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef CORE_H
-#define CORE_H
+#ifndef STROMX_CORE_CORE_H
+#define STROMX_CORE_CORE_H
 
 #include "Config.h"
 
@@ -32,4 +32,4 @@ extern "C"
     STROMX_CORE_API void stromxRegisterCore(stromx::core::Registry& registry);
 }
 
-#endif // CORE_H
+#endif // STROMX_CORE_CORE_H

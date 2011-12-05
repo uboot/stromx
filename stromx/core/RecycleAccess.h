@@ -38,7 +38,7 @@ namespace stromx
         class Data;
         class DataContainer;
         
-        /** \brief Recycle access to a data container */
+        /** \brief Recycle access to a data container. */
         class STROMX_CORE_API RecycleAccess
         {
         public:

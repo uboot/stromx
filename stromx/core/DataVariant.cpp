@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "DataVariant.h"
-
 #include "Config.h"
+#include "DataVariant.h"
 
 namespace stromx
 {

@@ -14,7 +14,8 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Node.h>
+#include <stromx/core/Input.h>
+#include <stromx/core/Output.h>
 #include <stromx/core/Operator.h>
 
 #include <boost/python.hpp>
@@ -22,10 +23,17 @@
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportNode()
-{    
-    class_<Node>("Node")
-        .def("id", reinterpret_cast<unsigned int (Node::*)() const>(&Node::id))
-        .def("op", reinterpret_cast<Operator* (Node::*)() const>(&Node::op), return_internal_reference<>())
+void exportConnector()
+{
+    class_<Connector, boost::noncopyable>("Connector", boost::python::no_init)
+        .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
+        .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
+        .def("empty", reinterpret_cast<bool (Connector::*)() const>(&Connector::empty))
+    ;
+    
+    class_<Output, bases<Connector> >("Output", init<Operator*, unsigned int>())
+    ;
+    
+    class_<Input, bases<Connector> >("Input", init<Operator*, unsigned int>())
     ;
 }

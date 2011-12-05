@@ -14,17 +14,16 @@
  *  limitations under the License.
  */
 
-#include "XmlWriterTest.h"
-
-#include "TestOperator.h"
-
 #include <cppunit/TestAssert.h>
-
+#include "TestOperator.h"
+#include "XmlWriterTest.h"
+#include <stromx/core/Operator.h>
 #include <stromx/core/XmlWriter.h>
 #include <stromx/core/Operator.h>
-#include <stromx/core/Node.h>
+#include <stromx/core/Input.h>
 #include <stromx/core/Thread.h>
 #include <stromx/core/Stream.h>
+#include <stromx/core/XmlWriter.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlWriterTest);
 

@@ -27,10 +27,18 @@ namespace stromx
         class Factory;
         class Stream;
         
-        /** \brief Reader for XML encoded streams */
+        /** \brief Reader for XML encoded streams. */
         class STROMX_CORE_API XmlReader
         {
         public:
+            /** 
+             * Reads a stream from an XML file.
+             * 
+             * \param filename The path of the file to be read.
+             * \param factory The factory is used to instantiate the operators and data
+             *                object in the stream. I.e. all required operator and data types
+             *                must have been registered with the factory.
+             */
             Stream* const read(const std::string & filename, const Factory& factory) const;
         };
     }

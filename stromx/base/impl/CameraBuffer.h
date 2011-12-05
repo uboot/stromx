@@ -18,8 +18,8 @@
 #define STROMX_BASE_IMPL_CAMERABUFFER_H
 
 #include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
 #include <stromx/core/Primitive.h>
+#include <stromx/core/RecycleAccess.h>
 
 namespace stromx
 {

@@ -14,16 +14,14 @@
  *  limitations under the License.
  */
 
+#include <boost/thread/thread.hpp>
 #include "SynchronizedOperatorKernel.h"
-
-#include "../OperatorKernel.h"
-#include "../Exception.h"
-#include "../Id2DataPair.h"
 #include "../Data.h"
 #include "../DataContainer.h"
+#include "../Exception.h"
+#include "../Id2DataPair.h"
 #include "../OperatorException.h"
-
-#include <boost/thread/thread.hpp>
+#include "../OperatorKernel.h"
 
 namespace stromx
 {

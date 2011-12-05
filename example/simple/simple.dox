@@ -2,7 +2,7 @@
 
 \em Streams are the main objects of the \em core library. All other objects belong either directly or indirectly to a stream. A stream consists of operators each of which can have several inputs and several outputs. An example of a very simple stream is given in the following image:
 
-\image html example/simple.png
+\image html example/simple/simple.png
 
 The operator \em Counter has the single output node \em OUTPUT which is connected to the only input node (fittingly called \em INPUT) of \em PeriodicDelay. This means that every output data which is produced at the output of \em PeriodicDelay will be transported to the input of \em Counter. Data which is transported to an input will stay there and \em block this input until its operator starts to process the data.
 

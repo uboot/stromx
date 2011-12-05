@@ -19,8 +19,8 @@
 
 #define __STDC_LIMIT_MACROS
 
-#include <stdint.h>
 #include <float.h>
+#include <stdint.h>
 #include "Data.h"
 #include "Description.h"
 #include "Version.h"
@@ -32,15 +32,15 @@ namespace stromx
         template<typename data_t>
         class NumericParameter;
         
-        /** \brief %Primitive data value */
+        /** \brief %Primitive data value. */
         template <class repr_t, class val_t>
         class STROMX_CORE_API Primitive : public Data
         {
         public:
-            /** Constructs a primitive and initializes it with 0 */
+            /** Constructs a primitive and initializes it with 0. */
             explicit Primitive() : m_value(0) {}
             
-            /** Constructs a primitive and initializes it with \c value */
+            /** Constructs a primitive and initializes it with \c value. */
             explicit Primitive(const repr_t value) : m_value(val_t(value)) {}
             
             virtual const std::string & type() const { return TYPE; }
@@ -55,23 +55,23 @@ namespace stromx
             
             virtual void deserialize(const std::string & data, const std::string & path);
             
-            /** Returns the value of the primitive */
+            /** Returns the value of the primitive. */
             const repr_t get() const {  return m_value; }
             
-            /** Returns the value of the primitive */
+            /** Returns the value of the primitive. */
             operator repr_t() const { return get(); }
             
-            /** Assigns \c value to the primitive */
+            /** Assigns \c value to the primitive. */
             const Primitive operator=(const repr_t value)
             { 
                 m_value = val_t(value);
                 return *this;
             }
             
-            /** The minimal value which can be stored by this primitive */
+            /** The minimal value which can be stored by this primitive. */
             static const Primitive MIN;
             
-            /** The maximal value which can be stored by this primitive */
+            /** The maximal value which can be stored by this primitive. */
             static const Primitive MAX;
             
         private:

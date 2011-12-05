@@ -27,7 +27,7 @@ namespace stromx
     {
         class Data;
         
-        /** \brief Abstract %core exception */
+        /** \brief Abstract %core exception. */
         class Exception : public std::exception
         {
         public:
@@ -42,7 +42,7 @@ namespace stromx
             std::string m_message; 
         };  
         
-        /** \brief A wrong argument was passed to a function */
+        /** \brief A wrong argument was passed to a function. */
         class WrongArgument : public Exception
         {
         public:
@@ -51,7 +51,7 @@ namespace stromx
             {}
         };  
         
-        /** \brief An object was identified by a wrong ID */
+        /** \brief An object was identified by a wrong ID. */
         class WrongId : public WrongArgument
         {
         public:
@@ -60,7 +60,7 @@ namespace stromx
             {}
         };  
         
-        /** \brief The current state does not allow a specific operation */
+        /** \brief The current state does not allow a specific operation. */
         class WrongState : public Exception
         {
         public:
@@ -69,7 +69,7 @@ namespace stromx
             {}
         };
         
-        /** \brief An internal, unexpected error occurred */
+        /** \brief An internal, unexpected error occurred. */
         class InternalError : public Exception
         {
         public:
@@ -78,7 +78,7 @@ namespace stromx
             {}
         };
         
-        /** \brief The current thread was stopped */
+        /** \brief The current thread was stopped. */
         class Interrupt : public Exception
         {
         public:
@@ -87,7 +87,7 @@ namespace stromx
             {}
         };
         
-        /** \brief An error occurred during file access */
+        /** \brief An error occurred during file access. */
         class FileAccessFailed : public Exception
         {
         public:
@@ -100,7 +100,7 @@ namespace stromx
             const std::string & m_filename;
         };
         
-        /** \brief Not enought memory */
+        /** \brief Not enought memory. */
         class OutOfMemory : public Exception
         {
         public:
@@ -109,7 +109,7 @@ namespace stromx
             {}
         };
         
-        /** \brief An operation timed out */
+        /** \brief An operation timed out. */
         class Timeout : public Exception
         {
         public:
@@ -118,7 +118,7 @@ namespace stromx
             {}
         };
         
-        /** \brief An impossible cast was attempted */
+        /** \brief An impossible cast was attempted. */
         class BadCast : public Exception
         {
         public:
@@ -127,7 +127,7 @@ namespace stromx
             {}
         };
         
-        /** \brief A function which is not implemented was called */
+        /** \brief A function which is not implemented was called. */
         class NotImplemented : public Exception
         {
         public:
@@ -136,7 +136,7 @@ namespace stromx
             {}
         };
         
-        /** \brief %Data could not be serialized */
+        /** \brief %Data could not be serialized. */
         class SerializationError : public Exception
         {
         public:
@@ -153,7 +153,7 @@ namespace stromx
             const std::string& m_path;
         };
         
-        /** \brief %Data could not be deserialized */
+        /** \brief %Data could not be deserialized. */
         class DeserializationError : public Exception
         {
         public:

@@ -17,8 +17,8 @@
 #ifndef STROMX_BASE_BASETEST_H
 #define STROMX_BASE_BASETEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
 #include <stromx/core/DataVariant.h>
 
 namespace stromx

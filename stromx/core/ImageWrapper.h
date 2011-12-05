@@ -23,11 +23,20 @@ namespace stromx
 {
         namespace core
     {
-        /** \brief Concrete image without memory management */
+        /** \brief Concrete image without memory management. */
         class STROMX_CORE_API ImageWrapper : public Image
         {
         public:
+            /** 
+             * Constructs an image wrapper from a given memory buffer. The buffer is not
+             * owned by the image and is thus not freed upon destruction of the image wrapper.
+             */
             ImageWrapper(const unsigned int size, uint8_t* const buffer);
+            
+            /** 
+             * Constructs an empty image wrapper, i.e. is an image wrapper without associated
+             * memory buffer.
+             */
             ImageWrapper();
             
             virtual const DataVariant & variant() const { return m_variant; }
@@ -58,11 +67,19 @@ namespace stromx
                                     const PixelType pixelType);
             
         protected:
+            /** Returns the number of channels for a given pixel type. */
             static const int numChannels(const PixelType pixelType);
+            
+            /** Returns the size of a single channel of a given pixel type in bytes. */
             static const int depth(const PixelType pixelType);
             
-            
+            /** Sets the size of the image buffer. */
             virtual void setSize(const unsigned int size);
+            
+            /** 
+             * Sets the buffer. Note that the image data defined by width, height, pixel type
+             * and data must always be contained in the image buffer.
+             */
             virtual void setBuffer(uint8_t* const buffer);
             
         private:

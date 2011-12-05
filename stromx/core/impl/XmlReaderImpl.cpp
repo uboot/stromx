@@ -14,8 +14,16 @@
  *  limitations under the License.
  */
 
+#include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <iostream>
 #include "XmlReaderImpl.h"
-
+#include "XmlUtilities.h"
 #include "../Exception.h"
 #include "../Factory.h"
 #include "../Data.h"
@@ -23,18 +31,6 @@
 #include "../Operator.h"
 #include "../Thread.h"
 #include "../Parameter.h"
-
-#include "XmlUtilities.h"
-
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/framework/MemBufInputSource.hpp>
-#include <xercesc/sax/HandlerBase.hpp>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
-
-#include <iostream>
-#include <boost/lexical_cast.hpp>
-#include <boost/assert.hpp>
 
 namespace stromx
 {

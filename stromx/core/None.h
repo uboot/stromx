@@ -23,7 +23,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief Undefined and empty data object */
+        /** \brief Undefined and empty data object. */
         class STROMX_CORE_API None : public Data
         {
         public:

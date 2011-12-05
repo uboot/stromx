@@ -14,16 +14,16 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_XMLWRITERIMPL_H
-#define STROMX_CORE_XMLWRITERIMPL_H
+#ifndef STROMX_CORE_IMPL_XMLWRITERIMPL_H
+#define STROMX_CORE_IMPL_XMLWRITERIMPL_H
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
-#include "../Node.h"
+#include "XmlUtilities.h"
+#include "../Input.h"
 #include "../Operator.h"
 #include "../Parameter.h"
 #include "../Stream.h"
-#include "XmlUtilities.h"
 
 namespace stromx
 {
@@ -60,4 +60,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CORE_XMLWRITERIMPL_H
+#endif // STROMX_CORE_IMPL_XMLWRITERIMPL_H

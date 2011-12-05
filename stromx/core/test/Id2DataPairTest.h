@@ -17,9 +17,8 @@
 #ifndef STROMX_CORE_ID2DATAPAIRTEST_H
 #define STROMX_CORE_ID2DATAPAIRTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
+#include <cppunit/TestFixture.h>
 #include <stromx/core/DataContainer.h>
 
 namespace stromx

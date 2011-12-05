@@ -27,16 +27,27 @@ namespace stromx
     {
         class Data;
         
-        /** \brief Read access to a data container */
+        /** 
+         *\brief Read access to a data container.
+         *
+         * A read access allows to read the content of a data container
+         * which contains data of the type \c data_t.
+         */
         template<typename data_t = Data>
         class ReadAccess
         {
         public:
+            /** 
+             * Constructs a read access from a data container. This functions
+             * waits until read access is possible, i.e. until no
+             * write access  to \c data exists.
+             */
             ReadAccess(const DataContainer & data)
               : m_impl(new impl::ReadAccessImpl(data))
             {
             }
             
+            /** Returns a constant reference to the content of the data container. */
             const data_t & get() const
             {
                 try
@@ -49,6 +60,7 @@ namespace stromx
                 }
             }
             
+            /** Returns a constant reference to the content of the data container. */
             const data_t & operator()() const { return get(); }
             
         private:

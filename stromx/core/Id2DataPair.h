@@ -30,7 +30,7 @@ namespace stromx
             class Id2DataMap;
         }
         
-        /** \brief A direct map of one ID to one data object */
+        /** \brief A direct map of one ID to one data object. */
         class STROMX_CORE_API Id2DataPair : public Id2DataMapper
         {
         public:

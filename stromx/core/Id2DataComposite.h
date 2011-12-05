@@ -24,7 +24,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief A composite expression of two ID-to-data mappers */
+        /** \brief A composite expression of two ID-to-data mappers. */
         class STROMX_CORE_API Id2DataComposite : public Id2DataMapper
         {
         private:

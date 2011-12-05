@@ -25,7 +25,7 @@ namespace stromx
         class DataContainer;
         class Id2DataMapper;
     
-        /** \brief Provider of functions to receive and send data
+        /** \brief Provider of functions to receive and send data.
          *
          * Data providers are passed as parameter to OperatorKernel::execute() and
          * provides ways for the executing kernel to communicate with its 

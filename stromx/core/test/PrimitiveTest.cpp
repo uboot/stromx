@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "PrimitiveTest.h"
-
 #include <cppunit/TestAssert.h>
+#include "PrimitiveTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::PrimitiveTest);
 

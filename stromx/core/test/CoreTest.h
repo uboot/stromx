@@ -17,8 +17,8 @@
 #ifndef STROMX_CORE_STROMTEST_H
 #define STROMX_CORE_STROMTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
 
 namespace stromx
 {

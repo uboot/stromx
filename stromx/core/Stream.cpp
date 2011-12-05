@@ -14,16 +14,16 @@
 *  limitations under the License.
 */
 
-#include "boost/assert.hpp"
+#include <boost/assert.hpp>
 #include "Enum.h"
 #include "Exception.h"
-#include "impl/InputNode.h"
-#include "impl/Network.h"
 #include "None.h"
 #include "Primitive.h"
 #include "Registry.h"
 #include "Stream.h"
 #include "Thread.h"
+#include "impl/InputNode.h"
+#include "impl/Network.h"
 
 namespace stromx
 {
@@ -161,8 +161,8 @@ namespace stromx
             return m_threads;
         }
         
-        void Stream::connect(Operator* const sourceOp, const unsigned int outputId,
-                            Operator* const targetOp, const unsigned int inputId) const
+        void Stream::connect(Operator* const sourceOp, const unsigned int outputId, 
+                             Operator* const targetOp, const unsigned int inputId) const
         {
             if (m_status != INACTIVE)
             {
@@ -202,7 +202,7 @@ namespace stromx
             m_network->removeOperator(op);
         }
         
-        const Node Stream::connectionSource(const Operator*const targetOp, const unsigned int inputId) const
+        const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
         {
             return m_network->connectionSource(targetOp, inputId);
         }

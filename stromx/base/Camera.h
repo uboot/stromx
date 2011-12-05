@@ -17,11 +17,11 @@
 #ifndef STROMX_BASE_CAMERA_H
 #define STROMX_BASE_CAMERA_H
 
-#include <stromx/core/Primitive.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Trigger.h>
-#include <stromx/core/Enum.h>
 #include "Config.h"
+#include <stromx/core/Enum.h>
+#include <stromx/core/OperatorKernel.h>
+#include <stromx/core/Primitive.h>
+#include <stromx/core/Trigger.h>
 
 namespace stromx
 {

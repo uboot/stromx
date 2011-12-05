@@ -23,7 +23,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief A version of an operator or data type */
+        /** \brief A version of an operator or data type. */
         class Version
         {
         public:
