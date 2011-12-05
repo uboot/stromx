@@ -47,7 +47,7 @@ namespace stromx
                 void createOperators(const std::vector<Operator*> operators);
                 void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
-                void createInputs(Operator* const currOp, xercesc::DOMElement* const opElement);
+                void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 
                 const Stream* m_stream;
                 std::string m_filename;

@@ -76,13 +76,13 @@ namespace stromx
              * Adds the input \c inputId of the operator \c op to the list of currently
              * visited inputs. 
              */
-            void addNode(const Input & input);
+            void addNode(Operator* const op, const unsigned int inputId);
             
             /** 
              * Inserts the input \c inputId of the operator \c op into the list of currently
              * visited inputs at \c position.
              */
-            void insertNode(const unsigned int position, const Input & input);
+            void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
             
             /** 
              * Removes the input at \c position from the list of currently

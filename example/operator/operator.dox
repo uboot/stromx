@@ -6,7 +6,7 @@
 
 In this example the stream in previous examples shall be extended by an operator \em Add which adds a constant offset to the number currently processed:
 
-\image html example/operator.png
+\image html example/operator/operator.png
 
 However such an operator is not defined in the package \em Base which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em Math.
 

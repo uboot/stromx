@@ -181,14 +181,14 @@ namespace stromx
                 dataElement->appendChild(value);
             }
             
-            void XmlWriterImpl::createInputs(Operator*const currOp, DOMElement*const opElement)
+            void XmlWriterImpl::createInputs(const Operator*const currOp, DOMElement*const opElement)
             {
                 for(std::vector<const Description*>::const_iterator iter_in = currOp->info().inputs().begin();
                     iter_in != currOp->info().inputs().end();
                     ++iter_in)
                 {
                     //Get the source node
-                    Output node = m_stream->connectionSource(Input(currOp, (*iter_in)->id()));
+                    Output node = m_stream->connectionSource(currOp, (*iter_in)->id());
                     
                     //Create Input only for connected operators
                     if (! node.empty())

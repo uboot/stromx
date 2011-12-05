@@ -109,37 +109,28 @@ namespace stromx
             m_stream->addOperator(m_imageQueue);
             m_stream->addOperator(m_indexQueue);
             
-            m_stream->connect(Output(m_input, ConstImage::OUTPUT),
-                              Input(m_adjustRgbChannels, AdjustRgbChannels::INPUT));
-            m_stream->connect(Output(m_adjustRgbChannels, AdjustRgbChannels::OUTPUT),
-                              Input(m_clip, Clip::INPUT));
-            m_stream->connect(Output(m_clip, Clip::OUTPUT),
-                              Input(m_trigger, Trigger::INPUT));
-            m_stream->connect(Output(m_trigger, Trigger::OUTPUT),
-                              Input(m_period, PeriodicDelay::INPUT));
-            m_stream->connect(Output(m_period, PeriodicDelay::OUTPUT),
-                              Input(m_buffer, impl::CameraBuffer::INPUT));
-            m_stream->connect(Output(m_buffer, impl::CameraBuffer::OUTPUT),
-                              Input(m_pixelType, ConvertPixelType::SOURCE));
-            m_stream->connect(Output(m_buffer, impl::CameraBuffer::BUFFER),
-                              Input(m_pixelType, ConvertPixelType::DESTINATION));
-            m_stream->connect(Output(m_pixelType, ConvertPixelType::OUTPUT),
-                              Input(m_imageQueue, Queue::INPUT));
-            m_stream->connect(Output(m_buffer, impl::CameraBuffer::INDEX),
-                              Input(m_indexQueue, Queue::INPUT));
+            m_stream->connect(m_input, ConstImage::OUTPUT, m_adjustRgbChannels, AdjustRgbChannels::INPUT);
+            m_stream->connect(m_adjustRgbChannels, AdjustRgbChannels::OUTPUT, m_clip, Clip::INPUT);
+            m_stream->connect(m_clip, Clip::OUTPUT, m_trigger, Trigger::INPUT);
+            m_stream->connect(m_trigger, Trigger::OUTPUT, m_period, PeriodicDelay::INPUT);
+            m_stream->connect(m_period, PeriodicDelay::OUTPUT, m_buffer, impl::CameraBuffer::INPUT);
+            m_stream->connect(m_buffer, impl::CameraBuffer::OUTPUT, m_pixelType, ConvertPixelType::SOURCE);
+            m_stream->connect(m_buffer, impl::CameraBuffer::BUFFER, m_pixelType, ConvertPixelType::DESTINATION);
+            m_stream->connect(m_pixelType, ConvertPixelType::OUTPUT, m_imageQueue, Queue::INPUT);
+            m_stream->connect(m_buffer, impl::CameraBuffer::INDEX, m_indexQueue, Queue::INPUT);
             
             Thread* frameThread = m_stream->addThread();
-            frameThread->addNode(Input(m_adjustRgbChannels, AdjustRgbChannels::INPUT));
-            frameThread->addNode(Input(m_clip, Clip::INPUT));
-            frameThread->addNode(Input(m_trigger, Trigger::INPUT));
-            frameThread->addNode(Input(m_period, PeriodicDelay::INPUT));
-            frameThread->addNode(Input(m_buffer, impl::CameraBuffer::INPUT));
+            frameThread->addNode(m_adjustRgbChannels, AdjustRgbChannels::INPUT);
+            frameThread->addNode(m_clip, Clip::INPUT);
+            frameThread->addNode(m_trigger, Trigger::INPUT);
+            frameThread->addNode(m_period, PeriodicDelay::INPUT);
+            frameThread->addNode(m_buffer, impl::CameraBuffer::INPUT);
             
             Thread* mainThread = m_stream->addThread();
-            mainThread->addNode(Input(m_pixelType, ConvertPixelType::SOURCE));
-            mainThread->addNode(Input(m_pixelType, ConvertPixelType::DESTINATION));
-            mainThread->addNode(Input(m_imageQueue, Queue::INPUT));
-            mainThread->addNode(Input(m_indexQueue, Queue::INPUT));
+            mainThread->addNode(m_pixelType, ConvertPixelType::SOURCE);
+            mainThread->addNode(m_pixelType, ConvertPixelType::DESTINATION);
+            mainThread->addNode(m_imageQueue, Queue::INPUT);
+            mainThread->addNode(m_indexQueue, Queue::INPUT);
             
             // start with software trigger
             m_trigger->setParameter(Trigger::ACTIVE, Bool(true));

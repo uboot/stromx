@@ -20,7 +20,6 @@
 #include <string>
 #include <vector>
 #include "Config.h"
-#include "Input.h"
 #include "Output.h"
 
 namespace stromx
@@ -52,11 +51,12 @@ namespace stromx
             const std::string& name() const { return m_name; }
             void setName(const std::string& name) { m_name = name; }
             const Status status() const { return m_status; }
-            const std::vector<Operator*>& operators() const;
+            const std::vector<Operator*>& operators() const;           
                 
-            void connect(const Output & source, const Input & target) const;
-            void disconnect(const Input & target) const;
-            const Output connectionSource(const Input & target) const;
+            void connect(Operator* const sourceOp, const unsigned int outputId, 
+                         Operator* const targetOp, const unsigned int inputId) const;
+            void disconnect(Operator* const targetOp, const unsigned int inputId) const;
+            const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             void addOperator(Operator* const op);
             void removeOperator(Operator* const op);

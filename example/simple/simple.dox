@@ -2,7 +2,7 @@
 
 \em Streams are the main objects of the \em core library. All other objects belong either directly or indirectly to a stream. A stream consists of operators each of which can have several inputs and several outputs. An example of a very simple stream is given in the following image:
 
-\image html example/simple.png
+\image html example/simple/simple.png
 
 The operator \em Counter has the single output node \em OUTPUT which is connected to the only input node (fittingly called \em INPUT) of \em PeriodicDelay. This means that every output data which is produced at the output of \em PeriodicDelay will be transported to the input of \em Counter. Data which is transported to an input will stay there and \em block this input until its operator starts to process the data.
 
@@ -70,15 +70,14 @@ In the next step the time delay of the timer operator is set to one second. All 
 Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of base::PeriodicCounter the access mode is core::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
 
 \code    
-    stream.connect(core::Output(source, base::Counter::OUTPUT),
-                   core::Input(timer, base::PeriodicDelay::INPUT));
+    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
 \endcode
 
 This line connects the output of the counter to the input of the \c timer operator. Note that input and output nodes are identified by the operator the belong to (\c source and \c timer) and their IDs (base::Counter::OUTPUT and base::PeriodicDelay::INPUT).
   
 \code  
     core::Thread* thread = stream.addThread();
-    thread->addNode(core::Input(timer, base::PeriodicDelay::INPUT));
+    thread->addNode(timer, base::PeriodicDelay::INPUT);
 \endcode
 
 Now the operating thread is added to the stream. In the next line the input node of \em timer is added as the only input node which is operated by \em thread. As before the input node is addressed by its operator and its ID.
