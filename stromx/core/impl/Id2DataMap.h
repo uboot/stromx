@@ -37,7 +37,7 @@ namespace stromx
                 
                 
                 const DataContainer & get(const unsigned int id) const;
-                void set(const unsigned int id, DataContainer data);
+                void set(const unsigned int id, const DataContainer & data);
                 void clear();
                 const bool empty() const;
                 

@@ -50,7 +50,7 @@ namespace stromx
                 return iter->second;
             }
             
-            void Id2DataMap::set(const unsigned int id, DataContainer data)
+            void Id2DataMap::set(const unsigned int id, const DataContainer & data)
             {
                 std::map<unsigned int, DataContainer>::iterator iter = m_map.find(id);
                 if(iter == m_map.end())
