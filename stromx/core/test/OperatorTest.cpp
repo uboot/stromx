@@ -277,9 +277,33 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(wrapper->setParameter(TestOperator::BUFFER_SIZE, value), ParameterAccessViolation);
         }
         
+        void OperatorTest::testAddObserver()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_operator->addObserver(&m_observer1));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->addObserver(&m_observer2));
+            CPPUNIT_ASSERT_THROW(m_operator->addObserver(0), WrongArgument);
+        }
+
+        void OperatorTest::testRemoveObserver()
+        {
+            m_operator->addObserver(&m_observer1);
+            m_operator->addObserver(&m_observer2);
+            CPPUNIT_ASSERT_NO_THROW(m_operator->removeObserver(&m_observer1));
+            CPPUNIT_ASSERT_THROW(m_operator->removeObserver(&m_observer1), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(m_operator->removeObserver(&m_observer2));
+        }
+
         void OperatorTest::tearDown ( void )
         {
             delete m_operator;
+        }
+        
+        void OperatorTest::TestObserver::observe(const Connector& connector, const DataContainer& data) const
+        {
+            m_lastType = connector.type();
+            m_lastOperator = connector.op();
+            m_lastId = connector.id();
+            m_lastData = data;
         }
     }
 }

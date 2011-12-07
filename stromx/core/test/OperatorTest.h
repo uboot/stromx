@@ -20,6 +20,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "../DataContainer.h"
+#include "../Observer.h"
+#include "../Connector.h"
 
 namespace stromx
 {
@@ -43,6 +45,8 @@ namespace stromx
             CPPUNIT_TEST (testSetParameter);
             CPPUNIT_TEST (testGetParameterStatusNone);
             CPPUNIT_TEST (testSetParameterStatusNone);
+            CPPUNIT_TEST (testAddObserver);
+            CPPUNIT_TEST (testRemoveObserver);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -64,8 +68,27 @@ namespace stromx
             void testSetParameter();
             void testGetParameterStatusNone();
             void testSetParameterStatusNone();
+            void testAddObserver();
+            void testRemoveObserver();
                 
         private:
+            class TestObserver : public Observer
+            {
+            public:
+                void observe(const Connector & connector, const DataContainer & data) const;
+                
+                const Connector::Type lastType() const { return m_lastType; }
+                const Operator* lastOperator() const { return m_lastOperator; }
+                const unsigned int lastId() const { return m_lastId; }
+                const DataContainer & lastData() const { return m_lastData; }
+                
+            private:
+                mutable Connector::Type m_lastType;
+                mutable const Operator* m_lastOperator;
+                mutable unsigned int m_lastId;
+                mutable DataContainer m_lastData;
+            };
+            
             void setInputDataDelayed(const unsigned int id); 
             void clearOutputDataDelayed(const unsigned int id); 
             void getOutputDataWithInterrupt(const unsigned id);
@@ -74,6 +97,8 @@ namespace stromx
             OperatorTester* m_operator;
             TestOperator* m_testOperator;
             DataContainer m_container;
+            TestObserver m_observer1;
+            TestObserver m_observer2;
         };
     }
 }

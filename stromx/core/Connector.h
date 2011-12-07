@@ -33,13 +33,13 @@ namespace stromx
                 OUTPUT
             };
             
-            virtual Operator* const op() const { return m_op; }
+            virtual const Operator* const op() const { return m_op; }
             virtual const unsigned int id() const { return m_id; }
             virtual const bool empty() const { return m_op == 0; }
             virtual const Type type() const = 0;
             
         protected:
-            Connector(const Type type, Operator* const op, const unsigned int id)
+            Connector(const Type type, const Operator* const op, const unsigned int id)
               : m_type(type),
                 m_op(op),
                 m_id(id)
@@ -47,7 +47,7 @@ namespace stromx
             
         private:
             Type m_type;
-            Operator* m_op;
+            const Operator* m_op;
             unsigned int m_id;
         };
     }

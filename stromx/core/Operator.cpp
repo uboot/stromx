@@ -18,6 +18,8 @@
 #include "Exception.h"
 #include "Operator.h"
 #include "OperatorInfo.h"
+#include "Input.h"
+#include "Output.h"
 #include "impl/InputNode.h"
 #include "impl/OutputNode.h"
 #include "impl/SynchronizedOperatorKernel.h"
@@ -165,15 +167,38 @@ namespace stromx
             m_kernel->deactivate();
         }
         
-        void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
+        void Operator::addObserver(const stromx::core::Observer*const observer)
         {
-
+            if(! observer)
+                throw WrongArgument("Passed 0 as observer.");
+            
+            m_observers.insert(observer);
         }
 
+        void Operator::removeObserver(const stromx::core::Observer*const observer)
+        {
+            if(m_observers.erase(observer) != 1)
+                throw WrongArgument("Observer has not been added to operator.");
+        }
+        
+        void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
+        {
+            for(std::set<const Observer*>::const_iterator iter = m_observers.begin();
+                iter != m_observers.end();
+                ++iter)
+            {
+                (*iter)->observe(Input(this, id), data);
+            }
+        }
 
         void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
-
+            for(std::set<const Observer*>::const_iterator iter = m_observers.begin();
+                iter != m_observers.end();
+                ++iter)
+            {
+                (*iter)->observe(Output(this, id), data);
+            }
         }
     }
 }
