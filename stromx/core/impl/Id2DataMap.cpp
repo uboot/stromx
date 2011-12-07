@@ -24,7 +24,8 @@ namespace stromx
     {
         namespace impl
         {
-            Id2DataMap::Id2DataMap(const std::vector<const Description*> & descriptions)
+            Id2DataMap::Id2DataMap(const std::vector<const Description*> & descriptions, const Id2DataMapObserver* const observer)
+              : m_observer(observer)
             {
                 for(std::vector<const Description*>::const_iterator iter = descriptions.begin();
                     iter != descriptions.end();
@@ -38,6 +39,7 @@ namespace stromx
             }
             
             Id2DataMap::Id2DataMap()
+              : m_observer(0)
             {
             }
             
@@ -57,6 +59,9 @@ namespace stromx
                     throw WrongId("No data with ID " + id);
                 
                 iter->second = data;
+                
+                if(m_observer)
+                    m_observer->observe(id, data);
             }
             
             void Id2DataMap::clear()

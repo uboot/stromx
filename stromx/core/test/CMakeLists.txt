@@ -25,6 +25,7 @@ set(SOURCES
     ../Id2DataComposite.cpp
     ../None.cpp
     Id2DataCompositeTest.cpp
+    Id2DataMapTest.cpp
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp
     ../OperatorKernel.cpp

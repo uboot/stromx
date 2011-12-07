@@ -35,7 +35,7 @@ namespace stromx
             descriptions.push_back(new Description(0, DataVariant::NONE));
             descriptions.push_back(new Description(1, DataVariant::NONE));
             descriptions.push_back(new Description(2, DataVariant::NONE));
-            m_map = new impl::Id2DataMap(descriptions);
+            m_map = new impl::Id2DataMap(descriptions, 0);
             m_dataContainer = DataContainer(new None());
         }
 

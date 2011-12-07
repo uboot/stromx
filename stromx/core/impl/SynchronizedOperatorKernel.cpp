@@ -66,7 +66,7 @@ namespace stromx
                 } 
             }
             
-            void SynchronizedOperatorKernel::initialize()
+            void SynchronizedOperatorKernel::initialize(const Id2DataMapObserver* const inputObserver, const Id2DataMapObserver* const outputObserver)
             {
                 lock_t lock(m_mutex);
                 
@@ -75,8 +75,8 @@ namespace stromx
                 
                 m_op->initialize();
                 
-                m_inputMap = impl::Id2DataMap(m_op->inputs());
-                m_outputMap = impl::Id2DataMap(m_op->outputs());
+                m_inputMap = impl::Id2DataMap(m_op->inputs(), inputObserver);
+                m_outputMap = impl::Id2DataMap(m_op->outputs(), outputObserver);
                 
                 BOOST_ASSERT(m_inputMap.empty());
                 BOOST_ASSERT(m_outputMap.empty());

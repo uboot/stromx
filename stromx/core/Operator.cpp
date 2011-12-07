@@ -21,15 +21,39 @@
 #include "impl/InputNode.h"
 #include "impl/OutputNode.h"
 #include "impl/SynchronizedOperatorKernel.h"
+#include "impl/Id2DataMap.h"
 
 namespace stromx
 {
     namespace core
     {
+        
+        Operator::ConnectorObserver::ConnectorObserver(const Operator* const op, const Type type)
+          : m_op(op),
+            m_type(type)
+        {}
+        
+        void Operator::ConnectorObserver::observe(const unsigned int id, const DataContainer & data) const
+        {
+            switch(m_type)
+            {
+            case INPUT:
+                m_op->observeInput(id, data);
+                break;
+            case OUTPUT:
+                m_op->observeOutput(id, data);
+                break;
+            default:
+                BOOST_ASSERT(false);
+            }
+        }
+        
         using namespace impl;
         
         Operator::Operator(OperatorKernel*const kernel)
-            : m_kernel(new SynchronizedOperatorKernel(kernel))
+          : m_inputObserver(this, ConnectorObserver::INPUT),
+            m_outputObserver(this, ConnectorObserver::OUTPUT),
+            m_kernel(new SynchronizedOperatorKernel(kernel))
         {}
 
         Operator::~Operator()
@@ -88,7 +112,7 @@ namespace stromx
         
         void Operator::initialize()
         {
-            m_kernel->initialize();
+            m_kernel->initialize(&m_inputObserver, &m_outputObserver);
             
             for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
                 iter != m_kernel->info()->inputs().end();
@@ -139,6 +163,17 @@ namespace stromx
         void Operator::deactivate()
         {
             m_kernel->deactivate();
+        }
+        
+        void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
+        {
+
+        }
+
+
+        void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
+        {
+
         }
     }
 }

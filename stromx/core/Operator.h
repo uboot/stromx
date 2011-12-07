@@ -22,6 +22,7 @@
 #include "DataContainer.h"
 #include "Exception.h"
 #include "OperatorInfo.h"
+#include "impl/Id2DataMap.h"
 
 namespace stromx
 {
@@ -55,13 +56,13 @@ namespace stromx
         class STROMX_CORE_API Operator
         {
             friend class FactoryTest;
-            friend class impl::Network;
             friend class InputNodeTest;
             friend class NetworkTest;
             friend class OperatorTester;
             friend class OutputNodeTest;
             friend class ThreadImplTest;
             friend class Thread;
+            friend class impl::Network;
             
         public:
             /** The possible states of an operator. */
@@ -157,12 +158,34 @@ namespace stromx
             void initialize();
             
         private:
+            class ConnectorObserver : public impl::Id2DataMapObserver
+            {
+            public:
+                enum Type
+                {
+                    INPUT,
+                    OUTPUT
+                };
+                
+                ConnectorObserver(const Operator* const op, const Type type);
+                virtual void observe(const unsigned int id, const DataContainer & data) const;
+                
+            private:
+                const Operator* m_op;
+                Type m_type;
+            };
+            
             impl::InputNode* const getInputNode(const unsigned int id) const;
             impl::OutputNode* const getOutputNode(const unsigned int id) const;
             void activate();
             void deactivate();
+            void observeInput(const unsigned int id, const DataContainer & data) const;
+            void observeOutput(const unsigned int id, const DataContainer & data) const;
+            
             
             std::string m_name;
+            ConnectorObserver m_inputObserver;
+            ConnectorObserver m_outputObserver;
             impl::SynchronizedOperatorKernel* m_kernel;
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
