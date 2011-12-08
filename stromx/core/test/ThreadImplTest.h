@@ -42,6 +42,8 @@ namespace stromx
             CPPUNIT_TEST(testStart);
             CPPUNIT_TEST(testStop);
             CPPUNIT_TEST(testJoin);
+            CPPUNIT_TEST(testPause);
+            CPPUNIT_TEST(testResume);
             CPPUNIT_TEST(testAddOperator);
             CPPUNIT_TEST(testInsertOperator);
             CPPUNIT_TEST(testRemoveOperator);
@@ -61,6 +63,8 @@ namespace stromx
             void testStart();
             void testStop();
             void testJoin();
+            void testPause();
+            void testResume();
                 
         private: 
             std::vector<TestOperator*> m_kernels;

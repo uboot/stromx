@@ -135,6 +135,7 @@ namespace stromx
             m_thread->start();
             CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
             CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::DEACTIVATING, m_thread->status());
         }
 
         void ThreadImplTest::testJoin()
@@ -146,6 +147,38 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->join());
             CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::INACTIVE, m_thread->status());
+        }
+        
+        void ThreadImplTest::testPause()
+        {
+            CPPUNIT_ASSERT_THROW(m_thread->pause(), WrongState);
+            
+            m_thread->start();
+            CPPUNIT_ASSERT_NO_THROW(m_thread->pause());
+            
+            m_operatorNodes[0]->setInputData(TestOperator::INPUT_1, m_container);
+            m_operatorNodes[0]->setInputData(TestOperator::INPUT_2, m_container);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::PAUSED, m_thread->status());
+        }
+        
+        void ThreadImplTest::testResume()
+        {
+            CPPUNIT_ASSERT_THROW(m_thread->resume(), WrongState);
+            
+            m_thread->start();
+            
+            CPPUNIT_ASSERT_THROW(m_thread->resume(), WrongState);
+            
+            m_thread->pause();
+            m_operatorNodes[0]->setInputData(TestOperator::INPUT_1, m_container);
+            m_operatorNodes[0]->setInputData(TestOperator::INPUT_2, m_container);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            CPPUNIT_ASSERT_NO_THROW(m_thread->resume());
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::ACTIVE, m_thread->status());
         }
 
         void ThreadImplTest::tearDown()

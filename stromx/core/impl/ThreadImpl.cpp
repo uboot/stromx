@@ -84,7 +84,7 @@ namespace stromx
 
             void ThreadImpl::stop()
             {
-                if(m_status != ACTIVE)
+                if(m_status != ACTIVE && m_status != PAUSED)
                     return;
                 
                 BOOST_ASSERT(m_thread);
@@ -108,6 +108,28 @@ namespace stromx
                 m_status = INACTIVE;
             }
             
+            void ThreadImpl::pause()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status != ACTIVE)
+                    throw WrongState("Thread must have been paused.");
+                
+                m_status = PAUSED;
+            }
+
+            void ThreadImpl::resume()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status != PAUSED)
+                    throw WrongState("Thread must have been paused.");
+                
+                m_status = ACTIVE;
+                
+                m_pauseCond.notify_all();
+            }
+            
             void ThreadImpl::loop()
             {
                 try
@@ -123,7 +145,12 @@ namespace stromx
                             
                             try
                             {
-                                boost::this_thread::interruption_point();
+                                unique_lock_t lock(m_mutex);
+                                
+                                if(m_status == PAUSED)
+                                    m_pauseCond.wait(lock);
+                                else
+                                    boost::this_thread::interruption_point();
                             }
                             catch(boost::thread_interrupted&)
                             {

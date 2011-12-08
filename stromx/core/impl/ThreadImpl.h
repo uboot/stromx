@@ -37,7 +37,8 @@ namespace stromx
                 {
                     INACTIVE,
                     ACTIVE,
-                    DEACTIVATING
+                    DEACTIVATING,
+                    PAUSED
                 };
                 
                 ThreadImpl();
@@ -53,12 +54,19 @@ namespace stromx
                 void start();
                 void stop();
                 void join();
+                void pause();
+                void resume();
                     
             private:
+                typedef boost::lock_guard<boost::mutex> lock_t;
+                typedef boost::unique_lock<boost::mutex> unique_lock_t;
+                
                 void loop();
                 
                 Status m_status;
                 boost::thread* m_thread;
+                boost::mutex m_mutex;
+                boost::condition_variable m_pauseCond;
                 std::vector<InputNode*> m_inputSequence;
             };
         }

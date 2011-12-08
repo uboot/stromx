@@ -55,7 +55,9 @@ namespace stromx
                 /** The thread is active. */
                 ACTIVE,
                 /** The thread was stopped and is waiting to become inactive. */
-                DEACTIVATING
+                DEACTIVATING,
+                /** The thread was paused and be resumed or stopped. */
+                PAUSED
             };
             
             virtual ~Thread();
