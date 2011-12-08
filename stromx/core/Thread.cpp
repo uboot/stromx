@@ -60,7 +60,6 @@ namespace stromx
         const std::vector<Input> & Thread::inputSequence() const
         { 
             return m_inputSequence;
-            
         }
         
         void Thread::start()
@@ -76,6 +75,16 @@ namespace stromx
         void Thread::join()
         { 
             m_thread->join();
+        }
+        
+        void Thread::pause()
+        {
+            m_thread->pause();
+        }
+
+        void Thread::resume()
+        {
+            m_thread->resume();
         }
             
         void Thread::addNode(Operator* const op, const unsigned int inputId)

@@ -98,6 +98,8 @@ namespace stromx
             void start();
             void stop();
             void join();
+            void pause();
+            void resume();
             
             impl::ThreadImpl* m_thread;
             std::string m_name;

@@ -84,6 +84,16 @@ namespace stromx
             }
         }
         
+        void Stream::pause()
+        {
+
+        }
+
+        void Stream::resume()
+        {
+
+        }
+        
         void Stream::join()
         {
             if (m_status == INACTIVE)
