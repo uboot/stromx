@@ -31,14 +31,17 @@ namespace stromx
         class OperatorError : public Exception
         {
         protected:
+            /** Constructs an operator exception, i.e. an exception related to an operator. */
             OperatorError(const OperatorInfo& op, const std::string & message)
             : Exception(message),
                 m_operator(op)
             {}
             
+            /** Returns the operator this exception relates to. */
+            const OperatorInfo& op() const;
+            
         private:
             const OperatorInfo& m_operator;
-                        
         };
         
         /** \brief A parameter with this ID does not exist. */

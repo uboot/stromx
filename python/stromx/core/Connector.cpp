@@ -33,7 +33,7 @@ void exportConnector()
     class_<Connector>("Connector")
         .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
         .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
-        .def("empty", reinterpret_cast<bool (Connector::*)() const>(&Connector::empty))
+        .def("valid", reinterpret_cast<bool (Connector::*)() const>(&Connector::valid))
         .def("type", reinterpret_cast<Connector::Type (Connector::*)() const>(&Connector::type))
     ;
     

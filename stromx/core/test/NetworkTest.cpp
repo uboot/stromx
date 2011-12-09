@@ -101,8 +101,8 @@ namespace stromx
             m_network->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
             
             CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op1));
-            CPPUNIT_ASSERT(m_network->connectionSource(op2, TestOperator::INPUT_1).empty());
-            CPPUNIT_ASSERT(m_network->connectionSource(op2, TestOperator::INPUT_2).empty());
+            CPPUNIT_ASSERT(! m_network->connectionSource(op2, TestOperator::INPUT_1).valid());
+            CPPUNIT_ASSERT(! m_network->connectionSource(op2, TestOperator::INPUT_2).valid());
         }
     
         void NetworkTest::testConnectionSource()
@@ -117,7 +117,7 @@ namespace stromx
             
             Output source;
             CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(op1, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT(source.empty());
+            CPPUNIT_ASSERT(! source.valid());
             
             m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
             m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);

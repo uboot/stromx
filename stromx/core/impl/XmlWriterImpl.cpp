@@ -191,7 +191,7 @@ namespace stromx
                     Output node = m_stream->connectionSource(currOp, (*iter_in)->id());
                     
                     //Create Input only for connected operators
-                    if (! node.empty())
+                    if (node.valid())
                     {
                         //Create Input entry in being child of current operator op (one for each parameter possible)
                         DOMElement* inElement = m_doc->createElement(Str2Xml("Input"));
