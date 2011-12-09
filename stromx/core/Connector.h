@@ -29,14 +29,21 @@ namespace stromx
         public:
             enum Type
             {
+                UNDEFINED,
                 INPUT,
                 OUTPUT
             };
             
-            virtual const Operator* const op() const { return m_op; }
-            virtual const unsigned int id() const { return m_id; }
-            virtual const bool empty() const { return m_op == 0; }
-            virtual const Type type() const = 0;
+            Connector()
+              : m_type(UNDEFINED),
+                m_op(0),
+                m_id(0)
+            {}
+            
+            const Operator* const op() const { return m_op; }
+            const unsigned int id() const { return m_id; }
+            const bool empty() const { return m_op == 0; }
+            const Type type() const { return m_type; }
             
         protected:
             Connector(const Type type, const Operator* const op, const unsigned int id)

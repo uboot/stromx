@@ -54,6 +54,9 @@ void exportOperator()
         .def("getOutputData", &Operator::getOutputData)
         .def("setInputData", &Operator::setInputData)
         .def("clearOutputData", &Operator::clearOutputData)
+        // NOTE: do not export the following functions because they might cause threading problems
+        //.def("addObserver", &Operator::addObserver)
+        //.def("removeObserver", &Operator::removeObserver)
     ;
 }
 

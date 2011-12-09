@@ -299,24 +299,24 @@ namespace stromx
             m_operator->addObserver(&m_observer1);
             m_operator->setInputData(TestOperator::INPUT_1, m_container);
             
-            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastId());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastOperator());
+            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastConnector().type());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastConnector().id());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer1.lastData());
             
             m_operator->setInputData(TestOperator::INPUT_2, m_container);
             m_operator->getOutputData(TestOperator::OUTPUT_1);
             
-            CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastId());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastOperator());
+            CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastConnector().type());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastConnector().id());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT(! m_observer1.lastData().empty());
             
             m_operator->clearOutputData(TestOperator::OUTPUT_2);
             
-            CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastId());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastOperator());
+            CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastConnector().type());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastConnector().id());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT(m_observer1.lastData().empty());
         }
         
@@ -326,14 +326,14 @@ namespace stromx
             m_operator->addObserver(&m_observer2);
             m_operator->setInputData(TestOperator::INPUT_1, m_container);
             
-            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastId());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastOperator());
+            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastConnector().type());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastConnector().id());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer1.lastData());
             
-            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer2.lastType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer2.lastId());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer2.lastOperator());
+            CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer2.lastConnector().type());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer2.lastConnector().id());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer2.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer2.lastData());
 
         }
@@ -345,9 +345,7 @@ namespace stromx
         
         void OperatorTest::TestObserver::observe(const Connector& connector, const DataContainer& data) const
         {
-            m_lastType = connector.type();
-            m_lastOperator = connector.op();
-            m_lastId = connector.id();
+            m_lastConnector = connector;
             m_lastData = data;
         }
     }

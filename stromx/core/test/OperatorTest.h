@@ -81,15 +81,11 @@ namespace stromx
             public:
                 void observe(const Connector & connector, const DataContainer & data) const;
                 
-                const Connector::Type lastType() const { return m_lastType; }
-                const Operator* lastOperator() const { return m_lastOperator; }
-                const unsigned int lastId() const { return m_lastId; }
+                const Connector& lastConnector() const { return m_lastConnector; }
                 const DataContainer & lastData() const { return m_lastData; }
                 
             private:
-                mutable Connector::Type m_lastType;
-                mutable const Operator* m_lastOperator;
-                mutable unsigned int m_lastId;
+                mutable Connector m_lastConnector;
                 mutable DataContainer m_lastData;
             };
             
