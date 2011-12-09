@@ -45,6 +45,7 @@ void exportStream()
         .value("INACTIVE", Stream::INACTIVE)
         .value("ACTIVE", Stream::ACTIVE)
         .value("DEACTIVATING", Stream::DEACTIVATING)
+        .value("PAUSED", Stream::PAUSED)
     ;
         
     class_<Stream>("Stream")
@@ -63,5 +64,7 @@ void exportStream()
         .def("start", &Stream::start)
         .def("stop", &Stream::stop)
         .def("join", &Stream::join)
+        .def("pause", &Stream::pause)
+        .def("resume", &Stream::resume)
     ;
 }

@@ -140,13 +140,12 @@ namespace stromx
 
         void ThreadImplTest::testJoin()
         {
-            CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
+            CPPUNIT_ASSERT_NO_THROW(m_thread->join());
             
             m_thread->start();
             m_thread->stop();
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->join());
-            CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
             CPPUNIT_ASSERT_EQUAL(ThreadImpl::INACTIVE, m_thread->status());
         }
         
@@ -186,9 +185,7 @@ namespace stromx
             if(m_thread)
             {
                 m_thread->stop();
-                
-                if(m_thread->status() == ThreadImpl::DEACTIVATING)
-                    m_thread->join();
+                m_thread->join();
             }
             
             delete m_thread;

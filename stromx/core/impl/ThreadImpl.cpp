@@ -96,6 +96,12 @@ namespace stromx
 
             void ThreadImpl::join()
             {
+                if(m_status == INACTIVE)
+                {
+                    BOOST_ASSERT(m_thread == 0);
+                    return;
+                }
+                
                 if(m_status != DEACTIVATING)
                     throw WrongState("Thread must have been stopped.");
                 

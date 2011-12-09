@@ -61,6 +61,7 @@ set(SOURCES
     WriteAccessTest.cpp
     ../Stream.cpp
     StreamTest.cpp
+    TestUtilities.cpp
     ../Core.cpp
     CoreTest.cpp
 )

@@ -33,6 +33,8 @@ namespace stromx
             CPPUNIT_TEST_SUITE (StreamTest);
             CPPUNIT_TEST(testAddThread);
             CPPUNIT_TEST(testRemoveThread);
+            CPPUNIT_TEST(testPause);
+            CPPUNIT_TEST(testResume);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -44,6 +46,8 @@ namespace stromx
         protected:
             void testAddThread();
             void testRemoveThread();
+            void testPause();
+            void testResume();
                 
         private:
             Stream* m_stream;
