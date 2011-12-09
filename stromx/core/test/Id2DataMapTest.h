@@ -35,10 +35,8 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            Id2DataMapTest()
-              : m_observer(this),
-                m_id2DataMap(0)
-            {}
+            Id2DataMapTest();
+            ~Id2DataMapTest();
             
             void setUp();
             void tearDown();
@@ -64,7 +62,7 @@ namespace stromx
                 mutable DataContainer m_lastData;
             };
             
-            Observer m_observer;
+            Observer* m_observer;
             impl::Id2DataMap* m_id2DataMap;
         };
     }

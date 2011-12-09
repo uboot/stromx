@@ -39,12 +39,13 @@ namespace stromx
             {
             public:
                 Id2DataMap();
-                Id2DataMap(const std::vector<const Description*> & descriptions, const Id2DataMapObserver* const observer);                
+                Id2DataMap(const std::vector<const Description*> & descriptions);                
                 
                 const DataContainer & get(const unsigned int id) const;
                 void set(const unsigned int id, const DataContainer & data);
                 void clear();
                 const bool empty() const;
+                void setObserver(const Id2DataMapObserver* const observer);
                 
             private:
                 std::map<unsigned int, DataContainer> m_map;

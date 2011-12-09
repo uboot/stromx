@@ -75,8 +75,10 @@ namespace stromx
                 
                 m_op->initialize();
                 
-                m_inputMap = impl::Id2DataMap(m_op->inputs(), inputObserver);
-                m_outputMap = impl::Id2DataMap(m_op->outputs(), outputObserver);
+                m_inputMap = impl::Id2DataMap(m_op->inputs());
+                m_inputMap.setObserver(inputObserver);
+                m_outputMap = impl::Id2DataMap(m_op->outputs());
+                m_outputMap.setObserver(outputObserver);
                 
                 BOOST_ASSERT(m_inputMap.empty());
                 BOOST_ASSERT(m_outputMap.empty());

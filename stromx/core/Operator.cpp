@@ -53,10 +53,13 @@ namespace stromx
         using namespace impl;
         
         Operator::Operator(OperatorKernel*const kernel)
-          : m_inputObserver(this, ConnectorObserver::INPUT),
-            m_outputObserver(this, ConnectorObserver::OUTPUT),
+          : m_inputObserver(0),
+            m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel))
-        {}
+        {
+            m_inputObserver = new ConnectorObserver(this, ConnectorObserver::INPUT);
+            m_outputObserver = new ConnectorObserver(this, ConnectorObserver::OUTPUT);
+        }
 
         Operator::~Operator()
         {
@@ -75,6 +78,9 @@ namespace stromx
             }
             
             delete m_kernel;
+
+            delete m_inputObserver;
+            delete m_outputObserver;
         }
         
         const OperatorInfo& Operator::info() const
@@ -114,7 +120,7 @@ namespace stromx
         
         void Operator::initialize()
         {
-            m_kernel->initialize(&m_inputObserver, &m_outputObserver);
+            m_kernel->initialize(m_inputObserver, m_outputObserver);
             
             for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
                 iter != m_kernel->info()->inputs().end();

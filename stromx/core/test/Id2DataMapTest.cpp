@@ -32,7 +32,8 @@ namespace stromx
             descriptions.push_back(new Description(0, DataVariant::NONE));
             descriptions.push_back(new Description(1, DataVariant::NONE));
             
-            m_id2DataMap = new impl::Id2DataMap(descriptions, &m_observer);
+            m_id2DataMap = new impl::Id2DataMap(descriptions);
+            m_id2DataMap->setObserver(m_observer);
             
             for(std::vector<const Description*>::iterator iter = descriptions.begin();
                 iter != descriptions.end();
@@ -73,14 +74,26 @@ namespace stromx
             DataContainer data1(new UInt8());
             m_id2DataMap->set(1, data1);
             
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_observer.lastId());
-            CPPUNIT_ASSERT_EQUAL(data1, m_observer.lastData());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_observer->lastId());
+            CPPUNIT_ASSERT_EQUAL(data1, m_observer->lastData());
             
             DataContainer data2(new UInt8());
             m_id2DataMap->set(0, data2);
             
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_observer.lastId());
-            CPPUNIT_ASSERT_EQUAL(data2, m_observer.lastData());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_observer->lastId());
+            CPPUNIT_ASSERT_EQUAL(data2, m_observer->lastData());
+        }
+
+        Id2DataMapTest::Id2DataMapTest()
+          : m_observer(0),
+            m_id2DataMap(0)
+        {
+            m_observer = new Observer(this);
+        }
+        
+        Id2DataMapTest::~Id2DataMapTest()
+        {
+            delete m_observer;
         }
         
         Id2DataMapTest::Observer::Observer(const stromx::core::Id2DataMapTest*const test)

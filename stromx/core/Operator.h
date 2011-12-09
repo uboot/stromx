@@ -202,8 +202,8 @@ namespace stromx
             void observeOutput(const unsigned int id, const DataContainer & data) const;
             
             std::string m_name;
-            ConnectorObserver m_inputObserver;
-            ConnectorObserver m_outputObserver;
+            ConnectorObserver* m_inputObserver;
+            ConnectorObserver* m_outputObserver;
             impl::SynchronizedOperatorKernel* m_kernel;
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
