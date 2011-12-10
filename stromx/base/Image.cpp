@@ -281,6 +281,7 @@ namespace stromx
                     return CV_LOAD_IMAGE_COLOR;
                 default:
                     BOOST_ASSERT(false);
+                    return CV_LOAD_IMAGE_UNCHANGED;
             }
         }
     }

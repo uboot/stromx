@@ -44,8 +44,11 @@ namespace stromx
             // get the output data
             output = m_operator->getOutputData(Buffer::OUTPUT);
             
-            // assert that the data is image data
-            CPPUNIT_ASSERT_NO_THROW(ReadAccess<Image>(output)());
+            {
+                // assert that the data is image data
+                ReadAccess<Image> access(output);
+                CPPUNIT_ASSERT_NO_THROW(access());
+            }
             
             // clear all outpout
             m_operator->clearOutputData(Buffer::OUTPUT);
@@ -56,8 +59,11 @@ namespace stromx
             // get the output data
             output = m_operator->getOutputData(Buffer::OUTPUT);
             
-            // assert that the data is image data
-            CPPUNIT_ASSERT_NO_THROW(ReadAccess<Image>(output)());
+            {
+                // assert that the data is image data
+                ReadAccess<Image> access(output);
+                CPPUNIT_ASSERT_NO_THROW(access());
+            }
         }
 
         void BufferTest::tearDown()
