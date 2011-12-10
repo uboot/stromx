@@ -66,7 +66,7 @@ namespace stromx
         Image::Image()
         : m_image(0)
         {
-            setSize(0);
+            setBufferSize(0);
             initialize(0, 0, 0, 0, core::Image::NONE);
             setVariant(core::DataVariant::IMAGE);
         }
@@ -149,7 +149,7 @@ namespace stromx
         void Image::getDataFromCvImage(const PixelType pixelType)
         {
             setBuffer((uint8_t*)(m_image->imageData));
-            setSize(m_image->imageSize);
+            setBufferSize(m_image->imageSize);
             initialize(m_image->width, m_image->height, m_image->widthStep, (uint8_t*)(m_image->imageData), pixelType);
         }
         

@@ -162,7 +162,7 @@ namespace stromx
         {
             m_image = new Image();
             CPPUNIT_ASSERT_NO_THROW(m_image->resize(1024));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->size());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->bufferSize());
         }
 
         void ImageTest::tearDown ( void )

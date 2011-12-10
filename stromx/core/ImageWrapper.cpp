@@ -21,11 +21,11 @@ namespace stromx
 {
     namespace core
     {
-        ImageWrapper::ImageWrapper(const unsigned int size, uint8_t* const buffer)
+        ImageWrapper::ImageWrapper(const unsigned int bufferSize, uint8_t* const buffer)
           : m_width(0),
             m_height(0),
             m_stride(0),
-            m_size(size),
+            m_bufferSize(bufferSize),
             m_pixelType(MONO_8),
             m_data(0),
             m_buffer(buffer),
@@ -37,7 +37,7 @@ namespace stromx
           : m_width(0),
             m_height(0),
             m_stride(0),
-            m_size(0),
+            m_bufferSize(0),
             m_pixelType(MONO_8),
             m_data(0),
             m_buffer(0),
@@ -50,9 +50,9 @@ namespace stromx
             m_variant = variant;
         }
         
-        void ImageWrapper::setSize(const unsigned int size)
+        void ImageWrapper::setBufferSize(const unsigned int bufferSize)
         {
-            m_size = size;
+            m_bufferSize = bufferSize;
         }
 
         void ImageWrapper::setBuffer(uint8_t*const buffer)
@@ -139,7 +139,7 @@ namespace stromx
             
             // check total data size
             unsigned int dataSize = stride * (height - 1) + width;
-            if(data + dataSize > m_buffer + m_size)
+            if(data + dataSize > m_buffer + m_bufferSize)
                 throw WrongArgument("Too small buffer.");
         }
     }

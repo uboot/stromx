@@ -31,7 +31,7 @@ namespace stromx
              * Constructs an image wrapper from a given memory buffer. The buffer is not
              * owned by the image and is thus not freed upon destruction of the image wrapper.
              */
-            ImageWrapper(const unsigned int size, uint8_t* const buffer);
+            ImageWrapper(const unsigned int bufferSize, uint8_t* const buffer);
             
             /** 
              * Constructs an empty image wrapper, i.e. is an image wrapper without associated
@@ -43,7 +43,7 @@ namespace stromx
             
             virtual uint8_t* const buffer() { return m_buffer; }
             
-            virtual const unsigned int size() const { return m_size; };
+            virtual const unsigned int bufferSize() const { return m_bufferSize; };
             
             virtual const unsigned int width() const { return m_width; }
             
@@ -74,7 +74,7 @@ namespace stromx
             static const int depth(const PixelType pixelType);
             
             /** Sets the size of the image buffer. */
-            virtual void setSize(const unsigned int size);
+            virtual void setBufferSize(const unsigned int bufferSize);
             
             /** 
              * Sets the buffer. Note that the image data defined by width, height, pixel type
@@ -92,7 +92,7 @@ namespace stromx
             unsigned int m_width;
             unsigned int m_height;
             unsigned int m_stride;
-            unsigned int m_size;
+            unsigned int m_bufferSize;
             PixelType m_pixelType;
             uint8_t* m_data;
             uint8_t* m_buffer;
