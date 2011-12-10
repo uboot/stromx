@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_OBSERVER_H
-#define STROMX_CORE_OBSERVER_H
+#ifndef STROMX_CORE_CONNECTOROBSERVER_H
+#define STROMX_CORE_CONNECTOROBSERVER_H
 
 
 namespace stromx
@@ -26,7 +26,7 @@ namespace stromx
         class DataContainer;
         class Connector;
 
-        class Observer
+        class ConnectorObserver
         {
         public:
             virtual void observe(const Connector & connector, const DataContainer & data) const = 0;
@@ -34,4 +34,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CORE_OBSERVER_H
+#endif // STROMX_CORE_CONNECTOROBSERVER_H

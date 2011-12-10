@@ -30,12 +30,12 @@ namespace stromx
     namespace core
     {
         
-        Operator::ConnectorObserver::ConnectorObserver(const Operator* const op, const Type type)
+        Operator::InternalObserver::InternalObserver(const Operator* const op, const Type type)
           : m_op(op),
             m_type(type)
         {}
         
-        void Operator::ConnectorObserver::observe(const unsigned int id, const DataContainer & data) const
+        void Operator::InternalObserver::observe(const unsigned int id, const DataContainer & data) const
         {
             switch(m_type)
             {
@@ -57,8 +57,8 @@ namespace stromx
             m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel))
         {
-            m_inputObserver = new ConnectorObserver(this, ConnectorObserver::INPUT);
-            m_outputObserver = new ConnectorObserver(this, ConnectorObserver::OUTPUT);
+            m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
+            m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);
         }
 
         Operator::~Operator()
@@ -173,7 +173,7 @@ namespace stromx
             m_kernel->deactivate();
         }
         
-        void Operator::addObserver(const stromx::core::Observer*const observer)
+        void Operator::addObserver(const ConnectorObserver*const observer)
         {
             if(! observer)
                 throw WrongArgument("Passed 0 as observer.");
@@ -181,7 +181,7 @@ namespace stromx
             m_observers.insert(observer);
         }
 
-        void Operator::removeObserver(const stromx::core::Observer*const observer)
+        void Operator::removeObserver(const ConnectorObserver*const observer)
         {
             if(m_observers.erase(observer) != 1)
                 throw WrongArgument("Observer has not been added to operator.");
@@ -189,7 +189,7 @@ namespace stromx
         
         void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
-            for(std::set<const Observer*>::const_iterator iter = m_observers.begin();
+            for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)
             {
@@ -199,7 +199,7 @@ namespace stromx
 
         void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
-            for(std::set<const Observer*>::const_iterator iter = m_observers.begin();
+            for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)
             {

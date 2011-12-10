@@ -22,7 +22,7 @@
 #include <string>
 #include "DataContainer.h"
 #include "Exception.h"
-#include "Observer.h"
+#include "ConnectorObserver.h"
 #include "OperatorInfo.h"
 #include "impl/Id2DataMap.h"
 
@@ -166,7 +166,7 @@ namespace stromx
              * \param observer A pointer to the observer is stored but not onwned by the operator
              * \throws WrongArgument If the input is 0.
              */
-            void addObserver(const Observer* const observer);
+            void addObserver(const ConnectorObserver* const observer);
             
             /**
              * Removes an observer from the set of current observers of this operator.
@@ -174,10 +174,10 @@ namespace stromx
              * \param observer The observer to be removed.
              * \throws WrongArgument If the observer has not been added to the operator before.
              */
-            void removeObserver(const Observer* const observer);
+            void removeObserver(const ConnectorObserver* const observer);
             
         private:
-            class ConnectorObserver : public impl::Id2DataMapObserver
+            class InternalObserver : public impl::Id2DataMapObserver
             {
             public:
                 enum Type
@@ -186,7 +186,7 @@ namespace stromx
                     OUTPUT
                 };
                 
-                ConnectorObserver(const Operator* const op, const Type type);
+                InternalObserver(const Operator* const op, const Type type);
                 virtual void observe(const unsigned int id, const DataContainer & data) const;
                 
             private:
@@ -202,12 +202,12 @@ namespace stromx
             void observeOutput(const unsigned int id, const DataContainer & data) const;
             
             std::string m_name;
-            ConnectorObserver* m_inputObserver;
-            ConnectorObserver* m_outputObserver;
+            InternalObserver* m_inputObserver;
+            InternalObserver* m_outputObserver;
             impl::SynchronizedOperatorKernel* m_kernel;
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
-            std::set<const Observer*> m_observers;
+            std::set<const ConnectorObserver*> m_observers;
         };
     }
 }

@@ -20,7 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "../DataContainer.h"
-#include "../Observer.h"
+#include "../ConnectorObserver.h"
 #include "../Connector.h"
 
 namespace stromx
@@ -76,7 +76,7 @@ namespace stromx
             void testTwoObservers();
                 
         private:
-            class TestObserver : public Observer
+            class TestObserver : public ConnectorObserver
             {
             public:
                 void observe(const Connector & connector, const DataContainer & data) const;
