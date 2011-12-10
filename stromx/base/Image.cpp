@@ -15,6 +15,7 @@
 */
 
 #include <opencv2/opencv.hpp>
+#include <boost/assert.hpp>
 #include "Image.h"
 #include "Utilities.h"
 #include <stromx/core/Exception.h>
@@ -76,6 +77,12 @@ namespace stromx
             open(filename);
         }
         
+        Image::Image(const std::string& filename, const FileAccess access)
+        : m_image(0)
+        {
+            open(filename, access);
+        }
+        
         Image::Image(const unsigned int size)
         {
             try
@@ -118,19 +125,25 @@ namespace stromx
                 throw core::DeserializationError(*this, data, path);
             }
         }
-
-        void Image::open(const std::string& filename)
+        
+        void Image::open(const std::string & filename, const FileAccess access)
         {
             if(m_image)
                 cvReleaseImage(&m_image);
             
-            m_image = cvLoadImage(filename.c_str());
+            int cvAccessType = getCvAccessType(access);
+            m_image = cvLoadImage(filename.c_str(), cvAccessType);
             
             if(! m_image)
                 throw core::FileAccessFailed(filename, "Failed to load image.");
                 
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
             setVariant(dataTypeFromPixelType(pixelType()));
+        } 
+
+        void Image::open(const std::string& filename)
+        {
+            open(filename, UNCHANGED);
         }  
         
         void Image::getDataFromCvImage(const PixelType pixelType)
@@ -254,6 +267,21 @@ namespace stromx
             default:
                 throw core::WrongArgument("Unknown combination of depth and number of channels.");    
             }         
+        }
+        
+        const int Image::getCvAccessType(const stromx::base::Image::FileAccess access)
+        {
+            switch(access)
+            {
+                case UNCHANGED:
+                    return CV_LOAD_IMAGE_UNCHANGED;
+                case GRAYSCALE:
+                    return CV_LOAD_IMAGE_GRAYSCALE;
+                case COLOR:
+                    return CV_LOAD_IMAGE_COLOR;
+                default:
+                    BOOST_ASSERT(false);
+            }
         }
     }
 }

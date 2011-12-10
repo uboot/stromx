@@ -18,10 +18,14 @@ add_executable(stromx_base_test
     AdjustRgbChannelsTest.cpp
     ../Base.cpp
     BaseTest.cpp
+    ../Buffer.cpp
+    BufferTest.cpp
     ../impl/CameraBuffer.cpp
     CameraBufferTest.cpp
     ../Camera.cpp
     CameraTest.cpp
+    ../Canny.cpp
+    CannyTest.cpp
     ../Clip.cpp
     ../Utilities.cpp
     ClipTest.cpp

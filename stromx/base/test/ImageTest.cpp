@@ -59,6 +59,24 @@ namespace stromx
             CPPUNIT_ASSERT(m_image->data());
         }
         
+        void ImageTest::testOpenAsColor()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_bw.jpg", Image::COLOR));
+            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+        }
+
+        void ImageTest::testOpenAsGrayscale()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna.jpg", Image::GRAYSCALE));
+            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+        }
+
+        void ImageTest::testOpenUnchanged()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_bw.jpg"));
+            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+        }
+        
         void ImageTest::testImageDefault()
         {
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image());
