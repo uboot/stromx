@@ -46,8 +46,8 @@ int main (int argc, char* argv[])
     for(unsigned int i = 0; i < 5; ++i)
     {
         core::DataContainer data = canny->getOutputData(0);
-        core::ReadAccess<core::Image> count(data);
-        std::cout << "Received image " <<  count().height() << "x" << count().width() << std::endl;
+        core::ReadAccess<core::Image> image(data);
+        std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
         
         canny->clearOutputData(0);
         camera->clearOutputData(1);

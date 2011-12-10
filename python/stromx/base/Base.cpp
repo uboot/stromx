@@ -44,9 +44,9 @@ BOOST_PYTHON_MODULE(libbase)
     exportImage();
     
     stromx::python::exportOperatorKernel<AdjustRgbChannels>("AdjustRgbChannels");
-    stromx::python::exportOperatorKernel<Camera>("Buffer");
+    stromx::python::exportOperatorKernel<Buffer>("Buffer");
     stromx::python::exportOperatorKernel<Camera>("Camera");
-    stromx::python::exportOperatorKernel<Camera>("Canny");
+    stromx::python::exportOperatorKernel<Canny>("Canny");
     stromx::python::exportOperatorKernel<Clip>("Clip");
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
