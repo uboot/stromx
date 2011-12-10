@@ -454,7 +454,7 @@ namespace stromx
                 const Parameter& param = info()->parameter(id);
                 if(! type.isVariant(param.variant()))
                     throw WrongParameterType(param, *this->info());
-            }  
+            }
         }
     }
 }
