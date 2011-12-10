@@ -23,6 +23,7 @@
 #include <stromx/core/Image.h>
 
 #include <stromx/base/Base.h>
+#include <stromx/base/Camera.h>
 
 #include <iostream>
 
@@ -39,14 +40,17 @@ int main (int argc, char* argv[])
     
     stream->start();
     
+    core::Operator* camera = stream->operators()[0];
     core::Operator* canny = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
         core::DataContainer data = canny->getOutputData(0);
         core::ReadAccess<core::Image> count(data);
+        std::cout << "Received image " <<  count().height() << "x" << count().width() << std::endl;
         
         canny->clearOutputData(0);
+        camera->clearOutputData(1);
     }
     
     stream->stop();

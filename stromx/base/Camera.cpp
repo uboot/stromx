@@ -411,7 +411,7 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
+            Parameter* image = new Parameter(IMAGE, DataVariant::COLOR_IMAGE);
             image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
             

@@ -35,13 +35,13 @@ namespace stromx
         template <>
         const std::string Bool::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void Bool::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<bool>(data);
+            m_value = boost::lexical_cast<bool>(data);
         }
         
         template<>
@@ -60,13 +60,13 @@ namespace stromx
         template <>
         const std::string Int8::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(static_cast<int>(*this));
+            return boost::lexical_cast<std::string>(static_cast<int>(m_value));
         }
         
         template <>
         void Int8::deserialize(const std::string & data, const std::string & path)
         {
-            *this = Int8(boost::lexical_cast<int>(data));
+            m_value = Int8(boost::lexical_cast<int>(data));
         }
         
         template<>
@@ -85,13 +85,13 @@ namespace stromx
         template <>
         const std::string UInt8::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(static_cast<int>(*this));
+            return boost::lexical_cast<std::string>(static_cast<int>(m_value));
         }
         
         template <>
         void UInt8::deserialize(const std::string & data, const std::string & path)
         {
-            *this = UInt8(boost::lexical_cast<int>(data));
+            m_value = UInt8(boost::lexical_cast<int>(data));
         }
         
         template<>
@@ -106,13 +106,13 @@ namespace stromx
         template <>
         const std::string Int16::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void Int16::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<int16_t>(data);
+            m_value = boost::lexical_cast<int16_t>(data);
         }
         
         template<>
@@ -127,13 +127,13 @@ namespace stromx
         template <>
         const std::string UInt16::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void UInt16::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<uint16_t>(data);
+            m_value = boost::lexical_cast<uint16_t>(data);
         }
         
         template<>
@@ -152,13 +152,13 @@ namespace stromx
         template <>
         const std::string Int32::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void Int32::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<int32_t>(data);
+            m_value = boost::lexical_cast<int32_t>(data);
         }
         
         template<>
@@ -177,13 +177,13 @@ namespace stromx
         template <>
         const std::string UInt32::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void UInt32::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<uint32_t>(data);
+            m_value = boost::lexical_cast<uint32_t>(data);
         }
         
         template<>
@@ -202,13 +202,13 @@ namespace stromx
         template <>
         const std::string Float::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void Float::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<float>(data);
+            m_value = boost::lexical_cast<float>(data);
         }
         
         template<>
@@ -227,13 +227,13 @@ namespace stromx
         template <>
         const std::string Double::serialize(const std::string & name, const std::string & path) const
         {
-            return boost::lexical_cast<std::string>(*this);
+            return boost::lexical_cast<std::string>(m_value);
         }
         
         template <>
         void Double::deserialize(const std::string & data, const std::string & path)
         {
-            *this = boost::lexical_cast<double>(data);
+            m_value = boost::lexical_cast<double>(data);
         }
     }
 }

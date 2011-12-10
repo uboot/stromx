@@ -46,7 +46,7 @@ namespace stromx
             const static DataVariant DOUBLE;
             const static DataVariant IMAGE;
             const static DataVariant MONO_IMAGE;
-            const static DataVariant RGB_IMAGE;
+            const static DataVariant COLOR_IMAGE;
             const static DataVariant MONO_8_IMAGE;
             const static DataVariant RGB_24_IMAGE;
             const static DataVariant BGR_24_IMAGE;
@@ -92,7 +92,7 @@ namespace stromx
                 DOUBLE_ID,
                 IMAGE_ID,
                 MONO_IMAGE_ID,
-                RGB_IMAGE_ID,
+                COLOR_IMAGE_ID,
                 MONO_8_IMAGE_ID,
                 RGB_24_IMAGE_ID,
                 BGR_24_IMAGE_ID,
