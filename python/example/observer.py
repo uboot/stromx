@@ -16,16 +16,11 @@
 #
 
 from stromx import *
+import time
 
 class MyObserver(core.ConnectorObserver):
     def observe(self, connector, data):
-        print "test"
-#        print connector.type()
-#        print connector.id()
-#        if not data.empty():
-#            access = core.ReadAccess(data)
-#            print access.get()
-#            del access
+        print connector.type(), connector.id()
 
 raw_input()
 
@@ -36,15 +31,14 @@ base.registerBase(factory)
 
 stream = core.XmlReader().read("file.xml", factory)
 
-observer = MyObserver()
+timer = stream.operators()[1]
 
+observer = MyObserver()
 source = stream.operators()[0]
 source.addObserver(observer)
 
-timer = stream.operators()[1]
-timer.setParameter(0, core.UInt32(100))
-
 stream.start()
+time.sleep(3)
 
 for i in range(1000):
     data = timer.getOutputData(0)
@@ -55,5 +49,5 @@ for i in range(1000):
     timer.clearOutputData(0)
 
 stream.stop()
-#stream.join()
+stream.join()
 
