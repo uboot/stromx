@@ -23,7 +23,7 @@
 
 using namespace boost::python;
 using namespace stromx::core;
-      
+ 
 void exportThread()
 {       
     enum_<Thread::Status>("ThreadStatus")

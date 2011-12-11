@@ -16,13 +16,21 @@
 #
 
 from stromx import *
-import time
 
 class MyObserver(core.ConnectorObserver):
     def observe(self, connector, data):
-        print connector.type(), connector.id()
-
-raw_input()
+        dataStr = ""
+        if data.empty():
+            dataStr = "empty"
+        else:
+            dataStr = str(core.ReadAccess(data).get().get())
+            
+        print "{0} {1} of Operator '{2}/{3}' was set to: {4}".format(
+            connector.type(),
+            connector.id(),
+            connector.op().info().package(),
+            connector.op().info().type(),
+            dataStr)
 
 factory = core.Factory()
 
@@ -31,21 +39,17 @@ base.registerBase(factory)
 
 stream = core.XmlReader().read("file.xml", factory)
 
+source = stream.operators()[0]
 timer = stream.operators()[1]
 
 observer = MyObserver()
-source = stream.operators()[0]
 source.addObserver(observer)
+timer.addObserver(observer)
 
 stream.start()
-time.sleep(3)
 
-for i in range(1000):
+for i in range(5):
     data = timer.getOutputData(0)
-    count = core.ReadAccess(data)
-    print "Received {0}".format(count.get().get())
-    del count
-    
     timer.clearOutputData(0)
 
 stream.stop()

@@ -31,6 +31,24 @@ namespace
         kernel.release();
         return op;
     }
+    
+    const DataContainer getOutputDataWrap(Operator & op, const unsigned int id)
+    {
+        DataContainer data;
+        
+        Py_BEGIN_ALLOW_THREADS
+        data = op.getOutputData(id);
+        Py_END_ALLOW_THREADS
+        
+        return data;
+    }
+    
+    void setInputDataWrap(Operator & op, const unsigned int id, const DataContainer data)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        op.setInputData(id, data);
+        Py_END_ALLOW_THREADS
+    }
 }
       
 void exportOperator()
@@ -51,8 +69,8 @@ void exportOperator()
         .def("initialize", &Operator::initialize)
         .def<const Data& (Operator::*)(const unsigned int) const>("getParameter", &Operator::getParameter, return_internal_reference<>())
         .def("setParameter", &Operator::setParameter)
-        .def("getOutputData", &Operator::getOutputData)
-        .def("setInputData", &Operator::setInputData)
+        .def("getOutputData", &getOutputDataWrap)
+        .def("setInputData", &setInputDataWrap)
         .def("clearOutputData", &Operator::clearOutputData)
         .def("addObserver", &Operator::addObserver)
         .def("removeObserver", &Operator::removeObserver)

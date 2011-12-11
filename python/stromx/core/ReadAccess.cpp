@@ -22,9 +22,24 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{   
+    std::auto_ptr< ReadAccess<> > allocate(const DataContainer & data)
+    {
+        ReadAccess<>* access = 0;
+        
+        Py_BEGIN_ALLOW_THREADS
+        access = new ReadAccess<>(data);
+        Py_END_ALLOW_THREADS
+        
+        return std::auto_ptr< ReadAccess<> >(access);
+    }
+}
+
 void exportReadAccess()
 {       
-    class_<ReadAccess<> >("ReadAccess", init<DataContainer>())
+    class_<ReadAccess<> >("ReadAccess", no_init)
+        .def("__init__", make_constructor(&allocate))
         .def("get", &ReadAccess<>::get, return_internal_reference<>())
     ;
 }

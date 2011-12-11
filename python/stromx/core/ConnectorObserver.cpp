@@ -30,11 +30,7 @@ namespace
         void observe(const Connector & connector, const DataContainer & data) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
-            Py_BEGIN_ALLOW_THREADS
-            
             this->get_override("observe")(connector, data);
-            
-            Py_END_ALLOW_THREADS
             PyGILState_Release(state);
         }
     };

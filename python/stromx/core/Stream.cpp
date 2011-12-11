@@ -27,6 +27,13 @@ using namespace stromx::core;
 
 namespace
 {
+    void joinWrap(Stream & stream)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        stream.join();
+        Py_END_ALLOW_THREADS
+    }
+    
     Operator* addOperatorWrap(Stream& stream, std::auto_ptr<Operator> op)
     {
         Operator* opPtr = op.get();
@@ -63,7 +70,7 @@ void exportStream()
         .def("threads", &Stream::threads, return_internal_reference<>())
         .def("start", &Stream::start)
         .def("stop", &Stream::stop)
-        .def("join", &Stream::join)
+        .def("join", &joinWrap)
         .def("pause", &Stream::pause)
         .def("resume", &Stream::resume)
     ;

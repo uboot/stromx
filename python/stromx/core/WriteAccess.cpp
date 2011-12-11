@@ -22,9 +22,24 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{   
+    std::auto_ptr< WriteAccess<> > allocate(const DataContainer & data)
+    {
+        WriteAccess<>* access = 0;
+        
+        Py_BEGIN_ALLOW_THREADS
+        access = new WriteAccess<>(data);
+        Py_END_ALLOW_THREADS
+        
+        return std::auto_ptr< WriteAccess<> >(access);
+    }
+}
+
 void exportWriteAccess()
 {       
-    class_<WriteAccess<> >("WriteAccess", init<DataContainer>())
+    class_<WriteAccess<> >("WriteAccess", no_init)
+        .def("__init__", make_constructor(&allocate))
         .def("get", &WriteAccess<>::get, return_internal_reference<>())
     ;
 }
