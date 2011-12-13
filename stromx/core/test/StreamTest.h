@@ -35,6 +35,7 @@ namespace stromx
             CPPUNIT_TEST(testRemoveThread);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
+            CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -48,6 +49,7 @@ namespace stromx
             void testRemoveThread();
             void testPause();
             void testResume();
+            void testRemoveOperator();
                 
         private:
             Stream* m_stream;

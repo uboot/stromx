@@ -15,10 +15,12 @@
  */
 
 #include <boost/bind.hpp>
+#include <set>
 #include "InputNode.h"
 #include "ThreadImpl.h"
 #include "../Exception.h"
 #include "../OperatorInfo.h"
+#include "../Input.h"
 
 namespace stromx
 {
@@ -53,6 +55,9 @@ namespace stromx
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
                 
+                if(! op)
+                    throw WrongArgument("Passed null as input node.");
+                
                 if(position > m_inputSequence.size())
                     throw WrongArgument("Can only insert at an existing position of at the end of the node sequence.");
                 
@@ -68,6 +73,31 @@ namespace stromx
                     throw WrongArgument("No node at this position.");
                 
                 m_inputSequence.erase(m_inputSequence.begin() + position);
+            }
+            
+            void ThreadImpl::removeOperator(const Operator* op)
+            {
+                if(m_status != INACTIVE)
+                    throw WrongState("Thread must be inactive.");
+                
+                typedef std::set< std::vector<InputNode*>::iterator > IndexSet;
+                
+                IndexSet toBeErased;
+                
+                for(std::vector<InputNode*>::iterator iter = m_inputSequence.begin();
+                    iter != m_inputSequence.end();
+                    ++iter)
+                {
+                    if((*iter)->op() == op)
+                        toBeErased.insert(iter);
+                }
+                
+                for(IndexSet::iterator iter = toBeErased.begin();
+                    iter != toBeErased.end();
+                    ++iter)
+                {
+                    m_inputSequence.erase(*iter);
+                }
             }
 
             void ThreadImpl::start()

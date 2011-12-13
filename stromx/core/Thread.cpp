@@ -86,6 +86,11 @@ namespace stromx
         {
             m_thread->resume();
         }
+
+        void Thread::removeOperator(const Operator* op)
+        {
+            m_thread->removeOperator(op);
+        }
             
         void Thread::addNode(Operator* const op, const unsigned int inputId)
         {

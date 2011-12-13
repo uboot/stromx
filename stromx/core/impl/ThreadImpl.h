@@ -26,6 +26,8 @@ namespace stromx
 {
     namespace core
     {
+        class Operator;
+        
         namespace impl
         {
             class InputNode;
@@ -50,6 +52,7 @@ namespace stromx
                 void addNode(InputNode* const op);
                 void insertNode(const unsigned int position, InputNode* const op);
                 void removeNode(const unsigned int position);
+                void removeOperator(const Operator* op);
                 
                 void start();
                 void stop();

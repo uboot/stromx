@@ -64,6 +64,15 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr), WrongArgument);
         }
         
+        void StreamTest::testRemoveOperator()
+        {
+            Operator* op = m_stream->operators()[1];
+            
+            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+        }
+
         void StreamTest::testPause()
         {
             CPPUNIT_ASSERT_THROW(m_stream->pause(), WrongState);
