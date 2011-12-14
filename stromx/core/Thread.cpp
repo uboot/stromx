@@ -89,6 +89,25 @@ namespace stromx
 
         void Thread::removeOperator(const Operator* op)
         {
+            typedef std::set< std::vector<Input>::iterator > IndexSet;
+            
+            IndexSet toBeErased;
+            
+            for(std::vector<Input>::iterator iter = m_inputSequence.begin();
+                iter != m_inputSequence.end();
+                ++iter)
+            {
+                if((*iter).op() == op)
+                    toBeErased.insert(iter);
+            }
+            
+            for(IndexSet::iterator iter = toBeErased.begin();
+                iter != toBeErased.end();
+                ++iter)
+            {
+                m_inputSequence.erase(*iter);
+            }
+            
             m_thread->removeOperator(op);
         }
             
