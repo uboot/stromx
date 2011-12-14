@@ -30,9 +30,17 @@ namespace stromx
         class STROMX_BASE_API Image : public core::ImageWrapper
         {
         public:
+            enum FileAccess
+            {
+                UNCHANGED,
+                GRAYSCALE,
+                COLOR
+            };
+            
             Image();
             Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
             Image(const std::string & filename);
+            Image(const std::string & filename, const FileAccess access);
             Image(const core::Image& image);
             Image(const unsigned int size);
             virtual ~Image();
@@ -47,6 +55,7 @@ namespace stromx
             virtual void deserialize(const std::string & data, const std::string & path);
             
             void open(const std::string& filename);
+            void open(const std::string & filename, const FileAccess access);
             void save(const std::string& filename) const;
             void resize(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType);
             void resize(const unsigned int size);
@@ -58,6 +67,7 @@ namespace stromx
             
             static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
             static const core::DataVariant dataTypeFromPixelType(const PixelType pixelType);
+            static const int getCvAccessType(const FileAccess access);
             
             void getDataFromCvImage(const PixelType pixelType);
             

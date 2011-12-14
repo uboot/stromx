@@ -15,10 +15,12 @@
  */
 
 #include <boost/bind.hpp>
+#include <set>
 #include "InputNode.h"
 #include "ThreadImpl.h"
 #include "../Exception.h"
 #include "../OperatorInfo.h"
+#include "../Input.h"
 
 namespace stromx
 {
@@ -53,6 +55,9 @@ namespace stromx
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
                 
+                if(! op)
+                    throw WrongArgument("Passed null as input node.");
+                
                 if(position > m_inputSequence.size())
                     throw WrongArgument("Can only insert at an existing position of at the end of the node sequence.");
                 
@@ -69,6 +74,31 @@ namespace stromx
                 
                 m_inputSequence.erase(m_inputSequence.begin() + position);
             }
+            
+            void ThreadImpl::removeOperator(const Operator* op)
+            {
+                if(m_status != INACTIVE)
+                    throw WrongState("Thread must be inactive.");
+                
+                typedef std::set< std::vector<InputNode*>::iterator > IndexSet;
+                
+                IndexSet toBeErased;
+                
+                for(std::vector<InputNode*>::iterator iter = m_inputSequence.begin();
+                    iter != m_inputSequence.end();
+                    ++iter)
+                {
+                    if((*iter)->op() == op)
+                        toBeErased.insert(iter);
+                }
+                
+                for(IndexSet::iterator iter = toBeErased.begin();
+                    iter != toBeErased.end();
+                    ++iter)
+                {
+                    m_inputSequence.erase(*iter);
+                }
+            }
 
             void ThreadImpl::start()
             {
@@ -84,7 +114,7 @@ namespace stromx
 
             void ThreadImpl::stop()
             {
-                if(m_status != ACTIVE)
+                if(m_status != ACTIVE && m_status != PAUSED)
                     return;
                 
                 BOOST_ASSERT(m_thread);
@@ -96,6 +126,12 @@ namespace stromx
 
             void ThreadImpl::join()
             {
+                if(m_status == INACTIVE)
+                {
+                    BOOST_ASSERT(m_thread == 0);
+                    return;
+                }
+                
                 if(m_status != DEACTIVATING)
                     throw WrongState("Thread must have been stopped.");
                 
@@ -106,6 +142,28 @@ namespace stromx
                 m_thread = 0;
                 
                 m_status = INACTIVE;
+            }
+            
+            void ThreadImpl::pause()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status != ACTIVE)
+                    throw WrongState("Thread must have been paused.");
+                
+                m_status = PAUSED;
+            }
+
+            void ThreadImpl::resume()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status != PAUSED)
+                    throw WrongState("Thread must have been paused.");
+                
+                m_status = ACTIVE;
+                
+                m_pauseCond.notify_all();
             }
             
             void ThreadImpl::loop()
@@ -123,7 +181,12 @@ namespace stromx
                             
                             try
                             {
-                                boost::this_thread::interruption_point();
+                                unique_lock_t lock(m_mutex);
+                                
+                                if(m_status == PAUSED)
+                                    m_pauseCond.wait(lock);
+                                else
+                                    boost::this_thread::interruption_point();
                             }
                             catch(boost::thread_interrupted&)
                             {

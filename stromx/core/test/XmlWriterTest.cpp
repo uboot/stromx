@@ -15,13 +15,9 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "TestOperator.h"
+#include "TestUtilities.h"
 #include "XmlWriterTest.h"
-#include "../Operator.h"
-#include "../XmlWriter.h"
-#include "../Operator.h"
-#include "../Input.h"
-#include "../Thread.h"
+#include "../Exception.h"
 #include "../Stream.h"
 #include "../XmlWriter.h"
 
@@ -33,43 +29,7 @@ namespace stromx
     {
         void XmlWriterTest::setUp()
         {
-            m_stream = new Stream;
-            m_stream->setName("TestStream");
-            
-            Operator* op0 = new Operator(new TestOperator);
-            op0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
-            op0->initialize();
-            op0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
-            op0->setName("Number 1");
-            m_stream->addOperator(op0);
-            
-            Operator* op1 = new Operator(new TestOperator);
-            op1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
-            op1->initialize();
-            op1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
-            op1->setName("Number 2");
-            m_stream->addOperator(op1);
-            
-            Operator* op2 = new Operator(new TestOperator);
-            op2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
-            op2->initialize();
-            op2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
-            op2->setName("Number 3");
-            m_stream->addOperator(op2);
-            
-            m_stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            m_stream->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
-            
-            m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
-            m_stream->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
-            
-            Thread* thread = m_stream->addThread();
-            thread->setName("Processing thread");
-            
-            thread->addNode(op1, TestOperator::INPUT_1);
-            thread->addNode(op1, TestOperator::INPUT_2);
-            thread->addNode(op2, TestOperator::INPUT_1);
-            thread->addNode(op2, TestOperator::INPUT_2);
+            m_stream = TestUtilities::buildTestStream();
         }
         
         void XmlWriterTest::testWrite()

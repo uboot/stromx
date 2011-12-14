@@ -35,6 +35,7 @@ namespace stromx
             
             virtual const DataVariant & variant() const { return DataVariant::ENUM; }
             virtual const std::string & type() const { return TYPE; }
+            virtual Data* const clone() const { return new Enum(); }
             
         private:
             static const std::string TYPE;

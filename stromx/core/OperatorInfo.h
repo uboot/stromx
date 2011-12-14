@@ -66,6 +66,16 @@ namespace stromx
             virtual const std::vector<const Parameter*>& parameters() const = 0;
             
             /**
+             * Returns the input description of the input \c id.
+             */
+            virtual const Description & output(const unsigned int id) const = 0;
+            
+            /**
+             * Returns the output description of the output \c id.
+             */
+            virtual const Description & input(const unsigned int id) const = 0;
+            
+            /**
              * Returns the parameter description of the parameter \c id.
              */
             virtual const Parameter & parameter(const unsigned int id) const = 0;

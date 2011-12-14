@@ -25,6 +25,7 @@ set(SOURCES
     ../Id2DataComposite.cpp
     ../None.cpp
     Id2DataCompositeTest.cpp
+    Id2DataMapTest.cpp
     ../Id2DataPair.cpp
     Id2DataPairTest.cpp
     ../OperatorKernel.cpp
@@ -60,6 +61,7 @@ set(SOURCES
     WriteAccessTest.cpp
     ../Stream.cpp
     StreamTest.cpp
+    TestUtilities.cpp
     ../Core.cpp
     CoreTest.cpp
 )

@@ -2,7 +2,7 @@
 <!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
 <Stromx version="0.1.0">
-    <Stream name="TestStrom">
+    <Stream name="TestStream">
         <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 1">
             <Parameter id="0">
                 <Data type="UInt32" package="Core" version="0.1.0">5000</Data>

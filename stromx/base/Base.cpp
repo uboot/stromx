@@ -16,7 +16,9 @@
 
 #include "AdjustRgbChannels.h"
 #include "Base.h"
+#include "Buffer.h"
 #include "Camera.h"
+#include "Canny.h"
 #include "Clip.h"
 #include "ConstImage.h"
 #include "ConvertPixelType.h"
@@ -35,7 +37,9 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerData(new Image);
     
     registry.registerOperator(new AdjustRgbChannels);
+    registry.registerOperator(new Buffer);
     registry.registerOperator(new Camera);
+    registry.registerOperator(new Canny);
     registry.registerOperator(new Clip);
     registry.registerOperator(new ConstImage);
     registry.registerOperator(new ConvertPixelType);

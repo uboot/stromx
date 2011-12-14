@@ -31,14 +31,17 @@ namespace stromx
         class OperatorError : public Exception
         {
         protected:
+            /** Constructs an operator exception, i.e. an exception related to an operator. */
             OperatorError(const OperatorInfo& op, const std::string & message)
             : Exception(message),
                 m_operator(op)
             {}
             
+            /** Returns the operator this exception relates to. */
+            const OperatorInfo& op() const;
+            
         private:
             const OperatorInfo& m_operator;
-                        
         };
         
         /** \brief A parameter with this ID does not exist. */
@@ -62,6 +65,8 @@ namespace stromx
             : OperatorError(op, message),
                 m_parameter(param)
             {}
+            
+            const Parameter & parameter() const { return m_parameter; }
             
         private:
             const Parameter& m_parameter;
@@ -94,6 +99,21 @@ namespace stromx
             {}
         };
         
+        
+        /** \brief General error in connection with an operator output. */
+        class OutputError : public OperatorError
+        {
+        public:
+            OutputError(const unsigned int outputId, const OperatorInfo& op, const std::string & message = "InputError")
+              : OperatorError(op, message),
+                m_outputId(outputId)
+            {}
+            
+            const unsigned int outputId() const { return m_outputId; }
+        private:
+            const unsigned int m_outputId;
+        };
+        
         /** \brief General error in connection with an operator input. */
         class InputError : public OperatorError
         {
@@ -103,16 +123,26 @@ namespace stromx
                 m_inputId(inputId)
             {}
             
+            const unsigned int inputId() const { return m_inputId; }
         private:
             const unsigned int m_inputId;
         };
         
-        /** \brief Tried to set the input to data of the wrong type. */
+        /** \brief Tried to set an input to data of the wrong type. */
         class WrongInputType : public InputError
         {
         public:
             WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "WrongInputType")
             : InputError(inputId, op, message)
+            {}
+        };
+        
+        /** \brief Tried to set an output to data of the wrong type. */
+        class WrongOutputType : public OutputError
+        {
+        public:
+            WrongOutputType(const unsigned int outputId, const OperatorInfo& op, const std::string & message = "WrongInputType")
+              : OutputError(outputId, op, message)
             {}
         };
     }

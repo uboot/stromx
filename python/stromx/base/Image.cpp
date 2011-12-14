@@ -38,15 +38,28 @@ namespace
     {
         return std::auto_ptr<stromx::base::Image>(new stromx::base::Image(filename));
     } 
+    
+    std::auto_ptr<stromx::base::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::base::Image::FileAccess access)
+    {
+        return std::auto_ptr<stromx::base::Image>(new stromx::base::Image(filename, access));
+    } 
 }
 
 void exportImage()
 {
+    enum_<stromx::base::Image::FileAccess>("ImageFileAccess")
+        .value("UNCHANGED", stromx::base::Image::UNCHANGED)
+        .value("GRAYSCALE", stromx::base::Image::GRAYSCALE)
+        .value("COLOR", stromx::base::Image::COLOR)
+    ;
+    
     class_<stromx::base::Image, bases<Data, Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
+        .def("__init__", make_constructor(&allocateFromFileWithAccess))
         .def("save", &stromx::base::Image::save)
-        .def("open", &stromx::base::Image::open)
+        .def<void (stromx::base::Image::*)(const std::string &)>("open", &stromx::base::Image::open)
+        .def<void (stromx::base::Image::*)(const std::string &, const stromx::base::Image::FileAccess)>("open", &stromx::base::Image::open)
         .def<void (stromx::base::Image::*)(const unsigned int, const unsigned int, const Image::PixelType)>("resize", &stromx::base::Image::resize)
      ;
      

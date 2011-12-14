@@ -41,7 +41,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->setParameter(Camera::IMAGE, image);
             m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
-            m_operator->setParameter(Camera::BUFFER_SIZE, UInt32(image.size()));
+            m_operator->setParameter(Camera::BUFFER_SIZE, UInt32(image.bufferSize()));
             
             // default to immediate, automatic trigger
             m_operator->setParameter(Camera::TRIGGER_MODE, Enum(Camera::INTERNAL));

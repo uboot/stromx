@@ -27,17 +27,17 @@ namespace stromx
                             const std::string & package,
                             const Version & version,
                             const std::vector<const Parameter*>& parameters)
-        : m_type(type),
+          : m_type(type),
             m_package(package),
-            m_version(version),
-            m_parameters(parameters)
+            m_version(version)
         {
-            validate(parameters);
+            validateParameters(parameters);
             
             for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
                 iter != parameters.end();
                 ++iter)
             {
+                m_parameters.push_back(*iter);
                 m_parameterMap[(*iter)->id()] = *iter;
             }
         }
@@ -45,7 +45,7 @@ namespace stromx
         OperatorKernel::OperatorKernel (const std::string & type,
                             const std::string & package,
                             const Version & version)
-        : m_type(type),
+          : m_type(type),
             m_package(package),
             m_version(version)
         {
@@ -59,19 +59,35 @@ namespace stromx
                         const std::vector<const Parameter* >& parameters)
           : m_type(type),
             m_package(package),
-            m_version(version),
-            m_inputs(inputs),
-            m_outputs(outputs),
-            m_parameters(parameters)
+            m_version(version)
         {
-            validate(inputs);
-            validate(outputs);
-            validate(parameters);
+            validateInputs(inputs);
+            validateOutputs(outputs);
+            validateParameters(parameters);
+            
+            for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
+                iter != inputs.end();
+                ++iter)
+            {
+                m_inputs.push_back(*iter);
+                m_inputMap[(*iter)->id()] = *iter;
+            }
+            
+            
+            for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
+                iter != outputs.end();
+                ++iter)
+            {
+                m_outputs.push_back(*iter);
+                m_outputMap[(*iter)->id()] = *iter;
+            }
+            
             
             for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
                 iter != parameters.end();
                 ++iter)
             {
+                m_parameters.push_back(*iter);
                 m_parameterMap[(*iter)->id()] = *iter;
             }
         }
@@ -81,23 +97,27 @@ namespace stromx
                                 const std::vector<const core::Description*>& outputs,
                                 const std::vector<const core::Parameter*>& parameters)
         {
+            validateInputs(inputs);
+            validateOutputs(outputs);
+            validateParameters(parameters);
+            
             for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
                 iter != inputs.end();
                 ++iter)
             {
                 m_inputs.push_back(*iter);
+                m_inputMap[(*iter)->id()] = *iter;
             }
             
-            validate(inputs);
             
             for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
                 iter != outputs.end();
                 ++iter)
             {
                 m_outputs.push_back(*iter);
+                m_outputMap[(*iter)->id()] = *iter;
             }
             
-            validate(outputs);
             
             for(std::vector<const core::Parameter*>::const_iterator iter = parameters.begin();
                 iter != parameters.end();
@@ -106,8 +126,6 @@ namespace stromx
                 m_parameters.push_back(*iter);
                 m_parameterMap[(*iter)->id()] = *iter;
             }
-            
-            validate(m_parameters);
         }
         
         const Parameter & OperatorKernel::findParameter(const unsigned int id) const
@@ -127,6 +145,24 @@ namespace stromx
         const Parameter& OperatorKernel::parameter(const unsigned int id) const
         {
             return findParameter(id);
+        }
+        
+        const Description& OperatorKernel::input(const unsigned int id) const
+        {
+            std::map<unsigned int, const Description*>::const_iterator iter = m_inputMap.find(id);
+            if(iter == m_inputMap.end())
+                throw WrongId("No input with ID " + id);
+            
+            return *iter->second;
+        }
+
+        const Description& OperatorKernel::output(const unsigned int id) const
+        {
+            std::map<unsigned int, const Description*>::const_iterator iter = m_outputMap.find(id);
+            if(iter == m_outputMap.end())
+                throw WrongId("No output with ID " + id);
+            
+            return *iter->second;
         }
         
         OperatorKernel::~OperatorKernel()
@@ -155,9 +191,36 @@ namespace stromx
             }
         }
 
-        void OperatorKernel::validate(const std::vector<const Description*>& descriptors)
+        void OperatorKernel::validateOutputs(const std::vector<const Description*>& descriptors)
         {
             std::set<unsigned int> ids;
+            
+            for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                ids.insert((*iter)->id());
+            }
+            
+            for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
+                iter != descriptors.end();
+                ++iter)
+            {
+                if(ids.count((*iter)->id()))
+                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+            }
+        }
+
+        void OperatorKernel::validateInputs(const std::vector<const Description*>& descriptors)
+        {
+            std::set<unsigned int> ids;
+            
+            for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                ++iter)
+            {
+                ids.insert((*iter)->id());
+            }
             
             for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
                 iter != descriptors.end();
@@ -168,9 +231,16 @@ namespace stromx
             }
         }
         
-        void OperatorKernel::validate(const std::vector<const Parameter*>& descriptors)
+        void OperatorKernel::validateParameters(const std::vector<const Parameter*>& descriptors)
         {
             std::set<unsigned int> ids;
+            
+            for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
+                iter != m_parameters.end();
+                ++iter)
+            {
+                ids.insert((*iter)->id());
+            }
             
             for(std::vector<const Parameter*>::const_iterator iter = descriptors.begin();
                 iter != descriptors.end();

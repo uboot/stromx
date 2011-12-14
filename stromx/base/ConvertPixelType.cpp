@@ -90,7 +90,7 @@ namespace stromx
             unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
             unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
             
-            if(destImage.size() < destImageSize)
+            if(destImage.bufferSize() < destImageSize)
                 throw InputError(DESTINATION, *this, "Destination image is too small");
             
             destImage.initialize(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);

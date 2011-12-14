@@ -1,3 +1,5 @@
+# dot operator.dot -Tpng  -ooperator.png
+
 digraph strom
 {
     node [shape = box, fontname = Helvetica, style = "rounded"]

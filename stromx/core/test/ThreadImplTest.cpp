@@ -44,36 +44,36 @@ namespace stromx
                 op->initialize();
                 op->activate();
                 
-                m_operatorNodes.push_back(op);
+                m_operators.push_back(op);
             }
             
             for(unsigned int i = 0; i < 2; ++i)
             {
-                m_operatorNodes[i + 1]->getInputNode(TestOperator::INPUT_1)
-                    ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_1));
+                m_operators[i + 1]->getInputNode(TestOperator::INPUT_1)
+                    ->connect(m_operators[i]->getOutputNode(TestOperator::OUTPUT_1));
                     
-                m_operatorNodes[i + 1]->getInputNode(TestOperator::INPUT_2)
-                    ->connect(m_operatorNodes[i]->getOutputNode(TestOperator::OUTPUT_2));
+                m_operators[i + 1]->getInputNode(TestOperator::INPUT_2)
+                    ->connect(m_operators[i]->getOutputNode(TestOperator::OUTPUT_2));
             }
             
             m_thread = new ThreadImpl();
             
             for(unsigned int i = 1; i < 3; ++i)
             {
-                for(std::vector<const Description*>::const_iterator input = m_operatorNodes[i]->info().inputs().begin();
-                    input != m_operatorNodes[i]->info().inputs().end();
+                for(std::vector<const Description*>::const_iterator input = m_operators[i]->info().inputs().begin();
+                    input != m_operators[i]->info().inputs().end();
                     ++input)
                 {
-                    InputNode* inputNode = m_operatorNodes[i]->getInputNode((*input)->id());
+                    InputNode* inputNode = m_operators[i]->getInputNode((*input)->id());
                     m_thread->addNode(inputNode);
                 }
             }
             
             m_container = DataContainer(new core::None);
             
-            m_operatorNode = new Operator(new TestOperator());
-            m_operatorNode->initialize();
-            m_node = m_operatorNode->getInputNode(TestOperator::INPUT_1);
+            m_operator = new Operator(new TestOperator());
+            m_operator->initialize();
+            m_node = m_operator->getInputNode(TestOperator::INPUT_1);
         }
         
         void ThreadImplTest::testAddOperator()
@@ -94,7 +94,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(m_node, m_thread->inputSequence()[0]);  
         }
 
-        void ThreadImplTest::testRemoveOperator()
+        void ThreadImplTest::testRemoveNode()
         {
             m_thread->insertNode(0, m_node);
             unsigned int numNodes = m_thread->inputSequence().size();
@@ -104,20 +104,31 @@ namespace stromx
             CPPUNIT_ASSERT(m_node != m_thread->inputSequence()[0]);  
         }
         
+        void ThreadImplTest::testRemoveOperator()
+        {
+            Operator* op = m_operators[1];
+            
+            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(op));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
+            
+            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_operator));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
+        }
+        
         void ThreadImplTest::testStart()
         {
             CPPUNIT_ASSERT_NO_THROW(m_thread->start());
             CPPUNIT_ASSERT_THROW(m_thread->start(), WrongState);
             
-            m_operatorNodes[0]->setInputData(TestOperator::INPUT_1, m_container);
-            m_operatorNodes[0]->setInputData(TestOperator::INPUT_2, m_container);
+            m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
+            m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
             
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             
-            DataContainer data = m_operatorNodes[2]->getOutputData(TestOperator::OUTPUT_1);
+            DataContainer data = m_operators[2]->getOutputData(TestOperator::OUTPUT_1);
             CPPUNIT_ASSERT_EQUAL(m_container, data);
             
-            data = m_operatorNodes[2]->getOutputData(TestOperator::OUTPUT_2);
+            data = m_operators[2]->getOutputData(TestOperator::OUTPUT_2);
             CPPUNIT_ASSERT_EQUAL(m_container, data);
             
             for(std::vector<TestOperator*>::const_iterator iter = m_kernels.begin();
@@ -135,17 +146,49 @@ namespace stromx
             m_thread->start();
             CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
             CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::DEACTIVATING, m_thread->status());
         }
 
         void ThreadImplTest::testJoin()
         {
-            CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
+            CPPUNIT_ASSERT_NO_THROW(m_thread->join());
             
             m_thread->start();
             m_thread->stop();
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->join());
-            CPPUNIT_ASSERT_THROW(m_thread->join(), WrongState);
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::INACTIVE, m_thread->status());
+        }
+        
+        void ThreadImplTest::testPause()
+        {
+            CPPUNIT_ASSERT_THROW(m_thread->pause(), WrongState);
+            
+            m_thread->start();
+            CPPUNIT_ASSERT_NO_THROW(m_thread->pause());
+            
+            m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
+            m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::PAUSED, m_thread->status());
+        }
+        
+        void ThreadImplTest::testResume()
+        {
+            CPPUNIT_ASSERT_THROW(m_thread->resume(), WrongState);
+            
+            m_thread->start();
+            
+            CPPUNIT_ASSERT_THROW(m_thread->resume(), WrongState);
+            
+            m_thread->pause();
+            m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
+            m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            CPPUNIT_ASSERT_NO_THROW(m_thread->resume());
+            CPPUNIT_ASSERT_EQUAL(ThreadImpl::ACTIVE, m_thread->status());
         }
 
         void ThreadImplTest::tearDown()
@@ -153,21 +196,19 @@ namespace stromx
             if(m_thread)
             {
                 m_thread->stop();
-                
-                if(m_thread->status() == ThreadImpl::DEACTIVATING)
-                    m_thread->join();
+                m_thread->join();
             }
             
             delete m_thread;
             
-            for(std::vector<Operator*>::iterator iter = m_operatorNodes.begin();
-                iter != m_operatorNodes.end();
+            for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                iter != m_operators.end();
                 ++iter)
             {
                 delete *iter;
             }
             
-            delete m_operatorNode;
+            delete m_operator;
         }
     }
 }

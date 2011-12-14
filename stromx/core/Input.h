@@ -23,19 +23,22 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief Identifier of an output of an operator. */
+        /** \brief Identifier of an input connector of an operator. */
         class Input : public Connector
         {
         public:
-            Input(Operator* const op, const unsigned int id)
+            /** 
+             * Constructs an input connector which points to the input
+             * \c id of the operator \c op.
+             */
+            Input(const Operator* const op, const unsigned int id)
               : Connector(Connector::INPUT, op, id)
             {}
             
+            /** Constructs an invalid input connector. */
             Input()
               : Connector(Connector::INPUT, 0, 0)
             {}
-            
-            virtual const Type type() const { return INPUT; }
         };
     }
 }

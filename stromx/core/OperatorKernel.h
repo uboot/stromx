@@ -119,6 +119,10 @@ namespace stromx
              */
             virtual void deactivate() {}
             
+            
+            virtual const Description & output(const unsigned int id) const;
+            virtual const Description & input(const unsigned int id) const;
+            
         protected:
             /**
              * Constructs an operator kernel.
@@ -158,8 +162,9 @@ namespace stromx
             Parameter & parameter(const unsigned int id);
             
         private:
-            static void validate(const std::vector<const Description*>& descriptors);
-            static void validate(const std::vector<const Parameter*>& descriptors);
+            void validateInputs(const std::vector<const Description*>& descriptors);
+            void validateOutputs(const std::vector<const Description*>& descriptors);
+            void validateParameters(const std::vector<const Parameter*>& descriptors);
             const Parameter & findParameter(const unsigned int id) const;
             
             std::string m_type;
@@ -169,6 +174,8 @@ namespace stromx
             std::vector<const Description*> m_outputs;
             std::vector<const Parameter*> m_parameters;
             std::map<unsigned int, const Parameter*> m_parameterMap;
+            std::map<unsigned int, const Description*> m_inputMap;
+            std::map<unsigned int, const Description*> m_outputMap;
         };
     }
 }

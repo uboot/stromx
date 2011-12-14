@@ -14,7 +14,6 @@
 *  limitations under the License.
 */
 
-#include <typeinfo>
 #include "CameraBuffer.h"
 #include "../Image.h"
 #include "../Config.h"

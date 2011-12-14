@@ -20,6 +20,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "../DataContainer.h"
+#include "../ConnectorObserver.h"
+#include "../Connector.h"
 
 namespace stromx
 {
@@ -43,6 +45,10 @@ namespace stromx
             CPPUNIT_TEST (testSetParameter);
             CPPUNIT_TEST (testGetParameterStatusNone);
             CPPUNIT_TEST (testSetParameterStatusNone);
+            CPPUNIT_TEST (testAddObserver);
+            CPPUNIT_TEST (testRemoveObserver);
+            CPPUNIT_TEST (testObserver);
+            CPPUNIT_TEST (testTwoObservers);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -64,8 +70,25 @@ namespace stromx
             void testSetParameter();
             void testGetParameterStatusNone();
             void testSetParameterStatusNone();
+            void testAddObserver();
+            void testRemoveObserver();
+            void testObserver();
+            void testTwoObservers();
                 
         private:
+            class TestObserver : public ConnectorObserver
+            {
+            public:
+                void observe(const Connector & connector, const DataContainer & data) const;
+                
+                const Connector& lastConnector() const { return m_lastConnector; }
+                const DataContainer & lastData() const { return m_lastData; }
+                
+            private:
+                mutable Connector m_lastConnector;
+                mutable DataContainer m_lastData;
+            };
+            
             void setInputDataDelayed(const unsigned int id); 
             void clearOutputDataDelayed(const unsigned int id); 
             void getOutputDataWithInterrupt(const unsigned id);
@@ -74,6 +97,8 @@ namespace stromx
             OperatorTester* m_operator;
             TestOperator* m_testOperator;
             DataContainer m_container;
+            TestObserver m_observer1;
+            TestObserver m_observer2;
         };
     }
 }

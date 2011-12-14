@@ -1,4 +1,6 @@
-digraph strom
+# dot simple.dot -Tpng  -osimple.png
+
+digraph stream
 {
     node [shape = box, fontname = Helvetica, style = "rounded"]
     "Counter" -> "PeriodicDelay" [headlabel = "INPUT", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]

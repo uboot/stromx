@@ -58,7 +58,7 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL(op, m_thread->inputSequence()[2].op());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[2].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[2].id());
         }
 
@@ -71,7 +71,7 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL(op, m_thread->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[1].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[1].id());
         }
 

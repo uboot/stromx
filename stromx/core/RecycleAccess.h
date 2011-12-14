@@ -38,17 +38,62 @@ namespace stromx
         class Data;
         class DataContainer;
         
-        /** \brief Recycle access to a data container. */
+        /** 
+         * \brief Recycle access to a data container.
+         *
+         * A recycle access allows to \em recycle data which is not used anymore.
+         * In other words, it provides a mechanism to reclaim objects which are ready 
+         * to be destroyed and to reuse the memory the occupy. This avoids frequent
+         * allocation and deallocation of these objects.
+         */
         class STROMX_CORE_API RecycleAccess
         {
         public:
+            /**
+             * Constructs a recycle access and adds data to it.
+             * 
+             * \param data This data will be recycled by this access.
+             */
             RecycleAccess(const DataContainer & data);
+            
+            /** Constructs an empty recycle access. */
             RecycleAccess() {}
             
+            /**
+             * Adds data to the recycle access.
+             * 
+             * \param data This data will be recycled by this access.
+             */
             void add(const DataContainer data);  
+            
+            /**
+             * Waits for data which has been added to the recycle access and 
+             * is ready to be recycled, i.e. no other objects reference it.
+             */
             Data* const operator()() const { return get(); }
+            
+            /**
+             * Waits for data which has been added to the recycle access and 
+             * is ready to be recycled, i.e. no other objects reference it.
+             */
             Data* const get() const;  
+            
+            /**
+             * Waits for data which has been added to the recycle access and 
+             * is ready to be recycled, i.e. no other objects reference it.
+             * 
+             * \param timeout The maximal time to wait in milliseconds.
+             * \throws Timeout If no data was recycled during the timeout.
+             */
             Data* const operator()(const unsigned int timeout) const { return get(timeout); }
+            
+            /**
+             * Waits for data which has been added to the recycle access and 
+             * is ready to be recycled, i.e. no other objects reference it.
+             * 
+             * \param timeout The maximal time to wait in milliseconds.
+             * \throws Timeout If no data was recycled during the timeout.
+             */
             Data* const get(const unsigned int timeout) const;
             
         private:

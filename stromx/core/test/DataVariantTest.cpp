@@ -26,13 +26,13 @@ namespace stromx
     {
         void DataVariantTest::testImageTypes()
         {
-            CPPUNIT_ASSERT(DataVariant::RGB_IMAGE.isVariant(DataVariant::IMAGE));
+            CPPUNIT_ASSERT(DataVariant::COLOR_IMAGE.isVariant(DataVariant::IMAGE));
             CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.isVariant(DataVariant::IMAGE));
-            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.isVariant(DataVariant::RGB_IMAGE));
+            CPPUNIT_ASSERT(DataVariant::RGB_24_IMAGE.isVariant(DataVariant::COLOR_IMAGE));
             
-            CPPUNIT_ASSERT(! DataVariant::IMAGE.isVariant(DataVariant::RGB_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::IMAGE.isVariant(DataVariant::COLOR_IMAGE));
             CPPUNIT_ASSERT(! DataVariant::IMAGE.isVariant(DataVariant::RGB_24_IMAGE));
-            CPPUNIT_ASSERT(! DataVariant::RGB_IMAGE.isVariant(DataVariant::RGB_24_IMAGE));
+            CPPUNIT_ASSERT(! DataVariant::COLOR_IMAGE.isVariant(DataVariant::RGB_24_IMAGE));
             
             CPPUNIT_ASSERT(DataVariant::MONO_IMAGE.isVariant(DataVariant::IMAGE));
             CPPUNIT_ASSERT(DataVariant::MONO_8_IMAGE.isVariant(DataVariant::IMAGE));

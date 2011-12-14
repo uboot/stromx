@@ -27,15 +27,18 @@ namespace stromx
         class Output : public Connector
         {
         public:
-            Output(Operator* const op, const unsigned int id)
+            /** 
+             * Constructs an output connector which points to the output
+             * \c id of the operator \c op.
+             */
+            Output(const Operator* const op, const unsigned int id)
               : Connector(Connector::OUTPUT, op, id)
             {}
             
+            /** Constructs an invalid output connector. */
             Output()
               : Connector(Connector::OUTPUT, 0, 0)
             {}
-            
-            virtual const Type type() const { return OUTPUT; }
         };
     }
 }

@@ -55,9 +55,9 @@ namespace
             return this->get_override("buffer")();
         }
         
-        const unsigned int size() const
+        const unsigned int bufferSize() const
         {
-            return this->get_override("size")();
+            return this->get_override("bufferSize")();
         }
         
         const unsigned int width() const
@@ -128,7 +128,7 @@ void exportImage()
     ;
         
     class_<ImageWrap, boost::noncopyable>("Image")
-        .def("size", pure_virtual(&Image::size))
+        .def("bufferSize", pure_virtual(&Image::bufferSize))
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))
         .def("stride", pure_virtual(&Image::stride))

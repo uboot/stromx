@@ -42,13 +42,16 @@ namespace stromx
             CPPUNIT_TEST(testStart);
             CPPUNIT_TEST(testStop);
             CPPUNIT_TEST(testJoin);
+            CPPUNIT_TEST(testPause);
+            CPPUNIT_TEST(testResume);
             CPPUNIT_TEST(testAddOperator);
             CPPUNIT_TEST(testInsertOperator);
+            CPPUNIT_TEST(testRemoveNode);
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ThreadImplTest() : m_thread(0), m_node(0), m_operatorNode(0) {}
+            ThreadImplTest() : m_thread(0), m_node(0), m_operator(0) {}
             
             void setUp();
             void tearDown();
@@ -56,19 +59,22 @@ namespace stromx
         protected:
             void testAddOperator();
             void testInsertOperator();
+            void testRemoveNode();
             void testRemoveOperator();
             
             void testStart();
             void testStop();
             void testJoin();
+            void testPause();
+            void testResume();
                 
         private: 
             std::vector<TestOperator*> m_kernels;
-            std::vector<Operator*> m_operatorNodes;
+            std::vector<Operator*> m_operators;
             DataContainer m_container;
             impl::ThreadImpl* m_thread;
             impl::InputNode* m_node;
-            Operator* m_operatorNode;
+            Operator* m_operator;
         };
     }
 }

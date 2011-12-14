@@ -29,20 +29,27 @@ namespace stromx
         
         namespace impl
         {
+            class Id2DataMapObserver
+            {
+            public:
+                virtual void observe(const unsigned int id, const DataContainer & data) const = 0;
+            };
+           
             class Id2DataMap
             {
             public:
                 Id2DataMap();
-                Id2DataMap(const std::vector<const Description*> & descriptions);
-                
+                Id2DataMap(const std::vector<const Description*> & descriptions);                
                 
                 const DataContainer & get(const unsigned int id) const;
-                void set(const unsigned int id, DataContainer data);
+                void set(const unsigned int id, const DataContainer & data);
                 void clear();
                 const bool empty() const;
+                void setObserver(const Id2DataMapObserver* const observer);
                 
             private:
                 std::map<unsigned int, DataContainer> m_map;
+                const Id2DataMapObserver* m_observer;
             };
         }
     }

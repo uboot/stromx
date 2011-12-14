@@ -10,6 +10,7 @@ set(SOURCES
     Factory.cpp
     Image.cpp
     Connector.cpp
+    ConnectorObserver.cpp
     Operator.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp

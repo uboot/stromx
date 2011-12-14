@@ -26,6 +26,8 @@ namespace stromx
 {
     namespace core
     {
+        class Operator;
+        
         namespace impl
         {
             class Network;
@@ -55,7 +57,9 @@ namespace stromx
                 /** The thread is active. */
                 ACTIVE,
                 /** The thread was stopped and is waiting to become inactive. */
-                DEACTIVATING
+                DEACTIVATING,
+                /** The thread was paused and be resumed or stopped. */
+                PAUSED
             };
             
             virtual ~Thread();
@@ -74,19 +78,25 @@ namespace stromx
             
             /** 
              * Adds the input \c inputId of the operator \c op to the list of currently
-             * visited inputs. 
+             * visited inputs.
+             * \throws WrongState If the thread state is not INACTIVE.
+             * \throws WrongArgument If \c op is 0.
              */
             void addNode(Operator* const op, const unsigned int inputId);
             
             /** 
              * Inserts the input \c inputId of the operator \c op into the list of currently
              * visited inputs at \c position.
+             * \throws WrongState If the thread state is not INACTIVE.
+             * \throws WrongArgument If \c op is 0 or if there is no input at \c position.
              */
             void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
             
             /** 
              * Removes the input at \c position from the list of currently
              * visited inputs.
+             * \throws WrongState If the thread state is not INACTIVE.
+             * \throws WrongArgument If there is no input at \c position.
              */
             void removeNode(const unsigned int position);
                 
@@ -96,6 +106,14 @@ namespace stromx
             void start();
             void stop();
             void join();
+            void pause();
+            void resume();
+            
+            /**
+             * Removes all inputs of the operator \c op from the thread.
+             * \throws WrongState If the thread state is not INACTIVE.
+             */
+            void removeOperator(const Operator* op);
             
             impl::ThreadImpl* m_thread;
             std::string m_name;

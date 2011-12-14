@@ -337,4 +337,6 @@ Using the presented technique allows to convert single steps of a data processin
 
 It is possible to define custom data types in a similar fashion by subclassing core::Data and core::DataVariant.
 
+The tutorial \ref camera how to process images orginating from a simulated camera.
+
 */

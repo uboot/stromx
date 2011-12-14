@@ -53,7 +53,7 @@ namespace stromx
             virtual uint8_t* const buffer() = 0;
             
             /** Returns the size of the buffer. */
-            virtual const unsigned int size() const = 0;
+            virtual const unsigned int bufferSize() const = 0;
             
             /** Returns the width of the image. */
             virtual const unsigned int width() const = 0;

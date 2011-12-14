@@ -33,9 +33,11 @@ namespace stromx
         public:
             virtual ~Exception() throw() {}
             
+            /** Returns a description of the exception. */
             virtual const char* what() const throw() { return m_message.c_str(); }
             
         protected:
+            /** Constructs an exception. */
             Exception(const std::string & message) : m_message(message) {}
                         
         private:

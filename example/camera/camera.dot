@@ -1,0 +1,8 @@
+# dot camera.dot -Tpng  -ocamera.png
+
+digraph stream
+{
+    node [shape = box, fontname = Helvetica, style = "rounded"]
+    "Camera" -> "Canny" [headlabel = "SOURCE", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+    "BufferArray" -> "Canny" [headlabel = "DESTINATION", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+}

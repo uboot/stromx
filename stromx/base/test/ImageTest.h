@@ -31,6 +31,9 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ImageTest);
             CPPUNIT_TEST (testOpenUnknownFile);
             CPPUNIT_TEST (testOpenJpeg);
+            CPPUNIT_TEST (testOpenAsColor);
+            CPPUNIT_TEST (testOpenAsGrayscale);
+            CPPUNIT_TEST (testOpenUnchanged);
             CPPUNIT_TEST (testImageFile);
             CPPUNIT_TEST (testImageRgb24);
             CPPUNIT_TEST (testImageMono8);
@@ -51,6 +54,9 @@ namespace stromx
 
             protected:
                 void testOpenJpeg();
+                void testOpenAsColor();
+                void testOpenAsGrayscale();
+                void testOpenUnchanged();
                 void testOpenUnknownFile();
                 void testImageFile();
                 void testImageRgb24();

@@ -22,7 +22,9 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Base.cpp
+    Buffer.cpp
     Camera.cpp
+    Canny.cpp
     impl/CameraBuffer.cpp
     Clip.cpp
     ConvertPixelType.cpp

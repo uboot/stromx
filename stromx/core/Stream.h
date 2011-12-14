@@ -43,7 +43,8 @@ namespace stromx
             {
                 INACTIVE,
                 ACTIVE,
-                DEACTIVATING
+                DEACTIVATING,
+                PAUSED
             };
             
             Stream();
@@ -68,6 +69,8 @@ namespace stromx
             void start();
             void join();
             void stop();
+            void pause();
+            void resume();
             
         private:
             std::string m_name; 

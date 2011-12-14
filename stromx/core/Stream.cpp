@@ -30,7 +30,7 @@ namespace stromx
     namespace core
     {
         Stream::Stream()
-        : m_network(new impl::Network()),
+          : m_network(new impl::Network()),
             m_threads(0),
             m_status(INACTIVE)
         {
@@ -84,6 +84,40 @@ namespace stromx
             }
         }
         
+        void Stream::pause()
+        {
+            if (m_status != ACTIVE)
+            {
+                throw WrongState("Stream object not active.");
+            }
+            
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter)
+            {
+                (*iter)->pause();
+            }
+            
+            m_status = PAUSED;
+        }
+
+        void Stream::resume()
+        {
+            if (m_status != PAUSED)
+            {
+                throw WrongState("Stream object not active.");
+            }
+            
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter)
+            {
+                (*iter)->resume();
+            }
+            
+            m_status = ACTIVE;
+        }
+        
         void Stream::join()
         {
             if (m_status == INACTIVE)
@@ -111,7 +145,7 @@ namespace stromx
 
         void Stream::stop()
         {
-            if (m_status != ACTIVE)
+            if (m_status != ACTIVE && m_status != PAUSED)
             {
                 return;
             }

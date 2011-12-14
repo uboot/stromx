@@ -18,19 +18,48 @@
 #include "Exception.h"
 #include "Operator.h"
 #include "OperatorInfo.h"
+#include "Input.h"
+#include "Output.h"
 #include "impl/InputNode.h"
 #include "impl/OutputNode.h"
 #include "impl/SynchronizedOperatorKernel.h"
+#include "impl/Id2DataMap.h"
 
 namespace stromx
 {
     namespace core
     {
+        
+        Operator::InternalObserver::InternalObserver(const Operator* const op, const Type type)
+          : m_op(op),
+            m_type(type)
+        {}
+        
+        void Operator::InternalObserver::observe(const unsigned int id, const DataContainer & data) const
+        {
+            switch(m_type)
+            {
+            case INPUT:
+                m_op->observeInput(id, data);
+                break;
+            case OUTPUT:
+                m_op->observeOutput(id, data);
+                break;
+            default:
+                BOOST_ASSERT(false);
+            }
+        }
+        
         using namespace impl;
         
         Operator::Operator(OperatorKernel*const kernel)
-            : m_kernel(new SynchronizedOperatorKernel(kernel))
-        {}
+          : m_inputObserver(0),
+            m_outputObserver(0),
+            m_kernel(new SynchronizedOperatorKernel(kernel))
+        {
+            m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
+            m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);
+        }
 
         Operator::~Operator()
         {
@@ -49,6 +78,9 @@ namespace stromx
             }
             
             delete m_kernel;
+
+            delete m_inputObserver;
+            delete m_outputObserver;
         }
         
         const OperatorInfo& Operator::info() const
@@ -88,7 +120,7 @@ namespace stromx
         
         void Operator::initialize()
         {
-            m_kernel->initialize();
+            m_kernel->initialize(m_inputObserver, m_outputObserver);
             
             for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
                 iter != m_kernel->info()->inputs().end();
@@ -139,6 +171,40 @@ namespace stromx
         void Operator::deactivate()
         {
             m_kernel->deactivate();
+        }
+        
+        void Operator::addObserver(const ConnectorObserver*const observer)
+        {
+            if(! observer)
+                throw WrongArgument("Passed 0 as observer.");
+            
+            m_observers.insert(observer);
+        }
+
+        void Operator::removeObserver(const ConnectorObserver*const observer)
+        {
+            if(m_observers.erase(observer) != 1)
+                throw WrongArgument("Observer has not been added to operator.");
+        }
+        
+        void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
+        {
+            for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
+                iter != m_observers.end();
+                ++iter)
+            {
+                (*iter)->observe(Input(this, id), data);
+            }
+        }
+
+        void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
+        {
+            for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
+                iter != m_observers.end();
+                ++iter)
+            {
+                (*iter)->observe(Output(this, id), data);
+            }
         }
     }
 }
