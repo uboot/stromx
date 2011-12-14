@@ -36,6 +36,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ThreadTest);
             CPPUNIT_TEST(testAddOperator);
             CPPUNIT_TEST(testInsertOperator);
+            CPPUNIT_TEST(testRemoveNode);;
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -49,6 +50,7 @@ namespace stromx
         protected:
             void testAddOperator();
             void testInsertOperator();
+            void testRemoveNode();
             void testRemoveOperator();
                 
         private:
