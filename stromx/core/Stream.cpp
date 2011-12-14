@@ -234,6 +234,14 @@ namespace stromx
             }
             
             m_network->removeOperator(op);
+            
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                    iter != m_threads.end();
+                    ++iter)
+                {
+                    (*iter)->removeOperator(op);
+                }
+            
         }
         
         const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
