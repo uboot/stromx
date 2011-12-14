@@ -12,6 +12,7 @@ include_directories(
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna_bw.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(stromx_base_test
     ../AdjustRgbChannels.cpp
