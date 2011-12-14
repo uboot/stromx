@@ -49,9 +49,9 @@ namespace stromx
                 const Status status() const { return m_status; }
                 const std::vector<InputNode*> & inputSequence() const { return m_inputSequence; }
                 
-                void addNode(InputNode* const op);
-                void insertNode(const unsigned int position, InputNode* const op);
-                void removeNode(const unsigned int position);
+                void addInput(InputNode* const op);
+                void insertInput(const unsigned int position, InputNode* const op);
+                void removeInput(const unsigned int position);
                 void removeOperator(const Operator* op);
                 
                 void start();

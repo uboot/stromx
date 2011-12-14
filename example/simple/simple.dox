@@ -77,7 +77,7 @@ This line connects the output of the counter to the input of the \c timer operat
   
 \code  
     core::Thread* thread = stream.addThread();
-    thread->addNode(timer, base::PeriodicDelay::INPUT);
+    thread->addInput(timer, base::PeriodicDelay::INPUT);
 \endcode
 
 Now the operating thread is added to the stream. In the next line the input connector of \em timer is added as the only input connector which is operated by \em thread. As before the input connector is addressed by its operator and its ID.

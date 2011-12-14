@@ -59,10 +59,10 @@ namespace stromx
             Thread* thread = stream->addThread();
             thread->setName("Processing thread");
             
-            thread->addNode(op1, TestOperator::INPUT_1);
-            thread->addNode(op1, TestOperator::INPUT_2);
-            thread->addNode(op2, TestOperator::INPUT_1);
-            thread->addNode(op2, TestOperator::INPUT_2);
+            thread->addInput(op1, TestOperator::INPUT_1);
+            thread->addInput(op1, TestOperator::INPUT_2);
+            thread->addInput(op2, TestOperator::INPUT_1);
+            thread->addInput(op2, TestOperator::INPUT_2);
             
             return stream;
         }

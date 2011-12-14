@@ -120,17 +120,17 @@ namespace stromx
             m_stream->connect(m_buffer, impl::CameraBuffer::INDEX, m_indexQueue, Queue::INPUT);
             
             Thread* frameThread = m_stream->addThread();
-            frameThread->addNode(m_adjustRgbChannels, AdjustRgbChannels::INPUT);
-            frameThread->addNode(m_clip, Clip::INPUT);
-            frameThread->addNode(m_trigger, Trigger::INPUT);
-            frameThread->addNode(m_period, PeriodicDelay::INPUT);
-            frameThread->addNode(m_buffer, impl::CameraBuffer::INPUT);
+            frameThread->addInput(m_adjustRgbChannels, AdjustRgbChannels::INPUT);
+            frameThread->addInput(m_clip, Clip::INPUT);
+            frameThread->addInput(m_trigger, Trigger::INPUT);
+            frameThread->addInput(m_period, PeriodicDelay::INPUT);
+            frameThread->addInput(m_buffer, impl::CameraBuffer::INPUT);
             
             Thread* mainThread = m_stream->addThread();
-            mainThread->addNode(m_pixelType, ConvertPixelType::SOURCE);
-            mainThread->addNode(m_pixelType, ConvertPixelType::DESTINATION);
-            mainThread->addNode(m_imageQueue, Queue::INPUT);
-            mainThread->addNode(m_indexQueue, Queue::INPUT);
+            mainThread->addInput(m_pixelType, ConvertPixelType::SOURCE);
+            mainThread->addInput(m_pixelType, ConvertPixelType::DESTINATION);
+            mainThread->addInput(m_imageQueue, Queue::INPUT);
+            mainThread->addInput(m_indexQueue, Queue::INPUT);
             
             // start with software trigger
             m_trigger->setParameter(Trigger::ACTIVE, Bool(true));

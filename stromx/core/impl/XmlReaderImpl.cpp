@@ -446,7 +446,7 @@ namespace stromx
                 if(idOpPair == m_id2OperatorMap.end())
                     throw XmlError("No operator with ID " + std::string(opIdStr) + ".");
                 
-                thread->addNode(idOpPair->second, inputId);
+                thread->addInput(idOpPair->second, inputId);
             }
             
             void XmlReaderImpl::readInput(DOMElement*const inputElement, Operator*const op)

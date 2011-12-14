@@ -44,9 +44,9 @@ namespace stromx
             CPPUNIT_TEST(testJoin);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
-            CPPUNIT_TEST(testAddOperator);
-            CPPUNIT_TEST(testInsertOperator);
-            CPPUNIT_TEST(testRemoveNode);
+            CPPUNIT_TEST(testAddInput);
+            CPPUNIT_TEST(testInsertInput);
+            CPPUNIT_TEST(testRemoveInput);
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -57,9 +57,9 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testAddOperator();
-            void testInsertOperator();
-            void testRemoveNode();
+            void testAddInput();
+            void testInsertInput();
+            void testRemoveInput();
             void testRemoveOperator();
             
             void testStart();

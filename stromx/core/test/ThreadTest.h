@@ -34,9 +34,9 @@ namespace stromx
         class ThreadTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ThreadTest);
-            CPPUNIT_TEST(testAddOperator);
-            CPPUNIT_TEST(testInsertOperator);
-            CPPUNIT_TEST(testRemoveNode);;
+            CPPUNIT_TEST(testAddInput);
+            CPPUNIT_TEST(testInsertInput);
+            CPPUNIT_TEST(testRemoveInput);;
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -48,9 +48,9 @@ namespace stromx
             
 
         protected:
-            void testAddOperator();
-            void testInsertOperator();
-            void testRemoveNode();
+            void testAddInput();
+            void testInsertInput();
+            void testRemoveInput();
             void testRemoveOperator();
                 
         private:

@@ -45,40 +45,40 @@ namespace stromx
             m_network->addOperator(m_op2);
             
             m_thread =  new Thread(m_network);
-            m_thread->addNode(m_op1, TestOperator::INPUT_1);
-            m_thread->addNode(m_op2, TestOperator::INPUT_1);
+            m_thread->addInput(m_op1, TestOperator::INPUT_1);
+            m_thread->addInput(m_op2, TestOperator::INPUT_1);
         }
         
-        void ThreadTest::testAddOperator()
+        void ThreadTest::testAddInput()
         {
             Operator* op = new Operator(new TestOperator);
             op->initialize();
             
-            CPPUNIT_ASSERT_THROW(m_thread->addNode(op, TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_thread->addInput(op, TestOperator::INPUT_1), WrongArgument);
             
             m_network->addOperator(op);
-            CPPUNIT_ASSERT_NO_THROW(m_thread->addNode(op, TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_NO_THROW(m_thread->addInput(op, TestOperator::INPUT_1));
             CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[2].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[2].id());
         }
 
-        void ThreadTest::testInsertOperator()
+        void ThreadTest::testInsertInput()
         {
             Operator* op = new Operator(new TestOperator);
             op->initialize();
             
-            CPPUNIT_ASSERT_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_thread->insertInput(1, op, TestOperator::INPUT_1), WrongArgument);
             
             m_network->addOperator(op);
-            CPPUNIT_ASSERT_NO_THROW(m_thread->insertNode(1, op, TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_NO_THROW(m_thread->insertInput(1, op, TestOperator::INPUT_1));
             CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[1].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[1].id());
         }
 
-        void ThreadTest::testRemoveNode()
+        void ThreadTest::testRemoveInput()
         {
-            CPPUNIT_ASSERT_THROW(m_thread->removeNode(3), WrongArgument);
-            CPPUNIT_ASSERT_NO_THROW(m_thread->removeNode(1));
+            CPPUNIT_ASSERT_THROW(m_thread->removeInput(3), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(1));
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
         }
         

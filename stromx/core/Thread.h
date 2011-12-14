@@ -82,7 +82,7 @@ namespace stromx
              * \throws WrongState If the thread state is not INACTIVE.
              * \throws WrongArgument If \c op is 0.
              */
-            void addNode(Operator* const op, const unsigned int inputId);
+            void addInput(Operator* const op, const unsigned int inputId);
             
             /** 
              * Inserts the input \c inputId of the operator \c op into the list of currently
@@ -90,7 +90,7 @@ namespace stromx
              * \throws WrongState If the thread state is not INACTIVE.
              * \throws WrongArgument If \c op is 0 or if there is no input at \c position.
              */
-            void insertNode(const unsigned int position, Operator* const op, const unsigned int inputId);
+            void insertInput(const unsigned int position, Operator* const op, const unsigned int inputId);
             
             /** 
              * Removes the input at \c position from the list of currently
@@ -98,7 +98,7 @@ namespace stromx
              * \throws WrongState If the thread state is not INACTIVE.
              * \throws WrongArgument If there is no input at \c position.
              */
-            void removeNode(const unsigned int position);
+            void removeInput(const unsigned int position);
                 
         private:
             Thread(const impl::Network* const network);

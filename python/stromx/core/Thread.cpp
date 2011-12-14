@@ -39,8 +39,8 @@ void exportThread()
         .def("name", &Thread::name, return_value_policy<copy_const_reference>())
         .def("setName", &Thread::setName)
         .def("inputSequence", &Thread::inputSequence, return_internal_reference<>())
-        .def("addNode", &Thread::addNode)
-        .def("insertNode", &Thread::insertNode)
-        .def("removeNode", &Thread::removeNode)
+        .def("addInput", &Thread::addInput)
+        .def("insertInput", &Thread::insertInput)
+        .def("removeInput", &Thread::removeInput)
     ;
 }

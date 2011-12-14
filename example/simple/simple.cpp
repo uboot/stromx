@@ -43,7 +43,7 @@ int main (int argc, char* argv[])
     stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
     
     core::Thread* thread = stream.addThread();
-    thread->addNode(timer, base::PeriodicDelay::INPUT);
+    thread->addInput(timer, base::PeriodicDelay::INPUT);
     
     stream.start();
     

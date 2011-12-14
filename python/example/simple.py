@@ -32,7 +32,7 @@ timer.setParameter(0, core.UInt32(1000))
 stream.connect(source, 0, timer, 0)
 
 thread = stream.addThread()
-thread.addNode(timer, 0)
+thread.addInput(timer, 0)
 
 stream.start()
 

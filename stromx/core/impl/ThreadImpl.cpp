@@ -39,7 +39,7 @@ namespace stromx
                 stop();
             }
             
-            void ThreadImpl::addNode(InputNode* const op)
+            void ThreadImpl::addInput(InputNode* const op)
             {
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
@@ -50,7 +50,7 @@ namespace stromx
                 m_inputSequence.push_back(op);
             }
 
-            void ThreadImpl::insertNode(const unsigned int position, InputNode* const op)
+            void ThreadImpl::insertInput(const unsigned int position, InputNode* const op)
             {
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
@@ -64,7 +64,7 @@ namespace stromx
                 m_inputSequence.insert(m_inputSequence.begin() + position, op);
             }
 
-            void ThreadImpl::removeNode(const unsigned int position)
+            void ThreadImpl::removeInput(const unsigned int position)
             {
                 if(m_status != INACTIVE)
                     throw WrongState("Thread must be inactive.");
