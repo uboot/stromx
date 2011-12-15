@@ -2,6 +2,8 @@
 
 digraph stream
 {
-    node [shape = box, fontname = Helvetica, style = "rounded"]
+    node [shape = box, fontname = Helvetica, style = "rounded"] "Counter" "PeriodicDelay"
+    node [shape=plaintext]
     "Counter" -> "PeriodicDelay" [headlabel = "INPUT", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+    "PeriodicDelay" -> "" [taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
 }
