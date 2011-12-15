@@ -26,6 +26,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief Clips an image to a rectangular region. */
         class STROMX_BASE_API Clip : public core::OperatorKernel
         {
         public:

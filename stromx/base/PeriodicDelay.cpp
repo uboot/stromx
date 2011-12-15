@@ -28,6 +28,7 @@ namespace stromx
     
     namespace base
     {
+        /** \cond */
         namespace impl
         {
             struct BoostSystemTime
@@ -35,6 +36,7 @@ namespace stromx
                 boost::system_time m_time;
             };
         }
+        /** \endcond */
         
         const std::string PeriodicDelay::TYPE("PeriodicDelay");
         

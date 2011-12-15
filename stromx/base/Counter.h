@@ -25,6 +25,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief Outputs an increasing integer value. */
         class STROMX_BASE_API Counter : public core::OperatorKernel
         {
         public:

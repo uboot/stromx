@@ -36,6 +36,7 @@ namespace stromx
             struct BoostConditionVariable;
         }
         
+        /** \brief Delays the execution until a trigger signal is received. */
         class STROMX_BASE_API Trigger : public core::OperatorKernel
         {
         public:

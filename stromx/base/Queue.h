@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief A data queue of configurable length. */
         class STROMX_BASE_API Queue : public core::OperatorKernel
         {
         public:

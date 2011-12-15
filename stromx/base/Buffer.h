@@ -31,6 +31,7 @@ namespace stromx
 
     namespace base
     {
+        /** \brief Manages an array or reusable image buffers. */
         class STROMX_BASE_API Buffer : public core::OperatorKernel
         {
         public:

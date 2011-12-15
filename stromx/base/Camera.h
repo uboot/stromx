@@ -37,6 +37,7 @@ namespace stromx
 
     namespace base
     {
+        /** \brief Simulates a camera input. */
         class STROMX_BASE_API Camera : public core::OperatorKernel
         {
         public:

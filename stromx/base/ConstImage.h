@@ -32,6 +32,7 @@ namespace stromx
 
     namespace base
     {
+        /** \brief Outputs a configurable constant image. */
         class STROMX_BASE_API ConstImage : public core::OperatorKernel
         {
         public:

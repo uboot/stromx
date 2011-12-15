@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief Converts the pixel type of image. */
         class STROMX_BASE_API ConvertPixelType : public core::OperatorKernel
         {
         public:

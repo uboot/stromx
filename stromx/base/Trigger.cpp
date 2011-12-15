@@ -30,6 +30,7 @@ namespace stromx
     {
         typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
+        /** \cond */
         namespace impl
         {
             struct BoostConditionVariable
@@ -38,6 +39,7 @@ namespace stromx
                 boost::mutex m_mutex;
             };
         }
+        /** \endcond */
         
         const std::string Trigger::TYPE("Trigger");
         

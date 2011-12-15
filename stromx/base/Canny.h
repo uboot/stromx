@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief Applies the %Canny edge detector. */
         class STROMX_BASE_API Canny : public core::OperatorKernel
         {
         public:

@@ -30,6 +30,7 @@ namespace stromx
 
     namespace base
     {
+        /** \brief Adjusts the relative values of the channels in an RGB image. */
         class STROMX_BASE_API AdjustRgbChannels : public core::OperatorKernel
         {
         public:

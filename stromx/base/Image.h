@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace base
     {
+        /** \brief %Image with support for reading and writing. */
         class STROMX_BASE_API Image : public core::ImageWrapper
         {
         public:

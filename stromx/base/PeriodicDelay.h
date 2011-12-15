@@ -36,6 +36,7 @@ namespace stromx
             struct BoostSystemTime;
         }
         
+        /** \brief Periodically delays the execution for a define amount of time. */
         class STROMX_BASE_API PeriodicDelay : public core::OperatorKernel
         {
         public:

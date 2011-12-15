@@ -25,7 +25,7 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of a data variant */
+        /** \brief %Description of a data variant. */
         class STROMX_CORE_API DataVariant
         {
         public:

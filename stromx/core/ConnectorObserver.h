@@ -26,6 +26,7 @@ namespace stromx
         class DataContainer;
         class Connector;
 
+        /** \brief Abstract base class of observers of operator connectors. */
         class ConnectorObserver
         {
         public:
