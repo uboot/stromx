@@ -15,6 +15,7 @@
 */
 
 #include "Core.h"
+#include "Dump.h"
 #include "Enum.h"
 #include "Exception.h"
 #include "None.h"
@@ -24,6 +25,8 @@
 void stromxRegisterCore(stromx::core::Registry& registry)
 {
     using namespace stromx::core;
+    
+    registry.registerOperator(new Dump);
     
     registry.registerData(new Bool);
     

@@ -15,9 +15,10 @@
 */
 
 #include <boost/python.hpp>
-
 #include <stromx/core/Core.h>
+#include <stromx/core/Dump.h>
 #include <stromx/core/Registry.h>
+#include "ExportOperatorKernel.h"
 
 void exportFactory();
 void exportData();
@@ -47,6 +48,8 @@ BOOST_PYTHON_MODULE(libcore)
     using namespace boost::python;
     
     def("registerCore", stromxRegisterCore);
+    
+    stromx::python::exportOperatorKernel<Dump>("Dump");
     
     exportData();
     exportDataContainer();
