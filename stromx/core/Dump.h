@@ -23,6 +23,7 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief Accepts and releases any input data */
         class STROMX_CORE_API Dump : public OperatorKernel
         {
         public:

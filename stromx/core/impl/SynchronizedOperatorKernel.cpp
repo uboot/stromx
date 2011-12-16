@@ -225,6 +225,9 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to get its output data.");
+                
                 while(m_outputMap.get(id).empty())
                 {
                     bool success = false;
@@ -253,6 +256,9 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to set its input data.");
+                
                 while(! m_inputMap.get(id).empty())
                 {
                     bool success = false;
@@ -280,6 +286,9 @@ namespace stromx
             void SynchronizedOperatorKernel::clearOutputData(unsigned int id)
             {
                 lock_t lock(m_mutex);
+                
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to clear its output data.");
                 
                 validateDataAccess();
                 
