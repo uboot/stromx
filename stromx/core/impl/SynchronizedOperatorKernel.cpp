@@ -105,7 +105,7 @@ namespace stromx
             {
                 lock_t lock(m_mutex);
                 
-                if(m_status == INITIALIZED)
+                if(m_status == INITIALIZED || m_status == NONE)
                     return;
                 
                 if(m_status == EXECUTING)
@@ -117,6 +117,22 @@ namespace stromx
                 m_outputMap.clear();
                 
                 m_status = INITIALIZED;
+            }
+            
+            void SynchronizedOperatorKernel::deinitialize()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status == NONE)
+                    return;
+                
+                if(m_status == EXECUTING || m_status == ACTIVE)
+                    throw WrongState("Operator must be inactive to be deinitialized.");
+                
+                m_op->deinitialize();
+                
+                m_status = NONE;
+
             }
             
             const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)

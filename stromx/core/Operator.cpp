@@ -129,6 +129,8 @@ namespace stromx
                 iter != m_kernel->info()->inputs().end();
                 ++iter)
             {
+                // this check is most probably redundant because OperatorKernel::initialize()
+                // makes sure the IDs are unique
                 if(m_inputs.count((*iter)->id()))
                     throw WrongArgument("Two inputs with the same ID.");
                 
@@ -139,11 +141,20 @@ namespace stromx
                 iter != m_kernel->info()->outputs().end();
                 ++iter)
             {
+                // this check is most probably redundant because OperatorKernel::initialize()
+                // makes sure the IDs are unique
                 if(m_outputs.count((*iter)->id()))
                     throw WrongArgument("Two outputs with the same ID.");
                 
                 m_outputs[(*iter)->id()] = new OutputNode(this, (*iter)->id());
             }
+        }
+        
+        void Operator::deinitialize()
+        {
+            BOOST_ASSERT(! m_isPartOfStream);
+            
+            m_kernel->deinitialize();
         }
         
         InputNode*const Operator::getInputNode(const unsigned int id) const

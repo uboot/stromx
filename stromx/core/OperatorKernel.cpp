@@ -107,6 +107,7 @@ namespace stromx
             {
                 m_inputs.push_back(*iter);
                 m_inputMap[(*iter)->id()] = *iter;
+                m_activeInputs.insert((*iter)->id());
             }
             
             
@@ -116,6 +117,7 @@ namespace stromx
             {
                 m_outputs.push_back(*iter);
                 m_outputMap[(*iter)->id()] = *iter;
+                m_activeOutputs.insert((*iter)->id());
             }
             
             
@@ -125,6 +127,34 @@ namespace stromx
             {
                 m_parameters.push_back(*iter);
                 m_parameterMap[(*iter)->id()] = *iter;
+                m_activeParameters.insert((*iter)->id());
+            }
+        }
+        
+        void OperatorKernel::deinitialize()
+        {
+            for(std::set<unsigned int>::iterator iter = m_activeInputs.begin();
+                iter != m_activeInputs.end();
+                ++iter)
+            {
+                m_inputs.pop_back();
+                m_inputMap.erase(m_inputMap.find(*iter));
+            }
+            
+            for(std::set<unsigned int>::iterator iter = m_activeOutputs.begin();
+                iter != m_activeOutputs.end();
+                ++iter)
+            {
+                m_outputs.pop_back();
+                m_outputMap.erase(m_outputMap.find(*iter));
+            }
+            
+            for(std::set<unsigned int>::iterator iter = m_activeParameters.begin();
+                iter != m_activeParameters.end();
+                ++iter)
+            {
+                m_parameters.pop_back();
+                m_parameterMap.erase(m_parameterMap.find(*iter));
             }
         }
         

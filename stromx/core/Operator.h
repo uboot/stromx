@@ -160,6 +160,14 @@ namespace stromx
              */
             void initialize();
             
+            /** 
+             * Deinitializes the operator if its status is INITIALIZED.
+             * After a successful call the status is NONE.
+             * 
+             * \throws WrongState If the status is not INITIALIZED.
+             */
+            void deinitialize();
+            
             /**
              * Adds an observer which is called whenever the data at an input 
              * or output connector changes.

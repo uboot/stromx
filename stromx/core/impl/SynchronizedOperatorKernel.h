@@ -50,6 +50,7 @@ namespace stromx
                 const OperatorInfo* const info() const { return m_op; }
                 
                 void initialize(const Id2DataMapObserver* const inputObserver, const Id2DataMapObserver* const outputObserver);
+                void deinitialize();
                 void activate();
                 void deactivate();
                 
