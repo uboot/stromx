@@ -348,5 +348,29 @@ namespace stromx
             m_lastConnector = connector;
             m_lastData = data;
         }
+        
+        void OperatorTest::testAddToStream()
+        {
+            Operator op = Operator(new TestOperator);
+            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
+            
+            op.initialize();
+            CPPUNIT_ASSERT_NO_THROW(op.addToStream());
+            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
+        }
+
+        void OperatorTest::testRemoveFromStream()
+        {
+            Operator op = Operator(new TestOperator);
+            
+            op.initialize();
+            op.addToStream();
+            op.activate();
+            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
+            
+            op.deactivate();
+            CPPUNIT_ASSERT_NO_THROW(op.removeFromStream());
+            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
+        }
     }
 }

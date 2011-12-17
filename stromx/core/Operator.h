@@ -58,6 +58,7 @@ namespace stromx
         class STROMX_CORE_API Operator
         {
             friend class FactoryTest;
+            friend class OperatorTest;
             friend class InputNodeTest;
             friend class NetworkTest;
             friend class OperatorTester;
