@@ -156,6 +156,10 @@ namespace stromx
                 m_parameters.pop_back();
                 m_parameterMap.erase(m_parameterMap.find(*iter));
             }
+            
+            m_activeInputs.clear();
+            m_activeOutputs.clear();
+            m_activeParameters.clear();
         }
         
         const Parameter & OperatorKernel::findParameter(const unsigned int id) const
@@ -198,6 +202,7 @@ namespace stromx
         OperatorKernel::~OperatorKernel()
         {
             deactivate();
+            deinitialize();
             
             for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
                 iter != m_inputs.end();

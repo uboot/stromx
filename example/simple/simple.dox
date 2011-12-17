@@ -58,7 +58,7 @@ The program starts by creating an empty stream object which will populated with 
     stream.addOperator(timer);
 \endcode
 
-First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operator can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
+First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operators can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
 \code
     timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));

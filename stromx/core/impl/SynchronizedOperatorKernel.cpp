@@ -126,7 +126,7 @@ namespace stromx
                 if(m_status == NONE)
                     return;
                 
-                if(m_status == EXECUTING || m_status == ACTIVE)
+                if(m_status == EXECUTING)
                     throw WrongState("Operator must be inactive to be deinitialized.");
                 
                 m_op->deinitialize();

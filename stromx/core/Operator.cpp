@@ -154,7 +154,53 @@ namespace stromx
         {
             BOOST_ASSERT(! m_isPartOfStream);
             
+            if(status() == ACTIVE)
+                deactivate();
+                
             m_kernel->deinitialize();
+            
+            for(std::map<unsigned int, impl::InputNode*>::iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                )
+            {
+                std::map<unsigned int, impl::InputNode*>::iterator currentIter = iter;
+                ++iter;
+                
+                bool wasFound = false;
+                
+                for(std::vector<const Description*>::const_iterator kernelIter = m_kernel->info()->inputs().begin();
+                    kernelIter != m_kernel->info()->inputs().end();
+                    ++kernelIter)
+                {
+                    if((*kernelIter)->id() == currentIter->first)
+                        wasFound = true;
+                }
+                
+                    
+                if(! wasFound)
+                    m_inputs.erase(currentIter);
+            }
+            
+            for(std::map<unsigned int, impl::OutputNode*>::iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                )
+            {
+                std::map<unsigned int, impl::OutputNode*>::iterator currentIter = iter;
+                ++iter;
+                
+                bool wasFound = false;
+                
+                for(std::vector<const Description*>::const_iterator kernelIter = m_kernel->info()->outputs().begin();
+                    kernelIter != m_kernel->info()->outputs().end();
+                    ++kernelIter)
+                {
+                    if((*kernelIter)->id() == currentIter->first)
+                        wasFound = true;
+                }
+                    
+                if(! wasFound)
+                    m_outputs.erase(currentIter);
+            }
         }
         
         InputNode*const Operator::getInputNode(const unsigned int id) const
