@@ -84,9 +84,6 @@ namespace stromx
                     throw WrongArgument("Invalid argument: Null pointer");
                 }
                 
-                if(op->status() != Operator::INITIALIZED)
-                    throw WrongArgument("Operator must be initialized.");
-                
                 for(std::vector<Operator*>::iterator iter = m_operators.begin();
                     iter != m_operators.end();
                     ++iter)
@@ -95,6 +92,17 @@ namespace stromx
                     {
                         throw WrongArgument("Operator already exists");
                     }
+                }
+                
+                // mark the operator as part of a stream and convert any WrongState
+                // exceptions to WrongArgument exceptions
+                try
+                {
+                    op->addToStream();
+                }
+                catch(WrongState & e)
+                {
+                    throw WrongArgument(e.what());
                 }
 
                 m_operators.push_back(op);
@@ -105,6 +113,17 @@ namespace stromx
                 if (op == 0)
                 {
                     throw WrongArgument("Invalid argument: Null pointer");
+                }
+                
+                // mark the operator removed from the stream and convert any WrongState
+                // exceptions to WrongArgument exceptions
+                try
+                {
+                    op->removeFromStream();
+                }
+                catch(WrongState & e)
+                {
+                    throw WrongArgument(e.what());
                 }
 
                 for(std::vector<Operator*>::iterator iter = m_operators.begin();

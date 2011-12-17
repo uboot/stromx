@@ -55,7 +55,8 @@ namespace stromx
         Operator::Operator(OperatorKernel*const kernel)
           : m_inputObserver(0),
             m_outputObserver(0),
-            m_kernel(new SynchronizedOperatorKernel(kernel))
+            m_kernel(new SynchronizedOperatorKernel(kernel)),
+            m_isPartOfStream(false)
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
             m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);
@@ -120,6 +121,8 @@ namespace stromx
         
         void Operator::initialize()
         {
+            BOOST_ASSERT(! m_isPartOfStream);
+                
             m_kernel->initialize(m_inputObserver, m_outputObserver);
             
             for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
@@ -205,6 +208,28 @@ namespace stromx
             {
                 (*iter)->observe(Output(this, id), data);
             }
+        }
+        
+        void Operator::addToStream()
+        {
+            if(m_isPartOfStream)
+                throw WrongState("Operator has already been added to a stream.");
+            
+            if(status() != INITIALIZED)
+                throw WrongState("Operator must be initialized to be added to a stream.");
+            
+            m_isPartOfStream = true;
+        }
+
+        void Operator::removeFromStream()
+        {
+            if(! m_isPartOfStream)
+                throw WrongState("Operator has not been added to a stream.");
+            
+            if(status() != INITIALIZED)
+                throw WrongState("Operator must be initialized but not active to be removed from a stream.");
+            
+            m_isPartOfStream = false;
         }
     }
 }

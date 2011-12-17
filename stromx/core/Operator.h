@@ -196,6 +196,9 @@ namespace stromx
             
             impl::InputNode* const getInputNode(const unsigned int id) const;
             impl::OutputNode* const getOutputNode(const unsigned int id) const;
+            const bool isPartOfStream() const { return m_isPartOfStream; }
+            void addToStream();
+            void removeFromStream();
             void activate();
             void deactivate();
             void observeInput(const unsigned int id, const DataContainer & data) const;
@@ -208,6 +211,7 @@ namespace stromx
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
+            bool m_isPartOfStream;
         };
     }
 }
