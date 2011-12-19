@@ -70,9 +70,10 @@ namespace stromx
             // TODO: initialize all members
         }
         
-        Camera::~Camera()
+        void Camera::deinitialize()
         {
             delete m_stream;
+            m_stream = 0;
         }
         
         void Camera::initialize()
