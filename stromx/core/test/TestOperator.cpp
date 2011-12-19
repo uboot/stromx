@@ -32,7 +32,7 @@ namespace stromx
         const Version TestOperator::VERSION(0, 1, 0);
         
         TestOperator::TestOperator()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
+        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),
             m_sleepTime(100),
             m_bufferSize(1000),
             m_numExecutes(0)
@@ -95,19 +95,33 @@ namespace stromx
             provider.sendOutputData(output1 && output2);
         }
         
-        const std::vector<const Description*> TestOperator::setupInputs()
+        const std::vector< const Description* > TestOperator::setupInitInputs()
         {
             std::vector<const Description*> inputs;
             inputs.push_back(new Description(INPUT_1, DataVariant::NONE));
+            
+            return inputs;
+        }
+                
+        const std::vector<const Description*> TestOperator::setupInputs()
+        {
+            std::vector<const Description*> inputs;
             inputs.push_back(new Description(INPUT_2, DataVariant::NONE));
             
             return inputs;
         }
         
-        const std::vector<const Description*> TestOperator::setupOutputs()
+        const std::vector<const Description*> TestOperator::setupInitOutputs()
         {
             std::vector<const Description*> outputs;
             outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
+            
+            return outputs;
+        }
+        
+        const std::vector<const Description*> TestOperator::setupOutputs()
+        {
+            std::vector<const Description*> outputs;
             outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
             
             return outputs;

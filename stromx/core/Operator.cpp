@@ -64,19 +64,7 @@ namespace stromx
 
         Operator::~Operator()
         {
-            for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
-                iter != m_inputs.end();
-                ++iter)
-            {
-                delete iter->second;
-            } 
-            
-            for(std::map<unsigned int, OutputNode*>::iterator iter = m_outputs.begin();
-                iter != m_outputs.end();
-                ++iter)
-            {
-                delete iter->second;
-            }
+            deinitialize();
             
             delete m_kernel;
 
@@ -121,8 +109,6 @@ namespace stromx
         
         void Operator::initialize()
         {
-            BOOST_ASSERT(! m_isPartOfStream);
-                
             m_kernel->initialize(m_inputObserver, m_outputObserver);
             
             for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
@@ -152,55 +138,27 @@ namespace stromx
         
         void Operator::deinitialize()
         {
-            BOOST_ASSERT(! m_isPartOfStream);
-            
             if(status() == ACTIVE)
                 deactivate();
                 
             m_kernel->deinitialize();
             
-            for(std::map<unsigned int, impl::InputNode*>::iterator iter = m_inputs.begin();
+            for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
                 iter != m_inputs.end();
-                )
+                ++iter)
             {
-                std::map<unsigned int, impl::InputNode*>::iterator currentIter = iter;
-                ++iter;
-                
-                bool wasFound = false;
-                
-                for(std::vector<const Description*>::const_iterator kernelIter = m_kernel->info()->inputs().begin();
-                    kernelIter != m_kernel->info()->inputs().end();
-                    ++kernelIter)
-                {
-                    if((*kernelIter)->id() == currentIter->first)
-                        wasFound = true;
-                }
-                
-                    
-                if(! wasFound)
-                    m_inputs.erase(currentIter);
+                delete iter->second;
+            } 
+            
+            for(std::map<unsigned int, OutputNode*>::iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                delete iter->second;
             }
             
-            for(std::map<unsigned int, impl::OutputNode*>::iterator iter = m_outputs.begin();
-                iter != m_outputs.end();
-                )
-            {
-                std::map<unsigned int, impl::OutputNode*>::iterator currentIter = iter;
-                ++iter;
-                
-                bool wasFound = false;
-                
-                for(std::vector<const Description*>::const_iterator kernelIter = m_kernel->info()->outputs().begin();
-                    kernelIter != m_kernel->info()->outputs().end();
-                    ++kernelIter)
-                {
-                    if((*kernelIter)->id() == currentIter->first)
-                        wasFound = true;
-                }
-                    
-                if(! wasFound)
-                    m_outputs.erase(currentIter);
-            }
+            m_inputs.clear();
+            m_outputs.clear();
         }
         
         InputNode*const Operator::getInputNode(const unsigned int id) const
