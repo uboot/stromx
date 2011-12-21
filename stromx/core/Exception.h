@@ -27,7 +27,7 @@ namespace stromx
     {
         class Data;
         
-        /** \brief Abstract %core exception. */
+        /** \brief Abstract stromx exception. */
         class Exception : public std::exception
         {
         public:
@@ -49,7 +49,7 @@ namespace stromx
         {
         public:
             WrongArgument(const std::string & message = "WrongArgument")
-            : Exception(message)
+              : Exception(message)
             {}
         };  
         
@@ -58,7 +58,7 @@ namespace stromx
         {
         public:
             WrongId(const std::string & message = "WrongId")
-            : WrongArgument(message)
+              : WrongArgument(message)
             {}
         };  
         
@@ -67,7 +67,7 @@ namespace stromx
         {
         public:
             WrongState(const std::string & message = "WrongState")
-            : Exception(message)
+              : Exception(message)
             {}
         };
         
@@ -76,7 +76,7 @@ namespace stromx
         {
         public:
             InternalError(const std::string & message = "InternalError")
-            : Exception(message)
+              : Exception(message)
             {}
         };
         
@@ -94,7 +94,7 @@ namespace stromx
         {
         public:
             FileAccessFailed(const std::string & filename, const std::string & message = "FileAccessFailed")
-            : Exception(message),
+              : Exception(message),
                 m_filename(filename)
             {}
             
@@ -107,7 +107,7 @@ namespace stromx
         {
         public:
             OutOfMemory(const std::string & message = "OutOfMemory")
-            : Exception(message)
+              : Exception(message)
             {}
         };
         
@@ -116,7 +116,7 @@ namespace stromx
         {
         public:
             Timeout(const std::string & message = "Timeout")
-            : Exception(message)
+              : Exception(message)
             {}
         };
         
@@ -125,7 +125,7 @@ namespace stromx
         {
         public:
             BadCast(const std::string & message = "BadCast")
-            : Exception(message)
+              : Exception(message)
             {}
         };
         
@@ -143,7 +143,7 @@ namespace stromx
         {
         public:
             SerializationError(const Data& data, const std::string & name, const std::string & path, const std::string & message = "SerializationError")
-            : Exception(message),
+              : Exception(message),
                 m_data(data),
                 m_name(name),
                 m_path(path)
@@ -160,7 +160,7 @@ namespace stromx
         {
         public:
             DeserializationError(const Data& data, const std::string & dataString, const std::string & path, const std::string & message = "DeserializationError")
-            : Exception(message),
+              : Exception(message),
                 m_data(data),
                 m_dataString(dataString),
                 m_path(path)
