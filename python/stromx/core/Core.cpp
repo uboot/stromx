@@ -50,8 +50,6 @@ BOOST_PYTHON_MODULE(libcore)
     
     def("registerCore", stromxRegisterCore);
     
-    stromx::python::exportOperatorKernel<Dump>("Dump");
-    
     exportData();
     exportDataContainer();
     exportDataVariant();
@@ -75,4 +73,6 @@ BOOST_PYTHON_MODULE(libcore)
     exportWriteAccess();
     exportXmlReader();
     exportXmlWriter();
+    
+    stromx::python::exportOperatorKernel<Dump>("Dump");
 }
