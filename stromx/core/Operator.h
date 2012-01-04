@@ -172,8 +172,8 @@ namespace stromx
              * Adds an observer which is called whenever the data at an input 
              * or output connector changes.
              * 
-             * \param observer A pointer to the observer is stored but not onwned by the operator
-             * \throws WrongArgument If the input is 0.
+             * \param observer A pointer to the observer is stored but not onwned by the operator.
+             * \throws WrongArgument If \c observer is a null pointer.
              */
             void addObserver(const ConnectorObserver* const observer);
             

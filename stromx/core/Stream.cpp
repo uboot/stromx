@@ -88,11 +88,11 @@ namespace stromx
                 
                 m_status = ACTIVE;
             }
-            catch(core::Exception& e)
+            catch(std::exception&)
             {
                 stop();
                 join();
-                throw e;
+                throw;
             }
         }
         
@@ -150,7 +150,14 @@ namespace stromx
                 BOOST_ASSERT((*iter)->status() == Thread::INACTIVE);
             }
             
-            m_network->deactivate();
+            try
+            {
+                m_network->deactivate();
+            }
+            catch(std::exception&)
+            {
+                // ignore exception during deactivation
+            }
             
             m_status = INACTIVE;
         }
