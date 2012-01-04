@@ -31,6 +31,11 @@ namespace stromx
 {
     namespace core
     {
+        void ThreadImplTest::TestObserver::observe(const std::exception& ex) const
+        {
+            m_message = std::string(ex.what());
+        }
+
         using namespace impl;
         
         void ThreadImplTest::setUp()
@@ -209,6 +214,22 @@ namespace stromx
             }
             
             delete m_operator;
+        }
+        
+        void ThreadImplTest::testObserver()
+        {
+            TestObserver* observer = new TestObserver;
+            m_thread->setObserver(observer);
+            
+            m_operators[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
+            
+            // start the thread and run it for 1 second
+            m_thread->start();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_thread->stop();
+            m_thread->join();
+            
+            CPPUNIT_ASSERT_EQUAL(std::string("Funny exception."), observer->message());
         }
     }
 }

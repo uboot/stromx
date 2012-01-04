@@ -105,7 +105,7 @@ namespace stromx
             {
                 lock_t lock(m_mutex);
                 
-                if(m_status == INITIALIZED)
+                if(m_status == INITIALIZED || m_status == NONE)
                     return;
                 
                 if(m_status == EXECUTING)
@@ -117,6 +117,22 @@ namespace stromx
                 m_outputMap.clear();
                 
                 m_status = INITIALIZED;
+            }
+            
+            void SynchronizedOperatorKernel::deinitialize()
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status == NONE)
+                    return;
+                
+                if(m_status == EXECUTING)
+                    throw WrongState("Operator must be inactive to be deinitialized.");
+                
+                m_op->deinitialize();
+                
+                m_status = NONE;
+
             }
             
             const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
@@ -225,6 +241,9 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to get its output data.");
+                
                 while(m_outputMap.get(id).empty())
                 {
                     bool success = false;
@@ -252,6 +271,9 @@ namespace stromx
             void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
             {
                 unique_lock_t lock(m_mutex);
+                
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to set its input data.");
                 
                 while(! m_inputMap.get(id).empty())
                 {
@@ -281,6 +303,9 @@ namespace stromx
             {
                 lock_t lock(m_mutex);
                 
+                if(m_status != ACTIVE && m_status != EXECUTING)
+                    throw WrongState("Operator must be active to clear its output data.");
+                
                 validateDataAccess();
                 
                 m_outputMap.set(id, DataContainer());
@@ -305,17 +330,13 @@ namespace stromx
                 {
                     m_op->execute(*this);
                 }
-                catch(Interrupt &)
+                catch(std::exception &)
                 {
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
                     m_statusCond.notify_all();
                     
                     throw;
-                }
-                catch(std::exception &)
-                {
-                    // ignore exceptions
                 }
                 
                 {

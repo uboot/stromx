@@ -20,6 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "../DataContainer.h"
+#include "../impl/ThreadImplObserver.h"
 
 namespace stromx
 {
@@ -48,6 +49,7 @@ namespace stromx
             CPPUNIT_TEST(testInsertInput);
             CPPUNIT_TEST(testRemoveInput);
             CPPUNIT_TEST(testRemoveOperator);
+            CPPUNIT_TEST(testObserver);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -67,8 +69,21 @@ namespace stromx
             void testJoin();
             void testPause();
             void testResume();
+            
+            void testObserver();
                 
         private: 
+            class TestObserver : public impl::ThreadImplObserver
+            {
+            public:
+                void observe(const std::exception & ex) const;
+                
+                const std::string message() const { return m_message; }
+                
+            private:
+                mutable std::string m_message;
+            };
+            
             std::vector<TestOperator*> m_kernels;
             std::vector<Operator*> m_operators;
             DataContainer m_container;

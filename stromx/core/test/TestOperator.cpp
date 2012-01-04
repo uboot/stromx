@@ -32,9 +32,10 @@ namespace stromx
         const Version TestOperator::VERSION(0, 1, 0);
         
         TestOperator::TestOperator()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),
             m_sleepTime(100),
             m_bufferSize(1000),
+            m_throwException(false),
             m_numExecutes(0)
         {
         }
@@ -56,6 +57,9 @@ namespace stromx
                 case SLEEP_TIME:
                     m_sleepTime= dynamic_cast<const UInt32&>(value);
                     break;
+                case THROW_EXCEPTION:
+                    m_throwException= dynamic_cast<const Bool&>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -74,6 +78,8 @@ namespace stromx
                 return m_bufferSize;
             case SLEEP_TIME:
                 return m_sleepTime;
+            case THROW_EXCEPTION:
+                return m_throwException;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -81,12 +87,17 @@ namespace stromx
         
         void TestOperator::execute(DataProvider& provider)
         {
+            if(m_throwException)
+            {
+                throw InternalError("Funny exception.");
+            }
+                
             Id2DataPair input1(INPUT_1);
             Id2DataPair input2(INPUT_2);
             
             provider.receiveInputData(input1 && input2);
             
-            // execute...
+             // execute...
             m_numExecutes++;
             boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
             
@@ -95,19 +106,33 @@ namespace stromx
             provider.sendOutputData(output1 && output2);
         }
         
-        const std::vector<const Description*> TestOperator::setupInputs()
+        const std::vector< const Description* > TestOperator::setupInitInputs()
         {
             std::vector<const Description*> inputs;
             inputs.push_back(new Description(INPUT_1, DataVariant::NONE));
+            
+            return inputs;
+        }
+                
+        const std::vector<const Description*> TestOperator::setupInputs()
+        {
+            std::vector<const Description*> inputs;
             inputs.push_back(new Description(INPUT_2, DataVariant::NONE));
             
             return inputs;
         }
         
-        const std::vector<const Description*> TestOperator::setupOutputs()
+        const std::vector<const Description*> TestOperator::setupInitOutputs()
         {
             std::vector<const Description*> outputs;
             outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
+            
+            return outputs;
+        }
+        
+        const std::vector<const Description*> TestOperator::setupOutputs()
+        {
+            std::vector<const Description*> outputs;
             outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
             
             return outputs;
@@ -118,6 +143,10 @@ namespace stromx
             std::vector<const Parameter*> parameters;
             Parameter* param = new Parameter(SLEEP_TIME, DataVariant::UINT_32);
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(THROW_EXCEPTION, DataVariant::BOOL);
+            param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
             return parameters;

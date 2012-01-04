@@ -27,7 +27,7 @@ namespace stromx
     {
         using namespace impl;
         
-        Thread::Thread(const core::impl::Network*const network)
+        Thread::Thread(const Network*const network)
           : m_thread(0),
             m_network(network)
         {
@@ -101,8 +101,8 @@ namespace stromx
                     toBeErased.insert(iter);
             }
             
-            for(IndexSet::iterator iter = toBeErased.begin();
-                iter != toBeErased.end();
+            for(IndexSet::reverse_iterator iter = toBeErased.rbegin();
+                iter != toBeErased.rend();
                 ++iter)
             {
                 m_inputSequence.erase(*iter);
@@ -129,6 +129,11 @@ namespace stromx
         {
             m_thread->removeInput(position);
             m_inputSequence.erase(m_inputSequence.begin() + position);
+        }
+        
+        void Thread::setObserver(const ThreadImplObserver*const observer)
+        {
+            m_thread->setObserver(observer);
         }
     } 
 }

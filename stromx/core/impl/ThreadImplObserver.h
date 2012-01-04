@@ -14,16 +14,24 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Exception.h>
+#ifndef STROMX_CORE_IMPL_THREADIMPLOBSERVER_H
+#define STROMX_CORE_IMPL_THREADIMPLOBSERVER_H
 
-#include <boost/python.hpp>
+#include <exception>
 
-using namespace boost::python;
-using namespace stromx::core;
-
-void exportException()
-{                 
-    class_<Exception>("Exception", no_init)
-        .def("what", &Exception::what)
-    ;
+namespace stromx
+{
+    namespace core
+    {
+        namespace impl
+        {
+            class ThreadImplObserver
+            {    
+            public:
+                virtual void observe(const std::exception & ex) const = 0;
+            };
+        }
+    }
 }
+
+#endif // STROMX_CORE_IMPL_THREADIMPLOBSERVER_H

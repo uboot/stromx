@@ -17,10 +17,12 @@
 #ifndef STROMX_CORE_STREAM_H
 #define STROMX_CORE_STREAM_H
 
+#include <set>
 #include <string>
 #include <vector>
 #include "Config.h"
 #include "Output.h"
+#include "impl/ThreadImplObserver.h"
 
 namespace stromx
 {
@@ -29,6 +31,7 @@ namespace stromx
         class Operator;
         class Registry;
         class Thread;
+        class ExceptionObserver;
         
         namespace impl
         {
@@ -97,6 +100,9 @@ namespace stromx
             void removeThread(Thread* const thr);
             const std::vector<Thread*> & threads() const;
             
+            void addObserver(const ExceptionObserver* const observer);
+            void removeObserver(const ExceptionObserver* const observer);
+            
             void start();
             void join();
             void stop();
@@ -104,9 +110,23 @@ namespace stromx
             void resume();
             
         private:
+            class InternalObserver : public impl::ThreadImplObserver
+            {
+            public:
+                InternalObserver(const Stream* const stream, const Thread* const thread);
+                virtual void observe(const std::exception & ex) const;
+                
+            private:
+                const Stream* m_stream;
+                const Thread* m_thread;
+            };
+            
+            void observeException(const Thread & thread, const std::exception & ex) const;
+            
             std::string m_name; 
             impl::Network* const m_network;
             std::vector<Thread*> m_threads;
+            std::set<const ExceptionObserver*> m_observers;
             Status m_status;
         };
     }

@@ -58,6 +58,7 @@ namespace stromx
         class STROMX_CORE_API Operator
         {
             friend class FactoryTest;
+            friend class OperatorTest;
             friend class InputNodeTest;
             friend class NetworkTest;
             friend class OperatorTester;
@@ -159,6 +160,14 @@ namespace stromx
              */
             void initialize();
             
+            /** 
+             * Deinitializes the operator if its status is INITIALIZED.
+             * After a successful call the status is NONE.
+             * 
+             * \throws WrongState If the status is not INITIALIZED.
+             */
+            void deinitialize();
+            
             /**
              * Adds an observer which is called whenever the data at an input 
              * or output connector changes.
@@ -196,6 +205,9 @@ namespace stromx
             
             impl::InputNode* const getInputNode(const unsigned int id) const;
             impl::OutputNode* const getOutputNode(const unsigned int id) const;
+            const bool isPartOfStream() const { return m_isPartOfStream; }
+            void addToStream();
+            void removeFromStream();
             void activate();
             void deactivate();
             void observeInput(const unsigned int id, const DataContainer & data) const;
@@ -208,6 +220,7 @@ namespace stromx
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
+            bool m_isPartOfStream;
         };
     }
 }

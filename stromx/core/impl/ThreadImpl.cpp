@@ -18,6 +18,7 @@
 #include <set>
 #include "InputNode.h"
 #include "ThreadImpl.h"
+#include "ThreadImplObserver.h"
 #include "../Exception.h"
 #include "../OperatorInfo.h"
 #include "../Input.h"
@@ -30,13 +31,17 @@ namespace stromx
         {
             ThreadImpl::ThreadImpl()
               : m_status(INACTIVE),
-                m_thread(0)
+                m_thread(0),
+                m_observer(0)
             {
             }
             
             ThreadImpl::~ThreadImpl()
             {
                 stop();
+                join();
+                
+                delete m_observer;
             }
             
             void ThreadImpl::addInput(InputNode* const op)
@@ -92,8 +97,8 @@ namespace stromx
                         toBeErased.insert(iter);
                 }
                 
-                for(IndexSet::iterator iter = toBeErased.begin();
-                    iter != toBeErased.end();
+                for(IndexSet::reverse_iterator iter = toBeErased.rbegin();
+                    iter != toBeErased.rend();
                     ++iter)
                 {
                     m_inputSequence.erase(*iter);
@@ -139,6 +144,7 @@ namespace stromx
                 
                 m_thread->join();
                 
+                delete m_thread;
                 m_thread = 0;
                 
                 m_status = INACTIVE;
@@ -166,6 +172,11 @@ namespace stromx
                 m_pauseCond.notify_all();
             }
             
+            void ThreadImpl::setObserver(const ThreadImplObserver*const observer)
+            {
+                m_observer = observer;
+            }
+            
             void ThreadImpl::loop()
             {
                 try
@@ -176,8 +187,22 @@ namespace stromx
                                 node != m_inputSequence.end();
                                 ++node)
                         {
-                            (*node)->setInputData();
-                            // TODO: handle exceptions in setInputData(), i.e. in OperatorKernel::execute()
+                            try
+                            {
+                                (*node)->setInputData();
+                            }
+                            catch(Interrupt &)
+                            {
+                                // re-throw interrupt exceptions to stop the thread
+                                throw;
+                            }
+                            catch(Exception & ex)
+                            {
+                                // send all other exceptions to the observer-mechanism
+                                // but do not stop the thread
+                                if(m_observer)
+                                    m_observer->observe(ex);
+                            }
                             
                             try
                             {

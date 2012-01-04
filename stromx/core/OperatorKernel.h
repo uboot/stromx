@@ -18,6 +18,7 @@
 #define STROMX_CORE_OPERATORKERNEL_H
 
 #include <map>
+#include <set>
 #include "Exception.h"
 #include "OperatorInfo.h"
 
@@ -102,10 +103,15 @@ namespace stromx
             
             /** 
              * Initializes the operator. After initialization the operator kernel must
-             * be prepared to accept calls to activate(). An operator kernel can only be
-             * initialized once, i.e. its state can never be reverted to not-initialzed.
+             * be prepared to accept calls to activate().
              */
             virtual void initialize() {}
+            
+            /**
+             * Deinitializes the operator. Must be called from
+             * any overloads of this function in derived classes.
+             */
+            virtual void deinitialize();
 
             /** 
              * Activates the operator. After activation the operator kernel must
@@ -150,7 +156,8 @@ namespace stromx
                     const Version & version);
             /**
              * Initializes an operator kernel. Must only be called from
-             * OperatorKernel::initialize() and overloads of this function.
+             * OperatorKernel::initialize() and overloads of this function
+             * in derived classes.
              */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
@@ -173,9 +180,17 @@ namespace stromx
             std::vector<const Description*> m_inputs;
             std::vector<const Description*> m_outputs;
             std::vector<const Parameter*> m_parameters;
+            
             std::map<unsigned int, const Parameter*> m_parameterMap;
             std::map<unsigned int, const Description*> m_inputMap;
             std::map<unsigned int, const Description*> m_outputMap;
+            
+            // the indices of all inputs, output and parameters which are
+            // have been during initialization, i.e. which must be removed
+            // upon deinitialization
+            std::set<unsigned int> m_activeInputs;
+            std::set<unsigned int> m_activeOutputs;
+            std::set<unsigned int> m_activeParameters;
         };
     }
 }

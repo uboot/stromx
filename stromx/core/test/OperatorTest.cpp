@@ -132,10 +132,34 @@ namespace stromx
         void OperatorTest::testInitialize()
         {
             OperatorTester* op = new OperatorTester(new TestOperator());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().parameters().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().inputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().outputs().size()));
             CPPUNIT_ASSERT_EQUAL(OperatorTester::NONE, op->status());
             
             CPPUNIT_ASSERT_NO_THROW(op->initialize());
             CPPUNIT_ASSERT_EQUAL(OperatorTester::INITIALIZED, op->status());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(op->info().parameters().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(op->info().inputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(op->info().outputs().size()));
+        }
+        
+        void OperatorTest::testDeinitialize()
+        {
+            OperatorTester* op = new OperatorTester(new TestOperator());
+            CPPUNIT_ASSERT_NO_THROW(op->deinitialize());
+            
+            op->initialize();
+            CPPUNIT_ASSERT_NO_THROW(op->deinitialize());
+            CPPUNIT_ASSERT_EQUAL(OperatorTester::NONE, op->status());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().parameters().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().inputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().outputs().size()));
+            
+            op->initialize();
+            op->activate();
+            CPPUNIT_ASSERT_NO_THROW(op->deinitialize());
+            CPPUNIT_ASSERT_EQUAL(OperatorTester::NONE, op->status());
         }
         
         void OperatorTest::testActivate()
@@ -347,6 +371,30 @@ namespace stromx
         {
             m_lastConnector = connector;
             m_lastData = data;
+        }
+        
+        void OperatorTest::testAddToStream()
+        {
+            Operator op = Operator(new TestOperator);
+            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
+            
+            op.initialize();
+            CPPUNIT_ASSERT_NO_THROW(op.addToStream());
+            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
+        }
+
+        void OperatorTest::testRemoveFromStream()
+        {
+            Operator op = Operator(new TestOperator);
+            
+            op.initialize();
+            op.addToStream();
+            op.activate();
+            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
+            
+            op.deactivate();
+            CPPUNIT_ASSERT_NO_THROW(op.removeFromStream());
+            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
         }
     }
 }

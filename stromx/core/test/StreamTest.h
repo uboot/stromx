@@ -20,6 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include <vector>
+#include "../ExceptionObserver.h"
 
 namespace stromx
 {
@@ -36,6 +37,10 @@ namespace stromx
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
             CPPUNIT_TEST(testRemoveOperator);
+            CPPUNIT_TEST(testAddObserver);
+            CPPUNIT_TEST(testRemoveObserver);
+            CPPUNIT_TEST(testObserver);
+            CPPUNIT_TEST(testTwoObserver);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -50,8 +55,25 @@ namespace stromx
             void testPause();
             void testResume();
             void testRemoveOperator();
+            void testAddObserver();
+            void testRemoveObserver();
+            void testObserver();
+            void testTwoObserver();
                 
         private:
+            class TestObserver : public ExceptionObserver
+            {
+            public:
+                void observe(const Thread & thread, const std::exception & ex) const;
+                
+                const std::string message() const { return m_message; }
+                const Thread* const thread() const { return m_thread; }
+                
+            private:
+                mutable std::string m_message;
+                mutable const Thread* m_thread;
+            };
+            
             Stream* m_stream;
             Network* m_network;
         };

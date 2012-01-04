@@ -15,9 +15,10 @@
 */
 
 #include <boost/python.hpp>
-
 #include <stromx/core/Core.h>
+#include <stromx/core/Dump.h>
 #include <stromx/core/Registry.h>
+#include "ExportOperatorKernel.h"
 
 void exportFactory();
 void exportData();
@@ -25,6 +26,7 @@ void exportDataContainer();
 void exportDataVariant();
 void exportDescription();
 void exportException();
+void exportExceptionObserver();
 void exportImage();
 void exportConnector();
 void exportConnectorObserver();
@@ -53,6 +55,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportDataVariant();
     exportDescription();
     exportException();
+    exportExceptionObserver();
     exportImage();
     exportConnector();
     exportConnectorObserver();
@@ -70,4 +73,6 @@ BOOST_PYTHON_MODULE(libcore)
     exportWriteAccess();
     exportXmlReader();
     exportXmlWriter();
+    
+    stromx::python::exportOperatorKernel<Dump>("Dump");
 }

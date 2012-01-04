@@ -55,7 +55,8 @@ namespace stromx
         Operator::Operator(OperatorKernel*const kernel)
           : m_inputObserver(0),
             m_outputObserver(0),
-            m_kernel(new SynchronizedOperatorKernel(kernel))
+            m_kernel(new SynchronizedOperatorKernel(kernel)),
+            m_isPartOfStream(false)
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
             m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);
@@ -63,19 +64,7 @@ namespace stromx
 
         Operator::~Operator()
         {
-            for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
-                iter != m_inputs.end();
-                ++iter)
-            {
-                delete iter->second;
-            } 
-            
-            for(std::map<unsigned int, OutputNode*>::iterator iter = m_outputs.begin();
-                iter != m_outputs.end();
-                ++iter)
-            {
-                delete iter->second;
-            }
+            deinitialize();
             
             delete m_kernel;
 
@@ -126,6 +115,8 @@ namespace stromx
                 iter != m_kernel->info()->inputs().end();
                 ++iter)
             {
+                // this check is most probably redundant because OperatorKernel::initialize()
+                // makes sure the IDs are unique
                 if(m_inputs.count((*iter)->id()))
                     throw WrongArgument("Two inputs with the same ID.");
                 
@@ -136,11 +127,38 @@ namespace stromx
                 iter != m_kernel->info()->outputs().end();
                 ++iter)
             {
+                // this check is most probably redundant because OperatorKernel::initialize()
+                // makes sure the IDs are unique
                 if(m_outputs.count((*iter)->id()))
                     throw WrongArgument("Two outputs with the same ID.");
                 
                 m_outputs[(*iter)->id()] = new OutputNode(this, (*iter)->id());
             }
+        }
+        
+        void Operator::deinitialize()
+        {
+            if(status() == ACTIVE)
+                deactivate();
+                
+            m_kernel->deinitialize();
+            
+            for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                ++iter)
+            {
+                delete iter->second;
+            } 
+            
+            for(std::map<unsigned int, OutputNode*>::iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                delete iter->second;
+            }
+            
+            m_inputs.clear();
+            m_outputs.clear();
         }
         
         InputNode*const Operator::getInputNode(const unsigned int id) const
@@ -205,6 +223,28 @@ namespace stromx
             {
                 (*iter)->observe(Output(this, id), data);
             }
+        }
+        
+        void Operator::addToStream()
+        {
+            if(m_isPartOfStream)
+                throw WrongState("Operator has already been added to a stream.");
+            
+            if(status() != INITIALIZED)
+                throw WrongState("Operator must be initialized to be added to a stream.");
+            
+            m_isPartOfStream = true;
+        }
+
+        void Operator::removeFromStream()
+        {
+            if(! m_isPartOfStream)
+                throw WrongState("Operator has not been added to a stream.");
+            
+            if(status() != INITIALIZED)
+                throw WrongState("Operator must be initialized but not active to be removed from a stream.");
+            
+            m_isPartOfStream = false;
         }
     }
 }

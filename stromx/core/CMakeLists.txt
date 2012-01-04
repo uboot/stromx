@@ -31,6 +31,7 @@ set(SOURCES
     RecycleAccess.cpp
     Data.cpp
     DataVariant.cpp
+    Dump.cpp
     Enum.cpp
     EnumParameter.cpp
     Id2DataComposite.cpp
