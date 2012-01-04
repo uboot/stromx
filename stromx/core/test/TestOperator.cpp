@@ -32,9 +32,10 @@ namespace stromx
         const Version TestOperator::VERSION(0, 1, 0);
         
         TestOperator::TestOperator()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),
             m_sleepTime(100),
             m_bufferSize(1000),
+            m_throwException(false),
             m_numExecutes(0)
         {
         }
@@ -56,6 +57,9 @@ namespace stromx
                 case SLEEP_TIME:
                     m_sleepTime= dynamic_cast<const UInt32&>(value);
                     break;
+                case THROW_EXCEPTION:
+                    m_throwException= dynamic_cast<const Bool&>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -74,6 +78,8 @@ namespace stromx
                 return m_bufferSize;
             case SLEEP_TIME:
                 return m_sleepTime;
+            case THROW_EXCEPTION:
+                return m_throwException;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -86,9 +92,16 @@ namespace stromx
             
             provider.receiveInputData(input1 && input2);
             
-            // execute...
-            m_numExecutes++;
-            boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
+            if(! m_throwException)
+            {
+                // execute...
+                m_numExecutes++;
+                boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
+            }
+            else
+            {
+                throw InternalError("Funny exception.");
+            }
             
             Id2DataPair output1(OUTPUT_1, input1.data());
             Id2DataPair output2(OUTPUT_2, input2.data());
@@ -132,6 +145,10 @@ namespace stromx
             std::vector<const Parameter*> parameters;
             Parameter* param = new Parameter(SLEEP_TIME, DataVariant::UINT_32);
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(THROW_EXCEPTION, DataVariant::BOOL);
+            param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
             return parameters;

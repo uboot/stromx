@@ -27,10 +27,12 @@ namespace stromx
     namespace core
     {
         class Operator;
+        class Exception;
         
         namespace impl
         {
             class InputNode;
+            class ThreadImplObserver;
             
             class ThreadImpl
             {    
@@ -59,6 +61,8 @@ namespace stromx
                 void join();
                 void pause();
                 void resume();
+                
+                void setObserver(const ThreadImplObserver* const observer);
                     
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
@@ -71,6 +75,7 @@ namespace stromx
                 boost::mutex m_mutex;
                 boost::condition_variable m_pauseCond;
                 std::vector<InputNode*> m_inputSequence;
+                const ThreadImplObserver* m_observer;
             };
         }
     }

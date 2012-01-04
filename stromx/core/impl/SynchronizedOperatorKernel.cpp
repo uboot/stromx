@@ -330,17 +330,13 @@ namespace stromx
                 {
                     m_op->execute(*this);
                 }
-                catch(Interrupt &)
+                catch(std::exception &)
                 {
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
                     m_statusCond.notify_all();
                     
                     throw;
-                }
-                catch(std::exception &)
-                {
-                    // ignore exceptions
                 }
                 
                 {

@@ -32,6 +32,7 @@ namespace stromx
         {
             class Network;
             class ThreadImpl;
+            class ThreadImplObserver;
         }
         
         /** 
@@ -114,6 +115,8 @@ namespace stromx
              * \throws WrongState If the thread state is not INACTIVE.
              */
             void removeOperator(const Operator* op);
+            
+            void setObserver(const impl::ThreadImplObserver* const observer);
             
             impl::ThreadImpl* m_thread;
             std::string m_name;

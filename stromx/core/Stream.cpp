@@ -17,6 +17,7 @@
 #include <boost/assert.hpp>
 #include "Enum.h"
 #include "Exception.h"
+#include "ExceptionObserver.h"
 #include "None.h"
 #include "Primitive.h"
 #include "Registry.h"
@@ -29,6 +30,17 @@ namespace stromx
 {
     namespace core
     {
+        Stream::InternalObserver::InternalObserver(const Stream* const stream, const Thread*const thread) 
+          : m_stream(stream),
+            m_thread(thread)
+        {
+        }
+        
+        void Stream::InternalObserver::observe(const std::exception & ex) const
+        {
+            m_stream->observeException(*m_thread, ex);
+        }
+
         Stream::Stream()
           : m_network(new impl::Network()),
             m_threads(0),
@@ -162,7 +174,10 @@ namespace stromx
         
         Thread* const Stream::addThread()
         {
+            
             Thread* thread = new Thread(m_network);
+            impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
+            thread->setObserver(observer);
             
             m_threads.push_back(thread);
             
@@ -247,6 +262,30 @@ namespace stromx
         const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
         {
             return m_network->connectionSource(targetOp, inputId);
+        }
+        
+        void Stream::addObserver(const ExceptionObserver*const observer)
+        {
+            if(! observer)
+                throw WrongArgument("Passed 0 as observer.");
+            
+            m_observers.insert(observer);
+        }
+
+        void Stream::removeObserver(const ExceptionObserver*const observer)
+        {
+            if(m_observers.erase(observer) != 1)
+                throw WrongArgument("Observer has not been added to operator.");
+        }
+                
+        void Stream::observeException(const Thread& thread, const std::exception& ex) const
+        {
+            for(std::set<const ExceptionObserver*>::const_iterator iter = m_observers.begin();
+                iter != m_observers.end();
+                ++iter)
+            {
+                (*iter)->observe(thread, ex);
+            }
         }
     }
 }
