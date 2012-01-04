@@ -221,12 +221,10 @@ namespace stromx
             TestObserver* observer = new TestObserver;
             m_thread->setObserver(observer);
             
-            m_operators[1]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
+            m_operators[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
             
             // start the thread and run it for 1 second
             m_thread->start();
-            m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
-            m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             m_thread->stop();
             m_thread->join();

@@ -14,10 +14,13 @@
 *  limitations under the License.
 */
 
+#include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h> 
 #include "StreamTest.h"
+#include "TestOperator.h"
 #include "TestUtilities.h"
 #include "../Exception.h"
+#include "../Operator.h"
 #include "../Stream.h"
 #include "../Thread.h"
 #include "../impl/Network.h"
@@ -28,6 +31,12 @@ namespace stromx
 {
     namespace core
     {
+        void StreamTest::TestObserver::observe(const Thread& thread, const std::exception& ex) const
+        {
+            m_message = std::string(ex.what());
+            m_thread = &thread;
+        }
+
         void StreamTest::setUp()
         {
             m_stream = TestUtilities::buildTestStream();
@@ -95,5 +104,63 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(Stream::ACTIVE, m_stream->status());
             CPPUNIT_ASSERT_THROW(m_stream->resume(), WrongState);
         }
+        
+        void StreamTest::testAddObserver()
+        {
+            TestObserver* observer1 = new TestObserver;
+            TestObserver* observer2 = new TestObserver;
+            
+            CPPUNIT_ASSERT_NO_THROW(m_stream->addObserver(observer1));
+            CPPUNIT_ASSERT_NO_THROW(m_stream->addObserver(observer2));
+            CPPUNIT_ASSERT_THROW(m_stream->addObserver(0), WrongArgument);
+        }
+
+        void StreamTest::testRemoveObserver()
+        {
+            TestObserver* observer1 = new TestObserver;
+            TestObserver* observer2 = new TestObserver;
+            
+            m_stream->addObserver(observer1);
+            m_stream->addObserver(observer2);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_stream->removeObserver(observer1));
+            CPPUNIT_ASSERT_THROW(m_stream->removeObserver(observer1), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(m_stream->removeObserver(observer2));
+        }
+                
+        void StreamTest::testObserver()
+        {
+            TestObserver* observer = new TestObserver;
+            m_stream->addObserver(observer);
+            m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
+            
+            m_stream->start();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_stream->stop();
+            m_stream->join();
+            
+            CPPUNIT_ASSERT_EQUAL(std::string("Funny exception."), observer->message());
+            CPPUNIT_ASSERT(observer->thread());
+        }
+        
+        void StreamTest::testTwoObserver()
+        {
+            TestObserver* observer1 = new TestObserver;
+            TestObserver* observer2 = new TestObserver;
+            m_stream->addObserver(observer1);
+            m_stream->addObserver(observer2);
+            
+            m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
+            
+            m_stream->start();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_stream->stop();
+            m_stream->join();
+            
+            CPPUNIT_ASSERT_EQUAL(std::string("Funny exception."), observer1->message());
+            CPPUNIT_ASSERT(observer1->thread());
+            CPPUNIT_ASSERT_EQUAL(std::string("Funny exception."), observer2->message());
+            CPPUNIT_ASSERT(observer2->thread());
+        }        
     }
 }

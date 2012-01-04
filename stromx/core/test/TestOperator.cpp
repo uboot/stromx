@@ -87,21 +87,19 @@ namespace stromx
         
         void TestOperator::execute(DataProvider& provider)
         {
+            if(m_throwException)
+            {
+                throw InternalError("Funny exception.");
+            }
+                
             Id2DataPair input1(INPUT_1);
             Id2DataPair input2(INPUT_2);
             
             provider.receiveInputData(input1 && input2);
             
-            if(! m_throwException)
-            {
-                // execute...
-                m_numExecutes++;
-                boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
-            }
-            else
-            {
-                throw InternalError("Funny exception.");
-            }
+             // execute...
+            m_numExecutes++;
+            boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
             
             Id2DataPair output1(OUTPUT_1, input1.data());
             Id2DataPair output2(OUTPUT_2, input2.data());
