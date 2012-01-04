@@ -48,7 +48,7 @@ namespace stromx
                 ACTIVE,
                 /** The stream was stopped and is waiting to become inactive. */
                 DEACTIVATING,
-                /** The stream was paused and be resumed or stopped. */
+                /** The stream was paused and can be resumed or stopped. */
                 PAUSED
             };
             
@@ -67,7 +67,10 @@ namespace stromx
             
             /** Returns a list of operators assigned to the stream */
             const std::vector<Operator*>& operators() const;           
-                
+            
+            /**
+             * \throws WrongState If the stream is not INACTIVE.
+             */
             void connect(Operator* const sourceOp, const unsigned int outputId, 
                          Operator* const targetOp, const unsigned int inputId) const;
             void disconnect(Operator* const targetOp, const unsigned int inputId) const;
