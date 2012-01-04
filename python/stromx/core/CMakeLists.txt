@@ -7,6 +7,7 @@ set(SOURCES
     DataVariant.cpp
     Description.cpp
     Exception.cpp
+    ExceptionObserver.cpp
     Factory.cpp
     Image.cpp
     Connector.cpp

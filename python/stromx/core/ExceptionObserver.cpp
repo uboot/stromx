@@ -14,16 +14,30 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Exception.h>
+#include <stromx/core/ExceptionObserver.h>
+#include <stromx/core/Thread.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportException()
+namespace
+{
+    struct ExceptionObserverWrap : ExceptionObserver, wrapper<ExceptionObserver>
+    {
+        void observe(const Thread & thread, const std::exception & ex) const
+        {
+            PyGILState_STATE state = PyGILState_Ensure();
+            this->get_override("observe")(thread, ex);
+            PyGILState_Release(state);
+        }
+    };
+}
+
+void exportExceptionObserver()
 {                 
-    class_<Exception>("Exception", no_init)
-        .def("what", &Exception::what)
+    class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
+        .def("observe", pure_virtual(&ExceptionObserver::observe))
     ;
 }

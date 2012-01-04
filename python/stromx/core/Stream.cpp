@@ -16,8 +16,9 @@
 
 #include "ExportVector.h"
 
-#include <stromx/core/Stream.h>
+#include <stromx/core/ExceptionObserver.h>
 #include <stromx/core/Operator.h>
+#include <stromx/core/Stream.h>
 #include <stromx/core/Thread.h>
 
 #include <boost/python.hpp>
@@ -68,6 +69,8 @@ void exportStream()
         .def("addThread", reinterpret_cast<Thread* (Stream::*)()>(&Stream::addThread), return_internal_reference<>())
         .def("removeThread", &Stream::removeThread)
         .def("threads", &Stream::threads, return_internal_reference<>())
+        .def("addObserver", &Stream::addObserver)
+        .def("removeObserver", &Stream::removeObserver)
         .def("start", &Stream::start)
         .def("stop", &Stream::stop)
         .def("join", &joinWrap)
