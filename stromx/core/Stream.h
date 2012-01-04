@@ -38,7 +38,7 @@ namespace stromx
             class Network;
         }
         
-        /** \brief The core data processing pipeline of core. */
+        /** \brief The core data processing pipeline of stromx. */
         class STROMX_CORE_API Stream
         {
         public:
@@ -51,7 +51,7 @@ namespace stromx
                 ACTIVE,
                 /** The stream was stopped and is waiting to become inactive. */
                 DEACTIVATING,
-                /** The stream was paused and be resumed or stopped. */
+                /** The stream was paused and is waiting to be resumed or stopped. */
                 PAUSED
             };
             
