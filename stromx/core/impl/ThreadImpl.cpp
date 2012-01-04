@@ -97,8 +97,8 @@ namespace stromx
                         toBeErased.insert(iter);
                 }
                 
-                for(IndexSet::iterator iter = toBeErased.begin();
-                    iter != toBeErased.end();
+                for(IndexSet::reverse_iterator iter = toBeErased.rbegin();
+                    iter != toBeErased.rend();
                     ++iter)
                 {
                     m_inputSequence.erase(*iter);
