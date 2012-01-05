@@ -89,7 +89,7 @@ namespace stromx
                     
             /*** Test 4 ***/
             m_operator->deactivate();
-            CPPUNIT_ASSERT_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container), WrongState);
+            CPPUNIT_ASSERT_THROW(m_operator->setInputData(TestOperator::INPUT_1, m_container), WrongOperatorState);
         }
         
         void OperatorTest::testClearOutputData()
@@ -126,7 +126,7 @@ namespace stromx
             
             /*** Test 3 ***/
             m_operator->deactivate();
-            CPPUNIT_ASSERT_THROW(m_operator->clearOutputData(TestOperator::INPUT_1), WrongState);
+            CPPUNIT_ASSERT_THROW(m_operator->clearOutputData(TestOperator::INPUT_1), WrongOperatorState);
         }
         
         void OperatorTest::testInitialize()
@@ -164,7 +164,7 @@ namespace stromx
         
         void OperatorTest::testActivate()
         {
-            CPPUNIT_ASSERT_THROW(m_operator->activate(), WrongState);
+            CPPUNIT_ASSERT_THROW(m_operator->activate(), WrongOperatorState);
             
             m_operator->deactivate();
             
@@ -241,7 +241,7 @@ namespace stromx
             
             /*** Test 4 ***/
             m_operator->deactivate();
-            CPPUNIT_ASSERT_THROW(data1 = m_operator->getOutputData(TestOperator::OUTPUT_1), WrongState);  
+            CPPUNIT_ASSERT_THROW(data1 = m_operator->getOutputData(TestOperator::OUTPUT_1), WrongOperatorState);  
         }
 
         void OperatorTest::testGetParameter()

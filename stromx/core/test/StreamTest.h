@@ -64,12 +64,14 @@ namespace stromx
             class TestObserver : public ExceptionObserver
             {
             public:
-                void observe(const Thread & thread, const std::exception & ex) const;
+                void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const;
                 
+                const ExceptionObserver::Phase phase() const { return m_phase; }
                 const std::string message() const { return m_message; }
                 const Thread* const thread() const { return m_thread; }
                 
             private:
+                mutable ExceptionObserver::Phase m_phase;
                 mutable std::string m_message;
                 mutable const Thread* m_thread;
             };

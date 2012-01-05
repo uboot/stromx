@@ -21,6 +21,7 @@
 #include <string>
 #include <vector>
 #include "Config.h"
+#include "ExceptionObserver.h"
 #include "Output.h"
 #include "impl/ThreadImplObserver.h"
 
@@ -29,9 +30,9 @@ namespace stromx
     namespace core
     {
         class Operator;
+        class OperatorError;
         class Registry;
         class Thread;
-        class ExceptionObserver;
         
         namespace impl
         {
@@ -155,7 +156,7 @@ namespace stromx
             /**
              * Activates each operator of the stream and starts all threads. 
              * \throws WrongState If the stream is not inactive.
-             * \throws std::exception If an exception was thrown during the activation of an operator.
+             * \throws OperatorError If an exception was thrown during the activation of an operator.
              */
             void start();
             
@@ -168,7 +169,8 @@ namespace stromx
             
             /**
              * Waits for the stream to stop and deactivates all operators. Exceptions
-             * which occur during the deactivation of an operator are ignored.
+             * which occur during the deactivation of an operator are sent to installed 
+             * observers but ignored otherwise.
              * \throws WrongState If the stream is active of paused.
              */
             void join();
@@ -193,14 +195,14 @@ namespace stromx
             {
             public:
                 InternalObserver(const Stream* const stream, const Thread* const thread);
-                virtual void observe(const std::exception & ex) const;
+                virtual void observe(const OperatorError & ex) const;
                 
             private:
                 const Stream* m_stream;
                 const Thread* m_thread;
             };
             
-            void observeException(const Thread & thread, const std::exception & ex) const;
+            void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
             
             std::string m_name; 
             impl::Network* const m_network;

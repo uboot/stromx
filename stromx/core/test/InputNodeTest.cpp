@@ -18,7 +18,7 @@
 #include "InputNodeTest.h"
 #include "TestOperator.h"
 #include "../DataContainer.h"
-#include "../Exception.h"
+#include "../OperatorException.h"
 #include "../None.h"
 #include "../Operator.h"
 #include "../impl/InputNode.h"
@@ -49,12 +49,12 @@ namespace stromx
         void InputNodeTest::testConnect()
         {
             CPPUNIT_ASSERT_NO_THROW(m_inputNode->connect(m_sourceNode));
-            CPPUNIT_ASSERT_THROW(m_inputNode->connect(m_sourceNode), WrongState);
+            CPPUNIT_ASSERT_THROW(m_inputNode->connect(m_sourceNode), WrongOperatorState);
         }
         
         void InputNodeTest::testSource()
         {
-            CPPUNIT_ASSERT_THROW(m_inputNode->source(), WrongState);
+            CPPUNIT_ASSERT_THROW(m_inputNode->source(), WrongOperatorState);
             
             m_inputNode->connect(m_sourceNode);
             CPPUNIT_ASSERT_EQUAL((const OutputNode*)(m_sourceNode), &(m_inputNode->source()));

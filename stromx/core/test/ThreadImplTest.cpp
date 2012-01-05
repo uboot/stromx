@@ -21,6 +21,7 @@
 #include "../Exception.h"
 #include "../None.h"
 #include "../Operator.h"
+#include "../OperatorException.h"
 #include "../OperatorTester.h"
 #include "../impl/InputNode.h"
 #include "../impl/ThreadImpl.h"
@@ -31,7 +32,7 @@ namespace stromx
 {
     namespace core
     {
-        void ThreadImplTest::TestObserver::observe(const std::exception& ex) const
+        void ThreadImplTest::TestObserver::observe(const OperatorError& ex) const
         {
             m_message = std::string(ex.what());
         }

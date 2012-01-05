@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2012 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@
 #ifndef STROMX_CORE_IMPL_THREADIMPLOBSERVER_H
 #define STROMX_CORE_IMPL_THREADIMPLOBSERVER_H
 
-#include <exception>
-
 namespace stromx
 {
     namespace core
     {
+        class OperatorError;
+        
         namespace impl
         {
             class ThreadImplObserver
             {    
             public:
-                virtual void observe(const std::exception & ex) const = 0;
+                virtual void observe(const OperatorError & ex) const = 0;
             };
         }
     }

@@ -24,24 +24,51 @@ namespace stromx
     namespace core
     {
         class OperatorInfo;
-
         class Parameter;
         
-        /** \brief Abstract error in connection with a specified operator. */
+        /** \brief Error in connection with a specified operator. */
         class OperatorError : public Exception
         {
-        protected:
-            /** Constructs an operator exception, i.e. an exception related to an operator. */
-            OperatorError(const OperatorInfo& op, const std::string & message)
-            : Exception(message),
-                m_operator(op)
-            {}
-            
+        public:
             /** Returns the operator this exception relates to. */
             const OperatorInfo& op() const;
             
+        protected:
+            /** Constructs an operator exception, i.e. an exception related to an operator. */
+            OperatorError(const OperatorInfo& op, const std::string & message)
+              : Exception(message),
+                m_operator(op)
+            {}
+            
         private:
             const OperatorInfo& m_operator;
+        };
+        
+        /** \brief Wraps an exception which occurred in connection with an operator. */
+        class WrappedOperatorError : public OperatorError
+        {
+        public:
+            /** Constructs an operator exception, i.e. an exception related to an operator. */
+            WrappedOperatorError(const OperatorInfo& op, const std::exception & ex)
+              : OperatorError(op, ex.what()),
+                m_exception(ex)
+            {}
+            
+            /** Returns the wrapped exception. */
+            const std::exception & ex() const { return m_exception; }
+            
+            
+        private:
+            const std::exception & m_exception;
+        };
+        
+        /** \brief The current state of the operator does not allow a specific operation. */
+        class WrongOperatorState : public OperatorError
+        {
+        public:
+            WrongOperatorState(const OperatorInfo& op, const std::string & message = "WrongOperatorState")
+              : OperatorError(op, message)
+            {}
         };
         
         /** \brief A parameter with this ID does not exist. */
@@ -49,7 +76,7 @@ namespace stromx
         {
         public:
             WrongParameterId(const unsigned int id, const OperatorInfo& op, const std::string & message = "WrongParameterId")
-            : OperatorError(op, message),
+              : OperatorError(op, message),
                 m_id(id)
             {}
             
@@ -62,7 +89,7 @@ namespace stromx
         {
         public:
             ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterError")
-            : OperatorError(op, message),
+              : OperatorError(op, message),
                 m_parameter(param)
             {}
             
@@ -77,7 +104,7 @@ namespace stromx
         {
         public:
             WrongParameterType(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterType")
-            : ParameterError(param, op, message)
+              : ParameterError(param, op, message)
             {}
         };
         
@@ -86,7 +113,7 @@ namespace stromx
         {
         public:
             WrongParameterValue(const Parameter& param, const OperatorInfo& op, const std::string & message = "WrongParameterValue")
-            : ParameterError(param, op, message)
+              : ParameterError(param, op, message)
             {}
         };
         
@@ -95,7 +122,7 @@ namespace stromx
         {
         public:
             ParameterAccessViolation(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterAccessViolation")
-            : ParameterError(param, op, message)
+              : ParameterError(param, op, message)
             {}
         };
         
@@ -119,7 +146,7 @@ namespace stromx
         {
         public:
             InputError(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "InputError")
-            : OperatorError(op, message),
+              : OperatorError(op, message),
                 m_inputId(inputId)
             {}
             
@@ -133,7 +160,7 @@ namespace stromx
         {
         public:
             WrongInputType(const unsigned int inputId, const OperatorInfo& op, const std::string & message = "WrongInputType")
-            : InputError(inputId, op, message)
+              : InputError(inputId, op, message)
             {}
         };
         

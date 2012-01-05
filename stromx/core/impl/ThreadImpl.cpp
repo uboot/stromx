@@ -19,7 +19,7 @@
 #include "InputNode.h"
 #include "ThreadImpl.h"
 #include "ThreadImplObserver.h"
-#include "../Exception.h"
+#include "../OperatorException.h"
 #include "../OperatorInfo.h"
 #include "../Input.h"
 
@@ -196,9 +196,9 @@ namespace stromx
                                 // re-throw interrupt exceptions to stop the thread
                                 throw;
                             }
-                            catch(Exception & ex)
+                            catch(OperatorError & ex)
                             {
-                                // send all other exceptions to the observer-mechanism
+                                // send all operator errors to the observer-mechanism
                                 // but do not stop the thread
                                 if(m_observer)
                                     m_observer->observe(ex);

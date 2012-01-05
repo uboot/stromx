@@ -17,7 +17,7 @@
 #include "InputNode.h"
 #include "OutputNode.h"
 #include "../DataContainer.h"
-#include "../Exception.h"
+#include "../OperatorException.h"
 #include "../Operator.h"
 
 namespace stromx
@@ -27,7 +27,7 @@ namespace stromx
         namespace impl
         {
             InputNode::InputNode(Operator* const op, const unsigned int inputId)
-            : m_source(0),
+              : m_source(0),
                 m_inputId(inputId),
                 m_operator(op)
             {
@@ -37,7 +37,7 @@ namespace stromx
             void InputNode::connect(OutputNode* const output)
             {
                 if(m_source)
-                    throw WrongState("Input node has already been connected.");
+                    throw WrongOperatorState(m_operator->info(), "Input node has already been connected.");
                 
                 m_source = output;
                 m_source->addConnectedInput(this);
@@ -46,7 +46,7 @@ namespace stromx
             const OutputNode& InputNode::source() const
             {
                 if(! m_source)
-                    throw WrongState("Input node is not connected.");
+                    throw WrongOperatorState(m_operator->info(), "Input node is not connected.");
                 else
                     return *m_source;
             }
@@ -54,7 +54,7 @@ namespace stromx
             void InputNode::setInputData()
             {
                 if(! m_source)
-                    throw WrongState("Input node has not been connected.");
+                    throw WrongOperatorState(m_operator->info(), "Input node has not been connected.");
                 
                 DataContainer inputData = m_source->getOutputData();
                 

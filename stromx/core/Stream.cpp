@@ -30,15 +30,15 @@ namespace stromx
 {
     namespace core
     {
-        Stream::InternalObserver::InternalObserver(const Stream* const stream, const Thread*const thread) 
+        Stream::InternalObserver::InternalObserver(const Stream* const stream, const Thread* const thread) 
           : m_stream(stream),
             m_thread(thread)
         {
         }
         
-        void Stream::InternalObserver::observe(const std::exception & ex) const
+        void Stream::InternalObserver::observe(const OperatorError & ex) const
         {
-            m_stream->observeException(*m_thread, ex);
+            m_stream->observeException(ExceptionObserver::EXECUTION, ex, m_thread);
         }
 
         Stream::Stream()
@@ -88,7 +88,7 @@ namespace stromx
                 
                 m_status = ACTIVE;
             }
-            catch(std::exception&)
+            catch(OperatorError &)
             {
                 stop();
                 join();
@@ -154,9 +154,10 @@ namespace stromx
             {
                 m_network->deactivate();
             }
-            catch(std::exception&)
+            catch(OperatorError & ex)
             {
-                // ignore exception during deactivation
+                // send any operator exceptions to the observers
+                observeException(ExceptionObserver::DEACTIVATION, ex, 0);
             }
             
             m_status = INACTIVE;
@@ -285,13 +286,13 @@ namespace stromx
                 throw WrongArgument("Observer has not been added to operator.");
         }
                 
-        void Stream::observeException(const Thread& thread, const std::exception& ex) const
+        void Stream::observeException(const ExceptionObserver::Phase phase, const OperatorError& ex, const Thread* const thread) const
         {
             for(std::set<const ExceptionObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)
             {
-                (*iter)->observe(thread, ex);
+                (*iter)->observe(phase, ex, thread);
             }
         }
     }

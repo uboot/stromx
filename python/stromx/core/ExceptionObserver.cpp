@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2012 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -26,17 +26,23 @@ namespace
 {
     struct ExceptionObserverWrap : ExceptionObserver, wrapper<ExceptionObserver>
     {
-        void observe(const Thread & thread, const std::exception & ex) const
+        void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
-            this->get_override("observe")(thread, ex);
+            this->get_override("observe")(phase, thread, ex);
             PyGILState_Release(state);
         }
     };
 }
 
 void exportExceptionObserver()
-{                 
+{          
+    enum_<ExceptionObserver::Phase>("ExceptionObserverPhase")
+        .value("EXECUTION", ExceptionObserver::EXECUTION)
+        .value("ACTIVATION", ExceptionObserver::ACTIVATION)
+        .value("DEACTIVATION", ExceptionObserver::DEACTIVATION)
+        ;  
+        
     class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
         .def("observe", pure_virtual(&ExceptionObserver::observe))
     ;

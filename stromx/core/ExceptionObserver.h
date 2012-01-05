@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2012 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
 #ifndef STROMX_CORE_EXCEPTIONOBSERVER_H
 #define STROMX_CORE_EXCEPTIONOBSERVER_H
 
-#include <exception>
-
+#include "OperatorException.h"
 
 namespace stromx
 {
@@ -30,7 +29,14 @@ namespace stromx
         class ExceptionObserver
         {
         public:
-            virtual void observe(const Thread & thread, const std::exception & ex) const = 0;
+            enum Phase
+            {
+                EXECUTION,
+                ACTIVATION,
+                DEACTIVATION
+            };
+            
+            virtual void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const = 0;
         };
     }
 }

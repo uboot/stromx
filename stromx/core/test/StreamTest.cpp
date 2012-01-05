@@ -31,10 +31,11 @@ namespace stromx
 {
     namespace core
     {
-        void StreamTest::TestObserver::observe(const Thread& thread, const std::exception& ex) const
+        void StreamTest::TestObserver::observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
         {
+            m_phase = phase;
             m_message = std::string(ex.what());
-            m_thread = &thread;
+            m_thread = thread;
         }
 
         void StreamTest::setUp()
