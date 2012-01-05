@@ -78,6 +78,7 @@ namespace stromx
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not belong to the stream.
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not have 
              *                       inputs \c outputId or \c inputId, respectively.
+             * \throws WrongState If the stream is not INACTIVE.
              */
             void connect(Operator* const sourceOp, const unsigned int outputId, 
                          Operator* const targetOp, const unsigned int inputId) const;
