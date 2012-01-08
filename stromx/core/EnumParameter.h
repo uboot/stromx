@@ -17,44 +17,35 @@
 #ifndef STROMX_CORE_ENUMPARAMETER_H
 #define STROMX_CORE_ENUMPARAMETER_H
 
-#include <vector>
 #include "Config.h"
-#include "Enum.h"
 #include "Parameter.h"
 
 namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of an enumeration value. */
-        class EnumDescription
-        {
-        public:
-            EnumDescription(const Enum value, const std::string & description)
-            : m_value(value),
-                m_description(description)
-            {}
-            
-            const Enum value() const { return m_value; }
-            const std::string & description() const { return m_description; }
-            
-        private:
-            Enum m_value;
-            std::string m_description;
-        };
-        
         /** \brief %Description of an enumeration parameter */
         class STROMX_CORE_API EnumParameter : public Parameter
         {
         public:
+            /** Constructs an enumeration parameter. */
             EnumParameter(const unsigned int id)
             : Parameter(id, DataVariant::ENUM)
             {}
             
             virtual const std::vector<EnumDescription> & descriptions() const { return m_descriptions; }
             
+            /** 
+             * Adds a description of a possible enumeration value.
+             * \throws WrongArgument If description with the same value has already been added.
+             */
             virtual void add(const EnumDescription & description);
-            virtual void remove(const EnumDescription & description);     
+            
+            /** 
+             * Removes a value from the possible enumeration values.
+             * \throws WrongArgument If no description with the same value exists.
+             */
+            virtual void remove(const Enum & value);     
             
         private:
             std::vector<EnumDescription> m_descriptions;

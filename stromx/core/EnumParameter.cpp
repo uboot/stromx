@@ -34,13 +34,13 @@ namespace stromx
             m_descriptions.push_back(description);
         }
 
-        void EnumParameter::remove(const core::EnumDescription& description)
+        void EnumParameter::remove(const Enum & value)
         {
             for(std::vector<EnumDescription>::iterator iter = m_descriptions.begin();
                 iter != m_descriptions.end();
                 ++iter)
             {
-                if(iter->value() == description.value())
+                if(iter->value() == value)
                     m_descriptions.erase(iter);
                 
                 return;
