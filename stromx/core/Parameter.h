@@ -100,16 +100,17 @@ namespace stromx
             void setAccessMode(const AccessMode mode) { m_access = mode; }
             
             /** Returns the maximal value of this parameter or an instance of None. */
-            virtual const Data& max() const { return None(); }
+            virtual const Data& max() const { return NONE; }
             
             /** Returns the minimal value of this parameter or an instance of None. */
-            virtual const Data& min() const { return None(); }
+            virtual const Data& min() const { return NONE; }
             
             /** Returns the possible values of an enumeration value or an empty vector. */
             virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
             
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;
+            static const None NONE;
             
             AccessMode m_access;
         };
