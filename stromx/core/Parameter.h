@@ -32,7 +32,7 @@ namespace stromx
         public:
             /** Constructs an enumeration description. */
             EnumDescription(const Enum value, const std::string & description)
-            : m_value(value),
+              : m_value(value),
                 m_description(description)
             {}
             
@@ -53,7 +53,7 @@ namespace stromx
          * parameter descriptions store information about the access mode
          * of a given parameter.
          */
-        class Parameter : public Description
+        class STROMX_CORE_API Parameter : public Description
         {
         public:
             enum AccessMode
