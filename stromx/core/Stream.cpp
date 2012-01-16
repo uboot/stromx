@@ -182,7 +182,6 @@ namespace stromx
         
         Thread* const Stream::addThread()
         {
-            
             Thread* thread = new Thread(m_network);
             impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
             thread->setObserver(observer);
