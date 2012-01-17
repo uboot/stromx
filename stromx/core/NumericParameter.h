@@ -30,12 +30,14 @@ namespace stromx
         class NumericParameter : public Parameter
         {
         public:
+            /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, const DataVariant& type)
             : Parameter(id, type),
                 m_min(data_t::MIN),
                 m_max(data_t::MAX)
             {}
             
+            /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, const DataVariant& type, const data_t min, const data_t max)
             : Parameter(id, type),
                 m_min(min),
@@ -46,11 +48,13 @@ namespace stromx
             virtual const Data& max() const { return m_max; }
             virtual const Data& min() const { return m_min; }
             
+            /** Sets the maximal value of the parameter. */
             virtual void setMax(const data_t& value)
             {
                 m_max = value;
             }
             
+            /** Sets the minimal value of the parameter. */
             virtual void setMin(const data_t& value)
             {
                 m_min = value;

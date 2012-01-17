@@ -30,6 +30,7 @@ void exportExceptionObserver();
 void exportImage();
 void exportConnector();
 void exportConnectorObserver();
+void exportNone();
 void exportOperator();
 void exportOperatorInfo();
 void exportOperatorKernel();
@@ -59,6 +60,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportImage();
     exportConnector();
     exportConnectorObserver();
+    exportNone();
     exportOperator();
     exportOperatorInfo();
     exportOperatorKernel();

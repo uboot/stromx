@@ -127,7 +127,7 @@ void exportImage()
         .value("BAYERGB_16", Image::BAYERGB_16)
     ;
         
-    class_<ImageWrap, boost::noncopyable>("Image")
+    class_<ImageWrap, bases<Data>, boost::noncopyable>("Image")
         .def("bufferSize", pure_virtual(&Image::bufferSize))
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))

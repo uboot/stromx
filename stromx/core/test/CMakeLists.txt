@@ -34,6 +34,7 @@ set(SOURCES
     TestOperator.cpp
     ../impl/SynchronizedOperatorKernel.cpp
     ../Operator.cpp
+    ../Parameter.cpp
     OperatorTest.cpp
     ../impl/OutputNode.cpp
     OutputNodeTest.cpp

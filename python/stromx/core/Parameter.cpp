@@ -14,9 +14,9 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Parameter.h>
-
 #include <boost/python.hpp>
+#include <stromx/core/Parameter.h>
+#include "ExportVector.h"
 
 using namespace boost::python;
 using namespace stromx::core;
@@ -30,9 +30,19 @@ void exportParameter()
         .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
         .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
         .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
-        ;
+    ;
+        
+    class_<EnumDescription>("EnumDescription", no_init)
+        .def("value", &EnumDescription::value)
+        .def("description", &EnumDescription::description, return_value_policy<copy_const_reference>())
+    ;
+    
+    stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");
         
     class_<Parameter, bases<Description> >("Parameter", no_init)
         .def("accessMode", &Parameter::accessMode)
+        .def("min", &Parameter::min, return_internal_reference<>())
+        .def("max", &Parameter::max, return_internal_reference<>())
+        .def("descriptions", &Parameter::descriptions, return_internal_reference<>())
     ;
 }

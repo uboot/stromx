@@ -40,6 +40,7 @@ set(SOURCES
     None.cpp
     Operator.cpp
     OperatorKernel.cpp
+    Parameter.cpp
     Factory.cpp
     Primitive.cpp
     Stream.cpp

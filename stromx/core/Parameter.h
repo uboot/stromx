@@ -17,12 +17,36 @@
 #ifndef STROMX_CORE_PARAMETER_H
 #define STROMX_CORE_PARAMETER_H
 
+#include <vector>
 #include "Description.h"
+#include "Enum.h"
+#include "None.h"
 
 namespace stromx
 {
     namespace core
     {
+        /** \brief %Description of an enumeration value. */
+        class EnumDescription
+        {
+        public:
+            /** Constructs an enumeration description. */
+            EnumDescription(const Enum value, const std::string & description)
+            : m_value(value),
+                m_description(description)
+            {}
+            
+            /** Returns the value. */
+            const Enum value() const { return m_value; }
+            
+            /** Returns the description text. */
+            const std::string & description() const { return m_description; }
+            
+        private:
+            Enum m_value;
+            std::string m_description;
+        };
+        
         /** \brief %Description of a parameter.
          * 
          * In addition to the information stored in a Description object
@@ -75,7 +99,18 @@ namespace stromx
             /** Sets the access mode. */
             void setAccessMode(const AccessMode mode) { m_access = mode; }
             
+            /** Returns the maximal value of this parameter or an instance of None. */
+            virtual const Data& max() const { return None(); }
+            
+            /** Returns the minimal value of this parameter or an instance of None. */
+            virtual const Data& min() const { return None(); }
+            
+            /** Returns the possible values of an enumeration value or an empty vector. */
+            virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
+            
         private:
+            static const std::vector<EnumDescription> NO_DESCRIPTIONS;
+            
             AccessMode m_access;
         };
     }
