@@ -30,8 +30,10 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (XmlReaderTest);
             CPPUNIT_TEST(testReadStream);
+            CPPUNIT_TEST(testReadStreamEmpty);
             CPPUNIT_TEST(testReadStreamWrongFile);
             CPPUNIT_TEST(testReadStreamInvalidFile);
+            CPPUNIT_TEST(testReadParameters);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -42,8 +44,11 @@ namespace stromx
 
         protected:
             void testReadStream();
+            void testReadStreamEmpty();
             void testReadStreamWrongFile();
             void testReadStreamInvalidFile();
+            
+            void testReadParameters();
                 
         private:
             Factory* m_factory;

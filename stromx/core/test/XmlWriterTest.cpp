@@ -40,6 +40,11 @@ namespace stromx
             //the test was initiated
             XmlWriter().writeStream("XmlWriterTest_testWrite.xml", *m_stream);
         }
+        
+        void XmlWriterTest::testWriteParameters()
+        {
+
+        }
 
         void XmlWriterTest::tearDown()
         {

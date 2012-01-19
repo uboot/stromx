@@ -18,12 +18,14 @@
 #define STROMX_CORE_XMLWRITER_H
 
 #include <string>
+#include <vector>
 #include "Config.h"
 
 namespace stromx
 {
         namespace core
     {
+        class Operator;
         class Stream;
         
         /** \brief Writer for XML encoded streams. */
@@ -31,6 +33,7 @@ namespace stromx
         {
         public:
             void writeStream(const std::string& filename, const Stream& stream) const;
+            void writeParameters(const std::string& filename, const std::vector<const stromx::core::Operator*>& operators) const;
         };
     }
 }

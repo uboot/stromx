@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Stromx SYSTEM "stromx.dtd">
+
+<Stromx version="0.1.0">
+    <Parameters>
+        <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0">
+            <Parameter id="0">
+                <Data type="UInt32" package="Core" version="0.1.0">5000</Data>
+            </Parameter>
+            <Parameter id="1">
+                <Data type="UInt32" package="Core" version="0.1.0">200</Data>
+            </Parameter>
+        </Operator>
+        <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0">
+            <Parameter id="0">
+                <Data type="UInt32" package="Core" version="0.1.0">6000</Data>
+            </Parameter>
+            <Parameter id="1">
+                <Data type="UInt32" package="Core" version="0.1.0">250</Data>
+            </Parameter>
+        </Operator>
+        <Operator id="2" package="TestPackage" type="TestOperator" version="0.1.0">
+            <Parameter id="0">
+                <Data type="UInt32" package="Core" version="0.1.0">7000</Data>
+            </Parameter>
+            <Parameter id="1">
+                <Data type="UInt32" package="Core" version="0.1.0">300</Data>
+            </Parameter>
+        </Operator>
+    </Parameters>
+</Stromx>
