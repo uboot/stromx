@@ -23,7 +23,7 @@ factory = core.Factory()
 core.registerCore(factory)
 base.registerBase(factory)
 
-stream = core.XmlReader().read("camera.xml", factory)
+stream = core.XmlReader().readStream("camera.xml", factory)
 
 stream.start()
 

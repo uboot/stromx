@@ -42,7 +42,7 @@ namespace stromx
                 
                 ~XmlReaderImpl();
                 
-                Stream* const read(const std::string & filename);
+                Stream* const readStream(const std::string & filename);
                 
             private:
                 void readOperator(xercesc::DOMElement* const opElement);

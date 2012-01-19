@@ -1,4 +1,4 @@
-<!ELEMENT Stromx (Stream)>
+<!ELEMENT Stromx (Stream?, Parameters?)>
 <!ATTLIST Stromx
     version CDATA #IMPLIED
 >
@@ -7,6 +7,8 @@
 <!ATTLIST Stream
     name CDATA #IMPLIED
 >
+
+<!ELEMENT Parameters (Operator*)>
 
 <!ELEMENT Thread (InputConnector*)>
 <!ATTLIST Thread

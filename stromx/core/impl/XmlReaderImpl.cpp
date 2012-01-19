@@ -120,7 +120,7 @@ namespace stromx
                 };
             }
 
-            Stream*const XmlReaderImpl::read(const std::string & filename)
+            Stream*const XmlReaderImpl::readStream(const std::string & filename)
             {    
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);

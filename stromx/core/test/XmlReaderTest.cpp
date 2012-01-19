@@ -34,20 +34,20 @@ namespace stromx
             m_factory->registerData(new UInt32());
         }
         
-        void XmlReaderTest::testRead()
+        void XmlReaderTest::testReadStream()
         {
-            Stream* stream = XmlReader().read("stream.xml", *m_factory);
+            Stream* stream = XmlReader().readStream("stream.xml", *m_factory);
             delete stream;
         }
         
-        void XmlReaderTest::testReadWrongFile()
+        void XmlReaderTest::testReadStreamWrongFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().read("wrongfile.xml", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("wrongfile.xml", *m_factory), FileAccessFailed);
         }
         
-        void XmlReaderTest::testReadInvalidFile()
+        void XmlReaderTest::testReadStreamInvalidFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().read("invalid.xml", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", *m_factory), FileAccessFailed);
         }
 
         void XmlReaderTest::tearDown()

@@ -30,7 +30,7 @@ namespace stromx
         class STROMX_CORE_API XmlWriter
         {
         public:
-            void write(const std::string& filename, const Stream& stream) const;
+            void writeStream(const std::string& filename, const Stream& stream) const;
         };
     }
 }

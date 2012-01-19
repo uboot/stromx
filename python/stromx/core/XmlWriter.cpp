@@ -25,6 +25,6 @@ using namespace stromx::core;
 void exportXmlWriter()
 {       
     class_<XmlWriter>("XmlWriter", init<>())
-        .def("write", &XmlWriter::write)
+        .def("writeStream", &XmlWriter::writeStream)
     ;
 }

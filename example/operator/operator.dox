@@ -311,7 +311,7 @@ To register a single operator one object of its class has to be instantiated and
 If the package \em Math contained more operators and was built as separate shared object it would make sense to define a function \c registerMath() in the shared object which registered all operators in \em Math.
 
 \code 
-    Stream* stream = XmlReader().read("operator.xml", factory);
+    Stream* stream = XmlReader().readStream("operator.xml", factory);
     
     stream->start();
     

@@ -36,7 +36,7 @@ int main (int argc, char* argv[])
     stromxRegisterCore(factory);
     stromxRegisterBase(factory);
     
-    core::Stream* stream = core::XmlReader().read("camera.xml", factory);
+    core::Stream* stream = core::XmlReader().readStream("camera.xml", factory);
     
     stream->start();
     

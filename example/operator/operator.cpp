@@ -40,7 +40,7 @@ int main (int argc, char* argv[])
     core::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);
     
-    core::Stream* stream = core::XmlReader().read("operator.xml", factory);
+    core::Stream* stream = core::XmlReader().readStream("operator.xml", factory);
     
     stream->start();
     

@@ -39,7 +39,7 @@ namespace stromx
              *                object in the stream. I.e. all required operator and data types
              *                must have been registered with the factory.
              */
-            Stream* const read(const std::string & filename, const Factory& factory) const;
+            Stream* const readStream(const std::string & filename, const Factory& factory) const;
         };
     }
 }

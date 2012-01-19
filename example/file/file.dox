@@ -61,7 +61,7 @@ As a first step a <em>core factory</em> is instantiated. The factory will be use
 If the above way of registering a package is used the package must be known at compile time. However, a package can be used even later if the library which contains its code is loaded dynamically during program execution. If the package \em MyPackage was loaded this way then the function <code>registerMyPackage()</code> would have to be called to allow the import of XML files which use \em MyPackage.
 
 \code
-    core::Stream* stream = core::XmlReader().read("file.xml", factory);
+    core::Stream* stream = core::XmlReader().readStream("file.xml", factory);
     
     stream->start();
 \endcode
