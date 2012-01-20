@@ -205,6 +205,7 @@ namespace stromx
                 if ((*iter) == thr)
                 {
                     m_threads.erase(iter);
+                    delete thr;
                     return;
                 }
             }
