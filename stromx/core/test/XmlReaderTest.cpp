@@ -20,6 +20,7 @@
 #include "../Factory.h"
 #include "../Stream.h"
 #include "../XmlReader.h"
+#include "../XmlWriter.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlReaderTest);
 
@@ -37,6 +38,10 @@ namespace stromx
         void XmlReaderTest::testReadStream()
         {
             Stream* stream = XmlReader().readStream("stream.xml", *m_factory);
+            
+            XmlWriter writer;
+            writer.writeStream("XmlReaderTest_testReadStream.xml", *stream);
+            
             delete stream;
         }
         
@@ -57,7 +62,6 @@ namespace stromx
         
         void XmlReaderTest::testReadParameters()
         {
-
         }
 
         void XmlReaderTest::tearDown()

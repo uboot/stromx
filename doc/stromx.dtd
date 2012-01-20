@@ -1,6 +1,6 @@
 <!ELEMENT Stromx (Stream?, Parameters?)>
 <!ATTLIST Stromx
-    version CDATA #IMPLIED
+    version CDATA #REQUIRED
 >
 
 <!ELEMENT Stream (Operator*, Thread*)>
