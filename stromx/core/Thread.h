@@ -100,9 +100,18 @@ namespace stromx
              * \throws WrongArgument If there is no input at \c position.
              */
             void removeInput(const unsigned int position);
+            
+            /** 
+             * Removes the input \c inputId of the operator \c op from the list of currently
+             * visited inputs.
+             * \throws WrongState If the thread state is not INACTIVE.
+             * \throws WrongArgument If the specified input is not part of thread.
+             */
+            void removeInput(Operator* const op, const unsigned int inputId);
                 
         private:
             Thread(const impl::Network* const network);
+            unsigned int findInput(Operator* const op, const unsigned int inputId);
             
             void start();
             void stop();

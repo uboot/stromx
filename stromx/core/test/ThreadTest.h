@@ -36,7 +36,8 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ThreadTest);
             CPPUNIT_TEST(testAddInput);
             CPPUNIT_TEST(testInsertInput);
-            CPPUNIT_TEST(testRemoveInput);;
+            CPPUNIT_TEST(testRemoveInputPosition);
+            CPPUNIT_TEST(testRemoveInputOpId);
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -50,7 +51,8 @@ namespace stromx
         protected:
             void testAddInput();
             void testInsertInput();
-            void testRemoveInput();
+            void testRemoveInputPosition();
+            void testRemoveInputOpId();
             void testRemoveOperator();
                 
         private:

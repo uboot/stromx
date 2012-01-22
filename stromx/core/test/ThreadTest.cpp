@@ -35,8 +35,8 @@ namespace stromx
         {
             m_network = new impl::Network();
             
-            Operator* m_op1 = new Operator(new TestOperator);
-            Operator* m_op2 = new Operator(new TestOperator);
+            m_op1 = new Operator(new TestOperator);
+            m_op2 = new Operator(new TestOperator);
             
             m_op1->initialize();
             m_op2->initialize();
@@ -75,20 +75,30 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[1].id());
         }
 
-        void ThreadTest::testRemoveInput()
+        void ThreadTest::testRemoveInputPosition()
         {
             CPPUNIT_ASSERT_THROW(m_thread->removeInput(3), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(1));
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_op1), m_thread->inputSequence()[0].op());
+        }
+        
+        void ThreadTest::testRemoveInputOpId()
+        {
+            CPPUNIT_ASSERT_THROW(m_thread->removeInput(m_op1, 1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_thread->removeInput(0, 0), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(m_op1, TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_op2), m_thread->inputSequence()[0].op());
         }
         
         void ThreadTest::testRemoveOperator()
         {
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_thread->inputSequence().size()));
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_thread->inputSequence().size()));
         }
 
         void ThreadTest::tearDown()
