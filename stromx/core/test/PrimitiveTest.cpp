@@ -21,7 +21,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::PrimitiveTest);
 
 namespace stromx
 {
-        namespace core
+    namespace core
     {
         void PrimitiveTest::testInt32()
         {

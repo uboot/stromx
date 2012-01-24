@@ -10,6 +10,12 @@
             <Parameter id="1">
                 <Data type="UInt32" package="Core" version="0.1.0">200</Data>
             </Parameter>
+            <Parameter id="2">
+                <Data package="Core" type="Bool" version="0.1.0">0</Data>
+            </Parameter>
+            <Parameter id="3">
+                <Data package="TestPackage" type="TestData" version="0.1.0" file="data.txt"/>
+            </Parameter>
         </Operator>
         <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 2">
             <Parameter id="0">

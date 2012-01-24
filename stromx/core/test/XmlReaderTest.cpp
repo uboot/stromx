@@ -15,6 +15,7 @@
  */
 
 #include <cppunit/TestAssert.h>
+#include "TestData.h"
 #include "TestOperator.h"
 #include "XmlReaderTest.h"
 #include "../Factory.h"
@@ -33,6 +34,8 @@ namespace stromx
             m_factory = new Factory;
             m_factory->registerOperator(new TestOperator());
             m_factory->registerData(new UInt32());
+            m_factory->registerData(new Bool());
+            m_factory->registerData(new TestData);
         }
         
         void XmlReaderTest::testReadStream()

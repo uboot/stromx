@@ -54,17 +54,14 @@ namespace stromx
             virtual Data* const clone() const = 0;
             
             /**
-             * Serializes this data object to a string. Additionally, some extra data can be stored
-             * in the file <code>path/name.[ext]</code> where the file extension \c ext can be chosen.
+             * Serializes this data object.
              */
-            virtual const std::string serialize(const std::string & name, const std::string & path) const;
+            virtual void serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const;
             
             /**
-             * Deserializes a data object from the string \c data. If necessary extra data should
-             * be read from the file <code>path/name.[ext]</code> where \c ext is
-             * the same as in serialize().
+             * Deserializes a data object.
              */
-            virtual void deserialize(const std::string & data, const std::string & path);
+            virtual void deserialize(std::istream & textData, std::istream & binData);
             
             /** Returns \c true if the variant of this data object is a subtype of \c v. */
             const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }

@@ -174,10 +174,31 @@ namespace stromx
                 
                 //Create value of current parameter param (one for each parameter possible)
                 //First, create unique input parameter name for function Data::serialize()
-                std::string str = m_stream->name() + 
-                                    "_" + "op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
-                                    "_" + "parameter" + boost::lexical_cast<std::string>(currPar->id());
-                DOMText* value = m_doc->createTextNode(Str2Xml(currOp->getParameter(currPar->id()).serialize(str, impl::XmlUtilities::computePath(m_filename)).c_str()));
+                std::string filename = m_filename +
+                                        "op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
+                                        "_" + "parameter" + boost::lexical_cast<std::string>(currPar->id());
+                                    
+                std::string filepath = impl::XmlUtilities::computePath(m_filename) + filename;
+                
+                std::ostringstream textData;
+                std::ofstream binData(filepath.c_str());
+                std::string ext;
+                
+                try
+                {
+                    currOp->getParameter(currPar->id()).serialize(textData, binData, ext);
+                }
+                catch(Exception & e)
+                {
+                    SerializationError(textData.str(), filename, e.what());
+                }
+                
+                //Create attribute for file
+                DOMAttr* fileAttr = m_doc->createAttribute(Str2Xml("file"));
+                fileAttr->setValue(Str2Xml(filename.c_str()));
+                dataElement->setAttributeNode(fileAttr);
+                
+                DOMText* value = m_doc->createTextNode(Str2Xml(textData.str().c_str()));
                 dataElement->appendChild(value);
             }
             

@@ -16,6 +16,8 @@
 
 #include "TestData.h"
 
+#include <fstream>
+
 namespace stromx
 {
     namespace core
@@ -25,5 +27,17 @@ namespace stromx
         const std::string TestData::TYPE = "TestData";
         const std::string TestData::PACKAGE = "TestPackage";
         const Version TestData::VERSION = Version(0, 1, 0);
+        
+        void TestData::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        {
+            binData << m_value;;
+            ext = "txt";
+        }
+
+
+        void TestData::deserialize(std::istream & textData, std::istream & binData)
+        {
+            binData >> m_value;
+        }
     }
 }

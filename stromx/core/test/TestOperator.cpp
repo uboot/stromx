@@ -55,10 +55,13 @@ namespace stromx
                     m_bufferSize = dynamic_cast<const UInt32&>(value);
                     break;
                 case SLEEP_TIME:
-                    m_sleepTime= dynamic_cast<const UInt32&>(value);
+                    m_sleepTime = dynamic_cast<const UInt32&>(value);
                     break;
                 case THROW_EXCEPTION:
-                    m_throwException= dynamic_cast<const Bool&>(value);
+                    m_throwException = dynamic_cast<const Bool&>(value);
+                    break;
+                case TEST_DATA:
+                    m_testData = dynamic_cast<const TestData&>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -80,6 +83,8 @@ namespace stromx
                 return m_sleepTime;
             case THROW_EXCEPTION:
                 return m_throwException;
+            case TEST_DATA:
+                return m_testData;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -146,6 +151,10 @@ namespace stromx
             parameters.push_back(param);
             
             param = new Parameter(THROW_EXCEPTION, DataVariant::BOOL);
+            param->setAccessMode(Parameter::ACTIVATED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(TEST_DATA, DataVariant::NONE);
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             

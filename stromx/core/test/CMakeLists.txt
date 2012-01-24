@@ -10,6 +10,7 @@ include_directories(
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/invalid.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
@@ -21,6 +22,8 @@ set(SOURCES
     DataContainerTest.cpp
     ../DataVariant.cpp
     DataVariantTest.cpp
+    ../DirectoryFileInput.cpp
+    DirectoryFileInputTest.cpp
     ../impl/Id2DataMap.cpp
     ../Id2DataComposite.cpp
     ../None.cpp

@@ -10,7 +10,7 @@
     <Stream name="Sample stream">
         <Operator id="0" package="Base" type="ConstImage" version="0.1.0" name="Source image">
             <Parameter id="0">
-                <Data type="Image" package="Base" version="0.1.0">lenna.png</Data>
+                <Data type="Image" package="Base" version="0.1.0" file="lenna.png"/>
             </Parameter>
         </Operator>
         <Operator id="1" package="Base" type="Clip" version="0.1.0" name="Clip image">

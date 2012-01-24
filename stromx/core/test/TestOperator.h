@@ -19,6 +19,7 @@
 
 #include "../OperatorKernel.h"
 #include "../Primitive.h"
+#include "TestData.h"
 
 namespace stromx
 {
@@ -34,6 +35,7 @@ namespace stromx
             static const unsigned int BUFFER_SIZE = 0;
             static const unsigned int SLEEP_TIME = 1;
             static const unsigned int THROW_EXCEPTION = 2;
+            static const unsigned int TEST_DATA = 3;
             
             TestOperator();
             
@@ -61,6 +63,7 @@ namespace stromx
             UInt32 m_bufferSize;
             Bool m_throwException;
             unsigned int m_numExecutes;
+            TestData m_testData;
         };
     }
 }

@@ -22,6 +22,7 @@
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <iostream>
+#include <fstream>
 #include "XmlReaderImpl.h"
 #include "XmlUtilities.h"
 #include "../Exception.h"
@@ -80,6 +81,7 @@ namespace stromx
     type CDATA #REQUIRED \
     package CDATA #REQUIRED \
     version CDATA #REQUIRED \
+    file CDATA #IMPLIED \
 > \
 \
 <!ELEMENT Input EMPTY> \
@@ -393,10 +395,12 @@ namespace stromx
             {
                 Xml2Str type(dataElement->getAttribute(Str2Xml("type")));
                 Xml2Str package(dataElement->getAttribute(Str2Xml("package")));
+                std::string file(Xml2Str(dataElement->getAttribute(Str2Xml("file"))));
+                
                 
                 DOMNodeList* dataTextElements = dataElement->getChildNodes();
                 XMLSize_t numDataTextElements = dataTextElements->getLength();
-                std::string dataString;
+                std::string textData;
                 
                 if(numDataTextElements > 1)
                     throw XmlError("More than one children of <Data/>.");
@@ -407,19 +411,31 @@ namespace stromx
                     if(node->getNodeType() != DOMNode::TEXT_NODE)
                         throw XmlError("Child of <Data/> must be a text node.");
                     
-                    dataString = std::string(Xml2Str(node->getNodeValue()));
+                    textData = std::string(Xml2Str(node->getNodeValue()));
                 }
                 
                 Data* data = m_factory.newData(std::string(package), std::string(type));
                 
                 try
                 {
-                    data->deserialize(dataString, m_currentPath);
+                    std::istringstream textStream(textData);
+                    
+                    if(! file.empty())
+                    {
+                        std::string filepath = std::string(m_currentPath + std::string(file));
+                        std::ifstream binStream(filepath.c_str(), std::ios::in | std::ios::binary);
+                        data->deserialize(textStream, binStream);
+                    }
+                    else
+                    {
+                        std::istringstream binStream("");
+                        data->deserialize(textStream, binStream);
+                    }
                 }
                 catch(Exception& e)
                 {
                     delete data;
-                    throw e;
+                    throw DeserializationError(textData, file, e.what());
                 }
                 
                 return data;

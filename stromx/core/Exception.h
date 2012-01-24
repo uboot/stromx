@@ -31,14 +31,13 @@ namespace stromx
         class Exception : public std::exception
         {
         public:
+            /** Constructs an exception. */
+            Exception(const std::string & message) : m_message(message) {}
+            
             virtual ~Exception() throw() {}
             
             /** Returns a description of the exception. */
             virtual const char* what() const throw() { return m_message.c_str(); }
-            
-        protected:
-            /** Constructs an exception. */
-            Exception(const std::string & message) : m_message(message) {}
                         
         private:
             std::string m_message; 
@@ -142,34 +141,30 @@ namespace stromx
         class SerializationError : public Exception
         {
         public:
-            SerializationError(const Data& data, const std::string & name, const std::string & path, const std::string & message = "SerializationError")
+            SerializationError(const std::string & textData, const std::string & filename, const std::string & message = "SerializationError")
               : Exception(message),
-                m_data(data),
-                m_name(name),
-                m_path(path)
+                m_textData(textData),
+                m_fileName(filename)
             {}
             
         private:
-            const Data& m_data;
-            const std::string& m_name;
-            const std::string& m_path;
+            const std::string& m_textData;
+            const std::string& m_fileName;
         };
         
         /** \brief %Data could not be deserialized. */
         class DeserializationError : public Exception
         {
         public:
-            DeserializationError(const Data& data, const std::string & dataString, const std::string & path, const std::string & message = "DeserializationError")
+            DeserializationError(const std::string & textData, const std::string & filename, const std::string & message = "DeserializationError")
               : Exception(message),
-                m_data(data),
-                m_dataString(dataString),
-                m_path(path)
+                m_textData(textData),
+                m_fileName(filename)
             {}
             
         private:
-            const Data& m_data;
-            const std::string& m_dataString;
-            const std::string& m_path;
+            const std::string& m_textData;
+            const std::string& m_fileName;
         };
     }
 }

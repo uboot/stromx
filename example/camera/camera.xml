@@ -6,7 +6,7 @@
         <Operator id="0" package="Base" type="Camera" version="0.1.0">
             <!-- image for camera simulator -->
             <Parameter id="0">
-                <Data type="Image" package="Base" version="0.1.0">lenna.jpg</Data>
+                <Data type="Image" package="Base" version="0.1.0" file="lenna.jpg"/>
             </Parameter>
             <!-- software trigger mode -->
             <Parameter id="1">

@@ -31,6 +31,7 @@ set(SOURCES
     RecycleAccess.cpp
     Data.cpp
     DataVariant.cpp
+    DirectoryFileInput.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
