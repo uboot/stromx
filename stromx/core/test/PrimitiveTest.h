@@ -19,6 +19,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
+#include "../InputProvider.h"
+#include "../OutputProvider.h"
 #include "../Primitive.h"
 
 namespace stromx
@@ -47,6 +49,37 @@ namespace stromx
             void testUInt8();
                 
         private: 
+            class DummyInput : public InputProvider
+            {
+            public:
+                DummyInput(const std::string & text)
+                  : m_text(text),
+                    m_file("")
+                {}
+                
+                std::istream & text() { return m_text; }
+                std::istream & file(std::ios_base::open_mode mode = std::ios_base::in) { return m_file; }
+                std::istream & file() { return m_file; }
+                
+            private:
+                std::istringstream m_text;
+                std::istringstream m_file;
+            };
+            
+            class DummyOutput : public OutputProvider
+            {
+            public:
+                std::ostream & text() { return m_text; }
+                std::ostream & file(const std::string & ext, std::ios_base::open_mode mode = std::ios_base::in) { return m_file; }
+                std::ostream & file() { return m_file; }
+                
+                const std::string value() const { return m_text.str(); }
+                
+            private:
+                std::ostringstream m_text;
+                std::ostringstream m_file;
+            };
+            
             Int8 m_int8;
             UInt8 m_uint8;
             Int32 m_int32;
