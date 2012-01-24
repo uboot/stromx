@@ -15,35 +15,55 @@
 */
 
 #include "DirectoryFileInput.h"
+#include "Exception.h"
 
 namespace stromx
 {
     namespace core
     {
-        DirectoryFileInput::DirectoryFileInput(const std::string& filename)
-        {
-
-        }
-
         void DirectoryFileInput::selectFile(const std::string& filename)
         {
-
+            if(m_currentFile.is_open())
+                m_currentFile.close();
+            
+            m_currentFilename = filename;
+        }
+        
+        DirectoryFileInput::~DirectoryFileInput()
+        {
+            if(m_currentFile.is_open())
+                m_currentFile.close();
         }
 
+        void DirectoryFileInput::setText(const std::string& text)
+        {
+            m_currentText.str(text);
+        }
 
         std::istream& DirectoryFileInput::text()
         {
-
+            return m_currentText;
         }
 
-        std::istream& DirectoryFileInput::file(std::ios_base::open_mode mode)
+        std::istream& DirectoryFileInput::openFile(std::ios_base::openmode mode)
         {
-
+            if(m_currentFile.is_open())
+                m_currentFile.close();
+            
+            m_currentFile.open(m_currentFilename.c_str(), mode);
+            
+            if(m_currentFile.fail())
+                throw FileAccessFailed(m_currentFilename);
+            
+            return m_currentFile;
         }
 
         std::istream& DirectoryFileInput::file()
         {
-
+            if(! m_currentFile.is_open())
+                throw WrongState("File has not been opened.");
+            
+            return m_currentFile;
         }
     }
 }

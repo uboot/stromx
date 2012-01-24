@@ -24,6 +24,8 @@ set(SOURCES
     DataVariantTest.cpp
     ../DirectoryFileInput.cpp
     DirectoryFileInputTest.cpp
+    ../DirectoryFileOutput.cpp
+    DirectoryFileOutputTest.cpp
     ../impl/Id2DataMap.cpp
     ../Id2DataComposite.cpp
     ../None.cpp

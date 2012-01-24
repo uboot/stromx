@@ -26,7 +26,6 @@ namespace stromx
 
         void DirectoryFileInputTest::tearDown()
         {
-            CppUnit::TestFixture::tearDown();
         }
 
         void DirectoryFileInputTest::testText()

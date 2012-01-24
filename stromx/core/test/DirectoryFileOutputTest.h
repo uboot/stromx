@@ -14,23 +14,34 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_INPUTPROVIDER_H
-#define STROMX_CORE_INPUTPROVIDER_H
+#ifndef STROMX_CORE_DIRECTORYFILEOUTPUTTEST_H
+#define STROMX_CORE_DIRECTORYFILEOUTPUTTEST_H
 
-#include <istream>
+#include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
 
 namespace stromx
 {
     namespace core
     {
-        class InputProvider
+        class DirectoryFileOutputTest : public CPPUNIT_NS :: TestFixture
         {
+            CPPUNIT_TEST_SUITE (DirectoryFileOutputTest);
+            CPPUNIT_TEST(testText);
+            CPPUNIT_TEST_SUITE_END ();
+
         public:
-            virtual std::istream & text() = 0;
-            virtual std::istream & openFile(std::ios_base::openmode mode = std::ios_base::in) = 0;
-            virtual std::istream & file() = 0;
+            DirectoryFileOutputTest() {}
+            
+            void setUp();
+            void tearDown();
+            
+        protected:
+            void testText();
+                
+        private:
         };
     }
 }
 
-#endif // STROMX_CORE_INPUTPROVIDER_H
+#endif // STROMX_CORE_DIRECTORYFILEOUTPUTTEST_H

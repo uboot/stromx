@@ -27,7 +27,7 @@ namespace stromx
         {
         public:
             virtual std::ostream & text() = 0;
-            virtual std::ostream & file(const std::string & ext = "", std::ios_base::open_mode mode = std::ios_base::in) = 0;
+            virtual std::ostream & openFile(const std::string & ext = "", std::ios_base::openmode mode = std::ios_base::out) = 0;
             virtual std::ostream & file() = 0;
         };
     }

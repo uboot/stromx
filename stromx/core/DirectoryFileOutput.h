@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_DIRECTORYFILEINPUT_H
-#define STROMX_CORE_DIRECTORYFILEINPUT_H
+#ifndef STROMX_CORE_DIRECTORYFILEOUTPUT_H
+#define STROMX_CORE_DIRECTORYFILEOUTPUT_H
 
-#include "FileInput.h"
+#include "FileOutput.h"
 #include <fstream>
 #include <sstream>
 
@@ -25,26 +25,20 @@ namespace stromx
 {
     namespace core
     {
-        class DirectoryFileInput : public FileInput
+        class DirectoryFileOutput : public FileOutput
         {
         public:
-            DirectoryFileInput(const std::string & filename) : m_filename(filename) {}
-            virtual ~DirectoryFileInput();
+            DirectoryFileOutput(const std::string & filename) {}
+            virtual ~DirectoryFileOutput();
             
             virtual void selectFile(const std::string & filename);
             virtual void setText(const std::string & text);
             
-            virtual std::istream & text();
-            virtual std::istream & openFile(std::ios_base::openmode mode);
-            virtual std::istream & file();
-            
-        private:
-            std::string m_filename;
-            std::string m_currentFilename;
-            std::ifstream m_currentFile;
-            std::istringstream m_currentText;
+            virtual std::ostream & text();
+            virtual std::ostream & openFile(const std::string & ext, std::ios_base::openmode mode);
+            virtual std::ostream & file();
         };
     }
 }
 
-#endif // STROMX_CORE_DIRECTORYFILEINPUT_H
+#endif // STROMX_CORE_DIRECTORYFILEOUTPUT_H

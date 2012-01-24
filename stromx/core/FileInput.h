@@ -27,6 +27,7 @@ namespace stromx
         {
         public:
             virtual void selectFile(const std::string & filename) = 0;
+            virtual void setText(const std::string & text) = 0;
             
             virtual ~FileInput() {}
         };

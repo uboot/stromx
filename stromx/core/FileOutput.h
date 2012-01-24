@@ -14,23 +14,24 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_INPUTPROVIDER_H
-#define STROMX_CORE_INPUTPROVIDER_H
+#ifndef STROMX_CORE_FILEOUTPUT_H
+#define STROMX_CORE_FILEOUTPUT_H
 
-#include <istream>
+#include "OutputProvider.h"
 
 namespace stromx
 {
     namespace core
     {
-        class InputProvider
+        class FileOutput : public OutputProvider
         {
         public:
-            virtual std::istream & text() = 0;
-            virtual std::istream & openFile(std::ios_base::openmode mode = std::ios_base::in) = 0;
-            virtual std::istream & file() = 0;
+            virtual void selectFile(const std::string & filename) = 0;
+            virtual void setText(const std::string & text) = 0;
+            
+            virtual ~FileOutput() {}
         };
     }
 }
 
-#endif // STROMX_CORE_INPUTPROVIDER_H
+#endif // STROMX_CORE_FILEOUTPUT_H

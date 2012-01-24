@@ -29,6 +29,7 @@ set(SOURCES
     Data.cpp
     DataVariant.cpp
     DirectoryFileInput.cpp
+    DirectoryFileOutput.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
