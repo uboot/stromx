@@ -24,9 +24,6 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
-    impl/XmlReaderImpl.cpp
-    impl/XmlUtilities.cpp
-    impl/XmlWriterImpl.cpp
     DataContainer.cpp
     RecycleAccess.cpp
     Data.cpp
@@ -56,6 +53,9 @@ if(BUILD_XML_SUPPORT)
         ${SOURCES}
         XmlReader.cpp
         XmlWriter.cpp
+        impl/XmlReaderImpl.cpp
+        impl/XmlUtilities.cpp
+        impl/XmlWriterImpl.cpp
         )
 endif()
 
