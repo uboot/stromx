@@ -21,12 +21,12 @@ namespace stromx
 {
     namespace core
     {
-        void Data::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Data::serialize(OutputProvider & out) const
         {
             throw Exception("This data type does not support serialization.");
         }
 
-        void Data::deserialize(std::istream & textData, std::istream & binData)
+        void Data::deserialize(InputProvider & in)
         {
             throw Exception("This data type does not support deserialization.");
         }

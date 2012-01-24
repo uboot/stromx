@@ -26,6 +26,8 @@ namespace stromx
 {
     namespace core
     {
+        class InputProvider;
+        class OutputProvider;
         class Version;
         
         /** \brief Abstract data object */
@@ -56,12 +58,12 @@ namespace stromx
             /**
              * Serializes this data object.
              */
-            virtual void serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const;
+            virtual void serialize(OutputProvider & out) const;
             
             /**
              * Deserializes a data object.
              */
-            virtual void deserialize(std::istream & textData, std::istream & binData);
+            virtual void deserialize(InputProvider & in);
             
             /** Returns \c true if the variant of this data object is a subtype of \c v. */
             const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }

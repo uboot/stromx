@@ -17,7 +17,9 @@
 #include <boost/lexical_cast.hpp>
 #include <float.h>
 #include "Config.h"
+#include "InputProvider.h"
 #include "Primitive.h"
+#include "OutputProvider.h"
 
 namespace stromx
 {
@@ -33,15 +35,15 @@ namespace stromx
         const Version Bool::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void Bool::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Bool::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void Bool::deserialize(std::istream & textData, std::istream & binData)
+        void Bool::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -58,17 +60,17 @@ namespace stromx
         const Version Int8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
 
         template <>
-        void Int8::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Int8::serialize(OutputProvider & out) const
         {
-            textData << static_cast<int>(m_value);
+            out.text() << static_cast<int>(m_value);
         }
         
         template <>
-        void Int8::deserialize(std::istream & textData, std::istream & binData)
+        void Int8::deserialize(InputProvider & in)
         {
             int temp;
-            textData >> temp;
-            m_value = temp;
+            in.text() >> temp;
+            m_value = static_cast<int8_t>(temp);
         }
         
         template<>
@@ -85,17 +87,17 @@ namespace stromx
         const Version UInt8::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void UInt8::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void UInt8::serialize(OutputProvider & out) const
         {
-            textData << static_cast<int>(m_value);
+            out.text() << static_cast<int>(m_value);
         }
         
         template <>
-        void UInt8::deserialize(std::istream & textData, std::istream & binData)
+        void UInt8::deserialize(InputProvider & in)
         {
             unsigned int temp;
-            textData >> temp;
-            m_value = temp;
+            in.text() >> temp;
+            m_value = static_cast<uint8_t>(temp);
         }
         
         template<>
@@ -108,15 +110,15 @@ namespace stromx
         const Version Int16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void Int16::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Int16::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void Int16::deserialize(std::istream & textData, std::istream & binData)
+        void Int16::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -129,15 +131,15 @@ namespace stromx
         const Version UInt16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void UInt16::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void UInt16::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void UInt16::deserialize(std::istream & textData, std::istream & binData)
+        void UInt16::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -154,15 +156,15 @@ namespace stromx
         const Version Int32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void Int32::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Int32::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void Int32::deserialize(std::istream & textData, std::istream & binData)
+        void Int32::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -179,15 +181,15 @@ namespace stromx
         const Version UInt32::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void UInt32::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void UInt32::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void UInt32::deserialize(std::istream & textData, std::istream & binData)
+        void UInt32::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -204,15 +206,15 @@ namespace stromx
         const Version Float::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         template <>
-        void Float::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Float::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void Float::deserialize(std::istream & textData, std::istream & binData)
+        void Float::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
         
         template<>
@@ -229,15 +231,15 @@ namespace stromx
         const Version Double::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
     
         template <>
-        void Double::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void Double::serialize(OutputProvider & out) const
         {
-            textData << m_value;
+            out.text() << m_value;
         }
         
         template <>
-        void Double::deserialize(std::istream & textData, std::istream & binData)
+        void Double::deserialize(InputProvider & in)
         {
-            textData >> m_value;
+            in.text() >> m_value;
         }
     }
 }
