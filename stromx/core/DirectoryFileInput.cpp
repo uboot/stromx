@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <boost/filesystem.hpp>
 #include "DirectoryFileInput.h"
 #include "Exception.h"
 
@@ -21,23 +22,20 @@ namespace stromx
 {
     namespace core
     {
-        void DirectoryFileInput::selectFile(const std::string& filename)
-        {
-            if(m_currentFile.is_open())
-                m_currentFile.close();
-            
-            m_currentFilename = filename;
-        }
-        
         DirectoryFileInput::~DirectoryFileInput()
         {
             if(m_currentFile.is_open())
                 m_currentFile.close();
         }
 
-        void DirectoryFileInput::setText(const std::string& text)
+        void DirectoryFileInput::reset(const std::string& text, const std::string& filename)
         {
             m_currentText.str(text);
+            
+            if(m_currentFile.is_open())
+                m_currentFile.close();
+            
+            m_currentFilename = filename;
         }
 
         std::istream& DirectoryFileInput::text()
@@ -45,12 +43,18 @@ namespace stromx
             return m_currentText;
         }
 
-        std::istream& DirectoryFileInput::openFile(std::ios_base::openmode mode)
+        std::istream& DirectoryFileInput::openFile(const OpenMode mode)
         {
             if(m_currentFile.is_open())
-                m_currentFile.close();
+                throw WrongState("File has already been opened.");
             
-            m_currentFile.open(m_currentFilename.c_str(), mode);
+            std::ios_base::openmode iosmode;
+            
+            if(mode == BINARY)
+                iosmode = std::ios_base::binary;
+            
+            std::string pathSeparator = boost::filesystem::path("/").string();  
+            m_currentFile.open((m_directory + pathSeparator + m_currentFilename).c_str(), std::ios_base::in & iosmode);
             
             if(m_currentFile.fail())
                 throw FileAccessFailed(m_currentFilename);

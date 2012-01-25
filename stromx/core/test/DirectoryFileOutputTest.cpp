@@ -16,21 +16,36 @@
 
 #include "DirectoryFileOutputTest.h"
 
+#include "../DirectoryFileOutput.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DirectoryFileOutputTest);
+
 namespace stromx
 {
     namespace core
     {
         void DirectoryFileOutputTest::setUp()
         {
+            m_output = new DirectoryFileOutput(".");
         }
 
         void DirectoryFileOutputTest::tearDown()
         {
+            delete m_output;
         }
 
         void DirectoryFileOutputTest::testText()
         {
-
+            m_output->reset("");
+            m_output->text() << "Test";
+            CPPUNIT_ASSERT_EQUAL(std::string("Test"), m_output->getText());
+        }
+                
+        void DirectoryFileOutputTest::testFileBinary()
+        {
+            m_output->reset("DirectoryFileOutputText_testFile");
+            m_output->openFile("bin", DirectoryFileOutput::BINARY);
+            m_output->file() << 5;
         }
     }
 }

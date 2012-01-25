@@ -28,18 +28,17 @@ namespace stromx
         class DirectoryFileInput : public FileInput
         {
         public:
-            DirectoryFileInput(const std::string & filename) : m_filename(filename) {}
+            DirectoryFileInput(const std::string & directory) : m_directory(directory) {}
             virtual ~DirectoryFileInput();
             
-            virtual void selectFile(const std::string & filename);
-            virtual void setText(const std::string & text);
+            virtual void reset(const std::string & text, const std::string & filename);
             
             virtual std::istream & text();
-            virtual std::istream & openFile(std::ios_base::openmode mode);
+            virtual std::istream & openFile(const OpenMode mode);
             virtual std::istream & file();
             
         private:
-            std::string m_filename;
+            std::string m_directory;
             std::string m_currentFilename;
             std::ifstream m_currentFile;
             std::istringstream m_currentText;

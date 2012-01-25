@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <boost/filesystem.hpp>
 #include "DirectoryFileOutput.h"
 #include "Exception.h"
 
@@ -21,6 +22,57 @@ namespace stromx
 {
     namespace core
     {
+        DirectoryFileOutput::~DirectoryFileOutput()
+        {
+            if(m_currentFile.is_open())
+                m_currentFile.close();
+        }
+
+        void DirectoryFileOutput::reset(const std::string& filename)
+        {
+            m_currentText.clear();
+            
+            if(m_currentFile.is_open())
+                m_currentFile.close();
         
+            m_currentFilename = filename;
+        }
+
+        const std::string DirectoryFileOutput::getText() const
+        {
+            return m_currentText.str();
+        }
+
+        std::ostream& DirectoryFileOutput::text()
+        {
+            return m_currentText;
+        }
+
+        std::ostream& DirectoryFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
+        {
+            if(m_currentFile.is_open())
+                throw WrongState("File has already been opened.");
+            
+            std::ios_base::openmode iosmode;
+            
+            if(mode == BINARY)
+                iosmode = std::ios_base::binary;
+            
+            std::string pathSeparator = boost::filesystem::path("/").string();  
+            m_currentFile.open((m_directory + pathSeparator + m_currentFilename + "." + ext).c_str(), std::ios_base::in & iosmode);
+            
+            if(m_currentFile.fail())
+                throw FileAccessFailed(m_currentFilename);
+            
+            return m_currentFile;
+        }
+
+        std::ostream& DirectoryFileOutput::file()
+        {
+            if(! m_currentFile.is_open())
+                throw WrongState("File has not been opened.");
+            
+            return m_currentFile;
+        }     
     }
 }

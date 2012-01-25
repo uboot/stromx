@@ -26,8 +26,10 @@ namespace stromx
         class OutputProvider
         {
         public:
+            enum OpenMode { BINARY, TEXT };
+            
             virtual std::ostream & text() = 0;
-            virtual std::ostream & openFile(const std::string & ext = "", std::ios_base::openmode mode = std::ios_base::out) = 0;
+            virtual std::ostream & openFile(const std::string & ext = "", const OpenMode mode = BINARY) = 0;
             virtual std::ostream & file() = 0;
         };
     }

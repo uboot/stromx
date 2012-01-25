@@ -28,15 +28,21 @@ namespace stromx
         class DirectoryFileOutput : public FileOutput
         {
         public:
-            DirectoryFileOutput(const std::string & filename) {}
+            DirectoryFileOutput(const std::string & directory) : m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             
-            virtual void selectFile(const std::string & filename);
-            virtual void setText(const std::string & text);
+            virtual void reset(const std::string & filename);
+            virtual const std::string getText() const;
             
             virtual std::ostream & text();
-            virtual std::ostream & openFile(const std::string & ext, std::ios_base::openmode mode);
+            virtual std::ostream & openFile(const std::string & ext, const OpenMode mode);
             virtual std::ostream & file();
+            
+        private:
+            std::string m_directory;
+            std::string m_currentFilename;
+            std::ofstream m_currentFile;
+            std::ostringstream m_currentText;
         };
     }
 }

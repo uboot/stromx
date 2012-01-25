@@ -26,8 +26,10 @@ namespace stromx
         class InputProvider
         {
         public:
+            enum OpenMode { BINARY, TEXT };
+            
             virtual std::istream & text() = 0;
-            virtual std::istream & openFile(std::ios_base::openmode mode = std::ios_base::in) = 0;
+            virtual std::istream & openFile(const OpenMode mode = BINARY) = 0;
             virtual std::istream & file() = 0;
         };
     }

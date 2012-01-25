@@ -24,22 +24,27 @@ namespace stromx
 {
     namespace core
     {
+        class DirectoryFileOutput;
+        
         class DirectoryFileOutputTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (DirectoryFileOutputTest);
             CPPUNIT_TEST(testText);
+            CPPUNIT_TEST(testFileBinary);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            DirectoryFileOutputTest() {}
+            DirectoryFileOutputTest() : m_output(0) {}
             
             void setUp();
             void tearDown();
             
         protected:
             void testText();
+            void testFileBinary();
                 
         private:
+            DirectoryFileOutput* m_output;
         };
     }
 }

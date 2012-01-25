@@ -26,8 +26,8 @@ namespace stromx
         class FileOutput : public OutputProvider
         {
         public:
-            virtual void selectFile(const std::string & filename) = 0;
-            virtual void setText(const std::string & text) = 0;
+            virtual void reset(const std::string & filename) = 0;
+            virtual const std::string getText() const = 0;
             
             virtual ~FileOutput() {}
         };
