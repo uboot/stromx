@@ -26,12 +26,12 @@ namespace stromx
 {
         namespace core
     {
-        class Factory;
-        class Stream;
         class Data;
+        class Factory;
+        class FileInput;
+        class Stream;
         class Operator;
         class Thread;
-        class Data;
         
         namespace impl
         {
@@ -42,7 +42,7 @@ namespace stromx
                 
                 ~XmlReaderImpl();
                 
-                Stream* const readStream(const std::string & filename);
+                Stream* const readStream(FileInput & input, const std::string & filename);
                 
             private:
                 void readOperator(xercesc::DOMElement* const opElement);
@@ -53,9 +53,9 @@ namespace stromx
                 void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
                 Data* readData(xercesc::DOMElement* const dataElement);
                 
-                std::string m_currentPath;
                 const Factory& m_factory;
                 Stream* m_stream;
+                FileInput* m_input;
                 std::map<unsigned int, Operator*> m_id2OperatorMap;
                 std::map<unsigned int, Data*> m_id2DataMap;
             };

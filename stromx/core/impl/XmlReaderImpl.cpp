@@ -28,6 +28,7 @@
 #include "../Exception.h"
 #include "../Factory.h"
 #include "../Data.h"
+#include "../DirectoryFileInput.h"
 #include "../Stream.h"
 #include "../Operator.h"
 #include "../Thread.h"
@@ -124,12 +125,10 @@ namespace stromx
                 };
             }
 
-            Stream*const XmlReaderImpl::readStream(const std::string & filename)
+            Stream*const XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
             {    
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
-                
-                m_currentPath = impl::XmlUtilities::computePath(filename);
                 
                 XercesDOMParser* parser = new XercesDOMParser();
 
@@ -137,11 +136,16 @@ namespace stromx
                 parser->setEntityResolver(entityResolver.get());
                 parser->setValidationScheme(XercesDOMParser::Val_Always);
 
-                const char* xmlFile = filename.c_str();
+                m_input = &input;
+                m_input->setData("", filename);
+                std::string content;
+                m_input->openFile(FileInput::TEXT) >> content;
+                
+                MemBufInputSource source(reinterpret_cast<const XMLByte*>(content.c_str()), content.size(), (XMLCh*)(0));
 
                 try
                 {
-                    parser->parse(xmlFile);
+                    parser->parse(source);
                 }
                 catch (const XMLException& toCatch)
                 {
@@ -237,7 +241,8 @@ namespace stromx
             
             XmlReaderImpl::XmlReaderImpl(const core::Factory& factory)
               : m_factory(factory),
-                m_stream(0)
+                m_stream(0),
+                m_input(0)
             {
                 try
                 {
@@ -418,19 +423,8 @@ namespace stromx
                 
                 try
                 {
-                    std::istringstream textStream(textData);
-                    
-                    if(! file.empty())
-                    {
-                        std::string filepath = std::string(m_currentPath + std::string(file));
-                        std::ifstream binStream(filepath.c_str(), std::ios::in | std::ios::binary);
-                        data->deserialize(textStream, binStream);
-                    }
-                    else
-                    {
-                        std::istringstream binStream("");
-                        data->deserialize(textStream, binStream);
-                    }
+                    m_input->setData(textData, file);
+                    data->deserialize(*m_input);
                 }
                 catch(Exception& e)
                 {

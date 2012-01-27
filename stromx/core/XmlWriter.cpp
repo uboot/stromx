@@ -15,17 +15,26 @@
 */
 
 #include "XmlWriter.h"
+
+#include "impl/XmlUtilities.h"
 #include "impl/XmlWriterImpl.h"
+#include "DirectoryFileOutput.h"
 
 namespace stromx
 {
     namespace core
     {
-        void XmlWriter::writeStream(const std::string& filename, const Stream& stream) const
+        void XmlWriter::writeStream(const std::string& filepath, const Stream& stream) const
         {
+            using namespace impl;
+            
             impl::XmlWriterImpl impl;
             
-            impl.writeStream(filename, stream);
+            std::string directory = XmlUtilities::computePath(filepath);
+            std::string filename = XmlUtilities::stripExtension(XmlUtilities::computeName(filepath));
+            DirectoryFileOutput output(directory);
+            
+            impl.writeStream(output, filename, stream);
         }
     }
 }

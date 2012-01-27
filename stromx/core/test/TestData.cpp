@@ -17,6 +17,8 @@
 #include "TestData.h"
 
 #include <fstream>
+#include "../InputProvider.h"
+#include "../OutputProvider.h"
 
 namespace stromx
 {
@@ -28,16 +30,14 @@ namespace stromx
         const std::string TestData::PACKAGE = "TestPackage";
         const Version TestData::VERSION = Version(0, 1, 0);
         
-        void TestData::serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const
+        void TestData::serialize(OutputProvider & output) const
         {
-            binData << m_value;;
-            ext = "txt";
+            output.openFile("txt", OutputProvider::TEXT) << m_value;
         }
 
-
-        void TestData::deserialize(std::istream & textData, std::istream & binData)
+        void TestData::deserialize(InputProvider & input)
         {
-            binData >> m_value;
+            input.openFile(InputProvider::TEXT) >> m_value;
         }
     }
 }

@@ -32,13 +32,14 @@ namespace stromx
 
         void DirectoryFileOutput::setFile(const std::string& filename)
         {
-            m_currentText.clear();
+            m_currentText.str("");
             
             if(m_currentFile.is_open())
                 m_currentFile.close();
         
             m_currentFilename = filename;
             m_isSet = true;
+            m_activeFilename = "";
         }
 
         const std::string DirectoryFileOutput::getText() const
@@ -68,10 +69,13 @@ namespace stromx
                 iosmode = std::ios_base::binary;
             
             std::string filename;
+            
             if(! ext.empty())
-                filename = m_directory + PATH_SEPARATOR + m_currentFilename + "." + ext;
+                m_activeFilename = m_currentFilename + "." + ext;
             else
-                filename = m_directory + PATH_SEPARATOR + m_currentFilename;
+                m_activeFilename = m_currentFilename;
+            
+            filename = m_directory + PATH_SEPARATOR + m_activeFilename;
                 
             m_currentFile.open(filename.c_str(), std::ios_base::in & iosmode);
             
@@ -79,6 +83,14 @@ namespace stromx
                 throw FileAccessFailed(m_currentFilename);
             
             return m_currentFile;
+        }
+        
+        const std::string& DirectoryFileOutput::getFilename() const
+        {
+            if(! m_isSet)
+                throw WrongState("No current file in directory output.");
+            
+            return m_activeFilename;
         }
 
         std::ostream& DirectoryFileOutput::file()

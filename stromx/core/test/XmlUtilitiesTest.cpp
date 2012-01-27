@@ -28,10 +28,26 @@ namespace stromx
         
         void XmlUtilitiesTest::testComputePath()
         {
-            CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computePath("test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("."), XmlUtilities::computePath("test.xml"));
             CPPUNIT_ASSERT_EQUAL(std::string("/"), XmlUtilities::computePath("/test.xml"));
-            CPPUNIT_ASSERT_EQUAL(std::string("dir/"), XmlUtilities::computePath("dir/test.xml"));
-            CPPUNIT_ASSERT_EQUAL(std::string("/dir/"), XmlUtilities::computePath("/dir/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("dir"), XmlUtilities::computePath("dir/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("/dir"), XmlUtilities::computePath("/dir/test.xml"));
+        }
+        
+        void XmlUtilitiesTest::testComputeName()
+        {
+            CPPUNIT_ASSERT_EQUAL(std::string("test.xml"), XmlUtilities::computeName("test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("test.xml"), XmlUtilities::computeName("/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("test.xml"), XmlUtilities::computeName("dir/test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("test.xml"), XmlUtilities::computeName("/dir/test.xml"));
+        }
+        
+        void XmlUtilitiesTest::testStripExtension()
+        {
+            CPPUNIT_ASSERT_EQUAL(std::string("test"), XmlUtilities::stripExtension("test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::stripExtension(".xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc"));
+            CPPUNIT_ASSERT_EQUAL(std::string("abc.txt"), XmlUtilities::stripExtension("abc.txt"));
         }
     }
 }

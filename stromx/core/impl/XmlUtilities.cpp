@@ -55,16 +55,27 @@ namespace stromx
                 return m_xmlStr;
             }
             
-            const std::string XmlUtilities::computePath(const std::string& filename)
+            const std::string XmlUtilities::computePath(const std::string& filepath)
             {
-                boost::filesystem::path filepath(filename);
-                boost::filesystem::path parentpath = filepath.parent_path();
-                std::string pathSeparator;
+                std::string path =  boost::filesystem::path(filepath).parent_path().string();
                 
-                if(! parentpath.empty() && parentpath != boost::filesystem::path("/"))
-                    pathSeparator = boost::filesystem::path("/").string();
+                return path.empty() ? "." : path;
+            }
             
-                return parentpath.string() + pathSeparator;
+            const std::string XmlUtilities::computeName(const std::string& filepath)
+            {
+                return boost::filesystem::path(filepath).filename();
+            }
+            
+            const std::string XmlUtilities::stripExtension(const std::string& filename)
+            {
+                if(filename.length() < 4)
+                    return filename;
+                
+                if(filename.substr(filename.length() - 4, 4) == ".xml")
+                    return filename.substr(0, filename.length() - 4);
+                
+                return filename;
             }
         }
     }

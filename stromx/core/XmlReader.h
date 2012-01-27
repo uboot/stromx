@@ -36,12 +36,12 @@ namespace stromx
             /** 
              * Reads a stream from an XML file.
              * 
-             * \param filename The path of the file to be read.
+             * \param filepath The path of the file to be read.
              * \param factory The factory is used to instantiate the operators and data
              *                object in the stream. I.e. all required operator and data types
              *                must have been registered with the factory.
              */
-            Stream* const readStream(const std::string & filename, const Factory& factory) const;
+            Stream* const readStream(const std::string & filepath, const Factory& factory) const;
             
             void readParameters(const std::string & filename, const std::vector<stromx::core::Operator*> operators) const;
         };

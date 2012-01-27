@@ -32,8 +32,8 @@ namespace stromx
         class STROMX_CORE_API XmlWriter
         {
         public:
-            void writeStream(const std::string& filename, const Stream& stream) const;
-            void writeParameters(const std::string& filename, const std::vector<const stromx::core::Operator*>& operators) const;
+            void writeStream(const std::string& filepath, const Stream& stream) const;
+            void writeParameters(const std::string& filepath, const std::vector<const stromx::core::Operator*>& operators) const;
         };
     }
 }

@@ -27,6 +27,7 @@ namespace stromx
         {
         public:
             virtual void setFile(const std::string & filename) = 0;
+            virtual const std::string & getFilename() const = 0;
             virtual const std::string getText() const = 0;
             
             virtual ~FileOutput() {}

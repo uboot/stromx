@@ -32,6 +32,7 @@ namespace stromx
             virtual ~DirectoryFileOutput();
             
             virtual void setFile(const std::string & filename);
+            virtual const std::string & getFilename() const;
             virtual const std::string getText() const;
             
             virtual std::ostream & text();
@@ -44,6 +45,7 @@ namespace stromx
             bool m_isSet;
             std::string m_directory;
             std::string m_currentFilename;
+            std::string m_activeFilename;
             std::ofstream m_currentFile;
             std::ostringstream m_currentText;
         };

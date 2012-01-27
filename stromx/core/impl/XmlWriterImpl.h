@@ -19,7 +19,6 @@
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
-#include "XmlUtilities.h"
 #include "../Input.h"
 #include "../Operator.h"
 #include "../Parameter.h"
@@ -29,6 +28,7 @@ namespace stromx
 {
     namespace core
     {
+        class FileOutput;
         class Stream;
         
         namespace impl
@@ -38,7 +38,7 @@ namespace stromx
             public:
                 XmlWriterImpl();
                 ~XmlWriterImpl() {};
-                void writeStream(const std::string & filename, const Stream& stream);
+                void writeStream(FileOutput & output, const std::string & filename, const Stream& stream);
                 
             private:
                 const unsigned int translateOperatorPointerToID(const Operator* const op) const;
@@ -50,6 +50,7 @@ namespace stromx
                 void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 
                 const Stream* m_stream;
+                FileOutput* m_output;
                 std::string m_filename;
                 xercesc::DOMImplementation* m_impl;
                 xercesc::DOMDocument* m_doc;

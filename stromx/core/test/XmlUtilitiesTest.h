@@ -28,6 +28,8 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (XmlUtilitiesTest);
             CPPUNIT_TEST(testComputePath);
+            CPPUNIT_TEST(testComputeName);
+            CPPUNIT_TEST(testStripExtension);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -37,6 +39,8 @@ namespace stromx
 
         protected:
             void testComputePath();
+            void testComputeName();
+            void testStripExtension();
         };
     }
 }

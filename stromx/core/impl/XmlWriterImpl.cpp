@@ -17,10 +17,12 @@
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <iostream>
+#include "XmlUtilities.h"
 #include "XmlWriterImpl.h"
 #include "../Config.h"
 #include "../Data.h"
 #include "../Exception.h"
+#include "../FileOutput.h"
 #include "../Input.h"
 #include "../Operator.h"
 #include "../Thread.h"
@@ -34,7 +36,7 @@ namespace stromx
     {
         namespace impl
         {
-            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_filename(""), m_impl(0), m_doc(0), m_stromxElement(0), m_strElement(0)
+            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_output(0), m_filename(""), m_impl(0), m_doc(0), m_stromxElement(0), m_strElement(0)
             {
                 try
                 {
@@ -178,27 +180,27 @@ namespace stromx
                                         "op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
                                         "_" + "parameter" + boost::lexical_cast<std::string>(currPar->id());
                                     
-                std::string filepath = impl::XmlUtilities::computePath(m_filename) + filename;
-                
-                std::ostringstream textData;
-                std::ofstream binData(filepath.c_str());
-                std::string ext;
+                m_output->setFile(filename);
+                const Data& data = currOp->getParameter(currPar->id());
                 
                 try
                 {
-                    currOp->getParameter(currPar->id()).serialize(textData, binData, ext);
+                    data.serialize(*m_output);
                 }
                 catch(Exception & e)
                 {
-                    SerializationError(textData.str(), filename, e.what());
+                    SerializationError(data, filename, e.what());
                 }
                 
                 //Create attribute for file
-                DOMAttr* fileAttr = m_doc->createAttribute(Str2Xml("file"));
-                fileAttr->setValue(Str2Xml(filename.c_str()));
-                dataElement->setAttributeNode(fileAttr);
+                if(! m_output->getFilename().empty())
+                { 
+                    DOMAttr* fileAttr = m_doc->createAttribute(Str2Xml("file"));
+                    fileAttr->setValue(Str2Xml(m_output->getFilename().c_str()));
+                    dataElement->setAttributeNode(fileAttr);
+                }
                 
-                DOMText* value = m_doc->createTextNode(Str2Xml(textData.str().c_str()));
+                DOMText* value = m_doc->createTextNode(Str2Xml(m_output->getText().c_str()));
                 dataElement->appendChild(value);
             }
             
@@ -284,7 +286,7 @@ namespace stromx
                 }
             }
         
-            void XmlWriterImpl::writeStream(const std::string& filename, const Stream& stream)
+            void XmlWriterImpl::writeStream(FileOutput & output, const std::string & filename, const Stream& stream)
             {
                 if (filename.empty())
                 {
@@ -292,6 +294,7 @@ namespace stromx
                 }
                 
                 m_stream = &stream;
+                m_output = &output;
                 m_filename = filename;
                 
                 try
@@ -334,21 +337,18 @@ namespace stromx
                     DOMLSSerializer* serializer = m_impl->createLSSerializer();
                     serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
                     char* content = XMLString::transcode(serializer->writeToString(m_doc));
-                    std::ofstream xmlFile;
-                    xmlFile.open(filename.c_str());
-                    if (xmlFile.is_open())
+                    
+                    try
                     {
-                        xmlFile << content << std::endl;
-                        xmlFile.close();
-                        if (!xmlFile.good())
-                        {
-                            throw FileAccessFailed("Error during file access");
-                        }
+                        m_output->setFile(filename);
+                        m_output->openFile("xml");
+                        m_output->file() << content;
                     }
-                    else
+                    catch(Exception&)
                     {
-                        throw FileAccessFailed("Could not open XML file.");
+                        throw FileAccessFailed(m_filename); 
                     }
+                    
                     XMLString::release(&content);
                     serializer->release();
 

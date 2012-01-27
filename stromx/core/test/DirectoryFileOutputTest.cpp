@@ -53,5 +53,15 @@ namespace stromx
             m_output->openFile("bin", DirectoryFileOutput::BINARY);
             m_output->file() << 5;
         }
+        
+        void DirectoryFileOutputTest::testGetFilename()
+        {
+            CPPUNIT_ASSERT_THROW(m_output->getFilename(), WrongState);
+            
+            m_output->setFile("DirectoryFileOutputText_testGetFilename");
+            CPPUNIT_ASSERT_EQUAL(std::string(""), m_output->getFilename());
+            m_output->openFile("bin", DirectoryFileOutput::BINARY);
+            CPPUNIT_ASSERT_EQUAL(std::string("DirectoryFileOutputText_testGetFilename.bin"), m_output->getFilename());
+        }
     }
 }

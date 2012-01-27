@@ -27,6 +27,7 @@ namespace stromx
         {
         public:
             TestData() : m_value(0) { wasDestructed = false; }
+            TestData(const int value) : m_value(value) { wasDestructed = false; }
             ~TestData() { wasDestructed = true; }
             
             virtual const Version & version() const { return VERSION; }
@@ -37,11 +38,11 @@ namespace stromx
             
             virtual Data* const clone() const { return new TestData; }
             
-            virtual void serialize(std::ostream & textData, std::ostream & binData, std::string & ext) const;
-            virtual void deserialize(std::istream & textData, std::istream & binData);
+            virtual void serialize(OutputProvider & output) const;
+            virtual void deserialize(InputProvider & input);
             
             const int value() const { return m_value; }
-            void setValue(int value) { m_value = value; }
+            void setValue(const int value) { m_value = value; }
             
             static bool wasDestructed;
             

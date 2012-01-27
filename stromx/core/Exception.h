@@ -141,14 +141,14 @@ namespace stromx
         class SerializationError : public Exception
         {
         public:
-            SerializationError(const std::string & textData, const std::string & filename, const std::string & message = "SerializationError")
+            SerializationError(const Data & data, const std::string & filename, const std::string & message = "SerializationError")
               : Exception(message),
-                m_textData(textData),
+                m_data(data),
                 m_fileName(filename)
             {}
             
         private:
-            const std::string& m_textData;
+            const Data& m_data;
             const std::string& m_fileName;
         };
         

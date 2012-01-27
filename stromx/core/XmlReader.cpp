@@ -15,17 +15,26 @@
  */
 
 #include "XmlReader.h"
+
+#include "DirectoryFileInput.h"
 #include "impl/XmlReaderImpl.h"
+#include "impl/XmlUtilities.h"
 
 namespace stromx
 {
     namespace core
     {
-        Stream*const XmlReader::readStream(const std::string& filename, const Factory& factory) const
+        Stream*const XmlReader::readStream(const std::string& filepath, const Factory& factory) const
         {
-            impl::XmlReaderImpl impl(factory);
+            using namespace impl;
             
-            return impl.readStream(filename);
+            XmlReaderImpl impl(factory);
+            
+            std::string directory = XmlUtilities::computePath(filepath);
+            std::string filename = XmlUtilities::stripExtension(XmlUtilities::computeName(filepath));
+            DirectoryFileInput input(directory);
+            
+            return impl.readStream(input, filename);
         }
     }
 }

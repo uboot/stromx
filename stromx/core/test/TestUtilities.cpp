@@ -33,6 +33,7 @@ namespace stromx
             op0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
             op0->initialize();
             op0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
+            op0->setParameter(TestOperator::TEST_DATA, TestData(1));
             op0->setName("Number 1");
             stream->addOperator(op0);
             
@@ -40,6 +41,7 @@ namespace stromx
             op1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
             op1->initialize();
             op1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
+            op1->setParameter(TestOperator::TEST_DATA, TestData(2));
             op1->setName("Number 2");
             stream->addOperator(op1);
             
@@ -47,6 +49,7 @@ namespace stromx
             op2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
             op2->initialize();
             op2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
+            op2->setParameter(TestOperator::TEST_DATA, TestData(3));
             op2->setName("Number 3");
             stream->addOperator(op2);
             
