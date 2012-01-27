@@ -31,7 +31,7 @@ namespace stromx
             XmlReaderImpl impl(factory);
             
             std::string directory = XmlUtilities::computePath(filepath);
-            std::string filename = XmlUtilities::stripExtension(XmlUtilities::computeName(filepath));
+            std::string filename = XmlUtilities::computeName(filepath);
             DirectoryFileInput input(directory);
             
             return impl.readStream(input, filename);

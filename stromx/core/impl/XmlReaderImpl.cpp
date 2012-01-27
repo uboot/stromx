@@ -136,10 +136,12 @@ namespace stromx
                 parser->setEntityResolver(entityResolver.get());
                 parser->setValidationScheme(XercesDOMParser::Val_Always);
 
+                std::stringbuf contentBuffer;
                 m_input = &input;
                 m_input->setData("", filename);
-                std::string content;
-                m_input->openFile(FileInput::TEXT) >> content;
+                m_input->openFile(FileInput::TEXT).get(contentBuffer, 0);
+                
+                std::string content = contentBuffer.str();
                 
                 MemBufInputSource source(reinterpret_cast<const XMLByte*>(content.c_str()), content.size(), (XMLCh*)(0));
 
