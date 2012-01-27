@@ -31,6 +31,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (DirectoryFileInputTest);
             CPPUNIT_TEST(testText);
             CPPUNIT_TEST(testFile);
+            CPPUNIT_TEST(testHasFile);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -42,6 +43,7 @@ namespace stromx
         protected:
             void testText();
             void testFile();
+            void testHasFile();
                 
         private:
             DirectoryFileInput* m_input;

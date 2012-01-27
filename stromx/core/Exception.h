@@ -166,6 +166,16 @@ namespace stromx
             const std::string& m_textData;
             const std::string& m_fileName;
         };
+        
+        /** \brief The input provider has no input file. */
+        class NoInputFile : public Exception
+        {
+        public:
+            NoInputFile(const std::string & message = "NoInputFile")
+              : Exception(message)
+            {}
+        };
+        
     }
 }
 

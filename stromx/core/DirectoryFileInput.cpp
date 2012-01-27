@@ -48,7 +48,15 @@ namespace stromx
             
             return m_currentText;
         }
-
+        
+        const bool DirectoryFileInput::hasFile() const 
+        {
+            if(! m_isSet)
+                throw WrongState("No current data in directory input.");
+            
+            return ! m_currentFilename.empty();
+        }
+            
         std::istream& DirectoryFileInput::openFile(const OpenMode mode)
         {
             if(! m_isSet)
@@ -56,6 +64,9 @@ namespace stromx
             
             if(m_currentFile.is_open())
                 throw WrongState("File has already been opened.");
+            
+            if(! hasFile())
+                throw NoInputFile();
             
             std::ios_base::openmode iosmode;
             

@@ -117,6 +117,9 @@ namespace stromx
         
         void Image::serialize(core::OutputProvider & output) const
         {
+            if(width() == 0 || height() == 0)
+                return;
+            
             std::vector<uchar> data;
             if(! cv::imencode(".png", cv::Mat(m_image), data))
                 throw core::Exception("Failed to encode image.");
@@ -133,6 +136,15 @@ namespace stromx
         void Image::deserialize(core::InputProvider & input)
         {
             releaseImage();
+            
+            if(! input.hasFile())
+            {
+                setBufferSize(0);
+                initialize(0, 0, 0, 0, core::Image::NONE);
+                setVariant(core::DataVariant::IMAGE);
+                
+                return;
+            }
             
             input.openFile(core::InputProvider::BINARY);
             

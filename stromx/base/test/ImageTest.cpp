@@ -141,6 +141,16 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
         }
+        
+        void ImageTest::testSerializeEmpty()
+        {
+            m_image = new Image(100, 0, core::Image::MONO_8);
+
+            core::DirectoryFileOutput output(".");
+            output.setFile("ImageTest_testSerializeEmpty");
+            
+            CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
+        }
             
         void ImageTest::testDeserialize()
         {
@@ -153,6 +163,15 @@ namespace stromx
             m_image->save("ImageTest_testDeserialize.png");
         }
         
+        void ImageTest::testDeserializeEmpty()
+        {
+            m_image = new Image();
+            
+            core::DirectoryFileInput input(".");
+            input.setData("", "");
+            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
+        }
+                
         void ImageTest::testResizeBuffer()
         {
             m_image = new Image();

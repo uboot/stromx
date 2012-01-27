@@ -41,7 +41,9 @@ namespace stromx
             CPPUNIT_TEST (testSaveUnknownDirectory);
             CPPUNIT_TEST (testImageDefault);
             CPPUNIT_TEST (testSerialize);
+            CPPUNIT_TEST (testSerializeEmpty);
             CPPUNIT_TEST (testDeserialize);
+            CPPUNIT_TEST (testDeserializeEmpty);
             CPPUNIT_TEST (testResizeDimension);
             CPPUNIT_TEST (testResizeBuffer);
             CPPUNIT_TEST_SUITE_END ();
@@ -65,7 +67,9 @@ namespace stromx
                 void testSaveJpeg();
                 void testSaveUnknownDirectory();
                 void testSerialize();
+                void testSerializeEmpty();
                 void testDeserialize();
+                void testDeserializeEmpty();
                 void testResizeDimension();
                 void testResizeBuffer();
                 

@@ -59,5 +59,15 @@ namespace stromx
             m_input->openFile(DirectoryFileInput::BINARY) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
         }
+        
+        void DirectoryFileInputTest::testHasFile()
+        {
+            m_input->setData("Test", "data.txt");
+            CPPUNIT_ASSERT_EQUAL(true, m_input->hasFile());
+            
+            m_input->setData("Test", "");
+            CPPUNIT_ASSERT_EQUAL(false, m_input->hasFile());
+            CPPUNIT_ASSERT_THROW(m_input->openFile(DirectoryFileInput::TEXT), NoInputFile);
+        }
     }
 }

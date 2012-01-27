@@ -29,6 +29,7 @@ namespace stromx
             enum OpenMode { BINARY, TEXT };
             
             virtual std::istream & text() = 0;
+            virtual const bool hasFile() const = 0;
             virtual std::istream & openFile(const OpenMode mode = BINARY) = 0;
             virtual std::istream & file() = 0;
         };
