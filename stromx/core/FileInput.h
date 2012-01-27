@@ -26,7 +26,7 @@ namespace stromx
         class FileInput : public InputProvider
         {
         public:
-            virtual void reset(const std::string & text, const std::string & filename) = 0;
+            virtual void setData(const std::string & text, const std::string & filename) = 0;
             
             virtual ~FileInput() {}
         };

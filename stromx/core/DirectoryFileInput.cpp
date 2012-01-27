@@ -22,13 +22,15 @@ namespace stromx
 {
     namespace core
     {
+        const std::string DirectoryFileInput::PATH_SEPARATOR = boost::filesystem::path("/").string();
+        
         DirectoryFileInput::~DirectoryFileInput()
         {
             if(m_currentFile.is_open())
                 m_currentFile.close();
         }
 
-        void DirectoryFileInput::reset(const std::string& text, const std::string& filename)
+        void DirectoryFileInput::setData(const std::string& text, const std::string& filename)
         {
             m_currentText.str(text);
             
@@ -36,15 +38,22 @@ namespace stromx
                 m_currentFile.close();
             
             m_currentFilename = filename;
+            m_isSet = true;
         }
 
         std::istream& DirectoryFileInput::text()
         {
+            if(! m_isSet)
+                throw WrongState("No current data in directory input.");
+            
             return m_currentText;
         }
 
         std::istream& DirectoryFileInput::openFile(const OpenMode mode)
         {
+            if(! m_isSet)
+                throw WrongState("No current data in directory input.");
+            
             if(m_currentFile.is_open())
                 throw WrongState("File has already been opened.");
             
@@ -53,8 +62,8 @@ namespace stromx
             if(mode == BINARY)
                 iosmode = std::ios_base::binary;
             
-            std::string pathSeparator = boost::filesystem::path("/").string();  
-            m_currentFile.open((m_directory + pathSeparator + m_currentFilename).c_str(), std::ios_base::in & iosmode);
+            std::string filename = m_directory + PATH_SEPARATOR + m_currentFilename;
+            m_currentFile.open(filename.c_str(), std::ios_base::in & iosmode);
             
             if(m_currentFile.fail())
                 throw FileAccessFailed(m_currentFilename);
@@ -64,6 +73,9 @@ namespace stromx
 
         std::istream& DirectoryFileInput::file()
         {
+            if(! m_isSet)
+                throw WrongState("No current data in directory input.");
+            
             if(! m_currentFile.is_open())
                 throw WrongState("File has not been opened.");
             

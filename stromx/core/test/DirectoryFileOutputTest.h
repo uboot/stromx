@@ -30,7 +30,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (DirectoryFileOutputTest);
             CPPUNIT_TEST(testText);
-            CPPUNIT_TEST(testFileBinary);
+            CPPUNIT_TEST(testFile);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,7 +41,7 @@ namespace stromx
             
         protected:
             void testText();
-            void testFileBinary();
+            void testFile();
                 
         private:
             DirectoryFileOutput* m_output;

@@ -16,6 +16,7 @@
 
 #include "DirectoryFileInputTest.h"
 
+#include "../Exception.h"
 #include "../DirectoryFileInput.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DirectoryFileInputTest);
@@ -36,20 +37,25 @@ namespace stromx
 
         void DirectoryFileInputTest::testText()
         {
-            m_input->reset("Test", "");
             std::string result;
+            CPPUNIT_ASSERT_THROW(m_input->text(), WrongState);
+            
+            m_input->setData("Test", "");
             m_input->text() >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("Test"), result);
         }
         
         void DirectoryFileInputTest::testFile()
         {
-            m_input->reset("Test", "data.txt");
             std::string result;
+            CPPUNIT_ASSERT_THROW(m_input->openFile(DirectoryFileInput::TEXT), WrongState);
+            
+            m_input->setData("Test", "data.txt");
+            CPPUNIT_ASSERT_THROW(m_input->file(), WrongState);
             m_input->openFile(DirectoryFileInput::TEXT) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
             
-            m_input->reset("Test", "data.txt");
+            m_input->setData("Test", "data.txt");
             m_input->openFile(DirectoryFileInput::BINARY) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
         }

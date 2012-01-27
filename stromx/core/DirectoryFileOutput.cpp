@@ -22,13 +22,15 @@ namespace stromx
 {
     namespace core
     {
+        const std::string DirectoryFileOutput::PATH_SEPARATOR = boost::filesystem::path("/").string();
+        
         DirectoryFileOutput::~DirectoryFileOutput()
         {
             if(m_currentFile.is_open())
                 m_currentFile.close();
         }
 
-        void DirectoryFileOutput::reset(const std::string& filename)
+        void DirectoryFileOutput::setFile(const std::string& filename)
         {
             m_currentText.clear();
             
@@ -36,6 +38,7 @@ namespace stromx
                 m_currentFile.close();
         
             m_currentFilename = filename;
+            m_isSet = true;
         }
 
         const std::string DirectoryFileOutput::getText() const
@@ -45,11 +48,17 @@ namespace stromx
 
         std::ostream& DirectoryFileOutput::text()
         {
+            if(! m_isSet)
+                throw WrongState("No current file in directory output.");
+            
             return m_currentText;
         }
 
         std::ostream& DirectoryFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
         {
+            if(! m_isSet)
+                throw WrongState("No current file in directory output.");
+            
             if(m_currentFile.is_open())
                 throw WrongState("File has already been opened.");
             
@@ -58,8 +67,13 @@ namespace stromx
             if(mode == BINARY)
                 iosmode = std::ios_base::binary;
             
-            std::string pathSeparator = boost::filesystem::path("/").string();  
-            m_currentFile.open((m_directory + pathSeparator + m_currentFilename + "." + ext).c_str(), std::ios_base::in & iosmode);
+            std::string filename;
+            if(! ext.empty())
+                filename = m_directory + PATH_SEPARATOR + m_currentFilename + "." + ext;
+            else
+                filename = m_directory + PATH_SEPARATOR + m_currentFilename;
+                
+            m_currentFile.open(filename.c_str(), std::ios_base::in & iosmode);
             
             if(m_currentFile.fail())
                 throw FileAccessFailed(m_currentFilename);
@@ -69,6 +83,9 @@ namespace stromx
 
         std::ostream& DirectoryFileOutput::file()
         {
+            if(! m_isSet)
+                throw WrongState("No current file in directory output.");
+            
             if(! m_currentFile.is_open())
                 throw WrongState("File has not been opened.");
             

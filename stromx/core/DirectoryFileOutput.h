@@ -28,10 +28,10 @@ namespace stromx
         class DirectoryFileOutput : public FileOutput
         {
         public:
-            DirectoryFileOutput(const std::string & directory) : m_directory(directory) {}
+            DirectoryFileOutput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             
-            virtual void reset(const std::string & filename);
+            virtual void setFile(const std::string & filename);
             virtual const std::string getText() const;
             
             virtual std::ostream & text();
@@ -39,6 +39,9 @@ namespace stromx
             virtual std::ostream & file();
             
         private:
+            static const std::string PATH_SEPARATOR;
+            
+            bool m_isSet;
             std::string m_directory;
             std::string m_currentFilename;
             std::ofstream m_currentFile;

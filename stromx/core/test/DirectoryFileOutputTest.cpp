@@ -17,6 +17,7 @@
 #include "DirectoryFileOutputTest.h"
 
 #include "../DirectoryFileOutput.h"
+#include "../Exception.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DirectoryFileOutputTest);
 
@@ -36,14 +37,19 @@ namespace stromx
 
         void DirectoryFileOutputTest::testText()
         {
-            m_output->reset("");
+            CPPUNIT_ASSERT_THROW(m_output->text(), WrongState);
+            
+            m_output->setFile("");
             m_output->text() << "Test";
             CPPUNIT_ASSERT_EQUAL(std::string("Test"), m_output->getText());
         }
                 
-        void DirectoryFileOutputTest::testFileBinary()
+        void DirectoryFileOutputTest::testFile()
         {
-            m_output->reset("DirectoryFileOutputText_testFile");
+            CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
+            
+            m_output->setFile("DirectoryFileOutputText_testFile");
+            CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             m_output->openFile("bin", DirectoryFileOutput::BINARY);
             m_output->file() << 5;
         }
