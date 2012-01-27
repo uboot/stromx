@@ -165,7 +165,6 @@ namespace stromx
             m_image = new IplImage(*m_matImage);
             m_isHeader = true;
             
-            
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
             setVariant(dataTypeFromPixelType(pixelType()));
         }
