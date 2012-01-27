@@ -24,6 +24,11 @@
 
 struct _IplImage;
 
+namespace cv
+{
+    class Mat;
+}
+
 namespace stromx
 {
     namespace base
@@ -72,8 +77,11 @@ namespace stromx
             static const int getCvAccessType(const FileAccess access);
             
             void getDataFromCvImage(const PixelType pixelType);
+            void releaseImage();
             
             _IplImage* m_image;
+            bool m_isHeader;
+            cv::Mat* m_matImage;
         };
     }
 }

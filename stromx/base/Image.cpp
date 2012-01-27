@@ -31,6 +31,9 @@ namespace stromx
         const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Image::Image(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             try
             {
@@ -46,6 +49,9 @@ namespace stromx
         }
         
         Image::Image(const core::Image& image)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             try
             {
@@ -66,7 +72,9 @@ namespace stromx
         }
         
         Image::Image()
-          : m_image(0)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             setBufferSize(0);
             initialize(0, 0, 0, 0, core::Image::NONE);
@@ -74,18 +82,25 @@ namespace stromx
         }
         
         Image::Image(const std::string& filename)
-        : m_image(0)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             open(filename);
         }
         
         Image::Image(const std::string& filename, const FileAccess access)
-        : m_image(0)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             open(filename, access);
         }
         
         Image::Image(const unsigned int size)
+          : m_image(0),
+            m_isHeader(false),
+            m_matImage(0)
         {
             try
             {
@@ -117,6 +132,8 @@ namespace stromx
 
         void Image::deserialize(core::InputProvider & input)
         {
+            releaseImage();
+            
             input.openFile(core::InputProvider::BINARY);
             
             unsigned int dataSize = 0;
@@ -130,20 +147,20 @@ namespace stromx
             }
             
             cv::Mat buffer(data, dataSize);
-            cv::Mat image = cv::imdecode(buffer, -1);
+            m_matImage = new cv::Mat(cv::imdecode(buffer, -1));
             
-            if(m_image)
-                cvReleaseImage(&m_image);
+            // construct an IplImage header
+            m_image = new IplImage(*m_matImage);
+            m_isHeader = true;
             
-            m_image = new IplImage(image);
+            
             getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
             setVariant(dataTypeFromPixelType(pixelType()));
         }
         
         void Image::open(const std::string & filename, const FileAccess access)
         {
-            if(m_image)
-                cvReleaseImage(&m_image);
+            releaseImage();
             
             int cvAccessType = getCvAccessType(access);
             m_image = cvLoadImage(filename.c_str(), cvAccessType);
@@ -169,8 +186,7 @@ namespace stromx
         
         void Image::resize(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
         {
-            if(m_image)
-                cvReleaseImage(&m_image);
+            releaseImage();
             
             try
             {
@@ -186,8 +202,7 @@ namespace stromx
         
         void Image::resize(const unsigned int size)
         {
-            if(m_image)
-                cvReleaseImage(&m_image);
+            releaseImage();
             
             try
             {
@@ -238,7 +253,7 @@ namespace stromx
         
         Image::~Image()
         {
-            cvReleaseImage(&m_image);
+            releaseImage();
         }
 
         const core::DataVariant Image::dataTypeFromPixelType(const core::Image::PixelType pixelType)
@@ -297,6 +312,19 @@ namespace stromx
                     BOOST_ASSERT(false);
                     return CV_LOAD_IMAGE_UNCHANGED;
             }
+        }
+        
+        void Image::releaseImage()
+        {
+            if(m_isHeader)
+                delete m_image;
+            else
+                cvReleaseImage(&m_image);
+            
+            if(m_matImage)
+                delete m_matImage;
+            
+            m_isHeader = false;
         }
     }
 }
