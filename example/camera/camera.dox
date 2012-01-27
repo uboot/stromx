@@ -100,7 +100,7 @@ int main (int argc, char* argv[])
 Next the stream is read from the XML file and started.
  
 \code   
-    core::Stream* stream = core::XmlReader().read("camera.xml", factory);
+    core::Stream* stream = core::XmlReader().readStream("camera.xml", factory);
     
     stream->start();
     

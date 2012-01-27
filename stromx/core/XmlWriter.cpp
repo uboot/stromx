@@ -21,11 +21,11 @@ namespace stromx
 {
     namespace core
     {
-        void XmlWriter::write(const std::string& filename, const Stream& stream) const
+        void XmlWriter::writeStream(const std::string& filename, const Stream& stream) const
         {
             impl::XmlWriterImpl impl;
             
-            impl.write(filename, stream);
+            impl.writeStream(filename, stream);
         }
     }
 }

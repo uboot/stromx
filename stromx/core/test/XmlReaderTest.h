@@ -29,9 +29,11 @@ namespace stromx
         class XmlReaderTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (XmlReaderTest);
-            CPPUNIT_TEST(testRead);
-            CPPUNIT_TEST(testReadWrongFile);
-            CPPUNIT_TEST(testReadInvalidFile);
+            CPPUNIT_TEST(testReadStream);
+            CPPUNIT_TEST(testReadStreamEmpty);
+            CPPUNIT_TEST(testReadStreamWrongFile);
+            CPPUNIT_TEST(testReadStreamInvalidFile);
+            CPPUNIT_TEST(testReadParameters);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -41,9 +43,12 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testRead();
-            void testReadWrongFile();
-            void testReadInvalidFile();
+            void testReadStream();
+            void testReadStreamEmpty();
+            void testReadStreamWrongFile();
+            void testReadStreamInvalidFile();
+            
+            void testReadParameters();
                 
         private:
             Factory* m_factory;

@@ -18,6 +18,7 @@
 #define STROMX_CORE_XMLREADER_H
 
 #include <string>
+#include <vector>
 #include "Config.h"
 
 namespace stromx
@@ -25,6 +26,7 @@ namespace stromx
     namespace core
     {
         class Factory;
+        class Operator;
         class Stream;
         
         /** \brief Reader for XML encoded streams. */
@@ -39,7 +41,9 @@ namespace stromx
              *                object in the stream. I.e. all required operator and data types
              *                must have been registered with the factory.
              */
-            Stream* const read(const std::string & filename, const Factory& factory) const;
+            Stream* const readStream(const std::string & filename, const Factory& factory) const;
+            
+            void readParameters(const std::string & filename, const std::vector<stromx::core::Operator*> operators) const;
         };
     }
 }

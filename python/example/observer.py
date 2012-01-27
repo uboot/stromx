@@ -37,7 +37,7 @@ factory = core.Factory()
 core.registerCore(factory)
 base.registerBase(factory)
 
-stream = core.XmlReader().read("file.xml", factory)
+stream = core.XmlReader().readStream("file.xml", factory)
 
 source = stream.operators()[0]
 timer = stream.operators()[1]

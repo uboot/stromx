@@ -263,7 +263,7 @@ namespace stromx
                 }
             }
         
-            void XmlWriterImpl::write(const std::string& filename, const Stream& stream)
+            void XmlWriterImpl::writeStream(const std::string& filename, const Stream& stream)
             {
                 if (filename.empty())
                 {

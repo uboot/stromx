@@ -182,7 +182,6 @@ namespace stromx
         
         Thread* const Stream::addThread()
         {
-            
             Thread* thread = new Thread(m_network);
             impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
             thread->setObserver(observer);
@@ -206,6 +205,7 @@ namespace stromx
                 if ((*iter) == thr)
                 {
                     m_threads.erase(iter);
+                    delete thr;
                     return;
                 }
             }

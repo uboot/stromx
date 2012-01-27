@@ -23,7 +23,7 @@
 
 using namespace boost::python;
 using namespace stromx::core;
- 
+
 void exportThread()
 {       
     enum_<Thread::Status>("ThreadStatus")
@@ -41,6 +41,7 @@ void exportThread()
         .def("inputSequence", &Thread::inputSequence, return_internal_reference<>())
         .def("addInput", &Thread::addInput)
         .def("insertInput", &Thread::insertInput)
-        .def("removeInput", &Thread::removeInput)
+        .def<void (Thread::*)(unsigned int const)>("removeInput", &Thread::removeInput)
+        .def<void (Thread::*)(Operator* const, unsigned int)>("removeInput", &Thread::removeInput)
     ;
 }

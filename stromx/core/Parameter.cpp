@@ -21,5 +21,6 @@ namespace stromx
     namespace core
     {
         const std::vector<EnumDescription> Parameter::NO_DESCRIPTIONS = std::vector<EnumDescription>();
+        const None Parameter::NONE = None();
     }
 }

@@ -38,7 +38,7 @@ namespace stromx
             public:
                 XmlWriterImpl();
                 ~XmlWriterImpl() {};
-                void write(const std::string & filename, const Stream& stream);
+                void writeStream(const std::string & filename, const Stream& stream);
                 
             private:
                 const unsigned int translateOperatorPointerToID(const Operator* const op) const;

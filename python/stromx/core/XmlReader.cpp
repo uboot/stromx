@@ -27,6 +27,6 @@ using namespace stromx::core;
 void exportXmlReader()
 {       
     class_<XmlReader>("XmlReader")
-        .def("read", reinterpret_cast<Stream* (XmlReader::*)(const std::string &, const Factory &)>(&XmlReader::read), return_value_policy<manage_new_object>())
+        .def("readStream", reinterpret_cast<Stream* (XmlReader::*)(const std::string &, const Factory &)>(&XmlReader::readStream), return_value_policy<manage_new_object>())
     ;
 }

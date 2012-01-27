@@ -29,7 +29,8 @@ namespace stromx
         class XmlWriterTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (XmlWriterTest);
-            CPPUNIT_TEST(testWrite);
+            CPPUNIT_TEST(testWriteStream);
+            CPPUNIT_TEST(testWriteParameters);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,7 +40,8 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testWrite();
+            void testWriteStream();
+            void testWriteParameters();
                 
         private:
             Stream* m_stream;

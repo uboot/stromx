@@ -193,7 +193,7 @@ namespace stromx
                     std::find(m_operators.begin(), m_operators.end(), op);
                 
                 if(iter == m_operators.end())
-                    throw WrongArgument("Operator is not part of the core.");
+                    throw WrongArgument("Operator is not part of the stream.");
                 
                 return (*iter)->getInputNode(inputId);
             }
@@ -204,7 +204,7 @@ namespace stromx
                     std::find(m_operators.begin(), m_operators.end(), op);
                 
                 if(iter == m_operators.end())
-                    throw WrongArgument("Operator is not part of the core.");
+                    throw WrongArgument("Operator is not part of the stream.");
                 
                 return (*iter)->getOutputNode(outputId);
             }

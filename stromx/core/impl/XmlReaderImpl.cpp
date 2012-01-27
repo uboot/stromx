@@ -44,15 +44,17 @@ namespace stromx
             {
                  const std::string DTD =
 " \
-<!ELEMENT Stromx (Stream)> \
+<!ELEMENT Stromx (Stream?, Parameters?)> \
 <!ATTLIST Stromx \
-    version CDATA #IMPLIED \
+    version CDATA #REQUIRED \
 > \
 \
 <!ELEMENT Stream (Operator*, Thread*)> \
 <!ATTLIST Stream \
     name CDATA #IMPLIED \
 > \
+\
+<!ELEMENT Parameters (Operator*)> \
 \
 <!ELEMENT Thread (InputConnector*)> \
 <!ATTLIST Thread \
@@ -120,7 +122,7 @@ namespace stromx
                 };
             }
 
-            Stream*const XmlReaderImpl::read(const std::string & filename)
+            Stream*const XmlReaderImpl::readStream(const std::string & filename)
             {    
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
@@ -173,7 +175,12 @@ namespace stromx
                     if(! doc)
                         throw FileAccessFailed(filename, "Failed to read file.");
                     
-                    DOMElement* stream = doc->getDocumentElement();
+                    DOMNodeList* streamNodes = doc->getElementsByTagName(Str2Xml("Stream"));
+                    
+                    if(! streamNodes->getLength())
+                        throw FileAccessFailed(filename, "Found no element <Stream/>.");
+                    
+                    DOMElement* stream = dynamic_cast<DOMElement*>(streamNodes->item(0));
                     
                     Xml2Str name(stream->getAttribute(Str2Xml("name")));
                     m_stream->setName(std::string(name));
