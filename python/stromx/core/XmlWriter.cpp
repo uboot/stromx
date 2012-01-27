@@ -23,8 +23,9 @@ using namespace boost::python;
 using namespace stromx::core;
 
 void exportXmlWriter()
-{       
+{    
     class_<XmlWriter>("XmlWriter", init<>())
         .def("writeStream", &XmlWriter::writeStream)
+        .def("writeParameters", &XmlWriter::writeParameters)
     ;
 }

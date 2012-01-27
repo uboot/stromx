@@ -18,6 +18,8 @@
 #include "ImageTest.h"
 #include "../Image.h"
 #include <stromx/core/Exception.h>
+#include <stromx/core/DirectoryFileInput.h>
+#include <stromx/core/DirectoryFileOutput.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ImageTest);
 
@@ -134,20 +136,21 @@ namespace stromx
         {
             m_image = new Image("lenna.jpg");
 
-            CPPUNIT_ASSERT_THROW(m_image->serialize("ImageTest_testSerialize", "unknown_dir/"), core::SerializationError);
+            core::DirectoryFileOutput output(".");
+            output.setFile("ImageTest_testSerialize");
             
-            CPPUNIT_ASSERT_EQUAL(std::string("ImageTest_testSerialize.png"), m_image->serialize("ImageTest_testSerialize", "./"));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
+            CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
         }
             
         void ImageTest::testDeserialize()
         {
             m_image = new Image();
             
-            CPPUNIT_ASSERT_THROW(m_image->deserialize("unknown.png", "./"), core::DeserializationError);
+            core::DirectoryFileInput input(".");
+            input.setData("", "lenna.jpg");
+            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
             
-            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize("ImageTest_testSerialize.png", "./"));
+            m_image->save("ImageTest_testDeserialize.png");
         }
         
         void ImageTest::testResizeBuffer()

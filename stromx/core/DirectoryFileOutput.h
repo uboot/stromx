@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_DIRECTORYFILEOUTPUT_H
 #define STROMX_CORE_DIRECTORYFILEOUTPUT_H
 
+#include "Config.h"
 #include "FileOutput.h"
 #include <fstream>
 #include <sstream>
@@ -25,7 +26,7 @@ namespace stromx
 {
     namespace core
     {
-        class DirectoryFileOutput : public FileOutput
+        class STROMX_CORE_API DirectoryFileOutput : public FileOutput
         {
         public:
             DirectoryFileOutput(const std::string & directory) : m_isSet(false), m_directory(directory) {}

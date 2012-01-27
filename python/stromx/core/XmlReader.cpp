@@ -28,5 +28,6 @@ void exportXmlReader()
 {       
     class_<XmlReader>("XmlReader")
         .def("readStream", reinterpret_cast<Stream* (XmlReader::*)(const std::string &, const Factory &)>(&XmlReader::readStream), return_value_policy<manage_new_object>())
+        .def("readStream", &XmlReader::readParameters)
     ;
 }

@@ -20,6 +20,7 @@
 #include <string>
 #include "Config.h"
 #include <stromx/core/ImageWrapper.h>
+#include "../core/Input.h"
 
 struct _IplImage;
 
@@ -52,8 +53,8 @@ namespace stromx
             
             virtual Data* const clone() const { return new Image; }
             
-            virtual const std::string serialize(const std::string & name, const std::string & path) const;
-            virtual void deserialize(const std::string & data, const std::string & path);
+            virtual void serialize(core::OutputProvider & output) const;
+            virtual void deserialize(core::InputProvider & input);
             
             void open(const std::string& filename);
             void open(const std::string & filename, const FileAccess access);

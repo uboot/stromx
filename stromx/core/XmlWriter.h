@@ -23,7 +23,7 @@
 
 namespace stromx
 {
-        namespace core
+    namespace core
     {
         class Operator;
         class Stream;

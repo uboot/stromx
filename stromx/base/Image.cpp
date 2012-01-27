@@ -19,6 +19,8 @@
 #include "Image.h"
 #include "Utilities.h"
 #include <stromx/core/Exception.h>
+#include <stromx/core/InputProvider.h>
+#include <stromx/core/OutputProvider.h>
 
 namespace stromx
 {
@@ -64,7 +66,7 @@ namespace stromx
         }
         
         Image::Image()
-        : m_image(0)
+          : m_image(0)
         {
             setBufferSize(0);
             initialize(0, 0, 0, 0, core::Image::NONE);
@@ -98,32 +100,44 @@ namespace stromx
             }
         } 
         
-        const std::string Image::serialize(const std::string& name, const std::string& path) const
+        void Image::serialize(core::OutputProvider & output) const
         {
-            try
+            std::vector<uchar> data;
+            if(! cv::imencode(".png", cv::Mat(m_image), data))
+                throw core::Exception("Failed to encode image.");
+            
+            std::ostream & outStream = output.openFile("png", core::OutputProvider::BINARY);
+            for(std::vector<uchar>::const_iterator iter = data.begin(); 
+                iter != data.end();
+                ++iter)
             {
-                std::string filename = name + ".png";
-                std::string filepath = path + filename;
-                save(filepath);
-                return filename;
-            }
-            catch(core::Exception&)
-            {
-                throw core::SerializationError(*this, name, path);
+                outStream.put(*iter);
             }
         }
 
-        void Image::deserialize(const std::string& data, const std::string& path)
+        void Image::deserialize(core::InputProvider & input)
         {
-            try
+            input.openFile(core::InputProvider::BINARY);
+            
+            unsigned int dataSize = 0;
+            const unsigned int CHUNK_SIZE = 100000;
+            std::vector<char> data;
+            while(! input.file().eof())
             {
-                std::string filepath = path + data;
-                open(filepath);
+                data.resize(data.size() + CHUNK_SIZE);
+                input.file().read(&data[0], CHUNK_SIZE);
+                dataSize += input.file().gcount();
             }
-            catch(core::Exception&)
-            {
-                throw core::DeserializationError(*this, data, path);
-            }
+            
+            cv::Mat buffer(data, dataSize);
+            cv::Mat image = cv::imdecode(buffer, -1);
+            
+            if(m_image)
+                cvReleaseImage(&m_image);
+            
+            m_image = new IplImage(image);
+            getDataFromCvImage(pixelTypeFromParameters(m_image->depth, m_image->nChannels));
+            setVariant(dataTypeFromPixelType(pixelType()));
         }
         
         void Image::open(const std::string & filename, const FileAccess access)

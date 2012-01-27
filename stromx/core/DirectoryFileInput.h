@@ -17,6 +17,7 @@
 #ifndef STROMX_CORE_DIRECTORYFILEINPUT_H
 #define STROMX_CORE_DIRECTORYFILEINPUT_H
 
+#include "Config.h"
 #include "FileInput.h"
 #include <fstream>
 #include <sstream>
@@ -25,7 +26,7 @@ namespace stromx
 {
     namespace core
     {
-        class DirectoryFileInput : public FileInput
+        class STROMX_CORE_API DirectoryFileInput : public FileInput
         {
         public:
             DirectoryFileInput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
