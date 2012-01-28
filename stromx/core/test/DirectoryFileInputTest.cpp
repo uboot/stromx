@@ -40,9 +40,13 @@ namespace stromx
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->text(), WrongState);
             
-            m_input->setData("Test", "");
+            m_input->setData("Test1", "");
             m_input->text() >> result;
-            CPPUNIT_ASSERT_EQUAL(std::string("Test"), result);
+            CPPUNIT_ASSERT_EQUAL(std::string("Test1"), result);
+            
+            m_input->setData("Test2", "");
+            m_input->text() >> result;
+            CPPUNIT_ASSERT_EQUAL(std::string("Test2"), result);
         }
         
         void DirectoryFileInputTest::testFile()

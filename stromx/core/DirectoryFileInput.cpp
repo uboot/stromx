@@ -32,6 +32,7 @@ namespace stromx
 
         void DirectoryFileInput::setData(const std::string& text, const std::string& filename)
         {
+            m_currentText.clear();
             m_currentText.str(text);
             
             if(m_currentFile.is_open())
