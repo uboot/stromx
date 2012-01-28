@@ -158,7 +158,7 @@ namespace stromx
                 dataSize += input.file().gcount();
             }
             
-            cv::Mat buffer(data, dataSize);
+            cv::Mat buffer(data);
             m_matImage = new cv::Mat(cv::imdecode(buffer, -1));
             
             // construct an IplImage header
