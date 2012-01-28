@@ -356,6 +356,8 @@ namespace stromx
                 return m_wbGreen;
             case WHITE_BALANCE_BLUE:
                 return m_wbBlue;
+            case PIXEL_TYPE:
+                 return m_pixelType->getParameter(ConvertPixelType::PIXEL_TYPE);
             default:
                 throw WrongParameterId(id, *this);
             }

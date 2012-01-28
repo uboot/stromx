@@ -177,8 +177,8 @@ namespace stromx
                 //Create value of current parameter param (one for each parameter possible)
                 //First, create unique input parameter name for function Data::serialize()
                 std::string filename = m_filename +
-                                        "op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
-                                        "_" + "parameter" + boost::lexical_cast<std::string>(currPar->id());
+                                        "_op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
+                                        "_parameter" + boost::lexical_cast<std::string>(currPar->id());
                                     
                 m_output->setFile(filename);
                 const Data& data = currOp->getParameter(currPar->id());
