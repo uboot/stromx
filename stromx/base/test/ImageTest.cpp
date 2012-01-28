@@ -137,7 +137,7 @@ namespace stromx
             m_image = new Image("lenna.jpg");
 
             core::DirectoryFileOutput output(".");
-            output.setFile("ImageTest_testSerialize");
+            output.initialize("ImageTest_testSerialize");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
         }
@@ -147,7 +147,7 @@ namespace stromx
             m_image = new Image(100, 0, core::Image::MONO_8);
 
             core::DirectoryFileOutput output(".");
-            output.setFile("ImageTest_testSerializeEmpty");
+            output.initialize("ImageTest_testSerializeEmpty");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
         }
@@ -157,7 +157,7 @@ namespace stromx
             m_image = new Image();
             
             core::DirectoryFileInput input(".");
-            input.setData("", "lenna.jpg");
+            input.initialize("", "lenna.jpg");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
             
             m_image->save("ImageTest_testDeserialize.png");
@@ -168,7 +168,7 @@ namespace stromx
             m_image = new Image();
             
             core::DirectoryFileInput input(".");
-            input.setData("", "");
+            input.initialize("", "");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
         }
                 

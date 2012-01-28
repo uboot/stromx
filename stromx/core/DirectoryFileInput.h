@@ -26,13 +26,15 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief File input which reads the input files from a common directory. */
         class STROMX_CORE_API DirectoryFileInput : public FileInput
         {
         public:
+            /** Constructs a directory file input which reads files in \c directory. */
             DirectoryFileInput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
             virtual ~DirectoryFileInput();
             
-            virtual void setData(const std::string & text, const std::string & filename);
+            virtual void initialize(const std::string & text, const std::string & filename);
             
             virtual std::istream & text();
             virtual const bool hasFile() const;

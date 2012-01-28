@@ -180,7 +180,7 @@ namespace stromx
                                         "_op" + boost::lexical_cast<std::string>(translateOperatorPointerToID(currOp)) + 
                                         "_parameter" + boost::lexical_cast<std::string>(currPar->id());
                                     
-                m_output->setFile(filename);
+                m_output->initialize(filename);
                 const Data& data = currOp->getParameter(currPar->id());
                 
                 try
@@ -340,7 +340,7 @@ namespace stromx
                     
                     try
                     {
-                        m_output->setFile(filename);
+                        m_output->initialize(filename);
                         m_output->openFile("xml");
                         m_output->file() << content;
                     }

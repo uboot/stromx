@@ -39,7 +39,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_THROW(m_output->text(), WrongState);
             
-            m_output->setFile("");
+            m_output->initialize("");
             m_output->text() << "Test";
             CPPUNIT_ASSERT_EQUAL(std::string("Test"), m_output->getText());
         }
@@ -48,7 +48,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             
-            m_output->setFile("DirectoryFileOutputText_testFile");
+            m_output->initialize("DirectoryFileOutputText_testFile");
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             m_output->openFile("bin", DirectoryFileOutput::BINARY);
             m_output->file() << 5;
@@ -58,7 +58,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_THROW(m_output->getFilename(), WrongState);
             
-            m_output->setFile("DirectoryFileOutputText_testGetFilename");
+            m_output->initialize("DirectoryFileOutputText_testGetFilename");
             CPPUNIT_ASSERT_EQUAL(std::string(""), m_output->getFilename());
             m_output->openFile("bin", DirectoryFileOutput::BINARY);
             CPPUNIT_ASSERT_EQUAL(std::string("DirectoryFileOutputText_testGetFilename.bin"), m_output->getFilename());

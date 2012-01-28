@@ -23,11 +23,27 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief Provides functions to initialize an output provider. */
         class FileOutput : public OutputProvider
         {
         public:
-            virtual void setFile(const std::string & filename) = 0;
+            /**
+             * Initializes the output provider.
+             * \param filename The name of the file which accepts the file data without file 
+             *                 extension.
+             */
+            virtual void initialize(const std::string & filename) = 0;
+            
+            /**
+             * Returns the name of the current file including the correct file extension.
+             * \throws WrongState If no file has been opened by the client.
+             */
             virtual const std::string & getFilename() const = 0;
+            
+            /**
+             * Returns the text representation of the data if it has already been set.
+             * Otherwise an empty string is returned.
+             */
             virtual const std::string getText() const = 0;
             
             virtual ~FileOutput() {}

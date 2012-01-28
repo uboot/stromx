@@ -40,11 +40,11 @@ namespace stromx
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->text(), WrongState);
             
-            m_input->setData("Test1", "");
+            m_input->initialize("Test1", "");
             m_input->text() >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("Test1"), result);
             
-            m_input->setData("Test2", "");
+            m_input->initialize("Test2", "");
             m_input->text() >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("Test2"), result);
         }
@@ -54,22 +54,22 @@ namespace stromx
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->openFile(DirectoryFileInput::TEXT), WrongState);
             
-            m_input->setData("Test", "data.txt");
+            m_input->initialize("Test", "data.txt");
             CPPUNIT_ASSERT_THROW(m_input->file(), WrongState);
             m_input->openFile(DirectoryFileInput::TEXT) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
             
-            m_input->setData("Test", "data.txt");
+            m_input->initialize("Test", "data.txt");
             m_input->openFile(DirectoryFileInput::BINARY) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
         }
         
         void DirectoryFileInputTest::testHasFile()
         {
-            m_input->setData("Test", "data.txt");
+            m_input->initialize("Test", "data.txt");
             CPPUNIT_ASSERT_EQUAL(true, m_input->hasFile());
             
-            m_input->setData("Test", "");
+            m_input->initialize("Test", "");
             CPPUNIT_ASSERT_EQUAL(false, m_input->hasFile());
             CPPUNIT_ASSERT_THROW(m_input->openFile(DirectoryFileInput::TEXT), NoInputFile);
         }

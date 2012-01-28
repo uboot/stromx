@@ -138,7 +138,7 @@ namespace stromx
 
                 std::stringbuf contentBuffer;
                 m_input = &input;
-                m_input->setData("", filename);
+                m_input->initialize("", filename);
                 m_input->openFile(FileInput::TEXT).get(contentBuffer, 0);
                 
                 std::string content = contentBuffer.str();
@@ -425,7 +425,7 @@ namespace stromx
                 
                 try
                 {
-                    m_input->setData(textData, file);
+                    m_input->initialize(textData, file);
                     data->deserialize(*m_input);
                 }
                 catch(Exception& e)

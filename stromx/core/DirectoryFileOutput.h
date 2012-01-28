@@ -26,13 +26,15 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief File outpt which stores the output data in single files in a common directory. */
         class STROMX_CORE_API DirectoryFileOutput : public FileOutput
         {
         public:
+            /** Constructs a directory file output which stores all files in \c directory. */
             DirectoryFileOutput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             
-            virtual void setFile(const std::string & filename);
+            virtual void initialize(const std::string & filename);
             virtual const std::string & getFilename() const;
             virtual const std::string getText() const;
             

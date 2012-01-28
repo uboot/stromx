@@ -30,7 +30,7 @@ namespace stromx
                 m_currentFile.close();
         }
 
-        void DirectoryFileOutput::setFile(const std::string& filename)
+        void DirectoryFileOutput::initialize(const std::string& filename)
         {
             m_currentText.str("");
             

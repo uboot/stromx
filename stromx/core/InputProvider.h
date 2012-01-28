@@ -23,14 +23,43 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief Provides functions to deserialize data from strings and files. */
         class InputProvider
         {
         public:
-            enum OpenMode { BINARY, TEXT };
+            /** The possible modes for file access. */
+            enum OpenMode
+            { 
+                /** Access the file as binary file. */
+                BINARY,
+                /** Access the file as text file. */
+                TEXT 
+            };
             
+            /** 
+             * Returns an input stream with the text representation of the data.
+             * \throws WrongState If the input provider has not been correctly initialized.
+             */
             virtual std::istream & text() = 0;
+            
+            /** 
+             * Returns true if a file representation of the data exists.
+             */
             virtual const bool hasFile() const = 0;
+            
+            /** 
+             * Opens the file representation of the data and returns the associated input stream.
+             * \throws WrongState If the input provider has not been correctly initialized
+             *                    or if this function has already been called.
+             * \throws FileAccessFailed If the file could not be opened.
+             */
             virtual std::istream & openFile(const OpenMode mode = BINARY) = 0;
+            
+            /** 
+             * Returns the input stream with the file representation of the data.
+             * \throws WrongState If the input provider has not been correctly initialized
+             *                    or if openFile() has not been called before calling this function.
+             */
             virtual std::istream & file() = 0;
         };
     }
