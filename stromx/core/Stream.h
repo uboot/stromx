@@ -115,7 +115,6 @@ namespace stromx
              * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
              * In addition, if the operator \c op is used by any thread it is automatically removed from this thread. 
              * \throws WrongState If the stream is not INACTIVE.
-             * \throws WrongState If the operator \c op is processed by a thread which is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is not valid (equal to 0).
              * \throws WrongArgument If the operator referenced by the pointer \c op is not known by the stream.
              */

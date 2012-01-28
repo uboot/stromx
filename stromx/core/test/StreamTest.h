@@ -28,15 +28,20 @@ namespace stromx
     {
         class Stream;
         class Network;
+        class Operator;
         
         class StreamTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (StreamTest);
+            CPPUNIT_TEST(testOperators);
+            CPPUNIT_TEST(testConnect);
+            CPPUNIT_TEST(testDisconnect);
+            CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testRemoveOperator);            
             CPPUNIT_TEST(testAddThread);
             CPPUNIT_TEST(testRemoveThread);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
-            CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST(testAddObserver);
             CPPUNIT_TEST(testRemoveObserver);
             CPPUNIT_TEST(testObserver);
@@ -50,11 +55,15 @@ namespace stromx
             void tearDown();
 
         protected:
+            void testOperators();
+            void testConnect();
+            void testDisconnect();
+            void testAddOperator();
+            void testRemoveOperator();
             void testAddThread();
             void testRemoveThread();
             void testPause();
             void testResume();
-            void testRemoveOperator();
             void testAddObserver();
             void testRemoveObserver();
             void testObserver();
@@ -78,6 +87,8 @@ namespace stromx
             
             Stream* m_stream;
             Network* m_network;
+            Operator* m_op1;
+            Operator* m_op2;
         };
     }
 }
