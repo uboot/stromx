@@ -64,7 +64,7 @@ namespace stromx
             
             const std::string XmlUtilities::computeName(const std::string& filepath)
             {
-                return boost::filesystem::path(filepath).filename();
+                return boost::filesystem::path(filepath).filename().string();
             }
             
             const std::string XmlUtilities::stripExtension(const std::string& filename)

@@ -155,7 +155,7 @@ namespace stromx
             {
                 data.resize(data.size() + CHUNK_SIZE);
                 input.file().read(&data[0], CHUNK_SIZE);
-                dataSize += input.file().gcount();
+                dataSize += (unsigned int)(input.file().gcount());
             }
             
             cv::Mat buffer(data, dataSize);
