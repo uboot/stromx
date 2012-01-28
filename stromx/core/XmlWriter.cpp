@@ -39,8 +39,10 @@ namespace stromx
         
         void XmlWriter::writeStream(FileOutput& output, const std::string filename, const stromx::core::Stream& stream) const
         {
-            impl::XmlWriterImpl impl;
-            impl.writeStream(output, filename, stream);
+            using namespace impl;
+            
+            XmlWriterImpl impl;
+            impl.writeStream(output, XmlUtilities::stripExtension(filename), stream);
         }
     }
 }
