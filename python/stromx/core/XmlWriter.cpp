@@ -22,9 +22,14 @@
 using namespace boost::python;
 using namespace stromx::core;
 
+namespace
+{
+    void (XmlWriter::*writeStreamToFileWrap)(const std::string &, const Stream&) const = &XmlWriter::writeStream;
+}
+
 void exportXmlWriter()
 {    
     class_<XmlWriter>("XmlWriter", init<>())
-        .def("writeStream", &XmlWriter::writeStream)
+        .def("writeStream", writeStreamToFileWrap)
     ;
 }

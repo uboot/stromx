@@ -26,6 +26,7 @@ namespace stromx
     namespace core
     {
         class Factory;
+        class FileInput;
         class Operator;
         class Stream;
         
@@ -45,6 +46,8 @@ namespace stromx
              */
             Stream* const readStream(const std::string & filepath, const Factory& factory) const;
             
+            Stream* const readStream(FileInput & input, const std::string filename, const Factory& factory) const;
+            
             /** 
              * Sets the parameters of \c operators to the values in the XML file \c filename.
              * If a parameter can not be set the error is silently ignored. In particular, only
@@ -56,7 +59,11 @@ namespace stromx
              * \throws FileAccessFailed Failed to read the XML file.
              * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              */
-            void readParameters(const std::string & filepath, const Factory& factory, const std::vector<stromx::core::Operator*> operators) const;
+            void readParameters(const std::string & filepath, const Factory& factory,
+                                const std::vector<stromx::core::Operator*> operators) const;
+            
+            void readParameters(FileInput & input, const std::string filename, const Factory& factory,
+                                const std::vector<stromx::core::Operator*> operators) const;
         };
     }
 }

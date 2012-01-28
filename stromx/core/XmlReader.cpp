@@ -36,5 +36,11 @@ namespace stromx
             
             return impl.readStream(input, filename);
         }
+        
+        Stream*const XmlReader::readStream(FileInput& input, const std::string filename, const stromx::core::Factory& factory) const
+        {
+            impl::XmlReaderImpl impl(factory);
+            return impl.readStream(input, filename);
+        }
     }
 }

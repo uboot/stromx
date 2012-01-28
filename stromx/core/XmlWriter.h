@@ -25,6 +25,7 @@ namespace stromx
 {
     namespace core
     {
+        class FileOutput;
         class Operator;
         class Stream;
         
@@ -33,7 +34,14 @@ namespace stromx
         {
         public:
             void writeStream(const std::string& filepath, const Stream& stream) const;
-            void writeParameters(const std::string& filepath, const std::vector<const stromx::core::Operator*>& operators) const;
+            
+            void writeStream(FileOutput & output, const std::string filename, const Stream& stream) const;
+            
+            void writeParameters(const std::string& filepath,
+                                 const std::vector<const stromx::core::Operator*>& operators) const;
+                                 
+            void writeParameters(FileOutput & output, const std::string filename,
+                                 const std::vector<const stromx::core::Operator*>& operators) const; 
         };
     }
 }

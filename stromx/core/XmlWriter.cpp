@@ -28,12 +28,18 @@ namespace stromx
         {
             using namespace impl;
             
-            impl::XmlWriterImpl impl;
+            XmlWriterImpl impl;
             
             std::string directory = XmlUtilities::computePath(filepath);
             std::string filename = XmlUtilities::stripExtension(XmlUtilities::computeName(filepath));
             DirectoryFileOutput output(directory);
             
+            impl.writeStream(output, filename, stream);
+        }
+        
+        void XmlWriter::writeStream(FileOutput& output, const std::string filename, const stromx::core::Stream& stream) const
+        {
+            impl::XmlWriterImpl impl;
             impl.writeStream(output, filename, stream);
         }
     }
