@@ -45,9 +45,12 @@ namespace stromx
         {
             allocate(image.width(), image.height(), image.pixelType());
             
-            cv::Mat cvInImage = getOpenCvMat(image);
-            cv::Mat cvImage(m_image);
-            cvInImage.copyTo(cvImage);
+            if(m_image)
+            {
+                cv::Mat cvInImage = getOpenCvMat(image);
+                cv::Mat cvImage(m_image);
+                cvInImage.copyTo(cvImage);
+            }
         }
         
         Image::Image()

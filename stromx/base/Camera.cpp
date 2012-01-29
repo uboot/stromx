@@ -19,6 +19,7 @@
 #include "Clip.h"
 #include "ConstImage.h"
 #include "ConvertPixelType.h"
+#include "Image.h"
 #include "PeriodicDelay.h"
 #include "Queue.h"
 #include "Trigger.h"
@@ -136,6 +137,9 @@ namespace stromx
             // start with software trigger
             m_trigger->setParameter(Trigger::ACTIVE, Bool(true));
             m_period->setParameter(PeriodicDelay::PERIOD, UInt32(0));
+            
+            // set the image to an empty RGB image
+            m_input->setParameter(ConstImage::IMAGE, base::Image(0, 0, Image::RGB_24));
         }
 
         void Camera::setParameter(unsigned int id, const Data& value)
