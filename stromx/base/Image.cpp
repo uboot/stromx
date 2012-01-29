@@ -131,12 +131,15 @@ namespace stromx
             unsigned int dataSize = 0;
             const unsigned int CHUNK_SIZE = 100000;
             std::vector<char> data;
+            char* dataPtr;
             while(! input.file().eof())
             {
                 data.resize(data.size() + CHUNK_SIZE);
-                input.file().read(&data[0], CHUNK_SIZE);
+                dataPtr = &data[0] + dataSize;
+                input.file().read(dataPtr, CHUNK_SIZE);
                 dataSize += (unsigned int)(input.file().gcount());
             }
+            data.resize(dataSize);
             
             cv::Mat buffer(data);
             m_matImage = new cv::Mat(cv::imdecode(buffer, -1));
