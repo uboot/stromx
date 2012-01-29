@@ -47,7 +47,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("test"), XmlUtilities::stripExtension("test.xml"));
             CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::stripExtension(".xml"));
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc"));
-            CPPUNIT_ASSERT_EQUAL(std::string("abc.txt"), XmlUtilities::stripExtension("abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc.txt"));
         }
     }
 }

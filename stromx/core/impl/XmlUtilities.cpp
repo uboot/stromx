@@ -15,6 +15,7 @@
  */
 
 #include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 #include "XmlUtilities.h"
 
 namespace stromx
@@ -70,13 +71,19 @@ namespace stromx
             
             const std::string XmlUtilities::stripExtension(const std::string& filename)
             {
-                if(filename.length() < 4)
-                    return filename;
+                std::string result;
                 
-                if(filename.substr(filename.length() - 4, 4) == ".xml")
-                    return filename.substr(0, filename.length() - 4);
+                for(std::string::const_iterator iter = filename.begin();
+                    iter != filename.end();
+                    ++iter)
+                {
+                    if(*iter == '.')
+                        break;
+                    
+                    result.append(boost::lexical_cast<std::string>(*iter));
+                }
                 
-                return filename;
+                return result;
             }
         }
     }
