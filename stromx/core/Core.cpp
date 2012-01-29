@@ -21,6 +21,7 @@
 #include "None.h"
 #include "Primitive.h"
 #include "Registry.h"
+#include "Trigger.h"
 
 void stromxRegisterCore(stromx::core::Registry& registry)
 {
@@ -29,19 +30,14 @@ void stromxRegisterCore(stromx::core::Registry& registry)
     registry.registerOperator(new Dump);
     
     registry.registerData(new Bool);
-    
     registry.registerData(new Int8);
     registry.registerData(new UInt8);
-    
     registry.registerData(new Int16);
     registry.registerData(new UInt16);
-    
     registry.registerData(new Int32);
     registry.registerData(new UInt32);
-    
     registry.registerData(new Double);
-    
     registry.registerData(new Enum);
-    
     registry.registerData(new None);
+    registry.registerData(new Trigger);
 }

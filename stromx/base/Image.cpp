@@ -35,17 +35,7 @@ namespace stromx
             m_isHeader(false),
             m_matImage(0)
         {
-            try
-            {
-                m_image = cvCreateImage(cv::Size(width, height), depth(pixelType) * 8, numChannels(pixelType));
-                
-                getDataFromCvImage(pixelType);
-                setVariant(dataTypeFromPixelType(pixelType));
-            }
-            catch(cv::Exception&)
-            {
-                throw core::OutOfMemory("Failed to create new image.");
-            }
+            allocate(width, height, pixelType);
         }
         
         Image::Image(const core::Image& image)
@@ -53,18 +43,7 @@ namespace stromx
             m_isHeader(false),
             m_matImage(0)
         {
-            try
-            {
-                m_image = cvCreateImage(cv::Size(image.width(), image.height()),
-                                        depth(image.pixelType()) * 8, numChannels(image.pixelType()));
-                
-                getDataFromCvImage(image.pixelType());
-                setVariant(image.variant());
-            }
-            catch(cv::Exception&)
-            {
-                throw core::OutOfMemory("Failed to create new image.");
-            }
+            allocate(image.width(), image.height(), image.pixelType());
             
             cv::Mat cvInImage = getOpenCvMat(image);
             cv::Mat cvImage(m_image);
@@ -76,9 +55,7 @@ namespace stromx
             m_isHeader(false),
             m_matImage(0)
         {
-            setBufferSize(0);
-            initialize(0, 0, 0, 0, core::Image::NONE);
-            setVariant(core::DataVariant::IMAGE);
+            allocate(0, 0, NONE);
         }
         
         Image::Image(const std::string& filename)
@@ -102,23 +79,18 @@ namespace stromx
             m_isHeader(false),
             m_matImage(0)
         {
-            try
-            {
-                m_image = cvCreateImage(cv::Size(size, 1), 8, 1);
-                
-                getDataFromCvImage(core::Image::MONO_8);
-                setVariant(core::DataVariant::IMAGE);
-            }
-            catch(cv::Exception&)
-            {
-                throw core::OutOfMemory("Failed to allocate image.");
-            }
+            allocate(size, 1, MONO_8);
         } 
         
         void Image::serialize(core::OutputProvider & output) const
         {
             if(width() == 0 || height() == 0)
+            {
+                output.text() << width() << " ";
+                output.text() << height() << " ";
+                output.text() << (unsigned int)(pixelType());
                 return;
+            }
             
             std::vector<uchar> data;
             if(! cv::imencode(".png", cv::Mat(m_image), data))
@@ -139,10 +111,15 @@ namespace stromx
             
             if(! input.hasFile())
             {
-                setBufferSize(0);
-                initialize(0, 0, 0, 0, core::Image::NONE);
-                setVariant(core::DataVariant::IMAGE);
+                unsigned int width = 0;
+                unsigned int height = 0;
+                unsigned int type = 0;
                 
+                input.text() >> width;
+                input.text() >> height;
+                input.text() >> type;
+                
+                allocate(width, height, PixelType(type));
                 return;
             }
             
@@ -265,6 +242,29 @@ namespace stromx
         Image::~Image()
         {
             releaseImage();
+        }
+        
+        void Image::allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
+        {
+            if(width == 0 || height == 0)
+            {
+                setBufferSize(0);
+                initialize(width, height, 0, 0, pixelType);
+            }
+            else
+            {
+                try
+                {
+                    m_image = cvCreateImage(cv::Size(width, height), depth(pixelType) * 8, numChannels(pixelType));
+                    getDataFromCvImage(pixelType);
+                }
+                catch(cv::Exception&)
+                {
+                    throw core::OutOfMemory("Failed to create new image.");
+                }
+            }
+             
+            setVariant(dataTypeFromPixelType(pixelType));
         }
 
         const core::DataVariant Image::dataTypeFromPixelType(const core::Image::PixelType pixelType)

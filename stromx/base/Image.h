@@ -64,7 +64,7 @@ namespace stromx
             void open(const std::string& filename);
             void open(const std::string & filename, const FileAccess access);
             void save(const std::string& filename) const;
-            void resize(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType);
+            void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
             void resize(const unsigned int size);
             
         private:
@@ -77,6 +77,7 @@ namespace stromx
             static const int getCvAccessType(const FileAccess access);
             
             void getDataFromCvImage(const PixelType pixelType);
+            void allocate(const unsigned int width, const unsigned int height, const PixelType pixelType);
             void releaseImage();
             
             _IplImage* m_image;

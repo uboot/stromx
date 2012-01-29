@@ -71,6 +71,7 @@ set(SOURCES
     StreamTest.cpp
     TestUtilities.cpp
     ../Core.cpp
+    ../Trigger.cpp
     CoreTest.cpp
 )
 

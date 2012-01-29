@@ -144,12 +144,13 @@ namespace stromx
         
         void ImageTest::testSerializeEmpty()
         {
-            m_image = new Image(100, 0, core::Image::MONO_8);
+            m_image = new Image(100, 0, core::Image::RGB_24);
 
             core::DirectoryFileOutput output(".");
             output.initialize("ImageTest_testSerializeEmpty");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
+            CPPUNIT_ASSERT_EQUAL(std::string("100 0 3"), output.getText());
         }
             
         void ImageTest::testDeserialize()
@@ -168,8 +169,11 @@ namespace stromx
             m_image = new Image();
             
             core::DirectoryFileInput input(".");
-            input.initialize("", "");
+            input.initialize("100 0 3", "");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
+            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
         }
                 
         void ImageTest::testResizeBuffer()
