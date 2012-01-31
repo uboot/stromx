@@ -39,6 +39,9 @@ namespace stromx
                 XmlWriterImpl();
                 ~XmlWriterImpl() {};
                 void writeStream(FileOutput & output, const std::string & filename, const Stream& stream);
+                void writeParameters(FileOutput& output, 
+                                     const std::string& filename, 
+                                     const std::vector< const stromx::core::Operator* >& operators);
                 
             private:
                 const unsigned int translateOperatorPointerToID(const Operator* const op) const;
@@ -56,6 +59,7 @@ namespace stromx
                 xercesc::DOMDocument* m_doc;
                 xercesc::DOMElement* m_stromxElement;
                 xercesc::DOMElement* m_strElement;
+                xercesc::DOMElement* m_parsElement;
             };
         }
     }

@@ -38,12 +38,11 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(XmlWriter().writeStream("/root/test/XmlWriterTest_testWriteStream.xml", *m_stream), FileAccessFailed);
             //Attempt to write to filesystem where access is guaranteed (hopefully: it is written to the subdirectory where
             //the test was initiated
-            XmlWriter().writeStream("XmlWriterTest_testWrite.xml", *m_stream);
+            XmlWriter().writeStream("XmlWriterTest_testWriteStream.xml", *m_stream);
         }
         
         void XmlWriterTest::testWriteParameters()
         {
-
         }
 
         void XmlWriterTest::tearDown()

@@ -36,7 +36,15 @@ namespace stromx
     {
         namespace impl
         {
-            XmlWriterImpl::XmlWriterImpl() : m_stream(0), m_output(0), m_filename(""), m_impl(0), m_doc(0), m_stromxElement(0), m_strElement(0)
+            XmlWriterImpl::XmlWriterImpl() 
+                : m_stream(0), 
+                  m_output(0), 
+                  m_filename(""), 
+                  m_impl(0), 
+                  m_doc(0), 
+                  m_stromxElement(0), 
+                  m_strElement(0),
+                  m_parsElement(0)
             {
                 try
                 {
@@ -372,6 +380,64 @@ namespace stromx
                 {
                 }
             }
+            
+            void XmlWriterImpl::writeParameters(FileOutput& output, 
+                                                const std::string& filename, 
+                                                const std::vector< const stromx::core::Operator* >& operators)
+            {
+                if (filename.empty())
+                {
+                    throw WrongArgument("Invalid file name.");
+                }
+                
+                m_output = &output;
+                m_filename = filename;
+                
+                try
+                {
+                    //Create document type
+                    DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
+                    
+                    //Create document
+                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+                                        
+                    //Create comment
+                    DOMComment* comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
+                    m_doc->appendChild(comment);
+                    
+                    //Create Stromx branch           
+                    m_stromxElement = m_doc->getDocumentElement();              
+                
+                    //Create attribute version of Stromx
+                    DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                    std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
+                                      boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
+                    verAttr->setValue(Str2Xml(str.c_str()));
+                    m_stromxElement->setAttributeNode(verAttr);
+                    
+                    //Create Parameters branch
+                    m_strElement = m_doc->createElement(Str2Xml("Parameters"));
+                    m_stromxElement->appendChild(m_parsElement);
+                }
+                catch(DOMException&)
+                {
+                    throw InternalError("Error in Xerces-C.");
+                }
+                catch(XMLException&)
+                {
+                    throw InternalError("Error in Xerces-C.");
+                }
+                            
+                try
+                {
+                    XMLPlatformUtils::Terminate();  // Terminate after release of memory
+                }
+                catch(XMLException&)
+                {
+                }
+            }
+
         }
     } 
 }
