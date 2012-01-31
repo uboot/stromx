@@ -124,6 +124,43 @@ namespace stromx
                     }
                 };
             }
+            
+            XmlReaderImpl::XmlReaderImpl(const core::Factory& factory)
+              : m_factory(factory),
+                m_stream(0),
+                m_input(0)
+            {
+                try
+                {
+                    XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
+                }
+                catch (const XMLException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InternalError ex("Failed to initialize xerces-c: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+            }
+
+            XmlReaderImpl::~XmlReaderImpl()
+            {  
+                try
+                {
+                    XMLPlatformUtils::Terminate();  // Terminate after release of memory
+                }
+                catch(XMLException&)
+                {
+                }
+                
+                for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
+                    iter != m_id2DataMap.end();
+                    ++iter)
+                {
+                    delete iter->second;
+                }
+            }
 
             Stream*const XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
             {    
@@ -241,42 +278,9 @@ namespace stromx
                 return m_stream;
             }  
             
-            XmlReaderImpl::XmlReaderImpl(const core::Factory& factory)
-              : m_factory(factory),
-                m_stream(0),
-                m_input(0)
+            void XmlReaderImpl::readParameters(FileInput& input, const std::string filename, const std::vector< stromx::core::Operator* > operators)
             {
-                try
-                {
-                    XMLPlatformUtils::Initialize();  // Initialize Xerces infrastructure
-                }
-                catch (const XMLException& toCatch)
-                {
-                    char* message = XMLString::transcode(toCatch.getMessage());
-                    
-                    InternalError ex("Failed to initialize xerces-c: " + std::string(message));
-                    XMLString::release(&message);
-                    throw ex;
-                }
-            }
 
-            
-            XmlReaderImpl::~XmlReaderImpl()
-            {  
-                try
-                {
-                    XMLPlatformUtils::Terminate();  // Terminate after release of memory
-                }
-                catch(XMLException&)
-                {
-                }
-                
-                for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
-                    iter != m_id2DataMap.end();
-                    ++iter)
-                {
-                    delete iter->second;
-                }
             }
             
             void XmlReaderImpl::readOperator(DOMElement*const opElement)

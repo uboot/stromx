@@ -21,6 +21,7 @@
 #include <xercesc/util/XercesDefs.hpp>
 #include <map>
 #include <string>
+#include <vector>
 
 namespace stromx
 {
@@ -43,6 +44,9 @@ namespace stromx
                 ~XmlReaderImpl();
                 
                 Stream* const readStream(FileInput & input, const std::string & filename);
+                
+                void readParameters(FileInput & input, const std::string filename, 
+                                    const std::vector<stromx::core::Operator*> operators);
                 
             private:
                 void readOperator(xercesc::DOMElement* const opElement);

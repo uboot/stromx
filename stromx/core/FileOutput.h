@@ -36,6 +36,7 @@ namespace stromx
             
             /**
              * Returns the name of the current file including the correct file extension.
+             * If no file data was written an empty string is returned.
              * \throws WrongState If no file has been opened by the client.
              */
             virtual const std::string & getFilename() const = 0;

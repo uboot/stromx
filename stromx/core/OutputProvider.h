@@ -23,6 +23,7 @@ namespace stromx
 {
     namespace core
     {
+        /** \brief Provides functions to serialize data to strings and files. */
         class OutputProvider
         {
         public:
