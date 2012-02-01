@@ -25,6 +25,7 @@ namespace stromx
     namespace core
     {
         class Factory;
+        class Stream;
         
         class XmlReaderTest : public CPPUNIT_NS :: TestFixture
         {
@@ -52,6 +53,7 @@ namespace stromx
                 
         private:
             Factory* m_factory;
+            Stream* m_stream;
         };
     }
 }

@@ -17,8 +17,10 @@
 #include <cppunit/TestAssert.h>
 #include "TestData.h"
 #include "TestOperator.h"
+#include "TestUtilities.h"
 #include "XmlReaderTest.h"
 #include "../Factory.h"
+#include "../Operator.h"
 #include "../Stream.h"
 #include "../XmlReader.h"
 #include "../XmlWriter.h"
@@ -36,6 +38,8 @@ namespace stromx
             m_factory->registerData(new UInt32());
             m_factory->registerData(new Bool());
             m_factory->registerData(new TestData);
+            
+            m_stream = TestUtilities::buildTestStream();
         }
         
         void XmlReaderTest::testReadStream()
@@ -65,11 +69,16 @@ namespace stromx
         
         void XmlReaderTest::testReadParameters()
         {
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.xml", *m_factory, m_stream->operators()));
+            
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(0)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
         }
 
         void XmlReaderTest::tearDown()
         {
             delete m_factory;
+            delete m_stream;
         }
     }
 }

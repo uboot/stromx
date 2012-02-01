@@ -56,7 +56,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConverPixelTypeTest_testExecuteMono8.png");
+            image.save("ConvertPixelTypeTest_testExecuteMono8.png");
         }
         
         void ConvertPixelTypeTest::testExecuteBayerBg8()
@@ -73,7 +73,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConverPixelTypeTest_testExecuteBayerBg8.png");
+            image.save("ConvertPixelTypeTest_testExecuteBayerBg8.png");
         }
         
         void ConvertPixelTypeTest::testExecuteBayerRgb24()
@@ -90,7 +90,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConverPixelTypeTest_testExecuteBayerRgb24.png");
+            image.save("ConvertPixelTypeTest_testExecuteBayerRgb24.png");
         }
         
         void ConvertPixelTypeTest::tearDown ( void )

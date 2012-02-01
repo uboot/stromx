@@ -5,26 +5,26 @@
     <Parameters>
         <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">5000</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">2000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Core" version="0.1.0">200</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">100</Data>
             </Parameter>
         </Operator>
         <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">6000</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">3000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Core" version="0.1.0">250</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">150</Data>
             </Parameter>
         </Operator>
         <Operator id="2" package="TestPackage" type="TestOperator" version="0.1.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">7000</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">4000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Core" version="0.1.0">300</Data>
+                <Data type="UInt32" package="Core" version="0.1.0">200</Data>
             </Parameter>
         </Operator>
     </Parameters>

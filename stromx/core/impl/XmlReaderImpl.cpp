@@ -280,7 +280,128 @@ namespace stromx
             
             void XmlReaderImpl::readParameters(FileInput& input, const std::string filename, const std::vector< stromx::core::Operator* > operators)
             {
+                std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
+                std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
+                
+                XercesDOMParser* parser = new XercesDOMParser();
 
+                parser->setErrorHandler(errHandler.get());
+                parser->setEntityResolver(entityResolver.get());
+                parser->setValidationScheme(XercesDOMParser::Val_Always);
+
+                std::stringbuf contentBuffer;
+                m_input = &input;
+                m_input->initialize("", filename);
+                m_input->openFile(FileInput::TEXT).get(contentBuffer, 0);
+                
+                std::string content = contentBuffer.str();
+                
+                MemBufInputSource source(reinterpret_cast<const XMLByte*>(content.c_str()), content.size(), (XMLCh*)(0));
+
+                try
+                {
+                    parser->parse(source);
+                }
+                catch (const XMLException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    FileAccessFailed ex(filename, "XML exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+                catch (const DOMException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.msg);
+                    
+                    FileAccessFailed ex(filename, "DOM exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+                catch (FileAccessFailed& e)
+                {
+                    throw e;
+                }
+                catch (...)
+                {
+                    throw FileAccessFailed(filename, "Unexpected exception.");
+                }
+                
+                try
+                {
+                    DOMDocument* doc = parser->getDocument();
+                    
+                    if(! doc)
+                        throw FileAccessFailed(filename, "Failed to read file.");
+                    
+                    DOMNodeList* streamNodes = doc->getElementsByTagName(Str2Xml("Parameters"));
+                    
+                    if(! streamNodes->getLength())
+                        throw FileAccessFailed(filename, "Found no element <Parameters/>.");
+                    
+                    DOMElement* stream = dynamic_cast<DOMElement*>(streamNodes->item(0));
+                    
+                    DOMNodeList* operatorNodes = stream->getElementsByTagName(Str2Xml("Operator"));
+                    XMLSize_t numOperators = operatorNodes->getLength();
+                    
+                    // read the operators
+                    for(unsigned int i = 0; i < numOperators; ++i)
+                    {
+                        DOMElement* opElement = dynamic_cast<DOMElement*>(operatorNodes->item(i));
+                        Xml2Str idStr(opElement->getAttribute(Str2Xml("id")));
+                        unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
+                        
+                        if(id >= operators.size())
+                            throw FileAccessFailed(filename, "No operator with ID " + boost::lexical_cast<std::string>(id) + ".");
+                        
+                        // get the operator with the correct ID
+                        Operator* op = operators[id];
+                
+                        DOMNodeList* parameters = opElement->getElementsByTagName(Str2Xml("Parameter"));
+                        XMLSize_t numParameters = parameters->getLength();
+                        
+                        // read the parameters of the current operator
+                        for(unsigned int i = 0; i < numParameters; ++i)
+                        {
+                            DOMElement* paramElement = dynamic_cast<DOMElement*>(parameters->item(i));
+                            readParameter(paramElement);
+                        }
+                    
+                        // set parameters
+                        for(std::map<unsigned int, stromx::core::Data*>::const_iterator iter = m_id2DataMap.begin();
+                            iter != m_id2DataMap.end();
+                            ++iter)
+                        {
+                            try
+                            {
+                                op->setParameter(iter->first, *(iter->second));
+                            }
+                            catch(stromx::core::OperatorError&)
+                            {
+                                // ignore exceptions
+                            }
+                            
+                            delete iter->second;
+                        }
+                        
+                        // clear the current parameters
+                        m_id2DataMap.clear();
+                    }
+                }
+                catch(xercesc::XMLException&)
+                {
+                    throw FileAccessFailed(filename, "Failed to read XML file.");
+                }
+                catch(core::Exception&)
+                {
+                    throw;
+                }
+                catch(boost::bad_lexical_cast & e)
+                {
+                    throw FileAccessFailed(filename, e.what());
+                }
+
+                delete parser;
             }
             
             void XmlReaderImpl::readOperator(DOMElement*const opElement)
