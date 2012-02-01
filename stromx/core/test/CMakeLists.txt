@@ -68,6 +68,8 @@ set(SOURCES
     TryTest.cpp
     ../impl/WriteAccessImpl.cpp
     WriteAccessTest.cpp
+    ../SortInputsAlgorithm.cpp
+    SortInputsAlgorithmTest.cpp
     ../Stream.cpp
     StreamTest.cpp
     TestUtilities.cpp
