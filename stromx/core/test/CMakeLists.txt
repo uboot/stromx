@@ -90,8 +90,18 @@ if(BUILD_XML_SUPPORT)
         XmlWriterTest.cpp
         ../impl/XmlWriterImpl.cpp
     )
-
     include_directories(${XERCES_INCLUDE_DIR})
+endif()
+
+if(BUILD_ZIP_SUPPORT)
+    set(SOURCES
+        ${SOURCES}
+        ../ZipFileInput.cpp
+        ZipFileInputTest.cpp
+        ../ZipFileOutput.cpp
+        ZipFileOutputTest.cpp
+    )
+    include_directories(${LIBZIP_INCLUDE_DIR})
 endif()
 
 add_executable(stromx_core_test ${SOURCES})

@@ -61,6 +61,14 @@ if(BUILD_XML_SUPPORT)
         )
 endif()
 
+if(BUILD_ZIP_SUPPORT)
+    set(SOURCES
+        ${SOURCES}
+        ZipFileInput.cpp
+        ZipFileOutput.cpp
+        )
+endif()
+
 add_library(stromx_core SHARED ${SOURCES})
 
 set(VERSION_STRING "${STROMX_VERSION_MAJOR}.${STROMX_VERSION_MINOR}.${STROMX_VERSION_PATCH}")
@@ -76,6 +84,10 @@ include_directories(
 
 if(BUILD_XML_SUPPORT)
     include_directories(${XERCES_INCLUDE_DIR})
+endif()
+
+if(BUILD_ZIP_SUPPORT)
+    include_directories(${LIBZIP_INCLUDE_DIR})
 endif()
 
 target_link_libraries(stromx_core

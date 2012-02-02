@@ -14,28 +14,28 @@
 *  limitations under the License.
 */
 
-#include "DirectoryFileOutputTest.h"
+#include "ZipFileOutputTest.h"
 
-#include "../DirectoryFileOutput.h"
+#include "../ZipFileOutput.h"
 #include "../Exception.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DirectoryFileOutputTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ZipFileOutputTest);
 
 namespace stromx
 {
     namespace core
     {
-        void DirectoryFileOutputTest::setUp()
+        void ZipFileOutputTest::setUp()
         {
-            m_output = new DirectoryFileOutput(".");
+            m_output = new ZipFileOutput("ZipFileOutputTest.zip");
         }
 
-        void DirectoryFileOutputTest::tearDown()
+        void ZipFileOutputTest::tearDown()
         {
             delete m_output;
         }
 
-        void DirectoryFileOutputTest::testText()
+        void ZipFileOutputTest::testText()
         {
             CPPUNIT_ASSERT_THROW(m_output->text(), WrongState);
             
@@ -44,7 +44,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("Test"), m_output->getText());
         }
                 
-        void DirectoryFileOutputTest::testFile()
+        void ZipFileOutputTest::testFile()
         {
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             
@@ -54,7 +54,7 @@ namespace stromx
             m_output->file() << 5;
         }
         
-        void DirectoryFileOutputTest::testGetFilename()
+        void ZipFileOutputTest::testGetFilename()
         {
             CPPUNIT_ASSERT_THROW(m_output->getFilename(), WrongState);
             

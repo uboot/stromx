@@ -14,25 +14,23 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_DIRECTORYFILEOUTPUT_H
-#define STROMX_CORE_DIRECTORYFILEOUTPUT_H
+#ifndef STROMX_CORE_ZIPFILEOUTPUT_H
+#define STROMX_CORE_ZIPFILEOUTPUT_H
 
 #include "Config.h"
 #include "FileOutput.h"
-#include <fstream>
-#include <sstream>
 
 namespace stromx
 {
     namespace core
     {
-        /** \brief File output which stores the output data in single files in a common directory. */
-        class STROMX_CORE_API DirectoryFileOutput : public FileOutput
+        /** \brief File output which stores the output data in a zip file. */
+        class STROMX_CORE_API ZipFileOutput : public FileOutput
         {
         public:
-            /** Constructs a directory file output which stores all files in \c directory. */
-            DirectoryFileOutput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
-            virtual ~DirectoryFileOutput();
+            /** Constructs a directory file output which stores all files in \c archive. */
+            ZipFileOutput(const std::string & archive) {}
+            virtual ~ZipFileOutput();
             
             virtual void initialize(const std::string & filename);
             virtual const std::string & getFilename() const;
@@ -43,16 +41,8 @@ namespace stromx
             virtual std::ostream & file();
             
         private:
-            static const std::string PATH_SEPARATOR;
-            
-            bool m_isSet;
-            std::string m_directory;
-            std::string m_currentFilename;
-            std::string m_activeFilename;
-            std::ofstream m_currentFile;
-            std::ostringstream m_currentText;
         };
     }
 }
 
-#endif // STROMX_CORE_DIRECTORYFILEOUTPUT_H
+#endif // STROMX_CORE_ZIPFILEOUTPUT_H

@@ -14,28 +14,28 @@
 *  limitations under the License.
 */
 
-#include "DirectoryFileInputTest.h"
+#include "ZipFileInputTest.h"
 
 #include "../Exception.h"
-#include "../DirectoryFileInput.h"
+#include "../ZipFileInput.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::DirectoryFileInputTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ZipFileInputTest);
 
 namespace stromx
 {
     namespace core
     {
-        void DirectoryFileInputTest::setUp()
+        void ZipFileInputTest::setUp()
         {
-            m_input = new DirectoryFileInput(".");
+            m_input = new ZipFileInput("archive.zip");
         }
 
-        void DirectoryFileInputTest::tearDown()
+        void ZipFileInputTest::tearDown()
         {
             delete m_input;
         }
 
-        void DirectoryFileInputTest::testText()
+        void ZipFileInputTest::testText()
         {
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->text(), WrongState);
@@ -49,7 +49,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("Test2"), result);
         }
         
-        void DirectoryFileInputTest::testFile()
+        void ZipFileInputTest::testFile()
         {
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->openFile(InputProvider::TEXT), WrongState);
@@ -64,7 +64,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
         }
         
-        void DirectoryFileInputTest::testHasFile()
+        void ZipFileInputTest::testHasFile()
         {
             m_input->initialize("Test", "data.txt");
             CPPUNIT_ASSERT_EQUAL(true, m_input->hasFile());

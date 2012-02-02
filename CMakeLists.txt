@@ -30,6 +30,8 @@ find_package(OpenCV2)
 
 find_package(XercesC)
 
+find_package(LibZip)
+
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)
 endif()
@@ -44,6 +46,10 @@ endif()
 
 if(XERCES_FOUND)
     option(BUILD_XML_SUPPORT "Build XML persistence" ON)
+endif()
+
+if(LIBZIP_FOUND)
+    option(BUILD_ZIP_SUPPORT "Build zip file support" ON)
 endif()
 
 if(BUILD_CORE)
