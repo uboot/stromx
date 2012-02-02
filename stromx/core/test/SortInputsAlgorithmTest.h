@@ -30,7 +30,8 @@ namespace stromx
         class SortInputsAlgorithmTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (SortInputsAlgorithmTest);
-            CPPUNIT_TEST (testApply);
+            CPPUNIT_TEST (testApplyTwoThreads);
+            CPPUNIT_TEST (testApplyOneThread);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -40,7 +41,8 @@ namespace stromx
                 void tearDown();
 
             protected:
-                void testApply();
+                void testApplyTwoThreads();
+                void testApplyOneThread();
                 
             private:
                 Stream* m_stream;

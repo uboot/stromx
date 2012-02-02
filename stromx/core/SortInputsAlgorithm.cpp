@@ -48,7 +48,7 @@ namespace stromx
                     std::map<const Operator*, unsigned int>::const_iterator rank2 = m_op2RankMap.find(input2.op());
                     BOOST_ASSERT(rank2 != m_op2RankMap.end());
                     
-                    return rank1->second < rank2->second ? true : false;
+                    return rank1->second > rank2->second ? true : false;
                 }
                 
             private:
@@ -113,7 +113,7 @@ namespace stromx
             std::map<const Operator*, unsigned int> op2RankMap;
             for(unsigned int rank = 0; rank < output.size(); ++rank)
             {
-                op2RankMap[id2OpMap[output[i]]] = i;
+                op2RankMap[id2OpMap[output[rank]]] = rank;
             }
             
             // reorder the input sequences
@@ -136,7 +136,10 @@ namespace stromx
                     inputIter != inputs.end();
                     ++inputIter)
                 {
-                    thread->addInput(inputIter->op(), inputIter->id());
+                    // add the input to the thread
+                    // cast away constness of the operator (non-const access is anyways
+                    // available via Stream::operators())
+                    thread->addInput(const_cast<Operator*>(inputIter->op()), inputIter->id());
                 }
             }
         }
