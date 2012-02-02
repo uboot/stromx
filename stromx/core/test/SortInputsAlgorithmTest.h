@@ -24,6 +24,9 @@ namespace stromx
 {
     namespace core
     {
+        class Operator;
+        class Stream;
+        
         class SortInputsAlgorithmTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (SortInputsAlgorithmTest);
@@ -31,13 +34,19 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                SortInputsAlgorithmTest() {}
+                SortInputsAlgorithmTest() : m_stream(0), m_op1(0), m_op2(0) {}
                 
-                void setUp() {}
-                void tearDown() {}
+                void setUp();
+                void tearDown();
 
             protected:
                 void testApply();
+                
+            private:
+                Stream* m_stream;
+                Operator* m_op1;
+                Operator* m_op2;
+            
         };
     }
 }

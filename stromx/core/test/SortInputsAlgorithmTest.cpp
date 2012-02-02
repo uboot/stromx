@@ -18,6 +18,10 @@
 
 #include <cppunit/TestAssert.h>
 #include "../SortInputsAlgorithm.h"
+#include "../Stream.h"
+#include "../Thread.h"
+#include "TestOperator.h"
+#include "TestUtilities.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::SortInputsAlgorithmTest);
 
@@ -25,9 +29,47 @@ namespace stromx
 {
     namespace core
     {
+        void SortInputsAlgorithmTest::setUp()
+        {
+            // create the test stream
+            m_stream = TestUtilities::buildTestStream();
+            
+            // remove the thread
+            m_stream->removeThread(*m_stream->threads().begin());
+            
+            // add two new threads
+            Thread* thread1 = m_stream->addThread();
+            Thread* thread2 = m_stream->addThread();
+            
+            m_op1 = m_stream->operators()[1];
+            m_op2 = m_stream->operators()[2];
+            
+            // add inputs in the wrong order
+            thread1->addInput(m_op2, TestOperator::INPUT_1);
+            thread1->addInput(m_op1, TestOperator::INPUT_1);
+            thread2->addInput(m_op2, TestOperator::INPUT_2);
+            thread2->addInput(m_op1, TestOperator::INPUT_2);
+        }
+
+        void SortInputsAlgorithmTest::tearDown()
+        {
+            delete m_stream;
+        }
+        
         void SortInputsAlgorithmTest::testApply()
         {
-
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_stream->threads()[0]->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op1), m_stream->threads()[0]->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_stream->threads()[1]->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op1), m_stream->threads()[1]->inputSequence()[1].op());
+            
+            SortInputsAlgorithm sort;
+            CPPUNIT_ASSERT_NO_THROW(sort.apply(*m_stream));
+            
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op1), m_stream->threads()[0]->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_stream->threads()[0]->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op1), m_stream->threads()[1]->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_stream->threads()[1]->inputSequence()[1].op());
         }
     }
 }
