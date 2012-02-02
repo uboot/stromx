@@ -74,6 +74,25 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(UInt32(7000), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(0)));
             CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
         }
+        
+        void XmlReaderTest::testReadParametersEmpty()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("empty.xml", *m_factory, m_stream->operators()),
+                                 FileAccessFailed);
+        }
+
+        void XmlReaderTest::testReadParametersInvalidFile()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("invalid.xml", *m_factory, m_stream->operators()),
+                                 FileAccessFailed);
+
+        }
+
+        void XmlReaderTest::testReadParametersWrongFile()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("wrongfile.xml", *m_factory, m_stream->operators()),
+                                 FileAccessFailed);
+        }
 
         void XmlReaderTest::tearDown()
         {

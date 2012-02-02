@@ -334,15 +334,18 @@ namespace stromx
                     if(! doc)
                         throw FileAccessFailed(filename, "Failed to read file.");
                     
-                    DOMNodeList* streamNodes = doc->getElementsByTagName(Str2Xml("Parameters"));
+                    DOMNodeList* parameterNodes = doc->getElementsByTagName(Str2Xml("Parameters"));
                     
-                    if(! streamNodes->getLength())
+                    if(! parameterNodes->getLength())
                         throw FileAccessFailed(filename, "Found no element <Parameters/>.");
                     
-                    DOMElement* stream = dynamic_cast<DOMElement*>(streamNodes->item(0));
+                    DOMElement* parametersItem = dynamic_cast<DOMElement*>(parameterNodes->item(0));
                     
-                    DOMNodeList* operatorNodes = stream->getElementsByTagName(Str2Xml("Operator"));
+                    DOMNodeList* operatorNodes = parametersItem->getElementsByTagName(Str2Xml("Operator"));
                     XMLSize_t numOperators = operatorNodes->getLength();
+                    
+                    if(numOperators != operators.size())
+                        throw FileAccessFailed(filename, "The number or <Operator/> tags does not match the number of input operators.");
                     
                     // read the operators
                     for(unsigned int i = 0; i < numOperators; ++i)
