@@ -29,7 +29,7 @@ namespace stromx
     {
         void XmlWriterTest::setUp()
         {
-            m_stream = TestUtilities::buildTestStream();
+            m_stream = TestUtilities::buildTestStream();         
         }
         
         void XmlWriterTest::testWriteStream()
@@ -38,12 +38,14 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(XmlWriter().writeStream("/root/test/XmlWriterTest_testWriteStream.xml", *m_stream), FileAccessFailed);
             //Attempt to write to filesystem where access is guaranteed (hopefully: it is written to the subdirectory where
             //the test was initiated
-            XmlWriter().writeStream("XmlWriterTest_testWrite.xml", *m_stream);
+            XmlWriter().writeStream("XmlWriterTest_testWriteStream.xml", *m_stream);
         }
         
         void XmlWriterTest::testWriteParameters()
         {
-
+            std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
+                 
+            XmlWriter().writeParameters("XmlWriterTest_testWriteParameters.xml", operators);
         }
 
         void XmlWriterTest::tearDown()

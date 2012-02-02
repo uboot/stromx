@@ -14,11 +14,10 @@
 *  limitations under the License.
 */
 
+#include "DirectoryFileOutput.h"
 #include "XmlWriter.h"
-
 #include "impl/XmlUtilities.h"
 #include "impl/XmlWriterImpl.h"
-#include "DirectoryFileOutput.h"
 
 namespace stromx
 {
@@ -44,5 +43,20 @@ namespace stromx
             XmlWriterImpl impl;
             impl.writeStream(output, XmlUtilities::stripExtension(filename), stream);
         }
+        
+        void XmlWriter::writeParameters(const std::string& filepath, 
+                                        const std::vector<const stromx::core::Operator* >& operators) const
+        {
+            using namespace impl;
+            
+            XmlWriterImpl impl;
+            
+            std::string directory = XmlUtilities::computePath(filepath);
+            std::string filename = XmlUtilities::stripExtension(XmlUtilities::computeName(filepath));
+            DirectoryFileOutput output(directory);
+            
+            impl.writeParameters(output, filename, operators);
+        }
+
     }
 }
