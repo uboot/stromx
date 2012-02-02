@@ -9,6 +9,15 @@ include_directories(
     ${CPPUNIT_INCLUDE_DIR}
 )
 
+if(BUILD_XML_SUPPORT)
+    include_directories(${XERCES_INCLUDE_DIR})
+endif()
+
+if(BUILD_ZIP_SUPPORT)
+    include_directories(${LIBZIP_INCLUDE_DIR})
+endif()
+
+
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/invalid.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/parameters.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -90,7 +99,6 @@ if(BUILD_XML_SUPPORT)
         XmlWriterTest.cpp
         ../impl/XmlWriterImpl.cpp
     )
-    include_directories(${XERCES_INCLUDE_DIR})
 endif()
 
 if(BUILD_ZIP_SUPPORT)
@@ -101,7 +109,6 @@ if(BUILD_ZIP_SUPPORT)
         ../ZipFileOutput.cpp
         ZipFileOutputTest.cpp
     )
-    include_directories(${LIBZIP_INCLUDE_DIR})
 endif()
 
 add_executable(stromx_core_test ${SOURCES})
@@ -115,5 +122,9 @@ target_link_libraries(stromx_core_test
 
 if(BUILD_XML_SUPPORT)
     target_link_libraries(stromx_core_test ${XERCES_LIBRARIES})
+endif()
+
+if(BUILD_XML_SUPPORT)
+    target_link_libraries(stromx_core_test ${LIBZIP_LIBRARY})
 endif()
 

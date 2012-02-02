@@ -17,24 +17,33 @@
 #include "ZipFileOutput.h"
 
 #include <zip.h>
+#include "Exception.h"
 
 namespace stromx
 {
     namespace core
     {
+        
         ZipFileOutput::ZipFileOutput(const std::string& archive)
+          : m_archive(0)
         {
-
+            int error = 0;
+            m_archive = zip_open(archive.c_str(), ZIP_CREATE, &error);
+            
+            if(!m_archive)
+                throw FileAccessFailed(archive);
         }
 
         ZipFileOutput::~ZipFileOutput()
         {
-
+            if(m_archive)
+                zip_close(m_archive);
         }
 
         void ZipFileOutput::initialize(const std::string& filename)
         {
-
+            m_fileOutput.str("");
+            m_fileOutput.clear();
         }
 
         const std::string& ZipFileOutput::getFilename() const

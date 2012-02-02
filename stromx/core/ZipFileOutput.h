@@ -17,8 +17,11 @@
 #ifndef STROMX_CORE_ZIPFILEOUTPUT_H
 #define STROMX_CORE_ZIPFILEOUTPUT_H
 
+#include <sstream>
 #include "Config.h"
 #include "FileOutput.h"
+
+struct zip;
 
 namespace stromx
 {
@@ -41,6 +44,9 @@ namespace stromx
             virtual std::ostream & file();
             
         private:
+            zip* m_archive;
+            bool m_initialized;
+            std::ostringstream m_fileOutput;
         };
     }
 }

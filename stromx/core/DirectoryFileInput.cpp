@@ -39,12 +39,12 @@ namespace stromx
                 m_currentFile.close();
             
             m_currentFilename = filename;
-            m_isSet = true;
+            m_initialized = true;
         }
 
         std::istream& DirectoryFileInput::text()
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current data in directory input.");
             
             return m_currentText;
@@ -52,7 +52,7 @@ namespace stromx
         
         const bool DirectoryFileInput::hasFile() const 
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current data in directory input.");
             
             return ! m_currentFilename.empty();
@@ -60,7 +60,7 @@ namespace stromx
             
         std::istream& DirectoryFileInput::openFile(const OpenMode mode)
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current data in directory input.");
             
             if(m_currentFile.is_open())
@@ -85,7 +85,7 @@ namespace stromx
 
         std::istream& DirectoryFileInput::file()
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current data in directory input.");
             
             if(! m_currentFile.is_open())

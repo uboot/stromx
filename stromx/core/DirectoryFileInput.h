@@ -31,7 +31,7 @@ namespace stromx
         {
         public:
             /** Constructs a directory file input which reads files in \c directory. */
-            DirectoryFileInput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
+            DirectoryFileInput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileInput();
             
             virtual void initialize(const std::string & text, const std::string & filename);
@@ -44,7 +44,7 @@ namespace stromx
         private:
             static const std::string PATH_SEPARATOR;
             
-            bool m_isSet;
+            bool m_initialized;
             std::string m_directory;
             std::string m_currentFilename;
             std::ifstream m_currentFile;

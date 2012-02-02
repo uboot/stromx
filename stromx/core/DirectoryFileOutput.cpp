@@ -38,7 +38,7 @@ namespace stromx
                 m_currentFile.close();
         
             m_currentFilename = filename;
-            m_isSet = true;
+            m_initialized = true;
             m_activeFilename = "";
         }
 
@@ -49,7 +49,7 @@ namespace stromx
 
         std::ostream& DirectoryFileOutput::text()
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current file in directory output.");
             
             return m_currentText;
@@ -57,7 +57,7 @@ namespace stromx
 
         std::ostream& DirectoryFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current file in directory output.");
             
             if(m_currentFile.is_open())
@@ -87,7 +87,7 @@ namespace stromx
         
         const std::string& DirectoryFileOutput::getFilename() const
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current file in directory output.");
             
             return m_activeFilename;
@@ -95,7 +95,7 @@ namespace stromx
 
         std::ostream& DirectoryFileOutput::file()
         {
-            if(! m_isSet)
+            if(! m_initialized)
                 throw WrongState("No current file in directory output.");
             
             if(! m_currentFile.is_open())

@@ -31,7 +31,7 @@ namespace stromx
         {
         public:
             /** Constructs a directory file output which stores all files in \c directory. */
-            DirectoryFileOutput(const std::string & directory) : m_isSet(false), m_directory(directory) {}
+            DirectoryFileOutput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             
             virtual void initialize(const std::string & filename);
@@ -45,7 +45,7 @@ namespace stromx
         private:
             static const std::string PATH_SEPARATOR;
             
-            bool m_isSet;
+            bool m_initialized;
             std::string m_directory;
             std::string m_currentFilename;
             std::string m_activeFilename;

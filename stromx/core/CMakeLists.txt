@@ -99,6 +99,10 @@ if(BUILD_XML_SUPPORT)
     target_link_libraries(stromx_core ${XERCES_LIBRARIES})
 endif()
 
+if(BUILD_ZIP_SUPPORT)
+    target_link_libraries(stromx_core ${LIBZIP_LIBRARY})
+endif()
+
 install (TARGETS stromx_core 
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
