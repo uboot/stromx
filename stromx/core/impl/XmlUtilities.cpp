@@ -17,6 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include "XmlUtilities.h"
+#include "../Version.h"
 
 namespace stromx
 {
@@ -84,6 +85,35 @@ namespace stromx
                 }
                 
                 return result;
+            }
+            
+            Version XmlUtilities::convertToVersion(const std::string& text)
+            {
+                unsigned int first = text.find_first_of(".");
+                unsigned int last = text.find_last_of(".");
+                
+                if(first == std::string::npos)
+                    throw WrongArgument("Input must be of the type '[x].[y].[z]'.");
+                
+                if(last == std::string::npos || last == first)
+                    throw WrongArgument("Input must be of the type '[x].[y].[z]'.");
+                
+                unsigned int major = 0;
+                unsigned int minor = 0;
+                unsigned int patch = 0;
+                
+                try
+                {
+                    major = boost::lexical_cast<unsigned int>(std::string(text, 0, first));
+                    minor = boost::lexical_cast<unsigned int>(std::string(text, first + 1, last - first - 1));
+                    patch = boost::lexical_cast<unsigned int>(std::string(text, last + 1));
+                }
+                catch(boost::bad_lexical_cast&)
+                {
+                    throw WrongArgument("Input must be of the type '[x].[y].[z]'.");
+                }
+                
+                return Version(major, minor, patch);
             }
         }
     }

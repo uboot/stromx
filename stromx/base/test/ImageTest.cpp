@@ -16,6 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "ImageTest.h"
+#include "../Config.h"
 #include "../Image.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/DirectoryFileInput.h>
@@ -27,6 +28,8 @@ namespace stromx
 {
     namespace base
     {
+        const stromx::core::Version ImageTest::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        
         void ImageTest::setUp ( void )
         {
             m_image = 0;
@@ -187,7 +190,7 @@ namespace stromx
             
             core::DirectoryFileInput input(".");
             input.initialize("", "lenna.jpg");
-            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
+            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             
             m_image->save("ImageTest_testDeserialize.png");
         }
@@ -198,7 +201,7 @@ namespace stromx
             
             core::DirectoryFileInput input(".");
             input.initialize("100 0 3", "");
-            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input));
+            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
             CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());

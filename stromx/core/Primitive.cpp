@@ -41,7 +41,7 @@ namespace stromx
         }
         
         template <>
-        void Bool::deserialize(InputProvider & in)
+        void Bool::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -66,7 +66,7 @@ namespace stromx
         }
         
         template <>
-        void Int8::deserialize(InputProvider & in)
+        void Int8::deserialize(InputProvider & in, const Version & version)
         {
             int temp;
             in.text() >> temp;
@@ -93,7 +93,7 @@ namespace stromx
         }
         
         template <>
-        void UInt8::deserialize(InputProvider & in)
+        void UInt8::deserialize(InputProvider & in, const Version & version)
         {
             unsigned int temp;
             in.text() >> temp;
@@ -116,7 +116,7 @@ namespace stromx
         }
         
         template <>
-        void Int16::deserialize(InputProvider & in)
+        void Int16::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -137,7 +137,7 @@ namespace stromx
         }
         
         template <>
-        void UInt16::deserialize(InputProvider & in)
+        void UInt16::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -162,7 +162,7 @@ namespace stromx
         }
         
         template <>
-        void Int32::deserialize(InputProvider & in)
+        void Int32::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -187,7 +187,7 @@ namespace stromx
         }
         
         template <>
-        void UInt32::deserialize(InputProvider & in)
+        void UInt32::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -212,7 +212,7 @@ namespace stromx
         }
         
         template <>
-        void Float::deserialize(InputProvider & in)
+        void Float::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }
@@ -237,7 +237,7 @@ namespace stromx
         }
         
         template <>
-        void Double::deserialize(InputProvider & in)
+        void Double::deserialize(InputProvider & in, const Version & version)
         {
             in.text() >> m_value;
         }

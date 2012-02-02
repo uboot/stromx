@@ -26,7 +26,7 @@ namespace stromx
             throw Exception("This data type does not support serialization.");
         }
 
-        void Data::deserialize(InputProvider & in)
+        void Data::deserialize(InputProvider & in, const Version & version)
         {
             throw Exception("This data type does not support deserialization.");
         }

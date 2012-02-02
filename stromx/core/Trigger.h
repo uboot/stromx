@@ -38,7 +38,7 @@ namespace stromx
             virtual Data* const clone() const { return new Trigger; }
             
             virtual void serialize(OutputProvider & out) const {}
-            virtual void deserialize(InputProvider & in) {}
+            virtual void deserialize(InputProvider & in, const Version & version) {}
             
         private:
             static const std::string TYPE;

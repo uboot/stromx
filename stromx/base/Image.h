@@ -59,7 +59,7 @@ namespace stromx
             virtual Data* const clone() const { return new Image; }
             
             virtual void serialize(core::OutputProvider & output) const;
-            virtual void deserialize(core::InputProvider & input);
+            virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
             
             void open(const std::string& filename);
             void open(const std::string & filename, const FileAccess access);

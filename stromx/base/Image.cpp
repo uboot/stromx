@@ -108,7 +108,7 @@ namespace stromx
             }
         }
 
-        void Image::deserialize(core::InputProvider & input)
+        void Image::deserialize(core::InputProvider & input, const core::Version & version)
         {
             releaseImage();
             

@@ -530,8 +530,10 @@ namespace stromx
             {
                 Xml2Str type(dataElement->getAttribute(Str2Xml("type")));
                 Xml2Str package(dataElement->getAttribute(Str2Xml("package")));
+                std::string versionString(Xml2Str(dataElement->getAttribute(Str2Xml("version"))));
                 std::string file(Xml2Str(dataElement->getAttribute(Str2Xml("file"))));
                 
+                Version version = XmlUtilities::convertToVersion(versionString);
                 
                 DOMNodeList* dataTextElements = dataElement->getChildNodes();
                 XMLSize_t numDataTextElements = dataTextElements->getLength();
@@ -554,7 +556,7 @@ namespace stromx
                 try
                 {
                     m_input->initialize(textData, file);
-                    data->deserialize(*m_input);
+                    data->deserialize(*m_input, version);
                 }
                 catch(Exception& e)
                 {

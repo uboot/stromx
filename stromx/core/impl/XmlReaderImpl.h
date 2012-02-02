@@ -22,6 +22,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "../Version.h"
 
 namespace stromx
 {

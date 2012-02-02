@@ -39,7 +39,7 @@ namespace stromx
             virtual Data* const clone() const { return new TestData; }
             
             virtual void serialize(OutputProvider & output) const;
-            virtual void deserialize(InputProvider & input);
+            virtual void deserialize(InputProvider & input, const Version & version);
             
             const int value() const { return m_value; }
             void setValue(const int value) { m_value = value; }

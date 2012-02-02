@@ -53,7 +53,7 @@ namespace stromx
             
             virtual void serialize(OutputProvider & out) const;
             
-            virtual void deserialize(InputProvider & in);
+            virtual void deserialize(InputProvider & in, const Version & version);
             
             /** Returns the value of the primitive. */
             const repr_t get() const {  return m_value; }
@@ -90,7 +90,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Bool::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Bool::deserialize(InputProvider & in);
+        STROMX_CORE_API void Bool::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Signed 8-bit integer */
         typedef Primitive<int, int8_t> Int8;
@@ -99,7 +99,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Int8::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Int8::deserialize(InputProvider & in);
+        STROMX_CORE_API void Int8::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Unsigned 8-bit integer */
         typedef Primitive<unsigned int, uint8_t> UInt8;
@@ -108,7 +108,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void UInt8::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void UInt8::deserialize(InputProvider & in);
+        STROMX_CORE_API void UInt8::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Signed 16-bit integer */
         typedef Primitive<int, int16_t> Int16;
@@ -117,7 +117,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Int16::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Int16::deserialize(InputProvider & in);
+        STROMX_CORE_API void Int16::deserialize(InputProvider & in, const Version & version);
 
         /** \brief Unsigned 16-bit integer */
         typedef Primitive<unsigned int, uint16_t> UInt16;
@@ -126,7 +126,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void UInt16::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void UInt16::deserialize(InputProvider & in);
+        STROMX_CORE_API void UInt16::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Signed 32-bit integer */
         typedef Primitive<int, int32_t> Int32;
@@ -135,7 +135,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Int32::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Int32::deserialize(InputProvider & in);
+        STROMX_CORE_API void Int32::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Unsigned 32-bit integer */
         typedef Primitive<unsigned int, uint32_t> UInt32;
@@ -144,7 +144,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void UInt32::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void UInt32::deserialize(InputProvider & in);
+        STROMX_CORE_API void UInt32::deserialize(InputProvider & in, const Version & version);
         
         /** \brief Single precision floating point number */
         typedef Primitive<double, float> Float;
@@ -153,7 +153,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Float::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Float::deserialize(InputProvider & in);
+        STROMX_CORE_API void Float::deserialize(InputProvider & in, const Version & version);
 
         /** \brief Double precision floating point number */
         typedef Primitive<double, double> Double;
@@ -162,7 +162,7 @@ namespace stromx
         template <>
         STROMX_CORE_API void Double::serialize(OutputProvider & out) const;
         template <>
-        STROMX_CORE_API void Double::deserialize(InputProvider & in);
+        STROMX_CORE_API void Double::deserialize(InputProvider & in, const Version & version);
 
         /** \cond */
         template class STROMX_CORE_API Primitive<bool, bool>;

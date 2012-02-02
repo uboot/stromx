@@ -57,13 +57,18 @@ namespace stromx
             
             /**
              * Serializes this data object.
+             * 
+             * \param out The output which the data is sent to.
              */
             virtual void serialize(OutputProvider & out) const;
             
             /**
              * Deserializes a data object.
+             * 
+             * \param out The input which the data obtained from.
+             * \param version The version of the data class which serialzed the input.
              */
-            virtual void deserialize(InputProvider & in);
+            virtual void deserialize(InputProvider & in, const Version & version);
             
             /** Returns \c true if the variant of this data object is a subtype of \c v. */
             const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }

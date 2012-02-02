@@ -15,6 +15,7 @@
  */
 
 #include <cppunit/TestAssert.h>
+#include "../Config.h"
 #include "PrimitiveTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::PrimitiveTest);
@@ -23,6 +24,8 @@ namespace stromx
 {
     namespace core
     {
+        const Version PrimitiveTest::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        
         void PrimitiveTest::testInt32()
         {
             CPPUNIT_ASSERT_EQUAL(int(0), int(m_int32));
@@ -34,7 +37,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("-235"), out.value());
             
             DummyInput in("-233");
-            m_int32.deserialize(in);
+            m_int32.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(Int32(-233), m_int32);
         }
         
@@ -51,7 +54,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("235"), out.value());
             
             DummyInput in("233");
-            m_uint32.deserialize(in);
+            m_uint32.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(UInt32(233), m_uint32);
         }
         
@@ -66,7 +69,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("-35"), out.value());
             
             DummyInput in("-33");
-            m_int8.deserialize(in);
+            m_int8.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(Int8(-33), m_int8);
         }
         
@@ -83,7 +86,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("235"), out.value());
             
             DummyInput in("233");
-            m_uint8.deserialize(in);
+            m_uint8.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(UInt8(233), m_uint8);
         } 
     }

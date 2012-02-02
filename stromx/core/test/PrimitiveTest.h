@@ -81,6 +81,8 @@ namespace stromx
                 std::ostringstream m_file;
             };
             
+            const static Version VERSION;
+            
             Int8 m_int8;
             UInt8 m_uint8;
             Int32 m_int32;

@@ -14,9 +14,10 @@
  *  limitations under the License.
  */
 
-#include <cppunit/TestAssert.h>
 #include "XmlUtilitiesTest.h"
 #include "../impl/XmlUtilities.h"
+#include "../Version.h"
+#include <cppunit/TestAssert.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::XmlUtilitiesTest);
 
@@ -48,6 +49,16 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::stripExtension(".xml"));
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc"));
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc.txt"));
+        }
+                
+        void XmlUtilitiesTest::testConvertToVersion()
+        {
+            Version expected(1, 2, 3);
+            Version converted = XmlUtilities::convertToVersion("1.2.3");
+            
+            CPPUNIT_ASSERT_EQUAL(expected.major(), converted.major());
+            CPPUNIT_ASSERT_EQUAL(expected.minor(), converted.minor());
+            CPPUNIT_ASSERT_EQUAL(expected.patch(), converted.patch());
         }
     }
 }
