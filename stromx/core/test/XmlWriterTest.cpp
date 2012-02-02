@@ -29,7 +29,7 @@ namespace stromx
     {
         void XmlWriterTest::setUp()
         {
-            m_stream = TestUtilities::buildTestStream();
+            m_stream = TestUtilities::buildTestStream();         
         }
         
         void XmlWriterTest::testWriteStream()
@@ -43,6 +43,9 @@ namespace stromx
         
         void XmlWriterTest::testWriteParameters()
         {
+            std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
+                 
+            XmlWriter().writeParameters("XmlWriterTest_testWriteParameters.xml", operators);
         }
 
         void XmlWriterTest::tearDown()

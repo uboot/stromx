@@ -37,7 +37,8 @@ namespace stromx
         namespace impl
         {
             XmlWriterImpl::XmlWriterImpl() 
-                : m_stream(0), 
+                : m_stream(0),
+                  m_opList(0),
                   m_output(0), 
                   m_filename(""), 
                   m_impl(0), 
@@ -73,11 +74,43 @@ namespace stromx
                 }
             }
             
+            void XmlWriterImpl::createDoc()
+            {
+                DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
+                m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+            }
+            
+            void XmlWriterImpl::createComm()
+            {
+                DOMComment* comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
+                m_doc->appendChild(comment); 
+            }
+
+            void XmlWriterImpl::createStromx()
+            {
+                //Create Stromx branch           
+                m_stromxElement = m_doc->getDocumentElement();              
+            
+                //Create attribute version of Stromx
+                DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
+                std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
+                                    boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
+                                    boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
+                verAttr->setValue(Str2Xml(str.c_str()));
+                m_stromxElement->setAttributeNode(verAttr);
+            }
+
+            
             const unsigned int XmlWriterImpl::translateOperatorPointerToID(const Operator* const op) const
             {
+                if (m_opList.empty())
+                {
+                    throw InternalError("No operator list available");
+                }
+                
                 unsigned int count_op = 0;
-                for(std::vector<Operator*>::const_iterator iter_op = m_stream->operators().begin();
-                        iter_op != m_stream->operators().end();
+                for(std::vector<const Operator*>::const_iterator iter_op = m_opList.begin();
+                        iter_op != m_opList.end();
                         ++iter_op, ++count_op)
                 {
                     if ((*iter_op) == op)
@@ -249,17 +282,17 @@ namespace stromx
                 }
             }
             
-            void XmlWriterImpl::createOperators(const std::vector<Operator*> operators)
+            void XmlWriterImpl::createOperators(const std::vector<const Operator*> operators, xercesc::DOMElement* const parentElement)
             {
                 //Add operator branches (tree structure: strom:operator)
                 //Processed for each operator belonging to the strom object (multiple entries for strom possible)
-                for(std::vector<Operator*>::const_iterator iter_op = operators.begin();
+                for(std::vector<const Operator*>::const_iterator iter_op = operators.begin();
                     iter_op != operators.end();
                     ++iter_op)
                 {
                     //Create current operator entry op being child of strom (one for each operator possible)
                     DOMElement* opElement = m_doc->createElement(Str2Xml("Operator"));
-                    m_strElement->appendChild(opElement);
+                    parentElement->appendChild(opElement);
                     
                     //Create attribute id of current operator op (one for each operator possible)
                     DOMAttr* idAttr = m_doc->createAttribute(Str2Xml("id"));
@@ -290,7 +323,11 @@ namespace stromx
                     opElement->setAttributeNode(verAttr);
                     
                     createParameters((*iter_op), opElement);
-                    createInputs((*iter_op), opElement);
+                    
+                    if (m_stream != 0)
+                    {
+                        createInputs((*iter_op), opElement);
+                    }
                 }
             }
         
@@ -305,29 +342,15 @@ namespace stromx
                 m_output = &output;
                 m_filename = filename;
                 
+                std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
+                m_opList = operators;
+                
                 try
                 {
-                    //Create document type
-                    DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
-                    
-                    //Create document
-                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+                    createDoc();
+                    createComm();                    
+                    createStromx();
                                         
-                    //Create comment
-                    DOMComment* comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
-                    m_doc->appendChild(comment); 
-                    
-                    //Create Stromx branch           
-                    m_stromxElement = m_doc->getDocumentElement();              
-                
-                    //Create attribute version of Stromx
-                    DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                    std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
-                                      boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
-                                      boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
-                    verAttr->setValue(Str2Xml(str.c_str()));
-                    m_stromxElement->setAttributeNode(verAttr);
-                    
                     //Create Stream branch
                     m_strElement = m_doc->createElement(Str2Xml("Stream"));
                     m_stromxElement->appendChild(m_strElement);
@@ -336,9 +359,8 @@ namespace stromx
                     DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
                     nameAttr->setValue(Str2Xml(m_stream->name().c_str()));
                     m_strElement->setAttributeNode(nameAttr);
-                    
-                    //Create Operators of Stream (multiple entries for Stream possible)
-                    createOperators(m_stream->operators());
+
+                    createOperators(m_opList,m_strElement);
                     //Create Threads of Stream (multiple entries for Stream possible)
                     createThreads(m_stream->threads());
                     
@@ -392,33 +414,43 @@ namespace stromx
                 
                 m_output = &output;
                 m_filename = filename;
+                m_opList = operators;
                 
                 try
                 {
-                    //Create document type
-                    DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
-                    
-                    //Create document
-                    m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
-                                        
-                    //Create comment
-                    DOMComment* comment = m_doc->createComment(Str2Xml("XML generated automatically by XmlWriter of the open source library Stromx"));
-                    m_doc->appendChild(comment);
-                    
-                    //Create Stromx branch           
-                    m_stromxElement = m_doc->getDocumentElement();              
-                
-                    //Create attribute version of Stromx
-                    DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                    std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
-                                      boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
-                                      boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
-                    verAttr->setValue(Str2Xml(str.c_str()));
-                    m_stromxElement->setAttributeNode(verAttr);
+                    createDoc();
+                    createComm();
+                    createStromx();
                     
                     //Create Parameters branch
-                    m_strElement = m_doc->createElement(Str2Xml("Parameters"));
+                    m_parsElement = m_doc->createElement(Str2Xml("Parameters"));
                     m_stromxElement->appendChild(m_parsElement);
+                    
+                    //Create Operator branches
+                    createOperators(m_opList, m_parsElement);
+                    
+                    
+                    
+                    DOMLSSerializer* serializer = m_impl->createLSSerializer();
+                    serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
+                    char* content = XMLString::transcode(serializer->writeToString(m_doc));
+                    
+                    try
+                    {
+                        m_output->initialize(filename);
+                        m_output->openFile("xml");
+                        m_output->file() << content;
+                    }
+                    catch(Exception&)
+                    {
+                        throw FileAccessFailed(m_filename); 
+                    }
+                    
+                    XMLString::release(&content);
+                    serializer->release();
+
+                    // done with the document, must call release() to release the entire document resources
+                    m_doc->release();
                 }
                 catch(DOMException&)
                 {

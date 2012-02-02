@@ -44,15 +44,19 @@ namespace stromx
                                      const std::vector< const stromx::core::Operator* >& operators);
                 
             private:
+                void createDoc();
+                void createComm();
+                void createStromx();
                 const unsigned int translateOperatorPointerToID(const Operator* const op) const;
                 void createThreads(const std::vector<Thread*> threads);
                 void createInputConnectors(const Thread* const currThr, xercesc::DOMElement* const thrElement);
-                void createOperators(const std::vector<Operator*> operators);
+                void createOperators(const std::vector<const Operator*> operators, xercesc::DOMElement* const parentElement);
                 void createParameters(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
                 void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 
                 const Stream* m_stream;
+                std::vector<const Operator*> m_opList;
                 FileOutput* m_output;
                 std::string m_filename;
                 xercesc::DOMImplementation* m_impl;
