@@ -29,7 +29,7 @@ namespace stromx
         {
         public:
             /** Constructs a zip file input which reads files in \c archive. */
-            ZipFileInput(const std::string & archive) {}
+            ZipFileInput(const std::string & archive);
             virtual ~ZipFileInput();
             
             virtual void initialize(const std::string & text, const std::string & filename);

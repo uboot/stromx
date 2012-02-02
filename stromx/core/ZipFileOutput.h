@@ -29,7 +29,7 @@ namespace stromx
         {
         public:
             /** Constructs a directory file output which stores all files in \c archive. */
-            ZipFileOutput(const std::string & archive) {}
+            ZipFileOutput(const std::string & archive);
             virtual ~ZipFileOutput();
             
             virtual void initialize(const std::string & filename);

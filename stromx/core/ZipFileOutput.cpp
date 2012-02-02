@@ -16,9 +16,50 @@
 
 #include "ZipFileOutput.h"
 
+#include <zip.h>
+
 namespace stromx
 {
     namespace core
     {
+        ZipFileOutput::ZipFileOutput(const std::string& archive)
+        {
+
+        }
+
+        ZipFileOutput::~ZipFileOutput()
+        {
+
+        }
+
+        void ZipFileOutput::initialize(const std::string& filename)
+        {
+
+        }
+
+        const std::string& ZipFileOutput::getFilename() const
+        {
+
+        }
+
+        const std::string ZipFileOutput::getText() const
+        {
+
+        }
+
+        std::ostream& ZipFileOutput::text()
+        {
+
+        }
+
+        std::ostream& ZipFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
+        {
+
+        }
+
+        std::ostream& ZipFileOutput::file()
+        {
+
+        }
     }
 }

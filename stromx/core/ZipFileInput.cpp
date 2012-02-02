@@ -16,9 +16,45 @@
 
 #include "ZipFileInput.h"
 
+#include <zip.h>
+
 namespace stromx
 {
     namespace core
     {
+        ZipFileInput::ZipFileInput(const std::string& archive)
+        {
+
+        }
+
+        ZipFileInput::~ZipFileInput()
+        {
+
+        }
+
+        void ZipFileInput::initialize(const std::string& text, const std::string& filename)
+        {
+
+        }
+
+        const bool ZipFileInput::hasFile() const
+        {
+
+        }
+
+        std::istream& ZipFileInput::text()
+        {
+
+        }
+
+        std::istream& ZipFileInput::openFile(const stromx::core::InputProvider::OpenMode mode)
+        {
+
+        }
+
+        std::istream& ZipFileInput::file()
+        {
+
+        }
     }
 }
