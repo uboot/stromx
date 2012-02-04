@@ -84,9 +84,9 @@ namespace stromx
             if(! hasFile())
                 throw NoInputFile();
             
-            std::ios_base::openmode iosmode;
+            std::ios_base::openmode iosmode = std::ios_base::in;
             if(mode == BINARY)
-                iosmode = std::ios_base::binary;
+                iosmode &= std::ios_base::binary;
             
             struct zip_stat stat;
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
@@ -102,7 +102,7 @@ namespace stromx
             if(zip_fread(file, content, fileSize) != fileSize)
                 throw FileAccessFailed(m_archive, "Failed to read the file '" + m_currentFilename + "'.");
             
-            m_currentFile = new std::istringstream(std::string(content, fileSize), std::ios_base::in & iosmode);
+            m_currentFile = new std::istringstream(std::string(content, fileSize), iosmode);
             
             return *m_currentFile;
         }

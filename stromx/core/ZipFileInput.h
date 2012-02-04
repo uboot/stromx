@@ -21,7 +21,7 @@
 #include "Config.h"
 #include "FileInput.h"
 
-class zip;
+struct zip;
 
 namespace stromx
 {
