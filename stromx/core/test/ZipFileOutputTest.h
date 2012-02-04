@@ -35,18 +35,15 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ZipFileOutputTest() : m_output(0) {}
+            ZipFileOutputTest() {}
             
-            void setUp();
-            void tearDown();
+            void setUp() {}
+            void tearDown() {}
             
         protected:
             void testText();
             void testFile();
             void testGetFilename();
-                
-        private:
-            ZipFileOutput* m_output;
         };
     }
 }

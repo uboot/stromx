@@ -24,51 +24,126 @@ namespace stromx
     namespace core
     {
         
-        ZipFileOutput::ZipFileOutput(const std::string& archive)
-          : m_archive(0)
+        ZipFileOutput::ZipFileOutput(const std::string& archiveName)
+          : m_archiveHandle(0),
+            m_initialized(false),
+            m_archiveName(archiveName),
+            m_currentFile(0)
         {
             int error = 0;
-            m_archive = zip_open(archive.c_str(), ZIP_CREATE, &error);
+            m_archiveHandle = zip_open(m_archiveName.c_str(), ZIP_CREATE, &error);
             
-            if(!m_archive)
-                throw FileAccessFailed(archive);
+            if(! m_archiveHandle)
+                throw FileAccessFailed(m_archiveName);
+            
+            // delete all files in the archive
+            int numFiles = zip_get_num_files(m_archiveHandle);
+            for(int i = 0; i < numFiles; ++i)
+            {
+                if(zip_delete(m_archiveHandle, i) < 0)
+                    throw FileAccessFailed(m_archiveName);
+            }
         }
 
         ZipFileOutput::~ZipFileOutput()
         {
-            if(m_archive)
-                zip_close(m_archive);
+            try
+            {
+                dumpFile();
+            }
+            catch(FileAccessFailed &)
+            {
+                // ignore exceptions in destructor
+            }
+            
+            if(m_archiveHandle)
+                zip_close(m_archiveHandle);
         }
 
         void ZipFileOutput::initialize(const std::string& filename)
         {
-            m_fileOutput.str("");
-            m_fileOutput.clear();
+            dumpFile();
+            
+            m_currentText.str("");
+            m_currentBasename = filename;
+            m_initialized = true;
+            m_currentFilename = "";
         }
 
         const std::string& ZipFileOutput::getFilename() const
         {
-
+            if(! m_initialized)
+                throw WrongState("No current file in directory output.");
+            
+            return m_currentFilename;
         }
 
         const std::string ZipFileOutput::getText() const
         {
-
+            return m_currentText.str();
         }
 
         std::ostream& ZipFileOutput::text()
         {
-
+            if(! m_initialized)
+                throw WrongState("No current file in directory output.");
+            
+            return m_currentText;
         }
 
         std::ostream& ZipFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
-        {
+        {            
+            if(! m_initialized)
+                throw WrongState("No current file in directory output.");
+            
+            if(m_currentFile)
+                throw WrongState("File has already been opened.");
 
+            std::string filename;
+            
+            if(! ext.empty())
+                m_currentFilename = m_currentBasename + "." + ext;
+            else
+                m_currentFilename = m_currentBasename;
+            
+            std::ios_base::openmode iosmode;
+            if(mode == BINARY)
+                iosmode = std::ios_base::binary;
+            
+            m_currentFile = new std::ostringstream(iosmode);
+            
+            return *m_currentFile;
         }
 
         std::ostream& ZipFileOutput::file()
         {
-
+            if(! m_initialized)
+                throw WrongState("No current file in directory output.");
+            
+            if(! m_currentFile)
+                throw WrongState("File has not been opened.");
+            
+            return *m_currentFile;
+        }
+        
+        void ZipFileOutput::dumpFile()
+        {
+            if(m_currentFile)
+            {
+                std::string fileContent = m_currentFile->str();
+                zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
+                if(! source)
+                    throw FileAccessFailed(m_archiveName);
+                
+                if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
+                {
+                    zip_source_free(source);
+                    throw FileAccessFailed(m_archiveName, "Failed to add file '" + m_currentFilename + "' to archive.");
+                }
+                
+                delete m_currentFile;
+                m_currentFile = 0;
+            }
         }
     }
 }

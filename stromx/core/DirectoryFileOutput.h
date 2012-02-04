@@ -47,8 +47,8 @@ namespace stromx
             
             bool m_initialized;
             std::string m_directory;
+            std::string m_currentBasename;
             std::string m_currentFilename;
-            std::string m_activeFilename;
             std::ofstream m_currentFile;
             std::ostringstream m_currentText;
         };

@@ -72,19 +72,22 @@ namespace stromx
             
             const std::string XmlUtilities::stripExtension(const std::string& filename)
             {
-                std::string result;
+                std::size_t i = filename.find_first_of(".");
                 
-                for(std::string::const_iterator iter = filename.begin();
-                    iter != filename.end();
-                    ++iter)
-                {
-                    if(*iter == '.')
-                        break;
-                    
-                    result.append(boost::lexical_cast<std::string>(*iter));
-                }
+                if(i == std::string::npos)
+                    return filename;
                 
-                return result;
+                return std::string (filename, 0, i);
+            }
+            
+            const std::string XmlUtilities::getExtension(const std::string& filename)
+            {
+                std::size_t i = filename.find_first_of(".");
+                
+                if(i == std::string::npos)
+                    return "";
+                
+                return std::string (filename, i + 1);
             }
             
             Version XmlUtilities::convertToVersion(const std::string& text)

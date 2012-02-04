@@ -25,43 +25,45 @@ namespace stromx
 {
     namespace core
     {
-        void ZipFileOutputTest::setUp()
-        {
-            m_output = new ZipFileOutput("ZipFileOutputTest.zip");
-        }
-
-        void ZipFileOutputTest::tearDown()
-        {
-            delete m_output;
-        }
-
         void ZipFileOutputTest::testText()
         {
-            CPPUNIT_ASSERT_THROW(m_output->text(), WrongState);
+            ZipFileOutput output("ZipFileOutputTest_testText.zip");
             
-            m_output->initialize("");
-            m_output->text() << "Test";
-            CPPUNIT_ASSERT_EQUAL(std::string("Test"), m_output->getText());
+            CPPUNIT_ASSERT_THROW(output.text(), WrongState);
+            
+            output.initialize("");
+            output.text() << "Test";
+            CPPUNIT_ASSERT_EQUAL(std::string("Test"), output.getText());
         }
                 
         void ZipFileOutputTest::testFile()
         {
-            CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
+            ZipFileOutput output("ZipFileOutputTest_testFile.zip");
             
-            m_output->initialize("DirectoryFileOutputText_testFile");
-            CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
-            m_output->openFile("bin", OutputProvider::BINARY);
-            m_output->file() << 5;
+            CPPUNIT_ASSERT_THROW(output.file(), WrongState);
+            
+            // first file
+            output.initialize("testFile1");
+            CPPUNIT_ASSERT_THROW(output.file(), WrongState);
+            output.openFile("bin", OutputProvider::BINARY);
+            output.file() << 5;
+            
+            // try a second file
+            output.initialize("testFile2");
+            output.openFile("bin", OutputProvider::BINARY);
+            output.file() << 6;
         }
         
         void ZipFileOutputTest::testGetFilename()
         {
-            CPPUNIT_ASSERT_THROW(m_output->getFilename(), WrongState);
+            ZipFileOutput output("ZipFileOutputTest_testGetFilename.zip");
             
-            m_output->initialize("DirectoryFileOutputText_testGetFilename");
-            CPPUNIT_ASSERT_EQUAL(std::string(""), m_output->getFilename());
-            m_output->openFile("bin", OutputProvider::BINARY);
-            CPPUNIT_ASSERT_EQUAL(std::string("DirectoryFileOutputText_testGetFilename.bin"), m_output->getFilename());
+            CPPUNIT_ASSERT_THROW(output.getFilename(), WrongState);
+            
+            output.initialize("testGetFilename");
+            CPPUNIT_ASSERT_EQUAL(std::string(""), output.getFilename());
+            output.openFile("bin", OutputProvider::BINARY);
+            CPPUNIT_ASSERT_EQUAL(std::string("testGetFilename.bin"), output.getFilename());
         }
     }
 }

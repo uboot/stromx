@@ -37,9 +37,9 @@ namespace stromx
             if(m_currentFile.is_open())
                 m_currentFile.close();
         
-            m_currentFilename = filename;
+            m_currentBasename = filename;
             m_initialized = true;
-            m_activeFilename = "";
+            m_currentFilename = "";
         }
 
         const std::string DirectoryFileOutput::getText() const
@@ -62,25 +62,24 @@ namespace stromx
             
             if(m_currentFile.is_open())
                 throw WrongState("File has already been opened.");
+
+            std::string filename;  
             
+            if(! ext.empty())
+                m_currentFilename = m_currentBasename + "." + ext;
+            else
+                m_currentFilename = m_currentBasename;
+            
+            filename = m_directory + PATH_SEPARATOR + m_currentFilename;
+                
             std::ios_base::openmode iosmode;
-            
             if(mode == BINARY)
                 iosmode = std::ios_base::binary;
             
-            std::string filename;
-            
-            if(! ext.empty())
-                m_activeFilename = m_currentFilename + "." + ext;
-            else
-                m_activeFilename = m_currentFilename;
-            
-            filename = m_directory + PATH_SEPARATOR + m_activeFilename;
-                
             m_currentFile.open(filename.c_str(), std::ios_base::in & iosmode);
             
             if(m_currentFile.fail())
-                throw FileAccessFailed(m_currentFilename);
+                throw FileAccessFailed(m_currentBasename);
             
             return m_currentFile;
         }
@@ -90,7 +89,7 @@ namespace stromx
             if(! m_initialized)
                 throw WrongState("No current file in directory output.");
             
-            return m_activeFilename;
+            return m_currentFilename;
         }
 
         std::ostream& DirectoryFileOutput::file()

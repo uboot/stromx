@@ -22,6 +22,7 @@
 #include "FileOutput.h"
 
 struct zip;
+struct zip_file;
 
 namespace stromx
 {
@@ -32,7 +33,7 @@ namespace stromx
         {
         public:
             /** Constructs a directory file output which stores all files in \c archive. */
-            ZipFileOutput(const std::string & archive);
+            ZipFileOutput(const std::string & archiveName);
             virtual ~ZipFileOutput();
             
             virtual void initialize(const std::string & filename);
@@ -44,9 +45,15 @@ namespace stromx
             virtual std::ostream & file();
             
         private:
-            zip* m_archive;
+            void dumpFile();
+            
+            zip* m_archiveHandle;
             bool m_initialized;
-            std::ostringstream m_fileOutput;
+            std::string m_archiveName;
+            std::string m_currentBasename;
+            std::string m_currentFilename;
+            std::ostringstream *m_currentFile;
+            std::ostringstream m_currentText;
         };
     }
 }

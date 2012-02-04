@@ -16,35 +16,35 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna_bw.jpg DESTINATION ${CMAKE_CURRENT_B
 
 add_executable(stromx_base_test
     ../AdjustRgbChannels.cpp
-    AdjustRgbChannelsTest.cpp
     ../Base.cpp
-    BaseTest.cpp
     ../Buffer.cpp
-    BufferTest.cpp
-    ../impl/CameraBuffer.cpp
-    CameraBufferTest.cpp
     ../Camera.cpp
-    CameraTest.cpp
     ../Canny.cpp
-    CannyTest.cpp
     ../Clip.cpp
-    ../Utilities.cpp
-    ClipTest.cpp
-    ../ConvertPixelType.cpp
-    ConvertPixelTypeTest.cpp
     ../ConstImage.cpp
-    ConstImageTest.cpp
     ../Counter.cpp
-    CounterTest.cpp
+    ../ConvertPixelType.cpp
     ../Image.cpp
-    ImageTest.cpp
-    main.cpp
-    ../Queue.cpp
-    QueueTest.cpp
     ../PeriodicDelay.cpp
-    PeriodicDelayTest.cpp
+    ../Queue.cpp
     ../Trigger.cpp
+    ../Utilities.cpp
+    ../impl/CameraBuffer.cpp
+    AdjustRgbChannelsTest.cpp
+    BaseTest.cpp
+    BufferTest.cpp
+    CameraBufferTest.cpp
+    CameraTest.cpp
+    CannyTest.cpp
+    ClipTest.cpp
+    ConvertPixelTypeTest.cpp
+    ConstImageTest.cpp
+    CounterTest.cpp
+    ImageTest.cpp
+    QueueTest.cpp
+    PeriodicDelayTest.cpp
     TriggerTest.cpp
+    main.cpp
 )
 
 target_link_libraries(stromx_base_test 
