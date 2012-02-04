@@ -17,8 +17,11 @@
 #ifndef STROMX_CORE_ZIPFILEINPUT_H
 #define STROMX_CORE_ZIPFILEINPUT_H
 
+#include <sstream>
 #include "Config.h"
 #include "FileInput.h"
+
+class zip;
 
 namespace stromx
 {
@@ -40,6 +43,12 @@ namespace stromx
             virtual std::istream & file();
             
         private:
+            zip* m_archiveHandle;
+            bool m_initialized;
+            std::string m_archive;
+            std::string m_currentFilename;
+            std::istringstream *m_currentFile;
+            std::istringstream m_currentText;
         };
     }
 }

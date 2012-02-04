@@ -54,14 +54,14 @@ namespace stromx
             std::string result;
             CPPUNIT_ASSERT_THROW(m_input->openFile(InputProvider::TEXT), WrongState);
             
-            m_input->initialize("Test", "data.txt");
+            m_input->initialize("Test", "data1.txt");
             CPPUNIT_ASSERT_THROW(m_input->file(), WrongState);
             m_input->openFile(InputProvider::TEXT) >> result;
             CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
             
-            m_input->initialize("Test", "data.txt");
+            m_input->initialize("Test", "data2.txt");
             m_input->openFile(InputProvider::BINARY) >> result;
-            CPPUNIT_ASSERT_EQUAL(std::string("191079"), result);
+            CPPUNIT_ASSERT_EQUAL(std::string("11092011"), result);
         }
         
         void ZipFileInputTest::testHasFile()

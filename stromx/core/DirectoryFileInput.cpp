@@ -70,7 +70,6 @@ namespace stromx
                 throw NoInputFile();
             
             std::ios_base::openmode iosmode;
-            
             if(mode == BINARY)
                 iosmode = std::ios_base::binary;
             

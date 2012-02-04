@@ -23,25 +23,24 @@ namespace stromx
 {
     namespace core
     {
-        
-        ZipFileOutput::ZipFileOutput(const std::string& archiveName)
+        ZipFileOutput::ZipFileOutput(const std::string& archive)
           : m_archiveHandle(0),
             m_initialized(false),
-            m_archiveName(archiveName),
+            m_archive(archive),
             m_currentFile(0)
         {
             int error = 0;
-            m_archiveHandle = zip_open(m_archiveName.c_str(), ZIP_CREATE, &error);
+            m_archiveHandle = zip_open(m_archive.c_str(), ZIP_CREATE, &error);
             
             if(! m_archiveHandle)
-                throw FileAccessFailed(m_archiveName);
+                throw FileAccessFailed(m_archive);
             
             // delete all files in the archive
             int numFiles = zip_get_num_files(m_archiveHandle);
             for(int i = 0; i < numFiles; ++i)
             {
                 if(zip_delete(m_archiveHandle, i) < 0)
-                    throw FileAccessFailed(m_archiveName);
+                    throw FileAccessFailed(m_archive);
             }
         }
 
@@ -133,12 +132,12 @@ namespace stromx
                 std::string fileContent = m_currentFile->str();
                 zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
                 if(! source)
-                    throw FileAccessFailed(m_archiveName);
+                    throw FileAccessFailed(m_archive);
                 
                 if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
                 {
                     zip_source_free(source);
-                    throw FileAccessFailed(m_archiveName, "Failed to add file '" + m_currentFilename + "' to archive.");
+                    throw FileAccessFailed(m_archive, "Failed to add file '" + m_currentFilename + "' to archive.");
                 }
                 
                 delete m_currentFile;
