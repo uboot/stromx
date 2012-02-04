@@ -50,7 +50,7 @@ namespace stromx
             
             // try a second file
             output.initialize("testFile2");
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile("txt", OutputProvider::TEXT);
             output.file() << 6;
         }
         

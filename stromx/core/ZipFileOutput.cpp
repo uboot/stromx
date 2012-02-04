@@ -129,7 +129,9 @@ namespace stromx
         {
             if(m_currentFile)
             {
-                std::string fileContent = m_currentFile->str();
+                m_bufferedFiles.push_back(m_currentFile->str());
+                std::string & fileContent = m_bufferedFiles.back();
+                
                 zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
                 if(! source)
                     throw FileAccessFailed(m_archive);

@@ -29,7 +29,7 @@ namespace stromx
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
-            std::string filebase = impl::XmlUtilities::stripExtension(filepath);
+            std::string filebase = impl::XmlUtilities::stripExtension(filename);
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             Stream* stream = 0;
@@ -60,7 +60,7 @@ namespace stromx
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
-            std::string filebase = impl::XmlUtilities::stripExtension(filepath);
+            std::string filebase = impl::XmlUtilities::stripExtension(filename);
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             if(extension == "xml")

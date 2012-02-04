@@ -48,10 +48,16 @@ namespace stromx
         {
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             
-            m_output->initialize("DirectoryFileOutputText_testFile");
+            // first file
+            m_output->initialize("DirectoryFileOutputText_testFile1");
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
             m_output->openFile("bin", OutputProvider::BINARY);
             m_output->file() << 5;
+            
+            // try a second file
+            m_output->initialize("DirectoryFileOutputText_testFile2");
+            m_output->openFile("txt", OutputProvider::TEXT);
+            m_output->file() << 6;
         }
         
         void DirectoryFileOutputTest::testGetFilename()

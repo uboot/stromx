@@ -18,6 +18,7 @@
 #define STROMX_CORE_ZIPFILEOUTPUT_H
 
 #include <sstream>
+#include <vector>
 #include "Config.h"
 #include "FileOutput.h"
 
@@ -53,6 +54,7 @@ namespace stromx
             std::string m_currentFilename;
             std::ostringstream *m_currentFile;
             std::ostringstream m_currentText;
+            std::vector<std::string> m_bufferedFiles;
         };
     }
 }

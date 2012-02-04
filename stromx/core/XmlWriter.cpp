@@ -27,59 +27,59 @@ namespace stromx
         void XmlWriter::writeStream(const std::string& filepath, const Stream& stream) const
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
-            std::string filename = impl::XmlUtilities::stripExtension(impl::XmlUtilities::computeName(filepath));
+            std::string filebase = impl::XmlUtilities::stripExtension(impl::XmlUtilities::computeName(filepath));
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             if(extension == "xml")
             {
                 DirectoryFileOutput output(directory);
-                writeStream(output, filename, stream);
+                writeStream(output, filebase, stream);
             }
             else if(extension == "zip")
             {
                 ZipFileOutput output(filepath);
-                writeStream(output, filename, stream);
+                writeStream(output, filebase, stream);
             }
             else
                 throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
         }
         
-        void XmlWriter::writeStream(FileOutput& output, const std::string filename, const stromx::core::Stream& stream) const
+        void XmlWriter::writeStream(FileOutput& output, const std::string basename, const stromx::core::Stream& stream) const
         {
             using namespace impl;
             
             XmlWriterImpl impl;
-            impl.writeStream(output, XmlUtilities::stripExtension(filename), stream);
+            impl.writeStream(output, basename, stream);
         }
         
         void XmlWriter::writeParameters(const std::string& filepath, 
                                         const std::vector<const stromx::core::Operator* >& operators) const
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
-            std::string filename = impl::XmlUtilities::stripExtension(impl::XmlUtilities::computeName(filepath));
+            std::string filebase = impl::XmlUtilities::stripExtension(impl::XmlUtilities::computeName(filepath));
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             if(extension == "xml")
             {
                 DirectoryFileOutput output(directory);
-                writeParameters(output, filename, operators);
+                writeParameters(output, filebase, operators);
             }
             else if(extension == "zip")
             {
                 ZipFileOutput output(filepath);
-                writeParameters(output, filename, operators);
+                writeParameters(output, filebase, operators);
             }
             else
                 throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
         }
         
-        void XmlWriter::writeParameters(FileOutput& output, const std::string filename,
+        void XmlWriter::writeParameters(FileOutput& output, const std::string basename,
                                         const std::vector< const stromx::core::Operator* >& operators) const
         {
             using namespace impl;
             
             XmlWriterImpl impl;
-            impl.writeParameters(output, XmlUtilities::stripExtension(filename), operators);
+            impl.writeParameters(output, basename, operators);
         }
     }
 }
