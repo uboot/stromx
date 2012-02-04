@@ -104,20 +104,26 @@ namespace stromx
 
         void ImageTest::testImageCopyConstructor()
         {
-            Image image(0, 100, Image::BGR_24);
+            Image image(200, 100, Image::RGB_24);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
+            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
+            CPPUNIT_ASSERT(m_image->data());
+        }
+
+        void ImageTest::testImageEmptyCopyConstructor()
+        {
+            Image image(0, 100, Image::RGB_24);
             
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
-        }
-
-        void ImageTest::testImageEmptyCopyConstructor()
-        {
-            Image image(200, 100, core::Image::RGB_24);
-
         }
         
         void ImageTest::testImageRgb24()
@@ -171,6 +177,7 @@ namespace stromx
             output.initialize("ImageTest_testSerialize");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
+            CPPUNIT_ASSERT_EQUAL(std::string("5 500 512"), output.getText());
         }
         
         void ImageTest::testSerializeEmpty()
@@ -181,7 +188,7 @@ namespace stromx
             output.initialize("ImageTest_testSerializeEmpty");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
-            CPPUNIT_ASSERT_EQUAL(std::string("100 0 3"), output.getText());
+            CPPUNIT_ASSERT_EQUAL(std::string("3 100 0"), output.getText());
         }
             
         void ImageTest::testDeserialize()
@@ -191,16 +198,29 @@ namespace stromx
             core::DirectoryFileInput input(".");
             input.initialize("", "lenna.jpg");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
+            CPPUNIT_ASSERT_EQUAL(Image::BGR_24, m_image->pixelType());
             
             m_image->save("ImageTest_testDeserialize.png");
         }
         
+        void ImageTest::testDeserializeWithType()
+        {
+            m_image = new Image();
+            
+            core::DirectoryFileInput input(".");
+            input.initialize("3", "lenna.jpg");
+            CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
+            CPPUNIT_ASSERT_EQUAL(Image::RGB_24, m_image->pixelType());
+            
+            m_image->save("ImageTest_testDeserializeWithType.png");
+        }
+                
         void ImageTest::testDeserializeEmpty()
         {
             m_image = new Image();
             
             core::DirectoryFileInput input(".");
-            input.initialize("100 0 3", "");
+            input.initialize("3 100 0", "");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());

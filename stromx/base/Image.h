@@ -45,11 +45,13 @@ namespace stromx
             };
             
             Image();
-            Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
-            Image(const std::string & filename);
-            Image(const std::string & filename, const FileAccess access);
-            Image(const core::Image& image);
-            Image(const unsigned int size);
+            explicit Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
+            explicit Image(const std::string & filename);
+            explicit Image(const std::string & filename, const FileAccess access);
+            explicit Image(const core::Image& image);
+            explicit Image(const stromx::base::Image& image);
+            explicit Image(const unsigned int size);
+            
             virtual ~Image();
             
             virtual const core::Version & version() const { return VERSION; }
@@ -75,14 +77,14 @@ namespace stromx
             static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
             static const core::DataVariant dataTypeFromPixelType(const PixelType pixelType);
             static const int getCvAccessType(const FileAccess access);
+            static const int cvTypeFromPixelType(const core::Image::PixelType pixelType);
+            static const core::Image::PixelType pixelTypeFromCvType(const int cvType);
             
             void getDataFromCvImage(const PixelType pixelType);
-            void allocate(const unsigned int width, const unsigned int height, const PixelType pixelType);
-            void releaseImage();
+            void copy(const stromx::core::Image & image);
+            void allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType);
             
-            _IplImage* m_image;
-            bool m_isHeader;
-            cv::Mat* m_matImage;
+            cv::Mat* m_image;
         };
     }
 }

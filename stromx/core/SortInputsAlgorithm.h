@@ -23,11 +23,19 @@ namespace stromx
     {
         class Stream;
         
+        /** \brief Algorithm which sorts the input sequence of stream threads */
         class SortInputsAlgorithm
         {
         public:
+            /** Constructs a sorting algorithm. */
             SortInputsAlgorithm() {}
             
+            /**
+             * Sorts the inputs of each thread in \c stream according to the topology
+             * of the stream. If a connection \em from an operator \em to another operator exists
+             * the inputs of the first operator will be moved in front of the inputs
+             * of the second operator.
+             */ 
             void apply(Stream & stream);
         };
     }

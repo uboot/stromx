@@ -66,7 +66,7 @@ namespace stromx
              * Deserializes a data object.
              * 
              * \param out The input which the data obtained from.
-             * \param version The version of the data class which serialzed the input.
+             * \param version The version of the data class which serialized the input.
              */
             virtual void deserialize(InputProvider & in, const Version & version);
             

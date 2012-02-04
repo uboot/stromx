@@ -64,6 +64,7 @@ namespace stromx
         {
             switch(pixelType)
             {
+            case core::Image::NONE:
             case core::Image::MONO_8:
             case core::Image::MONO_16:
             case core::Image::BAYERBG_8:
@@ -85,6 +86,7 @@ namespace stromx
         {
             switch(pixelType)
             {
+            case core::Image::NONE:
             case core::Image::MONO_8:
             case core::Image::RGB_24:
             case core::Image::BGR_24:
