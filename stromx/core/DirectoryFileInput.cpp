@@ -69,12 +69,12 @@ namespace stromx
             if(! hasFile())
                 throw NoInputFile();
             
-            std::ios_base::openmode iosmode;
+            std::ios_base::openmode iosmode = std::ios_base::in;
             if(mode == BINARY)
-                iosmode = std::ios_base::binary;
+                iosmode &= std::ios_base::binary;
             
             std::string filename = m_directory + PATH_SEPARATOR + m_currentFilename;
-            m_currentFile.open(filename.c_str(), std::ios_base::in & iosmode);
+            m_currentFile.open(filename.c_str(), iosmode);
             
             if(m_currentFile.fail())
                 throw FileAccessFailed(m_currentFilename);

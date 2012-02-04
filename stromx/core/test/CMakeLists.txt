@@ -127,7 +127,7 @@ if(BUILD_XML_SUPPORT)
     target_link_libraries(stromx_core_test ${XERCES_LIBRARIES})
 endif()
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_ZIP_SUPPORT)
     target_link_libraries(stromx_core_test ${LIBZIP_LIBRARY})
 endif()
 
