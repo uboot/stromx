@@ -74,7 +74,7 @@ namespace stromx
                 
             std::ios_base::openmode iosmode = std::ios_base::out;
             if(mode == BINARY)
-                iosmode &= std::ios_base::binary;
+                iosmode |= std::ios_base::binary;
             
             m_currentFile.open(filename.c_str(), iosmode);
             

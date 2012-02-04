@@ -86,7 +86,7 @@ namespace stromx
             
             std::ios_base::openmode iosmode = std::ios_base::in;
             if(mode == BINARY)
-                iosmode &= std::ios_base::binary;
+                iosmode |= std::ios_base::binary;
             
             struct zip_stat stat;
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
