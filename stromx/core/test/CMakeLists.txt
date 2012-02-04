@@ -58,32 +58,32 @@ set(SOURCES
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
-#     CoreTest.cpp
-#     DataContainerTest.cpp
-#     DataVariantTest.cpp
-#     DataTest.cpp
-#     DirectoryFileInputTest.cpp
-#     DirectoryFileOutputTest.cpp
-#     DumpTest.cpp
-#     Id2DataCompositeTest.cpp
-#     Id2DataMapTest.cpp
-#     Id2DataPairTest.cpp
+    CoreTest.cpp
+    DataContainerTest.cpp
+    DataVariantTest.cpp
+    DataTest.cpp
+    DirectoryFileInputTest.cpp
+    DirectoryFileOutputTest.cpp
+    DumpTest.cpp
+    Id2DataCompositeTest.cpp
+    Id2DataMapTest.cpp
+    Id2DataPairTest.cpp
     TestOperator.cpp
-#     OperatorTest.cpp
-#     OutputNodeTest.cpp
-#     InputNodeTest.cpp
-#     ReadAccessTest.cpp
-#     RecycleAccessTest.cpp
-#     ThreadImplTest.cpp
-#     ThreadTest.cpp
-#     NetworkTest.cpp
-#     FactoryTest.cpp
-#     PrimitiveTest.cpp
+    OperatorTest.cpp
+    OutputNodeTest.cpp
+    InputNodeTest.cpp
+    ReadAccessTest.cpp
+    RecycleAccessTest.cpp
+    ThreadImplTest.cpp
+    ThreadTest.cpp
+    NetworkTest.cpp
+    FactoryTest.cpp
+    PrimitiveTest.cpp
     TestData.cpp
-#     TryTest.cpp
-#     WriteAccessTest.cpp
-#     SortInputsAlgorithmTest.cpp
-#     StreamTest.cpp
+    TryTest.cpp
+    WriteAccessTest.cpp
+    SortInputsAlgorithmTest.cpp
+    StreamTest.cpp
     TestUtilities.cpp
     main.cpp
 )
