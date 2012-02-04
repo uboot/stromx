@@ -34,10 +34,12 @@ namespace stromx
             CPPUNIT_TEST(testReadStreamEmpty);
             CPPUNIT_TEST(testReadStreamWrongFile);
             CPPUNIT_TEST(testReadStreamInvalidFile);
+            CPPUNIT_TEST(testReadStreamZip);
             CPPUNIT_TEST(testReadParameters);
             CPPUNIT_TEST(testReadParametersEmpty);
             CPPUNIT_TEST(testReadParametersWrongFile);
             CPPUNIT_TEST(testReadParametersInvalidFile);
+            CPPUNIT_TEST(testReadParametersZip);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -51,11 +53,13 @@ namespace stromx
             void testReadStreamEmpty();
             void testReadStreamWrongFile();
             void testReadStreamInvalidFile();
+            void testReadStreamZip();
             
             void testReadParameters();
             void testReadParametersEmpty();
             void testReadParametersWrongFile();
             void testReadParametersInvalidFile();
+            void testReadParametersZip();
                 
         private:
             Factory* m_factory;

@@ -30,7 +30,7 @@ namespace stromx
             CPPUNIT_TEST(testComputePath);
             CPPUNIT_TEST(testComputeName);
             CPPUNIT_TEST(testStripExtension);
-            CPPUNIT_TEST(testGetExtension);
+            CPPUNIT_TEST(testComputeExtension);
             CPPUNIT_TEST(testConvertToVersion);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -43,7 +43,7 @@ namespace stromx
             void testComputePath();
             void testComputeName();
             void testStripExtension();
-            void testGetExtension();
+            void testComputeExtension();
             void testConvertToVersion();
         };
     }

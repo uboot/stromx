@@ -46,10 +46,21 @@ namespace stromx
              */
             Stream* const readStream(const std::string & filepath, const Factory& factory) const;
             
+            /** 
+             * Reads a stream from an file input.
+             * 
+             * \param input The file input which provides the stream files.
+             * \param filename The name of the file in the input to be read.
+             * \param factory The factory is used to instantiate the operators and data
+             *                objects in the stream. I.e. all required operator and data types
+             *                must have been registered with the factory.
+             * \throws FileAccessFailed Failed to read the XML file.
+             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
+             */
             Stream* const readStream(FileInput & input, const std::string filename, const Factory& factory) const;
             
             /** 
-             * Sets the parameters of \c operators to the values in the XML file \c filename.
+             * Sets the parameters of \c operators to the values in the XML file \c filepath.
              * If a parameter can not be set the error is silently ignored. In particular, only
              * those operator parameters are set which can be written to in the current operator state.
              * 
@@ -62,6 +73,19 @@ namespace stromx
             void readParameters(const std::string & filepath, const Factory& factory,
                                 const std::vector<stromx::core::Operator*> operators) const;
             
+            
+            /** 
+             * Sets the parameters of \c operators to the values in the XML file \c filename.
+             * If a parameter can not be set the error is silently ignored. In particular, only
+             * those operator parameters are set which can be written to in the current operator state.
+             * 
+             * \param input The file input which provides the parameter files.
+             * \param filename The name of the file in the input to be read.
+             * \param factory The factory is used to instantiate data objects in the stream.
+             *                I.e. all required data types must have been registered with the factory.
+             * \throws FileAccessFailed Failed to read the XML file.
+             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
+             */
             void readParameters(FileInput & input, const std::string filename, const Factory& factory,
                                 const std::vector<stromx::core::Operator*> operators) const;
         };

@@ -51,12 +51,12 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc.txt"));
         }
         
-        void XmlUtilitiesTest::testGetExtension()
+        void XmlUtilitiesTest::testComputeExtension()
         {
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), XmlUtilities::getExtension("test.xml"));
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), XmlUtilities::getExtension(".xml"));
-            CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::getExtension("abc"));
-            CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::getExtension("abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("xml"), XmlUtilities::computeExtension("test.xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string("xml"), XmlUtilities::computeExtension(".xml"));
+            CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computeExtension("abc"));
+            CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::computeExtension("abc.txt"));
         }
                 
         void XmlUtilitiesTest::testConvertToVersion()

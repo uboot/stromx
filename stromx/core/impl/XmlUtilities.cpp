@@ -80,7 +80,7 @@ namespace stromx
                 return std::string (filename, 0, i);
             }
             
-            const std::string XmlUtilities::getExtension(const std::string& filename)
+            const std::string XmlUtilities::computeExtension(const std::string& filename)
             {
                 std::size_t i = filename.find_first_of(".");
                 

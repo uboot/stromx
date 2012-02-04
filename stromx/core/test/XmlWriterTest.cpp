@@ -41,11 +41,23 @@ namespace stromx
             XmlWriter().writeStream("XmlWriterTest_testWriteStream.xml", *m_stream);
         }
         
+        void XmlWriterTest::testWriteStreamZip()
+        {
+            CPPUNIT_ASSERT_NO_THROW(XmlWriter().writeStream("XmlWriterTest_testWriteStreamZip.zip", *m_stream));
+        }
+        
         void XmlWriterTest::testWriteParameters()
         {
             std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
                  
             XmlWriter().writeParameters("XmlWriterTest_testWriteParameters.xml", operators);
+        }
+        
+        void XmlWriterTest::testWriteParametersZip()
+        {
+            std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
+                 
+            CPPUNIT_ASSERT_NO_THROW(XmlWriter().writeParameters("XmlWriterTest_testWriteParametersZip.zip", operators));
         }
 
         void XmlWriterTest::tearDown()

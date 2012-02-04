@@ -17,6 +17,7 @@
 #include "XmlReader.h"
 
 #include "DirectoryFileInput.h"
+#include "ZipFileInput.h"
 #include "impl/XmlReaderImpl.h"
 #include "impl/XmlUtilities.h"
 
@@ -26,15 +27,26 @@ namespace stromx
     {
         Stream*const XmlReader::readStream(const std::string& filepath, const Factory& factory) const
         {
-            using namespace impl;
+            std::string directory = impl::XmlUtilities::computePath(filepath);
+            std::string filename = impl::XmlUtilities::computeName(filepath);
+            std::string filebase = impl::XmlUtilities::stripExtension(filepath);
+            std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
-            XmlReaderImpl impl(factory);
+            Stream* stream = 0;
+            if(extension == "xml")
+            {
+                DirectoryFileInput input(directory);
+                stream = readStream(input, filename, factory);
+            }
+            else if(extension == "zip")
+            {
+                ZipFileInput input(filepath);
+                stream = readStream(input, filebase + ".xml", factory);
+            }
+            else
+                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
             
-            std::string directory = XmlUtilities::computePath(filepath);
-            std::string filename = XmlUtilities::computeName(filepath);
-            DirectoryFileInput input(directory);
-            
-            return impl.readStream(input, filename);
+            return stream;
         }
         
         Stream*const XmlReader::readStream(FileInput& input, const std::string filename, const stromx::core::Factory& factory) const
@@ -46,15 +58,23 @@ namespace stromx
         void XmlReader::readParameters(const std::string& filepath, const stromx::core::Factory& factory,
                                        const std::vector< Operator* > operators) const
         {
-            using namespace impl;
+            std::string directory = impl::XmlUtilities::computePath(filepath);
+            std::string filename = impl::XmlUtilities::computeName(filepath);
+            std::string filebase = impl::XmlUtilities::stripExtension(filepath);
+            std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
-            XmlReaderImpl impl(factory);
-            
-            std::string directory = XmlUtilities::computePath(filepath);
-            std::string filename = XmlUtilities::computeName(filepath);
-            DirectoryFileInput input(directory);
-            
-            impl.readParameters(input, filename, operators);
+            if(extension == "xml")
+            {
+                DirectoryFileInput input(directory);
+                readParameters(input, filename, factory, operators);
+            }
+            else if(extension == "zip")
+            {
+                ZipFileInput input(filepath);
+                readParameters(input, filebase + ".xml", factory, operators);
+            }
+            else
+                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
         }
 
         void XmlReader::readParameters(FileInput& input, const std::string filename, const stromx::core::Factory& factory,

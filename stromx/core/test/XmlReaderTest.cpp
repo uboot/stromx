@@ -44,10 +44,22 @@ namespace stromx
         
         void XmlReaderTest::testReadStream()
         {
-            Stream* stream = XmlReader().readStream("stream.xml", *m_factory);
+            Stream* stream = 0;
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.xml", *m_factory));
             
             XmlWriter writer;
             writer.writeStream("XmlReaderTest_testReadStream.xml", *stream);
+            
+            delete stream;
+        }
+        
+        void XmlReaderTest::testReadStreamZip()
+        {
+            Stream* stream = 0;
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.zip", *m_factory));
+            
+            XmlWriter writer;
+            writer.writeStream("XmlReaderTest_testReadStreamZip.xml", *stream);
             
             delete stream;
         }
@@ -73,6 +85,18 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(UInt32(7000), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(0)));
             CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
+            
+            XmlWriter().writeStream("XmlReaderTest_testReadParameters.xml", *m_stream);
+        }
+        
+        void XmlReaderTest::testReadParametersZip()
+        {
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.zip", *m_factory, m_stream->operators()));
+            
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(0)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
+            
+            XmlWriter().writeStream("XmlReaderTest_testReadParametersZip.xml", *m_stream);
         }
         
         void XmlReaderTest::testReadParametersEmpty()
