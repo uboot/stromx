@@ -52,6 +52,12 @@ namespace stromx
             impl.writeStream(output, basename, stream);
         }
         
+        void XmlWriter::writeParameters(const std::string& filepath, const std::vector< Operator* >& operators) const
+        {
+            std::vector<const Operator*> constOperators(operators.begin(), operators.end());
+            writeParameters(filepath, constOperators);
+        }
+        
         void XmlWriter::writeParameters(const std::string& filepath, 
                                         const std::vector<const stromx::core::Operator* >& operators) const
         {
@@ -71,6 +77,12 @@ namespace stromx
             }
             else
                 throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
+        }
+        
+        void XmlWriter::writeParameters(FileOutput& output, const std::string basename, const std::vector< Operator* >& operators) const
+        {
+            std::vector<const Operator*> constOperators(operators.begin(), operators.end());
+            writeParameters(output, basename, constOperators);
         }
         
         void XmlWriter::writeParameters(FileOutput& output, const std::string basename,

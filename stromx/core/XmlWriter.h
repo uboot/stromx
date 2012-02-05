@@ -39,9 +39,15 @@ namespace stromx
             
             void writeParameters(const std::string& filepath,
                                  const std::vector<const stromx::core::Operator*>& operators) const;
+            
+            void writeParameters(const std::string& filepath,
+                                 const std::vector<stromx::core::Operator*>& operators) const;
                                  
             void writeParameters(FileOutput & output, const std::string basename,
                                  const std::vector<const stromx::core::Operator*>& operators) const; 
+                                 
+            void writeParameters(FileOutput & output, const std::string basename,
+                                 const std::vector<stromx::core::Operator*>& operators) const; 
         };
     }
 }
