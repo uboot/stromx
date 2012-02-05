@@ -38,6 +38,7 @@ void exportParameter();
 void exportPrimitive();
 void exportReadAccess();
 void exportRegistry();
+void exportSortInputsAlgorithm();
 void exportStream();
 void exportThread();
 void exportVersion();
@@ -68,6 +69,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportPrimitive();
     exportReadAccess();
     exportRegistry();
+    exportSortInputsAlgorithm();
     exportFactory();
     exportStream();
     exportThread();
