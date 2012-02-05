@@ -44,12 +44,8 @@ if(OpenCV2_FOUND)
     option(BUILD_BASE "Build base operators" ON)
 endif()
 
-if(XERCES_FOUND)
-    option(BUILD_XML_SUPPORT "Build XML persistence" ON)
-endif()
-
-if(LIBZIP_FOUND)
-    option(BUILD_ZIP_SUPPORT "Build zip file support" ON)
+if(XERCES_FOUND AND LIBZIP_FOUND)
+    option(BUILD_FILE_PERSISTENCE "Build file persistence" ON)
 endif()
 
 if(BUILD_CORE)

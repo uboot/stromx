@@ -56,7 +56,7 @@ namespace stromx
         }
         
         void XmlReader::readParameters(const std::string& filepath, const stromx::core::Factory& factory,
-                                       const std::vector< Operator* > operators) const
+                                       const std::vector< Operator* > & operators) const
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
@@ -78,7 +78,7 @@ namespace stromx
         }
 
         void XmlReader::readParameters(FileInput& input, const std::string filename, const stromx::core::Factory& factory,
-                                       const std::vector< Operator* > operators) const
+                                       const std::vector< Operator* > & operators) const
         {
             impl::XmlReaderImpl impl(factory);
             impl.readParameters(input, filename, operators);

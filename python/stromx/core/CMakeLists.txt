@@ -24,9 +24,15 @@ set(SOURCES
     Thread.cpp
     Version.cpp
     WriteAccess.cpp
-    XmlReader.cpp
-    XmlWriter.cpp
 )
+
+if(BUILD_FILE_PERSISTENCE)
+    set(SOURCES
+        ${SOURCES}
+        XmlReader.cpp
+        XmlWriter.cpp
+       )
+endif(BUILD_FILE_PERSISTENCE)
 
 add_library(core SHARED ${SOURCES})
 

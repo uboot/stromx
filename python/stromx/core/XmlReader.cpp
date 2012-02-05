@@ -25,12 +25,15 @@ using namespace stromx::core;
 
 namespace
 {
+    typedef Stream* (XmlReader::*read_stream_t)(const std::string &, const Factory &);
     Stream* const (XmlReader::*readStreamFromFileWrap)(const std::string &, const Factory &) const = &XmlReader::readStream;
+    void (XmlReader::*readParametersFromFileWrap)(const std::string &, const Factory&, const std::vector<stromx::core::Operator*> &) const = &XmlReader::readParameters;
 }
 
 void exportXmlReader()
 {       
     class_<XmlReader>("XmlReader")
-        .def("readStream", reinterpret_cast<Stream* (XmlReader::*)(const std::string &, const Factory &)>(readStreamFromFileWrap), return_value_policy<manage_new_object>())
+        .def("readStream", reinterpret_cast<read_stream_t>(readStreamFromFileWrap), return_value_policy<manage_new_object>())
+        .def("readParameters", readParametersFromFileWrap)
     ;
 }

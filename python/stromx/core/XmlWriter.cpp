@@ -24,6 +24,12 @@ using namespace stromx::core;
 
 namespace
 {
+    void writeParametersToFileWrap(const XmlWriter & writer, const std::string& filepath, const std::vector<stromx::core::Operator*>& operators)
+    {
+        std::vector<const stromx::core::Operator*> tempOperators(operators.begin(), operators.end());
+        writer.writeParameters(filepath, tempOperators);
+    }
+    
     void (XmlWriter::*writeStreamToFileWrap)(const std::string &, const Stream&) const = &XmlWriter::writeStream;
 }
 
@@ -31,5 +37,6 @@ void exportXmlWriter()
 {    
     class_<XmlWriter>("XmlWriter", init<>())
         .def("writeStream", writeStreamToFileWrap)
+        .def("writeParameters", writeParametersToFileWrap)
     ;
 }

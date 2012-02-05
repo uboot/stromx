@@ -9,7 +9,7 @@ include_directories(
     ${CPPUNIT_INCLUDE_DIR}
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     include_directories(${XERCES_INCLUDE_DIR})
 endif()
 
@@ -90,7 +90,7 @@ set(SOURCES
     main.cpp
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     set(SOURCES
         ${SOURCES}
         ../XmlReader.cpp
@@ -123,7 +123,7 @@ target_link_libraries(stromx_core_test
     ${CMAKE_THREAD_LIBS_INIT}
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_core_test ${XERCES_LIBRARIES})
 endif()
 

@@ -50,24 +50,18 @@ set(SOURCES
     Try.cpp
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     set(SOURCES
         ${SOURCES}
         XmlReader.cpp
         XmlWriter.cpp
+        ZipFileInput.cpp
+        ZipFileOutput.cpp
         impl/XmlReaderImpl.cpp
         impl/XmlUtilities.cpp
         impl/XmlWriterImpl.cpp
-        )
-endif()
-
-if(BUILD_ZIP_SUPPORT)
-    set(SOURCES
-        ${SOURCES}
-        ZipFileInput.cpp
-        ZipFileOutput.cpp
-        )
-endif()
+       )
+endif(BUILD_FILE_PERSISTENCE)
 
 add_library(stromx_core SHARED ${SOURCES})
 
@@ -82,7 +76,7 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     include_directories(${XERCES_INCLUDE_DIR})
 endif()
 
@@ -95,7 +89,7 @@ target_link_libraries(stromx_core
     ${CMAKE_THREAD_LIBS_INIT}
 )
 
-if(BUILD_XML_SUPPORT)
+if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_core ${XERCES_LIBRARIES})
 endif()
 

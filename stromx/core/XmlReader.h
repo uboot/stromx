@@ -71,7 +71,7 @@ namespace stromx
              * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              */
             void readParameters(const std::string & filepath, const Factory& factory,
-                                const std::vector<stromx::core::Operator*> operators) const;
+                                const std::vector<stromx::core::Operator*> & operators) const;
             
             
             /** 
@@ -87,7 +87,7 @@ namespace stromx
              * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              */
             void readParameters(FileInput & input, const std::string filename, const Factory& factory,
-                                const std::vector<stromx::core::Operator*> operators) const;
+                                const std::vector<stromx::core::Operator*> & operators) const;
         };
     }
 }
