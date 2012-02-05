@@ -31,8 +31,6 @@ set(SOURCES
     ../Data.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
-    ../DirectoryFileInput.cpp
-    ../DirectoryFileOutput.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../Factory.cpp
@@ -64,8 +62,6 @@ set(SOURCES
     DataContainerTest.cpp
     DataVariantTest.cpp
     DataTest.cpp
-    DirectoryFileInputTest.cpp
-    DirectoryFileOutputTest.cpp
     DumpTest.cpp
     Id2DataCompositeTest.cpp
     Id2DataMapTest.cpp
@@ -93,26 +89,24 @@ set(SOURCES
 if(BUILD_FILE_PERSISTENCE)
     set(SOURCES
         ${SOURCES}
+        ../DirectoryFileInput.cpp
+        ../DirectoryFileOutput.cpp
         ../XmlReader.cpp
         ../XmlWriter.cpp
+        ../ZipFileInput.cpp
+        ../ZipFileOutput.cpp
         ../impl/XmlReaderImpl.cpp
         ../impl/XmlUtilities.cpp
         ../impl/XmlWriterImpl.cpp
+        DirectoryFileInputTest.cpp
+        DirectoryFileOutputTest.cpp
         XmlReaderTest.cpp
         XmlUtilitiesTest.cpp
         XmlWriterTest.cpp
-    )
-endif()
-
-if(BUILD_ZIP_SUPPORT)
-    set(SOURCES
-        ${SOURCES}
-        ../ZipFileInput.cpp
-        ../ZipFileOutput.cpp
         ZipFileInputTest.cpp
         ZipFileOutputTest.cpp
     )
-endif()
+endif(BUILD_FILE_PERSISTENCE)
 
 add_executable(stromx_core_test ${SOURCES})
 

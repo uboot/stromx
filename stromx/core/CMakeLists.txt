@@ -28,8 +28,6 @@ set(SOURCES
     RecycleAccess.cpp
     Data.cpp
     DataVariant.cpp
-    DirectoryFileInput.cpp
-    DirectoryFileOutput.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
@@ -53,6 +51,8 @@ set(SOURCES
 if(BUILD_FILE_PERSISTENCE)
     set(SOURCES
         ${SOURCES}
+        DirectoryFileInput.cpp
+        DirectoryFileOutput.cpp
         XmlReader.cpp
         XmlWriter.cpp
         ZipFileInput.cpp
