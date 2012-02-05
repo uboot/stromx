@@ -78,9 +78,6 @@ include_directories(
 
 if(BUILD_FILE_PERSISTENCE)
     include_directories(${XERCES_INCLUDE_DIR})
-endif()
-
-if(BUILD_ZIP_SUPPORT)
     include_directories(${LIBZIP_INCLUDE_DIR})
 endif()
 

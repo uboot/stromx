@@ -11,12 +11,8 @@ include_directories(
 
 if(BUILD_FILE_PERSISTENCE)
     include_directories(${XERCES_INCLUDE_DIR})
-endif()
-
-if(BUILD_ZIP_SUPPORT)
     include_directories(${LIBZIP_INCLUDE_DIR})
 endif()
-
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/archive.zip DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
