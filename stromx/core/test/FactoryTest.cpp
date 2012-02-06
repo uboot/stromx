@@ -49,7 +49,7 @@ namespace stromx
             m_factory->registerOperator(op);
             
             // try to get an operator which does not exist in the factory
-            CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), OperatorAllocationFailed);
             
             // get the existing operator
             Operator* newOp;
@@ -66,7 +66,7 @@ namespace stromx
             m_factory->registerData(data);
             
             // try to get data which does not exist in the factory
-            CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareData"), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_factory->newData("FunnyPackage", "RareData"), DataAllocationFailed);
             
             // get the existing data
             Data* newData;

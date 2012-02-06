@@ -30,36 +30,17 @@ namespace stromx
         class OperatorError : public Exception
         {
         public:
-            /** Returns the operator this exception relates to. */
-            const OperatorInfo& op() const;
-            
-        protected:
             /** Constructs an operator exception, i.e. an exception related to an operator. */
             OperatorError(const OperatorInfo& op, const std::string & message)
               : Exception(message),
                 m_operator(op)
             {}
             
+            /** Returns the operator this exception relates to. */
+            const OperatorInfo& op() const;
+            
         private:
             const OperatorInfo& m_operator;
-        };
-        
-        /** \brief Wraps an exception which occurred in connection with an operator. */
-        class WrappedOperatorError : public OperatorError
-        {
-        public:
-            /** Constructs an operator exception, i.e. an exception related to an operator. */
-            WrappedOperatorError(const OperatorInfo& op, const std::exception & ex)
-              : OperatorError(op, ex.what()),
-                m_exception(ex)
-            {}
-            
-            /** Returns the wrapped exception. */
-            const std::exception & ex() const { return m_exception; }
-            
-            
-        private:
-            const std::exception & m_exception;
         };
         
         /** \brief The current state of the operator does not allow a specific operation. */

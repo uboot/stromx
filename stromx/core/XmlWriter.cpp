@@ -33,15 +33,35 @@ namespace stromx
             if(extension == "xml")
             {
                 DirectoryFileOutput output(directory);
-                writeStream(output, filebase, stream);
+                
+                try
+                {
+                    writeStream(output, filebase, stream);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(directory);
+                    throw;
+                }
             }
             else if(extension == "zip")
             {
                 ZipFileOutput output(filepath);
-                writeStream(output, filebase, stream);
+                
+                try
+                {
+                    writeStream(output, filebase, stream);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(filepath);
+                    throw;
+                }
             }
             else
-                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
+            {
+                throw FileAccessFailed(filepath, "", "Filename has unsupported extension '" + extension +"'.");
+            }
         }
         
         void XmlWriter::writeStream(FileOutput& output, const std::string basename, const stromx::core::Stream& stream) const
@@ -68,15 +88,35 @@ namespace stromx
             if(extension == "xml")
             {
                 DirectoryFileOutput output(directory);
-                writeParameters(output, filebase, operators);
+                
+                try
+                {
+                    writeParameters(output, filebase, operators);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(directory);
+                    throw;
+                }
             }
             else if(extension == "zip")
             {
                 ZipFileOutput output(filepath);
-                writeParameters(output, filebase, operators);
+                
+                try
+                {
+                    writeParameters(output, filebase, operators);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(filepath);
+                    throw;
+                }
             }
             else
-                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
+            {
+                throw FileAccessFailed(filepath, "", "Filename has unsupported extension '" + extension +"'.");
+            }
         }
         
         void XmlWriter::writeParameters(FileOutput& output, const std::string basename, const std::vector< Operator* >& operators) const

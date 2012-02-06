@@ -50,7 +50,7 @@ namespace stromx
         std::ostream& DirectoryFileOutput::text()
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Directory output has not been initialized.");
             
             return m_currentText;
         }
@@ -58,7 +58,7 @@ namespace stromx
         std::ostream& DirectoryFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Directory output has not been initialized.");
             
             if(m_currentFile.is_open())
                 throw WrongState("File has already been opened.");
@@ -79,7 +79,7 @@ namespace stromx
             m_currentFile.open(filename.c_str(), iosmode);
             
             if(m_currentFile.fail())
-                throw FileAccessFailed(m_currentBasename);
+                throw FileAccessFailed(filename, m_directory);
             
             return m_currentFile;
         }
@@ -87,7 +87,7 @@ namespace stromx
         const std::string& DirectoryFileOutput::getFilename() const
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Directory output has not been initialized.");
             
             return m_currentFilename;
         }
@@ -95,7 +95,7 @@ namespace stromx
         std::ostream& DirectoryFileOutput::file()
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Directory output has not been initialized.");
             
             if(! m_currentFile.is_open())
                 throw WrongState("File has not been opened.");

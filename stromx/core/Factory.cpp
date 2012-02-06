@@ -100,7 +100,8 @@ namespace stromx
                 }
             }
             
-        throw WrongArgument("Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
+            throw OperatorAllocationFailed(package, type,
+                                           "Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
         }
 
         Data*const Factory::newData(const std::string& package, const std::string& type) const
@@ -122,7 +123,8 @@ namespace stromx
                 }
             }
             
-        throw WrongArgument("Invalid argument: Data (" + package + ", " + type + ") unknown. Register first unknown data.");        
+        throw DataAllocationFailed(package, type, 
+                                   "Invalid argument: Data (" + package + ", " + type + ") unknown. Register first unknown data.");        
         }
     } 
 }

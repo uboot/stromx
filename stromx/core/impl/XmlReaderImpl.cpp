@@ -107,7 +107,7 @@ namespace stromx
                     
                     virtual void error (const SAXParseException &exc)
                     {
-                        throw FileAccessFailed(m_filename, "XML file is not valid.");
+                        throw InvalidFileFormat(m_filename, "XML file is not valid.");
                     }
                     
                 private:
@@ -167,7 +167,7 @@ namespace stromx
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
                 
-                XercesDOMParser* parser = new XercesDOMParser();
+                std::auto_ptr<XercesDOMParser> parser(new XercesDOMParser());
 
                 parser->setErrorHandler(errHandler.get());
                 parser->setEntityResolver(entityResolver.get());
@@ -190,7 +190,7 @@ namespace stromx
                 {
                     char* message = XMLString::transcode(toCatch.getMessage());
                     
-                    FileAccessFailed ex(filename, "XML exception: " + std::string(message));
+                    InvalidFileFormat ex(filename, "", "XML exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
@@ -198,17 +198,17 @@ namespace stromx
                 {
                     char* message = XMLString::transcode(toCatch.msg);
                     
-                    FileAccessFailed ex(filename, "DOM exception: " + std::string(message));
+                    InternalError ex("DOM exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
-                catch (FileAccessFailed& e)
+                catch (Exception&)
                 {
-                    throw e;
+                    throw;
                 }
                 catch (...)
                 {
-                    throw FileAccessFailed(filename, "Unexpected exception.");
+                    throw InternalError("Unexpected exception.");
                 }
                 
                 try
@@ -257,10 +257,15 @@ namespace stromx
                         readThread(threadElement, thread);
                     }
                 }
-                catch(xercesc::XMLException&)
+                catch(xercesc::XMLException& toCatch)
                 {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InternalError ex("XML exception: " + std::string(message));
+                    XMLString::release(&message);
+                    
                     delete m_stream;
-                    throw FileAccessFailed(filename, "Failed to read XML file.");
+                    throw ex;
                 }
                 catch(core::Exception&)
                 {
@@ -270,10 +275,8 @@ namespace stromx
                 catch(boost::bad_lexical_cast & e)
                 {
                     delete m_stream;
-                    throw FileAccessFailed(filename, e.what());
+                    throw FileAccessFailed(filename, "", e.what());
                 }
-
-                delete parser;
                 
                 return m_stream;
             }  
@@ -306,7 +309,7 @@ namespace stromx
                 {
                     char* message = XMLString::transcode(toCatch.getMessage());
                     
-                    FileAccessFailed ex(filename, "XML exception: " + std::string(message));
+                    InvalidFileFormat ex(filename, "", "XML exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
@@ -314,17 +317,17 @@ namespace stromx
                 {
                     char* message = XMLString::transcode(toCatch.msg);
                     
-                    FileAccessFailed ex(filename, "DOM exception: " + std::string(message));
+                    InternalError ex("DOM exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
-                catch (FileAccessFailed& e)
+                catch (Exception&)
                 {
-                    throw e;
+                    throw;
                 }
                 catch (...)
                 {
-                    throw FileAccessFailed(filename, "Unexpected exception.");
+                    throw InternalError("Unexpected exception.");
                 }
                 
                 try
@@ -355,7 +358,7 @@ namespace stromx
                         unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
                         
                         if(id >= operators.size())
-                            throw FileAccessFailed(filename, "No operator with ID " + boost::lexical_cast<std::string>(id) + ".");
+                            throw InconsistentFileContent(filename, "No operator with ID " + boost::lexical_cast<std::string>(id) + ".");
                         
                         // get the operator with the correct ID
                         Operator* op = operators[id];
@@ -391,9 +394,13 @@ namespace stromx
                         m_id2DataMap.clear();
                     }
                 }
-                catch(xercesc::XMLException&)
+                catch(xercesc::XMLException& toCatch)
                 {
-                    throw FileAccessFailed(filename, "Failed to read XML file.");
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InternalError ex("XML exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
                 }
                 catch(core::Exception&)
                 {
@@ -401,7 +408,7 @@ namespace stromx
                 }
                 catch(boost::bad_lexical_cast & e)
                 {
-                    throw FileAccessFailed(filename, e.what());
+                    throw FileAccessFailed(filename, "", e.what());
                 }
 
                 delete parser;
@@ -558,10 +565,18 @@ namespace stromx
                     m_input->initialize(textData, file);
                     data->deserialize(*m_input, version);
                 }
-                catch(Exception& e)
+                catch(FileException &)
+                {
+                    throw;
+                }
+                catch(NoInputFile & e)
+                {
+                    throw DeserializationError(data->package(), data->type(), e.what());
+                }
+                catch(std::exception& e)
                 {
                     delete data;
-                    throw DeserializationError(textData, file, e.what());
+                    throw DeserializationError(data->package(), data->type(), e.what());
                 }
                 
                 return data;

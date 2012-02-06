@@ -36,15 +36,35 @@ namespace stromx
             if(extension == "xml")
             {
                 DirectoryFileInput input(directory);
-                stream = readStream(input, filename, factory);
+                
+                try
+                {
+                    stream = readStream(input, filebase + ".xml", factory);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(directory);
+                    throw;
+                }
             }
             else if(extension == "zip")
             {
                 ZipFileInput input(filepath);
-                stream = readStream(input, filebase + ".xml", factory);
+                
+                try
+                {
+                    stream = readStream(input, filebase + ".xml", factory);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(filepath);
+                    throw;
+                }
             }
             else
-                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
+            {
+                throw FileAccessFailed(filepath, "", "Filename has unsupported extension '" + extension +"'.");
+            }
             
             return stream;
         }
@@ -66,15 +86,35 @@ namespace stromx
             if(extension == "xml")
             {
                 DirectoryFileInput input(directory);
-                readParameters(input, filename, factory, operators);
+                
+                try
+                {
+                    readParameters(input, filebase + ".xml", factory, operators);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(directory);
+                    throw;
+                }
             }
             else if(extension == "zip")
             {
                 ZipFileInput input(filepath);
-                readParameters(input, filebase + ".xml", factory, operators);
+                
+                try
+                {
+                    readParameters(input, filebase + ".xml", factory, operators);
+                }
+                catch(FileException& e)
+                {
+                    e.setContainer(filepath);
+                    throw;
+                }
             }
             else
-                throw FileAccessFailed(filepath, "Filename has invalid extension '" + extension +"'.");
+            {
+                throw FileAccessFailed(filepath, "", "Filename has unsupported extension '" + extension +"'.");
+            }
         }
 
         void XmlReader::readParameters(FileInput& input, const std::string filename, const stromx::core::Factory& factory,

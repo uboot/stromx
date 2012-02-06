@@ -107,7 +107,7 @@ namespace stromx
                 }
                 catch(std::exception & e)
                 {
-                    throw WrappedOperatorError(*info(), e);
+                    throw OperatorError(*info(), e.what());
                 }
                
                 m_status = ACTIVE;
@@ -137,7 +137,7 @@ namespace stromx
                 }
                 catch(std::exception & e)
                 {
-                    throw WrappedOperatorError(*info(), e);
+                    throw OperatorError(*info(), e.what());
                 }
             }
             
@@ -377,7 +377,7 @@ namespace stromx
                     m_status = ACTIVE;
                     m_statusCond.notify_all();
                     
-                    throw WrappedOperatorError(*info(), e);
+                    throw OperatorError(*info(), e.what());
                 }
                 
                 {

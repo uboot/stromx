@@ -33,14 +33,14 @@ namespace stromx
             m_archiveHandle = zip_open(m_archive.c_str(), ZIP_CREATE, &error);
             
             if(! m_archiveHandle)
-                throw FileAccessFailed(m_archive);
+                throw FileAccessFailed(m_archive, "Failed to open zip archive.");
             
             // delete all files in the archive
             int numFiles = zip_get_num_files(m_archiveHandle);
             for(int i = 0; i < numFiles; ++i)
             {
                 if(zip_delete(m_archiveHandle, i) < 0)
-                    throw FileAccessFailed(m_archive);
+                    throw FileAccessFailed(m_archive, "Failed to delete files in zip archive.");
             }
         }
 
@@ -72,7 +72,7 @@ namespace stromx
         const std::string& ZipFileOutput::getFilename() const
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Zip file output has not been initialized.");
             
             return m_currentFilename;
         }
@@ -85,7 +85,7 @@ namespace stromx
         std::ostream& ZipFileOutput::text()
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Zip file output has not been initialized.");
             
             return m_currentText;
         }
@@ -93,7 +93,7 @@ namespace stromx
         std::ostream& ZipFileOutput::openFile(const std::string& ext, const stromx::core::OutputProvider::OpenMode mode)
         {            
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Zip file output has not been initialized.");
             
             if(m_currentFile)
                 throw WrongState("File has already been opened.");
@@ -117,7 +117,7 @@ namespace stromx
         std::ostream& ZipFileOutput::file()
         {
             if(! m_initialized)
-                throw WrongState("No current file in directory output.");
+                throw WrongState("Zip file output has not been initialized.");
             
             if(! m_currentFile)
                 throw WrongState("File has not been opened.");
@@ -134,12 +134,12 @@ namespace stromx
                 
                 zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
                 if(! source)
-                    throw FileAccessFailed(m_archive);
+                    throw FileAccessFailed(m_archive, m_currentFilename, "Failed to allocate ZLib source.");
                 
                 if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
                 {
                     zip_source_free(source);
-                    throw FileAccessFailed(m_archive, "Failed to add file '" + m_currentFilename + "' to archive.");
+                    throw FileAccessFailed(m_archive, m_currentFilename, "Failed to open file in zip archive.");
                 }
                 
                 delete m_currentFile;

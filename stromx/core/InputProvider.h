@@ -49,6 +49,7 @@ namespace stromx
             
             /** 
              * Opens the file representation of the data and returns the associated input stream.
+             * \throws NoInputFile If no file is provided.
              * \throws WrongState If the input provider has not been correctly initialized
              *                    or if this function has already been called.
              * \throws FileAccessFailed If the file could not be opened.

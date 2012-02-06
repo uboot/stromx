@@ -243,9 +243,13 @@ namespace stromx
                 {
                     data.serialize(*m_output);
                 }
-                catch(Exception & e)
+                catch(FileException & e)
                 {
-                    throw SerializationError(data, filename, e.what());
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw SerializationError(data.package(), data.type(), e.what());
                 }
                 
                 //Create attribute for file
@@ -392,7 +396,7 @@ namespace stromx
                     }
                     catch(Exception&)
                     {
-                        throw FileAccessFailed(m_filename); 
+                        throw; 
                     }
                     
                     XMLString::release(&content);
@@ -460,7 +464,7 @@ namespace stromx
                     }
                     catch(Exception&)
                     {
-                        throw FileAccessFailed(m_filename); 
+                        throw; 
                     }
                     
                     XMLString::release(&content);

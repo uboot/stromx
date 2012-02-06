@@ -88,17 +88,73 @@ namespace stromx
             {}
         };
         
-        /** \brief An error occurred during file access. */
-        class FileAccessFailed : public Exception
+        /** \brief A file related exception. */
+        class FileException : public Exception
         {
         public:
-            FileAccessFailed(const std::string & filename, const std::string & message = "FileAccessFailed")
+            void setContainer(const std::string & container) { m_container = container; }
+            
+        protected:
+            FileException(const std::string & filename, const std::string & container, 
+                          const std::string & message)
               : Exception(message),
-                m_filename(filename)
+                m_filename(filename),
+                m_container(container)
             {}
             
+            virtual ~FileException() throw() {}
+            
         private:
-            const std::string & m_filename;
+            const std::string m_filename;
+            std::string m_container;
+        };
+        
+        /** \brief An error occurred during file access. */
+        class FileAccessFailed : public FileException
+        {
+        public:
+            FileAccessFailed(const std::string & filename,
+                             const std::string & message)
+              : FileException(filename, "", message)
+            {}
+            
+            FileAccessFailed(const std::string & filename,
+                             const std::string & container,
+                             const std::string & message)
+              : FileException(filename, container, message)
+            {}
+        };
+        
+        /** \brief The file format is invalid */
+        class InvalidFileFormat : public FileException
+        {
+        public:
+            InvalidFileFormat(const std::string & filename,
+                             const std::string & message)
+              : FileException(filename, "", message)
+            {}
+            
+            InvalidFileFormat(const std::string & filename,
+                             const std::string & container,
+                             const std::string & message)
+              : FileException(filename, container, message)
+            {}
+        };
+        
+        /** \brief The file content is not consistent */
+        class InconsistentFileContent : public FileException
+        {
+        public:
+            InconsistentFileContent(const std::string & filename,
+                             const std::string & message)
+              : FileException(filename, "", message)
+            {}
+            
+            InconsistentFileContent(const std::string & filename,
+                             const std::string & container,
+                             const std::string & message)
+              : FileException(filename, container, message)
+            {}
         };
         
         /** \brief Not enought memory. */
@@ -137,34 +193,90 @@ namespace stromx
             {}
         };
         
-        /** \brief %Data could not be serialized. */
-        class SerializationError : public Exception
+        /** \brief Error related to a Data object. */
+        class DataException : public Exception
         {
         public:
-            SerializationError(const Data & data, const std::string & filename, const std::string & message = "SerializationError")
+            
+            virtual ~DataException() throw() {}
+            
+            const std::string & package() const { return m_package; }
+            const std::string & type() const { return m_package; }
+            
+        protected:
+            DataException(const std::string & package, const std::string & type,
+                               const std::string & message = "DataException")
               : Exception(message),
-                m_data(data),
-                m_fileName(filename)
+                m_package(package),
+                m_type(type)
             {}
             
         private:
-            const Data& m_data;
-            const std::string& m_fileName;
+            const std::string m_package;
+            const std::string m_type;
+        };
+        
+        /** \brief %Data could not be serialized. */
+        class SerializationError : public DataException
+        {
+        public:
+            SerializationError(const std::string & package, const std::string & type,
+                               const std::string & message = "SerializationError")
+              : DataException(package, type, message)
+            {}
         };
         
         /** \brief %Data could not be deserialized. */
-        class DeserializationError : public Exception
+        class DeserializationError : public DataException
         {
         public:
-            DeserializationError(const std::string & textData, const std::string & filename, const std::string & message = "DeserializationError")
+            DeserializationError(const std::string & package, const std::string & type,
+                                 const std::string & message = "DeserializationError")
+              : DataException(package, type, message)
+            {}
+        };
+        
+        /** \brief Error related to a data and operator factory. */
+        class FactoryException : public Exception
+        {
+        public:
+            
+            virtual ~FactoryException() throw() {}
+            
+            const std::string & package() const { return m_package; }
+            const std::string & type() const { return m_package; }
+            
+        protected:
+            FactoryException(const std::string & package, const std::string & type,
+                               const std::string & message = "SerializationError")
               : Exception(message),
-                m_textData(textData),
-                m_fileName(filename)
+                m_package(package),
+                m_type(type)
             {}
             
         private:
-            const std::string& m_textData;
-            const std::string& m_fileName;
+            const std::string m_package;
+            const std::string m_type;
+        };
+        
+        /** \brief %Operator could not be allocated. */
+        class OperatorAllocationFailed : public FactoryException
+        {
+        public:
+            OperatorAllocationFailed(const std::string & package, const std::string & type,
+                                     const std::string & message = "OperatorAllocationFailed")
+              : FactoryException(package, type, message)
+            {}
+        };
+        
+        /** \brief %Data could not be allocated. */
+        class DataAllocationFailed : public FactoryException
+        {
+        public:
+            DataAllocationFailed(const std::string & package, const std::string & type,
+                                 const std::string & message = "DataAllocationFailed")
+              : FactoryException(package, type, message)
+            {}
         };
         
         /** \brief The input provider has no input file. */
@@ -174,8 +286,7 @@ namespace stromx
             NoInputFile(const std::string & message = "NoInputFile")
               : Exception(message)
             {}
-        };
-        
+        };     
     }
 }
 

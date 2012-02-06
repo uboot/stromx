@@ -71,7 +71,7 @@ namespace stromx
         
         void XmlReaderTest::testReadStreamInvalidFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", *m_factory), InvalidFileFormat);
         }
         
         void XmlReaderTest::testReadStreamEmpty()
@@ -108,7 +108,7 @@ namespace stromx
         void XmlReaderTest::testReadParametersInvalidFile()
         {
             CPPUNIT_ASSERT_THROW(XmlReader().readParameters("invalid.xml", *m_factory, m_stream->operators()),
-                                 FileAccessFailed);
+                                 InvalidFileFormat);
 
         }
 

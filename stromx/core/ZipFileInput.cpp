@@ -33,7 +33,7 @@ namespace stromx
             m_archiveHandle = zip_open(m_archive.c_str(), 0, &error);
             
             if(! m_archiveHandle)
-                throw FileAccessFailed(m_archive);
+                throw FileAccessFailed(m_archive, "Failed to open zip archive.");
         }
 
         ZipFileInput::~ZipFileInput()
@@ -60,7 +60,7 @@ namespace stromx
         const bool ZipFileInput::hasFile() const
         {
             if(! m_initialized)
-                throw WrongState("No current data in directory input.");
+                throw WrongState("Zip file input has not been initialized.");
             
             return ! m_currentFilename.empty();
         }
@@ -68,7 +68,7 @@ namespace stromx
         std::istream& ZipFileInput::text()
         {
             if(! m_initialized)
-                throw WrongState("No current data in directory input.");
+                throw WrongState("Zip file input has not been initialized.");
             
             return m_currentText;
         }
@@ -76,7 +76,7 @@ namespace stromx
         std::istream& ZipFileInput::openFile(const stromx::core::InputProvider::OpenMode mode)
         {            
             if(! m_initialized)
-                throw WrongState("No current data in directory input.");
+                throw WrongState("Zip file input has not been initialized.");
             
             if(m_currentFile)
                 throw WrongState("File has already been opened.");
@@ -90,17 +90,17 @@ namespace stromx
             
             struct zip_stat stat;
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
-                throw FileAccessFailed(m_archive);
+                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to access file in zip archive.");
             
             unsigned int fileSize = stat.size;
             char* content = new char[fileSize];
                 
             zip_file* file = zip_fopen(m_archiveHandle, m_currentFilename.c_str(), 0);
             if(! file)
-                throw FileAccessFailed(m_archive);
+                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to open file in zip archive.");
             
             if(zip_fread(file, content, fileSize) != fileSize)
-                throw FileAccessFailed(m_archive, "Failed to read the file '" + m_currentFilename + "'.");
+                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to read file in zip archive.");
             
             m_currentFile = new std::istringstream(std::string(content, fileSize), iosmode);
             
@@ -110,7 +110,7 @@ namespace stromx
         std::istream& ZipFileInput::file()
         {
             if(! m_initialized)
-                throw WrongState("No current data in directory input.");
+                throw WrongState("Zip file input has not been initialized.");
             
             if(! m_currentFile)
                 throw WrongState("File has not been opened.");
