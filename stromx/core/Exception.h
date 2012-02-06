@@ -104,6 +104,9 @@ namespace stromx
             
             virtual ~FileException() throw() {}
             
+            const std::string filename() const { return m_filename; }
+            const std::string container() const { return m_container; }
+            
         private:
             const std::string m_filename;
             std::string m_container;
