@@ -569,10 +569,6 @@ namespace stromx
                 {
                     throw;
                 }
-                catch(NoInputFile & e)
-                {
-                    throw DeserializationError(data->package(), data->type(), e.what());
-                }
                 catch(std::exception& e)
                 {
                     delete data;
