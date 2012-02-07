@@ -15,6 +15,7 @@
 */
 
 #include <boost/assert.hpp>
+#include <boost/thread.hpp>
 #include "Enum.h"
 #include "Exception.h"
 #include "ExceptionObserver.h"
@@ -44,6 +45,7 @@ namespace stromx
         Stream::Stream()
           : m_network(new impl::Network()),
             m_threads(0),
+            m_observerMutex(new boost::mutex()),
             m_status(INACTIVE)
         {
             if (m_network == 0)
@@ -274,6 +276,8 @@ namespace stromx
         
         void Stream::addObserver(const ExceptionObserver*const observer)
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             if(! observer)
                 throw WrongArgument("Passed 0 as observer.");
             
@@ -282,12 +286,16 @@ namespace stromx
 
         void Stream::removeObserver(const ExceptionObserver*const observer)
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             if(m_observers.erase(observer) != 1)
                 throw WrongArgument("Observer has not been added to operator.");
         }
                 
         void Stream::observeException(const ExceptionObserver::Phase phase, const OperatorError& ex, const Thread* const thread) const
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             for(std::set<const ExceptionObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)

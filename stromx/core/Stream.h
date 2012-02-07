@@ -20,10 +20,16 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <auto_ptr.h>
 #include "Config.h"
 #include "ExceptionObserver.h"
 #include "Output.h"
 #include "impl/ThreadImplObserver.h"
+
+namespace boost
+{
+    class mutex;
+}
 
 namespace stromx
 {
@@ -208,6 +214,7 @@ namespace stromx
             impl::Network* const m_network;
             std::vector<Thread*> m_threads;
             std::set<const ExceptionObserver*> m_observers;
+            std::auto_ptr<boost::mutex>  m_observerMutex;
             Status m_status;
         };
     }

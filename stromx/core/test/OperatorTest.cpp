@@ -375,7 +375,7 @@ namespace stromx
         
         void OperatorTest::testAddToStream()
         {
-            Operator op = Operator(new TestOperator);
+            Operator op(new TestOperator);
             CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
             
             op.initialize();
@@ -385,7 +385,7 @@ namespace stromx
 
         void OperatorTest::testRemoveFromStream()
         {
-            Operator op = Operator(new TestOperator);
+            Operator op(new TestOperator);
             
             op.initialize();
             op.addToStream();

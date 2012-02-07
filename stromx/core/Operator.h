@@ -26,6 +26,11 @@
 #include "OperatorInfo.h"
 #include "impl/Id2DataMap.h"
 
+namespace boost
+{
+    class mutex;
+}
+
 namespace stromx
 {
     namespace core
@@ -220,6 +225,7 @@ namespace stromx
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
+            std::auto_ptr<boost::mutex>  m_observerMutex;
             bool m_isPartOfStream;
         };
     }

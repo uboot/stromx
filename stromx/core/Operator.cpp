@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+#include <boost/thread.hpp>
 #include "Description.h"
 #include "Exception.h"
 #include "Operator.h"
@@ -56,6 +57,7 @@ namespace stromx
           : m_inputObserver(0),
             m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel)),
+            m_observerMutex(new boost::mutex()),
             m_isPartOfStream(false)
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
@@ -193,6 +195,8 @@ namespace stromx
         
         void Operator::addObserver(const ConnectorObserver*const observer)
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             if(! observer)
                 throw WrongArgument("Passed 0 as observer.");
             
@@ -201,12 +205,16 @@ namespace stromx
 
         void Operator::removeObserver(const ConnectorObserver*const observer)
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             if(m_observers.erase(observer) != 1)
                 throw WrongArgument("Observer has not been added to operator.");
         }
         
         void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)
@@ -217,6 +225,8 @@ namespace stromx
 
         void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
+            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            
             for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
                 ++iter)

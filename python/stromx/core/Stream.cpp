@@ -56,7 +56,7 @@ void exportStream()
         .value("PAUSED", Stream::PAUSED)
     ;
         
-    class_<Stream>("Stream")
+    class_<Stream, boost::noncopyable>("Stream")
         .def("name", &Stream::name, return_value_policy<copy_const_reference>())
         .def("setName", &Stream::setName)
         .def("status", &Stream::status)
