@@ -129,6 +129,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
+            image->setName("Image");
             image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
                                         
