@@ -32,7 +32,12 @@ namespace stromx
         class STROMX_CORE_API ZipFileOutput : public FileOutput
         {
         public:
-            /** Constructs a directory file output which stores all files in \c archive. */
+            /**
+             * Constructs a file output which stores data in a zip file.
+             * 
+             * \param archive The path to the zip file.
+             * \throws FileAccessFailed If the zip file could not be opened.
+             */
             ZipFileOutput(const std::string & archive);
             virtual ~ZipFileOutput();
             

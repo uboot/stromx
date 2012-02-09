@@ -31,7 +31,12 @@ namespace stromx
         class STROMX_CORE_API ZipFileInput : public FileInput
         {
         public:
-            /** Constructs a zip file input which reads files in \c archive. */
+            /** 
+             * Constructs a zip file input which reads files from a zip file.
+             * 
+             * \param archive The path to the zip file.
+             * \throws FileAccessFailed If the zip file could not be opened.
+             */
             ZipFileInput(const std::string & archive);
             virtual ~ZipFileInput();
             
