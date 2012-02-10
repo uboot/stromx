@@ -243,7 +243,7 @@ namespace stromx
                 {
                     data.serialize(*m_output);
                 }
-                catch(FileException & e)
+                catch(FileException &)
                 {
                     throw;
                 }

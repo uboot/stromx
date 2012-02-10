@@ -28,7 +28,7 @@ namespace stromx
         class Data;
         
         /** \brief Abstract stromx exception. */
-        class Exception : public std::exception
+        class STROMX_CORE_API Exception : public std::exception
         {
         public:
             /** Constructs an exception. */
