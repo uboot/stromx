@@ -30,7 +30,11 @@ namespace stromx
         class STROMX_CORE_API DirectoryFileOutput : public FileOutput
         {
         public:
-            /** Constructs a directory file output which stores all files in \c directory. */
+            /**
+             * Constructs a directory file output which stores data in a directory.
+             *
+             * \param directory The path to the directory.
+             */
             DirectoryFileOutput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             

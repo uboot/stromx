@@ -30,7 +30,11 @@ namespace stromx
         class STROMX_CORE_API DirectoryFileInput : public FileInput
         {
         public:
-            /** Constructs a directory file input which reads files in \c directory. */
+            /** 
+             * Constructs a directory file input which reads files from a directory.
+             * 
+             * \param directory The path to the directory.
+             */
             DirectoryFileInput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileInput();
             
