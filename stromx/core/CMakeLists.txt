@@ -31,6 +31,7 @@ set(SOURCES
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
+    Exception.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp
     ImageWrapper.cpp

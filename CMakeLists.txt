@@ -14,6 +14,14 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251 /wd4275 /wd4661")
 endif(MSVC)
 
+if(CMAKE_COMPILER_IS_GNUCXX )
+    add_definitions(-DGNUCXX)
+endif(CMAKE_COMPILER_IS_GNUCXX )
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_definitions(-DDEBUG)
+endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+
 include(UseDoxygen OPTIONAL)
 
 find_package(Boost 1.36.0)

@@ -32,15 +32,21 @@ namespace stromx
         {
         public:
             /** Constructs an exception. */
-            Exception(const std::string & message) : m_message(message) {}
+            Exception(const std::string & message);
             
             virtual ~Exception() throw() {}
             
-            /** Returns a description of the exception. */
             virtual const char* what() const throw() { return m_message.c_str(); }
+            
+            /** Returns the exception message. */
+            virtual const std::string & message() const { return m_message; }
+            
+            /** Returns the call stack at the point where the exception was thrown. */
+            virtual const std::string & callStack() const { return m_callStack; }
                         
         private:
-            std::string m_message; 
+            std::string m_message;
+            std::string m_callStack;
         };  
         
         /** \brief A wrong argument was passed to a function. */

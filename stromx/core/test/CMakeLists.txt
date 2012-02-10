@@ -29,6 +29,7 @@ set(SOURCES
     ../DataVariant.cpp
     ../Dump.cpp
     ../Enum.cpp
+    ../Exception.cpp
     ../Factory.cpp
     ../Id2DataComposite.cpp
     ../Id2DataPair.cpp
@@ -59,6 +60,7 @@ set(SOURCES
     DataVariantTest.cpp
     DataTest.cpp
     DumpTest.cpp
+    ExceptionTest.cpp
     Id2DataCompositeTest.cpp
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
