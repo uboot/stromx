@@ -98,6 +98,9 @@ namespace stromx
         class FileException : public Exception
         {
         public:
+            const std::string filename() const { return m_filename; }
+            const std::string container() const { return m_container; }
+            
             void setContainer(const std::string & container) { m_container = container; }
             
         protected:
@@ -108,10 +111,8 @@ namespace stromx
                 m_container(container)
             {}
             
-            virtual ~FileException() throw() {}
             
-            const std::string filename() const { return m_filename; }
-            const std::string container() const { return m_container; }
+            virtual ~FileException() throw() {}
             
         private:
             const std::string m_filename;
@@ -253,7 +254,7 @@ namespace stromx
             virtual ~FactoryException() throw() {}
             
             const std::string & package() const { return m_package; }
-            const std::string & type() const { return m_package; }
+            const std::string & type() const { return m_type; }
             
         protected:
             FactoryException(const std::string & package, const std::string & type,

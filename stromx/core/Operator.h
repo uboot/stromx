@@ -191,22 +191,8 @@ namespace stromx
             void removeObserver(const ConnectorObserver* const observer);
             
         private:
-            class InternalObserver : public impl::Id2DataMapObserver
-            {
-            public:
-                enum Type
-                {
-                    INPUT,
-                    OUTPUT
-                };
-                
-                InternalObserver(const Operator* const op, const Type type);
-                virtual void observe(const unsigned int id, const DataContainer & data) const;
-                
-            private:
-                const Operator* m_op;
-                Type m_type;
-            };
+            class MutexHandle;
+            class InternalObserver;
             
             impl::InputNode* const getInputNode(const unsigned int id) const;
             impl::OutputNode* const getOutputNode(const unsigned int id) const;
@@ -225,7 +211,7 @@ namespace stromx
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
-            std::auto_ptr<boost::mutex>  m_observerMutex;
+            MutexHandle*  m_observerMutex;
             bool m_isPartOfStream;
         };
     }

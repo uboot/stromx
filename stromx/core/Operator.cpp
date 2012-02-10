@@ -30,26 +30,47 @@ namespace stromx
 {
     namespace core
     {
-        
-        Operator::InternalObserver::InternalObserver(const Operator* const op, const Type type)
-          : m_op(op),
-            m_type(type)
-        {}
-        
-        void Operator::InternalObserver::observe(const unsigned int id, const DataContainer & data) const
+        class Operator::MutexHandle
         {
-            switch(m_type)
+        public:
+            boost::mutex & mutex() { return m_mutex; }
+        private:
+            boost::mutex m_mutex;
+        };
+        
+        class Operator::InternalObserver : public impl::Id2DataMapObserver
+        {
+        public:
+            enum Type
             {
-            case INPUT:
-                m_op->observeInput(id, data);
-                break;
-            case OUTPUT:
-                m_op->observeOutput(id, data);
-                break;
-            default:
-                BOOST_ASSERT(false);
+                INPUT,
+                OUTPUT
+            };
+            
+            InternalObserver(const Operator* const op, const Type type)
+             : m_op(op),
+                m_type(type)
+            {}
+            
+            virtual void observe(const unsigned int id, const DataContainer & data) const
+            {
+                switch(m_type)
+                {
+                case INPUT:
+                    m_op->observeInput(id, data);
+                    break;
+                case OUTPUT:
+                    m_op->observeOutput(id, data);
+                    break;
+                default:
+                    BOOST_ASSERT(false);
+                }
             }
-        }
+            
+        private:
+            const Operator* m_op;
+            Type m_type;
+        };
         
         using namespace impl;
         
@@ -57,7 +78,7 @@ namespace stromx
           : m_inputObserver(0),
             m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel)),
-            m_observerMutex(new boost::mutex()),
+            m_observerMutex(new MutexHandle()),
             m_isPartOfStream(false)
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
@@ -72,6 +93,7 @@ namespace stromx
 
             delete m_inputObserver;
             delete m_outputObserver;
+            delete m_observerMutex;
         }
         
         const OperatorInfo& Operator::info() const
@@ -195,7 +217,7 @@ namespace stromx
         
         void Operator::addObserver(const ConnectorObserver*const observer)
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(! observer)
                 throw WrongArgument("Passed 0 as observer.");
@@ -205,7 +227,7 @@ namespace stromx
 
         void Operator::removeObserver(const ConnectorObserver*const observer)
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(m_observers.erase(observer) != 1)
                 throw WrongArgument("Observer has not been added to operator.");
@@ -213,7 +235,7 @@ namespace stromx
         
         void Operator::observeInput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();
@@ -225,7 +247,7 @@ namespace stromx
 
         void Operator::observeOutput(const unsigned int id, const stromx::core::DataContainer& data) const
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             for(std::set<const ConnectorObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();

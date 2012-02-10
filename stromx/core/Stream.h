@@ -20,16 +20,10 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <auto_ptr.h>
 #include "Config.h"
 #include "ExceptionObserver.h"
 #include "Output.h"
 #include "impl/ThreadImplObserver.h"
-
-namespace boost
-{
-    class mutex;
-}
 
 namespace stromx
 {
@@ -197,16 +191,8 @@ namespace stromx
             void resume();
             
         private:
-            class InternalObserver : public impl::ThreadImplObserver
-            {
-            public:
-                InternalObserver(const Stream* const stream, const Thread* const thread);
-                virtual void observe(const OperatorError & ex) const;
-                
-            private:
-                const Stream* m_stream;
-                const Thread* m_thread;
-            };
+            class MutexHandle;
+            class InternalObserver;
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
             
@@ -214,7 +200,7 @@ namespace stromx
             impl::Network* const m_network;
             std::vector<Thread*> m_threads;
             std::set<const ExceptionObserver*> m_observers;
-            std::auto_ptr<boost::mutex>  m_observerMutex;
+            MutexHandle*  m_observerMutex;
             Status m_status;
         };
     }

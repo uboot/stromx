@@ -31,21 +31,36 @@ namespace stromx
 {
     namespace core
     {
-        Stream::InternalObserver::InternalObserver(const Stream* const stream, const Thread* const thread) 
-          : m_stream(stream),
-            m_thread(thread)
+        class Stream::MutexHandle
         {
-        }
+        public:
+            boost::mutex & mutex() { return m_mutex; }
+        private:
+            boost::mutex m_mutex;
+        };
         
-        void Stream::InternalObserver::observe(const OperatorError & ex) const
+        class Stream::InternalObserver : public impl::ThreadImplObserver
         {
-            m_stream->observeException(ExceptionObserver::EXECUTION, ex, m_thread);
-        }
+        public:
+            InternalObserver(const Stream* const stream, const Thread* const thread) 
+              : m_stream(stream),
+                m_thread(thread)
+            {}
+            
+            virtual void observe(const OperatorError & ex) const
+            {
+                m_stream->observeException(ExceptionObserver::EXECUTION, ex, m_thread);
+            }
+            
+        private:
+            const Stream* m_stream;
+            const Thread* m_thread;
+        };
 
         Stream::Stream()
           : m_network(new impl::Network()),
             m_threads(0),
-            m_observerMutex(new boost::mutex()),
+            m_observerMutex(new MutexHandle),
             m_status(INACTIVE)
         {
             if (m_network == 0)
@@ -64,6 +79,7 @@ namespace stromx
             }
             
             delete m_network;
+            delete m_observerMutex;
         }
         
         const std::vector<Operator*>& Stream::operators() const
@@ -276,7 +292,7 @@ namespace stromx
         
         void Stream::addObserver(const ExceptionObserver*const observer)
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(! observer)
                 throw WrongArgument("Passed 0 as observer.");
@@ -286,7 +302,7 @@ namespace stromx
 
         void Stream::removeObserver(const ExceptionObserver*const observer)
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(m_observers.erase(observer) != 1)
                 throw WrongArgument("Observer has not been added to operator.");
@@ -294,7 +310,7 @@ namespace stromx
                 
         void Stream::observeException(const ExceptionObserver::Phase phase, const OperatorError& ex, const Thread* const thread) const
         {
-            boost::lock_guard<boost::mutex> lock(*m_observerMutex);
+            boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             for(std::set<const ExceptionObserver*>::const_iterator iter = m_observers.begin();
                 iter != m_observers.end();

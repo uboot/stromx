@@ -16,11 +16,11 @@
 
 #include "Exception.h"
 
-#ifdef GNUCXX
+#ifdef __GNUG__
     #include <execinfo.h>
     #include <cxxabi.h>
     #include <sstream>
-#endif // GNUCXX
+#endif // __GNUG__
 
 namespace stromx
 {
@@ -30,7 +30,7 @@ namespace stromx
           : m_message(message)
         {
 #ifdef DEBUG
-    #ifdef GNUCXX
+    #ifdef __GNUG__
             std::ostringstream out;
             
             const size_t MAX_DEPTH = 100;
@@ -46,10 +46,10 @@ namespace stromx
                 std::string line(lines[i]);
                 size_t start = line.find_first_of("(");
                 size_t end = line.find_first_of("+");
-                std::string function = line.substr(start + 1, end - start - 1);
                 
                 if(start != std::string::npos && end != std::string::npos)
                 {
+                    std::string function = line.substr(start + 1, end - start - 1);
                     const size_t LENGTH = 300;
                     char* demangled = new char[LENGTH];
                     size_t newLength = LENGTH;
@@ -64,7 +64,7 @@ namespace stromx
                     }
                     else
                     {
-                        out << function << "()" << std::endl;
+                        out << line << std::endl;
                     }
                     
                     delete [] demangled;
@@ -77,7 +77,7 @@ namespace stromx
             
             delete [] lines;
             m_callStack = out.str();
-    #endif // GNUCXX
+    #endif // __GNUG__
 #endif // DEBUG
         }
     }
