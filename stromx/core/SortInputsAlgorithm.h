@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_SORTINPUTSALGORITHM_H
 #define STROMX_CORE_SORTINPUTSALGORITHM_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -24,7 +26,7 @@ namespace stromx
         class Stream;
         
         /** \brief Algorithm which sorts the input sequence of stream threads */
-        class SortInputsAlgorithm
+        class STROMX_CORE_API SortInputsAlgorithm
         {
         public:
             /** Constructs a sorting algorithm. */
