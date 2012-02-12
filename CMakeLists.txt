@@ -1,5 +1,9 @@
 project(stromx)
 
+set (STROMX_VERSION_MAJOR 0)
+set (STROMX_VERSION_MINOR 1)
+set (STROMX_VERSION_PATCH 0)
+
 cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
@@ -73,6 +77,12 @@ if(BUILD_PYTHON)
 endif()
 
 configure_file (
-  "${PROJECT_SOURCE_DIR}/Findstromx.cmake.in"
-  "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+    "${PROJECT_SOURCE_DIR}/Findstromx.cmake.in"
+    "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+    @ONLY
 )
+
+install(FILES "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+    DESTINATION share/stromx
+)
+

@@ -1,9 +1,5 @@
 project(stromx_core)
 
-set (STROMX_VERSION_MAJOR 0)
-set (STROMX_VERSION_MINOR 1)
-set (STROMX_VERSION_PATCH 0)
-
 configure_file (
   "${PROJECT_SOURCE_DIR}/Config.h.in"
   "${PROJECT_SOURCE_DIR}/Config.h"
