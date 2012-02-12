@@ -30,7 +30,7 @@ find_package(CppUnit)
 
 find_package(Threads)
 
-find_package(OpenCV2)
+find_package(OpenCV)
 
 find_package(XercesC)
 
@@ -44,7 +44,7 @@ if(Boost_FOUND)
     set(BUILD_CORE true)
 endif()
 
-if(OpenCV2_FOUND)
+if(OpenCV_FOUND)
     option(BUILD_BASE "Build base operators" ON)
 endif()
 

@@ -16,7 +16,7 @@ endif()
 include_directories(
     ../..
     ${Boost_INCLUDE_DIRS}
-	${OpenCV2_INCLUDE_DIR}
+	${OpenCV_INCLUDE_DIRS}
 )
 
 set(SOURCES
@@ -47,9 +47,7 @@ set_target_properties(stromx_base PROPERTIES
 )
 
 target_link_libraries(stromx_base
-    ${OpenCV2_CORE_LIBRARY}
-    ${OpenCV2_IMGPROC_LIBRARY}
-    ${OpenCV2_HIGHGUI_LIBRARY}
+    ${OpenCV_LIBS}
     stromx_core
 )
 

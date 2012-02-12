@@ -8,7 +8,7 @@ include_directories(
     ../../..
     ${CPPUNIT_INCLUDE_DIR}
     ${Boost_INCLUDE_DIRS}
-	${OpenCV2_INCLUDE_DIR}
+	${OpenCV_INCLUDE_DIRS}
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -50,8 +50,6 @@ add_executable(stromx_base_test
 target_link_libraries(stromx_base_test 
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
-    ${OpenCV2_CORE_LIBRARY}
-    ${OpenCV2_IMGPROC_LIBRARY}
-    ${OpenCV2_HIGHGUI_LIBRARY}
+    ${OpenCV_LIBS}
     stromx_core
 )
