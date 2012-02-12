@@ -1,0 +1,76 @@
+# ===================================================================================
+#  The stromx CMake configuration file
+#
+#             ** File generated automatically, do not modify **
+#
+#  Usage from an external project:
+#    In your CMakeLists.txt, add these lines:
+#
+#    find_package(stromx REQUIRED )
+#    include_directories(stromx_INCLUDE_DIRS)
+#    target_link_libraries(MY_TARGET_NAME ${stromx_CORE_LIB})
+#
+#    Optionally add:
+#    target_link_libraries(MY_TARGET_NAME ${stromx_BASE_LIB})
+#
+#    This file will define the following variables:
+#      - stromx_LIBS                 : The list of libraries to links against.
+#      - stromx_LIB_DIR              : The directory where lib files are. Calling LINK_DIRECTORIES
+#                                      with this path is NOT needed.
+#      - stromx_INCLUDE_DIRS         : The OpenCV include directories.
+#      - stromx_VERSION              : The version of this stromx build. Example: "0.1.0"
+#      - stromx_VERSION_MAJOR        : Major version part of stromx_VERSION. Example: "0"
+#      - stromx_VERSION_MINOR        : Minor version part of stromx_VERSION. Example: "1"
+#      - stromx_VERSION_PATCH        : Patch version part of stromx_VERSION. Example: "0"
+#
+# =================================================================================================
+
+# Some additional settings are required if stromx is built as static libs
+set(stromx_SHARED @BUILD_SHARED_LIBS@)
+
+# Extract the directory where *this* file has been installed (determined at cmake run-time)
+get_filename_component(stromx_CONFIG_PATH "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+# Get the absolute path with no ../.. relative marks, to eliminate implicit linker warnings
+get_filename_component(stromx_INSTALL_PATH "${stromx_CONFIG_PATH}/../.." REALPATH)
+
+# ======================================================
+# Include directories to add to the user project:
+# ======================================================
+
+# Provide the include directories to the caller
+set(stromx_INCLUDE_DIRS @CMAKE_INCLUDE_DIRS_CONFIGCMAKE@)
+include_directories(${stromx_INCLUDE_DIRS})
+
+# ======================================================
+# Link directories to add to the user project:
+# ======================================================
+
+# Provide the libs directory anyway, it may be needed in some cases.
+set(stromx_LIB_DIR @CMAKE_LIB_DIRS_CONFIGCMAKE@)
+link_directories(${stromx_LIB_DIR})
+
+# ====================================================================
+# Link libraries:
+# ====================================================================
+set(stromx_LIB_COMPONENTS stromx_core stromx_base)
+
+
+set(stromx_LIBS "")
+if(WIN32)
+  foreach(__CVLIB ${stromx_LIB_COMPONENTS})
+      set(stromx_LIBS ${stromx_LIBS} debug ${__CVLIB} optimized ${__CVLIB})
+  endforeach()
+else()
+  foreach(__CVLIB ${OpenCV_LIB_COMPONENTS})
+    set(stromx_LIBS ${stromx_LIBS} ${__CVLIB})
+  endforeach()
+endif()
+
+# ======================================================
+#  Version variables:
+# ======================================================
+set(stromx_VERSION @STROMX_VERSION_MAJOR@.@STROMX_VERSION_MINOR@.@STROMX_VERSION_PATCH@)
+set(stromx_VERSION_MAJOR  @STROMX_VERSION_MAJOR@)
+set(stromx_VERSION_MINOR  @STROMX_VERSION_MINOR@)
+set(stromx_VERSION_PATCH  @STROMX_VERSION_PATCH@)

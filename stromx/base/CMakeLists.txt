@@ -16,7 +16,6 @@ endif()
 include_directories(
     ../..
     ${Boost_INCLUDE_DIRS}
-	${OpenCV_INCLUDE_DIRS}
 )
 
 set(SOURCES

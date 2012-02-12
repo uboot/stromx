@@ -71,3 +71,8 @@ endif()
 if(BUILD_PYTHON)
     add_subdirectory(python)
 endif()
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/Findstromx.cmake.in"
+  "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+)
