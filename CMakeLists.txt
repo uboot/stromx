@@ -77,12 +77,12 @@ if(BUILD_PYTHON)
 endif()
 
 configure_file (
-    "${PROJECT_SOURCE_DIR}/Findstromx.cmake.in"
-    "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+    "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
+    "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
     @ONLY
 )
 
-install(FILES "${PROJECT_BINARY_DIR}/Findstromx.cmake"
+install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
     DESTINATION share/stromx
 )
 
