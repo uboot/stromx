@@ -14,7 +14,8 @@
 #    target_link_libraries(MY_TARGET_NAME ${stromx_BASE_LIB})
 #
 #    This file will define the following variables:
-#      - stromx_LIBS                 : The list of libraries to links against.
+#      - stromx_CORE_LIB             : The stromx core lib
+#      - stromx_BASE_LIB             : The stromx base operators lib
 #      - stromx_LIB_DIR              : The directory where lib files are. Calling LINK_DIRECTORIES
 #                                      with this path is NOT needed.
 #      - stromx_INCLUDE_DIRS         : The stromx include directories.
@@ -24,12 +25,6 @@
 #      - stromx_VERSION_PATCH        : Patch version part of stromx_VERSION. Example: "0"
 #
 # =================================================================================================
-
-# Extract the directory where *this* file has been installed (determined at cmake run-time)
-get_filename_component(stromx_CONFIG_PATH "${CMAKE_CURRENT_LIST_FILE}" PATH)
-
-# Get the absolute path with no ../.. relative marks, to eliminate implicit linker warnings
-get_filename_component(stromx_INSTALL_PATH "${stromx_CONFIG_PATH}/../.." REALPATH)
 
 # ======================================================
 # Include directories to add to the user project:
@@ -50,17 +45,13 @@ link_directories(${stromx_LIB_DIR})
 # ====================================================================
 # Link libraries:
 # ====================================================================
-set(stromx_LIB_COMPONENTS stromx_core stromx_base)
-
 set(stromx_LIBS "")
 if(WIN32)
-  foreach(__STROMXLIB ${stromx_LIB_COMPONENTS})
-      set(stromx_LIBS ${stromx_LIBS} debug ${__STROMXLIB}.lib optimized ${__STROMXLIB}.lib)
-  endforeach()
+    set(stromx_CORE_LIB debug stromx_core.lib optimized stromx_core.lib)
+    set(stromx_BASE_LIB debug stromx_base.lib optimized stromx_base.lib)
 else()
-  foreach(__STROMXLIB ${stromx_LIB_COMPONENTS})
-    set(stromx_LIBS ${stromx_LIBS} ${__STROMXLIB})
-  endforeach()
+    set(stromx_CORE_LIB stromx_core)
+    set(stromx_BASE_LIB stromx_base)
 endif()
 
 # ======================================================
