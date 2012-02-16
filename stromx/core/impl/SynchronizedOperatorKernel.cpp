@@ -320,6 +320,16 @@ namespace stromx
                 m_dataCond.notify_all();
             }
             
+            void SynchronizedOperatorKernel::lockParameters()
+            {
+
+            }
+
+            void SynchronizedOperatorKernel::unlockParameters()
+            {
+
+            }
+            
             bool SynchronizedOperatorKernel::tryExecute()
             {
                 {

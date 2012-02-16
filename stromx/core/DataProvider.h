@@ -43,6 +43,7 @@ namespace stromx
              * This function should be called regularly during a longer computation
              * in OperatorKernel::execute() to ensure that a stream can be stopped
              * within a reasonable amount of time.
+             * 
              * \throws Interrupt 
              */
             virtual void testForInterrupt() = 0;
@@ -50,6 +51,7 @@ namespace stromx
             /**
              * Sleep for the given amount of microseconds. The function
              * throws Interrup if the stream has been stopped while sleeping.
+             * 
              * \throws Interrupt
              */
             virtual void sleep(const unsigned int microseconds) = 0;
@@ -58,6 +60,7 @@ namespace stromx
              * Receives input data from the provider. The functions waits until
              * the requirements formulated in \c mapper have are fulfilled.
              * If the stream is stopped during waiting Interrupt is thrown. 
+             * 
              * \throws Interrupt
              */
             virtual void receiveInputData(const Id2DataMapper& mapper) = 0;
@@ -66,9 +69,31 @@ namespace stromx
              * Sends input data from the provider. The functions waits until
              * the requirements formulated in \c mapper have are fulfilled.
              * If the stream is stopped during waiting Interrupt is thrown. 
+             * 
              * \throws Interrupt
              */
             virtual void sendOutputData(const Id2DataMapper& mapper) = 0;
+            
+            /**
+             * Allows other threads to read and write parameters of the
+             * calling operator until the execution of the parameter has finised
+             * or lockParameters() is called. This function must be called
+             * if the operator starts to wait for a signal which can only be triggered
+             * by setting a parameter.
+             * 
+             * \throws WrongState If the parameter access has already been unblocked.
+             */
+            virtual void unlockParameters() = 0;
+            
+            /**
+             * Blocks all read and write access to parameters of the calling operator
+             * until the execution of the parameter has finished or unlockParameters()
+             * is called. Blocking the parameter access makes sure no parameters are 
+             * changed while the operator executes.
+             * 
+             * \throws WrongState If the parameter access has already been blocked.
+             */
+            virtual void lockParameters() = 0;
         };
     }
 }

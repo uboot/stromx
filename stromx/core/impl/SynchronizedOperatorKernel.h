@@ -69,6 +69,10 @@ namespace stromx
                 void setInputData(const unsigned int id, DataContainer data);
                 void clearOutputData(unsigned int id);
                 
+                void unlockParameters();
+                void lockParameters();
+                
+                
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
                 typedef boost::unique_lock<boost::mutex> unique_lock_t;
