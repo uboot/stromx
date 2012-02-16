@@ -42,6 +42,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ThreadImplTest);
             CPPUNIT_TEST(testStart);
             CPPUNIT_TEST(testStop);
+            CPPUNIT_TEST(testStopEmpty);
             CPPUNIT_TEST(testJoin);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
@@ -66,6 +67,7 @@ namespace stromx
             
             void testStart();
             void testStop();
+            void testStopEmpty();
             void testJoin();
             void testPause();
             void testResume();

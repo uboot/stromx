@@ -179,8 +179,12 @@ namespace stromx
             
             void ThreadImpl::loop()
             {
+                // return immediately if there are no inputs to process
+                if(! m_inputSequence.size())
+                    return;
+                
                 try
-                {      
+                {
                     while(true)
                     {
                         for(std::vector<InputNode*>::iterator node = m_inputSequence.begin();

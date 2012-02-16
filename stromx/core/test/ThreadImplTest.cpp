@@ -154,6 +154,16 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
             CPPUNIT_ASSERT_EQUAL(ThreadImpl::DEACTIVATING, m_thread->status());
         }
+        
+        void ThreadImplTest::testStopEmpty()
+        {
+            // remove all inputs from the thread
+            while(m_thread->inputSequence().size())
+                m_thread->removeInput(0);
+            
+            m_thread->start();
+            CPPUNIT_ASSERT_NO_THROW(m_thread->stop());
+        }
 
         void ThreadImplTest::testJoin()
         {
