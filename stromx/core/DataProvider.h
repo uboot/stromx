@@ -28,8 +28,8 @@ namespace stromx
         /** \brief Provider of functions to receive and send data.
          *
          * Data providers are passed as parameter to OperatorKernel::execute() and
-         * provides ways for the executing kernel to communicate with its 
-         * surroundings.
+         * provides ways for the executing kernel to send output data and receive 
+         * input data.
          */
         class DataProvider
         {
@@ -76,10 +76,11 @@ namespace stromx
             
             /**
              * Allows other threads to read and write parameters of the
-             * calling operator until the execution of the parameter has finised
-             * or lockParameters() is called. This function must be called
-             * if the operator starts to wait for a signal which can only be triggered
-             * by setting a parameter.
+             * calling operator until lockParameters() any other blocking function is called.
+             * This function should be called if the operator is blocked by a longer operation
+             * which is not affected by parameter read or writes. In particular, it must be called
+             * if the operator is blocked at a condition which can only be unblocked by setting
+             * a parameter.
              * 
              * \throws WrongState If the parameter access has already been unblocked.
              */
@@ -87,8 +88,8 @@ namespace stromx
             
             /**
              * Blocks all read and write access to parameters of the calling operator
-             * until the execution of the parameter has finished or unlockParameters()
-             * is called. Blocking the parameter access makes sure no parameters are 
+             * until unlockParameters() is called or any other blocking function is called.
+             * Blocking the parameter access makes sure no parameters are 
              * changed while the operator executes.
              * 
              * \throws WrongState If the parameter access has already been blocked.

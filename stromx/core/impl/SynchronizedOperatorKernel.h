@@ -87,7 +87,8 @@ namespace stromx
                 
                 OperatorKernel* m_op;
                 Status m_status;
-                boost::condition_variable m_statusCond;
+                bool m_parametersAreLocked;
+                boost::condition_variable m_parameterCond;
                 boost::condition_variable m_dataCond;
                 boost::mutex m_mutex;
                 impl::Id2DataMap m_inputMap;

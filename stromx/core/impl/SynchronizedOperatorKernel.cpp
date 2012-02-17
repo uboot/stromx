@@ -31,7 +31,8 @@ namespace stromx
         {
             SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
               : m_op(op),
-                m_status(NONE)
+                m_status(NONE),
+                m_parametersAreLocked(false)
             {
                 if(!op)
                     throw WrongArgument("Passed null pointer as operator.");
@@ -56,6 +57,12 @@ namespace stromx
             
             void SynchronizedOperatorKernel::sleep(const unsigned int microseconds)
             {
+                // allow parameter access while sleeping
+                {
+                    lock_t lock(m_mutex);
+                    m_parametersAreLocked = false;
+                }
+                
                 try
                 {
                     boost::this_thread::sleep(boost::posix_time::microseconds(1));
@@ -64,6 +71,11 @@ namespace stromx
                 {
                     throw Interrupt();
                 } 
+                
+                {
+                    lock_t lock(m_mutex);
+                    m_parametersAreLocked = true;
+                }
             }
             
             void SynchronizedOperatorKernel::initialize(const Id2DataMapObserver* const inputObserver, const Id2DataMapObserver* const outputObserver)
@@ -161,8 +173,8 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
-                while(m_status == EXECUTING)
-                    waitForSignal(m_statusCond, lock);
+                while(m_parametersAreLocked)
+                    waitForSignal(m_parameterCond, lock);
                 
                 validateParameterId(id);
                 validateReadAccess(id);
@@ -176,27 +188,18 @@ namespace stromx
                 validateParameterId(id);
                 validateParameterType(id, value.variant());
                 
-                DataVariant parameterType = info()->parameter(id).variant();
-                if(parameterType.isVariant(DataVariant::TRIGGER))
-                {
-                    validateWriteAccess(id);
-                    
-                    m_op->setParameter(id, value);
-                }
-                else
-                {
-                    while(m_status == EXECUTING)
-                        waitForSignal(m_statusCond, lock);
-                    
-                    validateWriteAccess(id);
-                    
-                    m_op->setParameter(id, value);
-                }
+                while(m_parametersAreLocked)
+                    waitForSignal(m_parameterCond, lock);
+                
+                validateWriteAccess(id);
+                
+                m_op->setParameter(id, value);
             }
 
             void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
             {   
                 unique_lock_t lock(m_mutex);
+                m_parametersAreLocked = false;
                 
                 BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
                 
@@ -214,6 +217,7 @@ namespace stromx
                     interruptExceptionWasThrown = true;
                 }   
                 
+                m_parametersAreLocked = false;
                 if(! interruptExceptionWasThrown)
                     m_dataCond.notify_all();
                 
@@ -225,6 +229,7 @@ namespace stromx
             void SynchronizedOperatorKernel::sendOutputData(const core::Id2DataMapper& mapper)
             {
                 unique_lock_t lock(m_mutex);
+                m_parametersAreLocked = false;
                 
                 BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
                 
@@ -242,6 +247,7 @@ namespace stromx
                     interruptExceptionWasThrown = true;
                 }   
                 
+                m_parametersAreLocked = false;
                 if(! interruptExceptionWasThrown)
                     m_dataCond.notify_all();
                 
@@ -322,12 +328,14 @@ namespace stromx
             
             void SynchronizedOperatorKernel::lockParameters()
             {
-
+                lock_t lock(m_mutex);
+                m_parametersAreLocked = true;
             }
 
             void SynchronizedOperatorKernel::unlockParameters()
             {
-
+                lock_t lock(m_mutex);
+                m_parametersAreLocked = false;
             }
             
             bool SynchronizedOperatorKernel::tryExecute()
@@ -336,9 +344,14 @@ namespace stromx
                     lock_t lock(m_mutex);
                     
                     if(m_status == EXECUTING)
+                    {
                         return false;
+                    }
                     else
+                    {
                         m_status = EXECUTING;
+                        m_parametersAreLocked = true;
+                    }
                 }
                 
                 try
@@ -350,7 +363,8 @@ namespace stromx
                     // pass interrupts to the caller
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
-                    m_statusCond.notify_all();
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
                     
                     throw;
                 }
@@ -359,7 +373,8 @@ namespace stromx
                     // pass all operator exceptions to the caller
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
-                    m_statusCond.notify_all();
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
                     
                     throw;
                 }
@@ -368,7 +383,8 @@ namespace stromx
                     // wrap other exceptions
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
-                    m_statusCond.notify_all();
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
                     
                     throw OperatorError(*info(), e.what());
                 }
@@ -376,7 +392,8 @@ namespace stromx
                 {
                     lock_t lock(m_mutex);
                     m_status = ACTIVE;
-                    m_statusCond.notify_all();
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
                 }
         
                 return true;

@@ -369,6 +369,8 @@ namespace stromx
         
         void Camera::execute(DataProvider& provider)
         {
+            // allow parameter access while waiting for data
+            provider.unlockParameters();
             DataContainer image = m_imageQueue->getOutputData(Queue::OUTPUT);
             DataContainer index = m_indexQueue->getOutputData(Queue::OUTPUT);
             

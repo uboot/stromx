@@ -107,6 +107,9 @@ namespace stromx
                 {
                     // wait for trigger
                     unique_lock_t lock(m_cond->m_mutex);
+                    
+                    // allow to trigger while waiting
+                    provider.unlockParameters();
                     m_cond->m_cond.wait(lock);
                 }
                 catch(boost::thread_interrupted&)

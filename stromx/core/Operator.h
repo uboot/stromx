@@ -114,17 +114,33 @@ namespace stromx
             /** Returns the current status of the operator. */
             const Status status() const;
             
-            /** Sets a parameter \c id to \c value. */
+            /** 
+             * Sets a parameter \c id to \c value.
+             * 
+             * \throws Interrupt
+             * \throws WrongParameterType
+             * \throws ParameterAccessViolation
+             * \throws WrongParameterId 
+             */
             void setParameter(const unsigned int id, const Data& value);
             
-            /** Gets the current value of the parameter \c id. */
+            /**
+             * Gets the current value of the parameter \c id.
+             * 
+             * \throws Interrupt
+             * \throws ParameterAccessViolation
+             * \throws WrongParameterId 
+             */
             const Data& getParameter(const unsigned int id) const;
             
             /** 
              * Obtains the current value of the parameter \c id and 
              * attempts to cast it to \c data_t.
              * 
-             * \throw BadCast If the value can not be casted to \c data_t.
+             * \throws BadCast If the value can not be casted to \c data_t.
+             * \throws Interrupt
+             * \throws ParameterAccessViolation
+             * \throws WrongParameterId 
              */
             template<typename data_t>
             const data_t& getParameter(unsigned int id) const
@@ -144,16 +160,26 @@ namespace stromx
              * \em not removed by this function and will still be available
              * and block the output. Use clearOutputData() to remove the output
              * data.
+             * 
+             * \throws Interrupt
+             * \throws WrongOperatorState
              */
             const DataContainer getOutputData(const unsigned int id) const;
             
             /** 
              * Waits for the input \c to to become empty and then places \c data
              * at the input.
+             * 
+             * \throws Interrupt
+             * \throws WrongOperatorState
              */
             void setInputData(const unsigned int id, const DataContainer data);
             
-            /** Removes any output data from the output \c id. */
+            /**
+             * Removes any output data from the output \c id.
+             * 
+             * \throws WrongOperatorState
+             */
             void clearOutputData(const unsigned int id);
             
             /** 
