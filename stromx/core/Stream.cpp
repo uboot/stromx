@@ -183,7 +183,7 @@ namespace stromx
 
         void Stream::stop()
         {
-            if (m_status != ACTIVE && m_status != PAUSED)
+            if (m_status == INACTIVE)
             {
                 return;
             }

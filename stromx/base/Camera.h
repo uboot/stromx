@@ -121,7 +121,6 @@ namespace stromx
             core::Double m_wbGreen;
             core::Double m_wbBlue;
 
-            core::Trigger m_valueTrigger;
             core::Enum m_valueInternal;
             core::Enum m_valueSoftware;
         };

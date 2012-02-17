@@ -83,9 +83,19 @@ namespace stromx
             // if the queue is not full
             if(m_deque.size() < m_size)
             {
-                // try to get data from the input
                 Id2DataPair inputDataMapper(INPUT);
-                provider.receiveInputData(Try(inputDataMapper));
+                if(m_deque.size())
+                {
+                    // there is some data in the queue
+                    // try to get data from the input
+                    provider.receiveInputData(Try(inputDataMapper));
+                }
+                else
+                {
+                    // there is no data in the queue
+                    // wait here forever
+                    provider.receiveInputData(inputDataMapper);
+                }
                 
                 // if there was data push it on the queue
                 if(! inputDataMapper.data().empty())
@@ -95,9 +105,19 @@ namespace stromx
             // if the queue is not empty
             if(m_deque.size() > 0)
             {
-                // try to push data to the output
                 Id2DataPair outputDataMapper(OUTPUT, m_deque.front());
-                provider.sendOutputData(Try(outputDataMapper));
+                if(m_deque.size() < m_size)
+                {
+                    // there is some space left
+                    // try to push data to the output
+                    provider.sendOutputData(Try(outputDataMapper));
+                }
+                else
+                {
+                    // there is no space left
+                    // wait here forever
+                    provider.sendOutputData(outputDataMapper);
+                }
                 
                 // if this was successful delete the data from the queue
                 if(outputDataMapper.data().empty())

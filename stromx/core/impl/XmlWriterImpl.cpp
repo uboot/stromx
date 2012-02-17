@@ -39,7 +39,6 @@ namespace stromx
             XmlWriterImpl::XmlWriterImpl() 
                 : m_stream(0),
                   m_opList(0),
-                  m_ignoreAccessErrors(false),
                   m_output(0), 
                   m_filename(""), 
                   m_impl(0), 
@@ -178,18 +177,15 @@ namespace stromx
                             iter_par != currOp->info().parameters().end();
                             ++iter_par)
                 {
-                    if(m_ignoreAccessErrors)
+                    try
                     {
-                        try
-                        {
-                            // Try to access the parameter in question. 
-                            currOp->getParameter((*iter_par)->id());
-                        }
-                        catch(ParameterAccessViolation&)
-                        {
-                            // If the access fails continue with the next parameter.
-                            continue;
-                        }
+                        // Try to access the parameter in question. 
+                        currOp->getParameter((*iter_par)->id());
+                    }
+                    catch(ParameterAccessViolation&)
+                    {
+                        // If the access fails continue with the next parameter.
+                        continue;
                     }
                     
                     //Create current parameter entry param being child of current operator op (one for each parameter possible)
@@ -360,7 +356,6 @@ namespace stromx
                 m_stream = &stream;
                 m_output = &output;
                 m_filename = filename;
-                m_ignoreAccessErrors = false;
                 
                 std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
                 m_opList = operators;
@@ -435,7 +430,6 @@ namespace stromx
                 m_output = &output;
                 m_filename = filename;
                 m_opList = operators;
-                m_ignoreAccessErrors = true;
                 
                 try
                 {

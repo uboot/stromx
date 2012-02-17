@@ -134,12 +134,12 @@ namespace stromx
                 
                 zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
                 if(! source)
-                    throw FileAccessFailed(m_archive, m_currentFilename, "Failed to allocate ZLib source.");
+                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to allocate ZLib source.");
                 
                 if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
                 {
                     zip_source_free(source);
-                    throw FileAccessFailed(m_archive, m_currentFilename, "Failed to open file in zip archive.");
+                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
                 }
                 
                 delete m_currentFile;

@@ -325,7 +325,7 @@ namespace stromx
             switch(id)
             {
             case TRIGGER:
-                return m_valueTrigger;
+                throw ParameterAccessViolation(parameter(id), *this);
             case TRIGGER_MODE:
             {
                 const Data& value = m_trigger->getParameter(Trigger::ACTIVE);

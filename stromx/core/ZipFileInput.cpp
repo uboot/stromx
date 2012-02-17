@@ -90,17 +90,17 @@ namespace stromx
             
             struct zip_stat stat;
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
-                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to access file in zip archive.");
+                throw FileAccessFailed(m_currentFilename, m_archive, "Failed to access file in zip archive.");
             
             unsigned int fileSize = stat.size;
             char* content = new char[fileSize];
                 
             zip_file* file = zip_fopen(m_archiveHandle, m_currentFilename.c_str(), 0);
             if(! file)
-                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to open file in zip archive.");
+                throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
             
             if(zip_fread(file, content, fileSize) != fileSize)
-                throw FileAccessFailed(m_archive, m_currentFilename, "Failed to read file in zip archive.");
+                throw FileAccessFailed(m_currentFilename, m_archive, "Failed to read file in zip archive.");
             
             m_currentFile = new std::istringstream(std::string(content, fileSize), iosmode);
             

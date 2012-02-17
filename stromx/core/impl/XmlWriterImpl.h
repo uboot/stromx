@@ -57,7 +57,6 @@ namespace stromx
                 
                 const Stream* m_stream;
                 std::vector<const Operator*> m_opList;
-                bool m_ignoreAccessErrors;
                 FileOutput* m_output;
                 std::string m_filename;
                 xercesc::DOMImplementation* m_impl;
