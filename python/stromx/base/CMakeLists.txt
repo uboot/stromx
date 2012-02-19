@@ -23,8 +23,12 @@ target_link_libraries(base
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-find_file(python_base_EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libbase.so)
-
-if(python_base_EXISTS)
-    file(COPY ${CMAKE_CURRENT_BINARY_DIR}/libbase.so DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-endif()
+if(PYTHON_INSTALL_DIR)
+    install(DIRECTORY . 
+        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/base
+        FILES_MATCHING PATTERN "*.py"
+    )
+    install(TARGETS base 
+        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/base
+    )
+endif(PYTHON_INSTALL_DIR)
