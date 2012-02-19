@@ -8,6 +8,9 @@ cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 set(LIB_DIR lib${LIB_SUFFIX})
+if(NOT PYTHON_INSTALL_DIR)
+    set(PYTHON_INSTALL_DIR ${LIB_DIR}/python/site-packages)
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall")
@@ -22,6 +25,7 @@ endif(MSVC)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+
 
 include(UseDoxygen OPTIONAL)
 

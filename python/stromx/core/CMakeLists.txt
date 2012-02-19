@@ -51,15 +51,13 @@ target_link_libraries(core
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-if(PYTHON_INSTALL_DIR)
-    install(DIRECTORY . 
-        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/core
-        FILES_MATCHING PATTERN "*.py"
-    )
+install(DIRECTORY . 
+    DESTINATION ${PYTHON_INSTALL_DIR}/stromx/core
+    FILES_MATCHING PATTERN "*.py"
+)
 
-    install(TARGETS core 
-        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/core
-    )
-endif(PYTHON_INSTALL_DIR)
+install(TARGETS core 
+    DESTINATION ${PYTHON_INSTALL_DIR}/stromx/core
+)
 
 
