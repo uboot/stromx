@@ -52,8 +52,8 @@ target_link_libraries(stromx_base
 
 install (TARGETS stromx_base
     RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION ${LIB_DIR}
+    ARCHIVE DESTINATION ${LIB_DIR}
 )
 
 install(DIRECTORY . 
