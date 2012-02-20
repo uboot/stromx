@@ -23,6 +23,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.xml DESTINATION ${CMAKE_CURRENT_BIN
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.zip DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
+    ../Connector.cpp
     ../Core.cpp
     ../Data.cpp
     ../DataContainer.cpp

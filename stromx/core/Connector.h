@@ -17,6 +17,8 @@
 #ifndef STROMX_CORE_CONNECTOR_H
 #define STROMX_CORE_CONNECTOR_H
 
+#include "Config.h"
+
 namespace stromx
 {
     namespace core
@@ -26,6 +28,8 @@ namespace stromx
         /** \brief Identifier of a connector of an operator. */
         class Connector
         {
+            friend const bool operator==(const Connector & lhs, const Connector & rhs);
+            
         public:
             /** The possible types of a connector. */
             enum Type
@@ -79,6 +83,8 @@ namespace stromx
             const Operator* m_op;
             unsigned int m_id;
         };
+        
+        STROMX_CORE_API const bool operator==(const Connector & lhs, const Connector & rhs);
     }
 }
 

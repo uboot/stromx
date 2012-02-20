@@ -20,6 +20,7 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    Connector.cpp
     DataContainer.cpp
     RecycleAccess.cpp
     Data.cpp
