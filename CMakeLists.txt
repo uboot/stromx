@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 set(LIB_DIR lib${LIB_SUFFIX})
 if(NOT PYTHON_INSTALL_DIR)
-    set(PYTHON_INSTALL_DIR ${LIB_DIR}/python/site-packages)
+    set(PYTHON_INSTALL_DIR "" CACHE FILEPATH "Python install directory")
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
