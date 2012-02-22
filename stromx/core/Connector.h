@@ -28,7 +28,7 @@ namespace stromx
         /** \brief Identifier of a connector of an operator. */
         class Connector
         {
-            friend const bool operator==(const Connector & lhs, const Connector & rhs);
+            friend STROMX_CORE_API const bool operator==(const Connector & lhs, const Connector & rhs);
             
         public:
             /** The possible types of a connector. */
