@@ -32,7 +32,7 @@ if(BUILD_FILE_PERSISTENCE)
         ${SOURCES}
         XmlReader.cpp
         XmlWriter.cpp
-       )
+    )
 endif(BUILD_FILE_PERSISTENCE)
 
 add_library(core SHARED ${SOURCES})

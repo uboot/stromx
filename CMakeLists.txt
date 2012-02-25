@@ -91,3 +91,6 @@ install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
     DESTINATION share/stromx
 )
 
+install(DIRECTORY "${PROJECT_BINARY_DIR}/doc/html"
+    DESTINATION share/doc/packages/stromx
+)
