@@ -89,7 +89,6 @@ namespace stromx
                                     const unsigned int stride, 
                                     uint8_t* const data, 
                                     const PixelType pixelType) = 0;
-        protected:
         };
     }
 }
