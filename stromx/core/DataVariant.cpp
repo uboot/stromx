@@ -38,7 +38,7 @@ namespace stromx
         const DataVariant DataVariant::DOUBLE = DataVariant(DOUBLE_ID, STROMX_CORE_PACKAGE_NAME, "Double");
         const DataVariant DataVariant::IMAGE = DataVariant(IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Image");
         const DataVariant DataVariant::MONO_IMAGE = DataVariant(MONO_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Mono image");
-        const DataVariant DataVariant::COLOR_IMAGE = DataVariant(COLOR_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Color image");
+        const DataVariant DataVariant::RGB_IMAGE = DataVariant(RGB_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "RGB image");
         const DataVariant DataVariant::MONO_8_IMAGE = DataVariant(MONO_8_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Mono image 8-bit");
         const DataVariant DataVariant::RGB_24_IMAGE = DataVariant(RGB_24_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "RGB image 24-bit");
         const DataVariant DataVariant::BGR_24_IMAGE = DataVariant(BGR_24_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "BGR image 24-bit");
@@ -72,11 +72,11 @@ namespace stromx
                     || isVariant(INT_32);
             case IMAGE_ID:
                 return isVariant(MONO_IMAGE)
-                    || isVariant(COLOR_IMAGE);
+                    || isVariant(RGB_IMAGE);
             case MONO_IMAGE_ID:
                 return isVariant(MONO_8_IMAGE)
                     || isVariant(MONO_16_IMAGE);
-            case COLOR_IMAGE_ID:
+            case RGB_IMAGE_ID:
                 return isVariant(RGB_24_IMAGE)
                     || isVariant(BGR_24_IMAGE)
                     || isVariant(RGB_48_IMAGE)

@@ -34,6 +34,13 @@ namespace stromx
         class STROMX_CORE_API Data
         {
         public:
+            /** 
+             * The most general variant of this data class. 
+             * For an object \c data of type \c SomeData the expression
+             * <tt>data.isVariant(SomeData.classVariant())</tt> is always true.
+             */
+            static const DataVariant & classVariant();
+            
             virtual ~Data() {}
             
             /** Returns the version of the class of this data object. */

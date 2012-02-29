@@ -21,6 +21,11 @@ namespace stromx
 {
     namespace core
     {
+        const stromx::core::DataVariant& Data::classVariant()
+        {
+            return DataVariant::DATA;
+        }
+        
         void Data::serialize(OutputProvider & out) const
         {
             throw Exception("This data type does not support serialization.");
