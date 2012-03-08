@@ -29,6 +29,7 @@ namespace stromx
             class_< std::vector<T> >(name, no_init)
                 .def("__len__", &std::vector<T>::size)
                 .def< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>("__getitem__", &std::vector<T>::at, return_internal_reference<>())
+                .def("__iter__", iterator< std::vector<T>, return_internal_reference<> >())
             ;
         }
     }
