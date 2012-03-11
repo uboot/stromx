@@ -29,7 +29,6 @@ namespace stromx
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
-            std::string filebase = impl::XmlUtilities::stripExtension(filename);
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             Stream* stream = 0;
@@ -39,7 +38,7 @@ namespace stromx
                 
                 try
                 {
-                    stream = readStream(input, filebase + ".xml", factory);
+                    stream = readStream(input, filename, factory);
                 }
                 catch(FileException& e)
                 {
@@ -53,7 +52,7 @@ namespace stromx
                 
                 try
                 {
-                    stream = readStream(input, filebase + ".xml", factory);
+                    stream = readStream(input, "stream.xml", factory);
                 }
                 catch(FileException& e)
                 {
@@ -80,7 +79,6 @@ namespace stromx
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
-            std::string filebase = impl::XmlUtilities::stripExtension(filename);
             std::string extension = impl::XmlUtilities::computeExtension(filepath);
             
             if(extension == "xml")
@@ -89,7 +87,7 @@ namespace stromx
                 
                 try
                 {
-                    readParameters(input, filebase + ".xml", factory, operators);
+                    readParameters(input, filename, factory, operators);
                 }
                 catch(FileException& e)
                 {
@@ -103,7 +101,7 @@ namespace stromx
                 
                 try
                 {
-                    readParameters(input, filebase + ".xml", factory, operators);
+                    readParameters(input, "parameters.xml", factory, operators);
                 }
                 catch(FileException& e)
                 {

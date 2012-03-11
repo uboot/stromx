@@ -50,7 +50,7 @@ namespace stromx
                 
                 try
                 {
-                    writeStream(output, filebase, stream);
+                    writeStream(output, "stream", stream);
                 }
                 catch(FileException& e)
                 {
@@ -105,7 +105,7 @@ namespace stromx
                 
                 try
                 {
-                    writeParameters(output, filebase, operators);
+                    writeParameters(output, "parameters", operators);
                 }
                 catch(FileException& e)
                 {
