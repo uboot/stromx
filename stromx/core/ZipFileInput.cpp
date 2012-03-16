@@ -92,7 +92,7 @@ namespace stromx
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to access file in zip archive.");
             
-            int fileSize = stat.size;
+            unsigned int fileSize = (unsigned int)(stat.size);
             char* content = new char[fileSize];
                 
             zip_file* file = zip_fopen(m_archiveHandle, m_currentFilename.c_str(), 0);
