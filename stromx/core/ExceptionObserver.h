@@ -25,17 +25,32 @@ namespace stromx
     {
         class Thread;
 
-        /** \brief Abstract base class of observers of exceptions. */
+        /** \brief Abstract base observer of operator exceptions. */
         class ExceptionObserver
         {
         public:
+            /** 
+             * The different phases in which an operator can cause exceptions
+             * to be thrown.
+             */
             enum Phase
             {
-                EXECUTION,
+                /** Activation of the operator. */
                 ACTIVATION,
+                /** Execution of the operator. */
+                EXECUTION,
+                /** Deactivation of the operator. */
                 DEACTIVATION
             };
             
+            /** 
+             * Informs the observer that an operator has thrown an exception.
+             * 
+             * \param phase The phase during which the exception was thrown.
+             * \param ex The exception.
+             * \param thread The thread in which context the exception was thrown or 0 if the 
+             *               the thread is not a stromx::Thread object.
+             */
             virtual void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const = 0;
         };
     }

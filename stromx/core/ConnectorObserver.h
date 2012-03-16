@@ -30,6 +30,7 @@ namespace stromx
         class ConnectorObserver
         {
         public:
+            /** Informs the observer that \c connector was set to \c data. */
             virtual void observe(const Connector & connector, const DataContainer & data) const = 0;
         };
     }
