@@ -12,6 +12,10 @@ if(NOT PYTHON_INSTALL_DIR)
     set(PYTHON_INSTALL_DIR "" CACHE FILEPATH "Python install directory")
 endif()
 
+if(NOT DOC_INSTALL_DIR)
+    set(DOC_INSTALL_DIR "" CACHE FILEPATH "Documentation install directory")
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall")
 #   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
@@ -81,6 +85,8 @@ if(BUILD_PYTHON)
     add_subdirectory(python)
 endif()
 
+add_subdirectory(doc)
+
 configure_file (
     "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
     "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
@@ -90,9 +96,3 @@ configure_file (
 install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
     DESTINATION share/stromx
 )
-
-if(DOXYGEN_FOUND)
-    install(DIRECTORY "${PROJECT_BINARY_DIR}/doc/html"
-        DESTINATION share/doc/packages/stromx
-    )
-endif()
