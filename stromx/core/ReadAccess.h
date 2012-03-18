@@ -18,6 +18,8 @@
 #define STROMX_CORE_READACCESS_H
 
 #include <memory>
+#include "Data.h"
+#include "DataContainer.h"
 #include "Exception.h"
 #include "impl/ReadAccessImpl.h"
 
@@ -25,8 +27,6 @@ namespace stromx
 {
     namespace core
     {
-        class Data;
-        
         /** 
          *\brief Read access to a data container.
          *

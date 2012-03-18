@@ -23,17 +23,15 @@
     #include <memory>
 #endif
 
+#include "Data.h"
 #include "DataContainer.h"
 #include "Exception.h"
 #include "impl/WriteAccessImpl.h"
 
 namespace stromx
 {
-        namespace core
+    namespace core
     {
-        class Data;
-        class DataContainer;
-        
         /** 
          * \brief Write access to a data container.
          * 
