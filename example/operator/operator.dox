@@ -333,7 +333,7 @@ If the package \em Math contained more operators and was built as separate share
 }
 \endcode
 
-Using the presented technique allows to convert single steps of a data processing pipeline to \em core operator. These operators can then be combined arbitrarily to form new processing networks.
+Using the presented technique allows to implement single steps of a data processing pipeline in a \em stromx operator. These operators can then be combined arbitrarily to form new processing networks.
 
 It is possible to define custom data types in a similar fashion by subclassing core::Data and core::DataVariant.
 

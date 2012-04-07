@@ -55,7 +55,10 @@ namespace stromx
             NodeType m_type;
         };
         
+        /** Constructs an ID-to-data mapper which requires both \c lhs and \c rhs to succeed. */
         STROMX_CORE_API const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
+        
+        /** Constructs an ID-to-data mapper which requires either \c lhs or \c rhs to succeed. */
         STROMX_CORE_API const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
     }
 }
