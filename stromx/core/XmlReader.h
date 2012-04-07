@@ -30,12 +30,33 @@ namespace stromx
         class Operator;
         class Stream;
         
-        /** \brief Reader for XML encoded streams. */
+        /** \brief Reader for \e stromx files.
+         * 
+         * \em Stromx can read and write \em stream and \em parameter files. A stream 
+         * file contains all the operators, connections and threads of a stream. In addition,
+         * the settings of the parameters of each operator are stored.
+         * A parameter file contains the parameter settings of a list of operator. It can
+         * be used to set the parameters of an existing stream without changing its connections
+         * or threads.
+         * 
+         * Both stream and parameter files are XML files. Additionally, they can refer to
+         * \em dependend files which contain parameter information which should not be encoded
+         * as XML (such as image data). Thus the stream and parameter XML files are actually 
+         * part of file bundles which are either stored in a common directory or in a zip archive.
+         * In the first case the path of the file is the path of XML file contained in the same
+         * directory as the dependend files. In the second case it is the path of zip file which
+         * contains the XML file and the dependend files.
+         * 
+         * %Stream and parameter files can also be read from \em file \em inputs. File inputs 
+         * are an abstraction of the file bundles mentioned above and are represented by a
+         * FileInput object. This allows the user to implement custom ways to store file bundles,
+         * e.g. in a database or using a different archive format.
+         */
         class STROMX_CORE_API XmlReader
         {
         public:
             /** 
-             * Reads a stream from an XML file.
+             * Reads a stream file. The file can be either an XML or a zip file.
              * 
              * \param filepath The path of the file to be read.
              * \param factory The factory is used to instantiate the operators and data
@@ -48,7 +69,7 @@ namespace stromx
             Stream* const readStream(const std::string & filepath, const Factory& factory) const;
             
             /** 
-             * Reads a stream from an file input.
+             * Reads a stream file from an file input.
              * 
              * \param input The file input which provides the stream files.
              * \param filename The name of the file in the input to be read.
@@ -62,9 +83,11 @@ namespace stromx
             Stream* const readStream(FileInput & input, const std::string filename, const Factory& factory) const;
             
             /** 
-             * Sets the parameters of \c operators to the values in the XML file \c filepath.
-             * If a parameter can not be set the error is silently ignored. In particular, only
-             * those operator parameters are set which can be written to in the current operator state.
+             * Reads a parameter file. The file can be either an XML or a zip file.
+             * The functions sets the parameters of \c operators to the values in the file.
+             * If a parameter can not be set the error is silently ignored.
+             * In particular, only those operator parameters are set which can be written to 
+             * in the current operator state.
              * 
              * \param filepath The path of the file to be read.
              * \param factory The factory is used to instantiate data objects in the stream.
@@ -78,9 +101,11 @@ namespace stromx
             
             
             /** 
-             * Sets the parameters of \c operators to the values in the XML file \c filename.
+             * Reads a parameter file from an file input.
+             * The function sets the parameters of \c operators to the values in the file.
              * If a parameter can not be set the error is silently ignored. In particular, only
-             * those operator parameters are set which can be written to in the current operator state.
+             * those operator parameters are set which can be written to in the current
+             * operator state.
              * 
              * \param input The file input which provides the parameter files.
              * \param filename The name of the file in the input to be read.

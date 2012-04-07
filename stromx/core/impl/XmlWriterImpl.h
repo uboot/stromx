@@ -38,9 +38,9 @@ namespace stromx
             public:
                 XmlWriterImpl();
                 ~XmlWriterImpl() {};
-                void writeStream(FileOutput & output, const std::string & filename, const Stream& stream);
+                void writeStream(FileOutput & output, const std::string & basename, const Stream& stream);
                 void writeParameters(FileOutput& output, 
-                                     const std::string& filename, 
+                                     const std::string& basename, 
                                      const std::vector< const stromx::core::Operator* >& operators);
                 
             private:

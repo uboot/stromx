@@ -346,16 +346,16 @@ namespace stromx
                 }
             }
         
-            void XmlWriterImpl::writeStream(FileOutput & output, const std::string & filename, const Stream& stream)
+            void XmlWriterImpl::writeStream(FileOutput & output, const std::string & basename, const Stream& stream)
             {
-                if (filename.empty())
+                if (basename.empty())
                 {
                     throw WrongArgument("Invalid file name.");
                 }
                 
                 m_stream = &stream;
                 m_output = &output;
-                m_filename = filename;
+                m_filename = basename;
                 
                 std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
                 m_opList = operators;
@@ -385,7 +385,7 @@ namespace stromx
                     
                     try
                     {
-                        m_output->initialize(filename);
+                        m_output->initialize(basename);
                         m_output->openFile("xml");
                         m_output->file() << content;
                     }
@@ -419,16 +419,16 @@ namespace stromx
             }
             
             void XmlWriterImpl::writeParameters(FileOutput& output, 
-                                                const std::string& filename, 
+                                                const std::string& basename, 
                                                 const std::vector< const stromx::core::Operator* >& operators)
             {
-                if (filename.empty())
+                if (basename.empty())
                 {
-                    throw WrongArgument("Invalid file name.");
+                    throw WrongArgument("Invalid base name.");
                 }
                 
                 m_output = &output;
-                m_filename = filename;
+                m_filename = basename;
                 m_opList = operators;
                 
                 try
@@ -452,7 +452,7 @@ namespace stromx
                     
                     try
                     {
-                        m_output->initialize(filename);
+                        m_output->initialize(basename);
                         m_output->openFile("xml");
                         m_output->file() << content;
                     }
