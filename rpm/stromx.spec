@@ -18,14 +18,14 @@
 # norootforbuild
 
 Name:           stromx
-Version:        
-Release:        1
+Version:
+Release:
 Summary:        Library for near real-time, parallel processing of data
 Group:          Development/Libraries/C and C++
 
 License:        Apache 2.0
 URL:            http://www.stromx.org
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
 %if 0%{?suse_version}
