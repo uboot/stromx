@@ -14,3 +14,9 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/__init__.py.in"
   "${PROJECT_BINARY_DIR}/__init__.py"
 )
+
+if(PYTHON_INSTALL_DIR)
+    install(FILES ${PROJECT_BINARY_DIR}/__init__.py
+        DESTINATION ${PYTHON_INSTALL_DIR}/stromx
+    )
+endif()
