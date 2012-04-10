@@ -136,10 +136,27 @@ namespace stromx
                 if(! source)
                     throw FileAccessFailed(m_currentFilename, m_archive, "Failed to allocate ZLib source.");
                 
-                if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
+                // check if the file exists
+                struct zip_stat stat;
+                if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
+                { 
+                    // the file does not exist
+                    // add it to the archive
+                    if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
+                    {
+                        zip_source_free(source);
+                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
+                    }
+                }
+                else
                 {
-                    zip_source_free(source);
-                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
+                    // the file exists
+                    // replace it in the archive
+                    if(zip_replace(m_archiveHandle, stat.index, source) < 0)
+                    {
+                        zip_source_free(source);
+                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
+                    }
                 }
                 
                 delete m_currentFile;

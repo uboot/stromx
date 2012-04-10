@@ -31,6 +31,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ZipFileOutputTest);
             CPPUNIT_TEST(testText);
             CPPUNIT_TEST(testFile);
+            CPPUNIT_TEST(testFileDuplicate);
             CPPUNIT_TEST(testGetFilename);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -43,6 +44,7 @@ namespace stromx
         protected:
             void testText();
             void testFile();
+            void testFileDuplicate();
             void testGetFilename();
         };
     }

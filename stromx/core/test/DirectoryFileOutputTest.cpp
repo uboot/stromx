@@ -60,6 +60,19 @@ namespace stromx
             m_output->file() << 6;
         }
         
+        void DirectoryFileOutputTest::testFileDuplicate()
+        {
+            // first file
+            m_output->initialize("DirectoryFileOutputText_testFileDuplicate");
+            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->file() << 5;
+            
+            // try a second file with the same name
+            m_output->initialize("DirectoryFileOutputText_testFileDuplicate");
+            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->file() << 6;
+        }
+        
         void DirectoryFileOutputTest::testGetFilename()
         {
             CPPUNIT_ASSERT_THROW(m_output->getFilename(), WrongState);

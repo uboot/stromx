@@ -54,6 +54,21 @@ namespace stromx
             output.file() << 6;
         }
         
+        void ZipFileOutputTest::testFileDuplicate()
+        {
+            ZipFileOutput output("ZipFileOutputTest_testFileDuplicate.zip");
+            
+            // first file
+            output.initialize("testFile");
+            output.openFile("bin", OutputProvider::BINARY);
+            output.file() << 5;
+            
+            // try a second file with the same name
+            output.initialize("testFile");
+            output.openFile("bin", OutputProvider::BINARY);
+            output.file() << 6;
+        }
+        
         void ZipFileOutputTest::testGetFilename()
         {
             ZipFileOutput output("ZipFileOutputTest_testGetFilename.zip");
