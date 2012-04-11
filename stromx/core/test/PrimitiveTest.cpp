@@ -31,8 +31,11 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(int(0), int(m_int32));
             CPPUNIT_ASSERT(m_int32.isVariant(DataVariant::INT_32));
             
-            DummyOutput out;
             m_int32 = Int32(-235);
+            Int32 copy(m_int32);
+            CPPUNIT_ASSERT_EQUAL(int(-235), int(copy));
+            
+            DummyOutput out;
             m_int32.serialize(out);
             CPPUNIT_ASSERT_EQUAL(std::string("-235"), out.value());
             
