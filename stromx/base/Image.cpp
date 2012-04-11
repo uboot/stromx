@@ -232,6 +232,11 @@ namespace stromx
             }
         }
         
+        core::Data*const Image::clone() const
+        {
+            return new Image(*this);
+        }
+        
         void Image::allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
         {
             try

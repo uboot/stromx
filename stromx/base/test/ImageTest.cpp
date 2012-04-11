@@ -125,6 +125,18 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
         }
+
+        void ImageTest::testImageDefaultCopyConstructor()
+        {
+            Image image;
+            
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
+            CPPUNIT_ASSERT_EQUAL(core::Image::NONE, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
+        }
         
         void ImageTest::testImageRgb24()
         {

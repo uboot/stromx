@@ -48,13 +48,14 @@ namespace stromx
             friend class impl::SynchronizedOperatorKernel;
             
         public:
+            virtual ~OperatorKernel();
+            
             /**
              * Returns a copy of the operator, i.e. a object of the same type is
              * allocated and returned. The current status of the operator is \em not
              * reproduced.
              */
             virtual OperatorKernel* const clone() const = 0;
-            virtual ~OperatorKernel();
             
             /** Returns the type. In general this is the name of the class of its implementation. */
             const std::string& type() const { return m_type; }

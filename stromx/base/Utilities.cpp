@@ -40,6 +40,11 @@ namespace stromx
             case core::Image::BAYERGB_8:
                 cvType = CV_8UC1;
                 break;
+            case core::Image::NONE:
+                if(image.width() == 0 && image.height() == 0)
+                    return cv::Mat();
+                else
+                    throw core::WrongArgument("Image with no pixel type must have zero width and height.");
             default:
                 throw core::WrongArgument("Unknown pixel type.");
             }

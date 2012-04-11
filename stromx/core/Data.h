@@ -57,8 +57,8 @@ namespace stromx
             
             /**
              * Returns a copy of the data object, i.e. a object of the same type is
-             * allocated and returned. The current value of the data is \em not
-             * reproduced.
+             * allocated and the data of the original object is copied to the new object.
+             * A pointer to the new object is returned.
              */
             virtual Data* const clone() const = 0;
             

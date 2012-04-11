@@ -39,6 +39,7 @@ namespace stromx
             CPPUNIT_TEST (testImageEmpty);
             CPPUNIT_TEST (testImageCopyConstructor);
             CPPUNIT_TEST (testImageEmptyCopyConstructor);
+            CPPUNIT_TEST (testImageDefaultCopyConstructor);
             CPPUNIT_TEST (testImageRgb24);
             CPPUNIT_TEST (testImageMono8);
             CPPUNIT_TEST (testSaveJpeg);
@@ -69,6 +70,7 @@ namespace stromx
                 void testImageEmpty();
                 void testImageCopyConstructor();
                 void testImageEmptyCopyConstructor();
+                void testImageDefaultCopyConstructor();
                 void testImageRgb24();
                 void testImageMono8();
                 void testImageDefault();
