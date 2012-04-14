@@ -283,7 +283,7 @@ namespace stromx
                     }
                     catch(std::bad_cast&)
                     {
-                        throw WrongParameterType(parameter(EXPOSURE), *this);
+                        throw WrongParameterType(parameter(WHITE_BALANCE_RED), *this);
                     }
                     break;
                 case WHITE_BALANCE_GREEN:
@@ -295,7 +295,7 @@ namespace stromx
                     }
                     catch(std::bad_cast&)
                     {
-                        throw WrongParameterType(parameter(EXPOSURE), *this);
+                        throw WrongParameterType(parameter(WHITE_BALANCE_GREEN), *this);
                     }
                     break;
                 case WHITE_BALANCE_BLUE:
@@ -307,7 +307,7 @@ namespace stromx
                     }
                     catch(std::bad_cast&)
                     {
-                        throw WrongParameterType(parameter(EXPOSURE), *this);
+                        throw WrongParameterType(parameter(WHITE_BALANCE_BLUE), *this);
                     }
                     break;
                 default:
