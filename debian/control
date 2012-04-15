@@ -1,0 +1,21 @@
+Source: stromx
+Priority: extra
+Maintainer: roter_oktober <stromx-devel@googlegroups.com>
+Build-Depends: debhelper (>= 7.0.50~), cmake, cdbs
+Standards-Version: 3.9.1
+Section: libs
+#Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://git.debian.org/collab-maint/stromx.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/stromx.git;a=summary
+
+#Package: stromx-dev
+#Section: libdevel
+#Architecture: any
+#Depends: stromx
+#Description: Development files for stromx
+
+Package: stromx
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Library for near real-time, parallel processing of data
