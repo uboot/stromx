@@ -63,7 +63,7 @@ The %{name}-python package contains Python bindings for %{name}.
 %package        doc
 
 
-Summary:        Documentation and examples for stromx
+Summary:        Documentation and examples for %{name}
 Group:          DocumentationDocumentation/Other
 
 %description    doc

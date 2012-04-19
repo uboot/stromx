@@ -1,3 +1,26 @@
 #!/usr/bin/make -f
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/cmake.mk
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CMAKE_FLAGS = \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DPYTHON_INSTALL_DIR=usr/lib/python2.*/dist-packages \
+    -DDOC_INSTALL_DIR=usr/share/doc
+
+%:
+    dh $@ --buildsystem=cmake --parallel
+
+override_dh_auto_configure:
+    dh_auto_configure -- $(CMAKE_FLAGS)
+
+override_dh_install:
+    dh_install -O--buildsystem=cmake
+
+override_dh_installdocs:
+    make doc
+    dh_installdocs -O--buildsystem=cmake
+
+override_dh_clean:
+    dh_clean
