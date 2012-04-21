@@ -44,6 +44,7 @@ set(SOURCES
     ../Stream.cpp
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp
+    ../String.cpp
     ../Trigger.cpp
     ../Try.cpp
     ../impl/DataContainerImpl.cpp
@@ -76,6 +77,7 @@ set(SOURCES
     NetworkTest.cpp
     FactoryTest.cpp
     PrimitiveTest.cpp
+    StringTest.cpp
     TestData.cpp
     TryTest.cpp
     WriteAccessTest.cpp

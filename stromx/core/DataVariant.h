@@ -44,6 +44,7 @@ namespace stromx
             const static DataVariant UINT_32;
             const static DataVariant FLOAT;
             const static DataVariant DOUBLE;
+            const static DataVariant STRING;
             const static DataVariant IMAGE;
             const static DataVariant MONO_IMAGE;
             const static DataVariant RGB_IMAGE;
@@ -90,6 +91,7 @@ namespace stromx
                 UINT_32_ID,
                 FLOAT_ID,
                 DOUBLE_ID,
+                STRING_ID,
                 IMAGE_ID,
                 MONO_IMAGE_ID,
                 RGB_IMAGE_ID,

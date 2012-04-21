@@ -34,6 +34,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (TriggerTest);
             CPPUNIT_TEST (testExecuteActive);
+            CPPUNIT_TEST (testExecuteSwitchToInactive);
             CPPUNIT_TEST (testExecuteInactive);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -45,10 +46,12 @@ namespace stromx
 
             protected:
                 void testExecuteActive();
+                void testExecuteSwitchToInactive();
                 void testExecuteInactive();
                 
             private:
                 void triggerDelayed ();
+                void getOutputData();
                 void getOutputDataInterrupted();
         
                 core::OperatorTester* m_operator;

@@ -39,6 +39,7 @@ set(SOURCES
     Factory.cpp
     Primitive.cpp
     Stream.cpp
+    String.cpp
     SortInputsAlgorithm.cpp
     Core.cpp
     Thread.cpp

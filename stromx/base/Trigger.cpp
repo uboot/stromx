@@ -71,8 +71,16 @@ namespace stromx
                     break;
                 }
                 case ACTIVE:
-                    m_active = dynamic_cast<const Bool&>(value);
+                {
+                    bool boolValue = dynamic_cast<const Bool&>(value);
+                    m_active = boolValue;
+                    
+                    // make sure the thread does not stop at the condition variable
+                    // if the trigger is deactivated
+                    if(! boolValue)
+                        m_cond->m_cond.notify_all();
                     break;
+                }
                 default:
                     throw WrongParameterId(id, *this);
                 }

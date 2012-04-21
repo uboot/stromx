@@ -36,6 +36,7 @@ namespace stromx
         const DataVariant DataVariant::UINT_32 = DataVariant(UINT_32_ID, STROMX_CORE_PACKAGE_NAME, "UInt32");
         const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, STROMX_CORE_PACKAGE_NAME, "Float");
         const DataVariant DataVariant::DOUBLE = DataVariant(DOUBLE_ID, STROMX_CORE_PACKAGE_NAME, "Double");
+        const DataVariant DataVariant::STRING = DataVariant(STRING_ID, STROMX_CORE_PACKAGE_NAME, "String");
         const DataVariant DataVariant::IMAGE = DataVariant(IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Image");
         const DataVariant DataVariant::MONO_IMAGE = DataVariant(MONO_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "Mono image");
         const DataVariant DataVariant::RGB_IMAGE = DataVariant(RGB_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, "RGB image");

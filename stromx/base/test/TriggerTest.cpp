@@ -69,6 +69,19 @@ namespace stromx
             t3.join();
         }
         
+        void TriggerTest::testExecuteSwitchToInactive()
+        {
+            // wait for the output data in a separate thread
+            boost::thread t(boost::bind(&TriggerTest::getOutputData, this));
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            // deactivate the trigger
+            m_operator->setParameter(Trigger::ACTIVE, Bool(false));
+            
+            // wait for the thread to finish
+            t.join();
+        }
+        
         void TriggerTest::testExecuteInactive()
         {
             m_operator->setParameter(Trigger::ACTIVE, Bool(false));
@@ -81,6 +94,11 @@ namespace stromx
         void TriggerTest::getOutputDataInterrupted()
         {
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Trigger::OUTPUT), Interrupt);
+        }
+        
+        void TriggerTest::getOutputData()
+        {
+            m_operator->getOutputData(Trigger::OUTPUT);
         }
             
         void TriggerTest::triggerDelayed()
