@@ -40,6 +40,7 @@ void exportReadAccess();
 void exportRegistry();
 void exportSortInputsAlgorithm();
 void exportStream();
+void exportString();
 void exportThread();
 void exportVersion();
 void exportWriteAccess();
@@ -72,6 +73,7 @@ BOOST_PYTHON_MODULE(libcore)
     exportSortInputsAlgorithm();
     exportFactory();
     exportStream();
+    exportString();
     exportThread();
     exportVersion();    
     exportWriteAccess();

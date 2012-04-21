@@ -68,7 +68,7 @@ namespace stromx
             std::string m_value;
         };
         
-        const bool operator==(const String & lhs, const String & rhs);
+        STROMX_CORE_API const bool operator==(const String & lhs, const String & rhs);
     }
 }
     

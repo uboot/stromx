@@ -21,6 +21,7 @@ set(SOURCES
     ReadAccess.cpp
     Registry.cpp
     Stream.cpp
+    String.cpp
     SortInputsAlgorithm.cpp
     Thread.cpp
     Version.cpp
