@@ -4,8 +4,6 @@ Maintainer: roter_oktober <stromx-devel@googlegroups.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake, cdbs, libboost-all-dev, doxygen, python-dev, libzip-dev, libxerces-c-dev
 Standards-Version: 3.9.1
 #Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://git.debian.org/collab-maint/stromx.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/stromx.git;a=summary
 
 Package: stromx-dev
 Section: libdevel
