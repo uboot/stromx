@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 
 DEB_CMAKE_EXTRA_FLAGS = \
-	-DPYTHON_INSTALL_DIR=usr/lib/python2.*/dist-packages \
-	-DDOC_INSTALL_DIR=usr/share/doc
+	-DPYTHON_INSTALL_DIR=lib/python2.*/dist-packages \
+	-DDOC_INSTALL_DIR=share/doc
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
