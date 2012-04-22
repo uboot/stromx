@@ -1,10 +1,11 @@
 #!/usr/bin/make -f
 
-CMAKE_FLAGS = \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SKIP_RPATH=ON \
-    -DPYTHON_INSTALL_DIR=usr/lib/python2.*/dist-packages \
-    -DDOC_INSTALL_DIR=usr/share/doc
+DEB_CMAKE_EXTRA_FLAGS = \
+	-DPYTHON_INSTALL_DIR=usr/lib/python2.*/dist-packages \
+	-DDOC_INSTALL_DIR=usr/share/doc
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
+
+build/stromx-doc::
+	cd $(DEB_BUILDDIR) && $(MAKE) doc
