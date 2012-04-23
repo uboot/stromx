@@ -28,7 +28,7 @@ namespace stromx
         /** \brief %String data value. */
         class STROMX_CORE_API String : public Data
         {
-            friend const bool operator==(const String & lhs, const String & rhs);
+            friend STROMX_CORE_API const bool operator==(const String & lhs, const String & rhs);
             
         public:
             static const DataVariant & classVariant();
