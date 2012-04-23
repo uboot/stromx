@@ -39,7 +39,7 @@ void exportString()
     class_<String, bases<Data>, std::auto_ptr<String> >("String", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateFromString))
-        .def("get", &String::get, return_internal_reference<>())
+        .def("get", &String::get, return_value_policy<copy_const_reference>())
     ;
     
     implicitly_convertible< std::auto_ptr<String>, std::auto_ptr<Data> >();
