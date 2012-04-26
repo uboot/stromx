@@ -124,6 +124,8 @@ namespace stromx
             core::Enum m_valueSoftware;
             core::Enum m_valueInternal;
             core::Enum m_valueExternal;
+            
+            core::Trigger m_valueTrigger;
         };
     }
 }

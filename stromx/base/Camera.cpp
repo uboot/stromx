@@ -329,7 +329,7 @@ namespace stromx
             switch(id)
             {
             case TRIGGER:
-                throw ParameterAccessViolation(parameter(id), *this);
+                return m_valueTrigger;
             case TRIGGER_MODE:
             {
                 const Data& value = m_trigger->getParameter(Trigger::STATE);
