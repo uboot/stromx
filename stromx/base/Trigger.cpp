@@ -19,6 +19,7 @@
 #include "Trigger.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
+#include <stromx/core/EnumParameter.h>
 #include <stromx/core/Id2DataPair.h>
 #include <stromx/core/OperatorException.h>
 
@@ -49,7 +50,7 @@ namespace stromx
         Trigger::Trigger()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_cond(new impl::BoostConditionVariable),
-            m_active(true)
+            m_state(TRIGGER_ACTIVE)
         {
         }
         
@@ -67,17 +68,29 @@ namespace stromx
                 case TRIGGER:
                 {
                     // trigger
-                    m_cond->m_cond.notify_all();
+                    if(TriggerState(int(m_state)) != ALWAYS_STOP)
+                        m_cond->m_cond.notify_all();
                     break;
                 }
-                case ACTIVE:
+                case STATE:
                 {
-                    bool boolValue = dynamic_cast<const Bool&>(value);
-                    m_active = boolValue;
+                    Enum enumValue = data_cast<const Enum&>(value);
+                    
+                    switch(int(enumValue))
+                    {
+                        case ALWAYS_PASS:
+                        case ALWAYS_STOP:
+                        case TRIGGER_ACTIVE:
+                            break;
+                        default:
+                            throw WrongParameterValue(*parameters()[id], *this);
+                    }
+                    
+                    m_state = enumValue;
                     
                     // make sure the thread does not stop at the condition variable
                     // if the trigger is deactivated
-                    if(! boolValue)
+                    if(m_state == ALWAYS_PASS)
                         m_cond->m_cond.notify_all();
                     break;
                 }
@@ -97,8 +110,8 @@ namespace stromx
             {
             case TRIGGER:
                 throw ParameterAccessViolation(parameter(id), *this);
-            case ACTIVE:
-                return m_active;
+            case STATE:
+                return m_state;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -109,7 +122,8 @@ namespace stromx
             Id2DataPair inputDataMapper(INPUT);
             provider.receiveInputData(inputDataMapper);
             
-            if(m_active)
+            TriggerState state = TriggerState(int(m_state));
+            if(state == TRIGGER_ACTIVE || state == ALWAYS_STOP)
             {
                 try
                 {
@@ -161,10 +175,13 @@ namespace stromx
             trigger->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
             
-            Parameter* active = new Parameter(ACTIVE, DataVariant::BOOL);
-            active->setName("Active");
-            active->setAccessMode(core::Parameter::ACTIVATED_WRITE);
-            parameters.push_back(active);
+            EnumParameter* state = new EnumParameter(STATE);
+            state->setName("State");
+            state->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            state->add(EnumDescription(Enum(ALWAYS_PASS), "Always off"));
+            state->add(EnumDescription(Enum(ALWAYS_STOP), "Always on"));
+            state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Trigger active"));
+            parameters.push_back(state);
                                         
             return parameters;
         }

@@ -65,8 +65,9 @@ namespace stromx
             m_wbRed(1.0),
             m_wbGreen(1.0),
             m_wbBlue(1.0),
+            m_valueSoftware(SOFTWARE),
             m_valueInternal(INTERNAL),
-            m_valueSoftware(SOFTWARE)
+            m_valueExternal(EXTERNAL)
         {
             // TODO: initialize all members
         }
@@ -135,7 +136,7 @@ namespace stromx
             mainThread->addInput(m_indexQueue, Queue::INPUT);
             
             // start with software trigger
-            m_trigger->setParameter(Trigger::ACTIVE, Bool(true));
+            m_trigger->setParameter(Trigger::STATE, Enum(Trigger::TRIGGER_ACTIVE));
             m_period->setParameter(PeriodicDelay::PERIOD, UInt32(0));
             
             // set the image to an empty RGB image
@@ -196,10 +197,13 @@ namespace stromx
                     switch(triggerMode)
                     {
                     case SOFTWARE:
-                        m_trigger->setParameter(Trigger::ACTIVE, Bool(true));
+                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::TRIGGER_ACTIVE));
                         break;
                     case INTERNAL:
-                        m_trigger->setParameter(Trigger::ACTIVE, Bool(false));
+                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
+                        break;
+                    case EXTERNAL:
+                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_STOP));
                         break;
                     default:
                         throw WrongParameterValue(parameter(TRIGGER_MODE), *this);
@@ -328,13 +332,20 @@ namespace stromx
                 throw ParameterAccessViolation(parameter(id), *this);
             case TRIGGER_MODE:
             {
-                const Data& value = m_trigger->getParameter(Trigger::ACTIVE);
-                const Bool& triggerActive = dynamic_cast<const Bool&>(value);
+                const Data& value = m_trigger->getParameter(Trigger::STATE);
+                const Enum& triggerState = data_cast<const Enum&>(value);
                 
-                if(triggerActive)
-                    return m_valueSoftware;
-                else
+                switch(triggerState)
+                {
+                case Trigger::ALWAYS_PASS:
                     return m_valueInternal;
+                case Trigger::ALWAYS_STOP:
+                    return m_valueExternal;
+                case Trigger::TRIGGER_ACTIVE:
+                    return m_valueSoftware;
+                default:
+                    throw WrongParameterValue(parameter(id), *this);
+                }
             }
             case FRAME_PERIOD:
                 return m_period->getParameter(PeriodicDelay::PERIOD);

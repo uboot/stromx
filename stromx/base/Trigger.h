@@ -53,7 +53,14 @@ namespace stromx
             enum ParameterId
             {
                 TRIGGER,
-                ACTIVE
+                STATE
+            };
+            
+            enum TriggerState
+            {
+                ALWAYS_PASS,
+                ALWAYS_STOP,
+                TRIGGER_ACTIVE
             };
             
             Trigger();
@@ -76,7 +83,7 @@ namespace stromx
             static const core::Version VERSION; 
             
             impl::BoostConditionVariable* m_cond;
-            core::Bool m_active;
+            core::Enum m_state;
         };
     }
 }

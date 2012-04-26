@@ -75,8 +75,8 @@ namespace stromx
             boost::thread t(boost::bind(&TriggerTest::getOutputData, this));
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             
-            // deactivate the trigger
-            m_operator->setParameter(Trigger::ACTIVE, Bool(false));
+            // trigger will always operatore immediately
+            m_operator->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
             
             // wait for the thread to finish
             t.join();
@@ -84,7 +84,7 @@ namespace stromx
         
         void TriggerTest::testExecuteInactive()
         {
-            m_operator->setParameter(Trigger::ACTIVE, Bool(false));
+            m_operator->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
             
             DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
             ReadAccess<Image> access(result);
