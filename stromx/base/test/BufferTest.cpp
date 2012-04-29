@@ -19,6 +19,7 @@
 #include "../Buffer.h"
 #include <stromx/core/Image.h>
 #include <stromx/core/OperatorTester.h>
+#include <stromx/core/OperatorException.h>
 #include <stromx/core/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::BufferTest);
@@ -64,6 +65,12 @@ namespace stromx
                 ReadAccess<Image> access(output);
                 CPPUNIT_ASSERT_NO_THROW(access());
             }
+        }
+        
+        void BufferTest::testSetNoBuffers()
+        {
+            m_operator->deactivate();
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(Buffer::NUM_BUFFERS, UInt32(0)), WrongParameterValue);
         }
 
         void BufferTest::tearDown()

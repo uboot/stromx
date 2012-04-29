@@ -483,6 +483,7 @@ namespace stromx
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
             numBuffers->setName("Number of buffers");
             numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
