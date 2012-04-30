@@ -51,20 +51,20 @@ target_link_libraries(stromx_base
 )
 
 
-if(MSVC)    
+if(WIN32)    
     install (TARGETS stromx_base
         RUNTIME DESTINATION .
         LIBRARY DESTINATION ${LIB_DIR}
         ARCHIVE DESTINATION ${LIB_DIR}
     )
 
-else(MSVC)
+else(WIN32)
     install (TARGETS stromx_base
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${LIB_DIR}
         ARCHIVE DESTINATION ${LIB_DIR}
     )
-endif(MSVC)
+endif(WIN32)
 
 install(DIRECTORY . 
     DESTINATION include/stromx/base
