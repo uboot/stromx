@@ -50,11 +50,21 @@ target_link_libraries(stromx_base
     stromx_core
 )
 
-install (TARGETS stromx_base
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION ${LIB_DIR}
-    ARCHIVE DESTINATION ${LIB_DIR}
-)
+
+if(MSVC)    
+    install (TARGETS stromx_base
+        RUNTIME DESTINATION .
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+
+else(MSVC)
+    install (TARGETS stromx_base
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+endif(MSVC)
 
 install(DIRECTORY . 
     DESTINATION include/stromx/base

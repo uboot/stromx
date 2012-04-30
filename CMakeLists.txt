@@ -93,6 +93,12 @@ configure_file (
     @ONLY
 )
 
-install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
-    DESTINATION share/stromx
-)
+if(MSVC)
+    install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
+        DESTINATION .
+    )
+else(MSVC)
+    install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
+        DESTINATION share/stromx
+    )
+endif(MSVC)

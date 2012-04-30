@@ -90,11 +90,21 @@ if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_core ${LIBZIP_LIBRARY})
 endif()
 
-install (TARGETS stromx_core 
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION ${LIB_DIR}
-    ARCHIVE DESTINATION ${LIB_DIR}
-)
+
+
+if(MSVC)
+    install (TARGETS stromx_core 
+        RUNTIME DESTINATION .
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+else(MSVC)
+    install (TARGETS stromx_core 
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+endif(MSVC)
 
 install(DIRECTORY . 
     DESTINATION include/stromx/core
