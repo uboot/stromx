@@ -37,7 +37,7 @@ namespace stromx
             {}
             
             /** Returns the operator this exception relates to. */
-            const OperatorInfo& op() const;
+            const OperatorInfo& op() const { return m_operator; }
             
         private:
             const OperatorInfo& m_operator;

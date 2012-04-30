@@ -52,8 +52,13 @@ namespace stromx
                         m_bufferSize = dynamic_cast<const UInt32 &>(value);
                         break;
                     case NUM_BUFFERS:
-                        m_numBuffers = dynamic_cast<const UInt32 &>(value);
+                    {
+                        UInt32 newNumBuffers = dynamic_cast<const UInt32 &>(value);
+                        if(newNumBuffers < 1)
+                            throw WrongParameterValue(parameter(NUM_BUFFERS), *this);
+                        m_numBuffers = newNumBuffers;
                         break;
+                    }
                     default:
                         throw WrongParameterId(id, *this);
                     }
@@ -170,6 +175,7 @@ namespace stromx
                 NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
                 numBuffers->setName("Number of buffers");
                 numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+                numBuffers->setMin(UInt32(1));
                 parameters.push_back(numBuffers);
             
                 NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);

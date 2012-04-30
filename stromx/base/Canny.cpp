@@ -89,10 +89,13 @@ namespace stromx
             const Image& srcImage = src();
             Image& destImage = dest();
             
+            if(srcImage.pixelType() != Image::MONO_8)
+                throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
+            
             unsigned int minimalDestinationSize = srcImage.width() * srcImage.pixelSize() * srcImage.height();
                      
             if(destImage.bufferSize() < minimalDestinationSize)
-                throw InputError(DESTINATION, *this, "Destination image is too small");
+                throw InputError(DESTINATION, *this, "Destination image is too small.");
             
             destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
             

@@ -33,6 +33,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (BufferTest);
             CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testSetNoBuffers);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -43,6 +44,7 @@ namespace stromx
 
         protected:
             void testExecute();
+            void testSetNoBuffers();
                 
         private:
             core::OperatorTester* m_operator;
