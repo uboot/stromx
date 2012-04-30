@@ -37,7 +37,9 @@ namespace stromx
             const Version CameraBuffer::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
             
             CameraBuffer::CameraBuffer()
-            : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+              : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+                m_bufferSize(0),
+                m_numBuffers(1),
                 m_id(0)
             {
             }
