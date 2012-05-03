@@ -3,7 +3,8 @@ Priority: extra
 Maintainer: roter_oktober <stromx-devel@googlegroups.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake, cdbs, libboost-all-dev, doxygen, python-dev, libzip-dev, libxerces-c-dev, libopencv-dev
 Standards-Version: 3.9.1
-#Homepage: <insert the upstream URL, if relevant>
+Section: libs
+Homepage: http://www.stromx.org
 
 Package: stromx-dev
 Section: libdevel
