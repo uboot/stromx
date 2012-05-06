@@ -17,6 +17,7 @@
 #include "Canny.h"
 #include "Image.h"
 #include "Utilities.h"
+#include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
 #include <stromx/core/Id2DataComposite.h>
