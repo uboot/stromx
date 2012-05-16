@@ -31,6 +31,7 @@ namespace stromx
 {
     namespace core
     {
+        /** \cond */
         class Stream::MutexHandle
         {
         public:
@@ -56,6 +57,7 @@ namespace stromx
             const Stream* m_stream;
             const Thread* m_thread;
         };
+        /** \endcond */
 
         Stream::Stream()
           : m_network(new impl::Network()),

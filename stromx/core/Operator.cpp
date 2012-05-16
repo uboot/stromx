@@ -30,6 +30,7 @@ namespace stromx
 {
     namespace core
     {
+        /** \cond */
         class Operator::MutexHandle
         {
         public:
@@ -71,6 +72,7 @@ namespace stromx
             const Operator* m_op;
             Type m_type;
         };
+        /** \endcond */
         
         using namespace impl;
         
