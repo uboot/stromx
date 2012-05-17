@@ -4,9 +4,5 @@
 Getting Started
 ---------------------
 
-Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.
-
-The quick brown fox jumped over the lazy
-dog's back.
+The stromx project provides tools for near real time processing of data with a focus on industrial imaging.
+Further information can be found on the project <a href="http://www.stromx.org">homepage</a>.
