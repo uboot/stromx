@@ -26,10 +26,10 @@ namespace stromx
             m_height(0),
             m_stride(0),
             m_bufferSize(bufferSize),
-            m_pixelType(MONO_8),
+            m_pixelType(NONE),
             m_data(0),
             m_buffer(buffer),
-            m_variant(DataVariant::MONO_8_IMAGE)
+            m_variant(DataVariant::IMAGE)
         {
         }
         
@@ -38,10 +38,10 @@ namespace stromx
             m_height(0),
             m_stride(0),
             m_bufferSize(0),
-            m_pixelType(MONO_8),
+            m_pixelType(NONE),
             m_data(0),
             m_buffer(0),
-            m_variant(DataVariant::MONO_8_IMAGE)
+            m_variant(DataVariant::IMAGE)
         {
         }
         
