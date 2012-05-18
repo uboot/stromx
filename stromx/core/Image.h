@@ -76,9 +76,6 @@ namespace stromx
             /** Returns the address of the image data as a constant pointer. */
             virtual const uint8_t* const data() const = 0;
             
-            /** Sets the data variant. */
-            virtual void setVariant(const DataVariant& variant) = 0;
-            
             /** 
              * Initializes the image to the given data. Note that this function does not
              * change the image buffer but merely changes the description of the data

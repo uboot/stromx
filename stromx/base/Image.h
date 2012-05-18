@@ -75,7 +75,6 @@ namespace stromx
             static const core::Version VERSION;
             
             static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-            static const core::DataVariant dataTypeFromPixelType(const PixelType pixelType);
             static const int getCvAccessType(const FileAccess access);
             static const int cvTypeFromPixelType(const core::Image::PixelType pixelType);
             static const core::Image::PixelType pixelTypeFromCvType(const int cvType);

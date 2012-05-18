@@ -95,11 +95,6 @@ namespace
             return this->get_override("data")();
         }
         
-        void setVariant(const DataVariant& variant)
-        {
-            this->get_override("setVariant")();
-        }
-        
         void initialize(const unsigned int width, 
                         const unsigned int height, 
                         const unsigned int stride, 

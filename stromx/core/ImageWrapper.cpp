@@ -45,11 +45,6 @@ namespace stromx
         {
         }
         
-        void ImageWrapper::setVariant(const core::DataVariant& variant)
-        {
-            m_variant = variant;
-        }
-        
         void ImageWrapper::setBufferSize(const unsigned int bufferSize)
         {
             m_bufferSize = bufferSize;
@@ -124,6 +119,7 @@ namespace stromx
             m_stride = stride;
             m_data = data;
             m_pixelType = pixelType;
+            m_variant = dataVariantFromPixelType(pixelType);
         }
         
         void ImageWrapper::validate(const unsigned int width,
@@ -144,5 +140,27 @@ namespace stromx
             if(data + dataSize > m_buffer + m_bufferSize)
                 throw WrongArgument("Too small buffer.");
         }
+        
+        const core::DataVariant ImageWrapper::dataVariantFromPixelType(const core::Image::PixelType pixelType)
+        {
+            switch(pixelType)
+            {
+            case core::Image::NONE:
+                return core::DataVariant(core::DataVariant::IMAGE);
+            case core::Image::MONO_8:
+                return core::DataVariant(core::DataVariant::MONO_8_IMAGE);
+            case core::Image::BAYERBG_8:
+                return core::DataVariant(core::DataVariant::BAYERBG_8_IMAGE);
+            case core::Image::BAYERGB_8:
+                return core::DataVariant(core::DataVariant::BAYERGB_8_IMAGE);
+            case core::Image::RGB_24:
+                return core::DataVariant(core::DataVariant::RGB_24_IMAGE);
+            case core::Image::BGR_24:
+                return core::DataVariant(core::DataVariant::BGR_24_IMAGE);
+            default:
+                throw core::WrongArgument("Unknown pixel type.");  
+            }
+        }
     }
+    
 }

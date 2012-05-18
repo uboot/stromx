@@ -58,8 +58,6 @@ namespace stromx
             virtual uint8_t* const data() { return m_data; }
             virtual const uint8_t* const data() const { return m_data; }
             
-            virtual void setVariant(const DataVariant& variant);
-            
             virtual void initialize(const unsigned int width, 
                                     const unsigned int height, 
                                     const unsigned int stride, 
@@ -83,11 +81,14 @@ namespace stromx
             virtual void setBuffer(uint8_t* const buffer);
             
         private:
+            static const core::DataVariant dataVariantFromPixelType(const PixelType pixelType);
+            
             void validate(const unsigned int width,
                         const unsigned int height,
                         const unsigned int stride,
                         const uint8_t* const data,
                         const PixelType pixelType) const;
+                        
             
             unsigned int m_width;
             unsigned int m_height;

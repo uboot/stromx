@@ -164,7 +164,6 @@ namespace stromx
                     pixelType = PixelType(type);
                 
                 getDataFromCvImage(pixelType);
-                setVariant(dataTypeFromPixelType(pixelType));
             }
             catch(cv::Exception &)
             {
@@ -181,7 +180,6 @@ namespace stromx
                 throw core::FileAccessFailed(filename, "Failed to load image.");
                 
             getDataFromCvImage(pixelTypeFromCvType(m_image->type()));
-            setVariant(dataTypeFromPixelType(pixelType()));
         } 
 
         void Image::open(const std::string& filename)
@@ -245,7 +243,6 @@ namespace stromx
             {
                 *m_image = cv::Mat(height, width, cvTypeFromPixelType(pixelType));
                 getDataFromCvImage(pixelType);
-                setVariant(dataTypeFromPixelType(pixelType));
             }
             catch(cv::Exception&)
             {
@@ -280,27 +277,6 @@ namespace stromx
                 return core::Image::BGR_24;
             default:
                 throw core::WrongArgument("Unknown OpenCV element type.");  
-            }
-        }
-
-        const core::DataVariant Image::dataTypeFromPixelType(const core::Image::PixelType pixelType)
-        {
-            switch(pixelType)
-            {
-            case core::Image::NONE:
-                return core::DataVariant(core::DataVariant::IMAGE);
-            case core::Image::MONO_8:
-                return core::DataVariant(core::DataVariant::MONO_8_IMAGE);
-            case core::Image::BAYERBG_8:
-                return core::DataVariant(core::DataVariant::BAYERBG_8_IMAGE);
-            case core::Image::BAYERGB_8:
-                return core::DataVariant(core::DataVariant::BAYERGB_8_IMAGE);
-            case core::Image::RGB_24:
-                return core::DataVariant(core::DataVariant::RGB_24_IMAGE);
-            case core::Image::BGR_24:
-                return core::DataVariant(core::DataVariant::BGR_24_IMAGE);
-            default:
-                throw core::WrongArgument("Unknown pixel type.");  
             }
         }
 
