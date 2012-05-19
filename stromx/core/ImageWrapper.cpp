@@ -54,58 +54,12 @@ namespace stromx
         {
             m_buffer = buffer;
         }
-
-        const int ImageWrapper::numChannels(const core::Image::PixelType pixelType)
-        {
-            switch(pixelType)
-            {
-            case core::Image::NONE:
-            case core::Image::MONO_8:
-            case core::Image::MONO_16:
-            case core::Image::BAYERBG_8:
-            case core::Image::BAYERGB_8:
-            case core::Image::BAYERBG_16:
-            case core::Image::BAYERGB_16:
-                return 1;
-            case core::Image::RGB_24:
-            case core::Image::BGR_24:
-            case core::Image::RGB_48:
-            case core::Image::BGR_48:
-                return 3;
-            default:
-                throw core::WrongArgument("Unknown pixel type.");    
-            }
-        }
-        
-        const int ImageWrapper::depth(const core::Image::PixelType pixelType)
-        {
-            switch(pixelType)
-            {
-            case core::Image::NONE:
-            case core::Image::MONO_8:
-            case core::Image::RGB_24:
-            case core::Image::BGR_24:
-            case core::Image::BAYERBG_8:
-            case core::Image::BAYERGB_8:
-                return 1;
-            case core::Image::MONO_16:
-            case core::Image::RGB_48:
-            case core::Image::BGR_48:
-            case core::Image::BAYERBG_16:
-            case core::Image::BAYERGB_16:
-                return 2;
-            default:
-                throw core::WrongArgument("Unknown pixel type.");    
-            }
-        }
         
         const unsigned int ImageWrapper::pixelSize() const
         {
             return depth(m_pixelType) * numChannels(m_pixelType);
         }
         
-        
-            
         void ImageWrapper::initialize(const unsigned int width, 
                                 const unsigned int height, 
                                 const unsigned int stride,

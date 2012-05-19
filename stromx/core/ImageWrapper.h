@@ -65,12 +65,6 @@ namespace stromx
                                     const PixelType pixelType);
             
         protected:
-            /** Returns the number of channels for a given pixel type. */
-            static const int numChannels(const PixelType pixelType);
-            
-            /** Returns the size of a single channel of a given pixel type in bytes. */
-            static const int depth(const PixelType pixelType);
-            
             /** Sets the size of the image buffer. */
             virtual void setBufferSize(const unsigned int bufferSize);
             

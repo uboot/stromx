@@ -153,31 +153,31 @@ namespace stromx
                     m_trigger->setParameter(Trigger::TRIGGER, core::Trigger());
                     break;
                 case IMAGE:
-                    m_input->setParameter(ConstImage::IMAGE, value);
+                {
+                    const stromx::Image & image = data_cast<const stromx::Image &>(value);
+                    UInt32 size = data_cast<const UInt32 &>(getParameter(BUFFER_SIZE));
+                    Enum pixelType = data_cast<const Enum &>(getParameter(PIXEL_TYPE));
                     
-                    try
-                    {
-                        const core::Image& image = dynamic_cast<const core::Image &>(value);
-                        
-                        m_imageWidth = image.width();
-                        m_imageHeight = image.height();
-                        
-                        m_clip->setParameter(Clip::LEFT, UInt32(0));
-                        m_clip->setParameter(Clip::TOP, UInt32(0));
-                        m_clip->setParameter(Clip::WIDTH, UInt32(m_imageWidth));
-                        m_clip->setParameter(Clip::HEIGHT, UInt32(m_imageHeight));
-                        
-                        m_left->setMax(UInt32(0));
-                        m_top->setMax(UInt32(0));
-                        m_width->setMax(UInt32(m_imageWidth));
-                        m_height->setMax(UInt32(m_imageHeight));
-                    }
-                    catch(std::bad_cast&)
-                    {
-                        throw WrongParameterType(parameter(TRIGGER_MODE), *this);
-                    }
+                    if(validateBufferSize(size, image, pixelType))
+                        m_input->setParameter(ConstImage::IMAGE, image);
+                    else
+                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
+                    
+                    m_imageWidth = image.width();
+                    m_imageHeight = image.height();
+                    
+                    m_clip->setParameter(Clip::LEFT, UInt32(0));
+                    m_clip->setParameter(Clip::TOP, UInt32(0));
+                    m_clip->setParameter(Clip::WIDTH, UInt32(m_imageWidth));
+                    m_clip->setParameter(Clip::HEIGHT, UInt32(m_imageHeight));
+                    
+                    m_left->setMax(UInt32(0));
+                    m_top->setMax(UInt32(0));
+                    m_width->setMax(UInt32(m_imageWidth));
+                    m_height->setMax(UInt32(m_imageHeight));
                     
                     break;
+                }
                 case NUM_BUFFERS:
                     m_buffer->setParameter(impl::CameraBuffer::NUM_BUFFERS, value);
                     m_imageQueue->setParameter(Queue::SIZE, value);
@@ -187,9 +187,9 @@ namespace stromx
                     int triggerMode;
                     try
                     {
-                        triggerMode = dynamic_cast<const Enum&>(value);
+                        triggerMode = data_cast<const Enum&>(value);
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(TRIGGER_MODE), *this);
                     }
@@ -213,19 +213,37 @@ namespace stromx
                     m_period->setParameter(PeriodicDelay::PERIOD, value);
                     break;
                 case BUFFER_SIZE:
-                    m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
+                {
+                    UInt32 size = data_cast<const UInt32 &>(value);
+                    const stromx::Image & image = data_cast<const stromx::Image &>(getParameter(IMAGE));
+                    Enum pixelType = data_cast<const Enum &>(getParameter(PIXEL_TYPE));
+                    
+                    if(validateBufferSize(size, image, pixelType))
+                        m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
+                    else
+                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
                     break;
+                }
                 case PIXEL_TYPE:
-                    m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
+                {
+                    UInt32 size = data_cast<const UInt32 &>(getParameter(BUFFER_SIZE));
+                    const stromx::Image & image = data_cast<const stromx::Image &>(getParameter(IMAGE));
+                    Enum pixelType = data_cast<const Enum &>(value);
+                    
+                    if(validateBufferSize(size, image, pixelType))
+                        m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
+                    else
+                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
                     break;
+                }
                 case LEFT:
                     m_clip->setParameter(Clip::LEFT, value);
                     try
                     {
-                        UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<const UInt32 &>(value);
                         m_width->setMax(UInt32(m_imageWidth - intValue));
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(LEFT), *this);
                     }
@@ -234,10 +252,10 @@ namespace stromx
                     m_clip->setParameter(Clip::TOP, value);
                     try
                     {
-                        UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<const UInt32 &>(value);
                         m_height->setMax(UInt32(m_imageHeight - intValue));
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(TOP), *this);
                     }
@@ -246,10 +264,10 @@ namespace stromx
                     m_clip->setParameter(Clip::WIDTH, value);
                     try
                     {
-                        UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<const UInt32 &>(value);
                         m_left->setMax(UInt32(m_imageWidth - intValue));
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(WIDTH), *this);
                     }
@@ -258,10 +276,10 @@ namespace stromx
                     m_clip->setParameter(Clip::HEIGHT, value);
                     try
                     {
-                        UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<const UInt32 &>(value);
                         m_top->setMax(UInt32(m_imageHeight - intValue));
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(HEIGHT), *this);
                     }
@@ -269,11 +287,11 @@ namespace stromx
                 case EXPOSURE:
                     try
                     {
-                        UInt32 intValue = dynamic_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<const UInt32 &>(value);
                         m_exposure = intValue;
                         setRgbParameters();
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(EXPOSURE), *this);
                     }
@@ -281,11 +299,11 @@ namespace stromx
                 case WHITE_BALANCE_RED:
                     try
                     {
-                        Double fpValue = dynamic_cast<const Double &>(value);
+                        Double fpValue = data_cast<const Double &>(value);
                         m_wbRed = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(WHITE_BALANCE_RED), *this);
                     }
@@ -293,11 +311,11 @@ namespace stromx
                 case WHITE_BALANCE_GREEN:
                     try
                     {
-                        Double fpValue = dynamic_cast<const Double &>(value);
+                        Double fpValue = data_cast<const Double &>(value);
                         m_wbGreen = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(WHITE_BALANCE_GREEN), *this);
                     }
@@ -305,11 +323,11 @@ namespace stromx
                 case WHITE_BALANCE_BLUE:
                     try
                     {
-                        Double fpValue = dynamic_cast<const Double &>(value);
+                        Double fpValue = data_cast<const Double &>(value);
                         m_wbBlue = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
-                    catch(std::bad_cast&)
+                    catch(BadCast&)
                     {
                         throw WrongParameterType(parameter(WHITE_BALANCE_BLUE), *this);
                     }
@@ -318,7 +336,7 @@ namespace stromx
                     throw WrongParameterId(id, *this);
                 }
             }
-            catch(std::bad_cast&)
+            catch(BadCast&)
             {
                 throw WrongParameterType(*parameters()[id], *this);
             }
@@ -431,11 +449,6 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            Parameter* image = new Parameter(IMAGE, DataVariant::RGB_IMAGE);
-            image->setName("Image");
-            image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
-            parameters.push_back(image);
-            
             EnumParameter* triggerMode = new EnumParameter(TRIGGER_MODE);
             triggerMode->setName("Trigger mode");
             triggerMode->setAccessMode(core::Parameter::ACTIVATED_WRITE);
@@ -490,6 +503,11 @@ namespace stromx
             bufferSize->setName("Buffer size in bytes");
             bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
+            
+            Parameter* image = new Parameter(IMAGE, DataVariant::RGB_IMAGE);
+            image->setName("Image");
+            image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(image);
         
             m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
             m_width->setName("ROI width");
@@ -531,6 +549,15 @@ namespace stromx
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::RED, Double(exposureCoeff * m_wbRed));
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::GREEN, Double(exposureCoeff * m_wbGreen));
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Double(exposureCoeff * m_wbBlue));
+        }
+        
+        bool Camera::validateBufferSize(const UInt32 bufferSize, const core::Image & image, const core::Enum outputType)
+        {
+            Image::PixelType pixelType = Image::PixelType(int(outputType));
+            unsigned int outputSize = image.width() * image.height() * 
+                                      Image::depth(pixelType) * Image::numChannels(pixelType);
+        
+            return outputSize <= (unsigned int)(bufferSize);
         }
     } 
 }

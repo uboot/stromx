@@ -21,6 +21,7 @@
 #include "../Image.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/Enum.h>
+#include <stromx/core/OperatorException.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>
 #include <stromx/core/Trigger.h>
@@ -39,9 +40,9 @@ namespace stromx
             
             m_operator = new core::OperatorTester(new Camera());
             m_operator->initialize();
-            m_operator->setParameter(Camera::IMAGE, image);
             m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
             m_operator->setParameter(Camera::BUFFER_SIZE, UInt32(image.bufferSize()));
+            m_operator->setParameter(Camera::IMAGE, image);
             
             // default to immediate, automatic trigger
             m_operator->setParameter(Camera::TRIGGER_MODE, Enum(Camera::INTERNAL));
@@ -151,6 +152,22 @@ namespace stromx
             const Image & image = ReadAccess<Image>(imageContainer)();
             
             image.save("CameraTest_testAdjustWhiteBalance.png");
+        }
+        
+        void CameraTest::testValidateBufferSize()
+        {
+            UInt32 bufferSize = data_cast<const UInt32 &>(m_operator->getParameter(Camera::BUFFER_SIZE));
+            UInt32 singleChannelSize((unsigned int)(bufferSize) / 3);
+            
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24));
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(Camera::BUFFER_SIZE, singleChannelSize),
+                                 WrongParameterValue);
+            
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::MONO_8));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(Camera::BUFFER_SIZE, singleChannelSize));
+            
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24)),
+                                 WrongParameterValue);
         }
 
         void CameraTest::tearDown ( void )

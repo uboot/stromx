@@ -39,6 +39,7 @@ namespace stromx
             CPPUNIT_TEST (testAdjustPixelType);
             CPPUNIT_TEST (testAdjustExposure);
             CPPUNIT_TEST (testAdjustWhiteBalance);
+            CPPUNIT_TEST (testValidateBufferSize);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -54,6 +55,7 @@ namespace stromx
                 void testAdjustPixelType();
                 void testAdjustExposure();
                 void testAdjustWhiteBalance();
+                void testValidateBufferSize();
                 
             private:
                 core::OperatorTester* m_operator;

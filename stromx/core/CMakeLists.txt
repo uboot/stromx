@@ -31,6 +31,7 @@ set(SOURCES
     Exception.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp
+    Image.cpp
     ImageWrapper.cpp
     None.cpp
     Operator.cpp

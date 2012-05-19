@@ -19,6 +19,7 @@
 
 #include "Config.h"
 #include <stromx/core/Enum.h>
+#include <stromx/core/Image.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/Trigger.h>
@@ -87,6 +88,11 @@ namespace stromx
         private:
             static const std::vector<const core::Description*> setupInputs();
             static const std::vector<const core::Description*> setupOutputs();
+            static bool validateBufferSize(const core::UInt32 bufferSize,
+                                           const core::Image & image,
+                                           const core::Enum outputType);
+            
+            
             const std::vector<const core::Parameter*> setupParameters();
             void setRgbParameters();
             
