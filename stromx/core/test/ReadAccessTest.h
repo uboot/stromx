@@ -37,6 +37,7 @@ namespace stromx
             CPPUNIT_TEST(testReadAccessWrongCast);
             CPPUNIT_TEST(testReadAccessDelayed);
             CPPUNIT_TEST(testReadAccessInterrupt);
+            CPPUNIT_TEST(testReadAccessTimeout);
             CPPUNIT_TEST(testReleaseReadAccess);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -53,6 +54,7 @@ namespace stromx
             void testReadAccessWrongCast();
             void testReadAccessDelayed();
             void testReadAccessInterrupt();
+            void testReadAccessTimeout();
             void testReleaseReadAccess();
 
         private:

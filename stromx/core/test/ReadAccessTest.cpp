@@ -105,6 +105,20 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), Interrupt);
         }
         
+        void ReadAccessTest::testReadAccessTimeout()
+        {
+            m_data = new TestData;
+            DataContainer container(m_data);
+            
+            {
+                CPPUNIT_ASSERT_NO_THROW(ReadAccess<>(container, 100));
+            }
+            
+            WriteAccess<> write(container);
+            
+            CPPUNIT_ASSERT_THROW(ReadAccess<>(container, 100), Timeout);
+        }
+        
         void ReadAccessTest::testReadAccessInterrupt()
         {
             {

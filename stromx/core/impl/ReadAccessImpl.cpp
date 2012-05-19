@@ -35,6 +35,15 @@ namespace stromx
                 
                 m_data.m_impl->getReadAccess();
             }
+            
+            ReadAccessImpl::ReadAccessImpl(const DataContainer& data, const unsigned int timeout)
+              : m_data(data)
+            {
+                if(data.empty())
+                    throw WrongArgument("Data container is empty.");
+                
+                m_data.m_impl->getReadAccess(timeout);
+            }
 
             const Data & ReadAccessImpl::get() const
             {

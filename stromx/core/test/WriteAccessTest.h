@@ -38,6 +38,7 @@ namespace stromx
             CPPUNIT_TEST(testReleaseWriteAccess);
             CPPUNIT_TEST(testWriteAccessDelayed);
             CPPUNIT_TEST(testWriteAccessInterrupt);
+            CPPUNIT_TEST(testWriteAccessTimeout);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -54,6 +55,7 @@ namespace stromx
             void testReleaseWriteAccess();
             void testWriteAccessDelayed();
             void testWriteAccessInterrupt();
+            void testWriteAccessTimeout();
                 
         private:
             void releaseDelayed(WriteAccess<>& access);

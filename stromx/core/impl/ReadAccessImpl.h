@@ -32,6 +32,8 @@ namespace stromx
             {
             public:
                 ReadAccessImpl(const DataContainer& data);
+                ReadAccessImpl(const DataContainer& data, const unsigned int timeout);
+                
                 ~ReadAccessImpl();
                 
                 const Data & get() const;

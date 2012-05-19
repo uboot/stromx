@@ -32,6 +32,7 @@ namespace stromx
             {
             public:
                 WriteAccessImpl(const DataContainer & data);
+                WriteAccessImpl(const DataContainer & data, const unsigned int timeout);
                 ~WriteAccessImpl();
                 
                 Data& get() const;

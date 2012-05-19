@@ -41,9 +41,25 @@ namespace stromx
              * Constructs a read access from a data container. This functions
              * waits until read access is possible, i.e. until no
              * write access  to \c data exists.
+             * 
+             * \param data The container which contains the data to be read.
              */
             ReadAccess(const DataContainer & data)
               : m_impl(new impl::ReadAccessImpl(data))
+            {
+            }
+            
+            /** 
+             * Constructs a read access from a data container. This functions
+             * waits until read access is possible, i.e. until no
+             * write access  to \c data exists, or until the time out expires.
+             * 
+             * \param data The container which contains the data to be read.
+             * \param timeout The maximal time to wait in milliseconds.
+             * \throws Timeout If no read access could be obtained during the timeout.
+             */
+            ReadAccess(const DataContainer & data, const unsigned int timeout)
+              : m_impl(new impl::ReadAccessImpl(data, timeout))
             {
             }
             

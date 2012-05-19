@@ -46,9 +46,25 @@ namespace stromx
              * Constructs a write access from a data container. This functions
              * waits until write access is possible, i.e. until no other
              * read or write access  to \c data exists.
+             * 
+             * \param data The container which contains the data to be accessed.
              */
             WriteAccess(const DataContainer & data)
-            : m_impl(new impl::WriteAccessImpl(data))
+              : m_impl(new impl::WriteAccessImpl(data))
+            {
+            }
+            
+            /** 
+             * Constructs a write access from a data container. This functions
+             * waits until write access is possible, i.e. until no other
+             * read or write access  to \c data exists.
+             * 
+             * \param data The container which contains the data to be accessed.
+             * \param timeout The maximal time to wait in milliseconds.
+             * \throws Timeout If no read access could be obtained during the timeout.
+             */
+            WriteAccess(const DataContainer & data, const unsigned int timeout)
+              : m_impl(new impl::WriteAccessImpl(data, timeout))
             {
             }
             

@@ -117,6 +117,20 @@ namespace stromx
             
             CPPUNIT_ASSERT(TestData::wasDestructed);
         }
+        
+        void WriteAccessTest::testWriteAccessTimeout()
+        {
+            m_data = new TestData;
+            DataContainer container(m_data);
+            
+            {
+                CPPUNIT_ASSERT_NO_THROW(WriteAccess<>(container, 100));
+            }
+            
+            WriteAccess<> write(container);
+            
+            CPPUNIT_ASSERT_THROW(WriteAccess<>(container, 100), Timeout);
+        }
     }
 }
 
