@@ -57,12 +57,14 @@ namespace stromx
                 void activate();
                 void deactivate();
                 
+                void receiveInputData(const Id2DataMapper& mapper, const unsigned int timeout);
+                void sendOutputData(const Id2DataMapper& mapper, const unsigned int timeout);
+                
                 // DataProvider implementation
                 void receiveInputData(const Id2DataMapper& mapper);
                 void sendOutputData(const Id2DataMapper& mapper);
                 void testForInterrupt();
                 void sleep(const unsigned int microseconds);
-                
                 
              public:
                 DataContainer getOutputData(const unsigned int id);
@@ -71,7 +73,6 @@ namespace stromx
                 
                 void unlockParameters();
                 void lockParameters();
-                
                 
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
@@ -84,6 +85,8 @@ namespace stromx
          
                 // internally used members
                 bool tryExecute();
+                void receiveInputDataImpl(const Id2DataMapper& mapper, const bool waitWithTimeout, const unsigned int timeout = 0);
+                void sendOutputDataImpl(const Id2DataMapper& mapper, const bool waitWithTimeout, const unsigned int timeout = 0);
                 void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock,
                                    const bool waitWithTimeout = false, const unsigned int timeout = 0);
                 void validateParameterId(const unsigned int id);
