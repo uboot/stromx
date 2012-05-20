@@ -34,12 +34,24 @@ namespace
         
         return std::auto_ptr< WriteAccess<> >(access);
     }
+    
+    std::auto_ptr< WriteAccess<> > allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
+    {
+        WriteAccess<>* access = 0;
+        
+        Py_BEGIN_ALLOW_THREADS
+        access = new WriteAccess<>(data, timeout);
+        Py_END_ALLOW_THREADS
+        
+        return std::auto_ptr< WriteAccess<> >(access);
+    }
 }
 
 void exportWriteAccess()
 {       
     class_<WriteAccess<> >("WriteAccess", no_init)
         .def("__init__", make_constructor(&allocate))
+        .def("__init__", make_constructor(&allocateWithTimeout))
         .def("get", &WriteAccess<>::get, return_internal_reference<>())
     ;
 }
