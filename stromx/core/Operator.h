@@ -243,21 +243,6 @@ namespace stromx
              */
             const DataContainer getOutputData(const unsigned int id) const;
             
-            /**
-             * Waits for data at the output ID and returns it. The data is 
-             * \em not removed by this function and will still be available
-             * and block the output. Use clearOutputData() to remove the output
-             * data. If the function is not successful within the specified
-             * \c timeout the functions throws an exception and returns.
-             * 
-             * \param id The ID of the output.
-             * 
-             * \throws Interrupt
-             * \throws Timeout The output data could not be obtained during the timeout.
-             * \throws WrongOperatorState
-             */
-            const DataContainer getOutputData(const unsigned int id, const unsigned int timeout) const;
-            
             /** 
              * Waits for the input \c to to become empty and then places \c data
              * at the input.
@@ -266,17 +251,6 @@ namespace stromx
              * \throws WrongOperatorState
              */
             void setInputData(const unsigned int id, const DataContainer data);
-            
-            /** 
-             * Waits for the input \c to to become empty and then places \c data
-             * at the input. If the function is not successful within the specified
-             * \c timeout the functions throws an exception and returns.
-             * 
-             * \throws Interrupt
-             * \throws Timeout The input data could not be set during the timeout.
-             * \throws WrongOperatorState
-             */
-            void setInputData(const unsigned int id, const DataContainer data, const unsigned int timeout);
             
             /**
              * Removes any output data from the output \c id.

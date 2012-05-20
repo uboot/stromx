@@ -73,8 +73,8 @@ namespace stromx
                 const Status status() { return m_status; }
                 void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout = 0);
                 const Data& getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout = 0);
-                DataContainer getOutputData(const unsigned int id, const bool waitWithTimeout, const unsigned int timeout = 0);
-                void setInputData(const unsigned int id, DataContainer data, const bool waitWithTimeout, const unsigned int timeout = 0);
+                DataContainer getOutputData(const unsigned int id);
+                void setInputData(const unsigned int id, DataContainer data);
                 void clearOutputData(unsigned int id);
                 
                 // internally used members

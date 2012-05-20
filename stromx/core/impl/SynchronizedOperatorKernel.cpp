@@ -264,8 +264,7 @@ namespace stromx
                 }
             }
             
-            DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id,
-                                                                    const bool waitWithTimeout, const unsigned int timeout)
+            DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
@@ -284,15 +283,14 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                        waitForSignal(m_dataCond, lock, false);
                 }
                 
                 m_dataCond.notify_all();
                 return m_outputMap.get(id);
             }
 
-            void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data,
-                                                          const bool waitWithTimeout, const unsigned int timeout)
+            void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
@@ -311,7 +309,7 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                        waitForSignal(m_dataCond, lock, false);
                 }
                 
                 m_dataCond.notify_all();

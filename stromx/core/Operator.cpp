@@ -130,22 +130,12 @@ namespace stromx
         
         const DataContainer Operator::getOutputData(const unsigned int id) const
         { 
-            return m_kernel->getOutputData(id, false); 
-        }
-        
-        const DataContainer Operator::getOutputData(const unsigned int id, const unsigned int timeout) const
-        { 
-            return m_kernel->getOutputData(id, true, timeout); 
+            return m_kernel->getOutputData(id); 
         }
         
         void Operator::setInputData(const unsigned int id, const DataContainer data)
         {
-            m_kernel->setInputData(id, data, false);
-        }
-        
-        void Operator::setInputData(const unsigned int id, const DataContainer data, const unsigned int timeout)
-        {
-            m_kernel->setInputData(id, data, true, timeout);
+            m_kernel->setInputData(id, data);
         }
         
         void Operator::clearOutputData(const unsigned int id)
