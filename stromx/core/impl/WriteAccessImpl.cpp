@@ -25,22 +25,13 @@ namespace stromx
     {   
         namespace impl
         {
-            WriteAccessImpl::WriteAccessImpl(const DataContainer& data)
+            WriteAccessImpl::WriteAccessImpl(const DataContainer& data, const bool waitWithTimeout, const unsigned int timeout)
               : m_data(data)
             {
                 if(data.empty())
                     throw WrongArgument("Data container is empty.");
                 
-                m_data.m_impl->getWriteAccess();
-            }
-            
-            WriteAccessImpl::WriteAccessImpl(const stromx::core::DataContainer& data, const unsigned int timeout)
-              : m_data(data)
-            {
-                if(data.empty())
-                    throw WrongArgument("Data container is empty.");
-                
-                m_data.m_impl->getWriteAccess(timeout);
+                m_data.m_impl->getWriteAccess(waitWithTimeout, timeout);
             }
 
             Data& WriteAccessImpl::get() const

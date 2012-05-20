@@ -31,8 +31,7 @@ namespace stromx
             class STROMX_CORE_API ReadAccessImpl
             {
             public:
-                ReadAccessImpl(const DataContainer& data);
-                ReadAccessImpl(const DataContainer& data, const unsigned int timeout);
+                ReadAccessImpl(const DataContainer& data, const bool waitWithTimeout, const unsigned int timeout = 0);
                 
                 ~ReadAccessImpl();
                 

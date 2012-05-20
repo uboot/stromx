@@ -36,35 +36,26 @@ namespace stromx
                     throw WrongArgument();
             }
             
-            void DataContainerImpl::getReadAccess()
+            void DataContainerImpl::getReadAccess(const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
                 try
                 {
-                    while(m_writeAccess)
-                        m_cond.wait(lock);
-                }
-                catch(boost::thread_interrupted&)
-                {
-                    throw Interrupt();
-                } 
-                
-                m_readAccessCounter++;
-            }
-            
-            void DataContainerImpl::getReadAccess(const unsigned int timeout)
-            {
-                unique_lock_t lock(m_mutex);
-                
-                boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
-                
-                try
-                {
-                    while(m_writeAccess)
+                    if(waitWithTimeout)
                     {
-                        if(! m_cond.timed_wait(lock, finish))
-                            throw Timeout();
+                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
+                
+                        while(m_writeAccess)
+                        {
+                            if(! m_cond.timed_wait(lock, finish))
+                                throw Timeout();
+                        }
+                    }
+                    else
+                    {
+                        while(m_writeAccess)
+                            m_cond.wait(lock);
                     }
                 }
                 catch(boost::thread_interrupted&)
@@ -92,35 +83,26 @@ namespace stromx
                 m_cond.notify_all();
             }
                 
-            void DataContainerImpl::getWriteAccess()
+            void DataContainerImpl::getWriteAccess(const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
                 try
                 {
-                    while(m_readAccessCounter || m_writeAccess)
-                        m_cond.wait(lock);
-                }
-                catch(boost::thread_interrupted&)
-                {
-                    throw Interrupt();
-                } 
-                    
-                m_writeAccess = true;
-            }
-                
-            void DataContainerImpl::getWriteAccess(const unsigned int timeout)
-            {
-                unique_lock_t lock(m_mutex);
-                
-                boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
-                
-                try
-                {
-                    while(m_readAccessCounter || m_writeAccess)
+                    if(waitWithTimeout)
                     {
-                        if(! m_cond.timed_wait(lock, finish))
-                            throw Timeout();
+                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
+                
+                        while(m_readAccessCounter || m_writeAccess)
+                        {
+                            if(! m_cond.timed_wait(lock, finish))
+                                throw Timeout();
+                        }
+                    }
+                    else
+                    {
+                        while(m_readAccessCounter || m_writeAccess)
+                            m_cond.wait(lock);
                     }
                 }
                 catch(boost::thread_interrupted&)

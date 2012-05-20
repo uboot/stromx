@@ -62,8 +62,8 @@ namespace stromx
                 
                 const Status status() { return m_status; }
                 
-                void setParameter(unsigned int id, const Data& value);
-                const Data& getParameter(unsigned int id);
+                void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout = false, const unsigned int timeout = 0);
+                const Data& getParameter(unsigned int id, const bool waitWithTimeout = false, const unsigned int timeout = 0);
                 
                 DataContainer getOutputData(const unsigned int id);
                 void setInputData(const unsigned int id, DataContainer data);
@@ -78,7 +78,8 @@ namespace stromx
                 typedef boost::unique_lock<boost::mutex> unique_lock_t;
                 
                 bool tryExecute();
-                void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock);
+                void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock,
+                                   const bool waitWithTimeout = false, const unsigned int timeout = 0);
                 void validateParameterId(const unsigned int id);
                 void validateWriteAccess(const unsigned int id);
                 void validateReadAccess(const unsigned int id);

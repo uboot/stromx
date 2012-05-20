@@ -32,7 +32,7 @@ namespace stromx
             if(! m_impl.get())
                 return 0;
             
-            return m_impl->get();
+            return m_impl->get(false);
         }
 
         Data*const RecycleAccess::get(const unsigned int timeout) const
@@ -40,7 +40,7 @@ namespace stromx
             if(! m_impl.get())
                 return 0;
             
-            return m_impl->get(timeout);
+            return m_impl->get(true, timeout);
         }
         
         void RecycleAccess::add(const DataContainer data)

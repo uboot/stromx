@@ -169,19 +169,19 @@ namespace stromx
 
             }
             
-            const Data& SynchronizedOperatorKernel::getParameter(unsigned int id)
+            const Data& SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
                 while(m_parametersAreLocked)
-                    waitForSignal(m_parameterCond, lock);
+                    waitForSignal(m_parameterCond, lock, waitWithTimeout, timeout);
                 
                 validateParameterId(id);
                 validateReadAccess(id);
                 return m_op->getParameter(id);
             }
                 
-            void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value)
+            void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
@@ -189,7 +189,7 @@ namespace stromx
                 validateParameterType(id, value.variant());
                 
                 while(m_parametersAreLocked)
-                    waitForSignal(m_parameterCond, lock);
+                    waitForSignal(m_parameterCond, lock, waitWithTimeout, timeout);
                 
                 validateWriteAccess(id);
                 
@@ -399,11 +399,22 @@ namespace stromx
                 return true;
             }
             
-            void SynchronizedOperatorKernel::waitForSignal(boost::condition_variable & condition, unique_lock_t& lock)
+            void SynchronizedOperatorKernel::waitForSignal(boost::condition_variable & condition, unique_lock_t& lock,
+                                                           const bool waitWithTimeout, const unsigned int timeout)
             {
                 try
                 {
-                    condition.wait(lock);
+                    if(waitWithTimeout)
+                    {
+                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
+                
+                        if(! condition.timed_wait(lock, finish))
+                            throw Timeout();
+                    }
+                    else
+                    {
+                        condition.wait(lock);
+                    }
                 }
                 catch(boost::thread_interrupted&)
                 {

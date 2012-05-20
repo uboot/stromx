@@ -45,7 +45,7 @@ namespace stromx
              * \param data The container which contains the data to be read.
              */
             ReadAccess(const DataContainer & data)
-              : m_impl(new impl::ReadAccessImpl(data))
+              : m_impl(new impl::ReadAccessImpl(data, false))
             {
             }
             
@@ -59,7 +59,7 @@ namespace stromx
              * \throws Timeout If no read access could be obtained during the timeout.
              */
             ReadAccess(const DataContainer & data, const unsigned int timeout)
-              : m_impl(new impl::ReadAccessImpl(data, timeout))
+              : m_impl(new impl::ReadAccessImpl(data, true, timeout))
             {
             }
             

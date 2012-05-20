@@ -36,12 +36,10 @@ namespace stromx
                 DataContainerImpl(Data* const data);
                 ~DataContainerImpl();
                 
-                void getReadAccess();
-                void getReadAccess(const unsigned int timeout);
+                void getReadAccess(const bool waitWithTimeout, const unsigned int timeout);
                 void returnReadAccess();
                 
-                void getWriteAccess();
-                void getWriteAccess(const unsigned int timeout);
+                void getWriteAccess(const bool waitWithTimeout, const unsigned int timeout);
                 void returnWriteAccess();
                 
                 void getRecycleAccess(Recycler* const recycler);

@@ -50,7 +50,7 @@ namespace stromx
              * \param data The container which contains the data to be accessed.
              */
             WriteAccess(const DataContainer & data)
-              : m_impl(new impl::WriteAccessImpl(data))
+              : m_impl(new impl::WriteAccessImpl(data, false))
             {
             }
             
@@ -64,7 +64,7 @@ namespace stromx
              * \throws Timeout If no read access could be obtained during the timeout.
              */
             WriteAccess(const DataContainer & data, const unsigned int timeout)
-              : m_impl(new impl::WriteAccessImpl(data, timeout))
+              : m_impl(new impl::WriteAccessImpl(data, true, timeout))
             {
             }
             

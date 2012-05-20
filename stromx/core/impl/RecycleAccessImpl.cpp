@@ -72,7 +72,7 @@ namespace stromx
                 }
             }
             
-            Data*const RecycleAccessImpl::get()
+            Data*const RecycleAccessImpl::get(const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
@@ -81,34 +81,20 @@ namespace stromx
                 
                 try
                 {
-                    while(m_data.empty())
-                        m_cond.wait(lock);
-                }
-                catch(boost::thread_interrupted&)
-                {
-                    throw Interrupt();
-                }
-                
-                Data* value = m_data.front();
-                m_data.pop_front();
-                return value;
-            }
-            
-            Data*const RecycleAccessImpl::get(const unsigned int timeout)
-            {
-                unique_lock_t lock(m_mutex);
-                
-                if(m_dataContainer.empty() && m_data.empty())
-                    return 0;
-                
-                boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
-                
-                try
-                {
-                    while(m_data.empty())
+                    if(waitWithTimeout)
                     {
-                        if(! m_cond.timed_wait(lock, finish))
-                            throw Timeout();
+                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
+                
+                        while(m_data.empty())
+                        {
+                            if(! m_cond.timed_wait(lock, finish))
+                                throw Timeout();
+                        }
+                    }
+                    else
+                    {
+                        while(m_data.empty())
+                            m_cond.wait(lock);
                     }
                 }
                 catch(boost::thread_interrupted&)

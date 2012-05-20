@@ -27,22 +27,13 @@ namespace stromx
     {
         namespace impl
         {
-            ReadAccessImpl::ReadAccessImpl(const DataContainer& data)
+            ReadAccessImpl::ReadAccessImpl(const DataContainer& data, const bool waitWithTimeout, const unsigned int timeout)
               : m_data(data)
             {
                 if(data.empty())
                     throw WrongArgument("Data container is empty.");
                 
-                m_data.m_impl->getReadAccess();
-            }
-            
-            ReadAccessImpl::ReadAccessImpl(const DataContainer& data, const unsigned int timeout)
-              : m_data(data)
-            {
-                if(data.empty())
-                    throw WrongArgument("Data container is empty.");
-                
-                m_data.m_impl->getReadAccess(timeout);
+                m_data.m_impl->getReadAccess(waitWithTimeout, timeout);
             }
 
             const Data & ReadAccessImpl::get() const
