@@ -115,7 +115,9 @@ namespace stromx
             const Status status() const;
             
             /** 
-             * Sets a parameter \c id to \c value.
+             * Sets the parameter \c id to \c value. The functions waits until setting
+             * the parameter value is possible, i.e. the operator is not executed or accessed 
+             * by another thread.
              * 
              * \throws Interrupt
              * \throws WrongParameterType
@@ -124,8 +126,30 @@ namespace stromx
              */
             void setParameter(const unsigned int id, const Data& value);
             
+            /** 
+             * Sets the parameter \c id to \c value. The functions waits until setting
+             * the parameter value is possible, i.e. the operator is not executed or accessed 
+             * by another thread. If the function is not successful within the specified
+             * \c timeout the functions throws an exception and returns.
+             * 
+             * \param id The ID of the parameter to be set.
+             * \param value The new parameter value.
+             * \param timeout The maximal time to wait in milliseconds.
+             * 
+             * \throws Interrupt
+             * \throws ParameterAccessViolation
+             * \throws Timeout If the parameter could not be set during the timeout.
+             * \throws WrongParameterId 
+             * \throws WrongParameterType
+             */
+            void setParameter(const unsigned int id, const Data& value, const unsigned int timeout);
+            
             /**
-             * Gets the current value of the parameter \c id.
+             * Gets the current value of the parameter \c id. The functions waits until
+             * obtaining the parameter value is possible, i.e. the operator is not
+             * executed or accessed by another thread. 
+             * 
+             * \param id The ID of the parameter to be set.
              * 
              * \throws Interrupt
              * \throws ParameterAccessViolation
@@ -133,9 +157,30 @@ namespace stromx
              */
             const Data& getParameter(const unsigned int id) const;
             
+            /**
+             * Gets the current value of the parameter \c id. The functions waits until
+             * obtaining the parameter value is possible, i.e. the operator is not
+             * executed or accessed by another thread. If the function is not successful
+             * within the specified \c timeout the functions throws an exception and returns.
+             * 
+             * \param id The ID of the parameter to be set.
+             * \param timeout The maximal time to wait in milliseconds.
+             * 
+             * \throws Interrupt
+             * \throws ParameterAccessViolation
+             * \throws Timeout If the parameter could not be set during the timeout.
+             * \throws WrongParameterId 
+             */
+            const Data& getParameter(const unsigned int id, const unsigned int timeout) const;
+            
             /** 
-             * Obtains the current value of the parameter \c id and 
-             * attempts to cast it to \c data_t.
+             * Gets the current value of the parameter \c id and 
+             * attempts to cast it to \c data_t. The functions waits until
+             * obtaining the parameter value is possible, i.e. the operator is not
+             * executed or accessed by another thread.
+             * 
+             * \param id The ID of the parameter to be set.
+             * \returns The value of the parameter.
              * 
              * \throws BadCast If the value can not be casted to \c data_t.
              * \throws Interrupt
@@ -155,16 +200,63 @@ namespace stromx
                 }
             }
             
+            /** 
+             * Gets the current value of the parameter \c id and 
+             * attempts to cast it to \c data_t. The functions waits until
+             * obtaining the parameter value is possible, i.e. the operator is not
+             * executed or accessed by another thread. If the function is not successful
+             * within the specified \c timeout the functions throws an exception and returns.
+             * 
+             * \param id The ID of the parameter to be set.
+             * \param timeout The maximal time to wait in milliseconds.
+             * \returns The value of the parameter.
+             * 
+             * \throws BadCast If the value can not be casted to \c data_t.
+             * \throws Interrupt
+             * \throws ParameterAccessViolation
+             * \throws Timeout If the parameter could not be set during the timeout.
+             * \throws WrongParameterId 
+             */
+            template<typename data_t>
+            const data_t& getParameter(unsigned int id, const unsigned int timeout) const
+            {
+                try
+                {
+                    return dynamic_cast<const data_t &>(getParameter(id, timeout));
+                }
+                catch(std::bad_cast &)
+                {
+                    throw BadCast();
+                }
+            }
+            
             /**
              * Waits for data at the output ID and returns it. The data is 
              * \em not removed by this function and will still be available
              * and block the output. Use clearOutputData() to remove the output
              * data.
              * 
+             * \param id The ID of the output.
+             * 
              * \throws Interrupt
              * \throws WrongOperatorState
              */
             const DataContainer getOutputData(const unsigned int id) const;
+            
+            /**
+             * Waits for data at the output ID and returns it. The data is 
+             * \em not removed by this function and will still be available
+             * and block the output. Use clearOutputData() to remove the output
+             * data. If the function is not successful within the specified
+             * \c timeout the functions throws an exception and returns.
+             * 
+             * \param id The ID of the output.
+             * 
+             * \throws Interrupt
+             * \throws Timeout The output data could not be obtained during the timeout.
+             * \throws WrongOperatorState
+             */
+            const DataContainer getOutputData(const unsigned int id, const unsigned int timeout) const;
             
             /** 
              * Waits for the input \c to to become empty and then places \c data
@@ -174,6 +266,17 @@ namespace stromx
              * \throws WrongOperatorState
              */
             void setInputData(const unsigned int id, const DataContainer data);
+            
+            /** 
+             * Waits for the input \c to to become empty and then places \c data
+             * at the input. If the function is not successful within the specified
+             * \c timeout the functions throws an exception and returns.
+             * 
+             * \throws Interrupt
+             * \throws Timeout The input data could not be set during the timeout.
+             * \throws WrongOperatorState
+             */
+            void setInputData(const unsigned int id, const DataContainer data, const unsigned int timeout);
             
             /**
              * Removes any output data from the output \c id.

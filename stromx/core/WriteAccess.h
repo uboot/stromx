@@ -61,6 +61,7 @@ namespace stromx
              * 
              * \param data The container which contains the data to be accessed.
              * \param timeout The maximal time to wait in milliseconds.
+             * 
              * \throws Timeout If no read access could be obtained during the timeout.
              */
             WriteAccess(const DataContainer & data, const unsigned int timeout)

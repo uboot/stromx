@@ -166,27 +166,6 @@ namespace stromx
                 m_op->deinitialize();
                 
                 m_status = NONE;
-
-            }
-     
-            void SynchronizedOperatorKernel::receiveInputData(const stromx::core::Id2DataMapper& mapper)
-            {
-                receiveInputDataImpl(mapper, false);
-            }
-
-            void SynchronizedOperatorKernel::receiveInputData(const stromx::core::Id2DataMapper& mapper, const unsigned int timeout)
-            {
-                receiveInputDataImpl(mapper, true, timeout);
-            }
-
-            void SynchronizedOperatorKernel::sendOutputData(const stromx::core::Id2DataMapper& mapper)
-            {
-                sendOutputDataImpl(mapper, false);
-            }
-
-            void SynchronizedOperatorKernel::sendOutputData(const stromx::core::Id2DataMapper& mapper, const unsigned int timeout)
-            {
-                sendOutputDataImpl(mapper, true, timeout);
             }
             
             const Data& SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)
@@ -216,9 +195,7 @@ namespace stromx
                 m_op->setParameter(id, value);
             }
 
-            void SynchronizedOperatorKernel::receiveInputDataImpl(const Id2DataMapper& mapper,
-                                                                  const bool waitWithTimeout,
-                                                                  const unsigned int timeout)
+            void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
             {   
                 unique_lock_t lock(m_mutex);
                 m_parametersAreLocked = false;
@@ -230,7 +207,7 @@ namespace stromx
                 try
                 {
                     while(! mapper.tryGet(m_inputMap))
-                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                        waitForSignal(m_dataCond, lock, false);
                     
                     mapper.get(m_inputMap);
                 }
@@ -239,7 +216,7 @@ namespace stromx
                     interruptExceptionWasThrown = true;
                 }   
                 
-                m_parametersAreLocked = false;
+                m_parametersAreLocked = true;
                 if(! interruptExceptionWasThrown)
                     m_dataCond.notify_all();
                 
@@ -248,9 +225,7 @@ namespace stromx
                     throw Interrupt();
             }
 
-            void SynchronizedOperatorKernel::sendOutputDataImpl(const core::Id2DataMapper& mapper,
-                                                                const bool waitWithTimeout,
-                                                                const unsigned int timeout)
+            void SynchronizedOperatorKernel::sendOutputData(const core::Id2DataMapper& mapper)
             {
                 unique_lock_t lock(m_mutex);
                 m_parametersAreLocked = false;
@@ -262,7 +237,7 @@ namespace stromx
                 try
                 {
                     while(! mapper.trySet(m_outputMap))
-                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                        waitForSignal(m_dataCond, lock, false);
                     
                     mapper.set(m_outputMap);
                 }
@@ -271,7 +246,7 @@ namespace stromx
                     interruptExceptionWasThrown = true;
                 }   
                 
-                m_parametersAreLocked = false;
+                m_parametersAreLocked = true;
                 if(! interruptExceptionWasThrown)
                     m_dataCond.notify_all();
                 
@@ -289,7 +264,8 @@ namespace stromx
                 }
             }
             
-            DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id)
+            DataContainer SynchronizedOperatorKernel::getOutputData(const unsigned int id,
+                                                                    const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
@@ -308,14 +284,15 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock);
+                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
                 }
                 
                 m_dataCond.notify_all();
                 return m_outputMap.get(id);
             }
 
-            void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data)
+            void SynchronizedOperatorKernel::setInputData(const unsigned int id, DataContainer data,
+                                                          const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
@@ -334,7 +311,7 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock);
+                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
                 }
                 
                 m_dataCond.notify_all();

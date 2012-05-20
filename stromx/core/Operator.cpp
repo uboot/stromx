@@ -110,22 +110,42 @@ namespace stromx
         
         void Operator::setParameter(const unsigned int id, const Data& value)
         { 
-            m_kernel->setParameter(id, value);
+            m_kernel->setParameter(id, value, false);
+        }
+        
+        void Operator::setParameter(const unsigned int id, const Data& value, const unsigned int timeout)
+        { 
+            m_kernel->setParameter(id, value, true, timeout);
         }
         
         const Data& Operator::getParameter(const unsigned int id) const
         { 
-            return m_kernel->getParameter(id); 
+            return m_kernel->getParameter(id, false); 
+        }
+        
+        const Data& Operator::getParameter(const unsigned int id, const unsigned int timeout) const
+        { 
+            return m_kernel->getParameter(id, true, timeout); 
         }
         
         const DataContainer Operator::getOutputData(const unsigned int id) const
         { 
-            return m_kernel->getOutputData(id); 
+            return m_kernel->getOutputData(id, false); 
+        }
+        
+        const DataContainer Operator::getOutputData(const unsigned int id, const unsigned int timeout) const
+        { 
+            return m_kernel->getOutputData(id, true, timeout); 
         }
         
         void Operator::setInputData(const unsigned int id, const DataContainer data)
         {
-            m_kernel->setInputData(id, data);
+            m_kernel->setInputData(id, data, false);
+        }
+        
+        void Operator::setInputData(const unsigned int id, const DataContainer data, const unsigned int timeout)
+        {
+            m_kernel->setInputData(id, data, true, timeout);
         }
         
         void Operator::clearOutputData(const unsigned int id)

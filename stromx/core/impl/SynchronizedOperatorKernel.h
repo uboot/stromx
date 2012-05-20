@@ -57,20 +57,11 @@ namespace stromx
                 void activate();
                 void deactivate();
                 
-                void receiveInputData(const Id2DataMapper& mapper, const unsigned int timeout);
-                void sendOutputData(const Id2DataMapper& mapper, const unsigned int timeout);
-                
                 // DataProvider implementation
                 void receiveInputData(const Id2DataMapper& mapper);
                 void sendOutputData(const Id2DataMapper& mapper);
                 void testForInterrupt();
                 void sleep(const unsigned int microseconds);
-                
-             public:
-                DataContainer getOutputData(const unsigned int id);
-                void setInputData(const unsigned int id, DataContainer data);
-                void clearOutputData(unsigned int id);
-                
                 void unlockParameters();
                 void lockParameters();
                 
@@ -80,15 +71,16 @@ namespace stromx
                 
                 // used by Operator
                 const Status status() { return m_status; }
-                void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout = false, const unsigned int timeout = 0);
-                const Data& getParameter(unsigned int id, const bool waitWithTimeout = false, const unsigned int timeout = 0);
-         
+                void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout = 0);
+                const Data& getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout = 0);
+                DataContainer getOutputData(const unsigned int id, const bool waitWithTimeout, const unsigned int timeout = 0);
+                void setInputData(const unsigned int id, DataContainer data, const bool waitWithTimeout, const unsigned int timeout = 0);
+                void clearOutputData(unsigned int id);
+                
                 // internally used members
                 bool tryExecute();
-                void receiveInputDataImpl(const Id2DataMapper& mapper, const bool waitWithTimeout, const unsigned int timeout = 0);
-                void sendOutputDataImpl(const Id2DataMapper& mapper, const bool waitWithTimeout, const unsigned int timeout = 0);
                 void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock,
-                                   const bool waitWithTimeout = false, const unsigned int timeout = 0);
+                                   const bool waitWithTimeout, const unsigned int timeout = 0);
                 void validateParameterId(const unsigned int id);
                 void validateWriteAccess(const unsigned int id);
                 void validateReadAccess(const unsigned int id);

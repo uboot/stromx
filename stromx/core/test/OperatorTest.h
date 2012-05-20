@@ -45,8 +45,12 @@ namespace stromx
             CPPUNIT_TEST (testGetParameter);
             CPPUNIT_TEST (testGetParameterCast);
             CPPUNIT_TEST (testGetParameterWrongCast);
-            CPPUNIT_TEST (testSetParameter);
+            CPPUNIT_TEST (testGetParameterNoTimeout);
+            CPPUNIT_TEST (testGetParameterTimeout);
             CPPUNIT_TEST (testGetParameterStatusNone);
+            CPPUNIT_TEST (testSetParameter);
+            CPPUNIT_TEST (testSetParameterNoTimeout);
+            CPPUNIT_TEST (testSetParameterTimeout);
             CPPUNIT_TEST (testSetParameterStatusNone);
             CPPUNIT_TEST (testAddObserver);
             CPPUNIT_TEST (testRemoveObserver);
@@ -73,8 +77,12 @@ namespace stromx
             void testGetParameter();
             void testGetParameterCast();
             void testGetParameterWrongCast();
-            void testSetParameter();
+            void testGetParameterNoTimeout();
+            void testGetParameterTimeout();
             void testGetParameterStatusNone();
+            void testSetParameter();
+            void testSetParameterNoTimeout();
+            void testSetParameterTimeout();
             void testSetParameterStatusNone();
             void testAddObserver();
             void testRemoveObserver();
@@ -99,6 +107,7 @@ namespace stromx
             void clearOutputDataDelayed(const unsigned int id); 
             void getOutputDataWithInterrupt(const unsigned id);
             void setInputDataWithInterrupt(const unsigned int id);
+            void setWaitingTime(const unsigned int timeInMs);
             
             OperatorTester* m_operator;
             TestOperator* m_testOperator;

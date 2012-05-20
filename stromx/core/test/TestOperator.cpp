@@ -104,7 +104,7 @@ namespace stromx
             
              // execute...
             m_numExecutes++;
-            boost::this_thread::sleep(boost::posix_time::microsec(m_sleepTime));
+            boost::this_thread::sleep(boost::posix_time::millisec(m_sleepTime));
             
             Id2DataPair output1(OUTPUT_1, input1.data());
             Id2DataPair output2(OUTPUT_2, input2.data());

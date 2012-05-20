@@ -266,6 +266,22 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_operator->getParameter<UInt16>(TestOperator::SLEEP_TIME), BadCast);
         }
 
+        void OperatorTest::testGetParameterNoTimeout()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter<UInt32>(TestOperator::SLEEP_TIME, 100));
+        }
+        
+        void OperatorTest::testGetParameterTimeout()
+        { 
+            setWaitingTime(1000);
+            boost::thread t(boost::bind(&Operator::getOutputData, m_operator, TestOperator::OUTPUT_1));
+            
+            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            CPPUNIT_ASSERT_THROW(m_operator->getParameter(TestOperator::TEST_DATA, 100), Timeout);
+            
+            t.join();
+        }
+
         void OperatorTest::testSetParameter()
         {
             UInt32 value(2000);
@@ -281,6 +297,22 @@ namespace stromx
             
             UInt16 wrongType;
             CPPUNIT_ASSERT_THROW(m_operator->setParameter(TestOperator::SLEEP_TIME, wrongType), WrongParameterType);
+        }
+
+        void OperatorTest::testSetParameterNoTimeout()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(TestOperator::TEST_DATA, TestData(), 100));
+        }
+        
+        void OperatorTest::testSetParameterTimeout()
+        { 
+            setWaitingTime(1000);
+            boost::thread t(boost::bind(&Operator::getOutputData, m_operator, TestOperator::OUTPUT_1));
+            
+            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(TestOperator::TEST_DATA, TestData(), 100), Timeout);
+            
+            t.join();
         }
         
         void OperatorTest::testGetParameterStatusNone()
@@ -365,6 +397,15 @@ namespace stromx
         void OperatorTest::tearDown ( void )
         {
             delete m_operator;
+        }
+        
+        void OperatorTest::setWaitingTime(const unsigned int timeInMs)
+        {
+            m_operator->deactivate();
+            m_operator->setParameter(TestOperator::SLEEP_TIME, UInt32(timeInMs));
+            m_operator->activate();
+            m_operator->setInputData(TestOperator::INPUT_1, m_container);
+            m_operator->setInputData(TestOperator::INPUT_2, m_container);
         }
         
         void OperatorTest::TestObserver::observe(const Connector& connector, const DataContainer& data) const
