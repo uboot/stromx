@@ -28,6 +28,7 @@ namespace stromx
 {
     namespace core
     {
+        class Operator;
         class OperatorKernel;
         class Data;
         
@@ -35,6 +36,8 @@ namespace stromx
         {
             class SynchronizedOperatorKernel : public DataProvider
             {
+                friend class stromx::core::Operator;
+                
             public:    
                 enum Status
                 {
@@ -60,11 +63,8 @@ namespace stromx
                 void testForInterrupt();
                 void sleep(const unsigned int microseconds);
                 
-                const Status status() { return m_status; }
                 
-                void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout = false, const unsigned int timeout = 0);
-                const Data& getParameter(unsigned int id, const bool waitWithTimeout = false, const unsigned int timeout = 0);
-                
+             public:
                 DataContainer getOutputData(const unsigned int id);
                 void setInputData(const unsigned int id, DataContainer data);
                 void clearOutputData(unsigned int id);
@@ -77,6 +77,12 @@ namespace stromx
                 typedef boost::lock_guard<boost::mutex> lock_t;
                 typedef boost::unique_lock<boost::mutex> unique_lock_t;
                 
+                // used by Operator
+                const Status status() { return m_status; }
+                void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout = false, const unsigned int timeout = 0);
+                const Data& getParameter(unsigned int id, const bool waitWithTimeout = false, const unsigned int timeout = 0);
+         
+                // internally used members
                 bool tryExecute();
                 void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock,
                                    const bool waitWithTimeout = false, const unsigned int timeout = 0);
