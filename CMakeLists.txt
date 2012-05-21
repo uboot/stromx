@@ -5,6 +5,7 @@ set (STROMX_VERSION_MINOR 1)
 set (STROMX_VERSION_PATCH 0)
 
 cmake_minimum_required(VERSION 2.8)
+enable_testing()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 set(LIB_DIR lib${LIB_SUFFIX})

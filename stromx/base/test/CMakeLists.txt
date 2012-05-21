@@ -1,5 +1,7 @@
 project(stromx_base_test)
 
+add_test(NAME stromx_base_test COMMAND stromx_base_test)
+
 if(MSVC)
     add_definitions(/DSTROMX_BASE_STATIC)
 endif(MSVC)

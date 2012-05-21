@@ -1,4 +1,6 @@
 project(stromx_core_test)
+
+add_test(NAME stromx_core_test COMMAND stromx_core_test)
     
 if(MSVC)
     add_definitions(/DSTROMX_CORE_STATIC)
