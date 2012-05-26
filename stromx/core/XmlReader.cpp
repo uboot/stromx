@@ -46,7 +46,7 @@ namespace stromx
                     throw;
                 }
             }
-            else if(extension == "zip")
+            else if(extension == "zip" || extension == "stromx")
             {
                 ZipFileInput input(filepath);
                 
@@ -95,7 +95,7 @@ namespace stromx
                     throw;
                 }
             }
-            else if(extension == "zip")
+            else if(extension == "zip" || extension == "stromx")
             {
                 ZipFileInput input(filepath);
                 

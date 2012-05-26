@@ -45,7 +45,8 @@ namespace stromx
          * part of file bundles which are either stored in a common directory or in a zip archive.
          * In the first case the path of the file is the path of XML file contained in the same
          * directory as the dependend files. In the second case it is the path of zip file which
-         * contains the XML file and the dependend files.
+         * contains the XML file and the dependend files. Zip files can also have the custom
+         * extension <em>*.stromx</em>.
          * 
          * %Stream and parameter files can also be read from \em file \em inputs. File inputs 
          * are an abstraction of the file bundles mentioned above and are represented by a

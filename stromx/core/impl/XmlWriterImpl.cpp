@@ -350,7 +350,7 @@ namespace stromx
             {
                 if (basename.empty())
                 {
-                    throw WrongArgument("Invalid file name.");
+                    throw FileAccessFailed(basename, "Invalid file name.");
                 }
                 
                 m_stream = &stream;
@@ -424,7 +424,7 @@ namespace stromx
             {
                 if (basename.empty())
                 {
-                    throw WrongArgument("Invalid base name.");
+                    throw FileAccessFailed(basename, "Invalid base name.");
                 }
                 
                 m_output = &output;

@@ -64,6 +64,17 @@ namespace stromx
             delete stream;
         }
         
+        void XmlReaderTest::testReadStreamStromx()
+        {
+            Stream* stream = 0;
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.stromx", *m_factory));
+            
+            XmlWriter writer;
+            writer.writeStream("XmlReaderTest_testReadStreamStromx.xml", *stream);
+            
+            delete stream;
+        }
+        
         void XmlReaderTest::testReadStreamWrongFile()
         {
             CPPUNIT_ASSERT_THROW(XmlReader().readStream("wrongfile.xml", *m_factory), FileAccessFailed);
@@ -97,6 +108,16 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
             
             XmlWriter().writeStream("XmlReaderTest_testReadParametersZip.xml", *m_stream);
+        }
+        
+        void XmlReaderTest::testReadParametersStromx()
+        {
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.stromx", *m_factory, m_stream->operators()));
+            
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(0)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), dynamic_cast<const UInt32&>(m_stream->operators()[2]->getParameter(1)));
+            
+            XmlWriter().writeStream("XmlReaderTest_testReadParametersStromx.xml", *m_stream);
         }
         
         void XmlReaderTest::testReadParametersEmpty()

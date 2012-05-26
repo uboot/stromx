@@ -44,7 +44,8 @@ namespace stromx
          * part of file bundles which are either stored in a common directory or in a zip archive.
          * In the first case the path of the file is the path of XML file contained in the same
          * directory as the dependend files. In the second case it is the path of zip file which
-         * contains the XML file and the dependend files.
+         * contains the XML file and the dependend files. Zip files can also have the custom
+         * extension <em>*.stromx</em>.
          * 
          * %Stream and parameter files can also be written to \em file \em outputs. File outputs 
          * are an abstraction of the file bundles mentioned above and are represented by a
@@ -59,7 +60,8 @@ namespace stromx
              * 
              * \param filepath The path of the file. Any existing file is overwritten.
              * \param stream The stream to write.
-             * \throws WrongArgument The base name of the file name is empty.
+             * \throws FileException The base name of the file name is empty or the file extension
+             *                       is unknown.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
             void writeStream(const std::string& filepath, const Stream& stream) const;
@@ -71,7 +73,8 @@ namespace stromx
              * \param basename The common first part of the name of all files which are written to the
              *                 file output.
              * \param stream The stream to write.
-             * \throws WrongArgument The base name is empty.
+             * \throws FileException The base name of the file name is empty or the file extension
+             *                       is unknown.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
             void writeStream(FileOutput & output, const std::string basename, const Stream& stream) const;
@@ -81,7 +84,8 @@ namespace stromx
              * 
              * \param filepath The path of the file. Any existing file is overwritten.
              * \param operators The operators whose parameter settings are written to the file.
-             * \throws WrongArgument The base name of the file name is empty.
+             * \throws FileException The base name of the file name is empty or the file extension
+             *                       is unknown.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
             void writeParameters(const std::string& filepath,
@@ -91,7 +95,8 @@ namespace stromx
              * 
              * \param filepath The path of the file. Any existing file is overwritten.
              * \param operators The operators whose parameter settings are written to the file.
-             * \throws WrongArgument The base name of the file name is empty.
+             * \throws FileException The base name of the file name is empty or the file extension
+             *                       is unknown.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
             void writeParameters(const std::string& filepath,
