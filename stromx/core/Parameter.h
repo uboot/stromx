@@ -56,6 +56,62 @@ namespace stromx
         class STROMX_CORE_API Parameter : public Description
         {
         public:
+            /**
+             * The possible access modes of a parameter.
+             * 
+             * <table>
+             *     <tr>
+             *       <td>Status</td>
+             *       <td>%None</td>
+             *       <td>Intialized</td>
+             *       <td>Active</td>
+             *       <td>Executing</td>
+             *     </tr>
+             *     <tr>
+             *       <td>NO_ACCESS</td>
+             *       <td>-</td>
+             *       <td>-</td>
+             *       <td>-</td>
+             *       <td>-</td>
+             *     </tr>
+             *     <tr>
+             *       <td>NONE_READ</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *     </tr>
+             *     <tr>
+             *       <td>NONE_WRITE</td>
+             *       <td>R/W</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *     </tr>
+             *     <tr>
+             *       <td>INITIALIZED_READ</td>
+             *       <td>-</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *     </tr>
+             *     <tr>
+             *       <td>INITIALIZED_WRITE</td>
+             *       <td>-</td>
+             *       <td>R/W</td>
+             *       <td>R</td>
+             *       <td>R</td>
+             *     </tr>
+             *     <tr>
+             *       <td>ACTIVATED_WRITE</td>
+             *       <td>-</td>
+             *       <td>R/W</td>
+             *       <td>R/W</td>
+             *       <td>R/W</td>
+             *     </tr>
+             * </table>
+             * 
+             */
             enum AccessMode
             {
                 /** The parameter can never be accessed. */
@@ -81,8 +137,8 @@ namespace stromx
                 /** 
                  * This parameter can be read during the status Operator::INITIALIZED,
                  * Operator::ACTIVE and Operator::EXECUTING.
-                 * It can be written during the status Operator::INITIALIZED and 
-                 * Operator::ACTIVE.
+                 * It can be written during the status Operator::INITIALIZED,  
+                 * Operator::ACTIVE and Operator::EXECUTING.
                  */
                 ACTIVATED_WRITE
             };
