@@ -37,6 +37,7 @@ set(SOURCES
     Operator.cpp
     OperatorKernel.cpp
     Parameter.cpp
+    ParameterGroup.cpp
     Factory.cpp
     Primitive.cpp
     Stream.cpp

@@ -15,12 +15,24 @@
  */
 
 #include "Parameter.h"
+#include "ParameterGroup.h"
 
 namespace stromx
 {
     namespace core
     {
         const std::vector<EnumDescription> Parameter::NO_DESCRIPTIONS = std::vector<EnumDescription>();
+        const std::vector<const Parameter*> Parameter::NO_MEMBERS = std::vector<const Parameter*>();
         const None Parameter::NONE = None();
+        
+        Parameter::Parameter(const unsigned int id, const stromx::core::DataVariant& variant,
+                             ParameterGroup* const group)
+          : Description(id, variant),
+            m_access(NO_ACCESS),
+            m_group(group)
+        {
+            if(group)
+                group->addMember(this);
+        }
     }
 }

@@ -42,6 +42,7 @@ set(SOURCES
     ../Operator.cpp
     ../OperatorKernel.cpp
     ../Parameter.cpp
+    ../ParameterGroup.cpp
     ../Primitive.cpp
     ../RecycleAccess.cpp
     ../Thread.cpp
