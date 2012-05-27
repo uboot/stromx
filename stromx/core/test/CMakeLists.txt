@@ -72,6 +72,7 @@ set(SOURCES
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
     TestOperator.cpp
+    OperatorKernelTest.cpp
     OperatorTest.cpp
     OutputNodeTest.cpp
     ParameterTest.cpp

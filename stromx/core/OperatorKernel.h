@@ -46,6 +46,7 @@ namespace stromx
         class STROMX_CORE_API OperatorKernel : public OperatorInfo
         {
             friend class impl::SynchronizedOperatorKernel;
+            friend class OperatorKernelTest;
             
         public:
             virtual ~OperatorKernel();
