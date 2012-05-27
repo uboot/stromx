@@ -26,6 +26,8 @@ namespace stromx
 {
     namespace core
     {
+        class ParameterGroup;
+        
         /** \brief %Description of an enumeration value. */
         class EnumDescription
         {
@@ -144,16 +146,25 @@ namespace stromx
             };
             
             /** Constructs a parameter description. */
-            Parameter(const unsigned int id, const DataVariant& variant)
-            : Description(id, variant),
-                m_access(NO_ACCESS)
-            {}
+            Parameter(const unsigned int id, const DataVariant& variant, ParameterGroup* const group = 0);
             
             /** Returns the access mode. */
             const AccessMode accessMode() const { return m_access; }
             
             /** Sets the access mode. */
             void setAccessMode(const AccessMode mode) { m_access = mode; }
+            
+            /** 
+             * Returns the group the parameter belongs to. Returns 0 if the parameter
+             * does not belong to any group.
+             */
+            virtual const Parameter* const group() const { return m_group; }
+            
+            /**
+             * Returns the members of this parameter group. If the parameter is not 
+             * a parameter group or it has no members the returned list is empty.
+             */
+            virtual const std::vector<const Parameter*> & members() const { return NO_MEMBERS; }
             
             /** Returns the maximal value of this parameter or an instance of None. */
             virtual const Data& max() const { return NONE; }
@@ -166,9 +177,11 @@ namespace stromx
             
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;
+            static const std::vector<const Parameter*> NO_MEMBERS;
             static const None NONE;
             
             AccessMode m_access;
+            const Parameter* m_group;
         };
     }
 }

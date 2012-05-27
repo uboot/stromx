@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2012 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,25 +14,24 @@
  *  limitations under the License.
  */
 
-#include "Parameter.h"
 #include "ParameterGroup.h"
+#include "Exception.h"
+
+#include <algorithm>
+#include <boost/assert.hpp>
 
 namespace stromx
 {
     namespace core
-    {
-        const std::vector<EnumDescription> Parameter::NO_DESCRIPTIONS = std::vector<EnumDescription>();
-        const std::vector<const Parameter*> Parameter::NO_MEMBERS = std::vector<const Parameter*>();
-        const None Parameter::NONE = None();
-        
-        Parameter::Parameter(const unsigned int id, const stromx::core::DataVariant& variant,
-                             ParameterGroup* const group)
-          : Description(id, variant),
-            m_access(NO_ACCESS),
-            m_group(group)
-        {
-            if(group)
-                group->addMember(this);
+    {   
+        void ParameterGroup::addMember(const stromx::core::Parameter*const member)
+        {              
+            std::vector<const Parameter*>::const_iterator iter = 
+                std::find(m_members.begin(), m_members.end(), member);
+            
+            BOOST_ASSERT(iter == m_members.end());
+            
+            m_members.push_back(member);
         }
     }
 }

@@ -31,8 +31,8 @@ namespace stromx
         {
         public:
             /** Constructs a numeric parameter. */
-            NumericParameter(const unsigned int id, const DataVariant& type)
-            : Parameter(id, type),
+            NumericParameter(const unsigned int id, const DataVariant& type, ParameterGroup* const group = 0)
+            : Parameter(id, type, group),
                 m_min(data_t::MIN),
                 m_max(data_t::MAX)
             {}
