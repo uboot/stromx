@@ -74,6 +74,7 @@ set(SOURCES
     TestOperator.cpp
     OperatorTest.cpp
     OutputNodeTest.cpp
+    ParameterTest.cpp
     InputNodeTest.cpp
     ReadAccessTest.cpp
     RecycleAccessTest.cpp
