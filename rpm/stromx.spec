@@ -50,7 +50,7 @@ developing applications that use %{name}.
 
 
 %package        python
-Summary:        Python bindings files for %{name}
+Summary:        Python bindings for %{name}
 Group:          Development/Libraries/Python
 %if 0%{?suse_version}
 %py_requires

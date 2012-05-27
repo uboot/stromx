@@ -21,7 +21,7 @@ Description: Library for near real-time, parallel processing of data
 Package: stromx-python
 Architecture: any
 Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Python bindings files for stromx
+Description: Python bindings for stromx
 
 Package: stromx-doc
 Section: doc
