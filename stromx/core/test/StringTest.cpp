@@ -63,6 +63,16 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("test"), stdString);
         }
         
+        void StringTest::testEquality()
+        {
+            CPPUNIT_ASSERT(String("test") == String("test"));
+        }
+
+        void StringTest::testInequality()
+        {
+            CPPUNIT_ASSERT(String("test1") != String("test2"));
+        }
+        
         void StringTest::testClone()
         {
             String str("test");

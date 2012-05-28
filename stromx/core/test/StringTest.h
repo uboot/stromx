@@ -35,6 +35,8 @@ namespace stromx
             CPPUNIT_TEST(testSerialize);
             CPPUNIT_TEST(testDeserialize);
             CPPUNIT_TEST(testCastToStdString);
+            CPPUNIT_TEST(testEquality);
+            CPPUNIT_TEST(testInequality);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -49,6 +51,8 @@ namespace stromx
             void testSerialize();
             void testDeserialize();
             void testCastToStdString();
+            void testEquality();
+            void testInequality();
             void testClone();
                 
         private: 

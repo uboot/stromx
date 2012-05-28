@@ -42,6 +42,8 @@ namespace stromx
             DummyInput in("-233");
             m_int32.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(Int32(-233), m_int32);
+            
+            CPPUNIT_ASSERT(Int32(0) != m_int32);
         }
         
         void PrimitiveTest::testUInt32()
@@ -59,6 +61,8 @@ namespace stromx
             DummyInput in("233");
             m_uint32.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(UInt32(233), m_uint32);
+            
+            CPPUNIT_ASSERT(UInt32(0) != m_uint32);
         }
         
         void PrimitiveTest::testInt8()
@@ -74,6 +78,8 @@ namespace stromx
             DummyInput in("-33");
             m_int8.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(Int8(-33), m_int8);
+            
+            CPPUNIT_ASSERT(Int8(0) != m_int8);
         }
         
         void PrimitiveTest::testUInt8()
@@ -91,6 +97,8 @@ namespace stromx
             DummyInput in("233");
             m_uint8.deserialize(in, VERSION);
             CPPUNIT_ASSERT_EQUAL(UInt8(233), m_uint8);
+            
+            CPPUNIT_ASSERT(UInt8(0) != m_uint8);
         } 
     }
 }

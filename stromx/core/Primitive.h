@@ -84,7 +84,6 @@ namespace stromx
             val_t m_value;
         };
 
-
         /** \brief Boolean value */
         typedef Primitive<bool, bool> Bool;
         template<>

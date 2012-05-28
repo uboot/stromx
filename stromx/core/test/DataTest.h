@@ -40,8 +40,6 @@ namespace stromx
         protected:
             void testCastReference();
             void testCastPointer();
-                
-        private:
         };
     }
 }
