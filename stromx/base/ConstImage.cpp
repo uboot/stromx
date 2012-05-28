@@ -89,7 +89,10 @@ namespace stromx
         
         void ConstImage::execute(DataProvider& provider)
         {
+            provider.unlockParameters();
             Data* outData = m_imageAccess();
+            provider.lockParameters();
+            
             base::Image* outImage = dynamic_cast<base::Image*>(outData);
                 
             adjustImage(m_image->width(), m_image->height(), m_image->pixelType(), outImage);
