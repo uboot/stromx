@@ -105,7 +105,9 @@ namespace stromx
             // try to get a free buffer
             try
             {
+                provider.unlockParameters();
                 buffer = m_buffers();
+                provider.lockParameters();
             }
             catch(Timeout&)
             {

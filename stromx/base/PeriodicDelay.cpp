@@ -101,7 +101,9 @@ namespace stromx
             { 
                 try
                 {
+                    provider.unlockParameters();
                     boost::this_thread::sleep(m_nextTrigger->m_time);
+                    provider.lockParameters();
                 }
                 catch(boost::thread_interrupted&)
                 {
