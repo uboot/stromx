@@ -24,6 +24,12 @@ namespace stromx
 {
     namespace core
     {   
+        ParameterGroup::ParameterGroup(const unsigned int id, ParameterGroup*const group)
+          : Parameter(id, DataVariant::NONE, group)
+        {
+            setAccessMode(NO_ACCESS);
+        }
+            
         void ParameterGroup::addMember(const stromx::core::Parameter*const member)
         {              
             std::vector<const Parameter*>::const_iterator iter = 

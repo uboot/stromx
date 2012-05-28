@@ -21,6 +21,7 @@
 #include "../Id2DataComposite.h"
 #include "../Id2DataPair.h"
 #include "../OperatorException.h"
+#include "../ParameterGroup.h"
 #include "../Primitive.h"
 
 namespace stromx
@@ -154,7 +155,10 @@ namespace stromx
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(TEST_DATA, DataVariant::NONE);
+            ParameterGroup* group = new ParameterGroup(DATA_GROUP);
+            parameters.push_back(group);
+            
+            param = new Parameter(TEST_DATA, DataVariant::NONE, group);
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             

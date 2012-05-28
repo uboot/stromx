@@ -31,9 +31,7 @@ namespace stromx
             
         public:
             /** Constructs an enumeration parameter. */
-            ParameterGroup(const unsigned int id, ParameterGroup* const group = 0)
-              : Parameter(id, DataVariant::NONE, group)
-            {}
+            ParameterGroup(const unsigned int id, ParameterGroup* const group = 0);
             
             virtual const std::vector<const Parameter*> & members() const { return m_members; }
             

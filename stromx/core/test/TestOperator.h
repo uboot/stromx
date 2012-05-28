@@ -36,6 +36,8 @@ namespace stromx
             static const unsigned int SLEEP_TIME = 1;
             static const unsigned int THROW_EXCEPTION = 2;
             static const unsigned int TEST_DATA = 3;
+            static const unsigned int DATA_GROUP = 4;
+            static const unsigned int NUM_PARAMETERS = 5;
             
             TestOperator();
             

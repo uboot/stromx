@@ -139,7 +139,8 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(op->initialize());
             CPPUNIT_ASSERT_EQUAL(OperatorTester::INITIALIZED, op->status());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), (unsigned int)(op->info().parameters().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::NUM_PARAMETERS),
+                                 (unsigned int)(op->info().parameters().size()));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(op->info().inputs().size()));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(op->info().outputs().size()));
         }
