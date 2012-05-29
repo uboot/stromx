@@ -64,7 +64,9 @@ namespace stromx
                 TOP,
                 WIDTH,
                 HEIGHT,
-                PIXEL_TYPE
+                PIXEL_TYPE,
+                WHITE_BALANCE_GROUP,
+                ROI_GROUP
             };
             
             enum TriggerMode

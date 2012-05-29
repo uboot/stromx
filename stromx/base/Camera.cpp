@@ -35,6 +35,7 @@
 #include <stromx/core/NumericParameter.h>
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/Operator.h>
+#include <stromx/core/ParameterGroup.h>
 
 namespace stromx
 {
@@ -467,22 +468,26 @@ namespace stromx
             exposure->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(exposure);
             
-            NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataVariant::DOUBLE);
-            wbRed->setName("White balance red");
+            ParameterGroup* wbGroup = new ParameterGroup(WHITE_BALANCE_GROUP);
+            wbGroup->setName("White balance");
+            parameters.push_back(wbGroup);
+            
+            NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataVariant::DOUBLE, wbGroup);
+            wbRed->setName("WB red");
             wbRed->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbRed->setMin(Double(0));
             wbRed->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbRed);
             
-            NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataVariant::DOUBLE);
-            wbGreen->setName("White balance green");
+            NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataVariant::DOUBLE, wbGroup);
+            wbGreen->setName("WB green");
             wbGreen->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbGreen->setMin(Double(0));
             wbGreen->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbGreen);
             
-            NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataVariant::DOUBLE);
-            wbBlue->setName("White balance blue");
+            NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataVariant::DOUBLE, wbGroup);
+            wbBlue->setName("WB blue");
             wbBlue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbBlue->setMin(Double(0));
             wbBlue->setMax(Double(WHITE_BALANCE_MAX));
@@ -508,23 +513,27 @@ namespace stromx
             image->setName("Image");
             image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
+            
+            ParameterGroup* roiGroup = new ParameterGroup(ROI_GROUP);
+            roiGroup->setName("Region of interest");
+            parameters.push_back(roiGroup);
         
-            m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
+            m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32, roiGroup);
             m_width->setName("ROI width");
             m_width->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_width);
         
-            m_height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
+            m_height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32, roiGroup);
             m_height->setName("ROI height");
             m_height->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_height);
             
-            m_top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
+            m_top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32, roiGroup);
             m_top->setName("ROI top offset");
             m_top->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_top);
             
-            m_left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
+            m_left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32, roiGroup);
             m_left->setName("ROI left offset");
             m_left->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_left);
