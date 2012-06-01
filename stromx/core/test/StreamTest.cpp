@@ -162,6 +162,9 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->operators().size()));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+            
+            // delete removed operator
+            delete op;
         }
         
         void StreamTest::testAddThread()

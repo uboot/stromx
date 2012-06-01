@@ -70,19 +70,6 @@ namespace stromx
             m_valueInternal(INTERNAL),
             m_valueExternal(EXTERNAL)
         {
-            // TODO: initialize all members
-        }
-        
-        void Camera::deinitialize()
-        {
-            delete m_stream;
-            m_stream = 0;
-        }
-        
-        void Camera::initialize()
-        {
-            m_stream = new Stream();
-            
             m_input = new Operator(new ConstImage);
             m_adjustRgbChannels = new Operator(new AdjustRgbChannels);
             m_clip = new Operator(new Clip);
@@ -93,6 +80,24 @@ namespace stromx
             m_imageQueue = new Operator(new Queue);
             m_indexQueue = new Operator(new Queue);
             
+            m_stream = new Stream();
+        }
+        
+        void Camera::deinitialize()
+        {
+            // remove all operators from the stream and deinitialize them
+            std::vector<Operator*> ops = m_stream->operators();
+            for(std::vector<Operator*>::const_iterator iter = ops.begin();
+                iter != ops.end();
+                ++iter)
+            {
+                m_stream->removeOperator(*iter);
+                (*iter)->deinitialize();
+            }
+        }
+        
+        void Camera::initialize()
+        {
             m_input->initialize();
             m_adjustRgbChannels->initialize();
             m_clip->initialize();
@@ -135,13 +140,6 @@ namespace stromx
             mainThread->addInput(m_pixelType, ConvertPixelType::DESTINATION);
             mainThread->addInput(m_imageQueue, Queue::INPUT);
             mainThread->addInput(m_indexQueue, Queue::INPUT);
-            
-            // start with software trigger
-            m_trigger->setParameter(Trigger::STATE, Enum(Trigger::TRIGGER_ACTIVE));
-            m_period->setParameter(PeriodicDelay::PERIOD, UInt32(0));
-            
-            // set the image to an empty RGB image
-            m_input->setParameter(ConstImage::IMAGE, base::Image(0, 0, Image::RGB_24));
         }
 
         void Camera::setParameter(unsigned int id, const Data& value)

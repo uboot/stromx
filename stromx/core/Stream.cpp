@@ -281,9 +281,9 @@ namespace stromx
             for (std::vector<Thread*>::iterator iter = m_threads.begin();
                     iter != m_threads.end();
                     ++iter)
-                {
-                    (*iter)->removeOperator(op);
-                }
+            {
+                (*iter)->removeOperator(op);
+            }
             
         }
         
