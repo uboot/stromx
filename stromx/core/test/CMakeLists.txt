@@ -32,6 +32,7 @@ set(SOURCES
     ../Data.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
+    ../Documentation.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../Exception.cpp

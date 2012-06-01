@@ -20,7 +20,7 @@ namespace math
         std::vector<const core::Description*> inputs;
         
         core::Description* input = new core::Description(INPUT, core::DataVariant::UINT_32);
-        input->setName("Input");
+        input->setDoc("Input");
         inputs.push_back(input);
         
         return inputs;
@@ -31,7 +31,7 @@ namespace math
         std::vector<const core::Description*> outputs;
         
         core::Description* output = new core::Description(OUTPUT, core::DataVariant::UINT_32);
-        output->setName("Output");
+        output->setDoc("Output");
         outputs.push_back(output);
         
         return outputs;
@@ -42,7 +42,7 @@ namespace math
         std::vector<const core::Parameter*> parameters;
         
         core::Parameter* offset = new core::Parameter(OFFSET, core::DataVariant::UINT_32);
-        offset->setName("Offset");
+        offset->setDoc("Offset");
         offset->setAccessMode(core::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     

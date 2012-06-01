@@ -6,6 +6,7 @@ set(SOURCES
     DataContainer.cpp
     DataVariant.cpp
     Description.cpp
+    Documentation.cpp
     Exception.cpp
     ExceptionObserver.cpp
     Factory.cpp

@@ -19,6 +19,7 @@
 
 #include <string>
 #include "Config.h"
+#include "Documentation.h"
 #include "Version.h"
 
 namespace stromx
@@ -57,15 +58,15 @@ namespace stromx
             const static DataVariant RGB_48_IMAGE;
             const static DataVariant BGR_48_IMAGE;
             
-            DataVariant(const unsigned int id, const std::string & package, const std::string & description)
+            DataVariant(const unsigned int id, const std::string & package, const Documentation & doc)
               : m_id(id),
                 m_package(package),
-                m_description(description)
+                m_doc(doc)
             {}
             
             ~DataVariant() {}
             
-            const std::string & description() const { return m_description; }
+            const Documentation & doc() const { return m_doc; }
             
             virtual const bool isVariant(const DataVariant& type) const;
             
@@ -107,7 +108,7 @@ namespace stromx
             
             unsigned int m_id;
             std::string m_package;
-            std::string m_description;
+            Documentation m_doc;
         };
     }
 }

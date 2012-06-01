@@ -73,7 +73,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::UINT_32);
-            output->setName("Output");
+            output->setDoc("Output");
             outputs.push_back(output);
             
             return outputs;

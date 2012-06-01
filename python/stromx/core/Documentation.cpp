@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2012 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,18 +14,17 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Description.h>
+#include <stromx/core/Documentation.h>
 
 #include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::core;
 
-void exportDescription()
+void exportDocumentation()
 {         
-    class_<Description>("Description", no_init)
-        .def("doc", &Description::doc, return_internal_reference<>())
-        .def("id", &Description::id)
-        .def("variant", &Description::variant, return_internal_reference<>())
+    class_<Documentation>("Documentation", no_init)
+        .def("title", &Documentation::title, return_value_policy<copy_const_reference>())
+        .def("details", &Documentation::details, return_value_policy<copy_const_reference>())
     ;
 }

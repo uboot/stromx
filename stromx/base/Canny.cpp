@@ -114,11 +114,11 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* source = new Description(SOURCE, DataVariant::MONO_IMAGE);
-            source->setName("Source");
+            source->setDoc("Source");
             inputs.push_back(source);
             
             Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-            destination->setName("Destination");
+            destination->setDoc("Destination");
             inputs.push_back(destination);
             
             return inputs;
@@ -129,7 +129,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::MONO_IMAGE);
-            output->setName("Output");
+            output->setDoc("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -140,12 +140,12 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* threshold1 = new NumericParameter<Double>(THRESHOLD_1, DataVariant::DOUBLE);
-            threshold1->setName("Threshold 1");
+            threshold1->setDoc("Threshold 1");
             threshold1->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold1);
             
             Parameter* threshold2 = new NumericParameter<Double>(THRESHOLD_2, DataVariant::DOUBLE);
-            threshold2->setName("Threshold 2");
+            threshold2->setDoc("Threshold 2");
             threshold2->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold2);
                                         

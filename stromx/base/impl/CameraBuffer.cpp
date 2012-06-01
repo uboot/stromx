@@ -145,7 +145,7 @@ namespace stromx
                 std::vector<const Description*> inputs;
             
                 Description* input = new Description(INPUT, DataVariant::IMAGE);
-                input->setName("Input");
+                input->setDoc("Input");
                 inputs.push_back(input);
                 
                 return inputs;
@@ -156,15 +156,15 @@ namespace stromx
                 std::vector<const Description*> outputs;
             
                 Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-                output->setName("Output");
+                output->setDoc("Output");
                 outputs.push_back(output);
             
                 Description* buffer = new Description(BUFFER, DataVariant::IMAGE);
-                buffer->setName("Buffer");
+                buffer->setDoc("Buffer");
                 outputs.push_back(buffer);
             
                 Description* index = new Description(INDEX, DataVariant::UINT_32);
-                index->setName("Index");
+                index->setDoc("Index");
                 outputs.push_back(index);
                 
                 return outputs;
@@ -175,13 +175,13 @@ namespace stromx
                 std::vector<const Parameter*> parameters;
             
                 NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
-                numBuffers->setName("Number of buffers");
+                numBuffers->setDoc("Number of buffers");
                 numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
                 numBuffers->setMin(UInt32(1));
                 parameters.push_back(numBuffers);
             
                 NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
-                bufferSize->setName("Buffer size in bytes");
+                bufferSize->setDoc("Buffer size in bytes");
                 bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
                 parameters.push_back(bufferSize);
                                             

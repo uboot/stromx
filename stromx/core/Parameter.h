@@ -33,20 +33,31 @@ namespace stromx
         {
         public:
             /** Constructs an enumeration description. */
-            EnumDescription(const Enum value, const std::string & description)
+            EnumDescription(const Enum value)
+              : m_value(value)
+            {}
+            
+            /** Constructs an enumeration description with a documentation. */
+            EnumDescription(const Enum value, const Documentation & doc)
               : m_value(value),
-                m_description(description)
+                m_doc(doc)
+            {}
+            
+            /** Constructs an enumeration description with a documentation title . */
+            EnumDescription(const Enum value, const std::string & doc)
+              : m_value(value),
+                m_doc(Documentation(doc))
             {}
             
             /** Returns the value. */
             const Enum value() const { return m_value; }
             
             /** Returns the description text. */
-            const std::string & description() const { return m_description; }
+            const Documentation & doc() const { return m_doc; }
             
         private:
             Enum m_value;
-            std::string m_description;
+            Documentation m_doc;
         };
         
         /** \brief %Description of a parameter.

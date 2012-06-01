@@ -121,7 +121,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setName("Output");
+            output->setDoc("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -132,7 +132,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
-            image->setName("Image");
+            image->setDoc("Image");
             image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
                                         

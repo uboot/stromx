@@ -343,5 +343,10 @@ namespace stromx
                 }
             }
         }
+        
+        void OperatorKernel::setDoc(const stromx::core::Documentation& doc)
+        {
+            m_doc = doc;
+        }
     }
 }

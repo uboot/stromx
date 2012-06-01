@@ -46,8 +46,8 @@ namespace stromx
             
             virtual ~Description() {}
             
-            /** Returns the name. */
-            const std::string & name() const { return m_name; }
+            /** Returns the documentation. */
+            const Documentation & doc() const { return m_doc; }
             
             /** Returns the ID. */
             const unsigned int id() const { return m_id; }
@@ -55,11 +55,17 @@ namespace stromx
             /** Returns the data variant. */
             const DataVariant & variant() const { return m_variant; }
             
-            /** Sets the name. */
-            void setName(const std::string & name) { m_name = name; }
+            /** Sets the documentation. */
+            void setDoc(const Documentation & doc) { m_doc = doc; }
+            
+            /** 
+             * Convenience function which sets the title of the 
+             * documentation to \c doc.
+             */
+            void setDoc(const std::string & doc) { m_doc = Documentation(doc); }
             
         private:
-            std::string m_name;
+            Documentation m_doc;
             unsigned int m_id;
             DataVariant m_variant;
         };

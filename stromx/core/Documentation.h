@@ -37,6 +37,11 @@ namespace stromx
         {
         public:
             /** 
+             * Constructs an empty documentation.
+             */
+            Documentation() {}
+            
+            /** 
              * Constructs a documentation.
              * 
              * \param title A short (at most one line) title without formatting.

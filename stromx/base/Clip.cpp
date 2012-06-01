@@ -114,7 +114,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* input = new Description(INPUT, DataVariant::IMAGE);
-            input->setName("Input");
+            input->setDoc("Input");
             inputs.push_back(input);
             
             return inputs;
@@ -125,7 +125,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setName("Output");
+            output->setDoc("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -136,22 +136,22 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
-            top->setName("Top");
+            top->setDoc("Top");
             top->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(top);
             
             NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
-            left->setName("Left");
+            left->setDoc("Left");
             left->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(left);
             
             NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
-            width->setName("Width");
+            width->setDoc("Width");
             width->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(width);
             
             NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
-            height->setName("Height");
+            height->setDoc("Height");
             height->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(height);
                                         

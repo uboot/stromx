@@ -34,7 +34,7 @@ void exportParameter()
         
     class_<EnumDescription>("EnumDescription", no_init)
         .def("value", &EnumDescription::value)
-        .def("description", &EnumDescription::description, return_value_policy<copy_const_reference>())
+        .def("doc", &EnumDescription::doc, return_internal_reference<>())
     ;
     
     stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");

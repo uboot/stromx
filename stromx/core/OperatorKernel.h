@@ -64,6 +64,9 @@ namespace stromx
             /** Returns the package the operator belongs to. */
             const std::string& package() const { return m_package; }
             
+            /** Returns the documentation of the operator. */
+            const Documentation& doc() const { return m_doc; }
+            
             /** Returns the version of the operator. */
             const Version& version() const { return m_version; }
 
@@ -170,6 +173,9 @@ namespace stromx
              */
             Parameter & parameter(const unsigned int id);
             
+            /** Sets the documentation. */
+            void setDoc(const Documentation & doc);
+            
         private:
             void validateInputs(const std::vector<const Description*>& descriptors);
             void validateOutputs(const std::vector<const Description*>& descriptors);
@@ -179,6 +185,7 @@ namespace stromx
             std::string m_type;
             std::string m_package;
             Version m_version;
+            Documentation m_doc;
             std::vector<const Description*> m_inputs;
             std::vector<const Description*> m_outputs;
             std::vector<const Parameter*> m_parameters;
