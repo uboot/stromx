@@ -57,10 +57,10 @@ namespace stromx
             Documentation(const std::string & title, const std::string & details);
             
             /** Returns the the title. */
-            const std::string & title() { return m_title; }
+            const std::string & title() const { return m_title; }
             
             /** Returns the details. */
-            const std::string & details() { return m_details; }
+            const std::string & details() const { return m_details; }
             
         private:
             std::string m_title;
