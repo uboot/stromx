@@ -25,6 +25,7 @@ set(SOURCES
     RecycleAccess.cpp
     Data.cpp
     DataVariant.cpp
+    Documentation.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
