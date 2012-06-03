@@ -63,9 +63,11 @@ namespace stromx
              * \param factory The factory is used to instantiate the operators and data
              *                objects in the stream. I.e. all required operator and data types
              *                must have been registered with the factory.
+             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              * \throws FileException Failed to access the XML file or a data file.
              * \throws FactoryException Failed to allocate an operator or a data object.
-             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
+             * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
+             *                                 to a change of the file format.
              */
             Stream* const readStream(const std::string & filepath, const Factory& factory) const;
             
@@ -77,9 +79,11 @@ namespace stromx
              * \param factory The factory is used to instantiate the operators and data
              *                objects in the stream. I.e. all required operator and data types
              *                must have been registered with the factory.
+             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              * \throws FileException Failed to access the XML file or a data file.
              * \throws FactoryException Failed to allocate an operator or a data object.
-             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
+             * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
+             *                                 to a change of the file format.
              */
             Stream* const readStream(FileInput & input, const std::string filename, const Factory& factory) const;
             
@@ -93,9 +97,11 @@ namespace stromx
              * \param filepath The path of the file to be read.
              * \param factory The factory is used to instantiate data objects in the stream.
              *                I.e. all required data types must have been registered with the factory.
+             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              * \throws FileException Failed to access the XML file or a data file.
              * \throws FactoryException Failed to allocate an operator or a data object.
-             * \throws DeserializationError Failed to deserialize data referenced in the XML file.
+             * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
+             *                                 to a change of the file format.
              */
             void readParameters(const std::string & filepath, const Factory& factory,
                                 const std::vector<stromx::core::Operator*> & operators) const;

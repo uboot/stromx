@@ -44,6 +44,7 @@ namespace stromx
             
             enum ParameterId
             {
+                IN_PLACE,
                 THRESHOLD_1,
                 THRESHOLD_2
             };
@@ -54,11 +55,13 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
+            virtual void initialize();
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const core::Description*> setupInputs();
+            const std::vector<const core::Description*> setupOutputs();
+            const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const core::Parameter*> setupInitParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
@@ -66,6 +69,7 @@ namespace stromx
             
             core::Double m_threshold1;
             core::Double m_threshold2;
+            core::Bool m_inPlace;
         };
     }
 }

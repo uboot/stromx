@@ -33,6 +33,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (CannyTest);
             CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testExecuteInPlace);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -43,6 +44,7 @@ namespace stromx
 
             protected:
                 void testExecute();
+                void testExecuteInPlace();
                 
             private:
                 core::OperatorTester* m_operator;

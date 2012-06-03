@@ -34,6 +34,11 @@ namespace stromx
         void CannyTest::setUp ( void )
         {
             m_operator = new core::OperatorTester(new Canny());
+        }
+        
+        void CannyTest::testExecute()
+        {
+            m_operator->setParameter(Canny::IN_PLACE, Bool(false));
             m_operator->initialize();
             m_operator->activate();
             
@@ -43,22 +48,42 @@ namespace stromx
             
             DataContainer destination(new Image(image->width(), image->height(), core::Image::BAYERBG_8));
             m_operator->setInputData(Canny::DESTINATION, destination);
-        }
-        
-        void CannyTest::testExecute()
-        {
+            
             m_operator->setParameter(Canny::THRESHOLD_1, Double(50));
             m_operator->setParameter(Canny::THRESHOLD_2, Double(250));
             
             core::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
             
             ReadAccess<Image> access(result);
-            const Image& image = access();
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, image.pixelType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image.width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image.height());
+            const Image& resultImage = access();
+            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, resultImage.pixelType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            image.save("CannyTest_testExecute.png");
+            resultImage.save("CannyTest_testExecute.png");
+        }
+        
+        void CannyTest::testExecuteInPlace()
+        {
+            m_operator->initialize();
+            m_operator->activate();
+            
+            Image* image = new Image("lenna_bw.jpg");
+            DataContainer source(image);
+            m_operator->setInputData(Canny::SOURCE, source);
+            
+            m_operator->setParameter(Canny::THRESHOLD_1, Double(50));
+            m_operator->setParameter(Canny::THRESHOLD_2, Double(250));
+            
+            core::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
+            
+            ReadAccess<Image> access(result);
+            const Image& resultImage = access();
+            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, resultImage.pixelType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
+            
+            resultImage.save("CannyTest_testExecuteInPlace.png");
         }
         
         void CannyTest::tearDown ( void )

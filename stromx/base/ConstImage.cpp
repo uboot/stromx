@@ -37,7 +37,7 @@ namespace stromx
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_image(0)
         {
-            m_image = new Image(0, 0, core::Image::MONO_8);
+            m_image = new Image(0, 0, core::Image::RGB_24);
         }
         
         ConstImage::~ConstImage()

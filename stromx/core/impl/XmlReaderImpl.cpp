@@ -244,7 +244,15 @@ namespace stromx
                     for(unsigned int i = 0; i < numOperators; ++i)
                     {
                         DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
+                        
+                        try
+                        {
                         readOperatorInputs(op);
+                        }
+                        catch(WrongArgument& e)
+                        {
+                            throw InconsistentFileContent(filename, e.message());
+                        }
                     }
                     
                     DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
