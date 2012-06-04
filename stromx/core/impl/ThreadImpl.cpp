@@ -32,7 +32,8 @@ namespace stromx
             ThreadImpl::ThreadImpl()
               : m_status(INACTIVE),
                 m_thread(0),
-                m_observer(0)
+                m_observer(0),
+                m_delay(0)
             {
             }
             
@@ -103,6 +104,11 @@ namespace stromx
                 {
                     m_inputSequence.erase(*iter);
                 }
+            }
+            
+            void ThreadImpl::setDelay(const unsigned int delay)
+            {
+                m_delay = delay;
             }
 
             void ThreadImpl::start()
@@ -194,6 +200,9 @@ namespace stromx
                             try
                             {
                                 (*node)->setInputData();
+                                
+                                if(m_delay)
+                                    boost::this_thread::sleep(boost::posix_time::millisec(m_delay));
                             }
                             catch(Interrupt &)
                             {

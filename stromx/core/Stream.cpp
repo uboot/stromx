@@ -63,7 +63,9 @@ namespace stromx
           : m_network(new impl::Network()),
             m_threads(0),
             m_observerMutex(new MutexHandle),
-            m_status(INACTIVE)
+            m_status(INACTIVE),
+            m_delayMutex(new MutexHandle),
+            m_delay(0)
         {
             if (m_network == 0)
             {
@@ -82,6 +84,7 @@ namespace stromx
             
             delete m_network;
             delete m_observerMutex;
+            delete m_delayMutex;
         }
         
         const std::vector<Operator*>& Stream::operators() const
@@ -205,6 +208,7 @@ namespace stromx
             Thread* thread = new Thread(m_network);
             impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
             thread->setObserver(observer);
+            thread->setDelay(m_delay);
             
             m_threads.push_back(thread);
             
@@ -257,6 +261,27 @@ namespace stromx
             }
             
             m_network->disconnect(targetOp, inputId);
+        }
+                
+        const unsigned int Stream::delay() const
+        {
+            boost::lock_guard<boost::mutex> lock(m_delayMutex->mutex());
+            
+            return m_delay;
+        }
+
+        void Stream::setDelay(const unsigned int delay)
+        {
+            boost::lock_guard<boost::mutex> lock(m_delayMutex->mutex());
+            
+            m_delay = delay;
+            
+            for(std::vector<Thread*>::const_iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter)
+            {
+                (*iter)->setDelay(delay);
+            }
         }
         
         void Stream::addOperator(Operator* const op)

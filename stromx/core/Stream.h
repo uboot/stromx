@@ -154,6 +154,25 @@ namespace stromx
              */
             void removeObserver(const ExceptionObserver* const observer);
             
+            /** 
+             * Returns the current processing delay in milliseconds. The threads of the 
+             * stream delay the processing of an operator input by this amount of time.
+             * 
+             * \sa setDelay()
+             */
+            const unsigned int delay() const;
+            
+            /** 
+             * Sets the current processing delay in milliseconds. The threads of the 
+             * stream delay the processing of an operator input by this amount of time.
+             * Normally the processing delay should be set to 0 to ensure all input data
+             * is processed as soon as it becomes available. For debugging it might however
+             * make sense to choose a positive processing delay.
+             * 
+             * \sa setDelay()
+             */
+            void setDelay(const unsigned int delay);
+            
             /**
              * Activates each operator of the stream and starts all threads. 
              * \throws WrongState If the stream is not inactive.
@@ -203,6 +222,8 @@ namespace stromx
             std::set<const ExceptionObserver*> m_observers;
             MutexHandle*  m_observerMutex;
             Status m_status;
+            MutexHandle*  m_delayMutex;
+            unsigned int m_delay;
         };
     }
 }

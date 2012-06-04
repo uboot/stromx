@@ -266,6 +266,35 @@ namespace stromx
             CPPUNIT_ASSERT(observer1->thread());
             CPPUNIT_ASSERT_EQUAL(std::string("Funny exception."), observer2->message());
             CPPUNIT_ASSERT(observer2->thread());
-        }        
+        } 
+        
+        void StreamTest::testDelay()
+        {
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_stream->delay());
+            m_stream->setDelay(100);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_stream->delay());
+        }
+        
+        void StreamTest::testStopDelay()
+        {
+            
+            // set delay to 10 seconds
+            m_stream->setDelay(10000);
+            
+            // start the threads
+            m_stream->start();
+            
+            // set the input data
+            Operator* op = m_stream->operators()[0];
+            op->setInputData(TestOperator::INPUT_1, DataContainer(new None));
+            op->setInputData(TestOperator::INPUT_2, DataContainer(new None));
+            
+            // wait a bit (the thread should be delayed)
+            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            
+            // this should happen immediately
+            m_stream->stop();
+            m_stream->join();
+        }
     }
 }

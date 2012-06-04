@@ -119,6 +119,8 @@ namespace stromx
             void pause();
             void resume();
             
+            void setDelay(const unsigned int delay);
+            
             /**
              * Removes all inputs of the operator \c op from the thread.
              * \throws WrongState If the thread state is not INACTIVE.

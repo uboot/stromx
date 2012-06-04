@@ -46,6 +46,8 @@ namespace stromx
             CPPUNIT_TEST(testRemoveObserver);
             CPPUNIT_TEST(testObserver);
             CPPUNIT_TEST(testTwoObserver);
+            CPPUNIT_TEST(testDelay);
+            CPPUNIT_TEST(testStopDelay);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -68,6 +70,8 @@ namespace stromx
             void testRemoveObserver();
             void testObserver();
             void testTwoObserver();
+            void testDelay();
+            void testStopDelay();
                 
         private:
             class TestObserver : public ExceptionObserver

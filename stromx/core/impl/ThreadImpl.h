@@ -56,6 +56,8 @@ namespace stromx
                 void removeInput(const unsigned int position);
                 void removeOperator(const Operator* op);
                 
+                void setDelay(const unsigned int delay);
+                
                 void start();
                 void stop();
                 void join();
@@ -76,6 +78,7 @@ namespace stromx
                 boost::condition_variable m_pauseCond;
                 std::vector<InputNode*> m_inputSequence;
                 const ThreadImplObserver* m_observer;
+                unsigned int m_delay;
             };
         }
     }

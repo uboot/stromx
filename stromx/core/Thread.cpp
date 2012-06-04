@@ -110,6 +110,11 @@ namespace stromx
             
             m_thread->removeOperator(op);
         }
+
+        void Thread::setDelay(const unsigned int delay)
+        {
+            m_thread->setDelay(delay);
+        }
             
         void Thread::addInput(Operator* const op, const unsigned int inputId)
         {
