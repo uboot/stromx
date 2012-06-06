@@ -36,12 +36,16 @@
             </Parameter>
         </Operator>
         <Operator id="2" package="Base" type="Canny" version="0.1.0">
-            <!-- threshold 1 -->
+            <!-- process in place -->
             <Parameter id="0">
+                <Data type="Bool" package="Core" version="0.1.0">0</Data>
+            </Parameter>
+            <!-- threshold 1 -->
+            <Parameter id="1">
                 <Data type="Double" package="Core" version="0.1.0">50</Data>
             </Parameter>
             <!-- threshold 2 -->
-            <Parameter id="1">
+            <Parameter id="2">
                 <Data type="Double" package="Core" version="0.1.0">150</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
