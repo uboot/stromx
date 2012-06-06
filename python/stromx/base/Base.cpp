@@ -20,6 +20,7 @@
 
 #include <stromx/core/Registry.h>
 #include <stromx/base/Base.h>
+#include <stromx/base/Blur.h>
 #include <stromx/base/Buffer.h>
 #include <stromx/base/ConstImage.h>
 #include <stromx/base/AdjustRgbChannels.h>
@@ -44,6 +45,7 @@ BOOST_PYTHON_MODULE(libbase)
     exportImage();
     
     stromx::python::exportOperatorKernel<AdjustRgbChannels>("AdjustRgbChannels");
+    stromx::python::exportOperatorKernel<Blur>("Blur");
     stromx::python::exportOperatorKernel<Buffer>("Buffer");
     stromx::python::exportOperatorKernel<Camera>("Camera");
     stromx::python::exportOperatorKernel<Canny>("Canny");

@@ -18,6 +18,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna_bw.jpg DESTINATION ${CMAKE_CURRENT_B
 add_executable(stromx_base_test
     ../AdjustRgbChannels.cpp
     ../Base.cpp
+    ../Blur.cpp
     ../Buffer.cpp
     ../Camera.cpp
     ../Canny.cpp
@@ -33,6 +34,7 @@ add_executable(stromx_base_test
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
     BaseTest.cpp
+    BlurTest.cpp
     BufferTest.cpp
     CameraBufferTest.cpp
     CameraTest.cpp

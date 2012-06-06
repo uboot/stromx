@@ -21,6 +21,7 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Base.cpp
+    Blur.cpp
     Buffer.cpp
     Camera.cpp
     Canny.cpp

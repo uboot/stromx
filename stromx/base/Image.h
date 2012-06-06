@@ -20,7 +20,7 @@
 #include <string>
 #include "Config.h"
 #include <stromx/core/ImageWrapper.h>
-#include "../core/Input.h"
+#include <stromx/core/Input.h>
 
 struct _IplImage;
 

@@ -16,6 +16,7 @@
 
 #include "AdjustRgbChannels.h"
 #include "Base.h"
+#include "Blur.h"
 #include "Buffer.h"
 #include "Camera.h"
 #include "Canny.h"
@@ -37,6 +38,7 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerData(new Image);
     
     registry.registerOperator(new AdjustRgbChannels);
+    registry.registerOperator(new Blur);
     registry.registerOperator(new Buffer);
     registry.registerOperator(new Camera);
     registry.registerOperator(new Canny);
