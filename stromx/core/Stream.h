@@ -140,7 +140,8 @@ namespace stromx
             
             /**
              * Adds an observer to the stream. The observer is notified if an exception
-             * occurs while executing an operator.
+             * occurs while executing or deactivating an operator.
+             * 
              * \param observer A pointer to the observer is stored but not onwned by the operator.
              * \throws WrongArgument If \c observer is a null pointer.
              */
@@ -151,6 +152,8 @@ namespace stromx
              * 
              * \param observer The observer to be removed.
              * \throws WrongArgument If the observer has not been added to the stream before.
+             * 
+             * \sa addObserver()
              */
             void removeObserver(const ExceptionObserver* const observer);
             
