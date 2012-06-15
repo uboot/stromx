@@ -108,6 +108,7 @@ namespace stromx
             
             void ThreadImpl::setDelay(const unsigned int delay)
             {
+                lock_t lock(m_mutex);
                 m_delay = delay;
             }
 
@@ -200,6 +201,14 @@ namespace stromx
                             try
                             {
                                 (*node)->setInputData();
+                                
+                                // obtain the delay state in a thread-safe way
+                                bool delay = false;
+                                {
+                                    lock_t lock(m_mutex);
+                                    
+                                    delay = m_delay;
+                                }
                                 
                                 if(m_delay)
                                     boost::this_thread::sleep(boost::posix_time::millisec(m_delay));
