@@ -90,7 +90,14 @@ namespace stromx
 
         Operator::~Operator()
         {
-            deinitialize();
+            try
+            {
+                deinitialize();
+            }
+            catch(OperatorError&)
+            {
+                // ignore all exceptions in destructor
+            }
             
             delete m_kernel;
 
@@ -178,7 +185,16 @@ namespace stromx
             if(status() == ACTIVE)
                 deactivate();
                 
-            m_kernel->deinitialize();
+            
+            try
+            {
+                m_kernel->deinitialize();
+            }
+            catch(OperatorError& e)
+            {
+                e.setName(name());
+                throw;
+            }
             
             for(std::map<unsigned int, InputNode*>::iterator iter = m_inputs.begin();
                 iter != m_inputs.end();

@@ -35,12 +35,16 @@ namespace stromx
              */
             enum Phase
             {
+                /** Initialization of the operator. */
+                INITIALIZATION,
                 /** Activation of the operator. */
                 ACTIVATION,
                 /** Execution of the operator. */
                 EXECUTION,
                 /** Deactivation of the operator. */
-                DEACTIVATION
+                DEACTIVATION,
+                /** Deinitialization of the operator. */
+                DEINITIALIZATION
             };
             
             /** 
