@@ -22,6 +22,7 @@
 #include "../OperatorException.h"
 #include "../OperatorInfo.h"
 #include "../Input.h"
+#include "../Operator.h"
 
 namespace stromx
 {
@@ -220,6 +221,8 @@ namespace stromx
                             }
                             catch(OperatorError & ex)
                             {
+                                ex.setName((*node)->op()->name());
+                                
                                 // send all operator errors to the observer-mechanism
                                 // but do not stop the thread
                                 if(m_observer)

@@ -18,6 +18,7 @@
 #include "Description.h"
 #include "Exception.h"
 #include "Operator.h"
+#include "OperatorException.h"
 #include "OperatorInfo.h"
 #include "Input.h"
 #include "Output.h"
@@ -219,12 +220,28 @@ namespace stromx
 
         void Operator::activate()
         { 
-            m_kernel->activate(); 
+            try
+            {
+                m_kernel->activate(); 
+            }
+            catch(OperatorError& e)
+            {
+                e.setName(name());
+                throw;
+            }
         }
         
         void Operator::deactivate()
         {
-            m_kernel->deactivate();
+            try
+            {
+                m_kernel->deactivate();
+            }
+            catch(OperatorError& e)
+            {
+                e.setName(name());
+                throw;
+            }
         }
         
         void Operator::addObserver(const ConnectorObserver*const observer)

@@ -367,7 +367,7 @@ namespace stromx
                     
                     throw;
                 }
-                catch(OperatorError & e)
+                catch(OperatorError &)
                 {
                     // pass all operator exceptions to the caller
                     lock_t lock(m_mutex);
@@ -375,7 +375,7 @@ namespace stromx
                     m_parametersAreLocked = false;
                     m_parameterCond.notify_all();
                     
-                    throw e;
+                    throw;
                 }
                 catch(std::exception & e)
                 {

@@ -44,6 +44,9 @@ namespace stromx
             /** Returns the version of the operator. */
             virtual const Version& version() const = 0;
             
+            /** Returns the documentation of the operator. */
+            virtual const Documentation& doc() const = 0;
+            
             /**
              * Returns a list of the inputs of the operator. This list can
              * change when Operator::initialize() is called.

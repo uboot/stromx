@@ -40,6 +40,7 @@ namespace stromx
             m_operator = new OperatorTester(m_testOperator);
             m_operator->initialize();
             m_operator->activate();
+            m_operator->setName("Operator");
             Data* data = new core::None;
             m_container = DataContainer(data);  
         }
@@ -165,6 +166,15 @@ namespace stromx
         
         void OperatorTest::testActivate()
         {
+            try
+            {
+                m_operator->activate();
+            }
+            catch(OperatorError& e)
+            {
+                CPPUNIT_ASSERT_EQUAL(std::string("Operator"), e.name());
+            }
+            
             CPPUNIT_ASSERT_THROW(m_operator->activate(), WrongOperatorState);
             
             m_operator->deactivate();

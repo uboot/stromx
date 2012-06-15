@@ -58,16 +58,12 @@ namespace stromx
              */
             virtual OperatorKernel* const clone() const = 0;
             
-            /** Returns the type. In general this is the name of the class of its implementation. */
             const std::string& type() const { return m_type; }
             
-            /** Returns the package the operator belongs to. */
             const std::string& package() const { return m_package; }
             
-            /** Returns the documentation of the operator. */
             const Documentation& doc() const { return m_doc; }
             
-            /** Returns the version of the operator. */
             const Version& version() const { return m_version; }
 
             /**

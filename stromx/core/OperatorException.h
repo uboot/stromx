@@ -36,11 +36,27 @@ namespace stromx
                 m_operator(op)
             {}
             
+            /** Constructs an operator exception, i.e. an exception related to an operator. */
+            OperatorError(const OperatorInfo& op, const std::string & message, const std::string & name)
+              : Exception(message),
+                m_operator(op),
+                m_name(name)
+            {}
+            
+            virtual ~OperatorError() throw() {}
+            
             /** Returns the operator this exception relates to. */
             const OperatorInfo& op() const { return m_operator; }
             
+            /** Returns the name of the operator this exception relates to. */
+            const std::string & name() const { return m_name; }
+            
+            /** Sets the name of the operator this exception relates to. */
+            void setName(const std::string & name) { m_name = name; }
+            
         private:
             const OperatorInfo& m_operator;
+            std::string m_name;
         };
         
         /** \brief The current state of the operator does not allow a specific operation. */
