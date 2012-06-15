@@ -204,15 +204,15 @@ namespace stromx
                                 (*node)->setInputData();
                                 
                                 // obtain the delay state in a thread-safe way
-                                bool delay = false;
+                                unsigned int delay = 0;
                                 {
                                     lock_t lock(m_mutex);
                                     
                                     delay = m_delay;
                                 }
                                 
-                                if(m_delay)
-                                    boost::this_thread::sleep(boost::posix_time::millisec(m_delay));
+                                if(delay)
+                                    boost::this_thread::sleep(boost::posix_time::millisec(delay));
                             }
                             catch(Interrupt &)
                             {
