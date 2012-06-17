@@ -377,6 +377,16 @@ namespace stromx
                     
                     throw;
                 }
+                catch(boost::thread_interrupted&)
+                {
+                    // pass interrupts to the caller
+                    lock_t lock(m_mutex);
+                    m_status = ACTIVE;
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
+                    
+                    throw Interrupt();
+                }
                 catch(std::exception & e)
                 {
                     // wrap other exceptions
@@ -386,6 +396,16 @@ namespace stromx
                     m_parameterCond.notify_all();
                     
                     throw OperatorError(*info(), e.what());
+                }
+                catch(...)
+                {
+                    // handle remaining exceptions
+                    lock_t lock(m_mutex);
+                    m_status = ACTIVE;
+                    m_parametersAreLocked = false;
+                    m_parameterCond.notify_all();
+                    
+                    throw OperatorError(*info(), "Unknown error.");
                 }
                 
                 {
