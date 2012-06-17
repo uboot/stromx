@@ -66,29 +66,17 @@ namespace stromx
             
             const Version& version() const { return m_version; }
 
-            /**
-             * Returns a list of the inputs of the operator. This list can
-             * change when OperatorKernel::initialize() is called. After that it is
-             * constant.
-             */
             const std::vector<const Description*>& inputs() const { return m_inputs; }
             
-            /**
-             * Returns a list of the outputs of the operator. This list can
-             * change when Operator::initialize() is called. After that it is
-             * constant.
-             */
             const std::vector<const Description*>& outputs() const { return m_outputs; }
             
-            /**
-             * Returns a list of the outputs of the operator. This list can only
-             * change when Operator::initialize() is called. After that it is
-             * constant.
-             */
             const std::vector<const Parameter*>& parameters() const { return m_parameters; }
             
-            /** Returns the parameter description of the parameter \c id. */
             const Parameter & parameter(const unsigned int id) const;
+            
+            virtual const Description & input(const unsigned int id) const;
+            
+            virtual const Description & output(const unsigned int id) const;
             
             /** Sets a parameter \c id to \c value. */
             virtual void setParameter(const unsigned int id, const Data& value) { throw NotImplemented(); };
@@ -126,11 +114,6 @@ namespace stromx
              */
             virtual void deactivate() {}
             
-            /** Returns the description of the input \c id. */
-            virtual const Description & input(const unsigned int id) const;
-            
-            /** Returns the description of the output \c id. */
-            virtual const Description & output(const unsigned int id) const;
             
         protected:
             /**
