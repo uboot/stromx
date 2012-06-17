@@ -126,9 +126,11 @@ namespace stromx
              */
             virtual void deactivate() {}
             
-            
-            virtual const Description & output(const unsigned int id) const;
+            /** Returns the description of the input \c id. */
             virtual const Description & input(const unsigned int id) const;
+            
+            /** Returns the description of the output \c id. */
+            virtual const Description & output(const unsigned int id) const;
             
         protected:
             /**
