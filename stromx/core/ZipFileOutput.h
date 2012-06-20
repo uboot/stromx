@@ -41,6 +41,15 @@ namespace stromx
             ZipFileOutput(const std::string & archive);
             virtual ~ZipFileOutput();
             
+            /**
+             * Closes the zip file. If this functions is not called the file is closed 
+             * by the destructor.
+             * 
+             * \throws FileAccessFailed If the zip file could not be saved (e.g. due to
+             *                          missing write permission).
+             */
+            virtual void close();
+            
             virtual void initialize(const std::string & filename);
             virtual const std::string & getFilename() const;
             virtual const std::string getText() const;

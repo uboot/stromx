@@ -80,5 +80,15 @@ namespace stromx
             output.openFile("bin", OutputProvider::BINARY);
             CPPUNIT_ASSERT_EQUAL(std::string("testGetFilename.bin"), output.getFilename());
         }
+        
+        void ZipFileOutputTest::testNoAccess()
+        {
+            ZipFileOutput output("/ZipFileOutputTest_testNoAccess.zip");
+            output.initialize("testFile");
+            output.openFile("bin", OutputProvider::BINARY);
+            output.file() << 5;
+            
+            CPPUNIT_ASSERT_THROW(output.close(), FileAccessFailed);
+        }
     }
 }

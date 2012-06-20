@@ -48,15 +48,25 @@ namespace stromx
         {
             try
             {
-                dumpFile();
+                close();
             }
             catch(FileAccessFailed &)
             {
                 // ignore exceptions in destructor
             }
-            
+        }
+        
+        void ZipFileOutput::close()
+        {
             if(m_archiveHandle)
-                zip_close(m_archiveHandle);
+            {
+                dumpFile();
+            
+                if(zip_close(m_archiveHandle) < 0)
+                    throw FileAccessFailed(m_archive, "Failed to save zip archive.");
+                
+                m_archiveHandle = 0;
+            }
         }
 
         void ZipFileOutput::initialize(const std::string& filename)
@@ -145,7 +155,7 @@ namespace stromx
                     if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
                     {
                         zip_source_free(source);
-                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
+                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to add file to zip archive.");
                     }
                 }
                 else
@@ -155,7 +165,7 @@ namespace stromx
                     if(zip_replace(m_archiveHandle, stat.index, source) < 0)
                     {
                         zip_source_free(source);
-                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
+                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to replace file in zip archive.");
                     }
                 }
                 
