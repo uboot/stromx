@@ -71,7 +71,11 @@ namespace stromx
                  
             CPPUNIT_ASSERT_NO_THROW(XmlWriter().writeParameters("XmlWriterTest_testWriteParametersZip.stromx", operators));
         }
-
+        
+        void XmlWriterTest::testWriteNoAccess()
+        {
+            CPPUNIT_ASSERT_THROW(XmlWriter().writeStream("/XmlWriterTest_testWriteNoAccess.stromx", *m_stream), FileAccessFailed);
+        }
 
         void XmlWriterTest::tearDown()
         {

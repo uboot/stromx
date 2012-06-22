@@ -57,6 +57,9 @@ namespace stromx
                     e.setContainer(filepath);
                     throw;
                 }
+                
+                // close manually to receive an exception if the file access failed
+                output.close();
             }
             else
             {
