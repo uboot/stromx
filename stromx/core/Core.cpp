@@ -18,6 +18,7 @@
 #include "Dump.h"
 #include "Enum.h"
 #include "Exception.h"
+#include "Fork.h"
 #include "None.h"
 #include "Primitive.h"
 #include "Registry.h"
@@ -28,6 +29,7 @@ void stromxRegisterCore(stromx::core::Registry& registry)
     using namespace stromx::core;
     
     registry.registerOperator(new Dump);
+    registry.registerOperator(new Fork);
     
     registry.registerData(new Bool);
     registry.registerData(new Int8);

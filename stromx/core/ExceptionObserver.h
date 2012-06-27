@@ -44,7 +44,9 @@ namespace stromx
                 /** Deactivation of the operator. */
                 DEACTIVATION,
                 /** Deinitialization of the operator. */
-                DEINITIALIZATION
+                DEINITIALIZATION,
+                /** Accessing a parameter. */
+                PARAMETER_ACCESS
             };
             
             /** 

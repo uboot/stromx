@@ -30,6 +30,7 @@ set(SOURCES
     Enum.cpp
     EnumParameter.cpp
     Exception.cpp
+    Fork.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp
     Image.cpp

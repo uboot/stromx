@@ -67,10 +67,8 @@ namespace stromx
                 switch(id)
                 {
                 case PERIOD:
-                {
                     m_period = dynamic_cast<const UInt32 &>(value);
                     break;
-                }
                 default:
                     throw WrongParameterId(id, *this);
                 }
