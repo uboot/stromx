@@ -82,13 +82,38 @@ namespace stromx
             unsigned int numOutputs = (unsigned int)(m_numOutputs);
             BOOST_ASSERT(MIN_OUTPUTS >= 2);
             
-            std::vector<Id2DataPair> outputPairs;
+            std::vector<Id2DataPair*> outputPairs;
             for(unsigned int i = 0; i < numOutputs; ++i)
-                outputPairs[i] = Id2DataPair(i, input.data());
+                outputPairs.push_back(new Id2DataPair(i, input.data()));
             
-//             Id2DataComposite output = Id2DataPair(0, input.data()) && Id2DataPair(1, input.data());
-//             for(unsigned int i = 2; i < numOutputs; ++i)
-//                 output = output || Id2DataPair(i, input.data());
+            std::vector<Id2DataComposite*> outputComposites;
+            outputComposites.push_back(new Id2DataComposite(*outputPairs[0],
+                                                            *outputPairs[1],
+                                                            Id2DataComposite::OR));
+            for(unsigned int i = 1; i < numOutputs - 1; ++i)
+                outputComposites.push_back(new Id2DataComposite(*outputComposites[i - 1],
+                                                                *outputPairs[i + 1],
+                                                                Id2DataComposite::OR));
+            try
+            {
+                provider.sendOutputData(*outputComposites.back());
+            }
+            catch(...)
+            {
+                for(std::vector<Id2DataPair*>::const_iterator iter = outputPairs.begin();
+                    iter != outputPairs.end();
+                    ++iter)
+                {
+                    delete *iter;
+                }
+                
+                for(std::vector<Id2DataComposite*>::const_iterator iter = outputComposites.begin();
+                    iter != outputComposites.end();
+                    ++iter)
+                {
+                    delete *iter;
+                }
+            }
         }
         
         const std::vector<const Description*> Fork::setupInputs()

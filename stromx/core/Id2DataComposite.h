@@ -27,19 +27,18 @@ namespace stromx
         /** \brief A composite expression of two ID-to-data mappers. */
         class STROMX_CORE_API Id2DataComposite : public Id2DataMapper
         {
-        private:
+        public:
             enum NodeType
             {
                 AND,
                 OR
             };
             
-        public:
             STROMX_CORE_API friend const Id2DataComposite operator&&(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
             STROMX_CORE_API friend const Id2DataComposite operator||(const Id2DataMapper & lhs, const Id2DataMapper & rhs);
             
             Id2DataComposite(const Id2DataMapper& lhs, const Id2DataMapper& rhs, const NodeType type)
-            : m_lhs(lhs),
+              : m_lhs(lhs),
                 m_rhs(rhs),
                 m_type(type)
             {}
@@ -50,6 +49,8 @@ namespace stromx
             virtual void set(impl::Id2DataMap& id2DataMap) const;
             
         private:  
+            Id2DataComposite();
+            
             const Id2DataMapper& m_lhs;
             const Id2DataMapper& m_rhs;
             NodeType m_type;

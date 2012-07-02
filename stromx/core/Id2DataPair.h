@@ -35,9 +35,11 @@ namespace stromx
         {
         public:
             Id2DataPair(const unsigned int id, DataContainer data)
-            : m_id(id),
-                m_data(DataContainer())
-            { m_data = data; }
+             : m_id(id),
+               m_data(DataContainer())
+            { 
+                m_data = data;
+            }
             
             Id2DataPair(const unsigned int id)
             : m_id(id),
