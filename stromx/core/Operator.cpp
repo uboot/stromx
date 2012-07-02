@@ -118,12 +118,28 @@ namespace stromx
         
         void Operator::setParameter(const unsigned int id, const Data& value)
         { 
-            m_kernel->setParameter(id, value, false);
+            try
+            {
+                m_kernel->setParameter(id, value, false);
+            }
+            catch(OperatorError & e)
+            {
+                e.setName(m_name);
+                throw;
+            }
         }
         
         void Operator::setParameter(const unsigned int id, const Data& value, const unsigned int timeout)
         { 
-            m_kernel->setParameter(id, value, true, timeout);
+            try
+            {
+                m_kernel->setParameter(id, value, true, timeout);
+            }
+            catch(OperatorError & e)
+            {
+                e.setName(m_name);
+                throw;
+            }
         }
         
         const Data& Operator::getParameter(const unsigned int id) const

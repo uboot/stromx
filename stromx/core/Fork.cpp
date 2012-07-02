@@ -34,7 +34,8 @@ namespace stromx
         const unsigned int Fork::MAX_OUTPUTS = 4;
         
         Fork::Fork()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters())
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
+            m_numOutputs(2)
         {
         }
         
@@ -46,6 +47,8 @@ namespace stromx
             {
             case NUM_OUTPUTS:
                 uintValue = dynamic_cast<const UInt32 &>(value);
+                if(uintValue < MIN_OUTPUTS)
+                    throw WrongParameterValue(parameter(NUM_OUTPUTS), *this, "Too little outputs.");
                 if(uintValue > MAX_OUTPUTS)
                     throw WrongParameterValue(parameter(NUM_OUTPUTS), *this, "Too many outputs.");
                 m_numOutputs = uintValue;
