@@ -17,8 +17,10 @@
 #include "Fork.h"
 #include "DataProvider.h"
 #include "Id2DataPair.h"
+#include "Id2DataComposite.h"
 #include "NumericParameter.h"
 #include "OperatorException.h"
+#include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace stromx
@@ -28,6 +30,7 @@ namespace stromx
         const std::string Fork::TYPE("Fork");
         const std::string Fork::PACKAGE(STROMX_CORE_PACKAGE_NAME);
         const Version Fork::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        const unsigned int Fork::MIN_OUTPUTS = 2;
         const unsigned int Fork::MAX_OUTPUTS = 4;
         
         Fork::Fork()
@@ -75,6 +78,17 @@ namespace stromx
             Id2DataPair input(INPUT);
             
             provider.receiveInputData(input);
+            
+            unsigned int numOutputs = (unsigned int)(m_numOutputs);
+            BOOST_ASSERT(MIN_OUTPUTS >= 2);
+            
+            std::vector<Id2DataPair> outputPairs;
+            for(unsigned int i = 0; i < numOutputs; ++i)
+                outputPairs[i] = Id2DataPair(i, input.data());
+            
+//             Id2DataComposite output = Id2DataPair(0, input.data()) && Id2DataPair(1, input.data());
+//             for(unsigned int i = 2; i < numOutputs; ++i)
+//                 output = output || Id2DataPair(i, input.data());
         }
         
         const std::vector<const Description*> Fork::setupInputs()
@@ -108,6 +122,7 @@ namespace stromx
             NumericParameter<UInt32>* numOutputs = new NumericParameter<UInt32>(NUM_OUTPUTS, DataVariant::UINT_32);
             numOutputs->setDoc("Number of outputs");
             numOutputs->setAccessMode(core::Parameter::NONE_WRITE);
+            numOutputs->setMin(UInt32(MIN_OUTPUTS));
             numOutputs->setMax(UInt32(MAX_OUTPUTS));
             parameters.push_back(numOutputs);
             

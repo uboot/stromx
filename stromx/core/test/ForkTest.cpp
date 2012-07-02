@@ -34,13 +34,27 @@ namespace stromx
         void ForkTest::setUp ( void )
         {
             m_operator = new core::OperatorTester(new Fork());
-            m_operator->initialize();
-            m_operator->activate();
         }
         
         void ForkTest::testExecute()
         {
+            m_operator->setParameter(Fork::NUM_OUTPUTS, UInt32(3));
+            m_operator->initialize();
+            m_operator->activate();
             
+//             for(unsigned i = 0; i < 4; ++i)
+//             {
+//                 DataContainer data(new UInt32(i));
+//                 m_operator->setInputData(Fork::INPUT, data);
+//             }
+//             
+//             for(unsigned i = 0; i < 3; ++i)
+//             {
+//                 DataContainer data = m_operator->getOutputData(i);
+//                 
+//                 ReadAccess<UInt32> access(data);
+//                 CPPUNIT_ASSERT_EQUAL(UInt32(i), access());
+//             }
         }
         
         void ForkTest::tearDown ( void )

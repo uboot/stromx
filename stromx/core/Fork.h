@@ -54,6 +54,7 @@ namespace stromx
             static const std::string PACKAGE;
             static const Version VERSION;
             
+            static const unsigned int MIN_OUTPUTS;
             static const unsigned int MAX_OUTPUTS;
             
             UInt32 m_numOutputs;
