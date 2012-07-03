@@ -46,6 +46,7 @@ set(SOURCES
     ../Parameter.cpp
     ../ParameterGroup.cpp
     ../Primitive.cpp
+    ../Queue.cpp
     ../RecycleAccess.cpp
     ../Thread.cpp
     ../Stream.cpp
@@ -74,14 +75,15 @@ set(SOURCES
     Id2DataCompositeTest.cpp
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
-    TestOperator.cpp
+    InputNodeTest.cpp
     OperatorKernelTest.cpp
     OperatorTest.cpp
     OutputNodeTest.cpp
     ParameterTest.cpp
-    InputNodeTest.cpp
+    QueueTest.cpp
     ReadAccessTest.cpp
     RecycleAccessTest.cpp
+    TestOperator.cpp
     ThreadImplTest.cpp
     ThreadTest.cpp
     NetworkTest.cpp

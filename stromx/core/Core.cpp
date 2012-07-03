@@ -21,6 +21,7 @@
 #include "Fork.h"
 #include "None.h"
 #include "Primitive.h"
+#include "Queue.h"
 #include "Registry.h"
 #include "Trigger.h"
 
@@ -30,6 +31,7 @@ void stromxRegisterCore(stromx::core::Registry& registry)
     
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
+    registry.registerOperator(new Queue);
     
     registry.registerData(new Bool);
     registry.registerData(new Int8);

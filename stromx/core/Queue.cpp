@@ -15,24 +15,22 @@
 */
 
 #include "Queue.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/Try.h>
+#include "DataContainer.h"
+#include "DataProvider.h"
+#include "Id2DataPair.h"
+#include "NumericParameter.h"
+#include "OperatorException.h"
+#include "Primitive.h"
+#include "Try.h"
 
 namespace stromx
 {
-    using namespace core;
-
-    namespace base
+    namespace core
     {
         const std::string Queue::TYPE("Queue");
         
-        const std::string Queue::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version Queue::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const std::string Queue::PACKAGE(STROMX_CORE_PACKAGE_NAME);
+        const Version Queue::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         Queue::Queue()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

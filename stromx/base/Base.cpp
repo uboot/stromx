@@ -26,7 +26,6 @@
 #include "Counter.h"
 #include "Image.h"
 #include "PeriodicDelay.h"
-#include "Queue.h"
 #include "Trigger.h"
 #include <stromx/core/Registry.h>
 #include <stromx/core/Exception.h>
@@ -47,6 +46,5 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerOperator(new ConvertPixelType);
     registry.registerOperator(new Counter);
     registry.registerOperator(new PeriodicDelay);
-    registry.registerOperator(new Queue);
     registry.registerOperator(new Trigger);
 }

@@ -29,7 +29,6 @@
 #include <stromx/base/Counter.h>
 #include <stromx/base/ConvertPixelType.h>
 #include <stromx/base/Clip.h>
-#include <stromx/base/Queue.h>
 #include <stromx/base/PeriodicDelay.h>
 #include <stromx/base/Trigger.h>
 
@@ -54,6 +53,5 @@ BOOST_PYTHON_MODULE(libbase)
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
     stromx::python::exportOperatorKernel<Counter>("Counter");
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
-    stromx::python::exportOperatorKernel<Queue>("Queue");
     stromx::python::exportOperatorKernel<stromx::base::Trigger>("Trigger");
 }

@@ -40,6 +40,7 @@ set(SOURCES
     OperatorKernel.cpp
     Parameter.cpp
     ParameterGroup.cpp
+    Queue.cpp
     Factory.cpp
     Primitive.cpp
     Stream.cpp

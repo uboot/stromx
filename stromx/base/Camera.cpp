@@ -21,7 +21,6 @@
 #include "ConvertPixelType.h"
 #include "Image.h"
 #include "PeriodicDelay.h"
-#include "Queue.h"
 #include "Trigger.h"
 #include "impl/CameraBuffer.h"
 #include <stromx/core/OperatorException.h>
@@ -36,6 +35,7 @@
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/Operator.h>
 #include <stromx/core/ParameterGroup.h>
+#include <stromx/core/Queue.h>
 
 namespace stromx
 {

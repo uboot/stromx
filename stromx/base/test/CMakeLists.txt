@@ -28,7 +28,6 @@ add_executable(stromx_base_test
     ../ConvertPixelType.cpp
     ../Image.cpp
     ../PeriodicDelay.cpp
-    ../Queue.cpp
     ../Trigger.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
@@ -44,7 +43,6 @@ add_executable(stromx_base_test
     ConstImageTest.cpp
     CounterTest.cpp
     ImageTest.cpp
-    QueueTest.cpp
     PeriodicDelayTest.cpp
     TriggerTest.cpp
     main.cpp

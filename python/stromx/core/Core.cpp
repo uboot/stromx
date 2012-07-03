@@ -17,6 +17,7 @@
 #include <boost/python.hpp>
 #include <stromx/core/Core.h>
 #include <stromx/core/Dump.h>
+#include <stromx/core/Queue.h>
 #include <stromx/core/Registry.h>
 #include "ExportOperatorKernel.h"
 
@@ -83,4 +84,5 @@ BOOST_PYTHON_MODULE(libcore)
     exportXmlWriter();
     
     stromx::python::exportOperatorKernel<Dump>("Dump");
+    stromx::python::exportOperatorKernel<Queue>("Queue");
 }

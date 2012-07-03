@@ -14,21 +14,21 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_QUEUE_H
-#define STROMX_BASE_QUEUE_H
+#ifndef STROMX_CORE_QUEUE_H
+#define STROMX_CORE_QUEUE_H
 
 #include <deque>
 #include "Config.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include "DataContainer.h"
+#include "OperatorKernel.h"
+#include "Primitive.h"
 
 namespace stromx
 {
-    namespace base
+    namespace core
     {
         /** \brief A data queue of configurable length. */
-        class STROMX_BASE_API Queue : public core::OperatorKernel
+        class STROMX_CORE_API Queue : public core::OperatorKernel
         {
         public:
             enum InputId
@@ -70,4 +70,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_QUEUE_H
+#endif // STROMX_CORE_QUEUE_H

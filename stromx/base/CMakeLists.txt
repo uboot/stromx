@@ -31,7 +31,6 @@ set(SOURCES
     ConstImage.cpp
     Counter.cpp
     Image.cpp
-    Queue.cpp
     PeriodicDelay.cpp
     Trigger.cpp
     Utilities.cpp
