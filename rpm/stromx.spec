@@ -64,7 +64,7 @@ The %{name}-python package contains Python bindings for %{name}.
 
 
 Summary:        Documentation and examples for %{name}
-Group:          DocumentationDocumentation/Other
+Group:          Documentation/Other
 
 %description    doc
 This package contains the documentation and tutorials for the %{name} library.
