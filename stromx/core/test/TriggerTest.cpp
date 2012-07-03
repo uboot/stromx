@@ -18,7 +18,6 @@
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include "TriggerTest.h"
-#include "../Image.h"
 #include "../Trigger.h"
 #include "../Exception.h"
 #include "../OperatorTester.h"
@@ -48,7 +47,7 @@ namespace stromx
             boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
             DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
             
-            ReadAccess<Image> access(result);
+            ReadAccess<UInt32> access(result);
             access();
             
             m_operator->clearOutputData(Trigger::OUTPUT);
@@ -87,7 +86,7 @@ namespace stromx
             m_operator->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
             
             DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
-            ReadAccess<Image> access(result);
+            ReadAccess<UInt32> access(result);
             access();
         }
         

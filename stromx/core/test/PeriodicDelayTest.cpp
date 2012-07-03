@@ -17,7 +17,6 @@
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include "PeriodicDelayTest.h"
-#include "../Image.h"
 #include "../PeriodicDelay.h"
 #include "../Exception.h"
 #include "../OperatorTester.h"
@@ -46,7 +45,7 @@ namespace stromx
             
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-                ReadAccess<Image> access(result);
+                ReadAccess<UInt32> access(result);
                 access();
             }
             
@@ -81,7 +80,7 @@ namespace stromx
             
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-                ReadAccess<Image> access(result);
+                ReadAccess<UInt32> access(result);
                 access();
             }
             
