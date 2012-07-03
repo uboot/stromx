@@ -17,18 +17,18 @@
 #include <cppunit/TestAssert.h>
 #include "QueueTest.h"
 #include "../Queue.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include "../DataContainer.h"
+#include "../OperatorTester.h"
+#include "../Primitive.h"
+#include "../ReadAccess.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::QueueTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::QueueTest);
 
 namespace stromx
 {
     using namespace core;
 
-    namespace base
+    namespace core
     {
         void QueueTest::setUp ( void )
         {

@@ -14,20 +14,21 @@
 *  limitations under the License.
 */
 
+#include "Trigger.h"
+
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-#include "Trigger.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/EnumParameter.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
+#include "DataContainer.h"
+#include "DataProvider.h"
+#include "EnumParameter.h"
+#include "Id2DataPair.h"
+#include "OperatorException.h"
 
 namespace stromx
 {
     using namespace core;
 
-    namespace base
+    namespace core
     {
         typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
@@ -44,8 +45,8 @@ namespace stromx
         
         const std::string Trigger::TYPE("Trigger");
         
-        const std::string Trigger::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version Trigger::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const std::string Trigger::PACKAGE(STROMX_CORE_PACKAGE_NAME);
+        const Version Trigger::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         Trigger::Trigger()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

@@ -14,19 +14,20 @@
 *  limitations under the License.
 */
 
+#include "PeriodicDelay.h"
+
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include "PeriodicDelay.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
+#include "DataContainer.h"
+#include "DataProvider.h"
+#include "Id2DataPair.h"
+#include "OperatorException.h"
 
 namespace stromx
 {
     using namespace core;
     
-    namespace base
+    namespace core
     {
         /** \cond */
         namespace impl
@@ -40,8 +41,8 @@ namespace stromx
         
         const std::string PeriodicDelay::TYPE("PeriodicDelay");
         
-        const std::string PeriodicDelay::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version PeriodicDelay::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const std::string PeriodicDelay::PACKAGE(STROMX_CORE_PACKAGE_NAME);
+        const Version PeriodicDelay::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         PeriodicDelay::PeriodicDelay()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

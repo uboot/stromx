@@ -24,11 +24,8 @@ add_executable(stromx_base_test
     ../Canny.cpp
     ../Clip.cpp
     ../ConstImage.cpp
-    ../Counter.cpp
     ../ConvertPixelType.cpp
     ../Image.cpp
-    ../PeriodicDelay.cpp
-    ../Trigger.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
@@ -41,10 +38,7 @@ add_executable(stromx_base_test
     ClipTest.cpp
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
-    CounterTest.cpp
     ImageTest.cpp
-    PeriodicDelayTest.cpp
-    TriggerTest.cpp
     main.cpp
 )
 

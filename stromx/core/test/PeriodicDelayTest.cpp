@@ -19,30 +19,30 @@
 #include "PeriodicDelayTest.h"
 #include "../Image.h"
 #include "../PeriodicDelay.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
+#include "../Exception.h"
+#include "../OperatorTester.h"
+#include "../ReadAccess.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::PeriodicDelayTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::PeriodicDelayTest);
 
 namespace stromx
 {
     using namespace core;
 
-    namespace base
+    namespace core
     {
         void PeriodicDelayTest::setUp ( void )
         {
             m_operator = new core::OperatorTester(new PeriodicDelay());
             m_operator->initialize();
             m_operator->activate();
-            m_image = DataContainer(new Image("lenna.jpg"));
-            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            m_data = DataContainer(new UInt32(4));
+            m_operator->setInputData(PeriodicDelay::INPUT, m_data);
         }
         
         void PeriodicDelayTest::testExecute()
         {
-            m_operator->setParameter(PeriodicDelay::PERIOD, core::UInt32(1000));
+            m_operator->setParameter(PeriodicDelay::PERIOD, UInt32(1000));
             
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
@@ -52,24 +52,24 @@ namespace stromx
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }
 
             m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-            m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+            m_operator->setInputData(PeriodicDelay::INPUT, m_data);
             boost::thread t1(boost::bind(&PeriodicDelayTest::getOutputDataInterrupted, this));
             t1.interrupt();
             t1.join();
@@ -87,19 +87,19 @@ namespace stromx
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }   
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
-                m_operator->setInputData(PeriodicDelay::INPUT, m_image);
+                m_operator->setInputData(PeriodicDelay::INPUT, m_data);
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
             }
         }

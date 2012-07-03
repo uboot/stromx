@@ -29,12 +29,14 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.stromx DESTINATION ${CMAKE_CURRENT_
 set(SOURCES
     ../Connector.cpp
     ../Core.cpp
+    ../Counter.cpp
     ../Data.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
     ../Documentation.cpp
     ../Dump.cpp
     ../Enum.cpp
+    ../EnumParameter.cpp
     ../Exception.cpp
     ../Factory.cpp
     ../Fork.cpp
@@ -45,6 +47,7 @@ set(SOURCES
     ../OperatorKernel.cpp
     ../Parameter.cpp
     ../ParameterGroup.cpp
+    ../PeriodicDelay.cpp
     ../Primitive.cpp
     ../Queue.cpp
     ../RecycleAccess.cpp
@@ -53,6 +56,7 @@ set(SOURCES
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp
     ../String.cpp
+    ../Trigger.cpp
     ../TriggerData.cpp
     ../Try.cpp
     ../impl/DataContainerImpl.cpp
@@ -66,6 +70,7 @@ set(SOURCES
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
     CoreTest.cpp
+    CounterTest.cpp
     DataContainerTest.cpp
     DataVariantTest.cpp
     DataTest.cpp
@@ -80,6 +85,7 @@ set(SOURCES
     OperatorTest.cpp
     OutputNodeTest.cpp
     ParameterTest.cpp
+    PeriodicDelayTest.cpp
     QueueTest.cpp
     ReadAccessTest.cpp
     RecycleAccessTest.cpp
@@ -91,6 +97,7 @@ set(SOURCES
     PrimitiveTest.cpp
     StringTest.cpp
     TestData.cpp
+    TriggerTest.cpp
     TryTest.cpp
     WriteAccessTest.cpp
     SortInputsAlgorithmTest.cpp

@@ -28,7 +28,7 @@ namespace stromx
     namespace core
     {
         /** \brief A data queue of configurable length. */
-        class STROMX_CORE_API Queue : public core::OperatorKernel
+        class STROMX_CORE_API Queue : public OperatorKernel
         {
         public:
             enum InputId

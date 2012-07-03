@@ -14,47 +14,50 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_PERIODICDELAYTEST_H
-#define STROMX_BASE_PERIODICDELAYTEST_H
+#ifndef STROMX_BASE_TRIGGERTEST_H
+#define STROMX_BASE_TRIGGERTEST_H
 
-#include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <stromx/core/DataContainer.h>
+#include <cppunit/TestFixture.h>
+#include "../DataContainer.h"
 
 namespace stromx
 {
     namespace core
     {
         class OperatorTester;
-        class DataContainer;
     }
 
-    namespace base
+    namespace core
     {
-        class PeriodicDelayTest : public CPPUNIT_NS :: TestFixture
+        class TriggerTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (PeriodicDelayTest);
-            CPPUNIT_TEST (testExecute);
-            CPPUNIT_TEST (testExecuteZeroPeriod);
+            CPPUNIT_TEST_SUITE (TriggerTest);
+            CPPUNIT_TEST (testExecuteActive);
+            CPPUNIT_TEST (testExecuteSwitchToInactive);
+            CPPUNIT_TEST (testExecuteInactive);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                PeriodicDelayTest() : m_operator(0) {}
+                TriggerTest() : m_operator(0) {}
                 
                 void setUp();
                 void tearDown();
 
             protected:
-                void testExecute();
-                void testExecuteZeroPeriod();
+                void testExecuteActive();
+                void testExecuteSwitchToInactive();
+                void testExecuteInactive();
                 
             private:
+                void triggerDelayed ();
+                void getOutputData();
                 void getOutputDataInterrupted();
-                
+        
                 core::OperatorTester* m_operator;
-                core::DataContainer m_image;
+                core::DataContainer m_data;
         };
     }
 }
 
-#endif // STROMX_BASE_PERIODICDELAYTEST_H
+#endif // STROMX_BASE_TRIGGERTEST_H

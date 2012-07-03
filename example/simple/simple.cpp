@@ -14,13 +14,12 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Stream.h>
+#include <stromx/core/Counter.h>
 #include <stromx/core/Operator.h>
-#include <stromx/core/Thread.h>
+#include <stromx/core/PeriodicDelay.h>
 #include <stromx/core/ReadAccess.h>
-
-#include <stromx/base/Counter.h>
-#include <stromx/base/PeriodicDelay.h>
+#include <stromx/core/Stream.h>
+#include <stromx/core/Thread.h>
 
 #include <iostream>
 
@@ -30,30 +29,30 @@ int main (int argc, char* argv[])
 {
     core::Stream stream;
     
-    core::Operator* source = new core::Operator(new base::Counter);
+    core::Operator* source = new core::Operator(new core::Counter);
     source->initialize();
     stream.addOperator(source);
     
-    core::Operator* timer = new core::Operator(new base::PeriodicDelay);
+    core::Operator* timer = new core::Operator(new core::PeriodicDelay);
     timer->initialize();
     stream.addOperator(timer);
     
-    timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));
+    timer->setParameter(core::PeriodicDelay::PERIOD, core::UInt32(1000));
     
-    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    stream.connect(source, core::Counter::OUTPUT, timer, core::PeriodicDelay::INPUT);
     
     core::Thread* thread = stream.addThread();
-    thread->addInput(timer, base::PeriodicDelay::INPUT);
+    thread->addInput(timer, core::PeriodicDelay::INPUT);
     
     stream.start();
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
+        core::DataContainer data = timer->getOutputData(core::PeriodicDelay::OUTPUT);
         core::ReadAccess<core::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
-        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
+        timer->clearOutputData(core::PeriodicDelay::OUTPUT);
     }
     
     stream.stop();

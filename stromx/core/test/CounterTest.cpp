@@ -17,17 +17,17 @@
 #include <cppunit/TestAssert.h>
 #include "CounterTest.h"
 #include "../Counter.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
+#include "../DataContainer.h"
+#include "../OperatorTester.h"
+#include "../ReadAccess.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::CounterTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::CounterTest);
 
 namespace stromx
 {
     using namespace core;
 
-    namespace base
+    namespace core
     {
         void CounterTest::setUp()
         {
@@ -38,18 +38,18 @@ namespace stromx
 
         void CounterTest::testExecute()
         {
-            DataContainer data = m_operator->getOutputData(base::Counter::OUTPUT);
+            DataContainer data = m_operator->getOutputData(Counter::OUTPUT);
             CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
             
-            m_operator->clearOutputData(base::Counter::OUTPUT);
+            m_operator->clearOutputData(Counter::OUTPUT);
             
-            data = m_operator->getOutputData(base::Counter::OUTPUT);
+            data = m_operator->getOutputData(Counter::OUTPUT);
             CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess<UInt32>(data)());
             
             m_operator->deactivate();
             m_operator->activate();
             
-            data = m_operator->getOutputData(base::Counter::OUTPUT);
+            data = m_operator->getOutputData(Counter::OUTPUT);
             CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
         }
 

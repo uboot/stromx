@@ -14,78 +14,46 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TRIGGER_H
-#define STROMX_BASE_TRIGGER_H
+#ifndef STROMX_CORE_COUNTER_H
+#define STROMX_CORE_COUNTER_H
 
 #include "Config.h"
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include "OperatorKernel.h"
+#include "Primitive.h"
 
 namespace stromx
 {
     namespace core
     {
-        class DataContainer;
-    }
-
-    namespace base
-    {
-        namespace impl
-        {
-            struct BoostConditionVariable;
-        }
-        
-        /** \brief Delays the execution until a trigger signal is received. */
-        class STROMX_BASE_API Trigger : public core::OperatorKernel
+        /** \brief Outputs an increasing integer value. */
+        class STROMX_CORE_API Counter : public OperatorKernel
         {
         public:
-            enum InputId
-            {
-                INPUT
-            };
-            
             enum OutputId
             {
                 OUTPUT
             };
             
-            enum ParameterId
-            {
-                TRIGGER,
-                STATE
-            };
+            Counter();
             
-            enum TriggerState
-            {
-                ALWAYS_PASS,
-                ALWAYS_STOP,
-                TRIGGER_ACTIVE
-            };
-            
-            Trigger();
-            virtual ~Trigger();
-            
-            virtual OperatorKernel* const clone() const { return new Trigger; }
+            virtual OperatorKernel* const clone() const { return new Counter; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
+            virtual void activate();
             
         private:
-            Trigger(const Trigger &);
-            
             static const std::vector<const core::Description*> setupInputs();
             static const std::vector<const core::Description*> setupOutputs();
             static const std::vector<const core::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION; 
+            static const core::Version VERSION;
             
-            impl::BoostConditionVariable* m_cond;
-            core::Enum m_state;
+            unsigned int m_counter;
         };
     }
 }
 
-#endif // STROMX_BASE_TRIGGER_H
+#endif // STROMX_CORE_COUNTER_H

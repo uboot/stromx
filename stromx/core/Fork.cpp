@@ -71,9 +71,9 @@ namespace stromx
         
         void Fork::initialize()
         {
-            stromx::core::OperatorKernel::initialize(setupInputs(),
-                                                     setupOutputs(),
-                                                     std::vector<const Parameter*>());
+            OperatorKernel::initialize(setupInputs(),
+                                       setupOutputs(),
+                                       std::vector<const Parameter*>());
         }
         
         void Fork::execute(DataProvider& provider)

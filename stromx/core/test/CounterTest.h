@@ -27,7 +27,7 @@ namespace stromx
         class OperatorTester;
     }
 
-    namespace base
+    namespace core
     {
         class CounterTest : public CPPUNIT_NS :: TestFixture
         {

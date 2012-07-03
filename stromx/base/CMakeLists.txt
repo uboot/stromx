@@ -29,10 +29,7 @@ set(SOURCES
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
-    Counter.cpp
     Image.cpp
-    PeriodicDelay.cpp
-    Trigger.cpp
     Utilities.cpp
 )
 

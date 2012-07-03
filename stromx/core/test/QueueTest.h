@@ -28,7 +28,7 @@ namespace stromx
         class DataContainer;
     }
 
-    namespace base
+    namespace core
     {
         class QueueTest : public CPPUNIT_NS :: TestFixture
         {

@@ -20,26 +20,26 @@
 #include "TriggerTest.h"
 #include "../Image.h"
 #include "../Trigger.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/TriggerData.h>
+#include "../Exception.h"
+#include "../OperatorTester.h"
+#include "../ReadAccess.h"
+#include "../TriggerData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::TriggerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::TriggerTest);
 
 namespace stromx
 {
     using namespace core;
 
-    namespace base
+    namespace core
     {
         void TriggerTest::setUp ( void )
         {
             m_operator = new core::OperatorTester(new Trigger());
             m_operator->initialize();
             m_operator->activate();
-            m_image = DataContainer(new Image("lenna.jpg"));
-            m_operator->setInputData(Trigger::INPUT, m_image);
+            m_data = DataContainer(new UInt32(4));
+            m_operator->setInputData(Trigger::INPUT, m_data);
         }
         
         void TriggerTest::testExecuteActive()
@@ -52,7 +52,7 @@ namespace stromx
             access();
             
             m_operator->clearOutputData(Trigger::OUTPUT);
-            m_operator->setInputData(Trigger::INPUT, m_image);
+            m_operator->setInputData(Trigger::INPUT, m_data);
             t1.join();
             
             /*** Test 2 ***/
@@ -60,7 +60,7 @@ namespace stromx
             result = m_operator->getOutputData(Trigger::OUTPUT);
             
             m_operator->clearOutputData(Trigger::OUTPUT);
-            m_operator->setInputData(Trigger::INPUT, m_image);
+            m_operator->setInputData(Trigger::INPUT, m_data);
             t2.join();
             
             /*** Test 2 ***/

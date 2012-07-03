@@ -18,26 +18,23 @@
 #define STROMX_BASE_PERIODICDELAY_H
 
 #include "Config.h"
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include "Image.h"
+#include "OperatorKernel.h"
+#include "Primitive.h"
 
 namespace stromx
 {
     namespace core
     {
         class DataContainer;
-    }
-
-    namespace base
-    {
+        
         namespace impl
         {
             struct BoostSystemTime;
         }
         
         /** \brief Periodically delays the execution for a defined amount of time. */
-        class STROMX_BASE_API PeriodicDelay : public core::OperatorKernel
+        class STROMX_CORE_API PeriodicDelay : public OperatorKernel
         {
         public:
             enum InputId

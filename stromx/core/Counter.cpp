@@ -14,21 +14,20 @@
 *  limitations under the License.
 */
 
-#include <typeinfo>
 #include "Counter.h"
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
+
+#include <typeinfo>
+#include "DataProvider.h"
+#include "Id2DataPair.h"
+#include "OperatorException.h"
 
 namespace stromx
 {
-    using namespace core;
-
-    namespace base
+    namespace core
     {
         const std::string Counter::TYPE("Counter");
-        const std::string Counter::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version Counter::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const std::string Counter::PACKAGE(STROMX_CORE_PACKAGE_NAME);
+        const Version Counter::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
         
         Counter::Counter()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

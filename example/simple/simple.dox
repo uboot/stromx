@@ -21,22 +21,19 @@ The \em simple tutorial assembles the stream in the image above and operates it.
 In the following, the source code of \em simple.cpp is printed with comments under each part.
 
 \code
-#include <stromx/core/Stream.h>
+#include <stromx/core/Counter.h>
 #include <stromx/core/Operator.h>
-#include <stromx/core/Thread.h>
+#include <stromx/core/PeriodicDelay.h>
 #include <stromx/core/ReadAccess.h>
-
-
-#include <stromx/base/Counter.h>
-
-#include <stromx/base/PeriodicDelay.h>
+#include <stromx/core/Stream.h>
+#include <stromx/core/Thread.h>
 
 #include <iostream>
 \endcode
 
 As usual the program starts be including the required header files. Stromx uses a fine grained approach to the inclusion of headers, i.e. only the necessary headers are included by the library headers and forward declarations are used wherever possible. As a consequence the headers of all classes which are used in the code are included here.
 
-The first four headers are part of the core core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are part of the core base library which are imported next. The final header is necessary to write the results of the running stream to the standard output.
+The first four headers are part of the core core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
 \code
 using namespace stromx;
@@ -49,11 +46,11 @@ int main (int argc, char* argv[])
 The program starts by creating an empty stream object which will populated with operators and threads in the following.
 
 \code
-    core::Operator* source = new core::Operator(new base::Counter);
+    core::Operator* source = new core::Operator(new core::Counter);
     source->initialize();
     stream.addOperator(source);
     
-    core::Operator* timer = new core::Operator(new base::PeriodicDelay);
+    core::Operator* timer = new core::Operator(new core::PeriodicDelay);
     timer->initialize();
     stream.addOperator(timer);
 \endcode
@@ -61,23 +58,23 @@ The program starts by creating an empty stream object which will populated with 
 First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operators can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
 \code
-    timer->setParameter(base::PeriodicDelay::PERIOD, core::UInt32(1000));
+    timer->setParameter(core::PeriodicDelay::PERIOD, core::UInt32(1000));
 \endcode
 
 In the next step the time delay of the timer operator is set to one second. All data passed as parameter to the function core::Operator::setParameter must be derived from core::Data. Versions of primitive data types which are derived from core::Data are defined in core::Primitive. Here core::UInt32 is used which obviously wraps a 32-bit unsigned integer.
 
 \note
-Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of base::PeriodicCounter the access mode is core::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
+Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of core::PeriodicCounter the access mode is core::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
 
 \code    
-    stream.connect(source, base::Counter::OUTPUT, timer, base::PeriodicDelay::INPUT);
+    stream.connect(source, core::Counter::OUTPUT, timer, core::PeriodicDelay::INPUT);
 \endcode
 
-This line connects the output of the counter to the input of the \c timer operator. Note that input and output connectors are identified by the operator the belong to (\c source and \c timer) and their IDs (base::Counter::OUTPUT and base::PeriodicDelay::INPUT).
+This line connects the output of the counter to the input of the \c timer operator. Note that input and output connectors are identified by the operator the belong to (\c source and \c timer) and their IDs (core::Counter::OUTPUT and core::PeriodicDelay::INPUT).
   
 \code  
     core::Thread* thread = stream.addThread();
-    thread->addInput(timer, base::PeriodicDelay::INPUT);
+    thread->addInput(timer, core::PeriodicDelay::INPUT);
 \endcode
 
 Now the operating thread is added to the stream. In the next line the input connector of \em timer is added as the only input connector which is operated by \em thread. As before the input connector is addressed by its operator and its ID.
@@ -91,11 +88,11 @@ This step starts all threads (i.e. is one in our case) of the stream. The thread
 \code   
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = timer->getOutputData(base::PeriodicDelay::OUTPUT);
+        core::DataContainer data = timer->getOutputData(core::PeriodicDelay::OUTPUT);
         core::ReadAccess<core::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
 
-        timer->clearOutputData(base::PeriodicDelay::OUTPUT);
+        timer->clearOutputData(core::PeriodicDelay::OUTPUT);
     }
 \endcode
 

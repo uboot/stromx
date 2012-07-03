@@ -21,6 +21,7 @@ set(SOURCES
     impl/ThreadImpl.cpp
     impl/Network.cpp
     Connector.cpp
+    Counter.cpp
     DataContainer.cpp
     RecycleAccess.cpp
     Data.cpp
@@ -38,6 +39,7 @@ set(SOURCES
     None.cpp
     Operator.cpp
     OperatorKernel.cpp
+    PeriodicDelay.cpp
     Parameter.cpp
     ParameterGroup.cpp
     Queue.cpp
@@ -48,6 +50,7 @@ set(SOURCES
     SortInputsAlgorithm.cpp
     Core.cpp
     Thread.cpp
+    Trigger.cpp
     TriggerData.cpp
     Try.cpp
 )

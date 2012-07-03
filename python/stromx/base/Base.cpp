@@ -26,11 +26,8 @@
 #include <stromx/base/AdjustRgbChannels.h>
 #include <stromx/base/Camera.h>
 #include <stromx/base/Canny.h>
-#include <stromx/base/Counter.h>
 #include <stromx/base/ConvertPixelType.h>
 #include <stromx/base/Clip.h>
-#include <stromx/base/PeriodicDelay.h>
-#include <stromx/base/Trigger.h>
 
 void exportImage();
 
@@ -51,7 +48,4 @@ BOOST_PYTHON_MODULE(libbase)
     stromx::python::exportOperatorKernel<Clip>("Clip");
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
-    stromx::python::exportOperatorKernel<Counter>("Counter");
-    stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
-    stromx::python::exportOperatorKernel<stromx::base::Trigger>("Trigger");
 }

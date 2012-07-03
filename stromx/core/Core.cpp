@@ -15,23 +15,29 @@
 */
 
 #include "Core.h"
+#include "Counter.h"
 #include "Dump.h"
 #include "Enum.h"
 #include "Exception.h"
 #include "Fork.h"
 #include "None.h"
+#include "PeriodicDelay.h"
 #include "Primitive.h"
 #include "Queue.h"
 #include "Registry.h"
+#include "Trigger.h"
 #include "TriggerData.h"
 
 void stromxRegisterCore(stromx::core::Registry& registry)
 {
     using namespace stromx::core;
     
+    registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
+    registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
+    registry.registerOperator(new Trigger);
     
     registry.registerData(new Bool);
     registry.registerData(new Int8);
