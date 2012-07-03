@@ -23,7 +23,7 @@
 #include "Primitive.h"
 #include "Queue.h"
 #include "Registry.h"
-#include "Trigger.h"
+#include "TriggerData.h"
 
 void stromxRegisterCore(stromx::core::Registry& registry)
 {
@@ -43,5 +43,5 @@ void stromxRegisterCore(stromx::core::Registry& registry)
     registry.registerData(new Double);
     registry.registerData(new Enum);
     registry.registerData(new None);
-    registry.registerData(new Trigger);
+    registry.registerData(new TriggerData);
 }

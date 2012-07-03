@@ -53,7 +53,7 @@ set(SOURCES
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp
     ../String.cpp
-    ../Trigger.cpp
+    ../TriggerData.cpp
     ../Try.cpp
     ../impl/DataContainerImpl.cpp
     ../impl/Id2DataMap.cpp

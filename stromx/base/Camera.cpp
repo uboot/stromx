@@ -149,7 +149,7 @@ namespace stromx
                 switch(id)
                 {       
                 case TRIGGER:
-                    m_trigger->setParameter(Trigger::TRIGGER, core::Trigger());
+                    m_trigger->setParameter(Trigger::TRIGGER, core::TriggerData());
                     break;
                 case IMAGE:
                 {

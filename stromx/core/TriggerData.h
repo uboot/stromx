@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CORE_TRIGGER_H
-#define STROMX_CORE_TRIGGER_H
+#ifndef STROMX_CORE_TRIGGERDATA_H
+#define STROMX_CORE_TRIGGERDATA_H
 
 #include "Data.h"
 
@@ -24,10 +24,10 @@ namespace stromx
     namespace core
     {
         /** \brief Special data value for trigger signals. */
-        class STROMX_CORE_API Trigger : public Data
+        class STROMX_CORE_API TriggerData : public Data
         {
         public:
-            Trigger() {}
+            TriggerData() {}
             
             virtual const Version & version() const { return VERSION; }
             virtual const std::string & type() const { return TYPE; }
@@ -35,7 +35,7 @@ namespace stromx
             
             virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
             
-            virtual Data* const clone() const { return new Trigger; }
+            virtual Data* const clone() const { return new TriggerData; }
             
             virtual void serialize(OutputProvider & out) const {}
             virtual void deserialize(InputProvider & in, const Version & version) {}
@@ -48,4 +48,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CORE_TRIGGER_H
+#endif // STROMX_CORE_TRIGGERDATA_H

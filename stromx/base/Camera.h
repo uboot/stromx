@@ -22,7 +22,7 @@
 #include <stromx/core/Image.h>
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/Primitive.h>
-#include <stromx/core/Trigger.h>
+#include <stromx/core/TriggerData.h>
 
 namespace stromx
 {
@@ -133,7 +133,7 @@ namespace stromx
             core::Enum m_valueInternal;
             core::Enum m_valueExternal;
             
-            core::Trigger m_valueTrigger;
+            core::TriggerData m_valueTrigger;
         };
     }
 }

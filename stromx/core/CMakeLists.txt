@@ -48,7 +48,7 @@ set(SOURCES
     SortInputsAlgorithm.cpp
     Core.cpp
     Thread.cpp
-    Trigger.cpp
+    TriggerData.cpp
     Try.cpp
 )
 

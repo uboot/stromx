@@ -15,14 +15,14 @@
  */
 
 #include "Config.h"
-#include "Trigger.h"
+#include "TriggerData.h"
 
 namespace stromx
 {
     namespace core
     {
-        const std::string Trigger::TYPE = "Trigger";
-        const std::string Trigger::PACKAGE = STROMX_CORE_PACKAGE_NAME;
-        const Version Trigger::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        const std::string TriggerData::TYPE = "Trigger";
+        const std::string TriggerData::PACKAGE = STROMX_CORE_PACKAGE_NAME;
+        const Version TriggerData::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
     }
 }

@@ -23,7 +23,7 @@
 #include <stromx/core/Exception.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>
-#include <stromx/core/Trigger.h>
+#include <stromx/core/TriggerData.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::TriggerTest);
 
@@ -104,7 +104,7 @@ namespace stromx
         void TriggerTest::triggerDelayed()
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
-            m_operator->setParameter(Trigger::TRIGGER, core::Trigger());
+            m_operator->setParameter(Trigger::TRIGGER, core::TriggerData());
         }
 
         void TriggerTest::tearDown ( void )

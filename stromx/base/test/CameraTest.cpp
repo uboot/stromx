@@ -24,7 +24,7 @@
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/ReadAccess.h>
-#include <stromx/core/Trigger.h>
+#include <stromx/core/TriggerData.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::CameraTest);
 
@@ -56,7 +56,7 @@ namespace stromx
             
             {
                 boost::this_thread::sleep(boost::posix_time::seconds(1));
-                m_operator->setParameter(Camera::TRIGGER, core::Trigger());
+                m_operator->setParameter(Camera::TRIGGER, core::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
                 UInt32 index = ReadAccess<UInt32>(indexContainer)();
@@ -71,7 +71,7 @@ namespace stromx
             
             {
                 boost::this_thread::sleep(boost::posix_time::seconds(1));
-                m_operator->setParameter(Camera::TRIGGER, core::Trigger());
+                m_operator->setParameter(Camera::TRIGGER, core::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
                 UInt32 index = ReadAccess<UInt32>(indexContainer)();
