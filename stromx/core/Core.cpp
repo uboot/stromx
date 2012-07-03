@@ -20,6 +20,7 @@
 #include "Enum.h"
 #include "Exception.h"
 #include "Fork.h"
+#include "Join.h"
 #include "None.h"
 #include "PeriodicDelay.h"
 #include "Primitive.h"
@@ -35,6 +36,7 @@ void stromxRegisterCore(stromx::core::Registry& registry)
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
+    registry.registerOperator(new Join);
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
     registry.registerOperator(new Trigger);

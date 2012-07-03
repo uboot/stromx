@@ -93,13 +93,31 @@ namespace stromx
             outputComposites.push_back(new Id2DataComposite(*outputPairs[0],
                                                             *outputPairs[1],
                                                             Id2DataComposite::OR));
+            
             for(unsigned int i = 1; i < numOutputs - 1; ++i)
+            {
                 outputComposites.push_back(new Id2DataComposite(*outputComposites[i - 1],
                                                                 *outputPairs[i + 1],
                                                                 Id2DataComposite::OR));
+            }
+            
             try
             {
                 provider.sendOutputData(*outputComposites.back());
+                
+                for(std::vector<Id2DataPair*>::const_iterator iter = outputPairs.begin();
+                    iter != outputPairs.end();
+                    ++iter)
+                {
+                    delete *iter;
+                }
+                
+                for(std::vector<Id2DataComposite*>::const_iterator iter = outputComposites.begin();
+                    iter != outputComposites.end();
+                    ++iter)
+                {
+                    delete *iter;
+                }
             }
             catch(...)
             {
@@ -136,7 +154,7 @@ namespace stromx
             for(unsigned int i = 0; i < (unsigned int)(m_numOutputs); ++i)
             {
                 Description* output = new Description(i, DataVariant::DATA);
-                output->setDoc("Input " + boost::lexical_cast<std::string>(i));
+                output->setDoc("Output " + boost::lexical_cast<std::string>(i));
                 outputs.push_back(output);
             }
             

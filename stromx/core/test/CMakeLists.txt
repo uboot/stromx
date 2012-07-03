@@ -40,6 +40,7 @@ set(SOURCES
     ../Exception.cpp
     ../Factory.cpp
     ../Fork.cpp
+    ../Join.cpp
     ../Id2DataComposite.cpp
     ../Id2DataPair.cpp
     ../None.cpp
@@ -81,6 +82,7 @@ set(SOURCES
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
     InputNodeTest.cpp
+    JoinTest.cpp
     OperatorKernelTest.cpp
     OperatorTest.cpp
     OutputNodeTest.cpp

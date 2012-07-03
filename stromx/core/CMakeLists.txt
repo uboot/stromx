@@ -36,6 +36,7 @@ set(SOURCES
     Id2DataPair.cpp
     Image.cpp
     ImageWrapper.cpp
+    Join.cpp
     None.cpp
     Operator.cpp
     OperatorKernel.cpp

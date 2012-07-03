@@ -15,14 +15,14 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ForkTest.h"
+#include "JoinTest.h"
 #include "TestData.h"
-#include "../Fork.h"
+#include "../Join.h"
 #include "../DataContainer.h"
 #include "../OperatorTester.h"
 #include "../ReadAccess.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::ForkTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::core::JoinTest);
 
 namespace stromx
 {
@@ -30,33 +30,35 @@ namespace stromx
 
     namespace core
     {
-        void ForkTest::setUp ( void )
+        void JoinTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new Fork());
+            m_operator = new core::OperatorTester(new Join());
         }
         
-        void ForkTest::testExecute()
+        void JoinTest::testExecute()
         {
-            m_operator->setParameter(Fork::NUM_OUTPUTS, UInt32(3));
+            m_operator->setParameter(Join::NUM_INPUTS, UInt32(3));
             m_operator->initialize();
             m_operator->activate();
             
-            for(unsigned int i = 0; i < 4; ++i)
+            for(unsigned int i = 0; i < 3; ++i)
             {
                 DataContainer data(new UInt32(i));
-                m_operator->setInputData(Fork::INPUT, data);
+                m_operator->setInputData(i, data);
             }
             
             for(unsigned int i = 0; i < 3; ++i)
             {
-                DataContainer data = m_operator->getOutputData(i);
+                DataContainer data = m_operator->getOutputData(Join::OUTPUT);
                 
                 ReadAccess<UInt32> access(data);
                 CPPUNIT_ASSERT_EQUAL(UInt32(i), access());
+                
+                m_operator->clearOutputData(Join::OUTPUT);
             }
         }
         
-        void ForkTest::tearDown ( void )
+        void JoinTest::tearDown ( void )
         {
             delete m_operator;
         }
