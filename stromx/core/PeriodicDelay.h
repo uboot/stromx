@@ -18,7 +18,6 @@
 #define STROMX_BASE_PERIODICDELAY_H
 
 #include "Config.h"
-#include "Image.h"
 #include "OperatorKernel.h"
 #include "Primitive.h"
 

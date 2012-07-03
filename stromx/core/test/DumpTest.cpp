@@ -18,7 +18,6 @@
 #include "DumpTest.h"
 #include "TestData.h"
 #include "../Dump.h"
-#include "../Image.h"
 #include "../DataContainer.h"
 #include "../OperatorTester.h"
 #include "../ReadAccess.h"

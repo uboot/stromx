@@ -18,7 +18,6 @@
 #include "ForkTest.h"
 #include "TestData.h"
 #include "../Fork.h"
-#include "../Image.h"
 #include "../DataContainer.h"
 #include "../OperatorTester.h"
 #include "../ReadAccess.h"
