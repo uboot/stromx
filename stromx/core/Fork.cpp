@@ -134,6 +134,8 @@ namespace stromx
                 {
                     delete *iter;
                 }
+                
+                throw;
             }
         }
         

@@ -127,7 +127,7 @@ namespace stromx
 
             void ThreadImpl::stop()
             {
-                if(m_status != ACTIVE && m_status != PAUSED)
+                if(m_status == INACTIVE)
                     return;
                 
                 BOOST_ASSERT(m_thread);
