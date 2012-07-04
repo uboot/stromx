@@ -18,6 +18,7 @@
 #include "../Exception.h"
 #include "../DataContainer.h"
 #include "../Operator.h"
+#include "../OperatorException.h"
 
 namespace stromx
 {
@@ -50,8 +51,17 @@ namespace stromx
 
             DataContainer OutputNode::getOutputData()
             {
-                DataContainer value = m_operator->getOutputData(m_outputId);
-                
+                DataContainer value;
+                try
+                {
+                    value = m_operator->getOutputData(m_outputId);
+                }
+                catch(OperatorError & ex)
+                {
+                    ex.setName(m_operator->name());
+                    throw;
+                }
+                    
                 // the data has been obtained
                 // now make sure the connection counter is adapted in an atomic operation
                 {

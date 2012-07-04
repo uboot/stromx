@@ -58,7 +58,15 @@ namespace stromx
                 
                 DataContainer inputData = m_source->getOutputData();
                 
-                m_operator->setInputData(m_inputId, inputData);
+                try
+                {
+                    m_operator->setInputData(m_inputId, inputData);
+                }
+                catch(OperatorError & ex)
+                {
+                    ex.setName(m_operator->name());
+                    throw;
+                }
             }
             
             void InputNode::disconnect()
