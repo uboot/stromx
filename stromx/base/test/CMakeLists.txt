@@ -25,6 +25,7 @@ add_executable(stromx_base_test
     ../Clip.cpp
     ../ConstImage.cpp
     ../ConvertPixelType.cpp
+    ../Dilate.cpp
     ../Image.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
@@ -38,6 +39,7 @@ add_executable(stromx_base_test
     ClipTest.cpp
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
+    DilateTest.cpp
     ImageTest.cpp
     main.cpp
 )

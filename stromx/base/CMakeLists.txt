@@ -29,6 +29,7 @@ set(SOURCES
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
+    Dilate.cpp
     Image.cpp
     Utilities.cpp
 )

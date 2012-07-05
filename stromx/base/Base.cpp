@@ -23,6 +23,7 @@
 #include "Clip.h"
 #include "ConstImage.h"
 #include "ConvertPixelType.h"
+#include "Dilate.h"
 #include "Image.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/Registry.h>
@@ -41,4 +42,5 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerOperator(new Clip);
     registry.registerOperator(new ConstImage);
     registry.registerOperator(new ConvertPixelType);
+    registry.registerOperator(new Dilate);
 }
