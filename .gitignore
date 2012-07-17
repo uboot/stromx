@@ -1,4 +1,6 @@
 .kdev4
 *.vpp~*
+*.vpp.bak
+*.vpp.new
 *~
 Config.h
