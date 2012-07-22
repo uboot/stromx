@@ -27,6 +27,7 @@ add_executable(stromx_base_test
     ../ConvertPixelType.cpp
     ../Dilate.cpp
     ../Image.cpp
+    ../ImageFilter.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
@@ -41,6 +42,7 @@ add_executable(stromx_base_test
     ConstImageTest.cpp
     DilateTest.cpp
     ImageTest.cpp
+    ImageFilterTest.cpp
     main.cpp
 )
 

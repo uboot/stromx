@@ -189,8 +189,7 @@ namespace stromx
         
         void Image::getDataFromCvImage(const PixelType pixelType)
         {
-            setBuffer((uint8_t*)(m_image->data));
-            setBufferSize(m_image->step * m_image->rows);
+            setBuffer((uint8_t*)(m_image->data), m_image->step * m_image->rows);
             initialize(m_image->cols, m_image->rows, m_image->step, (uint8_t*)(m_image->data), pixelType);
         }
         

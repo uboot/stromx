@@ -65,14 +65,15 @@ namespace stromx
                                     const PixelType pixelType);
             
         protected:
-            /** Sets the size of the image buffer. */
-            virtual void setBufferSize(const unsigned int bufferSize);
-            
             /** 
-             * Sets the buffer. Note that the image data defined by width, height, pixel type
+             * Sets a new image buffer. Note that the image data defined by width, height, pixel type
              * and data must always be contained in the image buffer.
+	     * 
+	     * \param buffer The new buffer. Note that this memory is \em not released by
+	     *               the ImageWrapper.
+	     * \param bufferSize The size of \a buffer in bytes.
              */
-            virtual void setBuffer(uint8_t* const buffer);
+            virtual void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
             
         private:
             static const core::DataVariant dataVariantFromPixelType(const PixelType pixelType);

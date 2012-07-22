@@ -44,14 +44,10 @@ namespace stromx
             m_variant(DataVariant::IMAGE)
         {
         }
-        
-        void ImageWrapper::setBufferSize(const unsigned int bufferSize)
+
+        void ImageWrapper::setBuffer(uint8_t*const buffer, const unsigned int bufferSize)
         {
             m_bufferSize = bufferSize;
-        }
-
-        void ImageWrapper::setBuffer(uint8_t*const buffer)
-        {
             m_buffer = buffer;
         }
         

@@ -31,6 +31,7 @@ set(SOURCES
     ConstImage.cpp
     Dilate.cpp
     Image.cpp
+    ImageFilter.cpp
     Utilities.cpp
 )
 
