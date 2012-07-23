@@ -16,6 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include <stromx/core/DataContainer.h>
+#include <stromx/core/OperatorException.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
@@ -48,6 +49,16 @@ namespace stromx
             {
             }
             
+            void validateSourceImage(const core::Image & source)
+            {
+                if(source.pixelType() != core::Image::MONO_8)
+                    throw core::InputError(SOURCE, *this, "Source image is not a grayscale image.");
+            }
+            
+            const unsigned int computeDestinationSize(const core::Image & source)
+            {
+                return source.width() * source.pixelSize() * source.height();
+            }
         };
         
         void ImageFilterTest::setUp()

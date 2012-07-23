@@ -86,6 +86,10 @@ namespace stromx
                 WriteAccess<Image> src(srcMapper.data());
                 Image& image = src();
                 
+                validateSourceImage(image);
+                if(image.bufferSize() < computeDestinationSize(image))
+                    throw InputError(DESTINATION, *this, "Destination image is too small.");
+                
                 cv::Mat cvImage = getOpenCvMat(image);
                 
                 applyFilter(cvImage, cvImage);
@@ -108,9 +112,8 @@ namespace stromx
                     const Image& srcImage = src();
                     Image& destImage = dest();
                     
-                    unsigned int minimalDestinationSize = srcImage.width() * srcImage.pixelSize() * srcImage.height();
-                            
-                    if(destImage.bufferSize() < minimalDestinationSize)
+                    validateSourceImage(srcImage);
+                    if(destImage.bufferSize() < computeDestinationSize(srcImage))
                         throw InputError(DESTINATION, *this, "Destination image is too small.");
                     
                     destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
@@ -130,6 +133,10 @@ namespace stromx
                     // source and treat it as in the single input case.
                     WriteAccess<Image> src(srcMapper.data());
                     Image& image = src();
+                    
+                    validateSourceImage(image);
+                    if(image.bufferSize() < computeDestinationSize(image))
+                        throw InputError(DESTINATION, *this, "Destination image is too small.");
                     
                     cv::Mat cvImage = getOpenCvMat(image);
                     
