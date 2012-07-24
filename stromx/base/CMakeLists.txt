@@ -32,6 +32,7 @@ set(SOURCES
     Dilate.cpp
     Image.cpp
     ImageFilter.cpp
+    MorphologicalFilter.cpp
     Utilities.cpp
 )
 
