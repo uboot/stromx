@@ -37,6 +37,8 @@ namespace stromx
             CPPUNIT_TEST (testOneInput);
             CPPUNIT_TEST (testTwoInputs);
             CPPUNIT_TEST (testIdenticalInputs);
+            CPPUNIT_TEST (testWrongDestination);
+            CPPUNIT_TEST (testWrongSource);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -48,7 +50,9 @@ namespace stromx
             protected:
                 void testOneInput();
                 void testTwoInputs();
+                void testWrongSource();
                 void testIdenticalInputs();
+                void testWrongDestination();
                 
             private:
                 core::OperatorTester* m_operator;
