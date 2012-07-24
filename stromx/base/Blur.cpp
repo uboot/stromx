@@ -36,12 +36,8 @@ namespace stromx
     {
         const std::string Blur::TYPE("Blur");
         
-        const std::string Blur::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version Blur::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
-        
         Blur::Blur()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
-            m_inPlace(true),
+          : ImageFilter(TYPE),
             m_filterType(GAUSSIAN),
             m_kernelSize(3)
         {
@@ -53,9 +49,6 @@ namespace stromx
             {
                 switch(id)
                 {
-                case IN_PLACE:
-                    m_inPlace = data_cast<const Bool &>(value);
-                    break;
                 case FILTER_TYPE:
                     m_filterType = data_cast<const Enum &>(value);
                     break;
@@ -68,7 +61,7 @@ namespace stromx
                     
                     m_kernelSize = data_cast<const UInt32 &>(value);
                 default:
-                    throw WrongParameterId(id, *this);
+                    ImageFilter::setParameter(id, value);
                 }
             }
             catch(BadCast&)
@@ -81,108 +74,14 @@ namespace stromx
         {
             switch(id)
             {
-            case IN_PLACE:
-                return m_inPlace;
             case FILTER_TYPE:
                 return m_filterType;
             case KERNEL_SIZE:
                 return m_kernelSize;
             default:
-                throw WrongParameterId(id, *this);
+                return ImageFilter::getParameter(id);
             }
         }  
-    
-        void Blur::initialize()
-        {
-            stromx::core::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupInitParameters());
-        }
-        
-        void Blur::execute(DataProvider& provider)
-        {
-            if(m_inPlace)
-            {
-                Id2DataPair srcMapper(SOURCE);
-                provider.receiveInputData(srcMapper);
-                
-                WriteAccess<Image> src(srcMapper.data());
-                Image& image = src();
-                
-                cv::Mat cvImage = getOpenCvMat(image);
-                
-                applyFilter(cvImage, cvImage);
-                
-                Id2DataPair outputMapper(OUTPUT, srcMapper.data());
-                provider.sendOutputData(outputMapper);
-            }
-            else
-            {
-                Id2DataPair srcMapper(SOURCE);
-                Id2DataPair destMapper(DESTINATION);
-                provider.receiveInputData(srcMapper && destMapper);
-                
-                ReadAccess<Image> src(srcMapper.data());
-                WriteAccess<Image> dest(destMapper.data());
-                
-                const Image& srcImage = src();
-                Image& destImage = dest();
-                
-                unsigned int minimalDestinationSize = srcImage.width() * srcImage.pixelSize() * srcImage.height();
-                        
-                if(destImage.bufferSize() < minimalDestinationSize)
-                    throw InputError(DESTINATION, *this, "Destination image is too small.");
-                
-                destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
-                
-                cv::Mat inCvImage = getOpenCvMat(srcImage);
-                cv::Mat outCvImage = getOpenCvMat(destImage);
-                
-                applyFilter(inCvImage, outCvImage);
-                
-                Id2DataPair outputMapper(OUTPUT, destMapper.data());
-                provider.sendOutputData( outputMapper);
-            }
-        }
-        
-        const std::vector<const core::Description*> Blur::setupInputs()
-        {
-            std::vector<const Description*> inputs;
-            
-            Description* source = new Description(SOURCE, DataVariant::IMAGE);
-            source->setDoc("Source");
-            inputs.push_back(source);
-            
-            if(! m_inPlace)
-            {
-                Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-                destination->setDoc("Destination");
-                inputs.push_back(destination);
-            }
-            
-            return inputs;
-        }
-        
-        const std::vector<const Description*> Blur::setupOutputs()
-        {
-            std::vector<const Description*> outputs;
-            
-            Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setDoc("Output");
-            outputs.push_back(output);
-            
-            return outputs;
-        }
-        
-        const std::vector<const Parameter*> Blur::setupParameters()
-        {
-            std::vector<const core::Parameter*> parameters;
-            
-            Parameter* inPlace = new Parameter(IN_PLACE, DataVariant::BOOL);
-            inPlace->setDoc("Process in place");
-            inPlace->setAccessMode(core::Parameter::NONE_WRITE);
-            parameters.push_back(inPlace);
-                                        
-            return parameters;
-        }
         
         const std::vector<const Parameter*> Blur::setupInitParameters()
         {
@@ -216,6 +115,25 @@ namespace stromx
                 default:
                     throw WrongArgument("Unsupported filter type.");
             }
+        }
+        
+        const unsigned int Blur::computeDestinationSize(const stromx::core::Image& source)
+        {
+            return source.width() * source.pixelSize() * source.height();
+        }
+
+        void Blur::validateSourceImage(const stromx::core::Image& source)
+        {
+            switch(source.pixelType())
+            {
+            case Image::BAYERBG_8:
+            case Image::BAYERBG_16:
+            case Image::BAYERGB_8:
+            case Image::BAYERGB_16:
+                throw InputError(ImageFilter::SOURCE, *this, "Source image must not be a Bayer pattern image.");
+            default:
+                ; // everything else is valid
+            };
         }
     } 
 }

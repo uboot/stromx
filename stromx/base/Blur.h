@@ -18,10 +18,7 @@
 #define STROMX_BASE_BLUR_H
 
 #include "Config.h"
-#include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
+#include "ImageFilter.h"
 
 struct _IplImage;
 
@@ -35,24 +32,12 @@ namespace stromx
     namespace base
     {
         /** \brief Blurs the input image. */
-        class STROMX_BASE_API Blur : public core::OperatorKernel
+        class STROMX_BASE_API Blur : public ImageFilter
         {
         public:
-            enum InputId
-            {
-                SOURCE,
-                DESTINATION
-            };
-            
-            enum OutputId
-            {
-                OUTPUT
-            };
-            
             enum ParameterId
             {
-                IN_PLACE,
-                FILTER_TYPE,
+                FILTER_TYPE = ImageFilter::FILTER_PARAMETERS,
                 KERNEL_SIZE
             };
             
@@ -64,25 +49,19 @@ namespace stromx
             
             Blur();
             
-            virtual OperatorKernel* const clone() const { return new Blur; }
+            virtual OperatorKernel*const clone() const { return new Blur; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
-            virtual void initialize();
+            
+        protected:
+            virtual const std::vector<const core::Parameter*> setupInitParameters();
+            virtual void applyFilter(const cv::Mat & in, cv::Mat & out);
+            virtual void validateSourceImage(const core::Image & source);
+            virtual const unsigned int computeDestinationSize(const core::Image & source);
             
         private:
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupParameters();
-            const std::vector<const core::Parameter*> setupInitParameters();
-            
             static const std::string TYPE;
-            static const std::string PACKAGE;
-            static const core::Version VERSION;
             
-            void applyFilter(const cv::Mat & in, cv::Mat & out);
-            
-            core::Bool m_inPlace;
             core::Enum m_filterType;
             core::UInt32 m_kernelSize;
         };
