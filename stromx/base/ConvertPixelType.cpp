@@ -80,6 +80,9 @@ namespace stromx
             Id2DataPair destMapper(DESTINATION);
             provider.receiveInputData(srcMapper && destMapper);
             
+            if(srcMapper.data() == destMapper.data())
+                throw InputError(DESTINATION, *this, "Destination image be the same image as the source image."); 
+            
             ReadAccess<Image> src(srcMapper.data());
             WriteAccess<Image> dest(destMapper.data());
             
@@ -92,7 +95,7 @@ namespace stromx
             unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
             
             if(destImage.bufferSize() < destImageSize)
-                throw InputError(DESTINATION, *this, "Destination image is too small");
+                throw InputError(DESTINATION, *this, "Destination image is too small.");
             
             destImage.initialize(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
             

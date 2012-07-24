@@ -20,6 +20,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
+#include <stromx/core/DataContainer.h>
+
 namespace stromx
 {
     namespace core
@@ -35,6 +37,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteMono8);
             CPPUNIT_TEST (testExecuteBayerBg8);
             CPPUNIT_TEST (testExecuteBayerRgb24);
+            CPPUNIT_TEST (testExecuteIdenticalInputs);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -47,9 +50,11 @@ namespace stromx
                 void testExecuteMono8();
                 void testExecuteBayerBg8();
                 void testExecuteBayerRgb24();
+                void testExecuteIdenticalInputs();
                 
             private:
                 core::OperatorTester* m_operator;
+                core::DataContainer m_source;
         };
     }
 }

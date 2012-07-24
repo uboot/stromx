@@ -17,59 +17,41 @@
 #ifndef STROMX_BASE_CANNY_H
 #define STROMX_BASE_CANNY_H
 
-#include "Config.h"
+#include "ImageFilter.h"
 #include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
+#include "Image.h"
 
 namespace stromx
 {
     namespace base
     {
         /** \brief Applies the %Canny edge detector. */
-        class STROMX_BASE_API Canny : public core::OperatorKernel
+        class STROMX_BASE_API Canny : public ImageFilter
         {
         public:
-            enum InputId
-            {
-                SOURCE,
-                DESTINATION
-            };
-            
-            enum OutputId
-            {
-                OUTPUT
-            };
-            
             enum ParameterId
             {
-                IN_PLACE,
-                THRESHOLD_1,
+                THRESHOLD_1 = ImageFilter::FILTER_PARAMETERS,
                 THRESHOLD_2
             };
             
             Canny();
             
-            virtual OperatorKernel* const clone() const { return new Canny; }
+            virtual OperatorKernel*const clone() const { return new Canny; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
-            virtual void initialize();
+            
+        protected:
+            virtual const std::vector<const core::Parameter*> setupInitParameters();
+            virtual void applyFilter(const cv::Mat & in, cv::Mat & out);
+            virtual void validateSourceImage(const core::Image & source);
+            virtual const unsigned int computeDestinationSize(const core::Image & source);
             
         private:
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupParameters();
-            const std::vector<const core::Parameter*> setupInitParameters();
-            
             static const std::string TYPE;
-            static const std::string PACKAGE;
-            static const core::Version VERSION;
             
             core::Double m_threshold1;
             core::Double m_threshold2;
-            core::Bool m_inPlace;
         };
     }
 }

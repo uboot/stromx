@@ -35,12 +35,8 @@ namespace stromx
     {
         const std::string Canny::TYPE("Canny");
         
-        const std::string Canny::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version Canny::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
-        
         Canny::Canny()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
-            m_inPlace(true)
+          : ImageFilter(TYPE)
         {
         }
 
@@ -50,9 +46,6 @@ namespace stromx
             {
                 switch(id)
                 {
-                case IN_PLACE:
-                    m_inPlace = dynamic_cast<const Bool &>(value);
-                    break;
                 case THRESHOLD_1:
                     m_threshold1 = dynamic_cast<const Double &>(value);
                     break;
@@ -60,7 +53,7 @@ namespace stromx
                     m_threshold2 = dynamic_cast<const Double &>(value);
                     break;
                 default:
-                    throw WrongParameterId(id, *this);
+                    ImageFilter::setParameter(id, value);
                 }
             }
             catch(std::bad_cast&)
@@ -73,113 +66,30 @@ namespace stromx
         {
             switch(id)
             {
-            case IN_PLACE:
-                return m_inPlace;
             case THRESHOLD_1:
                 return m_threshold1;
             case THRESHOLD_2:
                 return m_threshold2;
             default:
-                throw WrongParameterId(id, *this);
+                return ImageFilter::getParameter(id);
             }
         }  
-    
-        void Canny::initialize()
+        
+        void Canny::validateSourceImage(const stromx::core::Image& source)
         {
-            stromx::core::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupInitParameters());
+
+            if(source.pixelType() != Image::MONO_8)
+                throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
         }
         
-        void Canny::execute(DataProvider& provider)
+        const unsigned int Canny::computeDestinationSize(const stromx::core::Image& source)
         {
-            if(m_inPlace)
-            {
-                Id2DataPair srcMapper(SOURCE);
-                provider.receiveInputData(srcMapper);
-                
-                WriteAccess<Image> src(srcMapper.data());
-                Image& image = src();
-                
-                if(image.pixelType() != Image::MONO_8)
-                    throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
-                
-                cv::Mat cvImage = getOpenCvMat(image);
-                
-                cv::Canny(cvImage, cvImage, m_threshold1, m_threshold2);
-                
-                Id2DataPair outputMapper(OUTPUT, srcMapper.data());
-                provider.sendOutputData(outputMapper);
-            }
-            else
-            {
-                Id2DataPair srcMapper(SOURCE);
-                Id2DataPair destMapper(DESTINATION);
-                provider.receiveInputData(srcMapper && destMapper);
-                
-                ReadAccess<Image> src(srcMapper.data());
-                WriteAccess<Image> dest(destMapper.data());
-                
-                const Image& srcImage = src();
-                Image& destImage = dest();
-                
-                if(srcImage.pixelType() != Image::MONO_8)
-                    throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
-                
-                unsigned int minimalDestinationSize = srcImage.width() * srcImage.pixelSize() * srcImage.height();
-                        
-                if(destImage.bufferSize() < minimalDestinationSize)
-                    throw InputError(DESTINATION, *this, "Destination image is too small.");
-                
-                destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
-                
-                cv::Mat inCvImage = getOpenCvMat(srcImage);
-                cv::Mat outCvImage = getOpenCvMat(destImage);
-                
-                cv::Canny(inCvImage, outCvImage, m_threshold1, m_threshold2);
-                
-                Id2DataPair outputMapper(OUTPUT, destMapper.data());
-                provider.sendOutputData( outputMapper);
-            }
+            return  source.width() * source.pixelSize() * source.height();
         }
-        
-        const std::vector<const core::Description*> Canny::setupInputs()
+
+        void Canny::applyFilter(const cv::Mat& in, cv::Mat& out)
         {
-            std::vector<const Description*> inputs;
-            
-            Description* source = new Description(SOURCE, DataVariant::MONO_IMAGE);
-            source->setDoc("Source");
-            inputs.push_back(source);
-            
-            if(! m_inPlace)
-            {
-                Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-                destination->setDoc("Destination");
-                inputs.push_back(destination);
-            }
-            
-            return inputs;
-        }
-        
-        const std::vector<const Description*> Canny::setupOutputs()
-        {
-            std::vector<const Description*> outputs;
-            
-            Description* output = new Description(OUTPUT, DataVariant::MONO_IMAGE);
-            output->setDoc("Output");
-            outputs.push_back(output);
-            
-            return outputs;
-        }
-        
-        const std::vector<const Parameter*> Canny::setupParameters()
-        {
-            std::vector<const core::Parameter*> parameters;
-            
-            Parameter* inPlace = new Parameter(IN_PLACE, DataVariant::BOOL);
-            inPlace->setDoc("Process in place");
-            inPlace->setAccessMode(core::Parameter::NONE_WRITE);
-            parameters.push_back(inPlace);
-                                        
-            return parameters;
+            cv::Canny(in, out, m_threshold1, m_threshold2);
         }
         
         const std::vector<const Parameter*> Canny::setupInitParameters()

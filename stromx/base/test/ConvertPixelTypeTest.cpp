@@ -19,6 +19,7 @@
 #include "../ConvertPixelType.h"
 #include "../Image.h"
 #include <stromx/core/DataContainer.h>
+#include <stromx/core/OperatorException.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
@@ -38,8 +39,8 @@ namespace stromx
             m_operator->activate();
             Image* image = new Image("lenna.jpg");
             image->initialize(499, 511, image->stride(), image->data(), image->pixelType());
-            DataContainer source(image);
-            m_operator->setInputData(ConvertPixelType::SOURCE, source);
+            m_source = DataContainer(image);
+            m_operator->setInputData(ConvertPixelType::SOURCE, m_source);
         }
         
         void ConvertPixelTypeTest::testExecuteMono8()
@@ -93,9 +94,17 @@ namespace stromx
             image.save("ConvertPixelTypeTest_testExecuteBayerRgb24.png");
         }
         
+        void ConvertPixelTypeTest::testExecuteIdenticalInputs()
+        {
+            m_operator->setInputData(ConvertPixelType::DESTINATION, m_source);
+            core::DataContainer result;
+            CPPUNIT_ASSERT_THROW(result = m_operator->getOutputData(ConvertPixelType::OUTPUT), InputError);
+        }
+        
         void ConvertPixelTypeTest::tearDown ( void )
         {
             delete m_operator;
+            m_source = DataContainer();
         }
     }
 }
