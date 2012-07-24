@@ -17,8 +17,7 @@
 #ifndef STROMX_BASE_DILATETEST_H
 #define STROMX_BASE_DILATETEST_H
 
-#include <cppunit/extensions/HelperMacros.h>
-#include <cppunit/TestFixture.h>
+#include "MorphologicalFilterTest.h"
 
 namespace stromx
 {
@@ -29,23 +28,16 @@ namespace stromx
 
     namespace base
     {
-        class DilateTest : public CPPUNIT_NS :: TestFixture
+        class DilateTest : public MorphologicalFilterTest
         {
             CPPUNIT_TEST_SUITE (DilateTest);
             CPPUNIT_TEST (testExecuteMono);
+            CPPUNIT_TEST (testExecuteColor);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
-                DilateTest() : m_operator(0) {}
-                
-                void setUp();
-                void tearDown();
-
             protected:
-                void testExecuteMono();
-                
-            private:
-                core::OperatorTester* m_operator;
+                core::OperatorKernel*const allocateOperator() const;
+                const std::string getTestName() const { return "DilateTest"; }
         };
     }
 }

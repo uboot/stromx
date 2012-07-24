@@ -77,8 +77,6 @@ namespace stromx
             resultImage.save(getTestName() + "_testExecuteColor.png");
         }
         
-        
-        
         void MorphologicalFilterTest::tearDown ( void )
         {
             delete m_operator;

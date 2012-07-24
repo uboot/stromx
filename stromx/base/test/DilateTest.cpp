@@ -14,14 +14,9 @@
 *  limitations under the License.
 */
 
-#include <cppunit/TestAssert.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
-#include "DilateTest.h"
 #include "../Dilate.h"
-#include "../Image.h"
+
+#include "DilateTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::DilateTest);
 
@@ -31,34 +26,9 @@ namespace stromx
 
     namespace base
     {
-        void DilateTest::setUp ( void )
+        OperatorKernel*const DilateTest::allocateOperator() const
         {
-            m_operator = new core::OperatorTester(new Dilate());
-        }
-        
-        void DilateTest::testExecuteMono()
-        {
-            m_operator->initialize();
-            m_operator->activate();
-            
-            Image* image = new Image("lenna_bw.jpg");
-            DataContainer source(image);
-            m_operator->setInputData(Dilate::SOURCE, source);
-            
-            core::DataContainer result = m_operator->getOutputData(Dilate::OUTPUT);
-            
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, resultImage.pixelType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
-            
-            resultImage.save("DilateTest_testExecuteMono.png");
-        }
-        
-        void DilateTest::tearDown ( void )
-        {
-            delete m_operator;
+            return new Dilate;
         }
     }
 }
