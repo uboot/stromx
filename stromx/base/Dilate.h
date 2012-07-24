@@ -17,79 +17,23 @@
 #ifndef STROMX_BASE_DILATE_H
 #define STROMX_BASE_DILATE_H
 
-#include "Config.h"
-#include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
-
-struct _IplImage;
-
-namespace cv
-{
-    class Mat;
-}
+#include "MorphologicalFilter.h"
 
 namespace stromx
 {
     namespace base
     {
         /** \brief Dilates the input image. */
-        class STROMX_BASE_API Dilate : public core::OperatorKernel
+        class STROMX_BASE_API Dilate : public MorphologicalFilter
         {
         public:
-            enum InputId
-            {
-                SOURCE,
-                DESTINATION
-            };
-            
-            enum OutputId
-            {
-                OUTPUT
-            };
-            
-            enum ParameterId
-            {
-                IN_PLACE,
-                KERNEL_SHAPE,
-                KERNEL_SIZE_X,
-                KERNEL_SIZE_Y,
-                ITERATIONS
-            };
-            
-            enum KernelShape
-            {
-                RECTANGLE,
-                ELLIPSE,
-                CROSS
-            };
-            
             Dilate();
-            
-            virtual OperatorKernel* const clone() const { return new Dilate; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
-            virtual void initialize();
+            virtual OperatorKernel*const clone() const { return new Dilate; }
             
         private:
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupParameters();
-            const std::vector<const core::Parameter*> setupInitParameters();
-            
+            virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,
+                                                  const cv::InputArray kernel, int iterations);
             static const std::string TYPE;
-            static const std::string PACKAGE;
-            static const core::Version VERSION;
-            
-            void applyFilter(const cv::Mat & in, cv::Mat & out);
-            
-            core::Bool m_inPlace;
-            core::Enum m_kernelShape;
-            core::UInt32 m_kernelSizeX;
-            core::UInt32 m_kernelSizeY;
-            core::UInt32 m_iterations;
         };
     }
 }

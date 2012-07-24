@@ -28,6 +28,7 @@ add_executable(stromx_base_test
     ../Dilate.cpp
     ../Image.cpp
     ../ImageFilter.cpp
+    ../MorphologicalFilter.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
