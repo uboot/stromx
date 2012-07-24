@@ -31,7 +31,7 @@ namespace stromx
 {
     namespace base
     {
-        /** \brief Dilates the input image. */
+        /** \brief Abstract base class of morphological filters. */
         class STROMX_BASE_API MorphologicalFilter : public ImageFilter
         {
         public:
