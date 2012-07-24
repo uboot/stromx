@@ -44,6 +44,7 @@ add_executable(stromx_base_test
     ImageTest.cpp
     ImageFilterTest.cpp
     main.cpp
+    MorphologicalFilterTest.cpp
 )
 
 target_link_libraries(stromx_base_test 
