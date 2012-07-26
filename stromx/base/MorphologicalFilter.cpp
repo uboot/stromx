@@ -16,7 +16,9 @@
 
 #include "MorphologicalFilter.h"
 
+#include <stromx/core/EnumParameter.h>
 #include <stromx/core/Image.h>
+#include <stromx/core/NumericParameter.h>
 #include <stromx/core/OperatorException.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -118,8 +120,36 @@ namespace stromx
         }
 
         const std::vector<const Parameter*> MorphologicalFilter::setupInitParameters()
-        {
-            return std::vector<const Parameter*>();
+        {            
+            std::vector<const core::Parameter*> parameters;
+            
+            EnumParameter* kernelShape = new EnumParameter(KERNEL_SHAPE);
+            kernelShape->setDoc("Filter type");
+            kernelShape->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelShape->add(EnumDescription(Enum(RECTANGLE), "Rectangle"));
+            kernelShape->add(EnumDescription(Enum(ELLIPSE), "Ellipse"));
+            kernelShape->add(EnumDescription(Enum(CROSS), "Cross"));
+            parameters.push_back(kernelShape);
+            
+            NumericParameter<UInt32>* kernelSizeX = new NumericParameter<UInt32>(KERNEL_SIZE_X, DataVariant::UINT_32);
+            kernelSizeX->setDoc("Kernel size x");
+            kernelSizeX->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSizeX->setMin(UInt32(1));
+            parameters.push_back(kernelSizeX);
+            
+            NumericParameter<UInt32>* kernelSizeY = new NumericParameter<UInt32>(KERNEL_SIZE_Y, DataVariant::UINT_32);
+            kernelSizeY->setDoc("Kernel size y");
+            kernelSizeY->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSizeY->setMin(UInt32(1));
+            parameters.push_back(kernelSizeY);
+            
+            NumericParameter<UInt32>* iterations = new NumericParameter<UInt32>(ITERATIONS, DataVariant::UINT_32);
+            iterations->setDoc("Iterations");
+            iterations->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            iterations->setMin(UInt32(1));
+            parameters.push_back(iterations);
+                                        
+            return parameters;
         }
 
         void MorphologicalFilter::validateSourceImage(const stromx::core::Image& source)

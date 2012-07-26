@@ -23,12 +23,15 @@ add_executable(stromx_base_test
     ../Camera.cpp
     ../Canny.cpp
     ../Clip.cpp
+    ../Close.cpp
     ../ConstImage.cpp
     ../ConvertPixelType.cpp
     ../Dilate.cpp
+    ../Erode.cpp
     ../Image.cpp
     ../ImageFilter.cpp
     ../MorphologicalFilter.cpp
+    ../Open.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
@@ -39,13 +42,16 @@ add_executable(stromx_base_test
     CameraTest.cpp
     CannyTest.cpp
     ClipTest.cpp
+    CloseTest.cpp
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
     DilateTest.cpp
+    ErodeTest.cpp
     ImageTest.cpp
     ImageFilterTest.cpp
     main.cpp
     MorphologicalFilterTest.cpp
+    OpenTest.cpp
 )
 
 target_link_libraries(stromx_base_test 

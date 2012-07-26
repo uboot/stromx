@@ -26,9 +26,12 @@
 #include <stromx/base/AdjustRgbChannels.h>
 #include <stromx/base/Camera.h>
 #include <stromx/base/Canny.h>
+#include <stromx/base/Close.h>
 #include <stromx/base/ConvertPixelType.h>
 #include <stromx/base/Clip.h>
 #include <stromx/base/Dilate.h>
+#include <stromx/base/Erode.h>
+#include <stromx/base/Open.h>
 
 void exportImage();
 
@@ -47,7 +50,10 @@ BOOST_PYTHON_MODULE(libbase)
     stromx::python::exportOperatorKernel<Camera>("Camera");
     stromx::python::exportOperatorKernel<Canny>("Canny");
     stromx::python::exportOperatorKernel<Clip>("Clip");
+    stromx::python::exportOperatorKernel<Close>("Close");
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
     stromx::python::exportOperatorKernel<Dilate>("Dilate");
+    stromx::python::exportOperatorKernel<Erode>("Erode");
+    stromx::python::exportOperatorKernel<Open>("Open");
 }

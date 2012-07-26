@@ -21,10 +21,13 @@
 #include "Camera.h"
 #include "Canny.h"
 #include "Clip.h"
+#include "Close.h"
 #include "ConstImage.h"
 #include "ConvertPixelType.h"
 #include "Dilate.h"
+#include "Erode.h"
 #include "Image.h"
+#include "Open.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/Registry.h>
 
@@ -40,7 +43,10 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerOperator(new Camera);
     registry.registerOperator(new Canny);
     registry.registerOperator(new Clip);
+    registry.registerOperator(new Close);
     registry.registerOperator(new ConstImage);
     registry.registerOperator(new ConvertPixelType);
     registry.registerOperator(new Dilate);
+    registry.registerOperator(new Erode);
+    registry.registerOperator(new Open);
 }

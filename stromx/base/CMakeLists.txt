@@ -25,14 +25,17 @@ set(SOURCES
     Buffer.cpp
     Camera.cpp
     Canny.cpp
+    Close.cpp
     impl/CameraBuffer.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
     Dilate.cpp
+    Erode.cpp
     Image.cpp
     ImageFilter.cpp
     MorphologicalFilter.cpp
+    Open.cpp
     Utilities.cpp
 )
 
