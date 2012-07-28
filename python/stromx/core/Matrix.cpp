@@ -80,6 +80,11 @@ namespace
             return this->get_override("valueType")();
         }
         
+        const unsigned int valueSize(const ValueType valueType) const
+        {
+            return this->get_override("valueSize")();
+        }
+        
         uint8_t* const data()
         {
             return this->get_override("data")();
@@ -88,15 +93,6 @@ namespace
         const uint8_t* const data() const
         {
             return this->get_override("data")();
-        }
-        
-        void initialize(const unsigned int rows, 
-                        const unsigned int cols, 
-                        const unsigned int stride, 
-                        uint8_t* const data, 
-                        const ValueType valueType)
-        {
-            this->get_override("initialize")();
         }
     };
 }
@@ -120,6 +116,7 @@ void exportMatrix()
         .def("cols", pure_virtual(&Matrix::cols))
         .def("stride", pure_virtual(&Matrix::stride))
         .def("valueType", pure_virtual(&Matrix::valueType))
+        .def("valueSize", pure_virtual(&Matrix::valueSize))
         .def("_data", pure_virtual(reinterpret_cast<unsigned int (Matrix::*)()>(static_cast<uint8_t* const(Matrix::*)()>(&Matrix::data))))
     ;
 }

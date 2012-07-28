@@ -103,7 +103,7 @@ namespace stromx
             adjustClipRegion(image.width(), image.height(), left, top, width, height);
             
             uint8_t* data = image.data() + top * image.stride() + left * image.pixelSize();
-            image.initialize(width, height, image.stride(), data, image.pixelType());
+            image.initializeImage(width, height, image.stride(), data, image.pixelType());
             
             Id2DataPair outputDataMapper(OUTPUT, container);
             provider.sendOutputData( outputDataMapper);

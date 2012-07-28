@@ -57,11 +57,11 @@ namespace stromx
             
             virtual const uint8_t* const data() const = 0;
             
-            virtual void initialize(const unsigned int rows, 
-                                    const unsigned int cols, 
-                                    const unsigned int stride, 
-                                    uint8_t* const data, 
-                                    const ValueType valueType) = 0;
+            virtual void initializeMatrix(const unsigned int rows, 
+                                          const unsigned int cols, 
+                                          const unsigned int stride, 
+                                          uint8_t* const data, 
+                                          const ValueType valueType) = 0;
             
         protected:
             /** 

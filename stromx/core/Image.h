@@ -65,11 +65,11 @@ namespace stromx
              * change the image buffer but merely changes the description of the data
              * contained in the image buffer.
              */
-            virtual void initialize(const unsigned int width, 
-                                    const unsigned int height, 
-                                    const unsigned int stride, 
-                                    uint8_t* const data, 
-                                    const PixelType pixelType) = 0;
+            virtual void initializeImage(const unsigned int width, 
+                                         const unsigned int height, 
+                                         const unsigned int stride, 
+                                         uint8_t* const data, 
+                                         const PixelType pixelType) = 0;
                                     
             /** Returns the number of channels for a given pixel type. */
             static const int numChannels(const PixelType pixelType);

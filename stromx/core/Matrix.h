@@ -65,6 +65,9 @@ namespace stromx
             /** Returns the value type of the data of the matrix. */
             virtual const ValueType valueType() const = 0;
             
+            /** Returns the size of a single value in bytes. */
+            virtual const unsigned int valueSize() const = 0;
+            
             /** Returns the address of the matrix data. */
             virtual uint8_t* const data() = 0;
             
@@ -76,16 +79,17 @@ namespace stromx
              * change the matrix buffer but merely changes the description of the data
              * contained in the matrix buffer.
              */
-            virtual void initialize(const unsigned int rows, 
-                                    const unsigned int cols, 
-                                    const unsigned int stride, 
-                                    uint8_t* const data, 
-                                    const ValueType valueType) = 0;
-                                    
-            /** Returns the size of a single value of type \c valueType in bytes. */  
-            static const unsigned int valueSize(const ValueType valueType);    
+            virtual void initializeMatrix(const unsigned int rows, 
+                                          const unsigned int cols, 
+                                          const unsigned int stride, 
+                                          uint8_t* const data, 
+                                          const ValueType valueType) = 0;
+                                     
             
         protected:
+            /** Returns the size of a single value of type \c valueType in bytes. */  
+            static const unsigned int valueSizeFromValueType(const ValueType valueType);  
+            
             static const core::DataVariant dataVariantFromValueType(const ValueType pixelType);
         };
     }

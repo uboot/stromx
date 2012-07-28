@@ -60,11 +60,9 @@ namespace stromx
             return depth(m_pixelType) * numChannels(m_pixelType);
         }
         
-        void ImageWrapper::initialize(const unsigned int width, 
-                                const unsigned int height, 
-                                const unsigned int stride,
-                                uint8_t*const data, 
-                                const PixelType pixelType)
+        void ImageWrapper::initializeImage(const unsigned int width, const unsigned int height, 
+                                           const unsigned int stride, uint8_t*const data, 
+                                           const PixelType pixelType)
         {
             validate(width, height, stride, data, pixelType);
             
@@ -122,14 +120,14 @@ namespace stromx
         
         const unsigned int ImageWrapper::valueSize() const
         {
-            return Matrix::valueSize(valueType());
+            return Matrix::valueSizeFromValueType(valueType());
         }
 
-        void ImageWrapper::initialize(const unsigned int rows, const unsigned int cols, const unsigned int stride, uint8_t*const data, const stromx::core::Matrix::ValueType valueType)
+        void ImageWrapper::initializeMatrix(const unsigned int rows, const unsigned int cols, const unsigned int stride, uint8_t*const data, const stromx::core::Matrix::ValueType valueType)
         {
-            validate(cols * Matrix::valueSize(valueType), rows, stride, data, NONE);
+            validate(cols * Matrix::valueSizeFromValueType(valueType), rows, stride, data, NONE);
             
-            m_width = cols * Matrix::valueSize(valueType);
+            m_width = cols * Matrix::valueSizeFromValueType(valueType);
             m_height = rows;
             m_stride = stride;
             m_data = data;

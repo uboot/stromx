@@ -20,7 +20,7 @@ namespace stromx
 {
     namespace core
     {
-        const unsigned int Matrix::valueSize(const stromx::core::Matrix::ValueType valueType)
+        const unsigned int Matrix::valueSizeFromValueType(const stromx::core::Matrix::ValueType valueType)
         {
             switch(valueType)
             {

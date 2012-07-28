@@ -53,12 +53,12 @@ namespace stromx
         
         const unsigned int MatrixWrapper::valueSize() const
         {
-            return Matrix::valueSize(m_valueType);
+            return Matrix::valueSizeFromValueType(m_valueType);
         }
         
-        void MatrixWrapper::initialize(const unsigned int rows, const unsigned int cols,
-                                       const unsigned int stride, uint8_t* const data, 
-                                       const ValueType valueType) 
+        void MatrixWrapper::initializeMatrix(const unsigned int rows, const unsigned int cols,
+                                             const unsigned int stride, uint8_t* const data, 
+                                             const ValueType valueType) 
         {
             validate(rows, cols, stride, data, valueType);
             
@@ -71,10 +71,10 @@ namespace stromx
         }
         
         void MatrixWrapper::validate(const unsigned int rows,
-                                    const unsigned int cols,
-                                    const unsigned int stride,
-                                    const uint8_t*const data,
-                                    const ValueType pixelType) const
+                                     const unsigned int cols,
+                                     const unsigned int stride,
+                                     const uint8_t*const data,
+                                     const ValueType pixelType) const
         {
             if(cols == 0 || rows == 0)
                 return;

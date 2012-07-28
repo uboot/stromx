@@ -38,7 +38,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             Image* image = new Image("lenna.jpg");
-            image->initialize(499, 511, image->stride(), image->data(), image->pixelType());
+            image->initializeImage(499, 511, image->stride(), image->data(), image->pixelType());
             m_source = DataContainer(image);
             m_operator->setInputData(ConvertPixelType::SOURCE, m_source);
         }

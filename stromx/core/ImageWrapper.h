@@ -58,21 +58,21 @@ namespace stromx
             virtual uint8_t* const data() { return m_data; }
             virtual const uint8_t* const data() const { return m_data; }
             
-            virtual void initialize(const unsigned int width, 
-                                    const unsigned int height, 
-                                    const unsigned int stride, 
-                                    uint8_t* const data, 
-                                    const PixelType pixelType);
+            virtual void initializeImage(const unsigned int width, 
+                                         const unsigned int height, 
+                                         const unsigned int stride, 
+                                         uint8_t* const data, 
+                                         const PixelType pixelType);
             
             virtual const unsigned int rows() const { return m_height; }
             virtual const unsigned int cols() const { return m_cols; }
             virtual const ValueType valueType() const { return m_valueType; }
             virtual const unsigned int valueSize() const;
-            virtual void initialize(const unsigned int rows, 
-                                    const unsigned int cols, 
-                                    const unsigned int stride, 
-                                    uint8_t* const data, 
-                                    const ValueType valueType) ;
+            virtual void initializeMatrix(const unsigned int rows, 
+                                          const unsigned int cols, 
+                                          const unsigned int stride, 
+                                          uint8_t* const data, 
+                                          const ValueType valueType) ;
             
         protected:
             /** 

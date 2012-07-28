@@ -95,15 +95,6 @@ namespace
             return this->get_override("data")();
         }
         
-        void initialize(const unsigned int width, 
-                        const unsigned int height, 
-                        const unsigned int stride, 
-                        uint8_t* const data, 
-                        const PixelType pixelType)
-        {
-            this->get_override("initialize")();
-        }
-        
          const unsigned int rows() const
         {
             return this->get_override("rows")();
@@ -122,15 +113,6 @@ namespace
         const unsigned int valueSize() const
         {
             return this->get_override("valueSize")();
-        }
-        
-        void initialize(const unsigned int rows, 
-                        const unsigned int cols, 
-                        const unsigned int stride, 
-                        uint8_t* const data, 
-                        const ValueType valueType)
-        {
-            this->get_override("initialize")();
         }
     };
 }

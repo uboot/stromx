@@ -116,7 +116,7 @@ namespace stromx
                     if(destImage.bufferSize() < computeDestinationSize(srcImage))
                         throw InputError(DESTINATION, *this, "Destination image is too small.");
                     
-                    destImage.initialize(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
+                    destImage.initializeImage(srcImage.width(), srcImage.height(), srcImage.width() * srcImage.pixelSize(), destImage.buffer(), srcImage.pixelType());
                     
                     cv::Mat inCvImage = getOpenCvMat(srcImage);
                     cv::Mat outCvImage = getOpenCvMat(destImage);

@@ -97,7 +97,7 @@ namespace stromx
             if(destImage.bufferSize() < destImageSize)
                 throw InputError(DESTINATION, *this, "Destination image is too small.");
             
-            destImage.initialize(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
+            destImage.initializeImage(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
             
             if((srcImage.pixelType() == core::Image::RGB_24 || srcImage.pixelType() == core::Image::BGR_24)
             && (pixelType == core::Image::BAYERBG_8 || pixelType == core::Image::BAYERGB_8))
