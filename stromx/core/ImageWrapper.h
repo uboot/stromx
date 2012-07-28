@@ -64,6 +64,16 @@ namespace stromx
                                     uint8_t* const data, 
                                     const PixelType pixelType);
             
+            virtual const unsigned int rows() const { return m_height; }
+            virtual const unsigned int cols() const { return m_width * pixelSize(); }
+            virtual const ValueType valueType() const;
+            virtual const unsigned int valueSize() const;
+            virtual void initialize(const unsigned int rows, 
+                                    const unsigned int cols, 
+                                    const unsigned int stride, 
+                                    uint8_t* const data, 
+                                    const ValueType valueType) ;
+            
         protected:
             /** 
              * Sets a new image buffer. Note that the image data defined by width, height, pixel type

@@ -18,14 +18,14 @@
 #define STROMX_CORE_IMAGE_H
 
 #include <stdint.h>
-#include "Data.h"
+#include "Matrix.h"
 
 namespace stromx
 {
     namespace core
     {
         /** \brief Abstract image. */
-        class STROMX_CORE_API Image : public Data
+        class STROMX_CORE_API Image : public Matrix
         {
         public:
             enum PixelType

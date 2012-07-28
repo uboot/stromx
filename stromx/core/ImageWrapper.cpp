@@ -96,21 +96,54 @@ namespace stromx
             switch(pixelType)
             {
             case core::Image::NONE:
-                return core::DataVariant(core::DataVariant::IMAGE);
+                return core::DataVariant::IMAGE;
             case core::Image::MONO_8:
-                return core::DataVariant(core::DataVariant::MONO_8_IMAGE);
+                return core::DataVariant::MONO_8_IMAGE;
             case core::Image::BAYERBG_8:
-                return core::DataVariant(core::DataVariant::BAYERBG_8_IMAGE);
+                return core::DataVariant::BAYERBG_8_IMAGE;
             case core::Image::BAYERGB_8:
-                return core::DataVariant(core::DataVariant::BAYERGB_8_IMAGE);
+                return core::DataVariant::BAYERGB_8_IMAGE;
             case core::Image::RGB_24:
-                return core::DataVariant(core::DataVariant::RGB_24_IMAGE);
+                return core::DataVariant::RGB_24_IMAGE;
             case core::Image::BGR_24:
-                return core::DataVariant(core::DataVariant::BGR_24_IMAGE);
+                return core::DataVariant::BGR_24_IMAGE;
             default:
                 throw core::WrongArgument("Unknown pixel type.");  
             }
         }
+        
+        const unsigned int ImageWrapper::valueSize() const
+        {
+            return Matrix::valueSize(valueType());
+        }
+
+        const stromx::core::Matrix::ValueType ImageWrapper::valueType() const
+        {
+            switch(m_pixelType)
+            {
+            case core::Image::NONE:
+            case core::Image::MONO_8:
+            case core::Image::BAYERBG_8:
+            case core::Image::BAYERGB_8:
+            case core::Image::RGB_24:
+            case core::Image::BGR_24:
+                return Matrix::UINT_8;
+            default:
+                throw core::WrongArgument("Unknown pixel type.");  
+            }
+        }
+
+        void ImageWrapper::initialize(const unsigned int rows, const unsigned int cols, const unsigned int stride, uint8_t*const data, const stromx::core::Matrix::ValueType valueType)
+        {
+            validate(cols * Matrix::valueSize(valueType), rows, stride, data, NONE);
+            
+            m_width = cols * Matrix::valueSize(valueType);
+            m_height = rows;
+            m_stride = stride;
+            m_data = data;
+            m_pixelType = NONE;
+            m_variant = dataVariantFromValueType(valueType);
+
+        }
     }
-    
 }

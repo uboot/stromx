@@ -37,6 +37,8 @@ set(SOURCES
     Image.cpp
     ImageWrapper.cpp
     Join.cpp
+    Matrix.cpp
+    MatrixWrapper.cpp
     None.cpp
     Operator.cpp
     OperatorKernel.cpp

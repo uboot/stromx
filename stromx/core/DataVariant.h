@@ -46,6 +46,17 @@ namespace stromx
             const static DataVariant FLOAT;
             const static DataVariant DOUBLE;
             const static DataVariant STRING;
+            const static DataVariant MATRIX;
+            const static DataVariant INT_MATRIX;
+            const static DataVariant UINT_MATRIX;
+            const static DataVariant INT_8_MATRIX;
+            const static DataVariant UINT_8_MATRIX;
+            const static DataVariant INT_16_MATRIX;
+            const static DataVariant UINT_16_MATRIX;
+            const static DataVariant INT_32_MATRIX;
+            const static DataVariant UINT_32_MATRIX;
+            const static DataVariant FLOAT_MATRIX;
+            const static DataVariant DOUBLE_MATRIX;
             const static DataVariant IMAGE;
             const static DataVariant MONO_IMAGE;
             const static DataVariant RGB_IMAGE;
@@ -93,6 +104,17 @@ namespace stromx
                 FLOAT_ID,
                 DOUBLE_ID,
                 STRING_ID,
+                MATRIX_ID,
+                INT_MATRIX_ID,
+                UINT_MATRIX_ID,
+                INT_8_MATRIX_ID,
+                UINT_8_MATRIX_ID,
+                INT_16_MATRIX_ID,
+                UINT_16_MATRIX_ID,
+                INT_32_MATRIX_ID,
+                UINT_32_MATRIX_ID,
+                FLOAT_MATRIX_ID,
+                DOUBLE_MATRIX_ID,
                 IMAGE_ID,
                 MONO_IMAGE_ID,
                 RGB_IMAGE_ID,
