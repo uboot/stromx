@@ -103,6 +103,35 @@ namespace
         {
             this->get_override("initialize")();
         }
+        
+         const unsigned int rows() const
+        {
+            return this->get_override("rows")();
+        }
+        
+        const unsigned int cols() const
+        {
+            return this->get_override("cols")();
+        }
+        
+        const ValueType valueType() const
+        {
+            return this->get_override("valueType")();
+        }
+        
+        const unsigned int valueSize() const
+        {
+            return this->get_override("valueSize")();
+        }
+        
+        void initialize(const unsigned int rows, 
+                        const unsigned int cols, 
+                        const unsigned int stride, 
+                        uint8_t* const data, 
+                        const ValueType valueType)
+        {
+            this->get_override("initialize")();
+        }
     };
 }
 
@@ -122,11 +151,12 @@ void exportImage()
         .value("BAYERGB_16", Image::BAYERGB_16)
     ;
         
-    class_<ImageWrap, bases<Data>, boost::noncopyable>("Image")
+    class_<ImageWrap, bases<Matrix>, boost::noncopyable>("Image", no_init)
         .def("bufferSize", pure_virtual(&Image::bufferSize))
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))
         .def("stride", pure_virtual(&Image::stride))
+        .def("pixelType", pure_virtual(&Image::pixelType))
         .def("pixelSize", pure_virtual(&Image::pixelSize))
         .def("_data", pure_virtual(reinterpret_cast<unsigned int (Image::*)()>(static_cast<uint8_t* const(Image::*)()>(&Image::data))))
     ;

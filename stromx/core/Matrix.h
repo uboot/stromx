@@ -65,9 +65,6 @@ namespace stromx
             /** Returns the value type of the data of the matrix. */
             virtual const ValueType valueType() const = 0;
             
-            /** Returns the size of a single value in bytes. */
-            virtual const unsigned int valueSize() const = 0;
-            
             /** Returns the address of the matrix data. */
             virtual uint8_t* const data() = 0;
             
