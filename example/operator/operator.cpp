@@ -22,8 +22,6 @@
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
 
-#include <stromx/base/Base.h>
-
 #include "math/Add.h"
 
 #include <iostream>
@@ -35,7 +33,6 @@ int main (int argc, char* argv[])
     core::Factory factory;
     
     stromxRegisterCore(factory);
-    stromxRegisterBase(factory);
     
     core::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);

@@ -53,7 +53,7 @@ void exportImage()
         .value("COLOR", stromx::base::Image::COLOR)
     ;
     
-    class_<stromx::base::Image, bases<Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
+    class_<stromx::base::Image, bases<stromx::core::Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
         .def("__init__", make_constructor(&allocateFromFileWithAccess))

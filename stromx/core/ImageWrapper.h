@@ -65,8 +65,8 @@ namespace stromx
                                     const PixelType pixelType);
             
             virtual const unsigned int rows() const { return m_height; }
-            virtual const unsigned int cols() const { return m_width * pixelSize(); }
-            virtual const ValueType valueType() const;
+            virtual const unsigned int cols() const { return m_cols; }
+            virtual const ValueType valueType() const { return m_valueType; }
             virtual const unsigned int valueSize() const;
             virtual void initialize(const unsigned int rows, 
                                     const unsigned int cols, 
@@ -97,9 +97,11 @@ namespace stromx
             
             unsigned int m_width;
             unsigned int m_height;
+            unsigned int m_cols;
             unsigned int m_stride;
             unsigned int m_bufferSize;
             PixelType m_pixelType;
+            ValueType m_valueType;
             uint8_t* m_data;
             uint8_t* m_buffer;
             DataVariant m_variant;

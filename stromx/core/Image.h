@@ -44,16 +44,6 @@ namespace stromx
             };
             
             virtual ~Image() {}
-
-            /** 
-             * Returns the address of the buffer of the image. This is not necessarily
-             * a pointer to the image data which can be located at a different position
-             * in the buffer.
-             */
-            virtual uint8_t* const buffer() = 0;
-            
-            /** Returns the size of the buffer. */
-            virtual const unsigned int bufferSize() const = 0;
             
             /** Returns the width of the image. */
             virtual const unsigned int width() const = 0;
@@ -69,12 +59,6 @@ namespace stromx
             
             /** Returns the size of a single pixel in bytes. */
             virtual const unsigned int pixelSize() const = 0;
-            
-            /** Returns the address of the image data. */
-            virtual uint8_t* const data() = 0;
-            
-            /** Returns the address of the image data as a constant pointer. */
-            virtual const uint8_t* const data() const = 0;
             
             /** 
              * Initializes the image to the given data. Note that this function does not

@@ -152,12 +152,9 @@ void exportImage()
     ;
         
     class_<ImageWrap, bases<Matrix>, boost::noncopyable>("Image", no_init)
-        .def("bufferSize", pure_virtual(&Image::bufferSize))
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))
-        .def("stride", pure_virtual(&Image::stride))
         .def("pixelType", pure_virtual(&Image::pixelType))
         .def("pixelSize", pure_virtual(&Image::pixelSize))
-        .def("_data", pure_virtual(reinterpret_cast<unsigned int (Image::*)()>(static_cast<uint8_t* const(Image::*)()>(&Image::data))))
     ;
 }

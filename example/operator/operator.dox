@@ -251,14 +251,14 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Base" type="Counter" version="0.1.0"/>
+        <Operator id="0" package="Core" type="Counter" version="0.1.0"/>
         <Operator id="1" package="Math" type="Add" version="1.0.0">
             <Parameter id="0">
                 <Data type="UInt32" package="Core" version="0.1.0">2</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
         </Operator>
-        <Operator id="2" package="Base" type="PeriodicDelay">
+        <Operator id="2" package="Core" type="PeriodicDelay">
             <Parameter id="0">
                 <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
             </Parameter>
@@ -283,9 +283,6 @@ The program which runs the stream is almost identical to the one in the previous
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
 
-
-#include <stromx/base/Base.h>
-
 #include "math/Add.h"
 
 #include <iostream>
@@ -299,7 +296,6 @@ int main (int argc, char* argv[])
     Factory* factory = new Factory;
     
     stromxRegisterCore(factory);
-    stromxRegisterBase(factory);
 
     OperatorKernel* op = new math::Add;
     factory->registerOperator(op);

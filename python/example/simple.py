@@ -19,11 +19,11 @@ from stromx import *
 
 stream = core.Stream()
 
-source = core.Operator(base.Counter())
+source = core.Operator(core.Counter())
 source.initialize()
 source = stream.addOperator(source)
 
-timer = core.Operator(base.PeriodicDelay())
+timer = core.Operator(core.PeriodicDelay())
 timer.initialize()
 timer = stream.addOperator(timer)
 

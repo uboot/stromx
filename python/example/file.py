@@ -21,7 +21,6 @@ from stromx import *
 factory = core.Factory()
 
 core.registerCore(factory)
-base.registerBase(factory)
 
 stream = core.XmlReader().readStream("file.xml", factory)
 

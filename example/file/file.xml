@@ -3,8 +3,8 @@
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Base" type="Counter" version="0.1.0"/>
-        <Operator id="1" package="Base" type="PeriodicDelay" version="0.1.0">
+        <Operator id="0" package="Core" type="Counter" version="0.1.0"/>
+        <Operator id="1" package="Core" type="PeriodicDelay" version="0.1.0">
             <Parameter id="0">
                 <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
             </Parameter>
