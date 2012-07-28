@@ -29,7 +29,7 @@ namespace stromx
             OutputNode::OutputNode(Operator*const op, const unsigned int outputId)
             : m_operator(op),
                 m_outputId(outputId),
-                m_remainingCopies(0)
+                m_servedInputs(0)
             {}
             
             void OutputNode::addConnectedInput(InputNode*const input)
@@ -67,17 +67,24 @@ namespace stromx
                 {
                     lock_t lock(m_mutex);
                     
-                    if(! m_remainingCopies)
+                    m_servedInputs++; 
+                    
+                    if(m_servedInputs >= m_connectedInputs.size())
                     {
                         m_operator->clearOutputData(m_outputId);
-                        m_remainingCopies = m_connectedInputs.size();
+                        m_servedInputs = 0;
                     }
                     
-                    m_remainingCopies--; 
                 }
                 
                 return value;
             }
+        
+            void OutputNode::reset()
+            {
+                m_servedInputs = 0;
+            }
         }
+
     }
 }

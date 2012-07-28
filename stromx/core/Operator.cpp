@@ -251,7 +251,11 @@ namespace stromx
         }
 
         void Operator::activate()
-        { 
+        {   
+            std::map<unsigned int, impl::OutputNode*>::const_iterator iter = m_outputs.begin();
+            for( ; iter != m_outputs.end(); ++iter)
+                iter->second->reset();
+            
             try
             {
                 m_kernel->activate(); 

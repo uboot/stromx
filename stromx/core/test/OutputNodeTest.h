@@ -39,6 +39,8 @@ namespace stromx
             CPPUNIT_TEST(testGetOutputData);
             CPPUNIT_TEST(testAddConnectedInputs);
             CPPUNIT_TEST(testRemoveConnectedInputs);
+            CPPUNIT_TEST(testTwoInputs);
+            CPPUNIT_TEST(testReset);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -51,12 +53,13 @@ namespace stromx
             void testGetOutputData();
             void testAddConnectedInputs();
             void testRemoveConnectedInputs();
+            void testTwoInputs();
+            void testReset();
                 
         private: 
             Operator* m_operatorWrapper;
             DataContainer m_container;
             impl::OutputNode* m_outputNode;
-            impl::InputNode* m_inputNode;
         };
     }
 }

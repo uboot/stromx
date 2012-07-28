@@ -38,8 +38,10 @@ namespace stromx
             m_operatorWrapper->initialize();
             m_operatorWrapper->activate();
             m_container = DataContainer(new core::None);
+            m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
+            m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
+            
             m_outputNode = new OutputNode(m_operatorWrapper, TestOperator::OUTPUT_1);
-            m_inputNode = new InputNode(m_operatorWrapper, 0);
         }
 
         void OutputNodeTest::tearDown()
@@ -50,24 +52,56 @@ namespace stromx
         
         void OutputNodeTest::testGetOutputData()
         {
-            m_operatorWrapper->setInputData(TestOperator::INPUT_1, m_container);
-            m_operatorWrapper->setInputData(TestOperator::INPUT_2, m_container);
-            
             DataContainer data;
             CPPUNIT_ASSERT_NO_THROW(data = m_outputNode->getOutputData());
             CPPUNIT_ASSERT_EQUAL(m_container, data);
         }
         
+        void OutputNodeTest::testReset()
+        {
+            InputNode inputNode1(m_operatorWrapper, 0);
+            InputNode inputNode2(m_operatorWrapper, 1);
+            
+            m_outputNode->addConnectedInput(&inputNode1);
+            m_outputNode->addConnectedInput(&inputNode2);
+            
+            DataContainer data;
+            data = m_outputNode->getOutputData();
+            
+            m_outputNode->reset();
+            data = m_outputNode->getOutputData();
+            data = m_outputNode->getOutputData();
+        }
+        
+        void OutputNodeTest::testTwoInputs()
+        {
+            InputNode inputNode1(m_operatorWrapper, 0);
+            InputNode inputNode2(m_operatorWrapper, 1);
+            
+            m_outputNode->addConnectedInput(&inputNode1);
+            m_outputNode->addConnectedInput(&inputNode2);
+            
+            DataContainer data;
+            data = m_outputNode->getOutputData();
+            data = m_outputNode->getOutputData();
+            
+            CPPUNIT_ASSERT_EQUAL(m_container, data);
+        }
+        
         void OutputNodeTest::testRemoveConnectedInputs()
         {
-            m_outputNode->addConnectedInput(m_inputNode);
-            CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(m_inputNode));
-            CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(m_inputNode));
+            InputNode inputNode(m_operatorWrapper, 0);
+            
+            m_outputNode->addConnectedInput(&inputNode);
+            CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(&inputNode));
+            CPPUNIT_ASSERT_NO_THROW(m_outputNode->removeConnectedInput(&inputNode));
         }
         
         void OutputNodeTest::testAddConnectedInputs()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_outputNode->addConnectedInput(m_inputNode));
+            InputNode inputNode(m_operatorWrapper, 0);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_outputNode->addConnectedInput(&inputNode));
             CPPUNIT_ASSERT_EQUAL(size_t(1), m_outputNode->connectedInputs().size());
             
             CPPUNIT_ASSERT_THROW(m_outputNode->addConnectedInput(0), WrongArgument);

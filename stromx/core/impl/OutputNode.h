@@ -43,13 +43,19 @@ namespace stromx
                 void removeConnectedInput(InputNode* const input);
                 const std::set<InputNode*> & connectedInputs() const { return m_connectedInputs; }
                 
+                /** 
+                 * Resets the counter which tracks how many inputs have received the data 
+                 * of the output node.
+                 */
+                void reset();
+                
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
                 
                 Operator* m_operator;
                 unsigned int m_outputId;
                 std::set<InputNode*> m_connectedInputs;
-                unsigned int m_remainingCopies;
+                unsigned int m_servedInputs;
                 
                 boost::mutex m_mutex;  
             };
