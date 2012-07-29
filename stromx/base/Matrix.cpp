@@ -87,19 +87,20 @@ namespace stromx
             input.text() >> cols;
             
             allocate(rows, cols, ValueType(type));
+            unsigned int size = rows * cols * valueSize();
                 
             if(rows == 0 || cols == 0)
                 return;
             
             input.openFile(core::InputProvider::BINARY);
+            input.file().read((char*)(buffer()), size);
             
-            // read file to matrix memory
+            if(input.file().fail())
+                throw stromx::core::Exception("Failed to load matrix.");
         }
 
         void Matrix::serialize(core::OutputProvider& output) const
         {
-            stromx::core::Data::serialize(output);
-            
             output.text() << (unsigned int)(valueType()) << " ";
             output.text() << rows() << " ";
             output.text() << cols();
@@ -107,9 +108,18 @@ namespace stromx
             if(rows() == 0 || cols() == 0)
                 return;
             
+            const uint8_t* rowPtr = data();
+            unsigned int rowSize = cols() * valueSize();
             std::ostream & outStream = output.openFile("bin", core::OutputProvider::BINARY);
+            for(unsigned int i = 0; i < rows(); ++i)
+            {
+                outStream.write((const char*)(rowPtr), rowSize);
+                rowPtr += rowSize;
+            }
             
-            // write file from matrix memory
+            if(outStream.fail())
+                throw stromx::core::Exception("Failed to save matrix.");
+            
         }
 
         void Matrix::copy(const stromx::core::Matrix& matrix)

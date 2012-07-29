@@ -209,15 +209,15 @@ namespace stromx
             allocate(size, 1, core::Image::NONE);
         }
         
-        void Image::save(const std::string& filename) const
+        void Image::save(const std::string& filename, const core::Image & image)
         {
-            cv::Mat inImage = getOpenCvMat(*this);
+            cv::Mat inImage = getOpenCvMat(image);
             
-            switch(pixelType())
+            switch(image.pixelType())
             {
             case core::Image::RGB_24:
             {
-                Image tempImage(height(), width(), BGR_24);
+                Image tempImage(image.height(), image.width(), BGR_24);
                 cv::cvtColor(inImage, *(tempImage.m_image), CV_RGB2BGR); 
                 if(! cv::imwrite(filename.c_str(), *(tempImage.m_image)))
                     throw core::FileAccessFailed(filename, "Failed to save image.");
@@ -235,6 +235,11 @@ namespace stromx
             default:
                 throw core::WrongArgument("Unknown pixel type.");    
             }
+        }
+        
+        void Image::save(const std::string& filename) const
+        {
+            save(filename, *this);
         }
         
         core::Data*const Image::clone() const

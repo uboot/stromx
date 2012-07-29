@@ -77,7 +77,7 @@ namespace stromx
             m_currentFile.open(filename.c_str(), iosmode);
             
             if(m_currentFile.fail())
-                throw FileAccessFailed(filename, m_directory);
+                throw FileAccessFailed(filename, m_directory, "");
             
             return m_currentFile;
         }

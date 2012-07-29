@@ -123,14 +123,10 @@ namespace stromx
         class FileAccessFailed : public FileException
         {
         public:
-            FileAccessFailed(const std::string & filename,
-                             const std::string & message)
-              : FileException(filename, "", message)
-            {}
             
             FileAccessFailed(const std::string & filename,
                              const std::string & container,
-                             const std::string & message)
+                             const std::string & message = "")
               : FileException(filename, container, message)
             {}
         };

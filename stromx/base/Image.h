@@ -43,6 +43,8 @@ namespace stromx
                 COLOR
             };
             
+            static void save(const std::string& filename, const core::Image & image);
+            
             Image();
             explicit Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
             explicit Image(const std::string & filename);

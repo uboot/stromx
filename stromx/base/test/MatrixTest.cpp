@@ -135,9 +135,13 @@ namespace stromx
             m_matrix = new Matrix();
             
             core::DirectoryFileInput input(".");
-            input.initialize("8 100 200", "double_matrix.bin");
+            input.initialize("8 50 100", "double_matrix.bin");
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL(Matrix::DOUBLE, m_matrix->valueType());
+            
+            for(unsigned int i = 0; i < m_matrix->rows() * m_matrix->stride(); ++i)
+                CPPUNIT_ASSERT_EQUAL(uint8_t(0), m_matrix->data()[i]);
+            
         }
 
         void MatrixTest::testDeserializeEmpty()
@@ -155,6 +159,7 @@ namespace stromx
         void MatrixTest::testSerialize()
         {
             m_matrix = new Matrix(200, 100, Matrix::INT_16);
+            memset(m_matrix->data(), 0, m_matrix->rows() * m_matrix->stride());
 
             core::DirectoryFileOutput output(".");
             output.initialize("MatrixTest_testSerialize");
