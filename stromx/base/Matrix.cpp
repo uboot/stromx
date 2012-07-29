@@ -33,6 +33,11 @@ namespace stromx
         {
 
         }
+        
+        Matrix::Matrix(cv::Mat& cvMatrix)
+        {
+
+        }
 
         Matrix::Matrix(const stromx::core::Matrix& image)
         {
@@ -56,7 +61,7 @@ namespace stromx
 
         core::Data*const Matrix::clone() const
         {
-
+            return new Matrix(*this);
         }
 
         void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)

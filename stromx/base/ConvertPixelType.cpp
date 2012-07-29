@@ -81,7 +81,7 @@ namespace stromx
             provider.receiveInputData(srcMapper && destMapper);
             
             if(srcMapper.data() == destMapper.data())
-                throw InputError(DESTINATION, *this, "Destination image be the same image as the source image."); 
+                throw InputError(DESTINATION, *this, "Destination image must not be the same image as the source image."); 
             
             ReadAccess<Image> src(srcMapper.data());
             WriteAccess<Image> dest(destMapper.data());

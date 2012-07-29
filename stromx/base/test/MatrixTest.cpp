@@ -20,6 +20,7 @@
 #include "../Matrix.h"
 #include <stromx/core/DirectoryFileInput.h>
 #include <stromx/core/DirectoryFileOutput.h>
+#include <opencv2/core/core.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::MatrixTest);
 
@@ -114,6 +115,19 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::UINT_32_MATRIX, m_matrix->variant());
+        }
+        
+        void MatrixTest::testImageCvImageConstructor()
+        {
+            cv::Mat cvMatrix(100, 200, CV_64F);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(cvMatrix));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::DOUBLE, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1600), m_matrix->stride());
+            CPPUNIT_ASSERT(m_matrix->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::DOUBLE_MATRIX, m_matrix->variant());
         }
 
         void MatrixTest::testDeserialize()

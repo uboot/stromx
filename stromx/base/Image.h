@@ -21,8 +21,6 @@
 #include "Config.h"
 #include <stromx/core/ImageWrapper.h>
 
-struct _IplImage;
-
 namespace cv
 {
     class Mat;
@@ -49,6 +47,7 @@ namespace stromx
             explicit Image(const std::string & filename, const FileAccess access);
             explicit Image(const stromx::core::Image& image);
             explicit Image(const stromx::base::Image& image);
+            explicit Image(const cv::Mat & cvImage);
             explicit Image(const unsigned int size);
             
             virtual ~Image();

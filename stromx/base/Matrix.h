@@ -38,6 +38,7 @@ namespace stromx
             
             Matrix();
             explicit Matrix(const unsigned int rows, const unsigned int cols, const ValueType valueType);
+            explicit Matrix(cv::Mat& cvMatrix);
             explicit Matrix(const stromx::core::Matrix& image);
             explicit Matrix(const stromx::base::Matrix& image);
             explicit Matrix(const unsigned int size);

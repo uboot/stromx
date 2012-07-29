@@ -21,6 +21,7 @@
 #include <stromx/core/Exception.h>
 #include <stromx/core/DirectoryFileInput.h>
 #include <stromx/core/DirectoryFileOutput.h>
+#include <opencv2/core/core.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ImageTest);
 
@@ -156,6 +157,22 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(core::Image::NONE, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::IMAGE, m_image->variant());
+        }
+        
+        void ImageTest::testImageCvImageConstructor()
+        {
+            cv::Mat cvImage(100, 200, CV_8UC1);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(cvImage));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->cols());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->stride());
+            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+            CPPUNIT_ASSERT(m_image->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::MONO_8_IMAGE, m_image->variant());
         }
         
         void ImageTest::testImageRgb24()

@@ -32,7 +32,7 @@ namespace stromx
             
         private:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,
-                                                  const cv::InputArray kernel, int iterations);
+                                                  const cv::Mat& kernel, int iterations);
             static const std::string TYPE;
         };
     }

@@ -29,7 +29,7 @@ namespace stromx
         {
         }
         
-        void Close::applyMorphologicalFilter(const cv::Mat& in, cv::Mat& out, const cv::InputArray kernel, int iterations)
+        void Close::applyMorphologicalFilter(const cv::Mat& in, cv::Mat& out, const cv::Mat& kernel, int iterations)
         {
             cv::erode(in, out, kernel, cv::Point(-1, -1), iterations);
         }

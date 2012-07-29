@@ -87,9 +87,6 @@ namespace stromx
                 Image& image = src();
                 
                 validateSourceImage(image);
-                if(image.bufferSize() < computeDestinationSize(image))
-                    throw InputError(DESTINATION, *this, "Destination image is too small.");
-                
                 cv::Mat cvImage = getOpenCvMat(image);
                 
                 applyFilter(cvImage, cvImage);
@@ -135,9 +132,6 @@ namespace stromx
                     Image& image = src();
                     
                     validateSourceImage(image);
-                    if(image.bufferSize() < computeDestinationSize(image))
-                        throw InputError(DESTINATION, *this, "Destination image is too small.");
-                    
                     cv::Mat cvImage = getOpenCvMat(image);
                     
                     applyFilter(cvImage, cvImage);

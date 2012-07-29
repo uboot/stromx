@@ -50,6 +50,12 @@ namespace stromx
             copy(image);
         }
         
+        Image::Image(const cv::Mat& cvImage)
+          : m_image(new cv::Mat(cvImage))
+        {
+            getDataFromCvImage(pixelTypeFromCvType(m_image->type()));
+        }
+        
         Image::Image()
           : m_image(new cv::Mat())
         {

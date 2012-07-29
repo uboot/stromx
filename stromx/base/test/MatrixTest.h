@@ -34,6 +34,7 @@ namespace stromx
             CPPUNIT_TEST (testMatrixCopyConstructor);
             CPPUNIT_TEST (testMatrixEmptyCopyConstructor);
             CPPUNIT_TEST (testMatrixDefaultCopyConstructor);
+            CPPUNIT_TEST (testImageCvImageConstructor);
             CPPUNIT_TEST (testMatrixFloat);
             CPPUNIT_TEST (testMatrixDefault);
             CPPUNIT_TEST (testSerialize);
@@ -55,6 +56,7 @@ namespace stromx
                 void testMatrixCopyConstructor();
                 void testMatrixEmptyCopyConstructor();
                 void testMatrixDefaultCopyConstructor();
+                void testImageCvImageConstructor();
                 void testMatrixFloat();
                 void testMatrixInt16();
                 void testMatrixDefault();

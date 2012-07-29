@@ -21,12 +21,6 @@
 #include "ImageFilter.h"
 #include <stromx/core/Enum.h>
 
-namespace cv
-{
-    class _InputArray;
-    typedef const _InputArray& InputArray;
-}
-
 namespace stromx
 {
     namespace base
@@ -57,7 +51,7 @@ namespace stromx
             
         protected:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,
-                                                  const cv::InputArray kernel, int iterations) = 0;
+                                                  const cv::Mat & kernel, int iterations) = 0;
             
         private:
             const std::vector<const core::Parameter*> setupInitParameters();

@@ -23,9 +23,6 @@
 #include <stromx/core/OperatorKernel.h>
 #include <stromx/core/RecycleAccess.h>
 
-
-struct _IplImage;
-
 namespace cv
 {
     class Mat;
