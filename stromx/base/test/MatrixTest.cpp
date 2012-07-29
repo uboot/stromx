@@ -49,10 +49,10 @@ namespace stromx
         void MatrixTest::testMatrixEmpty()
         {
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(0, 100, Matrix::DOUBLE));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
             CPPUNIT_ASSERT_EQUAL(core::Matrix::DOUBLE, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->stride());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(800), m_matrix->stride());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_matrix->data()); 
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::DOUBLE_MATRIX, m_matrix->variant());
         }
@@ -60,10 +60,10 @@ namespace stromx
         void MatrixTest::testMatrixFloat()
         {
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(200, 100, Matrix::FLOAT));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
             CPPUNIT_ASSERT_EQUAL(core::Matrix::FLOAT, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->stride());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(400), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::FLOAT_MATRIX, m_matrix->variant());
         }
@@ -71,10 +71,10 @@ namespace stromx
         void MatrixTest::testMatrixInt16()
         {
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(200, 100, Matrix::INT_16));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
             CPPUNIT_ASSERT_EQUAL(core::Matrix::INT_16, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->stride());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::INT_16_MATRIX, m_matrix->variant());
         }
@@ -82,39 +82,39 @@ namespace stromx
         void MatrixTest::testMatrixDefaultCopyConstructor()
         {
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(200, 100, Matrix::FLOAT));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->stride());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::FLOAT, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(400), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::FLOAT_MATRIX, m_matrix->variant());
         }
 
         void MatrixTest::testMatrixCopyConstructor()
         {
-            Matrix matrix(200, 100, Matrix::UINT_32);
+            Matrix matrix(200, 100, Matrix::UINT_16);
             
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(matrix));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_32, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(800), m_matrix->stride());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_16, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::UINT_32_MATRIX, m_matrix->variant());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::UINT_16_MATRIX, m_matrix->variant());
 
         }
 
         void MatrixTest::testMatrixEmptyCopyConstructor()
         {
-            Matrix matrix(0, 100, Matrix::UINT_32);
+            Matrix matrix(100, 0, Matrix::INT_32);
             
             CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(matrix));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_32, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::INT_32, m_matrix->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->stride());
-            CPPUNIT_ASSERT(m_matrix->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::UINT_32_MATRIX, m_matrix->variant());
+            CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_matrix->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::INT_32_MATRIX, m_matrix->variant());
         }
         
         void MatrixTest::testImageCvImageConstructor()

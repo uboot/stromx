@@ -34,13 +34,15 @@ namespace stromx
         /** \brief Matrix implementation based on OpenCV matrices. */
         class STROMX_BASE_API Matrix : public core::MatrixWrapper
         {
+            friend cv::Mat getOpenCvMat(const core::Matrix& matrix);
+        
         public:
             
             Matrix();
             explicit Matrix(const unsigned int rows, const unsigned int cols, const ValueType valueType);
             explicit Matrix(cv::Mat& cvMatrix);
-            explicit Matrix(const stromx::core::Matrix& image);
-            explicit Matrix(const stromx::base::Matrix& image);
+            explicit Matrix(const stromx::core::Matrix& matrix);
+            explicit Matrix(const stromx::base::Matrix& matrix);
             explicit Matrix(const unsigned int size);
             
             virtual ~Matrix();
@@ -62,10 +64,14 @@ namespace stromx
             static const std::string PACKAGE;
             static const core::Version VERSION;
             
-            void copy(const stromx::core::Matrix & matrix);
-            void allocate(const unsigned int width, const unsigned int height, const core::Matrix::ValueType valueType);
+            static const int cvTypeFromValueType(const core::Matrix::ValueType valueType);
+            static const core::Matrix::ValueType valueTypeFromCvType(const int cvType);
             
-            std::vector<uint8_t*> m_data;
+            void copy(const stromx::core::Matrix & matrix);
+            void allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType);
+            void getDataFromCvMatrix(const ValueType valueType);
+                
+            cv::Mat* m_matrix;
         };
     }
 }

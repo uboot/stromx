@@ -21,6 +21,7 @@
 #include <stromx/core/DataProvider.h>
 #include <stromx/core/Id2DataPair.h>
 #include <stromx/core/OperatorException.h>
+#include <boost/assert.hpp>
 
 namespace stromx
 {
@@ -94,8 +95,19 @@ namespace stromx
             provider.lockParameters();
             
             base::Image* outImage = dynamic_cast<base::Image*>(outData);
-                
-            adjustImage(m_image->width(), m_image->height(), m_image->pixelType(), outImage);
+            
+            if(! outImage)
+            {
+                delete outData;
+                outImage = new base::Image(m_image->width(), m_image->height(), m_image->pixelType());
+            }
+            
+            if(outImage->pixelType() != m_image->pixelType()
+                || outImage->width() != m_image->width()
+                || outImage->height() != m_image->height())
+            {
+                outImage->resize(m_image->width(), m_image->height(), m_image->pixelType());
+            }
             
             cv::Mat inCvImage = getOpenCvMat(*m_image);
             cv::Mat outCvImage = getOpenCvMat(*outImage);

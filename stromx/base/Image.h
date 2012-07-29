@@ -33,6 +33,8 @@ namespace stromx
         /** \brief %Image with support for reading and writing. */
         class STROMX_BASE_API Image : public core::ImageWrapper
         {
+             friend cv::Mat getOpenCvMat(const core::Image& image);
+             
         public:
             enum FileAccess
             {
