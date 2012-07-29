@@ -29,6 +29,9 @@ namespace stromx
         /** \brief %Description of a data variant. */
         class STROMX_CORE_API DataVariant
         {
+            friend const bool operator==(const DataVariant & lhs, const DataVariant & rhs);
+            friend std::ostream& operator<< (std::ostream& out, const DataVariant & container);
+            
         public:
             const static DataVariant NONE;
             const static DataVariant DATA;
@@ -132,6 +135,9 @@ namespace stromx
             std::string m_package;
             Documentation m_doc;
         };
+        
+        STROMX_CORE_API const bool operator==(const DataVariant & lhs, const DataVariant & rhs);
+        STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataVariant & container);
     }
 }
 

@@ -16,6 +16,8 @@
 
 #include "Config.h"
 #include "DataVariant.h"
+#include "Data.h"
+#include <ostream>
 
 namespace stromx
 {
@@ -111,6 +113,17 @@ namespace stromx
             default:
                 return false;
             }
+        }
+        
+        const bool operator==(const stromx::core::DataVariant& lhs, const stromx::core::DataVariant& rhs)
+        {
+            return lhs.m_id == rhs.m_id && lhs.m_package == rhs.m_package;
+        }
+        
+        std::ostream& operator<<(std::ostream& out, const DataVariant& variant)
+        {
+            out << variant.package() << ", " << variant.id();
+            return out;
         }
     }
 }
