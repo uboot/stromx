@@ -39,33 +39,15 @@ namespace stromx
              */
             ImageWrapper();
             
+            // Implementation of stromx::core::Matrix
             virtual const DataVariant & variant() const { return m_variant; }
-            
             virtual uint8_t* const buffer() { return m_buffer; }
-            
             virtual const unsigned int bufferSize() const { return m_bufferSize; };
-            
-            virtual const unsigned int width() const { return m_width; }
-            
-            virtual const unsigned int height() const { return m_height; }
-            
-            virtual const unsigned int stride() const { return m_stride; }
-            
-            virtual const PixelType pixelType() const { return m_pixelType; }
-            
-            virtual const unsigned int pixelSize() const;
-            
-            virtual uint8_t* const data() { return m_data; }
-            virtual const uint8_t* const data() const { return m_data; }
-            
-            virtual void initializeImage(const unsigned int width, 
-                                         const unsigned int height, 
-                                         const unsigned int stride, 
-                                         uint8_t* const data, 
-                                         const PixelType pixelType);
-            
             virtual const unsigned int rows() const { return m_height; }
             virtual const unsigned int cols() const { return m_cols; }
+            virtual uint8_t* const data() { return m_data; }
+            virtual const uint8_t* const data() const { return m_data; }
+            virtual const unsigned int stride() const { return m_stride; }
             virtual const ValueType valueType() const { return m_valueType; }
             virtual const unsigned int valueSize() const;
             virtual void initializeMatrix(const unsigned int rows, 
@@ -73,6 +55,17 @@ namespace stromx
                                           const unsigned int stride, 
                                           uint8_t* const data, 
                                           const ValueType valueType) ;
+            
+            // Implementation of stromx::core::Image
+            virtual const unsigned int width() const { return m_width; }
+            virtual const unsigned int height() const { return m_height; }
+            virtual const PixelType pixelType() const { return m_pixelType; }
+            virtual const unsigned int pixelSize() const;
+            virtual void initializeImage(const unsigned int width, 
+                                         const unsigned int height, 
+                                         const unsigned int stride, 
+                                         uint8_t* const data, 
+                                         const PixelType pixelType);
             
         protected:
             /** 
@@ -85,14 +78,12 @@ namespace stromx
              */
             virtual void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
             
-        private:
-            static const core::DataVariant dataVariantFromPixelType(const PixelType pixelType);
-            
+        private:            
             void validate(const unsigned int width,
-                        const unsigned int height,
-                        const unsigned int stride,
-                        const uint8_t* const data,
-                        const PixelType pixelType) const;
+                          const unsigned int height,
+                          const unsigned int stride,
+                          const uint8_t* const data,
+                          const PixelType pixelType) const;
                         
             
             unsigned int m_width;

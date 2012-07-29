@@ -76,6 +76,10 @@ namespace stromx
             
             /** Returns the size of a single channel of a given pixel type in bytes. */
             static const int depth(const PixelType pixelType);
+            
+        protected:
+            /** Returns the data variant defined by the input \c pixelType. */
+            static const core::DataVariant dataVariantFromPixelType(const PixelType pixelType);
         };
     }
 }

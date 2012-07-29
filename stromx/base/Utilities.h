@@ -32,8 +32,10 @@ namespace stromx
     {
         class Image;
         
+        /** Returns an OpenCV matrix header for \c image. */
         cv::Mat getOpenCvMat(const core::Image& image);
         
+        /** Returns an OpenCV matrix header for \c matrix. */
         cv::Mat getOpenCvMat(const core::Matrix& matrix);
     }
 }

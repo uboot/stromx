@@ -97,27 +97,6 @@ namespace stromx
                 throw WrongArgument("Too small buffer.");
         }
         
-        const core::DataVariant ImageWrapper::dataVariantFromPixelType(const core::Image::PixelType pixelType)
-        {
-            switch(pixelType)
-            {
-            case core::Image::NONE:
-                return core::DataVariant::IMAGE;
-            case core::Image::MONO_8:
-                return core::DataVariant::MONO_8_IMAGE;
-            case core::Image::BAYERBG_8:
-                return core::DataVariant::BAYERBG_8_IMAGE;
-            case core::Image::BAYERGB_8:
-                return core::DataVariant::BAYERGB_8_IMAGE;
-            case core::Image::RGB_24:
-                return core::DataVariant::RGB_24_IMAGE;
-            case core::Image::BGR_24:
-                return core::DataVariant::BGR_24_IMAGE;
-            default:
-                throw core::WrongArgument("Unknown pixel type.");  
-            }
-        }
-        
         const unsigned int ImageWrapper::valueSize() const
         {
             return Matrix::valueSizeFromValueType(valueType());

@@ -36,22 +36,66 @@ namespace stromx
              friend cv::Mat getOpenCvMat(const core::Image& image);
              
         public:
+            /** Conversion options when reading images. */
             enum FileAccess
             {
+                /** The image data is not converted. */
                 UNCHANGED,
+                
+                /**
+                 * The image data is converted to grayscale. I.e. the resulting image
+                 * is always a single-channel image.
+                 */
                 GRAYSCALE,
+                
+                /**
+                 * The image data is converted to color. I.e. the resulting image is always 
+                 * 3-channel image.
+                 */
                 COLOR
             };
             
+            /** 
+             * Saves the input \c image to \c filename. The file format is automatically 
+             * determined from the file name. 
+             */
             static void save(const std::string& filename, const core::Image & image);
             
+            /** 
+             * Constructs an empty image. The image width and height is 0 and no data is associated
+             * with the image, i.e. data and buffer are 0. The pixel type is Image::NONE.
+             */
             Image();
+            
+            /** Constructs an image for the given values. */
             explicit Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
+            
+            /** Allocates an image and reads its content from the image file \c filename. */
             explicit Image(const std::string & filename);
+            
+            /** 
+             * Allocates an image and reads its content from the image file \c filename. 
+             * The image data is converted according to \c access. 
+             */
             explicit Image(const std::string & filename, const FileAccess access);
+                        
+            /** Copy constructs an image from \c image. */
             explicit Image(const stromx::core::Image& image);
+            
+            /** Copy constructs an image from \c image. */
             explicit Image(const stromx::base::Image& image);
+            
+            /** 
+             * Creates an image from \c cvImage. The input image is \em not copied but 
+             * a reference to it is held in the constructed image. Use this to convert an
+             * OpenCV matrix to an stromx::base::Image object.
+             */
             explicit Image(const cv::Mat & cvImage);
+            
+            /** Allocates an image with a buffer of a given size in bytes. The width of the image is \c size
+             * and its height is 1. Its pixel type is Image::NONE. The buffer size of the image is 
+             * guaranteed to be at least \c size.
+             */
             explicit Image(const unsigned int size);
             
             virtual ~Image();
@@ -65,10 +109,34 @@ namespace stromx
             virtual void serialize(core::OutputProvider & output) const;
             virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
             
+            /** 
+             * Reads the image \c filename to the image. The data of the current image is replaced 
+             * by the data of the new image.
+             */ 
             void open(const std::string& filename);
+            
+            /** 
+             * Reads the image \c filename to the image. The data of the current image is replaced 
+             * by the data of the new image. The read image data is converted according to \c access. 
+             */ 
             void open(const std::string & filename, const FileAccess access);
+            
+            /** 
+             * Saves the image to the file \c filename. The file format is automatically 
+             * determined from the file name.
+             */
             void save(const std::string& filename) const;
+            
+            /**
+             * Resizes the image and changes the pixel type of the image.
+             */
             void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
+            
+            /**
+             * Resizes the buffer of the image to the given size in bytes. The width of the resized image is
+             * \c size and its height is 1. Its pixel type is Image::NONE. The buffer size of the image is 
+             * guaranteed to be at least \c size.
+             */
             void resize(const unsigned int size);
             
         private:

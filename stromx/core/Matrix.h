@@ -90,7 +90,8 @@ namespace stromx
             /** Returns the size of a single value of type \c valueType in bytes. */  
             static const unsigned int valueSizeFromValueType(const ValueType valueType);  
             
-            static const core::DataVariant dataVariantFromValueType(const ValueType pixelType);
+            /** Returns the data variant defined by the input \c valueType. */
+            static const core::DataVariant dataVariantFromValueType(const ValueType valueType);
         };
     }
 }
