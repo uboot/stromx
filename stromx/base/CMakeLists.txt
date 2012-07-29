@@ -34,6 +34,7 @@ set(SOURCES
     Erode.cpp
     Image.cpp
     ImageFilter.cpp
+    Matrix.cpp
     MorphologicalFilter.cpp
     Open.cpp
     Utilities.cpp

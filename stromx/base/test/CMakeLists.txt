@@ -30,6 +30,7 @@ add_executable(stromx_base_test
     ../Erode.cpp
     ../Image.cpp
     ../ImageFilter.cpp
+    ../Matrix.cpp
     ../MorphologicalFilter.cpp
     ../Open.cpp
     ../Utilities.cpp
@@ -50,6 +51,7 @@ add_executable(stromx_base_test
     ImageTest.cpp
     ImageFilterTest.cpp
     main.cpp
+    MatrixTest.cpp
     MorphologicalFilterTest.cpp
     OpenTest.cpp
 )

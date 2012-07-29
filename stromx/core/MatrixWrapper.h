@@ -38,30 +38,32 @@ namespace stromx
              * memory buffer.
              */
             MatrixWrapper();
+            
+            virtual const DataVariant & variant() const { return m_variant; }
            
-            virtual uint8_t* const buffer() = 0;
+            virtual uint8_t* const buffer() { return m_buffer; }
             
-            virtual const unsigned int bufferSize() const = 0;
+            virtual const unsigned int bufferSize() const { return m_bufferSize; }
             
-            virtual const unsigned int rows() const = 0;
+            virtual const unsigned int rows() const { return m_rows; }
             
-            virtual const unsigned int cols() const = 0;
+            virtual const unsigned int cols() const { return m_cols; }
             
-            virtual const unsigned int stride() const = 0;
+            virtual const unsigned int stride() const { return m_stride; }
             
-            virtual const ValueType valueType() const = 0;
+            virtual const ValueType valueType() const { return m_valueType; }
             
-            virtual const unsigned int valueSize() const = 0;
+            virtual const unsigned int valueSize() const;
             
-            virtual uint8_t* const data() = 0;
+            virtual uint8_t* const data() { return m_data; }
             
-            virtual const uint8_t* const data() const = 0;
+            virtual const uint8_t* const data() const { return m_data; }
             
             virtual void initializeMatrix(const unsigned int rows, 
                                           const unsigned int cols, 
                                           const unsigned int stride, 
                                           uint8_t* const data, 
-                                          const ValueType valueType) = 0;
+                                          const ValueType valueType);
             
         protected:
             /** 

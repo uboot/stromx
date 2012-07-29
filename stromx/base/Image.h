@@ -14,13 +14,12 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_IMAGEIMPL_H
-#define STROMX_BASE_IMAGEIMPL_H
+#ifndef STROMX_BASE_IMAGE_H
+#define STROMX_BASE_IMAGE_H
 
 #include <string>
 #include "Config.h"
 #include <stromx/core/ImageWrapper.h>
-#include <stromx/core/Input.h>
 
 struct _IplImage;
 
@@ -48,7 +47,7 @@ namespace stromx
             explicit Image(const unsigned int width, const unsigned int height, const PixelType pixelType);
             explicit Image(const std::string & filename);
             explicit Image(const std::string & filename, const FileAccess access);
-            explicit Image(const core::Image& image);
+            explicit Image(const stromx::core::Image& image);
             explicit Image(const stromx::base::Image& image);
             explicit Image(const unsigned int size);
             
@@ -88,4 +87,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_IMAGEIMPL_H
+#endif // STROMX_BASE_IMAGE_H

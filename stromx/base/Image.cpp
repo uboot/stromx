@@ -38,7 +38,7 @@ namespace stromx
             allocate(width, height, pixelType);
         }
         
-        Image::Image(const core::Image& image)
+        Image::Image(const stromx::core::Image& image)
           : m_image(new cv::Mat())
         {
             copy(image);

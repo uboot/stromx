@@ -75,7 +75,7 @@ namespace stromx
             
             // set the matrix specific fields
             m_cols = m_width * pixelSize();
-            m_valueType = Matrix::UINT_8;
+            m_valueType = pixelType == Image::NONE ? Matrix::NONE : Matrix::UINT_8;
         }
         
         void ImageWrapper::validate(const unsigned int width,
