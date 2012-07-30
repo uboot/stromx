@@ -92,7 +92,7 @@ namespace stromx
             cv::Canny(in, out, m_threshold1, m_threshold2);
         }
         
-        const std::vector<const Parameter*> Canny::setupInitParameters()
+        const std::vector<const Parameter*> Canny::setupParameters()
         {
             std::vector<const core::Parameter*> parameters;
             

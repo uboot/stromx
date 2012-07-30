@@ -83,7 +83,7 @@ namespace stromx
             }
         }  
         
-        const std::vector<const Parameter*> Blur::setupInitParameters()
+        const std::vector<const Parameter*> Blur::setupParameters()
         {
             std::vector<const core::Parameter*> parameters;
             

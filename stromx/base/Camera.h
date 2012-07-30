@@ -50,6 +50,7 @@ namespace stromx
             
             enum ParameterId
             {
+                OUTPUT_INDEX,
                 IMAGE,
                 TRIGGER_MODE,
                 TRIGGER,
@@ -88,13 +89,13 @@ namespace stromx
             virtual void deactivate();
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
             static bool validateBufferSize(const core::UInt32 bufferSize,
                                            const core::Image & image,
                                            const core::Enum outputType);
             
-            
+            const std::vector<const core::Parameter*> setupInitParameters();
+            const std::vector<const core::Description*> setupInputs();
+            const std::vector<const core::Description*> setupOutputs();
             const std::vector<const core::Parameter*> setupParameters();
             void setRgbParameters();
             
@@ -116,6 +117,8 @@ namespace stromx
             core::Operator* m_pixelType;
             core::Operator* m_imageQueue;
             core::Operator* m_indexQueue;
+            
+            core::Bool m_outputIndex;
             
             core::NumericParameter<core::UInt32>* m_left;
             core::NumericParameter<core::UInt32>* m_top;

@@ -119,7 +119,7 @@ namespace stromx
             applyMorphologicalFilter(in, out, kernel, m_iterations);
         }
 
-        const std::vector<const Parameter*> MorphologicalFilter::setupInitParameters()
+        const std::vector<const Parameter*> MorphologicalFilter::setupParameters()
         {            
             std::vector<const core::Parameter*> parameters;
             

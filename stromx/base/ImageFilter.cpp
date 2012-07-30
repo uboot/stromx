@@ -36,7 +36,7 @@ namespace stromx
         const Version ImageFilter::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         ImageFilter::ImageFilter(const std::string & type)
-          : OperatorKernel(type, PACKAGE, VERSION, setupParameters()),
+          : OperatorKernel(type, PACKAGE, VERSION, setupInitParameters()),
             m_inPlace(true)
         {
         }
@@ -73,7 +73,7 @@ namespace stromx
     
         void ImageFilter::initialize()
         {
-            stromx::core::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupInitParameters());
+            stromx::core::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
         void ImageFilter::execute(DataProvider& provider)
@@ -171,7 +171,7 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Parameter*> ImageFilter::setupParameters()
+        const std::vector<const Parameter*> ImageFilter::setupInitParameters()
         {
             std::vector<const core::Parameter*> parameters;
             

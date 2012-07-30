@@ -94,8 +94,8 @@ namespace stromx
 
         
         void OperatorKernel::initialize(const std::vector<const core::Description*>& inputs,
-                                const std::vector<const core::Description*>& outputs,
-                                const std::vector<const core::Parameter*>& parameters)
+                                        const std::vector<const core::Description*>& outputs,
+                                        const std::vector<const core::Parameter*>& parameters)
         {
             validateInputs(inputs);
             validateOutputs(outputs);

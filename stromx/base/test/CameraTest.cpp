@@ -39,6 +39,7 @@ namespace stromx
             Image image("lenna.jpg");
             
             m_operator = new core::OperatorTester(new Camera());
+            m_operator->setParameter(Camera::OUTPUT_INDEX, Bool(true));
             m_operator->initialize();
             m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
             m_operator->setParameter(Camera::BUFFER_SIZE, UInt32(image.bufferSize()));

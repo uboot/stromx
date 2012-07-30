@@ -45,7 +45,7 @@ namespace stromx
                 return new ImageFilterTester;
             } 
             
-            const std::vector< const stromx::core::Parameter* > setupInitParameters()
+            const std::vector< const stromx::core::Parameter* > setupParameters()
             {
                 return std::vector<const core::Parameter*>();
             }

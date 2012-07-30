@@ -54,7 +54,7 @@ namespace stromx
                                                   const cv::Mat & kernel, int iterations) = 0;
             
         private:
-            const std::vector<const core::Parameter*> setupInitParameters();
+            const std::vector<const core::Parameter*> setupParameters();
             void applyFilter(const cv::Mat & in, cv::Mat & out);
             void validateSourceImage(const core::Image & source);
             const unsigned int computeDestinationSize(const core::Image & source);

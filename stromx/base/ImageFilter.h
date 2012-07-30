@@ -61,7 +61,7 @@ namespace stromx
             virtual void initialize();
             
         protected:
-            virtual const std::vector<const core::Parameter*> setupInitParameters() = 0;
+            virtual const std::vector<const core::Parameter*> setupParameters() = 0;
             virtual void applyFilter(const cv::Mat & in, cv::Mat & out) = 0;
             virtual void validateSourceImage(const core::Image & source) = 0;
             virtual const unsigned int computeDestinationSize(const core::Image & source) = 0;
@@ -69,7 +69,7 @@ namespace stromx
 	private:
             const std::vector<const core::Description*> setupInputs();
             const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const core::Parameter*> setupInitParameters();
 	    
             static const std::string PACKAGE;
             static const core::Version VERSION;

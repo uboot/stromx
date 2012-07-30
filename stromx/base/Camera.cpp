@@ -49,7 +49,7 @@ namespace stromx
         const Version Camera::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         Camera::Camera()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_stream(0),
             m_input(0),
             m_clip(0),
@@ -60,6 +60,7 @@ namespace stromx
             m_pixelType(0),
             m_imageQueue(0),
             m_indexQueue(0),
+            m_outputIndex(false),
             m_imageWidth(0),
             m_imageHeight(0),
             m_exposure(BASE_EXPOSURE),
@@ -94,10 +95,14 @@ namespace stromx
                 m_stream->removeOperator(*iter);
                 (*iter)->deinitialize();
             }
+            
+            OperatorKernel::deinitialize();
         }
         
         void Camera::initialize()
         {
+            OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
+            
             m_input->initialize();
             m_adjustRgbChannels->initialize();
             m_clip->initialize();
@@ -148,6 +153,9 @@ namespace stromx
             {
                 switch(id)
                 {       
+                case OUTPUT_INDEX:
+                    m_outputIndex = data_cast<const stromx::Bool &>(value);
+                    break;
                 case TRIGGER:
                     m_trigger->setParameter(Trigger::TRIGGER, core::TriggerData());
                     break;
@@ -345,6 +353,8 @@ namespace stromx
         {
             switch(id)
             {
+            case OUTPUT_INDEX:
+                return m_outputIndex; 
             case TRIGGER:
                 return m_valueTrigger;
             case TRIGGER_MODE:
@@ -408,7 +418,10 @@ namespace stromx
             Id2DataPair imageMapper(OUTPUT, image);
             Id2DataPair indexMapper(INDEX, index);
             
-            provider.sendOutputData(imageMapper && indexMapper);
+            if(m_outputIndex)
+                provider.sendOutputData(imageMapper && indexMapper);
+            else
+                provider.sendOutputData(imageMapper);
         }
         
         void Camera::activate()
@@ -437,11 +450,26 @@ namespace stromx
             output->setDoc("Output");
             outputs.push_back(output);
             
-            Description* index = new Description(INDEX, DataVariant::UINT_32);
-            index->setDoc("Index");
-            outputs.push_back(index);
+            if(m_outputIndex)
+            {
+                Description* index = new Description(INDEX, DataVariant::UINT_32);
+                index->setDoc("Index");
+                outputs.push_back(index);
+            }
             
             return outputs;
+        }
+        
+        const std::vector<const Parameter*> Camera::setupInitParameters()
+        {
+            std::vector<const core::Parameter*> parameters;
+            
+            Parameter* outputIndex = new Parameter(OUTPUT_INDEX, DataVariant::BOOL);
+            outputIndex->setDoc("Output index");
+            outputIndex->setAccessMode(core::Parameter::NONE_WRITE);
+            parameters.push_back(outputIndex);
+            
+            return parameters;
         }
         
         const std::vector<const Parameter*> Camera::setupParameters()
