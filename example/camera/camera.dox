@@ -20,6 +20,10 @@ The illustrated stream is configured by the XML file below. The parameter settin
 <Stromx version="0.1.0">
     <Stream>
         <Operator id="0" package="Base" type="Camera" version="0.1.0">
+            <!-- output index -->
+            <Parameter id="0">
+                <Data package="Core" type="Bool" version="0.1.0">1</Data>
+            </Parameter>
             <!-- image for camera simulator -->
             <Parameter id="0">
                 <Data type="Image" package="Base" version="0.1.0">lenna.jpg</Data>

@@ -4,24 +4,28 @@
 <Stromx version="0.1.0">
     <Stream>
         <Operator id="0" package="Base" type="Camera" version="0.1.0">
-            <!-- image for camera simulator -->
+            <!-- output index -->
             <Parameter id="0">
+                <Data package="Core" type="Bool" version="0.1.0">1</Data>
+            </Parameter>
+            <!-- image for camera simulator -->
+            <Parameter id="1">
                 <Data type="Image" package="Base" version="0.1.0" file="lenna.jpg"/>
             </Parameter>
             <!-- software trigger mode -->
-            <Parameter id="1">
+            <Parameter id="2">
                 <Data type="Enum" package="Core" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
-            <Parameter id="5">
+            <Parameter id="6">
                 <Data type="UInt32" package="Core" version="0.1.0">1000000</Data>
             </Parameter>
             <!-- one buffer -->
-            <Parameter id="6">
+            <Parameter id="7">
                 <Data type="UInt32" package="Core" version="0.1.0">1</Data>
             </Parameter>
             <!-- 8-bit grayscale output -->
-            <Parameter id="14">
+            <Parameter id="15">
                 <Data type="Enum" package="Core" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
