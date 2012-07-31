@@ -4,7 +4,7 @@
 <Stromx version="0.1.0">
     <Stream>
         <Operator id="0" package="Base" type="Camera" version="0.1.0">
-            <!-- output index -->
+            <!-- output image index -->
             <Parameter id="0">
                 <Data package="Core" type="Bool" version="0.1.0">1</Data>
             </Parameter>
