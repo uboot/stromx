@@ -36,14 +36,15 @@ namespace
 }
 
 void exportExceptionObserver()
-{          
-    enum_<ExceptionObserver::Phase>("ExceptionObserverPhase")
+{         
+    scope in_ExceptionObserver = 
+    class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
+        .def("observe", pure_virtual(&ExceptionObserver::observe))
+    ; 
+    
+    enum_<ExceptionObserver::Phase>("Phase")
         .value("EXECUTION", ExceptionObserver::EXECUTION)
         .value("ACTIVATION", ExceptionObserver::ACTIVATION)
         .value("DEACTIVATION", ExceptionObserver::DEACTIVATION)
         ;  
-        
-    class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
-        .def("observe", pure_virtual(&ExceptionObserver::observe))
-    ;
 }

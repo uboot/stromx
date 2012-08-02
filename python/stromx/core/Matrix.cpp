@@ -99,17 +99,7 @@ namespace
 
 void exportMatrix()
 {     
-    enum_<Matrix::ValueType>("MatrixValueType")
-        .value("INT_8", Matrix::INT_8)
-        .value("INT_16", Matrix::INT_16)
-        .value("INT_32", Matrix::INT_32)
-        .value("UINT_8", Matrix::UINT_8)
-        .value("UINT_16", Matrix::UINT_16)
-        .value("UINT_32", Matrix::UINT_32)
-        .value("FLOAT", Matrix::FLOAT)
-        .value("DOUBLE", Matrix::DOUBLE)
-    ;
-        
+    scope in_Matrix = 
     class_<MatrixWrap, bases<Data>, boost::noncopyable>("Matrix", no_init)
         .def("bufferSize", pure_virtual(&Matrix::bufferSize))
         .def("rows", pure_virtual(&Matrix::rows))
@@ -118,5 +108,16 @@ void exportMatrix()
         .def("valueType", pure_virtual(&Matrix::valueType))
         .def("valueSize", pure_virtual(&Matrix::valueSize))
         .def("_data", pure_virtual(reinterpret_cast<unsigned int (Matrix::*)()>(static_cast<uint8_t* const(Matrix::*)()>(&Matrix::data))))
+    ;
+    
+    enum_<Matrix::ValueType>("ValueType")
+        .value("INT_8", Matrix::INT_8)
+        .value("INT_16", Matrix::INT_16)
+        .value("INT_32", Matrix::INT_32)
+        .value("UINT_8", Matrix::UINT_8)
+        .value("UINT_16", Matrix::UINT_16)
+        .value("UINT_32", Matrix::UINT_32)
+        .value("FLOAT", Matrix::FLOAT)
+        .value("DOUBLE", Matrix::DOUBLE)
     ;
 }

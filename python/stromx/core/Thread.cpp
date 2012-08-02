@@ -25,23 +25,26 @@ using namespace boost::python;
 using namespace stromx::core;
 
 void exportThread()
-{       
-    enum_<Thread::Status>("ThreadStatus")
-        .value("INACTIVE", Thread::INACTIVE)
-        .value("ACTIVE", Thread::ACTIVE)
-        .value("DEACTIVATING", Thread::DEACTIVATING)
-        ;
-        
+{               
     stromx::python::exportVector<Input>("InputVector");
-      
-    class_<Thread, boost::noncopyable>("Thread", no_init)
-        .def("status", &Thread::status)
-        .def("name", &Thread::name, return_value_policy<copy_const_reference>())
-        .def("setName", &Thread::setName)
-        .def("inputSequence", &Thread::inputSequence, return_internal_reference<>())
-        .def("addInput", &Thread::addInput)
-        .def("insertInput", &Thread::insertInput)
-        .def<void (Thread::*)(unsigned int const)>("removeInput", &Thread::removeInput)
-        .def<void (Thread::*)(Operator* const, unsigned int)>("removeInput", &Thread::removeInput)
-    ;
+     
+    {
+        scope in_Thread =
+        class_<Thread, boost::noncopyable>("Thread", no_init)
+            .def("status", &Thread::status)
+            .def("name", &Thread::name, return_value_policy<copy_const_reference>())
+            .def("setName", &Thread::setName)
+            .def("inputSequence", &Thread::inputSequence, return_internal_reference<>())
+            .def("addInput", &Thread::addInput)
+            .def("insertInput", &Thread::insertInput)
+            .def<void (Thread::*)(unsigned int const)>("removeInput", &Thread::removeInput)
+            .def<void (Thread::*)(Operator* const, unsigned int)>("removeInput", &Thread::removeInput)
+        ;        
+            
+        enum_<Thread::Status>("ThreadStatus")
+            .value("INACTIVE", Thread::INACTIVE)
+            .value("ACTIVE", Thread::ACTIVE)
+            .value("DEACTIVATING", Thread::DEACTIVATING)
+            ;
+    }
 }

@@ -25,17 +25,21 @@ using namespace stromx::core;
 
 void exportConnector()
 {
-    enum_<Connector::Type>("ConnectorType")
-        .value("INPUT", Connector::INPUT)
-        .value("OUTPUT", Connector::OUTPUT)
-    ;
+    {
+        scope in_Connector = 
+        class_<Connector>("Connector")
+            .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
+            .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
+            .def("valid", reinterpret_cast<bool (Connector::*)() const>(&Connector::valid))
+            .def("type", reinterpret_cast<Connector::Type (Connector::*)() const>(&Connector::type))
+        ;
         
-    class_<Connector>("Connector")
-        .def("id", reinterpret_cast<unsigned int (Connector::*)() const>(&Connector::id))
-        .def("op", reinterpret_cast<Operator* (Connector::*)() const>(&Connector::op), return_internal_reference<>())
-        .def("valid", reinterpret_cast<bool (Connector::*)() const>(&Connector::valid))
-        .def("type", reinterpret_cast<Connector::Type (Connector::*)() const>(&Connector::type))
-    ;
+        enum_<Connector::Type>("Type")
+            .value("INPUT", Connector::INPUT)
+            .value("OUTPUT", Connector::OUTPUT)
+            .export_values()
+        ;
+    }
     
     class_<Output, bases<Connector> >("Output", init<Operator*, unsigned int>())
     ;

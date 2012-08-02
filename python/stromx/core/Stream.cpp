@@ -48,33 +48,36 @@ void exportStream()
 {    
     stromx::python::exportVector<Operator*>("OperatorVector");
     stromx::python::exportVector<Thread*>("ThreadVector");
-    
-    enum_<Stream::Status>("StreamStatus")
-        .value("INACTIVE", Stream::INACTIVE)
-        .value("ACTIVE", Stream::ACTIVE)
-        .value("DEACTIVATING", Stream::DEACTIVATING)
-        .value("PAUSED", Stream::PAUSED)
-    ;
         
-    class_<Stream, boost::noncopyable>("Stream")
-        .def("name", &Stream::name, return_value_policy<copy_const_reference>())
-        .def("setName", &Stream::setName)
-        .def("status", &Stream::status)
-        .def("operators", &Stream::operators, return_internal_reference<>())
-        .def("addOperator", &addOperatorWrap, return_internal_reference<>())
-        .def("removeOperator", &Stream::removeOperator)
-        .def("connect", &Stream::connect)
-        .def("disconnect", &Stream::disconnect)
-        .def("connectionSource", &Stream::connectionSource)
-        .def("addThread", reinterpret_cast<Thread* (Stream::*)()>(&Stream::addThread), return_internal_reference<>())
-        .def("removeThread", &Stream::removeThread)
-        .def("threads", &Stream::threads, return_internal_reference<>())
-        .def("addObserver", &Stream::addObserver)
-        .def("removeObserver", &Stream::removeObserver)
-        .def("start", &Stream::start)
-        .def("stop", &Stream::stop)
-        .def("join", &joinWrap)
-        .def("pause", &Stream::pause)
-        .def("resume", &Stream::resume)
-    ;
+    {
+        scope in_Stream = 
+        class_<Stream, boost::noncopyable>("Stream")
+            .def("name", &Stream::name, return_value_policy<copy_const_reference>())
+            .def("setName", &Stream::setName)
+            .def("status", &Stream::status)
+            .def("operators", &Stream::operators, return_internal_reference<>())
+            .def("addOperator", &addOperatorWrap, return_internal_reference<>())
+            .def("removeOperator", &Stream::removeOperator)
+            .def("connect", &Stream::connect)
+            .def("disconnect", &Stream::disconnect)
+            .def("connectionSource", &Stream::connectionSource)
+            .def("addThread", reinterpret_cast<Thread* (Stream::*)()>(&Stream::addThread), return_internal_reference<>())
+            .def("removeThread", &Stream::removeThread)
+            .def("threads", &Stream::threads, return_internal_reference<>())
+            .def("addObserver", &Stream::addObserver)
+            .def("removeObserver", &Stream::removeObserver)
+            .def("start", &Stream::start)
+            .def("stop", &Stream::stop)
+            .def("join", &joinWrap)
+            .def("pause", &Stream::pause)
+            .def("resume", &Stream::resume)
+        ;
+        
+        enum_<Stream::Status>("StreamStatus")
+            .value("INACTIVE", Stream::INACTIVE)
+            .value("ACTIVE", Stream::ACTIVE)
+            .value("DEACTIVATING", Stream::DEACTIVATING)
+            .value("PAUSED", Stream::PAUSED)
+        ;
+    }
 }

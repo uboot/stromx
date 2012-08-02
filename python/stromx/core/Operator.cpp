@@ -53,13 +53,7 @@ namespace
       
 void exportOperator()
 {       
-    enum_<Operator::Status>("OperatorStatus")
-        .value("NONE", Operator::NONE)
-        .value("INITIALIZED", Operator::INITIALIZED)
-        .value("ACTIVE", Operator::ACTIVE)
-        .value("EXECUTING", Operator::EXECUTING)
-        ;
-         
+    scope in_Operator =
     class_<Operator, std::auto_ptr<Operator>, boost::noncopyable>("Operator", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("status", &Operator::status)
@@ -78,6 +72,13 @@ void exportOperator()
         .def("addObserver", &Operator::addObserver)
         .def("removeObserver", &Operator::removeObserver)
     ;
+    
+    enum_<Operator::Status>("Status")
+        .value("NONE", Operator::NONE)
+        .value("INITIALIZED", Operator::INITIALIZED)
+        .value("ACTIVE", Operator::ACTIVE)
+        .value("EXECUTING", Operator::EXECUTING)
+        ;
 }
 
             

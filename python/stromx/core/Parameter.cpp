@@ -22,29 +22,34 @@ using namespace boost::python;
 using namespace stromx::core;
 
 void exportParameter()
-{          
-    enum_<Parameter::AccessMode>("ParameterAccessMode")
-        .value("NO_ACCESS", Parameter::NO_ACCESS)
-        .value("NONE_READ", Parameter::NONE_READ)
-        .value("NONE_WRITE", Parameter::NONE_WRITE)
-        .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
-        .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
-        .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
-    ;
-        
+{       
     class_<EnumDescription>("EnumDescription", no_init)
         .def("value", &EnumDescription::value)
         .def("doc", &EnumDescription::doc, return_internal_reference<>())
     ;
     
     stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");
-        
-    class_<Parameter, bases<Description> >("Parameter", no_init)
-        .def("accessMode", &Parameter::accessMode)
-        .def("min", &Parameter::min, return_internal_reference<>())
-        .def("max", &Parameter::max, return_internal_reference<>())
-        .def("descriptions", &Parameter::descriptions, return_internal_reference<>())
-        .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
-        .def("members", &Parameter::members, return_internal_reference<>())
-    ;
+       
+    {
+        scope in_Parameter =
+        class_<Parameter, bases<Description> >("Parameter", no_init)
+            .def("accessMode", &Parameter::accessMode)
+            .def("min", &Parameter::min, return_internal_reference<>())
+            .def("max", &Parameter::max, return_internal_reference<>())
+            .def("descriptions", &Parameter::descriptions, return_internal_reference<>())
+            .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
+            .def("members", &Parameter::members, return_internal_reference<>())
+        ;
+            
+        enum_<Parameter::AccessMode>("AccessMode")
+            .value("NO_ACCESS", Parameter::NO_ACCESS)
+            .value("NONE_READ", Parameter::NONE_READ)
+            .value("NONE_WRITE", Parameter::NONE_WRITE)
+            .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
+            .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
+            .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
+        ;
+    }
+    
+    
 }

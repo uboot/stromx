@@ -118,8 +118,17 @@ namespace
 }
 
 void exportImage()
-{     
-    enum_<Image::PixelType>("ImagePixelType")
+{   
+       
+    scope in_Image = 
+    class_<ImageWrap, bases<Matrix>, boost::noncopyable>("Image", no_init)
+        .def("width", pure_virtual(&Image::width))
+        .def("height", pure_virtual(&Image::height))
+        .def("pixelType", pure_virtual(&Image::pixelType))
+        .def("pixelSize", pure_virtual(&Image::pixelSize))
+    ;
+    
+    enum_<Image::PixelType>("PixelType")
         .value("NONE", Image::NONE)
         .value("MONO_8", Image::MONO_8)
         .value("MONO_16", Image::MONO_16)
@@ -131,12 +140,5 @@ void exportImage()
         .value("BAYERBG_16", Image::BAYERBG_16)
         .value("BAYERGB_8", Image::BAYERGB_8)
         .value("BAYERGB_16", Image::BAYERGB_16)
-    ;
-        
-    class_<ImageWrap, bases<Matrix>, boost::noncopyable>("Image", no_init)
-        .def("width", pure_virtual(&Image::width))
-        .def("height", pure_virtual(&Image::height))
-        .def("pixelType", pure_virtual(&Image::pixelType))
-        .def("pixelSize", pure_virtual(&Image::pixelSize))
     ;
 }
