@@ -88,7 +88,7 @@ cmake -DCMAKE_SKIP_RPATH=ON \
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
-make %{?_smp_mflags} test
+make %{?_smp_mflags} test ARGS="-V"
 
 
 %install
