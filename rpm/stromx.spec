@@ -76,8 +76,7 @@ This package contains the documentation and tutorials for the %{name} library.
 %build
 %{__mkdir} build
 cd build
-cmake -DCMAKE_SKIP_RPATH=ON \
-      -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
+cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
       -DCMAKE_BUILD_TYPE=Release \
 %if "%{?_lib}" == "lib64"
       -DLIB_SUFFIX=64 \
