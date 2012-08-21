@@ -31,7 +31,7 @@ Source0:        %{name}-%{version}.tar.bz2
 %if 0%{?suse_version}
 BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel python-devel boost-devel doxygen cppunit-devel
 %else
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python-devel boost-devel doxygen lapack
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python-devel boost-devel doxygen lapack cppunit-devels
 %endif
 # Requires:       
 
