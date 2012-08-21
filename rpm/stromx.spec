@@ -88,12 +88,12 @@ cmake -DCMAKE_SKIP_RPATH=ON \
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
+make test ARGS="-V"
 
 
 %install
 cd build
 make install DESTDIR=%{buildroot}
-make test ARGS="-V"
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
