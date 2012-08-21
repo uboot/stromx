@@ -52,7 +52,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), OperatorAllocationFailed);
             
             // get the existing operator
-            Operator* newOp;
+            Operator* newOp = 0;
             CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "TestOperator"));
             CPPUNIT_ASSERT(newOp);
             
@@ -69,7 +69,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_factory->newData("FunnyPackage", "RareData"), DataAllocationFailed);
             
             // get the existing data
-            Data* newData;
+            Data* newData = 0;
             CPPUNIT_ASSERT_NO_THROW(newData = m_factory->newData("TestPackage", "TestData"));
             CPPUNIT_ASSERT(newData);
             
