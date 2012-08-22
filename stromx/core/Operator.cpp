@@ -54,6 +54,8 @@ namespace stromx
                 m_type(type)
             {}
             
+            virtual ~InternalObserver() {}
+            
             virtual void observe(const unsigned int id, const DataContainer & data) const
             {
                 switch(m_type)

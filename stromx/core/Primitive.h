@@ -19,7 +19,6 @@
 
 #define __STDC_LIMIT_MACROS
 
-#include <float.h>
 #include <stdint.h>
 #include "Data.h"
 #include "Description.h"
