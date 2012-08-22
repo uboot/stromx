@@ -18,6 +18,7 @@
 #define STROMX_CORE_PRIMITIVE_H
 
 #define __STDC_LIMIT_MACROS
+#define __STDC_CONSTANT_MACROS 
 
 #include <stdint.h>
 #include "Data.h"
