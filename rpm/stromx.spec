@@ -76,7 +76,8 @@ This package contains the documentation and tutorials for the %{name} library.
 %build
 %{__mkdir} build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
+cmake -DCMAKE_SKIP_RPATH=ON \
+      -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
       -DCMAKE_BUILD_TYPE=Release \
 %if "%{?_lib}" == "lib64"
       -DLIB_SUFFIX=64 \
@@ -87,7 +88,7 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
-make test ARGS="-V"
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:stromx/core make test ARGS="-V"
 
 
 %install

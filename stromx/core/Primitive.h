@@ -17,10 +17,12 @@
 #ifndef STROMX_CORE_PRIMITIVE_H
 #define STROMX_CORE_PRIMITIVE_H
 
-#define __STDC_LIMIT_MACROS
-#define __STDC_CONSTANT_MACROS 
+#ifdef __GNUG__
+    #include <tr1/cstdint>
+#else
+    #include <cstdint>
+#endif
 
-#include <stdint.h>
 #include "Data.h"
 #include "Description.h"
 #include "Version.h"
