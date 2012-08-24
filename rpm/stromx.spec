@@ -88,7 +88,7 @@ cmake -DCMAKE_SKIP_RPATH=ON \
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:stromx/core make test ARGS="-V"
+LD_LIBRARY_PATH=stromx/core make test ARGS="-V"
 
 
 %install
