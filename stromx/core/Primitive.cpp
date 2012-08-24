@@ -15,7 +15,7 @@
  */
 
 #include <boost/lexical_cast.hpp>
-#include <float.h>
+#include <cfloat>
 #include "Config.h"
 #include "InputProvider.h"
 #include "Primitive.h"
