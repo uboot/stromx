@@ -80,6 +80,13 @@ namespace stromx
 
         void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)
         {
+            /*
+            * TODO
+            * 
+            * This code is based on Carl Rogers cnpy library
+            * (https://github.com/rogersce/cnpy). This should be mentioned at an appropriate place.
+            */
+            
             // deserialization currently works only on little endian systems
             if(! isLittleEndian())
                 throw stromx::core::Exception("Matrix deserialization is currently only supported on little endian systems");
@@ -231,6 +238,13 @@ namespace stromx
              
         void Matrix::serialize(core::OutputProvider& output) const
         {
+            /*
+            * TODO
+            * 
+            * This code is based on Carl Rogers cnpy library
+            * (https://github.com/rogersce/cnpy). This should be mentioned at an appropriate place.
+            */ 
+            
             // serialization currently works only on little endian systems
             if(! isLittleEndian())
                 throw stromx::core::Exception("Matrix serialization is currently only supported on little endian systems");
