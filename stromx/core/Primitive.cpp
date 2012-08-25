@@ -113,6 +113,10 @@ namespace stromx
         template<>
         const std::string Int16::TYPE = "Int16";
         template<>
+        const Int16 Int16::MIN = Int16(INT16_MIN);
+        template<>
+        const Int16 Int16::MAX = Int16(INT16_MAX);
+        template<>
         const std::string Int16::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
         const Version Int16::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
@@ -135,6 +139,10 @@ namespace stromx
         const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
         template<>
         const std::string UInt16::TYPE = "UInt16";
+        template<>
+        const UInt16 UInt16::MIN = UInt16(0);
+        template<>
+        const UInt16 UInt16::MAX = UInt16(UINT16_MAX);
         template<>
         const std::string UInt16::PACKAGE = STROMX_CORE_PACKAGE_NAME;
         template<>
