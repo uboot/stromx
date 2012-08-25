@@ -37,7 +37,8 @@ namespace stromx
             CPPUNIT_TEST (testImageCvImageConstructor);
             CPPUNIT_TEST (testMatrixFloat);
             CPPUNIT_TEST (testMatrixDefault);
-            CPPUNIT_TEST (testSerialize);
+            CPPUNIT_TEST (testSerializeInt16);
+            CPPUNIT_TEST (testSerializeUInt8);
             CPPUNIT_TEST (testSerializeEmpty);
             CPPUNIT_TEST (testDeserialize);
             CPPUNIT_TEST (testDeserializeEmpty);
@@ -60,7 +61,8 @@ namespace stromx
                 void testMatrixFloat();
                 void testMatrixInt16();
                 void testMatrixDefault();
-                void testSerialize();
+                void testSerializeInt16();
+                void testSerializeUInt8();
                 void testSerializeEmpty();
                 void testDeserialize();
                 void testDeserializeEmpty();

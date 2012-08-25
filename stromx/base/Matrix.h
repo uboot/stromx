@@ -37,7 +37,6 @@ namespace stromx
             friend cv::Mat getOpenCvMat(const core::Matrix& matrix);
         
         public:
-            
             Matrix();
             explicit Matrix(const unsigned int rows, const unsigned int cols, const ValueType valueType);
             explicit Matrix(cv::Mat& cvMatrix);
@@ -66,6 +65,9 @@ namespace stromx
             
             static const int cvTypeFromValueType(const core::Matrix::ValueType valueType);
             static const core::Matrix::ValueType valueTypeFromCvType(const int cvType);
+            static const bool isLittleEndian();
+            static const char npyTypeSymbol(const core::Matrix::ValueType valueType);
+            
             
             void copy(const stromx::core::Matrix & matrix);
             void allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType);

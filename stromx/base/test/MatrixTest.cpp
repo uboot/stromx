@@ -156,16 +156,28 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT, m_matrix->valueType());
         }
         
-        void MatrixTest::testSerialize()
+        void MatrixTest::testSerializeInt16()
         {
             m_matrix = new Matrix(200, 100, Matrix::INT_16);
             memset(m_matrix->data(), 0, m_matrix->rows() * m_matrix->stride());
 
             core::DirectoryFileOutput output(".");
-            output.initialize("MatrixTest_testSerialize");
+            output.initialize("MatrixTest_testSerializeInt16");
             
             CPPUNIT_ASSERT_NO_THROW(m_matrix->serialize(output));
-            CPPUNIT_ASSERT_EQUAL(std::string("3 200 100"), output.getText());
+            CPPUNIT_ASSERT_EQUAL(std::string(""), output.getText());
+        }
+        
+        void MatrixTest::testSerializeUInt8()
+        {
+            m_matrix = new Matrix(20, 10, Matrix::UINT_8);
+            memset(m_matrix->data(), 0, m_matrix->rows() * m_matrix->stride());
+
+            core::DirectoryFileOutput output(".");
+            output.initialize("MatrixTest_testSerializeUInt8");
+            
+            CPPUNIT_ASSERT_NO_THROW(m_matrix->serialize(output));
+            CPPUNIT_ASSERT_EQUAL(std::string(""), output.getText());
         }
 
         void MatrixTest::testSerializeEmpty()
@@ -176,7 +188,7 @@ namespace stromx
             output.initialize("MatrixTest_testSerializeEmpty");
             
             CPPUNIT_ASSERT_NO_THROW(m_matrix->serialize(output));
-            CPPUNIT_ASSERT_EQUAL(std::string("1 0 100"), output.getText());
+            CPPUNIT_ASSERT_EQUAL(std::string(""), output.getText());
         }
 
         void MatrixTest::testResizeBuffer()

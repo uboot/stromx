@@ -99,18 +99,77 @@ namespace stromx
                 throw stromx::core::Exception("Failed to load matrix.");
         }
 
+        const bool Matrix::isLittleEndian()
+        {
+            unsigned char x[] = {1,0};
+            short y = *(short*) x;
+            return y == 1;
+        }
+
+        const char Matrix::npyTypeSymbol(const stromx::core::Matrix::ValueType valueType)
+        {
+            using namespace stromx::core;
+            
+            if(valueType == Matrix::INT_8
+               || valueType == Matrix::INT_16
+               || valueType == Matrix::INT_32)
+            {
+                return 'i';
+            }
+            else if(valueType == Matrix::UINT_8
+               || valueType == Matrix::UINT_16
+               || valueType == Matrix::UINT_32)
+            {
+                return 'u';
+            }
+            else if(valueType == Matrix::FLOAT
+               || valueType == Matrix::DOUBLE)
+            {
+                return 'f';
+            }
+            
+            throw stromx::core::Exception("Attempt to serialize unsupported matrix value type.");
+        }
+             
         void Matrix::serialize(core::OutputProvider& output) const
         {
-            output.text() << (unsigned int)(valueType()) << " ";
-            output.text() << rows() << " ";
-            output.text() << cols();
+            // serialization currently works only on little endian systems
+            if(! isLittleEndian())
+                throw stromx::core::Exception("Matrix serialization is currently only supported on little endian systems");
             
-            if(rows() == 0 || cols() == 0)
-                return;
+            // setup the array header
+            std::ostringstream header;
+            header << "{'descr': '";
+            header << '<';
+            header << npyTypeSymbol(valueType());
+            header << valueSize();
+            header << "', 'fortran_order': False, 'shape': (";
+            header << rows() << ", " << cols();
+            header << "), }";
             
+            // extract the header string and pad it
+            std::string headerString = header.str();
+            int remainder = 16 - (10 + headerString.length()) % 16;
+            headerString.append(remainder - 1, ' ');
+            unsigned short headerSize = headerString.size() + 1;
+            
+            // open the output file
+            std::ostream & outStream = output.openFile("npy", core::OutputProvider::BINARY);
+            
+            // write the numpy header
+            outStream << char(0x93);
+            outStream << "NUMPY";
+            outStream << char(0x01);
+            outStream << char(0x00);
+            outStream.write((char*)(&headerSize), sizeof(unsigned short));
+            
+            // write the array header
+            outStream << headerString;
+            outStream << '\n';
+            
+            // write data
             const uint8_t* rowPtr = data();
             unsigned int rowSize = cols() * valueSize();
-            std::ostream & outStream = output.openFile("bin", core::OutputProvider::BINARY);
             for(unsigned int i = 0; i < rows(); ++i)
             {
                 outStream.write((const char*)(rowPtr), rowSize);
@@ -119,7 +178,6 @@ namespace stromx
             
             if(outStream.fail())
                 throw stromx::core::Exception("Failed to save matrix.");
-            
         }
 
         void Matrix::copy(const stromx::core::Matrix& matrix)
