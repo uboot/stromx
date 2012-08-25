@@ -16,6 +16,8 @@
 
 #include "Matrix.h"
 #include "Utilities.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/regex.hpp>
 #include <stromx/core/OutputProvider.h>
 #include <stromx/core/InputProvider.h>
 #include <opencv2/core/core.hpp>
@@ -78,25 +80,121 @@ namespace stromx
 
         void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)
         {
-            int rows = -1;
-            int cols = -1;
-            int type = -1;
+            // deserialization currently works only on little endian systems
+            if(! isLittleEndian())
+                throw stromx::core::Exception("Matrix deserialization is currently only supported on little endian systems");
             
-            input.text() >> type;
-            input.text() >> rows;
-            input.text() >> cols;
-            
-            allocate(rows, cols, ValueType(type));
-            unsigned int size = rows * cols * valueSize();
-                
-            if(rows == 0 || cols == 0)
-                return;
-            
+            // open the file
             input.openFile(core::InputProvider::BINARY);
-            input.file().read((char*)(buffer()), size);
+            
+            // read and test the magic byte
+            char magicByte = 0;
+            input.file() >> magicByte;
+            if(magicByte != NUMPY_MAGIC_BYTE)
+                throw stromx::core::Exception("This is not a numpy file");
+            
+            // move to the array header size
+            input.file().seekg(8);
+            uint16_t headerSize = 0;
+            input.file().read((char*)(&headerSize), sizeof(headerSize));
+            
+            // allocate and read the array header
+            std::vector<char> headerData(headerSize);
+            input.file().read(&headerData[0], headerData.size());
+            std::string header(headerData.begin(), headerData.end());
+            
+            // match the array header regex
+            static const boost::regex e(".*'descr': ?'([<>])([uif])(\\d+)'.*'fortran_order': ?(False|True).*'shape': ?\\((\\d+), (\\d+)\\).*");
+            boost::smatch what;
+            if(! boost::regex_match(header, what, e))
+                throw stromx::core::Exception("Failed to parse numpy header.");
+            
+            // only little endian files are currently supported
+            if(what[0] == ">")
+                throw stromx::core::Exception("Matrix deserialization does not support big endian files.");
+            
+            // only C-style arrays are currently supported
+            if(what[1] == "True")
+                throw stromx::core::Exception("Matrix deserialization does not support fortran-ordered array.");
+            
+            // extract the matrix dimensions
+            int numRows = 0;
+            int numCols = 0;
+            int wordSize = 0;
+            try
+            {
+                wordSize = boost::lexical_cast<int>(what[3]);
+                numRows = boost::lexical_cast<int>(what[5]);
+                numCols = boost::lexical_cast<int>(what[6]);
+            }
+            catch(boost::bad_lexical_cast&)
+            {
+                throw stromx::core::Exception("Failed to interpret numpy header.");
+            }
+            
+            // get the value type and allocate the matrix
+            Matrix::ValueType valueType = valueTypeFromNpyHeader(what[2].str()[0], wordSize);
+            allocate(numRows, numCols, valueType);
+            
+            // read data
+            const uint8_t* rowPtr = data();
+            unsigned int rowSize = cols() * valueSize();
+            for(unsigned int i = 0; i < rows(); ++i)
+            {
+                input.file().read((char*)(rowPtr), rowSize);
+                rowPtr += stride();
+            }
             
             if(input.file().fail())
                 throw stromx::core::Exception("Failed to load matrix.");
+        }
+        
+        Matrix::ValueType Matrix::valueTypeFromNpyHeader(const char valueType,
+                                                         const int wordSize)
+        {
+            /* valueType  i  i  i  i   u  u  u  u   f  f  f  f  
+             * wordSize   1  2  4  8   1  2  4  8   1  2  4  8 */
+            Matrix::ValueType valueTypeTable[3][4] =
+                {{Matrix::INT_8, Matrix::INT_16, Matrix::INT_32, Matrix::NONE},
+                 {Matrix::UINT_8, Matrix::UINT_16, Matrix::UINT_32, Matrix::NONE},
+                 {Matrix::NONE, Matrix::NONE, Matrix::FLOAT, Matrix::DOUBLE}};
+               
+            int i = 0;
+            switch(valueType)
+            {
+            case 'i':
+                i = 0;
+                break;
+            case 'u':
+                i = 1;
+                break;
+            case 'f':
+                i = 2;
+                break;
+            default:
+                throw stromx::core::Exception("Unknown numpy value identifier.");
+            }
+            
+            int j = 0;
+            switch(wordSize)
+            {
+            case 1:
+                j = 0;
+                break;
+            case 2:
+                j = 1;
+                break;
+            case 4:
+                j = 2;
+                break;
+            case 8:
+                j = 3;
+                break;
+            default:
+                throw stromx::core::Exception("Unsupported numpy word size.");
+            }
+            
+            return valueTypeTable[i][j];
         }
 
         const bool Matrix::isLittleEndian()
@@ -151,17 +249,17 @@ namespace stromx
             std::string headerString = header.str();
             int remainder = 16 - (10 + headerString.length()) % 16;
             headerString.append(remainder - 1, ' ');
-            unsigned short headerSize = headerString.size() + 1;
             
             // open the output file
             std::ostream & outStream = output.openFile("npy", core::OutputProvider::BINARY);
             
             // write the numpy header
-            outStream << char(0x93);
+            outStream << NUMPY_MAGIC_BYTE;
             outStream << "NUMPY";
             outStream << char(0x01);
             outStream << char(0x00);
-            outStream.write((char*)(&headerSize), sizeof(unsigned short));
+            uint16_t headerSize = headerString.size() + 1;
+            outStream.write((char*)(&headerSize), sizeof(uint16_t));
             
             // write the array header
             outStream << headerString;
@@ -214,7 +312,7 @@ namespace stromx
             }
             catch(cv::Exception&)
             {
-                throw core::OutOfMemory("Failed to allocate image.");
+                throw core::OutOfMemory("Failed to allocate matrix.");
             }
         }
         

@@ -130,18 +130,46 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::DOUBLE_MATRIX, m_matrix->variant());
         }
 
-        void MatrixTest::testDeserialize()
+        void MatrixTest::testDeserializeDouble()
         {
             m_matrix = new Matrix();
             
             core::DirectoryFileInput input(".");
-            input.initialize("8 50 100", "double_matrix.bin");
+            input.initialize("", "double_matrix.npy");
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(50), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
             CPPUNIT_ASSERT_EQUAL(Matrix::DOUBLE, m_matrix->valueType());
             
-            for(unsigned int i = 0; i < m_matrix->rows() * m_matrix->stride(); ++i)
-                CPPUNIT_ASSERT_EQUAL(uint8_t(0), m_matrix->data()[i]);
+            const uint8_t* rowPtr = m_matrix->data();
+            for(unsigned int i = 0; i < m_matrix->rows(); ++i)
+            {
+                double* doubleData = (double*)(rowPtr);
+                for(unsigned int j = 0; j < m_matrix->cols(); ++j)
+                    CPPUNIT_ASSERT_EQUAL(double(0), doubleData[j]);
+                rowPtr += m_matrix->stride();
+            }
+        }
+
+        void MatrixTest::testDeserializeUInt16()
+        {
+            m_matrix = new Matrix();
             
+            core::DirectoryFileInput input(".");
+            input.initialize("", "uint16_matrix.npy");
+            CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::UINT_16, m_matrix->valueType());
+            
+            const uint8_t* rowPtr = m_matrix->data();
+            for(unsigned int i = 0; i < m_matrix->rows(); ++i)
+            {
+                uint16_t* uint16Data = (uint16_t*)(rowPtr);
+                for(unsigned int j = 0; j < m_matrix->cols(); ++j)
+                    CPPUNIT_ASSERT_EQUAL(uint16_t(4 * i + j), uint16Data[j]);
+                rowPtr += m_matrix->stride();
+            }
         }
 
         void MatrixTest::testDeserializeEmpty()
@@ -149,7 +177,7 @@ namespace stromx
             m_matrix = new Matrix();
             
             core::DirectoryFileInput input(".");
-            input.initialize("7 100 0", "");
+            input.initialize("", "empty_float_matrix.npy");
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->cols());

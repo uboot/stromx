@@ -38,7 +38,7 @@ find_package(Boost 1.36.0)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.36.0 COMPONENTS thread filesystem date_time system)
+find_package(Boost 1.36.0 COMPONENTS thread date_time filesystem regex system)
 
 find_package(CppUnit)
 
