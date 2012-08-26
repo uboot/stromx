@@ -26,6 +26,7 @@ namespace stromx
         const DataVariant DataVariant::NONE = DataVariant(NONE_ID, STROMX_CORE_PACKAGE_NAME, Documentation("None"));
         const DataVariant DataVariant::DATA = DataVariant(DATA_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Data"));
         const DataVariant DataVariant::TRIGGER = DataVariant(TRIGGER_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Trigger"));
+        const DataVariant DataVariant::PRIMITIVE = DataVariant(PRIMITIVE_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Primitive"));
         const DataVariant DataVariant::BOOL = DataVariant(BOOL_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Bool"));
         const DataVariant DataVariant::ENUM = DataVariant(ENUM_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Enum"));
         const DataVariant DataVariant::INT = DataVariant(INT_ID, STROMX_CORE_PACKAGE_NAME, Documentation("Int"));
@@ -75,6 +76,12 @@ namespace stromx
             
             switch(variant.id())
             {
+            case PRIMITIVE_ID:
+                return isVariant(BOOL)
+                    || isVariant(INT) 
+                    || isVariant(UINT) 
+                    || isVariant(FLOAT) 
+                    || isVariant(DOUBLE);
             case UINT_ID:
                 return isVariant(UINT_8) 
                     || isVariant(UINT_16) 

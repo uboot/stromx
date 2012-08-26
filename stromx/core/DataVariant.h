@@ -36,6 +36,7 @@ namespace stromx
             const static DataVariant NONE;
             const static DataVariant DATA;
             const static DataVariant TRIGGER;
+            const static DataVariant PRIMITIVE;
             const static DataVariant BOOL;
             const static DataVariant ENUM;
             const static DataVariant INT;
@@ -94,6 +95,7 @@ namespace stromx
                 NONE_ID,
                 DATA_ID,
                 TRIGGER_ID,
+                PRIMITIVE_ID,
                 BOOL_ID,
                 ENUM_ID,
                 INT_ID,
