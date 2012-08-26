@@ -8,7 +8,7 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
 
 common-build-arch::
-	cd $(DEB_BUILDDIR) && env LD_LIBRARY_PATH=$(DEB_BUILDDIR)/stromx/core $(MAKE) test ARGS="-V"
+	cd $(DEB_BUILDDIR) && env LD_LIBRARY_PATH=`pwd`/stromx/core $(MAKE) test ARGS="-V"
 
 build/stromx-doc::
 	cd $(DEB_BUILDDIR) && $(MAKE) doc
