@@ -31,6 +31,7 @@ add_executable(stromx_base_test
     ../ConvertPixelType.cpp
     ../Dilate.cpp
     ../Erode.cpp
+    ../HoughLines.cpp
     ../Image.cpp
     ../ImageFilter.cpp
     ../Matrix.cpp
@@ -51,6 +52,7 @@ add_executable(stromx_base_test
     ConstImageTest.cpp
     DilateTest.cpp
     ErodeTest.cpp
+    HoughLinesTest.cpp
     ImageTest.cpp
     ImageFilterTest.cpp
     main.cpp

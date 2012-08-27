@@ -14,45 +14,47 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_CANNY_H
-#define STROMX_BASE_CANNY_H
+#ifndef STROMX_BASE_HOUGHLINES_H
+#define STROMX_BASE_HOUGHLINES_H
 
-#include "ImageFilter.h"
+#include <stromx/core/Enum.h>
+#include <stromx/core/OperatorKernel.h>
+
 #include "Image.h"
 
 namespace stromx
 {
     namespace base
     {
-        /** \brief Applies the %Canny edge detector. */
-        class STROMX_BASE_API Canny : public ImageFilter
+        /** \brief Computes the Hough line transform of an image. */
+        class STROMX_BASE_API HoughLines : public core::OperatorKernel
         {
         public:
             enum ParameterId
             {
-                THRESHOLD_1 = ImageFilter::FILTER_PARAMETERS,
-                THRESHOLD_2
+                TRANSFORM,
+                RHO,
+                THETA,
+                THRESHOLD
             };
             
-            Canny();
+            HoughLines();
             
-            virtual OperatorKernel*const clone() const { return new Canny; }
+            virtual OperatorKernel*const clone() const { return new HoughLines; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::Data& getParameter(const unsigned int id) const;
-            
-        protected:
-            virtual const std::vector<const core::Parameter*> setupParameters();
-            virtual void applyFilter(const cv::Mat & in, cv::Mat & out);
-            virtual void validateSourceImage(const core::Image & source);
-            virtual const unsigned int computeDestinationSize(const core::Image & source);
+            virtual void execute(core::DataProvider& provider);
             
         private:
-            static const std::string TYPE;
+            virtual const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const core::Description*> setupInputs();
+            const std::vector<const core::Description*> setupOutputs();
             
-            core::Double m_threshold1;
-            core::Double m_threshold2;
+            static const std::string PACKAGE;
+            static const core::Version VERSION;
+            static const std::string TYPE;
         };
     }
 }
 
-#endif // STROMX_BASE_CANNY_H
+#endif // STROMX_BASE_HOUGHLINES_H
