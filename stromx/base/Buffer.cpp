@@ -149,13 +149,13 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
         
-            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
+            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
             numBuffers->setDoc("Number of buffers");
             numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
-            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
+            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
             bufferSize->setDoc("Buffer size in bytes");
             bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);

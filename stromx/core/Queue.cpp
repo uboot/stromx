@@ -149,7 +149,7 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE, DataVariant::UINT_32);
+            NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE);
             size->setDoc("Size");
             size->setMin(UInt32(1));
             size->setAccessMode(core::Parameter::INITIALIZED_WRITE);

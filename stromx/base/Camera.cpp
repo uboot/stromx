@@ -489,7 +489,7 @@ namespace stromx
             trigger->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
             
-            NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE, DataVariant::UINT_32);
+            NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE);
             exposure->setDoc("Exposure (milliseconds)");
             exposure->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(exposure);
@@ -498,39 +498,39 @@ namespace stromx
             wbGroup->setDoc("White balance");
             parameters.push_back(wbGroup);
             
-            NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, DataVariant::DOUBLE, wbGroup);
+            NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, wbGroup);
             wbRed->setDoc("WB red");
             wbRed->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbRed->setMin(Double(0));
             wbRed->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbRed);
             
-            NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, DataVariant::DOUBLE, wbGroup);
+            NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, wbGroup);
             wbGreen->setDoc("WB green");
             wbGreen->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbGreen->setMin(Double(0));
             wbGreen->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbGreen);
             
-            NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, DataVariant::DOUBLE, wbGroup);
+            NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, wbGroup);
             wbBlue->setDoc("WB blue");
             wbBlue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbBlue->setMin(Double(0));
             wbBlue->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbBlue);
             
-            NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD, DataVariant::UINT_32);
+            NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD);
             framePeriod->setDoc("Frame period (milliseconds)");
             framePeriod->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(framePeriod);
             
-            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS, DataVariant::UINT_32);
+            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
             numBuffers->setDoc("Number of buffers");
             numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
-            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE, DataVariant::UINT_32);
+            NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
             bufferSize->setDoc("Buffer size in bytes");
             bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
@@ -544,22 +544,22 @@ namespace stromx
             roiGroup->setDoc("Region of interest");
             parameters.push_back(roiGroup);
         
-            m_width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32, roiGroup);
+            m_width = new NumericParameter<UInt32>(WIDTH, roiGroup);
             m_width->setDoc("ROI width");
             m_width->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_width);
         
-            m_height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32, roiGroup);
+            m_height = new NumericParameter<UInt32>(HEIGHT, roiGroup);
             m_height->setDoc("ROI height");
             m_height->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_height);
             
-            m_top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32, roiGroup);
+            m_top = new NumericParameter<UInt32>(TOP, roiGroup);
             m_top->setDoc("ROI top offset");
             m_top->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_top);
             
-            m_left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32, roiGroup);
+            m_left = new NumericParameter<UInt32>(LEFT, roiGroup);
             m_left->setDoc("ROI left offset");
             m_left->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_left);

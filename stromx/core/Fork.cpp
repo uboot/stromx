@@ -167,7 +167,7 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            NumericParameter<UInt32>* numOutputs = new NumericParameter<UInt32>(NUM_OUTPUTS, DataVariant::UINT_32);
+            NumericParameter<UInt32>* numOutputs = new NumericParameter<UInt32>(NUM_OUTPUTS);
             numOutputs->setDoc("Number of outputs");
             numOutputs->setAccessMode(core::Parameter::NONE_WRITE);
             numOutputs->setMin(UInt32(MIN_OUTPUTS));

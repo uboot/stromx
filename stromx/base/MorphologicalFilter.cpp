@@ -131,19 +131,19 @@ namespace stromx
             kernelShape->add(EnumDescription(Enum(CROSS), "Cross"));
             parameters.push_back(kernelShape);
             
-            NumericParameter<UInt32>* kernelSizeX = new NumericParameter<UInt32>(KERNEL_SIZE_X, DataVariant::UINT_32);
+            NumericParameter<UInt32>* kernelSizeX = new NumericParameter<UInt32>(KERNEL_SIZE_X);
             kernelSizeX->setDoc("Kernel size x");
             kernelSizeX->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             kernelSizeX->setMin(UInt32(1));
             parameters.push_back(kernelSizeX);
             
-            NumericParameter<UInt32>* kernelSizeY = new NumericParameter<UInt32>(KERNEL_SIZE_Y, DataVariant::UINT_32);
+            NumericParameter<UInt32>* kernelSizeY = new NumericParameter<UInt32>(KERNEL_SIZE_Y);
             kernelSizeY->setDoc("Kernel size y");
             kernelSizeY->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             kernelSizeY->setMin(UInt32(1));
             parameters.push_back(kernelSizeY);
             
-            NumericParameter<UInt32>* iterations = new NumericParameter<UInt32>(ITERATIONS, DataVariant::UINT_32);
+            NumericParameter<UInt32>* iterations = new NumericParameter<UInt32>(ITERATIONS);
             iterations->setDoc("Iterations");
             iterations->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             iterations->setMin(UInt32(1));

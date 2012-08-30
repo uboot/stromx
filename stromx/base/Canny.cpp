@@ -96,12 +96,12 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            Parameter* threshold1 = new NumericParameter<Double>(THRESHOLD_1, DataVariant::DOUBLE);
+            Parameter* threshold1 = new NumericParameter<Double>(THRESHOLD_1);
             threshold1->setDoc("Threshold 1");
             threshold1->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold1);
             
-            Parameter* threshold2 = new NumericParameter<Double>(THRESHOLD_2, DataVariant::DOUBLE);
+            Parameter* threshold2 = new NumericParameter<Double>(THRESHOLD_2);
             threshold2->setDoc("Threshold 2");
             threshold2->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold2);

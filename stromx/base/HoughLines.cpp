@@ -105,17 +105,17 @@ namespace stromx
             transform->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(transform);
             
-            NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO, core::Double::classVariant());
+            NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO);
             rho->setDoc("Rho");
             rho->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(rho);
             
-            NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA, core::Double::classVariant());
+            NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA);
             theta->setDoc("Theta");
             theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
             
-            NumericParameter<core::Double>* threshold = new NumericParameter<core::Double>(THRESHOLD, core::Double::classVariant());
+            NumericParameter<core::Double>* threshold = new NumericParameter<core::Double>(THRESHOLD);
             threshold->setDoc("Threshold");
             threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);

@@ -31,15 +31,15 @@ namespace stromx
         {
         public:
             /** Constructs a numeric parameter. */
-            NumericParameter(const unsigned int id, const DataVariant& variant, ParameterGroup* const group = 0)
-              : Parameter(id, variant, group),
+            NumericParameter(const unsigned int id, ParameterGroup* const group = 0)
+              : Parameter(id, data_t::classVariant(), group),
                 m_min(data_t::MIN),
                 m_max(data_t::MAX)
             {}
             
             /** Constructs a numeric parameter. */
-            NumericParameter(const unsigned int id, const DataVariant& variant, const data_t min, const data_t max)
-              : Parameter(id, variant),
+            NumericParameter(const unsigned int id, const data_t min, const data_t max)
+              : Parameter(id, data_t::classVariant()),
                 m_min(min),
                 m_max(max)
             {}

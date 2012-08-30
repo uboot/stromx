@@ -135,22 +135,22 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP, DataVariant::UINT_32);
+            NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP);
             top->setDoc("Top");
             top->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(top);
             
-            NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT, DataVariant::UINT_32);
+            NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT);
             left->setDoc("Left");
             left->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(left);
             
-            NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH, DataVariant::UINT_32);
+            NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH);
             width->setDoc("Width");
             width->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(width);
             
-            NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT, DataVariant::UINT_32);
+            NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT);
             height->setDoc("Height");
             height->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(height);

@@ -158,17 +158,17 @@ namespace stromx
         {
             std::vector<const core::Parameter*> parameters;
             
-            NumericParameter<Double>* red = new NumericParameter<Double>(RED, DataVariant::DOUBLE, Double(0.0), Double::MAX);
+            NumericParameter<Double>* red = new NumericParameter<Double>(RED, Double(0.0), Double::MAX);
             red->setDoc("Red");
             red->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(red);
             
-            NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, DataVariant::DOUBLE, Double(0.0), Double::MAX);
+            NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, Double(0.0), Double::MAX);
             green->setDoc("Green");
             green->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(green);
             
-            NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, DataVariant::DOUBLE, Double(0.0), Double::MAX);
+            NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, Double(0.0), Double::MAX);
             blue->setDoc("Blue");
             blue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(blue);
