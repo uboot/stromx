@@ -30,12 +30,28 @@ namespace stromx
         class STROMX_BASE_API HoughLines : public core::OperatorKernel
         {
         public:
+            enum InputId
+            {
+                IMAGE
+            };
+            
+            enum OutputId
+            {
+                LINES
+            };
+            
             enum ParameterId
             {
                 TRANSFORM,
                 RHO,
                 THETA,
                 THRESHOLD
+            };
+            
+            enum Transform
+            {
+                HOUGH,
+                PROBALISTIC_HOUGH
             };
             
             HoughLines();
@@ -53,6 +69,11 @@ namespace stromx
             static const std::string PACKAGE;
             static const core::Version VERSION;
             static const std::string TYPE;
+            
+            core::Enum m_transform;
+            core::Double m_rho;
+            core::Double m_theta;
+            core::Double m_threshold;
         };
     }
 }

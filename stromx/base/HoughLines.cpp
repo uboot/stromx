@@ -20,11 +20,12 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
+#include <stromx/core/EnumParameter.h>
 #include <stromx/core/Id2DataPair.h>
+#include <stromx/core/NumericParameter.h>
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/ReadAccess.h>
 #include <stromx/core/WriteAccess.h>
-#include <stromx/core/NumericParameter.h>
 
 namespace stromx
 {
@@ -75,6 +76,10 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             
+            Description* image = new Description(IMAGE, DataVariant::MONO_IMAGE);
+            image->setDoc("Image");
+            inputs.push_back(image);
+            
             return inputs;
         }
         
@@ -82,12 +87,38 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
+            Description* lines = new Description(LINES, DataVariant::DOUBLE_MATRIX);
+            lines->setDoc("Lines");
+            outputs.push_back(lines);
+            
             return outputs;
         }
         
         const std::vector<const Parameter*> HoughLines::setupParameters()
         {
             std::vector<const core::Parameter*> parameters;
+            
+            EnumParameter* transform = new EnumParameter(TRANSFORM);
+            transform->setDoc("Transform");
+            transform->add(EnumDescription(HOUGH, "Hough transform"));
+            transform->add(EnumDescription(PROBALISTIC_HOUGH, "Probalistic Hough transform"));
+            transform->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(transform);
+            
+            NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO, core::Double::classVariant());
+            rho->setDoc("Rho");
+            rho->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(rho);
+            
+            NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA, core::Double::classVariant());
+            theta->setDoc("Theta");
+            theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(theta);
+            
+            NumericParameter<core::Double>* threshold = new NumericParameter<core::Double>(THRESHOLD, core::Double::classVariant());
+            threshold->setDoc("Threshold");
+            threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(threshold);
                                         
             return parameters;
         }
