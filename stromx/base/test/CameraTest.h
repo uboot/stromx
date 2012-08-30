@@ -33,9 +33,9 @@ namespace stromx
         class CameraTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (CameraTest);
-            CPPUNIT_TEST (testExecuteSoftwareTrigger);
-            CPPUNIT_TEST (testExecuteInternalTrigger);
-            CPPUNIT_TEST (testAdjustRoi);
+//             CPPUNIT_TEST (testExecuteSoftwareTrigger);
+//             CPPUNIT_TEST (testExecuteInternalTrigger);
+//             CPPUNIT_TEST (testAdjustRoi);
 //             CPPUNIT_TEST (testAdjustPixelType);
 //             CPPUNIT_TEST (testAdjustExposure);
 //             CPPUNIT_TEST (testAdjustWhiteBalance);
