@@ -35,7 +35,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (CameraTest);
 //             CPPUNIT_TEST (testExecuteSoftwareTrigger);
 //             CPPUNIT_TEST (testExecuteInternalTrigger);
-//             CPPUNIT_TEST (testAdjustRoi);
+             CPPUNIT_TEST (testAdjustRoi);
 //             CPPUNIT_TEST (testAdjustPixelType);
 //             CPPUNIT_TEST (testAdjustExposure);
 //             CPPUNIT_TEST (testAdjustWhiteBalance);
