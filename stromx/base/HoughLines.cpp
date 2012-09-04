@@ -48,6 +48,30 @@ namespace stromx
             {
                 switch(id)
                 {
+                case RHO:
+                    if(data_cast<const Double &>(value) <= 0.0)
+                    {
+                        throw WrongParameterValue(parameter(RHO), *this,
+                                                  "Rho must be positive.");
+                    }
+                    m_rho = data_cast<const Double &>(value);
+                    break;
+                case THETA:
+                    if(data_cast<const Double &>(value) <= 0.0)
+                    {
+                        throw WrongParameterValue(parameter(THETA), *this,
+                                                  "Theta must be positive.");
+                    }
+                    m_theta = data_cast<const Double &>(value);
+                    break;
+                case THRESHOLD:
+                    if(data_cast<const Double &>(value) <= 0.0)
+                    {
+                        throw WrongParameterValue(parameter(THRESHOLD), *this,
+                                                  "Threshold must be positive.");
+                    }
+                    m_threshold = data_cast<const Double &>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -62,6 +86,12 @@ namespace stromx
         {
             switch(id)
             {
+            case RHO:
+                return m_rho;
+            case THETA:
+                return m_theta;
+            case THRESHOLD:
+                return m_threshold;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -106,16 +136,19 @@ namespace stromx
             parameters.push_back(transform);
             
             NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO);
+            rho->setMin(Double(0.0));
             rho->setDoc("Rho");
             rho->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(rho);
             
             NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA);
+            theta->setMin(Double(0.0));
             theta->setDoc("Theta");
             theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
             
             NumericParameter<core::Double>* threshold = new NumericParameter<core::Double>(THRESHOLD);
+            threshold->setMin(Double(0.0));
             threshold->setDoc("Threshold");
             threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);
