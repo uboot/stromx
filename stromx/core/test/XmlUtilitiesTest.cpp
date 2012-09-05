@@ -66,7 +66,7 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(expected.major(), converted.major());
             CPPUNIT_ASSERT_EQUAL(expected.minor(), converted.minor());
-            CPPUNIT_ASSERT_EQUAL(expected.patch(), converted.patch());
+            CPPUNIT_ASSERT_EQUAL(expected.revision(), converted.revision());
         }
     }
 }

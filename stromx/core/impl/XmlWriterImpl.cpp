@@ -222,7 +222,7 @@ namespace stromx
                 DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
                 std::string str1 = boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().major()) + 
                                     "." + boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().minor()) + 
-                                    "." + boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().patch());
+                                    "." + boost::lexical_cast<std::string>(currOp->getParameter(currPar->id()).version().revision());
                 verAttr->setValue(Str2Xml(str1.c_str()));
                 dataElement->setAttributeNode(verAttr);
                 
@@ -333,7 +333,7 @@ namespace stromx
                     DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
                     std::string str = boost::lexical_cast<std::string>((*iter_op)->info().version().major()) + 
                                     "." + boost::lexical_cast<std::string>((*iter_op)->info().version().minor()) + 
-                                    "." + boost::lexical_cast<std::string>((*iter_op)->info().version().patch());
+                                    "." + boost::lexical_cast<std::string>((*iter_op)->info().version().revision());
                     verAttr->setValue(Str2Xml(str.c_str()));
                     opElement->setAttributeNode(verAttr);
                     
