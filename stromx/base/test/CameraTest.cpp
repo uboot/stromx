@@ -133,6 +133,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
             CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
             image.save("CameraTest_testAdjustRoi.png");
+            std::cout << "Saved image" << std::endl;
         }
         
         void CameraTest::testAdjustExposure()
@@ -178,7 +179,9 @@ namespace stromx
         void CameraTest::tearDown ( void )
         {
             m_operator->deactivate();
+            std::cout << "Deactivated operator" << std::endl;
             delete m_operator;
+            std::cout << "Deleted operator" << std::endl;
         }
     }
 }
