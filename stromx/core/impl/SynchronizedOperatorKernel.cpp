@@ -355,7 +355,9 @@ namespace stromx
                 
                 try
                 {
+                    std::cout << "Start execution of " << m_op->type() << std::endl;
                     m_op->execute(*this);
+                    std::cout << "Finished execution of " << m_op->type() << std::endl;
                 }
                 catch(Interrupt &)
                 {
@@ -365,6 +367,7 @@ namespace stromx
                     m_parametersAreLocked = false;
                     m_parameterCond.notify_all();
                     
+                    std::cout << "Caught interrupt" << std::endl;
                     throw;
                 }
                 catch(OperatorError &)
