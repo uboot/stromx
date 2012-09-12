@@ -24,6 +24,8 @@
 #include "../Input.h"
 #include "../Operator.h"
 
+#include <iostream>
+
 namespace stromx
 {
     namespace core
@@ -245,6 +247,7 @@ namespace stromx
                 }
                 catch(Interrupt&)
                 {
+                    std::cout << "Caught interrupt" << std::endl;
                 }
             }
         }

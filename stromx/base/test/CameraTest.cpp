@@ -122,18 +122,13 @@ namespace stromx
             m_operator->setParameter(Camera::LEFT, UInt32(51));
             m_operator->setParameter(Camera::HEIGHT, UInt32(217));
             m_operator->setParameter(Camera::TOP, UInt32(46));
-            std::cout << "Set parameters" << std::endl;
             m_operator->activate();
-            std::cout << "Activated operator" << std::endl;
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-            std::cout << "Retrieved output data" << std::endl;
             const Image & image = ReadAccess<Image>(imageContainer)();
-            std::cout << "Obtained read access" << std::endl;
             
             CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
             CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
             image.save("CameraTest_testAdjustRoi.png");
-            std::cout << "Saved image" << std::endl;
         }
         
         void CameraTest::testAdjustExposure()
@@ -179,9 +174,7 @@ namespace stromx
         void CameraTest::tearDown ( void )
         {
             m_operator->deactivate();
-            std::cout << "Deactivated operator" << std::endl;
             delete m_operator;
-            std::cout << "Deleted operator" << std::endl;
         }
     }
 }

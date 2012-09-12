@@ -23,6 +23,8 @@
 #include "../OperatorException.h"
 #include "../OperatorKernel.h"
 
+#include <iostream>
+
 namespace stromx
 {
     namespace core
@@ -367,7 +369,6 @@ namespace stromx
                     m_parametersAreLocked = false;
                     m_parameterCond.notify_all();
                     
-                    std::cout << "Caught interrupt" << std::endl;
                     throw;
                 }
                 catch(OperatorError &)
