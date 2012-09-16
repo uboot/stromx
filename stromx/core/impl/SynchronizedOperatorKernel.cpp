@@ -23,8 +23,6 @@
 #include "../OperatorException.h"
 #include "../OperatorKernel.h"
 
-#include <iostream>
-
 namespace stromx
 {
     namespace core
@@ -357,9 +355,7 @@ namespace stromx
                 
                 try
                 {
-                    std::cout << "Start execution of " << m_op->type() << std::endl;
                     m_op->execute(*this);
-                    std::cout << "Finished execution of " << m_op->type() << std::endl;
                 }
                 catch(Interrupt &)
                 {
