@@ -145,7 +145,6 @@ namespace stromx
                 }
                 catch (Interrupt&)
                 {
-                    std::cout << "Interrupt in CameraBuffer" << std::endl;
                     throw;
                 }
             }
