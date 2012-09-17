@@ -240,6 +240,7 @@ namespace stromx
                             }
                             catch(boost::thread_interrupted&)
                             {
+                                std::cout << "Interruption point" << std::endl;
                                 throw Interrupt();
                             } 
                         }
