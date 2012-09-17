@@ -200,9 +200,7 @@ namespace stromx
                 unique_lock_t lock(m_mutex);
                 m_parametersAreLocked = false;
                 
-                BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
-                
-                bool interruptExceptionWasThrown = false;
+                BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute();
                 
                 try
                 {
@@ -213,16 +211,12 @@ namespace stromx
                 }
                 catch(Interrupt&)
                 {
-                    interruptExceptionWasThrown = true;
+                    m_parametersAreLocked = true;
+                    throw;
                 }   
                 
                 m_parametersAreLocked = true;
-                if(! interruptExceptionWasThrown)
-                    m_dataCond.notify_all();
-                
-                // rethrow exception if necessary
-                if(interruptExceptionWasThrown)
-                    throw Interrupt();
+                m_dataCond.notify_all();
             }
 
             void SynchronizedOperatorKernel::sendOutputData(const core::Id2DataMapper& mapper)
@@ -231,8 +225,6 @@ namespace stromx
                 m_parametersAreLocked = false;
                 
                 BOOST_ASSERT(m_status == EXECUTING); // this function can only be called from OperatorKernel::execute()
-                
-                bool interruptExceptionWasThrown = false;
                 
                 try
                 {
@@ -243,16 +235,12 @@ namespace stromx
                 }
                 catch(Interrupt&)
                 {
-                    interruptExceptionWasThrown = true;
+                    m_parametersAreLocked = true;
+                    throw;
                 }   
                 
                 m_parametersAreLocked = true;
-                if(! interruptExceptionWasThrown)
-                    m_dataCond.notify_all();
-                
-                // rethrow exception if necessary
-                if(interruptExceptionWasThrown)
-                    throw Interrupt();   
+                m_dataCond.notify_all();  
             }
             
             void SynchronizedOperatorKernel::validateDataAccess()
