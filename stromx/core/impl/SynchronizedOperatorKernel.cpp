@@ -425,6 +425,7 @@ namespace stromx
                 }
                 catch(boost::thread_interrupted&)
                 {
+                    std::cout << "Interrupt in waitForSignal()" << std::endl;
                     throw Interrupt();
                 } 
             }

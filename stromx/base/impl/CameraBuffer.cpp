@@ -107,46 +107,38 @@ namespace stromx
             
             void CameraBuffer::execute(DataProvider& provider)
             {
+                // get the input data
+                Id2DataPair inputMapper(INPUT);
+                provider.receiveInputData(inputMapper);
+                
+                // try to get a free buffer
+                Data* buffer = 0;
                 try
                 {
-                    // get the input data
-                    Id2DataPair inputMapper(INPUT);
-                    provider.receiveInputData(inputMapper);
-                    
-                    Data* buffer = 0;
-                    
-                    // try to get a free buffer
-                    try
-                    {
-                        buffer = m_buffers(0);
-                    }
-                    catch(Timeout&)
-                    {
-                    }
-                    
-                    if(buffer)
-                    {
-                        // there was a free buffer
-                        DataContainer bufferContainer(buffer);
-                        
-                        // remember it in the recycling access
-                        m_buffers.add(bufferContainer);
-                        
-                        Id2DataPair outputMapper(OUTPUT, inputMapper.data());
-                        Id2DataPair bufferMapper(BUFFER, bufferContainer);
-                        Id2DataPair idMapper(INDEX, DataContainer(new UInt32(m_id)));
-                        
-                        // send it to the output (together with the input image and the current index)
-                        provider.sendOutputData(outputMapper && bufferMapper && idMapper);
-                    }
-                    
-                    // increase the index
-                    ++m_id;
+                    buffer = m_buffers(0);
                 }
-                catch (Interrupt&)
+                catch(Timeout&)
                 {
-                    throw;
                 }
+                
+                if(buffer)
+                {
+                    // there was a free buffer
+                    DataContainer bufferContainer(buffer);
+                    
+                    // remember it in the recycling access
+                    m_buffers.add(bufferContainer);
+                    
+                    Id2DataPair outputMapper(OUTPUT, inputMapper.data());
+                    Id2DataPair bufferMapper(BUFFER, bufferContainer);
+                    Id2DataPair idMapper(INDEX, DataContainer(new UInt32(m_id)));
+                    
+                    // send it to the output (together with the input image and the current index)
+                    provider.sendOutputData(outputMapper && bufferMapper && idMapper);
+                }
+                
+                // increase the index
+                ++m_id;
             }
             
             const std::vector<const Description*> CameraBuffer::setupInputs()

@@ -24,8 +24,6 @@
 #include "../Input.h"
 #include "../Operator.h"
 
-#include <iostream>
-
 namespace stromx
 {
     namespace core
@@ -240,7 +238,6 @@ namespace stromx
                             }
                             catch(boost::thread_interrupted&)
                             {
-                                std::cout << "Interruption point" << std::endl;
                                 throw Interrupt();
                             } 
                         }
@@ -248,7 +245,6 @@ namespace stromx
                 }
                 catch(Interrupt&)
                 {
-                    std::cout << "Caught interrupt" << std::endl;
                 }
             }
         }
