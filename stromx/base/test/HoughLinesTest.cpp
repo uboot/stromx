@@ -42,9 +42,9 @@ namespace stromx
             core::DataContainer source(image);
             m_operator->setInputData(HoughLines::IMAGE, source);
             
-//             core::DataContainer result = m_operator->getOutputData(HoughLines::LINES);
-//             core::ReadAccess<Matrix> access(result);
-//             const Matrix& resultLines = access();
+            core::DataContainer result = m_operator->getOutputData(HoughLines::LINES);
+            core::ReadAccess<Matrix> access(result);
+            const Matrix& resultLines = access();
             
 //             resultLines.save("HoughLinesTest_testExecute.png");
         }

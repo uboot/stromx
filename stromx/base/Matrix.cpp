@@ -349,7 +349,7 @@ namespace stromx
         void Matrix::getDataFromCvMatrix(const ValueType valueType)
         {
             setBuffer((uint8_t*)(m_matrix->data), m_matrix->step * m_matrix->rows);
-            initializeMatrix(m_matrix->rows, m_matrix->cols, m_matrix->step,
+            initializeMatrix(m_matrix->rows, m_matrix->cols * m_matrix->channels(), m_matrix->step,
                              (uint8_t*)(m_matrix->data), valueType);
         }
         
@@ -382,18 +382,39 @@ namespace stromx
             switch(cvType)
             {
             case CV_8UC1:
+            case CV_8UC2:
+            case CV_8UC3:
+            case CV_8UC4:
                 return core::Matrix::UINT_8;
             case CV_8SC1:
+            case CV_8SC2:
+            case CV_8SC3:
+            case CV_8SC4:
                 return core::Matrix::INT_8;
             case CV_16UC1:
+            case CV_16UC2:
+            case CV_16UC3:
+            case CV_16UC4:
                 return core::Matrix::UINT_16;
             case CV_16SC1:
+            case CV_16SC2:
+            case CV_16SC3:
+            case CV_16SC4:
                 return core::Matrix::INT_16;
             case CV_32SC1:
+            case CV_32SC2:
+            case CV_32SC3:
+            case CV_32SC4:
                 return core::Matrix::INT_32;
             case CV_32FC1:
+            case CV_32FC2:
+            case CV_32FC3:
+            case CV_32FC4:
                 return core::Matrix::FLOAT;
             case CV_64FC1:
+            case CV_64FC2:
+            case CV_64FC3:
+            case CV_64FC4:
                 return core::Matrix::DOUBLE;
             default:
                 throw core::WrongArgument("Unsupported OpenCV element type.");  

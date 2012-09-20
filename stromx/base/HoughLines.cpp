@@ -99,6 +99,8 @@ namespace stromx
                 return m_theta;
             case THRESHOLD:
                 return m_threshold;
+            case TRANSFORM:
+                return m_transform;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -119,6 +121,7 @@ namespace stromx
             cv::Mat cvImage = getOpenCvMat(image);
             cv::Mat cvLines;
             cv::HoughLinesP(cvImage, cvLines, m_rho, m_theta, m_threshold);
+            cvLines = cvLines.reshape(1, cvLines.cols);
             
             Matrix* lines = new Matrix(cvLines);
             Id2DataPair outputMapper(LINES, DataContainer(lines));

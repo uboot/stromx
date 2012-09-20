@@ -35,7 +35,7 @@ namespace stromx
         const Version ConstImage::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         ConstImage::ConstImage()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_image(0)
         {
             m_image = new Image(0, 0, core::Image::RGB_24);
