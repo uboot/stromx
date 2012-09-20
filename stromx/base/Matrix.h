@@ -43,6 +43,7 @@ namespace stromx
             explicit Matrix(const stromx::core::Matrix& matrix);
             explicit Matrix(const stromx::base::Matrix& matrix);
             explicit Matrix(const unsigned int size);
+            explicit Matrix(const std::string & filename);
             
             virtual ~Matrix();
             
@@ -57,6 +58,9 @@ namespace stromx
             
             void resize(const unsigned int rows, const unsigned int cols, const ValueType valueType);
             void resize(const unsigned int size);
+            
+            void open(const std::string& filename);
+            void save(const std::string& filename) const;
             
         private:
             static const std::string TYPE;

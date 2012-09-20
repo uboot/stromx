@@ -17,6 +17,7 @@
 #include <cppunit/TestAssert.h>
 #include "HoughLinesTest.h"
 #include "../HoughLines.h"
+#include "../Matrix.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>
@@ -26,8 +27,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::HoughLinesTest);
 
 namespace stromx
 {
-    using namespace core;
-
     namespace base
     {
         void HoughLinesTest::setUp ( void )
@@ -38,7 +37,16 @@ namespace stromx
         }
         
         void HoughLinesTest::testExecute()
-        {
+        {            
+            Image* image = new Image("lenna_bw.jpg");
+            core::DataContainer source(image);
+            m_operator->setInputData(HoughLines::IMAGE, source);
+            
+//             core::DataContainer result = m_operator->getOutputData(HoughLines::LINES);
+//             core::ReadAccess<Matrix> access(result);
+//             const Matrix& resultLines = access();
+            
+//             resultLines.save("HoughLinesTest_testExecute.png");
         }
         
         void HoughLinesTest::tearDown ( void )

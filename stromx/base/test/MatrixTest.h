@@ -34,7 +34,10 @@ namespace stromx
             CPPUNIT_TEST (testMatrixCopyConstructor);
             CPPUNIT_TEST (testMatrixEmptyCopyConstructor);
             CPPUNIT_TEST (testMatrixDefaultCopyConstructor);
-            CPPUNIT_TEST (testImageCvImageConstructor);
+            CPPUNIT_TEST (testMatrixCvMatrix64F);
+            CPPUNIT_TEST (testMatrixCvMatrix32FC2);
+            CPPUNIT_TEST (testMatrixCvMatrix16SC3);
+            CPPUNIT_TEST (testMatrixCvMatrix32UC4);
             CPPUNIT_TEST (testMatrixFloat);
             CPPUNIT_TEST (testMatrixDefault);
             CPPUNIT_TEST (testSerializeInt16);
@@ -45,6 +48,12 @@ namespace stromx
             CPPUNIT_TEST (testDeserializeEmpty);
             CPPUNIT_TEST (testResizeDimension);
             CPPUNIT_TEST (testResizeBuffer);
+            CPPUNIT_TEST (testOpenUInt16);
+            CPPUNIT_TEST (testOpenDouble);
+            CPPUNIT_TEST (testOpenEmpty);
+            CPPUNIT_TEST (testSaveDouble);
+            CPPUNIT_TEST (testSaveUInt16);
+            CPPUNIT_TEST (testSaveEmpty);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -58,7 +67,11 @@ namespace stromx
                 void testMatrixCopyConstructor();
                 void testMatrixEmptyCopyConstructor();
                 void testMatrixDefaultCopyConstructor();
-                void testImageCvImageConstructor();
+                void testMatrixFileConstructor();
+                void testMatrixCvMatrix64F();
+                void testMatrixCvMatrix32FC2();
+                void testMatrixCvMatrix16SC3();
+                void testMatrixCvMatrix32UC4();
                 void testMatrixFloat();
                 void testMatrixInt16();
                 void testMatrixDefault();
@@ -70,6 +83,12 @@ namespace stromx
                 void testDeserializeEmpty();
                 void testResizeDimension();
                 void testResizeBuffer();
+                void testOpenUInt16();
+                void testOpenDouble();
+                void testOpenEmpty();
+                void testSaveDouble();
+                void testSaveUInt16();
+                void testSaveEmpty();
                 
             private:
                 const static stromx::core::Version VERSION;

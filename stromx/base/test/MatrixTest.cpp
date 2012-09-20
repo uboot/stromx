@@ -117,7 +117,12 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::INT_32_MATRIX, m_matrix->variant());
         }
         
-        void MatrixTest::testImageCvImageConstructor()
+        void MatrixTest::testMatrixFileConstructor()
+        {
+
+        }
+        
+        void MatrixTest::testMatrixCvMatrix64F()
         {
             cv::Mat cvMatrix(100, 200, CV_64F);
             
@@ -128,6 +133,69 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1600), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::DOUBLE_MATRIX, m_matrix->variant());
+        }
+        
+        void MatrixTest::testMatrixCvMatrix16SC3()
+        {
+            cv::Mat cvMatrix(100, 200, CV_16UC3);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(cvMatrix));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_16, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1200), m_matrix->stride());
+            CPPUNIT_ASSERT(m_matrix->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::UINT_16_MATRIX, m_matrix->variant());
+        }
+
+        void MatrixTest::testMatrixCvMatrix32FC2()
+        {
+            cv::Mat cvMatrix(100, 200, CV_32FC2);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(cvMatrix));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(400), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::FLOAT, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1600), m_matrix->stride());
+            CPPUNIT_ASSERT(m_matrix->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::FLOAT_MATRIX, m_matrix->variant());
+        }
+
+        void MatrixTest::testMatrixCvMatrix32UC4()
+        {
+            cv::Mat cvMatrix(100, 200, CV_32SC4);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_matrix = new Matrix(cvMatrix));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(800), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL(core::Matrix::INT_32, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3200), m_matrix->stride());
+            CPPUNIT_ASSERT(m_matrix->data());
+            CPPUNIT_ASSERT_EQUAL(core::DataVariant::INT_32_MATRIX, m_matrix->variant());
+        }
+        
+        void MatrixTest::testOpenDouble()
+        {
+            Matrix matrix("double_matrix.npy");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(50), matrix.rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), matrix.cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::DOUBLE, matrix.valueType());
+        }
+
+        void MatrixTest::testOpenUInt16()
+        {
+            Matrix matrix("uint16_matrix.npy");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), matrix.rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), matrix.cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::UINT_16, matrix.valueType());
+        }
+
+        void MatrixTest::testOpenEmpty()
+        {
+            Matrix matrix("empty_float_matrix.npy");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), matrix.rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), matrix.cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT, matrix.valueType());
         }
 
         void MatrixTest::testDeserializeDouble()
@@ -184,6 +252,24 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT, m_matrix->valueType());
         }
         
+        void MatrixTest::testSaveUInt16()
+        {
+            Matrix matrix(200, 100, Matrix::UINT_16);
+            matrix.save("MatrixTest_testSaveUInt16");
+        }
+
+        void MatrixTest::testSaveDouble()
+        {
+            Matrix matrix(50, 10, Matrix::DOUBLE);
+            matrix.save("MatrixTest_testSaveDouble");
+        }
+
+        void MatrixTest::testSaveEmpty()
+        {
+            Matrix matrix(0, 10, Matrix::INT_32);
+            matrix.save("MatrixTest_testSaveEmpty");
+        }
+
         void MatrixTest::testSerializeInt16()
         {
             m_matrix = new Matrix(200, 100, Matrix::INT_16);

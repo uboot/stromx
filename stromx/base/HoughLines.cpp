@@ -17,6 +17,9 @@
 #include "HoughLines.h"
 
 #include "Image.h"
+#include "Matrix.h"
+#include "Utilities.h"
+#include <boost/math/constants/constants.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
@@ -26,6 +29,7 @@
 #include <stromx/core/OperatorException.h>
 #include <stromx/core/ReadAccess.h>
 #include <stromx/core/WriteAccess.h>
+
 
 namespace stromx
 {
@@ -38,7 +42,10 @@ namespace stromx
         const std::string HoughLines::TYPE("HoughLines");
         
         HoughLines::HoughLines()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters())
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_rho(1.0),
+            m_theta(boost::math::constants::pi<double>() / 180.0),
+            m_threshold(100)
         {
         }
 
@@ -99,7 +106,23 @@ namespace stromx
                 
         void HoughLines::execute(DataProvider& provider)
         {
-
+            Id2DataPair srcMapper(IMAGE);
+            provider.receiveInputData(srcMapper);
+            
+            WriteAccess<Image> src(srcMapper.data());
+            Image& image = src();
+            
+            if(image.pixelType() != Image::MONO_8)
+                throw InputError(HoughLines::IMAGE, *this, "Source image must be an 8-bit monochrome image.");
+            
+            // apply the transform
+            cv::Mat cvImage = getOpenCvMat(image);
+            cv::Mat cvLines;
+            cv::HoughLinesP(cvImage, cvLines, m_rho, m_theta, m_threshold);
+            
+            Matrix* lines = new Matrix(cvLines);
+            Id2DataPair outputMapper(LINES, DataContainer(lines));
+            provider.sendOutputData(outputMapper);
         }
         
         const std::vector<const core::Description*> HoughLines::setupInputs()

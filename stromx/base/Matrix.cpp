@@ -67,6 +67,12 @@ namespace stromx
         {
             allocate(size, 1, UINT_8);
         }
+        
+        Matrix::Matrix(const std::string& filename)
+          : m_matrix(new cv::Mat())
+        {
+            open(filename);
+        }
 
         Matrix::~Matrix()
         {
@@ -315,6 +321,16 @@ namespace stromx
         void Matrix::resize(const unsigned int size)
         {
             allocate(size, 1, core::Matrix::NONE);
+        }
+        
+        void Matrix::open(const std::string& filename)
+        {
+
+        }
+
+        void Matrix::save(const std::string& filename) const
+        {
+
         }
 
         void Matrix::allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType)
