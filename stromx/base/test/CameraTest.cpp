@@ -173,6 +173,7 @@ namespace stromx
 
         void CameraTest::tearDown ( void )
         {
+            sleep(1);
             m_operator->deactivate();
             delete m_operator;
         }
