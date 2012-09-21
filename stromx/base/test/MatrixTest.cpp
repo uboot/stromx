@@ -117,11 +117,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(core::DataVariant::INT_32_MATRIX, m_matrix->variant());
         }
         
-        void MatrixTest::testMatrixFileConstructor()
-        {
-
-        }
-        
         void MatrixTest::testMatrixCvMatrix64F()
         {
             cv::Mat cvMatrix(100, 200, CV_64F);

@@ -21,6 +21,7 @@
 #include <stromx/core/OutputProvider.h>
 #include <stromx/core/InputProvider.h>
 #include <opencv2/core/core.hpp>
+#include <fstream>
 
 
 namespace stromx
@@ -83,10 +84,10 @@ namespace stromx
         {
             return new Matrix(*this);
         }
-
-        void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)
+                
+        void Matrix::doDeserialize(std::istream& in)
         {
-            /*
+             /*
             * TODO
             * 
             * This code is based on Carl Rogers cnpy library
@@ -95,25 +96,22 @@ namespace stromx
             
             // deserialization currently works only on little endian systems
             if(! isLittleEndian())
-                throw stromx::core::Exception("Matrix deserialization is currently only supported on little endian systems");
-            
-            // open the file
-            input.openFile(core::InputProvider::BINARY);
+                throw stromx::core::Exception("Matrix deserialization is currently only supported on little endian systems");  
             
             // read and test the magic byte
             char magicByte = 0;
-            input.file() >> magicByte;
+            in >> magicByte;
             if(magicByte != NUMPY_MAGIC_BYTE)
                 throw stromx::core::Exception("This is not a numpy file");
             
             // move to the array header size
-            input.file().seekg(8);
+            in.seekg(8);
             uint16_t headerSize = 0;
-            input.file().read((char*)(&headerSize), sizeof(headerSize));
+            in.read((char*)(&headerSize), sizeof(headerSize));
             
             // allocate and read the array header
             std::vector<char> headerData(headerSize);
-            input.file().read(&headerData[0], headerData.size());
+            in.read(&headerData[0], headerData.size());
             std::string header(headerData.begin(), headerData.end());
             
             // match the array header regex
@@ -154,12 +152,21 @@ namespace stromx
             unsigned int rowSize = cols() * valueSize();
             for(unsigned int i = 0; i < rows(); ++i)
             {
-                input.file().read((char*)(rowPtr), rowSize);
+                in.read((char*)(rowPtr), rowSize);
                 rowPtr += stride();
             }
             
-            if(input.file().fail())
+            if(in.fail())
                 throw stromx::core::Exception("Failed to load matrix.");
+        }
+
+        void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)
+        {
+            // open the file
+            input.openFile(core::InputProvider::BINARY);
+            
+            // call the actual deserialization method
+            doDeserialize(input.file());
         }
         
         Matrix::ValueType Matrix::valueTypeFromNpyHeader(const char valueType,
@@ -241,8 +248,8 @@ namespace stromx
             
             throw stromx::core::Exception("Attempt to serialize unsupported matrix value type.");
         }
-             
-        void Matrix::serialize(core::OutputProvider& output) const
+        
+        void Matrix::doSerialize(std::ostream& out) const
         {
             /*
             * TODO
@@ -270,32 +277,38 @@ namespace stromx
             int remainder = 16 - (10 + headerString.length()) % 16;
             headerString.append(remainder - 1, ' ');
             
-            // open the output file
-            std::ostream & outStream = output.openFile("npy", core::OutputProvider::BINARY);
-            
             // write the numpy header
-            outStream << NUMPY_MAGIC_BYTE;
-            outStream << "NUMPY";
-            outStream << char(0x01);
-            outStream << char(0x00);
+            out << NUMPY_MAGIC_BYTE;
+            out << "NUMPY";
+            out << char(0x01);
+            out << char(0x00);
             uint16_t headerSize = headerString.size() + 1;
-            outStream.write((char*)(&headerSize), sizeof(uint16_t));
+            out.write((char*)(&headerSize), sizeof(uint16_t));
             
             // write the array header
-            outStream << headerString;
-            outStream << '\n';
+            out << headerString;
+            out << '\n';
             
             // write data
             const uint8_t* rowPtr = data();
             unsigned int rowSize = cols() * valueSize();
             for(unsigned int i = 0; i < rows(); ++i)
             {
-                outStream.write((const char*)(rowPtr), rowSize);
+                out.write((const char*)(rowPtr), rowSize);
                 rowPtr += rowSize;
             }
             
-            if(outStream.fail())
+            if(out.fail())
                 throw stromx::core::Exception("Failed to save matrix.");
+        }
+             
+        void Matrix::serialize(core::OutputProvider& output) const
+        {
+            // open the output file
+            std::ostream & outStream = output.openFile("npy", core::OutputProvider::BINARY);
+            
+            // call the actual serialization function
+            doSerialize(outStream);
         }
 
         void Matrix::copy(const stromx::core::Matrix& matrix)
@@ -325,12 +338,20 @@ namespace stromx
         
         void Matrix::open(const std::string& filename)
         {
-
+            // open the file
+            std::ifstream in(filename.c_str(), std::ios_base::in | std::ios_base::binary);
+            
+            // deserialize the matrix
+            doDeserialize(in);
         }
 
         void Matrix::save(const std::string& filename) const
         {
-
+            // open the file
+            std::ofstream out(filename.c_str(), std::ios_base::out | std::ios_base::binary);
+            
+            // deserialize the matrix
+            doSerialize(out);
         }
 
         void Matrix::allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType)

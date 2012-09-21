@@ -67,7 +67,6 @@ namespace stromx
                 void testMatrixCopyConstructor();
                 void testMatrixEmptyCopyConstructor();
                 void testMatrixDefaultCopyConstructor();
-                void testMatrixFileConstructor();
                 void testMatrixCvMatrix64F();
                 void testMatrixCvMatrix32FC2();
                 void testMatrixCvMatrix16SC3();

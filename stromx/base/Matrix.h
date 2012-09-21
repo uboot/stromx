@@ -77,6 +77,9 @@ namespace stromx
             void copy(const stromx::core::Matrix & matrix);
             void allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType);
             void getDataFromCvMatrix(const ValueType valueType);
+            
+            void doSerialize(std::ostream & out) const;
+            void doDeserialize(std::istream & in);
                 
             cv::Mat* m_matrix;
         };
