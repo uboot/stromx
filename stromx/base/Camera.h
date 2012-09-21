@@ -137,6 +137,8 @@ namespace stromx
             core::Enum m_valueExternal;
             
             core::TriggerData m_valueTrigger;
+            
+            bool m_isFirstInitialization;
         };
     }
 }

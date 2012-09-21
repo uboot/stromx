@@ -69,7 +69,8 @@ namespace stromx
             m_wbBlue(1.0),
             m_valueSoftware(SOFTWARE),
             m_valueInternal(INTERNAL),
-            m_valueExternal(EXTERNAL)
+            m_valueExternal(EXTERNAL),
+            m_isFirstInitialization(true)
         {
             m_input = new Operator(new ConstImage);
             m_adjustRgbChannels = new Operator(new AdjustRgbChannels);
@@ -145,6 +146,18 @@ namespace stromx
             mainThread->addInput(m_pixelType, ConvertPixelType::DESTINATION);
             mainThread->addInput(m_imageQueue, Queue::INPUT);
             mainThread->addInput(m_indexQueue, Queue::INPUT);
+            
+            // if this is the first time the operator is initialized, set its parameters
+            // to reasonable values
+            if(m_isFirstInitialization)
+            {
+                m_period->setParameter(PeriodicDelay::PERIOD, UInt32(1000));
+                m_buffer->setParameter(impl::CameraBuffer::NUM_BUFFERS, UInt32(2));
+                m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, UInt32(1e6));
+                m_imageQueue->setParameter(Queue::SIZE, UInt32(2));
+                m_indexQueue->setParameter(Queue::SIZE, UInt32(2));
+                m_isFirstInitialization = false;
+            }
         }
 
         void Camera::setParameter(unsigned int id, const Data& value)
