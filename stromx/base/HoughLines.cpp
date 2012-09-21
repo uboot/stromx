@@ -45,7 +45,9 @@ namespace stromx
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_rho(1.0),
             m_theta(boost::math::constants::pi<double>() / 180.0),
-            m_threshold(100)
+            m_threshold(100),
+            m_minLineLength(30),
+            m_maxLineGap(10)
         {
         }
 
@@ -79,6 +81,22 @@ namespace stromx
                     }
                     m_threshold = data_cast<const Double &>(value);
                     break;
+                case MIN_LINE_LENGTH:
+                    if(data_cast<const Double &>(value) < 0.0)
+                    {
+                        throw WrongParameterValue(parameter(MIN_LINE_LENGTH), *this,
+                                                  "Minimal line length must not be negative.");
+                    }
+                    m_minLineLength = data_cast<const Double &>(value);
+                    break;
+                case MAX_LINE_GAP:
+                    if(data_cast<const Double &>(value) < 0.0)
+                    {
+                        throw WrongParameterValue(parameter(MAX_LINE_GAP), *this,
+                                                  "Maximal line gap must not be negative.");
+                    }
+                    m_maxLineGap = data_cast<const Double &>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -101,6 +119,10 @@ namespace stromx
                 return m_threshold;
             case TRANSFORM:
                 return m_transform;
+            case MIN_LINE_LENGTH:
+                return m_minLineLength;
+            case MAX_LINE_GAP:
+                return m_maxLineGap;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -120,7 +142,7 @@ namespace stromx
             // apply the transform
             cv::Mat cvImage = getOpenCvMat(image);
             cv::Mat cvLines;
-            cv::HoughLinesP(cvImage, cvLines, m_rho, m_theta, m_threshold);
+            cv::HoughLinesP(cvImage, cvLines, m_rho, m_theta, m_threshold, m_minLineLength, m_maxLineGap);
             cvLines = cvLines.reshape(1, cvLines.cols);
             
             Matrix* lines = new Matrix(cvLines);
@@ -178,6 +200,18 @@ namespace stromx
             threshold->setDoc("Threshold");
             threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);
+            
+            NumericParameter<core::Double>* minLineLength = new NumericParameter<core::Double>(MIN_LINE_LENGTH);
+            minLineLength->setMin(Double(0.0));
+            minLineLength->setDoc("Minimal line length");
+            minLineLength->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(minLineLength);
+            
+            NumericParameter<core::Double>* maxLineGap = new NumericParameter<core::Double>(MAX_LINE_GAP);
+            maxLineGap->setMin(Double(0.0));
+            maxLineGap->setDoc("Maximal line gap");
+            maxLineGap->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(maxLineGap);
                                         
             return parameters;
         }

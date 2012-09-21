@@ -46,7 +46,7 @@ namespace stromx
             core::ReadAccess<Matrix> access(result);
             const Matrix& resultLines = access();
             
-//             resultLines.save("HoughLinesTest_testExecute.png");
+            resultLines.save("HoughLinesTest_testExecute.npy");
         }
         
         void HoughLinesTest::tearDown ( void )

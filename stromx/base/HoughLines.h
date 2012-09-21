@@ -45,7 +45,9 @@ namespace stromx
                 TRANSFORM,
                 RHO,
                 THETA,
-                THRESHOLD
+                THRESHOLD,
+                MIN_LINE_LENGTH,
+                MAX_LINE_GAP
             };
             
             enum Transform
@@ -74,6 +76,8 @@ namespace stromx
             core::Double m_rho;
             core::Double m_theta;
             core::Double m_threshold;
+            core::Double m_minLineLength;
+            core::Double m_maxLineGap;
         };
     }
 }
