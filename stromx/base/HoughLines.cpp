@@ -43,11 +43,12 @@ namespace stromx
         
         HoughLines::HoughLines()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_transform(PROBALISTIC_HOUGH),
             m_rho(1.0),
             m_theta(boost::math::constants::pi<double>() / 180.0),
             m_threshold(100),
-            m_minLineLength(30),
-            m_maxLineGap(10)
+            m_minLineLength(50),
+            m_maxLineGap(5)
         {
         }
 

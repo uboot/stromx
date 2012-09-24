@@ -38,7 +38,7 @@ namespace stromx
         
         void HoughLinesTest::testExecute()
         {            
-            Image* image = new Image("lenna_bw.jpg");
+            Image* image = new Image("edges.png");
             core::DataContainer source(image);
             m_operator->setInputData(HoughLines::IMAGE, source);
             

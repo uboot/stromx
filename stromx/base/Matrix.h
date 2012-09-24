@@ -37,10 +37,25 @@ namespace stromx
             friend cv::Mat getOpenCvMat(const core::Matrix& matrix);
         
         public:
+            /** 
+             * Constructs an empty matrix with zero rows and columns and value type Matrix::NONE.
+             * No data is associated with the matrix, i.e. its data and buffer pointers are 0.
+             */
             Matrix();
+            
+            /** Constructs a matrix for the given parameters. */
             explicit Matrix(const unsigned int rows, const unsigned int cols, const ValueType valueType);
+            
+            /** 
+             * Constructs a matrix from \c cvMatrix. The data of the input matrix is not copied
+             * only a lightweight wrapper is allocated which references \c cvMatrix.
+             */
             explicit Matrix(cv::Mat& cvMatrix);
+            
+            /** Copy constructs a matrix from \c matrix. */
             explicit Matrix(const stromx::core::Matrix& matrix);
+            
+            /** Copy constructs a matrix from \c matrix. */
             explicit Matrix(const stromx::base::Matrix& matrix);
             explicit Matrix(const unsigned int size);
             explicit Matrix(const std::string & filename);
