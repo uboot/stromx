@@ -153,7 +153,7 @@ namespace stromx
             {
                 m_period->setParameter(PeriodicDelay::PERIOD, UInt32(1000));
                 m_buffer->setParameter(impl::CameraBuffer::NUM_BUFFERS, UInt32(2));
-                m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, UInt32(1e6));
+                m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, UInt32(1000000));
                 m_imageQueue->setParameter(Queue::SIZE, UInt32(2));
                 m_indexQueue->setParameter(Queue::SIZE, UInt32(2));
                 m_isFirstInitialization = false;
