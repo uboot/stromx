@@ -75,12 +75,7 @@ namespace stromx
                     m_theta = data_cast<const Double &>(value);
                     break;
                 case THRESHOLD:
-                    if(data_cast<const Double &>(value) <= 0.0)
-                    {
-                        throw WrongParameterValue(parameter(THRESHOLD), *this,
-                                                  "Threshold must be positive.");
-                    }
-                    m_threshold = data_cast<const Double &>(value);
+                    m_threshold = data_cast<const UInt32 &>(value);
                     break;
                 case MIN_LINE_LENGTH:
                     if(data_cast<const Double &>(value) < 0.0)
@@ -196,8 +191,7 @@ namespace stromx
             theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
             
-            NumericParameter<core::Double>* threshold = new NumericParameter<core::Double>(THRESHOLD);
-            threshold->setMin(Double(0.0));
+            NumericParameter<core::UInt32>* threshold = new NumericParameter<core::UInt32>(THRESHOLD);
             threshold->setDoc("Threshold");
             threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);

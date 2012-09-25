@@ -75,7 +75,7 @@ namespace stromx
             core::Enum m_transform;
             core::Double m_rho;
             core::Double m_theta;
-            core::Double m_threshold;
+            core::UInt32 m_threshold;
             core::Double m_minLineLength;
             core::Double m_maxLineGap;
         };
