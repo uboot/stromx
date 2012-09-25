@@ -173,7 +173,7 @@ namespace stromx
 
         void CameraTest::tearDown ( void )
         {
-            sleep(1);
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
             m_operator->deactivate();
             delete m_operator;
         }
