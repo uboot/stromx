@@ -110,13 +110,13 @@ namespace stromx
             virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
             
             /** 
-             * Reads the image \c filename to the image. The data of the current image is replaced 
+             * Reads the image \c filename. The data of the current image is replaced 
              * by the data of the new image.
              */ 
             void open(const std::string& filename);
             
             /** 
-             * Reads the image \c filename to the image. The data of the current image is replaced 
+             * Reads the image \c filename. The data of the current image is replaced 
              * by the data of the new image. The read image data is converted according to \c access. 
              */ 
             void open(const std::string & filename, const FileAccess access);
@@ -127,9 +127,7 @@ namespace stromx
              */
             void save(const std::string& filename) const;
             
-            /**
-             * Resizes the image and changes the pixel type of the image.
-             */
+            /** Resizes the image and changes the pixel type of the image. */
             void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
             
             /**

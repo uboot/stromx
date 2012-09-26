@@ -57,7 +57,15 @@ namespace stromx
             
             /** Copy constructs a matrix from \c matrix. */
             explicit Matrix(const stromx::base::Matrix& matrix);
+            
+            /** 
+             * Allocates a matrix with a buffer of a given size in bytes. The matrix has 1 row and
+             * \c size columns. Its value type is Image::NONE. The buffer size of the image is 
+             * guaranteed to be at least \c size.
+             */
             explicit Matrix(const unsigned int size);
+            
+            /** Allocates a matrix and reads its content from the file \c filename. */
             explicit Matrix(const std::string & filename);
             
             virtual ~Matrix();
@@ -71,10 +79,25 @@ namespace stromx
             virtual void serialize(core::OutputProvider & output) const;
             virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
             
+            /** Resizes the matrix and changes the value type of the matrix. */
             void resize(const unsigned int rows, const unsigned int cols, const ValueType valueType);
+            
+            /**
+             * Resizes the buffer of the matrix to the given size in bytes. The resized matrix has
+             * 1 row and \c size columns. Its value type is Matrix::NONE. The buffer size of the matrix
+             * is guaranteed to be at least \c size.
+             */
             void resize(const unsigned int size);
             
+            /** 
+             * Reads the file \c filename. The data of the current matrix is replaced 
+             * by the data of the new image.
+             */ 
             void open(const std::string& filename);
+            
+            /** 
+             * Saves the matrix to the file \c filename. The matrix is stored in the NPY format.
+             */
             void save(const std::string& filename) const;
             
         private:
