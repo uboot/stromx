@@ -58,6 +58,9 @@ namespace stromx
             {
                 switch(id)
                 {
+                case TRANSFORM:
+                    m_transform = data_cast<const Enum &>(value);
+                    break;
                 case RHO:
                     if(data_cast<const Double &>(value) <= 0.0)
                     {
