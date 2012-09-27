@@ -32,9 +32,10 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (WriteAccessTest);
             CPPUNIT_TEST(testWriteAccess);
+            CPPUNIT_TEST(testEmptyWriteAccess);
             CPPUNIT_TEST(testWriteAccessCast);
             CPPUNIT_TEST(testWriteAccessWrongCast);
-            CPPUNIT_TEST(testWriteAccessEmpty);
+            CPPUNIT_TEST(testWriteAccessEmptyContainer);
             CPPUNIT_TEST(testReleaseWriteAccess);
             CPPUNIT_TEST(testWriteAccessDelayed);
             CPPUNIT_TEST(testWriteAccessInterrupt);
@@ -48,7 +49,8 @@ namespace stromx
             void tearDown() { m_data = 0; }
 
         protected:
-            void testWriteAccessEmpty();
+            void testWriteAccessEmptyContainer();
+            void testEmptyWriteAccess();
             void testWriteAccess();
             void testWriteAccessCast();
             void testWriteAccessWrongCast();

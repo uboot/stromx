@@ -42,6 +42,9 @@ namespace stromx
         class WriteAccess
         {
         public:
+            /** Constructs an empty write access. */ 
+            WriteAccess() {}
+            
             /** 
              * Constructs a write access from a data container. This functions
              * waits until write access is possible, i.e. until no other
@@ -69,9 +72,15 @@ namespace stromx
             {
             }
             
+            /** Returns \c true if the write access is empty. */
+            const bool empty() const { return m_impl.get() == 0; }
+            
             /** Returns a reference to the content of the data container. */
             data_t & get() const
             {
+                if(empty())
+                    throw AccessEmpty();
+                
                 try
                 {
                     return dynamic_cast<data_t &>(m_impl->get());
@@ -86,8 +95,6 @@ namespace stromx
             data_t & operator()() const { return get(); }
             
         private:
-            WriteAccess();
-
             std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
         };
     }

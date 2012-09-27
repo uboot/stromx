@@ -37,6 +37,9 @@ namespace stromx
         class ReadAccess
         {
         public:
+            /** Constructs an empty read access. */ 
+            ReadAccess() {}
+            
             /** 
              * Constructs a read access from a data container. This functions
              * waits until read access is possible, i.e. until no
@@ -64,9 +67,19 @@ namespace stromx
             {
             }
             
-            /** Returns a constant reference to the content of the data container. */
+            /** Returns \c true if the read access is empty. */
+            const bool empty() const { return m_impl.get() == 0; }
+            
+            /** 
+             * Returns a constant reference to the content of the data container.
+             * 
+             * \throws EmptyAccess If the read access is empty.
+             */
             const data_t & get() const
             {
+                if(empty())
+                    throw AccessEmpty();
+                
                 try
                 {
                     return dynamic_cast<const data_t &>(m_impl->get());
@@ -81,7 +94,6 @@ namespace stromx
             const data_t & operator()() const { return get(); }
             
         private:
-            ReadAccess();
             std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
         };
     }

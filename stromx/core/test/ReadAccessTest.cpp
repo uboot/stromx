@@ -30,7 +30,7 @@ namespace stromx
 {
     namespace core
     {
-        void ReadAccessTest::testReadAccessEmpty()
+        void ReadAccessTest::testReadAccessEmptyContainer()
         {
             DataContainer container;
             CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), WrongArgument);
@@ -49,6 +49,13 @@ namespace stromx
             }
             
             CPPUNIT_ASSERT(TestData::wasDestructed);  
+        }
+        
+        void ReadAccessTest::testEmptyReadAccess()
+        {
+            ReadAccess<> access;
+            CPPUNIT_ASSERT(access.empty());
+            CPPUNIT_ASSERT_THROW(access.get(), AccessEmpty);
         }
 
         void ReadAccessTest::testReadAccessCast()

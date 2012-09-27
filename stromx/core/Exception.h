@@ -199,6 +199,15 @@ namespace stromx
             {}
         };
         
+        /** \brief Tried to get the data of an empty read or write access. */
+        class AccessEmpty : public Exception
+        {
+        public:
+            AccessEmpty(const std::string & message = "AccessEmpty")
+              : Exception(message)
+            {}
+        };
+        
         /** \brief Error related to a Data object. */
         class DataException : public Exception
         {

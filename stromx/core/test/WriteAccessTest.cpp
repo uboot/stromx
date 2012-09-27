@@ -42,6 +42,13 @@ namespace stromx
             CPPUNIT_ASSERT(TestData::wasDestructed);  
         }
         
+        void WriteAccessTest::testEmptyWriteAccess()
+        {
+            WriteAccess<> access;
+            CPPUNIT_ASSERT(access.empty());
+            CPPUNIT_ASSERT_THROW(access.get(), AccessEmpty);
+        }
+        
         void WriteAccessTest::testWriteAccessCast()
         {
             Data* data = new TestData;
@@ -61,7 +68,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(access(), BadCast);
         }
         
-        void WriteAccessTest::testWriteAccessEmpty()
+        void WriteAccessTest::testWriteAccessEmptyContainer()
         {
             DataContainer container;
             CPPUNIT_ASSERT_THROW(WriteAccess<> access(container), WrongArgument);

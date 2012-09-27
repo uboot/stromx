@@ -31,8 +31,9 @@ namespace stromx
         class ReadAccessTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ReadAccessTest);
-            CPPUNIT_TEST(testReadAccessEmpty);
+            CPPUNIT_TEST(testReadAccessEmptyContainer);
             CPPUNIT_TEST(testReadAccess);
+            CPPUNIT_TEST(testEmptyReadAccess);
             CPPUNIT_TEST(testReadAccessCast);
             CPPUNIT_TEST(testReadAccessWrongCast);
             CPPUNIT_TEST(testReadAccessDelayed);
@@ -48,8 +49,9 @@ namespace stromx
             void tearDown() {}
 
         protected:
-            void testReadAccessEmpty();
+            void testReadAccessEmptyContainer();
             void testReadAccess();
+            void testEmptyReadAccess();
             void testReadAccessCast();
             void testReadAccessWrongCast();
             void testReadAccessDelayed();
