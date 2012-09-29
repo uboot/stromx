@@ -75,7 +75,6 @@ namespace stromx
             virtual const std::string & package() const { return m_data->package(); }
             virtual const DataVariant & variant() const { return m_data->variant(); }
             
-            const bool isVariant(const DataVariant & v) const { return m_data->isVariant(v); }
             virtual Data* const clone() const { return m_data->clone(); }
             
             virtual void serialize(OutputProvider & out) const { return m_data->serialize(out); }

@@ -46,7 +46,6 @@ namespace stromx
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
-            const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }
         };
         
         /** 

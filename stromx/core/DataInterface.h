@@ -69,7 +69,7 @@ namespace stromx
             virtual void deserialize(InputProvider & in, const Version & version) = 0;
             
             /** Returns \c true if the variant of this data object is a subtype of \c v. */
-            virtual const bool isVariant(const DataVariant & v) const = 0;
+            bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }
         };
     }
 }
