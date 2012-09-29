@@ -47,10 +47,10 @@ namespace stromx
                 switch(id)
                 {
                 case THRESHOLD_1:
-                    m_threshold1 = dynamic_cast<const Double &>(value);
+                    m_threshold1 = stromx::core::data_cast<Double>(value);
                     break;
                 case THRESHOLD_2:
-                    m_threshold2 = dynamic_cast<const Double &>(value);
+                    m_threshold2 = stromx::core::data_cast<Double>(value);
                     break;
                 default:
                     ImageFilter::setParameter(id, value);

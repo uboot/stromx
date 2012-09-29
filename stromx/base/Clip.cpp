@@ -48,16 +48,16 @@ namespace stromx
                 switch(id)
                 {
                 case TOP:
-                    m_top = dynamic_cast<const UInt32&>(value);
+                    m_top = stromx::core::data_cast<UInt32>(value);
                     break;
                 case LEFT:
-                    m_left = dynamic_cast<const UInt32&>(value);
+                    m_left = stromx::core::data_cast<UInt32>(value);
                     break;
                 case WIDTH:
-                    m_width = dynamic_cast<const UInt32&>(value);
+                    m_width = stromx::core::data_cast<UInt32>(value);
                     break;
                 case HEIGHT:
-                    m_height = dynamic_cast<const UInt32&>(value);
+                    m_height = stromx::core::data_cast<UInt32>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);

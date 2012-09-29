@@ -58,7 +58,7 @@ namespace stromx
                     
                     try
                     {
-                        const core::Image& image = dynamic_cast<const core::Image&>(value);
+                        const core::Image& image = stromx::core::data_cast<core::Image>(value);
                         m_image = new Image(image);
                     }
                     catch(std::bad_cast&)
@@ -94,7 +94,7 @@ namespace stromx
             Data* outData = m_imageAccess();
             provider.lockParameters();
             
-            base::Image* outImage = dynamic_cast<base::Image*>(outData);
+            base::Image* outImage = stromx::core::data_cast<base::Image>(outData);
             
             if(! outImage)
             {

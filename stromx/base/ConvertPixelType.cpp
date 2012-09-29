@@ -51,7 +51,7 @@ namespace stromx
                 switch(id)
                 {
                 case PIXEL_TYPE:
-                    m_pixelType = dynamic_cast<const Enum &>(value);
+                    m_pixelType = stromx::core::data_cast<Enum>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);

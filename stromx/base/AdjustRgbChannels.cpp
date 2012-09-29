@@ -50,13 +50,13 @@ namespace stromx
                 switch(id)
                 {
                 case RED:
-                    m_red = dynamic_cast<const Double&>(value);
+                    m_red = stromx::core::data_cast<Double>(value);
                     break;
                 case GREEN:
-                    m_green = dynamic_cast<const Double&>(value);
+                    m_green = stromx::core::data_cast<Double>(value);
                     break;
                 case BLUE:
-                    m_blue = dynamic_cast<const Double&>(value);
+                    m_blue = stromx::core::data_cast<Double>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);

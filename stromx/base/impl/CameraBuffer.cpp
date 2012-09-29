@@ -53,11 +53,11 @@ namespace stromx
                     switch(id)
                     {
                     case BUFFER_SIZE:
-                        m_bufferSize = dynamic_cast<const UInt32 &>(value);
+                        m_bufferSize = stromx::core::data_cast<UInt32>(value);
                         break;
                     case NUM_BUFFERS:
                     {
-                        UInt32 newNumBuffers = dynamic_cast<const UInt32 &>(value);
+                        UInt32 newNumBuffers = stromx::core::data_cast<UInt32>(value);
                         if(newNumBuffers < 1)
                             throw WrongParameterValue(parameter(NUM_BUFFERS), *this);
                         m_numBuffers = newNumBuffers;

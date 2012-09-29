@@ -48,7 +48,7 @@ namespace stromx
                 switch(id)
                 {
                 case IN_PLACE:
-                    m_inPlace = dynamic_cast<const Bool &>(value);
+                    m_inPlace = stromx::core::data_cast<Bool>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
