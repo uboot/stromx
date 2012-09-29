@@ -73,6 +73,7 @@ set(SOURCES
     CoreTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp
+    DataRefTest.cpp
     DataVariantTest.cpp
     DataTest.cpp
     DumpTest.cpp
