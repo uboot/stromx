@@ -49,6 +49,42 @@ namespace
         op.setInputData(id, data);
         Py_END_ALLOW_THREADS
     }
+    
+    const Data& getParameterWrap(Operator & op, const unsigned int id)
+    {
+        const Data* data = 0;
+        
+        Py_BEGIN_ALLOW_THREADS
+        data = &op.getParameter(id);
+        Py_END_ALLOW_THREADS
+        
+        return *data;
+    }
+    
+    const Data& getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
+    {
+        const Data* data = 0;
+        
+        Py_BEGIN_ALLOW_THREADS
+        return op.getParameter(id, timeout);
+        Py_END_ALLOW_THREADS
+        
+        return *data;
+    }
+    
+    void setParameterWrap(Operator & op, const unsigned int id, const Data & data)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        op.setParameter(id, data);
+        Py_END_ALLOW_THREADS
+    }
+    
+    void setParameterWithTimoutWrap(Operator & op, const unsigned int id, const Data & data, const unsigned int timeout)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        op.setParameter(id, data, timeout);
+        Py_END_ALLOW_THREADS
+    }
 }
       
 void exportOperator()
@@ -62,10 +98,10 @@ void exportOperator()
         .def("setName", &Operator::setName)
         .def("initialize", &Operator::initialize)
         .def("deinitialize", &Operator::deinitialize)
-        .def<const Data& (Operator::*)(const unsigned int) const>("getParameter", &Operator::getParameter, return_internal_reference<>())
-        .def<const Data& (Operator::*)(const unsigned int, const unsigned int) const>("getParameter", &Operator::getParameter, return_internal_reference<>())
-        .def<void (Operator::*)(const unsigned int, const Data &)>("setParameter", &Operator::setParameter)
-        .def<void (Operator::*)(const unsigned int, const Data &, const unsigned int)>("setParameter", &Operator::setParameter)
+        .def("getParameter", &getParameterWrap, return_internal_reference<>())
+        .def("getParameter", &getParameterWithTimoutWrap, return_internal_reference<>())
+        .def("setParameter", &setParameterWrap)
+        .def("setParameter", &setParameterWrap)
         .def("getOutputData", &getOutputDataWrap)
         .def("setInputData", &setInputDataWrap)
         .def("clearOutputData", &Operator::clearOutputData)

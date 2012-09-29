@@ -28,6 +28,7 @@ timer.initialize()
 timer = stream.addOperator(timer)
 
 timer.setParameter(0, core.UInt32(1000))
+print timer.getParameter(0)
 
 stream.connect(source, 0, timer, 0)
 
