@@ -19,6 +19,7 @@
 
 #include <typeinfo>
 #include "Config.h"
+#include "DataInterface.h"
 #include "DataVariant.h"
 #include "Exception.h"
 
@@ -30,8 +31,8 @@ namespace stromx
         class OutputProvider;
         class Version;
         
-        /** \brief Abstract data object */
-        class STROMX_CORE_API Data
+        /** \brief Abstract data object. */
+        class STROMX_CORE_API Data : public DataInterface
         {
         public:
             /** 
@@ -43,46 +44,13 @@ namespace stromx
             
             virtual ~Data() {}
             
-            /** Returns the version of the class of this data object. */
-            virtual const Version & version() const = 0;
-            
-            /** Returns the name of the class of this data object. */
-            virtual const std::string & type() const = 0;
-            
-            /** Returns the package of the class of this data object. */
-            virtual const std::string & package() const = 0;
-            
-            /** Returns the data variant of this data object. */
-            virtual const DataVariant & variant() const = 0;
-            
-            /**
-             * Returns a copy of the data object, i.e. a object of the same type is
-             * allocated and the data of the original object is copied to the new object.
-             * A pointer to the new object is returned.
-             */
-            virtual Data* const clone() const = 0;
-            
-            /**
-             * Serializes this data object.
-             * 
-             * \param out The output which the data is sent to.
-             */
             virtual void serialize(OutputProvider & out) const;
-            
-            /**
-             * Deserializes a data object.
-             * 
-             * \param out The input which the data obtained from.
-             * \param version The version of the data class which serialized the input.
-             */
             virtual void deserialize(InputProvider & in, const Version & version);
-            
-            /** Returns \c true if the variant of this data object is a subtype of \c v. */
             const bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }
         };
         
         /** 
-         * Casts the type of a reference to a data object to <tt>data_t &</tt>.
+         * Casts a reference to a data object to <tt>data_t &</tt>.
          * Throws BadCast if the cast failed.
          * \throws BadCast
          */
@@ -100,7 +68,7 @@ namespace stromx
         }
         
         /** 
-         * Casts the type of a constant reference to a data object to <tt>const data_t &</tt>.
+         * Casts a constant reference to a data object to <tt>const data_t &</tt>.
          * Throws BadCast if the cast failed 
          * \throws BadCast
          */
@@ -118,7 +86,7 @@ namespace stromx
         }
         
         /** 
-         * Casts the type of a pointer to a data object to \c data_t*.
+         * Casts a pointer to a data object to \c data_t*.
          * Returns \c 0 if the cast failed
          */
         template<typename data_t>
@@ -128,7 +96,7 @@ namespace stromx
         }
         
         /** 
-         * Casts the type of a pointer to a constant data object to <tt>const data_t*</tt>.
+         * Casts a pointer to a constant data object to <tt>const data_t*</tt>.
          * Returns \c 0 if the cast failed
          */
         template<typename data_t>
