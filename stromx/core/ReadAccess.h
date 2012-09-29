@@ -55,7 +55,7 @@ namespace stromx
             /** 
              * Constructs a read access from a data container. This functions
              * waits until read access is possible, i.e. until no
-             * write access  to \c data exists, or until the time out expires.
+             * write access  to \c data exists, or until the timeout expires.
              * 
              * \param data The container which contains the data to be read.
              * \param timeout The maximal time to wait in milliseconds.

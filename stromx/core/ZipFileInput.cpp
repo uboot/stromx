@@ -99,7 +99,7 @@ namespace stromx
             if(! file)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
             
-            if(zip_fread(file, content, fileSize) != fileSize)
+            if((unsigned int)(zip_fread(file, content, fileSize)) != fileSize)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to read file in zip archive.");
             
             m_currentFile = new std::istringstream(std::string(content, fileSize), iosmode);
