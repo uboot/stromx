@@ -50,16 +50,16 @@ namespace stromx
                 switch(id)
                 {
                 case FILTER_TYPE:
-                    m_filterType = data_cast<const Enum &>(value);
+                    m_filterType = data_cast<Enum>(value);
                     break;
                 case KERNEL_SIZE:
-                    if(data_cast<const UInt32 &>(value) % 2 == 0)
+                    if(data_cast<UInt32>(value) % 2 == 0)
                     {
                         throw WrongParameterValue(parameter(KERNEL_SIZE), *this,
                                                   "Kernel size must be an odd value.");
                     }
                     
-                    m_kernelSize = data_cast<const UInt32 &>(value);
+                    m_kernelSize = data_cast<UInt32>(value);
                 default:
                     ImageFilter::setParameter(id, value);
                 }

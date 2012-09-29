@@ -157,7 +157,7 @@ namespace stromx
         
         void CameraTest::testValidateBufferSize()
         {
-            UInt32 bufferSize = data_cast<const UInt32 &>(m_operator->getParameter(Camera::BUFFER_SIZE));
+            UInt32 bufferSize = data_cast<UInt32>(m_operator->getParameter(Camera::BUFFER_SIZE));
             UInt32 singleChannelSize((unsigned int)(bufferSize) / 3);
             
             m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24));

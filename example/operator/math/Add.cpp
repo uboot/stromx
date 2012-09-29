@@ -61,7 +61,7 @@ namespace math
             switch(id)
             {
             case OFFSET:
-                m_offset = core::data_cast<const core::UInt32&>(value);
+                m_offset = core::data_cast<core::UInt32>(value);
                 break;
             default:
                 throw core::WrongParameterId(id, *this);

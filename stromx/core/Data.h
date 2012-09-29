@@ -82,16 +82,16 @@ namespace stromx
         };
         
         /** 
-         * Casts the type of a reference to a data object to \c data_t.
+         * Casts the type of a reference to a data object to <tt>data_t &</tt>.
          * Throws BadCast if the cast failed.
          * \throws BadCast
          */
         template<typename data_t>
-        data_t data_cast(Data & data)
+        data_t & data_cast(Data & data)
         {
             try
             {
-                return dynamic_cast<data_t>(data);
+                return dynamic_cast<data_t &>(data);
             }
             catch(std::bad_cast &)
             {
@@ -100,16 +100,16 @@ namespace stromx
         }
         
         /** 
-         * Casts the type of a constant reference to a data object to \c data_t.
+         * Casts the type of a constant reference to a data object to <tt>const data_t &</tt>.
          * Throws BadCast if the cast failed 
          * \throws BadCast
          */
         template<typename data_t>
-        data_t data_cast(const Data & data)
+        const data_t & data_cast(const Data & data)
         {
             try
             {
-                return dynamic_cast<const data_t>(data);
+                return dynamic_cast<const data_t &>(data);
             }
             catch(std::bad_cast &)
             {
@@ -118,13 +118,23 @@ namespace stromx
         }
         
         /** 
-         * Casts the type of a pointer to a data object to \c data_t.
+         * Casts the type of a pointer to a data object to \c data_t*.
          * Returns \c 0 if the cast failed
          */
         template<typename data_t>
-        data_t data_cast(Data * data)
+        data_t* data_cast(Data * data)
         {
-            return dynamic_cast<data_t>(data);
+            return dynamic_cast<data_t*>(data);
+        }
+        
+        /** 
+         * Casts the type of a pointer to a constant data object to <tt>const data_t*</tt>.
+         * Returns \c 0 if the cast failed
+         */
+        template<typename data_t>
+        const data_t* data_cast(const Data * data)
+        {
+            return dynamic_cast<const data_t*>(data);
         }
     }
 }

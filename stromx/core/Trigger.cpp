@@ -75,7 +75,7 @@ namespace stromx
                 }
                 case STATE:
                 {
-                    Enum enumValue = data_cast<const Enum&>(value);
+                    Enum enumValue = data_cast<Enum>(value);
                     
                     switch(int(enumValue))
                     {

@@ -30,24 +30,26 @@ namespace stromx
         {
             TestData testData;
             Data & data(testData);
+            const Data & constData(testData);
             
-            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData &>(data));
-            CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData &>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(constData));
             
-            CPPUNIT_ASSERT_THROW(data_cast<None &>(data), BadCast);
-            CPPUNIT_ASSERT_THROW(data_cast<const None &>(data), BadCast);
+            CPPUNIT_ASSERT_THROW(data_cast<None>(data), BadCast);
+            CPPUNIT_ASSERT_THROW(data_cast<None>(constData), BadCast);
         }
         
         void DataTest::testCastPointer()
         {
             TestData testData;
             Data* data = &testData;
+            const Data* constData = &testData;
             
-            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData *>(data));
-            CPPUNIT_ASSERT_NO_THROW(data_cast<const TestData *>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(data));
+            CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(constData));
             
-            CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None *>(data));
-            CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<const None *>(data));
+            CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None>(data));
+            CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<None>(constData));
         }
     }
 }

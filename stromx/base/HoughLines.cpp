@@ -59,42 +59,42 @@ namespace stromx
                 switch(id)
                 {
                 case TRANSFORM:
-                    m_transform = data_cast<const Enum &>(value);
+                    m_transform = data_cast<Enum>(value);
                     break;
                 case RHO:
-                    if(data_cast<const Double &>(value) <= 0.0)
+                    if(data_cast<Double>(value) <= 0.0)
                     {
                         throw WrongParameterValue(parameter(RHO), *this,
                                                   "Rho must be positive.");
                     }
-                    m_rho = data_cast<const Double &>(value);
+                    m_rho = data_cast<Double>(value);
                     break;
                 case THETA:
-                    if(data_cast<const Double &>(value) <= 0.0)
+                    if(data_cast<Double>(value) <= 0.0)
                     {
                         throw WrongParameterValue(parameter(THETA), *this,
                                                   "Theta must be positive.");
                     }
-                    m_theta = data_cast<const Double &>(value);
+                    m_theta = data_cast<Double>(value);
                     break;
                 case THRESHOLD:
-                    m_threshold = data_cast<const UInt32 &>(value);
+                    m_threshold = data_cast<UInt32>(value);
                     break;
                 case MIN_LINE_LENGTH:
-                    if(data_cast<const Double &>(value) < 0.0)
+                    if(data_cast<Double>(value) < 0.0)
                     {
                         throw WrongParameterValue(parameter(MIN_LINE_LENGTH), *this,
                                                   "Minimal line length must not be negative.");
                     }
-                    m_minLineLength = data_cast<const Double &>(value);
+                    m_minLineLength = data_cast<Double>(value);
                     break;
                 case MAX_LINE_GAP:
-                    if(data_cast<const Double &>(value) < 0.0)
+                    if(data_cast<Double>(value) < 0.0)
                     {
                         throw WrongParameterValue(parameter(MAX_LINE_GAP), *this,
                                                   "Maximal line gap must not be negative.");
                     }
-                    m_maxLineGap = data_cast<const Double &>(value);
+                    m_maxLineGap = data_cast<Double>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);

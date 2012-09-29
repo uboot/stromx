@@ -62,26 +62,26 @@ namespace stromx
                 switch(id)
                 {
                 case KERNEL_SHAPE:
-                    m_kernelShape = data_cast<const Enum &>(value);
+                    m_kernelShape = data_cast<Enum>(value);
                     break;
                 case KERNEL_SIZE_X:
-                    if(data_cast<const UInt32 &>(value) < 1)
+                    if(data_cast<UInt32>(value) < 1)
                     {
                         throw WrongParameterValue(parameter(KERNEL_SIZE_X), *this,
                                                   "Kernel size must be positive.");
                     }
-                    m_kernelSizeX = data_cast<const UInt32 &>(value);
+                    m_kernelSizeX = data_cast<UInt32>(value);
                     break;
                 case KERNEL_SIZE_Y:
-                    if(data_cast<const UInt32 &>(value) < 1)
+                    if(data_cast<UInt32>(value) < 1)
                     {
                         throw WrongParameterValue(parameter(KERNEL_SIZE_Y), *this,
                                                   "Kernel size must be positive.");
                     }
-                    m_kernelSizeY = data_cast<const UInt32 &>(value);
+                    m_kernelSizeY = data_cast<UInt32>(value);
                     break;
                 case ITERATIONS:
-                    m_iterations = data_cast<const UInt32 &>(value);
+                    m_iterations = data_cast<UInt32>(value);
                     break;
                 default:
                     stromx::base::ImageFilter::setParameter(id, value);

@@ -78,7 +78,7 @@ namespace stromx
             String str("test");
             Data* clone = str.clone();
             
-            CPPUNIT_ASSERT_EQUAL(std::string("test"), std::string(*data_cast<String*>(clone)));
+            CPPUNIT_ASSERT_EQUAL(std::string("test"), std::string(*data_cast<String>(clone)));
             delete clone;
         }
     }

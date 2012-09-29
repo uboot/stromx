@@ -167,16 +167,16 @@ namespace stromx
                 switch(id)
                 {       
                 case OUTPUT_INDEX:
-                    m_outputIndex = data_cast<const stromx::Bool &>(value);
+                    m_outputIndex = data_cast<stromx::Bool>(value);
                     break;
                 case TRIGGER:
                     m_trigger->setParameter(Trigger::TRIGGER, core::TriggerData());
                     break;
                 case IMAGE:
                 {
-                    const stromx::Image & image = data_cast<const stromx::Image &>(value);
-                    UInt32 size = data_cast<const UInt32 &>(getParameter(BUFFER_SIZE));
-                    Enum pixelType = data_cast<const Enum &>(getParameter(PIXEL_TYPE));
+                    const stromx::Image & image = data_cast<stromx::Image>(value);
+                    UInt32 size = data_cast<UInt32>(getParameter(BUFFER_SIZE));
+                    Enum pixelType = data_cast<Enum>(getParameter(PIXEL_TYPE));
                     
                     if(validateBufferSize(size, image, pixelType))
                         m_input->setParameter(ConstImage::IMAGE, image);
@@ -207,7 +207,7 @@ namespace stromx
                     int triggerMode;
                     try
                     {
-                        triggerMode = data_cast<const Enum&>(value);
+                        triggerMode = data_cast<Enum>(value);
                     }
                     catch(BadCast&)
                     {
@@ -234,9 +234,9 @@ namespace stromx
                     break;
                 case BUFFER_SIZE:
                 {
-                    UInt32 size = data_cast<const UInt32 &>(value);
-                    const stromx::Image & image = data_cast<const stromx::Image &>(getParameter(IMAGE));
-                    Enum pixelType = data_cast<const Enum &>(getParameter(PIXEL_TYPE));
+                    UInt32 size = data_cast<UInt32>(value);
+                    const stromx::Image & image = data_cast<stromx::Image>(getParameter(IMAGE));
+                    Enum pixelType = data_cast<Enum>(getParameter(PIXEL_TYPE));
                     
                     if(validateBufferSize(size, image, pixelType))
                         m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
@@ -246,9 +246,9 @@ namespace stromx
                 }
                 case PIXEL_TYPE:
                 {
-                    UInt32 size = data_cast<const UInt32 &>(getParameter(BUFFER_SIZE));
-                    const stromx::Image & image = data_cast<const stromx::Image &>(getParameter(IMAGE));
-                    Enum pixelType = data_cast<const Enum &>(value);
+                    UInt32 size = data_cast<UInt32>(getParameter(BUFFER_SIZE));
+                    const stromx::Image & image = data_cast<stromx::Image>(getParameter(IMAGE));
+                    Enum pixelType = data_cast<Enum>(value);
                     
                     if(validateBufferSize(size, image, pixelType))
                         m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
@@ -260,7 +260,7 @@ namespace stromx
                     m_clip->setParameter(Clip::LEFT, value);
                     try
                     {
-                        UInt32 intValue = data_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<UInt32>(value);
                         m_width->setMax(UInt32(m_imageWidth - intValue));
                     }
                     catch(BadCast&)
@@ -272,7 +272,7 @@ namespace stromx
                     m_clip->setParameter(Clip::TOP, value);
                     try
                     {
-                        UInt32 intValue = data_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<UInt32>(value);
                         m_height->setMax(UInt32(m_imageHeight - intValue));
                     }
                     catch(BadCast&)
@@ -284,7 +284,7 @@ namespace stromx
                     m_clip->setParameter(Clip::WIDTH, value);
                     try
                     {
-                        UInt32 intValue = data_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<UInt32>(value);
                         m_left->setMax(UInt32(m_imageWidth - intValue));
                     }
                     catch(BadCast&)
@@ -296,7 +296,7 @@ namespace stromx
                     m_clip->setParameter(Clip::HEIGHT, value);
                     try
                     {
-                        UInt32 intValue = data_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<UInt32>(value);
                         m_top->setMax(UInt32(m_imageHeight - intValue));
                     }
                     catch(BadCast&)
@@ -307,7 +307,7 @@ namespace stromx
                 case EXPOSURE:
                     try
                     {
-                        UInt32 intValue = data_cast<const UInt32 &>(value);
+                        UInt32 intValue = data_cast<UInt32>(value);
                         m_exposure = intValue;
                         setRgbParameters();
                     }
@@ -319,7 +319,7 @@ namespace stromx
                 case WHITE_BALANCE_RED:
                     try
                     {
-                        Double fpValue = data_cast<const Double &>(value);
+                        Double fpValue = data_cast<Double>(value);
                         m_wbRed = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -331,7 +331,7 @@ namespace stromx
                 case WHITE_BALANCE_GREEN:
                     try
                     {
-                        Double fpValue = data_cast<const Double &>(value);
+                        Double fpValue = data_cast<Double>(value);
                         m_wbGreen = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -343,7 +343,7 @@ namespace stromx
                 case WHITE_BALANCE_BLUE:
                     try
                     {
-                        Double fpValue = data_cast<const Double &>(value);
+                        Double fpValue = data_cast<Double>(value);
                         m_wbBlue = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -373,7 +373,7 @@ namespace stromx
             case TRIGGER_MODE:
             {
                 const Data& value = m_trigger->getParameter(Trigger::STATE);
-                const Enum& triggerState = data_cast<const Enum&>(value);
+                const Enum& triggerState = data_cast<Enum>(value);
                 
                 switch(triggerState)
                 {
