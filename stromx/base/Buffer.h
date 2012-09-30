@@ -50,7 +50,7 @@ namespace stromx
             
             virtual OperatorKernel* const clone() const { return new Buffer; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
             virtual void activate();
             virtual void deactivate();

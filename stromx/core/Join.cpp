@@ -58,7 +58,7 @@ namespace stromx
             }
         }
 
-        const Data& Join::getParameter(const unsigned int id) const
+        const DataRef Join::getParameter(const unsigned int id) const
         {
             switch(id)
             {

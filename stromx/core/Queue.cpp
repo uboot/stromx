@@ -60,7 +60,7 @@ namespace stromx
             }
         }
 
-        const Data& Queue::getParameter(const unsigned int id) const
+        const DataRef Queue::getParameter(const unsigned int id) const
         {
             switch(id)
             {

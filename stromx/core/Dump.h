@@ -33,7 +33,7 @@ namespace stromx
             
             virtual OperatorKernel* const clone() const { return new Dump; }
             virtual void setParameter(const unsigned int id, const Data& value);
-            const Data& getParameter(const unsigned int id) const;
+            const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);
             
         private:

@@ -47,7 +47,7 @@ namespace stromx
             MorphologicalFilter(const std::string & type);
             
             virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual const core::DataRef getParameter(const unsigned int id) const;
             
         protected:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,

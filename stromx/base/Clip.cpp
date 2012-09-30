@@ -69,7 +69,7 @@ namespace stromx
             }
         }
 
-        const Data& Clip::getParameter(const unsigned int id) const
+        const DataRef Clip::getParameter(const unsigned int id) const
         {
             switch(id)
             {

@@ -38,7 +38,7 @@ namespace stromx
             
             virtual OperatorKernel*const clone() const { return new Canny; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::Data& getParameter(const unsigned int id) const;
+            virtual const core::DataRef getParameter(const unsigned int id) const;
             
         protected:
             virtual const std::vector<const core::Parameter*> setupParameters();

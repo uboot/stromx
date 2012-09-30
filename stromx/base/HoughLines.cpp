@@ -106,7 +106,7 @@ namespace stromx
             }
         }
 
-        const Data& HoughLines::getParameter(const unsigned int id) const
+        const DataRef HoughLines::getParameter(const unsigned int id) const
         {
             switch(id)
             {

@@ -70,7 +70,7 @@ namespace stromx
             }
         }
 
-        const Data& Blur::getParameter(const unsigned int id) const
+        const DataRef Blur::getParameter(const unsigned int id) const
         {
             switch(id)
             {

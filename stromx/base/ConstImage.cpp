@@ -77,7 +77,7 @@ namespace stromx
             }
         }
 
-        const Data& ConstImage::getParameter(unsigned int id) const
+        const DataRef ConstImage::getParameter(unsigned int id) const
         {
             switch(id)
             {

@@ -19,6 +19,7 @@
 
 #include <map>
 #include <set>
+#include "DataRef.h"
 #include "Exception.h"
 #include "OperatorInfo.h"
 
@@ -26,7 +27,6 @@ namespace stromx
 {
         namespace core
     {
-        class Data;
         class DataContainer;
         class DataProvider;
         
@@ -82,7 +82,7 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const Data& value) { throw NotImplemented(); };
             
             /** Gets the current value of the parameter \c id. */
-            virtual const Data& getParameter(const unsigned int id) const { throw NotImplemented(); };
+            virtual const DataRef getParameter(const unsigned int id) const { throw NotImplemented(); };
             
             /**
              * Executes the operator.

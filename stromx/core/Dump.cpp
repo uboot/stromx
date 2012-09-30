@@ -36,7 +36,7 @@ namespace stromx
             throw WrongParameterId(id, *this);
         }
 
-        const Data& Dump::getParameter(const unsigned int id) const
+        const DataRef Dump::getParameter(const unsigned int id) const
         {
             throw WrongParameterId(id, *this);
         }  

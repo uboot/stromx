@@ -92,7 +92,7 @@ namespace stromx
             {
             }
 
-            const Data& CameraBuffer::getParameter(const unsigned int id) const
+            const DataRef CameraBuffer::getParameter(const unsigned int id) const
             {
                 switch(id)
                 {

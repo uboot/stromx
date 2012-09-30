@@ -62,7 +62,7 @@ namespace stromx
             }
         }
 
-        const Data& Canny::getParameter(const unsigned int id) const
+        const DataRef Canny::getParameter(const unsigned int id) const
         {
             switch(id)
             {

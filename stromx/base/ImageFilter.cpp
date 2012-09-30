@@ -60,7 +60,7 @@ namespace stromx
             }
         }
 
-        const Data& ImageFilter::getParameter(const unsigned int id) const
+        const DataRef ImageFilter::getParameter(const unsigned int id) const
         {
             switch(id)
             {

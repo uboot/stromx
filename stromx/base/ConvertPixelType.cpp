@@ -63,7 +63,7 @@ namespace stromx
             }
         }
 
-        const Data& ConvertPixelType::getParameter(const unsigned int id) const
+        const DataRef ConvertPixelType::getParameter(const unsigned int id) const
         {
             switch(id)
             {

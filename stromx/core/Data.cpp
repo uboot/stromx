@@ -28,7 +28,7 @@ namespace stromx
             return DataVariant::DATA;
         }
         
-        Data::operator DataRef()
+        Data::operator DataRef() const
         {
             return DataRef(this->clone());
         }

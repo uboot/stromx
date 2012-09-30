@@ -80,7 +80,7 @@ namespace stromx
             }
         }
 
-        const Data& PeriodicDelay::getParameter(const unsigned int id) const
+        const DataRef PeriodicDelay::getParameter(const unsigned int id) const
         {
             switch(id)
             {

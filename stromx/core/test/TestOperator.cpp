@@ -74,7 +74,7 @@ namespace stromx
             }
         }
 
-        const Data& TestOperator::getParameter(const unsigned int id) const
+        const DataRef TestOperator::getParameter(const unsigned int id) const
         {
             switch(id)
             {

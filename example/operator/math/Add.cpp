@@ -73,7 +73,7 @@ namespace math
         }
     }
 
-    const core::Data& Add::getParameter(const unsigned int id) const
+    const core::DataRef Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {

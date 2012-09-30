@@ -85,7 +85,7 @@ namespace stromx
         {
         }
 
-        const Data& Buffer::getParameter(const unsigned int id) const
+        const DataRef Buffer::getParameter(const unsigned int id) const
         {
             switch(id)
             {

@@ -47,7 +47,7 @@ namespace math
         virtual void execute(stromx::core::DataProvider& provider);
         
         virtual void setParameter(const unsigned int id, const stromx::core::Data& value);
-        virtual const stromx::core::Data& getParameter(const unsigned int id) const;
+        virtual const stromx::core::DataRef getParameter(const unsigned int id) const;
         
     private:
         static const std::vector<const stromx::core::Description*> setupInputs();

@@ -38,7 +38,7 @@ namespace stromx
         {
         }  
         
-        const stromx::core::Data& MorphologicalFilter::getParameter(const unsigned int id) const
+        const stromx::core::DataRef MorphologicalFilter::getParameter(const unsigned int id) const
         {
             switch(id)
             {

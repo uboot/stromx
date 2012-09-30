@@ -178,7 +178,7 @@ namespace stromx
                 validateParameterId(id);
                 validateReadAccess(id);
                 
-                return DataRef(m_op->getParameter(id).clone());
+                return m_op->getParameter(id);
             }
                 
             void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout)

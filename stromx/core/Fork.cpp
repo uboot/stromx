@@ -15,6 +15,7 @@
  */
 
 #include "Fork.h"
+
 #include "DataProvider.h"
 #include "Id2DataPair.h"
 #include "Id2DataComposite.h"
@@ -58,7 +59,7 @@ namespace stromx
             }
         }
 
-        const Data& Fork::getParameter(const unsigned int id) const
+        const DataRef Fork::getParameter(const unsigned int id) const
         {
             switch(id)
             {

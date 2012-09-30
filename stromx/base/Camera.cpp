@@ -175,10 +175,10 @@ namespace stromx
                 case IMAGE:
                 {
                     const stromx::Image & image = data_cast<stromx::Image>(value);
-                    UInt32 size = data_cast<UInt32>(getParameter(BUFFER_SIZE));
-                    Enum pixelType = data_cast<Enum>(getParameter(PIXEL_TYPE));
+                    DataRef size = getParameter(BUFFER_SIZE);
+                    DataRef pixelType = getParameter(PIXEL_TYPE);
                     
-                    if(validateBufferSize(size, image, pixelType))
+                    if(validateBufferSize(data_cast<UInt32>(size), image, data_cast<Enum>(pixelType)))
                         m_input->setParameter(ConstImage::IMAGE, image);
                     else
                         throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
@@ -235,10 +235,10 @@ namespace stromx
                 case BUFFER_SIZE:
                 {
                     UInt32 size = data_cast<UInt32>(value);
-                    const stromx::Image & image = data_cast<stromx::Image>(getParameter(IMAGE));
-                    Enum pixelType = data_cast<Enum>(getParameter(PIXEL_TYPE));
+                    DataRef image = getParameter(IMAGE);
+                    DataRef pixelType = getParameter(PIXEL_TYPE);
                     
-                    if(validateBufferSize(size, image, pixelType))
+                    if(validateBufferSize(size, data_cast<stromx::Image>(image), data_cast<Enum>(pixelType)))
                         m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
                     else
                         throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
@@ -246,11 +246,11 @@ namespace stromx
                 }
                 case PIXEL_TYPE:
                 {
-                    UInt32 size = data_cast<UInt32>(getParameter(BUFFER_SIZE));
-                    const stromx::Image & image = data_cast<stromx::Image>(getParameter(IMAGE));
+                    DataRef size = getParameter(BUFFER_SIZE);
+                    DataRef image = getParameter(IMAGE);
                     Enum pixelType = data_cast<Enum>(value);
                     
-                    if(validateBufferSize(size, image, pixelType))
+                    if(validateBufferSize(data_cast<UInt32>(size), data_cast<stromx::Image>(image), pixelType))
                         m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
                     else
                         throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
@@ -362,7 +362,7 @@ namespace stromx
             }
         }
 
-        const Data& Camera::getParameter(unsigned int id) const
+        const DataRef Camera::getParameter(unsigned int id) const
         {
             switch(id)
             {
@@ -372,7 +372,7 @@ namespace stromx
                 return m_valueTrigger;
             case TRIGGER_MODE:
             {
-                const Data& value = m_trigger->getParameter(Trigger::STATE);
+                DataRef value = m_trigger->getParameter(Trigger::STATE);
                 const Enum& triggerState = data_cast<Enum>(value);
                 
                 switch(triggerState)

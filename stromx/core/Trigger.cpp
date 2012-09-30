@@ -105,7 +105,7 @@ namespace stromx
             }
         }
 
-        const Data& Trigger::getParameter(const unsigned int id) const
+        const DataRef Trigger::getParameter(const unsigned int id) const
         {
             switch(id)
             {

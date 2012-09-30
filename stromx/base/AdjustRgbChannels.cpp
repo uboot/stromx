@@ -68,7 +68,7 @@ namespace stromx
             }
         }
 
-        const Data& AdjustRgbChannels::getParameter(const unsigned int id) const
+        const DataRef AdjustRgbChannels::getParameter(const unsigned int id) const
         {
             switch(id)
             {
