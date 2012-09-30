@@ -28,11 +28,6 @@ namespace stromx
             return DataVariant::DATA;
         }
         
-        Data::operator DataRef() const
-        {
-            return DataRef(this->clone());
-        }
-        
         void Data::serialize(OutputProvider & out) const
         {
             throw Exception("This data type does not support serialization.");

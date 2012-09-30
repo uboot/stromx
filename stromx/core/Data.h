@@ -45,8 +45,6 @@ namespace stromx
             
             virtual ~Data() {}
             
-            operator DataRef() const;
-            
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
         };

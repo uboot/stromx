@@ -62,6 +62,9 @@ namespace stromx
              * takes ownership of \c data.
              */
             DataRef(Data* data) : m_data(data) {}
+
+            /** Clones the object \c data and constructs a reference to the clone. */
+            DataRef(const Data &data);
             
             /** Casts a data reference to <tt>Data &</tt>. */
             operator Data&() { return *m_data; }

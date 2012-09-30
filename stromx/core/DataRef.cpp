@@ -22,6 +22,12 @@ namespace stromx
 {
     namespace core
     {
+        DataRef::DataRef(const stromx::core::Data& data)
+          : m_data(data.clone())
+        {
+
+        }
+
         const Version & DataRef::version() const
         { 
             return m_data->version();
