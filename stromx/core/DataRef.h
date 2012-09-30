@@ -36,16 +36,41 @@ namespace stromx
             class SynchronizedOperatorKernel;
         }
         
-        /** \brief Reference to a constant data object. */
+        /** 
+         * \brief Reference to a constant data object.
+         * 
+         * %Data references hold a smart pointer to a data object. They can
+         * be copied and passed by value without copying the data object. Instances of
+         * this class are automatically casted to <tt>Data &</tt> references. If all copies
+         * of a data reference are out of scope the encapsulated data object is automatically
+         * deleted.
+         */
         class STROMX_CORE_API DataRef
         {
             friend class Data;
             friend class ConstDataRef;
             
         public:
+            /** 
+             * Constructs an null data reference. For a null reference the behavior of all member
+             * functions with exceptoin of isNull() is undefined.
+             */
             DataRef() {}
+            
+            /**
+             * Constructs a data reference from a pointer to a data object. The reference
+             * takes ownership of \c data.
+             */
             DataRef(Data* data) : m_data(data) {}
+            
+            /** Casts a data reference to <tt>Data &</tt>. */
             operator Data&() { return *m_data; }
+            
+            /** 
+             * Returns true if the data reference is a null reference, i.e. it was not initialized
+             * by a pointer to an object. Null references can not 
+             */
+            const bool isNull() const { return 0 == m_data.get(); }
             
             virtual const Version & version() const;
             virtual const std::string & type() const;
@@ -54,7 +79,6 @@ namespace stromx
             
             const bool isVariant(const DataVariant & v) const;
             virtual Data* const clone() const;
-            const bool isNull() const { return 0 == m_data.get(); }
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
@@ -63,17 +87,47 @@ namespace stromx
             std::tr1::shared_ptr<Data> m_data;
         };
         
-        /** \brief Reference to a data object. */
+        /** 
+         * \brief Reference to a data object.
+         * 
+         * %Data references hold a smart pointer to a constant data object. They can
+         * be copied and passed by value without copying the data object. Instances of
+         * this class are automatically casted to <tt>Data &</tt> references. If all copies
+         * of a data reference are out of scope the encapsulated data object is automatically
+         * deleted.
+         */
         class STROMX_CORE_API ConstDataRef : public DataInterface
         {
             friend class DataRefTest;
             friend class impl::SynchronizedOperatorKernel;
             
         public:
-            ConstDataRef(const Data* data) : m_data(data) {}
+            /** 
+             * Constructs an null data reference. For a null reference the behavior of all member
+             * functions with exceptoin of isNull() is undefined.
+             */
             ConstDataRef() {}
+            
+            /**
+             * Constructs a data reference from a pointer to a data object. The reference
+             * takes ownership of \c data.
+             */
+            ConstDataRef(const Data* data) : m_data(data) {}
+            
+            /** 
+             * Constructs a constant data reference from the input (non-constant) data
+             * reference. They data held by the reference is not copied.
+             */
             ConstDataRef(const DataRef & dataRef) : m_data(dataRef.m_data) {}
+
+            /** Casts a data reference to <tt>const Data &</tt>. */
             operator const Data&() { return *m_data; }
+            
+            /** 
+             * Returns true if the data reference is a null reference, i.e. it was not initialized
+             * by a pointer to an object. Null references can not 
+             */
+            const bool isNull() const { return bool(m_data); }
             
             virtual const Version & version() const;
             virtual const std::string & type() const;
@@ -82,7 +136,6 @@ namespace stromx
             
             const bool isVariant(const DataVariant & v) const;
             virtual Data* const clone() const;
-            const bool isNull() const { return bool(m_data); }
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
