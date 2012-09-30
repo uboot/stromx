@@ -31,6 +31,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (DataRefTest);
             CPPUNIT_TEST(testDataRef);
             CPPUNIT_TEST(testConstDataRef);
+            CPPUNIT_TEST(testIsNull);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -45,6 +46,7 @@ namespace stromx
         protected:
             void testDataRef();
             void testConstDataRef();
+            void testIsNull();
         };
     }
 }

@@ -41,11 +41,10 @@ namespace stromx
         {
             friend class Data;
             friend class ConstDataRef;
-            friend class DataRefTest;
-            friend class impl::SynchronizedOperatorKernel;
             
         public:
             DataRef() {}
+            DataRef(Data* data) : m_data(data) {}
             operator Data&() { return *m_data; }
             
             virtual const Version & version() const;
@@ -55,13 +54,12 @@ namespace stromx
             
             const bool isVariant(const DataVariant & v) const;
             virtual Data* const clone() const;
+            const bool isNull() const { return 0 == m_data.get(); }
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
             
         private:
-            DataRef(Data* data) : m_data(data) {}
-            
             std::tr1::shared_ptr<Data> m_data;
         };
         
@@ -72,6 +70,7 @@ namespace stromx
             friend class impl::SynchronizedOperatorKernel;
             
         public:
+            ConstDataRef(const Data* data) : m_data(data) {}
             ConstDataRef() {}
             ConstDataRef(const DataRef & dataRef) : m_data(dataRef.m_data) {}
             operator const Data&() { return *m_data; }
@@ -83,13 +82,12 @@ namespace stromx
             
             const bool isVariant(const DataVariant & v) const;
             virtual Data* const clone() const;
+            const bool isNull() const { return bool(m_data); }
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);
             
         private:
-            ConstDataRef(const Data* data) : m_data(data) {}
-            
             std::tr1::shared_ptr<const Data> m_data;
         };
         

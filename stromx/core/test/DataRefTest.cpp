@@ -49,5 +49,11 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(int(5), data_cast<TestData>(empty).value());
         }
+        
+        void DataRefTest::testIsNull()
+        {
+            CPPUNIT_ASSERT(! DataRef(new TestData()).isNull());
+            CPPUNIT_ASSERT(DataRef().isNull());
+        }
     }
 }
