@@ -17,6 +17,7 @@
 #include <cppunit/TestAssert.h>
 #include "DataRefTest.h"
 #include "TestData.h"
+#include "../ConstDataRef.h"
 #include "../DataRef.h"
 #include "../None.h"
 

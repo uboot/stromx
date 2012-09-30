@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_CORE_DATAREF_H
-#define STROMX_CORE_DATAREF_H
+#ifndef STROMX_CORE_CONSTDATAREF_H
+#define STROMX_CORE_CONSTDATAREF_H
 
 #include "DataInterface.h"
 
@@ -30,50 +30,48 @@ namespace stromx
     namespace core
     {
         class Data;
-        
-        namespace impl
-        {
-            class SynchronizedOperatorKernel;
-        }
+        class DataRef;
         
         /** 
-         * \brief Reference to a constant data object.
+         * \brief Reference to a data object.
          * 
-         * %Data references hold a smart pointer to a data object. They can
+         * %Data references hold a smart pointer to a constant data object. They can
          * be copied and passed by value without copying the data object. Instances of
          * this class are automatically casted to <tt>Data &</tt> references. If all copies
          * of a data reference are out of scope the encapsulated data object is automatically
          * deleted.
          */
-        class STROMX_CORE_API DataRef
+        class STROMX_CORE_API ConstDataRef : public DataInterface
         {
-            friend class Data;
-            friend class ConstDataRef;
+            friend class DataRefTest;
             
         public:
             /** 
              * Constructs an null data reference. For a null reference the behavior of all member
              * functions with exceptoin of isNull() is undefined.
              */
-            DataRef() {}
+            ConstDataRef() {}
             
             /**
              * Constructs a data reference from a pointer to a data object. The reference
              * takes ownership of \c data.
              */
-            DataRef(Data* data);
-
-            /** Clones the object \c data and constructs a reference to the clone. */
-            DataRef(const Data &data);
+            ConstDataRef(const Data* data);
             
-            /** Casts a data reference to <tt>Data &</tt>. */
-            operator Data&() { return *m_data; }
+            /** 
+             * Constructs a constant data reference from the input (non-constant) data
+             * reference. They data held by the reference is not copied.
+             */
+            ConstDataRef(const DataRef & dataRef);
+
+            /** Casts a data reference to <tt>const Data &</tt>. */
+            operator const Data&() { return *m_data; }
             
             /** 
              * Returns true if the data reference is a null reference, i.e. it was not initialized
              * by a pointer to an object. Null references can not 
              */
-            const bool isNull() const { return 0 == m_data.get(); }
+            const bool isNull() const { return bool(m_data); }
             
             virtual const Version & version() const;
             virtual const std::string & type() const;
@@ -87,20 +85,20 @@ namespace stromx
             virtual void deserialize(InputProvider & in, const Version & version);
             
         private:
-            std::tr1::shared_ptr<Data> m_data;
+            std::tr1::shared_ptr<const Data> m_data;
         };
         
         /** 
-         * Casts a data reference to <tt>data_t &</tt>.
+         * Casts a constant data reference to <tt>const data_t &</tt>.
          * Throws BadCast if the cast failed.
          * \throws BadCast
          */
         template<typename data_t>
-        data_t & data_cast(DataRef & data)
+        const data_t & data_cast(ConstDataRef & data)
         {
-            return data_cast<data_t>((Data &)(data));
+            return data_cast<data_t>((const Data &)(data));
         }
     }
 }
 
-#endif // STROMX_CORE_DATAREF_H
+#endif // STROMX_CORE_CONSTDATAREF_H

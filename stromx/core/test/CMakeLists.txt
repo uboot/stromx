@@ -28,6 +28,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.stromx DESTINATION ${CMAKE_CURRENT_
 
 set(SOURCES
     ../Connector.cpp
+    ../ConstDataRef.cpp
     ../Core.cpp
     ../Counter.cpp
     ../Data.cpp

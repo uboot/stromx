@@ -21,6 +21,7 @@ set(SOURCES
     impl/ThreadImpl.cpp
     impl/Network.cpp
     Connector.cpp
+    ConstDataRef.cpp
     Counter.cpp
     DataContainer.cpp
     Data.cpp

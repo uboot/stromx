@@ -14,62 +14,63 @@
  *  limitations under the License.
  */
 
-#include "DataRef.h"
+#include "ConstDataRef.h"
 
 #include "Data.h"
+#include "DataRef.h"
 
 namespace stromx
 {
     namespace core
     {
-        DataRef::DataRef(Data* data)
-          : m_data(data) 
-        { 
-        }
-        
-        DataRef::DataRef(const stromx::core::Data& data)
-          : m_data(data.clone())
+        ConstDataRef::ConstDataRef(const Data* data)
+          : m_data(data)
         {
         }
-
-        const Version & DataRef::version() const
+        
+        ConstDataRef::ConstDataRef(const DataRef & dataRef) 
+          : m_data(dataRef.m_data)
+        {
+        }
+        
+        const Version & ConstDataRef::version() const
         { 
             return m_data->version();
         }
         
-        const std::string & DataRef::type() const
+        const std::string & ConstDataRef::type() const
         {
             return m_data->type();
         }
         
-        const std::string & DataRef::package() const
+        const std::string & ConstDataRef::package() const
         { 
             return m_data->package();  
         }
         
-        const DataVariant & DataRef::variant() const 
+        const DataVariant & ConstDataRef::variant() const 
         { 
             return m_data->variant();
         }
         
-        const bool DataRef::isVariant(const DataVariant & v) const
+        const bool ConstDataRef::isVariant(const DataVariant & v) const
         {
             return m_data->isVariant(v);
         }
         
-        Data* const DataRef::clone() const 
+        Data* const ConstDataRef::clone() const 
         {
             return m_data->clone();
         }
         
-        void DataRef::serialize(OutputProvider & out) const
+        void ConstDataRef::serialize(OutputProvider & out) const
         { 
             return m_data->serialize(out);
-        }       
+        }        
         
-        void DataRef::deserialize(InputProvider & in, const Version & version)
+        void ConstDataRef::deserialize(InputProvider & in, const Version & version)
         { 
-            m_data->deserialize(in, version);
-        } 
+            throw NotImplemented("Constant data references can not be deserialized.");
+        }
     }
 }
