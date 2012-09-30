@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace core
     {
+        class DataRef;
         class InputProvider;
         class OutputProvider;
         class Version;
@@ -43,6 +44,8 @@ namespace stromx
             static const DataVariant & classVariant();
             
             virtual ~Data() {}
+            
+            operator DataRef();
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);

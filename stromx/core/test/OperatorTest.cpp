@@ -261,25 +261,15 @@ namespace stromx
             
             m_operator->deactivate();
             
-            const Data& value = m_operator->getParameter(TestOperator::SLEEP_TIME);
-            CPPUNIT_ASSERT_NO_THROW(dynamic_cast<const UInt32&>(value));
+            DataRef value = m_operator->getParameter(TestOperator::SLEEP_TIME);
+            CPPUNIT_ASSERT_NO_THROW(data_cast<UInt32>(value));
             
             CPPUNIT_ASSERT_THROW(m_operator->getParameter(-1), WrongParameterId);
         }
 
-        void OperatorTest::testGetParameterCast()
-        {
-            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter<UInt32>(TestOperator::SLEEP_TIME));
-        }
-        
-        void OperatorTest::testGetParameterWrongCast()
-        {
-            CPPUNIT_ASSERT_THROW(m_operator->getParameter<UInt16>(TestOperator::SLEEP_TIME), BadCast);
-        }
-
         void OperatorTest::testGetParameterNoTimeout()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter<UInt32>(TestOperator::SLEEP_TIME, 100));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter(TestOperator::SLEEP_TIME, 100));
         }
         
         void OperatorTest::testGetParameterTimeout()
@@ -301,8 +291,8 @@ namespace stromx
             m_operator->deactivate();
             
             CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(TestOperator::SLEEP_TIME, value)); 
-            const Data& testValue = m_operator->getParameter(TestOperator::SLEEP_TIME);
-            CPPUNIT_ASSERT_EQUAL(UInt32(2000), dynamic_cast<const UInt32&>(testValue));
+            DataRef testValue = m_operator->getParameter(TestOperator::SLEEP_TIME);
+            CPPUNIT_ASSERT_EQUAL(UInt32(2000), data_cast<UInt32>(testValue));
             
             CPPUNIT_ASSERT_THROW(m_operator->setParameter(-1, value), WrongParameterId);
             

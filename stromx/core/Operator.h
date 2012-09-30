@@ -21,6 +21,7 @@
 #include <set>
 #include <string>
 #include "DataContainer.h"
+#include "DataRef.h"
 #include "Exception.h"
 #include "ConnectorObserver.h"
 #include "OperatorInfo.h"
@@ -35,7 +36,6 @@ namespace stromx
 {
     namespace core
     {
-        class Data;
         class Id2DataMapper;
         class OperatorInfo;
         class OperatorKernel;
@@ -155,7 +155,7 @@ namespace stromx
              * \throws ParameterAccessViolation
              * \throws WrongParameterId 
              */
-            const Data& getParameter(const unsigned int id) const;
+            DataRef getParameter(const unsigned int id) const;
             
             /**
              * Gets the current value of the parameter \c id. The functions waits until
@@ -171,64 +171,7 @@ namespace stromx
              * \throws Timeout If the parameter could not be set during the timeout.
              * \throws WrongParameterId 
              */
-            const Data& getParameter(const unsigned int id, const unsigned int timeout) const;
-            
-            /** 
-             * Gets the current value of the parameter \c id and 
-             * attempts to cast it to \c data_t. The functions waits until
-             * obtaining the parameter value is possible, i.e. the operator is not
-             * executed or accessed by another thread.
-             * 
-             * \param id The ID of the parameter to be set.
-             * \returns The value of the parameter.
-             * 
-             * \throws BadCast If the value can not be casted to \c data_t.
-             * \throws Interrupt
-             * \throws ParameterAccessViolation
-             * \throws WrongParameterId 
-             */
-            template<typename data_t>
-            const data_t& getParameter(unsigned int id) const
-            {
-                try
-                {
-                    return dynamic_cast<const data_t &>(getParameter(id));
-                }
-                catch(std::bad_cast &)
-                {
-                    throw BadCast();
-                }
-            }
-            
-            /** 
-             * Gets the current value of the parameter \c id and 
-             * attempts to cast it to \c data_t. The functions waits until
-             * obtaining the parameter value is possible, i.e. the operator is not
-             * executed or accessed by another thread. If the function is not successful
-             * within the specified \c timeout the functions throws an exception and returns.
-             * 
-             * \param id The ID of the parameter to be set.
-             * \param timeout The maximal time to wait in milliseconds.
-             * \returns The value of the parameter.
-             * 
-             * \throws BadCast If the value can not be casted to \c data_t.
-             * \throws Interrupt
-             * \throws ParameterAccessViolation
-             * \throws Timeout If the parameter could not be set during the timeout.
-             * \throws WrongParameterId 
-             */
-            template<typename data_t>
-            const data_t& getParameter(unsigned int id, const unsigned int timeout) const
-            {
-                try
-                {
-                    return dynamic_cast<const data_t &>(getParameter(id, timeout));
-                }
-                catch(std::bad_cast &)
-                {
-                    throw BadCast();
-                }
-            }
+            DataRef getParameter(const unsigned int id, const unsigned int timeout) const;
             
             /**
              * Waits for data at the output ID and returns it. The data is 

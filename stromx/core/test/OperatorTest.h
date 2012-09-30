@@ -43,8 +43,6 @@ namespace stromx
             CPPUNIT_TEST (testActivate);
             CPPUNIT_TEST (testDeactivate);
             CPPUNIT_TEST (testGetParameter);
-            CPPUNIT_TEST (testGetParameterCast);
-            CPPUNIT_TEST (testGetParameterWrongCast);
             CPPUNIT_TEST (testGetParameterNoTimeout);
             CPPUNIT_TEST (testGetParameterTimeout);
             CPPUNIT_TEST (testGetParameterStatusNone);
@@ -75,8 +73,6 @@ namespace stromx
             void testActivate();
             void testDeactivate();
             void testGetParameter();
-            void testGetParameterCast();
-            void testGetParameterWrongCast();
             void testGetParameterNoTimeout();
             void testGetParameterTimeout();
             void testGetParameterStatusNone();

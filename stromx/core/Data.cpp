@@ -15,6 +15,8 @@
  */
 
 #include "Data.h"
+
+#include "DataRef.h"
 #include "Exception.h"
 
 namespace stromx
@@ -24,6 +26,11 @@ namespace stromx
         const stromx::core::DataVariant& Data::classVariant()
         {
             return DataVariant::DATA;
+        }
+        
+        Data::operator DataRef()
+        {
+            return DataRef(this->clone());
         }
         
         void Data::serialize(OutputProvider & out) const

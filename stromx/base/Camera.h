@@ -18,6 +18,7 @@
 #define STROMX_BASE_CAMERA_H
 
 #include "Config.h"
+#include <stromx/core/DataRef.h>
 #include <stromx/core/Enum.h>
 #include <stromx/core/Image.h>
 #include <stromx/core/OperatorKernel.h>

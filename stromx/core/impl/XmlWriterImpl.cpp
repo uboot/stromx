@@ -233,7 +233,7 @@ namespace stromx
                                         "_parameter" + boost::lexical_cast<std::string>(currPar->id());
                                     
                 m_output->initialize(filename);
-                const Data& data = currOp->getParameter(currPar->id());
+                DataRef data = currOp->getParameter(currPar->id());
                 
                 try
                 {

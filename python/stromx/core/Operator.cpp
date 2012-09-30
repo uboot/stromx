@@ -52,24 +52,24 @@ namespace
     
     const Data& getParameterWrap(Operator & op, const unsigned int id)
     {
-        const Data* data = 0;
-        
-        Py_BEGIN_ALLOW_THREADS
-        data = &op.getParameter(id);
-        Py_END_ALLOW_THREADS
-        
-        return *data;
+//         const Data* data = 0;
+//         
+//         Py_BEGIN_ALLOW_THREADS
+//         data = &op.getParameter(id);
+//         Py_END_ALLOW_THREADS
+//         
+//         return *data;
     }
     
     const Data& getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
     {
-        const Data* data = 0;
-        
-        Py_BEGIN_ALLOW_THREADS
-        return op.getParameter(id, timeout);
-        Py_END_ALLOW_THREADS
-        
-        return *data;
+//         const Data* data = 0;
+//         
+//         Py_BEGIN_ALLOW_THREADS
+//         return op.getParameter(id, timeout);
+//         Py_END_ALLOW_THREADS
+//         
+//         return *data;
     }
     
     void setParameterWrap(Operator & op, const unsigned int id, const Data & data)

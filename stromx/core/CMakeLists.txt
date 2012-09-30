@@ -23,14 +23,15 @@ set(SOURCES
     Connector.cpp
     Counter.cpp
     DataContainer.cpp
-    RecycleAccess.cpp
     Data.cpp
+    DataRef.cpp
     DataVariant.cpp
     Documentation.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp
     Exception.cpp
+    Factory.cpp
     Fork.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp
@@ -46,8 +47,8 @@ set(SOURCES
     Parameter.cpp
     ParameterGroup.cpp
     Queue.cpp
-    Factory.cpp
     Primitive.cpp
+    RecycleAccess.cpp
     Stream.cpp
     String.cpp
     SortInputsAlgorithm.cpp

@@ -168,7 +168,7 @@ namespace stromx
                 m_status = NONE;
             }
             
-            const Data& SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)
+            DataRef SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
@@ -177,7 +177,8 @@ namespace stromx
                 
                 validateParameterId(id);
                 validateReadAccess(id);
-                return m_op->getParameter(id);
+                
+                return DataRef(m_op->getParameter(id).clone());
             }
                 
             void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout)

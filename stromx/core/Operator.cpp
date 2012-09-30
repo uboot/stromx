@@ -144,12 +144,12 @@ namespace stromx
             }
         }
         
-        const Data& Operator::getParameter(const unsigned int id) const
+        DataRef Operator::getParameter(const unsigned int id) const
         { 
             return m_kernel->getParameter(id, false); 
         }
         
-        const Data& Operator::getParameter(const unsigned int id, const unsigned int timeout) const
+        DataRef Operator::getParameter(const unsigned int id, const unsigned int timeout) const
         { 
             return m_kernel->getParameter(id, true, timeout); 
         }

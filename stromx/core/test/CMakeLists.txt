@@ -31,6 +31,7 @@ set(SOURCES
     ../Core.cpp
     ../Counter.cpp
     ../Data.cpp
+    ../DataRef.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
     ../Documentation.cpp

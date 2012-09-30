@@ -17,7 +17,6 @@
 #ifndef STROMX_CORE_DATAREF_H
 #define STROMX_CORE_DATAREF_H
 
-#include "Data.h"
 #include "DataInterface.h"
 
 #ifdef __GNUG__
@@ -32,58 +31,66 @@ namespace stromx
     {
         class Data;
         
-        /** \brief Reference to a data object. */
-        class STROMX_CORE_API ConstDataRef : public DataInterface
+        namespace impl
         {
-            friend class DataRefTest;
-            
-        public:
-            ConstDataRef() {}
-            operator const Data&() { return *m_data; }
-            
-            virtual const Version & version() const { return m_data->version(); }
-            virtual const std::string & type() const { return m_data->type(); }
-            virtual const std::string & package() const { return m_data->package(); }
-            virtual const DataVariant & variant() const { return m_data->variant(); }
-            
-            const bool isVariant(const DataVariant & v) const { return m_data->isVariant(v); }
-            virtual Data* const clone() const { return m_data->clone(); }
-            
-            virtual void serialize(OutputProvider & out) const { return m_data->serialize(out); }
-            virtual void deserialize(InputProvider & in, const Version & version)
-            { 
-                throw NotImplemented("Constant data references can not be deserialized.");
-            }
-            
-        private:
-            ConstDataRef(const Data* data) : m_data(data) {}
-            
-            std::tr1::shared_ptr<const Data> m_data;
-        };
+            class SynchronizedOperatorKernel;
+        }
         
         /** \brief Reference to a constant data object. */
         class STROMX_CORE_API DataRef
         {
+            friend class Data;
+            friend class ConstDataRef;
             friend class DataRefTest;
+            friend class impl::SynchronizedOperatorKernel;
             
         public:
             DataRef() {}
             operator Data&() { return *m_data; }
             
-            virtual const Version & version() const { return m_data->version(); }
-            virtual const std::string & type() const { return m_data->type(); }
-            virtual const std::string & package() const { return m_data->package(); }
-            virtual const DataVariant & variant() const { return m_data->variant(); }
+            virtual const Version & version() const;
+            virtual const std::string & type() const;
+            virtual const std::string & package() const;
+            virtual const DataVariant & variant() const;
             
-            virtual Data* const clone() const { return m_data->clone(); }
+            const bool isVariant(const DataVariant & v) const;
+            virtual Data* const clone() const;
             
-            virtual void serialize(OutputProvider & out) const { return m_data->serialize(out); }
-            virtual void deserialize(InputProvider & in, const Version & version) { m_data->deserialize(in, version); }
+            virtual void serialize(OutputProvider & out) const;
+            virtual void deserialize(InputProvider & in, const Version & version);
             
         private:
             DataRef(Data* data) : m_data(data) {}
             
             std::tr1::shared_ptr<Data> m_data;
+        };
+        
+        /** \brief Reference to a data object. */
+        class STROMX_CORE_API ConstDataRef : public DataInterface
+        {
+            friend class DataRefTest;
+            friend class impl::SynchronizedOperatorKernel;
+            
+        public:
+            ConstDataRef() {}
+            ConstDataRef(const DataRef & dataRef) : m_data(dataRef.m_data) {}
+            operator const Data&() { return *m_data; }
+            
+            virtual const Version & version() const;
+            virtual const std::string & type() const;
+            virtual const std::string & package() const;
+            virtual const DataVariant & variant() const;
+            
+            const bool isVariant(const DataVariant & v) const;
+            virtual Data* const clone() const;
+            
+            virtual void serialize(OutputProvider & out) const;
+            virtual void deserialize(InputProvider & in, const Version & version);
+            
+        private:
+            ConstDataRef(const Data* data) : m_data(data) {}
+            
+            std::tr1::shared_ptr<const Data> m_data;
         };
         
         /** 
