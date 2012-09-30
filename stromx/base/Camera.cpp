@@ -63,13 +63,11 @@ namespace stromx
             m_outputIndex(false),
             m_imageWidth(0),
             m_imageHeight(0),
+            m_imageDepth(0),
             m_exposure(BASE_EXPOSURE),
             m_wbRed(1.0),
             m_wbGreen(1.0),
             m_wbBlue(1.0),
-            m_valueSoftware(SOFTWARE),
-            m_valueInternal(INTERNAL),
-            m_valueExternal(EXTERNAL),
             m_isFirstInitialization(true)
         {
             m_input = new Operator(new ConstImage);
@@ -178,13 +176,19 @@ namespace stromx
                     DataRef size = getParameter(BUFFER_SIZE);
                     DataRef pixelType = getParameter(PIXEL_TYPE);
                     
-                    if(validateBufferSize(data_cast<UInt32>(size), image, data_cast<Enum>(pixelType)))
+                    if(validateBufferSize(data_cast<UInt32>(size), image.width(), image.height(),
+                        Image::depth(image.pixelType()), data_cast<Enum>(pixelType)))
+                    {
                         m_input->setParameter(ConstImage::IMAGE, image);
+                    }
                     else
-                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
+                    {
+                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this, "Buffer size is too small for this image.");
+                    }
                     
                     m_imageWidth = image.width();
                     m_imageHeight = image.height();
+                    m_imageDepth = Image::depth(image.pixelType());
                     
                     m_clip->setParameter(Clip::LEFT, UInt32(0));
                     m_clip->setParameter(Clip::TOP, UInt32(0));
@@ -238,10 +242,10 @@ namespace stromx
                     DataRef image = getParameter(IMAGE);
                     DataRef pixelType = getParameter(PIXEL_TYPE);
                     
-                    if(validateBufferSize(size, data_cast<stromx::Image>(image), data_cast<Enum>(pixelType)))
+                    if(validateBufferSize(size, m_imageWidth, m_imageHeight, m_imageDepth, data_cast<Enum>(pixelType)))
                         m_buffer->setParameter(impl::CameraBuffer::BUFFER_SIZE, value);
                     else
-                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
+                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this, "This buffer size is too small for the current image size and pixel type.");
                     break;
                 }
                 case PIXEL_TYPE:
@@ -250,10 +254,10 @@ namespace stromx
                     DataRef image = getParameter(IMAGE);
                     Enum pixelType = data_cast<Enum>(value);
                     
-                    if(validateBufferSize(data_cast<UInt32>(size), data_cast<stromx::Image>(image), pixelType))
+                    if(validateBufferSize(data_cast<UInt32>(size), m_imageWidth, m_imageHeight, m_imageDepth, pixelType))
                         m_pixelType->setParameter(ConvertPixelType::PIXEL_TYPE, value);
                     else
-                        throw WrongParameterValue(parameter(BUFFER_SIZE), *this);
+                        throw WrongParameterValue(parameter(PIXEL_TYPE), *this, "Buffer is too small to support this pixel size.");
                     break;
                 }
                 case LEFT:
@@ -369,7 +373,7 @@ namespace stromx
             case OUTPUT_INDEX:
                 return m_outputIndex; 
             case TRIGGER:
-                return m_valueTrigger;
+                return TriggerData();
             case TRIGGER_MODE:
             {
                 DataRef value = m_trigger->getParameter(Trigger::STATE);
@@ -378,11 +382,11 @@ namespace stromx
                 switch(triggerState)
                 {
                 case Trigger::ALWAYS_PASS:
-                    return m_valueInternal;
+                    return Enum(INTERNAL);
                 case Trigger::ALWAYS_STOP:
-                    return m_valueExternal;
+                    return Enum(EXTERNAL);
                 case Trigger::TRIGGER_ACTIVE:
-                    return m_valueSoftware;
+                    return Enum(SOFTWARE);
                 default:
                     throw WrongParameterValue(parameter(id), *this);
                 }
@@ -598,12 +602,12 @@ namespace stromx
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::GREEN, Double(exposureCoeff * m_wbGreen));
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Double(exposureCoeff * m_wbBlue));
         }
-        
-        bool Camera::validateBufferSize(const UInt32 bufferSize, const core::Image & image, const core::Enum outputType)
+  
+        bool Camera::validateBufferSize(unsigned int bufferSize, unsigned int width, unsigned int height,
+                                        unsigned int depth, const stromx::core::Enum outputType)
         {
-            Image::PixelType pixelType = Image::PixelType(int(outputType));
-            unsigned int outputSize = image.width() * image.height() * 
-                                      Image::depth(pixelType) * Image::numChannels(pixelType);
+            Image::PixelType outputPixelType = Image::PixelType(int(outputType));
+            unsigned int outputSize = width * height * depth * Image::numChannels(outputPixelType);
         
             return outputSize <= (unsigned int)(bufferSize);
         }

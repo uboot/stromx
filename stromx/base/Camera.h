@@ -90,8 +90,10 @@ namespace stromx
             virtual void deactivate();
             
         private:
-            static bool validateBufferSize(const core::UInt32 bufferSize,
-                                           const core::Image & image,
+            static bool validateBufferSize(unsigned int bufferSize,
+                                           unsigned int width,
+                                           unsigned int height,
+                                           unsigned int depth,
                                            const core::Enum outputType);
             
             const std::vector<const core::Parameter*> setupInitParameters();
@@ -126,18 +128,13 @@ namespace stromx
             core::NumericParameter<core::UInt32>* m_width;
             core::NumericParameter<core::UInt32>* m_height;
             
-            core::UInt32 m_imageWidth;
-            core::UInt32 m_imageHeight;
+            unsigned int m_imageWidth;
+            unsigned int m_imageHeight;
+            unsigned int m_imageDepth;
             core::UInt32 m_exposure;
             core::Double m_wbRed;
             core::Double m_wbGreen;
             core::Double m_wbBlue;
-
-            core::Enum m_valueSoftware;
-            core::Enum m_valueInternal;
-            core::Enum m_valueExternal;
-            
-            core::TriggerData m_valueTrigger;
             
             bool m_isFirstInitialization;
         };
