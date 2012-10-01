@@ -37,7 +37,7 @@ namespace stromx
         }
         
         /** 
-         * \brief Reference to a constant data object.
+         * \brief Reference to a data object.
          * 
          * %Data references hold a smart pointer to a data object. They can
          * be copied and passed by value without copying the data object. Instances of
@@ -61,7 +61,7 @@ namespace stromx
              * Constructs a data reference from a pointer to a data object. The reference
              * takes ownership of \c data.
              */
-            DataRef(Data* data);
+            explicit DataRef(Data* data);
 
             /** Clones the object \c data and constructs a reference to the clone. */
             DataRef(const Data &data);

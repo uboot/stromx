@@ -18,11 +18,17 @@
 
 #include <boost/python.hpp>
 
+#ifdef __GNUG__
+    #include <tr1/memory>
+#else
+    #include <memory>
+#endif
+
 using namespace boost::python;
 using namespace stromx::core;
-
+    
 namespace
-{
+{       
     struct DataWrap : Data, wrapper<Data>
     {
         const Version & version() const

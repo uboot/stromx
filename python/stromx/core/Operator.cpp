@@ -14,14 +14,26 @@
 *  limitations under the License.
 */
 
+#include <boost/python.hpp>
+
 #include <stromx/core/Operator.h>
 #include <stromx/core/Data.h>
 #include <stromx/core/OperatorKernel.h>
 
-#include <boost/python.hpp>
-
 using namespace boost::python;
 using namespace stromx::core;
+
+namespace boost 
+{ 
+    namespace python
+    {
+        template <> 
+        struct pointee<DataRef>
+        {
+            typedef Data type;
+        };
+    }
+}
 
 namespace
 {
@@ -50,26 +62,26 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
-    const Data& getParameterWrap(Operator & op, const unsigned int id)
+    DataRef getParameterWrap(Operator & op, const unsigned int id)
     {
-//         const Data* data = 0;
-//         
-//         Py_BEGIN_ALLOW_THREADS
-//         data = &op.getParameter(id);
-//         Py_END_ALLOW_THREADS
-//         
-//         return *data;
+        DataRef data;
+        
+        Py_BEGIN_ALLOW_THREADS
+        data = op.getParameter(id);
+        Py_END_ALLOW_THREADS
+        
+        return data;
     }
     
-    const Data& getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
+    DataRef getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
     {
-//         const Data* data = 0;
-//         
-//         Py_BEGIN_ALLOW_THREADS
-//         return op.getParameter(id, timeout);
-//         Py_END_ALLOW_THREADS
-//         
-//         return *data;
+        DataRef data;
+        
+        Py_BEGIN_ALLOW_THREADS
+        data = op.getParameter(id, timeout);
+        Py_END_ALLOW_THREADS
+        
+        return data;
     }
     
     void setParameterWrap(Operator & op, const unsigned int id, const Data & data)
@@ -86,6 +98,11 @@ namespace
         Py_END_ALLOW_THREADS
     }
 }
+
+stromx::core::Data* get_pointer(const stromx::core::DataRef & p)
+{
+    return &(Data&)(p);
+}
       
 void exportOperator()
 {       
@@ -98,8 +115,8 @@ void exportOperator()
         .def("setName", &Operator::setName)
         .def("initialize", &Operator::initialize)
         .def("deinitialize", &Operator::deinitialize)
-        .def("getParameter", &getParameterWrap, return_internal_reference<>())
-        .def("getParameter", &getParameterWithTimoutWrap, return_internal_reference<>())
+        .def("getParameter", &getParameterWrap)
+        .def("getParameter", &getParameterWithTimoutWrap)
         .def("setParameter", &setParameterWrap)
         .def("setParameter", &setParameterWrap)
         .def("getOutputData", &getOutputDataWrap)
@@ -115,6 +132,8 @@ void exportOperator()
         .value("ACTIVE", Operator::ACTIVE)
         .value("EXECUTING", Operator::EXECUTING)
         ;
+        
+//     register_ptr_to_python<DataRef>();
 }
 
             

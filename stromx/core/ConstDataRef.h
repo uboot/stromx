@@ -33,7 +33,7 @@ namespace stromx
         class DataRef;
         
         /** 
-         * \brief Reference to a data object.
+         * \brief Reference to a constant data object.
          * 
          * %Data references hold a smart pointer to a constant data object. They can
          * be copied and passed by value without copying the data object. Instances of
