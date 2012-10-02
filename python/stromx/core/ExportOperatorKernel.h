@@ -14,6 +14,9 @@
 *  limitations under the License.
 */
 
+#ifndef STROMX_PYTHON_EXPORTOPERATORKERNEL_H
+#define STROMX_PYTHON_EXPORTOPERATORKERNEL_H
+
 #include <boost/python.hpp>
 
 #include <stromx/core/OperatorKernel.h>
@@ -44,3 +47,5 @@ namespace stromx
         }
     }
 }
+
+#endif // STROMX_PYTHON_EXPORTOPERATORKERNEL_H

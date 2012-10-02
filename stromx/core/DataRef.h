@@ -75,6 +75,9 @@ namespace stromx
              */
             const bool isNull() const { return 0 == m_data.get(); }
             
+            /** Returns the shared pointer which holds the data object internally. */
+            const std::tr1::shared_ptr<Data> & ptr() const { return m_data; }
+            
             virtual const Version & version() const;
             virtual const std::string & type() const;
             virtual const std::string & package() const;

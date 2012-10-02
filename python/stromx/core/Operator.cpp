@@ -23,20 +23,30 @@
 using namespace boost::python;
 using namespace stromx::core;
 
-namespace boost 
-{ 
-    namespace python
-    {
-        template <> 
-        struct pointee<DataRef>
-        {
-            typedef Data type;
-        };
-    }
-}
 
 namespace
 {
+    /*
+    * TODO
+    * 
+    * This code is based on 
+    * http://stackoverflow.com/questions/6326757/conversion-from-boostshared-ptr-to-stdshared-ptr
+    */
+    template<typename T>
+    void do_release(typename std::tr1::shared_ptr<T> const&, T*)
+    {
+    }
+
+    template<typename T>
+    typename boost::shared_ptr<T> toBoost(typename std::tr1::shared_ptr<T> const& p)
+    {
+        return
+            boost::shared_ptr<T>(
+            p.get(),
+            boost::bind(&do_release<T>, p, _1));
+
+    }
+
     std::auto_ptr<Operator> allocate(std::auto_ptr<OperatorKernel> kernel)
     {
         std::auto_ptr<Operator> op(new Operator(kernel.get()));
@@ -49,7 +59,15 @@ namespace
         DataContainer data;
         
         Py_BEGIN_ALLOW_THREADS
-        data = op.getOutputData(id);
+        try
+        {
+            data = op.getOutputData(id);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
         return data;
@@ -58,43 +76,83 @@ namespace
     void setInputDataWrap(Operator & op, const unsigned int id, const DataContainer data)
     {
         Py_BEGIN_ALLOW_THREADS
-        op.setInputData(id, data);
+        try
+        {
+            op.setInputData(id, data);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
     }
     
-    DataRef getParameterWrap(Operator & op, const unsigned int id)
+    boost::shared_ptr<Data> getParameterWrap(Operator & op, const unsigned int id)
     {
         DataRef data;
         
         Py_BEGIN_ALLOW_THREADS
-        data = op.getParameter(id);
+        try
+        {
+            data = op.getParameter(id);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
-        return data;
+        return toBoost(data.ptr());
     }
     
-    DataRef getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
+    boost::shared_ptr<Data> getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
     {
         DataRef data;
         
         Py_BEGIN_ALLOW_THREADS
-        data = op.getParameter(id, timeout);
+        try
+        {
+            data = op.getParameter(id, timeout);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
-        return data;
+        return toBoost(data.ptr());;
     }
     
     void setParameterWrap(Operator & op, const unsigned int id, const Data & data)
     {
         Py_BEGIN_ALLOW_THREADS
-        op.setParameter(id, data);
+        try
+        {
+            op.setParameter(id, data);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
     }
     
     void setParameterWithTimoutWrap(Operator & op, const unsigned int id, const Data & data, const unsigned int timeout)
     {
         Py_BEGIN_ALLOW_THREADS
-        op.setParameter(id, data, timeout);
+        try
+        {
+            op.setParameter(id, data, timeout);
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
     }
 }
@@ -133,7 +191,7 @@ void exportOperator()
         .value("EXECUTING", Operator::EXECUTING)
         ;
         
-//     register_ptr_to_python<DataRef>();
+    register_ptr_to_python< boost::shared_ptr<Data> >();
 }
 
             

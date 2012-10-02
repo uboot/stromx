@@ -31,7 +31,15 @@ namespace
     void joinWrap(Stream & stream)
     {
         Py_BEGIN_ALLOW_THREADS
-        stream.join();
+        try
+        {
+            stream.join();
+        }
+        catch(stromx::core::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
     }
     

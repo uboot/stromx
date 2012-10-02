@@ -87,7 +87,7 @@ namespace stromx
                 
         void Matrix::doDeserialize(std::istream& in)
         {
-             /*
+            /*
             * TODO
             * 
             * This code is based on Carl Rogers cnpy library

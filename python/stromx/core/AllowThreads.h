@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2012 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,11 +14,10 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_PYTHON_EXPORTVECTOR_H
-#define STROMX_PYTHON_EXPORTVECTOR_H
+#ifndef STROMX_PYTHON_ALLOWTHREADS_H
+#define STROMX_PYTHON_ALLOWTHREADS_H
 
 #include <boost/python.hpp>
-#include <vector>
 
 using namespace boost::python;
 
@@ -26,16 +25,15 @@ namespace stromx
 {
     namespace python
     {
-        template <class T>
-        void exportVector(const char* const name)
+        class AllowThreads
         {
-            class_< std::vector<T> >(name, no_init)
-                .def("__len__", &std::vector<T>::size)
-                .def< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>("__getitem__", &std::vector<T>::at, return_internal_reference<>())
-                .def("__iter__", iterator< std::vector<T>, return_internal_reference<> >())
-            ;
-        }
+        public:
+            AllowThreads() : m_save(PyEval_SaveThread()) {}
+            ~AllowThreads() { PyEval_RestoreThread(m_save); }
+        private:
+            PyThreadState *m_save;
+        };
     }
 }
 
-#endif // STROMX_PYTHON_EXPORTVECTOR_H
+#endif // STROMX_PYTHON_ALLOWTHREADS_H

@@ -194,7 +194,7 @@ An example is an operator which merges several inputs to one output. After insta
 The parameter \em Add supports only one parameter. To support more parameter further \c case statements have to be added to the \c switch statement. The value of the parameter \c OFFSET is internally stored as member of type core::UInt32. Because the parameter \c value is of type core::Data it must be down-casted to the correct type. The function core::data_cast() works exactly as dynamic_cast() but throws a core::BadCast instead of std::bad_cast.
 
 \code
-    const core::Data& Add::getParameter(const unsigned int id) const
+    const core::DataRef Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {
