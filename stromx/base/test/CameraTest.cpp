@@ -14,7 +14,6 @@
 *  limitations under the License.
 */
 
-#include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include "CameraTest.h"
 #include "../Camera.h"
@@ -173,7 +172,6 @@ namespace stromx
 
         void CameraTest::tearDown ( void )
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
             m_operator->deactivate();
             delete m_operator;
         }
