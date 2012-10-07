@@ -18,6 +18,7 @@
 #include "CameraTest.h"
 #include "../Camera.h"
 #include "../Image.h"
+#include <boost/thread.hpp>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/Enum.h>
 #include <stromx/core/OperatorException.h>
