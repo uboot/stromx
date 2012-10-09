@@ -55,16 +55,10 @@ namespace stromx
                 case IMAGE:
                 {
                     delete m_image;
+                    m_image = 0;
                     
-                    try
-                    {
-                        const core::Image& image = stromx::core::data_cast<core::Image>(value);
-                        m_image = new Image(image);
-                    }
-                    catch(std::bad_cast&)
-                    {
-                        throw WrongParameterType(parameter(id), *this);
-                    }
+                    const core::Image& image = stromx::core::data_cast<core::Image>(value);
+                    m_image = new Image(image);
                     break;
                 }
                 default:
