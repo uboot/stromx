@@ -51,7 +51,7 @@ namespace stromx
             {
             public:
                 Observer(const Id2DataMapTest* const test);
-                ~Observer() {}
+                virtual ~Observer() {}
                 virtual void observe(const unsigned int id, const DataContainer & data) const;
                 
                 const unsigned int lastId() const { return m_lastId; }
