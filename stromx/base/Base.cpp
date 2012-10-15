@@ -27,7 +27,7 @@
 #include "Dilate.h"
 #include "Erode.h"
 #include "Image.h"
-#include "HoughLines.h"
+#include "HoughLinesP.h"
 #include "Open.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/Registry.h>
@@ -49,6 +49,6 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerOperator(new ConvertPixelType);
     registry.registerOperator(new Dilate);
     registry.registerOperator(new Erode);
-    registry.registerOperator(new HoughLines);
+    registry.registerOperator(new HoughLinesP);
     registry.registerOperator(new Open);
 }

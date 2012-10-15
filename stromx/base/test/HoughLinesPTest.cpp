@@ -15,41 +15,41 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "HoughLinesTest.h"
-#include "../HoughLines.h"
+#include "HoughLinesPTest.h"
+#include "../HoughLinesP.h"
 #include "../Matrix.h"
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/OperatorTester.h>
 #include <stromx/core/Primitive.h>
 #include <stromx/core/ReadAccess.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::HoughLinesTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::HoughLinesPTest);
 
 namespace stromx
 {
     namespace base
     {
-        void HoughLinesTest::setUp ( void )
+        void HoughLinesPTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new HoughLines());
+            m_operator = new core::OperatorTester(new HoughLinesP());
             m_operator->initialize();
             m_operator->activate();
         }
         
-        void HoughLinesTest::testExecute()
+        void HoughLinesPTest::testExecute()
         {            
             Image* image = new Image("edges.png");
             core::DataContainer source(image);
-            m_operator->setInputData(HoughLines::IMAGE, source);
+            m_operator->setInputData(HoughLinesP::IMAGE, source);
             
-            core::DataContainer result = m_operator->getOutputData(HoughLines::LINES);
+            core::DataContainer result = m_operator->getOutputData(HoughLinesP::LINES);
             core::ReadAccess<Matrix> access(result);
             const Matrix& resultLines = access();
             
-            resultLines.save("HoughLinesTest_testExecute.npy");
+            resultLines.save("HoughLinesPTest_testExecute.npy");
         }
         
-        void HoughLinesTest::tearDown ( void )
+        void HoughLinesPTest::tearDown ( void )
         {
             delete m_operator;
         }

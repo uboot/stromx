@@ -31,6 +31,7 @@
 #include <stromx/base/Clip.h>
 #include <stromx/base/Dilate.h>
 #include <stromx/base/Erode.h>
+#include <stromx/base/HoughLinesP.h>
 #include <stromx/base/Open.h>
 
 void exportImage();
@@ -55,5 +56,6 @@ BOOST_PYTHON_MODULE(libbase)
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
     stromx::python::exportOperatorKernel<Dilate>("Dilate");
     stromx::python::exportOperatorKernel<Erode>("Erode");
+    stromx::python::exportOperatorKernel<HoughLinesP>("HoughLinesP");
     stromx::python::exportOperatorKernel<Open>("Open");
 }

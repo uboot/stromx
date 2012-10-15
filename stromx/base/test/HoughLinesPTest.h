@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_HOUGHLINESTEST_H
-#define STROMX_BASE_HOUGHLINESTEST_H
+#ifndef STROMX_BASE_HOUGHLINESPTEST_H
+#define STROMX_BASE_HOUGHLINESPTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -30,14 +30,14 @@ namespace stromx
 
     namespace base
     {
-        class HoughLinesTest : public CPPUNIT_NS :: TestFixture
+        class HoughLinesPTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (HoughLinesTest);
+            CPPUNIT_TEST_SUITE (HoughLinesPTest);
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                HoughLinesTest() : m_operator(0) {}
+                HoughLinesPTest() : m_operator(0) {}
                 
                 void setUp();
                 void tearDown();
@@ -51,4 +51,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_HOUGHLINESTEST_H
+#endif // STROMX_BASE_HOUGHLINESPTEST_H

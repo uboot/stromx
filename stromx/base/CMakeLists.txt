@@ -32,7 +32,7 @@ set(SOURCES
     ConstImage.cpp
     Dilate.cpp
     Erode.cpp
-    HoughLines.cpp
+    HoughLinesP.cpp
     Image.cpp
     ImageFilter.cpp
     Matrix.cpp

@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#include "HoughLines.h"
+#include "HoughLinesP.h"
 
 #include "Image.h"
 #include "Matrix.h"
@@ -23,7 +23,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/core/DataContainer.h>
 #include <stromx/core/DataProvider.h>
-#include <stromx/core/EnumParameter.h>
 #include <stromx/core/Id2DataPair.h>
 #include <stromx/core/NumericParameter.h>
 #include <stromx/core/OperatorException.h>
@@ -37,13 +36,12 @@ namespace stromx
 
     namespace base
     {
-        const std::string HoughLines::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const Version HoughLines::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
-        const std::string HoughLines::TYPE("HoughLines");
+        const std::string HoughLinesP::PACKAGE(STROMX_BASE_PACKAGE_NAME);
+        const Version HoughLinesP::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const std::string HoughLinesP::TYPE("HoughLinesP");
         
-        HoughLines::HoughLines()
+        HoughLinesP::HoughLinesP()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-            m_transform(PROBALISTIC_HOUGH),
             m_rho(1.0),
             m_theta(boost::math::constants::pi<double>() / 180.0),
             m_threshold(100),
@@ -52,15 +50,12 @@ namespace stromx
         {
         }
 
-        void HoughLines::setParameter(unsigned int id, const Data& value)
+        void HoughLinesP::setParameter(unsigned int id, const Data& value)
         {
             try
             {
                 switch(id)
                 {
-                case TRANSFORM:
-                    m_transform = data_cast<Enum>(value);
-                    break;
                 case RHO:
                     if(data_cast<Double>(value) <= 0.0)
                     {
@@ -106,7 +101,7 @@ namespace stromx
             }
         }
 
-        const DataRef HoughLines::getParameter(const unsigned int id) const
+        const DataRef HoughLinesP::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -116,8 +111,6 @@ namespace stromx
                 return m_theta;
             case THRESHOLD:
                 return m_threshold;
-            case TRANSFORM:
-                return m_transform;
             case MIN_LINE_LENGTH:
                 return m_minLineLength;
             case MAX_LINE_GAP:
@@ -127,7 +120,7 @@ namespace stromx
             }
         }    
                 
-        void HoughLines::execute(DataProvider& provider)
+        void HoughLinesP::execute(DataProvider& provider)
         {
             Id2DataPair srcMapper(IMAGE);
             provider.receiveInputData(srcMapper);
@@ -136,7 +129,7 @@ namespace stromx
             Image& image = src();
             
             if(image.pixelType() != Image::MONO_8)
-                throw InputError(HoughLines::IMAGE, *this, "Source image must be an 8-bit monochrome image.");
+                throw InputError(HoughLinesP::IMAGE, *this, "Source image must be an 8-bit monochrome image.");
             
             // apply the transform
             cv::Mat cvImage = getOpenCvMat(image);
@@ -149,7 +142,7 @@ namespace stromx
             provider.sendOutputData(outputMapper);
         }
         
-        const std::vector<const core::Description*> HoughLines::setupInputs()
+        const std::vector<const core::Description*> HoughLinesP::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -160,7 +153,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> HoughLines::setupOutputs()
+        const std::vector<const Description*> HoughLinesP::setupOutputs()
         {
             std::vector<const Description*> outputs;
             
@@ -171,16 +164,9 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Parameter*> HoughLines::setupParameters()
+        const std::vector<const Parameter*> HoughLinesP::setupParameters()
         {
             std::vector<const core::Parameter*> parameters;
-            
-            EnumParameter* transform = new EnumParameter(TRANSFORM);
-            transform->setDoc("Transform");
-            transform->add(EnumDescription(HOUGH, "Hough transform"));
-            transform->add(EnumDescription(PROBALISTIC_HOUGH, "Probalistic Hough transform"));
-            transform->setAccessMode(core::Parameter::ACTIVATED_WRITE);
-            parameters.push_back(transform);
             
             NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO);
             rho->setMin(Double(0.0));

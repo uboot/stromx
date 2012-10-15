@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_HOUGHLINES_H
+#ifndef STROMX_BASE_HOUGHLINESP_H
 #define STROMX_BASE_HOUGHLINES_H
 
 #include <stromx/core/Enum.h>
@@ -27,7 +27,7 @@ namespace stromx
     namespace base
     {
         /** \brief Computes the Hough line transform of an image. */
-        class STROMX_BASE_API HoughLines : public core::OperatorKernel
+        class STROMX_BASE_API HoughLinesP : public core::OperatorKernel
         {
         public:
             enum InputId
@@ -50,15 +50,9 @@ namespace stromx
                 MAX_LINE_GAP
             };
             
-            enum Transform
-            {
-                HOUGH,
-                PROBALISTIC_HOUGH
-            };
+            HoughLinesP();
             
-            HoughLines();
-            
-            virtual OperatorKernel*const clone() const { return new HoughLines; }
+            virtual OperatorKernel*const clone() const { return new HoughLinesP; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);
@@ -72,7 +66,6 @@ namespace stromx
             static const core::Version VERSION;
             static const std::string TYPE;
             
-            core::Enum m_transform;
             core::Double m_rho;
             core::Double m_theta;
             core::UInt32 m_threshold;
@@ -82,4 +75,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_HOUGHLINES_H
+#endif // STROMX_BASE_HOUGHLINESP_H
