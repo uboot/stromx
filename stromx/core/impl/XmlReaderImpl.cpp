@@ -244,15 +244,7 @@ namespace stromx
                     for(unsigned int i = 0; i < numOperators; ++i)
                     {
                         DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
-                        
-                        try
-                        {
                         readOperatorInputs(op);
-                        }
-                        catch(WrongArgument& e)
-                        {
-                            throw InconsistentFileContent(filename, e.message());
-                        }
                     }
                     
                     DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
@@ -274,6 +266,16 @@ namespace stromx
                     
                     delete m_stream;
                     throw ex;
+                }
+                catch(XmlError& e)
+                {
+                    delete m_stream;
+                    throw InconsistentFileContent(filename, e.message());
+                }
+                catch(WrongArgument& e)
+                {
+                    delete m_stream;
+                    throw InconsistentFileContent(filename, e.message());
                 }
                 catch(core::Exception&)
                 {
@@ -409,6 +411,11 @@ namespace stromx
                     InternalError ex("XML exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
+                }
+                catch(XmlError& e)
+                {
+                    delete m_stream;
+                    throw InconsistentFileContent(filename, e.message());
                 }
                 catch(core::Exception&)
                 {
