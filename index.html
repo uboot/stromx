@@ -1,105 +1,119 @@
 <!DOCTYPE html>
-<html>
-<script type="text/javascript">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-30108963-1']);
-  _gaq.push(['_trackPageview']);
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
 
-</script>
-<head>
-  <meta charset='utf-8'>
+        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
-  <title>stromx</title>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Project name</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-form pull-right">
+                            <input class="span2" type="text" placeholder="Email">
+                            <input class="span2" type="password" placeholder="Password">
+                            <button type="submit" class="btn">Sign in</button>
+                        </form>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #2075bc; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #2075bc; }
-    h3 { color: #2075bc; }
-    a:link { font-weight:none; color: #2075bc; text-decoration:none; }
-    a:visited { font-weight:none; color: #019547; text-decoration:none; }
-    a:focus { font-weight:none; color: #BE202E; text-decoration:none; }
-    a:hover { font-weight:none; color: #BE202E; text-decoration:none; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+        <div class="container">
 
-<body>
-  <a href="https://github.com/uboot/stromx"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <h1>Hello, world!</h1>
+                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+            </div>
 
-  <div id="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="span4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div>
+                <div class="span4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+               </div>
+                <div class="span4">
+                    <h2>Heading</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div>
+            </div>
 
-    <h1>stromx</h1>
+            <hr>
 
-    <div class="description">
-      Tools for near real time processing of data with a focus on industrial imaging.
-    </div>
+            <footer>
+                <p>&copy; Company 2012</p>
+            </footer>
 
-      <h2>Introduction</h2>
-      <p>
-        The stromx project currently consists of two subprojects: <em>stromx</em> and <em>stromx-studio</em>. More information can be found on the introductory page of the  <a href="http://github.com/uboot/stromx/wiki/Introduction">stromx wiki</a>.
-      </p>
+        </div> <!-- /container -->
 
-      <h2>Binaries</h2>
-      <p>
-        Prebuild packages of a current development version of <em>stromx</em> and <em>stromx-studio</em> for Linux and Windows exist. The Linux packages are hosted at <a href="http://build.opensuse.org/">openSUSE Build Service</a> and <a href="http://launchpad.net/">launchpad</a>. Note that while the packages are updated regularly they are not always based on the most recent sources. Moreover, the packages for different distributions are not synchronized. The current Ubuntu packages might e.g. have been built from newer sources than the latest Windows installer.
-      </p>
-      <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/Fedora_16/">Fedora 16</a></p>
-      <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/openSUSE_12.1/">openSUSE 12.1</a></p>
-      <p><a href="http://launchpad.net/~stromx-developers/+archive/packages/">Ubuntu natty, oneiric, precise</a></p>
-      <p><a href="https://github.com/uboot/stromx-studio/downloads">Windows</a></p>
-      
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
 
-      <h2>Sources</h2>
-      <p>
-        The sources of <em>stromx</em> are hosted at <a href="http://github.com/uboot/stromx">github</a>.
-        For <em>stromx-studio</em> a separate repository exists <a href="http://github.com/uboot/stromx-studio">here</a>.
-      <p>
-    
-      <h2>Documentation</h2>
-      <p>
-        The current <a href="http://uboot.github.com/stromx/api/">stromx documentation</a> contains several tutorials and a description of the library API.  
-      </p>
-    
-      <h2>Build instructions</h2>
-      <p>
-        The common <a href="http://github.com/uboot/stromx/wiki">wiki</a> of both projects provides useful information about the necessary 
-        prequisites for building <em>stromx</em> and <em>stromx-studio</em> on Linux and Windows. It also contains build instruction for both platforms.
-      </p>
+        <script src="js/vendor/bootstrap.min.js"></script>
 
-      <h2>Mailing list</h2>
-      <p>
-        Ask your questions at
-        <a href="mailto:stromx-devel@googlegroups.com">stromx-devel@googlegroups.com</a>.
-      </p>
-    
-      <h2>License</h2>
-      <p>
-        The <em>stromx</em> libraries are released under the Apache license.
-        The <em>stromx-studio</em> is released under the GPL 3 license.
-      </p>
+        <script src="js/main.js"></script>
 
-  </div>
-
-</body>
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
 </html>
