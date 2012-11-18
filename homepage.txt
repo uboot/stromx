@@ -1,0 +1,25 @@
+Title links:
+ - Screenshots
+ - Videos
+ - Download
+ - Develop
+ - Contact
+
+Title text:
+stromx
+An open source solution for industrial vision. Visually solve vision problems and deploy the solution on a robust runtime.
+
+
+Boxes:
+ - Studio
+   Stromx-studio is a visual editor to design and edit solutions for problems in industrial vision. It allows to construct complex data processing networks (="streams") by drag and drop. The effect of parameter changes can be observed in real-time while the network is executing in the studio.
+
+ - Library
+   Stromx streams can be executed outside stromx-studio in a runtime provided by the stromx library. It provides an API to safely start and stop the execution  of streams and to change the parameters of a running stream. The library licensed under the permissive Apache 2.0 license which essentially allows to use it in closed source products without restrictions.
+
+
+ - Operators
+   
+
+
+
