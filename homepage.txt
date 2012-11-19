@@ -19,7 +19,7 @@ Boxes:
 
 
  - Operators
-   
+   Implement custom operators and data types using the stromx API. Your own operators can then be assembled and configured in stromx-studio and deployed in any stromx stream. Use custom operators to easily integrate custom vision algorithms, access special hardware (industrial cameras, PLC,...) or communicate with database systems.
 
 
 
