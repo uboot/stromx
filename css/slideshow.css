@@ -1,0 +1,115 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+html{
+	background:url('../img/page_bg_tile.jpg') #202027;
+}
+
+body{
+	color:#999;
+	
+	background-image:url('../img/contour.png'),url('../img/page_bg.jpg');
+	background-repeat:no-repeat,no-repeat;
+	background-position: center 117px, center -200px;
+
+	font:15px Calibri,Arial,sans-serif;
+	border:1px solid transparent;
+}
+
+/* Styling the slideshow */
+
+#slideShowContainer{
+	width:510px;
+	height:510px;
+	position:relative;
+	margin:120px auto 50px;
+}
+
+#slideShow{
+	position:absolute;
+	height:490px;
+	width:490px;
+	background-color:#fff;
+	margin:10px 0 0 10px;
+	z-index:100;
+	
+	-moz-box-shadow:0 0 10px #111;
+	-webkit-box-shadow:0 0 10px #111;
+	box-shadow:0 0 10px #111;
+}
+
+#slideShow ul{
+	position:absolute;
+	top:15px;
+	right:15px;
+	bottom:15px;
+	left:15px;
+	list-style:none;
+	overflow:hidden;
+}
+
+#slideShow li{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+#slideShowContainer > a{
+	border:none;
+	text-decoration:none;
+	text-indent:-99999px;
+	overflow:hidden;
+	width:36px;
+	height:37px;
+	background:url('../img/arrows.png') no-repeat;
+	position:absolute;
+	top:50%;
+	margin-top:-21px;
+}
+
+#previousLink{
+	left:-38px;
+}
+
+#previousLink:hover{
+	background-position:bottom left;
+}
+
+a#nextLink{
+	right:-38px;
+	background-position:top right;
+}
+
+#nextLink:hover{
+	background-position:bottom right;
+}
+
+/* General styles */
+
+.note{
+	margin-bottom:40px;
+	text-align:center;
+}
+
+.credit{
+	font-size:12px;
+}
+
+.credit a{
+	color:#bbb !important;
+}
+
+
+a, a:visited {
+	text-decoration:underline;
+	outline:none;
+	color:#97CAE6;
+}
+
+a:hover{
+	text-decoration:none;
+}
