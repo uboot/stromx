@@ -31,7 +31,7 @@ namespace stromx
 {
     namespace base
     {
-        /** \brief Matrix implementation based on OpenCV matrices. */
+        /** \brief %Matrix implementation based on OpenCV matrices. */
         class STROMX_BASE_API Matrix : public core::MatrixWrapper
         {
             friend cv::Mat getOpenCvMat(const core::Matrix& matrix);

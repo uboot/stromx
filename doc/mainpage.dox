@@ -2,9 +2,6 @@
 
 \image html logo/stromx-logo-rgb-text-69x100.png
 
-Some general info.
-
-
 \section tutorial Tutorial
 
 The main concepts of \em stromx are illustrated in four examples. \em Simple shows how to build and operate a stream using only library functions. In \em file instead of assembling the stream with multiple function calls in the code it is loaded from an XML file. The example \em operator shows how to implement and use a proprietary \em stromx operator. A slightly more real-world example is \em camera which shows how to process images orginating from a simulated camera.
