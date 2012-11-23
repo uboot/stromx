@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['file',['file',['../classstromx_1_1core_1_1_directory_file_input.html#a6bed3b00cbb4ac8c1336458399a9c3b0',1,'stromx::core::DirectoryFileInput::file()'],['../classstromx_1_1core_1_1_directory_file_output.html#a28f843977e0381b9364fc9386923e9e0',1,'stromx::core::DirectoryFileOutput::file()'],['../classstromx_1_1core_1_1_input_provider.html#a10e20a13fa13686005a7310e8f0484a0',1,'stromx::core::InputProvider::file()'],['../classstromx_1_1core_1_1_output_provider.html#a6af811dad9f4598eeee5e12f038cdff2',1,'stromx::core::OutputProvider::file()'],['../classstromx_1_1core_1_1_zip_file_input.html#ad471b259d1fee2e81cc7f2fcb55914e4',1,'stromx::core::ZipFileInput::file()'],['../classstromx_1_1core_1_1_zip_file_output.html#a7ae98519222e446c032f92406c85d668',1,'stromx::core::ZipFileOutput::file()']]]
-];

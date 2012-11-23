@@ -56,23 +56,29 @@
 
 	    <h1>Develop</h1>
 
-	    Compiling <em>stromx</em> and <em>stromx-studio</em> from the sources should be relatively easy. Below are links to the source repositories and to build instructions for Linux and Windows.
+	    <p>To play around with <em>stromx</em> and implement first vision streams an installation of <em>stromx-studio</em> is 
+the only thing you need. It can be downloaded for the most popular Linux distribution and for Windows on the <a href="download.html"> downloads page</a>.</p>
+
+<p>It is also possible to use the functionality of <em>stromx</em> from a different application via the <em>stromx</em> API. E.g. a vision application with a custom GUI can use <em>stromx</em> to implement its imaging capabilities. In this case the <em>stromx</em> header files and the shared library objects are necessary. The same files &#x2013; headers and shared objects &#x2013; are necessary if you want to implement your own operators. For those Linux distributions we provide packages for these files are provided in the <em>devel</em> packages. For other distributions <em>stromx</em> has to be compiled from the sources.</p>
+
+<p>On Windows the <em>stromx</em> library has to be build specifically each version of Visual Studio. For this reason we currently do not provide pre-compiled Windows versions.
+Finally, if you want to participate in the development of <em>stromx</em> or to adapt the library to your needs it is obviously necessary to compile and build it yourself. The necessary information how to build <em>stromx</em> is given below.</p>
             
 	    <h2>Sources</h2>
 	    <p>
 	      The sources of <em>stromx</em> are hosted at <a href="http://github.com/uboot/stromx">github</a>.
-	      For <em>stromx-studio</em> a separate repository exists <a href="http://github.com/uboot/stromx-studio">here</a>.
+	      For <em>stromx-studio</em> a separate repository exists <a href="http://github.com/uboot/stromx-studio">here</a>. You can either clone the repository with <em>git</em> or download the repository as a compressed archive.
 	    <p>
-	  
-	    <h2>Documentation</h2>
-	    <p>
-	      The current <a href="api/index.html">stromx documentation</a> contains several tutorials and a description of the library API.  
-	    </p>
 	  
 	    <h2>Build instructions</h2>
 	    <p>
 	      The common <a href="http://github.com/uboot/stromx/wiki">wiki</a> of both projects provides useful information about the necessary 
 	      prequisites for building <em>stromx</em> and <em>stromx-studio</em> on Linux and Windows. It also contains build instruction for both platforms.
+	    </p>
+	  
+	    <h2>Documentation and tutorials</h2>
+	    <p>
+	      The documentation of the <em>stromx</em> API is generated during the build process as explained in the wiki. Alternatively, a copy of the documentation is available <a href="api/index.html">online</a>. It includes tutorials which explain how to use <em>stromx</em> in an application and how to implement custom operator.
 	    </p>
 
             <hr>
