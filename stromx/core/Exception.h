@@ -208,7 +208,7 @@ namespace stromx
             {}
         };
         
-        /** \brief Error related to a Data object. */
+        /** \brief Error related to a %Data object. */
         class DataException : public Exception
         {
         public:
