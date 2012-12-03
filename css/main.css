@@ -4,17 +4,16 @@
    Author's custom styles
    ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
-
+.titleimg {
+	float: right;
+	width: 600px;
+}
+.logo {
+	float: right;
+}
+.hero-unit {
+	padding: 60px 10px 60px 60px;
+}
 
 
 
