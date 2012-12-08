@@ -41,7 +41,7 @@ void exportThread()
             .def<void (Thread::*)(Operator* const, unsigned int)>("removeInput", &Thread::removeInput)
         ;        
             
-        enum_<Thread::Status>("ThreadStatus")
+        enum_<Thread::Status>("Status")
             .value("INACTIVE", Thread::INACTIVE)
             .value("ACTIVE", Thread::ACTIVE)
             .value("DEACTIVATING", Thread::DEACTIVATING)

@@ -81,7 +81,7 @@ void exportStream()
             .def("resume", &Stream::resume)
         ;
         
-        enum_<Stream::Status>("StreamStatus")
+        enum_<Stream::Status>("Status")
             .value("INACTIVE", Stream::INACTIVE)
             .value("ACTIVE", Stream::ACTIVE)
             .value("DEACTIVATING", Stream::DEACTIVATING)
