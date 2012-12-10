@@ -6,16 +6,22 @@
 
 .titleimg {
 	float: right;
-	width: 600px;
+	width: 60%;
+}
+.titleimg img {
+	width: 100%;
+	margin-left: 20px;
+}
+.titletext {
+	float: left;
+	width: 40%;
 }
 .logo {
 	float: right;
 }
 .hero-unit {
-	padding: 60px 10px 60px 60px;
+	padding: 60px;
 }
-
-
-
-
-
+.hero-unit .row {
+	margin: 0;
+}
