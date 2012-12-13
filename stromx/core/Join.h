@@ -39,7 +39,7 @@ namespace stromx
             
             Join();
             
-            virtual OperatorKernel* const clone() const { return new Join; }
+            virtual OperatorKernel* clone() const { return new Join; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();

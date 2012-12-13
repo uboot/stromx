@@ -54,7 +54,7 @@ namespace stromx
             PeriodicDelay();
             virtual ~PeriodicDelay();
             
-            virtual OperatorKernel* const clone() const { return new PeriodicDelay; }
+            virtual OperatorKernel* clone() const { return new PeriodicDelay; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

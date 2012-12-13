@@ -48,7 +48,7 @@ namespace stromx
             
             Queue();
             
-            virtual OperatorKernel* const clone() const { return new Queue; }
+            virtual OperatorKernel* clone() const { return new Queue; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void deactivate();

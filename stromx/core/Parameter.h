@@ -160,7 +160,7 @@ namespace stromx
             Parameter(const unsigned int id, const DataVariant& variant, ParameterGroup* const group = 0);
             
             /** Returns the access mode. */
-            const AccessMode accessMode() const { return m_access; }
+            AccessMode accessMode() const { return m_access; }
             
             /** Sets the access mode. */
             void setAccessMode(const AccessMode mode) { m_access = mode; }

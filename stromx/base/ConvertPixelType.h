@@ -49,7 +49,7 @@ namespace stromx
             
             ConvertPixelType();
             
-            virtual OperatorKernel* const clone() const { return new ConvertPixelType; }
+            virtual OperatorKernel* clone() const { return new ConvertPixelType; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

@@ -51,13 +51,13 @@ namespace stromx
             m_buffer = buffer;
         }
         
-        const unsigned int MatrixWrapper::valueSize() const
+        unsigned int MatrixWrapper::valueSize() const
         {
             return Matrix::valueSizeFromValueType(m_valueType);
         }
         
         void MatrixWrapper::initializeMatrix(const unsigned int rows, const unsigned int cols,
-                                             const unsigned int stride, uint8_t* const data, 
+                                             const unsigned int stride, uint8_t* data, 
                                              const ValueType valueType) 
         {
             validate(rows, cols, stride, data, valueType);

@@ -52,7 +52,7 @@ namespace stromx
             
             AdjustRgbChannels();
             
-            virtual OperatorKernel* const clone() const { return new AdjustRgbChannels; }
+            virtual OperatorKernel* clone() const { return new AdjustRgbChannels; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

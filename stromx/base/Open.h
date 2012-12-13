@@ -28,7 +28,7 @@ namespace stromx
         {
         public:
             Open();
-            virtual OperatorKernel*const clone() const { return new Open; }
+            virtual OperatorKernel* clone() const { return new Open; }
             
         private:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,

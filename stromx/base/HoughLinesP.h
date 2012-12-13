@@ -52,7 +52,7 @@ namespace stromx
             
             HoughLinesP();
             
-            virtual OperatorKernel*const clone() const { return new HoughLinesP; }
+            virtual OperatorKernel* clone() const { return new HoughLinesP; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

@@ -40,7 +40,7 @@ namespace stromx
             {
             }
             
-            OperatorKernel*const clone() const
+            OperatorKernel* clone() const
             {
                 return new ImageFilterTester;
             } 

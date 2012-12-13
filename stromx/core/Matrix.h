@@ -48,31 +48,31 @@ namespace stromx
              * a pointer to the matrix data which can be located at a different position
              * in the buffer.
              */
-            virtual uint8_t* const buffer() = 0;
+            virtual uint8_t* buffer() = 0;
             
             /** Returns the size of the buffer. */
-            virtual const unsigned int bufferSize() const = 0;
+            virtual unsigned int bufferSize() const = 0;
             
             /** Returns the number of rows of the matrix. */
-            virtual const unsigned int rows() const = 0;
+            virtual unsigned int rows() const = 0;
             
             /** Returns the number columns of the matrix. */
-            virtual const unsigned int cols() const = 0;
+            virtual unsigned int cols() const = 0;
             
             /** Returns the size of a row in the matrix in bytes. */
-            virtual const unsigned int stride() const = 0;
+            virtual unsigned int stride() const = 0;
             
             /** Returns the value type of the data of the matrix. */
-            virtual const ValueType valueType() const = 0;
+            virtual ValueType valueType() const = 0;
             
             /** Returns the size of a single value in bytes. */
-            virtual const unsigned int valueSize() const = 0;
+            virtual unsigned int valueSize() const = 0;
             
             /** Returns the address of the matrix data. */
-            virtual uint8_t* const data() = 0;
+            virtual uint8_t* data() = 0;
             
             /** Returns the address of the matrix data as a constant pointer. */
-            virtual const uint8_t* const data() const = 0;
+            virtual const uint8_t* data() const = 0;
             
             /** 
              * Initializes the matrix to the given data. Note that this function does not
@@ -82,13 +82,13 @@ namespace stromx
             virtual void initializeMatrix(const unsigned int rows, 
                                           const unsigned int cols, 
                                           const unsigned int stride, 
-                                          uint8_t* const data, 
+                                          uint8_t* data, 
                                           const ValueType valueType) = 0;
                                      
             
         protected:
             /** Returns the size of a single value of type \c valueType in bytes. */  
-            static const unsigned int valueSizeFromValueType(const ValueType valueType);  
+            static unsigned int valueSizeFromValueType(const ValueType valueType);  
             
             /** Returns the data variant defined by the input \c valueType. */
             static const core::DataVariant dataVariantFromValueType(const ValueType valueType);

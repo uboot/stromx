@@ -50,47 +50,47 @@ namespace
             return this->get_override("clone")();
         }
         
-        uint8_t* const buffer()
+        uint8_t* buffer()
         {
             return this->get_override("buffer")();
         }
         
-        const unsigned int bufferSize() const
+        unsigned int bufferSize() const
         {
             return this->get_override("bufferSize")();
         }
         
-        const unsigned int rows() const
+        unsigned int rows() const
         {
             return this->get_override("rows")();
         }
         
-        const unsigned int cols() const
+        unsigned int cols() const
         {
             return this->get_override("cols")();
         }
         
-        const unsigned int stride() const
+        unsigned int stride() const
         {
             return this->get_override("stride")();
         }
         
-        const ValueType valueType() const
+        ValueType valueType() const
         {
             return this->get_override("valueType")();
         }
         
-        const unsigned int valueSize(const ValueType valueType) const
+        unsigned int valueSize(const ValueType valueType) const
         {
-            return this->get_override("valueSize")();
+            return this->get_override("valueSize")(valueType);
         }
         
-        uint8_t* const data()
+        uint8_t* data()
         {
             return this->get_override("data")();
         }
         
-        const uint8_t* const data() const
+        const uint8_t* data() const
         {
             return this->get_override("data")();
         }
@@ -107,7 +107,7 @@ void exportMatrix()
         .def("stride", pure_virtual(&Matrix::stride))
         .def("valueType", pure_virtual(&Matrix::valueType))
         .def("valueSize", pure_virtual(&Matrix::valueSize))
-        .def("_data", pure_virtual(reinterpret_cast<unsigned int (Matrix::*)()>(static_cast<uint8_t* const(Matrix::*)()>(&Matrix::data))))
+        .def("_data", pure_virtual(reinterpret_cast<unsigned int (Matrix::*)()>(static_cast<uint8_t*(Matrix::*)()>(&Matrix::data))))
     ;
     
     enum_<Matrix::ValueType>("ValueType")

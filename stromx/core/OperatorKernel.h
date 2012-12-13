@@ -56,7 +56,7 @@ namespace stromx
              * allocated and returned. The current status of the operator is \em not
              * reproduced.
              */
-            virtual OperatorKernel* const clone() const = 0;
+            virtual OperatorKernel* clone() const = 0;
             
             const std::string& type() const { return m_type; }
             

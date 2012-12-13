@@ -28,7 +28,7 @@ namespace stromx
         {
         public:
             Dilate();
-            virtual OperatorKernel*const clone() const { return new Dilate; }
+            virtual OperatorKernel* clone() const { return new Dilate; }
             
         private:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,

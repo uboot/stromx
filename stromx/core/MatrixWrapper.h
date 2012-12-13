@@ -41,19 +41,19 @@ namespace stromx
             
             // Implementation of stromx::core::Matrix
             virtual const DataVariant & variant() const { return m_variant; }
-            virtual uint8_t* const buffer() { return m_buffer; }
-            virtual const unsigned int bufferSize() const { return m_bufferSize; }
-            virtual const unsigned int rows() const { return m_rows; }
-            virtual const unsigned int cols() const { return m_cols; }
-            virtual const unsigned int stride() const { return m_stride; }
-            virtual const ValueType valueType() const { return m_valueType; }
-            virtual const unsigned int valueSize() const;
-            virtual uint8_t* const data() { return m_data; }
-            virtual const uint8_t* const data() const { return m_data; }
+            virtual uint8_t* buffer() { return m_buffer; }
+            virtual unsigned int bufferSize() const { return m_bufferSize; }
+            virtual unsigned int rows() const { return m_rows; }
+            virtual unsigned int cols() const { return m_cols; }
+            virtual unsigned int stride() const { return m_stride; }
+            virtual ValueType valueType() const { return m_valueType; }
+            virtual unsigned int valueSize() const;
+            virtual uint8_t* data() { return m_data; }
+            virtual const uint8_t* data() const { return m_data; }
             virtual void initializeMatrix(const unsigned int rows, 
                                           const unsigned int cols, 
                                           const unsigned int stride, 
-                                          uint8_t* const data, 
+                                          uint8_t* data, 
                                           const ValueType valueType);
             
         protected:
@@ -71,7 +71,7 @@ namespace stromx
             void validate(const unsigned int rows,
                         const unsigned int cols,
                         const unsigned int stride,
-                        const uint8_t* const data,
+                        const uint8_t* data,
                         const ValueType valueType) const;
                        
             unsigned int m_rows;

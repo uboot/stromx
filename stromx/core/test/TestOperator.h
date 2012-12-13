@@ -41,7 +41,7 @@ namespace stromx
             
             TestOperator();
             
-            virtual OperatorKernel* const clone() const { return new TestOperator; }
+            virtual OperatorKernel* clone() const { return new TestOperator; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);

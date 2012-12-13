@@ -28,7 +28,7 @@ namespace stromx
         {
         public:
             Erode();
-            virtual OperatorKernel*const clone() const { return new Erode; }
+            virtual OperatorKernel* clone() const { return new Erode; }
             
         private:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,

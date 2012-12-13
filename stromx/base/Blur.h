@@ -49,7 +49,7 @@ namespace stromx
             
             Blur();
             
-            virtual OperatorKernel*const clone() const { return new Blur; }
+            virtual OperatorKernel* clone() const { return new Blur; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             

@@ -51,7 +51,7 @@ namespace stromx
             
             Clip();
             
-            virtual OperatorKernel* const clone() const { return new Clip; }
+            virtual OperatorKernel* clone() const { return new Clip; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

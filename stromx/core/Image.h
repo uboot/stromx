@@ -46,19 +46,19 @@ namespace stromx
             virtual ~Image() {}
             
             /** Returns the width of the image. */
-            virtual const unsigned int width() const = 0;
+            virtual unsigned int width() const = 0;
             
             /** Returns the height of the image. */
-            virtual const unsigned int height() const = 0;
+            virtual unsigned int height() const = 0;
             
             /** Returns the size of a line in the image in bytes. */
-            virtual const unsigned int stride() const = 0;
+            virtual unsigned int stride() const = 0;
             
             /** Returns the type of the pixel data of the image. */
-            virtual const PixelType pixelType() const = 0;
+            virtual PixelType pixelType() const = 0;
             
             /** Returns the size of a single pixel in bytes. */
-            virtual const unsigned int pixelSize() const = 0;
+            virtual unsigned int pixelSize() const = 0;
             
             /** 
              * Initializes the image to the given data. Note that this function does not
@@ -68,14 +68,14 @@ namespace stromx
             virtual void initializeImage(const unsigned int width, 
                                          const unsigned int height, 
                                          const unsigned int stride, 
-                                         uint8_t* const data, 
+                                         uint8_t* data, 
                                          const PixelType pixelType) = 0;
                                     
             /** Returns the number of channels for a given pixel type. */
-            static const int numChannels(const PixelType pixelType);
+            static int numChannels(const PixelType pixelType);
             
             /** Returns the size of a single channel of a given pixel type in bytes. */
-            static const int depth(const PixelType pixelType);
+            static int depth(const PixelType pixelType);
             
         protected:
             /** Returns the data variant defined by the input \c pixelType. */

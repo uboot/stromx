@@ -27,7 +27,7 @@ namespace
 {
     struct OperatorKernelWrap : public OperatorKernel, wrapper<OperatorKernel>
     {
-        virtual OperatorKernel* const clone() const
+        virtual OperatorKernel* clone() const
         {
             return this->get_override("clone")();
         }

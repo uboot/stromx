@@ -65,7 +65,7 @@ namespace stromx
             Trigger();
             virtual ~Trigger();
             
-            virtual OperatorKernel* const clone() const { return new Trigger; }
+            virtual OperatorKernel* clone() const { return new Trigger; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

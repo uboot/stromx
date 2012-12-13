@@ -41,30 +41,30 @@ namespace stromx
             
             // Implementation of stromx::core::Matrix
             virtual const DataVariant & variant() const { return m_variant; }
-            virtual uint8_t* const buffer() { return m_buffer; }
-            virtual const unsigned int bufferSize() const { return m_bufferSize; };
-            virtual const unsigned int rows() const { return m_height; }
-            virtual const unsigned int cols() const { return m_cols; }
-            virtual uint8_t* const data() { return m_data; }
-            virtual const uint8_t* const data() const { return m_data; }
-            virtual const unsigned int stride() const { return m_stride; }
-            virtual const ValueType valueType() const { return m_valueType; }
-            virtual const unsigned int valueSize() const;
+            virtual uint8_t* buffer() { return m_buffer; }
+            virtual unsigned int bufferSize() const { return m_bufferSize; };
+            virtual unsigned int rows() const { return m_height; }
+            virtual unsigned int cols() const { return m_cols; }
+            virtual uint8_t* data() { return m_data; }
+            virtual const uint8_t* data() const { return m_data; }
+            virtual unsigned int stride() const { return m_stride; }
+            virtual ValueType valueType() const { return m_valueType; }
+            virtual unsigned int valueSize() const;
             virtual void initializeMatrix(const unsigned int rows, 
                                           const unsigned int cols, 
                                           const unsigned int stride, 
-                                          uint8_t* const data, 
+                                          uint8_t* data, 
                                           const ValueType valueType) ;
             
             // Implementation of stromx::core::Image
-            virtual const unsigned int width() const { return m_width; }
-            virtual const unsigned int height() const { return m_height; }
-            virtual const PixelType pixelType() const { return m_pixelType; }
-            virtual const unsigned int pixelSize() const;
+            virtual unsigned int width() const { return m_width; }
+            virtual unsigned int height() const { return m_height; }
+            virtual PixelType pixelType() const { return m_pixelType; }
+            virtual unsigned int pixelSize() const;
             virtual void initializeImage(const unsigned int width, 
                                          const unsigned int height, 
                                          const unsigned int stride, 
-                                         uint8_t* const data, 
+                                         uint8_t* data, 
                                          const PixelType pixelType);
             
         protected:
@@ -82,7 +82,7 @@ namespace stromx
             void validate(const unsigned int width,
                           const unsigned int height,
                           const unsigned int stride,
-                          const uint8_t* const data,
+                          const uint8_t* data,
                           const PixelType pixelType) const;
                         
             

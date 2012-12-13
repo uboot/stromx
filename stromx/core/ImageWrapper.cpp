@@ -55,7 +55,7 @@ namespace stromx
             m_buffer = buffer;
         }
         
-        const unsigned int ImageWrapper::pixelSize() const
+        unsigned int ImageWrapper::pixelSize() const
         {
             return depth(m_pixelType) * numChannels(m_pixelType);
         }
@@ -97,7 +97,7 @@ namespace stromx
                 throw WrongArgument("Too small buffer.");
         }
         
-        const unsigned int ImageWrapper::valueSize() const
+        unsigned int ImageWrapper::valueSize() const
         {
             return Matrix::valueSizeFromValueType(valueType());
         }

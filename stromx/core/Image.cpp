@@ -20,7 +20,7 @@ namespace stromx
 {
     namespace core
     {
-        const int Image::numChannels(const PixelType pixelType)
+        int Image::numChannels(const PixelType pixelType)
         {
             switch(pixelType)
             {
@@ -42,7 +42,7 @@ namespace stromx
             }
         }
         
-        const int Image::depth(const PixelType pixelType)
+        int Image::depth(const PixelType pixelType)
         {
             switch(pixelType)
             {

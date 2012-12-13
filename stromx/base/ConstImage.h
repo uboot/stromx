@@ -49,7 +49,7 @@ namespace stromx
             ConstImage();
             virtual ~ConstImage();
             
-            virtual OperatorKernel* const clone() const { return new ConstImage; }
+            virtual OperatorKernel* clone() const { return new ConstImage; }
             virtual void setParameter(const unsigned int id, const core::Data& value);
             virtual const core::DataRef getParameter(const unsigned int id) const;
             virtual void execute(core::DataProvider& provider);

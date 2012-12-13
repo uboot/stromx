@@ -50,67 +50,67 @@ namespace
             return this->get_override("clone")();
         }
         
-        uint8_t* const buffer()
+        uint8_t* buffer()
         {
             return this->get_override("buffer")();
         }
         
-        const unsigned int bufferSize() const
+        unsigned int bufferSize() const
         {
             return this->get_override("bufferSize")();
         }
         
-        const unsigned int width() const
+        unsigned int width() const
         {
             return this->get_override("width")();
         }
         
-        const unsigned int height() const
+        unsigned int height() const
         {
             return this->get_override("height")();
         }
         
-        const unsigned int stride() const
+        unsigned int stride() const
         {
             return this->get_override("stride")();
         }
         
-        const PixelType pixelType() const
+        PixelType pixelType() const
         {
             return this->get_override("pixelType")();
         }
         
-        const unsigned int pixelSize() const
+        unsigned int pixelSize() const
         {
             return this->get_override("pixelSize")();
         }
         
-        uint8_t* const data()
+        uint8_t* data()
         {
             return this->get_override("data")();
         }
         
-        const uint8_t* const data() const
+        const uint8_t* data() const
         {
             return this->get_override("data")();
         }
         
-         const unsigned int rows() const
+        unsigned int rows() const
         {
             return this->get_override("rows")();
         }
         
-        const unsigned int cols() const
+        unsigned int cols() const
         {
             return this->get_override("cols")();
         }
         
-        const ValueType valueType() const
+        ValueType valueType() const
         {
             return this->get_override("valueType")();
         }
         
-        const unsigned int valueSize() const
+        unsigned int valueSize() const
         {
             return this->get_override("valueSize")();
         }

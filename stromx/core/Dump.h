@@ -31,7 +31,7 @@ namespace stromx
             
             Dump();
             
-            virtual OperatorKernel* const clone() const { return new Dump; }
+            virtual OperatorKernel* clone() const { return new Dump; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);
