@@ -343,7 +343,14 @@ namespace stromx
                 iter != m_observers.end();
                 ++iter)
             {
-                (*iter)->observe(phase, ex, thread);
+                try
+                {
+                    (*iter)->observe(phase, ex, thread);
+                }
+                catch(...)
+                {
+                    // catch all exceptions which are thrown while observing exceptions...
+                }
             }
         }
     }

@@ -308,7 +308,14 @@ namespace stromx
                 iter != m_observers.end();
                 ++iter)
             {
-                (*iter)->observe(Input(this, id), data);
+                try
+                {
+                    (*iter)->observe(Input(this, id), data);
+                }
+                catch(...)
+                {
+                    // catch all exceptions which are thrown by the observer
+                }
             }
         }
 
@@ -320,7 +327,14 @@ namespace stromx
                 iter != m_observers.end();
                 ++iter)
             {
-                (*iter)->observe(Output(this, id), data);
+                try
+                {
+                    (*iter)->observe(Output(this, id), data);
+                }
+                catch(...)
+                {
+                    // catch all exceptions which are thrown by the observer
+                }
             }
         }
         
