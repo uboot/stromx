@@ -121,7 +121,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a199956ed4d445d35634c6ec540019935"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a199956ed4d445d35634c6ec540019935">version</a> () const </td></tr>
 <tr class="memitem:a4eb8c70b8f9f572526c4578ef801847b"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a4eb8c70b8f9f572526c4578ef801847b">package</a> () const </td></tr>
 <tr class="memitem:a518f288928d5390f4981836514e5b0cb"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1core_1_1_data_variant.html">DataVariant</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a518f288928d5390f4981836514e5b0cb">variant</a> () const </td></tr>
-<tr class="memitem:a3b29a133986d894957df770f52afc463"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a3b29a133986d894957df770f52afc463">clone</a> () const </td></tr>
+<tr class="memitem:a9bce43a1c908189e53dfdbf739889191"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a9bce43a1c908189e53dfdbf739889191">clone</a> () const </td></tr>
 <tr class="memitem:afceb3d02f7b0618ef1198e65a95cc96b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#afceb3d02f7b0618ef1198e65a95cc96b">serialize</a> (<a class="el" href="classstromx_1_1core_1_1_output_provider.html">OutputProvider</a> &amp;out) const </td></tr>
 <tr class="memitem:a9025739374331734f3cf309826b7bf4d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a9025739374331734f3cf309826b7bf4d">deserialize</a> (<a class="el" href="classstromx_1_1core_1_1_input_provider.html">InputProvider</a> &amp;in, const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;<a class="el" href="classstromx_1_1core_1_1_primitive.html#a199956ed4d445d35634c6ec540019935">version</a>)</td></tr>
 <tr class="memitem:a349a2378bc6de37bedc9daadd72ec240"><td class="memItemLeft" align="right" valign="top">const repr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_primitive.html#a349a2378bc6de37bedc9daadd72ec240">get</a> () const </td></tr>
@@ -223,7 +223,7 @@ template&lt;class repr_t, class val_t&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a3b29a133986d894957df770f52afc463"></a>
+<a class="anchor" id="a9bce43a1c908189e53dfdbf739889191"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -233,7 +233,7 @@ template&lt;class repr_t, class val_t&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a>* const <a class="el" href="classstromx_1_1core_1_1_primitive.html">stromx::core::Primitive</a>&lt; repr_t, val_t &gt;::clone </td>
+          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a>* <a class="el" href="classstromx_1_1core_1_1_primitive.html">stromx::core::Primitive</a>&lt; repr_t, val_t &gt;::clone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -247,9 +247,9 @@ template&lt;class repr_t, class val_t&gt; </div>
 </div><div class="memdoc">
 <p>Returns a copy of the data object, i.e. a object of the same type is allocated and the data of the original object is copied to the new object. A pointer to the new object is returned. </p>
 
-<p>Implements <a class="el" href="classstromx_1_1core_1_1_data_interface.html#ac5221332259b732f9bac21b62ffde20e">stromx::core::DataInterface</a>.</p>
+<p>Implements <a class="el" href="classstromx_1_1core_1_1_data_interface.html#a5033be822c4d9a72f4562e42e520c55e">stromx::core::DataInterface</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classstromx_1_1core_1_1_enum.html#ade700f73c6cf8bbbacb2ed7b357dc20f">stromx::core::Enum</a>.</p>
+<p>Reimplemented in <a class="el" href="classstromx_1_1core_1_1_enum.html#a2b4544b5bb1afca6f486c8bed0c46133">stromx::core::Enum</a>.</p>
 
 </div>
 </div>

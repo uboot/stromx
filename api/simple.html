@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The first four headers are part of the core core library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are imported next. The final header is necessary to write the results of the running stream to the standard output.</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>stromx;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">int</span>, <span class="keywordtype">char</span>**)</div>
 <div class="line">{</div>
 <div class="line">    <a class="code" href="classstromx_1_1core_1_1_stream.html" title="The core data processing pipeline of stromx.">core::Stream</a> stream;</div>
 </div><!-- fragment --><p>The program starts by creating an empty stream object which will populated with operators and threads in the following.</p>
@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dl class="section note"><dt>Note:</dt><dd>Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of core::PeriodicCounter the access mode is core::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.</dd></dl>
 <div class="fragment"><div class="line">    stream.<a class="code" href="classstromx_1_1core_1_1_stream.html#a19df4545427371a67048916e64299d22">connect</a>(source, core::Counter::OUTPUT, timer, core::PeriodicDelay::INPUT);</div>
 </div><!-- fragment --><p>This line connects the output of the counter to the input of the <code>timer</code> operator. Note that input and output connectors are identified by the operator the belong to (<code>source</code> and <code>timer</code>) and their IDs (core::Counter::OUTPUT and core::PeriodicDelay::INPUT).</p>
-<div class="fragment"><div class="line">    core::Thread* thread = stream.<a class="code" href="classstromx_1_1core_1_1_stream.html#aebbd571015ac3e919b2ad339e8593a35">addThread</a>();</div>
+<div class="fragment"><div class="line">    core::Thread* thread = stream.<a class="code" href="classstromx_1_1core_1_1_stream.html#a4c221d86c72eac2c81f028597f69059d">addThread</a>();</div>
 <div class="line">    thread-&gt;<a class="code" href="classstromx_1_1core_1_1_thread.html#a65546a29a73582b9cde4b04987d4a732">addInput</a>(timer, core::PeriodicDelay::INPUT);</div>
 </div><!-- fragment --><p>Now the operating thread is added to the stream. In the next line the input connector of <em>timer</em> is added as the only input connector which is operated by <em>thread</em>. As before the input connector is addressed by its operator and its ID.</p>
 <div class="fragment"><div class="line">    stream.<a class="code" href="classstromx_1_1core_1_1_stream.html#a458264a5cd10d15ce4e124d61fd6780b">start</a>();</div>

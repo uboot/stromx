@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id',['id',['../classstromx_1_1core_1_1_connector.html#a97a0daf6f24d17d6fb313b94dd086775',1,'stromx::core::Connector::id()'],['../classstromx_1_1core_1_1_description.html#a91249d13b15f0c58d4462fc4de08e649',1,'stromx::core::Description::id()']]],
+  ['id',['id',['../classstromx_1_1core_1_1_connector.html#ae0d8ae152039947ae2aa1a1b45b44003',1,'stromx::core::Connector::id()'],['../classstromx_1_1core_1_1_description.html#abda3ac28c85329bac6b831020e828cd8',1,'stromx::core::Description::id()']]],
   ['id2datacomposite',['Id2DataComposite',['../classstromx_1_1core_1_1_id2_data_composite.html',1,'stromx::core']]],
   ['id2datamapper',['Id2DataMapper',['../classstromx_1_1core_1_1_id2_data_mapper.html',1,'stromx::core']]],
   ['id2datapair',['Id2DataPair',['../classstromx_1_1core_1_1_id2_data_pair.html',1,'stromx::core']]],
@@ -18,8 +18,8 @@ var searchData=
   ['initialized',['INITIALIZED',['../classstromx_1_1core_1_1_operator.html#a7cfc6170d638e5b2be3dda241a8d5743a258943ba480d0562435c0e7f59f0e865',1,'stromx::core::Operator']]],
   ['initialized_5fread',['INITIALIZED_READ',['../classstromx_1_1core_1_1_parameter.html#a36219519169d6fb295a3a351af31aa01a72bbc57c992a94901609dd3119bd7979',1,'stromx::core::Parameter']]],
   ['initialized_5fwrite',['INITIALIZED_WRITE',['../classstromx_1_1core_1_1_parameter.html#a36219519169d6fb295a3a351af31aa01a05d8844f8bc2cc9974f2ba688bbb5ee9',1,'stromx::core::Parameter']]],
-  ['initializeimage',['initializeImage',['../classstromx_1_1core_1_1_image.html#aa460bd70e4d0daffbb3edaa370d4d985',1,'stromx::core::Image']]],
-  ['initializematrix',['initializeMatrix',['../classstromx_1_1core_1_1_image_wrapper.html#a0ed490e296cae9b5ea3afcf9ff1a5257',1,'stromx::core::ImageWrapper::initializeMatrix()'],['../classstromx_1_1core_1_1_matrix.html#a18f7d65b8d9bfbc9b10d6560992d3dda',1,'stromx::core::Matrix::initializeMatrix()']]],
+  ['initializeimage',['initializeImage',['../classstromx_1_1core_1_1_image.html#afe681b1774efd1cb753ea0efef992039',1,'stromx::core::Image']]],
+  ['initializematrix',['initializeMatrix',['../classstromx_1_1core_1_1_image_wrapper.html#a6f9c4cc03d58b98a5eef2f41e72ee88f',1,'stromx::core::ImageWrapper::initializeMatrix()'],['../classstromx_1_1core_1_1_matrix.html#a8101501f6aa13016a9995953357ec121',1,'stromx::core::Matrix::initializeMatrix()']]],
   ['input',['Input',['../classstromx_1_1core_1_1_input.html',1,'stromx::core']]],
   ['input',['Input',['../classstromx_1_1core_1_1_input.html#a0668ea84d6a09ddc92f8ced313701116',1,'stromx::core::Input::Input(const Operator *const op, const unsigned int id)'],['../classstromx_1_1core_1_1_input.html#a58f2da0c1aa7a60d4025908d1a609933',1,'stromx::core::Input::Input()'],['../classstromx_1_1core_1_1_operator_info.html#aba615a5d9031d80f0f142c950286cac7',1,'stromx::core::OperatorInfo::input()'],['../classstromx_1_1core_1_1_operator_kernel.html#a1a73f7d6a09dd79a05cbecbacebacdd5',1,'stromx::core::OperatorKernel::input()'],['../classstromx_1_1core_1_1_connector.html#a772f34ee69131785e6e8e2a5bc7e56d3a93ce0f98e9971baeefb88133f10de606',1,'stromx::core::Connector::INPUT()']]],
   ['inputerror',['InputError',['../classstromx_1_1core_1_1_input_error.html',1,'stromx::core']]],
@@ -33,6 +33,6 @@ var searchData=
   ['internalerror',['InternalError',['../classstromx_1_1core_1_1_internal_error.html',1,'stromx::core']]],
   ['interrupt',['Interrupt',['../classstromx_1_1core_1_1_interrupt.html',1,'stromx::core']]],
   ['invalidfileformat',['InvalidFileFormat',['../classstromx_1_1core_1_1_invalid_file_format.html',1,'stromx::core']]],
-  ['isnull',['isNull',['../classstromx_1_1core_1_1_const_data_ref.html#a90c2817a3852c519322945aee661bb06',1,'stromx::core::ConstDataRef::isNull()'],['../classstromx_1_1core_1_1_data_ref.html#a0c4876e4ac4c650103e90eb887fcfbc8',1,'stromx::core::DataRef::isNull()']]],
-  ['isvariant',['isVariant',['../classstromx_1_1core_1_1_const_data_ref.html#ab04d0fb4fed4f327d694e6e59ad8dd47',1,'stromx::core::ConstDataRef::isVariant()'],['../classstromx_1_1core_1_1_data_interface.html#a4983cef01cf057341e3a689c698bcfce',1,'stromx::core::DataInterface::isVariant()']]]
+  ['isnull',['isNull',['../classstromx_1_1core_1_1_const_data_ref.html#a2f55637a95569627cffb01be8e727fbf',1,'stromx::core::ConstDataRef::isNull()'],['../classstromx_1_1core_1_1_data_ref.html#a2e6c866dabfaf5cbc07e849552279360',1,'stromx::core::DataRef::isNull()']]],
+  ['isvariant',['isVariant',['../classstromx_1_1core_1_1_const_data_ref.html#a85d52c7f92c4f4a5d6256d23b0b045c4',1,'stromx::core::ConstDataRef::isVariant()'],['../classstromx_1_1core_1_1_data_interface.html#a4983cef01cf057341e3a689c698bcfce',1,'stromx::core::DataInterface::isVariant()']]]
 ];

@@ -139,7 +139,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a45d2d6115400a01eedbd25e0cc4a619c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1base_1_1_image_filter.html#a45d2d6115400a01eedbd25e0cc4a619c">execute</a> (<a class="el" href="classstromx_1_1core_1_1_data_provider.html">core::DataProvider</a> &amp;provider)</td></tr>
 <tr class="memitem:a57de9444818174823d10eb21aa723d49"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1base_1_1_image_filter.html#a57de9444818174823d10eb21aa723d49">initialize</a> ()</td></tr>
 <tr class="inherit_header pub_methods_classstromx_1_1core_1_1_operator_kernel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classstromx_1_1core_1_1_operator_kernel')"><img src="closed.png" alt="-"/>&nbsp;Public Member Functions inherited from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">stromx::core::OperatorKernel</a></td></tr>
-<tr class="memitem:ab618508f49118582f18ca9570113c0d3 inherit pub_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#ab618508f49118582f18ca9570113c0d3">clone</a> () const =0</td></tr>
+<tr class="memitem:afe31aa831e7e015ae447dca34e66497d inherit pub_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#afe31aa831e7e015ae447dca34e66497d">clone</a> () const =0</td></tr>
 <tr class="memitem:a7a9d082db204418117ffccf24b936042 inherit pub_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a7a9d082db204418117ffccf24b936042">type</a> () const </td></tr>
 <tr class="memitem:ad27d1824c21ca8914b4ddb17006909eb inherit pub_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#ad27d1824c21ca8914b4ddb17006909eb">package</a> () const </td></tr>
 <tr class="memitem:a63a10535a316d54795b0df254db95e79 inherit pub_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classstromx_1_1core_1_1_documentation.html">Documentation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a63a10535a316d54795b0df254db95e79">doc</a> () const </td></tr>
@@ -166,8 +166,8 @@ virtual const std::vector<br class="typebreak"/>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>applyFilter</b> (const cv::Mat &amp;in, cv::Mat &amp;out)=0</td></tr>
 <tr class="memitem:accc34d6317c6b9ed4f6064c7dfacffed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accc34d6317c6b9ed4f6064c7dfacffed"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>validateSourceImage</b> (const <a class="el" href="classstromx_1_1core_1_1_image.html">core::Image</a> &amp;source)=0</td></tr>
-<tr class="memitem:a1139f89df317d4bd2545dca29263f0dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1139f89df317d4bd2545dca29263f0dc"></a>
-virtual const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>computeDestinationSize</b> (const <a class="el" href="classstromx_1_1core_1_1_image.html">core::Image</a> &amp;source)=0</td></tr>
+<tr class="memitem:a07029ac6dfeb0c914f0638234cbba870"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07029ac6dfeb0c914f0638234cbba870"></a>
+virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>computeDestinationSize</b> (const <a class="el" href="classstromx_1_1core_1_1_image.html">core::Image</a> &amp;source)=0</td></tr>
 <tr class="inherit_header pro_methods_classstromx_1_1core_1_1_operator_kernel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classstromx_1_1core_1_1_operator_kernel')"><img src="closed.png" alt="-"/>&nbsp;Protected Member Functions inherited from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">stromx::core::OperatorKernel</a></td></tr>
 <tr class="memitem:aa321c76ea381f3786f4808fb44261223 inherit pro_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#aa321c76ea381f3786f4808fb44261223">OperatorKernel</a> (const std::string &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a7a9d082db204418117ffccf24b936042">type</a>, const std::string &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#ad27d1824c21ca8914b4ddb17006909eb">package</a>, const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#abfa4568c875f0b352a6e0ef13dce17c1">version</a>, const std::vector&lt; const <a class="el" href="classstromx_1_1core_1_1_parameter.html">Parameter</a> * &gt; &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#aaa05ab544c2510f3cb80ef96e01c2604">parameters</a>)</td></tr>
 <tr class="memitem:a44e291156fdf99f160ddfc1848447b2b inherit pro_methods_classstromx_1_1core_1_1_operator_kernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a44e291156fdf99f160ddfc1848447b2b">OperatorKernel</a> (const std::string &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a7a9d082db204418117ffccf24b936042">type</a>, const std::string &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#ad27d1824c21ca8914b4ddb17006909eb">package</a>, const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#abfa4568c875f0b352a6e0ef13dce17c1">version</a>, const std::vector&lt; const <a class="el" href="classstromx_1_1core_1_1_description.html">Description</a> * &gt; &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a58a58839d533d920fee49604a00c7513">inputs</a>, const std::vector&lt; const <a class="el" href="classstromx_1_1core_1_1_description.html">Description</a> * &gt; &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a69593a5b155c64ed805ef8721757dd3a">outputs</a>, const std::vector&lt; const <a class="el" href="classstromx_1_1core_1_1_parameter.html">Parameter</a> * &gt; &amp;<a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#aaa05ab544c2510f3cb80ef96e01c2604">parameters</a>)</td></tr>
@@ -223,7 +223,7 @@ virtual const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b
           <td class="memname">const <a class="el" href="classstromx_1_1core_1_1_data_ref.html">DataRef</a> stromx::base::ImageFilter::getParameter </td>
           <td>(</td>
           <td class="paramtype">const unsigned int&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -235,7 +235,7 @@ virtual const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b
 </div><div class="memdoc">
 <p>Gets the current value of the parameter <code>id</code>. </p>
 
-<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a86c7a98be67f124b4f3c34d2704b751e">stromx::core::OperatorKernel</a>.</p>
+<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a5aa19bce680278adc45a4529d295ab28">stromx::core::OperatorKernel</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classstromx_1_1base_1_1_blur.html#af7d0411704f2606ebed9a31688275852">stromx::base::Blur</a>, <a class="el" href="classstromx_1_1base_1_1_morphological_filter.html#a42156cc144be2d328248a5bfc522b839">stromx::base::MorphologicalFilter</a>, and <a class="el" href="classstromx_1_1base_1_1_canny.html#a5ffad80ea1680c51c5a699e8ac134584">stromx::base::Canny</a>.</p>
 
@@ -278,13 +278,13 @@ virtual const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b
           <td class="memname">void stromx::base::ImageFilter::setParameter </td>
           <td>(</td>
           <td class="paramtype">const unsigned int&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="classstromx_1_1core_1_1_data.html">core::Data</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -300,7 +300,7 @@ virtual const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b
 </div><div class="memdoc">
 <p>Sets a parameter <code>id</code> to <code>value</code>. </p>
 
-<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a63e0152828822f4ddf3e233226a8623c">stromx::core::OperatorKernel</a>.</p>
+<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#af3348c44622d6596145f4b09de546985">stromx::core::OperatorKernel</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classstromx_1_1base_1_1_blur.html#a5f808c55be9c97bec92d37833e69ea1c">stromx::base::Blur</a>, <a class="el" href="classstromx_1_1base_1_1_morphological_filter.html#a23b2f8c7bee431801c4fe14f99da6ead">stromx::base::MorphologicalFilter</a>, and <a class="el" href="classstromx_1_1base_1_1_canny.html#a3b2d01f4c4040105ca637fb2ad331665">stromx::base::Canny</a>.</p>
 

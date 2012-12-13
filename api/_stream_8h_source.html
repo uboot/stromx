@@ -147,7 +147,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            </div>
 <div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="classstromx_1_1core_1_1_stream.html#a36e3ad8a0824e6a2da80fe7e9bda6bce">   67</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1core_1_1_stream.html#a36e3ad8a0824e6a2da80fe7e9bda6bce">setName</a>(<span class="keyword">const</span> std::string&amp; name) { m_name = name; }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="classstromx_1_1core_1_1_stream.html#a6af14bc8f172893d08da91f2345c0ae0">   70</a></span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1core_1_1_stream.html#aabcc598f64c895bb2af3ad6cfc79b1c7">Status</a> <a class="code" href="classstromx_1_1core_1_1_stream.html#a6af14bc8f172893d08da91f2345c0ae0">status</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_status; }</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="classstromx_1_1core_1_1_stream.html#a8e747b2764fc6d95ebe9b62fabd9207a">   70</a></span>&#160;            <a class="code" href="classstromx_1_1core_1_1_stream.html#aabcc598f64c895bb2af3ad6cfc79b1c7">Status</a> <a class="code" href="classstromx_1_1core_1_1_stream.html#a8e747b2764fc6d95ebe9b62fabd9207a">status</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_status; }</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">const</span> std::vector&lt;Operator*&gt;&amp; operators() <span class="keyword">const</span>;           </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            </div>
@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            </div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordtype">void</span> removeOperator(<a class="code" href="classstromx_1_1core_1_1_operator.html" title="Abstract operator.">Operator</a>* <span class="keyword">const</span> op);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <a class="code" href="classstromx_1_1core_1_1_thread.html" title="A thread which visits input nodes.">Thread</a>* <span class="keyword">const</span> addThread();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <a class="code" href="classstromx_1_1core_1_1_thread.html" title="A thread which visits input nodes.">Thread</a>* addThread();</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keywordtype">void</span> removeThread(<a class="code" href="classstromx_1_1core_1_1_thread.html" title="A thread which visits input nodes.">Thread</a>* <span class="keyword">const</span> thr);</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            </div>
@@ -172,7 +172,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            </div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordtype">void</span> removeObserver(<span class="keyword">const</span> <a class="code" href="classstromx_1_1core_1_1_exception_observer.html" title="Abstract base observer of operator exceptions.">ExceptionObserver</a>* <span class="keyword">const</span> observer);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> delay() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> delay() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            </div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            <span class="keywordtype">void</span> setDelay(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> delay);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            </div>

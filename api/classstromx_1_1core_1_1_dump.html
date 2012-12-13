@@ -113,7 +113,7 @@ Inheritance diagram for stromx::core::Dump:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2052db874cb885e81a254170482a2579"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_dump.html#a2052db874cb885e81a254170482a2579">clone</a> () const </td></tr>
+<tr class="memitem:a414992de56b195a0c9a8cd84d4c7c5e1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_dump.html#a414992de56b195a0c9a8cd84d4c7c5e1">clone</a> () const </td></tr>
 <tr class="memitem:ab49606f1b65e1658b9d010e2702f7590"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_dump.html#ab49606f1b65e1658b9d010e2702f7590">setParameter</a> (const unsigned int id, const <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> &amp;value)</td></tr>
 <tr class="memitem:ad5860f546b4a264f2e4c6a53a9520cfe"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classstromx_1_1core_1_1_data_ref.html">DataRef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_dump.html#ad5860f546b4a264f2e4c6a53a9520cfe">getParameter</a> (const unsigned int id) const </td></tr>
 <tr class="memitem:a79950d0ae20109e57331747ffb111061"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_dump.html#a79950d0ae20109e57331747ffb111061">execute</a> (<a class="el" href="classstromx_1_1core_1_1_data_provider.html">DataProvider</a> &amp;provider)</td></tr>
@@ -154,7 +154,7 @@ Additional Inherited Members</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Accepts and releases any input data. </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a2052db874cb885e81a254170482a2579"></a>
+<a class="anchor" id="a414992de56b195a0c9a8cd84d4c7c5e1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -162,7 +162,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a>* const stromx::core::Dump::clone </td>
+          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html">OperatorKernel</a>* stromx::core::Dump::clone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -176,7 +176,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a copy of the operator, i.e. a object of the same type is allocated and returned. The current status of the operator is <em>not</em> reproduced. </p>
 
-<p>Implements <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#ab618508f49118582f18ca9570113c0d3">stromx::core::OperatorKernel</a>.</p>
+<p>Implements <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#afe31aa831e7e015ae447dca34e66497d">stromx::core::OperatorKernel</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">const <a class="el" href="classstromx_1_1core_1_1_data_ref.html">DataRef</a> stromx::core::Dump::getParameter </td>
           <td>(</td>
           <td class="paramtype">const unsigned int&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -236,7 +236,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the current value of the parameter <code>id</code>. </p>
 
-<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a86c7a98be67f124b4f3c34d2704b751e">stromx::core::OperatorKernel</a>.</p>
+<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a5aa19bce680278adc45a4529d295ab28">stromx::core::OperatorKernel</a>.</p>
 
 </div>
 </div>
@@ -251,13 +251,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void stromx::core::Dump::setParameter </td>
           <td>(</td>
           <td class="paramtype">const unsigned int&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -273,7 +273,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Sets a parameter <code>id</code> to <code>value</code>. </p>
 
-<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a63e0152828822f4ddf3e233226a8623c">stromx::core::OperatorKernel</a>.</p>
+<p>Reimplemented from <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#af3348c44622d6596145f4b09de546985">stromx::core::OperatorKernel</a>.</p>
 
 </div>
 </div>

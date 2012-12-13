@@ -5,8 +5,8 @@ var searchData=
   ['parametergroup',['ParameterGroup',['../classstromx_1_1core_1_1_parameter_group.html#a3a3a5a9e79cef7207fab9f8871e203f8',1,'stromx::core::ParameterGroup']]],
   ['parameters',['parameters',['../classstromx_1_1core_1_1_operator_info.html#ade46018c4985c878a166f636602d2e1d',1,'stromx::core::OperatorInfo::parameters()'],['../classstromx_1_1core_1_1_operator_kernel.html#aaa05ab544c2510f3cb80ef96e01c2604',1,'stromx::core::OperatorKernel::parameters()']]],
   ['pause',['pause',['../classstromx_1_1core_1_1_stream.html#afaf29ffe110d0f199d5c78b0d75d2712',1,'stromx::core::Stream']]],
-  ['pixelsize',['pixelSize',['../classstromx_1_1core_1_1_image.html#a254b2b0f1e958998b41ae4f111ff3f01',1,'stromx::core::Image::pixelSize()'],['../classstromx_1_1core_1_1_image_wrapper.html#a155591483dfbbca22eb590902bf9b0a4',1,'stromx::core::ImageWrapper::pixelSize()']]],
-  ['pixeltype',['pixelType',['../classstromx_1_1core_1_1_image.html#ad58a928161a816080b67fac3469eb45d',1,'stromx::core::Image::pixelType()'],['../classstromx_1_1core_1_1_image_wrapper.html#a41436943ee8656c6928321c104b11de2',1,'stromx::core::ImageWrapper::pixelType()']]],
+  ['pixelsize',['pixelSize',['../classstromx_1_1core_1_1_image.html#af98697153385d1c02d5303f745109b74',1,'stromx::core::Image::pixelSize()'],['../classstromx_1_1core_1_1_image_wrapper.html#a4a96e45f88cbe9d1d7b4c4da38c8007e',1,'stromx::core::ImageWrapper::pixelSize()']]],
+  ['pixeltype',['pixelType',['../classstromx_1_1core_1_1_image.html#a7cb0b2105ca9eb8fec050f43f519caae',1,'stromx::core::Image::pixelType()'],['../classstromx_1_1core_1_1_image_wrapper.html#accfdbe43287b88aff6c8567091d3d918',1,'stromx::core::ImageWrapper::pixelType()']]],
   ['primitive',['Primitive',['../classstromx_1_1core_1_1_primitive.html#a1e3d17ec958c2d3f86a7389325b33ac4',1,'stromx::core::Primitive::Primitive()'],['../classstromx_1_1core_1_1_primitive.html#ac8f3d09527c3e20230622393d2a5271a',1,'stromx::core::Primitive::Primitive(const repr_t value)']]],
   ['ptr',['ptr',['../classstromx_1_1core_1_1_data_ref.html#ae49679c149c4b0c9563f84e4aa20ea43',1,'stromx::core::DataRef']]]
 ];

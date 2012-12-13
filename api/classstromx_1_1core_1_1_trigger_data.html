@@ -116,9 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae767539aaa96049e1a06adb223dbd96b"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#ae767539aaa96049e1a06adb223dbd96b">type</a> () const </td></tr>
 <tr class="memitem:a8e402f32980b069714c722d60f619b4e"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a8e402f32980b069714c722d60f619b4e">package</a> () const </td></tr>
 <tr class="memitem:adcd922cc08eac03be1d377bfaee9be17"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1core_1_1_data_variant.html">DataVariant</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#adcd922cc08eac03be1d377bfaee9be17">variant</a> () const </td></tr>
-<tr class="memitem:a1f1f90d637db621241bbc792524872a1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a1f1f90d637db621241bbc792524872a1">clone</a> () const </td></tr>
-<tr class="memitem:a8071f1da6f9fde29d4962ca640458623"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a8071f1da6f9fde29d4962ca640458623">serialize</a> (<a class="el" href="classstromx_1_1core_1_1_output_provider.html">OutputProvider</a> &amp;out) const </td></tr>
-<tr class="memitem:a866151a059a13c3b672516743e058cbc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a866151a059a13c3b672516743e058cbc">deserialize</a> (<a class="el" href="classstromx_1_1core_1_1_input_provider.html">InputProvider</a> &amp;in, const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;<a class="el" href="classstromx_1_1core_1_1_trigger_data.html#ad351e65e3e79e8b30553073e25a03203">version</a>)</td></tr>
+<tr class="memitem:a115c815b7fa48479236eea156c9e87b1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a115c815b7fa48479236eea156c9e87b1">clone</a> () const </td></tr>
+<tr class="memitem:a42d8aac052486c05806166f8cdac638d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a42d8aac052486c05806166f8cdac638d">serialize</a> (<a class="el" href="classstromx_1_1core_1_1_output_provider.html">OutputProvider</a> &amp;) const </td></tr>
+<tr class="memitem:a47a06386a9913dbdb0c45c31302c0552"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_trigger_data.html#a47a06386a9913dbdb0c45c31302c0552">deserialize</a> (<a class="el" href="classstromx_1_1core_1_1_input_provider.html">InputProvider</a> &amp;, const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -128,7 +128,7 @@ Additional Inherited Members</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Special data value for trigger signals. </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a1f1f90d637db621241bbc792524872a1"></a>
+<a class="anchor" id="a115c815b7fa48479236eea156c9e87b1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -136,7 +136,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a>* const stromx::core::TriggerData::clone </td>
+          <td class="memname">virtual <a class="el" href="classstromx_1_1core_1_1_data.html">Data</a>* stromx::core::TriggerData::clone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -150,11 +150,11 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a copy of the data object, i.e. a object of the same type is allocated and the data of the original object is copied to the new object. A pointer to the new object is returned. </p>
 
-<p>Implements <a class="el" href="classstromx_1_1core_1_1_data_interface.html#ac5221332259b732f9bac21b62ffde20e">stromx::core::DataInterface</a>.</p>
+<p>Implements <a class="el" href="classstromx_1_1core_1_1_data_interface.html#a5033be822c4d9a72f4562e42e520c55e">stromx::core::DataInterface</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a866151a059a13c3b672516743e058cbc"></a>
+<a class="anchor" id="a47a06386a9913dbdb0c45c31302c0552"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -224,7 +224,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8071f1da6f9fde29d4962ca640458623"></a>
+<a class="anchor" id="a42d8aac052486c05806166f8cdac638d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
