@@ -42,7 +42,7 @@ namespace stromx
             delete m_thread;
         }
         
-        const Thread::Status Thread::status() const 
+        Thread::Status Thread::status() const 
         { 
             return Status(m_thread->status());
         }

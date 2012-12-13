@@ -82,7 +82,7 @@ namespace stromx
                 throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
         }
         
-        const unsigned int Canny::computeDestinationSize(const stromx::core::Image& source)
+        unsigned int Canny::computeDestinationSize(const stromx::core::Image& source)
         {
             return  source.width() * source.pixelSize() * source.height();
         }

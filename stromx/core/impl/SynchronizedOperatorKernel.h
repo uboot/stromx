@@ -48,7 +48,7 @@ namespace stromx
                 SynchronizedOperatorKernel(OperatorKernel* const op);
                 virtual ~SynchronizedOperatorKernel();
                 
-                const OperatorInfo* const info() const { return m_op; }
+                const OperatorInfo* info() const { return m_op; }
                 
                 void initialize(const Id2DataMapObserver* const inputObserver, const Id2DataMapObserver* const outputObserver);
                 void deinitialize();
@@ -56,7 +56,7 @@ namespace stromx
                 void deactivate();
                 
                 // used by Operator
-                const Status status() { return m_status; }
+                Status status() { return m_status; }
                 void setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout = 0);
                 DataRef getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout = 0);
                 DataContainer getOutputData(const unsigned int id);

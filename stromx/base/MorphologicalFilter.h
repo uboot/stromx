@@ -57,7 +57,7 @@ namespace stromx
             const std::vector<const core::Parameter*> setupParameters();
             void applyFilter(const cv::Mat & in, cv::Mat & out);
             void validateSourceImage(const core::Image & source);
-            const unsigned int computeDestinationSize(const core::Image & source);
+            unsigned int computeDestinationSize(const core::Image & source);
             
             core::Enum m_kernelShape;
             core::UInt32 m_kernelSizeX;

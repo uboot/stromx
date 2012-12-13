@@ -158,7 +158,7 @@ namespace stromx
             return parameters;
         }
         
-        const int ConvertPixelType::getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType)
+        int ConvertPixelType::getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType)
         {
             switch(inType)
             {
@@ -217,7 +217,7 @@ namespace stromx
             }         
         }
         
-        const unsigned int ConvertPixelType::getDestPixelSize(const core::Image::PixelType pixelType)
+        unsigned int ConvertPixelType::getDestPixelSize(const core::Image::PixelType pixelType)
         {
             switch(pixelType)
             {

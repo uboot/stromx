@@ -64,17 +64,17 @@ namespace
             
         const Parameter & parameter(const unsigned int id) const
         {
-            return this->get_override("parameter")();
+            return this->get_override("parameter")(id);
         }
             
         const Description & input(const unsigned int id) const
         {
-            return this->get_override("input")();
+            return this->get_override("input")(id);
         }
             
         const Description & output(const unsigned int id) const
         {
-            return this->get_override("output")();
+            return this->get_override("output")(id);
         }
     };
 }

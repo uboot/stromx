@@ -93,7 +93,7 @@ The program which operates the stream is straightforward. As in the previous exa
 
 using namespace stromx;
 
-int main (int argc, char* argv[])
+int main (int, char**)
 {
     core::Factory factory;
     

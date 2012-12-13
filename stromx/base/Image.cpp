@@ -45,7 +45,8 @@ namespace stromx
         }
         
         Image::Image(const stromx::base::Image& image)
-          : m_image(new cv::Mat())
+          : core::ImageWrapper(),
+            m_image(new cv::Mat())
         {
             copy(image);
         }
@@ -129,7 +130,7 @@ namespace stromx
             }
         }
 
-        void Image::deserialize(core::InputProvider & input, const core::Version & version)
+        void Image::deserialize(core::InputProvider & input, const core::Version &)
         {
             int width = -1;
             int height = -1;
@@ -260,7 +261,7 @@ namespace stromx
             }
         }
         
-        const int Image::cvTypeFromPixelType(const core::Image::PixelType pixelType)
+        int Image::cvTypeFromPixelType(const core::Image::PixelType pixelType)
         {
             switch(pixelType)
             {
@@ -277,7 +278,7 @@ namespace stromx
             }
         }
         
-        const stromx::core::Image::PixelType Image::pixelTypeFromCvType(const int cvType)
+        stromx::core::Image::PixelType Image::pixelTypeFromCvType(const int cvType)
         {
             switch(cvType)
             {
@@ -290,7 +291,7 @@ namespace stromx
             }
         }
 
-        const core::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
+        core::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
         {
             switch(depth)
             {
@@ -311,7 +312,7 @@ namespace stromx
             }         
         }
         
-        const int Image::getCvAccessType(const stromx::base::Image::FileAccess access)
+        int Image::getCvAccessType(const stromx::base::Image::FileAccess access)
         {
             switch(access)
             {

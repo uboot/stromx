@@ -93,7 +93,7 @@ namespace stromx
             }
         }
         
-        const unsigned int MorphologicalFilter::computeDestinationSize(const stromx::core::Image& source)
+        unsigned int MorphologicalFilter::computeDestinationSize(const stromx::core::Image& source)
         {
             return source.width() * source.pixelSize() * source.height();
         }

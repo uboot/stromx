@@ -50,7 +50,7 @@ namespace stromx
             return m_currentText;
         }
         
-        const bool DirectoryFileInput::hasFile() const 
+        bool DirectoryFileInput::hasFile() const 
         {
             if(! m_initialized)
                 throw WrongState("Directory file has not been initialized.");

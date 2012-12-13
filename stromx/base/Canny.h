@@ -44,7 +44,7 @@ namespace stromx
             virtual const std::vector<const core::Parameter*> setupParameters();
             virtual void applyFilter(const cv::Mat & in, cv::Mat & out);
             virtual void validateSourceImage(const core::Image & source);
-            virtual const unsigned int computeDestinationSize(const core::Image & source);
+            virtual unsigned int computeDestinationSize(const core::Image & source);
             
         private:
             static const std::string TYPE;

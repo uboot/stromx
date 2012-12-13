@@ -32,8 +32,8 @@ namespace stromx
         public:
             virtual ~Id2DataMapper() {}
             
-            virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const = 0;
-            virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const = 0;
+            virtual bool trySet(const impl::Id2DataMap& id2DataMap) const = 0;
+            virtual bool tryGet(const impl::Id2DataMap& id2DataMap) const = 0;
             virtual void get(impl::Id2DataMap& id2DataMap) const = 0; 
             virtual void set(impl::Id2DataMap& id2DataMap) const = 0; 
         };

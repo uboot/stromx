@@ -8,7 +8,7 @@
 #include <cppunit/TestRunner.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-int main (int argc, char* argv[])
+int main (int /*argc*/, char* /*argv*/[])
 {
     // Informiert Test-Listener ueber Testresultate
     CPPUNIT_NS :: TestResult testresult;

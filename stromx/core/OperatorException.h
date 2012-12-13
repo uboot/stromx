@@ -133,7 +133,7 @@ namespace stromx
                 m_outputId(outputId)
             {}
             
-            const unsigned int outputId() const { return m_outputId; }
+            unsigned int outputId() const { return m_outputId; }
         private:
             const unsigned int m_outputId;
         };
@@ -147,7 +147,7 @@ namespace stromx
                 m_inputId(inputId)
             {}
             
-            const unsigned int inputId() const { return m_inputId; }
+            unsigned int inputId() const { return m_inputId; }
         private:
             const unsigned int m_inputId;
         };

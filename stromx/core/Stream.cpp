@@ -203,7 +203,7 @@ namespace stromx
             m_status = DEACTIVATING;
         }
         
-        Thread* const Stream::addThread()
+        Thread* Stream::addThread()
         {
             Thread* thread = new Thread(m_network);
             impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
@@ -263,7 +263,7 @@ namespace stromx
             m_network->disconnect(targetOp, inputId);
         }
                 
-        const unsigned int Stream::delay() const
+        unsigned int Stream::delay() const
         {
             boost::lock_guard<boost::mutex> lock(m_delayMutex->mutex());
             

@@ -63,8 +63,8 @@ namespace stromx
             static const std::string PACKAGE;
             static const core::Version VERSION;   
             
-            static const int getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType);
-            static const unsigned int getDestPixelSize(const core::Image::PixelType pixelType);   
+            static int getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType);
+            static unsigned int getDestPixelSize(const core::Image::PixelType pixelType);   
             static void rgbToBayer(const core::Image & inImage, core::Image & outImage);  
             static void openCvConversion(const core::Image & inImage, core::Image & outImage);
             

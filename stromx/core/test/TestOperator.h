@@ -47,7 +47,7 @@ namespace stromx
             virtual void execute(DataProvider& provider);
             virtual void initialize();
             
-            const unsigned int numExecutes() { return m_numExecutes; }
+            unsigned int numExecutes() { return m_numExecutes; }
             
         private:
             static const std::vector<const Description*> setupInitInputs();

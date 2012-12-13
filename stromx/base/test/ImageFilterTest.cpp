@@ -50,7 +50,7 @@ namespace stromx
                 return std::vector<const core::Parameter*>();
             }
     
-            void applyFilter ( const cv::Mat& in, cv::Mat& out )
+            void applyFilter (const cv::Mat&, cv::Mat&)
             {
             }
             
@@ -60,7 +60,7 @@ namespace stromx
                     throw core::InputError(SOURCE, *this, "Source image is not a grayscale image.");
             }
             
-            const unsigned int computeDestinationSize(const core::Image & source)
+            unsigned int computeDestinationSize(const core::Image & source)
             {
                 return source.width() * source.pixelSize() * source.height();
             }

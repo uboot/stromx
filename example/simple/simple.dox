@@ -38,7 +38,7 @@ The first four headers are part of the core core library. This library provides 
 \code
 using namespace stromx;
 
-int main (int argc, char* argv[])
+int main (int, char**)
 {
     core::Stream stream;
 \endcode

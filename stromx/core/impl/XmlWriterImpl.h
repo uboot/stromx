@@ -47,7 +47,7 @@ namespace stromx
                 void createDoc();
                 void createComm();
                 void createStromx();
-                const unsigned int translateOperatorPointerToID(const Operator* const op) const;
+                unsigned int translateOperatorPointerToID(const Operator* const op) const;
                 void createThreads(const std::vector<Thread*> threads);
                 void createInputConnectors(const Thread* const currThr, xercesc::DOMElement* const thrElement);
                 void createOperators(const std::vector<const Operator*> operators, xercesc::DOMElement* const parentElement);

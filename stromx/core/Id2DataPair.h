@@ -48,11 +48,11 @@ namespace stromx
             
             ~Id2DataPair() {}
             
-            const unsigned int id() const { return m_id; }
+            unsigned int id() const { return m_id; }
             const DataContainer & data() const { return m_data; }
             
-            virtual const bool trySet(const impl::Id2DataMap& id2DataMap) const;
-            virtual const bool tryGet(const impl::Id2DataMap& id2DataMap) const;
+            virtual bool trySet(const impl::Id2DataMap& id2DataMap) const;
+            virtual bool tryGet(const impl::Id2DataMap& id2DataMap) const;
             virtual void get(impl::Id2DataMap& id2DataMap) const; 
             virtual void set(impl::Id2DataMap& id2DataMap) const;     
         

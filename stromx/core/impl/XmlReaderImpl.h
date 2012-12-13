@@ -44,7 +44,7 @@ namespace stromx
                 
                 ~XmlReaderImpl();
                 
-                Stream* const readStream(FileInput & input, const std::string & filename);
+                Stream* readStream(FileInput & input, const std::string & filename);
                 
                 void readParameters(FileInput & input, const std::string filename, 
                                     const std::vector<stromx::core::Operator*> operators);

@@ -69,7 +69,7 @@ namespace stromx
              * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
              *                                 to a change of the file format.
              */
-            Stream* const readStream(const std::string & filepath, const Factory& factory) const;
+            Stream* readStream(const std::string & filepath, const Factory& factory) const;
             
             /** 
              * Reads a stream file from an file input.
@@ -85,7 +85,7 @@ namespace stromx
              * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
              *                                 to a change of the file format.
              */
-            Stream* const readStream(FileInput & input, const std::string filename, const Factory& factory) const;
+            Stream* readStream(FileInput & input, const std::string filename, const Factory& factory) const;
             
             /** 
              * Reads a parameter file. The file can be either an XML or a zip file.

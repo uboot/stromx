@@ -73,7 +73,7 @@ namespace stromx
             }
             
             /** Returns \c true if the write access is empty. */
-            const bool empty() const { return m_impl.get() == 0; }
+            bool empty() const { return m_impl.get() == 0; }
             
             /** Returns a reference to the content of the data container. */
             data_t & get() const

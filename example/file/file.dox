@@ -44,7 +44,7 @@ Again the programs starts by importing all required header files. In addition to
 \code
 using namespace stromx;
 
-int main (int argc, char* argv[])
+int main (int, char**)
 {
     core::Factory factory;  
  

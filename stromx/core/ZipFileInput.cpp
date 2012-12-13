@@ -57,7 +57,7 @@ namespace stromx
             m_initialized = true;
         }
 
-        const bool ZipFileInput::hasFile() const
+        bool ZipFileInput::hasFile() const
         {
             if(! m_initialized)
                 throw WrongState("Zip file input has not been initialized.");

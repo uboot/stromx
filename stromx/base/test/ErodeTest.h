@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
             protected:
-                core::OperatorKernel*const allocateOperator() const;
+                core::OperatorKernel* allocateOperator() const;
                 const std::string getTestName() const { return "ErodeTest"; }
         };
     }

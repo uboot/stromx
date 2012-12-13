@@ -92,8 +92,8 @@ namespace stromx
             
             Version XmlUtilities::convertToVersion(const std::string& text)
             {
-                unsigned int first = text.find_first_of(".");
-                unsigned int last = text.find_last_of(".");
+                std::size_t first = text.find_first_of(".");
+                std::size_t last = text.find_last_of(".");
                 
                 if(first == std::string::npos)
                     throw WrongArgument("Input must be of the type '[x].[y].[z]'.");

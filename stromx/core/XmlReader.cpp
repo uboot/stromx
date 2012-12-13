@@ -25,7 +25,7 @@ namespace stromx
 {
     namespace core
     {
-        Stream*const XmlReader::readStream(const std::string& filepath, const Factory& factory) const
+        Stream* XmlReader::readStream(const std::string& filepath, const Factory& factory) const
         {
             std::string directory = impl::XmlUtilities::computePath(filepath);
             std::string filename = impl::XmlUtilities::computeName(filepath);
@@ -68,7 +68,7 @@ namespace stromx
             return stream;
         }
         
-        Stream*const XmlReader::readStream(FileInput& input, const std::string filename, const stromx::core::Factory& factory) const
+        Stream* XmlReader::readStream(FileInput& input, const std::string filename, const stromx::core::Factory& factory) const
         {
             impl::XmlReaderImpl impl(factory);
             return impl.readStream(input, filename);

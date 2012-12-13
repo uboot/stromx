@@ -28,12 +28,12 @@ namespace stromx
             return DataVariant::DATA;
         }
         
-        void Data::serialize(OutputProvider & out) const
+        void Data::serialize(OutputProvider &) const
         {
             throw Exception("This data type does not support serialization.");
         }
 
-        void Data::deserialize(InputProvider & in, const Version & version)
+        void Data::deserialize(InputProvider &, const Version &)
         {
             throw Exception("This data type does not support deserialization.");
         }

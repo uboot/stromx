@@ -23,12 +23,12 @@ namespace stromx
 {
     namespace core
     {      
-        const bool Id2DataPair::trySet(const impl::Id2DataMap& id2DataMap) const
+        bool Id2DataPair::trySet(const impl::Id2DataMap& id2DataMap) const
         {
             return id2DataMap.get(m_id).empty();   
         }
         
-        const bool Id2DataPair::tryGet(const impl::Id2DataMap& id2DataMap) const
+        bool Id2DataPair::tryGet(const impl::Id2DataMap& id2DataMap) const
         {
             return ! id2DataMap.get(m_id).empty();
         }

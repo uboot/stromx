@@ -48,7 +48,7 @@ namespace stromx
                 ThreadImpl();
                 ~ThreadImpl();
                 
-                const Status status() const { return m_status; }
+                Status status() const { return m_status; }
                 const std::vector<InputNode*> & inputSequence() const { return m_inputSequence; }
                 
                 void addInput(InputNode* const op);

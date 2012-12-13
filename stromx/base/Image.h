@@ -142,10 +142,10 @@ namespace stromx
             static const std::string PACKAGE;
             static const core::Version VERSION;
             
-            static const PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-            static const int getCvAccessType(const FileAccess access);
-            static const int cvTypeFromPixelType(const core::Image::PixelType pixelType);
-            static const core::Image::PixelType pixelTypeFromCvType(const int cvType);
+            static PixelType pixelTypeFromParameters(const int depth, const int numChannels);
+            static int getCvAccessType(const FileAccess access);
+            static int cvTypeFromPixelType(const core::Image::PixelType pixelType);
+            static core::Image::PixelType pixelTypeFromCvType(const int cvType);
             
             void getDataFromCvImage(const PixelType pixelType);
             void copy(const stromx::core::Image & image);

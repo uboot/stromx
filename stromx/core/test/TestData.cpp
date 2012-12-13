@@ -35,7 +35,7 @@ namespace stromx
             output.openFile("txt", OutputProvider::TEXT) << m_value;
         }
 
-        void TestData::deserialize(InputProvider & input, const Version & version)
+        void TestData::deserialize(InputProvider & input, const Version &)
         {
             input.openFile(InputProvider::TEXT) >> m_value;
         }

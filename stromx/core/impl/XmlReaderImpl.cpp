@@ -105,7 +105,7 @@ namespace stromx
                 public:
                     XercesErrorHandler(const std::string & filename) : m_filename(filename) {}
                     
-                    virtual void error (const SAXParseException &exc)
+                    virtual void error (const SAXParseException &/*exc*/)
                     {
                         throw InvalidFileFormat(m_filename, "XML file is not valid.");
                     }
@@ -117,7 +117,7 @@ namespace stromx
                 class XercesEntityResolver : public HandlerBase
                 {
                 public:
-                    virtual InputSource* resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId)
+                    virtual InputSource* resolveEntity (const XMLCh *const /*publicId*/, const XMLCh *const /*systemId*/)
                     {
                         InputSource* grammar = new MemBufInputSource(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
                         return grammar;
@@ -162,7 +162,7 @@ namespace stromx
                 }
             }
 
-            Stream*const XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
+            Stream* XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
             {    
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);

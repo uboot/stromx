@@ -41,7 +41,7 @@ namespace stromx
             virtual void initialize(const std::string & text, const std::string & filename);
             
             virtual std::istream & text();
-            virtual const bool hasFile() const;
+            virtual bool hasFile() const;
             virtual std::istream & openFile(const OpenMode mode);
             virtual std::istream & file();
             

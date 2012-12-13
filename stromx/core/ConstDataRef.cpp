@@ -53,7 +53,7 @@ namespace stromx
             return m_data->variant();
         }
         
-        const bool ConstDataRef::isVariant(const DataVariant & v) const
+        bool ConstDataRef::isVariant(const DataVariant & v) const
         {
             return m_data->isVariant(v);
         }
@@ -68,7 +68,7 @@ namespace stromx
             return m_data->serialize(out);
         }        
         
-        void ConstDataRef::deserialize(InputProvider & in, const Version & version)
+        void ConstDataRef::deserialize(InputProvider &, const Version &)
         { 
             throw NotImplemented("Constant data references can not be deserialized.");
         }

@@ -25,7 +25,7 @@
 
 namespace stromx
 {
-        namespace core
+    namespace core
     {
         class DataContainer;
         class DataProvider;
@@ -79,10 +79,10 @@ namespace stromx
             virtual const Description & output(const unsigned int id) const;
             
             /** Sets a parameter \c id to \c value. */
-            virtual void setParameter(const unsigned int id, const Data& value) { throw NotImplemented(); };
+            virtual void setParameter(const unsigned int, const Data&) { throw NotImplemented(); };
             
             /** Gets the current value of the parameter \c id. */
-            virtual const DataRef getParameter(const unsigned int id) const { throw NotImplemented(); };
+            virtual const DataRef getParameter(const unsigned int) const { throw NotImplemented(); };
             
             /**
              * Executes the operator.

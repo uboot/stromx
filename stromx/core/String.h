@@ -28,8 +28,8 @@ namespace stromx
         /** \brief %String data value. */
         class STROMX_CORE_API String : public Data
         {
-            friend STROMX_CORE_API const bool operator==(const String & lhs, const String & rhs);
-            friend STROMX_CORE_API const bool operator!=(const String & lhs, const String & rhs);
+            friend STROMX_CORE_API bool operator==(const String & lhs, const String & rhs);
+            friend STROMX_CORE_API bool operator!=(const String & lhs, const String & rhs);
             
         public:
             static const DataVariant & classVariant();
@@ -70,10 +70,10 @@ namespace stromx
         };
         
         /** Returns true if the contents of \c lhs and \c rhs are the same. */
-        STROMX_CORE_API const bool operator==(const String & lhs, const String & rhs);
+        STROMX_CORE_API bool operator==(const String & lhs, const String & rhs);
         
         /** Returns true if the contents of \c lhs and \c rhs are different. */
-        STROMX_CORE_API const bool operator!=(const String & lhs, const String & rhs);
+        STROMX_CORE_API bool operator!=(const String & lhs, const String & rhs);
     }
 }
     

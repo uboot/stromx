@@ -26,7 +26,7 @@ namespace stromx
 
     namespace base
     {
-        OperatorKernel*const CloseTest::allocateOperator() const
+        OperatorKernel* CloseTest::allocateOperator() const
         {
             return new Close;
         }

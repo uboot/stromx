@@ -74,13 +74,13 @@ namespace stromx
                                      const unsigned int cols,
                                      const unsigned int stride,
                                      const uint8_t*const data,
-                                     const ValueType pixelType) const
+                                     const ValueType valueType) const
         {
             if(cols == 0 || rows == 0)
                 return;
             
             // check row length
-            if(cols * valueSize() > stride)
+            if(cols * Matrix::valueSizeFromValueType(valueType) > stride)
                 throw WrongArgument("Too small stride.");
             
             // check total data size

@@ -57,7 +57,7 @@ namespace stromx
             CPPUNIT_ASSERT(TestData::wasDestructed);
         }
         
-        void DataContainerTest::destroyDelayed(DataContainer& container)
+        void DataContainerTest::destroyDelayed(DataContainer&)
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
         }

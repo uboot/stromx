@@ -41,7 +41,7 @@ namespace stromx
             void tearDown() {}
             
         private:
-            void dataFunction(const Data & data) {}
+            void dataFunction(const Data &) {}
 
         protected:
             void testDataRef();

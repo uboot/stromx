@@ -31,7 +31,7 @@ namespace stromx
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
         {
         }
-        void Dump::setParameter(unsigned int id, const core::Data& value)
+        void Dump::setParameter(unsigned int id, const core::Data&)
         {
             throw WrongParameterId(id, *this);
         }

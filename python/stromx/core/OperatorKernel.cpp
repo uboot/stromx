@@ -17,6 +17,7 @@
 #include "ExportVector.h"
 
 #include <stromx/core/OperatorKernel.h>
+#include <stromx/core/DataProvider.h>
 
 #include <boost/python.hpp>
 
@@ -34,7 +35,7 @@ namespace
         
         virtual void execute(DataProvider& provider)
         {
-            this->get_override("execute")();
+            this->get_override("execute")(provider);
         }
     };
 }

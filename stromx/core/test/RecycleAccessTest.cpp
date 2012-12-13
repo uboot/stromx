@@ -118,7 +118,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(data, recycledData);
         }
         
-        void RecycleAccessTest::destroyDelayed(DataContainer& container)
+        void RecycleAccessTest::destroyDelayed(DataContainer& /*container*/)
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
@@ -148,7 +148,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(RecycleAccess access(container), Interrupt);
         }
         
-        void RecycleAccessTest::releaseAccessDelayed(RecycleAccess& access)
+        void RecycleAccessTest::releaseAccessDelayed(RecycleAccess& /*access*/)
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
         }

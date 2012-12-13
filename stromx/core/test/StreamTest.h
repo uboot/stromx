@@ -79,9 +79,9 @@ namespace stromx
             public:
                 void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const;
                 
-                const ExceptionObserver::Phase phase() const { return m_phase; }
+                ExceptionObserver::Phase phase() const { return m_phase; }
                 const std::string message() const { return m_message; }
-                const Thread* const thread() const { return m_thread; }
+                const Thread* thread() const { return m_thread; }
                 
             private:
                 mutable ExceptionObserver::Phase m_phase;

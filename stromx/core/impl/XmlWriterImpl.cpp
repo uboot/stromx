@@ -101,7 +101,7 @@ namespace stromx
             }
 
             
-            const unsigned int XmlWriterImpl::translateOperatorPointerToID(const Operator* const op) const
+            unsigned int XmlWriterImpl::translateOperatorPointerToID(const Operator* const op) const
             {
                 if (m_opList.empty())
                 {

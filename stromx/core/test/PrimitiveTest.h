@@ -58,8 +58,8 @@ namespace stromx
                 {}
                 
                 std::istream & text() { return m_text; }
-                std::istream & openFile(const OpenMode mode) { return m_file; }
-                const bool hasFile() const { return true; }
+                std::istream & openFile(const OpenMode) { return m_file; }
+                bool hasFile() const { return true; }
                 std::istream & file() { return m_file; }
                 
             private:
@@ -71,7 +71,7 @@ namespace stromx
             {
             public:
                 std::ostream & text() { return m_text; }
-                std::ostream & openFile(const std::string & ext, const OpenMode mode) { return m_file; }
+                std::ostream & openFile(const std::string &, const OpenMode) { return m_file; }
                 std::ostream & file() { return m_file; }
                 
                 const std::string value() const { return m_text.str(); }

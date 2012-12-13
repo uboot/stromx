@@ -81,7 +81,7 @@ namespace stromx
             m_dataTypes.push_back(data);
         }
 
-        Operator*const Factory::newOperator(const std::string& package, const std::string& type) const
+        Operator* Factory::newOperator(const std::string& package, const std::string& type) const
         {
             for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
                 iter != m_operators.end();

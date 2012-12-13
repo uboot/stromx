@@ -54,7 +54,7 @@ namespace stromx
                 virtual ~Observer() {}
                 virtual void observe(const unsigned int id, const DataContainer & data) const;
                 
-                const unsigned int lastId() const { return m_lastId; }
+                unsigned int lastId() const { return m_lastId; }
                 const DataContainer & lastData() const { return m_lastData; }
                 
             private:

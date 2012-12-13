@@ -43,7 +43,7 @@ namespace stromx
                 void testExecuteMono();
                 void testExecuteColor();
                 
-                virtual core::OperatorKernel* const allocateOperator() const = 0;
+                virtual core::OperatorKernel* allocateOperator() const = 0;
                 virtual const std::string getTestName() const = 0;
                 
             private:

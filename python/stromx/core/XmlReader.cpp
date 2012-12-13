@@ -26,7 +26,7 @@ using namespace stromx::core;
 namespace
 {
     typedef Stream* (XmlReader::*read_stream_t)(const std::string &, const Factory &);
-    Stream* const (XmlReader::*readStreamFromFileWrap)(const std::string &, const Factory &) const = &XmlReader::readStream;
+    Stream* (XmlReader::*readStreamFromFileWrap)(const std::string &, const Factory &) const = &XmlReader::readStream;
     void (XmlReader::*readParametersFromFileWrap)(const std::string &, const Factory&, const std::vector<stromx::core::Operator*> &) const = &XmlReader::readParameters;
 }
 

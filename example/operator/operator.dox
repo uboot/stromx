@@ -289,7 +289,7 @@ The program which runs the stream is almost identical to the one in the previous
 
 using namespace stromx;
 
-int main (int argc, char* argv[])
+int main (int, char**)
 {
     using namespace core;
    

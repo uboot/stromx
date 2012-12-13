@@ -35,7 +35,7 @@ namespace stromx
         {
         }
 
-        void Counter::setParameter(unsigned int id, const Data& value)
+        void Counter::setParameter(unsigned int id, const Data&)
         {
             throw WrongParameterId(id, *this);
         }

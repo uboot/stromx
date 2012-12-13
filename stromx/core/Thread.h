@@ -66,7 +66,7 @@ namespace stromx
             virtual ~Thread();
             
             /** Returns the current state of the thread. */
-            const Status status() const;
+            Status status() const;
             
             /** Returns the name of the thread. */
             const std::string & name() const;

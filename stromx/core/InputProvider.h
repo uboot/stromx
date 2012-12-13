@@ -45,7 +45,7 @@ namespace stromx
             /** 
              * Returns true if a file representation of the data exists.
              */
-            virtual const bool hasFile() const = 0;
+            virtual bool hasFile() const = 0;
             
             /** 
              * Opens the file representation of the data and returns the associated input stream.

@@ -71,14 +71,14 @@ namespace stromx
              * Returns true if the data reference is a null reference, i.e. it was not initialized
              * by a pointer to an object. Null references can not 
              */
-            const bool isNull() const { return bool(m_data); }
+            bool isNull() const { return bool(m_data); }
             
             virtual const Version & version() const;
             virtual const std::string & type() const;
             virtual const std::string & package() const;
             virtual const DataVariant & variant() const;
             
-            const bool isVariant(const DataVariant & v) const;
+            bool isVariant(const DataVariant & v) const;
             virtual Data* clone() const;
             
             virtual void serialize(OutputProvider & out) const;

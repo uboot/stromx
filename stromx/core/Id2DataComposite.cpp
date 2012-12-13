@@ -21,7 +21,7 @@ namespace stromx
 {
     namespace core
     {
-        const bool Id2DataComposite::trySet(const impl::Id2DataMap& id2DataMap) const
+        bool Id2DataComposite::trySet(const impl::Id2DataMap& id2DataMap) const
         {
             switch(m_type)
             {
@@ -35,7 +35,7 @@ namespace stromx
             } 
         }
         
-        const bool Id2DataComposite::tryGet(const impl::Id2DataMap& id2DataMap) const
+        bool Id2DataComposite::tryGet(const impl::Id2DataMap& id2DataMap) const
         {
             switch(m_type)
             {

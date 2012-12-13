@@ -26,7 +26,7 @@ namespace stromx
 
     namespace base
     {
-        OperatorKernel*const DilateTest::allocateOperator() const
+        OperatorKernel* DilateTest::allocateOperator() const
         {
             return new Dilate;
         }

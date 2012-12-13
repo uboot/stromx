@@ -67,7 +67,7 @@ namespace stromx
             void setName(const std::string& name) { m_name = name; }
             
             /** Returns the current state of the stream. */
-            const Status status() const { return m_status; }
+            Status status() const { return m_status; }
             
             /** Returns a list of operators assigned to the stream */
             const std::vector<Operator*>& operators() const;           
@@ -125,7 +125,7 @@ namespace stromx
              * Creates a thread, adds it to the stream and returns a pointer to it.
              * \return A pointer to the created thread. The thread is owned by the stream.
              */
-            Thread* const addThread();
+            Thread* addThread();
             
             /**
              * Removes the thread \c thr from the stream.
@@ -163,7 +163,7 @@ namespace stromx
              * 
              * \sa setDelay()
              */
-            const unsigned int delay() const;
+            unsigned int delay() const;
             
             /** 
              * Sets the current processing delay in milliseconds. The threads of the 

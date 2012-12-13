@@ -58,7 +58,8 @@ namespace stromx
         }
 
         Matrix::Matrix(const stromx::base::Matrix& matrix)
-          : m_matrix(new cv::Mat())
+          : core::MatrixWrapper(),
+            m_matrix(new cv::Mat())
         {
             copy(matrix);
         }
@@ -160,7 +161,7 @@ namespace stromx
                 throw stromx::core::Exception("Failed to load matrix.");
         }
 
-        void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version& version)
+        void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version&)
         {
             // open the file
             input.openFile(core::InputProvider::BINARY);
@@ -217,14 +218,14 @@ namespace stromx
             return valueTypeTable[i][j];
         }
 
-        const bool Matrix::isLittleEndian()
+        bool Matrix::isLittleEndian()
         {
             unsigned char x[] = {1,0};
             short y = *(short*) x;
             return y == 1;
         }
 
-        const char Matrix::npyTypeSymbol(const stromx::core::Matrix::ValueType valueType)
+        char Matrix::npyTypeSymbol(const stromx::core::Matrix::ValueType valueType)
         {
             using namespace stromx::core;
             
@@ -374,7 +375,7 @@ namespace stromx
                              (uint8_t*)(m_matrix->data), valueType);
         }
         
-        const int Matrix::cvTypeFromValueType(const core::Matrix::ValueType valueType)
+        int Matrix::cvTypeFromValueType(const core::Matrix::ValueType valueType)
         {
             switch(valueType)
             {
@@ -398,7 +399,7 @@ namespace stromx
             }
         }
         
-        const core::Matrix::ValueType Matrix::valueTypeFromCvType(const int cvType)
+        core::Matrix::ValueType Matrix::valueTypeFromCvType(const int cvType)
         {
             switch(cvType)
             {

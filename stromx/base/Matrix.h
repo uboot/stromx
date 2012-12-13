@@ -106,10 +106,10 @@ namespace stromx
             static const core::Version VERSION;
             static const char NUMPY_MAGIC_BYTE = char(0x93);
             
-            static const int cvTypeFromValueType(const core::Matrix::ValueType valueType);
-            static const core::Matrix::ValueType valueTypeFromCvType(const int cvType);
-            static const bool isLittleEndian();
-            static const char npyTypeSymbol(const core::Matrix::ValueType valueType);
+            static int cvTypeFromValueType(const core::Matrix::ValueType valueType);
+            static core::Matrix::ValueType valueTypeFromCvType(const int cvType);
+            static bool isLittleEndian();
+            static char npyTypeSymbol(const core::Matrix::ValueType valueType);
             Matrix::ValueType valueTypeFromNpyHeader(const char valueType, const int wordSize);
             
             void copy(const stromx::core::Matrix & matrix);

@@ -26,7 +26,7 @@ namespace stromx
 
     namespace base
     {
-        OperatorKernel*const ErodeTest::allocateOperator() const
+        OperatorKernel* ErodeTest::allocateOperator() const
         {
             return new Erode;
         }

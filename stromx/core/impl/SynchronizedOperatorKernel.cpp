@@ -65,7 +65,7 @@ namespace stromx
                 
                 try
                 {
-                    boost::this_thread::sleep(boost::posix_time::microseconds(1));
+                    boost::this_thread::sleep(boost::posix_time::microseconds(microseconds));
                 }
                 catch(boost::thread_interrupted&)
                 {

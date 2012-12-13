@@ -41,17 +41,17 @@ namespace stromx
             out.text() << m_value;
         }
         
-        void String::deserialize(InputProvider & in, const Version & version)
+        void String::deserialize(InputProvider & in, const Version &)
         {
             in.text() >> m_value;
         }
         
-        const bool operator==(const stromx::core::String& lhs, const stromx::core::String& rhs)
+        bool operator==(const stromx::core::String& lhs, const stromx::core::String& rhs)
         {
             return lhs.m_value == rhs.m_value;
         }
         
-        const bool operator!=(const stromx::core::String& lhs, const stromx::core::String& rhs)
+        bool operator!=(const stromx::core::String& lhs, const stromx::core::String& rhs)
         {
             return lhs.m_value != rhs.m_value;
         }

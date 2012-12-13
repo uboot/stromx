@@ -29,12 +29,12 @@ namespace
     {
         void registerOperator(const OperatorKernel* const op)
         {
-            this->get_override("registerOperator")();
+            this->get_override("registerOperator")(op);
         }
         
         void registerData(const Data* data)
         {
-            this->get_override("registerData")();
+            this->get_override("registerData")(data);
         }
     };
 }
