@@ -28,7 +28,7 @@ namespace stromx
         /** \brief Identifier of a connector of an operator. */
         class Connector
         {
-            friend STROMX_CORE_API const bool operator==(const Connector & lhs, const Connector & rhs);
+            friend STROMX_CORE_API bool operator==(const Connector & lhs, const Connector & rhs);
             
         public:
             /** The possible types of a connector. */
@@ -53,23 +53,23 @@ namespace stromx
             {}
             
             /** Returns a pointer to the operator the connector belongs to. */
-            const Operator* const op() const { return m_op; }
+            const Operator* op() const { return m_op; }
             
             /** Returns the ID of the connector. */
-            const unsigned int id() const { return m_id; }
+            unsigned int id() const { return m_id; }
             
             /** 
              * Returns \c true if this connector is valid, i.e. it does
              * point to a valid connector. If the connector is invalid its
              * operator pointer is 0 and its type UNDEFINED.
              */
-            const bool valid() const { return m_op != 0; }
+            bool valid() const { return m_op != 0; }
             
             /**
              * Returns the type of the connector, i.e. whether this connector
              * is an input or output connector.
              */
-            const Type type() const { return m_type; }
+            Type type() const { return m_type; }
             
         protected:
             Connector(const Type type, const Operator* const op, const unsigned int id)
@@ -84,7 +84,7 @@ namespace stromx
             unsigned int m_id;
         };
         
-        STROMX_CORE_API const bool operator==(const Connector & lhs, const Connector & rhs);
+        STROMX_CORE_API bool operator==(const Connector & lhs, const Connector & rhs);
     }
 }
 

@@ -36,7 +36,7 @@ namespace stromx
             public:
                 OutputNode(Operator* const op, const unsigned int outputId);
                 
-                const unsigned int outputId() const { return m_outputId; }
+                unsigned int outputId() const { return m_outputId; }
                 Operator* const op() const { return m_operator; }
                 DataContainer getOutputData();
                 void addConnectedInput(InputNode* const input);

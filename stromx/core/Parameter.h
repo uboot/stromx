@@ -169,7 +169,7 @@ namespace stromx
              * Returns the group the parameter belongs to. Returns 0 if the parameter
              * does not belong to any group.
              */
-            virtual const Parameter* const group() const { return m_group; }
+            virtual const Parameter* group() const { return m_group; }
             
             /**
              * Returns the members of this parameter group. If the parameter is not 

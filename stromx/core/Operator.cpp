@@ -113,7 +113,7 @@ namespace stromx
             return *m_kernel->info(); 
         }
         
-        const Operator::Status Operator::status() const
+        Operator::Status Operator::status() const
         { 
             return Status(m_kernel->status());
         }
@@ -232,7 +232,7 @@ namespace stromx
             m_outputs.clear();
         }
         
-        InputNode*const Operator::getInputNode(const unsigned int id) const
+        InputNode* Operator::getInputNode(const unsigned int id) const
         {
             std::map<unsigned int, impl::InputNode*>::const_iterator iter = m_inputs.find(id);
             
@@ -242,7 +242,7 @@ namespace stromx
             return iter->second;
         }
 
-        OutputNode*const Operator::getOutputNode(const unsigned int id) const
+        OutputNode* Operator::getOutputNode(const unsigned int id) const
         {
             std::map<unsigned int, impl::OutputNode*>::const_iterator iter = m_outputs.find(id);
             

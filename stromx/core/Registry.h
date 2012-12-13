@@ -36,7 +36,7 @@ namespace stromx
             
             /** Registers a data object with the registry. The registry assumes 
              *  ownership of \c data. */
-            virtual void registerData(const Data* const data) = 0;
+            virtual void registerData(const Data* data) = 0;
         };
     }
 }

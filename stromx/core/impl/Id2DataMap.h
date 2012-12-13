@@ -44,7 +44,7 @@ namespace stromx
                 const DataContainer & get(const unsigned int id) const;
                 void set(const unsigned int id, const DataContainer & data);
                 void clear();
-                const bool empty() const;
+                bool empty() const;
                 void setObserver(const Id2DataMapObserver* const observer);
                 
             private:

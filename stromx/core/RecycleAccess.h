@@ -72,7 +72,7 @@ namespace stromx
              * Returns 0 if the recycle access does not reference any data
              * which can be recycled.
              */
-            Data* const operator()() const { return get(); }
+            Data* operator()() const { return get(); }
             
             /**
              * Waits for data which has been added to the recycle access and 
@@ -80,18 +80,7 @@ namespace stromx
              * Returns 0 if the recycle access does not reference any data
              * which can be recycled.
              */
-            Data* const get() const;  
-            
-            /**
-             * Waits for data which has been added to the recycle access and 
-             * is ready to be recycled, i.e. no other objects reference it.
-             * Returns 0 if the recycle access does not reference any data
-             * which can be recycled.
-             * 
-             * \param timeout The maximal time to wait in milliseconds.
-             * \throws Timeout If no data was recycled during the timeout.
-             */
-            Data* const operator()(const unsigned int timeout) const { return get(timeout); }
+            Data* get() const;  
             
             /**
              * Waits for data which has been added to the recycle access and 
@@ -102,7 +91,18 @@ namespace stromx
              * \param timeout The maximal time to wait in milliseconds.
              * \throws Timeout If no data was recycled during the timeout.
              */
-            Data* const get(const unsigned int timeout) const;
+            Data* operator()(const unsigned int timeout) const { return get(timeout); }
+            
+            /**
+             * Waits for data which has been added to the recycle access and 
+             * is ready to be recycled, i.e. no other objects reference it.
+             * Returns 0 if the recycle access does not reference any data
+             * which can be recycled.
+             * 
+             * \param timeout The maximal time to wait in milliseconds.
+             * \throws Timeout If no data was recycled during the timeout.
+             */
+            Data* get(const unsigned int timeout) const;
             
         private:
             std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      

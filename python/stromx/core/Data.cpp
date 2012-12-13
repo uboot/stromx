@@ -51,7 +51,7 @@ namespace
             return this->get_override("variant")();
         }
         
-        Data* const clone() const
+        Data* clone() const
         {
             return this->get_override("clone")();
         }

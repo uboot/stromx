@@ -50,7 +50,7 @@ namespace stromx
             const Documentation & doc() const { return m_doc; }
             
             /** Returns the ID. */
-            const unsigned int id() const { return m_id; }
+            unsigned int id() const { return m_id; }
             
             /** Returns the data variant. */
             const DataVariant & variant() const { return m_variant; }

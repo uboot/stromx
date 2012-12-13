@@ -22,12 +22,12 @@ namespace stromx
 {
     namespace core
     {
-        DataContainer::DataContainer(Data* const data)
+        DataContainer::DataContainer(Data* data)
           : m_impl(new impl::DataContainerImpl(data))
         {
         }
         
-        const bool operator==(const core::DataContainer& lhs, const core::DataContainer& rhs)
+        bool operator==(const core::DataContainer& lhs, const core::DataContainer& rhs)
         {
             if(! lhs.m_impl.get() && ! rhs.m_impl.get())
                 return true;
@@ -38,7 +38,7 @@ namespace stromx
             return lhs.m_impl->data() == rhs.m_impl->data();
         }
         
-        const bool operator!=(const core::DataContainer& lhs, const core::DataContainer& rhs)
+        bool operator!=(const core::DataContainer& lhs, const core::DataContainer& rhs)
         {
             return ! (lhs == rhs);
         }

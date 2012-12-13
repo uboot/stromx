@@ -80,7 +80,7 @@ namespace stromx
                 }       
             }
             
-            const bool Id2DataMap::empty() const
+            bool Id2DataMap::empty() const
             {
                 bool value = true;
                 for(std::map<unsigned int, DataContainer>::const_iterator iter = m_map.begin();

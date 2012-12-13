@@ -74,7 +74,7 @@ namespace stromx
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual Data* const clone() const;
+            virtual Data* clone() const;
             
             virtual void serialize(core::OutputProvider & output) const;
             virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);

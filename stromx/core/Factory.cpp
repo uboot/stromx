@@ -61,7 +61,7 @@ namespace stromx
             m_operators.push_back(op);
         }
 
-        void Factory::registerData(const Data*const data)
+        void Factory::registerData(const Data* data)
         {
             if(data == 0)
             {
@@ -104,7 +104,7 @@ namespace stromx
                                            "Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
         }
 
-        Data*const Factory::newData(const std::string& package, const std::string& type) const
+        Data* Factory::newData(const std::string& package, const std::string& type) const
         {
             for(std::vector<const Data*>::const_iterator iter = m_dataTypes.begin();
                 iter != m_dataTypes.end();

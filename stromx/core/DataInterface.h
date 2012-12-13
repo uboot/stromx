@@ -51,7 +51,7 @@ namespace stromx
              * allocated and the data of the original object is copied to the new object.
              * A pointer to the new object is returned.
              */
-            virtual Data* const clone() const = 0;
+            virtual Data* clone() const = 0;
             
             /**
              * Serializes this data object.

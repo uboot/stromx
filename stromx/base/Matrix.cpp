@@ -80,7 +80,7 @@ namespace stromx
             delete m_matrix;
         }
 
-        core::Data*const Matrix::clone() const
+        core::Data* Matrix::clone() const
         {
             return new Matrix(*this);
         }

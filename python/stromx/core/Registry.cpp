@@ -32,7 +32,7 @@ namespace
             this->get_override("registerOperator")();
         }
         
-        void registerData(const Data* const data)
+        void registerData(const Data* data)
         {
             this->get_override("registerData")();
         }

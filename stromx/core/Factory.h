@@ -35,13 +35,13 @@ namespace stromx
             
             virtual void registerOperator(const OperatorKernel* const op);  
             
-            virtual void registerData(const Data* const data);   
+            virtual void registerData(const Data* data);   
             
             /** Allocates and returns a new operator. */
             virtual Operator* const newOperator(const std::string & package, const std::string & type) const;      
             
             /** Allocates and returns a new data object. */
-            virtual Data* const newData(const std::string & package, const std::string & type) const;
+            virtual Data* newData(const std::string & package, const std::string & type) const;
             
             /** Returns a list of the operators registered with the factory. */
             virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }

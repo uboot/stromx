@@ -48,8 +48,8 @@ namespace stromx
             friend class impl::ReadAccessImpl;
             friend class impl::RecycleAccessImpl;
             
-            friend STROMX_CORE_API const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
-            friend STROMX_CORE_API const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+            friend STROMX_CORE_API bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+            friend STROMX_CORE_API bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
             friend STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataContainer & container);
             
         public:
@@ -63,20 +63,20 @@ namespace stromx
              * \param data A non-zero pointer to a Data object
              * \throws WrongArgument
              */
-            explicit DataContainer(core::Data*const data);
+            explicit DataContainer(core::Data* data);
             
             /** Returns whether to DataContainer holds any data. */
-            const bool empty() const { return m_impl.get() == 0; }
+            bool empty() const { return m_impl.get() == 0; }
             
         private:
             std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
         };     
         
         /** Returns \c true if the addresses in \c lhs and \c rhs are the same. */
-        STROMX_CORE_API const bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
+        STROMX_CORE_API bool operator==(const DataContainer & lhs, const DataContainer & rhs); 
         
         /** Returns \c true if the addresses in \c lhs and \c rhs are not the same. */
-        STROMX_CORE_API const bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
+        STROMX_CORE_API bool operator!=(const DataContainer & lhs, const DataContainer & rhs); 
         
         /** Returns the address of the data held by \c container. */
         STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataContainer & container);

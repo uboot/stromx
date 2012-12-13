@@ -35,7 +35,7 @@ namespace stromx
             
             virtual const DataVariant & variant() const { return DataVariant::NONE; }
             
-            virtual Data* const clone() const { return new None; }
+            virtual Data* clone() const { return new None; }
             
         private:
             static const std::string TYPE;

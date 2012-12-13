@@ -20,7 +20,7 @@ namespace stromx
 {
     namespace core
     {
-        const bool operator==(const Connector & lhs, const Connector & rhs)
+        bool operator==(const Connector & lhs, const Connector & rhs)
         {
             return lhs.m_type == rhs.m_type && lhs.m_op == rhs.m_op && lhs.m_id == rhs.m_id;
         }

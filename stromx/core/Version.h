@@ -35,13 +35,13 @@ namespace stromx
             {}
             
             /** Returns the major version number. */
-            const unsigned int major() const { return m_major; }
+            unsigned int major() const { return m_major; }
             
             /** Returns the minor version number. */
-            const unsigned int minor() const { return m_minor; }
+            unsigned int minor() const { return m_minor; }
             
             /** Returns the revision number. */
-            const unsigned int revision() const { return m_revision; }
+            unsigned int revision() const { return m_revision; }
             
         private:
             unsigned int m_major;

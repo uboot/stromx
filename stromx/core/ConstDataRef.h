@@ -79,7 +79,7 @@ namespace stromx
             virtual const DataVariant & variant() const;
             
             const bool isVariant(const DataVariant & v) const;
-            virtual Data* const clone() const;
+            virtual Data* clone() const;
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);

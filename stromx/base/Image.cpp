@@ -242,7 +242,7 @@ namespace stromx
             save(filename, *this);
         }
         
-        core::Data*const Image::clone() const
+        core::Data* Image::clone() const
         {
             return new Image(*this);
         }

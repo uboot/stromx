@@ -33,7 +33,7 @@ namespace stromx
             class DataContainerImpl
             {
             public:
-                DataContainerImpl(Data* const data);
+                DataContainerImpl(Data* data);
                 ~DataContainerImpl();
                 
                 void getReadAccess(const bool waitWithTimeout, const unsigned int timeout);
@@ -45,7 +45,7 @@ namespace stromx
                 void getRecycleAccess(Recycler* const recycler);
                 void returnRecycleAccess();
                 
-                Data* const data() const { return m_data; }
+                Data* data() const { return m_data; }
                 
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;

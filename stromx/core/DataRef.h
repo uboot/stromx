@@ -73,7 +73,7 @@ namespace stromx
              * Returns true if the data reference is a null reference, i.e. it was not initialized
              * by a pointer to an object. Null references can not 
              */
-            const bool isNull() const { return 0 == m_data.get(); }
+            bool isNull() const { return 0 == m_data.get(); }
             
             /** Returns the shared pointer which holds the data object internally. */
             const std::tr1::shared_ptr<Data> & ptr() const { return m_data; }
@@ -83,8 +83,8 @@ namespace stromx
             virtual const std::string & package() const;
             virtual const DataVariant & variant() const;
             
-            const bool isVariant(const DataVariant & v) const;
-            virtual Data* const clone() const;
+            bool isVariant(const DataVariant & v) const;
+            virtual Data* clone() const;
             
             virtual void serialize(OutputProvider & out) const;
             virtual void deserialize(InputProvider & in, const Version & version);

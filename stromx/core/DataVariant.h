@@ -29,7 +29,7 @@ namespace stromx
         /** \brief %Description of a data variant. */
         class STROMX_CORE_API DataVariant
         {
-            STROMX_CORE_API friend const bool operator==(const DataVariant & lhs, const DataVariant & rhs);
+            STROMX_CORE_API friend bool operator==(const DataVariant & lhs, const DataVariant & rhs);
             STROMX_CORE_API friend std::ostream& operator<< (std::ostream& out, const DataVariant & container);
             
         public:
@@ -83,10 +83,10 @@ namespace stromx
             
             const Documentation & doc() const { return m_doc; }
             
-            virtual const bool isVariant(const DataVariant& type) const;
+            virtual bool isVariant(const DataVariant& type) const;
             
         protected:
-            const unsigned int id() const { return m_id; }
+            unsigned int id() const { return m_id; }
             const std::string & package() const { return m_package; }
         
         private: 
@@ -138,7 +138,7 @@ namespace stromx
             Documentation m_doc;
         };
         
-        STROMX_CORE_API const bool operator==(const DataVariant & lhs, const DataVariant & rhs);
+        STROMX_CORE_API bool operator==(const DataVariant & lhs, const DataVariant & rhs);
         STROMX_CORE_API std::ostream& operator<< (std::ostream& out, const DataVariant & container);
     }
 }

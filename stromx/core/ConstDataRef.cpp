@@ -58,7 +58,7 @@ namespace stromx
             return m_data->isVariant(v);
         }
         
-        Data* const ConstDataRef::clone() const 
+        Data* ConstDataRef::clone() const 
         {
             return m_data->clone();
         }

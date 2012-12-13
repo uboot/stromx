@@ -72,7 +72,7 @@ namespace stromx
                 }
             }
             
-            Data*const RecycleAccessImpl::get(const bool waitWithTimeout, const unsigned int timeout)
+            Data* RecycleAccessImpl::get(const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 

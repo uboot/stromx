@@ -43,7 +43,7 @@ namespace stromx
         {
             TestData testData;
             Data* data = &testData;
-            const Data* constData = &testData;
+            const Data* constData= &testData;
             
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(data));
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(constData));

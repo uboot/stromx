@@ -112,7 +112,7 @@ namespace stromx
             const OperatorInfo& info() const;
             
             /** Returns the current status of the operator. */
-            const Status status() const;
+            Status status() const;
             
             /** 
              * Sets the parameter \c id to \c value. The functions waits until setting
@@ -240,9 +240,9 @@ namespace stromx
             class MutexHandle;
             class InternalObserver;
             
-            impl::InputNode* const getInputNode(const unsigned int id) const;
-            impl::OutputNode* const getOutputNode(const unsigned int id) const;
-            const bool isPartOfStream() const { return m_isPartOfStream; }
+            impl::InputNode* getInputNode(const unsigned int id) const;
+            impl::OutputNode* getOutputNode(const unsigned int id) const;
+            bool isPartOfStream() const { return m_isPartOfStream; }
             void addToStream();
             void removeFromStream();
             void activate();

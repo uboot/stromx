@@ -49,7 +49,7 @@ namespace stromx
             
             virtual const DataVariant & variant() const;
             
-            virtual Data* const clone() const { return new String(m_value); }
+            virtual Data* clone() const { return new String(m_value); }
             
             virtual void serialize(OutputProvider & out) const;
             

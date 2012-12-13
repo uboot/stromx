@@ -63,7 +63,7 @@ namespace stromx
         const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, Documentation("RGB image 48-bit"));
         const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, STROMX_CORE_PACKAGE_NAME, Documentation("BGR image 48-bit"));
             
-        const bool DataVariant::isVariant(const core::DataVariant& variant) const
+        bool DataVariant::isVariant(const core::DataVariant& variant) const
         {
             if(variant.package() != package())
                 return false;
@@ -122,7 +122,7 @@ namespace stromx
             }
         }
         
-        const bool operator==(const stromx::core::DataVariant& lhs, const stromx::core::DataVariant& rhs)
+        bool operator==(const stromx::core::DataVariant& lhs, const stromx::core::DataVariant& rhs)
         {
             return lhs.m_id == rhs.m_id && lhs.m_package == rhs.m_package;
         }

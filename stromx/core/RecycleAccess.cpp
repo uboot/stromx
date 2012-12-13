@@ -27,7 +27,7 @@ namespace stromx
         {
         }
 
-        Data*const RecycleAccess::get() const
+        Data* RecycleAccess::get() const
         {
             if(! m_impl.get())
                 return 0;
@@ -35,7 +35,7 @@ namespace stromx
             return m_impl->get(false);
         }
 
-        Data*const RecycleAccess::get(const unsigned int timeout) const
+        Data* RecycleAccess::get(const unsigned int timeout) const
         {
             if(! m_impl.get())
                 return 0;

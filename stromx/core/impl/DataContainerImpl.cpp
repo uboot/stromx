@@ -26,7 +26,7 @@ namespace stromx
     {
         namespace impl
         {
-            DataContainerImpl::DataContainerImpl(Data* const data)
+            DataContainerImpl::DataContainerImpl(Data* data)
             : m_readAccessCounter(0),
                 m_writeAccess(false),
                 m_recycleAccess(0),

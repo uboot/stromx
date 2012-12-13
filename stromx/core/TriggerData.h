@@ -35,7 +35,7 @@ namespace stromx
             
             virtual const DataVariant & variant() const { return DataVariant::TRIGGER; }
             
-            virtual Data* const clone() const { return new TriggerData; }
+            virtual Data* clone() const { return new TriggerData; }
             
             virtual void serialize(OutputProvider & out) const {}
             virtual void deserialize(InputProvider & in, const Version & version) {}

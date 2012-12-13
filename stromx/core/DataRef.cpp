@@ -52,12 +52,12 @@ namespace stromx
             return m_data->variant();
         }
         
-        const bool DataRef::isVariant(const DataVariant & v) const
+        bool DataRef::isVariant(const DataVariant & v) const
         {
             return m_data->isVariant(v);
         }
         
-        Data* const DataRef::clone() const 
+        Data* DataRef::clone() const 
         {
             return m_data->clone();
         }
