@@ -73,10 +73,21 @@ namespace stromx
             const static DataVariant RGB_48_IMAGE;
             const static DataVariant BGR_48_IMAGE;
             
+            DataVariant(const unsigned int id, const std::string & package)
+              : m_id(id),
+                m_package(package)
+            {}
+            
             DataVariant(const unsigned int id, const std::string & package, const Documentation & doc)
               : m_id(id),
                 m_package(package),
                 m_doc(doc)
+            {}
+            
+            DataVariant(const unsigned int id, const std::string & package, const std::string & doc)
+              : m_id(id),
+                m_package(package),
+                m_doc(Documentation(doc))
             {}
             
             ~DataVariant() {}
