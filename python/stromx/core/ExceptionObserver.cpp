@@ -29,7 +29,16 @@ namespace
         void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
-            this->get_override("observe")(phase, thread, ex);
+            
+            try
+            {
+                this->get_override("observe")(phase, thread, ex);
+            }
+            catch(...)
+            {
+                // catch everything to make sure the GIL is released
+            }
+            
             PyGILState_Release(state);
         }
     };
