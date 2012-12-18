@@ -67,6 +67,12 @@ namespace stromx
             void add(const DataContainer data);  
             
             /**
+             * Returns true if the recycle access does not reference any data
+             * which can be recycled.
+             */
+            bool empty() const;
+            
+            /**
              * Waits for data which has been added to the recycle access and 
              * is ready to be recycled, i.e. no other objects reference it.
              * Returns 0 if the recycle access does not reference any data
