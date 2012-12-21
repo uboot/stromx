@@ -42,7 +42,7 @@ class Method(object):
         assert(len(outputs) == 1)
         return outputs [0]
         
-class Generator(object):
+class MethodFragment(object):
     def initializeParameter(self):
         return ""
     
@@ -73,7 +73,7 @@ class Generator(object):
     def allocate(self):
         return
 
-class Argument(Generator):
+class Argument(MethodFragment):
     name = ""
     description = ""
     cvType = CvType.UNDEFINED
