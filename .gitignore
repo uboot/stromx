@@ -4,3 +4,5 @@
 *.vpp.new
 *~
 Config.h
+*.pyc
+
