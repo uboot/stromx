@@ -74,6 +74,7 @@ class MethodFragment(object):
         return
 
 class Argument(MethodFragment):
+    ident = ""
     name = ""
     description = ""
     cvType = CvType.UNDEFINED
@@ -89,7 +90,7 @@ class OutputArgument(Argument):
         return "OutputArgument()"
         
 class Parameter(InputArgument):
-    pass
+    default = None
 
 class NumericParameter(Parameter):
     minValue = None
@@ -117,6 +118,12 @@ class Rule(object):
         return ""
 
 class OddRule(Rule):
+    pass
+
+class MinRule(Rule):
+    pass
+
+class MaxRule(Rule):
     pass
 
 if __name__ == "__main__":
