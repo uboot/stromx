@@ -14,20 +14,7 @@ class MethodGenerator(object):
         self.lines = []
         self.indent = 0
         
-    def generate(self):
-        self.includeGuardEnter()
-        self.blank()
-        self.headerIncludes()
-        self.blank()
-        self.namespaceEnter()
-        self.classEnter()
-        self.access("public")
-        self.classExit()
-        self.namespaceExit()
-        self.blank()
-        self.includeGuardExit()
-        
-    def document(self):
+    def string(self):
         s = ""
         for line in self.lines:
             s += line + "\n"
@@ -43,7 +30,47 @@ class MethodGenerator(object):
         self.lines.append("{0}{1}".format(" " * self.indent, line))
         
     def blank(self):
-        self.line("\n")
+        self.line("")
+        
+    def className(self):
+        return Names.className(self.m.ident)
+
+class HeaderGenerator(MethodGenerator):
+    def __init__(self, package, method):
+        super(HeaderGenerator, self).__init__(package, method)
+        
+    def generate(self):
+        self.includeGuardEnter()
+        self.blank()
+        self.headerIncludes()
+        self.blank()
+        self.namespaceEnter()
+        self.classEnter()
+        self.access("public")
+        self.inputIds()
+        self.blank()
+        self.outputIds()
+        self.blank()
+        self.parameterIds()
+        self.blank()
+        self.constructor()
+        self.kernelOverloads()
+        self.blank()
+        self.access("private")
+        self.statics()
+        self.blank()
+        self.setupFunctions()
+        self.blank()
+        self.parameters()
+        self.classExit()
+        self.namespaceExit()
+        self.blank()
+        self.includeGuardExit()
+        self.blank()
+        
+    def save(self):
+        with file("{0}.h".format(self.className()), "w") as f:
+            f.write(self.string())
     
     def headerIncludes(self):
         self.line('#include "Config.h"');
@@ -64,7 +91,7 @@ class MethodGenerator(object):
         self.increaseIndent()
         
     def classEnter(self):
-        self.line("class {0} {1} : public stromx.core.OperatorKernel".format(
+        self.line("class {0} {1} : public core::OperatorKernel".format(
                     self.apiDecl(), self.className()))
         self.line("{")
         self.increaseIndent()
@@ -73,6 +100,58 @@ class MethodGenerator(object):
         self.decreaseIndent()
         self.line("{0}:".format(key))
         self.increaseIndent()
+        
+    def inputIds(self):
+        values = [Names.constantName(v.ident) for v in self.m.args
+                                              if isinstance(v, Input)]
+        self.enum("InputId", values)
+        
+    def outputIds(self):
+        values = [Names.constantName(v.ident) for v in self.m.args
+                                              if isinstance(v, Output)]
+        self.enum("OutputId", values)
+    
+    def parameterIds(self):
+        values = [Names.constantName(v.ident) for v in self.m.args
+                                              if isinstance(v, Parameter)]
+        self.enum("ParameterId", values)
+        
+    def constructor(self):
+        self.line("{0}();".format(self.className()))
+        
+    def kernelOverloads(self):
+        self.line("virtual OperatorKernel* clone() const {{ return new {0}; }}".format(self.className()))
+        self.line("virtual void setParameter(const unsigned int id, const core::Data& value);")
+        self.line("virtual const core::DataRef getParameter(const unsigned int id) const;")
+        self.line("virtual void execute(core::DataProvider& provider);")
+        
+    def statics(self):
+        self.line("static const std::string PACKAGE;")
+        self.line("static const core::Version VERSION;")
+        self.line("static const std::string TYPE;")
+        
+    def setupFunctions(self):
+        self.line("const std::vector<const core::Parameter*> setupParameters();")
+        self.line("const std::vector<const core::Description*> setupInputs();")
+        self.line("const std::vector<const core::Description*> setupOutputs();")
+        
+    def parameters(self):
+        params = [p for p in self.m.args if isinstance(p, Parameter)]
+        for p in params:
+            self.line("{0} m_{1};".format(Types.dataType(p.dataType),
+                                          Names.methodName(p.ident)))
+        
+    def enum(self, name, values):
+        self.line("enum {0}".format(name))
+        self.line("{")
+        self.increaseIndent()
+        for i, v in zip(range(len(values)), values):
+            if i < len(values) - 1:
+                self.line("{0},".format(v))
+            else:
+                self.line(v)
+        self.decreaseIndent()
+        self.line("};")
     
     def classExit(self):
         self.decreaseIndent()
@@ -93,8 +172,26 @@ class MethodGenerator(object):
     def apiDecl(self):
         return "STROMX_{0}_API".format(p.ident.upper())
         
-    def className(self):
-        return "{0}{1}".format(self.m.ident[0].upper(), self.m.ident[1:])
+class Names:
+    @staticmethod
+    def className(s):
+        return "{0}{1}".format(s[0].upper(), s[1:])
+        
+    @staticmethod
+    def constantName(s):
+        return s.upper()
+        
+    @staticmethod
+    def methodName(s):
+        return s
+        
+class Types:
+    @staticmethod
+    def dataType(t):
+        if t == DataType.UINT_32:
+            return "core::UInt32"
+        else:
+            assert(False)
     
 if __name__ == "__main__":
     p = Package()
@@ -128,6 +225,7 @@ if __name__ == "__main__":
     
     m.args = [arg1, arg2, arg3]
     
-    g = MethodGenerator(p, m)
+    g = HeaderGenerator(p, m)
     g.generate()
-    print g.document()
+    g.save()
+    print g.string()
