@@ -133,6 +133,7 @@ class HeaderGenerator(MethodGenerator):
         self.line("virtual OperatorKernel* clone() const {{ return new {0}; }}".format(self.className()))
         self.line("virtual void setParameter(const unsigned int id, const core::Data& value);")
         self.line("virtual const core::DataRef getParameter(const unsigned int id) const;")
+        self.line("void initialize();")
         self.line("virtual void execute(core::DataProvider& provider);")
         
     def statics(self):
@@ -208,11 +209,25 @@ class ImplementationGenerator(MethodGenerator):
         self.includes()
         self.blank()
         self.namespaceEnter()
+        self.constants()
+        self.blank()
         self.constructor()
         self.blank()
         self.setParameter()
         self.blank()
         self.getParameter()
+        self.blank()
+        self.setupInitParameters()
+        self.blank()
+        self.setupParameters()
+        self.blank()
+        self.setupInputs()
+        self.blank()
+        self.setupOutputs()
+        self.blank()
+        self.initialize()
+        self.blank()
+        self.execute()
         self.namespaceExit()
     
     def save(self):
@@ -225,7 +240,6 @@ class ImplementationGenerator(MethodGenerator):
         self.line('#include "Image.h"')
         self.line('#include "Matrix.h"')
         self.line('#include "Utilities.h"')
-        self.line('#include <opencv2/imgproc/imgproc.hpp>')
         self.line('#include <stromx/core/DataContainer.h>')
         self.line('#include <stromx/core/DataProvider.h>')
         self.line('#include <stromx/core/EnumParameter.h>')
@@ -234,10 +248,12 @@ class ImplementationGenerator(MethodGenerator):
         self.line('#include <stromx/core/OperatorException.h>')
         self.line('#include <stromx/core/ReadAccess.h>')
         self.line('#include <stromx/core/WriteAccess.h>')
+        self.line('#include <opencv2/imgproc/imgproc.hpp>')
     
     def constructor(self):
         self.line("{0}()".format(self.method(self.className())))
-        self.line("  : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters())")
+        self.line(("  : core::OperatorKernel(TYPE, PACKAGE, VERSION, " +
+                   "setupInitParameters())"))
         self.increaseIndent()
         params = [p for p in self.m.args if isinstance(p, Parameter)]
         for p in params:
@@ -246,6 +262,12 @@ class ImplementationGenerator(MethodGenerator):
         self.decreaseIndent()
         self.scopeEnter()
         self.scopeExit()
+        
+    def constants(self):
+        self.line("const std::string {0}::PACKAGE(STROMX_{1}_PACKAGE_NAME);"\
+            .format(self.className(), Names.constantName(self.p.ident)))
+        self.line("const core::Version {0}::VERSION({1}_VERSION_MAJOR, {1}_VERSION_MINOR, {1}_VERSION_PATCH);"\
+            .format(self.className(), Names.constantName(self.p.ident)))
         
     def setParameter(self):
         self.line("void {0}(unsigned int id, const Data& value)"\
@@ -256,12 +278,12 @@ class ImplementationGenerator(MethodGenerator):
         self.line("switch(id)")
         self.scopeEnter()
         self.label("default")
-        self.line("throw WrongParameterId(id, *this);")
+        self.line("throw core::WrongParameterId(id, *this);")
         self.scopeExit()
         self.scopeExit()
         self.line("catch(core::BadCast&)")
         self.scopeEnter()
-        self.line("throw WrongParameterType(parameter(id), *this);")
+        self.line("throw core::WrongParameterType(parameter(id), *this);")
         self.scopeExit()
         self.scopeExit()
         
@@ -272,8 +294,58 @@ class ImplementationGenerator(MethodGenerator):
         self.line("switch(id)")
         self.scopeEnter()
         self.label("default")
-        self.line("throw WrongParameterId(id, *this);")
+        self.line("throw core::WrongParameterId(id, *this);")
         self.scopeExit()
+        self.scopeExit()
+        
+    def setupInitParameters(self):
+        self.line("const std::vector<const core::Parameter*> {0}()"\
+            .format(self.method("setupInitParameters")))
+        self.scopeEnter()
+        self.line("std::vector<const core::Parameter*> parameters;")
+        self.blank()
+        self.line("return parameters;")
+        self.scopeExit()
+    
+    def setupParameters(self):
+        self.line("const std::vector<const Parameter*> {0}()"\
+            .format(self.method("setupParameters")))
+        self.scopeEnter()
+        self.line("std::vector<const Parameter*> parameters;")
+        self.blank()
+        self.line("return parameters;")
+        self.scopeExit()
+    
+    def setupInputs(self):
+        self.line("const std::vector<const core::Description*> {0}()"\
+            .format(self.method("setupInputs")))
+        self.scopeEnter()
+        self.line("std::vector<const core::Description*> inputs;")
+        self.blank()
+        self.line("return inputs;")
+        self.scopeExit()
+    
+    def setupOutputs(self):
+        self.line("const std::vector<const core::Description*> {0}()"\
+            .format(self.method("setupOutputs")))
+        self.scopeEnter()
+        self.line("std::vector<const core::Description*> outputs;")
+        self.blank()
+        self.line("return outputs;")
+        self.scopeExit()
+        
+    def initialize(self):
+        self.line("void {0}()"\
+            .format(self.method("initialize")))
+        self.scopeEnter()
+        self.line(("core::OperatorKernel::initialize(setupInputs(), " +
+                   "setupOutputs(), setupParameters());"))
+        self.scopeExit()
+    
+    def execute(self):
+        self.line("void {0}(core::DataProvider & provider)"\
+            .format(self.method("execute")))
+        self.scopeEnter()
         self.scopeExit()
         
     def method(self, s):
