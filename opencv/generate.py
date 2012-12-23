@@ -34,6 +34,29 @@ class MethodGenerator(object):
         
     def className(self):
         return Names.className(self.m.ident)
+        
+    def namespaceEnter(self):
+        self.line("namespace stromx")
+        self.scopeEnter()
+        self.line("namespace {0}".format(self.p.ident.lower()))
+        self.scopeEnter()
+    
+    def namespaceExit(self):
+        self.scopeExit()
+        self.scopeExit()
+        
+    def scopeEnter(self):
+        self.line("{")
+        self.increaseIndent()
+        
+    def scopeExit(self):
+        self.decreaseIndent()
+        self.line("}")
+        
+    def label(self, key):
+        self.decreaseIndent()
+        self.line("{0}:".format(key))
+        self.increaseIndent()
 
 class HeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -42,11 +65,11 @@ class HeaderGenerator(MethodGenerator):
     def generate(self):
         self.includeGuardEnter()
         self.blank()
-        self.headerIncludes()
+        self.includes()
         self.blank()
         self.namespaceEnter()
         self.classEnter()
-        self.access("public")
+        self.label("public:")
         self.inputIds()
         self.blank()
         self.outputIds()
@@ -56,7 +79,7 @@ class HeaderGenerator(MethodGenerator):
         self.constructor()
         self.kernelOverloads()
         self.blank()
-        self.access("private")
+        self.label("private:")
         self.statics()
         self.blank()
         self.setupFunctions()
@@ -72,7 +95,7 @@ class HeaderGenerator(MethodGenerator):
         with file("{0}.h".format(self.className()), "w") as f:
             f.write(self.string())
     
-    def headerIncludes(self):
+    def includes(self):
         self.line('#include "Config.h"');
         self.line('#include <stromx/core/Enum.h>');
         self.line('#include <stromx/core/OperatorKernel.h>');
@@ -82,23 +105,10 @@ class HeaderGenerator(MethodGenerator):
         self.line("#ifndef {0}".format(self.includeGuard()))
         self.line("#define {0}".format(self.includeGuard()))
         
-    def namespaceEnter(self):
-        self.line("namespace stromx")
-        self.line("{")
-        self.increaseIndent()
-        self.line("namespace {0}".format(self.p.ident.lower()))
-        self.line("{")
-        self.increaseIndent()
-        
     def classEnter(self):
         self.line("class {0} {1} : public core::OperatorKernel".format(
                     self.apiDecl(), self.className()))
         self.line("{")
-        self.increaseIndent()
-        
-    def access(self, key):
-        self.decreaseIndent()
-        self.line("{0}:".format(key))
         self.increaseIndent()
         
     def inputIds(self):
@@ -131,6 +141,7 @@ class HeaderGenerator(MethodGenerator):
         self.line("static const std::string TYPE;")
         
     def setupFunctions(self):
+        self.line("const std::vector<const core::Parameter*> setupInitParameters();")
         self.line("const std::vector<const core::Parameter*> setupParameters();")
         self.line("const std::vector<const core::Description*> setupInputs();")
         self.line("const std::vector<const core::Description*> setupOutputs();")
@@ -138,30 +149,22 @@ class HeaderGenerator(MethodGenerator):
     def parameters(self):
         params = [p for p in self.m.args if isinstance(p, Parameter)]
         for p in params:
-            self.line("{0} m_{1};".format(Types.dataType(p.dataType),
-                                          Names.methodName(p.ident)))
+            self.line("{0} {1};".format(Types.dataType(p.dataType),
+                                        Names.attributeName(p.ident)))
         
     def enum(self, name, values):
         self.line("enum {0}".format(name))
-        self.line("{")
-        self.increaseIndent()
+        self.scopeEnter()
         for i, v in zip(range(len(values)), values):
             if i < len(values) - 1:
                 self.line("{0},".format(v))
             else:
                 self.line(v)
-        self.decreaseIndent()
-        self.line("};")
+        self.scopeExit()
     
     def classExit(self):
         self.decreaseIndent()
         self.line("};")
-    
-    def namespaceExit(self):
-        self.decreaseIndent()
-        self.line("}")
-        self.decreaseIndent()
-        self.line("}")
         
     def includeGuardExit(self):
         self.line("#endif // {0}".format(self.includeGuard()))
@@ -185,6 +188,10 @@ class Names:
     def methodName(s):
         return s
         
+    @staticmethod
+    def attributeName(s):
+        return "m_{0}".format(Names.methodName(s))
+        
 class Types:
     @staticmethod
     def dataType(t):
@@ -192,6 +199,85 @@ class Types:
             return "core::UInt32"
         else:
             assert(False)
+            
+class ImplementationGenerator(MethodGenerator):
+    def __init__(self, package, method):
+        super(ImplementationGenerator, self).__init__(package, method)
+        
+    def generate(self):
+        self.includes()
+        self.blank()
+        self.namespaceEnter()
+        self.constructor()
+        self.blank()
+        self.setParameter()
+        self.blank()
+        self.getParameter()
+        self.namespaceExit()
+    
+    def save(self):
+        with file("{0}.cpp".format(self.className()), "w") as f:
+            f.write(self.string())
+            
+    def includes(self):
+        self.line('#include "{0}.h"'.format(self.className()))
+        self.blank()
+        self.line('#include "Image.h"')
+        self.line('#include "Matrix.h"')
+        self.line('#include "Utilities.h"')
+        self.line('#include <opencv2/imgproc/imgproc.hpp>')
+        self.line('#include <stromx/core/DataContainer.h>')
+        self.line('#include <stromx/core/DataProvider.h>')
+        self.line('#include <stromx/core/EnumParameter.h>')
+        self.line('#include <stromx/core/Id2DataPair.h>')
+        self.line('#include <stromx/core/NumericParameter.h>')
+        self.line('#include <stromx/core/OperatorException.h>')
+        self.line('#include <stromx/core/ReadAccess.h>')
+        self.line('#include <stromx/core/WriteAccess.h>')
+    
+    def constructor(self):
+        self.line("{0}()".format(self.method(self.className())))
+        self.line("  : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters())")
+        self.increaseIndent()
+        params = [p for p in self.m.args if isinstance(p, Parameter)]
+        for p in params:
+            self.line("{0}({1}),".format(Names.attributeName(p.ident),
+                                         p.default))
+        self.decreaseIndent()
+        self.scopeEnter()
+        self.scopeExit()
+        
+    def setParameter(self):
+        self.line("void {0}(unsigned int id, const Data& value)"\
+            .format(self.method("setParameter")))
+        self.scopeEnter()
+        self.line("try")
+        self.scopeEnter()
+        self.line("switch(id)")
+        self.scopeEnter()
+        self.label("default")
+        self.line("throw WrongParameterId(id, *this);")
+        self.scopeExit()
+        self.scopeExit()
+        self.line("catch(core::BadCast&)")
+        self.scopeEnter()
+        self.line("throw WrongParameterType(parameter(id), *this);")
+        self.scopeExit()
+        self.scopeExit()
+        
+    def getParameter(self):
+        self.line("const DataRef {0}(unsigned int id)"\
+            .format(self.method("getParameter")))
+        self.scopeEnter()
+        self.line("switch(id)")
+        self.scopeEnter()
+        self.label("default")
+        self.line("throw WrongParameterId(id, *this);")
+        self.scopeExit()
+        self.scopeExit()
+        
+    def method(self, s):
+        return "{0}::{1}".format(self.className(), s)
     
 if __name__ == "__main__":
     p = Package()
@@ -228,4 +314,7 @@ if __name__ == "__main__":
     g = HeaderGenerator(p, m)
     g.generate()
     g.save()
+    
+    g = ImplementationGenerator(p, m)
+    g.generate()
     print g.string()
