@@ -156,8 +156,8 @@ class HeaderGenerator(MethodGenerator):
     def enum(self, name, values):
         self.line("enum {0}".format(name))
         self.scopeEnter()
-        for i, v in zip(range(len(values)), values):
-            if i < len(values) - 1:
+        for isEnd, v in Names.listIterator(values):
+            if not isEnd:
                 self.line("{0},".format(v))
             else:
                 self.line(v)
@@ -192,6 +192,12 @@ class Names:
     @staticmethod
     def attributeName(s):
         return "m_{0}".format(Names.methodName(s))
+    
+    @staticmethod
+    def listIterator(l):
+        isEnd = [i == len(l) - 1 for i in range(len(l))]
+        return zip(isEnd, l)
+        
         
 class Types:
     @staticmethod
@@ -346,6 +352,12 @@ class ImplementationGenerator(MethodGenerator):
         self.line("void {0}(core::DataProvider & provider)"\
             .format(self.method("execute")))
         self.scopeEnter()
+        argStr = ""
+        for isEnd, arg in Names.listIterator(self.m.args):
+            argStr += arg.ident
+            if not isEnd:
+                argStr += ", "
+        self.line("cv::{0}({1});".format(self.m.ident, argStr))
         self.scopeExit()
         
     def method(self, s):
