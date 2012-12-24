@@ -15,6 +15,50 @@ class Package(object):
     name = ""
     description = ""
     
+class Names:
+    @staticmethod
+    def className(s):
+        return "{0}{1}".format(s[0].upper(), s[1:])
+        
+    @staticmethod
+    def constantName(s):
+        """
+        >>> Names.constantName("srcPos")
+        'SRC_POS'
+        >>> Names.constantName("SrcPosF")
+        'SRC_POS_F'
+        >>> Names.constantName("SrcPos1")
+        'SRC_POS_1'
+        """
+        result = ""
+        for c in s:
+            if c.isupper() or c.isdigit():
+                result += '_'
+            result += c.upper()
+        return result.strip("_")
+        
+    @staticmethod
+    def methodName(s):
+        return s
+        
+    @staticmethod
+    def attributeName(s):
+        return "m_{0}".format(Names.methodName(s))
+    
+    @staticmethod
+    def listIterator(l):
+        isEnd = [i == len(l) - 1 for i in range(len(l))]
+        return zip(isEnd, l)
+        
+        
+class Types:
+    @staticmethod
+    def dataType(t):
+        if t == DataType.UINT_32:
+            return "core::UInt32"
+        else:
+            assert(False)
+    
 class Method(object):
     """
     >>> args = [InputArgument(), OutputArgument(), InputArgument()]
@@ -43,35 +87,14 @@ class Method(object):
         return outputs [0]
         
 class MethodFragment(object):
-    def initializeParameter(self):
-        return ""
-    
-    def activateParameter(self):
-        return ""
-    
-    def inputConnector(self):
-        return ""
+    def inputId(self):
+        return []
         
-    def getParameter(self):
-        return ""
-    
-    def setParameter(self):
-        return ""
+    def outputId(self):
+        return []
         
-    def inputMapper(self):
-        return ""
-        
-    def outputMapper(self):
-        return ""
-        
-    def toCvType(self):
-        return ""
-        
-    def toDataType(self):
-        return
-        
-    def allocate(self):
-        return
+    def paramId(self):
+        return []
 
 class Argument(MethodFragment):
     ident = ""
@@ -91,6 +114,9 @@ class OutputArgument(Argument):
         
 class Parameter(InputArgument):
     default = None
+    
+    def paramId(self):
+        return [Names.constantName(self.ident)]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -100,10 +126,20 @@ class Constant(InputArgument):
     value = ""
     
 class Input(InputArgument):
-    pass
+    def inputId(self):
+        return [Names.constantName(self.ident)]
 
 class Output(OutputArgument):
     inPlace = None
+    
+    def outputId(self):
+        return [Names.constantName(self.ident)]
+        
+    def paramId(self):
+        if self.inPlace:
+            return [Names.constantName("inPlace")]
+        else:
+            return []
     
 class Allocation(OutputArgument):
     pass

@@ -112,18 +112,15 @@ class HeaderGenerator(MethodGenerator):
         self.increaseIndent()
         
     def inputIds(self):
-        values = [Names.constantName(v.ident) for v in self.m.args
-                                              if isinstance(v, Input)]
+        values = self.collect("inputId")
         self.enum("InputId", values)
         
     def outputIds(self):
-        values = [Names.constantName(v.ident) for v in self.m.args
-                                              if isinstance(v, Output)]
+        values = self.collect("outputId")
         self.enum("OutputId", values)
     
     def parameterIds(self):
-        values = [Names.constantName(v.ident) for v in self.m.args
-                                              if isinstance(v, Parameter)]
+        values = self.collect("paramId")
         self.enum("ParameterId", values)
         
     def constructor(self):
@@ -176,36 +173,11 @@ class HeaderGenerator(MethodGenerator):
     def apiDecl(self):
         return "STROMX_{0}_API".format(p.ident.upper())
         
-class Names:
-    @staticmethod
-    def className(s):
-        return "{0}{1}".format(s[0].upper(), s[1:])
-        
-    @staticmethod
-    def constantName(s):
-        return s.upper()
-        
-    @staticmethod
-    def methodName(s):
-        return s
-        
-    @staticmethod
-    def attributeName(s):
-        return "m_{0}".format(Names.methodName(s))
-    
-    @staticmethod
-    def listIterator(l):
-        isEnd = [i == len(l) - 1 for i in range(len(l))]
-        return zip(isEnd, l)
-        
-        
-class Types:
-    @staticmethod
-    def dataType(t):
-        if t == DataType.UINT_32:
-            return "core::UInt32"
-        else:
-            assert(False)
+    def collect(self, method):
+        l = []
+        for arg in self.m.args:
+            l.extend(arg.__getattribute__(method)())
+        return l
             
 class ImplementationGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -397,7 +369,7 @@ if __name__ == "__main__":
     
     g = HeaderGenerator(p, m)
     g.generate()
-    g.save()
+    print g.string()
     
     g = ImplementationGenerator(p, m)
     g.generate()
