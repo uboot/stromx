@@ -293,6 +293,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const core::Parameter*> parameters;")
         self.blank()
+        values = self.collect("initParamCreate")
+        for v in values:
+            for l in v:
+                self.line(l)
+            self.blank()
         self.line("return parameters;")
         self.scopeExit()
     
@@ -302,6 +307,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const Parameter*> parameters;")
         self.blank()
+        values = self.collect("paramCreate")
+        for v in values:
+            for l in v:
+                self.line(l)
+            self.blank()
         self.line("return parameters;")
         self.scopeExit()
     
@@ -370,6 +380,7 @@ if __name__ == "__main__":
     
     arg3 = NumericParameter()
     arg3.ident = "ksize"
+    arg3.name = "Kernel size"
     arg3.cvType = CvType.INT
     arg3.dataType = DataType.UINT_32
     arg3.default = 3

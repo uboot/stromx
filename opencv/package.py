@@ -90,6 +90,12 @@ class MethodFragment(object):
         
     def paramSet(self):
         return []
+        
+    def paramCreate(self):
+        return []
+        
+    def initParamCreate(self):
+        return []
 
 class Argument(MethodFragment):
     ident = ""
@@ -138,7 +144,15 @@ class Parameter(InputArgument):
             .format(Names.attributeName(self.ident), Types.dataType(self.dataType)))
         lines.append("break;")
         impl.lines = lines
-        return [impl]        
+        return [impl]      
+        
+    def paramCreate(self):
+        lines = []
+        lines.append("Parameter* {0} = new Parameter({0});"\
+            .format(self.ident, Names.constantName(self.ident)))
+        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append("parameters.push_back({0});".format(self.ident))
+        return [lines]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -197,6 +211,14 @@ class Output(OutputArgument):
         lines.append("break;")
         impl.lines = lines
         return [impl]    
+        
+    def initParamCreate(self):
+        lines = []
+        lines.append("Parameter* inPlace = new Parameter({0});"\
+            .format(Names.constantName("inPlace")))
+        lines.append('inPlace->setDoc("In place");')
+        lines.append("parameters.push_back(inPlace);")
+        return [lines]
     
 class Allocation(OutputArgument):
     pass
