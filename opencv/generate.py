@@ -57,6 +57,12 @@ class MethodGenerator(object):
         self.decreaseIndent()
         self.line("{0}:".format(key))
         self.increaseIndent()
+        
+    def collect(self, method):
+        l = []
+        for arg in self.m.args:
+            l.extend(arg.__getattribute__(method)())
+        return l
 
 class HeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -145,10 +151,9 @@ class HeaderGenerator(MethodGenerator):
         self.line("const std::vector<const core::Description*> setupOutputs();")
         
     def parameters(self):
-        params = [p for p in self.m.args if isinstance(p, Parameter)]
-        for p in params:
-            self.line("{0} {1};".format(Types.dataType(p.dataType),
-                                        Names.attributeName(p.ident)))
+        values = self.collect("paramDecl")
+        for v in values:
+            self.line("{0};".format(v))
         
     def enum(self, name, values):
         self.line("enum {0}".format(name))
@@ -172,12 +177,6 @@ class HeaderGenerator(MethodGenerator):
     
     def apiDecl(self):
         return "STROMX_{0}_API".format(p.ident.upper())
-        
-    def collect(self, method):
-        l = []
-        for arg in self.m.args:
-            l.extend(arg.__getattribute__(method)())
-        return l
             
 class ImplementationGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -231,12 +230,14 @@ class ImplementationGenerator(MethodGenerator):
     def constructor(self):
         self.line("{0}()".format(self.method(self.className())))
         self.line(("  : core::OperatorKernel(TYPE, PACKAGE, VERSION, " +
-                   "setupInitParameters())"))
+                   "setupInitParameters()),"))
         self.increaseIndent()
-        params = [p for p in self.m.args if isinstance(p, Parameter)]
-        for p in params:
-            self.line("{0}({1}),".format(Names.attributeName(p.ident),
-                                         p.default))
+        values = self.collect("paramInit")
+        for isEnd, v in Names.listIterator(values):
+            if not isEnd:
+                self.line("{0},".format(v))
+            else:
+                self.line(v)
         self.decreaseIndent()
         self.scopeEnter()
         self.scopeExit()

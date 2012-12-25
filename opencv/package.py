@@ -60,31 +60,10 @@ class Types:
             assert(False)
     
 class Method(object):
-    """
-    >>> args = [InputArgument(), OutputArgument(), InputArgument()]
-    >>> m = Method()
-    >>> m.args = args
-    >>> m.inputs
-    [InputArgument(), InputArgument()]
-    >>> m.output
-    OutputArgument()
-    """
     ident = ""
     name = ""
     description = ""
     args = []
-    
-    @property
-    def inputs(self):
-        inputs =  [arg for arg in self.args if isinstance(arg, InputArgument)]
-        assert(len(inputs) > 0)
-        return inputs
-
-    @property
-    def output(self):
-        outputs = [arg for arg in self.args if isinstance(arg, OutputArgument)]
-        assert(len(outputs) == 1)
-        return outputs [0]
         
 class MethodFragment(object):
     def inputId(self):
@@ -94,6 +73,12 @@ class MethodFragment(object):
         return []
         
     def paramId(self):
+        return []
+        
+    def paramDecl(self):
+        return []
+        
+    def paramInit(self):
         return []
 
 class Argument(MethodFragment):
@@ -117,6 +102,15 @@ class Parameter(InputArgument):
     
     def paramId(self):
         return [Names.constantName(self.ident)]
+        
+    def paramDecl(self):
+        decl = "{0} {1}".format(Types.dataType(self.dataType),
+                                 Names.attributeName(self.ident))
+        return [decl]
+        
+    def paramInit(self):
+        return ["{0}({1})".format(Names.attributeName(self.ident),
+                                  self.default)]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -138,6 +132,18 @@ class Output(OutputArgument):
     def paramId(self):
         if self.inPlace:
             return [Names.constantName("inPlace")]
+        else:
+            return []
+            
+    def paramDecl(self):
+        if self.inPlace:
+            return ["core::Bool m_inPlace"]
+        else:
+            return []
+            
+    def paramInit(self):
+        if self.inPlace:
+            return ["m_inPlace(false)"]
         else:
             return []
     
