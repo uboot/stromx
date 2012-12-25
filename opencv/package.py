@@ -9,10 +9,15 @@ class DataType:
     UNDEFINED = 0
     IMAGE = 1
     UINT_32 = 2
+    BOOL = 3
     
 class EnumImpl:
     label = ""
     lines = []
+    
+class Format:
+    INCREASE_INDENT = 0
+    DECREASE_INDENT = 1
     
 class Package(object):
     ident = ""
@@ -58,10 +63,26 @@ class Names:
 class Types:
     @staticmethod
     def dataType(t):
-        if t == DataType.UINT_32:
+        if t == DataType.BOOL:
+            return "core::BOOL"
+        elif t == DataType.UINT_32:
             return "core::UInt32"
+        elif t == DataType.IMAGE:
+            return "core::IMAGE"
         else:
             assert(False)
+    
+    @staticmethod
+    def dataVariant(t):
+        if t == DataType.BOOL:
+            return "core::DataVariant::BOOL"
+        elif t == DataType.UINT_32:
+            return "core::DataVariant::UINT_32"
+        elif t == DataType.IMAGE:
+            return "core::DataVariant::IMAGE"
+        else:
+            assert(False)
+        
     
 class Method(object):
     ident = ""
@@ -96,6 +117,12 @@ class MethodFragment(object):
         
     def initParamCreate(self):
         return []
+        
+    def inputCreate(self):
+        return []
+        
+    def outputCreate(self):
+        return []  
 
 class Argument(MethodFragment):
     ident = ""
@@ -141,15 +168,18 @@ class Parameter(InputArgument):
         impl.label = Names.constantName(self.ident)
         lines = []
         lines.append("{0} = core::data_cast<{1}>(value);"\
-            .format(Names.attributeName(self.ident), Types.dataType(self.dataType)))
+            .format(Names.attributeName(self.ident),
+                    Types.dataType(self.dataType)))
         lines.append("break;")
         impl.lines = lines
         return [impl]      
         
     def paramCreate(self):
         lines = []
-        lines.append("Parameter* {0} = new Parameter({0});"\
-            .format(self.ident, Names.constantName(self.ident)))
+        lines.append("Parameter* {0} = new Parameter({1}, {2});"\
+            .format(self.ident,
+                    Names.constantName(self.ident),
+                    Types.dataType(self.dataType)))
         lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
@@ -164,6 +194,16 @@ class Constant(InputArgument):
 class Input(InputArgument):
     def inputId(self):
         return [Names.constantName(self.ident)]
+        
+    def inputCreate(self):
+        lines = []
+        lines.append("Description* {0} = new Description({1}, {2});"\
+            .format(self.ident,
+                    Names.constantName(self.ident),
+                    Types.dataVariant(self.dataType)))
+        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append("inputs.push_back({0});".format(self.ident))
+        return [lines]
 
 class Output(OutputArgument):
     inPlace = None
@@ -214,10 +254,38 @@ class Output(OutputArgument):
         
     def initParamCreate(self):
         lines = []
-        lines.append("Parameter* inPlace = new Parameter({0});"\
-            .format(Names.constantName("inPlace")))
+        lines.append("Parameter* inPlace = new Parameter({0}, {1});"\
+            .format(Names.constantName("inPlace"),
+                    Types.dataVariant(self.dataType)))
         lines.append('inPlace->setDoc("In place");')
         lines.append("parameters.push_back(inPlace);")
+        return [lines]
+        
+    def inputCreate(self):
+        lines = []
+        if self.inPlace:
+            lines.append("if(! m_inPlace)")
+            lines.append("{")
+            lines.append(Format.INCREASE_INDENT)
+        lines.append("Description* {0} = new Description({1}, {2});"\
+            .format(self.ident,
+                    Names.constantName(self.ident),
+                    Types.dataVariant(self.dataType)))
+        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append("inputs.push_back({0});".format(self.ident))
+        if self.inPlace:
+            lines.append(Format.DECREASE_INDENT)
+            lines.append("}")
+        return [lines]
+        
+    def outputCreate(self):
+        lines = []
+        lines.append("Description* {0} = new Description({1}, {2});"\
+            .format(self.ident,
+                    Names.constantName(self.ident),
+                    Types.dataVariant(self.dataType)))
+        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append("outputs.push_back({0});".format(self.ident))
         return [lines]
     
 class Allocation(OutputArgument):

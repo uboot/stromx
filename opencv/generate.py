@@ -27,6 +27,15 @@ class MethodGenerator(object):
         self.indent -= 4
     
     def line(self, line):
+        if isinstance(line, int):
+            if line == Format.INCREASE_INDENT:
+                self.increaseIndent()
+            elif line == Format.DECREASE_INDENT:
+                self.decreaseIndent()
+            else:
+                assert(False)
+            return
+            
         self.lines.append("{0}{1}".format(" " * self.indent, line))
         
     def blank(self):
@@ -321,6 +330,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const core::Description*> inputs;")
         self.blank()
+        values = self.collect("inputCreate")
+        for v in values:
+            for l in v:
+                self.line(l)
+            self.blank()
         self.line("return inputs;")
         self.scopeExit()
     
@@ -330,6 +344,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const core::Description*> outputs;")
         self.blank()
+        values = self.collect("outputCreate")
+        for v in values:
+            for l in v:
+                self.line(l)
+            self.blank()
         self.line("return outputs;")
         self.scopeExit()
         
@@ -367,13 +386,13 @@ if __name__ == "__main__":
     
     arg1 = Input()
     arg1.ident = "src"
-    arg1.name = "source"
+    arg1.name = "Source"
     arg1.cvType = CvType.MAT
     arg1.dataType = DataType.IMAGE
     
     arg2 = Output()
     arg2.ident = "dst"
-    arg2.name = "destination"
+    arg2.name = "Destination"
     arg2.cvType = CvType.MAT
     arg2.dataType = DataType.IMAGE
     arg2.inPlace = arg1
