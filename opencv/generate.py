@@ -256,6 +256,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
+        values = self.collect("paramSet")
+        for v in values:
+            self.label("case {0}".format(v.label))
+            for l in v.lines:
+                self.line(l)
         self.label("default")
         self.line("throw core::WrongParameterId(id, *this);")
         self.scopeExit()
@@ -272,6 +277,11 @@ class ImplementationGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
+        values = self.collect("paramGet")
+        for v in values:
+            self.label("case {0}".format(v.label))
+            for l in v.lines:
+                self.line(l)
         self.label("default")
         self.line("throw core::WrongParameterId(id, *this);")
         self.scopeExit()

@@ -10,6 +10,10 @@ class DataType:
     IMAGE = 1
     UINT_32 = 2
     
+class EnumImpl:
+    label = ""
+    lines = []
+    
 class Package(object):
     ident = ""
     name = ""
@@ -80,6 +84,12 @@ class MethodFragment(object):
         
     def paramInit(self):
         return []
+        
+    def paramGet(self):
+        return []
+        
+    def paramSet(self):
+        return []
 
 class Argument(MethodFragment):
     ident = ""
@@ -111,6 +121,24 @@ class Parameter(InputArgument):
     def paramInit(self):
         return ["{0}({1})".format(Names.attributeName(self.ident),
                                   self.default)]
+                                  
+    def paramGet(self):
+        impl = EnumImpl()
+        impl.label = Names.constantName(self.ident)
+        lines = []
+        lines.append("return {0};".format(Names.attributeName(self.ident)))
+        impl.lines = lines
+        return [impl]
+        
+    def paramSet(self):
+        impl = EnumImpl()
+        impl.label = Names.constantName(self.ident)
+        lines = []
+        lines.append("{0} = core::data_cast<{1}>(value);"\
+            .format(Names.attributeName(self.ident), Types.dataType(self.dataType)))
+        lines.append("break;")
+        impl.lines = lines
+        return [impl]        
 
 class NumericParameter(Parameter):
     minValue = None
@@ -130,22 +158,45 @@ class Output(OutputArgument):
         return [Names.constantName(self.ident)]
         
     def paramId(self):
-        if self.inPlace:
-            return [Names.constantName("inPlace")]
-        else:
+        if not self.inPlace:
             return []
+            
+        return [Names.constantName("inPlace")]
             
     def paramDecl(self):
-        if self.inPlace:
-            return ["core::Bool m_inPlace"]
-        else:
+        if not self.inPlace:
             return []
             
+        return ["core::Bool m_inPlace"]
+            
     def paramInit(self):
-        if self.inPlace:
-            return ["m_inPlace(false)"]
-        else:
+        if not self.inPlace:
             return []
+            
+        return ["m_inPlace(false)"]
+                                  
+    def paramGet(self):
+        if not self.inPlace:
+            return []
+            
+        impl = EnumImpl()
+        impl.label = Names.constantName(self.ident)
+        lines = []
+        lines.append("return m_inPlace;")
+        impl.lines = lines
+        return [impl]
+        
+    def paramSet(self):
+        if not self.inPlace:
+            return []
+            
+        impl = EnumImpl()
+        impl.label = Names.constantName("inPlace")
+        lines = []
+        lines.append("m_inPlace = core::data_cast<core::Bool>(value);")
+        lines.append("break;")
+        impl.lines = lines
+        return [impl]    
     
 class Allocation(OutputArgument):
     pass
