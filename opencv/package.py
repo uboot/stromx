@@ -64,11 +64,11 @@ class Types:
     @staticmethod
     def dataType(t):
         if t == DataType.BOOL:
-            return "core::BOOL"
+            return "core::Bool"
         elif t == DataType.UINT_32:
             return "core::UInt32"
         elif t == DataType.IMAGE:
-            return "core::IMAGE"
+            return "core::Image"
         else:
             assert(False)
     
@@ -123,6 +123,21 @@ class MethodFragment(object):
         
     def outputCreate(self):
         return []  
+        
+    def inputMapper(self):
+        return []
+        
+    def outputMapper(self):
+        return []
+        
+    def receiveInput(self):
+        return []
+        
+    def readAccess(self):
+        return []
+        
+    def writeAccess(self):
+        return []
 
 class Argument(MethodFragment):
     ident = ""
@@ -204,6 +219,24 @@ class Input(InputArgument):
         lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
         return [lines]
+    
+    def inputMapper(self):
+        lines = []
+        lines.append("core::Id2DataMapper {0}InMapper({1});"\
+            .format(self.ident, Names.constantName(self.ident)))
+        return lines
+        
+    def receiveInput(self, inPlace = False):
+        inputMappers = []
+        inputMappers.append("{0}InMapper".format(self.ident))
+        return inputMappers
+        
+    def readAccess(self):
+        lines = []
+        lines.append("core::ReadAccess<{0}> {1}Access({1}InMapper.data());"\
+            .format(Types.dataType(self.dataType),
+                    self.ident))
+        return lines
 
 class Output(OutputArgument):
     inPlace = None
@@ -288,6 +321,30 @@ class Output(OutputArgument):
         lines.append("outputs.push_back({0});".format(self.ident))
         return [lines]
     
+    def inputMapper(self):
+        lines = []
+        lines.append("core::Id2DataMapper {0}InMapper({1});"\
+            .format(self.ident, Names.constantName(self.ident)))
+        return lines
+    
+    def outputMapper(self):
+        lines = []
+        lines.append("core::Id2DataMapper {0}OutMapper({1}, result);"\
+            .format(self.ident, Names.constantName(self.ident)))
+        return lines
+        
+    def receiveInput(self):
+        inputMappers = []
+        inputMappers.append("{0}InMapper".format(self.ident))
+        return inputMappers
+        
+    def writeAccess(self):
+        lines = []
+        lines.append("core::Write<{0}> {1}Access({1}InMapper.data());"\
+            .format(Types.dataType(self.dataType),
+                    self.ident))
+        return lines
+        
 class Allocation(OutputArgument):
     pass
 

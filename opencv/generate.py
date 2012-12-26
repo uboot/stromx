@@ -364,12 +364,37 @@ class ImplementationGenerator(MethodGenerator):
         self.line("void {0}(core::DataProvider & provider)"\
             .format(self.method("execute")))
         self.scopeEnter()
+        values = self.collect("inputMapper")
+        for v in values:
+            self.line(v)
+        self.blank()
+        values = self.collect("receiveInput")
+        inputMapper = ""
+        for isEnd, v in Names.listIterator(values):
+            if not isEnd:
+                inputMapper += v + " && "
+            else:
+                inputMapper += v
+        self.line("provider.receiveInput({0});".format(inputMapper))
+        self.blank()
+        values = self.collect("writeAccess")
+        for v in values:
+            self.line(v)
+        self.blank()
+        values = self.collect("readAccess")
+        for v in values:
+            self.line(v)
+        self.blank()
         argStr = ""
         for isEnd, arg in Names.listIterator(self.m.args):
             argStr += arg.ident
             if not isEnd:
                 argStr += ", "
         self.line("cv::{0}({1});".format(self.m.ident, argStr))
+        self.blank()
+        values = self.collect("outputMapper")
+        for v in values:
+            self.line(v)
         self.scopeExit()
         
     def method(self, s):
