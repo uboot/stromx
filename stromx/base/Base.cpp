@@ -29,6 +29,7 @@
 #include "Image.h"
 #include "HoughLinesP.h"
 #include "Open.h"
+#include "WebCamera.h"
 #include <stromx/core/Exception.h>
 #include <stromx/core/Registry.h>
 
@@ -51,4 +52,5 @@ void stromxRegisterBase(stromx::core::Registry& registry)
     registry.registerOperator(new Erode);
     registry.registerOperator(new HoughLinesP);
     registry.registerOperator(new Open);
+    registry.registerOperator(new WebCamera);
 }
