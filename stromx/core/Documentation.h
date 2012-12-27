@@ -62,6 +62,12 @@ namespace stromx
             /** Returns the details. */
             const std::string & details() const { return m_details; }
             
+            /** Returns true if the title of the documentation is not empty. */
+            bool hasTitle() const { return m_title.empty(); }
+            
+            /** Returns true if the description of the documentation is not empty. */
+            bool hasDescription() const { return m_details.empty(); }
+            
         private:
             std::string m_title;
             std::string m_details;

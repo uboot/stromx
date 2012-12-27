@@ -26,63 +26,177 @@ namespace stromx
 {
     namespace core
     {
-        /** \brief %Description of a data variant. */
+        /** \brief %Description of a data variant.
+         *
+         * A data variant describes type of a Data object, i.e. which subclass of Data the object
+         * is an instance of. Some data variants give further details about the data object, e.g the
+         * type of the entries of a Matrix object (their type is not characterized by the class type
+         * but by a class member).
+         */
         class STROMX_CORE_API DataVariant
         {
             STROMX_CORE_API friend bool operator==(const DataVariant & lhs, const DataVariant & rhs);
             STROMX_CORE_API friend std::ostream& operator<< (std::ostream& out, const DataVariant & container);
             
         public:
+            /** A subclass of Data which contains no data. */
             const static DataVariant NONE;
+            
+            /** Any subclass of Data. */
             const static DataVariant DATA;
+            
+            /** A Trigger object. */
             const static DataVariant TRIGGER;
+            
+            /** Any Primitive object. */
             const static DataVariant PRIMITIVE;
+            
+            /** A Bool object. */
             const static DataVariant BOOL;
+            
+            /** An Enum object. */
             const static DataVariant ENUM;
+            
+            /** Any of Int8, Int16 or Int32. */
             const static DataVariant INT;
+            
+            /** Any of UInt8, UInt16 or UInt32. */
             const static DataVariant UINT;
+            
+            /** An Int8 object. */
             const static DataVariant INT_8;
+            
+            /** An UInt8 object. */
             const static DataVariant UINT_8;
+            
+            /** An Int16 object. */
             const static DataVariant INT_16;
+            
+            /** An UInt16 object. */
             const static DataVariant UINT_16;
+            
+            /** An Int32 object. */
             const static DataVariant INT_32;
+            
+            /** An UInt32 object. */
             const static DataVariant UINT_32;
+            
+            /** A Float object. */
             const static DataVariant FLOAT;
+            
+            /** A Double object. */
             const static DataVariant DOUBLE;
+            
+            /** A String object. */
             const static DataVariant STRING;
+            
+            /** Any Matrix object. */
             const static DataVariant MATRIX;
+            
+            /** A Matrix object with value type Matrix::INT_8, Matrix::INT_16 or Matrix::INT_32. */
             const static DataVariant INT_MATRIX;
+            
+            /** A Matrix object with value type Matrix::UINT_8, Matrix::UINT_16 or Matrix::UINT_32. */
             const static DataVariant UINT_MATRIX;
+            
+            /** A Matrix object with Matrix::INT_8 value type. */
             const static DataVariant INT_8_MATRIX;
+            
+            /** A Matrix object with Matrix::UINT_8 value type. */
             const static DataVariant UINT_8_MATRIX;
+            
+            /** A Matrix object with Matrix::INT_16 value type. */
             const static DataVariant INT_16_MATRIX;
+            
+            /** A Matrix object with Matrix::UINT_16 value type. */
             const static DataVariant UINT_16_MATRIX;
+            
+            /** A Matrix object with Matrix::INT_32 value type. */
             const static DataVariant INT_32_MATRIX;
+            
+            /** A Matrix object with Matrix::UINT_32 value type. */
             const static DataVariant UINT_32_MATRIX;
+            
+            /** A Matrix object with Matrix::FLOAT value type. */
             const static DataVariant FLOAT_MATRIX;
+            
+            /** A Matrix object with Matrix::DOUBLE value type. */
             const static DataVariant DOUBLE_MATRIX;
+            
+            /** Any Image object. */
             const static DataVariant IMAGE;
+            
+            /** An Image object with pixel type Image::MONO_8 or Image::MONO_16. */
             const static DataVariant MONO_IMAGE;
+            
+            /** 
+             * An Image object with pixel type Image::RGB_24, Image::BGR_24, 
+             * Image::RGB_48 or Image::BGR_48.
+             */
             const static DataVariant RGB_IMAGE;
+            
+            /** An Image object with Image::MONO_8 pixel type. */
             const static DataVariant MONO_8_IMAGE;
+            
+            /** An Image object with Image::RGB_24 pixel type. */
             const static DataVariant RGB_24_IMAGE;
+            
+            /** An Image object with Image::BGR_24 pixel type. */
             const static DataVariant BGR_24_IMAGE;
+            
+            /** An Image object with Image::BAYERBG_8 pixel type. */
             const static DataVariant BAYERBG_8_IMAGE;
+            
+            /** An Image object with Image::BAYERGB_8 pixel type. */
             const static DataVariant BAYERGB_8_IMAGE;
+            
+            /** An Image object with Image::MONO_16 pixel type. */
             const static DataVariant MONO_16_IMAGE;
+            
+            /** An Image object with Image::RGB_48 pixel type. */
             const static DataVariant RGB_48_IMAGE;
+            
+            /** An Image object with Image::BGR_48 pixel type. */
             const static DataVariant BGR_48_IMAGE;
             
+            /** 
+             * Constructs a data variant. The pair (\c package, \c id) uniquely identifies
+             * the data variant.
+             */
+            DataVariant(const unsigned int id, const std::string & package)
+              : m_id(id),
+                m_package(package)
+            {}
+            
+            /** 
+             * Constructs a data variant with documentation. The pair (\c package, \c id) uniquely identifies
+             * the data variant.
+             */
             DataVariant(const unsigned int id, const std::string & package, const Documentation & doc)
               : m_id(id),
                 m_package(package),
                 m_doc(doc)
             {}
             
+            /** 
+             * Constructs a data variant with a documentation title. The pair (\c package, \c id) 
+             * uniquely identifies the data variant.
+             */
+            DataVariant(const unsigned int id, const std::string & package, const std::string & doc)
+              : m_id(id),
+                m_package(package),
+                m_doc(Documentation(doc))
+            {}
+            
             ~DataVariant() {}
             
+            /** Returns the documentation of the data variant. */
             const Documentation & doc() const { return m_doc; }
             
+            /**
+             * Returns true if \c type is a subtype of \c this. E.g.
+             * <tt>INT.isVariant(INT_16) == true</tt>
+             */
             virtual bool isVariant(const DataVariant& type) const;
             
         protected:

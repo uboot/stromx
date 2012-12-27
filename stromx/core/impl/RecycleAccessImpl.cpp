@@ -72,11 +72,16 @@ namespace stromx
                 }
             }
             
+            bool RecycleAccessImpl::empty() const
+            {
+                return m_dataContainer.empty() && m_data.empty();
+            }
+            
             Data* RecycleAccessImpl::get(const bool waitWithTimeout, const unsigned int timeout)
             {
                 unique_lock_t lock(m_mutex);
                 
-                if(m_dataContainer.empty() && m_data.empty())
+                if(empty())
                     return 0;
                 
                 try

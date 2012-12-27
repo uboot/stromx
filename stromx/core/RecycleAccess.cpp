@@ -26,6 +26,14 @@ namespace stromx
         : m_impl(new impl::RecycleAccessImpl(data))
         {
         }
+        
+        bool RecycleAccess::empty() const
+        {
+            if(! m_impl.get())
+                return true;
+            
+            return m_impl->empty();
+        }
 
         Data* RecycleAccess::get() const
         {

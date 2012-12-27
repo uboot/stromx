@@ -30,7 +30,16 @@ namespace
         void observe(const Connector & connector, const DataContainer & data) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
-            this->get_override("observe")(connector, data);
+            
+            try
+            {
+                this->get_override("observe")(connector, data);
+            }
+            catch(...)
+            {
+                // catch everything to make sure the GIL is released
+            }
+            
             PyGILState_Release(state);
         }
     };

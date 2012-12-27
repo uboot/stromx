@@ -42,6 +42,7 @@ namespace stromx
             CPPUNIT_TEST(testGetRecycleAccessInterrupt);
             CPPUNIT_TEST(testAdd);
             CPPUNIT_TEST(testRecycleMultiple);
+            CPPUNIT_TEST(testEmpty);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -62,6 +63,7 @@ namespace stromx
             void testGetRecycleAccessInterrupt();
             void testAdd();
             void testRecycleMultiple();
+            void testEmpty();
             
         private:
             void destroyDelayed(DataContainer & container);
