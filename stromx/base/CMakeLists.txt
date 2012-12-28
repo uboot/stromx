@@ -39,6 +39,7 @@ set(SOURCES
     MorphologicalFilter.cpp
     Open.cpp
     Utilities.cpp
+    WebCamera.cpp
 )
 
 add_library(stromx_base SHARED ${SOURCES})

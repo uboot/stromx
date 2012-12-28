@@ -39,6 +39,7 @@ add_executable(stromx_base_test
     ../MorphologicalFilter.cpp
     ../Open.cpp
     ../Utilities.cpp
+    ../WebCamera.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
     BaseTest.cpp
