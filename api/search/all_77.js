@@ -1,6 +1,7 @@
 var searchData=
 [
   ['welcome_20to_20stromx_21',['Welcome to stromx!',['../index.html',1,'']]],
+  ['webcamera',['WebCamera',['../classstromx_1_1base_1_1_web_camera.html',1,'stromx::base']]],
   ['width',['width',['../classstromx_1_1core_1_1_image.html#ab74d85e7c3b9ea72a9e2d5940452b2d8',1,'stromx::core::Image::width()'],['../classstromx_1_1core_1_1_image_wrapper.html#a97507bc7ac528d7afecfed0d8ffe5870',1,'stromx::core::ImageWrapper::width()']]],
   ['writeaccess',['WriteAccess',['../classstromx_1_1core_1_1_write_access.html',1,'stromx::core']]],
   ['writeaccess',['WriteAccess',['../classstromx_1_1core_1_1_write_access.html#a2529e8660db4050ed6d8c0e87241d40a',1,'stromx::core::WriteAccess::WriteAccess()'],['../classstromx_1_1core_1_1_write_access.html#a20343e5320f937a94406049f275fc1b8',1,'stromx::core::WriteAccess::WriteAccess(const DataContainer &amp;data)'],['../classstromx_1_1core_1_1_write_access.html#abb0f5fb822bb16630ff72963a7ad2f8b',1,'stromx::core::WriteAccess::WriteAccess(const DataContainer &amp;data, const unsigned int timeout)']]],

@@ -8,6 +8,8 @@ var searchData=
   ['fileexception',['FileException',['../classstromx_1_1core_1_1_file_exception.html',1,'stromx::core']]],
   ['fileinput',['FileInput',['../classstromx_1_1core_1_1_file_input.html',1,'stromx::core']]],
   ['fileoutput',['FileOutput',['../classstromx_1_1core_1_1_file_output.html',1,'stromx::core']]],
-  ['float',['Float',['../namespacestromx_1_1core.html#ad0a928d3f6b33eb1c23c7e5a05e3ae6a',1,'stromx::core']]],
-  ['fork',['Fork',['../classstromx_1_1core_1_1_fork.html',1,'stromx::core']]]
+  ['float',['FLOAT',['../classstromx_1_1core_1_1_data_variant.html#a9bfd458cd92c77afe07344c564a5b5cc',1,'stromx::core::DataVariant::FLOAT()'],['../namespacestromx_1_1core.html#ad0a928d3f6b33eb1c23c7e5a05e3ae6a',1,'stromx::core::Float()']]],
+  ['float_5fmatrix',['FLOAT_MATRIX',['../classstromx_1_1core_1_1_data_variant.html#ab489ede9d415ab6175558b6c5966df65',1,'stromx::core::DataVariant']]],
+  ['fork',['Fork',['../classstromx_1_1core_1_1_fork.html',1,'stromx::core']]],
+  ['format',['Format',['../classpackage_1_1_format.html',1,'package']]]
 ];

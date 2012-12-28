@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['webcamera',['WebCamera',['../classstromx_1_1base_1_1_web_camera.html',1,'stromx::base']]],
   ['writeaccess',['WriteAccess',['../classstromx_1_1core_1_1_write_access.html',1,'stromx::core']]],
   ['wrongargument',['WrongArgument',['../classstromx_1_1core_1_1_wrong_argument.html',1,'stromx::core']]],
   ['wrongid',['WrongId',['../classstromx_1_1core_1_1_wrong_id.html',1,'stromx::core']]],

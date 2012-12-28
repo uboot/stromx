@@ -112,13 +112,14 @@ Inheritance diagram for stromx::core::OperatorInfo:</div>
 <area href="classstromx_1_1base_1_1_convert_pixel_type.html" title="Converts the pixel type of image." alt="stromx::base::ConvertPixelType" shape="rect" coords="207,392,404,416"/>
 <area href="classstromx_1_1base_1_1_hough_lines_p.html" title="Computes the Hough line transform of an image." alt="stromx::base::HoughLinesP" shape="rect" coords="207,448,404,472"/>
 <area href="classstromx_1_1base_1_1_image_filter.html" title="Abstract base class of image filters." alt="stromx::base::ImageFilter" shape="rect" coords="207,504,404,528"/>
-<area href="classstromx_1_1core_1_1_counter.html" title="Outputs an increasing integer value." alt="stromx::core::Counter" shape="rect" coords="207,560,404,584"/>
-<area href="classstromx_1_1core_1_1_dump.html" title="Accepts and releases any input data." alt="stromx::core::Dump" shape="rect" coords="207,616,404,640"/>
-<area href="classstromx_1_1core_1_1_fork.html" title="Distributes input data to several outputs." alt="stromx::core::Fork" shape="rect" coords="207,672,404,696"/>
-<area href="classstromx_1_1core_1_1_join.html" title="Distributes input data to several outputs." alt="stromx::core::Join" shape="rect" coords="207,728,404,752"/>
-<area href="classstromx_1_1core_1_1_periodic_delay.html" title="Periodically delays the execution for a defined amount of time." alt="stromx::core::PeriodicDelay" shape="rect" coords="207,784,404,808"/>
-<area href="classstromx_1_1core_1_1_queue.html" title="A data queue of configurable length." alt="stromx::core::Queue" shape="rect" coords="207,840,404,864"/>
-<area href="classstromx_1_1core_1_1_trigger.html" title="Delays the execution until a trigger signal is received." alt="stromx::core::Trigger" shape="rect" coords="207,896,404,920"/>
+<area href="classstromx_1_1base_1_1_web_camera.html" alt="stromx::base::WebCamera" shape="rect" coords="207,560,404,584"/>
+<area href="classstromx_1_1core_1_1_counter.html" title="Outputs an increasing integer value." alt="stromx::core::Counter" shape="rect" coords="207,616,404,640"/>
+<area href="classstromx_1_1core_1_1_dump.html" title="Accepts and releases any input data." alt="stromx::core::Dump" shape="rect" coords="207,672,404,696"/>
+<area href="classstromx_1_1core_1_1_fork.html" title="Distributes input data to several outputs." alt="stromx::core::Fork" shape="rect" coords="207,728,404,752"/>
+<area href="classstromx_1_1core_1_1_join.html" title="Distributes input data to several outputs." alt="stromx::core::Join" shape="rect" coords="207,784,404,808"/>
+<area href="classstromx_1_1core_1_1_periodic_delay.html" title="Periodically delays the execution for a defined amount of time." alt="stromx::core::PeriodicDelay" shape="rect" coords="207,840,404,864"/>
+<area href="classstromx_1_1core_1_1_queue.html" title="A data queue of configurable length." alt="stromx::core::Queue" shape="rect" coords="207,896,404,920"/>
+<area href="classstromx_1_1core_1_1_trigger.html" title="Delays the execution until a trigger signal is received." alt="stromx::core::Trigger" shape="rect" coords="207,952,404,976"/>
 </map>
  </div></div>
 
@@ -129,7 +130,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a19e7f4fd5213f098713450bdc4bb7c5d"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_info.html#a19e7f4fd5213f098713450bdc4bb7c5d">type</a> () const =0</td></tr>
 <tr class="memitem:aefd91f4b136d03a03f658ff957503640"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_info.html#aefd91f4b136d03a03f658ff957503640">package</a> () const =0</td></tr>
 <tr class="memitem:ab12f07d12164d94af2e4c25ef6801cb5"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1core_1_1_version.html">Version</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_info.html#ab12f07d12164d94af2e4c25ef6801cb5">version</a> () const =0</td></tr>
-<tr class="memitem:a14a5a1f23f3040f898450619bfd75c67"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1core_1_1_documentation.html">Documentation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_info.html#a14a5a1f23f3040f898450619bfd75c67">doc</a> () const =0</td></tr>
 <tr class="memitem:aea1027482f940600544dec959989ffe8"><td class="memItemLeft" align="right" valign="top">virtual const std::vector<br class="typebreak"/>
 &lt; const <a class="el" href="classstromx_1_1core_1_1_description.html">Description</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1core_1_1_operator_info.html#aea1027482f940600544dec959989ffe8">inputs</a> () const =0</td></tr>
 <tr class="memitem:ab5f50a53652f54d68996708d7c6e7977"><td class="memItemLeft" align="right" valign="top">virtual const std::vector<br class="typebreak"/>
@@ -144,32 +144,6 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Meta-information about an operator. </p>
 <p>This class contains all the information how to use an operator without looking at its API documentaion. This information reaches its final status only after <a class="el" href="classstromx_1_1core_1_1_operator.html#a84b72cfaf2a77f2f2a79bf2bc308c388">Operator::initialize()</a> is called. </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a14a5a1f23f3040f898450619bfd75c67"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual const <a class="el" href="classstromx_1_1core_1_1_documentation.html">Documentation</a>&amp; stromx::core::OperatorInfo::doc </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns the documentation of the operator. </p>
-
-<p>Implemented in <a class="el" href="classstromx_1_1core_1_1_operator_kernel.html#a63a10535a316d54795b0df254db95e79">stromx::core::OperatorKernel</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aba615a5d9031d80f0f142c950286cac7"></a>
 <div class="memitem">
 <div class="memproto">
