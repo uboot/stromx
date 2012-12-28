@@ -272,7 +272,9 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock, false);
+                        waitForSignal(m_dataCond, lock, false); // wait for the situation to change
+                    else
+                        testForInterrupt(); // give us some chance to escape the while loop
                 }
                 
                 m_dataCond.notify_all();
@@ -298,7 +300,9 @@ namespace stromx
                     }
                     
                     if(! success)
-                        waitForSignal(m_dataCond, lock, false);
+                        waitForSignal(m_dataCond, lock, false); // wait for the situation to change
+                    else
+                        testForInterrupt(); // give us some chance to escape the while loop
                 }
                 
                 m_dataCond.notify_all();
