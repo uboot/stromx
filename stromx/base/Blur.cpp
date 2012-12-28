@@ -60,6 +60,7 @@ namespace stromx
                     }
                     
                     m_kernelSize = data_cast<UInt32>(value);
+                    break;
                 default:
                     ImageFilter::setParameter(id, value);
                 }
