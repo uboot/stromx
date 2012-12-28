@@ -52,7 +52,7 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             Description* input = new Description(INPUT, DataVariant::DATA);
-            input->setDoc("Input");
+            input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;

@@ -464,13 +464,13 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             if(m_outputIndex)
             {
                 Description* index = new Description(INDEX, DataVariant::UINT_32);
-                index->setDoc("Index");
+                index->setTitle("Index");
                 outputs.push_back(index);
             }
             
@@ -482,7 +482,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* outputIndex = new Parameter(OUTPUT_INDEX, DataVariant::BOOL);
-            outputIndex->setDoc("Output index");
+            outputIndex->setTitle("Output index");
             outputIndex->setAccessMode(core::Parameter::NONE_WRITE);
             parameters.push_back(outputIndex);
             
@@ -494,7 +494,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             EnumParameter* triggerMode = new EnumParameter(TRIGGER_MODE);
-            triggerMode->setDoc("Trigger mode");
+            triggerMode->setTitle("Trigger mode");
             triggerMode->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             triggerMode->add(EnumDescription(Enum(SOFTWARE), "Software trigger"));
             triggerMode->add(EnumDescription(Enum(INTERNAL), "Internal"));
@@ -502,87 +502,87 @@ namespace stromx
             parameters.push_back(triggerMode);
             
             Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
-            trigger->setDoc("Trigger");
+            trigger->setTitle("Trigger");
             trigger->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
             
             NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE);
-            exposure->setDoc("Exposure (milliseconds)");
+            exposure->setTitle("Exposure (milliseconds)");
             exposure->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(exposure);
             
             ParameterGroup* wbGroup = new ParameterGroup(WHITE_BALANCE_GROUP);
-            wbGroup->setDoc("White balance");
+            wbGroup->setTitle("White balance");
             parameters.push_back(wbGroup);
             
             NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, wbGroup);
-            wbRed->setDoc("WB red");
+            wbRed->setTitle("WB red");
             wbRed->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbRed->setMin(Double(0));
             wbRed->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbRed);
             
             NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, wbGroup);
-            wbGreen->setDoc("WB green");
+            wbGreen->setTitle("WB green");
             wbGreen->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbGreen->setMin(Double(0));
             wbGreen->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbGreen);
             
             NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, wbGroup);
-            wbBlue->setDoc("WB blue");
+            wbBlue->setTitle("WB blue");
             wbBlue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             wbBlue->setMin(Double(0));
             wbBlue->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbBlue);
             
             NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD);
-            framePeriod->setDoc("Frame period (milliseconds)");
+            framePeriod->setTitle("Frame period (milliseconds)");
             framePeriod->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(framePeriod);
             
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
-            numBuffers->setDoc("Number of buffers");
+            numBuffers->setTitle("Number of buffers");
             numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
-            bufferSize->setDoc("Buffer size in bytes");
+            bufferSize->setTitle("Buffer size in bytes");
             bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
             
             Parameter* image = new Parameter(IMAGE, DataVariant::RGB_IMAGE);
-            image->setDoc("Image");
+            image->setTitle("Image");
             image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
             
             ParameterGroup* roiGroup = new ParameterGroup(ROI_GROUP);
-            roiGroup->setDoc("Region of interest");
+            roiGroup->setTitle("Region of interest");
             parameters.push_back(roiGroup);
         
             m_width = new NumericParameter<UInt32>(WIDTH, roiGroup);
-            m_width->setDoc("ROI width");
+            m_width->setTitle("ROI width");
             m_width->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_width);
         
             m_height = new NumericParameter<UInt32>(HEIGHT, roiGroup);
-            m_height->setDoc("ROI height");
+            m_height->setTitle("ROI height");
             m_height->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_height);
             
             m_top = new NumericParameter<UInt32>(TOP, roiGroup);
-            m_top->setDoc("ROI top offset");
+            m_top->setTitle("ROI top offset");
             m_top->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_top);
             
             m_left = new NumericParameter<UInt32>(LEFT, roiGroup);
-            m_left->setDoc("ROI left offset");
+            m_left->setTitle("ROI left offset");
             m_left->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_left);
             
             EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
-            pixelType->setDoc("Pixel type");
+            pixelType->setTitle("Pixel type");
             pixelType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             pixelType->add(EnumDescription(Enum(core::Image::MONO_8), "Mono image 8-bit"));
             pixelType->add(EnumDescription(Enum(core::Image::RGB_24), "RGB image 24-bit"));

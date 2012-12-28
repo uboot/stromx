@@ -89,14 +89,14 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             EnumParameter* filterType = new EnumParameter(FILTER_TYPE);
-            filterType->setDoc("Filter type");
+            filterType->setTitle("Filter type");
             filterType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             filterType->add(EnumDescription(Enum(MEDIAN), "Median"));
             filterType->add(EnumDescription(Enum(GAUSSIAN), "Gaussian"));
             parameters.push_back(filterType);
             
             Parameter* kernelSize = new NumericParameter<UInt32>(KERNEL_SIZE);
-            kernelSize->setDoc("Kernel size");
+            kernelSize->setTitle("Kernel size");
             kernelSize->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(kernelSize);
                                         

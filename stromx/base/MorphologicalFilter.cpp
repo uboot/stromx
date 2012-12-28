@@ -124,7 +124,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             EnumParameter* kernelShape = new EnumParameter(KERNEL_SHAPE);
-            kernelShape->setDoc("Filter type");
+            kernelShape->setTitle("Filter type");
             kernelShape->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             kernelShape->add(EnumDescription(Enum(RECTANGLE), "Rectangle"));
             kernelShape->add(EnumDescription(Enum(ELLIPSE), "Ellipse"));
@@ -132,19 +132,19 @@ namespace stromx
             parameters.push_back(kernelShape);
             
             NumericParameter<UInt32>* kernelSizeX = new NumericParameter<UInt32>(KERNEL_SIZE_X);
-            kernelSizeX->setDoc("Kernel size x");
+            kernelSizeX->setTitle("Kernel size x");
             kernelSizeX->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             kernelSizeX->setMin(UInt32(1));
             parameters.push_back(kernelSizeX);
             
             NumericParameter<UInt32>* kernelSizeY = new NumericParameter<UInt32>(KERNEL_SIZE_Y);
-            kernelSizeY->setDoc("Kernel size y");
+            kernelSizeY->setTitle("Kernel size y");
             kernelSizeY->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             kernelSizeY->setMin(UInt32(1));
             parameters.push_back(kernelSizeY);
             
             NumericParameter<UInt32>* iterations = new NumericParameter<UInt32>(ITERATIONS);
-            iterations->setDoc("Iterations");
+            iterations->setTitle("Iterations");
             iterations->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             iterations->setMin(UInt32(1));
             parameters.push_back(iterations);

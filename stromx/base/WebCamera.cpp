@@ -45,7 +45,7 @@ namespace stromx
             std::vector<const core::Description*> outputs;
 
             core::Description* output = new core::Description(OUTPUT, core::DataVariant::RGB_IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
 
             return outputs;
@@ -56,12 +56,12 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
 
             core::Parameter* frameRate = new core::Parameter(FRAMERATE, core::DataVariant::DOUBLE);
-            frameRate->setDoc("Frame rate");
+            frameRate->setTitle("Frame rate");
             frameRate->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(frameRate);
             
             core::Parameter* brightness = new core::Parameter(BRIGHTNESS, core::DataVariant::DOUBLE);
-            brightness->setDoc("Brightness");
+            brightness->setTitle("Brightness");
             brightness->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(brightness);
 

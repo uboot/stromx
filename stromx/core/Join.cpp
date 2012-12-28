@@ -152,7 +152,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             Description* output = new Description(OUTPUT, DataVariant::DATA);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -165,7 +165,7 @@ namespace stromx
             for(unsigned int i = 0; i < (unsigned int)(m_numInputs); ++i)
             {
                 Description* input = new Description(i, DataVariant::DATA);
-                input->setDoc("Input " + boost::lexical_cast<std::string>(i));
+                input->setTitle("Input " + boost::lexical_cast<std::string>(i));
                 inputs.push_back(input);
             }
             
@@ -177,7 +177,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             NumericParameter<UInt32>* numInputs = new NumericParameter<UInt32>(NUM_INPUTS);
-            numInputs->setDoc("Number of inputs");
+            numInputs->setTitle("Number of inputs");
             numInputs->setAccessMode(core::Parameter::NONE_WRITE);
             numInputs->setMin(UInt32(MIN_INPUTS));
             numInputs->setMax(UInt32(MAX_INPUTS));

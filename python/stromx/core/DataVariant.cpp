@@ -25,7 +25,7 @@ void exportDataVariant()
 {         
     class_<DataVariant>("DataVariant", no_init)
         .def_readonly("NONE", DataVariant::NONE)
-        .def("doc", &DataVariant::doc, return_internal_reference<>())
+        .def("title", &DataVariant::title, return_internal_reference<>())
         .def("isVariant", &DataVariant::isVariant)
     ;
 }

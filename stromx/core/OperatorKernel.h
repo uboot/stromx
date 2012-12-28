@@ -62,8 +62,6 @@ namespace stromx
             
             const std::string& package() const { return m_package; }
             
-            const Documentation& doc() const { return m_doc; }
-            
             const Version& version() const { return m_version; }
 
             const std::vector<const Description*>& inputs() const { return m_inputs; }
@@ -154,9 +152,6 @@ namespace stromx
              */
             Parameter & parameter(const unsigned int id);
             
-            /** Sets the documentation. */
-            void setDoc(const Documentation & doc);
-            
         private:
             void validateInputs(const std::vector<const Description*>& descriptors);
             void validateOutputs(const std::vector<const Description*>& descriptors);
@@ -166,7 +161,6 @@ namespace stromx
             std::string m_type;
             std::string m_package;
             Version m_version;
-            Documentation m_doc;
             std::vector<const Description*> m_inputs;
             std::vector<const Description*> m_outputs;
             std::vector<const Parameter*> m_parameters;

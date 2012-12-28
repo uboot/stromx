@@ -120,11 +120,11 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* source = new Description(SOURCE, DataVariant::IMAGE);
-            source->setDoc("Source");
+            source->setTitle("Source");
             inputs.push_back(source);
             
             Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-            destination->setDoc("Destination");
+            destination->setTitle("Destination");
             inputs.push_back(destination);
             
             return inputs;
@@ -135,7 +135,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -146,7 +146,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
-            pixelType->setDoc("Pixel type");
+            pixelType->setTitle("Pixel type");
             pixelType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             pixelType->add(EnumDescription(Enum(core::Image::MONO_8), "Mono image 8-bit"));
             pixelType->add(EnumDescription(Enum(core::Image::RGB_24), "RGB image 24-bit"));

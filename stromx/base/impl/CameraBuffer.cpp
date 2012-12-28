@@ -146,7 +146,7 @@ namespace stromx
                 std::vector<const Description*> inputs;
             
                 Description* input = new Description(INPUT, DataVariant::IMAGE);
-                input->setDoc("Input");
+                input->setTitle("Input");
                 inputs.push_back(input);
                 
                 return inputs;
@@ -157,15 +157,15 @@ namespace stromx
                 std::vector<const Description*> outputs;
             
                 Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-                output->setDoc("Output");
+                output->setTitle("Output");
                 outputs.push_back(output);
             
                 Description* buffer = new Description(BUFFER, DataVariant::IMAGE);
-                buffer->setDoc("Buffer");
+                buffer->setTitle("Buffer");
                 outputs.push_back(buffer);
             
                 Description* index = new Description(INDEX, DataVariant::UINT_32);
-                index->setDoc("Index");
+                index->setTitle("Index");
                 outputs.push_back(index);
                 
                 return outputs;
@@ -176,13 +176,13 @@ namespace stromx
                 std::vector<const Parameter*> parameters;
             
                 NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
-                numBuffers->setDoc("Number of buffers");
+                numBuffers->setTitle("Number of buffers");
                 numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
                 numBuffers->setMin(UInt32(1));
                 parameters.push_back(numBuffers);
             
                 NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
-                bufferSize->setDoc("Buffer size in bytes");
+                bufferSize->setTitle("Buffer size in bytes");
                 bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
                 parameters.push_back(bufferSize);
                                             

@@ -150,7 +150,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* input = new Description(OUTPUT, DataVariant::DATA);
-            input->setDoc("Input");
+            input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
@@ -161,7 +161,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::DATA);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -172,12 +172,12 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
-            trigger->setDoc("Trigger");
+            trigger->setTitle("Trigger");
             trigger->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
             
             EnumParameter* state = new EnumParameter(STATE);
-            state->setDoc("State");
+            state->setTitle("State");
             state->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             state->add(EnumDescription(Enum(ALWAYS_PASS), "Always off"));
             state->add(EnumDescription(Enum(ALWAYS_STOP), "Always on"));

@@ -147,7 +147,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* image = new Description(IMAGE, DataVariant::MONO_IMAGE);
-            image->setDoc("Image");
+            image->setTitle("Image");
             inputs.push_back(image);
             
             return inputs;
@@ -158,7 +158,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* lines = new Description(LINES, DataVariant::DOUBLE_MATRIX);
-            lines->setDoc("Lines");
+            lines->setTitle("Lines");
             outputs.push_back(lines);
             
             return outputs;
@@ -170,30 +170,30 @@ namespace stromx
             
             NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO);
             rho->setMin(Double(0.0));
-            rho->setDoc("Rho");
+            rho->setTitle("Rho");
             rho->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(rho);
             
             NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA);
             theta->setMin(Double(0.0));
-            theta->setDoc("Theta");
+            theta->setTitle("Theta");
             theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
             
             NumericParameter<core::UInt32>* threshold = new NumericParameter<core::UInt32>(THRESHOLD);
-            threshold->setDoc("Threshold");
+            threshold->setTitle("Threshold");
             threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);
             
             NumericParameter<core::Double>* minLineLength = new NumericParameter<core::Double>(MIN_LINE_LENGTH);
             minLineLength->setMin(Double(0.0));
-            minLineLength->setDoc("Minimal line length");
+            minLineLength->setTitle("Minimal line length");
             minLineLength->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(minLineLength);
             
             NumericParameter<core::Double>* maxLineGap = new NumericParameter<core::Double>(MAX_LINE_GAP);
             maxLineGap->setMin(Double(0.0));
-            maxLineGap->setDoc("Maximal line gap");
+            maxLineGap->setTitle("Maximal line gap");
             maxLineGap->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(maxLineGap);
                                         

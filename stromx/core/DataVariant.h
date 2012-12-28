@@ -19,7 +19,6 @@
 
 #include <string>
 #include "Config.h"
-#include "Documentation.h"
 #include "Version.h"
 
 namespace stromx
@@ -169,29 +168,19 @@ namespace stromx
             {}
             
             /** 
-             * Constructs a data variant with documentation. The pair (\c package, \c id) uniquely identifies
-             * the data variant.
-             */
-            DataVariant(const unsigned int id, const std::string & package, const Documentation & doc)
-              : m_id(id),
-                m_package(package),
-                m_doc(doc)
-            {}
-            
-            /** 
              * Constructs a data variant with a documentation title. The pair (\c package, \c id) 
              * uniquely identifies the data variant.
              */
-            DataVariant(const unsigned int id, const std::string & package, const std::string & doc)
+            DataVariant(const unsigned int id, const std::string & package, const std::string & title)
               : m_id(id),
                 m_package(package),
-                m_doc(Documentation(doc))
+                m_title(title)
             {}
             
             ~DataVariant() {}
             
-            /** Returns the documentation of the data variant. */
-            const Documentation & doc() const { return m_doc; }
+            /** Returns the title of the data variant. */
+            const std::string & title() const { return m_title; }
             
             /**
              * Returns true if \c type is a subtype of \c this. E.g.
@@ -249,7 +238,7 @@ namespace stromx
             
             unsigned int m_id;
             std::string m_package;
-            Documentation m_doc;
+            std::string m_title;
         };
         
         STROMX_CORE_API bool operator==(const DataVariant & lhs, const DataVariant & rhs);

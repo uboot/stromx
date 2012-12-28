@@ -203,7 +203,6 @@ namespace stromx
             if(status() == ACTIVE)
                 deactivate();
                 
-            
             try
             {
                 m_kernel->deinitialize();

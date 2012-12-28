@@ -42,11 +42,6 @@ namespace
             return this->get_override("version")();
         }
             
-        const Documentation& doc() const
-        {
-            return this->get_override("doc")();
-        }
-            
         const std::vector<const Description*>& inputs() const
         {
             return this->get_override("inputs")();
@@ -88,7 +83,6 @@ void exportOperatorInfo()
         .def("type", pure_virtual(&OperatorInfo::type), return_value_policy<copy_const_reference>())
         .def("package", pure_virtual(&OperatorInfo::package), return_value_policy<copy_const_reference>())
         .def("version", pure_virtual(&OperatorInfo::version), return_internal_reference<>())
-        .def("doc", pure_virtual(&OperatorInfo::doc), return_internal_reference<>())
         .def("inputs", pure_virtual(&OperatorInfo::inputs), return_internal_reference<>())
         .def("outputs", pure_virtual(&OperatorInfo::outputs), return_internal_reference<>())
         .def("parameters", pure_virtual(&OperatorInfo::parameters), return_internal_reference<>())

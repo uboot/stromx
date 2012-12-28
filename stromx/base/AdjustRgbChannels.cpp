@@ -137,7 +137,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* input = new Description(INPUT, DataVariant::RGB_IMAGE);
-            input->setDoc("Input");
+            input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
@@ -148,7 +148,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::RGB_IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -159,17 +159,17 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             NumericParameter<Double>* red = new NumericParameter<Double>(RED, Double(0.0), Double::MAX);
-            red->setDoc("Red");
+            red->setTitle("Red");
             red->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(red);
             
             NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, Double(0.0), Double::MAX);
-            green->setDoc("Green");
+            green->setTitle("Green");
             green->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(green);
             
             NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, Double(0.0), Double::MAX);
-            blue->setDoc("Blue");
+            blue->setTitle("Blue");
             blue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(blue);
                                         

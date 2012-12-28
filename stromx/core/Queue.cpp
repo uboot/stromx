@@ -128,7 +128,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* input = new Description(INPUT, DataVariant::DATA);
-            input->setDoc("Input");
+            input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
@@ -139,7 +139,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::DATA);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -150,7 +150,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             NumericParameter<UInt32>* size = new NumericParameter<UInt32>(SIZE);
-            size->setDoc("Size");
+            size->setTitle("Size");
             size->setMin(UInt32(1));
             size->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(size);

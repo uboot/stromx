@@ -35,7 +35,6 @@ set(SOURCES
     ../DataRef.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
-    ../Documentation.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../EnumParameter.cpp

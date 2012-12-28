@@ -147,13 +147,13 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* source = new Description(SOURCE, DataVariant::MONO_IMAGE);
-            source->setDoc("Source");
+            source->setTitle("Source");
             inputs.push_back(source);
             
             if(! m_inPlace)
             {
                 Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-                destination->setDoc("Destination");
+                destination->setTitle("Destination");
                 inputs.push_back(destination);
             }
             
@@ -165,7 +165,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, DataVariant::MONO_IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -176,7 +176,7 @@ namespace stromx
             std::vector<const core::Parameter*> parameters;
             
             Parameter* inPlace = new Parameter(IN_PLACE, DataVariant::BOOL);
-            inPlace->setDoc("Process in place");
+            inPlace->setTitle("Process in place");
             inPlace->setAccessMode(core::Parameter::NONE_WRITE);
             parameters.push_back(inPlace);
                                         

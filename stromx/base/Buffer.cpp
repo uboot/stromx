@@ -139,7 +139,7 @@ namespace stromx
             std::vector<const Description*> outputs;
         
             Description* output = new Description(OUTPUT, DataVariant::IMAGE);
-            output->setDoc("Output");
+            output->setTitle("Output");
             outputs.push_back(output);
             
             return outputs;
@@ -150,13 +150,13 @@ namespace stromx
             std::vector<const Parameter*> parameters;
         
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
-            numBuffers->setDoc("Number of buffers");
+            numBuffers->setTitle("Number of buffers");
             numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
-            bufferSize->setDoc("Buffer size in bytes");
+            bufferSize->setTitle("Buffer size in bytes");
             bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
                                         
