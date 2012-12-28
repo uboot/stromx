@@ -108,7 +108,11 @@ namespace stromx
                 {
                     throw Interrupt();
                 }
+            }
             
+            // check m_period again because it might have changed while sleeping
+            if(m_period)
+            {
                 unsigned int passedMs = (unsigned int)((boost::get_system_time() - m_nextTrigger->m_time).total_milliseconds());
                 unsigned int numPeriods = passedMs / m_period + 1;
                 m_nextTrigger->m_time += boost::posix_time::millisec(m_period * numPeriods);
