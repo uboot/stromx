@@ -118,10 +118,17 @@ namespace stromx
         {            
             BOOST_ASSERT(m_webcam);
         
+            // grab and retrieve a frame
+            // apparently the returned frame is a pointer to a fixed frame buffer
+            // (i.e. with a constant address)
             cv::Mat currentFrame;
             *m_webcam >> currentFrame;
             
-            core::Data* outImage = new base::Image(currentFrame);
+            // to make sure the frame is not overwritten by a new one while being
+            // processed a copy of the frame is created
+            cv::Mat frameCopy;
+            currentFrame.copyTo(frameCopy);
+            base::Image* outImage = new base::Image(frameCopy);
             
             core::DataContainer outContainer = core::DataContainer(outImage);
             
