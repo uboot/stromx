@@ -239,6 +239,8 @@ class Constant(InputArgument):
     value = ""
     
 class Input(InputArgument):
+    inPlace = None
+    
     def inputId(self):
         return [Names.constantName(self.ident)]
         
@@ -268,7 +270,16 @@ class Input(InputArgument):
         return [cast]
 
 class Output(OutputArgument):
-    inPlace = None
+    __inPlace = None
+    
+    @property
+    def inPlace(self):
+        return self.__inPlace
+        
+    @inPlace.setter
+    def inPlace(self, target):
+        self.__inPlace = target
+        target.inPlace = self
     
     def outputId(self):
         return [Names.constantName(self.ident)]
