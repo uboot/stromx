@@ -364,37 +364,80 @@ class ImplementationGenerator(MethodGenerator):
         self.line("void {0}(core::DataProvider & provider)"\
             .format(self.method("execute")))
         self.scopeEnter()
-        values = self.collect("inputMapper")
-        for v in values:
-            self.line(v)
+        writeAccess = self.collect("writeAccess")
+        assert(len(writeAccess) <= 1)
+        readAccess = self.collect("readAccess")
+        access = writeAccess + readAccess
+        
+        for a in access:
+            self.line("core::Id2DataMap {0}InMapper({1});"\
+                .format(a, Names.constantName(a)))
         self.blank()
-        values = self.collect("receiveInput")
-        inputMapper = ""
-        for isEnd, v in Names.listIterator(values):
+          
+        receiveInputStr = ""              
+        for isEnd, a in Names.listIterator(access):
+            receiveInputStr += "{0}InMapper".format(a)
+            
             if not isEnd:
-                inputMapper += v + " && "
-            else:
-                inputMapper += v
-        self.line("provider.receiveInput({0});".format(inputMapper))
+                receiveInputStr += " && "
+        self.line("provider.receiveInput({0});".format(receiveInputStr))
         self.blank()
-        values = self.collect("writeAccess")
-        for v in values:
+        
+        for a in writeAccess:
+            self.line("core::Data* {0}Data = 0;".format(a))
+            
+        for a in readAccess:
+            self.line("const core::Data* {0}Data = 0;".format(a))
+        self.blank()
+        
+        for a in readAccess:
+            self.line("core::ReadAccess<> {0}ReadAccess({0}InMapper.data());"\
+                .format(a))
+        self.blank()
+        
+        if len(writeAccess):
+            self.line("core::DataContainer inContainer = {0}InMapper.data();"\
+                .format(writeAccess[0]))
+            self.line("core::WriteAccess<> writeAccess(inContainer);")
+            self.line("{0}Data = writeAccess();".format(writeAccess[0]))
+            self.blank()
+            
+            for a in readAccess:
+                self.line("if({0}InMapper.data() == inContainer)".format(a))
+                self.scopeEnter()
+                self.line("{0}Data = &writeAccess();".format(a))
+                self.scopeExit()
+                self.line("else")
+                self.scopeEnter()
+                self.line(("{0}ReadAccess = core::ReadAccess<>({0}InMapper" +
+                           ".data());").format(a))
+                self.line("{0}Data = &{0}ReadAccess();".format(a))
+                self.scopeExit()
+                self.blank()
+        else:
+            for a in readAccess:
+                self.line(("{0}ReadAccess = core::ReadAccess<>({0}InMapper" +
+                           ".data());").format(a))
+                self.line("{0}Data = &{0}ReadAccess();".format(a))
+                self.blank();
+                
+        castedData = self.collect("castedData")
+        for v in castedData:
             self.line(v)
         self.blank()
-        values = self.collect("readAccess")
-        for v in values:
+        
+        cvData = self.collect("cvData")
+        for v in cvData:
             self.line(v)
         self.blank()
+        
+        arg = self.collect("arg")
         argStr = ""
-        for isEnd, arg in Names.listIterator(self.m.args):
-            argStr += arg.ident
+        for isEnd, a in Names.listIterator(arg):
+            argStr += a
             if not isEnd:
                 argStr += ", "
         self.line("cv::{0}({1});".format(self.m.ident, argStr))
-        self.blank()
-        values = self.collect("outputMapper")
-        for v in values:
-            self.line(v)
         self.scopeExit()
         
     def method(self, s):

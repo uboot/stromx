@@ -82,7 +82,28 @@ class Types:
             return "core::DataVariant::IMAGE"
         else:
             assert(False)
-        
+            
+    @staticmethod
+    def cvType(t):
+        if t == DataType.BOOL:
+            return "bool"
+        elif t == DataType.UINT_32:
+            return "unsigned int"
+        elif t == DataType.IMAGE:
+            return "cv::Mat"
+        else:
+            assert(False)
+            
+    @staticmethod
+    def cvCast(t):
+        if t == DataType.BOOL:
+            return "bool"
+        elif t == DataType.UINT_32:
+            return "(unsigned int)"
+        elif t == DataType.IMAGE:
+            return "getOpenCvMat"
+        else:
+            assert(False)
     
 class Method(object):
     ident = ""
@@ -124,20 +145,20 @@ class MethodFragment(object):
     def outputCreate(self):
         return []  
         
-    def inputMapper(self):
-        return []
-        
-    def outputMapper(self):
-        return []
-        
-    def receiveInput(self):
-        return []
-        
     def readAccess(self):
         return []
         
     def writeAccess(self):
         return []
+        
+    def castedData(self):
+        return []
+        
+    def cvData(self):
+        return []
+    
+    def arg(self):
+        return ["{0}CvData".format(self.ident)]
 
 class Argument(MethodFragment):
     ident = ""
@@ -198,6 +219,14 @@ class Parameter(InputArgument):
         lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
+        
+    def cvData(self):
+        cast = "{0} {1}CvData = {2}({3});"\
+            .format(Types.cvType(self.cvType),
+                    self.ident,
+                    Types.cvCast(self.cvType),
+                    Names.attributeName(self.ident))
+        return [cast]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -216,27 +245,24 @@ class Input(InputArgument):
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
-        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
         return [lines]
-    
-    def inputMapper(self):
-        lines = []
-        lines.append("core::Id2DataMapper {0}InMapper({1});"\
-            .format(self.ident, Names.constantName(self.ident)))
-        return lines
-        
-    def receiveInput(self, inPlace = False):
-        inputMappers = []
-        inputMappers.append("{0}InMapper".format(self.ident))
-        return inputMappers
         
     def readAccess(self):
-        lines = []
-        lines.append("core::ReadAccess<{0}> {1}Access({1}InMapper.data());"\
-            .format(Types.dataType(self.dataType),
-                    self.ident))
-        return lines
+        return [self.ident]
+        
+    def castedData(self):
+        cast = "const {0}* {1}CastedData = core::data_cast<{0}>({1}Data);"\
+            .format(Types.dataType(self.dataType), self.ident)
+        return [cast]
+        
+    def cvData(self):
+        cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
+            .format(Types.cvType(self.cvType),
+                    Types.cvCast(self.cvType),
+                    self.ident)
+        return [cast]
 
 class Output(OutputArgument):
     inPlace = None
@@ -290,25 +316,18 @@ class Output(OutputArgument):
         lines.append("Parameter* inPlace = new Parameter({0}, {1});"\
             .format(Names.constantName("inPlace"),
                     Types.dataVariant(self.dataType)))
-        lines.append('inPlace->setDoc("In place");')
+        lines.append('inPlace->setTitle("In place");')
         lines.append("parameters.push_back(inPlace);")
         return [lines]
         
     def inputCreate(self):
         lines = []
-        if self.inPlace:
-            lines.append("if(! m_inPlace)")
-            lines.append("{")
-            lines.append(Format.INCREASE_INDENT)
         lines.append("Description* {0} = new Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
-        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
-        if self.inPlace:
-            lines.append(Format.DECREASE_INDENT)
-            lines.append("}")
         return [lines]
         
     def outputCreate(self):
@@ -317,33 +336,24 @@ class Output(OutputArgument):
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
-        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("outputs.push_back({0});".format(self.ident))
         return [lines]
-    
-    def inputMapper(self):
-        lines = []
-        lines.append("core::Id2DataMapper {0}InMapper({1});"\
-            .format(self.ident, Names.constantName(self.ident)))
-        return lines
-    
-    def outputMapper(self):
-        lines = []
-        lines.append("core::Id2DataMapper {0}OutMapper({1}, result);"\
-            .format(self.ident, Names.constantName(self.ident)))
-        return lines
-        
-    def receiveInput(self):
-        inputMappers = []
-        inputMappers.append("{0}InMapper".format(self.ident))
-        return inputMappers
         
     def writeAccess(self):
-        lines = []
-        lines.append("core::Write<{0}> {1}Access({1}InMapper.data());"\
-            .format(Types.dataType(self.dataType),
-                    self.ident))
-        return lines
+        return [self.ident]
+        
+    def castedData(self):
+        cast = "{0}* {1}CastedData = core::data_cast<{0}>({1}Data);"\
+            .format(Types.dataType(self.dataType), self.ident)
+        return [cast]
+        
+    def cvData(self):
+        cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
+            .format(Types.cvType(self.cvType),
+                    Types.cvCast(self.cvType),
+                    self.ident)
+        return [cast]
         
 class Allocation(OutputArgument):
     pass
