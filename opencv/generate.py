@@ -438,6 +438,16 @@ class ImplementationGenerator(MethodGenerator):
             if not isEnd:
                 argStr += ", "
         self.line("cv::{0}({1});".format(self.m.ident, argStr))
+        self.blank()
+        
+        outContainer = self.collect("outContainer")
+        assert(len(outContainer) == 1)
+        for v in outContainer:
+            self.line(v)
+        self.blank()
+        
+        self.line("provider.sendOutput(outContainer);")
+        
         self.scopeExit()
         
     def method(self, s):

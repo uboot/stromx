@@ -159,6 +159,9 @@ class MethodFragment(object):
     
     def arg(self):
         return ["{0}CvData".format(self.ident)]
+        
+    def outContainer(self):
+        return []
 
 class Argument(MethodFragment):
     ident = ""
@@ -354,6 +357,9 @@ class Output(OutputArgument):
                     Types.cvCast(self.cvType),
                     self.ident)
         return [cast]
+    
+    def outContainer(self):
+        return ["DataContainer outContainer = inContainer;"]
         
 class Allocation(OutputArgument):
     pass
