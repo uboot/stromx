@@ -110,6 +110,7 @@ class Method(object):
     name = ""
     description = ""
     args = []
+    initOptions = None
         
 class MethodFragment(object):
     def inputId(self):
@@ -170,6 +171,15 @@ class Argument(MethodFragment):
     cvType = CvType.UNDEFINED
     dataType = DataType.UNDEFINED
     rules = []
+    
+    def __init__(self, arg = None):
+        if arg:
+            self.ident = arg.ident
+            self.name = arg.name
+            self.description = arg.description
+            self.cvType = arg.cvType
+            self.dataType = arg.dataType
+            self.rules = arg.rules
     
 class InputArgument(Argument):
     def __repr__(self):
@@ -234,13 +244,27 @@ class Parameter(InputArgument):
 class NumericParameter(Parameter):
     minValue = None
     maxValue = None
+    
+class InitOptions(Parameter):
+    def __init__(self):
+        self.ident = "inPlace"
+        self.name = "In place"
+        self.dataType = DataType.BOOL
+        self.default = "false"
+        
+    def initParamCreate(self):
+        return self.paramCreate()
+        
+    def cvData(self):
+        return []
+        
+    def arg(self):
+        return []
 
 class Constant(InputArgument):
     value = ""
     
 class Input(InputArgument):
-    inPlace = None
-    
     def inputId(self):
         return [Names.constantName(self.ident)]
         
@@ -270,69 +294,8 @@ class Input(InputArgument):
         return [cast]
 
 class Output(OutputArgument):
-    __inPlace = None
-    
-    @property
-    def inPlace(self):
-        return self.__inPlace
-        
-    @inPlace.setter
-    def inPlace(self, target):
-        self.__inPlace = target
-        target.inPlace = self
-    
     def outputId(self):
-        return [Names.constantName(self.ident)]
-        
-    def paramId(self):
-        if not self.inPlace:
-            return []
-            
-        return [Names.constantName("inPlace")]
-            
-    def paramDecl(self):
-        if not self.inPlace:
-            return []
-            
-        return ["core::Bool m_inPlace"]
-            
-    def paramInit(self):
-        if not self.inPlace:
-            return []
-            
-        return ["m_inPlace(false)"]
-                                  
-    def paramGet(self):
-        if not self.inPlace:
-            return []
-            
-        impl = EnumImpl()
-        impl.label = Names.constantName(self.ident)
-        lines = []
-        lines.append("return m_inPlace;")
-        impl.lines = lines
-        return [impl]
-        
-    def paramSet(self):
-        if not self.inPlace:
-            return []
-            
-        impl = EnumImpl()
-        impl.label = Names.constantName("inPlace")
-        lines = []
-        lines.append("m_inPlace = core::data_cast<core::Bool>(value);")
-        lines.append("break;")
-        impl.lines = lines
-        return [impl]    
-        
-    def initParamCreate(self):
-        lines = []
-        lines.append("Parameter* inPlace = new Parameter({0}, {1});"\
-            .format(Names.constantName("inPlace"),
-                    Types.dataVariant(self.dataType)))
-        lines.append('inPlace->setTitle("In place");')
-        lines.append("parameters.push_back(inPlace);")
-        return [lines]
+        return [Names.constantName(self.ident)] 
         
     def inputCreate(self):
         lines = []
@@ -371,6 +334,13 @@ class Output(OutputArgument):
     
     def outContainer(self):
         return ["DataContainer outContainer = inContainer;"]
+        
+class RefInput(OutputArgument):
+    def __init__(self, inputArg):
+        self.inputArg = inputArg
+        
+    def arg(self):
+        return self.inputArg.arg()
         
 class Allocation(OutputArgument):
     pass

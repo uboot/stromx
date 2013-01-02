@@ -71,8 +71,9 @@ class MethodGenerator(object):
         l = []
         for arg in self.m.args:
             l.extend(arg.__getattribute__(method)())
+        l.extend(self.m.initOptions.__getattribute__(method)())
         return l
-
+        
 class HeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
         super(HeaderGenerator, self).__init__(package, method)
@@ -367,7 +368,7 @@ class ImplementationGenerator(MethodGenerator):
         writeAccess = self.collect("writeAccess")
         assert(len(writeAccess) <= 1)
         readAccess = self.collect("readAccess")
-        access = writeAccess + readAccess
+        access = readAccess + writeAccess
         
         for a in access:
             self.line("core::Id2DataMap {0}InMapper({1});"\
@@ -388,10 +389,11 @@ class ImplementationGenerator(MethodGenerator):
             
         for a in readAccess:
             self.line("const core::Data* {0}Data = 0;".format(a))
-        self.blank()
+        if len(readAccess):
+            self.blank()
         
         for a in readAccess:
-            self.line("core::ReadAccess<> {0}ReadAccess({0}InMapper.data());"\
+            self.line("core::ReadAccess<> {0}ReadAccess();"\
                 .format(a))
         self.blank()
         
@@ -473,7 +475,6 @@ if __name__ == "__main__":
     arg2.name = "Destination"
     arg2.cvType = CvType.MAT
     arg2.dataType = DataType.IMAGE
-    arg2.inPlace = arg1
     
     arg3 = NumericParameter()
     arg3.ident = "ksize"
@@ -485,6 +486,9 @@ if __name__ == "__main__":
     arg3.rules.append(OddRule())
     
     m.args = [arg1, arg2, arg3]
+#    m.args = [Output(arg1), RefInput(arg1), arg3]
+    
+    m.initOptions = InitOptions()
     
     g = HeaderGenerator(p, m)
     g.generate()
