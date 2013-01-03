@@ -470,10 +470,10 @@ class ImplementationGenerator(MethodGenerator):
         self.blank()
         
         outContainer = self.collect("outContainer")
-        assert(len(outContainer) >= 1)
         for v in outContainer:
             self.line(v)
-        self.blank()
+        if len(outContainer):
+            self.blank()
         
         self.line("provider.sendOutput(outContainer);")
         

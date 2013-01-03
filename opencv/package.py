@@ -414,14 +414,12 @@ class Allocation(OutputArgument):
         lines = []
         lines.append("core::Image* outData = new base::Image({0}->width(), "
                      "{0}->height(), {0}->pixelType());".format(src))
+        lines.append("DataContainer outContainer = DataContainer(outData);")
         lines.append("{0} {1}CvData = {2}(outData);"\
             .format(Types.cvType(self.cvType),
                     self.ident,
                     Types.cvCast(self.cvType)))
         return lines
-        
-    def outContainer(self):
-        return ["DataContainer outContainer = DataContainer(outData);"]
 
 class EnumDescription(object):
     ident = ""
