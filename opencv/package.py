@@ -19,6 +19,8 @@ class EnumImpl:
 class Format:
     INCREASE_INDENT = 0
     DECREASE_INDENT = 1
+    SCOPE_ENTER = 2
+    SCOPE_EXIT = 3
     
 class Package(object):
     ident = ""
@@ -110,13 +112,6 @@ class Types:
             return "getOpenCvMat"
         else:
             assert(False)
-            
-    @staticmethod
-    def dataAllocate(t):
-        if t == DataType.IMAGE:
-            return "base::Image"
-        else:
-            assert(False)
     
 class Method(object):
     ident = ""
@@ -181,6 +176,9 @@ class MethodFragment(object):
         return ["{0}CvData".format(self.ident)]
         
     def outContainer(self):
+        return []
+        
+    def outputInit(self):
         return []
 
 class Argument(MethodFragment):
@@ -340,6 +338,10 @@ class Input(InputArgument):
         return [cast]
 
 class Output(OutputArgument):
+    def __init__(self, arg, refArg = None):
+        super(Output, self).__init__(arg)
+        self.refArg = refArg
+        
     def outputId(self):
         return [Names.constantName(self.ident)] 
         
@@ -380,22 +382,46 @@ class Output(OutputArgument):
     
     def outContainer(self):
         return ["DataContainer outContainer = inContainer;"]
+    
+    def outputInit(self):
+        if self.refArg == None:
+            return []
+        
+        src = "{0}CastedData".format(self.refArg.ident)
+        dst = "{0}CastedData".format(self.ident)
+        
+        lines = []
+        lines.append("if({0} != {1})".format(src, dst))
+        lines.append(Format.SCOPE_ENTER)
+        lines.append("{0}->initializeImage({1}->width(), {1}>height(), "
+                     "{1}->width() * {1}->pixelSize(), {0}->buffer(), "
+                     "{1}->pixelType());".format(dst, src))
+        lines.append(Format.SCOPE_EXIT)
+        
+        return lines
         
 class RefInput(OutputArgument):
     pass
         
 class Allocation(OutputArgument):
+    def __init__(self, arg, refArg = None):
+        super(Allocation, self).__init__(arg)
+        self.refArg = refArg
     
     def allocate(self):
-        return ["{0} {1}CvData;".format(Types.cvType(self.cvType),
-                                        self.ident)]
-    
-    def outContainer(self):
+        src = "{0}CastedData".format(self.refArg.ident)
+        
         lines = []
-        lines.append("core::Data* outData = new {0}({1}CvData);"\
-            .format(Types.dataAllocate(self.dataType), self.ident))
-        lines.append("DataContainer outContainer = DataContainer(outData);")
+        lines.append("core::Image* outData = new base::Image({0}->width(), "
+                     "{0}->height(), {0}->pixelType());".format(src))
+        lines.append("{0} {1}CvData = {2}(outData);"\
+            .format(Types.cvType(self.cvType),
+                    self.ident,
+                    Types.cvCast(self.cvType)))
         return lines
+        
+    def outContainer(self):
+        return ["DataContainer outContainer = DataContainer(outData);"]
 
 class EnumDescription(object):
     ident = ""

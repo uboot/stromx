@@ -36,6 +36,10 @@ class MethodGenerator(object):
                 self.increaseIndent()
             elif line == Format.DECREASE_INDENT:
                 self.decreaseIndent()
+            elif line == Format.SCOPE_ENTER:
+                self.scopeEnter()
+            elif line == Format.SCOPE_EXIT:
+                self.scopeExit()
             else:
                 assert(False)
             return
@@ -439,6 +443,12 @@ class ImplementationGenerator(MethodGenerator):
             self.line(v)
         self.blank()
         
+        outputInit = self.collect("outputInit")
+        for v in outputInit:
+            self.line(v)
+        if len(outputInit):
+            self.blank()
+        
         cvData = self.collect("cvData")
         for v in cvData:
             self.line(v)
@@ -447,7 +457,8 @@ class ImplementationGenerator(MethodGenerator):
         allocate = self.collect("allocate")
         for v in allocate:
             self.line(v)
-        self.blank()
+        if len(allocate):
+            self.blank()
         
         arg = self.collect("arg")
         argStr = ""
@@ -480,13 +491,13 @@ if __name__ == "__main__":
     m.ident = "medianBlur"
     m.name = "Median Blur"
     
-    arg1 = Input()
+    arg1 = Argument()
     arg1.ident = "src"
     arg1.name = "Source"
     arg1.cvType = CvType.MAT
     arg1.dataType = DataType.IMAGE
     
-    arg2 = Output()
+    arg2 = Argument()
     arg2.ident = "dst"
     arg2.name = "Destination"
     arg2.cvType = CvType.MAT
@@ -501,9 +512,9 @@ if __name__ == "__main__":
     arg3.minValue = 1
     arg3.rules.append(OddRule())
     
-    m.args = [arg1, arg2, arg3]
+#    m.args = [Input(arg1), Output(arg2, arg1), arg3]
 #    m.args = [Output(arg1), RefInput(arg1), arg3]
-    m.args = [arg1, Allocation(arg2), arg3]
+    m.args = [Input(arg1), Allocation(arg2, arg1), arg3]
     
     m.initOptions = InitOptions()
     
