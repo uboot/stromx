@@ -7,6 +7,40 @@ Created on Fri Dec 21 17:07:19 2012
 
 from package import *
 
+def generate(package):
+    g = LibHeaderGenerator(p)
+    g.generate()
+    g.save()
+    
+    g = LibImplGenerator(p)
+    g.generate()
+    g.save()
+    
+    g = CMakeGenerator(p)
+    g.generate()
+    g.save()
+    
+    g = ConfigGenerator(p)
+    g.generate()
+    g.save()
+    
+    g = LibHeaderGenerator(p)
+    g.generate()
+    g.save()
+    
+    g = LibImplGenerator(p)
+    g.generate()
+    g.save()
+    
+    for m in p.methods:
+        g = OpHeaderGenerator(p, m)
+        g.generate()
+        g.save()
+        
+        g = OpImplGenerator(p, m)
+        g.generate()
+        g.save()
+
 class Generator(object):
     def __init__(self):
         self.lines = []
@@ -110,6 +144,10 @@ class LibHeaderGenerator(LibGenerator):
         
         self.line("#endif // STROMX_{0}_{0}_H".format(p))
         
+    def save(self):
+        with file("{0}.h".format(Names.className(self.p.ident)), "w") as f:
+            f.write(self.string())
+        
 class LibImplGenerator(LibGenerator):
     def generate(self):
         for m in self.p.methods:
@@ -128,17 +166,21 @@ class LibImplGenerator(LibGenerator):
                 .format(Names.className(m.ident)))
         
         self.scopeExit()
+        
+    def save(self):
+        with file("{0}.cpp".format(Names.className(self.p.ident)), "w") as f:
+            f.write(self.string())
 
 class CMakeGenerator(LibGenerator):
     def generate(self):
-        self.line("project(stromx_{0})".format(p.ident))
+        self.line("project(stromx_{0})".format(self.p.ident))
         self.blank()
         self.line("set ({0}_VERSION_MAJOR {1})"\
-            .format(Names.constantName(p.ident), p.major))
+            .format(Names.constantName(self.p.ident), self.p.major))
         self.line("set ({0}_VERSION_MINOR {1})"\
-            .format(Names.constantName(p.ident), p.major))
+            .format(Names.constantName(self.p.ident), self.p.major))
         self.line("set ({0}_VERSION_PATCH {1})"\
-            .format(Names.constantName(p.ident), p.patch))
+            .format(Names.constantName(self.p.ident), self.p.patch))
         self.blank()
         
         self.line("configure_file (")
@@ -166,7 +208,7 @@ class CMakeGenerator(LibGenerator):
         self.blank()
         
         self.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
-            .format(p.ident))
+            .format(self.p.ident))
         self.blank()
         
         self.line('set(VERSION_STRING "${{{0}_VERSION_MAJOR}}.'
@@ -370,10 +412,11 @@ class OpHeaderGenerator(MethodGenerator):
         self.line("#endif // {0}".format(self.includeGuard()))
         
     def includeGuard(self):
-        return "STROMX_{0}_{1}_H".format(p.ident.upper(), m.ident.upper())
+        return "STROMX_{0}_{1}_H".format(self.p.ident.upper(),
+                                         self.m.ident.upper())
     
     def apiDecl(self):
-        return "STROMX_{0}_API".format(p.ident.upper())
+        return "STROMX_{0}_API".format(self.p.ident.upper())
             
 class OpImplGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -691,34 +734,4 @@ if __name__ == "__main__":
     
     m.initOptions = InitOptions()
     
-    g = OpHeaderGenerator(p, m)
-    g.generate()
-    print g.string()
-    
-    g = OpImplGenerator(p, m)
-    g.generate()
-    print g.string()
-    
-    g = LibHeaderGenerator(p)
-    g.generate()
-    print g.string()
-    
-    g = LibImplGenerator(p)
-    g.generate()
-    print g.string()
-    
-    g = CMakeGenerator(p)
-    g.generate()
-    print g.string()
-    
-    g = ConfigGenerator(p)
-    g.generate()
-    print g.string()
-    
-    g = LibHeaderGenerator(p)
-    g.generate()
-    print g.string()
-    
-    g = LibImplGenerator(p)
-    g.generate()
-    print g.string()
+    generate(p)
