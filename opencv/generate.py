@@ -80,6 +80,39 @@ class LibGenerator(Generator):
     def __init__(self, package):
         super(LibGenerator, self).__init__()
         self.p = package
+        
+class LibHeaderGenerator(LibGenerator):
+    def generate(self):
+        p = Names.constantName(self.p.ident)
+        self.line("#ifndef STROMX_{0}_{0}_H".format(p))
+        self.line("#define STROMX_{0}_{0}_H".format(p))
+        self.blank()
+        
+        self.line("#include Config.h")
+        self.blank()
+        
+        self.line("namespace stromx")
+        self.scopeEnter()
+        self.line("namespace {0}".format(self.p.ident))
+        self.scopeEnter()
+        self.line("class Registry;")
+        self.scopeExit()
+        self.scopeExit()
+        self.blank()
+        
+        self.line('extern "C"')
+        self.scopeEnter()
+        self.line("STROMX_{0}_API void stromxRegister{1}"
+                  "(stromx::core::Registry& registry);"\
+                  .format(p, Names.className(self.p.ident)))
+        self.scopeExit()
+        self.blank()
+        
+        self.line("#endif // STROMX_{0}_{0}_H".format(p))
+        
+class LibImplGenerator(LibGenerator):
+    def generate(self):
+        pass
 
 class CMakeGenerator(LibGenerator):
     def generate(self):
@@ -192,7 +225,7 @@ class ConfigGenerator(LibGenerator):
         self.line("#define STROMX_{0}_API".format(p))
         self.decreaseIndent()
         self.line("#endif // WIN32")
-        self.blank()
+        self.blank() 
         
         self.line("#endif // {0}".format(guard))
 
@@ -206,9 +239,9 @@ class MethodGenerator(Generator):
         self.p = package
         self.m = method
         
-class HeaderGenerator(MethodGenerator):
+class OpHeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
-        super(HeaderGenerator, self).__init__(package, method)
+        super(OpHeaderGenerator, self).__init__(package, method)
         
     def generate(self):
         self.includeGuardEnter()
@@ -327,9 +360,9 @@ class HeaderGenerator(MethodGenerator):
     def apiDecl(self):
         return "STROMX_{0}_API".format(p.ident.upper())
             
-class ImplementationGenerator(MethodGenerator):
+class OpImplGenerator(MethodGenerator):
     def __init__(self, package, method):
-        super(ImplementationGenerator, self).__init__(package, method)
+        super(OpImplGenerator, self).__init__(package, method)
         
     def generate(self):
         self.includes()
@@ -643,11 +676,19 @@ if __name__ == "__main__":
     
     m.initOptions = InitOptions()
     
-    g = HeaderGenerator(p, m)
+    g = OpHeaderGenerator(p, m)
     g.generate()
     print g.string()
     
-    g = ImplementationGenerator(p, m)
+    g = OpImplGenerator(p, m)
+    g.generate()
+    print g.string()
+    
+    g = LibHeaderGenerator(p)
+    g.generate()
+    print g.string()
+    
+    g = LibImplGenerator(p)
     g.generate()
     print g.string()
     
@@ -656,5 +697,13 @@ if __name__ == "__main__":
     print g.string()
     
     g = ConfigGenerator(p)
+    g.generate()
+    print g.string()
+    
+    g = LibHeaderGenerator(p)
+    g.generate()
+    print g.string()
+    
+    g = LibImplGenerator(p)
     g.generate()
     print g.string()
