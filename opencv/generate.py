@@ -112,7 +112,22 @@ class LibHeaderGenerator(LibGenerator):
         
 class LibImplGenerator(LibGenerator):
     def generate(self):
-        pass
+        for m in self.p.methods:
+            self.line("#include {0}.h".format(Names.className(m.ident)))
+        self.line("#include <stromx/core/Registry.h>")
+        self.blank()
+        
+        self.line("void stromxRegister{0}(stromx::core::Registry& registry)"\
+            .format(Names.className(self.p.ident)))
+        self.scopeEnter()
+        self.line("using namespace {0};".format(self.p.ident))
+        self.blank()
+        
+        for m in self.p.methods:
+            self.line("registry.registerOperator(new {0});"\
+                .format(Names.className(m.ident)))
+        
+        self.scopeExit()
 
 class CMakeGenerator(LibGenerator):
     def generate(self):
