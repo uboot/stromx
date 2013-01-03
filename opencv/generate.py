@@ -7,14 +7,8 @@ Created on Fri Dec 21 17:07:19 2012
 
 from package import *
 
-class LibraryGenerator(object):
-    def __init__(self, package):
-        self.p = package
-
-class MethodGenerator(object):
-    def __init__(self, package, method):
-        self.p = package
-        self.m = method
+class Generator(object):
+    def __init__(self):
         self.lines = []
         self.indent = 0
         
@@ -81,6 +75,84 @@ class MethodGenerator(object):
             l.extend(arg.__getattribute__(method)())
         l.extend(self.m.initOptions.__getattribute__(method)())
         return l
+        
+class LibGenerator(Generator):
+    def __init__(self, package):
+        super(LibGenerator, self).__init__()
+        self.p = package
+
+class CMakeGenerator(LibGenerator):
+    def generate(self):
+        self.line("project(stromx_{0})".format(p.ident))
+        self.blank()
+        self.line("set ({0}_VERSION_MAJOR {1})"\
+            .format(Names.constantName(p.ident), p.major))
+        self.line("set ({0}_VERSION_MINOR {1})"\
+            .format(Names.constantName(p.ident), p.major))
+        self.line("set ({0}_VERSION_PATCH {1})"\
+            .format(Names.constantName(p.ident), p.patch))
+        self.blank()
+        
+        self.line("configure_file (")
+        self.increaseIndent()
+        self.line(r"${PROJECT_SOURCE_DIR}/Config.h.in")
+        self.line(r"${PROJECT_SOURCE_DIR}/Config.h")
+        self.decreaseIndent()
+        self.line(")")
+        self.blank()
+        
+        self.line("include_directories (")
+        self.increaseIndent()
+        self.line(r"../..")
+        self.line(r"${Boost_INCLUDE_DIRS}")
+        self.decreaseIndent()
+        self.line(")")
+        self.blank()
+        
+        self.line("set (SOURCES ")
+        self.increaseIndent()
+        for m in self.p.methods:
+            self.line("{0}.cpp".format(Names.className(m.ident)))
+        self.decreaseIndent()
+        self.line(")")
+        self.blank()
+        
+        self.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
+            .format(p.ident))
+        self.blank()
+        
+        self.line('set(VERSION_STRING "${{{0}_VERSION_MAJOR}}.'
+                  '${{{0}_VERSION_MINOR}}.${{{0}_VERSION_PATCH}}")'\
+                  .format(Names.constantName(self.p.ident)))
+        self.blank()
+        
+        self.line("set_target_properties (stromx_{0} PROPERTIES"\
+            .format(self.p.ident))
+        self.increaseIndent()
+        self.line("VERSION ${VERSION_STRING}")
+        self.line("SOVERSION ${VERSION_STRING}")
+        self.decreaseIndent()
+        self.line(")")
+        self.blank()
+        
+        self.line("target_link_libraries (stromx_{0} PROPERTIES"\
+            .format(self.p.ident))
+        self.increaseIndent()
+        self.line("${OpenCV_LIBS}")
+        self.line("stromx_core")
+        self.decreaseIndent()
+        self.line(")")
+        self.blank()
+    
+    def save(self):
+        with file("CMakeLists.txt", "w") as f:
+            f.write(self.string())
+        
+class MethodGenerator(Generator):
+    def __init__(self, package, method):
+        super(MethodGenerator, self).__init__()
+        self.p = package
+        self.m = method
         
 class HeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -483,13 +555,14 @@ class ImplementationGenerator(MethodGenerator):
         return "{0}::{1}".format(self.className(), s)
     
 if __name__ == "__main__":
-    p = Package()
+    p = Package(0, 0, 1)
     p.ident = "imgproc"
     p.name = "OpenCV image processing"
     
     m = Method()
     m.ident = "medianBlur"
     m.name = "Median Blur"
+    p.methods.append(m)
     
     arg1 = Argument()
     arg1.ident = "src"
@@ -523,5 +596,9 @@ if __name__ == "__main__":
     print g.string()
     
     g = ImplementationGenerator(p, m)
+    g.generate()
+    print g.string()
+    
+    g = CMakeGenerator(p)
     g.generate()
     print g.string()

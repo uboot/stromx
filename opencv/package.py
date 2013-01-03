@@ -27,6 +27,14 @@ class Package(object):
     name = ""
     description = ""
     methods = []
+    major = 0
+    minor = 0
+    patch = 0
+    
+    def __init__(self, major, minor, patch):
+        self.major = major
+        self.minor = minor
+        self.patch = patch
     
 class Names:
     @staticmethod
@@ -288,7 +296,7 @@ class EnumParameter(Parameter):
     
     
 class InitOptions(EnumParameter):
-    def __init__(self):
+    def __init__(self, inPlace = True, allocate = True):
         self.ident = "dataFlow"
         self.name = "Data Flow"
         self.default = 0
