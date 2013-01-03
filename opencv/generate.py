@@ -147,6 +147,58 @@ class CMakeGenerator(LibGenerator):
     def save(self):
         with file("CMakeLists.txt", "w") as f:
             f.write(self.string())
+            
+class ConfigGenerator(LibGenerator):
+    def generate(self):
+        p = Names.constantName(self.p.ident)
+        guard = "STROMX_{0}_CONFIG_H".format(p)
+        
+        self.line("#ifndef {0}".format(guard))
+        self.line("#define {0}".format(guard))
+        self.blank()
+        
+        version = "{0}_VERSION".format(p)
+        self.line("#define {0}_MAJOR @{0}_MAJOR@".format(version))
+        self.line("#define {0}_MINOR @{0}_MINOR@".format(version))
+        self.line("#define {0}_PATCH @{0}_PATCH@".format(version))
+        self.blank()
+        
+        self.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
+            .format(p, self.p.ident))
+        self.blank()
+        
+        self.line("#ifdef WIN32")
+        self.increaseIndent()
+        self.line("#ifdef STROMX_{0}_STATIC".format(p))
+        self.increaseIndent()
+        self.line("#define STROMX_{0}_STATIC".format(p))
+        self.decreaseIndent()
+        self.line("#else // STROMX_{0}_STATIC".format(p))
+        self.increaseIndent()
+        self.line("#ifdef stromx_{0}_EXPORTS".format(self.p.ident))
+        self.increaseIndent()
+        self.line("#define STROMX_{0}_API __declspec(dllexport)".format(p))
+        self.decreaseIndent()
+        self.line("#else // stromx_{0}_EXPORTS".format(self.p.ident))
+        self.increaseIndent()
+        self.line("#define STROMX_{0}_API __declspec(dllimport)".format(p))
+        self.decreaseIndent()
+        self.line("#endif // stromx_{0}_EXPORTS".format(self.p.ident))
+        self.decreaseIndent()
+        self.line("#endif // STROMX_{0}_STATIC".format(p))
+        self.decreaseIndent()
+        self.line("#else // WIN32")
+        self.increaseIndent()
+        self.line("#define STROMX_{0}_API".format(p))
+        self.decreaseIndent()
+        self.line("#endif // WIN32")
+        self.blank()
+        
+        self.line("#endif // {0}".format(guard))
+
+    def save(self):
+        with file("Config.h.in", "w") as f:
+            f.write(self.string())
         
 class MethodGenerator(Generator):
     def __init__(self, package, method):
@@ -600,5 +652,9 @@ if __name__ == "__main__":
     print g.string()
     
     g = CMakeGenerator(p)
+    g.generate()
+    print g.string()
+    
+    g = ConfigGenerator(p)
     g.generate()
     print g.string()
