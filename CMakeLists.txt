@@ -72,6 +72,7 @@ endif()
 
 if(BUILD_BASE)
    add_subdirectory(stromx/base)
+   add_subdirectory(stromx/imgproc)
    add_subdirectory(example)
 endif()
 

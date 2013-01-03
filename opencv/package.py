@@ -117,7 +117,7 @@ class Types:
         elif t == DataType.UINT_32:
             return "(unsigned int)"
         elif t == DataType.IMAGE:
-            return "getOpenCvMat"
+            return "base::getOpenCvMat"
         else:
             assert(False)
     
@@ -250,13 +250,13 @@ class Parameter(InputArgument):
         
     def paramCreate(self):
         lines = []
-        lines.append("Parameter* {0} = new Parameter({1}, {2});"\
+        lines.append("core::Parameter* {0} = new core::Parameter({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
-                    Types.dataType(self.dataType)))
+                    Types.dataVariant(self.dataType)))
         lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
             .format(self.ident))
-        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
         
@@ -282,15 +282,15 @@ class EnumParameter(Parameter):
         
     def paramCreate(self):
         lines = []
-        lines.append("Parameter* {0} = new EnumParameter({1}, {2});"\
+        lines.append("core::EnumParameter* {0} = new core::EnumParameter({1});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataType(self.dataType)))
         lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
             .format(self.ident))
-        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         for d in self.descriptions:
-            lines.append('{0}->add({0});'.format(d.constructor()))
+            lines.append('{0}->add({1});'.format(self.ident, d.constructor()))
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
     
@@ -322,7 +322,7 @@ class Input(InputArgument):
         
     def inputCreate(self):
         lines = []
-        lines.append("Description* {0} = new Description({1}, {2});"\
+        lines.append("core::Description* {0} = new core::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
@@ -350,12 +350,15 @@ class Output(OutputArgument):
         super(Output, self).__init__(arg)
         self.refArg = refArg
         
+    def inputId(self):
+        return [Names.constantName(self.ident)]
+        
     def outputId(self):
-        return [Names.constantName(self.ident)] 
+        return ["RESULT"] 
         
     def inputCreate(self):
         lines = []
-        lines.append("Description* {0} = new Description({1}, {2});"\
+        lines.append("core::Description* {0} = new core::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
@@ -365,12 +368,9 @@ class Output(OutputArgument):
         
     def outputCreate(self):
         lines = []
-        lines.append("Description* {0} = new Description({1}, {2});"\
-            .format(self.ident,
-                    Names.constantName(self.ident),
-                    Types.dataVariant(self.dataType)))
-        lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
-        lines.append("outputs.push_back({0});".format(self.ident))
+        lines.append('core::Description* result = new core::Description(RESULT, '
+                     '{0});'.format(Types.dataVariant(self.dataType)))
+        lines.append("outputs.push_back(result);".format(self.ident))
         return [lines]
         
     def writeAccess(self):
@@ -389,7 +389,7 @@ class Output(OutputArgument):
         return [cast]
     
     def outContainer(self):
-        return ["DataContainer outContainer = inContainer;"]
+        return ["core::DataContainer outContainer = inContainer;"]
     
     def outputInit(self):
         if self.refArg == None:
@@ -415,6 +415,16 @@ class Allocation(OutputArgument):
     def __init__(self, arg, refArg = None):
         super(Allocation, self).__init__(arg)
         self.refArg = refArg
+        
+    def outputId(self):
+        return ["RESULT"] 
+        
+    def outputCreate(self):
+        lines = []
+        lines.append('core::Description* result = new core::Description(RESULT, '
+                     '{0});'.format(Types.dataVariant(self.dataType)))
+        lines.append("outputs.push_back(result);".format(self.ident))
+        return [lines]
     
     def allocate(self):
         src = "{0}CastedData".format(self.refArg.ident)
@@ -422,8 +432,8 @@ class Allocation(OutputArgument):
         lines = []
         lines.append("core::Image* outData = new base::Image({0}->width(), "
                      "{0}->height(), {0}->pixelType());".format(src))
-        lines.append("DataContainer outContainer = DataContainer(outData);")
-        lines.append("{0} {1}CvData = {2}(outData);"\
+        lines.append("core::DataContainer outContainer = core::DataContainer(outData);")
+        lines.append("{0} {1}CvData = {2}(*outData);"\
             .format(Types.cvType(self.cvType),
                     self.ident,
                     Types.cvCast(self.cvType)))
@@ -438,7 +448,7 @@ class EnumDescription(object):
         self.name = name
     
     def constructor(self):
-        return ('EnumDescription(Enum({0}), "{1}")'\
+        return ('core::EnumDescription({0}, "{1}")'\
             .format(Names.constantName(self.ident), self.name))
         
     

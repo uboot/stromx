@@ -122,12 +122,12 @@ class LibHeaderGenerator(LibGenerator):
         self.line("#define STROMX_{0}_{0}_H".format(p))
         self.blank()
         
-        self.line("#include Config.h")
+        self.line('#include "Config.h"')
         self.blank()
         
         self.line("namespace stromx")
         self.scopeEnter()
-        self.line("namespace {0}".format(self.p.ident))
+        self.line("namespace core".format(self.p.ident))
         self.scopeEnter()
         self.line("class Registry;")
         self.scopeExit()
@@ -150,15 +150,17 @@ class LibHeaderGenerator(LibGenerator):
         
 class LibImplGenerator(LibGenerator):
     def generate(self):
+        self.line('#include "{0}.h"'.format(Names.className(self.p.ident)))
+        self.blank()
         for m in self.p.methods:
-            self.line("#include {0}.h".format(Names.className(m.ident)))
+            self.line('#include "{0}.h"'.format(Names.className(m.ident)))
         self.line("#include <stromx/core/Registry.h>")
         self.blank()
         
         self.line("void stromxRegister{0}(stromx::core::Registry& registry)"\
             .format(Names.className(self.p.ident)))
         self.scopeEnter()
-        self.line("using namespace {0};".format(self.p.ident))
+        self.line("using namespace stromx::{0};".format(self.p.ident))
         self.blank()
         
         for m in self.p.methods:
@@ -203,6 +205,7 @@ class CMakeGenerator(LibGenerator):
         self.increaseIndent()
         for m in self.p.methods:
             self.line("{0}.cpp".format(Names.className(m.ident)))
+            self.line("{0}.cpp".format(Names.className(self.p.ident)))
         self.decreaseIndent()
         self.line(")")
         self.blank()
@@ -225,11 +228,12 @@ class CMakeGenerator(LibGenerator):
         self.line(")")
         self.blank()
         
-        self.line("target_link_libraries (stromx_{0} PROPERTIES"\
+        self.line("target_link_libraries (stromx_{0}"\
             .format(self.p.ident))
         self.increaseIndent()
         self.line("${OpenCV_LIBS}")
         self.line("stromx_core")
+        self.line("stromx_base")
         self.decreaseIndent()
         self.line(")")
         self.blank()
@@ -307,7 +311,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.blank()
         self.namespaceEnter()
         self.classEnter()
-        self.label("public:")
+        self.label("public")
         self.inputIds()
         self.blank()
         self.outputIds()
@@ -319,7 +323,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.constructor()
         self.kernelOverloads()
         self.blank()
-        self.label("private:")
+        self.label("private")
         self.statics()
         self.blank()
         self.setupFunctions()
@@ -402,7 +406,8 @@ class OpHeaderGenerator(MethodGenerator):
                 self.line("{0},".format(v))
             else:
                 self.line(v)
-        self.scopeExit()
+        self.decreaseIndent()
+        self.line("};")
     
     def classExit(self):
         self.decreaseIndent()
@@ -454,9 +459,9 @@ class OpImplGenerator(MethodGenerator):
     def includes(self):
         self.line('#include "{0}.h"'.format(self.className()))
         self.blank()
-        self.line('#include "Image.h"')
-        self.line('#include "Matrix.h"')
-        self.line('#include "Utilities.h"')
+        self.line('#include <stromx/base/Image.h>')
+        self.line('#include <stromx/base/Matrix.h>')
+        self.line('#include <stromx/base/Utilities.h>')
         self.line('#include <stromx/core/DataContainer.h>')
         self.line('#include <stromx/core/DataProvider.h>')
         self.line('#include <stromx/core/EnumParameter.h>')
@@ -489,7 +494,7 @@ class OpImplGenerator(MethodGenerator):
             .format(self.className(), Names.constantName(self.p.ident)))
         
     def setParameter(self):
-        self.line("void {0}(unsigned int id, const Data& value)"\
+        self.line("void {0}(unsigned int id, const core::Data& value)"\
             .format(self.method("setParameter")))
         self.scopeEnter()
         self.line("try")
@@ -512,7 +517,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
         
     def getParameter(self):
-        self.line("const DataRef {0}(unsigned int id)"\
+        self.line("const core::DataRef {0}(unsigned int id) const"\
             .format(self.method("getParameter")))
         self.scopeEnter()
         self.line("switch(id)")
@@ -542,10 +547,10 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
     
     def setupParameters(self):
-        self.line("const std::vector<const Parameter*> {0}()"\
+        self.line("const std::vector<const core::Parameter*> {0}()"\
             .format(self.method("setupParameters")))
         self.scopeEnter()
-        self.line("std::vector<const Parameter*> parameters;")
+        self.line("std::vector<const core::Parameter*> parameters;")
         self.blank()
         values = self.collect("paramCreate")
         for v in values:
@@ -601,7 +606,7 @@ class OpImplGenerator(MethodGenerator):
         access = readAccess + writeAccess
         
         for a in access:
-            self.line("core::Id2DataMap {0}InMapper({1});"\
+            self.line("core::Id2DataPair {0}InMapper({1});"\
                 .format(a, Names.constantName(a)))
         self.blank()
           
@@ -611,7 +616,7 @@ class OpImplGenerator(MethodGenerator):
             
             if not isEnd:
                 receiveInputStr += " && "
-        self.line("provider.receiveInput({0});".format(receiveInputStr))
+        self.line("provider.receiveInputData({0});".format(receiveInputStr))
         self.blank()
         
         for a in writeAccess:
@@ -623,7 +628,7 @@ class OpImplGenerator(MethodGenerator):
             self.blank()
         
         for a in readAccess:
-            self.line("core::ReadAccess<> {0}ReadAccess();"\
+            self.line("core::ReadAccess<> {0}ReadAccess;"\
                 .format(a))
         self.blank()
         
@@ -690,7 +695,12 @@ class OpImplGenerator(MethodGenerator):
         if len(outContainer):
             self.blank()
         
-        self.line("provider.sendOutput(outContainer);")
+        outputId = self.collect("outputId")
+        assert(len(outputId) == 1)
+        self.line("core::Id2DataPair outputMapper({0}, outContainer);"\
+            .format(outputId[0]))
+        
+        self.line("provider.sendOutputData(outputMapper);")
         
         self.scopeExit()
         
