@@ -10,6 +10,7 @@ class DataType:
     IMAGE = 1
     UINT_32 = 2
     BOOL = 3
+    ENUM = 4
     
 class EnumImpl:
     label = ""
@@ -23,6 +24,7 @@ class Package(object):
     ident = ""
     name = ""
     description = ""
+    methods = []
     
 class Names:
     @staticmethod
@@ -69,6 +71,8 @@ class Types:
             return "core::UInt32"
         elif t == DataType.IMAGE:
             return "core::Image"
+        elif t == DataType.ENUM:
+            return "core::Enum"
         else:
             assert(False)
     
@@ -80,6 +84,8 @@ class Types:
             return "core::DataVariant::UINT_32"
         elif t == DataType.IMAGE:
             return "core::DataVariant::IMAGE"
+        elif t == DataType.IMAGE:
+            return "core::DataVariant::ENUM"
         else:
             assert(False)
             
@@ -104,6 +110,13 @@ class Types:
             return "getOpenCvMat"
         else:
             assert(False)
+            
+    @staticmethod
+    def dataAllocate(t):
+        if t == DataType.IMAGE:
+            return "base::Image"
+        else:
+            assert(False)
     
 class Method(object):
     ident = ""
@@ -120,6 +133,9 @@ class MethodFragment(object):
         return []
         
     def paramId(self):
+        return []
+        
+    def enumIds(self):
         return []
         
     def paramDecl(self):
@@ -153,6 +169,9 @@ class MethodFragment(object):
         return []
         
     def castedData(self):
+        return []
+        
+    def allocate(self):
         return []
         
     def cvData(self):
@@ -229,6 +248,8 @@ class Parameter(InputArgument):
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataType(self.dataType)))
+        lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
+            .format(self.ident))
         lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
@@ -245,12 +266,37 @@ class NumericParameter(Parameter):
     minValue = None
     maxValue = None
     
-class InitOptions(Parameter):
+class EnumParameter(Parameter):
+    dataType = DataType.ENUM
+    descriptions = [] 
+    
+    def enumIds(self):
+        values = [Names.constantName(d.ident) for d in self.descriptions]
+        return [("{0}Id".format(Names.className(self.ident)), values)]
+        
+    def paramCreate(self):
+        lines = []
+        lines.append("Parameter* {0} = new EnumParameter({1}, {2});"\
+            .format(self.ident,
+                    Names.constantName(self.ident),
+                    Types.dataType(self.dataType)))
+        lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
+            .format(self.ident))
+        lines.append('{0}->setDoc("{1}");'.format(self.ident, self.name))
+        for d in self.descriptions:
+            lines.append('{0}->add({0});'.format(d.constructor()))
+        lines.append("parameters.push_back({0});".format(self.ident))
+        return [lines]
+    
+    
+class InitOptions(EnumParameter):
     def __init__(self):
-        self.ident = "inPlace"
-        self.name = "In place"
-        self.dataType = DataType.BOOL
-        self.default = "false"
+        self.ident = "dataFlow"
+        self.name = "Data Flow"
+        self.default = 0
+        self.descriptions.append(EnumDescription("inPlace", "In place"))
+        self.descriptions.append(EnumDescription("allocate", "Allocate"))
+        self.descriptions.append(EnumDescription("manual", "Manual"))
         
     def initParamCreate(self):
         return self.paramCreate()
@@ -336,19 +382,33 @@ class Output(OutputArgument):
         return ["DataContainer outContainer = inContainer;"]
         
 class RefInput(OutputArgument):
-    def __init__(self, inputArg):
-        self.inputArg = inputArg
-        
-    def arg(self):
-        return self.inputArg.arg()
+    pass
         
 class Allocation(OutputArgument):
-    pass
+    
+    def allocate(self):
+        return ["{0} {1}CvData;".format(Types.cvType(self.cvType),
+                                        self.ident)]
+    
+    def outContainer(self):
+        lines = []
+        lines.append("core::Data* outData = new {0}({1}CvData);"\
+            .format(Types.dataAllocate(self.dataType), self.ident))
+        lines.append("DataContainer outContainer = DataContainer(outData);")
+        return lines
 
 class EnumDescription(object):
     ident = ""
     name = ""
-    description = ""
+    
+    def __init__(self, ident, name):
+        self.ident = ident
+        self.name = name
+    
+    def constructor(self):
+        return ('EnumDescription(Enum({0}), "{1}")'\
+            .format(Names.constantName(self.ident), self.name))
+        
     
 class Rule(object):
     def check(self):

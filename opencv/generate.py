@@ -7,6 +7,10 @@ Created on Fri Dec 21 17:07:19 2012
 
 from package import *
 
+class LibraryGenerator(object):
+    def __init__(self, package):
+        self.p = package
+
 class MethodGenerator(object):
     def __init__(self, package, method):
         self.p = package
@@ -92,6 +96,8 @@ class HeaderGenerator(MethodGenerator):
         self.blank()
         self.parameterIds()
         self.blank()
+        self.enumIds()
+        self.blank()
         self.constructor()
         self.kernelOverloads()
         self.blank()
@@ -138,6 +144,11 @@ class HeaderGenerator(MethodGenerator):
     def parameterIds(self):
         values = self.collect("paramId")
         self.enum("ParameterId", values)
+    
+    def enumIds(self):
+        values = self.collect("enumIds")
+        for v in values:
+            self.enum(v[0], v[1])
         
     def constructor(self):
         self.line("{0}();".format(self.className()))
@@ -433,6 +444,11 @@ class ImplementationGenerator(MethodGenerator):
             self.line(v)
         self.blank()
         
+        allocate = self.collect("allocate")
+        for v in allocate:
+            self.line(v)
+        self.blank()
+        
         arg = self.collect("arg")
         argStr = ""
         for isEnd, a in Names.listIterator(arg):
@@ -443,7 +459,7 @@ class ImplementationGenerator(MethodGenerator):
         self.blank()
         
         outContainer = self.collect("outContainer")
-        assert(len(outContainer) == 1)
+        assert(len(outContainer) >= 1)
         for v in outContainer:
             self.line(v)
         self.blank()
@@ -487,6 +503,7 @@ if __name__ == "__main__":
     
     m.args = [arg1, arg2, arg3]
 #    m.args = [Output(arg1), RefInput(arg1), arg3]
+    m.args = [arg1, Allocation(arg2), arg3]
     
     m.initOptions = InitOptions()
     
