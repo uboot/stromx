@@ -214,6 +214,14 @@ class OutputArgument(Argument):
     def __repr__(self):
         return "OutputArgument()"
         
+    def outputCreate(self):
+        lines = []
+        lines.append('core::Description* result = new core::Description(RESULT, '
+                     '{0});'.format(Types.dataVariant(self.dataType)))
+        lines.append('result->setTitle("Result");')
+        lines.append("outputs.push_back(result);".format(self.ident))
+        return [lines]
+        
 class Parameter(InputArgument):
     default = None
     
@@ -281,13 +289,16 @@ class EnumParameter(Parameter):
         return [("{0}Id".format(Names.className(self.ident)), values)]
         
     def paramCreate(self):
+        return self.paramCreateWithAccessMode("ACTIVATED_WRITE")
+        
+    def paramCreateWithAccessMode(self, accessMode):
         lines = []
         lines.append("core::EnumParameter* {0} = new core::EnumParameter({1});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataType(self.dataType)))
-        lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
-            .format(self.ident))
+        lines.append('{0}->setAccessMode(core::Parameter::{1});'\
+            .format(self.ident, accessMode))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         for d in self.descriptions:
             lines.append('{0}->add({1});'.format(self.ident, d.constructor()))
@@ -304,8 +315,11 @@ class InitOptions(EnumParameter):
         self.descriptions.append(EnumDescription("allocate", "Allocate"))
         self.descriptions.append(EnumDescription("manual", "Manual"))
         
+    def paramCreate(self):
+        return []
+        
     def initParamCreate(self):
-        return self.paramCreate()
+        return self.paramCreateWithAccessMode("NONE_WRITE")
         
     def cvData(self):
         return []
@@ -366,13 +380,6 @@ class Output(OutputArgument):
         lines.append("inputs.push_back({0});".format(self.ident))
         return [lines]
         
-    def outputCreate(self):
-        lines = []
-        lines.append('core::Description* result = new core::Description(RESULT, '
-                     '{0});'.format(Types.dataVariant(self.dataType)))
-        lines.append("outputs.push_back(result);".format(self.ident))
-        return [lines]
-        
     def writeAccess(self):
         return [self.ident]
         
@@ -401,7 +408,7 @@ class Output(OutputArgument):
         lines = []
         lines.append("if({0} != {1})".format(src, dst))
         lines.append(Format.SCOPE_ENTER)
-        lines.append("{0}->initializeImage({1}->width(), {1}>height(), "
+        lines.append("{0}->initializeImage({1}->width(), {1}->height(), "
                      "{1}->width() * {1}->pixelSize(), {0}->buffer(), "
                      "{1}->pixelType());".format(dst, src))
         lines.append(Format.SCOPE_EXIT)
@@ -411,6 +418,9 @@ class Output(OutputArgument):
 class RefInput(OutputArgument):
     pass
         
+    def outputCreate(self):
+        return []
+        
 class Allocation(OutputArgument):
     def __init__(self, arg, refArg = None):
         super(Allocation, self).__init__(arg)
@@ -418,13 +428,6 @@ class Allocation(OutputArgument):
         
     def outputId(self):
         return ["RESULT"] 
-        
-    def outputCreate(self):
-        lines = []
-        lines.append('core::Description* result = new core::Description(RESULT, '
-                     '{0});'.format(Types.dataVariant(self.dataType)))
-        lines.append("outputs.push_back(result);".format(self.ident))
-        return [lines]
     
     def allocate(self):
         src = "{0}CastedData".format(self.refArg.ident)

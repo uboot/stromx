@@ -85,7 +85,18 @@ namespace stromx
                 if(m_status != NONE)
                     throw WrongOperatorState(*info(), "Operator has already been initialized.");
                 
-                m_op->initialize();
+                try
+                {
+                    m_op->initialize();
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
                 
                 m_inputMap = impl::Id2DataMap(m_op->inputs());
                 m_inputMap.setObserver(inputObserver);
@@ -163,7 +174,18 @@ namespace stromx
                 if(m_status == EXECUTING)
                     throw WrongOperatorState(*info(), "Operator must be inactive to be deinitialized.");
                 
-                m_op->deinitialize();
+                try
+                {
+                    m_op->deinitialize();
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
                 
                 m_status = NONE;
             }

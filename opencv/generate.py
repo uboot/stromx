@@ -258,7 +258,7 @@ class ConfigGenerator(LibGenerator):
         self.blank()
         
         self.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
-            .format(p, self.p.ident))
+            .format(p, Names.className(self.p.ident)))
         self.blank()
         
         self.line("#ifdef WIN32")
@@ -465,6 +465,7 @@ class OpImplGenerator(MethodGenerator):
         self.line('#include <stromx/core/DataContainer.h>')
         self.line('#include <stromx/core/DataProvider.h>')
         self.line('#include <stromx/core/EnumParameter.h>')
+        self.line('#include <stromx/core/Id2DataComposite.h>')
         self.line('#include <stromx/core/Id2DataPair.h>')
         self.line('#include <stromx/core/NumericParameter.h>')
         self.line('#include <stromx/core/OperatorException.h>')
@@ -492,6 +493,8 @@ class OpImplGenerator(MethodGenerator):
             .format(self.className(), Names.constantName(self.p.ident)))
         self.line("const core::Version {0}::VERSION({1}_VERSION_MAJOR, {1}_VERSION_MINOR, {1}_VERSION_PATCH);"\
             .format(self.className(), Names.constantName(self.p.ident)))
+        self.line('const std::string {0}::TYPE("{1}");'\
+            .format(self.className(), Names.className(self.m.ident)))
         
     def setParameter(self):
         self.line("void {0}(unsigned int id, const core::Data& value)"\
@@ -636,7 +639,7 @@ class OpImplGenerator(MethodGenerator):
             self.line("core::DataContainer inContainer = {0}InMapper.data();"\
                 .format(writeAccess[0]))
             self.line("core::WriteAccess<> writeAccess(inContainer);")
-            self.line("{0}Data = writeAccess();".format(writeAccess[0]))
+            self.line("{0}Data = &writeAccess();".format(writeAccess[0]))
             self.blank()
             
             for a in readAccess:
@@ -738,9 +741,9 @@ if __name__ == "__main__":
     arg3.minValue = 1
     arg3.rules.append(OddRule())
     
-#    m.args = [Input(arg1), Output(arg2, arg1), arg3]
+    m.args = [Input(arg1), Output(arg2, arg1), arg3]
 #    m.args = [Output(arg1), RefInput(arg1), arg3]
-    m.args = [Input(arg1), Allocation(arg2, arg1), arg3]
+#    m.args = [Input(arg1), Allocation(arg2, arg1), arg3]
     
     m.initOptions = InitOptions()
     
