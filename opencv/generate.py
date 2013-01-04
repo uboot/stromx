@@ -473,6 +473,7 @@ class OpImplGenerator(MethodGenerator):
         self.line('#include <stromx/core/OperatorException.h>')
         self.line('#include <stromx/core/ReadAccess.h>')
         self.line('#include <stromx/core/WriteAccess.h>')
+        self.line('#include <boost/assert.hpp>')
         self.line('#include <opencv2/imgproc/imgproc.hpp>')
     
     def constructor(self):
@@ -569,6 +570,34 @@ class OpImplGenerator(MethodGenerator):
         self.line("const std::vector<const core::Description*> {0}()"\
             .format(self.method("setupInputs")))
         self.scopeEnter()
+        
+        optParam = self.m.optionParameter
+        if not optParam.trivial:
+            self.line("switch(int({0}))"\
+                .format(Names.attributeName(optParam.ident)))
+            self.scopeEnter()
+            
+        for opt in optParam.options:   
+            self.option = opt
+            if not optParam.trivial:
+                self.label("case {0}".format(optParam.enumConstant(opt)))
+                self.scopeEnter()
+                
+            self.__setupInputs()
+                
+            if not optParam.trivial:
+                self.scopeExit()
+            
+        self.option = Options.MANUAL
+            
+        if not optParam.trivial:
+            self.label("default")
+            self.line("BOOST_ASSERT(false);")
+            self.scopeExit()
+            
+        self.scopeExit()
+        
+    def __setupInputs(self):
         self.line("std::vector<const core::Description*> inputs;")
         self.blank()
         values = self.collect("inputCreate")
@@ -577,12 +606,13 @@ class OpImplGenerator(MethodGenerator):
                 self.line(l)
             self.blank()
         self.line("return inputs;")
-        self.scopeExit()
+        
     
     def setupOutputs(self):
         self.line("const std::vector<const core::Description*> {0}()"\
             .format(self.method("setupOutputs")))
         self.scopeEnter()
+                
         self.line("std::vector<const core::Description*> outputs;")
         self.blank()
         values = self.collect("outputCreate")
@@ -590,7 +620,8 @@ class OpImplGenerator(MethodGenerator):
             for l in v:
                 self.line(l)
             self.blank()
-        self.line("return outputs;")
+        self.line("return outputs;") 
+        
         self.scopeExit()
         
     def initialize(self):
@@ -605,6 +636,34 @@ class OpImplGenerator(MethodGenerator):
         self.line("void {0}(core::DataProvider & provider)"\
             .format(self.method("execute")))
         self.scopeEnter()
+        
+        optParam = self.m.optionParameter
+        if not optParam.trivial:
+            self.line("switch(int({0}))"\
+                .format(Names.attributeName(optParam.ident)))
+            self.scopeEnter()
+            
+        for opt in optParam.options:   
+            self.option = opt
+            if not optParam.trivial:
+                self.label("case {0}".format(optParam.enumConstant(opt)))
+                self.scopeEnter()
+                
+            self.__execute()
+                
+            if not optParam.trivial:
+                self.scopeExit()
+            
+        self.option = Options.MANUAL
+            
+        if not optParam.trivial:
+            self.label("default")
+            self.line("BOOST_ASSERT(false);")
+            self.scopeExit()
+        
+        self.scopeExit()
+        
+    def __execute(self):
         writeAccess = self.collect("writeAccess")
         assert(len(writeAccess) <= 1)
         readAccess = self.collect("readAccess")
@@ -706,8 +765,6 @@ class OpImplGenerator(MethodGenerator):
             .format(outputId[0]))
         
         self.line("provider.sendOutputData(outputMapper);")
-        
-        self.scopeExit()
         
     def method(self, s):
         return "{0}::{1}".format(self.className(), s)

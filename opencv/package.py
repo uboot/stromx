@@ -327,7 +327,17 @@ class Options(EnumParameter):
     @property
     def trivial(self):
         return len(self.options) <= 1
-        
+    
+    def enumConstant(self, option):
+        if option == Options.MANUAL:
+            return "MANUAL"
+        elif option == Options.ALLOCATE:
+            return "ALLOCATE"
+        elif option == Options.IN_PLACE:
+            return "IN_PLACE"
+        else:
+            assert(False)
+            
     def paramCreate(self):
         return []
         
@@ -356,7 +366,7 @@ class Method(object):
         
     @options.setter
     def options(self, options):
-        self.__options.options = options
+        self.__options = Options(options)
         
     @property
     def optionParameter(self):
