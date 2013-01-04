@@ -46,6 +46,7 @@ namespace stromx
         
         PeriodicDelay::PeriodicDelay()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_period(1000),
             m_nextTrigger(new impl::BoostSystemTime)
         {
         }
