@@ -120,13 +120,6 @@ class Types:
             return "base::getOpenCvMat"
         else:
             assert(False)
-    
-class Method(object):
-    ident = ""
-    name = ""
-    description = ""
-    args = []
-    initOptions = None
         
 class MethodFragment(object):
     def inputId(self):
@@ -305,20 +298,43 @@ class EnumParameter(Parameter):
         lines.append("parameters.push_back({0});".format(self.ident))
         return [lines]
     
+class Options(EnumParameter):
+    MANUAL = 0
+    ALLOCATE = 1
+    IN_PLACE = 2
     
-class InitOptions(EnumParameter):
-    def __init__(self, inPlace = True, allocate = True):
+    def __init__(self, options = dict()):
+        if len(options) > 0:
+            assert(options.has_key(Options.MANUAL))
+        
         self.ident = "dataFlow"
         self.name = "Data Flow"
-        self.default = 0
-        self.descriptions.append(EnumDescription("inPlace", "In place"))
-        self.descriptions.append(EnumDescription("allocate", "Allocate"))
-        self.descriptions.append(EnumDescription("manual", "Manual"))
+        self.options = options
+        self.default = Options.MANUAL
+        
+        if self.trivial:
+            return
+            
+        if self.options.has_key(Options.MANUAL):
+            self.descriptions.append(EnumDescription("manual", "Manual"))
+        
+        if self.options.has_key(Options.IN_PLACE):
+            self.descriptions.append(EnumDescription("inPlace", "In place"))
+        
+        if self.options.has_key(Options.ALLOCATE):
+            self.descriptions.append(EnumDescription("allocate", "Allocate"))
+        
+    @property
+    def trivial(self):
+        return len(self.options) <= 1
         
     def paramCreate(self):
         return []
         
     def initParamCreate(self):
+        if self.trivial:
+            return []
+            
         return self.paramCreateWithAccessMode("NONE_WRITE")
         
     def cvData(self):
@@ -326,6 +342,25 @@ class InitOptions(EnumParameter):
         
     def arg(self):
         return []
+        
+class Method(object):
+    ident = ""
+    name = ""
+    description = ""
+    args = []
+    __options = Options()
+    
+    @property
+    def options(self):
+        return self.__options.options
+        
+    @options.setter
+    def options(self, options):
+        self.__options.options = options
+        
+    @property
+    def optionParameter(self):
+        return self.__options
 
 class Constant(InputArgument):
     value = ""

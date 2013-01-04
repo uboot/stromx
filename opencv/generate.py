@@ -103,13 +103,6 @@ class Generator(object):
         self.line("{0}:".format(key))
         self.increaseIndent()
         
-    def collect(self, method):
-        l = []
-        for arg in self.m.args:
-            l.extend(arg.__getattribute__(method)())
-        l.extend(self.m.initOptions.__getattribute__(method)())
-        return l
-        
 class LibGenerator(Generator):
     def __init__(self, package):
         super(LibGenerator, self).__init__()
@@ -295,10 +288,19 @@ class ConfigGenerator(LibGenerator):
             f.write(self.string())
         
 class MethodGenerator(Generator):
+    option = Options.MANUAL
+    
     def __init__(self, package, method):
         super(MethodGenerator, self).__init__()
         self.p = package
         self.m = method
+        
+    def collect(self, method):
+        l = []
+        for arg in self.m.options[self.option]:
+            l.extend(arg.__getattribute__(method)())
+        l.extend(self.m.optionParameter.__getattribute__(method)())
+        return l
         
 class OpHeaderGenerator(MethodGenerator):
     def __init__(self, package, method):
@@ -741,10 +743,11 @@ if __name__ == "__main__":
     arg3.minValue = 1
     arg3.rules.append(OddRule())
     
-    m.args = [Input(arg1), Output(arg2, arg1), arg3]
-#    m.args = [Output(arg1), RefInput(arg1), arg3]
-#    m.args = [Input(arg1), Allocation(arg2, arg1), arg3]
-    
-    m.initOptions = InitOptions()
+    options = dict()
+    options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
+    options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
+    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
+
+    m.options = options
     
     generate(p)
