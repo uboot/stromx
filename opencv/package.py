@@ -500,17 +500,17 @@ class EnumDescription(object):
             .format(Names.constantName(self.ident), self.name))
         
     
-class Rule(object):
+class ParameterRule(object):
     def check(self):
         return ""
 
-class OddRule(Rule):
+class OddRule(ParameterRule):
     pass
 
-class MinRule(Rule):
+class MinRule(ParameterRule):
     pass
 
-class MaxRule(Rule):
+class MaxRule(ParameterRule):
     pass
 
 if __name__ == "__main__":
