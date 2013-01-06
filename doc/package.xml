@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Stromx SYSTEM "stromx-doc.dtd">
+
+<Package>
+    <DataVariant id=0>
+    </DataVariant>
+    <Operator type="Join">
+        <Input id=0 title="Source"/>
+    </Operator>
+</Package>
