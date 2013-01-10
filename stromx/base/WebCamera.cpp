@@ -68,8 +68,9 @@ namespace stromx
             return parameters;
         }
 
-        WebCamera::WebCamera() : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-                                m_webcam(0)
+        WebCamera::WebCamera()
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+            m_webcam(0)
         {
         }
 
@@ -129,6 +130,18 @@ namespace stromx
             cv::Mat frameCopy;
             currentFrame.copyTo(frameCopy);
             base::Image* outImage = new base::Image(frameCopy);
+            
+            try
+            {
+                // So far, our experience showed that the webcam image is a BGR 24-bit image.
+                // For this reason we try to initalize the image as such.
+                // TODO: This could be different for other cameras.
+                outImage->initializeImage(outImage->width(), outImage->height(), outImage->stride(),
+                                          outImage->data(), Image::BGR_24);
+            }
+            catch(core::WrongArgument&)
+            {
+            }
             
             core::DataContainer outContainer = core::DataContainer(outImage);
             
