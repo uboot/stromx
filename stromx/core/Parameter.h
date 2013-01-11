@@ -177,6 +177,12 @@ namespace stromx
             /** Returns the minimal value of this parameter or an instance of None. */
             virtual const Data& min() const { return NONE; }
             
+            /** 
+             * Returns a useful step size to decrease or increase the value of this
+             * parameter. Returns NONE if no step size is defined for this parameter.
+             */
+            virtual const Data& step() const { return NONE; }
+            
             /** Returns the possible values of an enumeration value or an empty vector. */
             virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
             

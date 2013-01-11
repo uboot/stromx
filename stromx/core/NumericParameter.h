@@ -34,7 +34,8 @@ namespace stromx
             NumericParameter(const unsigned int id, ParameterGroup* const group = 0)
               : Parameter(id, data_t::classVariant(), group),
                 m_min(data_t::MIN),
-                m_max(data_t::MAX)
+                m_max(data_t::MAX),
+                m_step(data_t(1))
             {}
             
             /** Constructs a numeric parameter. */
@@ -44,9 +45,17 @@ namespace stromx
                 m_max(max)
             {}
             
+            /** Constructs a numeric parameter. */
+            NumericParameter(const unsigned int id, const data_t min, const data_t max,
+                             const data_t step)
+              : Parameter(id, data_t::classVariant()),
+                m_min(min),
+                m_max(max)
+            {}
             
             virtual const Data& max() const { return m_max; }
             virtual const Data& min() const { return m_min; }
+            virtual const Data& step() const { return m_step; }
             
             /** Sets the maximal value of the parameter. */
             virtual void setMax(const data_t& value)
@@ -60,9 +69,16 @@ namespace stromx
                 m_min = value;
             }
             
+            /** Sets the step value of the parameter. */
+            virtual void setStep(const data_t& value)
+            {
+                m_step = value;
+            }
+            
         private:
             data_t m_min;
             data_t m_max;
+            data_t m_step;
         };
     }
 }
