@@ -17,15 +17,15 @@
 #include "ConstImage.h"
 #include "Image.h"
 #include "Utilities.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/OperatorException.h>
 #include <boost/assert.hpp>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -38,7 +38,7 @@ namespace stromx
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_image(0)
         {
-            m_image = new Image(0, 0, core::Image::RGB_24);
+            m_image = new Image(0, 0, runtime::Image::RGB_24);
         }
         
         ConstImage::~ConstImage()
@@ -57,7 +57,7 @@ namespace stromx
                     delete m_image;
                     m_image = 0;
                     
-                    const core::Image& image = stromx::core::data_cast<core::Image>(value);
+                    const runtime::Image& image = stromx::runtime::data_cast<runtime::Image>(value);
                     m_image = new Image(image);
                     break;
                 }
@@ -88,7 +88,7 @@ namespace stromx
             Data* outData = m_imageAccess();
             provider.lockParameters();
             
-            base::Image* outImage = stromx::core::data_cast<base::Image>(outData);
+            base::Image* outImage = stromx::runtime::data_cast<base::Image>(outData);
             
             if(! outImage)
             {
@@ -115,7 +115,7 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const core::Description*> ConstImage::setupInputs()
+        const std::vector<const runtime::Description*> ConstImage::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -135,11 +135,11 @@ namespace stromx
         
         const std::vector<const Parameter*> ConstImage::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             Parameter* image = new Parameter(IMAGE, DataVariant::IMAGE);
             image->setTitle("Image");
-            image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            image->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
                                         
             return parameters;

@@ -17,7 +17,7 @@ include_directories(
 target_link_libraries(base
     ${Boost_LIBRARIES}
     ${PYTHON_LIBRARY}
-    stromx_core
+    stromx_runtime
     stromx_base
 )
 

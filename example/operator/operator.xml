@@ -3,16 +3,16 @@
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Core" type="Counter" version="0.1.0"/>
+        <Operator id="0" package="Runtime" type="Counter" version="0.1.0"/>
         <Operator id="1" package="Math" type="Add" version="1.0.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">2</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">2</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
         </Operator>
-        <Operator id="2" package="Core" type="PeriodicDelay" version="0.1.0">
+        <Operator id="2" package="Runtime" type="PeriodicDelay" version="0.1.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1000</Data>
             </Parameter>
             <Input id="0" operator="1" output="0"/>
         </Operator>

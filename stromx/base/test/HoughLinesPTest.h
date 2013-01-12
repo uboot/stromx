@@ -19,11 +19,11 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <stromx/core/DataContainer.h>
+#include <stromx/runtime/DataContainer.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class OperatorTester;
     }
@@ -46,7 +46,7 @@ namespace stromx
                 void testExecute();
                 
             private:
-                core::OperatorTester* m_operator;
+                runtime::OperatorTester* m_operator;
         };
     }
 }

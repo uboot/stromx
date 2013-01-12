@@ -17,18 +17,18 @@
 #include "CameraBuffer.h"
 #include "../Image.h"
 #include "../Config.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
 
 #include <iostream>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
     
     namespace base
     {
@@ -53,11 +53,11 @@ namespace stromx
                     switch(id)
                     {
                     case BUFFER_SIZE:
-                        m_bufferSize = stromx::core::data_cast<UInt32>(value);
+                        m_bufferSize = stromx::runtime::data_cast<UInt32>(value);
                         break;
                     case NUM_BUFFERS:
                     {
-                        UInt32 newNumBuffers = stromx::core::data_cast<UInt32>(value);
+                        UInt32 newNumBuffers = stromx::runtime::data_cast<UInt32>(value);
                         if(newNumBuffers < 1)
                             throw WrongParameterValue(parameter(NUM_BUFFERS), *this);
                         m_numBuffers = newNumBuffers;
@@ -177,13 +177,13 @@ namespace stromx
             
                 NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
                 numBuffers->setTitle("Number of buffers");
-                numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+                numBuffers->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
                 numBuffers->setMin(UInt32(1));
                 parameters.push_back(numBuffers);
             
                 NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
                 bufferSize->setTitle("Buffer size in bytes");
-                bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+                bufferSize->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
                 parameters.push_back(bufferSize);
                                             
                 return parameters;

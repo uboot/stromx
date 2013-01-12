@@ -18,10 +18,10 @@
 #include "HoughLinesPTest.h"
 #include "../HoughLinesP.h"
 #include "../Matrix.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::HoughLinesPTest);
 
@@ -31,7 +31,7 @@ namespace stromx
     {
         void HoughLinesPTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new HoughLinesP());
+            m_operator = new runtime::OperatorTester(new HoughLinesP());
             m_operator->initialize();
             m_operator->activate();
         }
@@ -39,11 +39,11 @@ namespace stromx
         void HoughLinesPTest::testExecute()
         {            
             Image* image = new Image("edges.png");
-            core::DataContainer source(image);
+            runtime::DataContainer source(image);
             m_operator->setInputData(HoughLinesP::IMAGE, source);
             
-            core::DataContainer result = m_operator->getOutputData(HoughLinesP::LINES);
-            core::ReadAccess<Matrix> access(result);
+            runtime::DataContainer result = m_operator->getOutputData(HoughLinesP::LINES);
+            runtime::ReadAccess<Matrix> access(result);
             const Matrix& resultLines = access();
             
             resultLines.save("HoughLinesPTest_testExecute.npy");

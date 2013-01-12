@@ -17,17 +17,17 @@
 #include "Clip.h"
 #include "Image.h"
 #include "Utilities.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/WriteAccess.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -48,16 +48,16 @@ namespace stromx
                 switch(id)
                 {
                 case TOP:
-                    m_top = stromx::core::data_cast<UInt32>(value);
+                    m_top = stromx::runtime::data_cast<UInt32>(value);
                     break;
                 case LEFT:
-                    m_left = stromx::core::data_cast<UInt32>(value);
+                    m_left = stromx::runtime::data_cast<UInt32>(value);
                     break;
                 case WIDTH:
-                    m_width = stromx::core::data_cast<UInt32>(value);
+                    m_width = stromx::runtime::data_cast<UInt32>(value);
                     break;
                 case HEIGHT:
-                    m_height = stromx::core::data_cast<UInt32>(value);
+                    m_height = stromx::runtime::data_cast<UInt32>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -109,7 +109,7 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const core::Description*> Clip::setupInputs()
+        const std::vector<const runtime::Description*> Clip::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -133,26 +133,26 @@ namespace stromx
         
         const std::vector<const Parameter*> Clip::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             NumericParameter<UInt32>* top = new NumericParameter<UInt32>(TOP);
             top->setTitle("Top");
-            top->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            top->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(top);
             
             NumericParameter<UInt32>* left = new NumericParameter<UInt32>(LEFT);
             left->setTitle("Left");
-            left->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            left->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(left);
             
             NumericParameter<UInt32>* width = new NumericParameter<UInt32>(WIDTH);
             width->setTitle("Width");
-            width->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            width->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(width);
             
             NumericParameter<UInt32>* height = new NumericParameter<UInt32>(HEIGHT);
             height->setTitle("Height");
-            height->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            height->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(height);
                                         
             return parameters;

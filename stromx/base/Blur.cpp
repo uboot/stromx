@@ -18,19 +18,19 @@
 #include "Image.h"
 #include "Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/EnumParameter.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/WriteAccess.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -86,18 +86,18 @@ namespace stromx
         
         const std::vector<const Parameter*> Blur::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             EnumParameter* filterType = new EnumParameter(FILTER_TYPE);
             filterType->setTitle("Filter type");
-            filterType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            filterType->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             filterType->add(EnumDescription(Enum(MEDIAN), "Median"));
             filterType->add(EnumDescription(Enum(GAUSSIAN), "Gaussian"));
             parameters.push_back(filterType);
             
             NumericParameter<UInt32>* kernelSize = new NumericParameter<UInt32>(KERNEL_SIZE);
             kernelSize->setTitle("Kernel size");
-            kernelSize->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             kernelSize->setStep(UInt32(2));
             kernelSize->setMin(UInt32(1));
             parameters.push_back(kernelSize);
@@ -120,12 +120,12 @@ namespace stromx
             }
         }
         
-        unsigned int Blur::computeDestinationSize(const stromx::core::Image& source)
+        unsigned int Blur::computeDestinationSize(const stromx::runtime::Image& source)
         {
             return source.width() * source.pixelSize() * source.height();
         }
 
-        void Blur::validateSourceImage(const stromx::core::Image& source)
+        void Blur::validateSourceImage(const stromx::runtime::Image& source)
         {
             switch(source.pixelType())
             {

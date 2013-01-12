@@ -18,18 +18,18 @@
 #include "Image.h"
 #include "Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/EnumParameter.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/WriteAccess.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -40,7 +40,7 @@ namespace stromx
         
         ConvertPixelType::ConvertPixelType()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-            m_pixelType(core::Image::MONO_8)
+            m_pixelType(runtime::Image::MONO_8)
         {
         }
 
@@ -51,7 +51,7 @@ namespace stromx
                 switch(id)
                 {
                 case PIXEL_TYPE:
-                    m_pixelType = stromx::core::data_cast<Enum>(value);
+                    m_pixelType = stromx::runtime::data_cast<Enum>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -89,7 +89,7 @@ namespace stromx
             const Image& srcImage = src();
             Image& destImage = dest();
             
-            core::Image::PixelType pixelType = core::Image::PixelType((unsigned int)(m_pixelType));
+            runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
             
             unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
             unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
@@ -99,8 +99,8 @@ namespace stromx
             
             destImage.initializeImage(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
             
-            if((srcImage.pixelType() == core::Image::RGB_24 || srcImage.pixelType() == core::Image::BGR_24)
-            && (pixelType == core::Image::BAYERBG_8 || pixelType == core::Image::BAYERGB_8))
+            if((srcImage.pixelType() == runtime::Image::RGB_24 || srcImage.pixelType() == runtime::Image::BGR_24)
+            && (pixelType == runtime::Image::BAYERBG_8 || pixelType == runtime::Image::BAYERGB_8))
             {
                 // this case is not handled by OpenCV
                 rgbToBayer(srcImage, destImage);
@@ -115,7 +115,7 @@ namespace stromx
             provider.sendOutputData( outputMapper);
         }
         
-        const std::vector<const core::Description*> ConvertPixelType::setupInputs()
+        const std::vector<const runtime::Description*> ConvertPixelType::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -143,109 +143,109 @@ namespace stromx
         
         const std::vector<const Parameter*> ConvertPixelType::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
             pixelType->setTitle("Pixel type");
-            pixelType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
-            pixelType->add(EnumDescription(Enum(core::Image::MONO_8), "Mono image 8-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::RGB_24), "RGB image 24-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BGR_24), "BGR image 24-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
+            pixelType->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            pixelType->add(EnumDescription(Enum(runtime::Image::MONO_8), "Mono image 8-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::RGB_24), "RGB image 24-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BGR_24), "BGR image 24-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
             parameters.push_back(pixelType);
                                         
             return parameters;
         }
         
-        int ConvertPixelType::getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType)
+        int ConvertPixelType::getCvConversionCode(const runtime::Image::PixelType inType, const runtime::Image::PixelType outType)
         {
             switch(inType)
             {
-            case core::Image::MONO_8:
+            case runtime::Image::MONO_8:
                 switch(outType)
                 {
-                case core::Image::RGB_24:
+                case runtime::Image::RGB_24:
                     return CV_GRAY2RGB;
-                case core::Image::BGR_24:
+                case runtime::Image::BGR_24:
                     return CV_GRAY2BGR;
                 default:
-                    throw core::WrongArgument("Unknown conversion.");   
+                    throw runtime::WrongArgument("Unknown conversion.");   
                 }
-            case core::Image::RGB_24:
+            case runtime::Image::RGB_24:
                 switch(outType)
                 {
-                case core::Image::MONO_8:
+                case runtime::Image::MONO_8:
                     return CV_RGB2GRAY;
-                case core::Image::BGR_24:
+                case runtime::Image::BGR_24:
                     return CV_RGB2BGR;
                 default:
-                    throw core::WrongArgument("Unknown conversion.");   
+                    throw runtime::WrongArgument("Unknown conversion.");   
                 }
-            case core::Image::BGR_24:
+            case runtime::Image::BGR_24:
                 switch(outType)
                 {
-                case core::Image::MONO_8:
+                case runtime::Image::MONO_8:
                     return CV_BGR2GRAY;
-                case core::Image::RGB_24:
+                case runtime::Image::RGB_24:
                     return CV_BGR2RGB;
                 default:
-                    throw core::WrongArgument("Unknown conversion.");   
+                    throw runtime::WrongArgument("Unknown conversion.");   
                 }
-            case core::Image::BAYERBG_8:
+            case runtime::Image::BAYERBG_8:
                 switch(outType)
                 {
-                case core::Image::RGB_24:
+                case runtime::Image::RGB_24:
                     return CV_BayerBG2RGB;
-                case core::Image::BGR_24:
+                case runtime::Image::BGR_24:
                     return CV_BayerBG2BGR;
                 default:
-                    throw core::WrongArgument("Unknown conversion.");   
+                    throw runtime::WrongArgument("Unknown conversion.");   
                 }
-            case core::Image::BAYERGB_8:
+            case runtime::Image::BAYERGB_8:
                 switch(outType)
                 {
-                case core::Image::RGB_24:
+                case runtime::Image::RGB_24:
                     return CV_BayerGB2RGB;
-                case core::Image::BGR_24:
+                case runtime::Image::BGR_24:
                     return CV_BayerGB2BGR;
                 default:
-                    throw core::WrongArgument("Unknown conversion.");   
+                    throw runtime::WrongArgument("Unknown conversion.");   
                 }
             default:
-                throw core::WrongArgument("Unknown conversion.");
+                throw runtime::WrongArgument("Unknown conversion.");
             }         
         }
         
-        unsigned int ConvertPixelType::getDestPixelSize(const core::Image::PixelType pixelType)
+        unsigned int ConvertPixelType::getDestPixelSize(const runtime::Image::PixelType pixelType)
         {
             switch(pixelType)
             {
-            case core::Image::MONO_8:
-            case core::Image::MONO_16:
-            case core::Image::BAYERBG_8:
-            case core::Image::BAYERGB_8:
+            case runtime::Image::MONO_8:
+            case runtime::Image::MONO_16:
+            case runtime::Image::BAYERBG_8:
+            case runtime::Image::BAYERGB_8:
                 return 1;
-            case core::Image::BAYERBG_16:
-            case core::Image::BAYERGB_16:
+            case runtime::Image::BAYERBG_16:
+            case runtime::Image::BAYERGB_16:
                 return 2;
-            case core::Image::RGB_24:
-            case core::Image::BGR_24:
+            case runtime::Image::RGB_24:
+            case runtime::Image::BGR_24:
                 return 3;
-            case core::Image::RGB_48:
-            case core::Image::BGR_48:
+            case runtime::Image::RGB_48:
+            case runtime::Image::BGR_48:
                 return 6;
             default:
-                throw core::WrongArgument("Unknown pixel type.");    
+                throw runtime::WrongArgument("Unknown pixel type.");    
             }  
         }
         
-        void ConvertPixelType::rgbToBayer(const core::Image& inImage, core::Image& outImage)
+        void ConvertPixelType::rgbToBayer(const runtime::Image& inImage, runtime::Image& outImage)
         {
-            if(inImage.pixelSize() != core::Image::RGB_24
-            && outImage.pixelType() != core::Image::BAYERBG_8)
+            if(inImage.pixelSize() != runtime::Image::RGB_24
+            && outImage.pixelType() != runtime::Image::BAYERBG_8)
             {
-                throw core::WrongArgument("Unknown pixel type.");    
+                throw runtime::WrongArgument("Unknown pixel type.");    
             }
             
             const uint8_t* inLine = inImage.data();
@@ -288,7 +288,7 @@ namespace stromx
             }
         }
         
-        void ConvertPixelType::openCvConversion(const core::Image& inImage, core::Image& outImage)
+        void ConvertPixelType::openCvConversion(const runtime::Image& inImage, runtime::Image& outImage)
         {
             cv::Mat inCvImage = getOpenCvMat(inImage);
             cv::Mat outCvImage = getOpenCvMat(outImage);

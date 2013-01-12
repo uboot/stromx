@@ -14,13 +14,13 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Factory.h>
-#include <stromx/core/XmlReader.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Core.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/XmlReader.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Runtime.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 #include <iostream>
 
@@ -28,20 +28,20 @@ using namespace stromx;
 
 int main (int, char**)
 {
-    core::Factory factory;
+    runtime::Factory factory;
     
-    stromxRegisterCore(factory);
+    stromxRegisterRuntime(factory);
     
-    core::Stream* stream = core::XmlReader().readStream("file.xml", factory);
+    runtime::Stream* stream = runtime::XmlReader().readStream("file.xml", factory);
     
     stream->start();
     
-    core::Operator* timer = stream->operators()[1];
+    runtime::Operator* timer = stream->operators()[1];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = timer->getOutputData(0);
-        core::ReadAccess<core::UInt32> count(data);
+        runtime::DataContainer data = timer->getOutputData(0);
+        runtime::ReadAccess<runtime::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
         timer->clearOutputData(0);

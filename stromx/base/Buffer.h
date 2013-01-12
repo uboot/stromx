@@ -18,13 +18,13 @@
 #define STROMX_BASE_BUFFER_H
 
 #include "Config.h"
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class Data;
     }
@@ -32,7 +32,7 @@ namespace stromx
     namespace base
     {
         /** \brief Manages an array or reusable image buffers. */
-        class STROMX_BASE_API Buffer : public core::OperatorKernel
+        class STROMX_BASE_API Buffer : public runtime::OperatorKernel
         {
         public:
             enum OutputId
@@ -49,24 +49,24 @@ namespace stromx
             Buffer();
             
             virtual OperatorKernel* clone() const { return new Buffer; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             virtual void activate();
             virtual void deactivate();
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             
-            core::RecycleAccess m_buffers;
-            core::UInt32 m_bufferSize;
-            core::UInt32 m_numBuffers;
+            runtime::RecycleAccess m_buffers;
+            runtime::UInt32 m_bufferSize;
+            runtime::UInt32 m_numBuffers;
         };
     }
 }

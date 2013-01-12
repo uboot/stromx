@@ -22,7 +22,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ErodeTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {

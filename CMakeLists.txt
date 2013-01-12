@@ -55,7 +55,7 @@ if(CPPUNIT_FOUND)
 endif()
 
 if(Boost_FOUND)
-    set(BUILD_CORE true)
+    set(BUILD_RUNTIME true)
 endif()
 
 if(OpenCV_FOUND)
@@ -66,8 +66,8 @@ if(XERCES_FOUND AND LIBZIP_FOUND)
     option(BUILD_FILE_PERSISTENCE "Build file persistence" ON)
 endif()
 
-if(BUILD_CORE)
-    add_subdirectory(stromx/core)
+if(BUILD_RUNTIME)
+    add_subdirectory(stromx/runtime)
 endif()
 
 if(BUILD_BASE)

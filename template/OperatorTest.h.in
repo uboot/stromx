@@ -22,7 +22,7 @@
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class OperatorTester;
     }

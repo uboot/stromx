@@ -17,14 +17,14 @@
 #include <cppunit/TestAssert.h>
 #include "CameraBufferTest.h"
 #include "../impl/CameraBuffer.h"
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::CameraBufferTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -32,7 +32,7 @@ namespace stromx
         
         void CameraBufferTest::setUp()
         {
-            m_operator = new core::OperatorTester(new CameraBuffer());
+            m_operator = new runtime::OperatorTester(new CameraBuffer());
             m_operator->initialize();
             m_operator->setParameter(CameraBuffer::NUM_BUFFERS, UInt32(1));
             m_operator->activate();

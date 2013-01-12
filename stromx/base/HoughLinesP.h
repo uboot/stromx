@@ -17,8 +17,8 @@
 #ifndef STROMX_BASE_HOUGHLINESP_H
 #define STROMX_BASE_HOUGHLINES_H
 
-#include <stromx/core/Enum.h>
-#include <stromx/core/OperatorKernel.h>
+#include <stromx/runtime/Enum.h>
+#include <stromx/runtime/OperatorKernel.h>
 
 #include "Image.h"
 
@@ -27,7 +27,7 @@ namespace stromx
     namespace base
     {
         /** \brief Computes the Hough line transform of an image. */
-        class STROMX_BASE_API HoughLinesP : public core::OperatorKernel
+        class STROMX_BASE_API HoughLinesP : public runtime::OperatorKernel
         {
         public:
             enum InputId
@@ -53,24 +53,24 @@ namespace stromx
             HoughLinesP();
             
             virtual OperatorKernel* clone() const { return new HoughLinesP; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             
         private:
-            virtual const std::vector<const core::Parameter*> setupParameters();
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
+            virtual const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupOutputs();
             
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             static const std::string TYPE;
             
-            core::Double m_rho;
-            core::Double m_theta;
-            core::UInt32 m_threshold;
-            core::Double m_minLineLength;
-            core::Double m_maxLineGap;
+            runtime::Double m_rho;
+            runtime::Double m_theta;
+            runtime::UInt32 m_threshold;
+            runtime::Double m_minLineLength;
+            runtime::Double m_maxLineGap;
         };
     }
 }

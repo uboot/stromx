@@ -22,7 +22,7 @@ The illustrated stream is configured by the XML file below. The parameter settin
         <Operator id="0" package="Base" type="Camera" version="0.1.0">
             <!-- output image index -->
             <Parameter id="0">
-                <Data package="Core" type="Bool" version="0.1.0">1</Data>
+                <Data package="Runtime" type="Bool" version="0.1.0">1</Data>
             </Parameter>
             <!-- image for camera simulator -->
             <Parameter id="0">
@@ -30,39 +30,39 @@ The illustrated stream is configured by the XML file below. The parameter settin
             </Parameter>
             <!-- software trigger mode -->
             <Parameter id="1">
-                <Data type="Enum" package="Core" version="0.1.0">1</Data>
+                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
             <Parameter id="5">
-                <Data type="UInt32" package="Core" version="0.1.0">1000000</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
             </Parameter>
             <!-- one buffer -->
             <Parameter id="6">
-                <Data type="UInt32" package="Core" version="0.1.0">1</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- 8-bit grayscale output -->
             <Parameter id="14">
-                <Data type="Enum" package="Core" version="0.1.0">1</Data>
+                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
         <Operator id="1" package="Base" type="Buffer" version="0.1.0">
             <!-- one buffer -->
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">1</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
             <Parameter id="1">
-                <Data type="UInt32" package="Core" version="0.1.0">1000000</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
             </Parameter>
         </Operator>
         <Operator id="2" package="Base" type="Canny" version="0.1.0">
             <!-- threshold 1 -->
             <Parameter id="0">
-                <Data type="Double" package="Core" version="0.1.0">50</Data>
+                <Data type="Double" package="Runtime" version="0.1.0">50</Data>
             </Parameter>
             <!-- threshold 2 -->
             <Parameter id="1">
-                <Data type="Double" package="Core" version="0.1.0">150</Data>
+                <Data type="Double" package="Runtime" version="0.1.0">150</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
             <Input id="1" operator="1" output="0"/>
@@ -75,16 +75,16 @@ The illustrated stream is configured by the XML file below. The parameter settin
 </Stromx>
 \endcode
 
-The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em core and \em base libraries.
+The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em base libraries.
 
 \code
-#include <stromx/core/Factory.h>
-#include <stromx/core/XmlReader.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Core.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/Image.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/XmlReader.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Runtime.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/Image.h>
 
 #include <stromx/base/Base.h>
 #include <stromx/base/Camera.h>
@@ -95,26 +95,26 @@ using namespace stromx;
 
 int main (int, char**)
 {
-    core::Factory factory;
+    runtime::Factory factory;
     
-    stromxRegisterCore(factory);
+    stromxRegisterRuntime(factory);
     stromxRegisterBase(factory);
 \endcode
 
 Next the stream is read from the XML file and started.
  
 \code   
-    core::Stream* stream = core::XmlReader().readStream("camera.xml", factory);
+    runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
     
     stream->start();
     
-    core::Operator* camera = stream->operators()[0];
-    core::Operator* canny = stream->operators()[2];
+    runtime::Operator* camera = stream->operators()[0];
+    runtime::Operator* canny = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = canny->getOutputData(0);
-        core::ReadAccess<core::Image> image(data);
+        runtime::DataContainer data = canny->getOutputData(0);
+        runtime::ReadAccess<runtime::Image> image(data);
         std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
         
         canny->clearOutputData(0);
@@ -134,7 +134,7 @@ Before starting the iteration explicit references to the \em Camera and \em Cann
 Finally, the stream is stopped and deleted. 
 
 \note 
-The class core::Image does not support saving of images to file because core is not linked to any 3rd party image processing library. However, base::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing base::Image objects from the more general core::Image data:
+The class runtime::Image does not support saving of images to file because runtime is not linked to any 3rd party image processing library. However, base::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing base::Image objects from the more general runtime::Image data:
 
 \code 
 #include <base/Image.h>

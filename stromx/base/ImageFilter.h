@@ -18,10 +18,10 @@
 #define STROMX_BASE_IMAGEFILTER_H
 
 #include "Config.h"
-#include <stromx/core/Primitive.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace cv
 {
@@ -33,7 +33,7 @@ namespace stromx
     namespace base
     {
         /** \brief Abstract base class of image filters. */
-        class STROMX_BASE_API ImageFilter : public core::OperatorKernel
+        class STROMX_BASE_API ImageFilter : public runtime::OperatorKernel
         {
         public:
             enum InputId
@@ -55,26 +55,26 @@ namespace stromx
             
             ImageFilter(const std::string & type);
             
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             
         protected:
-            virtual const std::vector<const core::Parameter*> setupParameters() = 0;
+            virtual const std::vector<const runtime::Parameter*> setupParameters() = 0;
             virtual void applyFilter(const cv::Mat & in, cv::Mat & out) = 0;
-            virtual void validateSourceImage(const core::Image & source) = 0;
-            virtual unsigned int computeDestinationSize(const core::Image & source) = 0;
+            virtual void validateSourceImage(const runtime::Image & source) = 0;
+            virtual unsigned int computeDestinationSize(const runtime::Image & source) = 0;
             
 	private:
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupInitParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Parameter*> setupInitParameters();
 	    
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             
-            core::Bool m_inPlace;
+            runtime::Bool m_inPlace;
         };
     }
 }

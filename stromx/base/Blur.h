@@ -50,20 +50,20 @@ namespace stromx
             Blur();
             
             virtual OperatorKernel* clone() const { return new Blur; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
             
         protected:
-            virtual const std::vector<const core::Parameter*> setupParameters();
+            virtual const std::vector<const runtime::Parameter*> setupParameters();
             virtual void applyFilter(const cv::Mat & in, cv::Mat & out);
-            virtual void validateSourceImage(const core::Image & source);
-            virtual unsigned int computeDestinationSize(const core::Image & source);
+            virtual void validateSourceImage(const runtime::Image & source);
+            virtual unsigned int computeDestinationSize(const runtime::Image & source);
             
         private:
             static const std::string TYPE;
             
-            core::Enum m_filterType;
-            core::UInt32 m_kernelSize;
+            runtime::Enum m_filterType;
+            runtime::UInt32 m_kernelSize;
         };
     }
 }

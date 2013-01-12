@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataVariant.h>
-#include <stromx/core/Data.h>
-#include <stromx/core/Image.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataVariant.h>
+#include <stromx/runtime/Data.h>
+#include <stromx/runtime/Image.h>
 
 #include <stromx/base/Image.h>
 
@@ -25,7 +25,7 @@
 #include <boost/python.hpp>
 
 using namespace boost::python;
-using namespace stromx::core;
+using namespace stromx::runtime;
 
 namespace
 {  
@@ -53,7 +53,7 @@ void exportImage()
         .value("COLOR", stromx::base::Image::COLOR)
     ;
     
-    class_<stromx::base::Image, bases<stromx::core::Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
+    class_<stromx::base::Image, bases<stromx::runtime::Image>, std::auto_ptr<stromx::base::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
         .def("__init__", make_constructor(&allocateFromFileWithAccess))

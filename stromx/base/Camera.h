@@ -18,16 +18,16 @@
 #define STROMX_BASE_CAMERA_H
 
 #include "Config.h"
-#include <stromx/core/DataRef.h>
-#include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/TriggerData.h>
+#include <stromx/runtime/DataRef.h>
+#include <stromx/runtime/Enum.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/TriggerData.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class DataContainer;
         class Operator;
@@ -40,7 +40,7 @@ namespace stromx
     namespace base
     {
         /** \brief Simulates a camera input. */
-        class STROMX_BASE_API Camera : public core::OperatorKernel
+        class STROMX_BASE_API Camera : public runtime::OperatorKernel
         {
         public:
             enum OutputId
@@ -81,9 +81,9 @@ namespace stromx
             Camera();
             
             virtual OperatorKernel* clone() const { return new Camera; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             virtual void deinitialize();
             virtual void activate();
@@ -94,47 +94,47 @@ namespace stromx
                                            unsigned int width,
                                            unsigned int height,
                                            unsigned int depth,
-                                           const core::Enum outputType);
+                                           const runtime::Enum outputType);
             
-            const std::vector<const core::Parameter*> setupInitParameters();
-            const std::vector<const core::Description*> setupInputs();
-            const std::vector<const core::Description*> setupOutputs();
-            const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const runtime::Parameter*> setupInitParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Parameter*> setupParameters();
             void setRgbParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION; 
+            static const runtime::Version VERSION; 
             
             static const unsigned int WHITE_BALANCE_MAX = 10;
             static const unsigned int BASE_EXPOSURE = 10;
             
-            core::Stream* m_stream;
+            runtime::Stream* m_stream;
             
-            core::Operator* m_input;
-            core::Operator* m_clip;
-            core::Operator* m_adjustRgbChannels;
-            core::Operator* m_period;
-            core::Operator* m_trigger;
-            core::Operator* m_buffer;
-            core::Operator* m_pixelType;
-            core::Operator* m_imageQueue;
-            core::Operator* m_indexQueue;
+            runtime::Operator* m_input;
+            runtime::Operator* m_clip;
+            runtime::Operator* m_adjustRgbChannels;
+            runtime::Operator* m_period;
+            runtime::Operator* m_trigger;
+            runtime::Operator* m_buffer;
+            runtime::Operator* m_pixelType;
+            runtime::Operator* m_imageQueue;
+            runtime::Operator* m_indexQueue;
             
-            core::Bool m_outputIndex;
+            runtime::Bool m_outputIndex;
             
-            core::NumericParameter<core::UInt32>* m_left;
-            core::NumericParameter<core::UInt32>* m_top;
-            core::NumericParameter<core::UInt32>* m_width;
-            core::NumericParameter<core::UInt32>* m_height;
+            runtime::NumericParameter<runtime::UInt32>* m_left;
+            runtime::NumericParameter<runtime::UInt32>* m_top;
+            runtime::NumericParameter<runtime::UInt32>* m_width;
+            runtime::NumericParameter<runtime::UInt32>* m_height;
             
             unsigned int m_imageWidth;
             unsigned int m_imageHeight;
             unsigned int m_imageDepth;
-            core::UInt32 m_exposure;
-            core::Double m_wbRed;
-            core::Double m_wbGreen;
-            core::Double m_wbBlue;
+            runtime::UInt32 m_exposure;
+            runtime::Double m_wbRed;
+            runtime::Double m_wbGreen;
+            runtime::Double m_wbBlue;
             
             bool m_isFirstInitialization;
         };

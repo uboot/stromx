@@ -19,7 +19,7 @@
 
 #include "Config.h"
 #include "ImageFilter.h"
-#include <stromx/core/Enum.h>
+#include <stromx/runtime/Enum.h>
 
 namespace stromx
 {
@@ -46,23 +46,23 @@ namespace stromx
             
             MorphologicalFilter(const std::string & type);
             
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
             
         protected:
             virtual void applyMorphologicalFilter(const cv::Mat & in, cv::Mat & out,
                                                   const cv::Mat & kernel, int iterations) = 0;
             
         private:
-            const std::vector<const core::Parameter*> setupParameters();
+            const std::vector<const runtime::Parameter*> setupParameters();
             void applyFilter(const cv::Mat & in, cv::Mat & out);
-            void validateSourceImage(const core::Image & source);
-            unsigned int computeDestinationSize(const core::Image & source);
+            void validateSourceImage(const runtime::Image & source);
+            unsigned int computeDestinationSize(const runtime::Image & source);
             
-            core::Enum m_kernelShape;
-            core::UInt32 m_kernelSizeX;
-            core::UInt32 m_kernelSizeY;
-            core::UInt32 m_iterations;
+            runtime::Enum m_kernelShape;
+            runtime::UInt32 m_kernelSizeX;
+            runtime::UInt32 m_kernelSizeY;
+            runtime::UInt32 m_iterations;
         };
     }
 }

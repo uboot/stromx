@@ -18,12 +18,12 @@
 #define STROMX_BASE_ADJUSTRGBCHANNELS_H
 
 #include "Config.h"
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class DataContainer;
     }
@@ -31,7 +31,7 @@ namespace stromx
     namespace base
     {
         /** \brief Adjusts the relative values of the channels in an RGB image. */
-        class STROMX_BASE_API AdjustRgbChannels : public core::OperatorKernel
+        class STROMX_BASE_API AdjustRgbChannels : public runtime::OperatorKernel
         {
         public:
             enum InputId
@@ -53,22 +53,22 @@ namespace stromx
             AdjustRgbChannels();
             
             virtual OperatorKernel* clone() const { return new AdjustRgbChannels; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;                         
+            static const runtime::Version VERSION;                         
             
-            core::Double m_red;
-            core::Double m_green;
-            core::Double m_blue;
+            runtime::Double m_red;
+            runtime::Double m_green;
+            runtime::Double m_blue;
         };
     }
 }

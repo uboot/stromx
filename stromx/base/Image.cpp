@@ -20,9 +20,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "Image.h"
 #include "Utilities.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/InputProvider.h>
-#include <stromx/core/OutputProvider.h>
+#include <stromx/runtime/Exception.h>
+#include <stromx/runtime/InputProvider.h>
+#include <stromx/runtime/OutputProvider.h>
 
 namespace stromx
 {
@@ -30,22 +30,22 @@ namespace stromx
     {
         const std::string Image::TYPE = "Image";
         const std::string Image::PACKAGE = STROMX_BASE_PACKAGE_NAME;
-        const core::Version Image::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const runtime::Version Image::VERSION = runtime::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
-        Image::Image(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
+        Image::Image(const unsigned int width, const unsigned int height, const runtime::Image::PixelType pixelType)
           : m_image(new cv::Mat())
         {
             allocate(width, height, pixelType);
         }
         
-        Image::Image(const stromx::core::Image& image)
+        Image::Image(const stromx::runtime::Image& image)
           : m_image(new cv::Mat())
         {
             copy(image);
         }
         
         Image::Image(const stromx::base::Image& image)
-          : core::ImageWrapper(),
+          : runtime::ImageWrapper(),
             m_image(new cv::Mat())
         {
             copy(image);
@@ -86,7 +86,7 @@ namespace stromx
             delete m_image;
         }
 
-        void Image::copy(const core::Image& image)
+        void Image::copy(const runtime::Image& image)
         {
             allocate(image.width(), image.height(), image.pixelType());
             
@@ -97,11 +97,11 @@ namespace stromx
             }
             catch(cv::Exception&)
             {
-                throw stromx::core::Exception("Failed to copy construct image.");
+                throw stromx::runtime::Exception("Failed to copy construct image.");
             }
         }
         
-        void Image::serialize(core::OutputProvider & output) const
+        void Image::serialize(runtime::OutputProvider & output) const
         {
             output.text() << (unsigned int)(pixelType()) << " ";
             output.text() << width() << " ";
@@ -114,14 +114,14 @@ namespace stromx
             try
             {
                 if(! cv::imencode(".png", *m_image, data))
-                    throw core::Exception("Failed to encode image.");
+                    throw runtime::Exception("Failed to encode image.");
             }
             catch(cv::Exception&)
             {
-                throw stromx::core::Exception("Failed to encode image.");
+                throw stromx::runtime::Exception("Failed to encode image.");
             }
             
-            std::ostream & outStream = output.openFile("png", core::OutputProvider::BINARY);
+            std::ostream & outStream = output.openFile("png", runtime::OutputProvider::BINARY);
             for(std::vector<uchar>::const_iterator iter = data.begin(); 
                 iter != data.end();
                 ++iter)
@@ -130,7 +130,7 @@ namespace stromx
             }
         }
 
-        void Image::deserialize(core::InputProvider & input, const core::Version &)
+        void Image::deserialize(runtime::InputProvider & input, const runtime::Version &)
         {
             int width = -1;
             int height = -1;
@@ -146,7 +146,7 @@ namespace stromx
                 return;
             }
             
-            input.openFile(core::InputProvider::BINARY);
+            input.openFile(runtime::InputProvider::BINARY);
             
             unsigned int dataSize = 0;
             const unsigned int CHUNK_SIZE = 100000;
@@ -174,7 +174,7 @@ namespace stromx
             }
             catch(cv::Exception &)
             {
-                throw stromx::core::Exception("Failed to decode image.");
+                throw stromx::runtime::Exception("Failed to decode image.");
             }
         }
         
@@ -184,7 +184,7 @@ namespace stromx
             
             *m_image = cv::imread(filename, cvAccessType);
             if(! m_image->data)
-                throw core::FileAccessFailed(filename, "Failed to load image.");
+                throw runtime::FileAccessFailed(filename, "Failed to load image.");
                 
             getDataFromCvImage(pixelTypeFromCvType(m_image->type()));
         } 
@@ -200,41 +200,41 @@ namespace stromx
             initializeImage(m_image->cols, m_image->rows, m_image->step, (uint8_t*)(m_image->data), pixelType);
         }
         
-        void Image::resize(const unsigned int width, const unsigned int height, const core::Image::PixelType pixelType)
+        void Image::resize(const unsigned int width, const unsigned int height, const runtime::Image::PixelType pixelType)
         {
             allocate(width, height, pixelType);
         }
         
         void Image::resize(const unsigned int size)
         {
-            allocate(size, 1, core::Image::NONE);
+            allocate(size, 1, runtime::Image::NONE);
         }
         
-        void Image::save(const std::string& filename, const core::Image & image)
+        void Image::save(const std::string& filename, const runtime::Image & image)
         {
             cv::Mat inImage = getOpenCvMat(image);
             
             switch(image.pixelType())
             {
-            case core::Image::RGB_24:
+            case runtime::Image::RGB_24:
             {
                 Image tempImage(image.height(), image.width(), BGR_24);
                 cv::cvtColor(inImage, *(tempImage.m_image), CV_RGB2BGR); 
                 if(! cv::imwrite(filename.c_str(), *(tempImage.m_image)))
-                    throw core::FileAccessFailed(filename, "Failed to save image.");
+                    throw runtime::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }
-            case core::Image::BGR_24:
-            case core::Image::MONO_8:
-            case core::Image::BAYERBG_8:
-            case core::Image::BAYERGB_8:
+            case runtime::Image::BGR_24:
+            case runtime::Image::MONO_8:
+            case runtime::Image::BAYERBG_8:
+            case runtime::Image::BAYERGB_8:
             {
                 if(! cv::imwrite(filename, inImage))
-                    throw core::FileAccessFailed(filename, "Failed to save image.");
+                    throw runtime::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }
             default:
-                throw core::WrongArgument("Unknown pixel type.");    
+                throw runtime::WrongArgument("Unknown pixel type.");    
             }
         }
         
@@ -243,7 +243,7 @@ namespace stromx
             save(filename, *this);
         }
         
-        core::Data* Image::clone() const
+        runtime::Data* Image::clone() const
         {
             return new Image(*this);
         }
@@ -257,41 +257,41 @@ namespace stromx
             }
             catch(cv::Exception&)
             {
-                throw core::OutOfMemory("Failed to allocate image.");
+                throw runtime::OutOfMemory("Failed to allocate image.");
             }
         }
         
-        int Image::cvTypeFromPixelType(const core::Image::PixelType pixelType)
+        int Image::cvTypeFromPixelType(const runtime::Image::PixelType pixelType)
         {
             switch(pixelType)
             {
-            case core::Image::NONE:
-            case core::Image::MONO_8:
-            case core::Image::BAYERBG_8:
-            case core::Image::BAYERGB_8:
+            case runtime::Image::NONE:
+            case runtime::Image::MONO_8:
+            case runtime::Image::BAYERBG_8:
+            case runtime::Image::BAYERGB_8:
                 return CV_8UC1;
-            case core::Image::RGB_24:
-            case core::Image::BGR_24:
+            case runtime::Image::RGB_24:
+            case runtime::Image::BGR_24:
                 return CV_8UC3;
             default:
-                throw core::WrongArgument("Unknown pixel type.");  
+                throw runtime::WrongArgument("Unknown pixel type.");  
             }
         }
         
-        stromx::core::Image::PixelType Image::pixelTypeFromCvType(const int cvType)
+        stromx::runtime::Image::PixelType Image::pixelTypeFromCvType(const int cvType)
         {
             switch(cvType)
             {
             case CV_8UC1:
-                return core::Image::MONO_8;
+                return runtime::Image::MONO_8;
             case CV_8UC3:
-                return core::Image::BGR_24;
+                return runtime::Image::BGR_24;
             default:
-                throw core::WrongArgument("Unknown OpenCV element type.");  
+                throw runtime::WrongArgument("Unknown OpenCV element type.");  
             }
         }
 
-        core::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
+        runtime::Image::PixelType Image::pixelTypeFromParameters(const int depth, const int numChannels)
         {
             switch(depth)
             {
@@ -299,16 +299,16 @@ namespace stromx
                 switch(numChannels)
                 {
                 case 1:
-                    return core::Image::MONO_8;
+                    return runtime::Image::MONO_8;
                 case 3:
-                    return core::Image::BGR_24;
+                    return runtime::Image::BGR_24;
                 default:
-                    throw core::WrongArgument("Unknown combination of depth and number of channels.");
+                    throw runtime::WrongArgument("Unknown combination of depth and number of channels.");
                 }
             case 16:
-                throw core::WrongArgument("Unknown combination of depth and number of channels.");      
+                throw runtime::WrongArgument("Unknown combination of depth and number of channels.");      
             default:
-                throw core::WrongArgument("Unknown combination of depth and number of channels.");    
+                throw runtime::WrongArgument("Unknown combination of depth and number of channels.");    
             }         
         }
         

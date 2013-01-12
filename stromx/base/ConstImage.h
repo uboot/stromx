@@ -18,14 +18,14 @@
 #define STROMX_BASE_CONSTIMAGE_H
 
 #include "Config.h"
-#include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/Enum.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class Image;
     }
@@ -33,7 +33,7 @@ namespace stromx
     namespace base
     {
         /** \brief Outputs a configurable constant image. */
-        class STROMX_BASE_API ConstImage : public core::OperatorKernel
+        class STROMX_BASE_API ConstImage : public runtime::OperatorKernel
         {
         public:
             enum OutputIds
@@ -50,21 +50,21 @@ namespace stromx
             virtual ~ConstImage();
             
             virtual OperatorKernel* clone() const { return new ConstImage; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;   
+            static const runtime::Version VERSION;   
             
-            core::Image* m_image;
-            core::RecycleAccess m_imageAccess;
+            runtime::Image* m_image;
+            runtime::RecycleAccess m_imageAccess;
         };
     }
 }

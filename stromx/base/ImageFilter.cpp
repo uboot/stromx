@@ -18,17 +18,17 @@
 #include "Image.h"
 #include "Utilities.h"
 #include <opencv2/core/core.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/WriteAccess.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -48,7 +48,7 @@ namespace stromx
                 switch(id)
                 {
                 case IN_PLACE:
-                    m_inPlace = stromx::core::data_cast<Bool>(value);
+                    m_inPlace = stromx::runtime::data_cast<Bool>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -73,7 +73,7 @@ namespace stromx
     
         void ImageFilter::initialize()
         {
-            stromx::core::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
+            stromx::runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
         void ImageFilter::execute(DataProvider& provider)
@@ -142,7 +142,7 @@ namespace stromx
             }
         }
         
-        const std::vector<const core::Description*> ImageFilter::setupInputs()
+        const std::vector<const runtime::Description*> ImageFilter::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -173,11 +173,11 @@ namespace stromx
         
         const std::vector<const Parameter*> ImageFilter::setupInitParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             Parameter* inPlace = new Parameter(IN_PLACE, DataVariant::BOOL);
             inPlace->setTitle("Process in place");
-            inPlace->setAccessMode(core::Parameter::NONE_WRITE);
+            inPlace->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(inPlace);
                                         
             return parameters;

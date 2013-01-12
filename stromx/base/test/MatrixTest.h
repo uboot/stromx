@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <stromx/core/Version.h>
+#include <stromx/runtime/Version.h>
 
 namespace stromx
 {
@@ -90,7 +90,7 @@ namespace stromx
                 void testSaveEmpty();
                 
             private:
-                const static stromx::core::Version VERSION;
+                const static stromx::runtime::Version VERSION;
                 
                 Matrix* m_matrix;
         };

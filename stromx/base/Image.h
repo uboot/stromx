@@ -19,7 +19,7 @@
 
 #include <string>
 #include "Config.h"
-#include <stromx/core/ImageWrapper.h>
+#include <stromx/runtime/ImageWrapper.h>
 
 namespace cv
 {
@@ -31,9 +31,9 @@ namespace stromx
     namespace base
     {
         /** \brief %Image with support for reading and writing. */
-        class STROMX_BASE_API Image : public core::ImageWrapper
+        class STROMX_BASE_API Image : public runtime::ImageWrapper
         {
-             friend cv::Mat getOpenCvMat(const core::Image& image);
+             friend cv::Mat getOpenCvMat(const runtime::Image& image);
              
         public:
             /** Conversion options when reading images. */
@@ -59,7 +59,7 @@ namespace stromx
              * Saves the input \c image to \c filename. The file format is automatically 
              * determined from the file name. 
              */
-            static void save(const std::string& filename, const core::Image & image);
+            static void save(const std::string& filename, const runtime::Image & image);
             
             /** 
              * Constructs an empty image. The image width and height is 0 and no data is associated
@@ -80,7 +80,7 @@ namespace stromx
             explicit Image(const std::string & filename, const FileAccess access);
                         
             /** Copy constructs an image from \c image. */
-            explicit Image(const stromx::core::Image& image);
+            explicit Image(const stromx::runtime::Image& image);
             
             /** Copy constructs an image from \c image. */
             explicit Image(const stromx::base::Image& image);
@@ -100,14 +100,14 @@ namespace stromx
             
             virtual ~Image();
             
-            virtual const core::Version & version() const { return VERSION; }
+            virtual const runtime::Version & version() const { return VERSION; }
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
             virtual Data* clone() const;
             
-            virtual void serialize(core::OutputProvider & output) const;
-            virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
+            virtual void serialize(runtime::OutputProvider & output) const;
+            virtual void deserialize(runtime::InputProvider & input, const stromx::runtime::Version & version);
             
             /** 
              * Reads the image \c filename. The data of the current image is replaced 
@@ -140,15 +140,15 @@ namespace stromx
         private:
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             
             static PixelType pixelTypeFromParameters(const int depth, const int numChannels);
             static int getCvAccessType(const FileAccess access);
-            static int cvTypeFromPixelType(const core::Image::PixelType pixelType);
-            static core::Image::PixelType pixelTypeFromCvType(const int cvType);
+            static int cvTypeFromPixelType(const runtime::Image::PixelType pixelType);
+            static runtime::Image::PixelType pixelTypeFromCvType(const int cvType);
             
             void getDataFromCvImage(const PixelType pixelType);
-            void copy(const stromx::core::Image & image);
+            void copy(const stromx::runtime::Image & image);
             void allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType);
             
             cv::Mat* m_image;

@@ -16,14 +16,14 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/OperatorKernel.h>
+#include <stromx/runtime/OperatorKernel.h>
 #include <opencv2/highgui/highgui.hpp>
 
 namespace stromx
 {
     namespace base
     {
-        class WebCamera : public core::OperatorKernel
+        class WebCamera : public runtime::OperatorKernel
         {
         public:  
             enum OutputId
@@ -42,21 +42,21 @@ namespace stromx
             //destructor
             virtual ~WebCamera(){};
             virtual OperatorKernel* clone() const {return new WebCamera;}
-            virtual void execute(core::DataProvider& provider);
+            virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             virtual void deinitialize();
 
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
 
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
 
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
 
             cv::VideoCapture* m_webcam;
         };

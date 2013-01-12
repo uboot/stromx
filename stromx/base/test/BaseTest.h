@@ -19,11 +19,11 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <stromx/core/DataVariant.h>
+#include <stromx/runtime/DataVariant.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class Factory;
     }
@@ -48,7 +48,7 @@ namespace stromx
                 void testRegisterBase();
                 
             private:
-                core::Factory* m_factory;
+                runtime::Factory* m_factory;
         };
     }
 }

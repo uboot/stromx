@@ -67,5 +67,5 @@ target_link_libraries(stromx_base_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     ${OpenCV_LIBS}
-    stromx_core
+    stromx_runtime
 )

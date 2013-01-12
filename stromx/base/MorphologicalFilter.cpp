@@ -16,10 +16,10 @@
 
 #include "MorphologicalFilter.h"
 
-#include <stromx/core/EnumParameter.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
+#include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -27,7 +27,7 @@ namespace stromx
 {
     namespace base
     {
-        using namespace core;
+        using namespace runtime;
         
         MorphologicalFilter::MorphologicalFilter(const std::string& type)
           : ImageFilter(type),
@@ -38,7 +38,7 @@ namespace stromx
         {
         }  
         
-        const stromx::core::DataRef MorphologicalFilter::getParameter(const unsigned int id) const
+        const stromx::runtime::DataRef MorphologicalFilter::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -55,7 +55,7 @@ namespace stromx
             }
         }
 
-        void MorphologicalFilter::setParameter(const unsigned int id, const stromx::core::Data& value)
+        void MorphologicalFilter::setParameter(const unsigned int id, const stromx::runtime::Data& value)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace stromx
             }
         }
         
-        unsigned int MorphologicalFilter::computeDestinationSize(const stromx::core::Image& source)
+        unsigned int MorphologicalFilter::computeDestinationSize(const stromx::runtime::Image& source)
         {
             return source.width() * source.pixelSize() * source.height();
         }
@@ -121,11 +121,11 @@ namespace stromx
 
         const std::vector<const Parameter*> MorphologicalFilter::setupParameters()
         {            
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             EnumParameter* kernelShape = new EnumParameter(KERNEL_SHAPE);
             kernelShape->setTitle("Filter type");
-            kernelShape->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelShape->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             kernelShape->add(EnumDescription(Enum(RECTANGLE), "Rectangle"));
             kernelShape->add(EnumDescription(Enum(ELLIPSE), "Ellipse"));
             kernelShape->add(EnumDescription(Enum(CROSS), "Cross"));
@@ -133,26 +133,26 @@ namespace stromx
             
             NumericParameter<UInt32>* kernelSizeX = new NumericParameter<UInt32>(KERNEL_SIZE_X);
             kernelSizeX->setTitle("Kernel size x");
-            kernelSizeX->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSizeX->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             kernelSizeX->setMin(UInt32(1));
             parameters.push_back(kernelSizeX);
             
             NumericParameter<UInt32>* kernelSizeY = new NumericParameter<UInt32>(KERNEL_SIZE_Y);
             kernelSizeY->setTitle("Kernel size y");
-            kernelSizeY->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSizeY->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             kernelSizeY->setMin(UInt32(1));
             parameters.push_back(kernelSizeY);
             
             NumericParameter<UInt32>* iterations = new NumericParameter<UInt32>(ITERATIONS);
             iterations->setTitle("Iterations");
-            iterations->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            iterations->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             iterations->setMin(UInt32(1));
             parameters.push_back(iterations);
                                         
             return parameters;
         }
 
-        void MorphologicalFilter::validateSourceImage(const stromx::core::Image& source)
+        void MorphologicalFilter::validateSourceImage(const stromx::runtime::Image& source)
         {
             switch(source.pixelType())
             {

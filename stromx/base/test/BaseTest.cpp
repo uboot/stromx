@@ -17,9 +17,9 @@
 #include <cppunit/TestAssert.h>
 #include "BaseTest.h"
 #include "../Base.h"
-#include <stromx/core/Data.h>
-#include <stromx/core/Factory.h>
-#include <stromx/core/Operator.h>
+#include <stromx/runtime/Data.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/Operator.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::BaseTest);
 
@@ -29,19 +29,19 @@ namespace stromx
     {
         void BaseTest::setUp ( void )
         {
-            m_factory = new core::Factory;
+            m_factory = new runtime::Factory;
         }
         
         void BaseTest::testRegisterBase()
         {
             CPPUNIT_ASSERT_NO_THROW(stromxRegisterBase(*m_factory));
             
-            core::Operator* kernel = 0;
+            runtime::Operator* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("Base", "Camera"));
             CPPUNIT_ASSERT(kernel);
             delete kernel;
             
-            core::Data* data = 0;
+            runtime::Data* data = 0;
             CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("Base", "Image"));
             CPPUNIT_ASSERT(data);
             delete data;

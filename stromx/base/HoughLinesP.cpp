@@ -21,18 +21,18 @@
 #include "Utilities.h"
 #include <boost/math/constants/constants.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/WriteAccess.h>
 
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -142,7 +142,7 @@ namespace stromx
             provider.sendOutputData(outputMapper);
         }
         
-        const std::vector<const core::Description*> HoughLinesP::setupInputs()
+        const std::vector<const runtime::Description*> HoughLinesP::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -166,36 +166,36 @@ namespace stromx
         
         const std::vector<const Parameter*> HoughLinesP::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
-            NumericParameter<core::Double>* rho = new NumericParameter<core::Double>(RHO);
+            NumericParameter<runtime::Double>* rho = new NumericParameter<runtime::Double>(RHO);
             rho->setMin(Double(0.0));
             rho->setTitle("Rho");
-            rho->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            rho->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(rho);
             
-            NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA);
+            NumericParameter<runtime::Double>* theta = new NumericParameter<runtime::Double>(THETA);
             theta->setMin(Double(0.0));
             theta->setStep(Double(0.1));
             theta->setTitle("Theta");
-            theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            theta->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
             
-            NumericParameter<core::UInt32>* threshold = new NumericParameter<core::UInt32>(THRESHOLD);
+            NumericParameter<runtime::UInt32>* threshold = new NumericParameter<runtime::UInt32>(THRESHOLD);
             threshold->setTitle("Threshold");
-            threshold->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            threshold->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);
             
-            NumericParameter<core::Double>* minLineLength = new NumericParameter<core::Double>(MIN_LINE_LENGTH);
+            NumericParameter<runtime::Double>* minLineLength = new NumericParameter<runtime::Double>(MIN_LINE_LENGTH);
             minLineLength->setMin(Double(0.0));
             minLineLength->setTitle("Minimal line length");
-            minLineLength->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            minLineLength->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(minLineLength);
             
-            NumericParameter<core::Double>* maxLineGap = new NumericParameter<core::Double>(MAX_LINE_GAP);
+            NumericParameter<runtime::Double>* maxLineGap = new NumericParameter<runtime::Double>(MAX_LINE_GAP);
             maxLineGap->setMin(Double(0.0));
             maxLineGap->setTitle("Maximal line gap");
-            maxLineGap->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            maxLineGap->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(maxLineGap);
                                         
             return parameters;

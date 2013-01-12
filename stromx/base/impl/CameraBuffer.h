@@ -17,13 +17,13 @@
 #ifndef STROMX_BASE_IMPL_CAMERABUFFER_H
 #define STROMX_BASE_IMPL_CAMERABUFFER_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class Data;
     }
@@ -32,7 +32,7 @@ namespace stromx
     {
         namespace impl
         {
-            class CameraBuffer : public core::OperatorKernel
+            class CameraBuffer : public runtime::OperatorKernel
             {
             public:
                 enum InputId
@@ -56,24 +56,24 @@ namespace stromx
                 CameraBuffer();
                 
                 virtual OperatorKernel* clone() const { return new CameraBuffer; }
-                virtual void setParameter(const unsigned int id, const core::Data& value);
-                virtual const core::DataRef getParameter(const unsigned int id) const;
-                virtual void execute(core::DataProvider& provider);
+                virtual void setParameter(const unsigned int id, const runtime::Data& value);
+                virtual const runtime::DataRef getParameter(const unsigned int id) const;
+                virtual void execute(runtime::DataProvider& provider);
                 virtual void activate();
                 virtual void deactivate();
                 
             private:
-                static const std::vector<const core::Description*> setupInputs();
-                static const std::vector<const core::Description*> setupOutputs();
-                static const std::vector<const core::Parameter*> setupParameters();
+                static const std::vector<const runtime::Description*> setupInputs();
+                static const std::vector<const runtime::Description*> setupOutputs();
+                static const std::vector<const runtime::Parameter*> setupParameters();
                 
                 static const std::string TYPE;
                 static const std::string PACKAGE;
-                static const core::Version VERSION;
+                static const runtime::Version VERSION;
                 
-                core::RecycleAccess m_buffers;
-                core::UInt32 m_bufferSize;
-                core::UInt32 m_numBuffers;
+                runtime::RecycleAccess m_buffers;
+                runtime::UInt32 m_bufferSize;
+                runtime::UInt32 m_numBuffers;
                 unsigned int m_id;
             };
         }

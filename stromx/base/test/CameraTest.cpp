@@ -19,18 +19,18 @@
 #include "../Camera.h"
 #include "../Image.h"
 #include <boost/thread.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Enum.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/TriggerData.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/Enum.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/TriggerData.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::CameraTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -38,7 +38,7 @@ namespace stromx
         {
             Image image("lenna.jpg");
             
-            m_operator = new core::OperatorTester(new Camera());
+            m_operator = new runtime::OperatorTester(new Camera());
             m_operator->setParameter(Camera::OUTPUT_INDEX, Bool(true));
             m_operator->initialize();
             m_operator->setParameter(Camera::NUM_BUFFERS, UInt32(1));
@@ -57,7 +57,7 @@ namespace stromx
             
             {
                 boost::this_thread::sleep(boost::posix_time::seconds(1));
-                m_operator->setParameter(Camera::TRIGGER, core::TriggerData());
+                m_operator->setParameter(Camera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
                 UInt32 index = ReadAccess<UInt32>(indexContainer)();
@@ -72,7 +72,7 @@ namespace stromx
             
             {
                 boost::this_thread::sleep(boost::posix_time::seconds(1));
-                m_operator->setParameter(Camera::TRIGGER, core::TriggerData());
+                m_operator->setParameter(Camera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(Camera::INDEX);
                 UInt32 index = ReadAccess<UInt32>(indexContainer)();
@@ -107,12 +107,12 @@ namespace stromx
         
         void CameraTest::testAdjustPixelType()
         {
-            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::BAYERBG_8));
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::BAYERBG_8));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             const Image & image = ReadAccess<Image>(imageContainer)();
             
-            CPPUNIT_ASSERT_EQUAL(image.pixelType(), core::Image::BAYERBG_8);
+            CPPUNIT_ASSERT_EQUAL(image.pixelType(), runtime::Image::BAYERBG_8);
             image.save("CameraTest_testAdjustPixelTypeBayerBg8.png");
         }
 
@@ -134,7 +134,7 @@ namespace stromx
         void CameraTest::testAdjustExposure()
         {
             m_operator->setParameter(Camera::EXPOSURE, UInt32(5));
-            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24));
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             const Image & image = ReadAccess<Image>(imageContainer)();
@@ -147,7 +147,7 @@ namespace stromx
             m_operator->setParameter(Camera::WHITE_BALANCE_RED, Double(2.0));
             m_operator->setParameter(Camera::WHITE_BALANCE_GREEN, Double(1.0));
             m_operator->setParameter(Camera::WHITE_BALANCE_BLUE, Double(0.0));
-            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24));
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
             const Image & image = ReadAccess<Image>(imageContainer)();
@@ -160,14 +160,14 @@ namespace stromx
             UInt32 bufferSize = data_cast<UInt32>(m_operator->getParameter(Camera::BUFFER_SIZE));
             UInt32 singleChannelSize((unsigned int)(bufferSize) / 3);
             
-            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24));
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             CPPUNIT_ASSERT_THROW(m_operator->setParameter(Camera::BUFFER_SIZE, singleChannelSize),
                                  WrongParameterValue);
             
-            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::MONO_8));
+            m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::MONO_8));
             CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(Camera::BUFFER_SIZE, singleChannelSize));
             
-            CPPUNIT_ASSERT_THROW(m_operator->setParameter(Camera::PIXEL_TYPE, Enum(core::Image::RGB_24)),
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24)),
                                  WrongParameterValue);
         }
 

@@ -14,11 +14,11 @@
 *  limitations under the License.
 */
 
-#include "../core/ExportOperatorKernel.h"
+#include "../runtime/ExportOperatorKernel.h"
 
 #include <boost/python.hpp>
 
-#include <stromx/core/Registry.h>
+#include <stromx/runtime/Registry.h>
 #include <stromx/base/Base.h>
 #include <stromx/base/Blur.h>
 #include <stromx/base/Buffer.h>

@@ -7,5 +7,5 @@ add_executable(simple
 )
 
 target_link_libraries(simple
-    stromx_core
+    stromx_runtime
 )

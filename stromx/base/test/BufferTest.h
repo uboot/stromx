@@ -22,7 +22,7 @@
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class OperatorTester;
     }
@@ -47,7 +47,7 @@ namespace stromx
             void testSetNoBuffers();
                 
         private:
-            core::OperatorTester* m_operator;
+            runtime::OperatorTester* m_operator;
         };
     }
 }

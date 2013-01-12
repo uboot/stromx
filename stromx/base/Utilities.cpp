@@ -17,17 +17,17 @@
 #include "Matrix.h"
 #include "Image.h"
 #include "Utilities.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Exception.h>
-#include <stromx/core/Image.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/Exception.h>
+#include <stromx/runtime/Image.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
-        cv::Mat getOpenCvMat(const core::Image& image)
+        cv::Mat getOpenCvMat(const runtime::Image& image)
         {
             int cvType = Image::cvTypeFromPixelType(image.pixelType());
             uint8_t* data = const_cast<uint8_t*>(image.data());
@@ -35,7 +35,7 @@ namespace stromx
             return cv::Mat(image.height(), image.width(), cvType, data, image.stride());
         }
         
-        cv::Mat getOpenCvMat(const core::Matrix& matrix)
+        cv::Mat getOpenCvMat(const runtime::Matrix& matrix)
         {
             int cvType = Matrix::cvTypeFromValueType(matrix.valueType());
             uint8_t* data = const_cast<uint8_t*>(matrix.data());

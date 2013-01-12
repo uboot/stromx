@@ -8,7 +8,7 @@ add_executable(operator
 )
 
 target_link_libraries(operator
-    stromx_core
+    stromx_runtime
     stromx_base
 )
 

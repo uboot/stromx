@@ -18,23 +18,23 @@
 #include "ConvertPixelTypeTest.h"
 #include "../ConvertPixelType.h"
 #include "../Image.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ConvertPixelTypeTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
         void ConvertPixelTypeTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new ConvertPixelType());
+            m_operator = new runtime::OperatorTester(new ConvertPixelType());
             m_operator->initialize();
             m_operator->activate();
             Image* image = new Image("lenna.jpg");
@@ -45,15 +45,15 @@ namespace stromx
         
         void ConvertPixelTypeTest::testExecuteMono8()
         {
-            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(core::Image::MONO_8));
-            DataContainer destination(new Image(512, 500, core::Image::BAYERBG_8));
+            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::MONO_8));
+            DataContainer destination(new Image(512, 500, runtime::Image::BAYERBG_8));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
             
-            core::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
             ReadAccess<Image> access(result);
             const Image& image = access();
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, image.pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
@@ -62,15 +62,15 @@ namespace stromx
         
         void ConvertPixelTypeTest::testExecuteBayerBg8()
         {
-            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(core::Image::BAYERBG_8));
-            DataContainer destination(new Image(512, 500, core::Image::MONO_8));
+            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::BAYERBG_8));
+            DataContainer destination(new Image(512, 500, runtime::Image::MONO_8));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
             
-            core::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
             ReadAccess<Image> access(result);
             const Image& image = access();
-            CPPUNIT_ASSERT_EQUAL(core::Image::BAYERBG_8, image.pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BAYERBG_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
@@ -79,15 +79,15 @@ namespace stromx
         
         void ConvertPixelTypeTest::testExecuteBayerRgb24()
         {
-            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(core::Image::RGB_24));
-            DataContainer destination(new Image(512, 500, core::Image::BGR_24));
+            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
+            DataContainer destination(new Image(512, 500, runtime::Image::BGR_24));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
             
-            core::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
             ReadAccess<Image> access(result);
             const Image& image = access();
-            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, image.pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
@@ -97,7 +97,7 @@ namespace stromx
         void ConvertPixelTypeTest::testExecuteIdenticalInputs()
         {
             m_operator->setInputData(ConvertPixelType::DESTINATION, m_source);
-            core::DataContainer result;
+            runtime::DataContainer result;
             CPPUNIT_ASSERT_THROW(result = m_operator->getOutputData(ConvertPixelType::OUTPUT), InputError);
         }
         

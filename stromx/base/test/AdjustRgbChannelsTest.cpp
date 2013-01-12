@@ -18,22 +18,22 @@
 #include "AdjustRgbChannelsTest.h"
 #include "../AdjustRgbChannels.h"
 #include "../Image.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::AdjustRgbChannelsTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
         void AdjustRgbChannelsTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new AdjustRgbChannels());
+            m_operator = new runtime::OperatorTester(new AdjustRgbChannels());
             m_operator->initialize();
             m_operator->activate();
             DataContainer image(new Image("lenna.jpg"));
@@ -46,7 +46,7 @@ namespace stromx
             m_operator->setParameter(AdjustRgbChannels::GREEN, Double(1.0));
             m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
             
-            core::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
             ReadAccess<Image> access(result);
             const Image& image = access();
             

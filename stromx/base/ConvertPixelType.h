@@ -18,17 +18,17 @@
 #define STROMX_BASE_CONVERTPIXELTYPE_H
 
 #include "Config.h"
-#include <stromx/core/Enum.h>
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/Enum.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace stromx
 {
     namespace base
     {
         /** \brief Converts the pixel type of image. */
-        class STROMX_BASE_API ConvertPixelType : public core::OperatorKernel
+        class STROMX_BASE_API ConvertPixelType : public runtime::OperatorKernel
         {
         public:
             enum InputId
@@ -50,25 +50,25 @@ namespace stromx
             ConvertPixelType();
             
             virtual OperatorKernel* clone() const { return new ConvertPixelType; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;   
+            static const runtime::Version VERSION;   
             
-            static int getCvConversionCode(const core::Image::PixelType inType, const core::Image::PixelType outType);
-            static unsigned int getDestPixelSize(const core::Image::PixelType pixelType);   
-            static void rgbToBayer(const core::Image & inImage, core::Image & outImage);  
-            static void openCvConversion(const core::Image & inImage, core::Image & outImage);
+            static int getCvConversionCode(const runtime::Image::PixelType inType, const runtime::Image::PixelType outType);
+            static unsigned int getDestPixelSize(const runtime::Image::PixelType pixelType);   
+            static void rgbToBayer(const runtime::Image & inImage, runtime::Image & outImage);  
+            static void openCvConversion(const runtime::Image & inImage, runtime::Image & outImage);
             
-            core::Enum m_pixelType;
+            runtime::Enum m_pixelType;
         };
     }
 }

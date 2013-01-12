@@ -18,18 +18,18 @@
 #include "Image.h"
 #include "Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/WriteAccess.h>
-#include <stromx/core/NumericParameter.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/WriteAccess.h>
+#include <stromx/runtime/NumericParameter.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -47,10 +47,10 @@ namespace stromx
                 switch(id)
                 {
                 case THRESHOLD_1:
-                    m_threshold1 = stromx::core::data_cast<Double>(value);
+                    m_threshold1 = stromx::runtime::data_cast<Double>(value);
                     break;
                 case THRESHOLD_2:
-                    m_threshold2 = stromx::core::data_cast<Double>(value);
+                    m_threshold2 = stromx::runtime::data_cast<Double>(value);
                     break;
                 default:
                     ImageFilter::setParameter(id, value);
@@ -75,14 +75,14 @@ namespace stromx
             }
         }  
         
-        void Canny::validateSourceImage(const stromx::core::Image& source)
+        void Canny::validateSourceImage(const stromx::runtime::Image& source)
         {
 
             if(source.pixelType() != Image::MONO_8)
                 throw InputError(SOURCE, *this, "Source image is not a grayscale image.");
         }
         
-        unsigned int Canny::computeDestinationSize(const stromx::core::Image& source)
+        unsigned int Canny::computeDestinationSize(const stromx::runtime::Image& source)
         {
             return  source.width() * source.pixelSize() * source.height();
         }
@@ -94,16 +94,16 @@ namespace stromx
         
         const std::vector<const Parameter*> Canny::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             Parameter* threshold1 = new NumericParameter<Double>(THRESHOLD_1);
             threshold1->setTitle("Threshold 1");
-            threshold1->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            threshold1->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold1);
             
             Parameter* threshold2 = new NumericParameter<Double>(THRESHOLD_2);
             threshold2->setTitle("Threshold 2");
-            threshold2->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            threshold2->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold2);
                                         
             return parameters;

@@ -15,11 +15,11 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 #include "../Image.h"
 
 #include "ImageFilterTest.h"
@@ -30,7 +30,7 @@ namespace stromx
 {
     namespace base
     {
-        using namespace core;
+        using namespace runtime;
         
         class ImageFilterTester : public ImageFilter
         {
@@ -45,22 +45,22 @@ namespace stromx
                 return new ImageFilterTester;
             } 
             
-            const std::vector< const stromx::core::Parameter* > setupParameters()
+            const std::vector< const stromx::runtime::Parameter* > setupParameters()
             {
-                return std::vector<const core::Parameter*>();
+                return std::vector<const runtime::Parameter*>();
             }
     
             void applyFilter (const cv::Mat&, cv::Mat&)
             {
             }
             
-            void validateSourceImage(const core::Image & source)
+            void validateSourceImage(const runtime::Image & source)
             {
-                if(source.pixelType() != core::Image::MONO_8)
-                    throw core::InputError(SOURCE, *this, "Source image is not a grayscale image.");
+                if(source.pixelType() != runtime::Image::MONO_8)
+                    throw runtime::InputError(SOURCE, *this, "Source image is not a grayscale image.");
             }
             
-            unsigned int computeDestinationSize(const core::Image & source)
+            unsigned int computeDestinationSize(const runtime::Image & source)
             {
                 return source.width() * source.pixelSize() * source.height();
             }
@@ -77,12 +77,12 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            core::Image* sourceImage = new base::Image("lenna_bw.jpg");
+            runtime::Image* sourceImage = new base::Image("lenna_bw.jpg");
             DataContainer source(sourceImage);
             m_operator->setInputData(ImageFilter::SOURCE, source);
             
-            core::Image* destinationImage = new Image(sourceImage->width(), sourceImage->height(),
-                                                      core::Image::BAYERBG_8);
+            runtime::Image* destinationImage = new Image(sourceImage->width(), sourceImage->height(),
+                                                      runtime::Image::BAYERBG_8);
             DataContainer destination(destinationImage);
             m_operator->setInputData(ImageFilter::DESTINATION, destination);
             
@@ -99,7 +99,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            core::Image* sourceImage = new base::Image("lenna_bw.jpg");
+            runtime::Image* sourceImage = new base::Image("lenna_bw.jpg");
             DataContainer source(sourceImage);
             m_operator->setInputData(ImageFilter::SOURCE, source);
             
@@ -117,7 +117,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            core::Image* sourceImage = new base::Image("lenna_bw.jpg");
+            runtime::Image* sourceImage = new base::Image("lenna_bw.jpg");
             DataContainer source(sourceImage);
             m_operator->setInputData(ImageFilter::SOURCE, source);
             m_operator->setInputData(ImageFilter::DESTINATION, source);
@@ -135,7 +135,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            core::Image* sourceImage = new Image(100, 100, core::Image::BAYERBG_8);
+            runtime::Image* sourceImage = new Image(100, 100, runtime::Image::BAYERBG_8);
             DataContainer source(sourceImage);
             m_operator->setInputData(ImageFilter::SOURCE, source);
             
@@ -149,11 +149,11 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            core::Image* sourceImage = new base::Image("lenna_bw.jpg");
+            runtime::Image* sourceImage = new base::Image("lenna_bw.jpg");
             DataContainer source(sourceImage);
             m_operator->setInputData(ImageFilter::SOURCE, source);
             
-            core::Image* destinationImage = new Image(100, 100, core::Image::BAYERBG_8);
+            runtime::Image* destinationImage = new Image(100, 100, runtime::Image::BAYERBG_8);
             DataContainer destination(destinationImage);
             m_operator->setInputData(ImageFilter::DESTINATION, destination);
             

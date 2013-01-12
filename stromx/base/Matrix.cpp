@@ -18,8 +18,8 @@
 #include "Utilities.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
-#include <stromx/core/OutputProvider.h>
-#include <stromx/core/InputProvider.h>
+#include <stromx/runtime/OutputProvider.h>
+#include <stromx/runtime/InputProvider.h>
 #include <opencv2/core/core.hpp>
 #include <fstream>
 
@@ -30,7 +30,7 @@ namespace stromx
     {
         const std::string Matrix::TYPE = "Matrix";
         const std::string Matrix::PACKAGE = STROMX_BASE_PACKAGE_NAME;
-        const core::Version Matrix::VERSION = core::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const runtime::Version Matrix::VERSION = runtime::Version(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
                 
         Matrix::Matrix()
           : m_matrix(new cv::Mat())
@@ -38,7 +38,7 @@ namespace stromx
             getDataFromCvMatrix(NONE);
         }
 
-        Matrix::Matrix(const unsigned int rows, const unsigned int cols, const stromx::core::Matrix::ValueType valueType)
+        Matrix::Matrix(const unsigned int rows, const unsigned int cols, const stromx::runtime::Matrix::ValueType valueType)
           : m_matrix(new cv::Mat())
         {
             allocate(rows, cols, valueType);
@@ -51,14 +51,14 @@ namespace stromx
             getDataFromCvMatrix(valueTypeFromCvType(m_matrix->type()));
         }
 
-        Matrix::Matrix(const stromx::core::Matrix& matrix)
+        Matrix::Matrix(const stromx::runtime::Matrix& matrix)
           : m_matrix(new cv::Mat())
         {
             copy(matrix);
         }
 
         Matrix::Matrix(const stromx::base::Matrix& matrix)
-          : core::MatrixWrapper(),
+          : runtime::MatrixWrapper(),
             m_matrix(new cv::Mat())
         {
             copy(matrix);
@@ -81,7 +81,7 @@ namespace stromx
             delete m_matrix;
         }
 
-        core::Data* Matrix::clone() const
+        runtime::Data* Matrix::clone() const
         {
             return new Matrix(*this);
         }
@@ -97,13 +97,13 @@ namespace stromx
             
             // deserialization currently works only on little endian systems
             if(! isLittleEndian())
-                throw stromx::core::Exception("Matrix deserialization is currently only supported on little endian systems");  
+                throw stromx::runtime::Exception("Matrix deserialization is currently only supported on little endian systems");  
             
             // read and test the magic byte
             char magicByte = 0;
             in >> magicByte;
             if(magicByte != NUMPY_MAGIC_BYTE)
-                throw stromx::core::Exception("This is not a numpy file");
+                throw stromx::runtime::Exception("This is not a numpy file");
             
             // move to the array header size
             in.seekg(8);
@@ -119,15 +119,15 @@ namespace stromx
             static const boost::regex e(".*'descr': ?'([<>])([uif])(\\d+)'.*'fortran_order': ?(False|True).*'shape': ?\\((\\d+), (\\d+)\\).*");
             boost::smatch what;
             if(! boost::regex_match(header, what, e))
-                throw stromx::core::Exception("Failed to parse numpy header.");
+                throw stromx::runtime::Exception("Failed to parse numpy header.");
             
             // only little endian files are currently supported
             if(what[0] == ">")
-                throw stromx::core::Exception("Matrix deserialization does not support big endian files.");
+                throw stromx::runtime::Exception("Matrix deserialization does not support big endian files.");
             
             // only C-style arrays are currently supported
             if(what[1] == "True")
-                throw stromx::core::Exception("Matrix deserialization does not support fortran-ordered array.");
+                throw stromx::runtime::Exception("Matrix deserialization does not support fortran-ordered array.");
             
             // extract the matrix dimensions
             int numRows = 0;
@@ -141,7 +141,7 @@ namespace stromx
             }
             catch(boost::bad_lexical_cast&)
             {
-                throw stromx::core::Exception("Failed to interpret numpy header.");
+                throw stromx::runtime::Exception("Failed to interpret numpy header.");
             }
             
             // get the value type and allocate the matrix
@@ -158,13 +158,13 @@ namespace stromx
             }
             
             if(in.fail())
-                throw stromx::core::Exception("Failed to load matrix.");
+                throw stromx::runtime::Exception("Failed to load matrix.");
         }
 
-        void Matrix::deserialize(core::InputProvider& input, const stromx::core::Version&)
+        void Matrix::deserialize(runtime::InputProvider& input, const stromx::runtime::Version&)
         {
             // open the file
-            input.openFile(core::InputProvider::BINARY);
+            input.openFile(runtime::InputProvider::BINARY);
             
             // call the actual deserialization method
             doDeserialize(input.file());
@@ -193,7 +193,7 @@ namespace stromx
                 i = 2;
                 break;
             default:
-                throw stromx::core::Exception("Unknown numpy value identifier.");
+                throw stromx::runtime::Exception("Unknown numpy value identifier.");
             }
             
             int j = 0;
@@ -212,7 +212,7 @@ namespace stromx
                 j = 3;
                 break;
             default:
-                throw stromx::core::Exception("Unsupported numpy word size.");
+                throw stromx::runtime::Exception("Unsupported numpy word size.");
             }
             
             return valueTypeTable[i][j];
@@ -225,9 +225,9 @@ namespace stromx
             return y == 1;
         }
 
-        char Matrix::npyTypeSymbol(const stromx::core::Matrix::ValueType valueType)
+        char Matrix::npyTypeSymbol(const stromx::runtime::Matrix::ValueType valueType)
         {
-            using namespace stromx::core;
+            using namespace stromx::runtime;
             
             if(valueType == Matrix::INT_8
                || valueType == Matrix::INT_16
@@ -247,7 +247,7 @@ namespace stromx
                 return 'f';
             }
             
-            throw stromx::core::Exception("Attempt to serialize unsupported matrix value type.");
+            throw stromx::runtime::Exception("Attempt to serialize unsupported matrix value type.");
         }
         
         void Matrix::doSerialize(std::ostream& out) const
@@ -261,7 +261,7 @@ namespace stromx
             
             // serialization currently works only on little endian systems
             if(! isLittleEndian())
-                throw stromx::core::Exception("Matrix serialization is currently only supported on little endian systems");
+                throw stromx::runtime::Exception("Matrix serialization is currently only supported on little endian systems");
             
             // setup the array header
             std::ostringstream header;
@@ -300,19 +300,19 @@ namespace stromx
             }
             
             if(out.fail())
-                throw stromx::core::Exception("Failed to save matrix.");
+                throw stromx::runtime::Exception("Failed to save matrix.");
         }
              
-        void Matrix::serialize(core::OutputProvider& output) const
+        void Matrix::serialize(runtime::OutputProvider& output) const
         {
             // open the output file
-            std::ostream & outStream = output.openFile("npy", core::OutputProvider::BINARY);
+            std::ostream & outStream = output.openFile("npy", runtime::OutputProvider::BINARY);
             
             // call the actual serialization function
             doSerialize(outStream);
         }
 
-        void Matrix::copy(const stromx::core::Matrix& matrix)
+        void Matrix::copy(const stromx::runtime::Matrix& matrix)
         {
             allocate(matrix.rows(), matrix.cols(), matrix.valueType());
             
@@ -323,18 +323,18 @@ namespace stromx
             }
             catch(cv::Exception&)
             {
-                throw stromx::core::Exception("Failed to copy construct matrix.");
+                throw stromx::runtime::Exception("Failed to copy construct matrix.");
             }
         }
 
-        void Matrix::resize(const unsigned int rows, const unsigned int cols, const stromx::core::Matrix::ValueType valueType)
+        void Matrix::resize(const unsigned int rows, const unsigned int cols, const stromx::runtime::Matrix::ValueType valueType)
         {
             allocate(rows, cols, valueType);
         }
 
         void Matrix::resize(const unsigned int size)
         {
-            allocate(size, 1, core::Matrix::NONE);
+            allocate(size, 1, runtime::Matrix::NONE);
         }
         
         void Matrix::open(const std::string& filename)
@@ -355,7 +355,7 @@ namespace stromx
             doSerialize(out);
         }
 
-        void Matrix::allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType)
+        void Matrix::allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType)
         {
             try
             {
@@ -364,7 +364,7 @@ namespace stromx
             }
             catch(cv::Exception&)
             {
-                throw core::OutOfMemory("Failed to allocate matrix.");
+                throw runtime::OutOfMemory("Failed to allocate matrix.");
             }
         }
         
@@ -375,31 +375,31 @@ namespace stromx
                              (uint8_t*)(m_matrix->data), valueType);
         }
         
-        int Matrix::cvTypeFromValueType(const core::Matrix::ValueType valueType)
+        int Matrix::cvTypeFromValueType(const runtime::Matrix::ValueType valueType)
         {
             switch(valueType)
             {
-            case core::Matrix::NONE:
-            case core::Matrix::UINT_8:
+            case runtime::Matrix::NONE:
+            case runtime::Matrix::UINT_8:
                 return CV_8UC1;
-            case core::Matrix::INT_8:
+            case runtime::Matrix::INT_8:
                 return CV_8SC1;
-            case core::Matrix::UINT_16:
+            case runtime::Matrix::UINT_16:
                 return CV_16UC1;
-            case core::Matrix::INT_16:
+            case runtime::Matrix::INT_16:
                 return CV_16SC1;
-            case core::Matrix::INT_32:
+            case runtime::Matrix::INT_32:
                 return CV_32SC1;
-            case core::Matrix::FLOAT:
+            case runtime::Matrix::FLOAT:
                 return CV_32FC1;
-            case core::Matrix::DOUBLE:
+            case runtime::Matrix::DOUBLE:
                 return CV_64FC1;
             default:
-                throw core::WrongArgument("Unsupported value type.");  
+                throw runtime::WrongArgument("Unsupported value type.");  
             }
         }
         
-        core::Matrix::ValueType Matrix::valueTypeFromCvType(const int cvType)
+        runtime::Matrix::ValueType Matrix::valueTypeFromCvType(const int cvType)
         {
             switch(cvType)
             {
@@ -407,39 +407,39 @@ namespace stromx
             case CV_8UC2:
             case CV_8UC3:
             case CV_8UC4:
-                return core::Matrix::UINT_8;
+                return runtime::Matrix::UINT_8;
             case CV_8SC1:
             case CV_8SC2:
             case CV_8SC3:
             case CV_8SC4:
-                return core::Matrix::INT_8;
+                return runtime::Matrix::INT_8;
             case CV_16UC1:
             case CV_16UC2:
             case CV_16UC3:
             case CV_16UC4:
-                return core::Matrix::UINT_16;
+                return runtime::Matrix::UINT_16;
             case CV_16SC1:
             case CV_16SC2:
             case CV_16SC3:
             case CV_16SC4:
-                return core::Matrix::INT_16;
+                return runtime::Matrix::INT_16;
             case CV_32SC1:
             case CV_32SC2:
             case CV_32SC3:
             case CV_32SC4:
-                return core::Matrix::INT_32;
+                return runtime::Matrix::INT_32;
             case CV_32FC1:
             case CV_32FC2:
             case CV_32FC3:
             case CV_32FC4:
-                return core::Matrix::FLOAT;
+                return runtime::Matrix::FLOAT;
             case CV_64FC1:
             case CV_64FC2:
             case CV_64FC3:
             case CV_64FC4:
-                return core::Matrix::DOUBLE;
+                return runtime::Matrix::DOUBLE;
             default:
-                throw core::WrongArgument("Unsupported OpenCV element type.");  
+                throw runtime::WrongArgument("Unsupported OpenCV element type.");  
             }
         }
     }

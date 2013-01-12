@@ -18,9 +18,9 @@
 #include "ImageTest.h"
 #include "../Config.h"
 #include "../Image.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/DirectoryFileInput.h>
-#include <stromx/core/DirectoryFileOutput.h>
+#include <stromx/runtime/Exception.h>
+#include <stromx/runtime/DirectoryFileInput.h>
+#include <stromx/runtime/DirectoryFileOutput.h>
 #include <opencv2/core/core.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ImageTest);
@@ -29,7 +29,7 @@ namespace stromx
 {
     namespace base
     {
-        const stromx::core::Version ImageTest::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+        const stromx::runtime::Version ImageTest::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
         
         void ImageTest::setUp ( void )
         {
@@ -40,7 +40,7 @@ namespace stromx
         {
             m_image = new Image();
             
-            CPPUNIT_ASSERT_THROW(m_image->open("unknown.jpg"), core::FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(m_image->open("unknown.jpg"), runtime::FileAccessFailed);
         }
         
         void ImageTest::testImageFile()
@@ -49,7 +49,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
         }
         
@@ -61,26 +61,26 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1500), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
         }
         
         void ImageTest::testOpenAsColor()
         {
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_bw.jpg", Image::COLOR));
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
         }
 
         void ImageTest::testOpenAsGrayscale()
         {
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna.jpg", Image::GRAYSCALE));
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
         }
 
         void ImageTest::testOpenUnchanged()
         {
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_bw.jpg"));
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
         }
         
         void ImageTest::testImageDefault()
@@ -88,13 +88,13 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::NONE, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::NONE, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::NONE, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::NONE, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::IMAGE, m_image->variant());
         }
         
         void ImageTest::testImageEmpty()
@@ -102,13 +102,13 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 100, Image::BGR_24));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::BGR_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::BGR_24_IMAGE, m_image->variant());
         }
 
         void ImageTest::testImageCopyConstructor()
@@ -118,13 +118,13 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::RGB_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::RGB_24_IMAGE, m_image->variant());
         }
 
         void ImageTest::testImageEmptyCopyConstructor()
@@ -134,13 +134,13 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::RGB_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::RGB_24_IMAGE, m_image->variant());
         }
 
         void ImageTest::testImageDefaultCopyConstructor()
@@ -150,13 +150,13 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(image));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::NONE, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::NONE, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::NONE, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::NONE, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL((uint8_t*)(0), m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::IMAGE, m_image->variant());
         }
         
         void ImageTest::testImageCvImageConstructor()
@@ -166,52 +166,52 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(cvImage));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::MONO_8_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::MONO_8_IMAGE, m_image->variant());
         }
         
         void ImageTest::testImageRgb24()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, core::Image::RGB_24));
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, runtime::Image::RGB_24));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(600), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::RGB_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::RGB_24_IMAGE, m_image->variant());
             delete m_image;
             
-            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, core::Image::RGB_24));
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, runtime::Image::RGB_24));
         }
         
         void ImageTest::testImageMono8()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, core::Image::MONO_8));
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(200, 100, runtime::Image::MONO_8));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->cols());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->rows());
-            CPPUNIT_ASSERT_EQUAL(core::Matrix::UINT_8, m_image->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::UINT_8, m_image->valueType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->stride());
-            CPPUNIT_ASSERT_EQUAL(core::Image::MONO_8, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::MONO_8_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::MONO_8_IMAGE, m_image->variant());
             delete m_image;
             
-            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, core::Image::MONO_8));
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, runtime::Image::MONO_8));
         }
 
         void ImageTest::testSaveJpeg()
         {
-            m_image = new Image(200, 100, core::Image::RGB_24);
+            m_image = new Image(200, 100, runtime::Image::RGB_24);
             CPPUNIT_ASSERT_NO_THROW(m_image->save("ImageTest_testSaveJpeg.jpg"));
             delete m_image;
             m_image = 0;
@@ -222,15 +222,15 @@ namespace stromx
         
         void ImageTest::testSaveUnknownDirectory()
         {
-            m_image = new Image(200, 100, core::Image::RGB_24);
-            CPPUNIT_ASSERT_THROW(m_image->save("unknown_dir/ImageTest_testSaveJpeg.jpg"), core::FileAccessFailed);
+            m_image = new Image(200, 100, runtime::Image::RGB_24);
+            CPPUNIT_ASSERT_THROW(m_image->save("unknown_dir/ImageTest_testSaveJpeg.jpg"), runtime::FileAccessFailed);
         }
         
         void ImageTest::testSerialize()
         {
             m_image = new Image("lenna.jpg");
 
-            core::DirectoryFileOutput output(".");
+            runtime::DirectoryFileOutput output(".");
             output.initialize("ImageTest_testSerialize");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
@@ -239,9 +239,9 @@ namespace stromx
         
         void ImageTest::testSerializeEmpty()
         {
-            m_image = new Image(100, 0, core::Image::RGB_24);
+            m_image = new Image(100, 0, runtime::Image::RGB_24);
 
-            core::DirectoryFileOutput output(".");
+            runtime::DirectoryFileOutput output(".");
             output.initialize("ImageTest_testSerializeEmpty");
             
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
@@ -252,7 +252,7 @@ namespace stromx
         {
             m_image = new Image();
             
-            core::DirectoryFileInput input(".");
+            runtime::DirectoryFileInput input(".");
             input.initialize("", "lenna.jpg");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL(Image::BGR_24, m_image->pixelType());
@@ -264,7 +264,7 @@ namespace stromx
         {
             m_image = new Image();
             
-            core::DirectoryFileInput input(".");
+            runtime::DirectoryFileInput input(".");
             input.initialize("3", "lenna.jpg");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL(Image::RGB_24, m_image->pixelType());
@@ -276,22 +276,22 @@ namespace stromx
         {
             m_image = new Image();
             
-            core::DirectoryFileInput input(".");
+            runtime::DirectoryFileInput input(".");
             input.initialize("3 100 0", "");
             CPPUNIT_ASSERT_NO_THROW(m_image->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_image->height());
-            CPPUNIT_ASSERT_EQUAL(core::Image::RGB_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, m_image->pixelType());
         }
                 
         void ImageTest::testResizeBuffer()
         {
             m_image = new Image();
-            CPPUNIT_ASSERT_NO_THROW(m_image->resize(300, 200, core::Image::BGR_24));
+            CPPUNIT_ASSERT_NO_THROW(m_image->resize(300, 200, runtime::Image::BGR_24));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(300), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->height());
-            CPPUNIT_ASSERT_EQUAL(core::Image::BGR_24, m_image->pixelType());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::BGR_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::BGR_24_IMAGE, m_image->variant());
         }
 
         void ImageTest::testResizeDimension()
@@ -301,8 +301,8 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->bufferSize());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_image->height());
-            CPPUNIT_ASSERT_EQUAL(core::Image::NONE, m_image->pixelType());
-            CPPUNIT_ASSERT_EQUAL(core::DataVariant::IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::NONE, m_image->pixelType());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::IMAGE, m_image->variant());
         }
 
         void ImageTest::tearDown ( void )

@@ -22,7 +22,7 @@
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class OperatorTester;
     }
@@ -53,7 +53,7 @@ namespace stromx
                 void testExecuteMedianColor();
                 
             private:
-                core::OperatorTester* m_operator;
+                runtime::OperatorTester* m_operator;
         };
     }
 }

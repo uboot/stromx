@@ -18,16 +18,16 @@
 #define STROMX_BASE_CLIP_H
 
 #include "Config.h"
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/RecycleAccess.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/RecycleAccess.h>
 
 namespace stromx
 {
     namespace base
     {
         /** \brief Clips an image to a rectangular region. */
-        class STROMX_BASE_API Clip : public core::OperatorKernel
+        class STROMX_BASE_API Clip : public runtime::OperatorKernel
         {
         public:
             enum InputId
@@ -52,27 +52,27 @@ namespace stromx
             Clip();
             
             virtual OperatorKernel* clone() const { return new Clip; }
-            virtual void setParameter(const unsigned int id, const core::Data& value);
-            virtual const core::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(core::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const runtime::Data& value);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const core::Description*> setupInputs();
-            static const std::vector<const core::Description*> setupOutputs();
-            static const std::vector<const core::Parameter*> setupParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             
             void adjustClipRegion(const unsigned int destWidth, const unsigned int destHeight,
                                 unsigned int & left, unsigned int & top,
                                 unsigned int & width, unsigned int & height);                           
             
-            core::UInt32 m_top;
-            core::UInt32 m_left;
-            core::UInt32 m_width;
-            core::UInt32 m_height;
+            runtime::UInt32 m_top;
+            runtime::UInt32 m_left;
+            runtime::UInt32 m_width;
+            runtime::UInt32 m_height;
         };
     }
 }

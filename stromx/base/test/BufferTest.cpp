@@ -17,22 +17,22 @@
 #include <cppunit/TestAssert.h>
 #include "BufferTest.h"
 #include "../Buffer.h"
-#include <stromx/core/Image.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::BufferTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
         void BufferTest::setUp()
         {
-            m_operator = new core::OperatorTester(new Buffer());
+            m_operator = new runtime::OperatorTester(new Buffer());
             m_operator->initialize();
             m_operator->setParameter(Buffer::NUM_BUFFERS, UInt32(1));
             m_operator->activate();

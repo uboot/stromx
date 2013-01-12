@@ -20,7 +20,7 @@
 #include "Config.h"
 #include <string>
 #include <vector>
-#include <stromx/core/MatrixWrapper.h>
+#include <stromx/runtime/MatrixWrapper.h>
 
 namespace cv
 {
@@ -32,9 +32,9 @@ namespace stromx
     namespace base
     {
         /** \brief %Matrix implementation based on OpenCV matrices. */
-        class STROMX_BASE_API Matrix : public core::MatrixWrapper
+        class STROMX_BASE_API Matrix : public runtime::MatrixWrapper
         {
-            friend cv::Mat getOpenCvMat(const core::Matrix& matrix);
+            friend cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
         
         public:
             /** 
@@ -53,7 +53,7 @@ namespace stromx
             explicit Matrix(cv::Mat& cvMatrix);
             
             /** Copy constructs a matrix from \c matrix. */
-            explicit Matrix(const stromx::core::Matrix& matrix);
+            explicit Matrix(const stromx::runtime::Matrix& matrix);
             
             /** Copy constructs a matrix from \c matrix. */
             explicit Matrix(const stromx::base::Matrix& matrix);
@@ -70,14 +70,14 @@ namespace stromx
             
             virtual ~Matrix();
             
-            virtual const core::Version & version() const { return VERSION; }
+            virtual const runtime::Version & version() const { return VERSION; }
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
             virtual Data* clone() const;
             
-            virtual void serialize(core::OutputProvider & output) const;
-            virtual void deserialize(core::InputProvider & input, const stromx::core::Version & version);
+            virtual void serialize(runtime::OutputProvider & output) const;
+            virtual void deserialize(runtime::InputProvider & input, const stromx::runtime::Version & version);
             
             /** Resizes the matrix and changes the value type of the matrix. */
             void resize(const unsigned int rows, const unsigned int cols, const ValueType valueType);
@@ -103,17 +103,17 @@ namespace stromx
         private:
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const core::Version VERSION;
+            static const runtime::Version VERSION;
             static const char NUMPY_MAGIC_BYTE = char(0x93);
             
-            static int cvTypeFromValueType(const core::Matrix::ValueType valueType);
-            static core::Matrix::ValueType valueTypeFromCvType(const int cvType);
+            static int cvTypeFromValueType(const runtime::Matrix::ValueType valueType);
+            static runtime::Matrix::ValueType valueTypeFromCvType(const int cvType);
             static bool isLittleEndian();
-            static char npyTypeSymbol(const core::Matrix::ValueType valueType);
+            static char npyTypeSymbol(const runtime::Matrix::ValueType valueType);
             Matrix::ValueType valueTypeFromNpyHeader(const char valueType, const int wordSize);
             
-            void copy(const stromx::core::Matrix & matrix);
-            void allocate(const unsigned int rows, const unsigned int cols, const core::Matrix::ValueType valueType);
+            void copy(const stromx::runtime::Matrix & matrix);
+            void allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType);
             void getDataFromCvMatrix(const ValueType valueType);
             
             void doSerialize(std::ostream & out) const;

@@ -17,17 +17,17 @@
 #include "AdjustRgbChannels.h"
 #include "Image.h"
 #include "Utilities.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/WriteAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/WriteAccess.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -50,13 +50,13 @@ namespace stromx
                 switch(id)
                 {
                 case RED:
-                    m_red = stromx::core::data_cast<Double>(value);
+                    m_red = stromx::runtime::data_cast<Double>(value);
                     break;
                 case GREEN:
-                    m_green = stromx::core::data_cast<Double>(value);
+                    m_green = stromx::runtime::data_cast<Double>(value);
                     break;
                 case BLUE:
-                    m_blue = stromx::core::data_cast<Double>(value);
+                    m_blue = stromx::runtime::data_cast<Double>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -96,7 +96,7 @@ namespace stromx
             
             switch(image.pixelType())
             {
-            case core::Image::RGB_24:
+            case runtime::Image::RGB_24:
             {
                 typedef cv::Vec<unsigned char, 3> pixel_t;
 
@@ -110,7 +110,7 @@ namespace stromx
                 }
                 break;
             }
-            case core::Image::BGR_24:
+            case runtime::Image::BGR_24:
             {
                 typedef cv::Vec<unsigned char, 3> pixel_t;
 
@@ -132,7 +132,7 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const core::Description*> AdjustRgbChannels::setupInputs()
+        const std::vector<const runtime::Description*> AdjustRgbChannels::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -156,21 +156,21 @@ namespace stromx
         
         const std::vector<const Parameter*> AdjustRgbChannels::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             NumericParameter<Double>* red = new NumericParameter<Double>(RED, Double(0.0), Double::MAX);
             red->setTitle("Red");
-            red->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            red->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(red);
             
             NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, Double(0.0), Double::MAX);
             green->setTitle("Green");
-            green->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            green->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(green);
             
             NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, Double(0.0), Double::MAX);
             blue->setTitle("Blue");
-            blue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            blue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(blue);
                                         
             return parameters;

@@ -7,7 +7,7 @@ add_executable(camera
 )
 
 target_link_libraries(camera
-    stromx_core
+    stromx_runtime
     stromx_base
 )
 

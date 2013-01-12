@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <stromx/core/Version.h>
+#include <stromx/runtime/Version.h>
 
 namespace stromx
 {
@@ -87,7 +87,7 @@ namespace stromx
                 void testResizeBuffer();
                 
             private:
-                const static stromx::core::Version VERSION;
+                const static stromx::runtime::Version VERSION;
                 
                 Image* m_image;
         };

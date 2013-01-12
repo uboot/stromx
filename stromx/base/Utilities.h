@@ -18,11 +18,11 @@
 #define STROMX_BASE_UTILITIES_H
 
 #include <opencv2/core/core.hpp>
-#include <stromx/core/Image.h>
+#include <stromx/runtime/Image.h>
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class Image;
         class DataContainer;
@@ -33,10 +33,10 @@ namespace stromx
         class Image;
         
         /** Returns an OpenCV matrix header for \c image. */
-        cv::Mat getOpenCvMat(const core::Image& image);
+        cv::Mat getOpenCvMat(const runtime::Image& image);
         
         /** Returns an OpenCV matrix header for \c matrix. */
-        cv::Mat getOpenCvMat(const core::Matrix& matrix);
+        cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
     }
 }
 

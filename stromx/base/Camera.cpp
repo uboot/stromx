@@ -21,25 +21,25 @@
 #include "ConvertPixelType.h"
 #include "Image.h"
 #include "impl/CameraBuffer.h"
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Thread.h>
-#include <stromx/core/EnumParameter.h>
-#include <stromx/core/NumericParameter.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/PeriodicDelay.h>
-#include <stromx/core/ParameterGroup.h>
-#include <stromx/core/Queue.h>
-#include <stromx/core/Trigger.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Thread.h>
+#include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/PeriodicDelay.h>
+#include <stromx/runtime/ParameterGroup.h>
+#include <stromx/runtime/Queue.h>
+#include <stromx/runtime/Trigger.h>
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
@@ -168,7 +168,7 @@ namespace stromx
                     m_outputIndex = data_cast<stromx::Bool>(value);
                     break;
                 case TRIGGER:
-                    m_trigger->setParameter(Trigger::TRIGGER, core::TriggerData());
+                    m_trigger->setParameter(Trigger::TRIGGER, runtime::TriggerData());
                     break;
                 case IMAGE:
                 {
@@ -452,7 +452,7 @@ namespace stromx
             m_stream->join();
         }
         
-        const std::vector<const core::Description*> Camera::setupInputs()
+        const std::vector<const runtime::Description*> Camera::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -479,11 +479,11 @@ namespace stromx
         
         const std::vector<const Parameter*> Camera::setupInitParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             Parameter* outputIndex = new Parameter(OUTPUT_INDEX, DataVariant::BOOL);
             outputIndex->setTitle("Output index");
-            outputIndex->setAccessMode(core::Parameter::NONE_WRITE);
+            outputIndex->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(outputIndex);
             
             return parameters;
@@ -491,11 +491,11 @@ namespace stromx
         
         const std::vector<const Parameter*> Camera::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
             
             EnumParameter* triggerMode = new EnumParameter(TRIGGER_MODE);
             triggerMode->setTitle("Trigger mode");
-            triggerMode->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            triggerMode->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             triggerMode->add(EnumDescription(Enum(SOFTWARE), "Software trigger"));
             triggerMode->add(EnumDescription(Enum(INTERNAL), "Internal"));
             triggerMode->add(EnumDescription(Enum(EXTERNAL), "External"));
@@ -503,12 +503,12 @@ namespace stromx
             
             Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
             trigger->setTitle("Trigger");
-            trigger->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
             
             NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE);
             exposure->setTitle("Exposure (milliseconds)");
-            exposure->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            exposure->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(exposure);
             
             ParameterGroup* wbGroup = new ParameterGroup(WHITE_BALANCE_GROUP);
@@ -517,44 +517,44 @@ namespace stromx
             
             NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, wbGroup);
             wbRed->setTitle("WB red");
-            wbRed->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            wbRed->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             wbRed->setMin(Double(0));
             wbRed->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbRed);
             
             NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, wbGroup);
             wbGreen->setTitle("WB green");
-            wbGreen->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            wbGreen->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             wbGreen->setMin(Double(0));
             wbGreen->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbGreen);
             
             NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, wbGroup);
             wbBlue->setTitle("WB blue");
-            wbBlue->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            wbBlue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             wbBlue->setMin(Double(0));
             wbBlue->setMax(Double(WHITE_BALANCE_MAX));
             parameters.push_back(wbBlue);
             
             NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD);
             framePeriod->setTitle("Frame period (milliseconds)");
-            framePeriod->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            framePeriod->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(framePeriod);
             
             NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
             numBuffers->setTitle("Number of buffers");
-            numBuffers->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            numBuffers->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
         
             NumericParameter<UInt32>* bufferSize = new NumericParameter<UInt32>(BUFFER_SIZE);
             bufferSize->setTitle("Buffer size in bytes");
-            bufferSize->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            bufferSize->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
             
             Parameter* image = new Parameter(IMAGE, DataVariant::RGB_IMAGE);
             image->setTitle("Image");
-            image->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            image->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);
             
             ParameterGroup* roiGroup = new ParameterGroup(ROI_GROUP);
@@ -563,32 +563,32 @@ namespace stromx
         
             m_width = new NumericParameter<UInt32>(WIDTH, roiGroup);
             m_width->setTitle("ROI width");
-            m_width->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            m_width->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_width);
         
             m_height = new NumericParameter<UInt32>(HEIGHT, roiGroup);
             m_height->setTitle("ROI height");
-            m_height->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            m_height->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_height);
             
             m_top = new NumericParameter<UInt32>(TOP, roiGroup);
             m_top->setTitle("ROI top offset");
-            m_top->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            m_top->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_top);
             
             m_left = new NumericParameter<UInt32>(LEFT, roiGroup);
             m_left->setTitle("ROI left offset");
-            m_left->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            m_left->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(m_left);
             
             EnumParameter* pixelType = new EnumParameter(PIXEL_TYPE);
             pixelType->setTitle("Pixel type");
-            pixelType->setAccessMode(core::Parameter::ACTIVATED_WRITE);
-            pixelType->add(EnumDescription(Enum(core::Image::MONO_8), "Mono image 8-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::RGB_24), "RGB image 24-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BGR_24), "BGR image 24-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
-            pixelType->add(EnumDescription(Enum(core::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
+            pixelType->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            pixelType->add(EnumDescription(Enum(runtime::Image::MONO_8), "Mono image 8-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::RGB_24), "RGB image 24-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BGR_24), "BGR image 24-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
+            pixelType->add(EnumDescription(Enum(runtime::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
             parameters.push_back(pixelType);
                                         
             return parameters;
@@ -604,7 +604,7 @@ namespace stromx
         }
   
         bool Camera::validateBufferSize(unsigned int bufferSize, unsigned int width, unsigned int height,
-                                        unsigned int depth, const stromx::core::Enum outputType)
+                                        unsigned int depth, const stromx::runtime::Enum outputType)
         {
             Image::PixelType outputPixelType = Image::PixelType(int(outputType));
             unsigned int outputSize = width * height * depth * Image::numChannels(outputPixelType);

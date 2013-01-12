@@ -1,11 +1,11 @@
 #include "Add.h"
 
-#include <stromx/core/Primitive.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/ReadAccess.h>
 
 using namespace stromx;
 
@@ -13,37 +13,37 @@ namespace math
 {
     const std::string Add::TYPE("Add");
     const std::string Add::PACKAGE("Math");
-    const core::Version Add::VERSION(1, 0, 0);
+    const runtime::Version Add::VERSION(1, 0, 0);
     
-    const std::vector<const core::Description*> Add::setupInputs()
+    const std::vector<const runtime::Description*> Add::setupInputs()
     {
-        std::vector<const core::Description*> inputs;
+        std::vector<const runtime::Description*> inputs;
         
-        core::Description* input = new core::Description(INPUT, core::DataVariant::UINT_32);
+        runtime::Description* input = new runtime::Description(INPUT, runtime::DataVariant::UINT_32);
         input->setTitle("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const core::Description*> Add::setupOutputs()
+    const std::vector<const runtime::Description*> Add::setupOutputs()
     {
-        std::vector<const core::Description*> outputs;
+        std::vector<const runtime::Description*> outputs;
         
-        core::Description* output = new core::Description(OUTPUT, core::DataVariant::UINT_32);
+        runtime::Description* output = new runtime::Description(OUTPUT, runtime::DataVariant::UINT_32);
         output->setTitle("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector<const core::Parameter*> Add::setupParameters()
+    const std::vector<const runtime::Parameter*> Add::setupParameters()
     {
-        std::vector<const core::Parameter*> parameters;
+        std::vector<const runtime::Parameter*> parameters;
         
-        core::Parameter* offset = new core::Parameter(OFFSET, core::DataVariant::UINT_32);
+        runtime::Parameter* offset = new runtime::Parameter(OFFSET, runtime::DataVariant::UINT_32);
         offset->setTitle("Offset");
-        offset->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+        offset->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     
         return parameters;
@@ -54,48 +54,48 @@ namespace math
     {
     }
     
-    void Add::setParameter(unsigned int id, const core::Data& value)
+    void Add::setParameter(unsigned int id, const runtime::Data& value)
     {
         try
         {
             switch(id)
             {
             case OFFSET:
-                m_offset = core::data_cast<core::UInt32>(value);
+                m_offset = runtime::data_cast<runtime::UInt32>(value);
                 break;
             default:
-                throw core::WrongParameterId(id, *this);
+                throw runtime::WrongParameterId(id, *this);
             }
         }
-        catch(core::BadCast&)
+        catch(runtime::BadCast&)
         {
-            throw core::WrongParameterId(id, *this);
+            throw runtime::WrongParameterId(id, *this);
         }
     }
 
-    const core::DataRef Add::getParameter(const unsigned int id) const
+    const runtime::DataRef Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {
         case OFFSET:
             return m_offset;
         default:
-            throw core::WrongParameterId(id, *this);
+            throw runtime::WrongParameterId(id, *this);
         }
     }  
     
-    void Add::execute(core::DataProvider& provider)
+    void Add::execute(runtime::DataProvider& provider)
     {
-        core::Id2DataPair inputMapper(INPUT);
+        runtime::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
         
-        core::ReadAccess<core::UInt32> input(inputMapper.data());
+        runtime::ReadAccess<runtime::UInt32> input(inputMapper.data());
         
-        core::Data* result = new core::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        runtime::Data* result = new runtime::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
         
-        core::DataContainer outContainer(result);
+        runtime::DataContainer outContainer(result);
        
-        core::Id2DataPair output(OUTPUT, outContainer);
+        runtime::Id2DataPair output(OUTPUT, outContainer);
         provider.sendOutputData(output);
     }
 } 

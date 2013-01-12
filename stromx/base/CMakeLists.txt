@@ -53,7 +53,7 @@ set_target_properties(stromx_base PROPERTIES
 
 target_link_libraries(stromx_base
     ${OpenCV_LIBS}
-    stromx_core
+    stromx_runtime
 )
 
 

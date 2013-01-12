@@ -18,21 +18,21 @@
 #include "ConstImageTest.h"
 #include "../ConstImage.h"
 #include "../Image.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ConstImageTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
         void ConstImageTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new ConstImage());
+            m_operator = new runtime::OperatorTester(new ConstImage());
             m_operator->initialize();
             m_operator->activate();
             
@@ -42,7 +42,7 @@ namespace stromx
         
         void ConstImageTest::testExecute()
         {
-            core::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
             
             ReadAccess<Image> access(result);
             const Image& image = access();

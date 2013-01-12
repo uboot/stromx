@@ -19,12 +19,12 @@
 #include "Utilities.h"
 #include "WebCamera.h"
 #include <boost/assert.hpp>
-#include <stromx/core/Image.h>
-#include <stromx/core/DataVariant.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
+#include <stromx/runtime/Image.h>
+#include <stromx/runtime/DataVariant.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
 
-#include <stromx/core/OperatorException.h>
+#include <stromx/runtime/OperatorException.h>
 
 namespace stromx
 {
@@ -32,37 +32,37 @@ namespace stromx
     {
         const std::string WebCamera::TYPE("WebCamera");
         const std::string WebCamera::PACKAGE(STROMX_BASE_PACKAGE_NAME);
-        const core::Version WebCamera::VERSION(BASE_VERSION_MAJOR,BASE_VERSION_MINOR,BASE_VERSION_PATCH);
+        const runtime::Version WebCamera::VERSION(BASE_VERSION_MAJOR,BASE_VERSION_MINOR,BASE_VERSION_PATCH);
         
-        const std::vector<const core::Description*> WebCamera::setupInputs()
+        const std::vector<const runtime::Description*> WebCamera::setupInputs()
         {
-            std::vector<const core::Description*> inputs;
+            std::vector<const runtime::Description*> inputs;
             return inputs;
         }
 
-        const std::vector<const core::Description*> WebCamera::setupOutputs()
+        const std::vector<const runtime::Description*> WebCamera::setupOutputs()
         {
-            std::vector<const core::Description*> outputs;
+            std::vector<const runtime::Description*> outputs;
 
-            core::Description* output = new core::Description(OUTPUT, core::DataVariant::RGB_IMAGE);
+            runtime::Description* output = new runtime::Description(OUTPUT, runtime::DataVariant::RGB_IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
 
             return outputs;
         }
 
-        const std::vector<const core::Parameter*> WebCamera::setupParameters()
+        const std::vector<const runtime::Parameter*> WebCamera::setupParameters()
         {
-            std::vector<const core::Parameter*> parameters;
+            std::vector<const runtime::Parameter*> parameters;
 
-            core::Parameter* frameRate = new core::Parameter(FRAMERATE, core::DataVariant::DOUBLE);
+            runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::DOUBLE);
             frameRate->setTitle("Frame rate");
-            frameRate->setAccessMode(core::Parameter::INITIALIZED_WRITE);
+            frameRate->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(frameRate);
             
-            core::Parameter* brightness = new core::Parameter(BRIGHTNESS, core::DataVariant::DOUBLE);
+            runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::DOUBLE);
             brightness->setTitle("Brightness");
-            brightness->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            brightness->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(brightness);
 
             return parameters;
@@ -74,7 +74,7 @@ namespace stromx
         {
         }
 
-        void WebCamera::setParameter(unsigned int id, const core::Data& value)
+        void WebCamera::setParameter(unsigned int id, const runtime::Data& value)
         {
             try
             {
@@ -82,40 +82,40 @@ namespace stromx
                 {
                     case FRAMERATE:
                     {
-                        core::Double frameRate = core::data_cast<const core::Double&>(value);
+                        runtime::Double frameRate = runtime::data_cast<const runtime::Double&>(value);
                         m_webcam->set(CV_CAP_PROP_FPS, frameRate);
                         break;
                     }
                     case BRIGHTNESS:
                     {
-                        core::Double brightness = core::data_cast<const core::Double&>(value);
+                        runtime::Double brightness = runtime::data_cast<const runtime::Double&>(value);
                         m_webcam->set(CV_CAP_PROP_BRIGHTNESS, brightness);
                         break;
                     }
                     default:
-                        throw core::WrongParameterId(id,*this);
+                        throw runtime::WrongParameterId(id,*this);
                 }
             }
             catch(std::bad_cast&)
             {
-                throw core::WrongParameterType(parameter(id),*this);
+                throw runtime::WrongParameterType(parameter(id),*this);
             }
         }
 
-        const core::DataRef WebCamera::getParameter(const unsigned int id) const
+        const runtime::DataRef WebCamera::getParameter(const unsigned int id) const
         {
             switch(id)
             {
                 case FRAMERATE:
-                    return core::Double(m_webcam->get(CV_CAP_PROP_FPS));
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_FPS));
                 case BRIGHTNESS:
-                    return core::Double(m_webcam->get(CV_CAP_PROP_BRIGHTNESS));
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_BRIGHTNESS));
                 default:
-                    throw core::WrongParameterId(id,*this);
+                    throw runtime::WrongParameterId(id,*this);
             }
         }
 
-        void WebCamera::execute(core::DataProvider& provider)
+        void WebCamera::execute(runtime::DataProvider& provider)
         {            
             BOOST_ASSERT(m_webcam);
         
@@ -139,13 +139,13 @@ namespace stromx
                 outImage->initializeImage(outImage->width(), outImage->height(), outImage->stride(),
                                           outImage->data(), Image::BGR_24);
             }
-            catch(core::WrongArgument&)
+            catch(runtime::WrongArgument&)
             {
             }
             
-            core::DataContainer outContainer = core::DataContainer(outImage);
+            runtime::DataContainer outContainer = runtime::DataContainer(outImage);
             
-            core::Id2DataPair outputDataMapper(OUTPUT, outContainer);
+            runtime::Id2DataPair outputDataMapper(OUTPUT, outContainer);
             provider.sendOutputData(outputDataMapper);
         }
 
@@ -153,9 +153,9 @@ namespace stromx
         {
             std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(0));
             if(!webcam.get())
-                throw core::OperatorError(*this, "Failed to allocate WebCamera.");
+                throw runtime::OperatorError(*this, "Failed to allocate WebCamera.");
             if(!webcam->isOpened())
-                throw core::OperatorError(*this, "Failed to open WebCamera.");
+                throw runtime::OperatorError(*this, "Failed to open WebCamera.");
             
             m_webcam = webcam.release();
         }

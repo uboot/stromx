@@ -30,10 +30,10 @@
 #include "HoughLinesP.h"
 #include "Open.h"
 #include "WebCamera.h"
-#include <stromx/core/Exception.h>
-#include <stromx/core/Registry.h>
+#include <stromx/runtime/Exception.h>
+#include <stromx/runtime/Registry.h>
 
-void stromxRegisterBase(stromx::core::Registry& registry)
+void stromxRegisterBase(stromx::runtime::Registry& registry)
 {
     using namespace stromx::base;
     

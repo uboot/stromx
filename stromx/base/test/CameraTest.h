@@ -22,7 +22,7 @@
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class DataContainer;
         class OperatorTester;
@@ -58,7 +58,7 @@ namespace stromx
                 void testValidateBufferSize();
                 
             private:
-                core::OperatorTester* m_operator;
+                runtime::OperatorTester* m_operator;
         };
     }
 }

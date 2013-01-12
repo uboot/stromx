@@ -18,22 +18,22 @@
 #include "ClipTest.h"
 #include "../Clip.h"
 #include "../Image.h"
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/OperatorTester.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorTester.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::base::ClipTest);
 
 namespace stromx
 {
-    using namespace core;
+    using namespace runtime;
 
     namespace base
     {
         void ClipTest::setUp ( void )
         {
-            m_operator = new core::OperatorTester(new Clip());
+            m_operator = new runtime::OperatorTester(new Clip());
             m_operator->initialize();
             m_operator->activate();
             DataContainer image(new Image("lenna.jpg"));
@@ -47,7 +47,7 @@ namespace stromx
             m_operator->setParameter(Clip::WIDTH, UInt32(100));
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
 
-            core::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
                 
             ReadAccess<Image> access(result);
             const Image& image = access();
@@ -64,7 +64,7 @@ namespace stromx
             m_operator->setParameter(Clip::WIDTH, UInt32(100));
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
-            core::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
             ReadAccess<Image> access(result);
             
             const Image& image = access();
@@ -81,7 +81,7 @@ namespace stromx
             m_operator->setParameter(Clip::WIDTH, UInt32(100));
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
-            core::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
+            runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
             ReadAccess<Image> access(result);
             
             const Image& image = access();

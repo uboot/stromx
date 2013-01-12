@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE Stromx SYSTEM "stromx-doc.dtd">
 
-<Package name="Core">
+<Package name="Runtime">
     <!-- Als erstes kommen die Datentypen (=DataVariant), welche in diesem Package definiert sind. -->
     <DataVariant id="1" title="Bool">
         A Boolean value.
@@ -20,7 +20,7 @@
     
     <!-- Der Datentyp, von dem dieser Type abgeleitet ist, wird mit "variantPackage" und "variantId" referenziert. 
          Meinen Sie, ist das vernuenftig??? -->
-    <DataVariant id="6" title="Mono image 8-bit" variantPackage="Core" variantId="5">
+    <DataVariant id="6" title="Mono image 8-bit" variantPackage="Runtime" variantId="5">
         <Description>
             Image with one channel and 8-bit pixels.
         </Description>
@@ -36,30 +36,30 @@
         
         <!-- Der Datentyp dieses Parameters wird mit "variantPackage" und "variantId" referenziert. 
              Meinen Sie immer noch, dass das vernuenftig ist??? -->
-        <Parameter id="0" title="In place" variantPackage="Core" variantId="1">
+        <Parameter id="0" title="In place" variantPackage="Runtime" variantId="1">
             <Description>
                 If true the operator is initialized with only one input and the image at
                 this input is blurred in-place. Otherwise, the operator is initialized with
                 an input and a destination input.
             </Description>
         </Parameter>
-        <Parameter id="0" title="Kernel size" variantPackage="Core" variantId="3">
+        <Parameter id="0" title="Kernel size" variantPackage="Runtime" variantId="3">
             <Description>
                 The size of the Gaussian kernel.
             </Description>
         </Parameter>
-        <Input id="0" title="Source" variantPackage="Core" variantId="6">
+        <Input id="0" title="Source" variantPackage="Runtime" variantId="6">
             <Description>
                 The input image. If the operator is initialized as an in-place operation
                 this image will be blurred.
             </Description>
         </Input>
-        <Input id="0" title="Destination" variantPackage="Core" variantId="6">
+        <Input id="0" title="Destination" variantPackage="Runtime" variantId="6">
             <Description>
                 The image which will contain the blurred version of the image <em>Source</em>.
             </Description>
         </Input>
-        <Output id="0" title="Result" variantPackage="Core" variantId="6">
+        <Output id="0" title="Result" variantPackage="Runtime" variantId="6">
             <Description>
                 The the blurred image. This is either the destination image (no in-place operation) or
                 the input image (in-place operation).

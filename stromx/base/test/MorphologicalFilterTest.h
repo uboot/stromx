@@ -23,7 +23,7 @@
 
 namespace stromx
 {
-    namespace core
+    namespace runtime
     {
         class OperatorKernel;
         class OperatorTester;
@@ -43,12 +43,12 @@ namespace stromx
                 void testExecuteMono();
                 void testExecuteColor();
                 
-                virtual core::OperatorKernel* allocateOperator() const = 0;
+                virtual runtime::OperatorKernel* allocateOperator() const = 0;
                 virtual const std::string getTestName() const = 0;
                 
             private:
-                core::OperatorKernel* m_template;
-                core::OperatorTester* m_operator;
+                runtime::OperatorKernel* m_template;
+                runtime::OperatorTester* m_operator;
         };
     }
 }
