@@ -95,9 +95,11 @@ namespace stromx
             filterType->add(EnumDescription(Enum(GAUSSIAN), "Gaussian"));
             parameters.push_back(filterType);
             
-            Parameter* kernelSize = new NumericParameter<UInt32>(KERNEL_SIZE);
+            NumericParameter<UInt32>* kernelSize = new NumericParameter<UInt32>(KERNEL_SIZE);
             kernelSize->setTitle("Kernel size");
             kernelSize->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+            kernelSize->setStep(UInt32(2));
+            kernelSize->setMin(UInt32(1));
             parameters.push_back(kernelSize);
                                         
             return parameters;

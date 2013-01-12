@@ -41,7 +41,7 @@ namespace stromx
             /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, const data_t min, const data_t max)
               : Parameter(id, data_t::classVariant()),
-                m_min(min),
+                m_min(min), 
                 m_max(max)
             {}
             
