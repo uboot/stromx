@@ -176,6 +176,7 @@ namespace stromx
             
             NumericParameter<core::Double>* theta = new NumericParameter<core::Double>(THETA);
             theta->setMin(Double(0.0));
+            theta->setStep(Double(0.1));
             theta->setTitle("Theta");
             theta->setAccessMode(core::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
