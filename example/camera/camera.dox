@@ -19,14 +19,14 @@ The illustrated stream is configured by the XML file below. The parameter settin
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Base" type="Camera" version="0.1.0">
+        <Operator id="0" package="Example" type="Camera" version="0.1.0">
             <!-- output image index -->
             <Parameter id="0">
                 <Data package="Runtime" type="Bool" version="0.1.0">1</Data>
             </Parameter>
             <!-- image for camera simulator -->
             <Parameter id="0">
-                <Data type="Image" package="Base" version="0.1.0">lenna.jpg</Data>
+                <Data type="Image" package="Example" version="0.1.0">lenna.jpg</Data>
             </Parameter>
             <!-- software trigger mode -->
             <Parameter id="1">
@@ -45,7 +45,7 @@ The illustrated stream is configured by the XML file below. The parameter settin
                 <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
-        <Operator id="1" package="Base" type="Buffer" version="0.1.0">
+        <Operator id="1" package="Example" type="Buffer" version="0.1.0">
             <!-- one buffer -->
             <Parameter id="0">
                 <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
@@ -55,7 +55,7 @@ The illustrated stream is configured by the XML file below. The parameter settin
                 <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
             </Parameter>
         </Operator>
-        <Operator id="2" package="Base" type="Canny" version="0.1.0">
+        <Operator id="2" package="Example" type="Canny" version="0.1.0">
             <!-- threshold 1 -->
             <Parameter id="0">
                 <Data type="Double" package="Runtime" version="0.1.0">50</Data>
@@ -75,7 +75,7 @@ The illustrated stream is configured by the XML file below. The parameter settin
 </Stromx>
 \endcode
 
-The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em base libraries.
+The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em example libraries.
 
 \code
 #include <stromx/runtime/Factory.h>
@@ -86,8 +86,8 @@ The program which operates the stream is straightforward. As in the previous exa
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/Image.h>
 
-#include <stromx/base/Base.h>
-#include <stromx/base/Camera.h>
+#include <stromx/example/Example.h.h>
+#include <stromx/example/Camera.h>
 
 #include <iostream>
 
@@ -98,7 +98,7 @@ int main (int, char**)
     runtime::Factory factory;
     
     stromxRegisterRuntime(factory);
-    stromxRegisterBase(factory);
+    stromxRegisterExample(factory);
 \endcode
 
 Next the stream is read from the XML file and started.
@@ -134,18 +134,18 @@ Before starting the iteration explicit references to the \em Camera and \em Cann
 Finally, the stream is stopped and deleted. 
 
 \note 
-The class runtime::Image does not support saving of images to file because runtime is not linked to any 3rd party image processing library. However, base::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing base::Image objects from the more general runtime::Image data:
+The class runtime::Image does not support saving of images to file because runtime is not linked to any 3rd party image processing library. However, example::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing example::Image objects from the more general runtime::Image data:
 
 \code 
-#include <base/Image.h>
+#include <example/Image.h>
 ...
 {
     ...
     for(unsigned int i = 0; i < 5; ++i)
     {
         ...
-        base::Image baseImage(image())
-        baseImage.save("image.png");
+        example::Image exampleImage(image())
+        exampleImage.save("image.png");
         ...
     }
     ...

@@ -59,7 +59,7 @@ if(Boost_FOUND)
 endif()
 
 if(OpenCV_FOUND)
-    option(BUILD_BASE "Build base operators" ON)
+    option(BUILD_EXAMPLE "Build example operators" ON)
 endif()
 
 if(XERCES_FOUND AND LIBZIP_FOUND)
@@ -70,8 +70,8 @@ if(BUILD_RUNTIME)
     add_subdirectory(stromx/runtime)
 endif()
 
-if(BUILD_BASE)
-   add_subdirectory(stromx/base)
+if(BUILD_EXAMPLE)
+   add_subdirectory(stromx/example)
    add_subdirectory(example)
 endif()
 

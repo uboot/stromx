@@ -420,7 +420,7 @@ class Allocation(OutputArgument):
         src = "{0}CastedData".format(self.refArg.ident)
         
         lines = []
-        lines.append("core::Image* outData = new base::Image({0}->width(), "
+        lines.append("core::Image* outData = new example::Image({0}->width(), "
                      "{0}->height(), {0}->pixelType());".format(src))
         lines.append("DataContainer outContainer = DataContainer(outData);")
         lines.append("{0} {1}CvData = {2}(outData);"\

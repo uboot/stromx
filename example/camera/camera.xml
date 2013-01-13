@@ -3,14 +3,14 @@
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Base" type="Camera" version="0.1.0">
+        <Operator id="0" package="Example" type="Camera" version="0.1.0">
             <!-- output image index -->
             <Parameter id="0">
                 <Data package="Runtime" type="Bool" version="0.1.0">1</Data>
             </Parameter>
             <!-- image for camera simulator -->
             <Parameter id="1">
-                <Data type="Image" package="Base" version="0.1.0" file="lenna.jpg"/>
+                <Data type="Image" package="Example" version="0.1.0" file="lenna.jpg"/>
             </Parameter>
             <!-- software trigger mode -->
             <Parameter id="2">
@@ -29,7 +29,7 @@
                 <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
-        <Operator id="1" package="Base" type="Buffer" version="0.1.0">
+        <Operator id="1" package="Example" type="Buffer" version="0.1.0">
             <!-- one buffer -->
             <Parameter id="0">
                 <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
@@ -39,7 +39,7 @@
                 <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
             </Parameter>
         </Operator>
-        <Operator id="2" package="Base" type="Canny" version="0.1.0">
+        <Operator id="2" package="Example" type="Canny" version="0.1.0">
             <!-- process in place -->
             <Parameter id="0">
                 <Data type="Bool" package="Runtime" version="0.1.0">0</Data>

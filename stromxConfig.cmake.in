@@ -11,11 +11,11 @@
 #    target_link_libraries(MY_TARGET_NAME ${stromx_RUNTIME_LIB})
 #
 #    Optionally add:
-#    target_link_libraries(MY_TARGET_NAME ${stromx_BASE_LIB})
+#    target_link_libraries(MY_TARGET_NAME ${stromx_EXAMPLE_LIB})
 #
 #    This file will define the following variables:
 #      - stromx_RUNTIME_LIB             : The stromx runtime lib
-#      - stromx_BASE_LIB             : The stromx base operators lib
+#      - stromx_EXAMPLE_LIB             : The stromx example operators lib
 #      - stromx_LIB_DIR              : The directory where lib files are. Calling LINK_DIRECTORIES
 #                                      with this path is NOT needed.
 #      - stromx_INCLUDE_DIRS         : The stromx include directories.
@@ -48,10 +48,10 @@ link_directories(${stromx_LIB_DIR})
 set(stromx_LIBS "")
 if(WIN32)
     set(stromx_RUNTIME_LIB debug stromx_runtime.lib optimized stromx_runtime.lib)
-    set(stromx_BASE_LIB debug stromx_base.lib optimized stromx_base.lib)
+    set(stromx_EXAMPLE_LIB debug stromx_example.lib optimized stromx_example.lib)
 else()
     set(stromx_RUNTIME_LIB stromx_runtime)
-    set(stromx_BASE_LIB stromx_base)
+    set(stromx_EXAMPLE_LIB stromx_example)
 endif()
 
 # ======================================================

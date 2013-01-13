@@ -12,7 +12,7 @@ namespace @PACKAGE@
 {
     const std::string @CLASS@::TYPE("@CLASS@");
     const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
-    const Version @CLASS@::VERSION(BASE_VERSION_MAJOR, BASE_VERSION_MINOR, BASE_VERSION_PATCH);
+    const Version @CLASS@::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
     
     @CLASS@::@CLASS@()
       : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())

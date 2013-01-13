@@ -8,7 +8,7 @@ add_executable(camera
 
 target_link_libraries(camera
     stromx_runtime
-    stromx_base
+    stromx_example
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

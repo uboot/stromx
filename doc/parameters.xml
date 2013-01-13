@@ -8,12 +8,12 @@
 
 <Stromx version="0.1.0">
     <Parameters>
-        <Operator id="0" package="Base" type="ConstImage" version="0.1.0" name="Source image">
+        <Operator id="0" package="Example" type="ConstImage" version="0.1.0" name="Source image">
             <Parameter id="0">
-                <Data type="Image" package="Base" version="0.1.0">lenna.png</Data>
+                <Data type="Image" package="Example" version="0.1.0">lenna.png</Data>
             </Parameter>
         </Operator>
-        <Operator id="1" package="Base" type="Clip" version="0.1.0" name="Clip image">
+        <Operator id="1" package="Example" type="Clip" version="0.1.0" name="Clip image">
             <Parameter id="0">
                 <Data type="UInt32" package="Stream" version="0.1.0">200</Data>
             </Parameter>
@@ -27,7 +27,7 @@
                 <Data type="UInt32" package="Stream" version="0.1.0">90</Data>
             </Parameter>
         </Operator>
-        <Operator id="2" package="Base" type="AdjustRgbChannels" version="0.1.0" name="White balance">
+        <Operator id="2" package="Example" type="AdjustRgbChannels" version="0.1.0" name="White balance">
             <Parameter id="0">
                 <Data type="Double" package="Stream" version="0.1.0">0.1</Data>
             </Parameter>
@@ -38,7 +38,7 @@
                 <Data type="Double" package="Stream" version="0.1.0">1.5</Data>
             </Parameter>
         </Operator>
-        <Operator id="3" package="Base" type="AdjustRgbChannels" version="0.1.0" name="Exposure">
+        <Operator id="3" package="Example" type="AdjustRgbChannels" version="0.1.0" name="Exposure">
             <Parameter id="0">
                 <Data type="Double" package="Stream" version="0.1.0">0.8</Data>
             </Parameter>

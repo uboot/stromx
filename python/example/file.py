@@ -18,11 +18,11 @@
 
 from stromx import *
 
-factory = core.Factory()
+factory = runtime.Factory()
 
-core.registerCore(factory)
+runtime.registerRuntime(factory)
 
-stream = core.XmlReader().readStream("file.xml", factory)
+stream = runtime.XmlReader().readStream("file.xml", factory)
 
 stream.start()
 
@@ -30,7 +30,7 @@ timer = stream.operators()[1]
 
 for i in range(5):
     data = timer.getOutputData(0)
-    count = core.ReadAccess(data)
+    count = runtime.ReadAccess(data)
     print "Received {0}".format(count.get().get())
     del count
     

@@ -5,9 +5,9 @@ if(BUILD_RUNTIME)
     set (AVAILABLE_PACKAGES "\"runtime\"")
 endif()
 
-if(BUILD_BASE)
-    add_subdirectory(base)
-    set (AVAILABLE_PACKAGES "\"runtime\", \"base\"")
+if(BUILD_EXAMPLE)
+    add_subdirectory(example)
+    set (AVAILABLE_PACKAGES "\"runtime\", \"example\"")
 endif()
 
 configure_file (

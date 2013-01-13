@@ -22,8 +22,8 @@
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/Image.h>
 
-#include <stromx/base/Base.h>
-#include <stromx/base/Camera.h>
+#include <stromx/example/Example.h>
+#include <stromx/example/Camera.h>
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ int main (int, char**)
     runtime::Factory factory;
     
     stromxRegisterRuntime(factory);
-    stromxRegisterBase(factory);
+    stromxRegisterExample(factory);
     
     runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
     

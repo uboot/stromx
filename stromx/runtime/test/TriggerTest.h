@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TRIGGERTEST_H
-#define STROMX_BASE_TRIGGERTEST_H
+#ifndef STROMX_EXAMPLE_TRIGGERTEST_H
+#define STROMX_EXAMPLE_TRIGGERTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -60,4 +60,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_TRIGGERTEST_H
+#endif // STROMX_EXAMPLE_TRIGGERTEST_H

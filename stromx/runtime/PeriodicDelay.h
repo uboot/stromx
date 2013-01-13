@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_PERIODICDELAY_H
-#define STROMX_BASE_PERIODICDELAY_H
+#ifndef STROMX_EXAMPLE_PERIODICDELAY_H
+#define STROMX_EXAMPLE_PERIODICDELAY_H
 
 #include "Config.h"
 #include "OperatorKernel.h"
@@ -77,4 +77,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_PERIODICDELAY_H
+#endif // STROMX_EXAMPLE_PERIODICDELAY_H

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_COUNTERTEST_H
-#define STROMX_BASE_COUNTERTEST_H
+#ifndef STROMX_EXAMPLE_COUNTERTEST_H
+#define STROMX_EXAMPLE_COUNTERTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -50,4 +50,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_COUNTERTEST_H
+#endif // STROMX_EXAMPLE_COUNTERTEST_H

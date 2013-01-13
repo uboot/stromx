@@ -16,7 +16,7 @@
 #  limitations under the License.
 #
 
-from libcore import *
+from libruntime import *
 
 from ctypes import pythonapi
 from ctypes import py_object

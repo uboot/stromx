@@ -39,7 +39,7 @@ The same principle holds for the list of input connector elements of a \em Threa
 #include <iostream>
 \endcode
 
-Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the runtime library are required. On the other hand, the inclusion of the operator headers in the \em base library is not required anymore. The file base/Base.h is the only one which is needed from this library.
+Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the runtime library are required. On the other hand, the inclusion of the operator headers in the \em example library is not required anymore. The file example/Example.h is the only one which is needed from this library.
 
 \code
 using namespace stromx;
@@ -68,7 +68,7 @@ In the next step a stream is instantiated according the XML file using a runtime
     runtime::Operator* timer = stream->operators()[1];
 \endcode
 
-So far a stream was build and started without knowing anything about its internal structure. To have a look at the processed data a specific operator must obviously be addressed. The above line obtains a pointer to the second operator in the stream. Note that \em second refers to the zero-based position of the operator in the XML file not its ID there.
+So far a stream was build and started without knowing anything about its internal structure. To have a look at the processed data a specific operator must obviously be addressed. The above line obtains a pointer to the second operator in the stream. Note that \em second refers to the zero-exampled position of the operator in the XML file not its ID there.
 
 \code 
     for(unsigned int i = 0; i < 5; ++i)

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_PERIODICDELAYTEST_H
-#define STROMX_BASE_PERIODICDELAYTEST_H
+#ifndef STROMX_EXAMPLE_PERIODICDELAYTEST_H
+#define STROMX_EXAMPLE_PERIODICDELAYTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -57,4 +57,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_PERIODICDELAYTEST_H
+#endif // STROMX_EXAMPLE_PERIODICDELAYTEST_H

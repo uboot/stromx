@@ -17,17 +17,17 @@
 
 from stromx import *
 
-stream = core.Stream()
+stream = runtime.Stream()
 
-source = core.Operator(core.Counter())
+source = runtime.Operator(runtime.Counter())
 source.initialize()
 source = stream.addOperator(source)
 
-timer = core.Operator(core.PeriodicDelay())
+timer = runtime.Operator(runtime.PeriodicDelay())
 timer.initialize()
 timer = stream.addOperator(timer)
 
-timer.setParameter(0, core.UInt32(1000))
+timer.setParameter(0, runtime.UInt32(1000))
 
 stream.connect(source, 0, timer, 0)
 
@@ -38,7 +38,7 @@ stream.start()
 
 for i in range(5):
     data = timer.getOutputData(0)
-    count = core.ReadAccess(data)
+    count = runtime.ReadAccess(data)
     print "Received {0}".format(count.get().get())
     del count
     

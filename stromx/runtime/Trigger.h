@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_BASE_TRIGGER_H
-#define STROMX_BASE_TRIGGER_H
+#ifndef STROMX_EXAMPLE_TRIGGER_H
+#define STROMX_EXAMPLE_TRIGGER_H
 
 #include "Config.h"
 #include "OperatorKernel.h"
@@ -87,4 +87,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_BASE_TRIGGER_H
+#endif // STROMX_EXAMPLE_TRIGGER_H

@@ -9,7 +9,7 @@ add_executable(operator
 
 target_link_libraries(operator
     stromx_runtime
-    stromx_base
+    stromx_example
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/operator.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
