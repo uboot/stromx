@@ -73,6 +73,21 @@ namespace
         return data;
     }
     
+    void clearOutputDataWrap(Operator & op, const unsigned int id)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        try
+        {
+            op.clearOutputData(id);
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
+        Py_END_ALLOW_THREADS
+    }
+    
     void setInputDataWrap(Operator & op, const unsigned int id, const DataContainer data)
     {
         Py_BEGIN_ALLOW_THREADS
@@ -179,7 +194,7 @@ void exportOperator()
         .def("setParameter", &setParameterWrap)
         .def("getOutputData", &getOutputDataWrap)
         .def("setInputData", &setInputDataWrap)
-        .def("clearOutputData", &Operator::clearOutputData)
+        .def("clearOutputData", &clearOutputDataWrap)
         .def("addObserver", &Operator::addObserver)
         .def("removeObserver", &Operator::removeObserver)
     ;
