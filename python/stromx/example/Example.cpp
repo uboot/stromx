@@ -39,7 +39,7 @@ void exportImage();
 using namespace boost::python;
 using namespace stromx::example;
     
-BOOST_PYTHON_MODULE(libbase)
+BOOST_PYTHON_MODULE(libexample)
 {
     def("registerExample", stromxRegisterExample);
     

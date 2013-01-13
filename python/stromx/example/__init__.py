@@ -16,6 +16,6 @@
 #  limitations under the License.
 #
 
-import stromx.core
+import stromx.runtime
 
-from libbase import *
+from libexample import *
