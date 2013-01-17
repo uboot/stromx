@@ -1,0 +1,13 @@
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/observer.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/simple.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+
+add_test(NAME python_example_camera COMMAND python camera.py)
+add_test(NAME python_example_file COMMAND python file.py)
+add_test(NAME python_example_observer COMMAND python observer.py)
+add_test(NAME python_example_simple COMMAND python simple.py)

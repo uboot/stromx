@@ -3,3 +3,4 @@ if(MSVC)
 endif(MSVC)
 
 add_subdirectory(stromx)
+add_subdirectory(example)
