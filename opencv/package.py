@@ -76,26 +76,26 @@ class Types:
     @staticmethod
     def dataType(t):
         if t == DataType.BOOL:
-            return "core::Bool"
+            return "runtime::Bool"
         elif t == DataType.UINT_32:
-            return "core::UInt32"
+            return "runtime::UInt32"
         elif t == DataType.IMAGE:
-            return "core::Image"
+            return "runtime::Image"
         elif t == DataType.ENUM:
-            return "core::Enum"
+            return "runtime::Enum"
         else:
             assert(False)
     
     @staticmethod
     def dataVariant(t):
         if t == DataType.BOOL:
-            return "core::DataVariant::BOOL"
+            return "runtime::DataVariant::BOOL"
         elif t == DataType.UINT_32:
-            return "core::DataVariant::UINT_32"
+            return "runtime::DataVariant::UINT_32"
         elif t == DataType.IMAGE:
-            return "core::DataVariant::IMAGE"
+            return "runtime::DataVariant::IMAGE"
         elif t == DataType.IMAGE:
-            return "core::DataVariant::ENUM"
+            return "runtime::DataVariant::ENUM"
         else:
             assert(False)
             
@@ -117,7 +117,7 @@ class Types:
         elif t == DataType.UINT_32:
             return "(unsigned int)"
         elif t == DataType.IMAGE:
-            return "base::getOpenCvMat"
+            return "example::getOpenCvMat"
         else:
             assert(False)
         
@@ -209,7 +209,7 @@ class OutputArgument(Argument):
         
     def outputCreate(self):
         lines = []
-        lines.append('core::Description* result = new core::Description(RESULT, '
+        lines.append('runtime::Description* result = new runtime::Description(RESULT, '
                      '{0});'.format(Types.dataVariant(self.dataType)))
         lines.append('result->setTitle("Result");')
         lines.append("outputs.push_back(result);".format(self.ident))
@@ -242,7 +242,7 @@ class Parameter(InputArgument):
         impl = EnumImpl()
         impl.label = Names.constantName(self.ident)
         lines = []
-        lines.append("{0} = core::data_cast<{1}>(value);"\
+        lines.append("{0} = runtime::data_cast<{1}>(value);"\
             .format(Names.attributeName(self.ident),
                     Types.dataType(self.dataType)))
         lines.append("break;")
@@ -251,11 +251,11 @@ class Parameter(InputArgument):
         
     def paramCreate(self):
         lines = []
-        lines.append("core::Parameter* {0} = new core::Parameter({1}, {2});"\
+        lines.append("runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
-        lines.append('{0}->setAccessMode(core::Parameter::ACTIVATED_WRITE);'\
+        lines.append('{0}->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);'\
             .format(self.ident))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("parameters.push_back({0});".format(self.ident))
@@ -286,11 +286,11 @@ class EnumParameter(Parameter):
         
     def paramCreateWithAccessMode(self, accessMode):
         lines = []
-        lines.append("core::EnumParameter* {0} = new core::EnumParameter({1});"\
+        lines.append("runtime::EnumParameter* {0} = new runtime::EnumParameter({1});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataType(self.dataType)))
-        lines.append('{0}->setAccessMode(core::Parameter::{1});'\
+        lines.append('{0}->setAccessMode(runtime::Parameter::{1});'\
             .format(self.ident, accessMode))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         for d in self.descriptions:
@@ -381,7 +381,7 @@ class Input(InputArgument):
         
     def inputCreate(self):
         lines = []
-        lines.append("core::Description* {0} = new core::Description({1}, {2});"\
+        lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
@@ -393,7 +393,7 @@ class Input(InputArgument):
         return [self.ident]
         
     def castedData(self):
-        cast = "const {0}* {1}CastedData = core::data_cast<{0}>({1}Data);"\
+        cast = "const {0}* {1}CastedData = runtime::data_cast<{0}>({1}Data);"\
             .format(Types.dataType(self.dataType), self.ident)
         return [cast]
         
@@ -417,7 +417,7 @@ class Output(OutputArgument):
         
     def inputCreate(self):
         lines = []
-        lines.append("core::Description* {0} = new core::Description({1}, {2});"\
+        lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
                     Types.dataVariant(self.dataType)))
@@ -429,7 +429,7 @@ class Output(OutputArgument):
         return [self.ident]
         
     def castedData(self):
-        cast = "{0}* {1}CastedData = core::data_cast<{0}>({1}Data);"\
+        cast = "{0}* {1}CastedData = runtime::data_cast<{0}>({1}Data);"\
             .format(Types.dataType(self.dataType), self.ident)
         return [cast]
         
@@ -441,7 +441,7 @@ class Output(OutputArgument):
         return [cast]
     
     def outContainer(self):
-        return ["core::DataContainer outContainer = inContainer;"]
+        return ["runtime::DataContainer outContainer = inContainer;"]
     
     def outputInit(self):
         if self.refArg == None:
@@ -478,9 +478,9 @@ class Allocation(OutputArgument):
         src = "{0}CastedData".format(self.refArg.ident)
         
         lines = []
-        lines.append("core::Image* outData = new example::Image({0}->width(), "
+        lines.append("runtime::Image* outData = new example::Image({0}->width(), "
                      "{0}->height(), {0}->pixelType());".format(src))
-        lines.append("core::DataContainer outContainer = core::DataContainer(outData);")
+        lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
         lines.append("{0} {1}CvData = {2}(*outData);"\
             .format(Types.cvType(self.cvType),
                     self.ident,
@@ -496,7 +496,7 @@ class EnumDescription(object):
         self.name = name
     
     def constructor(self):
-        return ('core::EnumDescription({0}, "{1}")'\
+        return ('runtime::EnumDescription({0}, "{1}")'\
             .format(Names.constantName(self.ident), self.name))
         
     

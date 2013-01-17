@@ -120,7 +120,7 @@ class LibHeaderGenerator(LibGenerator):
         
         self.line("namespace stromx")
         self.scopeEnter()
-        self.line("namespace core".format(self.p.ident))
+        self.line("namespace runtime".format(self.p.ident))
         self.scopeEnter()
         self.line("class Registry;")
         self.scopeExit()
@@ -130,7 +130,7 @@ class LibHeaderGenerator(LibGenerator):
         self.line('extern "C"')
         self.scopeEnter()
         self.line("STROMX_{0}_API void stromxRegister{1}"
-                  "(stromx::core::Registry& registry);"\
+                  "(stromx::runtime::Registry& registry);"\
                   .format(p, Names.className(self.p.ident)))
         self.scopeExit()
         self.blank()
@@ -147,10 +147,10 @@ class LibImplGenerator(LibGenerator):
         self.blank()
         for m in self.p.methods:
             self.line('#include "{0}.h"'.format(Names.className(m.ident)))
-        self.line("#include <stromx/core/Registry.h>")
+        self.line("#include <stromx/runtime/Registry.h>")
         self.blank()
         
-        self.line("void stromxRegister{0}(stromx::core::Registry& registry)"\
+        self.line("void stromxRegister{0}(stromx::runtime::Registry& registry)"\
             .format(Names.className(self.p.ident)))
         self.scopeEnter()
         self.line("using namespace stromx::{0};".format(self.p.ident))
@@ -225,8 +225,8 @@ class CMakeGenerator(LibGenerator):
             .format(self.p.ident))
         self.increaseIndent()
         self.line("${OpenCV_LIBS}")
-        self.line("stromx_core")
-        self.line("stromx_base")
+        self.line("stromx_runtime")
+        self.line("stromx_example")
         self.decreaseIndent()
         self.line(")")
         self.blank()
@@ -343,16 +343,16 @@ class OpHeaderGenerator(MethodGenerator):
     
     def includes(self):
         self.line('#include "Config.h"');
-        self.line('#include <stromx/core/Enum.h>');
-        self.line('#include <stromx/core/OperatorKernel.h>');
-        self.line('#include <stromx/core/Primitive.h>');
+        self.line('#include <stromx/runtime/Enum.h>');
+        self.line('#include <stromx/runtime/OperatorKernel.h>');
+        self.line('#include <stromx/runtime/Primitive.h>');
         
     def includeGuardEnter(self):
         self.line("#ifndef {0}".format(self.includeGuard()))
         self.line("#define {0}".format(self.includeGuard()))
         
     def classEnter(self):
-        self.line("class {0} {1} : public core::OperatorKernel".format(
+        self.line("class {0} {1} : public runtime::OperatorKernel".format(
                     self.apiDecl(), self.className()))
         self.line("{")
         self.increaseIndent()
@@ -379,21 +379,21 @@ class OpHeaderGenerator(MethodGenerator):
         
     def kernelOverloads(self):
         self.line("virtual OperatorKernel* clone() const {{ return new {0}; }}".format(self.className()))
-        self.line("virtual void setParameter(const unsigned int id, const core::Data& value);")
-        self.line("virtual const core::DataRef getParameter(const unsigned int id) const;")
+        self.line("virtual void setParameter(const unsigned int id, const runtime::Data& value);")
+        self.line("virtual const runtime::DataRef getParameter(const unsigned int id) const;")
         self.line("void initialize();")
-        self.line("virtual void execute(core::DataProvider& provider);")
+        self.line("virtual void execute(runtime::DataProvider& provider);")
         
     def statics(self):
         self.line("static const std::string PACKAGE;")
-        self.line("static const core::Version VERSION;")
+        self.line("static const runtime::Version VERSION;")
         self.line("static const std::string TYPE;")
         
     def setupFunctions(self):
-        self.line("const std::vector<const core::Parameter*> setupInitParameters();")
-        self.line("const std::vector<const core::Parameter*> setupParameters();")
-        self.line("const std::vector<const core::Description*> setupInputs();")
-        self.line("const std::vector<const core::Description*> setupOutputs();")
+        self.line("const std::vector<const runtime::Parameter*> setupInitParameters();")
+        self.line("const std::vector<const runtime::Parameter*> setupParameters();")
+        self.line("const std::vector<const runtime::Description*> setupInputs();")
+        self.line("const std::vector<const runtime::Description*> setupOutputs();")
         
     def parameters(self):
         values = self.collect("paramDecl")
@@ -461,24 +461,24 @@ class OpImplGenerator(MethodGenerator):
     def includes(self):
         self.line('#include "{0}.h"'.format(self.className()))
         self.blank()
-        self.line('#include <stromx/base/Image.h>')
-        self.line('#include <stromx/base/Matrix.h>')
-        self.line('#include <stromx/base/Utilities.h>')
-        self.line('#include <stromx/core/DataContainer.h>')
-        self.line('#include <stromx/core/DataProvider.h>')
-        self.line('#include <stromx/core/EnumParameter.h>')
-        self.line('#include <stromx/core/Id2DataComposite.h>')
-        self.line('#include <stromx/core/Id2DataPair.h>')
-        self.line('#include <stromx/core/NumericParameter.h>')
-        self.line('#include <stromx/core/OperatorException.h>')
-        self.line('#include <stromx/core/ReadAccess.h>')
-        self.line('#include <stromx/core/WriteAccess.h>')
+        self.line('#include <stromx/example/Image.h>')
+        self.line('#include <stromx/example/Matrix.h>')
+        self.line('#include <stromx/example/Utilities.h>')
+        self.line('#include <stromx/runtime/DataContainer.h>')
+        self.line('#include <stromx/runtime/DataProvider.h>')
+        self.line('#include <stromx/runtime/EnumParameter.h>')
+        self.line('#include <stromx/runtime/Id2DataComposite.h>')
+        self.line('#include <stromx/runtime/Id2DataPair.h>')
+        self.line('#include <stromx/runtime/NumericParameter.h>')
+        self.line('#include <stromx/runtime/OperatorException.h>')
+        self.line('#include <stromx/runtime/ReadAccess.h>')
+        self.line('#include <stromx/runtime/WriteAccess.h>')
         self.line('#include <boost/assert.hpp>')
         self.line('#include <opencv2/imgproc/imgproc.hpp>')
     
     def constructor(self):
         self.line("{0}()".format(self.method(self.className())))
-        self.line(("  : core::OperatorKernel(TYPE, PACKAGE, VERSION, " +
+        self.line(("  : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, " +
                    "setupInitParameters()),"))
         self.increaseIndent()
         values = self.collect("paramInit")
@@ -494,13 +494,13 @@ class OpImplGenerator(MethodGenerator):
     def constants(self):
         self.line("const std::string {0}::PACKAGE(STROMX_{1}_PACKAGE_NAME);"\
             .format(self.className(), Names.constantName(self.p.ident)))
-        self.line("const core::Version {0}::VERSION({1}_VERSION_MAJOR, {1}_VERSION_MINOR, {1}_VERSION_PATCH);"\
+        self.line("const runtime::Version {0}::VERSION({1}_VERSION_MAJOR, {1}_VERSION_MINOR, {1}_VERSION_PATCH);"\
             .format(self.className(), Names.constantName(self.p.ident)))
         self.line('const std::string {0}::TYPE("{1}");'\
             .format(self.className(), Names.className(self.m.ident)))
         
     def setParameter(self):
-        self.line("void {0}(unsigned int id, const core::Data& value)"\
+        self.line("void {0}(unsigned int id, const runtime::Data& value)"\
             .format(self.method("setParameter")))
         self.scopeEnter()
         self.line("try")
@@ -513,17 +513,17 @@ class OpImplGenerator(MethodGenerator):
             for l in v.lines:
                 self.line(l)
         self.label("default")
-        self.line("throw core::WrongParameterId(id, *this);")
+        self.line("throw runtime::WrongParameterId(id, *this);")
         self.scopeExit()
         self.scopeExit()
-        self.line("catch(core::BadCast&)")
+        self.line("catch(runtime::BadCast&)")
         self.scopeEnter()
-        self.line("throw core::WrongParameterType(parameter(id), *this);")
+        self.line("throw runtime::WrongParameterType(parameter(id), *this);")
         self.scopeExit()
         self.scopeExit()
         
     def getParameter(self):
-        self.line("const core::DataRef {0}(unsigned int id) const"\
+        self.line("const runtime::DataRef {0}(unsigned int id) const"\
             .format(self.method("getParameter")))
         self.scopeEnter()
         self.line("switch(id)")
@@ -534,15 +534,15 @@ class OpImplGenerator(MethodGenerator):
             for l in v.lines:
                 self.line(l)
         self.label("default")
-        self.line("throw core::WrongParameterId(id, *this);")
+        self.line("throw runtime::WrongParameterId(id, *this);")
         self.scopeExit()
         self.scopeExit()
         
     def setupInitParameters(self):
-        self.line("const std::vector<const core::Parameter*> {0}()"\
+        self.line("const std::vector<const runtime::Parameter*> {0}()"\
             .format(self.method("setupInitParameters")))
         self.scopeEnter()
-        self.line("std::vector<const core::Parameter*> parameters;")
+        self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
         values = self.collect("initParamCreate")
         for v in values:
@@ -553,10 +553,10 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
     
     def setupParameters(self):
-        self.line("const std::vector<const core::Parameter*> {0}()"\
+        self.line("const std::vector<const runtime::Parameter*> {0}()"\
             .format(self.method("setupParameters")))
         self.scopeEnter()
-        self.line("std::vector<const core::Parameter*> parameters;")
+        self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
         values = self.collect("paramCreate")
         for v in values:
@@ -567,7 +567,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
     
     def setupInputs(self):
-        self.line("const std::vector<const core::Description*> {0}()"\
+        self.line("const std::vector<const runtime::Description*> {0}()"\
             .format(self.method("setupInputs")))
         self.scopeEnter()
         
@@ -598,7 +598,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
         
     def __setupInputs(self):
-        self.line("std::vector<const core::Description*> inputs;")
+        self.line("std::vector<const runtime::Description*> inputs;")
         self.blank()
         values = self.collect("inputCreate")
         for v in values:
@@ -609,11 +609,11 @@ class OpImplGenerator(MethodGenerator):
         
     
     def setupOutputs(self):
-        self.line("const std::vector<const core::Description*> {0}()"\
+        self.line("const std::vector<const runtime::Description*> {0}()"\
             .format(self.method("setupOutputs")))
         self.scopeEnter()
                 
-        self.line("std::vector<const core::Description*> outputs;")
+        self.line("std::vector<const runtime::Description*> outputs;")
         self.blank()
         values = self.collect("outputCreate")
         for v in values:
@@ -628,12 +628,12 @@ class OpImplGenerator(MethodGenerator):
         self.line("void {0}()"\
             .format(self.method("initialize")))
         self.scopeEnter()
-        self.line(("core::OperatorKernel::initialize(setupInputs(), " +
+        self.line(("runtime::OperatorKernel::initialize(setupInputs(), " +
                    "setupOutputs(), setupParameters());"))
         self.scopeExit()
     
     def execute(self):
-        self.line("void {0}(core::DataProvider & provider)"\
+        self.line("void {0}(runtime::DataProvider & provider)"\
             .format(self.method("execute")))
         self.scopeEnter()
         
@@ -671,7 +671,7 @@ class OpImplGenerator(MethodGenerator):
         access = readAccess + writeAccess
         
         for a in access:
-            self.line("core::Id2DataPair {0}InMapper({1});"\
+            self.line("runtime::Id2DataPair {0}InMapper({1});"\
                 .format(a, Names.constantName(a)))
         self.blank()
           
@@ -685,22 +685,22 @@ class OpImplGenerator(MethodGenerator):
         self.blank()
         
         for a in writeAccess:
-            self.line("core::Data* {0}Data = 0;".format(a))
+            self.line("runtime::Data* {0}Data = 0;".format(a))
             
         for a in readAccess:
-            self.line("const core::Data* {0}Data = 0;".format(a))
+            self.line("const runtime::Data* {0}Data = 0;".format(a))
         if len(readAccess):
             self.blank()
         
         for a in readAccess:
-            self.line("core::ReadAccess<> {0}ReadAccess;"\
+            self.line("runtime::ReadAccess<> {0}ReadAccess;"\
                 .format(a))
         self.blank()
         
         if len(writeAccess):
-            self.line("core::DataContainer inContainer = {0}InMapper.data();"\
+            self.line("runtime::DataContainer inContainer = {0}InMapper.data();"\
                 .format(writeAccess[0]))
-            self.line("core::WriteAccess<> writeAccess(inContainer);")
+            self.line("runtime::WriteAccess<> writeAccess(inContainer);")
             self.line("{0}Data = &writeAccess();".format(writeAccess[0]))
             self.blank()
             
@@ -711,14 +711,14 @@ class OpImplGenerator(MethodGenerator):
                 self.scopeExit()
                 self.line("else")
                 self.scopeEnter()
-                self.line(("{0}ReadAccess = core::ReadAccess<>({0}InMapper" +
+                self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper" +
                            ".data());").format(a))
                 self.line("{0}Data = &{0}ReadAccess();".format(a))
                 self.scopeExit()
                 self.blank()
         else:
             for a in readAccess:
-                self.line(("{0}ReadAccess = core::ReadAccess<>({0}InMapper" +
+                self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper" +
                            ".data());").format(a))
                 self.line("{0}Data = &{0}ReadAccess();".format(a))
                 self.blank();
@@ -762,7 +762,7 @@ class OpImplGenerator(MethodGenerator):
         
         outputId = self.collect("outputId")
         assert(len(outputId) == 1)
-        self.line("core::Id2DataPair outputMapper({0}, outContainer);"\
+        self.line("runtime::Id2DataPair outputMapper({0}, outContainer);"\
             .format(outputId[0]))
         
         self.line("provider.sendOutputData(outputMapper);")
@@ -804,7 +804,7 @@ if __name__ == "__main__":
     options = dict()
     options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
     options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
-#    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
+    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
 
     m.options = options
     
