@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Counter.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/PeriodicDelay.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Thread.h>
+#include <stromx/runtime/Counter.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/PeriodicDelay.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Thread.h>
 
 #include <iostream>
 
@@ -27,32 +27,32 @@ using namespace stromx;
 
 int main (int, char**)
 {
-    core::Stream stream;
+    runtime::Stream stream;
     
-    core::Operator* source = new core::Operator(new core::Counter);
+    runtime::Operator* source = new runtime::Operator(new runtime::Counter);
     source->initialize();
     stream.addOperator(source);
     
-    core::Operator* timer = new core::Operator(new core::PeriodicDelay);
+    runtime::Operator* timer = new runtime::Operator(new runtime::PeriodicDelay);
     timer->initialize();
     stream.addOperator(timer);
     
-    timer->setParameter(core::PeriodicDelay::PERIOD, core::UInt32(1000));
+    timer->setParameter(runtime::PeriodicDelay::PERIOD, runtime::UInt32(1000));
     
-    stream.connect(source, core::Counter::OUTPUT, timer, core::PeriodicDelay::INPUT);
+    stream.connect(source, runtime::Counter::OUTPUT, timer, runtime::PeriodicDelay::INPUT);
     
-    core::Thread* thread = stream.addThread();
-    thread->addInput(timer, core::PeriodicDelay::INPUT);
+    runtime::Thread* thread = stream.addThread();
+    thread->addInput(timer, runtime::PeriodicDelay::INPUT);
     
     stream.start();
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = timer->getOutputData(core::PeriodicDelay::OUTPUT);
-        core::ReadAccess<core::UInt32> count(data);
+        runtime::DataContainer data = timer->getOutputData(runtime::PeriodicDelay::OUTPUT);
+        runtime::ReadAccess<runtime::UInt32> count(data);
         std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
         
-        timer->clearOutputData(core::PeriodicDelay::OUTPUT);
+        timer->clearOutputData(runtime::PeriodicDelay::OUTPUT);
     }
     
     stream.stop();

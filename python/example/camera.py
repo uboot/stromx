@@ -18,12 +18,12 @@
 
 from stromx import *
 
-factory = core.Factory()
+factory = runtime.Factory()
 
-core.registerCore(factory)
-base.registerBase(factory)
+runtime.registerRuntime(factory)
+example.registerExample(factory)
 
-stream = core.XmlReader().readStream("camera.xml", factory)
+stream = runtime.XmlReader().readStream("camera.xml", factory)
 
 stream.start()
 
@@ -32,7 +32,7 @@ canny = stream.operators()[2]
 
 for i in range(5):
     data = canny.getOutputData(0)
-    image = core.ReadAccess(data)
+    image = runtime.ReadAccess(data)
     print "Received image {0}x{1}".format(image.get().width(), image.get().height())
     del image
     del data

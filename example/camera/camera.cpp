@@ -14,16 +14,16 @@
 *  limitations under the License.
 */
 
-#include <stromx/core/Factory.h>
-#include <stromx/core/XmlReader.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Core.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/ReadAccess.h>
-#include <stromx/core/Image.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/XmlReader.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Runtime.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/Image.h>
 
-#include <stromx/base/Base.h>
-#include <stromx/base/Camera.h>
+#include <stromx/example/Example.h>
+#include <stromx/example/Camera.h>
 
 #include <iostream>
 
@@ -31,22 +31,22 @@ using namespace stromx;
 
 int main (int, char**)
 {
-    core::Factory factory;
+    runtime::Factory factory;
     
-    stromxRegisterCore(factory);
-    stromxRegisterBase(factory);
+    stromxRegisterRuntime(factory);
+    stromxRegisterExample(factory);
     
-    core::Stream* stream = core::XmlReader().readStream("camera.xml", factory);
+    runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
     
     stream->start();
     
-    core::Operator* camera = stream->operators()[0];
-    core::Operator* canny = stream->operators()[2];
+    runtime::Operator* camera = stream->operators()[0];
+    runtime::Operator* canny = stream->operators()[2];
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        core::DataContainer data = canny->getOutputData(0);
-        core::ReadAccess<core::Image> image(data);
+        runtime::DataContainer data = canny->getOutputData(0);
+        runtime::ReadAccess<runtime::Image> image(data);
         std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
         
         canny->clearOutputData(0);

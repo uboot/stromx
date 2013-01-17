@@ -7,8 +7,10 @@ add_executable(file
 )
 
 target_link_libraries(file
-    stromx_core
-    stromx_base
+    stromx_runtime
+    stromx_example
 )
+
+add_test(NAME example_file COMMAND file)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

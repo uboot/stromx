@@ -17,13 +17,13 @@
 
 from stromx import *
 
-class MyObserver(core.ConnectorObserver):
+class MyObserver(runtime.ConnectorObserver):
     def observe(self, connector, data):
         dataStr = ""
         if data.empty():
             dataStr = "empty"
         else:
-            dataStr = str(core.ReadAccess(data).get().get())
+            dataStr = str(runtime.ReadAccess(data).get().get())
             
         print "{0} {1} of Operator '{2}/{3}' was set to: {4}".format(
             connector.type(),
@@ -32,12 +32,12 @@ class MyObserver(core.ConnectorObserver):
             connector.op().info().type(),
             dataStr)
 
-factory = core.Factory()
+factory = runtime.Factory()
 
-core.registerCore(factory)
-base.registerBase(factory)
+runtime.registerRuntime(factory)
+example.registerExample(factory)
 
-stream = core.XmlReader().readStream("file.xml", factory)
+stream = runtime.XmlReader().readStream("file.xml", factory)
 
 source = stream.operators()[0]
 timer = stream.operators()[1]

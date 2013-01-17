@@ -1,13 +1,13 @@
-project(python_core)
+project(python_runtime)
 
-if(BUILD_CORE)
-    add_subdirectory(core)
-    set (AVAILABLE_PACKAGES "\"core\"")
+if(BUILD_RUNTIME)
+    add_subdirectory(runtime)
+    set (AVAILABLE_PACKAGES "\"runtime\"")
 endif()
 
-if(BUILD_BASE)
-    add_subdirectory(base)
-    set (AVAILABLE_PACKAGES "\"core\", \"base\"")
+if(BUILD_EXAMPLE)
+    add_subdirectory(example)
+    set (AVAILABLE_PACKAGES "\"runtime\", \"example\"")
 endif()
 
 configure_file (

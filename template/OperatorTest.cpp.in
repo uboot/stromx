@@ -2,7 +2,7 @@
 
 #include <cppunit/TestAssert.h>
 
-#include <stromx/core/OperatorTester.h>
+#include <stromx/runtime/OperatorTester.h>
 
 #include <stromx/@PACKAGE@/@CLASS@.h>
 
@@ -14,7 +14,7 @@ namespace stromx
     {
         void @CLASS@Test::setUp()
         {
-            m_operator = new core::OperatorTester(new @CLASS@());
+            m_operator = new runtime::OperatorTester(new @CLASS@());
         }
 
         void @CLASS@Test::testExecute()

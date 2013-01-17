@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Stromx SYSTEM "stromx-doc.dtd">
+
+<Package name="Runtime">
+    <!-- Als erstes kommen die Datentypen (=DataVariant), welche in diesem Package definiert sind. -->
+    <DataVariant id="1" title="Bool">
+        A Boolean value.
+    </DataVariant>
+    <DataVariant id="3" title="Float">
+        A Boolean value.
+    </DataVariant>
+    <DataVariant id="5" title="Image">
+        <!-- Eigenes "Description" Element sinnvoll? -->
+        <Description>
+            All data objects of the variant <em>Image</em> implement the interface stromx::Image.
+            Images are two-dimensional arrays with 1-3 channels and 8-bit or 16-bit pixels.
+        </Description>
+    </DataVariant>
+    
+    
+    <!-- Der Datentyp, von dem dieser Type abgeleitet ist, wird mit "variantPackage" und "variantId" referenziert. 
+         Meinen Sie, ist das vernuenftig??? -->
+    <DataVariant id="6" title="Mono image 8-bit" variantPackage="Runtime" variantId="5">
+        <Description>
+            Image with one channel and 8-bit pixels.
+        </Description>
+    </DataVariant>
+    
+   
+    <!-- Jetzt kommen die Operatoren (hier nur einer). -->
+    <Operator type="Blur">
+        <Description>
+            This operators convolutes the input image with a Gaussian kernel of a given
+            width. The operator can operate in-place.
+        </Description>
+        
+        <!-- Der Datentyp dieses Parameters wird mit "variantPackage" und "variantId" referenziert. 
+             Meinen Sie immer noch, dass das vernuenftig ist??? -->
+        <Parameter id="0" title="In place" variantPackage="Runtime" variantId="1">
+            <Description>
+                If true the operator is initialized with only one input and the image at
+                this input is blurred in-place. Otherwise, the operator is initialized with
+                an input and a destination input.
+            </Description>
+        </Parameter>
+        <Parameter id="0" title="Kernel size" variantPackage="Runtime" variantId="3">
+            <Description>
+                The size of the Gaussian kernel.
+            </Description>
+        </Parameter>
+        <Input id="0" title="Source" variantPackage="Runtime" variantId="6">
+            <Description>
+                The input image. If the operator is initialized as an in-place operation
+                this image will be blurred.
+            </Description>
+        </Input>
+        <Input id="0" title="Destination" variantPackage="Runtime" variantId="6">
+            <Description>
+                The image which will contain the blurred version of the image <em>Source</em>.
+            </Description>
+        </Input>
+        <Output id="0" title="Result" variantPackage="Runtime" variantId="6">
+            <Description>
+                The the blurred image. This is either the destination image (no in-place operation) or
+                the input image (in-place operation).
+            </Description>
+        </Output>
+    </Operator>
+</Package>

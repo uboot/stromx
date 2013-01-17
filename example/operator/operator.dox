@@ -8,11 +8,11 @@ In this example the stream in previous examples shall be extended by an operator
 
 \image html example/operator/operator.png
 
-However such an operator is not defined in the package \em Base which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em Math.
+However such an operator is not defined in the package \em Example which provided all operators which have been used so far. Thus, a custom operator \em Add must be implemented. It will be the single member of the new package \em Math.
 
 \section operator_declare Declaring the operator
 
-A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernels do not have to be thread-safe. All concurrent accesses are handled by the core::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.
+A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernels do not have to be thread-safe. All concurrent accesses are handled by the runtime::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.
 
 The new operator kernel is declared in the header file <em>Add.h</em>:
 
@@ -20,20 +20,20 @@ The new operator kernel is declared in the header file <em>Add.h</em>:
 #ifndef MATH_ADD_H
 #define MATH_ADD_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/Primitive.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
 
 using namespace stromx;
 
 namespace math
 {
-    class Add : public core::OperatorKernel
+    class Add : public runtime::OperatorKernel
     {
 \endcode
 
 The kernel will be a member of the package \em Math. It seems to be a good practice to add all operators of a package to a common namespace which in this case is consequently called \em math.
 
-All operator kernels are derived from core::OperatorKernel.
+All operator kernels are derived from runtime::OperatorKernel.
 
 \code
     public:
@@ -60,25 +60,25 @@ Each input, output and parameter of the operator is identified by an ID. Here ea
         Add();
         
         virtual OperatorKernel* const clone() const { return new Add; }
-        virtual void execute(core::DataProvider& provider);
+        virtual void execute(runtime::DataProvider& provider);
 
-        virtual void setParameter(const unsigned int id, const core::Data& value);
-        virtual const core::Data& getParameter(const unsigned int id);
+        virtual void setParameter(const unsigned int id, const runtime::Data& value);
+        virtual const runtime::Data& getParameter(const unsigned int id);
 \endcode
 
-First the default constructor is declared. The functions core::OperatorKernel::clone() and core::OperatorKernel::execute() are abstract in core::OperatorKernel and must be defined in each custom operator kernel. The subsequent functions must be implemented to support reading and writing the paramter of  \em Add.
+First the default constructor is declared. The functions runtime::OperatorKernel::clone() and runtime::OperatorKernel::execute() are abstract in runtime::OperatorKernel and must be defined in each custom operator kernel. The subsequent functions must be implemented to support reading and writing the paramter of  \em Add.
 
 \code
     private:
-        static const std::vector<const core::Description*> setupInputs();
-        static const std::vector<const core::Description*> setupOutputs();
-        static const std::vector<const core::Parameter*> setupParameters();
+        static const std::vector<const runtime::Description*> setupInputs();
+        static const std::vector<const runtime::Description*> setupOutputs();
+        static const std::vector<const runtime::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const core::Version VERSION;                         
+        static const runtime::Version VERSION;                         
         
-        core::UInt32 m_offset;
+        runtime::UInt32 m_offset;
     };
 }
 
@@ -93,17 +93,17 @@ The operatorar \em Add is implemented in <em>Add.cpp</em>.
 \code
 #include "Add.h"
 
-#include <stromx/core/Primitive.h>
-#include <stromx/core/OperatorException.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/DataProvider.h>
-#include <stromx/core/Id2DataPair.h>
-#include <stromx/core/Id2DataComposite.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/ReadAccess.h>
 
 \endcode
 
-First all necessary headers are included. The subsequent \em using allows to access the members of the \em core library without the prefix \c core::
+First all necessary headers are included. The subsequent \em using allows to access the members of the \em runtime library without the prefix \c runtime::
 
 \code
 namespace math
@@ -113,49 +113,49 @@ namespace math
     const Version Add::VERSION(1, 0, 0);
 \endcode
 
-Each operator kernel provides exports its type, the package it belongs to and its version. This information must be the same for each instance of specific operator class and is naturally stored in static variables. This data will be passed to the constructor of core::OperatorKernel.
+Each operator kernel provides exports its type, the package it belongs to and its version. This information must be the same for each instance of specific operator class and is naturally stored in static variables. This data will be passed to the constructor of runtime::OperatorKernel.
 
-Moreover, the constructor of core::OperatorKernel accepts vectors of descriptions of the inputs, outputs and parameters of the operator kernel. These descriptions are \em not required to be the same for each instance of a specific operator class and can change during the lifetime of operator objects. As a consequence they can not be static variables but must be allocated for each class instance. The following helper functions take care of this allocations. In the case of \em Add the initial descriptions are the same for each class instance. Thus, the initialization functions can be static.
+Moreover, the constructor of runtime::OperatorKernel accepts vectors of descriptions of the inputs, outputs and parameters of the operator kernel. These descriptions are \em not required to be the same for each instance of a specific operator class and can change during the lifetime of operator objects. As a consequence they can not be static variables but must be allocated for each class instance. The following helper functions take care of this allocations. In the case of \em Add the initial descriptions are the same for each class instance. Thus, the initialization functions can be static.
 
 \code
-    const std::vector<const core::Description*> Add::setupInputs()
+    const std::vector<const runtime::Description*> Add::setupInputs()
     {
-        std::vector<const core::Description*> inputs;
+        std::vector<const runtime::Description*> inputs;
         
-        core::Description* input = new core::Description(INPUT, core::DataVariant::UINT_32);
+        runtime::Description* input = new runtime::Description(INPUT, runtime::DataVariant::UINT_32);
         input->setTitle("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const core::Description*> Add::setupOutputs()
+    const std::vector<const runtime::Description*> Add::setupOutputs()
     {
-        std::vector<const core::Description*> outputs;
+        std::vector<const runtime::Description*> outputs;
         
-        core::Description* output = new core::Description(OUTPUT, core::DataVariant::UINT_32);
+        runtime::Description* output = new runtime::Description(OUTPUT, runtime::DataVariant::UINT_32);
         output->setTitle("Output");
         outputs.push_back(output);
         
         return outputs;
     }
     
-    const std::vector<const core::Parameter*> Add::setupParameters()
+    const std::vector<const runtime::Parameter*> Add::setupParameters()
     {
-        std::vector<const core::Parameter*> parameters;
+        std::vector<const runtime::Parameter*> parameters;
         
-        core::Parameter* offset = new core::Parameter(OFFSET, core::DataVariant::UINT_32);
+        runtime::Parameter* offset = new runtime::Parameter(OFFSET, runtime::DataVariant::UINT_32);
         offset->setTitle("Offset");
-        offset->setAccessMode(core::Parameter::ACTIVATED_WRITE);
+        offset->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);
                                     
         return parameters;
     }
 \endcode
 
-Each initialization function allocates an empty vector which contains pointers to core::Description objects (in the case of inputs and outputs) or core::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
+Each initialization function allocates an empty vector which contains pointers to runtime::Description objects (in the case of inputs and outputs) or runtime::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
 
-Parameters additionally provide information about their access mode. Here core::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of core::Parameter to describe specific types of parameters in more detail. One example is core::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
+Parameters additionally provide information about their access mode. Here runtime::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of runtime::Parameter to describe specific types of parameters in more detail. One example is runtime::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
 
 \code
     Add::Add()
@@ -167,41 +167,41 @@ Parameters additionally provide information about their access mode. Here core::
 The constructor of \em Add simply passes all information which was setup above to the constructor of operator kernel.
 
 \note
-Not all inputs, outputs and parameters have to be passed to the constructor of core::OperatorKernel. There exists the possibility to add further information during initialization of the operator (by overloading core::OperatorKernel::initialize()). This means that an operator can be set up in a two stage process. After instantiation (but before initialization) some parameter descriptions are allocated and the corresponding parameters can be set. Depending on the value of these parameters the operators assigns further inputs, outputs and parameters to itself during initialization.
+Not all inputs, outputs and parameters have to be passed to the constructor of runtime::OperatorKernel. There exists the possibility to add further information during initialization of the operator (by overloading runtime::OperatorKernel::initialize()). This means that an operator can be set up in a two stage process. After instantiation (but before initialization) some parameter descriptions are allocated and the corresponding parameters can be set. Depending on the value of these parameters the operators assigns further inputs, outputs and parameters to itself during initialization.
 An example is an operator which merges several inputs to one output. After instantation the operator has no inputs but a parameter which defines the number of inputs. Only during initialization these inputs are actually allocated.
 
 \code
-    void Add::setParameter(unsigned int id, const core::Data& value)
+    void Add::setParameter(unsigned int id, const runtime::Data& value)
     {
         try
         {
             switch(id)
             {
             case OFFSET:
-                m_offset = core::data_cast<const core::UInt32&>(value);
+                m_offset = runtime::data_cast<const runtime::UInt32&>(value);
                 break;
             default:
-                throw core::WrongParameterId(id, *this);
+                throw runtime::WrongParameterId(id, *this);
             }
         }
-        catch(core::BadCast&)
+        catch(runtime::BadCast&)
         {
-            throw core::WrongParameterId(id, *this);
+            throw runtime::WrongParameterId(id, *this);
         }
     }
 \endcode
 
-The parameter \em Add supports only one parameter. To support more parameter further \c case statements have to be added to the \c switch statement. The value of the parameter \c OFFSET is internally stored as member of type core::UInt32. Because the parameter \c value is of type core::Data it must be down-casted to the correct type. The function core::data_cast() works exactly as dynamic_cast() but throws a core::BadCast instead of std::bad_cast.
+The parameter \em Add supports only one parameter. To support more parameter further \c case statements have to be added to the \c switch statement. The value of the parameter \c OFFSET is internally stored as member of type runtime::UInt32. Because the parameter \c value is of type runtime::Data it must be down-casted to the correct type. The function runtime::data_cast() works exactly as dynamic_cast() but throws a runtime::BadCast instead of std::bad_cast.
 
 \code
-    const core::DataRef Add::getParameter(const unsigned int id) const
+    const runtime::DataRef Add::getParameter(const unsigned int id) const
     {
         switch(id)
         {
         case OFFSET:
             return m_offset;
         default:
-            throw core::WrongParameterId(id, *this);
+            throw runtime::WrongParameterId(id, *this);
         }
     }  
 \endcode
@@ -209,38 +209,38 @@ The parameter \em Add supports only one parameter. To support more parameter fur
 The functions to read a parameter follows the same pattern as writing it.
 
 \note
-As mentioned above operator kernels do not have to be thread-safe. It is guaranteed that core::OperatorKernel::getParameter() and core::OperatorKernel::setParameter() are never called during execution of the operator.
+As mentioned above operator kernels do not have to be thread-safe. It is guaranteed that runtime::OperatorKernel::getParameter() and runtime::OperatorKernel::setParameter() are never called during execution of the operator.
 
 \code
-    void Add::execute(core::DataProvider& provider)
+    void Add::execute(runtime::DataProvider& provider)
     {
-        core::Id2DataPair inputMapper(INPUT);
+        runtime::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
 \endcode
 
-The actual work done by \em Add happens in \c execute(). There the input data is processed and the result is passed to the operator output. The input data is obtained from a core::DataProvider object. To request the data of an specific input a core::Id2DataPair object \c inputMapper is instantiated with the ID of the input in question. The data provider looks up the corresponding input and waits for input data. If the data arrives it stores in \c inputMapper.
+The actual work done by \em Add happens in \c execute(). There the input data is processed and the result is passed to the operator output. The input data is obtained from a runtime::DataProvider object. To request the data of an specific input a runtime::Id2DataPair object \c inputMapper is instantiated with the ID of the input in question. The data provider looks up the corresponding input and waits for input data. If the data arrives it stores in \c inputMapper.
 
 \note
-The above procedure to obtain the input data of the operator via data mappers might appear complicated at first sight. However, this approach allows for more flexible strategies to get input data. Consider e.g. an operator which has two inputs but requires only data from one of them at a time. If \c inputMapper1 and \c inputMapper2 map to the respective inputs, the call <tt>provider.receiveInputData(inputMapper1 || inputMapper2)</tt> returns as soon as one of the inputs received some data. On the other hand, <tt>provider.receiveInputData(inputMapper1 && inputMapper2)</tt> waits until both inputs received their data. More complicated expressions of data mappers can be built by combining core::operator&&, core::operator|| and core::Try.
+The above procedure to obtain the input data of the operator via data mappers might appear complicated at first sight. However, this approach allows for more flexible strategies to get input data. Consider e.g. an operator which has two inputs but requires only data from one of them at a time. If \c inputMapper1 and \c inputMapper2 map to the respective inputs, the call <tt>provider.receiveInputData(inputMapper1 || inputMapper2)</tt> returns as soon as one of the inputs received some data. On the other hand, <tt>provider.receiveInputData(inputMapper1 && inputMapper2)</tt> waits until both inputs received their data. More complicated expressions of data mappers can be built by combining runtime::operator&&, runtime::operator|| and runtime::Try.
 
 \code
-        core::ReadAccess<core::UInt32> input(inputMapper.data());
+        runtime::ReadAccess<runtime::UInt32> input(inputMapper.data());
 
-        core::Data* result = new core::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        runtime::Data* result = new runtime::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
 \endcode
 
-The member core::Id2DataPair::data() returns a core::DataContainer object. As in the previous examples a core::ReadAccess is needed to extract the actual data from the data container. In the next step the output value is computed and stored in an core::UInt32 object. The output data is passed to subsequent operators or to the client of the library \em without copying the data. I.e. the object must be allocated on the heap because it should stay alive even if it leaves the scope of \c Add::execute(). 
+The member runtime::Id2DataPair::data() returns a runtime::DataContainer object. As in the previous examples a runtime::ReadAccess is needed to extract the actual data from the data container. In the next step the output value is computed and stored in an runtime::UInt32 object. The output data is passed to subsequent operators or to the client of the library \em without copying the data. I.e. the object must be allocated on the heap because it should stay alive even if it leaves the scope of \c Add::execute(). 
         
 \code
-        core::DataContainer outContainer(result);
+        runtime::DataContainer outContainer(result);
        
-        core::Id2DataPair output(OUTPUT, outContainer);
+        runtime::Id2DataPair output(OUTPUT, outContainer);
         provider.sendOutputData(output);
     }
 } 
 \endcode
 
-To send the result data to the output it is packed into a DataContainer and paired with the ID of the respective output. The data provider is responsible to send the data container to the corresponding output. As in the case of core::DataProvider::receiveInputData(), the function core::DataProvider::sendOutputData() accepts expressions core::Id2DataPair objects together with core::operator&&, core::operator|| and core::Try.
+To send the result data to the output it is packed into a DataContainer and paired with the ID of the respective output. The data provider is responsible to send the data container to the corresponding output. As in the case of runtime::DataProvider::receiveInputData(), the function runtime::DataProvider::sendOutputData() accepts expressions runtime::Id2DataPair objects together with runtime::operator&&, runtime::operator|| and runtime::Try.
 
 \section operator_deploy Deploying the operator
 
@@ -251,16 +251,16 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="Core" type="Counter" version="0.1.0"/>
+        <Operator id="0" package="Runtime" type="Counter" version="0.1.0"/>
         <Operator id="1" package="Math" type="Add" version="1.0.0">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">2</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">2</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
         </Operator>
-        <Operator id="2" package="Core" type="PeriodicDelay">
+        <Operator id="2" package="Runtime" type="PeriodicDelay">
             <Parameter id="0">
-                <Data type="UInt32" package="Core" version="0.1.0">1000</Data>
+                <Data type="UInt32" package="Runtime" version="0.1.0">1000</Data>
             </Parameter>
             <Input id="0" operator="1" output="0"/>
         </Operator>
@@ -275,13 +275,13 @@ Finally, the new operator should be used as a part of a stream. This is simply d
 The program which runs the stream is almost identical to the one in the previous tutorial. The only extra step which has to be taken is the registration of the operator \em Add with the factory. 
 
 \code
-#include <stromx/core/Factory.h>
-#include <stromx/core/XmlReader.h>
-#include <stromx/core/Stream.h>
-#include <stromx/core/Core.h>
-#include <stromx/core/Operator.h>
-#include <stromx/core/Primitive.h>
-#include <stromx/core/ReadAccess.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/XmlReader.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/Runtime.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/ReadAccess.h>
 
 #include "math/Add.h"
 
@@ -291,11 +291,11 @@ using namespace stromx;
 
 int main (int, char**)
 {
-    using namespace core;
+    using namespace runtime;
    
     Factory* factory = new Factory;
     
-    stromxRegisterCore(factory);
+    stromxRegisterRuntime(factory);
 
     OperatorKernel* op = new math::Add;
     factory->registerOperator(op);
@@ -331,7 +331,7 @@ If the package \em Math contained more operators and was built as separate share
 
 Using the presented technique allows to implement single steps of a data processing pipeline in a \em stromx operator. These operators can then be combined arbitrarily to form new processing networks.
 
-It is possible to define custom data types in a similar fashion by subclassing core::Data and core::DataVariant.
+It is possible to define custom data types in a similar fashion by subclassing runtime::Data and runtime::DataVariant.
 
 The tutorial \ref camera how to process images orginating from a simulated camera.
 

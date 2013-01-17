@@ -17,13 +17,13 @@
 #ifndef MATH_ADD_H
 #define MATH_ADD_H
 
-#include <stromx/core/OperatorKernel.h>
-#include <stromx/core/DataContainer.h>
-#include <stromx/core/Primitive.h>
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/Primitive.h>
 
 namespace math
 {
-    class Add : public stromx::core::OperatorKernel
+    class Add : public stromx::runtime::OperatorKernel
     {
     public:
         enum InputId
@@ -44,21 +44,21 @@ namespace math
         Add();
         
         virtual OperatorKernel* clone() const { return new Add; }
-        virtual void execute(stromx::core::DataProvider& provider);
+        virtual void execute(stromx::runtime::DataProvider& provider);
         
-        virtual void setParameter(const unsigned int id, const stromx::core::Data& value);
-        virtual const stromx::core::DataRef getParameter(const unsigned int id) const;
+        virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
+        virtual const stromx::runtime::DataRef getParameter(const unsigned int id) const;
         
     private:
-        static const std::vector<const stromx::core::Description*> setupInputs();
-        static const std::vector<const stromx::core::Description*> setupOutputs();
-        static const std::vector<const stromx::core::Parameter*> setupParameters();
+        static const std::vector<const stromx::runtime::Description*> setupInputs();
+        static const std::vector<const stromx::runtime::Description*> setupOutputs();
+        static const std::vector<const stromx::runtime::Parameter*> setupParameters();
         
         static const std::string TYPE;
         static const std::string PACKAGE;
-        static const stromx::core::Version VERSION;                         
+        static const stromx::runtime::Version VERSION;                         
         
-        stromx::core::UInt32 m_offset;
+        stromx::runtime::UInt32 m_offset;
     };
 }
 
