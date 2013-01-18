@@ -2,71 +2,75 @@
 
 #include "Config.h"
 
-#include <stream/OperatorException.h>
+#include <stromx/runtime/OperatorException.h>
 
 #include <typeinfo>
 
-using namespace stream;
 
-namespace @PACKAGE@
+namespace stromx
 {
-    const std::string @CLASS@::TYPE("@CLASS@");
-    const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
-    const Version @CLASS@::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+    using namespace runtime;
     
-    @CLASS@::@CLASS@()
-      : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+    namespace @PACKAGE@
     {
-    }
+        const std::string @CLASS@::TYPE("@CLASS@");
+        const std::string @CLASS@::PACKAGE(PACKAGE_NAME);
+        const Version @CLASS@::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+        
+        @CLASS@::@CLASS@()
+        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+        {
+        }
 
-    void @CLASS@::setParameter(unsigned int id, const Data& value)
-    {
-        try
+        void @CLASS@::setParameter(unsigned int id, const Data& value)
+        {
+            try
+            {
+                switch(id)
+                {
+                default:
+                    throw WrongParameterId(id, *this);
+                }
+            }
+            catch(std::bad_cast&)
+            {
+                throw WrongParameterType(*parameters()[id], *this);
+            }
+        }
+
+        const Data& @CLASS@::getParameter(unsigned int id)
         {
             switch(id)
             {
             default:
                 throw WrongParameterId(id, *this);
             }
-        }
-        catch(std::bad_cast&)
-        {
-            throw WrongParameterType(*parameters()[id], *this);
-        }
-    }
-
-    const Data& @CLASS@::getParameter(unsigned int id)
-    {
-        switch(id)
-        {
-        default:
-            throw WrongParameterId(id, *this);
-        }
-    }  
-    
-    void @CLASS@::execute(DataProvider& provider)
-    {
+        }  
         
-    }
-    
-    const std::vector<const Description*> @CLASS@::setupInputs()
-    {
-        std::vector<const Description*> inputs;
-
-        return inputs;
-    }
-    
-    const std::vector<const Description*> @CLASS@::setupOutputs()
-    {
-        std::vector<const Description*> outputs;
+        void @CLASS@::execute(DataProvider& provider)
+        {
+            
+        }
         
-        return outputs;
+        const std::vector<const Description*> @CLASS@::setupInputs()
+        {
+            std::vector<const Description*> inputs;
+
+            return inputs;
+        }
+        
+        const std::vector<const Description*> @CLASS@::setupOutputs()
+        {
+            std::vector<const Description*> outputs;
+            
+            return outputs;
+        }
+        
+        const std::vector<const Parameter*> @CLASS@::setupParameters()
+        {
+            std::vector<const Parameter*> parameters;
+                                        
+            return parameters;
+        }
     }
-    
-    const std::vector<const Parameter*> @CLASS@::setupParameters()
-    {
-        std::vector<const Parameter*> parameters;
-                                    
-        return parameters;
-    }
-} 
+}
