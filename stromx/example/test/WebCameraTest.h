@@ -51,7 +51,7 @@ namespace stromx
                 void testExecute();
                 
             private:
-                core::OperatorTester* m_operator;
+                runtime::OperatorTester* m_operator;
                 bool m_hasCamera;
         };
     }

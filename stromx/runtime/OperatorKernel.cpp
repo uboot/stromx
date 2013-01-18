@@ -94,7 +94,7 @@ namespace stromx
 
         OperatorKernel::OperatorKernel(const std::string& type,
                         const std::string& package,
-                        const core::Version& version,
+                        const runtime::Version& version,
                         const std::vector<const Description* >& inputs,
                         const std::vector<const Description* >& outputs)
           : m_type(type),
@@ -104,7 +104,7 @@ namespace stromx
             validateInputs(inputs);
             validateOutputs(outputs);
             
-            for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
+            for(std::vector<const runtime::Description*>::const_iterator iter = inputs.begin();
                 iter != inputs.end();
                 ++iter)
             {
@@ -113,7 +113,7 @@ namespace stromx
             }
             
             
-            for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
+            for(std::vector<const runtime::Description*>::const_iterator iter = outputs.begin();
                 iter != outputs.end();
                 ++iter)
             {

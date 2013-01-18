@@ -137,7 +137,7 @@ namespace stromx
              */  
             OperatorKernel(const std::string& type,
                     const std::string& package,
-                    const core::Version& version,
+                    const runtime::Version& version,
                     const std::vector<const Description* >& inputs,
                     const std::vector<const Description* >& outputs);
              
