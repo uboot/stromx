@@ -87,11 +87,18 @@ class Types:
             assert(False)
             
     @staticmethod
-    def dataAllocate(t):
+    def dataAllocate(t, src):
         if t == DataType.IMAGE:
-            return "example::Image"
+            if src:
+                return ("example::Image({0}->width(), {0}->height(), "
+                        "{0}->pixelType())").format(src)
+            else:
+                return "example::Image()"
         else:
-            return Types.dataType(t)
+            if src:
+                return "{0}({1})".format(Types.dataType(t), src)
+            else:
+                return "{0}()".format(Types.dataType(t))
     
     @staticmethod
     def dataVariant(t):
@@ -108,25 +115,28 @@ class Types:
             
     @staticmethod
     def cvType(t):
-        if t == DataType.BOOL:
-            return "bool"
-        elif t == DataType.UINT_32:
+        if t == CvType.INT:
             return "unsigned int"
-        elif t == DataType.IMAGE:
+        elif t == CvType.MAT:
             return "cv::Mat"
         else:
             assert(False)
             
     @staticmethod
     def cvCast(t):
-        if t == DataType.BOOL:
-            return "runtime::Bool"
-        elif t == DataType.UINT_32:
-            return "(unsigned int)"
-        elif t == DataType.IMAGE:
+        if t == CvType.INT:
+            return "int"
+        elif t == CvType.MAT:
             return "example::getOpenCvMat"
         else:
             assert(False)
+            
+    @staticmethod
+    def dataCast(t):
+        if t == DataType.IMAGE:
+            return "example::Image"
+        else:
+            return Types.dataType(t)
         
 class MethodFragment(object):
     def inputId(self):
@@ -486,9 +496,11 @@ class Allocation(OutputArgument):
         if self.refArg:
             src = "{0}CastedData".format(self.refArg.ident)
             
-            lines.append("runtime::Image* outData = new example::Image({0}->width(), "
-                         "{0}->height(), {0}->pixelType());".format(src))
-            lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
+            lines.append("{0}* outData = new {1};"\
+                .format(Types.dataType(self.dataType),
+                        Types.dataAllocate(self.dataType, src)))
+            lines.append("runtime::DataContainer outContainer = "
+                         "runtime::DataContainer(outData);")
             lines.append("{0} {1}CvData = {2}(*outData);"\
                 .format(Types.cvType(self.cvType),
                         self.ident,
@@ -503,7 +515,7 @@ class Allocation(OutputArgument):
         if not self.refArg:
             lines.append("{0}* outData = new {1}({2}CvData);"\
                 .format(Types.dataType(self.cvType),
-                        Types.dataAllocate(self.cvType),
+                        Types.dataCast(self.cvType),
                         self.ident))
             lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
         return lines
