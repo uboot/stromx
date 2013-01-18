@@ -34,7 +34,12 @@ namespace stromx
             enum ParameterId
             {
                 FRAMERATE,
-                BRIGHTNESS
+                BRIGHTNESS,
+                CONTRAST,
+                SATURATION,
+                HUE,
+                GAIN,
+                EXPOSURE
             };
                 
             //constructor
@@ -52,13 +57,20 @@ namespace stromx
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Parameter*> setupParameters();
 
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
 
             cv::VideoCapture* m_webcam;
+            double m_configurableFrameRate;
+            double m_configurableBrightness;
+            double m_configurableContrast;
+            double m_configurableSaturation;
+            double m_configurableHue;
+            double m_configurableGain;
+            double m_configurableExposure;
         };
     }
 }
