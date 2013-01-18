@@ -33,7 +33,7 @@ namespace stromx
     namespace example
     {
         const std::string ImageFilter::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version ImageFilter::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+        const Version ImageFilter::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
         
         ImageFilter::ImageFilter(const std::string & type)
           : OperatorKernel(type, PACKAGE, VERSION, setupInitParameters()),

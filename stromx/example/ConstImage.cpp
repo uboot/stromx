@@ -32,7 +32,7 @@ namespace stromx
         const std::string ConstImage::TYPE("ConstImage");
         
         const std::string ConstImage::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version ConstImage::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+        const Version ConstImage::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
         
         ConstImage::ConstImage()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

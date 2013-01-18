@@ -37,7 +37,7 @@ namespace stromx
     namespace example
     {
         const std::string HoughLinesP::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version HoughLinesP::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+        const Version HoughLinesP::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
         const std::string HoughLinesP::TYPE("HoughLinesP");
         
         HoughLinesP::HoughLinesP()

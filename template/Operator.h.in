@@ -17,41 +17,45 @@
 #ifndef @PREPROCESSOR_MACRO@
 #define @PREPROCESSOR_MACRO@
 
-#include <stream/OperatorKernel.h>
+#include <stromx/runtime/OperatorKernel.h>
 
-namespace @PACKAGE@
-{
-    class @CLASS@ : public stream::OperatorKernel
+namespace stromx
+{ 
+    namespace @PACKAGE@
     {
-    public:
-        enum InputId
+        class @CLASS@ : public stromx::runtime::OperatorKernel
         {
+        public:
+            enum InputId
+            {
+            };
+            
+            enum OutputId
+            {
+            };
+            
+            enum ParameterId
+            {
+            };
+            
+            @CLASS@();
+            
+            virtual OperatorKernel* const clone() const { return new @CLASS@; }
+            virtual void setParameter(unsigned int id, const stream::Data& value);
+            virtual const stream::Data& getParameter(unsigned int id);
+            virtual void execute(stream::DataProvider& provider);
+            virtual OperatorKernel* clone() const { return new @CLASS@(); }
+            
+        private:
+            static const std::vector<const stromx::runtime::Description*> setupInputs();
+            static const std::vector<const stromx::runtime::Description*> setupOutputs();
+            static const std::vector<const stromx::runtime::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const stromx::runtime::Version VERSION;
         };
-        
-        enum OutputId
-        {
-        };
-        
-        enum ParameterId
-        {
-        };
-        
-        @CLASS@();
-        
-        virtual OperatorKernel* const clone() const { return new @CLASS@; }
-        virtual void setParameter(unsigned int id, const stream::Data& value);
-        virtual const stream::Data& getParameter(unsigned int id);
-        virtual void execute(stream::DataProvider& provider);
-        
-    private:
-        static const std::vector<const stream::Description*> setupInputs();
-        static const std::vector<const stream::Description*> setupOutputs();
-        static const std::vector<const stream::Parameter*> setupParameters();
-        
-        static const std::string TYPE;
-        static const std::string PACKAGE;
-        static const stream::Version VERSION;
-    };
+    }
 }
 
 #endif // @PREPROCESSOR_MACRO@

@@ -1,6 +1,9 @@
 #include "@CLASS@.h"
 
-namespace @PACKAGE@
+namespace stromx
 {
-    
-} 
+    namespace @PACKAGE@
+    {
+        
+    } 
+}

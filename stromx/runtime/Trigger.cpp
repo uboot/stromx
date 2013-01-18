@@ -46,7 +46,7 @@ namespace stromx
         const std::string Trigger::TYPE("Trigger");
         
         const std::string Trigger::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Trigger::VERSION(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        const Version Trigger::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Trigger::Trigger()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

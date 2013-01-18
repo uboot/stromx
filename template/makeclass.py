@@ -62,8 +62,8 @@ def usage():
 
 def replace(text, author, className, package):
     year = str(datetime.date.today().year)
-    preprocessorMacro = package.upper() + '_' + className.upper() + '_H'
-    preprocessorMacroTest = package.upper() + '_' + className.upper() + 'TEST_H'
+    preprocessorMacro = "STROMX_" + package.upper() + '_' + className.upper() + '_H'
+    preprocessorMacroTest = "STROMX_" + package.upper() + '_' + className.upper() + 'TEST_H'
     
     text = re.sub(r'@PREPROCESSOR_MACRO@', preprocessorMacro, text)
     text = re.sub(r'@PREPROCESSOR_MACRO_TEST@', preprocessorMacroTest, text)

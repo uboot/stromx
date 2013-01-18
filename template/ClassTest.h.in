@@ -20,25 +20,28 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-namespace @PACKAGE@
+namespace stromx
 {
-    class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+    namespace @PACKAGE@
     {
-        CPPUNIT_TEST_SUITE (@CLASS@Test);
-        CPPUNIT_TEST(test);
-        CPPUNIT_TEST_SUITE_END ();
+        class @CLASS@Test : public CPPUNIT_NS :: TestFixture
+        {
+            CPPUNIT_TEST_SUITE (@CLASS@Test);
+            CPPUNIT_TEST(test);
+            CPPUNIT_TEST_SUITE_END ();
 
-    public:
-        @CLASS@Test() {}
-        
-        void setUp();
-        void tearDown();
-
-    protected:
-        void test();
+        public:
+            @CLASS@Test() {}
             
-    private:
-    };
+            void setUp();
+            void tearDown();
+
+        protected:
+            void test();
+                
+        private:
+        };
+    }
 }
 
 #endif // @PREPROCESSOR_MACRO_TEST@
