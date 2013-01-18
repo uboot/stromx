@@ -14,9 +14,7 @@
 *  limitations under the License.
 */
 
-#include "Config.h"
 #include "Image.h"
-#include "Utilities.h"
 #include "WebCamera.h"
 #include <boost/assert.hpp>
 #include <stromx/runtime/Image.h>
@@ -54,22 +52,68 @@ namespace stromx
         const std::vector<const runtime::Parameter*> WebCamera::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
-
-            runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::DOUBLE);
-            frameRate->setTitle("Frame rate");
-            frameRate->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
-            parameters.push_back(frameRate);
             
-            runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::DOUBLE);
-            brightness->setTitle("Brightness");
-            brightness->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            parameters.push_back(brightness);
+            if(m_configurableFrameRate >= 0.0)
+            {
+                runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::DOUBLE);
+                frameRate->setTitle("Frame rate");
+                frameRate->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
+                parameters.push_back(frameRate);
+            }
+            
+            if(m_configurableBrightness >= 0.0)
+            {
+                runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::DOUBLE);
+                brightness->setTitle("Brightness");
+                brightness->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(brightness);
+            }
+            
+            if(m_configurableContrast >= 0.0)
+            {
+                runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::DOUBLE);
+                contrast->setTitle("Contrast");
+                contrast->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(contrast);
+            }
+            
+            if(m_configurableSaturation >= 0.0)
+            {
+                runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::DOUBLE);
+                saturation->setTitle("Saturation");
+                saturation->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(saturation);
+            }
+            
+            if(m_configurableHue >= 0.0)
+            {
+                runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::DOUBLE);
+                hue->setTitle("Hue");
+                hue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(hue);
+            }
+            
+            if(m_configurableGain >= 0.0)
+            {
+                runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::DOUBLE);
+                gain->setTitle("Gain");
+                gain->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(gain);
+            }
+            
+            if(m_configurableExposure >= 0.0)
+            {
+                runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::DOUBLE);
+                exposure->setTitle("Exposure");
+                exposure->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(exposure);
+            }
 
             return parameters;
         }
 
         WebCamera::WebCamera()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs()),
             m_webcam(0)
         {
         }
@@ -92,6 +136,36 @@ namespace stromx
                         m_webcam->set(CV_CAP_PROP_BRIGHTNESS, brightness);
                         break;
                     }
+                    case CONTRAST:
+                    {
+                        runtime::Double contrast = runtime::data_cast<const runtime::Double&>(value);
+                        m_webcam->set(CV_CAP_PROP_CONTRAST, contrast);
+                        break;
+                    }
+                    case SATURATION:
+                    {
+                        runtime::Double saturation = runtime::data_cast<const runtime::Double&>(value);
+                        m_webcam->set(CV_CAP_PROP_SATURATION, saturation);
+                        break;
+                    }
+                    case HUE:
+                    {
+                        runtime::Double hue = runtime::data_cast<const runtime::Double&>(value);
+                        m_webcam->set(CV_CAP_PROP_HUE, hue);
+                        break;
+                    }
+                    case GAIN:
+                    {
+                        runtime::Double gain = runtime::data_cast<const runtime::Double&>(value);
+                        m_webcam->set(CV_CAP_PROP_GAIN, gain);
+                        break;
+                    }
+                    case EXPOSURE:
+                    {
+                        runtime::Double exposure = runtime::data_cast<const runtime::Double&>(value);
+                        m_webcam->set(CV_CAP_PROP_EXPOSURE, exposure);
+                        break;
+                    }
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -110,6 +184,16 @@ namespace stromx
                     return runtime::Double(m_webcam->get(CV_CAP_PROP_FPS));
                 case BRIGHTNESS:
                     return runtime::Double(m_webcam->get(CV_CAP_PROP_BRIGHTNESS));
+                case CONTRAST:
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_CONTRAST));
+                case SATURATION:
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_SATURATION));
+                case HUE:
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_HUE));
+                case GAIN:
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_GAIN));
+                case EXPOSURE:
+                    return runtime::Double(m_webcam->get(CV_CAP_PROP_EXPOSURE));
                 default:
                     throw runtime::WrongParameterId(id,*this);
             }
@@ -156,6 +240,27 @@ namespace stromx
                 throw runtime::OperatorError(*this, "Failed to allocate WebCamera.");
             if(!webcam->isOpened())
                 throw runtime::OperatorError(*this, "Failed to open WebCamera.");
+            
+            //Check available parameters of camera accessible through OpenCV VideoCapture
+            m_configurableFrameRate = webcam->get(CV_CAP_PROP_FPS);
+            m_configurableBrightness = webcam->get(CV_CAP_PROP_BRIGHTNESS);
+            m_configurableContrast = webcam->get(CV_CAP_PROP_CONTRAST);
+            m_configurableSaturation = webcam->get(CV_CAP_PROP_SATURATION);
+            m_configurableHue = webcam->get(CV_CAP_PROP_HUE);
+            m_configurableGain = webcam->get(CV_CAP_PROP_GAIN);
+            m_configurableExposure = webcam->get(CV_CAP_PROP_EXPOSURE);
+            
+            
+            //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
+            //Since the new input and output is added to existing one, you cannot call
+            //setupInputs() and setupOutputs() again! Otherwise identical input-IDs and OutputIDs 
+            //occur twice resulting in an exception caused by validateOutputs called 
+            //in OperatorKernel::initialize. Note: setupInputs() could be called since for this operator
+            //no input is generated, i.e. inputs is automatically an empty vector!
+            std::vector<const runtime::Description*> inputs;
+            std::vector<const runtime::Description*> outputs;
+            
+            OperatorKernel::initialize(inputs,outputs,setupParameters());
             
             m_webcam = webcam.release();
         }

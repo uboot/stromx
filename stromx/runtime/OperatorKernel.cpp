@@ -92,6 +92,35 @@ namespace stromx
             }
         }
 
+        OperatorKernel::OperatorKernel(const std::string& type,
+                        const std::string& package,
+                        const core::Version& version,
+                        const std::vector<const Description* >& inputs,
+                        const std::vector<const Description* >& outputs)
+          : m_type(type),
+            m_package(package),
+            m_version(version)
+        {
+            validateInputs(inputs);
+            validateOutputs(outputs);
+            
+            for(std::vector<const core::Description*>::const_iterator iter = inputs.begin();
+                iter != inputs.end();
+                ++iter)
+            {
+                m_inputs.push_back(*iter);
+                m_inputMap[(*iter)->id()] = *iter;
+            }
+            
+            
+            for(std::vector<const core::Description*>::const_iterator iter = outputs.begin();
+                iter != outputs.end();
+                ++iter)
+            {
+                m_outputs.push_back(*iter);
+                m_outputMap[(*iter)->id()] = *iter;
+            }
+        }
         
         void OperatorKernel::initialize(const std::vector<const runtime::Description*>& inputs,
                                         const std::vector<const runtime::Description*>& outputs,

@@ -131,6 +131,15 @@ namespace stromx
                     const std::vector<const Description*>& inputs,
                     const std::vector<const Description*>& outputs,
                     const std::vector<const Parameter*>& parameters);
+
+	    /**
+             * Constructs an operator kernel.
+             */  
+            OperatorKernel(const std::string& type,
+                    const std::string& package,
+                    const core::Version& version,
+                    const std::vector<const Description* >& inputs,
+                    const std::vector<const Description* >& outputs);
              
             /**
              * Constructs an operator kernel.

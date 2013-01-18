@@ -61,6 +61,7 @@ add_executable(stromx_example_test
     MatrixTest.cpp
     MorphologicalFilterTest.cpp
     OpenTest.cpp
+    WebCameraTest.cpp
 )
 
 target_link_libraries(stromx_example_test 
