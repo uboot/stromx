@@ -85,6 +85,13 @@ class Types:
             return "runtime::Enum"
         else:
             assert(False)
+            
+    @staticmethod
+    def dataAllocate(t):
+        if t == DataType.IMAGE:
+            return "example::Image"
+        else:
+            return Types.dataType(t)
     
     @staticmethod
     def dataVariant(t):
@@ -113,7 +120,7 @@ class Types:
     @staticmethod
     def cvCast(t):
         if t == DataType.BOOL:
-            return "bool"
+            return "runtime::Bool"
         elif t == DataType.UINT_32:
             return "(unsigned int)"
         elif t == DataType.IMAGE:
@@ -474,17 +481,31 @@ class Allocation(OutputArgument):
     def outputId(self):
         return ["RESULT"] 
     
-    def allocate(self):
-        src = "{0}CastedData".format(self.refArg.ident)
-        
+    def cvData(self):
         lines = []
-        lines.append("runtime::Image* outData = new example::Image({0}->width(), "
-                     "{0}->height(), {0}->pixelType());".format(src))
-        lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
-        lines.append("{0} {1}CvData = {2}(*outData);"\
-            .format(Types.cvType(self.cvType),
-                    self.ident,
-                    Types.cvCast(self.cvType)))
+        if self.refArg:
+            src = "{0}CastedData".format(self.refArg.ident)
+            
+            lines.append("runtime::Image* outData = new example::Image({0}->width(), "
+                         "{0}->height(), {0}->pixelType());".format(src))
+            lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
+            lines.append("{0} {1}CvData = {2}(*outData);"\
+                .format(Types.cvType(self.cvType),
+                        self.ident,
+                        Types.cvCast(self.cvType)))
+        else:
+            lines.append("{0} {1}CvData;"\
+                .format(Types.cvType(self.cvType), self.ident))
+        return lines
+        
+    def outContainer(self):
+        lines = []
+        if not self.refArg:
+            lines.append("{0}* outData = new {1}({2}CvData);"\
+                .format(Types.dataType(self.cvType),
+                        Types.dataAllocate(self.cvType),
+                        self.ident))
+            lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
         return lines
 
 class EnumDescription(object):

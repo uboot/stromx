@@ -804,7 +804,8 @@ if __name__ == "__main__":
     options = dict()
     options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
     options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
-    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
+#    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
+    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2), arg3]
 
     m.options = options
     
