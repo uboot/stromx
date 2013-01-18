@@ -36,7 +36,7 @@ namespace stromx
         {
             const std::string CameraBuffer::TYPE("CameraBuffer");
             const std::string CameraBuffer::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-            const Version CameraBuffer::VERSION(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+            const Version CameraBuffer::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
             
             CameraBuffer::CameraBuffer()
               : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

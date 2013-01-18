@@ -32,7 +32,7 @@ namespace stromx
     {
         const std::string WebCamera::TYPE("WebCamera");
         const std::string WebCamera::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const runtime::Version WebCamera::VERSION(EXAMPLE_VERSION_MAJOR,EXAMPLE_VERSION_MINOR,EXAMPLE_VERSION_PATCH);
+        const runtime::Version WebCamera::VERSION(STROMX_EXAMPLE_VERSION_MAJOR,STROMX_EXAMPLE_VERSION_MINOR,STROMX_EXAMPLE_VERSION_PATCH);
         
         const std::vector<const runtime::Description*> WebCamera::setupInputs()
         {

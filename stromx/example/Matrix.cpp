@@ -30,7 +30,7 @@ namespace stromx
     {
         const std::string Matrix::TYPE = "Matrix";
         const std::string Matrix::PACKAGE = STROMX_EXAMPLE_PACKAGE_NAME;
-        const runtime::Version Matrix::VERSION = runtime::Version(EXAMPLE_VERSION_MAJOR, EXAMPLE_VERSION_MINOR, EXAMPLE_VERSION_PATCH);
+        const runtime::Version Matrix::VERSION = runtime::Version(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
                 
         Matrix::Matrix()
           : m_matrix(new cv::Mat())

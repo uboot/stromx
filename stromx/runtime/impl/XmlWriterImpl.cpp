@@ -93,9 +93,9 @@ namespace stromx
             
                 //Create attribute version of Stromx
                 DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                std::string str = boost::lexical_cast<std::string>(STROMX_VERSION_MAJOR) + "." +
-                                    boost::lexical_cast<std::string>(STROMX_VERSION_MINOR) + "." + 
-                                    boost::lexical_cast<std::string>(STROMX_VERSION_PATCH);
+                std::string str = boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_MAJOR) + "." +
+                                    boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_MINOR) + "." + 
+                                    boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_PATCH);
                 verAttr->setValue(Str2Xml(str.c_str()));
                 m_stromxElement->setAttributeNode(verAttr);
             }

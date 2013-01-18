@@ -24,7 +24,7 @@ namespace stromx
     {
         const std::string String::TYPE = "String";
         const std::string String::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
-        const Version String::VERSION = Version(STROMX_VERSION_MAJOR, STROMX_VERSION_MINOR, STROMX_VERSION_PATCH);
+        const Version String::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         const DataVariant & String::classVariant()
         { 
