@@ -75,6 +75,10 @@ class Names:
 class Types:
     @staticmethod
     def dataType(t):
+        """
+        >>> Types.dataType(DataType.UINT_32)
+        'runtime::UInt32'
+        """
         if t == DataType.BOOL:
             return "runtime::Bool"
         elif t == DataType.UINT_32:
@@ -87,7 +91,17 @@ class Types:
             assert(False)
             
     @staticmethod
-    def dataAllocate(t, src):
+    def dataAllocate(t, src = None):
+        """
+        >>> Types.dataAllocate(DataType.UINT_32)
+        'runtime::UInt32()'
+        >>> Types.dataAllocate(DataType.UINT_32, "src")
+        'runtime::UInt32(src)'
+        >>> Types.dataAllocate(DataType.IMAGE)
+        'example::Image()'
+        >>> Types.dataAllocate(DataType.IMAGE, "src")
+        'example::Image(src->width(), src->height(), src->pixelType())'
+        """
         if t == DataType.IMAGE:
             if src:
                 return ("example::Image({0}->width(), {0}->height(), "
@@ -102,6 +116,10 @@ class Types:
     
     @staticmethod
     def dataVariant(t):
+        """
+        >>> Types.dataVariant(DataType.IMAGE)
+        'runtime::DataVariant::IMAGE'
+        """
         if t == DataType.BOOL:
             return "runtime::DataVariant::BOOL"
         elif t == DataType.UINT_32:
@@ -319,6 +337,7 @@ class Options(EnumParameter):
     MANUAL = 0
     ALLOCATE = 1
     IN_PLACE = 2
+    TEST_1 = 3
     
     def __init__(self, options = dict()):
         if len(options) > 0:
@@ -341,6 +360,9 @@ class Options(EnumParameter):
         if self.options.has_key(Options.ALLOCATE):
             self.descriptions.append(EnumDescription("allocate", "Allocate"))
         
+        if self.options.has_key(Options.TEST_1):
+            self.descriptions.append(EnumDescription("test1", "Test 1"))
+        
     @property
     def trivial(self):
         return len(self.options) <= 1
@@ -352,6 +374,8 @@ class Options(EnumParameter):
             return "ALLOCATE"
         elif option == Options.IN_PLACE:
             return "IN_PLACE"
+        elif option == Options.TEST_1:
+            return "TEST_1"
         else:
             assert(False)
             
@@ -523,6 +547,7 @@ class Allocation(OutputArgument):
 class EnumDescription(object):
     ident = ""
     name = ""
+    cvIdent = ""
     
     def __init__(self, ident, name):
         self.ident = ident
