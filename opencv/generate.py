@@ -85,7 +85,7 @@ class Generator(object):
         self.line("")
         
     def className(self):
-        return Names.className(self.m.ident)
+        return self.m.ident.className()
         
     def namespaceEnter(self):
         self.line("namespace stromx")
@@ -117,7 +117,7 @@ class LibGenerator(Generator):
         
 class LibHeaderGenerator(LibGenerator):
     def generate(self):
-        p = Names.constantName(self.p.ident)
+        p = self.p.ident.constant()
         self.line("#ifndef STROMX_{0}_{0}_H".format(p))
         self.line("#define STROMX_{0}_{0}_H".format(p))
         self.blank()
@@ -138,39 +138,39 @@ class LibHeaderGenerator(LibGenerator):
         self.scopeEnter()
         self.line("STROMX_{0}_API void stromxRegister{1}"
                   "(stromx::runtime::Registry& registry);"\
-                  .format(p, Names.className(self.p.ident)))
+                  .format(p, self.p.ident.className()))
         self.scopeExit()
         self.blank()
         
         self.line("#endif // STROMX_{0}_{0}_H".format(p))
         
     def save(self):
-        with file("{0}.h".format(Names.className(self.p.ident)), "w") as f:
+        with file("{0}.h".format(self.p.ident.className()), "w") as f:
             f.write(self.string())
         
 class LibImplGenerator(LibGenerator):
     def generate(self):
-        self.line('#include "{0}.h"'.format(Names.className(self.p.ident)))
+        self.line('#include "{0}.h"'.format(self.p.ident.className()))
         self.blank()
         for m in self.p.methods:
-            self.line('#include "{0}.h"'.format(Names.className(m.ident)))
+            self.line('#include "{0}.h"'.format(m.ident.className()))
         self.line("#include <stromx/runtime/Registry.h>")
         self.blank()
         
         self.line("void stromxRegister{0}(stromx::runtime::Registry& registry)"\
-            .format(Names.className(self.p.ident)))
+            .format(self.p.ident.className()))
         self.scopeEnter()
         self.line("using namespace stromx::{0};".format(self.p.ident))
         self.blank()
         
         for m in self.p.methods:
             self.line("registry.registerOperator(new {0});"\
-                .format(Names.className(m.ident)))
+                .format(m.ident.className()))
         
         self.scopeExit()
         
     def save(self):
-        with file("{0}.cpp".format(Names.className(self.p.ident)), "w") as f:
+        with file("{0}.cpp".format(self.p.ident.className()), "w") as f:
             f.write(self.string())
 
 class CMakeGenerator(LibGenerator):
@@ -178,11 +178,11 @@ class CMakeGenerator(LibGenerator):
         self.line("project(stromx_{0})".format(self.p.ident))
         self.blank()
         self.line("set ({0}_VERSION_MAJOR {1})"\
-            .format(Names.constantName(self.p.ident), self.p.major))
+            .format(self.p.ident.constant(), self.p.major))
         self.line("set ({0}_VERSION_MINOR {1})"\
-            .format(Names.constantName(self.p.ident), self.p.major))
+            .format(self.p.ident.constant(), self.p.major))
         self.line("set ({0}_VERSION_PATCH {1})"\
-            .format(Names.constantName(self.p.ident), self.p.patch))
+            .format(self.p.ident.constant(), self.p.patch))
         self.blank()
         
         self.line("configure_file (")
@@ -204,8 +204,8 @@ class CMakeGenerator(LibGenerator):
         self.line("set (SOURCES ")
         self.increaseIndent()
         for m in self.p.methods:
-            self.line("{0}.cpp".format(Names.className(m.ident)))
-            self.line("{0}.cpp".format(Names.className(self.p.ident)))
+            self.line("{0}.cpp".format(m.ident.className()))
+            self.line("{0}.cpp".format(self.p.ident.className()))
         self.decreaseIndent()
         self.line(")")
         self.blank()
@@ -216,7 +216,7 @@ class CMakeGenerator(LibGenerator):
         
         self.line('set(VERSION_STRING "${{{0}_VERSION_MAJOR}}.'
                   '${{{0}_VERSION_MINOR}}.${{{0}_VERSION_PATCH}}")'\
-                  .format(Names.constantName(self.p.ident)))
+                  .format(self.p.ident.constant()))
         self.blank()
         
         self.line("set_target_properties (stromx_{0} PROPERTIES"\
@@ -244,7 +244,7 @@ class CMakeGenerator(LibGenerator):
             
 class ConfigGenerator(LibGenerator):
     def generate(self):
-        p = Names.constantName(self.p.ident)
+        p = self.p.ident.constant()
         guard = "STROMX_{0}_CONFIG_H".format(p)
         
         self.line("#ifndef {0}".format(guard))
@@ -258,7 +258,7 @@ class ConfigGenerator(LibGenerator):
         self.blank()
         
         self.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
-            .format(p, Names.className(self.p.ident)))
+            .format(p, self.p.ident.className()))
         self.blank()
         
         self.line("#ifdef WIN32")
@@ -500,11 +500,11 @@ class OpImplGenerator(MethodGenerator):
         
     def constants(self):
         self.line("const std::string {0}::PACKAGE(STROMX_{1}_PACKAGE_NAME);"\
-            .format(self.className(), Names.constantName(self.p.ident)))
+            .format(self.className(), self.p.ident.constant()))
         self.line("const runtime::Version {0}::VERSION({1}_VERSION_MAJOR, {1}_VERSION_MINOR, {1}_VERSION_PATCH);"\
-            .format(self.className(), Names.constantName(self.p.ident)))
+            .format(self.className(), self.p.ident.constant()))
         self.line('const std::string {0}::TYPE("{1}");'\
-            .format(self.className(), Names.className(self.m.ident)))
+            .format(self.className(), self.m.ident.className()))
         
     def setParameter(self):
         self.line("void {0}(unsigned int id, const runtime::Data& value)"\
@@ -581,7 +581,7 @@ class OpImplGenerator(MethodGenerator):
         optParam = self.m.optionParameter
         if not optParam.trivial:
             self.line("switch(int({0}))"\
-                .format(Names.attributeName(optParam.ident)))
+                .format(optParam.ident.attribute()))
             self.scopeEnter()
             
         for opt in optParam.options:   
@@ -647,7 +647,7 @@ class OpImplGenerator(MethodGenerator):
         optParam = self.m.optionParameter
         if not optParam.trivial:
             self.line("switch(int({0}))"\
-                .format(Names.attributeName(optParam.ident)))
+                .format(optParam.ident.attribute()))
             self.scopeEnter()
             
         for opt in optParam.options:   
@@ -679,7 +679,7 @@ class OpImplGenerator(MethodGenerator):
         
         for a in access:
             self.line("runtime::Id2DataPair {0}InMapper({1});"\
-                .format(a, Names.constantName(a)))
+                .format(a, a.constant()))
         self.blank()
           
         receiveInputStr = ""              
@@ -779,28 +779,28 @@ class OpImplGenerator(MethodGenerator):
     
 if __name__ == "__main__":
     p = Package(0, 0, 1)
-    p.ident = "imgproc"
+    p.ident = Ident("imgproc")
     p.name = "OpenCV image processing"
     
     m = Method()
-    m.ident = "medianBlur"
+    m.ident = Ident("medianBlur")
     m.name = "Median Blur"
     p.methods.append(m)
     
     arg1 = Argument()
-    arg1.ident = "src"
+    arg1.ident = Ident("src")
     arg1.name = "Source"
     arg1.cvType = cvtype.Mat()
     arg1.dataType = datatype.Image()
     
     arg2 = Argument()
-    arg2.ident = "dst"
+    arg2.ident = Ident("dst")
     arg2.name = "Destination"
     arg2.cvType = cvtype.Mat()
     arg2.dataType = datatype.Image()
     
     arg3 = NumericParameter()
-    arg3.ident = "ksize"
+    arg3.ident = Ident("ksize")
     arg3.name = "Kernel size"
     arg3.cvType = cvtype.Int()
     arg3.dataType = datatype.UInt32()
@@ -812,7 +812,6 @@ if __name__ == "__main__":
     options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
     options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
     options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
-    options[Options.TEST_1] = [Input(arg1), Allocation(arg2), arg3]
 
     m.options = options
     

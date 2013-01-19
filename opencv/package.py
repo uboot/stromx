@@ -1,18 +1,46 @@
 # -*- coding: utf-8 -*-
 
 import datatype
+import cvtype
 
-class CvType:
-    UNDEFINED = 0
-    MAT = 1
-    INT = 2
-    
-class DataType:
-    UNDEFINED = 0
-    IMAGE = 1
-    UINT_32 = 2
-    BOOL = 3
-    ENUM = 4
+class Ident(object):
+    def __init__(self, ident = ""):
+        self.ident = ident
+        
+    def className(self):
+        return "{0}{1}".format(self.ident[0].upper(), self.ident[1:])
+        
+    def constant(self):
+        """
+        >>> Ident("srcPos").constant()
+        'SRC_POS'
+        >>> Ident("SrcPosF").constant()
+        'SRC_POS_F'
+        >>> Ident("SrcPos1").constant()
+        'SRC_POS_1'
+        """
+        result = ""
+        for c in self.ident:
+            if c.isupper() or c.isdigit():
+                result += '_'
+            result += c.upper()
+        return result.strip("_")
+        
+    def method(self):
+        return self.ident
+        
+    def attribute(self):
+        return "m_{0}".format(self.method())
+        
+    def upper(self):
+        return self.ident.upper()
+        
+    def lower(self):
+        return self.ident.lower()
+        
+    def __str__(self):
+        return self.ident
+        
     
 class EnumImpl:
     label = ""
@@ -37,36 +65,6 @@ class Package(object):
         self.major = major
         self.minor = minor
         self.patch = patch
-    
-class Names:
-    @staticmethod
-    def className(s):
-        return "{0}{1}".format(s[0].upper(), s[1:])
-        
-    @staticmethod
-    def constantName(s):
-        """
-        >>> Names.constantName("srcPos")
-        'SRC_POS'
-        >>> Names.constantName("SrcPosF")
-        'SRC_POS_F'
-        >>> Names.constantName("SrcPos1")
-        'SRC_POS_1'
-        """
-        result = ""
-        for c in s:
-            if c.isupper() or c.isdigit():
-                result += '_'
-            result += c.upper()
-        return result.strip("_")
-        
-    @staticmethod
-    def methodName(s):
-        return s
-        
-    @staticmethod
-    def attributeName(s):
-        return "m_{0}".format(Names.methodName(s))
         
 class MethodFragment(object):
     def inputId(self):
@@ -133,8 +131,8 @@ class Argument(MethodFragment):
     ident = ""
     name = ""
     description = ""
-    cvType = CvType.UNDEFINED
-    dataType = DataType.UNDEFINED
+    cvType = cvtype.CvType()
+    dataType = datatype.DataType()
     rules = []
     
     def __init__(self, arg = None):
@@ -166,31 +164,31 @@ class Parameter(InputArgument):
     default = None
     
     def paramId(self):
-        return [Names.constantName(self.ident)]
+        return [self.ident.constant()]
         
     def paramDecl(self):
         decl = "{0} {1}".format(self.dataType.ident(),
-                                 Names.attributeName(self.ident))
+                                 self.ident.attribute())
         return [decl]
         
     def paramInit(self):
-        return ["{0}({1})".format(Names.attributeName(self.ident),
+        return ["{0}({1})".format(self.ident.attribute(),
                                   self.default)]
                                   
     def paramGet(self):
         impl = EnumImpl()
-        impl.label = Names.constantName(self.ident)
+        impl.label = self.ident.constant()
         lines = []
-        lines.append("return {0};".format(Names.attributeName(self.ident)))
+        lines.append("return {0};".format(self.ident.attribute()))
         impl.lines = lines
         return [impl]
         
     def paramSet(self):
         impl = EnumImpl()
-        impl.label = Names.constantName(self.ident)
+        impl.label = self.ident.constant()
         lines = []
         lines.append("{0} = runtime::data_cast<{1}>(value);"\
-            .format(Names.attributeName(self.ident),
+            .format(self.ident.attribute(),
                     self.dataType.ident()))
         lines.append("break;")
         impl.lines = lines
@@ -200,7 +198,7 @@ class Parameter(InputArgument):
         lines = []
         lines.append("runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
             .format(self.ident,
-                    Names.constantName(self.ident),
+                    self.ident.constant(),
                     self.dataType.variant()))
         lines.append('{0}->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);'\
             .format(self.ident))
@@ -213,7 +211,7 @@ class Parameter(InputArgument):
             .format(self.cvType.ident(),
                     self.ident,
                     self.cvType.cast(),
-                    Names.attributeName(self.ident))
+                    self.ident.attribute())
         return [cast]
 
 class NumericParameter(Parameter):
@@ -225,8 +223,8 @@ class EnumParameter(Parameter):
     descriptions = [] 
     
     def enumIds(self):
-        values = [Names.constantName(d.ident) for d in self.descriptions]
-        return [("{0}Id".format(Names.className(self.ident)), values)]
+        values = [d.ident.constant() for d in self.descriptions]
+        return [("{0}Id".format(self.ident.className()), values)]
         
     def paramCreate(self):
         return self.paramCreateWithAccessMode("ACTIVATED_WRITE")
@@ -235,7 +233,7 @@ class EnumParameter(Parameter):
         lines = []
         lines.append("runtime::EnumParameter* {0} = new runtime::EnumParameter({1});"\
             .format(self.ident,
-                    Names.constantName(self.ident),
+                    self.ident.constant(),
                     self.dataType.ident()))
         lines.append('{0}->setAccessMode(runtime::Parameter::{1});'\
             .format(self.ident, accessMode))
@@ -255,7 +253,7 @@ class Options(EnumParameter):
         if len(options) > 0:
             assert(options.has_key(Options.MANUAL))
         
-        self.ident = "dataFlow"
+        self.ident = Ident("dataFlow")
         self.name = "Data Flow"
         self.options = options
         self.default = Options.MANUAL
@@ -330,13 +328,13 @@ class Constant(InputArgument):
     
 class Input(InputArgument):
     def inputId(self):
-        return [Names.constantName(self.ident)]
+        return [self.ident.constant()]
         
     def inputCreate(self):
         lines = []
         lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
-                    Names.constantName(self.ident),
+                    self.ident.constant(),
                     self.dataType.variant()))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
@@ -363,7 +361,7 @@ class Output(OutputArgument):
         self.refArg = refArg
         
     def inputId(self):
-        return [Names.constantName(self.ident)]
+        return [self.ident.constant()]
         
     def outputId(self):
         return ["RESULT"] 
@@ -372,7 +370,7 @@ class Output(OutputArgument):
         lines = []
         lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
-                    Names.constantName(self.ident),
+                    self.ident.constant(),
                     self.dataType.variant()))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
@@ -445,17 +443,17 @@ class Allocation(OutputArgument):
         return lines
 
 class EnumDescription(object):
-    ident = ""
+    ident = Ident()
     name = ""
     cvIdent = ""
     
     def __init__(self, ident, name):
-        self.ident = ident
+        self.ident = Ident(ident)
         self.name = name
     
     def constructor(self):
         return ('runtime::EnumDescription({0}, "{1}")'\
-            .format(Names.constantName(self.ident), self.name))
+            .format(self.ident.constant(), self.name))
         
     
 class ParameterRule(object):
