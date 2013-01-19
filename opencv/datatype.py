@@ -9,11 +9,8 @@ class DataType(object):
     def ident(self):
         raise NotImplementedError()
         
-    def allocate(self, src = None):
-        if src:
-            return "{0}({1})".format(self.cast(), src)
-        else:
-            return "{0}()".format(self.cast())
+    def initialize(self, ident, src = None):
+        return ""
         
     def variant(self):
         raise NotImplementedError()
@@ -49,12 +46,10 @@ class Image(DataType):
     def variant(self):
         return "runtime::DataVariant::IMAGE"
         
-    def allocate(self, src = None):
-        if src:
-            return ("{0}({1}->width(), {1}->height(), "
-                    "{1}->pixelType())").format(self.cast(), src)
-        else:
-            return "{0}()".format(self.cast())
+    def initialize(self, ident, src):
+        return ("{0}->initializeImage({0}->width(), {0}->height(), "
+                "{0}->stride(), {0}->data(), {1}->pixelType());")\
+                .format(ident, src)
         
     def cast(self):
         return "example::Image"

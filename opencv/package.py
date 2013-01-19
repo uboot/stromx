@@ -429,31 +429,19 @@ class Allocation(OutputArgument):
     
     def cvData(self):
         lines = []
-        if self.refArg:
-            src = "{0}CastedData".format(self.refArg.ident)
-            
-            lines.append("{0}* outData = new {1};"\
-                .format(self.dataType.ident(),
-                        self.dataType.allocate(src)))
-            lines.append("runtime::DataContainer outContainer = "
-                         "runtime::DataContainer(outData);")
-            lines.append("{0} {1}CvData = {2}(*outData);"\
-                .format(self.cvType.ident(),
-                        self.ident,
-                        self.cvType.cast()))
-        else:
-            lines.append("{0} {1}CvData;"\
-                .format(self.cvType.ident(), self.ident))
+        lines.append("{0} {1}CvData;".format(self.cvType.ident(), self.ident))
         return lines
         
     def outContainer(self):
         lines = []
-        if not self.refArg:
-            lines.append("{0}* outData = new {1}({2}CvData);"\
-                .format(self.dataType.ident(),
-                        self.dataType.cast(),
-                        self.ident))
-            lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
+        lines.append("{0}* outData = new {1}({2}CvData);"\
+            .format(self.dataType.ident(),
+                    self.dataType.cast(),
+                    self.ident))
+        lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
+        if self.refArg:
+            sourceData = "{0}CastedData".format(self.refArg.ident)
+            lines.append(self.dataType.initialize("outData", sourceData))
         return lines
 
 class EnumDescription(object):
