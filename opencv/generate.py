@@ -7,6 +7,10 @@ Created on Fri Dec 21 17:07:19 2012
 
 from package import *
 
+def listIterator(l):
+    isEnd = [i == len(l) - 1 for i in range(len(l))]
+    return zip(isEnd, l)
+
 def generate(package):
     g = LibHeaderGenerator(p)
     g.generate()
@@ -295,7 +299,7 @@ class MethodGenerator(Generator):
         self.p = package
         self.m = method
         
-    def collect(self, method):
+    def collectData(self, method):
         l = []
         for arg in self.m.options[self.option]:
             l.extend(arg.__getattribute__(method)())
@@ -358,19 +362,19 @@ class OpHeaderGenerator(MethodGenerator):
         self.increaseIndent()
         
     def inputIds(self):
-        values = self.collect("inputId")
+        values = self.collectData("inputId")
         self.enum("InputId", values)
         
     def outputIds(self):
-        values = self.collect("outputId")
+        values = self.collectData("outputId")
         self.enum("OutputId", values)
     
     def parameterIds(self):
-        values = self.collect("paramId")
+        values = self.collectData("paramId")
         self.enum("ParameterId", values)
     
     def enumIds(self):
-        values = self.collect("enumIds")
+        values = self.collectData("enumIds")
         for v in values:
             self.enum(v[0], v[1])
         
@@ -396,14 +400,14 @@ class OpHeaderGenerator(MethodGenerator):
         self.line("const std::vector<const runtime::Description*> setupOutputs();")
         
     def parameters(self):
-        values = self.collect("paramDecl")
+        values = self.collectData("paramDecl")
         for v in values:
             self.line("{0};".format(v))
         
     def enum(self, name, values):
         self.line("enum {0}".format(name))
         self.scopeEnter()
-        for isEnd, v in Names.listIterator(values):
+        for isEnd, v in listIterator(values):
             if not isEnd:
                 self.line("{0},".format(v))
             else:
@@ -481,8 +485,8 @@ class OpImplGenerator(MethodGenerator):
         self.line(("  : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, " +
                    "setupInitParameters()),"))
         self.increaseIndent()
-        values = self.collect("paramInit")
-        for isEnd, v in Names.listIterator(values):
+        values = self.collectData("paramInit")
+        for isEnd, v in listIterator(values):
             if not isEnd:
                 self.line("{0},".format(v))
             else:
@@ -507,7 +511,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
-        values = self.collect("paramSet")
+        values = self.collectData("paramSet")
         for v in values:
             self.label("case {0}".format(v.label))
             for l in v.lines:
@@ -528,7 +532,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
-        values = self.collect("paramGet")
+        values = self.collectData("paramGet")
         for v in values:
             self.label("case {0}".format(v.label))
             for l in v.lines:
@@ -544,7 +548,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
-        values = self.collect("initParamCreate")
+        values = self.collectData("initParamCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -558,7 +562,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
-        values = self.collect("paramCreate")
+        values = self.collectData("paramCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -600,7 +604,7 @@ class OpImplGenerator(MethodGenerator):
     def __setupInputs(self):
         self.line("std::vector<const runtime::Description*> inputs;")
         self.blank()
-        values = self.collect("inputCreate")
+        values = self.collectData("inputCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -615,7 +619,7 @@ class OpImplGenerator(MethodGenerator):
                 
         self.line("std::vector<const runtime::Description*> outputs;")
         self.blank()
-        values = self.collect("outputCreate")
+        values = self.collectData("outputCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -665,9 +669,9 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
         
     def __execute(self):
-        writeAccess = self.collect("writeAccess")
+        writeAccess = self.collectData("writeAccess")
         assert(len(writeAccess) <= 1)
-        readAccess = self.collect("readAccess")
+        readAccess = self.collectData("readAccess")
         access = readAccess + writeAccess
         
         for a in access:
@@ -676,7 +680,7 @@ class OpImplGenerator(MethodGenerator):
         self.blank()
           
         receiveInputStr = ""              
-        for isEnd, a in Names.listIterator(access):
+        for isEnd, a in listIterator(access):
             receiveInputStr += "{0}InMapper".format(a)
             
             if not isEnd:
@@ -723,44 +727,44 @@ class OpImplGenerator(MethodGenerator):
                 self.line("{0}Data = &{0}ReadAccess();".format(a))
                 self.blank();
                 
-        castedData = self.collect("castedData")
+        castedData = self.collectData("castedData")
         for v in castedData:
             self.line(v)
         self.blank()
         
-        outputInit = self.collect("outputInit")
+        outputInit = self.collectData("outputInit")
         for v in outputInit:
             self.line(v)
         if len(outputInit):
             self.blank()
         
-        cvData = self.collect("cvData")
+        cvData = self.collectData("cvData")
         for v in cvData:
             self.line(v)
         self.blank()
         
-        allocate = self.collect("allocate")
+        allocate = self.collectData("allocate")
         for v in allocate:
             self.line(v)
         if len(allocate):
             self.blank()
         
-        arg = self.collect("arg")
+        arg = self.collectData("arg")
         argStr = ""
-        for isEnd, a in Names.listIterator(arg):
+        for isEnd, a in listIterator(arg):
             argStr += a
             if not isEnd:
                 argStr += ", "
         self.line("cv::{0}({1});".format(self.m.ident, argStr))
         self.blank()
         
-        outContainer = self.collect("outContainer")
+        outContainer = self.collectData("outContainer")
         for v in outContainer:
             self.line(v)
         if len(outContainer):
             self.blank()
         
-        outputId = self.collect("outputId")
+        outputId = self.collectData("outputId")
         assert(len(outputId) == 1)
         self.line("runtime::Id2DataPair outputMapper({0}, outContainer);"\
             .format(outputId[0]))

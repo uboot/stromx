@@ -65,12 +65,6 @@ class Names:
     @staticmethod
     def attributeName(s):
         return "m_{0}".format(Names.methodName(s))
-    
-    @staticmethod
-    def listIterator(l):
-        isEnd = [i == len(l) - 1 for i in range(len(l))]
-        return zip(isEnd, l)
-        
         
 class Types:
     @staticmethod
@@ -539,7 +533,7 @@ class Allocation(OutputArgument):
         if not self.refArg:
             lines.append("{0}* outData = new {1}({2}CvData);"\
                 .format(Types.dataType(self.cvType),
-                        Types.dataCast(self.cvType),
+                        Types.dataCast(self.dataType),
                         self.ident))
             lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
         return lines
