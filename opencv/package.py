@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import datatype
+
 class CvType:
     UNDEFINED = 0
     MAT = 1
@@ -65,90 +67,6 @@ class Names:
     @staticmethod
     def attributeName(s):
         return "m_{0}".format(Names.methodName(s))
-        
-class Types:
-    @staticmethod
-    def dataType(t):
-        """
-        >>> Types.dataType(DataType.UINT_32)
-        'runtime::UInt32'
-        """
-        if t == DataType.BOOL:
-            return "runtime::Bool"
-        elif t == DataType.UINT_32:
-            return "runtime::UInt32"
-        elif t == DataType.IMAGE:
-            return "runtime::Image"
-        elif t == DataType.ENUM:
-            return "runtime::Enum"
-        else:
-            assert(False)
-            
-    @staticmethod
-    def dataAllocate(t, src = None):
-        """
-        >>> Types.dataAllocate(DataType.UINT_32)
-        'runtime::UInt32()'
-        >>> Types.dataAllocate(DataType.UINT_32, "src")
-        'runtime::UInt32(src)'
-        >>> Types.dataAllocate(DataType.IMAGE)
-        'example::Image()'
-        >>> Types.dataAllocate(DataType.IMAGE, "src")
-        'example::Image(src->width(), src->height(), src->pixelType())'
-        """
-        if t == DataType.IMAGE:
-            if src:
-                return ("example::Image({0}->width(), {0}->height(), "
-                        "{0}->pixelType())").format(src)
-            else:
-                return "example::Image()"
-        else:
-            if src:
-                return "{0}({1})".format(Types.dataType(t), src)
-            else:
-                return "{0}()".format(Types.dataType(t))
-    
-    @staticmethod
-    def dataVariant(t):
-        """
-        >>> Types.dataVariant(DataType.IMAGE)
-        'runtime::DataVariant::IMAGE'
-        """
-        if t == DataType.BOOL:
-            return "runtime::DataVariant::BOOL"
-        elif t == DataType.UINT_32:
-            return "runtime::DataVariant::UINT_32"
-        elif t == DataType.IMAGE:
-            return "runtime::DataVariant::IMAGE"
-        elif t == DataType.IMAGE:
-            return "runtime::DataVariant::ENUM"
-        else:
-            assert(False)
-            
-    @staticmethod
-    def cvType(t):
-        if t == CvType.INT:
-            return "unsigned int"
-        elif t == CvType.MAT:
-            return "cv::Mat"
-        else:
-            assert(False)
-            
-    @staticmethod
-    def cvCast(t):
-        if t == CvType.INT:
-            return "int"
-        elif t == CvType.MAT:
-            return "example::getOpenCvMat"
-        else:
-            assert(False)
-            
-    @staticmethod
-    def dataCast(t):
-        if t == DataType.IMAGE:
-            return "example::Image"
-        else:
-            return Types.dataType(t)
         
 class MethodFragment(object):
     def inputId(self):
@@ -239,7 +157,7 @@ class OutputArgument(Argument):
     def outputCreate(self):
         lines = []
         lines.append('runtime::Description* result = new runtime::Description(RESULT, '
-                     '{0});'.format(Types.dataVariant(self.dataType)))
+                     '{0});'.format(self.dataType.variant()))
         lines.append('result->setTitle("Result");')
         lines.append("outputs.push_back(result);".format(self.ident))
         return [lines]
@@ -251,7 +169,7 @@ class Parameter(InputArgument):
         return [Names.constantName(self.ident)]
         
     def paramDecl(self):
-        decl = "{0} {1}".format(Types.dataType(self.dataType),
+        decl = "{0} {1}".format(self.dataType.ident(),
                                  Names.attributeName(self.ident))
         return [decl]
         
@@ -273,7 +191,7 @@ class Parameter(InputArgument):
         lines = []
         lines.append("{0} = runtime::data_cast<{1}>(value);"\
             .format(Names.attributeName(self.ident),
-                    Types.dataType(self.dataType)))
+                    self.dataType.ident()))
         lines.append("break;")
         impl.lines = lines
         return [impl]      
@@ -283,7 +201,7 @@ class Parameter(InputArgument):
         lines.append("runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
-                    Types.dataVariant(self.dataType)))
+                    self.dataType.variant()))
         lines.append('{0}->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);'\
             .format(self.ident))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
@@ -292,9 +210,9 @@ class Parameter(InputArgument):
         
     def cvData(self):
         cast = "{0} {1}CvData = {2}({3});"\
-            .format(Types.cvType(self.cvType),
+            .format(self.cvType.ident(),
                     self.ident,
-                    Types.cvCast(self.cvType),
+                    self.cvType.cast(),
                     Names.attributeName(self.ident))
         return [cast]
 
@@ -303,7 +221,7 @@ class NumericParameter(Parameter):
     maxValue = None
     
 class EnumParameter(Parameter):
-    dataType = DataType.ENUM
+    dataType = datatype.Enum()
     descriptions = [] 
     
     def enumIds(self):
@@ -318,7 +236,7 @@ class EnumParameter(Parameter):
         lines.append("runtime::EnumParameter* {0} = new runtime::EnumParameter({1});"\
             .format(self.ident,
                     Names.constantName(self.ident),
-                    Types.dataType(self.dataType)))
+                    self.dataType.ident()))
         lines.append('{0}->setAccessMode(runtime::Parameter::{1});'\
             .format(self.ident, accessMode))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
@@ -419,7 +337,7 @@ class Input(InputArgument):
         lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
-                    Types.dataVariant(self.dataType)))
+                    self.dataType.variant()))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
         return [lines]
@@ -429,13 +347,13 @@ class Input(InputArgument):
         
     def castedData(self):
         cast = "const {0}* {1}CastedData = runtime::data_cast<{0}>({1}Data);"\
-            .format(Types.dataType(self.dataType), self.ident)
+            .format(self.dataType.ident(), self.ident)
         return [cast]
         
     def cvData(self):
         cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
-            .format(Types.cvType(self.cvType),
-                    Types.cvCast(self.cvType),
+            .format(self.cvType.ident(),
+                    self.cvType.cast(),
                     self.ident)
         return [cast]
 
@@ -455,7 +373,7 @@ class Output(OutputArgument):
         lines.append("runtime::Description* {0} = new runtime::Description({1}, {2});"\
             .format(self.ident,
                     Names.constantName(self.ident),
-                    Types.dataVariant(self.dataType)))
+                    self.dataType.variant()))
         lines.append('{0}->setTitle("{1}");'.format(self.ident, self.name))
         lines.append("inputs.push_back({0});".format(self.ident))
         return [lines]
@@ -465,13 +383,13 @@ class Output(OutputArgument):
         
     def castedData(self):
         cast = "{0}* {1}CastedData = runtime::data_cast<{0}>({1}Data);"\
-            .format(Types.dataType(self.dataType), self.ident)
+            .format(self.dataType.ident(), self.ident)
         return [cast]
         
     def cvData(self):
         cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
-            .format(Types.cvType(self.cvType),
-                    Types.cvCast(self.cvType),
+            .format(self.cvType.ident(),
+                    self.cvType.cast(),
                     self.ident)
         return [cast]
     
@@ -515,25 +433,25 @@ class Allocation(OutputArgument):
             src = "{0}CastedData".format(self.refArg.ident)
             
             lines.append("{0}* outData = new {1};"\
-                .format(Types.dataType(self.dataType),
-                        Types.dataAllocate(self.dataType, src)))
+                .format(self.dataType.ident(),
+                        self.dataType.allocate(src)))
             lines.append("runtime::DataContainer outContainer = "
                          "runtime::DataContainer(outData);")
             lines.append("{0} {1}CvData = {2}(*outData);"\
-                .format(Types.cvType(self.cvType),
+                .format(self.cvType.ident(),
                         self.ident,
-                        Types.cvCast(self.cvType)))
+                        self.cvType.cast()))
         else:
             lines.append("{0} {1}CvData;"\
-                .format(Types.cvType(self.cvType), self.ident))
+                .format(self.cvType.ident(), self.ident))
         return lines
         
     def outContainer(self):
         lines = []
         if not self.refArg:
             lines.append("{0}* outData = new {1}({2}CvData);"\
-                .format(Types.dataType(self.cvType),
-                        Types.dataCast(self.dataType),
+                .format(self.dataType.ident(),
+                        self.dataType.cast(),
                         self.ident))
             lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
         return lines

@@ -7,6 +7,9 @@ Created on Fri Dec 21 17:07:19 2012
 
 from package import *
 
+import cvtype
+import datatype
+
 def listIterator(l):
     isEnd = [i == len(l) - 1 for i in range(len(l))]
     return zip(isEnd, l)
@@ -787,20 +790,20 @@ if __name__ == "__main__":
     arg1 = Argument()
     arg1.ident = "src"
     arg1.name = "Source"
-    arg1.cvType = CvType.MAT
-    arg1.dataType = DataType.IMAGE
+    arg1.cvType = cvtype.Mat()
+    arg1.dataType = datatype.Image()
     
     arg2 = Argument()
     arg2.ident = "dst"
     arg2.name = "Destination"
-    arg2.cvType = CvType.MAT
-    arg2.dataType = DataType.IMAGE
+    arg2.cvType = cvtype.Mat()
+    arg2.dataType = datatype.Image()
     
     arg3 = NumericParameter()
     arg3.ident = "ksize"
     arg3.name = "Kernel size"
-    arg3.cvType = CvType.INT
-    arg3.dataType = DataType.UINT_32
+    arg3.cvType = cvtype.Int()
+    arg3.dataType = datatype.UInt32()
     arg3.default = 3
     arg3.minValue = 1
     arg3.rules.append(OddRule())
