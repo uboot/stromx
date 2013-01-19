@@ -66,23 +66,23 @@ namespace stromx
             virtual const std::vector<const Parameter*>& parameters() const = 0;
             
             /**
-             * Returns the input description of the input \c id.
+             * Returns the description of the input \c id.
              * 
-             * \throws WrongId If no parameter \c id exists.
+             * \throws WrongId If no output with \c id exists.
              */
             virtual const Description & output(const unsigned int id) const = 0;
             
             /**
-             * Returns the output description of the output \c id.
+             * Returns the description of the output \c id.
              * 
-             * \throws WrongId If no parameter \c id exists.
+             * \throws WrongId If no input with \c id exists.
              */
             virtual const Description & input(const unsigned int id) const = 0;
             
             /**
              * Returns the parameter description of the parameter \c id.
              * 
-             * \throws WrongId If no parameter \c id exists.
+             * \throws WrongId If no parameter with \c id exists.
              */
             virtual const Parameter & parameter(const unsigned int id) const = 0;
         };
