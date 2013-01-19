@@ -782,28 +782,12 @@ if __name__ == "__main__":
     p.ident = Ident("imgproc")
     p.name = "OpenCV image processing"
     
-    m = Method()
-    m.ident = Ident("medianBlur")
-    m.name = "Median Blur"
-    p.methods.append(m)
+    ### medianBlur ###
     
-    arg1 = Argument()
-    arg1.ident = Ident("src")
-    arg1.name = "Source"
-    arg1.cvType = cvtype.Mat()
-    arg1.dataType = datatype.Image()
-    
-    arg2 = Argument()
-    arg2.ident = Ident("dst")
-    arg2.name = "Destination"
-    arg2.cvType = cvtype.Mat()
-    arg2.dataType = datatype.Image()
-    
-    arg3 = NumericParameter()
-    arg3.ident = Ident("ksize")
-    arg3.name = "Kernel size"
-    arg3.cvType = cvtype.Int()
-    arg3.dataType = datatype.UInt32()
+    arg1 = Argument("src", "Source", cvtype.Mat(), datatype.Image())
+    arg2 = Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
+    arg3 = NumericParameter("ksize", "Kernel size",
+                            cvtype.Int(), datatype.UInt32())
     arg3.default = 3
     arg3.minValue = 1
     arg3.rules.append(OddRule())
@@ -812,7 +796,24 @@ if __name__ == "__main__":
     options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
     options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
     options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
-
-    m.options = options
+    
+    m = Method("medianBlur", "Median Blur", options)
+    p.methods.append(m)
+    
+    ### resize ###
+    
+    arg1 = Argument("src", "Source", cvtype.Mat(), datatype.Image())
+    arg2 = Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
+    arg3 = CvSize("dsize", "Size")
+    arg3.x.default = 0
+    arg3.y.default = 0
+    arg4 = Constant("0")
+    arg5 = Constant("0")
+    
+    options = dict()
+    options[Options.MANUAL] = [Input(arg1), Output(arg2), arg3, arg4, arg5]
+    
+    m = Method("resize", "Resize", options)
+    p.methods.append(m)
     
     generate(p)

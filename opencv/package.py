@@ -135,14 +135,19 @@ class Argument(MethodFragment):
     dataType = datatype.DataType()
     rules = []
     
-    def __init__(self, arg = None):
-        if arg:
-            self.ident = arg.ident
-            self.name = arg.name
-            self.description = arg.description
-            self.cvType = arg.cvType
-            self.dataType = arg.dataType
-            self.rules = arg.rules
+    def __init__(self, ident, name, cvType, dataType):
+        self.ident = Ident(ident)
+        self.name = name
+        self.cvType = cvType
+        self.dataType = dataType
+            
+    def copyFrom(self, arg):
+        self.ident = arg.ident
+        self.name = arg.name
+        self.description = arg.description
+        self.cvType = arg.cvType
+        self.dataType = arg.dataType
+        self.rules = arg.rules
     
 class InputArgument(Argument):
     def __repr__(self):
@@ -213,6 +218,39 @@ class Parameter(InputArgument):
                     self.cvType.cast(),
                     self.ident.attribute())
         return [cast]
+        
+class CvSize(Parameter):
+    def __init__(self, ident, name):
+        self.ident = Ident(ident)
+        self.name = name
+        self.x = Parameter("{0}X".format(ident), "{0} X".format(name),
+                           cvtype.Int(), datatype.UInt32())
+        self.y = Parameter("{0}Y".format(ident), "{0} Y".format(name),
+                           cvtype.Int(), datatype.UInt32())
+                           
+    def paramId(self):
+        return self.x.paramId() + self.y.paramId()
+                           
+    def paramDecl(self):
+        return self.x.paramDecl() + self.y.paramDecl()
+        
+    def paramInit(self):
+        return self.x.paramInit() + self.y.paramInit()
+                           
+    def paramGet(self):
+        return self.x.paramGet() + self.y.paramGet()
+                           
+    def paramSet(self):
+        return self.x.paramSet() + self.y.paramSet()
+        
+    def paramCreate(self):
+        return self.x.paramCreate() + self.y.paramCreate()
+        
+    def cvData(self):
+        return self.x.cvData() + self.y.cvData()
+        
+    def arg(self):
+        return ["cv::Size({0}, {1})".format(self.x.arg()[0], self.y.arg()[0])]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -308,8 +346,12 @@ class Method(object):
     ident = ""
     name = ""
     description = ""
-    args = []
     __options = Options()
+    
+    def __init__(self, ident, name, options):
+        self.ident = Ident(ident)
+        self.name = name
+        self.options = options
     
     @property
     def options(self):
@@ -323,10 +365,20 @@ class Method(object):
     def optionParameter(self):
         return self.__options
 
-class Constant(InputArgument):
+class Constant(Argument):
     value = ""
     
+    def __init__(self, value):
+        self.value = value
+        
+    def arg(self):
+        return self.value
+    
 class Input(InputArgument):
+    def __init__(self, arg = None):
+        if arg:
+            self.copyFrom(arg)
+        
     def inputId(self):
         return [self.ident.constant()]
         
@@ -357,7 +409,9 @@ class Input(InputArgument):
 
 class Output(OutputArgument):
     def __init__(self, arg, refArg = None):
-        super(Output, self).__init__(arg)
+        if arg:
+            self.copyFrom(arg)
+            
         self.refArg = refArg
         
     def inputId(self):
@@ -412,14 +466,16 @@ class Output(OutputArgument):
         return lines
         
 class RefInput(OutputArgument):
-    pass
+    def __init__(self, arg = None):
+        if arg:
+            self.copyFrom(arg)
         
     def outputCreate(self):
         return []
         
 class Allocation(OutputArgument):
     def __init__(self, arg, refArg = None):
-        super(Allocation, self).__init__(arg)
+        self.copyFrom(arg)
         self.refArg = refArg
         
     def outputId(self):
