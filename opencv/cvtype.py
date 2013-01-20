@@ -9,8 +9,8 @@ class CvType(object):
     def ident(self):
         raise NotImplementedError()
         
-    def cast(self):
-        return self.ident()
+    def cast(self, src):
+        return "{0}({1})".format(self.ident(), src)
         
 class Bool(CvType):
     def ident(self):
@@ -24,8 +24,8 @@ class Mat(CvType):
     def ident(self):
         return "cv::Mat"
     
-    def cast(self):
-        return "example::getOpenCvMat"
+    def cast(self, src):
+        return "example::getOpenCvMat({0})".format(src)
         
 if __name__ == "__main__":
     import doctest

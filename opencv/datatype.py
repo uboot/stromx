@@ -9,14 +9,11 @@ class DataType(object):
     def ident(self):
         raise NotImplementedError()
         
-    def initialize(self, ident, src = None):
-        return ""
-        
     def variant(self):
         raise NotImplementedError()
         
-    def cast(self):
-        return self.dataType()
+    def cast(self, src, refArg = None):
+        return "{0}({1})".format(self.dataType(), src)
         
 class Bool(DataType):
     def ident(self):
@@ -51,9 +48,12 @@ class Image(DataType):
                 "{0}->stride(), {0}->data(), {1}->pixelType());")\
                 .format(ident, src)
         
-    def cast(self):
-        return "example::Image"
-
+    def cast(self, src, refArg = None):
+        if not refArg:
+            return "example::Image({0})".format(src)
+        else:
+            return "example::Image({0}, {1}->pixelType())".format(src, refArg)
+            
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

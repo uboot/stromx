@@ -794,7 +794,7 @@ if __name__ == "__main__":
     
     options = dict()
     options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
-    options[Options.IN_PLACE] = [Output(arg1), RefInput(arg1), arg3]
+    options[Options.IN_PLACE] = [Output(arg1), RefInput(arg2, arg1), arg3]
     options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
     
     m = Method("medianBlur", "Median Blur", options)
@@ -807,8 +807,8 @@ if __name__ == "__main__":
     arg3 = CvSize("dsize", "Size")
     arg3.x.default = 0
     arg3.y.default = 0
-    arg4 = Constant("0")
-    arg5 = Constant("0")
+    arg4 = Constant("fx", cvtype.Int(), 0)
+    arg5 = Constant("fy", cvtype.Int(), 0)
     
     options = dict()
     options[Options.MANUAL] = [Input(arg1), Output(arg2), arg3, arg4, arg5]

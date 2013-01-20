@@ -92,6 +92,17 @@ namespace stromx
              */
             explicit Image(const cv::Mat & cvImage);
             
+            /** 
+             * Creates an image from \c cvImage. The input image is \em not copied but 
+             * a reference to it is held in the constructed image. Use this to convert an
+             * OpenCV matrix to an stromx::example::Image object. The pixel type of the 
+             * resulting image is set to \c pixelType.
+             * 
+             * \throws WrongArgument If the input \c pixelType can not be set, i.e.
+             *                       it would imply an incompatible pixel size in bytes.
+             */
+            explicit Image(const cv::Mat & cvImage, const PixelType pixelType);
+            
             /** Allocates an image with a buffer of a given size in bytes. The width of the image is \c size
              * and its height is 1. Its pixel type is Image::NONE. The buffer size of the image is 
              * guaranteed to be at least \c size.

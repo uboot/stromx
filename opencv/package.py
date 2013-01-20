@@ -212,11 +212,10 @@ class Parameter(InputArgument):
         return [lines]
         
     def cvData(self):
-        cast = "{0} {1}CvData = {2}({3});"\
+        cast = "{0} {1}CvData = {2};"\
             .format(self.cvType.ident(),
                     self.ident,
-                    self.cvType.cast(),
-                    self.ident.attribute())
+                    self.cvType.cast(self.ident.attribute()))
         return [cast]
         
 class CvSize(Parameter):
@@ -247,10 +246,10 @@ class CvSize(Parameter):
         return self.x.paramCreate() + self.y.paramCreate()
         
     def cvData(self):
-        return self.x.cvData() + self.y.cvData()
-        
-    def arg(self):
-        return ["cv::Size({0}, {1})".format(self.x.arg()[0], self.y.arg()[0])]
+        l = "cv::Size {0}CvData({1}, {2});".format(self.ident,
+                                                   self.x.ident.attribute(),
+                                                   self.y.ident.attribute())
+        return [l]
 
 class NumericParameter(Parameter):
     minValue = None
@@ -368,11 +367,17 @@ class Method(object):
 class Constant(Argument):
     value = ""
     
-    def __init__(self, value):
+    def __init__(self, ident, cvType, value):
+        self.cvType = cvType
         self.value = value
+        self.ident = ident
         
-    def arg(self):
-        return self.value
+    def cvData(self):
+        l = "{0} {1}CvData = {2};".format(self.cvType.ident(),
+                                         self.ident,
+                                         self.value)
+                                         
+        return [l]
     
 class Input(InputArgument):
     def __init__(self, arg = None):
@@ -401,10 +406,11 @@ class Input(InputArgument):
         return [cast]
         
     def cvData(self):
-        cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
+        src = "*{0}CastedData".format(self.ident)
+        cast = "{0} {1}CvData = {2};"\
             .format(self.cvType.ident(),
-                    self.cvType.cast(),
-                    self.ident)
+                    self.ident,
+                    self.cvType.cast(src))
         return [cast]
 
 class Output(OutputArgument):
@@ -439,10 +445,11 @@ class Output(OutputArgument):
         return [cast]
         
     def cvData(self):
-        cast = "{0} {2}CvData = {1}(*{2}CastedData);"\
+        src = "*{0}CastedData".format(self.ident)
+        cast = "{0} {1}CvData = {2};"\
             .format(self.cvType.ident(),
-                    self.cvType.cast(),
-                    self.ident)
+                    self.ident,
+                    self.cvType.cast(src))
         return [cast]
     
     def outContainer(self):
@@ -466,9 +473,17 @@ class Output(OutputArgument):
         return lines
         
 class RefInput(OutputArgument):
-    def __init__(self, arg = None):
-        if arg:
-            self.copyFrom(arg)
+    def __init__(self, arg, refArg):
+        self.copyFrom(arg)
+        self.refArg = refArg
+        
+    def cvData(self):
+        lines = []
+        l = "{0} {1}CvData = {2}CvData;".format(self.cvType.ident(),
+                                                self.ident,
+                                                self.refArg.ident)
+        lines.append(l)
+        return lines
         
     def outputCreate(self):
         return []
@@ -488,14 +503,20 @@ class Allocation(OutputArgument):
         
     def outContainer(self):
         lines = []
-        lines.append("{0}* outData = new {1}({2}CvData);"\
-            .format(self.dataType.ident(),
-                    self.dataType.cast(),
-                    self.ident))
-        lines.append("runtime::DataContainer outContainer = runtime::DataContainer(outData);")
-        if self.refArg:
-            sourceData = "{0}CastedData".format(self.refArg.ident)
-            lines.append(self.dataType.initialize("outData", sourceData))
+        cvData = "{0}CvData".format(self.ident)
+        if not self.refArg:
+            l = "{0}* outData = new {1};"\
+                .format(self.dataType.ident(),
+                        self.dataType.cast(cvData))
+        else:
+            refData = "{0}CastedData".format(self.refArg.ident)
+            l = "{0}* outData = new {1};"\
+                .format(self.dataType.ident(),
+                        self.dataType.cast(cvData, refData))
+        lines.append(l)
+        l = ("runtime::DataContainer outContainer = "
+             "runtime::DataContainer(outData);")
+        lines.append(l)
         return lines
 
 class EnumDescription(object):
