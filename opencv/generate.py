@@ -10,9 +10,7 @@ from package import *
 import cvtype
 import datatype
 
-def listIterator(l):
-    isEnd = [i == len(l) - 1 for i in range(len(l))]
-    return zip(isEnd, l)
+from package import listIterator
 
 def generate(package):
     g = LibHeaderGenerator(p)
@@ -302,7 +300,7 @@ class MethodGenerator(Generator):
         self.p = package
         self.m = method
         
-    def collectData(self, method):
+    def collect(self, method):
         l = []
         for arg in self.m.options[self.option]:
             l.extend(arg.__getattribute__(method)())
@@ -365,19 +363,19 @@ class OpHeaderGenerator(MethodGenerator):
         self.increaseIndent()
         
     def inputIds(self):
-        values = self.collectData("inputId")
+        values = self.collect("inputId")
         self.enum("InputId", values)
         
     def outputIds(self):
-        values = self.collectData("outputId")
+        values = self.collect("outputId")
         self.enum("OutputId", values)
     
     def parameterIds(self):
-        values = self.collectData("paramId")
+        values = self.collect("paramId")
         self.enum("ParameterId", values)
     
     def enumIds(self):
-        values = self.collectData("enumIds")
+        values = self.collect("enumIds")
         for v in values:
             self.enum(v[0], v[1])
         
@@ -403,7 +401,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.line("const std::vector<const runtime::Description*> setupOutputs();")
         
     def parameters(self):
-        values = self.collectData("paramDecl")
+        values = self.collect("paramDecl")
         for v in values:
             self.line("{0};".format(v))
         
@@ -488,7 +486,7 @@ class OpImplGenerator(MethodGenerator):
         self.line(("  : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, " +
                    "setupInitParameters()),"))
         self.increaseIndent()
-        values = self.collectData("paramInit")
+        values = self.collect("paramInit")
         for isEnd, v in listIterator(values):
             if not isEnd:
                 self.line("{0},".format(v))
@@ -514,7 +512,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
-        values = self.collectData("paramSet")
+        values = self.collect("paramSet")
         for v in values:
             self.label("case {0}".format(v.label))
             for l in v.lines:
@@ -535,7 +533,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("switch(id)")
         self.scopeEnter()
-        values = self.collectData("paramGet")
+        values = self.collect("paramGet")
         for v in values:
             self.label("case {0}".format(v.label))
             for l in v.lines:
@@ -551,7 +549,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
-        values = self.collectData("initParamCreate")
+        values = self.collect("initParamCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -565,7 +563,7 @@ class OpImplGenerator(MethodGenerator):
         self.scopeEnter()
         self.line("std::vector<const runtime::Parameter*> parameters;")
         self.blank()
-        values = self.collectData("paramCreate")
+        values = self.collect("paramCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -607,7 +605,7 @@ class OpImplGenerator(MethodGenerator):
     def __setupInputs(self):
         self.line("std::vector<const runtime::Description*> inputs;")
         self.blank()
-        values = self.collectData("inputCreate")
+        values = self.collect("inputCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -622,7 +620,7 @@ class OpImplGenerator(MethodGenerator):
                 
         self.line("std::vector<const runtime::Description*> outputs;")
         self.blank()
-        values = self.collectData("outputCreate")
+        values = self.collect("outputCreate")
         for v in values:
             for l in v:
                 self.line(l)
@@ -672,9 +670,9 @@ class OpImplGenerator(MethodGenerator):
         self.scopeExit()
         
     def __execute(self):
-        writeAccess = self.collectData("writeAccess")
+        writeAccess = self.collect("writeAccess")
         assert(len(writeAccess) <= 1)
-        readAccess = self.collectData("readAccess")
+        readAccess = self.collect("readAccess")
         access = readAccess + writeAccess
         
         for a in access:
@@ -711,63 +709,64 @@ class OpImplGenerator(MethodGenerator):
             self.line("{0}Data = &writeAccess();".format(writeAccess[0]))
             self.blank()
             
-            for a in readAccess:
-                self.line("if({0}InMapper.data() == inContainer)".format(a))
-                self.scopeEnter()
-                self.line("{0}Data = &writeAccess();".format(a))
-                self.scopeExit()
-                self.line("else")
-                self.scopeEnter()
-                self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper" +
-                           ".data());").format(a))
-                self.line("{0}Data = &{0}ReadAccess();".format(a))
-                self.scopeExit()
-                self.blank()
+            for arg in self.m.options[self.option]:
+                for a in arg.readAccess():
+                    self.line("if({0}InMapper.data() == inContainer)".format(a))
+                    self.scopeEnter()
+                    if arg.inPlace:
+                        self.line("{0}Data = &writeAccess();".format(a))
+                    else:
+                        self.line('throw runtime::InputError({0}, *this, "Can not '
+                                  'operate in place.");'.format(arg.ident.constant()))
+                    self.scopeExit()
+                    self.line("else")
+                    self.scopeEnter()
+                    self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper"
+                               ".data());").format(a))
+                    self.line("{0}Data = &{0}ReadAccess();".format(a))
+                    self.scopeExit()
+                    self.blank()
         else:
             for a in readAccess:
-                self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper" +
+                self.line(("{0}ReadAccess = runtime::ReadAccess<>({0}InMapper"
                            ".data());").format(a))
                 self.line("{0}Data = &{0}ReadAccess();".format(a))
                 self.blank();
                 
-        castedData = self.collectData("castedData")
+        castedData = self.collect("castedData")
         for v in castedData:
             self.line(v)
         self.blank()
         
-        outputInit = self.collectData("outputInit")
+        outputInit = self.collect("outputInit")
         for v in outputInit:
             self.line(v)
         if len(outputInit):
             self.blank()
         
-        cvData = self.collectData("cvData")
+        cvData = self.collect("cvData")
         for v in cvData:
             self.line(v)
         self.blank()
         
-        allocate = self.collectData("allocate")
+        allocate = self.collect("allocate")
         for v in allocate:
             self.line(v)
         if len(allocate):
             self.blank()
         
-        arg = self.collectData("arg")
-        argStr = ""
-        for isEnd, a in listIterator(arg):
-            argStr += a
-            if not isEnd:
-                argStr += ", "
-        self.line("cv::{0}({1});".format(self.m.ident, argStr))
+        call = self.m.call(self.option)
+        for v in call:
+            self.line(v)
         self.blank()
         
-        outContainer = self.collectData("outContainer")
+        outContainer = self.collect("outContainer")
         for v in outContainer:
             self.line(v)
         if len(outContainer):
             self.blank()
         
-        outputId = self.collectData("outputId")
+        outputId = self.collect("outputId")
         assert(len(outputId) == 1)
         self.line("runtime::Id2DataPair outputMapper({0}, outContainer);"\
             .format(outputId[0]))
@@ -784,8 +783,14 @@ if __name__ == "__main__":
     
     ### medianBlur ###
     
-    arg1 = Argument("src", "Source", cvtype.Mat(), datatype.Image())
+    arg1 = Argument("src", "Source", cvtype.Mat(), datatype.Image(), True)
     arg2 = Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
+    arg2.initIn = ["dstCastedData->initializeImage(srcCastedData->width(), "
+                   "srcCastedData->height(), srcCastedData->stride(), "
+                   "dstCastedData->data(), srcCastedData->pixelType());"]
+    arg2.initOut = ["dstCastedData->initializeImage(dstCastedData->width(), "
+                    "dstCastedData->height(), dstCastedData->stride(), "
+                    "dstCastedData->data(), srcCastedData->pixelType());"]
     arg3 = NumericParameter("ksize", "Kernel size",
                             cvtype.Int(), datatype.UInt32())
     arg3.default = 3
@@ -793,9 +798,9 @@ if __name__ == "__main__":
     arg3.rules.append(OddRule())
     
     options = dict()
-    options[Options.MANUAL] = [Input(arg1), Output(arg2, arg1), arg3]
+    options[Options.MANUAL] = [Input(arg1), Output(arg2), arg3]
     options[Options.IN_PLACE] = [Output(arg1), RefInput(arg2, arg1), arg3]
-    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2, arg1), arg3]
+    options[Options.ALLOCATE] = [Input(arg1), Allocation(arg2), arg3]
     
     m = Method("medianBlur", "Median Blur", options)
     p.methods.append(m)
@@ -804,6 +809,9 @@ if __name__ == "__main__":
     
     arg1 = Argument("src", "Source", cvtype.Mat(), datatype.Image())
     arg2 = Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
+    arg2.initIn = ["dstCastedData->initializeImage(int(m_dsizeX), "
+                   "int(m_dsizeY), int(m_dsizeY) * srcCastedData->pixelSize(), "
+                   "dstCastedData->data(), srcCastedData->pixelType());"]
     arg3 = CvSize("dsize", "Size")
     arg3.x.default = 0
     arg3.y.default = 0

@@ -3,6 +3,10 @@
 import datatype
 import cvtype
 
+def listIterator(l):
+    isEnd = [i == len(l) - 1 for i in range(len(l))]
+    return zip(isEnd, l)
+
 class Ident(object):
     def __init__(self, ident = ""):
         self.ident = ident
@@ -134,12 +138,15 @@ class Argument(MethodFragment):
     cvType = cvtype.CvType()
     dataType = datatype.DataType()
     rules = []
+    initIn = []
+    initOut = []
     
-    def __init__(self, ident, name, cvType, dataType):
+    def __init__(self, ident, name, cvType, dataType, inPlace = False):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
         self.dataType = dataType
+        self.inPlace = inPlace
             
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -148,6 +155,9 @@ class Argument(MethodFragment):
         self.cvType = arg.cvType
         self.dataType = arg.dataType
         self.rules = arg.rules
+        self.initIn = arg.initIn
+        self.initOut = arg.initOut
+        self.inPlace = arg.inPlace
     
 class InputArgument(Argument):
     def __repr__(self):
@@ -345,6 +355,7 @@ class Method(object):
     ident = ""
     name = ""
     description = ""
+    customCall = []
     __options = Options()
     
     def __init__(self, ident, name, options):
@@ -363,6 +374,18 @@ class Method(object):
     @property
     def optionParameter(self):
         return self.__options
+        
+    def call(self, option):
+        if len(self.customCall):
+            return self.customCall
+        
+        args = ""
+        for isEnd, arg in listIterator(self.options[option]):
+            args += "{0}CvData".format(arg.ident)
+            if not isEnd:
+                args += ", "
+        l = "cv::{0}({1});".format(self.ident, args)
+        return [l]
 
 class Constant(Argument):
     value = ""
@@ -414,11 +437,9 @@ class Input(InputArgument):
         return [cast]
 
 class Output(OutputArgument):
-    def __init__(self, arg, refArg = None):
+    def __init__(self, arg):
         if arg:
             self.copyFrom(arg)
-            
-        self.refArg = refArg
         
     def inputId(self):
         return [self.ident.constant()]
@@ -456,21 +477,7 @@ class Output(OutputArgument):
         return ["runtime::DataContainer outContainer = inContainer;"]
     
     def outputInit(self):
-        if self.refArg == None:
-            return []
-        
-        src = "{0}CastedData".format(self.refArg.ident)
-        dst = "{0}CastedData".format(self.ident)
-        
-        lines = []
-        lines.append("if({0} != {1})".format(src, dst))
-        lines.append(Format.SCOPE_ENTER)
-        lines.append("{0}->initializeImage({1}->width(), {1}->height(), "
-                     "{1}->width() * {1}->pixelSize(), {0}->buffer(), "
-                     "{1}->pixelType());".format(dst, src))
-        lines.append(Format.SCOPE_EXIT)
-        
-        return lines
+        return self.initIn
         
 class RefInput(OutputArgument):
     def __init__(self, arg, refArg):
@@ -489,9 +496,8 @@ class RefInput(OutputArgument):
         return []
         
 class Allocation(OutputArgument):
-    def __init__(self, arg, refArg = None):
+    def __init__(self, arg):
         self.copyFrom(arg)
-        self.refArg = refArg
         
     def outputId(self):
         return ["RESULT"] 
@@ -504,19 +510,14 @@ class Allocation(OutputArgument):
     def outContainer(self):
         lines = []
         cvData = "{0}CvData".format(self.ident)
-        if not self.refArg:
-            l = "{0}* outData = new {1};"\
-                .format(self.dataType.ident(),
-                        self.dataType.cast(cvData))
-        else:
-            refData = "{0}CastedData".format(self.refArg.ident)
-            l = "{0}* outData = new {1};"\
-                .format(self.dataType.ident(),
-                        self.dataType.cast(cvData, refData))
+        l = "{0}* {2}CastedData = new {1};".format(self.dataType.ident(),
+                                                   self.dataType.cast(cvData),
+                                                   self.ident)
         lines.append(l)
         l = ("runtime::DataContainer outContainer = "
-             "runtime::DataContainer(outData);")
+             "runtime::DataContainer({0}CastedData);".format(self.ident))
         lines.append(l)
+        lines.extend(self.initOut)
         return lines
 
 class EnumDescription(object):

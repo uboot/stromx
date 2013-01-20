@@ -12,7 +12,7 @@ class DataType(object):
     def variant(self):
         raise NotImplementedError()
         
-    def cast(self, src, refArg = None):
+    def cast(self, src):
         return "{0}({1})".format(self.dataType(), src)
         
 class Bool(DataType):
@@ -48,11 +48,8 @@ class Image(DataType):
                 "{0}->stride(), {0}->data(), {1}->pixelType());")\
                 .format(ident, src)
         
-    def cast(self, src, refArg = None):
-        if not refArg:
-            return "example::Image({0})".format(src)
-        else:
-            return "example::Image({0}, {1}->pixelType())".format(src, refArg)
+    def cast(self, src):
+        return "example::Image({0})".format(src)
             
 if __name__ == "__main__":
     import doctest
