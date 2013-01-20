@@ -34,25 +34,39 @@ namespace stromx
             
             
             CPPUNIT_TEST_SUITE (WebCameraTest);
-            CPPUNIT_TEST (testSetParameter);
-            CPPUNIT_TEST (testGetParameter);
+            CPPUNIT_TEST (testParameterFrameRate);
+            CPPUNIT_TEST (testParameterBrightness);
+            CPPUNIT_TEST (testParameterContrast);
+            CPPUNIT_TEST (testParameterSaturation);
+            CPPUNIT_TEST (testParameterHue);
+            CPPUNIT_TEST (testParameterGain);
+            CPPUNIT_TEST (testParameterExposure);
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST_SUITE_END ();
             
             public:
-                WebCameraTest():m_operator(0),m_hasCamera(true){}
+                WebCameraTest():m_operator(0),m_hasCamera(true),m_deltaAcceptance(0.01){}
                 
                 void setUp();
                 void tearDown();
                 
             protected:
-                void testSetParameter();
-                void testGetParameter();
+                void testParameterFrameRate();
+                void testParameterBrightness();
+                void testParameterContrast();
+                void testParameterSaturation();
+                void testParameterHue();
+                void testParameterGain();
+                void testParameterExposure();
                 void testExecute();
                 
             private:
+                
+                bool checkParameter(const unsigned int id);
+                
                 runtime::OperatorTester* m_operator;
                 bool m_hasCamera;
+                double m_deltaAcceptance;
         };
     }
 }

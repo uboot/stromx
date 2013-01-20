@@ -45,7 +45,7 @@ namespace stromx
             //constructor
             WebCamera();
             //destructor
-            virtual ~WebCamera(){};
+            virtual ~WebCamera();
             virtual OperatorKernel* clone() const {return new WebCamera;}
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
@@ -57,20 +57,13 @@ namespace stromx
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
-            const std::vector<const runtime::Parameter*> setupParameters();
+            static const std::vector<const runtime::Parameter*> setupParameters(cv::VideoCapture* const webcam);
 
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
 
             cv::VideoCapture* m_webcam;
-            double m_configurableFrameRate;
-            double m_configurableBrightness;
-            double m_configurableContrast;
-            double m_configurableSaturation;
-            double m_configurableHue;
-            double m_configurableGain;
-            double m_configurableExposure;
         };
     }
 }

@@ -49,11 +49,11 @@ namespace stromx
             return outputs;
         }
 
-        const std::vector<const runtime::Parameter*> WebCamera::setupParameters()
+        const std::vector<const runtime::Parameter*> WebCamera::setupParameters(cv::VideoCapture* const webcam)
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            if(m_configurableFrameRate >= 0.0)
+            if(webcam->get(CV_CAP_PROP_FPS) >= 0.0)
             {
                 runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::DOUBLE);
                 frameRate->setTitle("Frame rate");
@@ -61,7 +61,7 @@ namespace stromx
                 parameters.push_back(frameRate);
             }
             
-            if(m_configurableBrightness >= 0.0)
+            if(webcam->get(CV_CAP_PROP_BRIGHTNESS) >= 0.0)
             {
                 runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::DOUBLE);
                 brightness->setTitle("Brightness");
@@ -69,7 +69,7 @@ namespace stromx
                 parameters.push_back(brightness);
             }
             
-            if(m_configurableContrast >= 0.0)
+            if(webcam->get(CV_CAP_PROP_CONTRAST) >= 0.0)
             {
                 runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::DOUBLE);
                 contrast->setTitle("Contrast");
@@ -77,7 +77,7 @@ namespace stromx
                 parameters.push_back(contrast);
             }
             
-            if(m_configurableSaturation >= 0.0)
+            if(webcam->get(CV_CAP_PROP_SATURATION) >= 0.0)
             {
                 runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::DOUBLE);
                 saturation->setTitle("Saturation");
@@ -85,7 +85,7 @@ namespace stromx
                 parameters.push_back(saturation);
             }
             
-            if(m_configurableHue >= 0.0)
+            if(webcam->get(CV_CAP_PROP_HUE) >= 0.0)
             {
                 runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::DOUBLE);
                 hue->setTitle("Hue");
@@ -93,7 +93,7 @@ namespace stromx
                 parameters.push_back(hue);
             }
             
-            if(m_configurableGain >= 0.0)
+            if(webcam->get(CV_CAP_PROP_GAIN) >= 0.0)
             {
                 runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::DOUBLE);
                 gain->setTitle("Gain");
@@ -101,7 +101,7 @@ namespace stromx
                 parameters.push_back(gain);
             }
             
-            if(m_configurableExposure >= 0.0)
+            if(webcam->get(CV_CAP_PROP_EXPOSURE) >= 0.0)
             {
                 runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::DOUBLE);
                 exposure->setTitle("Exposure");
@@ -116,6 +116,11 @@ namespace stromx
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs()),
             m_webcam(0)
         {
+        }
+        
+        WebCamera::~WebCamera()
+        {
+            delete m_webcam;
         }
 
         void WebCamera::setParameter(unsigned int id, const runtime::Data& value)
@@ -241,15 +246,7 @@ namespace stromx
             if(!webcam->isOpened())
                 throw runtime::OperatorError(*this, "Failed to open WebCamera.");
             
-            //Check available parameters of camera accessible through OpenCV VideoCapture
-            m_configurableFrameRate = webcam->get(CV_CAP_PROP_FPS);
-            m_configurableBrightness = webcam->get(CV_CAP_PROP_BRIGHTNESS);
-            m_configurableContrast = webcam->get(CV_CAP_PROP_CONTRAST);
-            m_configurableSaturation = webcam->get(CV_CAP_PROP_SATURATION);
-            m_configurableHue = webcam->get(CV_CAP_PROP_HUE);
-            m_configurableGain = webcam->get(CV_CAP_PROP_GAIN);
-            m_configurableExposure = webcam->get(CV_CAP_PROP_EXPOSURE);
-            
+            m_webcam = webcam.release();
             
             //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
             //Since the new input and output is added to existing one, you cannot call
@@ -260,9 +257,7 @@ namespace stromx
             std::vector<const runtime::Description*> inputs;
             std::vector<const runtime::Description*> outputs;
             
-            OperatorKernel::initialize(inputs,outputs,setupParameters());
-            
-            m_webcam = webcam.release();
+            OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam));
         }
 
         void WebCamera::deinitialize()
