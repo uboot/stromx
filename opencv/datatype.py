@@ -43,11 +43,6 @@ class Image(DataType):
     def variant(self):
         return "runtime::DataVariant::IMAGE"
         
-    def initialize(self, ident, src):
-        return ("{0}->initializeImage({0}->width(), {0}->height(), "
-                "{0}->stride(), {0}->data(), {1}->pixelType());")\
-                .format(ident, src)
-        
     def cast(self, src):
         return "example::Image({0})".format(src)
             

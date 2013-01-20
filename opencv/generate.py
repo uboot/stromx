@@ -795,6 +795,7 @@ if __name__ == "__main__":
                             cvtype.Int(), datatype.UInt32())
     arg3.default = 3
     arg3.minValue = 1
+    arg3.step = 2
     arg3.rules.append(OddRule())
     
     options = dict()
@@ -817,9 +818,13 @@ if __name__ == "__main__":
     arg3.y.default = 0
     arg4 = Constant("fx", cvtype.Int(), 0)
     arg5 = Constant("fy", cvtype.Int(), 0)
+    arg6 = EnumParameter("interpolation", "Interpolation")
+    arg6.descriptions = [EnumDescription("INTER_NEAREST", "Nearest neighbour"),
+                         EnumDescription("INTER_LINEAR", "Bilinear")]
+    arg6.default = "INTER_LINEAR"
     
     options = dict()
-    options[Options.MANUAL] = [Input(arg1), Output(arg2), arg3, arg4, arg5]
+    options[Options.MANUAL] = [Input(arg1), Output(arg2), arg3, arg4, arg5, arg6]
     
     m = Method("resize", "Resize", options)
     p.methods.append(m)

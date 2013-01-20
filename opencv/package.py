@@ -183,7 +183,7 @@ class Parameter(InputArgument):
         
     def paramDecl(self):
         decl = "{0} {1}".format(self.dataType.ident(),
-                                 self.ident.attribute())
+                                self.ident.attribute())
         return [decl]
         
     def paramInit(self):
@@ -264,13 +264,17 @@ class CvSize(Parameter):
 class NumericParameter(Parameter):
     minValue = None
     maxValue = None
+    step = None
     
 class EnumParameter(Parameter):
-    dataType = datatype.Enum()
     descriptions = [] 
     
+    def __init__(self, ident, name):
+        super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
+                                            datatype.Enum())
+    
     def enumIds(self):
-        values = [d.ident.constant() for d in self.descriptions]
+        values = [str(d.ident) for d in self.descriptions]
         return [("{0}Id".format(self.ident.className()), values)]
         
     def paramCreate(self):
@@ -297,11 +301,11 @@ class Options(EnumParameter):
     TEST_1 = 3
     
     def __init__(self, options = dict()):
+        super(Options, self).__init__("dataFlow", "Data Flow")
+        
         if len(options) > 0:
             assert(options.has_key(Options.MANUAL))
         
-        self.ident = Ident("dataFlow")
-        self.name = "Data Flow"
         self.options = options
         self.default = Options.MANUAL
         
@@ -309,16 +313,16 @@ class Options(EnumParameter):
             return
             
         if self.options.has_key(Options.MANUAL):
-            self.descriptions.append(EnumDescription("manual", "Manual"))
+            self.descriptions.append(EnumDescription("MANUAL", "Manual"))
         
         if self.options.has_key(Options.IN_PLACE):
-            self.descriptions.append(EnumDescription("inPlace", "In place"))
+            self.descriptions.append(EnumDescription("IN_PLACE", "In place"))
         
         if self.options.has_key(Options.ALLOCATE):
-            self.descriptions.append(EnumDescription("allocate", "Allocate"))
+            self.descriptions.append(EnumDescription("ALLOCATE", "Allocate"))
         
         if self.options.has_key(Options.TEST_1):
-            self.descriptions.append(EnumDescription("test1", "Test 1"))
+            self.descriptions.append(EnumDescription("TEST_1", "Test 1"))
         
     @property
     def trivial(self):
@@ -523,7 +527,6 @@ class Allocation(OutputArgument):
 class EnumDescription(object):
     ident = Ident()
     name = ""
-    cvIdent = ""
     
     def __init__(self, ident, name):
         self.ident = Ident(ident)
@@ -531,7 +534,7 @@ class EnumDescription(object):
     
     def constructor(self):
         return ('runtime::EnumDescription({0}, "{1}")'\
-            .format(self.ident.constant(), self.name))
+            .format(self.ident, self.name))
         
     
 class ParameterRule(object):
