@@ -45,7 +45,7 @@ namespace stromx
          * of a data reference are out of scope the encapsulated data object is automatically
          * deleted.
          */
-        class STROMX_RUNTIME_API DataRef
+        class STROMX_RUNTIME_API DataRef : public DataInterface
         {
             friend class Data;
             friend class ConstDataRef;
