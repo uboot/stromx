@@ -53,5 +53,6 @@ void exportReadAccess()
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateWithTimeout))
         .def("get", &ReadAccess<>::get, return_internal_reference<>())
+        .def("release", &ReadAccess<>::release)
     ;
 }

@@ -44,6 +44,15 @@ namespace stromx
             CPPUNIT_ASSERT(TestData::wasDestructed);
         }
         
+        void DataContainerTest::testRelease()
+        {
+            DataContainer container(new TestData());
+            container.release();
+
+            CPPUNIT_ASSERT(TestData::wasDestructed);
+            CPPUNIT_ASSERT(container.empty());
+        }
+                
         void DataContainerTest::testDestroyDelayed()
         {
             {

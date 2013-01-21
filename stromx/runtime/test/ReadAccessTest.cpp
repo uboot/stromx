@@ -76,16 +76,29 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(access1(), BadCast);
         }
         
-        void ReadAccessTest::testReleaseReadAccess()
+        void ReadAccessTest::testDestroyReadAccess()
         {
             Data* data = new TestData;
             DataContainer container(data);
             {
                 ReadAccess<> access(container);
+                
+                // the read access is destroyed before leaving the scope
             }
             
             WriteAccess<> access(container);
             CPPUNIT_ASSERT_EQUAL(data, &access());
+        }
+        
+        void ReadAccessTest::testRelease()
+        {
+            Data* data = new TestData;
+            DataContainer container(data);
+            
+            ReadAccess<> access(container);
+            access.release();
+            
+            CPPUNIT_ASSERT(access.empty());
         }
         
         void ReadAccessTest::testReadAccessDelayed()

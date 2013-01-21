@@ -51,3 +51,17 @@ _extendVectorClass(DescriptionVector)
 _extendVectorClass(ParameterVector)
 _extendVectorClass(ThreadVector)
 _extendVectorClass(InputVector)
+
+def _returnObject(self):
+    return self
+    
+def _releaseObject(self, exc_type, exc_value, traceback):
+    self.release()
+    
+def _extendObject(objectClass):
+    objectClass.__enter__ = _returnObject
+    objectClass.__exit__ = _releaseObject
+    
+_extendObject(DataContainer)
+_extendObject(ReadAccess)
+_extendObject(WriteAccess)

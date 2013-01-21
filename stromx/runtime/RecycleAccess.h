@@ -110,6 +110,9 @@ namespace stromx
              */
             Data* get(const unsigned int timeout) const;
             
+            /** Releases the write access. The access is empty after calling this function. */
+            void release() { m_impl.reset(); }
+            
         private:
             std::tr1::shared_ptr<impl::RecycleAccessImpl> m_impl;      
         };

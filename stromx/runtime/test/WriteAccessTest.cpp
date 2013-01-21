@@ -58,6 +58,15 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(access());
         }
         
+        void WriteAccessTest::testRelease()
+        {
+            Data* data = new TestData;
+            DataContainer container(data);
+            WriteAccess<TestData> access(container);
+
+            access.release();
+            CPPUNIT_ASSERT(access.empty());
+        }
         
         void WriteAccessTest::testWriteAccessWrongCast()
         {

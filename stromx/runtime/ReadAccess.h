@@ -93,6 +93,9 @@ namespace stromx
             /** Returns a constant reference to the content of the data container. */
             const data_t & operator()() const { return get(); }
             
+            /** Releases the recycle access. The access is empty after calling this function. */
+            void release() { m_impl.reset(); }
+            
         private:
             std::tr1::shared_ptr<impl::ReadAccessImpl> m_impl;
         };

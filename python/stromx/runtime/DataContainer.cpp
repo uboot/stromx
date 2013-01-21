@@ -41,5 +41,6 @@ void exportDataContainer()
     class_<DataContainer>("DataContainer", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("empty", &DataContainer::empty)
+        .def("release", &DataContainer::release)
     ;
 }

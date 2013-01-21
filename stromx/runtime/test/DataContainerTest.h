@@ -33,6 +33,7 @@ namespace stromx
             CPPUNIT_TEST (testDestroyDelayed);
             CPPUNIT_TEST (testComparison);
             CPPUNIT_TEST (testEmpty);
+            CPPUNIT_TEST (testRelease);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -46,6 +47,7 @@ namespace stromx
                 void testDestroyDelayed();
                 void testComparison();
                 void testEmpty();
+                void testRelease();
             private:
                 void destroyDelayed(DataContainer & container);
         };
