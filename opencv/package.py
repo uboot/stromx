@@ -528,9 +528,13 @@ class EnumDescription(object):
     ident = Ident()
     name = ""
     
-    def __init__(self, ident, name):
-        self.ident = Ident(ident)
+    def __init__(self, ident, name, cvIdent = None):
+        self.ident = ident
         self.name = name
+        if cvIdent:
+            self.cvIdent = cvIdent
+        else:
+            self.cvIdent = ident
     
     def constructor(self):
         return ('runtime::EnumDescription({0}, "{1}")'\
