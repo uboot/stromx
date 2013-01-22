@@ -31,11 +31,9 @@ camera = stream.operators()[0]
 canny = stream.operators()[2]
 
 for i in range(5):
-    data = canny.getOutputData(0)
-    image = runtime.ReadAccess(data)
-    print "Received image {0}x{1}".format(image.get().width(), image.get().height())
-    del image
-    del data
+    with canny.getOutputData(0) as data, runtime.ReadAccess(data) as image:
+        print "Received image {0}x{1}".format(image.get().width(),
+                                              image.get().height())
     
     canny.clearOutputData(0)
     camera.clearOutputData(1)

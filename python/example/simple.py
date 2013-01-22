@@ -38,9 +38,8 @@ stream.start()
 
 for i in range(5):
     data = timer.getOutputData(0)
-    count = runtime.ReadAccess(data)
-    print "Received {0}".format(count.get().get())
-    del count
+    with runtime.ReadAccess(data) as count:
+        print "Received {0}".format(count.get().get())
     
     timer.clearOutputData(0)
 
