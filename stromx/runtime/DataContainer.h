@@ -68,6 +68,9 @@ namespace stromx
             /** Returns whether to DataContainer holds any data. */
             bool empty() const { return m_impl.get() == 0; }
             
+            /** Releases the data from the container. The container is empty after calling this function. */
+            void release() { m_impl.reset(); }
+            
         private:
             std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;
         };     

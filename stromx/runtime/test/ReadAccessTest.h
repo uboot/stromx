@@ -34,12 +34,13 @@ namespace stromx
             CPPUNIT_TEST(testReadAccessEmptyContainer);
             CPPUNIT_TEST(testReadAccess);
             CPPUNIT_TEST(testEmptyReadAccess);
+            CPPUNIT_TEST(testRelease);
             CPPUNIT_TEST(testReadAccessCast);
             CPPUNIT_TEST(testReadAccessWrongCast);
             CPPUNIT_TEST(testReadAccessDelayed);
             CPPUNIT_TEST(testReadAccessInterrupt);
             CPPUNIT_TEST(testReadAccessTimeout);
-            CPPUNIT_TEST(testReleaseReadAccess);
+            CPPUNIT_TEST(testDestroyReadAccess);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -57,7 +58,8 @@ namespace stromx
             void testReadAccessDelayed();
             void testReadAccessInterrupt();
             void testReadAccessTimeout();
-            void testReleaseReadAccess();
+            void testRelease();
+            void testDestroyReadAccess();
 
         private:
             void releaseDelayed(WriteAccess<>& access);

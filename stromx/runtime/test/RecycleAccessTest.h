@@ -32,6 +32,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (RecycleAccessTest);
             CPPUNIT_TEST(testRecycle);
+            CPPUNIT_TEST(testRelease);
             CPPUNIT_TEST(testNoRecycle);
             CPPUNIT_TEST(testDelayedRecycle);
             CPPUNIT_TEST(testRecycleNoTimeout);
@@ -53,6 +54,7 @@ namespace stromx
 
         protected:
             void testRecycle();
+            void testRelease();
             void testNoRecycle();
             void testDelayedRecycle();
             void testCopiedRecycle();

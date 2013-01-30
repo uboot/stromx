@@ -53,5 +53,6 @@ void exportWriteAccess()
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateWithTimeout))
         .def("get", &WriteAccess<>::get, return_internal_reference<>())
+        .def("release", &WriteAccess<>::release)
     ;
 }

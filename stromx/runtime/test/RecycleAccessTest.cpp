@@ -48,6 +48,16 @@ namespace stromx
             delete data;
         }
         
+        void RecycleAccessTest::testRelease()
+        {
+            Data* data = new TestData();
+            DataContainer container = DataContainer(data);
+            RecycleAccess access(container);
+            
+            access.release();
+            CPPUNIT_ASSERT(access.empty());
+        }
+        
         void RecycleAccessTest::testRecycleNoTimeout()
         {
             Data* data = new TestData();
