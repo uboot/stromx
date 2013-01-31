@@ -1,7 +1,6 @@
 .kdev4
 *.vpp~*
-*.vpp.bak
-*.vpp.new
+*.vpp.*
 *~
 Config.h
 *.pyc
