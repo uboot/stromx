@@ -185,6 +185,7 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Double::deserialize(InputProvider & in, const Version & version);
 
+#ifdef WIN32
         /** \cond */
         template class STROMX_RUNTIME_API Primitive<bool, bool>;
         template class STROMX_RUNTIME_API Primitive<int, int8_t>;    
@@ -196,6 +197,7 @@ namespace stromx
         template class STROMX_RUNTIME_API Primitive<double, float>;   
         template class STROMX_RUNTIME_API Primitive<double, double>;   
         /** \endcond */
+#endif // WIN32
     }
 }
     
