@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_CAMERA_H
 #define STROMX_EXAMPLE_CAMERA_H
 
-#include "Config.h"
+#include "stromx/example/Config.h"
 #include <stromx/runtime/DataRef.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/Image.h>

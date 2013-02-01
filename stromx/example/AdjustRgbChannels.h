@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_ADJUSTRGBCHANNELS_H
 #define STROMX_EXAMPLE_ADJUSTRGBCHANNELS_H
 
-#include "Config.h"
+#include "stromx/example/Config.h"
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
 

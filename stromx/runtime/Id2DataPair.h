@@ -17,9 +17,9 @@
 #ifndef STROMX_RUNTIME_ID2DATAPAIR_H
 #define STROMX_RUNTIME_ID2DATAPAIR_H
 
-#include "Config.h"
-#include "DataContainer.h"
-#include "Id2DataMapper.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Id2DataMapper.h"
 
 namespace stromx
 {
@@ -41,7 +41,7 @@ namespace stromx
                 m_data = data;
             }
             
-            Id2DataPair(const unsigned int id)
+            explicit Id2DataPair(const unsigned int id)
             : m_id(id),
                 m_data(DataContainer())
             {}

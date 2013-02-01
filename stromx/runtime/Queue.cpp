@@ -14,14 +14,14 @@
 *  limitations under the License.
 */
 
-#include "Queue.h"
-#include "DataContainer.h"
-#include "DataProvider.h"
-#include "Id2DataPair.h"
-#include "NumericParameter.h"
-#include "OperatorException.h"
-#include "Primitive.h"
-#include "Try.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/NumericParameter.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Queue.h"
+#include "stromx/runtime/Try.h"
 
 namespace stromx
 {

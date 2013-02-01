@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "Exception.h"
+#include "stromx/runtime/Exception.h"
 
 #ifdef __GNUG__
     #include <execinfo.h>

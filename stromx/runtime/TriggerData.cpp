@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Config.h"
-#include "TriggerData.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/TriggerData.h"
 
 namespace stromx
 {

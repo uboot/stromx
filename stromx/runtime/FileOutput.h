@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_FILEOUTPUT_H
 #define STROMX_RUNTIME_FILEOUTPUT_H
 
-#include "OutputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
 
 namespace stromx
 {

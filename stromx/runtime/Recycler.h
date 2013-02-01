@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_RECYCLER_H
 #define STROMX_RUNTIME_RECYCLER_H
 
-#include "Config.h"
+#include "stromx/runtime/Config.h"
 
 namespace stromx
 {

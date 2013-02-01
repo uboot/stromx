@@ -19,11 +19,11 @@
 
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-#include "Id2DataMap.h"
-#include "../DataProvider.h"
-#include "../DataRef.h"
-#include "../OperatorKernel.h"
-#include "../Parameter.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/DataRef.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Parameter.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace stromx
 {
@@ -45,7 +45,7 @@ namespace stromx
                     EXECUTING
                 };
                 
-                SynchronizedOperatorKernel(OperatorKernel* const op);
+                explicit SynchronizedOperatorKernel(OperatorKernel* const op);
                 virtual ~SynchronizedOperatorKernel();
                 
                 const OperatorInfo* info() const { return m_op; }

@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_IMPL_READACCESSIMPL_H
 #define STROMX_RUNTIME_IMPL_READACCESSIMPL_H
 
-#include "../Runtime.h"
-#include "../DataContainer.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Runtime.h"
 
 namespace stromx
 {

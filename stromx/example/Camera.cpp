@@ -14,27 +14,26 @@
 *  limitations under the License.
 */
 
-#include "AdjustRgbChannels.h"
-#include "Camera.h"
-#include "Clip.h"
-#include "ConstImage.h"
-#include "ConvertPixelType.h"
-#include "Image.h"
-#include "impl/CameraBuffer.h"
-#include <stromx/runtime/OperatorException.h>
+#include "stromx/example/AdjustRgbChannels.h"
+#include "stromx/example/Camera.h"
+#include "stromx/example/Clip.h"
+#include "stromx/example/ConstImage.h"
+#include "stromx/example/ConvertPixelType.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/impl/CameraBuffer.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
-#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Id2DataComposite.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
+#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ParameterGroup.h>
+#include <stromx/runtime/PeriodicDelay.h>
+#include <stromx/runtime/Queue.h>
 #include <stromx/runtime/Stream.h>
 #include <stromx/runtime/Thread.h>
-#include <stromx/runtime/EnumParameter.h>
-#include <stromx/runtime/NumericParameter.h>
-#include <stromx/runtime/OperatorException.h>
-#include <stromx/runtime/Operator.h>
-#include <stromx/runtime/PeriodicDelay.h>
-#include <stromx/runtime/ParameterGroup.h>
-#include <stromx/runtime/Queue.h>
 #include <stromx/runtime/Trigger.h>
 
 namespace stromx

@@ -18,10 +18,10 @@
 #define STROMX_RUNTIME_READACCESS_H
 
 #include <memory>
-#include "Data.h"
-#include "DataContainer.h"
-#include "Exception.h"
-#include "impl/ReadAccessImpl.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/impl/ReadAccessImpl.h"
 
 namespace stromx
 {
@@ -47,7 +47,7 @@ namespace stromx
              * 
              * \param data The container which contains the data to be read.
              */
-            ReadAccess(const DataContainer & data)
+            explicit ReadAccess(const DataContainer & data)
               : m_impl(new impl::ReadAccessImpl(data, false))
             {
             }

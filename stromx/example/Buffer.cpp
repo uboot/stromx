@@ -14,9 +14,9 @@
 *  limitations under the License.
 */
 
-#include "Buffer.h"
-#include "Image.h"
-#include "Config.h"
+#include "stromx/example/Buffer.h"
+#include "stromx/example/Config.h"
+#include "stromx/example/Image.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>

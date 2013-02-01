@@ -15,7 +15,7 @@
  */
 
 #include <boost/assert.hpp>
-#include "Id2DataComposite.h"
+#include "stromx/runtime/Id2DataComposite.h"
 
 namespace stromx
 {

@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-#include "Config.h"
-#include "DataVariant.h"
-#include "Data.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataVariant.h"
 #include <ostream>
 
 namespace stromx

@@ -14,17 +14,16 @@
 *  limitations under the License.
 */
 
-#include "CameraBuffer.h"
-#include "../Image.h"
-#include "../Config.h"
+#include <iostream>
+#include "stromx/example/Config.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/impl/CameraBuffer.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
-
-#include <iostream>
 
 namespace stromx
 {

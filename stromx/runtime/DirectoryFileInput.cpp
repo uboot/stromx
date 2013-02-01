@@ -15,8 +15,8 @@
 */
 
 #include <boost/filesystem.hpp>
-#include "DirectoryFileInput.h"
-#include "Exception.h"
+#include "stromx/runtime/DirectoryFileInput.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

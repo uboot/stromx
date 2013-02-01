@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_MATRIXWRAPPER_H
 #define STROMX_RUNTIME_MATRIXWRAPPER_H
 
-#include "Matrix.h"
+#include "stromx/runtime/Matrix.h"
 
 namespace stromx
 {

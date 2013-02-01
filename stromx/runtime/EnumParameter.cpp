@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "EnumParameter.h"
-#include "Exception.h"
+#include "stromx/runtime/EnumParameter.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

@@ -19,10 +19,10 @@
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
-#include "../Input.h"
-#include "../Operator.h"
-#include "../Parameter.h"
-#include "../Stream.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Parameter.h"
+#include "stromx/runtime/Stream.h"
 
 namespace stromx
 {

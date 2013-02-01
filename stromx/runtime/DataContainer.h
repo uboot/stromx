@@ -18,7 +18,7 @@
 #define STROMX_RUNTIME_DATACONTAINER_H
 
 #include <ostream>
-#include "Config.h"
+#include "stromx/runtime/Config.h"
 
 #ifdef __GNUG__
     #include <tr1/memory>

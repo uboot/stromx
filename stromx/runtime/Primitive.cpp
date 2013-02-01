@@ -14,12 +14,12 @@
  *  limitations under the License.
  */
 
-#include "Primitive.h"
+#include "stromx/runtime/Primitive.h"
 #include <boost/lexical_cast.hpp>
 #include <cfloat>
-#include "Config.h"
-#include "InputProvider.h"
-#include "OutputProvider.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
 
 namespace stromx
 {

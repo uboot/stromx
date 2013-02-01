@@ -1,5 +1,3 @@
-#ifndef STROMX_EXAMPLE_WEBCAMERA_H
-#define STROMX_EXAMPLE_WEBCAMERA_H
 /* 
 *  Copyright 2012 Thomas Fidler
 *
@@ -16,8 +14,11 @@
 *  limitations under the License.
 */
 
-#include <stromx/runtime/OperatorKernel.h>
+#ifndef STROMX_EXAMPLE_WEBCAMERA_H
+#define STROMX_EXAMPLE_WEBCAMERA_H
+
 #include <opencv2/highgui/highgui.hpp>
+#include <stromx/runtime/OperatorKernel.h>
 
 namespace stromx
 {

@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "ParameterGroup.h"
-#include "Exception.h"
-
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/ParameterGroup.h"
 #include <algorithm>
 #include <boost/assert.hpp>
 

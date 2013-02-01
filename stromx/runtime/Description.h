@@ -18,8 +18,8 @@
 #define STROMX_RUNTIME_DESCRIPTOR_H
 
 #include <string>
-#include "Config.h"
-#include "DataVariant.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/DataVariant.h"
 
 namespace stromx
 {

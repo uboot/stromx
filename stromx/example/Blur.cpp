@@ -14,9 +14,9 @@
 *  limitations under the License.
 */
 
-#include "Blur.h"
-#include "Image.h"
-#include "Utilities.h"
+#include "stromx/example/Blur.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>

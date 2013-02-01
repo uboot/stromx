@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Config.h"
-#include "None.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/None.h"
 
 namespace stromx
 {

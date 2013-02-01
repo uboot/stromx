@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "Erode.h"
-
 #include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/Erode.h"
 
 namespace stromx
 {

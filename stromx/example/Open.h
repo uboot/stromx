@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_OPEN_H
 #define STROMX_EXAMPLE_OPEN_H
 
-#include "MorphologicalFilter.h"
+#include "stromx/example/MorphologicalFilter.h"
 
 namespace stromx
 {

@@ -14,14 +14,13 @@
 *  limitations under the License.
 */
 
-#include "PeriodicDelay.h"
-
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include "DataContainer.h"
-#include "DataProvider.h"
-#include "Id2DataPair.h"
-#include "OperatorException.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/PeriodicDelay.h"
 
 namespace stromx
 {

@@ -17,9 +17,9 @@
 #ifndef STROMX_EXAMPLE_TRIGGER_H
 #define STROMX_EXAMPLE_TRIGGER_H
 
-#include "Config.h"
-#include "OperatorKernel.h"
-#include "Primitive.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
 
 namespace stromx
 {
@@ -71,7 +71,7 @@ namespace stromx
             virtual void execute(runtime::DataProvider& provider);
             
         private:
-            Trigger(const Trigger &);
+            explicit Trigger(const Trigger &);
             
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();

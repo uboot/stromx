@@ -21,7 +21,7 @@
 #include <boost/thread/condition_variable.hpp>
 #include <deque>
 #include <set>
-#include "../Recycler.h"
+#include "stromx/runtime/Recycler.h"
 
 namespace stromx
 {
@@ -37,7 +37,7 @@ namespace stromx
             class RecycleAccessImpl : public Recycler
             {
             public:
-                RecycleAccessImpl(const DataContainer& data);
+                explicit RecycleAccessImpl(const DataContainer& data);
                 ~RecycleAccessImpl();    
                 
                 void recycle(impl::DataContainerImpl* const container);

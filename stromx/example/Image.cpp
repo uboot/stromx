@@ -18,8 +18,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include "Image.h"
-#include "Utilities.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/InputProvider.h>
 #include <stromx/runtime/OutputProvider.h>

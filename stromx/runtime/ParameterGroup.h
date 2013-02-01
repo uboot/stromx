@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_PARAMETERGROUP_H
 #define STROMX_RUNTIME_PARAMETERGROUP_H
 
-#include "Config.h"
-#include "Parameter.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Parameter.h"
 
 namespace stromx
 {

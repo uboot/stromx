@@ -17,9 +17,9 @@
 #include "Counter.h"
 
 #include <typeinfo>
-#include "DataProvider.h"
-#include "Id2DataPair.h"
-#include "OperatorException.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/OperatorException.h"
 
 namespace stromx
 {

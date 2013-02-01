@@ -14,11 +14,11 @@
 *  limitations under the License.
 */
 
-#include "DirectoryFileOutput.h"
-#include "ZipFileOutput.h"
-#include "XmlWriter.h"
-#include "impl/XmlUtilities.h"
-#include "impl/XmlWriterImpl.h"
+#include "stromx/runtime/DirectoryFileOutput.h"
+#include "stromx/runtime/XmlWriter.h"
+#include "stromx/runtime/ZipFileOutput.h"
+#include "stromx/runtime/impl/XmlUtilities.h"
+#include "stromx/runtime/impl/XmlWriterImpl.h"
 
 namespace stromx
 {

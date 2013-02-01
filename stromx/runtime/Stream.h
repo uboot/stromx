@@ -20,10 +20,10 @@
 #include <set>
 #include <string>
 #include <vector>
-#include "Config.h"
-#include "ExceptionObserver.h"
-#include "Output.h"
-#include "impl/ThreadImplObserver.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/ExceptionObserver.h"
+#include "stromx/runtime/Output.h"
+#include "stromx/runtime/impl/ThreadImplObserver.h"
 
 namespace stromx
 {

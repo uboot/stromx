@@ -20,7 +20,7 @@
 
 #include <string>
 #include <vector>
-#include "../Output.h"
+#include "stromx/runtime/Output.h"
 
 namespace stromx
 {

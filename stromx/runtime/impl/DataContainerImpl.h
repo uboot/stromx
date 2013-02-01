@@ -19,7 +19,7 @@
 
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-#include "../Config.h"
+#include "stromx/runtime/Config.h"
 
 namespace stromx
 {
@@ -33,7 +33,7 @@ namespace stromx
             class DataContainerImpl
             {
             public:
-                DataContainerImpl(Data* data);
+                explicit DataContainerImpl(Data* data);
                 ~DataContainerImpl();
                 
                 void getReadAccess(const bool waitWithTimeout, const unsigned int timeout);

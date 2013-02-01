@@ -19,9 +19,9 @@
 
 #include <map>
 #include <set>
-#include "DataRef.h"
-#include "Exception.h"
-#include "OperatorInfo.h"
+#include "stromx/runtime/DataRef.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/OperatorInfo.h"
 
 namespace stromx
 {

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Parameter.h"
-#include "ParameterGroup.h"
+#include "stromx/runtime/Parameter.h"
+#include "stromx/runtime/ParameterGroup.h"
 
 namespace stromx
 {

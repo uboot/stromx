@@ -15,8 +15,8 @@
  */
 
 #include <memory>
-#include "RecycleAccess.h"
-#include "impl/RecycleAccessImpl.h"
+#include "stromx/runtime/RecycleAccess.h"
+#include "stromx/runtime/impl/RecycleAccessImpl.h"
 
 namespace stromx
 {

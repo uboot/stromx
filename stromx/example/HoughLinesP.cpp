@@ -14,13 +14,12 @@
 *  limitations under the License.
 */
 
-#include "HoughLinesP.h"
-
-#include "Image.h"
-#include "Matrix.h"
-#include "Utilities.h"
 #include <boost/math/constants/constants.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/HoughLinesP.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>

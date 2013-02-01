@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_TRY_H
 #define STROMX_RUNTIME_TRY_H
 
-#include "Config.h"
-#include "Id2DataMapper.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Id2DataMapper.h"
 
 namespace stromx
 {
@@ -28,7 +28,7 @@ namespace stromx
         class STROMX_RUNTIME_API Try : public Id2DataMapper
         {
         public:
-            Try(const Id2DataMapper& mapper)
+            explicit Try(const Id2DataMapper& mapper)
             : m_mapper(mapper)
             {}
             

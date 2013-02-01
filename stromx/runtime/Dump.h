@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_DUMP_H
 #define STROMX_RUNTIME_DUMP_H
 
-#include "OperatorKernel.h"
+#include "stromx/runtime/OperatorKernel.h"
 
 namespace stromx
 {

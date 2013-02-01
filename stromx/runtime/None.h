@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_NONE_H
 #define STROMX_RUNTIME_NONE_H
 
-#include "Data.h"
+#include "stromx/runtime/Data.h"
 
 namespace stromx
 {

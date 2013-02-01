@@ -18,7 +18,7 @@
 #define STROMX_RUNTIME_MATRIX_H
 
 #include <stdint.h>
-#include "Data.h"
+#include "stromx/runtime/Data.h"
 
 namespace stromx
 {

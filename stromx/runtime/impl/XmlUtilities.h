@@ -18,7 +18,7 @@
 #define STROMX_RUNTIME_IMPL_XMLUTILITES_H
 
 #include <xercesc/util/XMLString.hpp>
-#include "../Exception.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

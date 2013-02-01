@@ -16,8 +16,8 @@
 
 #include "ConstDataRef.h"
 
-#include "Data.h"
-#include "DataRef.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataRef.h"
 
 namespace stromx
 {

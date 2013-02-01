@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#include "ImageFilter.h"
-#include "Image.h"
-#include "Utilities.h"
 #include <opencv2/core/core.hpp>
+#include "stromx/example/Image.h"
+#include "stromx/example/ImageFilter.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>

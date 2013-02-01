@@ -14,18 +14,18 @@
 *  limitations under the License.
 */
 
-#include "Canny.h"
-#include "Image.h"
-#include "Utilities.h"
+#include "stromx/example/Canny.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/WriteAccess.h>
-#include <stromx/runtime/NumericParameter.h>
 
 namespace stromx
 {

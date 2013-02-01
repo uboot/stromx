@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-#include "Dump.h"
-#include "OperatorException.h"
-#include "Id2DataPair.h"
-#include "DataProvider.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/Dump.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/OperatorException.h"
 
 namespace stromx
 {

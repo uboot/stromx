@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_DIRECTORYFILEINPUT_H
 #define STROMX_RUNTIME_DIRECTORYFILEINPUT_H
 
-#include "Config.h"
-#include "FileInput.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/FileInput.h"
 #include <fstream>
 #include <sstream>
 
@@ -35,7 +35,7 @@ namespace stromx
              * 
              * \param directory The path to the directory.
              */
-            DirectoryFileInput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
+            explicit DirectoryFileInput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileInput();
             
             virtual void initialize(const std::string & text, const std::string & filename);

@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "Dilate.h"
-
 #include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/Dilate.h"
 
 namespace stromx
 {

@@ -19,7 +19,7 @@
 
 #include <string>
 #include <vector>
-#include "Config.h"
+#include "stromx/runtime/Config.h"
 
 namespace stromx
 {

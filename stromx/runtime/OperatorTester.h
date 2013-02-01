@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_OPERATORTESTER_H
 #define STROMX_RUNTIME_OPERATORTESTER_H
 
-#include "Operator.h"
+#include "stromx/runtime/Operator.h"
 
 namespace stromx
 {
@@ -27,7 +27,7 @@ namespace stromx
         class OperatorTester : public Operator
         {
         public:
-            OperatorTester(OperatorKernel* const kernel) 
+            explicit OperatorTester(OperatorKernel* const kernel) 
             : Operator(kernel)
             {}
             

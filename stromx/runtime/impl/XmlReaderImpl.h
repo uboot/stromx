@@ -22,7 +22,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "../Version.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {
@@ -40,7 +40,7 @@ namespace stromx
             class XmlReaderImpl
             {
             public:
-                XmlReaderImpl(const Factory& factory);
+                explicit XmlReaderImpl(const Factory& factory);
                 
                 ~XmlReaderImpl();
                 

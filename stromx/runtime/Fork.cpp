@@ -14,13 +14,12 @@
  *  limitations under the License.
  */
 
-#include "Fork.h"
-
-#include "DataProvider.h"
-#include "Id2DataPair.h"
-#include "Id2DataComposite.h"
-#include "NumericParameter.h"
-#include "OperatorException.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/Fork.h"
+#include "stromx/runtime/Id2DataComposite.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/NumericParameter.h"
+#include "stromx/runtime/OperatorException.h"
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
 

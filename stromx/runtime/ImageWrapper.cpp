@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Exception.h"
-#include "ImageWrapper.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/ImageWrapper.h"
 
 namespace stromx
 {

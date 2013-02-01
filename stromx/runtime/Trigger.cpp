@@ -14,15 +14,14 @@
 *  limitations under the License.
 */
 
-#include "Trigger.h"
-
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
-#include "DataContainer.h"
-#include "DataProvider.h"
-#include "EnumParameter.h"
-#include "Id2DataPair.h"
-#include "OperatorException.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/DataProvider.h"
+#include "stromx/runtime/EnumParameter.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/Trigger.h"
 
 namespace stromx
 {

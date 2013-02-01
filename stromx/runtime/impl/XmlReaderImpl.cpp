@@ -21,19 +21,18 @@
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLString.hpp>
-#include <iostream>
 #include <fstream>
-#include "XmlReaderImpl.h"
-#include "XmlUtilities.h"
-#include "../Exception.h"
-#include "../Factory.h"
-#include "../Data.h"
-#include "../DirectoryFileInput.h"
-#include "../Stream.h"
-#include "../Operator.h"
-#include "../Thread.h"
-#include "../Parameter.h"
-
+#include <iostream>
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DirectoryFileInput.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Parameter.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/impl/XmlReaderImpl.h"
+#include "stromx/runtime/impl/XmlUtilities.h"
 namespace stromx
 {
     namespace runtime
@@ -103,7 +102,7 @@ namespace stromx
                 class XercesErrorHandler : public HandlerBase
                 {
                 public:
-                    XercesErrorHandler(const std::string & filename) : m_filename(filename) {}
+                    explicit XercesErrorHandler(const std::string & filename) : m_filename(filename) {}
                     
                     virtual void error (const SAXParseException &/*exc*/)
                     {

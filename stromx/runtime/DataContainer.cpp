@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-#include "DataContainer.h"
-#include "Recycler.h"
-#include "impl/DataContainerImpl.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Recycler.h"
+#include "stromx/runtime/impl/DataContainerImpl.h"
 
 namespace stromx
 {

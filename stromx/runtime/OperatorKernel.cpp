@@ -16,8 +16,8 @@
 
 #include <boost/lexical_cast.hpp>
 #include <set>
-#include "Exception.h"
-#include "OperatorKernel.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/OperatorKernel.h"
 
 namespace stromx
 {

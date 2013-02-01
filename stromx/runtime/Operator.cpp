@@ -15,17 +15,18 @@
  */
 
 #include <boost/thread.hpp>
-#include "Description.h"
-#include "Exception.h"
-#include "Operator.h"
-#include "OperatorException.h"
-#include "OperatorInfo.h"
-#include "Input.h"
-#include "Output.h"
-#include "impl/InputNode.h"
-#include "impl/OutputNode.h"
-#include "impl/SynchronizedOperatorKernel.h"
-#include "impl/Id2DataMap.h"
+#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/OperatorInfo.h"
+#include "stromx/runtime/Output.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
+#include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/OutputNode.h"
+#include "stromx/runtime/impl/SynchronizedOperatorKernel.h"
+
 
 namespace stromx
 {

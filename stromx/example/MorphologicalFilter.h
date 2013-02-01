@@ -17,8 +17,8 @@
 #ifndef STROMX_EXAMPLE_MORPHOLOGICALFILTER_H
 #define STROMX_EXAMPLE_MORPHOLOGICALFILTER_H
 
-#include "Config.h"
-#include "ImageFilter.h"
+#include "stromx/example/Config.h"
+#include "stromx/example/ImageFilter.h"
 #include <stromx/runtime/Enum.h>
 
 namespace stromx
@@ -44,7 +44,7 @@ namespace stromx
                 CROSS
             };
             
-            MorphologicalFilter(const std::string & type);
+            explicit MorphologicalFilter(const std::string & type);
             
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
