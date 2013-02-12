@@ -65,7 +65,8 @@ class Package(object):
     minor = 0
     patch = 0
     
-    def __init__(self, major, minor, patch):
+    def __init__(self, ident, major, minor, patch):
+        self.ident = Ident(ident)
         self.major = major
         self.minor = minor
         self.patch = patch
@@ -138,15 +139,12 @@ class Argument(MethodFragment):
     cvType = cvtype.CvType()
     dataType = datatype.DataType()
     rules = []
-    initIn = []
-    initOut = []
     
-    def __init__(self, ident, name, cvType, dataType, inPlace = False):
+    def __init__(self, ident, name, cvType, dataType):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
         self.dataType = dataType
-        self.inPlace = inPlace
             
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -155,15 +153,24 @@ class Argument(MethodFragment):
         self.cvType = arg.cvType
         self.dataType = arg.dataType
         self.rules = arg.rules
-        self.initIn = arg.initIn
-        self.initOut = arg.initOut
-        self.inPlace = arg.inPlace
+        
+    def accept(self, visitor):
+        raise NotImplementedError
     
 class InputArgument(Argument):
     def __repr__(self):
         return "InputArgument()"
 
 class OutputArgument(Argument):
+    initIn = []
+    initOut = []
+    
+    def copyFrom(self, arg):
+        super(OutputArgument, self).copyFrom(arg)
+        if isinstance(arg, OutputArgument):
+            self.initIn = arg.initIn
+            self.initOut = arg.initOut
+    
     def __repr__(self):
         return "OutputArgument()"
         
@@ -176,7 +183,11 @@ class OutputArgument(Argument):
         return [lines]
         
 class Parameter(InputArgument):
+    inPlace = False
     default = None
+    
+    def accept(self, visitor):
+        visitor.visitParameter(self)
     
     def paramId(self):
         return [self.ident.constant()]
@@ -228,15 +239,11 @@ class Parameter(InputArgument):
                     self.cvType.cast(self.ident.attribute()))
         return [cast]
         
-class CvSize(Parameter):
-    def __init__(self, ident, name):
-        self.ident = Ident(ident)
-        self.name = name
-        self.x = Parameter("{0}X".format(ident), "{0} X".format(name),
-                           cvtype.Int(), datatype.UInt32())
-        self.y = Parameter("{0}Y".format(ident), "{0} Y".format(name),
-                           cvtype.Int(), datatype.UInt32())
-                           
+class Size(Parameter):
+    
+    def accept(self, visitor):
+        visitor.visitSize(self)
+                               
     def paramId(self):
         return self.x.paramId() + self.y.paramId()
                            
@@ -266,12 +273,18 @@ class NumericParameter(Parameter):
     maxValue = None
     step = None
     
+    def accept(self, visitor):
+        visitor.visitNumericParameter(self)
+    
 class EnumParameter(Parameter):
     descriptions = [] 
     
     def __init__(self, ident, name):
         super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
                                             datatype.Enum())
+    
+    def accept(self, visitor):
+        visitor.visitEnumParameter(self)
     
     def enumIds(self):
         values = [str(d.ident) for d in self.descriptions]
@@ -358,26 +371,12 @@ class Options(EnumParameter):
 class Method(object):
     ident = ""
     name = ""
-    description = ""
-    customCall = []
-    __options = Options()
+    doc = ""
+    functions = []
+    options = []
     
-    def __init__(self, ident, name, options):
+    def __init__(self, ident):
         self.ident = Ident(ident)
-        self.name = name
-        self.options = options
-    
-    @property
-    def options(self):
-        return self.__options.options
-        
-    @options.setter
-    def options(self, options):
-        self.__options = Options(options)
-        
-    @property
-    def optionParameter(self):
-        return self.__options
         
     def call(self, option):
         if len(self.customCall):
@@ -390,6 +389,11 @@ class Method(object):
                 args += ", "
         l = "cv::{0}({1});".format(self.ident, args)
         return [l]
+        
+class Option(object):
+    def __init__(self, ident):
+        self.ident = Ident(ident)
+        self.args = []
 
 class Constant(Argument):
     value = ""
@@ -398,6 +402,9 @@ class Constant(Argument):
         self.cvType = cvType
         self.value = value
         self.ident = ident
+    
+    def accept(self, visitor):
+        visitor.visitConstant(self)
         
     def cvData(self):
         l = "{0} {1}CvData = {2};".format(self.cvType.ident(),
@@ -407,9 +414,15 @@ class Constant(Argument):
         return [l]
     
 class Input(InputArgument):
-    def __init__(self, arg = None):
+    inPlace = False
+            
+    def __init__(self, arg, inPlace = False):
         if arg:
             self.copyFrom(arg)
+        self.inPlace = inPlace
+    
+    def accept(self, visitor):
+        visitor.visitInput(self)
         
     def inputId(self):
         return [self.ident.constant()]
@@ -444,6 +457,9 @@ class Output(OutputArgument):
     def __init__(self, arg):
         if arg:
             self.copyFrom(arg)
+    
+    def accept(self, visitor):
+        visitor.visitOutput(self)
         
     def inputId(self):
         return [self.ident.constant()]
@@ -502,6 +518,9 @@ class RefInput(OutputArgument):
 class Allocation(OutputArgument):
     def __init__(self, arg):
         self.copyFrom(arg)
+    
+    def accept(self, visitor):
+        visitor.visitAllocation(self)
         
     def outputId(self):
         return ["RESULT"] 

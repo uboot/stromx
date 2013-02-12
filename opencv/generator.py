@@ -6,6 +6,9 @@ Created on Thu Jan 31 21:48:28 2013
 """
 
 import document
+import package
+
+from methodgenerator import *
 
 class LibGenerator(object):
     p = None
@@ -22,9 +25,7 @@ class LibGenerator(object):
         
 class LibHeaderGenerator(LibGenerator):
     """
-    >>> import package
-    >>> p = package.Package(0, 0, 1)
-    >>> p.ident = package.Ident("imgproc")
+    >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
     >>> g = LibHeaderGenerator()
     >>> g.save(p, True)    
@@ -83,8 +84,7 @@ class LibHeaderGenerator(LibGenerator):
             
 class LibImplGenerator(LibGenerator):
     """
-    >>> import package
-    >>> p = package.Package(0, 0, 1)
+    >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.ident = package.Ident("imgproc")
     >>> p.name = "OpenCV image processing"
     >>> g = LibImplGenerator()
@@ -126,9 +126,7 @@ class LibImplGenerator(LibGenerator):
 
 class CMakeGenerator(LibGenerator):
     """
-    >>> import package
-    >>> p = package.Package(0, 0, 1)
-    >>> p.ident = package.Ident("imgproc")
+    >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
     >>> g = CMakeGenerator()
     >>> g.save(p, True)        
@@ -237,9 +235,7 @@ class CMakeGenerator(LibGenerator):
             
 class ConfigGenerator(LibGenerator):
     """
-    >>> import package
-    >>> p = package.Package(0, 0, 1)
-    >>> p.ident = package.Ident("imgproc")
+    >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
     >>> g = CMakeGenerator()
     >>> g.save(p, True)
@@ -328,33 +324,6 @@ class ConfigGenerator(LibGenerator):
 
         with file("Config.h.in", "w") as f:
             f.write(self.doc.string())
-            
-class MethodGenerator(object):
-    p = None
-    m = None
-    doc = None
-    
-    def save(self, package, method, printResult):
-        self.p = package
-        self.m = method
-        self.doc = document.Document()
-        
-        self.generate()
-        
-        if printResult:
-            print self.doc.string()
-            
-class OpHeaderGenerator(MethodGenerator):
-    def generate(self):
-        
-        with file("{0}.h".format(self.m.ident.className()), "w") as f:
-            f.write(self.string())
-            
-class OpImplGenerator(MethodGenerator):
-    def generate(self):
-        
-        with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
-            f.write(self.string())
         
 if __name__ == "__main__":
     import doctest
