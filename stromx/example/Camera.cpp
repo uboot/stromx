@@ -82,6 +82,21 @@ namespace stromx
             m_stream = new Stream();
         }
         
+        Camera::~Camera()
+        {
+            delete m_stream;
+            
+            delete m_indexQueue;
+            delete m_imageQueue;
+            delete m_pixelType;
+            delete m_trigger;
+            delete m_period;
+            delete m_buffer;
+            delete m_clip;
+            delete m_adjustRgbChannels;
+            delete m_input;
+        }
+        
         void Camera::deinitialize()
         {
             // remove all operators from the stream and deinitialize them

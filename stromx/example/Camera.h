@@ -79,6 +79,7 @@ namespace stromx
             };
             
             Camera();
+            virtual ~Camera();
             
             virtual OperatorKernel* clone() const { return new Camera; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);

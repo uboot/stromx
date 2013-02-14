@@ -19,6 +19,8 @@
 #include <zip.h>
 #include "stromx/runtime/Exception.h"
 
+#include <vector>
+
 namespace stromx
 {
     namespace runtime
@@ -92,17 +94,20 @@ namespace stromx
             if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to access file in zip archive.");
             
+            if(stat.size == 0)
+                throw FileAccessFailed(m_currentFilename, m_archive, "File in zip archive has zero size.");
+            
             unsigned int fileSize = (unsigned int)(stat.size);
-            char* content = new char[fileSize];
+            std::vector<char> content(fileSize);
                 
             zip_file* file = zip_fopen(m_archiveHandle, m_currentFilename.c_str(), 0);
             if(! file)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to open file in zip archive.");
             
-            if((unsigned int)(zip_fread(file, content, fileSize)) != fileSize)
+            if((unsigned int)(zip_fread(file, &content[0], fileSize)) != fileSize)
                 throw FileAccessFailed(m_currentFilename, m_archive, "Failed to read file in zip archive.");
             
-            m_currentFile = new std::istringstream(std::string(content, fileSize), iosmode);
+            m_currentFile = new std::istringstream(std::string(&content[0], fileSize), iosmode);
             
             return *m_currentFile;
         }
