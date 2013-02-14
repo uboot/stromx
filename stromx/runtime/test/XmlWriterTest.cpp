@@ -15,11 +15,11 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "TestUtilities.h"
-#include "XmlWriterTest.h"
-#include "../Exception.h"
-#include "../Stream.h"
-#include "../XmlWriter.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/XmlWriter.h"
+#include "stromx/runtime/test/TestUtilities.h"
+#include "stromx/runtime/test/XmlWriterTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::XmlWriterTest);
 

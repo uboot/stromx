@@ -17,11 +17,11 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "RecycleAccessTest.h"
-#include "TestData.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-#include "../RecycleAccess.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/RecycleAccess.h"
+#include "stromx/runtime/test/RecycleAccessTest.h"
+#include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::RecycleAccessTest);
 

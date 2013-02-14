@@ -14,10 +14,9 @@
 *  limitations under the License.
 */
 
-#include "ZipFileOutputTest.h"
-
-#include "../ZipFileOutput.h"
-#include "../Exception.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/ZipFileOutput.h"
+#include "stromx/runtime/test/ZipFileOutputTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ZipFileOutputTest);
 

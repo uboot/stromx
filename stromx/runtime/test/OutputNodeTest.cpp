@@ -15,14 +15,14 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "OutputNodeTest.h"
-#include "TestOperator.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-#include "../None.h"
-#include "../Operator.h"
-#include "../impl/InputNode.h"
-#include "../impl/OutputNode.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/OutputNode.h"
+#include "stromx/runtime/test/OutputNodeTest.h"
+#include "stromx/runtime/test/TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::OutputNodeTest);
 

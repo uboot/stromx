@@ -14,10 +14,9 @@
 *  limitations under the License.
 */
 
-#include "DirectoryFileOutputTest.h"
-
-#include "../DirectoryFileOutput.h"
-#include "../Exception.h"
+#include "stromx/runtime/DirectoryFileOutput.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/test/DirectoryFileOutputTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DirectoryFileOutputTest);
 

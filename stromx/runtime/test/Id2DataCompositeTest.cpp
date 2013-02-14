@@ -15,13 +15,13 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "Id2DataCompositeTest.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-#include "../Id2DataComposite.h"
-#include "../Id2DataPair.h"
-#include "../None.h"
-#include "../impl/Id2DataMap.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Id2DataComposite.h"
+#include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
+#include "stromx/runtime/test/Id2DataCompositeTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Id2DataCompositeTest);
 

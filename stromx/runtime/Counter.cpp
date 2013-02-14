@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "Counter.h"
-
 #include <typeinfo>
+#include "stromx/runtime/Counter.h"
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"

@@ -19,9 +19,9 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../DataContainer.h"
-#include "../ConnectorObserver.h"
-#include "../Connector.h"
+#include "stromx/runtime/Connector.h"
+#include "stromx/runtime/ConnectorObserver.h"
+#include "stromx/runtime/DataContainer.h"
 
 namespace stromx
 {

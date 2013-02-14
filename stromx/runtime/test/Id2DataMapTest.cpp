@@ -15,10 +15,10 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "Id2DataMapTest.h"
-#include "../Description.h"
-#include "../Exception.h"
-#include "../Primitive.h"
+#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/test/Id2DataMapTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Id2DataMapTest);
 

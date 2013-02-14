@@ -19,9 +19,9 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../InputProvider.h"
-#include "../OutputProvider.h"
-#include "../String.h"
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/String.h"
 
 namespace stromx
 {
@@ -59,7 +59,7 @@ namespace stromx
             class DummyInput : public InputProvider
             {
             public:
-                DummyInput(const std::string & text)
+                explicit DummyInput(const std::string & text)
                   : m_text(text),
                     m_file("")
                 {}

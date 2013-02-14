@@ -17,14 +17,13 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "OperatorTest.h"
-#include "TestOperator.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-#include "../None.h"
-#include "../OperatorException.h"
-#include "../OperatorTester.h"
-
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/test/OperatorTest.h"
+#include "stromx/runtime/test/TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::OperatorTest);
 

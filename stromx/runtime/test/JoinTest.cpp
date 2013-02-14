@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "JoinTest.h"
-#include "TestData.h"
-#include "../Join.h"
-#include "../DataContainer.h"
-#include "../OperatorTester.h"
-#include "../ReadAccess.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Join.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/test/JoinTest.h"
+#include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::JoinTest);
 

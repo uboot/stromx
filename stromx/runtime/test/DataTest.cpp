@@ -15,10 +15,10 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "DataTest.h"
-#include "TestData.h"
-#include "../Data.h"
-#include "../None.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/test/DataTest.h"
+#include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DataTest);
 

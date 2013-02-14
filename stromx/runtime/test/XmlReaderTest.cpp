@@ -15,15 +15,15 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "TestData.h"
-#include "TestOperator.h"
-#include "TestUtilities.h"
-#include "XmlReaderTest.h"
-#include "../Factory.h"
-#include "../Operator.h"
-#include "../Stream.h"
-#include "../XmlReader.h"
-#include "../XmlWriter.h"
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/XmlReader.h"
+#include "stromx/runtime/XmlWriter.h"
+#include "stromx/runtime/test/TestData.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/TestUtilities.h"
+#include "stromx/runtime/test/XmlReaderTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::XmlReaderTest);
 

@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../RecycleAccess.h"
+#include "stromx/runtime/RecycleAccess.h"
 
 namespace stromx
 {

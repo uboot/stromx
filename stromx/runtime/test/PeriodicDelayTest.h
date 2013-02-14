@@ -19,7 +19,7 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include "../DataContainer.h"
+#include "stromx/runtime/DataContainer.h"
 
 namespace stromx
 {

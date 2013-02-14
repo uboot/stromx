@@ -19,8 +19,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../impl/Id2DataMap.h"
-#include "../DataContainer.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace stromx
 {
@@ -50,7 +50,7 @@ namespace stromx
             class Observer : public impl::Id2DataMapObserver
             {
             public:
-                Observer(const Id2DataMapTest* const test);
+                explicit Observer(const Id2DataMapTest* const test);
                 virtual ~Observer() {}
                 virtual void observe(const unsigned int id, const DataContainer & data) const;
                 

@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "QueueTest.h"
-#include "../Queue.h"
-#include "../DataContainer.h"
-#include "../OperatorTester.h"
-#include "../Primitive.h"
-#include "../ReadAccess.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Queue.h"
+#include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/test/QueueTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::QueueTest);
 

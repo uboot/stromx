@@ -17,9 +17,9 @@
 #ifndef STROMX_RUNTIME_TESTOPERATOR_H
 #define STROMX_RUNTIME_TESTOPERATOR_H
 
-#include "../OperatorKernel.h"
-#include "../Primitive.h"
-#include "TestData.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/test/TestData.h"
 
 namespace stromx
 {

@@ -16,15 +16,15 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "TestOperator.h"
-#include "ThreadImplTest.h"
-#include "../Exception.h"
-#include "../None.h"
-#include "../Operator.h"
-#include "../OperatorException.h"
-#include "../OperatorTester.h"
-#include "../impl/InputNode.h"
-#include "../impl/ThreadImpl.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/ThreadImpl.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/ThreadImplTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ThreadImplTest);
 

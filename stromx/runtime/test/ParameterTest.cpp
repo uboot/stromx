@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "ParameterTest.h"
-
-#include "../ParameterGroup.h"
+#include "stromx/runtime/ParameterGroup.h"
+#include "stromx/runtime/test/ParameterTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ParameterTest);
 

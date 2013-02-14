@@ -16,11 +16,11 @@
 
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "PeriodicDelayTest.h"
-#include "../PeriodicDelay.h"
-#include "../Exception.h"
-#include "../OperatorTester.h"
-#include "../ReadAccess.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/PeriodicDelay.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/test/PeriodicDelayTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::PeriodicDelayTest);
 

@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../WriteAccess.h"
+#include "stromx/runtime/WriteAccess.h"
 
 namespace stromx
 {

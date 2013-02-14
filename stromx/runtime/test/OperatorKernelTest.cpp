@@ -14,10 +14,9 @@
  *  limitations under the License.
  */
 
-#include "OperatorKernelTest.h"
-
-#include "../OperatorKernel.h"
-#include "../ParameterGroup.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/ParameterGroup.h"
+#include "stromx/runtime/test/OperatorKernelTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::OperatorKernelTest);
 

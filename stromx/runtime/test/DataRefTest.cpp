@@ -15,11 +15,11 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "DataRefTest.h"
-#include "TestData.h"
-#include "../ConstDataRef.h"
-#include "../DataRef.h"
-#include "../None.h"
+#include "stromx/runtime/ConstDataRef.h"
+#include "stromx/runtime/DataRef.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/test/DataRefTest.h"
+#include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DataRefTest);
 

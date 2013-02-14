@@ -15,8 +15,8 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "DataVariantTest.h"
-#include "../DataVariant.h"
+#include "stromx/runtime/DataVariant.h"
+#include "stromx/runtime/test/DataVariantTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DataVariantTest);
 

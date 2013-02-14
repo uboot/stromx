@@ -19,8 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-
-#include "TestOperator.h"
+#include "stromx/runtime/test/TestOperator.h"
 
 namespace stromx
 {

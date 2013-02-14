@@ -15,8 +15,8 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "../Config.h"
-#include "PrimitiveTest.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/test/PrimitiveTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::PrimitiveTest);
 
