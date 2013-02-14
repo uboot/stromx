@@ -6,22 +6,22 @@ Created on Sat Jan 19 17:00:37 2013
 """
 
 class CvType(object):
-    def ident(self):
+    def typeId(self):
         raise NotImplementedError()
         
     def cast(self, src):
-        return "{0}({1})".format(self.ident(), src)
+        return "{0}({1})".format(self.typeId(), src)
         
 class Bool(CvType):
-    def ident(self):
+    def typeId(self):
         return "bool"
         
 class Int(CvType):
-    def ident(self):
+    def typeId(self):
         return "int"
         
 class Mat(CvType):
-    def ident(self):
+    def typeId(self):
         return "cv::Mat"
     
     def cast(self, src):

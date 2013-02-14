@@ -49,6 +49,15 @@ class MethodGenerator(ArgumentVisitor):
         if printResult:
             print self.doc.string()
             
+    def visitAll(self, visitor):
+        for opt in self.m.options:
+            for arg in opt.args:
+                arg.accept(visitor)
+            
+    def visitOption(self, visitor, opt):
+        for arg in opt.args:
+            arg.accept(visitor)
+            
 class OpHeaderGenerator(MethodGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
@@ -64,24 +73,28 @@ class OpHeaderGenerator(MethodGenerator):
     >>> g.save(p, m, True)
     <BLANKLINE>
     """
-    params = set()
+    
+    class DataMemberVisitor(ArgumentVisitor):
+        params = set()
+    
+        def visitParameter(self, parameter):
+            self.params.add(parameter)
+            
+        def visitNumericParameter(self, parameter):
+            self.params.add(parameter)
+            
+        def export(self, doc):
+            for p in self.params:
+                l = "{0} {1};".format(p.dataType.typeId(), p.ident.attribute())
+                doc.line(l)
     
     def generate(self):
-        for opt in self.m.options:
-            for arg in opt.args:
-                arg.accept(self)
-                
-        for p in self.params:
-            self.doc.line(p)
+        v = OpHeaderGenerator.DataMemberVisitor()
+        self.visitAll(v)
+        v.export(self.doc)
         
         with file("{0}.h".format(self.m.ident.className()), "w") as f:
             f.write(self.doc.string())
-    
-    def visitParameter(self, parameter):
-        self.params.add(parameter.ident.attribute())
-        
-    def visitNumericParameter(self, parameter):
-        self.params.add(parameter.ident.attribute())
             
 class OpImplGenerator(MethodGenerator):
     
