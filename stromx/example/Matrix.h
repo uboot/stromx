@@ -17,9 +17,9 @@
 #ifndef STROMX_EXAMPLE_MATRIX_H
 #define STROMX_EXAMPLE_MATRIX_H
 
-#include "Config.h"
 #include <string>
 #include <vector>
+#include "stromx/example/Config.h"
 #include <stromx/runtime/MatrixWrapper.h>
 
 namespace cv

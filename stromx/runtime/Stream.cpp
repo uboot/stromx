@@ -16,16 +16,16 @@
 
 #include <boost/assert.hpp>
 #include <boost/thread.hpp>
-#include "Enum.h"
-#include "Exception.h"
-#include "ExceptionObserver.h"
-#include "None.h"
-#include "Primitive.h"
-#include "Registry.h"
-#include "Stream.h"
-#include "Thread.h"
-#include "impl/InputNode.h"
-#include "impl/Network.h"
+#include "stromx/runtime/Enum.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/ExceptionObserver.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Registry.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/Network.h"
 
 namespace stromx
 {

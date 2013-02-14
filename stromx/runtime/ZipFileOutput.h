@@ -19,8 +19,8 @@
 
 #include <sstream>
 #include <vector>
-#include "Config.h"
-#include "FileOutput.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/FileOutput.h"
 
 struct zip;
 
@@ -38,7 +38,7 @@ namespace stromx
              * \param archive The path to the zip file.
              * \throws FileAccessFailed If the zip file could not be opened.
              */
-            ZipFileOutput(const std::string & archive);
+            explicit ZipFileOutput(const std::string & archive);
             virtual ~ZipFileOutput();
             
             /**

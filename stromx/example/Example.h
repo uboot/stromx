@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_EXAMPLE_H
 #define STROMX_EXAMPLE_EXAMPLE_H
 
-#include "Config.h"
+#include "stromx/example/Config.h"
 
 namespace stromx
 {

@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#include "Matrix.h"
-#include "Image.h"
-#include "Utilities.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/Exception.h>
-#include <stromx/runtime/Image.h>
+//#include <stromx/runtime/Image.h>
 
 namespace stromx
 {

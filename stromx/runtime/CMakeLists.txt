@@ -84,6 +84,7 @@ set_target_properties(stromx_runtime PROPERTIES
 )
 
 include_directories(
+    ${CMAKE_SOURCE_DIR}
     ${Boost_INCLUDE_DIRS}
 )
 

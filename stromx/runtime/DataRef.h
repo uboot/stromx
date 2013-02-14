@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_DATAREF_H
 #define STROMX_RUNTIME_DATAREF_H
 
-#include "DataInterface.h"
+#include "stromx/runtime/DataInterface.h"
 
 #ifdef __GNUG__
     #include <tr1/memory>

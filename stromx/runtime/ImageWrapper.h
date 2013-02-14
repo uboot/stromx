@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_IMAGEWRAPPER_H
 #define STROMX_RUNTIME_IMAGEWRAPPER_H
 
-#include "Image.h"
+#include "stromx/runtime/Image.h"
 
 namespace stromx
 {

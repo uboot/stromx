@@ -14,17 +14,16 @@
 *  limitations under the License.
 */
 
-#include "SortInputsAlgorithm.h"
-
 #include <boost/graph/adjacency_matrix.hpp>
 #include <boost/graph/topological_sort.hpp>
 #include <boost/assert.hpp>
 #include <iostream>
-#include "Description.h"
-#include "Input.h"
-#include "Operator.h"
-#include "Stream.h"
-#include "Thread.h"
+#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/SortInputsAlgorithm.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
 
 namespace stromx
 {

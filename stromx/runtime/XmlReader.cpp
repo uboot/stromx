@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-#include "XmlReader.h"
-
-#include "DirectoryFileInput.h"
-#include "ZipFileInput.h"
-#include "impl/XmlReaderImpl.h"
-#include "impl/XmlUtilities.h"
+#include "stromx/runtime/DirectoryFileInput.h"
+#include "stromx/runtime/XmlReader.h"
+#include "stromx/runtime/ZipFileInput.h"
+#include "stromx/runtime/impl/XmlReaderImpl.h"
+#include "stromx/runtime/impl/XmlUtilities.h"
 
 namespace stromx
 {

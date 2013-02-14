@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-#include "String.h"
-#include "InputProvider.h"
-#include "OutputProvider.h"
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/String.h"
 
 namespace stromx
 {

@@ -14,16 +14,13 @@
  *  limitations under the License.
  */
 
-
-
 #include <cppunit/TestAssert.h>
-#include "TestOperator.h"
-#include "ThreadTest.h"
-#include "../impl/Network.h"
-#include "../Exception.h"
-#include "../Operator.h"
-#include "../Thread.h"
-
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/ThreadTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ThreadTest);
 

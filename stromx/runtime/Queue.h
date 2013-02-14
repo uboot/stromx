@@ -18,10 +18,10 @@
 #define STROMX_RUNTIME_QUEUE_H
 
 #include <deque>
-#include "Config.h"
-#include "DataContainer.h"
-#include "OperatorKernel.h"
-#include "Primitive.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
 
 namespace stromx
 {

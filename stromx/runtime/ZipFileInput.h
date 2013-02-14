@@ -18,8 +18,8 @@
 #define STROMX_RUNTIME_ZIPFILEINPUT_H
 
 #include <sstream>
-#include "Config.h"
-#include "FileInput.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/FileInput.h"
 
 struct zip;
 
@@ -37,7 +37,7 @@ namespace stromx
              * \param archive The path to the zip file.
              * \throws FileAccessFailed If the zip file could not be opened.
              */
-            ZipFileInput(const std::string & archive);
+            explicit ZipFileInput(const std::string & archive);
             virtual ~ZipFileInput();
             
             virtual void initialize(const std::string & text, const std::string & filename);

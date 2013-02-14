@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_DATAINTERFACE_H
 #define STROMX_RUNTIME_DATAINTERFACE_H
 
-#include "DataVariant.h"
+#include "stromx/runtime/DataVariant.h"
 
 namespace stromx
 {

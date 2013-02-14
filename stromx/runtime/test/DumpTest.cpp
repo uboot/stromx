@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "DumpTest.h"
-#include "TestData.h"
-#include "../Dump.h"
-#include "../DataContainer.h"
-#include "../OperatorTester.h"
-#include "../ReadAccess.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Dump.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/test/DumpTest.h"
+#include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DumpTest);
 

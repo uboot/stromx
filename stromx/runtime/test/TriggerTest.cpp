@@ -17,12 +17,12 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "TriggerTest.h"
-#include "../Trigger.h"
-#include "../Exception.h"
-#include "../OperatorTester.h"
-#include "../ReadAccess.h"
-#include "../TriggerData.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/Trigger.h"
+#include "stromx/runtime/TriggerData.h"
+#include "stromx/runtime/test/TriggerTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::TriggerTest);
 

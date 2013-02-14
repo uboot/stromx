@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-#include "Data.h"
-#include "Exception.h"
-#include "Factory.h"
-#include "Operator.h"
-#include "OperatorKernel.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorKernel.h"
 
 namespace stromx
 {

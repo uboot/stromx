@@ -14,14 +14,13 @@
 *  limitations under the License.
 */
 
-#include "Image.h"
-#include "WebCamera.h"
 #include <boost/assert.hpp>
-#include <stromx/runtime/Image.h>
-#include <stromx/runtime/DataVariant.h>
+#include "stromx/example/Image.h"
+#include "stromx/example/WebCamera.h"
 #include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/DataVariant.h>
 #include <stromx/runtime/Id2DataPair.h>
-
+#include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorException.h>
 
 namespace stromx

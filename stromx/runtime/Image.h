@@ -18,7 +18,7 @@
 #define STROMX_RUNTIME_IMAGE_H
 
 #include <stdint.h>
-#include "Matrix.h"
+#include "stromx/runtime/Matrix.h"
 
 namespace stromx
 {

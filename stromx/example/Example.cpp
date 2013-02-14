@@ -14,22 +14,22 @@
 *  limitations under the License.
 */
 
-#include "AdjustRgbChannels.h"
-#include "Example.h"
-#include "Blur.h"
-#include "Buffer.h"
-#include "Camera.h"
-#include "Canny.h"
-#include "Clip.h"
-#include "Close.h"
-#include "ConstImage.h"
-#include "ConvertPixelType.h"
-#include "Dilate.h"
-#include "Erode.h"
-#include "Image.h"
-#include "HoughLinesP.h"
-#include "Open.h"
-#include "WebCamera.h"
+#include "stromx/example/AdjustRgbChannels.h"
+#include "stromx/example/Buffer.h"
+#include "stromx/example/Blur.h"
+#include "stromx/example/Camera.h"
+#include "stromx/example/Canny.h"
+#include "stromx/example/Clip.h"
+#include "stromx/example/Close.h"
+#include "stromx/example/ConstImage.h"
+#include "stromx/example/ConvertPixelType.h"
+#include "stromx/example/Dilate.h"
+#include "stromx/example/Erode.h"
+#include "stromx/example/Example.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/HoughLinesP.h"
+#include "stromx/example/Open.h"
+#include "stromx/example/WebCamera.h"
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 

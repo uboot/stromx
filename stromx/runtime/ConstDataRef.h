@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_CONSTDATAREF_H
 #define STROMX_RUNTIME_CONSTDATAREF_H
 
-#include "DataInterface.h"
+#include "stromx/runtime/DataInterface.h"
 
 #ifdef __GNUG__
     #include <tr1/memory>
@@ -56,13 +56,13 @@ namespace stromx
              * Constructs a data reference from a pointer to a data object. The reference
              * takes ownership of \c data.
              */
-            ConstDataRef(const Data* data);
+            explicit ConstDataRef(const Data* data);
             
             /** 
              * Constructs a constant data reference from the input (non-constant) data
              * reference. They data held by the reference is not copied.
              */
-            ConstDataRef(const DataRef & dataRef);
+            explicit ConstDataRef(const DataRef & dataRef);
 
             /** Casts a data reference to <tt>const Data &</tt>. */
             operator const Data&() { return *m_data; }

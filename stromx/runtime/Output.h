@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_OUTPUT_H
 #define STROMX_RUNTIME_OUTPUT_H
 
-#include "Connector.h"
+#include "stromx/runtime/Connector.h"
 
 namespace stromx
 {

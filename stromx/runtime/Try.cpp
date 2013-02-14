@@ -15,7 +15,7 @@
  */
 
 #include <boost/assert.hpp>
-#include "Try.h"
+#include "stromx/runtime/Try.h"
 
 namespace stromx
 {

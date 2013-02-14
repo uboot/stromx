@@ -20,7 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include <vector>
-#include "../ExceptionObserver.h"
+#include "stromx/runtime/ExceptionObserver.h"
 
 namespace stromx
 {

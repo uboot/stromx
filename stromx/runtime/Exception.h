@@ -19,7 +19,7 @@
 
 #include <exception>
 #include <string>
-#include "Config.h"
+#include "stromx/runtime/Config.h"
 
 namespace stromx
 {
@@ -32,7 +32,7 @@ namespace stromx
         {
         public:
             /** Constructs an exception. */
-            Exception(const std::string & message);
+            explicit Exception(const std::string & message);
             
             virtual ~Exception() throw() {}
             

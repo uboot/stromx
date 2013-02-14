@@ -18,8 +18,7 @@
 #define STROMX_RUNTIME_STRING_H
 
 #include <string>
-
-#include "Data.h"
+#include "stromx/runtime/Data.h"
 
 namespace stromx
 {

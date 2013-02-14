@@ -14,11 +14,11 @@
 *  limitations under the License.
 */
 
-#include "TestUtilities.h"
-#include "TestOperator.h"
-#include "../Operator.h"
-#include "../Thread.h"
-#include "../Stream.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/TestUtilities.h"
 
 namespace stromx
 {

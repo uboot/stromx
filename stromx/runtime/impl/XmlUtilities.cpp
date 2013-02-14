@@ -16,8 +16,8 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
-#include "XmlUtilities.h"
-#include "../Version.h"
+#include "stromx/runtime/Version.h"
+#include "stromx/runtime/impl/XmlUtilities.h"
 
 namespace stromx
 {

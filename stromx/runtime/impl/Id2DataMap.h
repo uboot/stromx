@@ -19,7 +19,7 @@
 
 #include <map>
 #include <vector>
-#include "../Description.h"
+#include "stromx/runtime/Description.h"
 
 namespace stromx
 {
@@ -39,7 +39,7 @@ namespace stromx
             {
             public:
                 Id2DataMap();
-                Id2DataMap(const std::vector<const Description*> & descriptions);                
+                explicit Id2DataMap(const std::vector<const Description*> & descriptions);                
                 
                 const DataContainer & get(const unsigned int id) const;
                 void set(const unsigned int id, const DataContainer & data);

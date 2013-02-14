@@ -17,10 +17,10 @@
 #ifndef STROMX_EXAMPLE_IMAGEFILTER_H
 #define STROMX_EXAMPLE_IMAGEFILTER_H
 
-#include "Config.h"
-#include <stromx/runtime/Primitive.h>
+#include "stromx/example/Config.h"
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/RecycleAccess.h>
 
 namespace cv
@@ -53,7 +53,7 @@ namespace stromx
 		FILTER_PARAMETERS
             };
             
-            ImageFilter(const std::string & type);
+            explicit ImageFilter(const std::string & type);
             
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;

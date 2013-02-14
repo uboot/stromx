@@ -14,10 +14,9 @@
 *  limitations under the License.
 */
 
-#include "DirectoryFileInputTest.h"
-
-#include "../Exception.h"
-#include "../DirectoryFileInput.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/DirectoryFileInput.h"
+#include "stromx/runtime/test/DirectoryFileInputTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DirectoryFileInputTest);
 

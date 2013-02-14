@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "Image.h"
+#include "stromx/runtime/Image.h"
 
 namespace stromx
 {

@@ -17,11 +17,11 @@
 #include "SortInputsAlgorithmTest.h"
 
 #include <cppunit/TestAssert.h>
-#include "../SortInputsAlgorithm.h"
-#include "../Stream.h"
-#include "../Thread.h"
-#include "TestOperator.h"
-#include "TestUtilities.h"
+#include "stromx/runtime/SortInputsAlgorithm.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/TestUtilities.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::SortInputsAlgorithmTest);
 

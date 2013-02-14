@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include "Exception.h"
-#include "MatrixWrapper.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/MatrixWrapper.h"
 
 namespace stromx
 {

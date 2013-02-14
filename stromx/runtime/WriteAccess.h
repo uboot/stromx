@@ -23,10 +23,10 @@
     #include <memory>
 #endif
 
-#include "Data.h"
-#include "DataContainer.h"
-#include "Exception.h"
-#include "impl/WriteAccessImpl.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/impl/WriteAccessImpl.h"
 
 namespace stromx
 {
@@ -52,7 +52,7 @@ namespace stromx
              * 
              * \param data The container which contains the data to be accessed.
              */
-            WriteAccess(const DataContainer & data)
+            explicit WriteAccess(const DataContainer & data)
               : m_impl(new impl::WriteAccessImpl(data, false))
             {
             }

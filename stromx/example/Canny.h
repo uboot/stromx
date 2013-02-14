@@ -17,8 +17,8 @@
 #ifndef STROMX_EXAMPLE_CANNY_H
 #define STROMX_EXAMPLE_CANNY_H
 
-#include "ImageFilter.h"
-#include "Image.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/ImageFilter.h"
 
 namespace stromx
 {

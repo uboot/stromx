@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-#include "InputNode.h"
-#include "OutputNode.h"
-#include "../DataContainer.h"
-#include "../OperatorException.h"
-#include "../Operator.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/OutputNode.h"
 
 namespace stromx
 {

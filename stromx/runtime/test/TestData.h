@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_TESTDATA_H
 #define STROMX_RUNTIME_TESTDATA_H
 
-#include "../Data.h"
+#include "stromx/runtime/Data.h"
 
 namespace stromx
 {
@@ -27,7 +27,7 @@ namespace stromx
         {
         public:
             TestData() : m_value(0) { wasDestructed = false; }
-            TestData(const int value) : m_value(value) { wasDestructed = false; }
+            explicit TestData(const int value) : m_value(value) { wasDestructed = false; }
             ~TestData() { wasDestructed = true; }
             
             virtual const Version & version() const { return VERSION; }

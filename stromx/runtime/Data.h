@@ -18,10 +18,10 @@
 #define STROMX_RUNTIME_DATA_H
 
 #include <typeinfo>
-#include "Config.h"
-#include "DataInterface.h"
-#include "DataVariant.h"
-#include "Exception.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/DataInterface.h"
+#include "stromx/runtime/DataVariant.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

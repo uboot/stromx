@@ -16,14 +16,14 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h> 
-#include "StreamTest.h"
-#include "TestOperator.h"
-#include "TestUtilities.h"
-#include "../Exception.h"
-#include "../Operator.h"
-#include "../Stream.h"
-#include "../Thread.h"
-#include "../impl/Network.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Stream.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/test/StreamTest.h"
+#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/TestUtilities.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::StreamTest);
 

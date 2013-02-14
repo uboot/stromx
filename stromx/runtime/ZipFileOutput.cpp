@@ -17,7 +17,7 @@
 #include "ZipFileOutput.h"
 
 #include <zip.h>
-#include "Exception.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

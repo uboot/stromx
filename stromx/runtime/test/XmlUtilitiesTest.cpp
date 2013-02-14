@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-#include "XmlUtilitiesTest.h"
-#include "../impl/XmlUtilities.h"
-#include "../Version.h"
 #include <cppunit/TestAssert.h>
+#include "stromx/runtime/impl/XmlUtilities.h"
+#include "stromx/runtime/test/XmlUtilitiesTest.h"
+#include "stromx/runtime/Version.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::XmlUtilitiesTest);
 

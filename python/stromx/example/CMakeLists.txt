@@ -8,7 +8,7 @@ set(SOURCES
 add_library(example SHARED ${SOURCES})
 
 include_directories(
-    ../../..
+    ${CMAKE_SOURCE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${OpenCV2_INCLUDE_DIR}
     ${PYTHON_INCLUDE_DIRS}

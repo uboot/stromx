@@ -17,10 +17,9 @@
 #ifndef STROMX_EXAMPLE_HOUGHLINESP_H
 #define STROMX_EXAMPLE_HOUGHLINES_H
 
+#include "stromx/example/Image.h"
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/OperatorKernel.h>
-
-#include "Image.h"
 
 namespace stromx
 {

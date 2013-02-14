@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-#include "DataRef.h"
-
-#include "Data.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataRef.h"
 
 namespace stromx
 {

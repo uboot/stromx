@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../None.h"
+#include "stromx/runtime/None.h"
 
 namespace stromx
 {

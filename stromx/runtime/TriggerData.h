@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_TRIGGERDATA_H
 #define STROMX_RUNTIME_TRIGGERDATA_H
 
-#include "Data.h"
+#include "stromx/runtime/Data.h"
 
 namespace stromx
 {

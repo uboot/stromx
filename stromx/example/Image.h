@@ -18,7 +18,7 @@
 #define STROMX_EXAMPLE_IMAGE_H
 
 #include <string>
-#include "Config.h"
+#include "stromx/example/Config.h"
 #include <stromx/runtime/ImageWrapper.h>
 
 namespace cv

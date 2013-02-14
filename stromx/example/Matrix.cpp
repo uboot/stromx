@@ -14,15 +14,14 @@
 *  limitations under the License.
 */
 
-#include "Matrix.h"
-#include "Utilities.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
-#include <stromx/runtime/OutputProvider.h>
-#include <stromx/runtime/InputProvider.h>
 #include <opencv2/core/core.hpp>
 #include <fstream>
-
+#include "stromx/example/Matrix.h"
+#include "stromx/example/Utilities.h"
+#include <stromx/runtime/InputProvider.h>
+#include <stromx/runtime/OutputProvider.h>
 
 namespace stromx
 {

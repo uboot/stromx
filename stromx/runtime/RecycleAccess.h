@@ -23,8 +23,8 @@
     #include <memory>
 #endif
 
-#include "DataContainer.h"
-#include "Exception.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {
@@ -54,7 +54,7 @@ namespace stromx
              * 
              * \param data This data will be recycled by this access.
              */
-            RecycleAccess(const DataContainer & data);
+            explicit RecycleAccess(const DataContainer & data);
             
             /** Constructs an empty recycle access. */
             RecycleAccess() {}

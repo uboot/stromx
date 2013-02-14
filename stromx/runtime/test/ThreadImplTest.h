@@ -19,8 +19,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "../DataContainer.h"
-#include "../impl/ThreadImplObserver.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/impl/ThreadImplObserver.h"
 
 namespace stromx
 {

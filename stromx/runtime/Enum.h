@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_ENUM_H
 #define STROMX_RUNTIME_ENUM_H
 
-#include "Primitive.h"
+#include "stromx/runtime/Primitive.h"
 
 namespace stromx
 {
@@ -31,7 +31,7 @@ namespace stromx
             Enum() : UInt32() {}
             
             /** Constructs an enumeration value and initializes it to \c value. */
-            Enum(const unsigned int value) : UInt32(value) {}
+            explicit Enum(const unsigned int value) : UInt32(value) {}
             
             virtual const DataVariant & variant() const { return DataVariant::ENUM; }
             virtual const std::string & type() const { return TYPE; }

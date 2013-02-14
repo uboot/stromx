@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_CONVERTPIXELTYPE_H
 #define STROMX_EXAMPLE_CONVERTPIXELTYPE_H
 
-#include "Config.h"
+#include "stromx/example/Config.h"
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorKernel.h>

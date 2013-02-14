@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_CLIP_H
 #define STROMX_EXAMPLE_CLIP_H
 
-#include "Config.h"
+#include "stromx/example/Config.h"
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/RecycleAccess.h>

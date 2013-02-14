@@ -20,12 +20,12 @@
 #include <map>
 #include <set>
 #include <string>
-#include "DataContainer.h"
-#include "DataRef.h"
-#include "Exception.h"
-#include "ConnectorObserver.h"
-#include "OperatorInfo.h"
-#include "impl/Id2DataMap.h"
+#include "stromx/runtime/ConnectorObserver.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/DataRef.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/OperatorInfo.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace boost
 {
@@ -91,7 +91,7 @@ namespace stromx
              * 
              * \param kernel The operator deletes \c kernel upon its destruction.
              */
-            Operator(OperatorKernel* const kernel);
+            explicit Operator(OperatorKernel* const kernel);
             
             virtual ~Operator();
             

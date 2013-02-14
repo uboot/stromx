@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_FILEINPUT_H
 #define STROMX_RUNTIME_FILEINPUT_H
 
-#include "InputProvider.h"
+#include "stromx/runtime/InputProvider.h"
 
 namespace stromx
 {

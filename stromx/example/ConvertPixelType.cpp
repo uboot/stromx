@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#include "ConvertPixelType.h"
-#include "Image.h"
-#include "Utilities.h"
 #include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/ConvertPixelType.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/EnumParameter.h>

@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-#include "Id2DataMap.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace stromx
 {

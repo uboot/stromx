@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "Open.h"
-
 #include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/Open.h"
 
 namespace stromx
 {

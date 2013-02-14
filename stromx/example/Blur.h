@@ -17,8 +17,8 @@
 #ifndef STROMX_EXAMPLE_BLUR_H
 #define STROMX_EXAMPLE_BLUR_H
 
-#include "Config.h"
-#include "ImageFilter.h"
+#include "stromx/example/Config.h"
+#include "stromx/example/ImageFilter.h"
 
 struct _IplImage;
 

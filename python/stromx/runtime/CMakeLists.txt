@@ -40,7 +40,7 @@ endif(BUILD_FILE_PERSISTENCE)
 add_library(runtime SHARED ${SOURCES})
 
 include_directories(
-    ../../..
+    ${CMAKE_SOURCE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${PYTHON_INCLUDE_DIRS}
 )

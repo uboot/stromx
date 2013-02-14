@@ -18,8 +18,8 @@
 #define STROMX_RUNTIME_DATAVARIANT_H
 
 #include <string>
-#include "Config.h"
-#include "Version.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {

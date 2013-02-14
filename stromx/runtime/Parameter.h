@@ -18,9 +18,9 @@
 #define STROMX_RUNTIME_PARAMETER_H
 
 #include <vector>
-#include "Description.h"
-#include "Enum.h"
-#include "None.h"
+#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Enum.h"
+#include "stromx/runtime/None.h"
 
 namespace stromx
 {
@@ -33,7 +33,7 @@ namespace stromx
         {
         public:
             /** Constructs an enumeration description. */
-            EnumDescription(const Enum value)
+            explicit EnumDescription(const Enum value)
               : m_value(value)
             {}
             

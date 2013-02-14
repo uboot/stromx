@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_CONNECTOR_H
 #define STROMX_RUNTIME_CONNECTOR_H
 
-#include "Config.h"
+#include "stromx/runtime/Config.h"
 
 namespace stromx
 {
@@ -72,7 +72,7 @@ namespace stromx
             Type type() const { return m_type; }
             
         protected:
-            Connector(const Type type, const Operator* const op, const unsigned int id)
+            explicit Connector(const Type type, const Operator* const op, const unsigned int id)
               : m_type(type),
                 m_op(op),
                 m_id(id)

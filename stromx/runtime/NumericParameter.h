@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_NUMERICPARAMETER_H
 #define STROMX_RUNTIME_NUMERICPARAMETER_H
 
-#include "Parameter.h"
+#include "stromx/runtime/Parameter.h"
 
 namespace stromx
 {

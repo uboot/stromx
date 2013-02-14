@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_OPERATOREXCEPTI0N_H
 #define STROMX_RUNTIME_OPERATOREXCEPTI0N_H
 
-#include "Exception.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {

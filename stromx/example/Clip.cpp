@@ -14,9 +14,9 @@
 *  limitations under the License.
 */
 
-#include "Clip.h"
-#include "Image.h"
-#include "Utilities.h"
+#include "stromx/example/Clip.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>

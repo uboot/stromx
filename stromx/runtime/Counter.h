@@ -17,9 +17,9 @@
 #ifndef STROMX_RUNTIME_COUNTER_H
 #define STROMX_RUNTIME_COUNTER_H
 
-#include "Config.h"
-#include "OperatorKernel.h"
-#include "Primitive.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
 
 namespace stromx
 {

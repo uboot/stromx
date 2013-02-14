@@ -14,14 +14,14 @@
 *  limitations under the License.
 */
 
-#include "ConstImage.h"
-#include "Image.h"
-#include "Utilities.h"
+#include <boost/assert.hpp>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
-#include <boost/assert.hpp>
+#include "stromx/example/ConstImage.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/Utilities.h"
 
 namespace stromx
 {

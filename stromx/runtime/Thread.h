@@ -19,8 +19,8 @@
 
 #include <string>
 #include <vector>
-#include "Config.h"
-#include "Input.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Input.h"
 
 namespace stromx
 {
@@ -110,7 +110,7 @@ namespace stromx
             void removeInput(Operator* const op, const unsigned int inputId);
                 
         private:
-            Thread(const impl::Network* const network);
+            explicit Thread(const impl::Network* const network);
             unsigned int findInput(Operator* const op, const unsigned int inputId);
             
             void start();

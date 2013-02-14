@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_DIRECTORYFILEOUTPUT_H
 #define STROMX_RUNTIME_DIRECTORYFILEOUTPUT_H
 
-#include "Config.h"
-#include "FileOutput.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/FileOutput.h"
 #include <fstream>
 #include <sstream>
 
@@ -35,7 +35,7 @@ namespace stromx
              *
              * \param directory The path to the directory.
              */
-            DirectoryFileOutput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
+            explicit DirectoryFileOutput(const std::string & directory) : m_initialized(false), m_directory(directory) {}
             virtual ~DirectoryFileOutput();
             
             virtual void initialize(const std::string & filename);

@@ -16,12 +16,12 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "NetworkTest.h"
-#include "TestOperator.h"
-#include "../Exception.h"
-#include "../Operator.h"
-#include "../OperatorTester.h"
-#include "../impl/Network.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorTester.h"
+#include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/test/NetworkTest.h"
+#include "stromx/runtime/test/TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::NetworkTest);
 

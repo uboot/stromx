@@ -14,20 +14,20 @@
 *  limitations under the License.
 */
 
-#include "Runtime.h"
-#include "Counter.h"
-#include "Dump.h"
-#include "Enum.h"
-#include "Exception.h"
-#include "Fork.h"
-#include "Join.h"
-#include "None.h"
-#include "PeriodicDelay.h"
-#include "Primitive.h"
-#include "Queue.h"
-#include "Registry.h"
-#include "Trigger.h"
-#include "TriggerData.h"
+#include "stromx/runtime/Counter.h"
+#include "stromx/runtime/Dump.h"
+#include "stromx/runtime/Enum.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Fork.h"
+#include "stromx/runtime/Join.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/PeriodicDelay.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Queue.h"
+#include "stromx/runtime/Runtime.h"
+#include "stromx/runtime/Registry.h"
+#include "stromx/runtime/Trigger.h"
+#include "stromx/runtime/TriggerData.h"
 
 void stromxRegisterRuntime(stromx::runtime::Registry& registry)
 {

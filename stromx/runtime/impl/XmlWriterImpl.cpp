@@ -17,16 +17,15 @@
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <iostream>
-#include "XmlUtilities.h"
-#include "XmlWriterImpl.h"
-#include "../Config.h"
-#include "../Data.h"
-#include "../Exception.h"
-#include "../FileOutput.h"
-#include "../Input.h"
-#include "../Operator.h"
-#include "../Thread.h"
-
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/FileOutput.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Thread.h"
+#include "stromx/runtime/impl/XmlUtilities.h"
+#include "stromx/runtime/impl/XmlWriterImpl.h"
 
 using namespace xercesc;
 

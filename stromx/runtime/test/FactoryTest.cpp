@@ -15,12 +15,12 @@
  */
 
 #include <cppunit/TestAssert.h>
-#include "FactoryTest.h"
-#include "TestData.h"
-#include "TestOperator.h"
-#include "../Exception.h"
-#include "../Factory.h"
-#include "../Operator.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/test/FactoryTest.h"
+#include "stromx/runtime/test/TestData.h"
+#include "stromx/runtime/test/TestOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::FactoryTest);
 

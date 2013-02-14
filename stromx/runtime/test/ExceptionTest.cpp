@@ -15,8 +15,8 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ExceptionTest.h"
-#include "../Exception.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/test/ExceptionTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ExceptionTest);
 

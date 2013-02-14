@@ -17,12 +17,11 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
-#include "TestData.h"
-#include "WriteAccessTest.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-#include "../None.h"
-
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/None.h"
+#include "stromx/runtime/test/TestData.h"
+#include "stromx/runtime/test/WriteAccessTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::WriteAccessTest);
 

@@ -17,9 +17,9 @@
 #ifndef STROMX_EXAMPLE_PERIODICDELAY_H
 #define STROMX_EXAMPLE_PERIODICDELAY_H
 
-#include "Config.h"
-#include "OperatorKernel.h"
-#include "Primitive.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
 
 namespace stromx
 {
@@ -61,7 +61,7 @@ namespace stromx
             virtual void activate();
             
         private:
-            PeriodicDelay(const PeriodicDelay &);
+            explicit PeriodicDelay(const PeriodicDelay &);
             
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();

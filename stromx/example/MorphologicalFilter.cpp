@@ -14,14 +14,13 @@
 *  limitations under the License.
 */
 
-#include "MorphologicalFilter.h"
-
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "stromx/example/MorphologicalFilter.h"
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
 
 namespace stromx
 {

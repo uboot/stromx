@@ -14,11 +14,10 @@
  *  limitations under the License.
  */
 
-#include "TestData.h"
-
 #include <fstream>
-#include "../InputProvider.h"
-#include "../OutputProvider.h"
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/test/TestData.h"
 
 namespace stromx
 {

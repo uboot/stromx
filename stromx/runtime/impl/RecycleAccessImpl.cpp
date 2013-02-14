@@ -14,13 +14,11 @@
  *  limitations under the License.
  */
 
-#include "DataContainerImpl.h"
-#include "RecycleAccessImpl.h"
-#include "../Data.h"
-#include "../DataContainer.h"
-#include "../Exception.h"
-
-
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/impl/DataContainerImpl.h"
+#include "stromx/runtime/impl/RecycleAccessImpl.h"
 
 namespace stromx
 {

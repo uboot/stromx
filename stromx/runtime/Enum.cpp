@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "Enum.h"
+#include "stromx/runtime/Enum.h"
 
 namespace stromx
 {

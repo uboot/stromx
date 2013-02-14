@@ -17,8 +17,8 @@
 #ifndef STROMX_RUNTIME_ID2DATACOMPOSITE_H
 #define STROMX_RUNTIME_ID2DATACOMPOSITE_H
 
-#include "Config.h"
-#include "Id2DataMapper.h"
+#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Id2DataMapper.h"
 
 namespace stromx
 {
