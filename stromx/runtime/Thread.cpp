@@ -93,19 +93,19 @@ namespace stromx
             
             IndexSet toBeErased;
             
-            for(std::vector<Input>::iterator iter = m_inputSequence.begin();
-                iter != m_inputSequence.end();
-                ++iter)
+            for(std::vector<Input>::iterator iter1 = m_inputSequence.begin();
+                iter1 != m_inputSequence.end();
+                ++iter1)
             {
-                if((*iter).op() == op)
-                    toBeErased.insert(iter);
+                if((*iter1).op() == op)
+                    toBeErased.insert(iter1);
             }
             
-            for(IndexSet::reverse_iterator iter = toBeErased.rbegin();
-                iter != toBeErased.rend();
-                ++iter)
+            for(IndexSet::reverse_iterator iter2 = toBeErased.rbegin();
+                iter2 != toBeErased.rend();
+                ++iter2)
             {
-                m_inputSequence.erase(*iter);
+                m_inputSequence.erase(*iter2);
             }
             
             m_thread->removeOperator(op);
