@@ -35,7 +35,7 @@ class Document(object):
         return self.m.ident.className()
         
     def namespaceEnter(self, name):
-        self.line("namespace {0}".format(self.p.ident.lower()))
+        self.line("namespace {0}".format(name))
         self.scopeEnter()
     
     def namespaceExit(self):
@@ -53,3 +53,14 @@ class Document(object):
         self.decreaseIndent()
         self.line("{0}:".format(key))
         self.increaseIndent()
+        
+    def enum(self, name, keys):
+        self.line("enum {0}".format(name))
+        self.scopeEnter()
+        for i, key in enumerate(keys):
+            if i != len(keys) - 1:
+                self.line("{0},".format(key))
+            else:
+                self.line(key)
+                
+        self.scopeExit()
