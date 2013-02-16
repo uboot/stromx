@@ -20,9 +20,8 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "../Image.h"
-
-#include "ImageFilterTest.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ImageFilterTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ImageFilterTest);
 

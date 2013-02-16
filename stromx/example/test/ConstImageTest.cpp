@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ConstImageTest.h"
-#include "../ConstImage.h"
-#include "../Image.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/ConstImage.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ConstImageTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ConstImageTest);
 

@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "../Dilate.h"
-
-#include "DilateTest.h"
+#include "stromx/example/Dilate.h"
+#include "stromx/example/test/DilateTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::DilateTest);
 

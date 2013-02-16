@@ -19,9 +19,9 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "CannyTest.h"
-#include "../Canny.h"
-#include "../Image.h"
+#include "stromx/example/Canny.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/CannyTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::CannyTest);
 

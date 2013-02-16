@@ -19,8 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-
-#include "../ImageFilter.h"
+#include "stromx/example/ImageFilter.h"
 
 namespace stromx
 {

@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "../Close.h"
-
-#include "CloseTest.h"
+#include "stromx/example/Close.h"
+#include "stromx/example/test/CloseTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::CloseTest);
 
