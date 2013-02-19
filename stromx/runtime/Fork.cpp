@@ -46,7 +46,7 @@ namespace stromx
             switch(id)
             {
             case NUM_OUTPUTS:
-                uintValue = dynamic_cast<const UInt32 &>(value);
+                uintValue = data_cast<const UInt32 &>(value);
                 if(uintValue < MIN_OUTPUTS)
                     throw WrongParameterValue(parameter(NUM_OUTPUTS), *this, "Too little outputs.");
                 if(uintValue > MAX_OUTPUTS)

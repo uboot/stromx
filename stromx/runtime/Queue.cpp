@@ -48,7 +48,7 @@ namespace stromx
                     if(m_size == 0)
                         throw WrongParameterValue(parameter(SIZE), *this);
                     
-                    m_size = dynamic_cast<const UInt32&>(value);
+                    m_size = data_cast<const UInt32&>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);

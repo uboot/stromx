@@ -53,16 +53,16 @@ namespace stromx
                 switch(id)
                 {
                 case BUFFER_SIZE:
-                    m_bufferSize = dynamic_cast<const UInt32&>(value);
+                    m_bufferSize = data_cast<const UInt32&>(value);
                     break;
                 case SLEEP_TIME:
-                    m_sleepTime = dynamic_cast<const UInt32&>(value);
+                    m_sleepTime = data_cast<const UInt32&>(value);
                     break;
                 case THROW_EXCEPTION:
-                    m_throwException = dynamic_cast<const Bool&>(value);
+                    m_throwException = data_cast<const Bool&>(value);
                     break;
                 case TEST_DATA:
-                    m_testData = dynamic_cast<const TestData&>(value);
+                    m_testData = data_cast<const TestData&>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
