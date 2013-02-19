@@ -64,7 +64,7 @@ namespace stromx
              * 
              * \param data This data will be recycled by this access.
              */
-            void add(const DataContainer data);  
+            void add(const DataContainer & data);  
             
             /**
              * Returns true if the recycle access does not reference any data

@@ -44,7 +44,7 @@ namespace stromx
 
         public:
             InputNodeTest() 
-            : m_operatorWrapper(0),
+              : m_operatorWrapper(0),
                 m_sourceOperatorWrapper(0),
                 m_inputNode(0),
                 m_sourceNode(0)

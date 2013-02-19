@@ -34,7 +34,7 @@ namespace stromx
         class MorphologicalFilterTest : public CPPUNIT_NS :: TestFixture
         {
             public:
-                MorphologicalFilterTest() : m_operator(0) {}
+                MorphologicalFilterTest() : m_template(0), m_operator(0) {}
                 
                 void setUp();
                 void tearDown();

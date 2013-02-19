@@ -111,7 +111,7 @@ namespace stromx
             }
             
             ReadAccess<> access(container);
-            CPPUNIT_ASSERT_EQUAL((const Data*)(m_data), &access());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(m_data), &access());
         }
         
         void ReadAccessTest::releaseDelayed(WriteAccess<>& access)

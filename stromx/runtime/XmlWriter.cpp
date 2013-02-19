@@ -67,7 +67,7 @@ namespace stromx
             }
         }
         
-        void XmlWriter::writeStream(FileOutput& output, const std::string basename, const stromx::runtime::Stream& stream) const
+        void XmlWriter::writeStream(FileOutput& output, const std::string & basename, const stromx::runtime::Stream& stream) const
         {
             using namespace impl;
             
@@ -122,13 +122,13 @@ namespace stromx
             }
         }
         
-        void XmlWriter::writeParameters(FileOutput& output, const std::string basename, const std::vector< Operator* >& operators) const
+        void XmlWriter::writeParameters(FileOutput& output, const std::string & basename, const std::vector< Operator* >& operators) const
         {
             std::vector<const Operator*> constOperators(operators.begin(), operators.end());
             writeParameters(output, basename, constOperators);
         }
         
-        void XmlWriter::writeParameters(FileOutput& output, const std::string basename,
+        void XmlWriter::writeParameters(FileOutput& output, const std::string & basename,
                                         const std::vector< const stromx::runtime::Operator* >& operators) const
         {
             using namespace impl;

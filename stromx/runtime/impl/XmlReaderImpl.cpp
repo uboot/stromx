@@ -290,7 +290,7 @@ namespace stromx
                 return m_stream;
             }  
             
-            void XmlReaderImpl::readParameters(FileInput& input, const std::string filename, const std::vector< stromx::runtime::Operator* > operators)
+            void XmlReaderImpl::readParameters(FileInput& input, const std::string & filename, const std::vector< stromx::runtime::Operator* > & operators)
             {
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);

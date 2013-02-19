@@ -37,7 +37,7 @@ namespace stromx
             
             for(std::vector<const Description*>::iterator iter = descriptions.begin();
                 iter != descriptions.end();
-                iter++)
+                ++iter)
             {
                 delete *iter;
             }

@@ -44,7 +44,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ReadAccessTest () {}
+            ReadAccessTest () : m_data(0) {}
             
             void setUp() {}
             void tearDown() {}

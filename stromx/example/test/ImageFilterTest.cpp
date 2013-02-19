@@ -90,7 +90,7 @@ namespace stromx
             
             ReadAccess<Image> access(result);
             const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL((const Image*)(destinationImage), &resultImage);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(destinationImage), &resultImage);
         }
 
         void ImageFilterTest::testOneInput()
@@ -107,7 +107,7 @@ namespace stromx
             
             ReadAccess<Image> access(result);
             const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL((const Image*)(sourceImage), &resultImage);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(sourceImage), &resultImage);
         }
 
 
@@ -126,7 +126,7 @@ namespace stromx
             
             ReadAccess<Image> access(result);
             const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL((const Image*)(sourceImage), &resultImage);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(sourceImage), &resultImage);
         }
         
         void ImageFilterTest::testWrongSource()

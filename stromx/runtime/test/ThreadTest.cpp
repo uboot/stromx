@@ -55,7 +55,7 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->addInput(op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[2].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(op), m_thread->inputSequence()[2].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[2].id());
         }
 
@@ -68,7 +68,7 @@ namespace stromx
             
             m_network->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_thread->insertInput(1, op, TestOperator::INPUT_1));
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(op), m_thread->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(op), m_thread->inputSequence()[1].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_thread->inputSequence()[1].id());
         }
 
@@ -77,7 +77,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_thread->removeInput(3), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(1));
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_op1), m_thread->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op1), m_thread->inputSequence()[0].op());
         }
         
         void ThreadTest::testRemoveInputOpId()
@@ -86,7 +86,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_thread->removeInput(0, 0), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(m_op1, TestOperator::INPUT_1));
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_op2), m_thread->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_thread->inputSequence()[0].op());
         }
         
         void ThreadTest::testRemoveOperator()

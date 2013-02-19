@@ -20,6 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include <vector>
+#include <boost/graph/graph_concepts.hpp>
 #include "stromx/runtime/ExceptionObserver.h"
 
 namespace stromx
@@ -51,7 +52,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            StreamTest() {}
+            StreamTest() : m_stream(0), m_network(0), m_op1(0), m_op2(0) {}
             
             void setUp();
             void tearDown();
@@ -77,6 +78,8 @@ namespace stromx
             class TestObserver : public ExceptionObserver
             {
             public:
+                TestObserver() : m_phase(ExceptionObserver::ACTIVATION), m_thread(0) {}
+                
                 void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const;
                 
                 ExceptionObserver::Phase phase() const { return m_phase; }

@@ -107,8 +107,6 @@ namespace stromx
             
             if(m_currentFile)
                 throw WrongState("File has already been opened.");
-
-            std::string filename;
             
             if(! ext.empty())
                 m_currentFilename = m_currentBasename + "." + ext;

@@ -82,7 +82,7 @@ namespace stromx
             if(m_deque.size() < m_size)
             {
                 Id2DataPair inputDataMapper(INPUT);
-                if(m_deque.size())
+                if(! m_deque.empty())
                 {
                     // there is some data in the queue
                     // try to get data from the input
@@ -101,7 +101,7 @@ namespace stromx
             }
                 
             // if the queue is not empty
-            if(m_deque.size() > 0)
+            if(! m_deque.empty())
             {
                 Id2DataPair outputDataMapper(OUTPUT, m_deque.front());
                 if(m_deque.size() < m_size)

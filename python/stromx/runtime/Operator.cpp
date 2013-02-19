@@ -88,7 +88,7 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
-    void setInputDataWrap(Operator & op, const unsigned int id, const DataContainer data)
+    void setInputDataWrap(Operator & op, const unsigned int id, const DataContainer & data)
     {
         Py_BEGIN_ALLOW_THREADS
         try
@@ -122,7 +122,7 @@ namespace
         return toBoost(data.ptr());
     }
     
-    boost::shared_ptr<Data> getParameterWithTimoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
+    boost::shared_ptr<Data> getParameterWithTimeoutWrap(Operator & op, const unsigned int id, const unsigned int timeout)
     {
         DataRef data;
         
@@ -156,7 +156,7 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
-    void setParameterWithTimoutWrap(Operator & op, const unsigned int id, const Data & data, const unsigned int timeout)
+    void setParameterWithTimeoutWrap(Operator & op, const unsigned int id, const Data & data, const unsigned int timeout)
     {
         Py_BEGIN_ALLOW_THREADS
         try
@@ -189,9 +189,9 @@ void exportOperator()
         .def("initialize", &Operator::initialize)
         .def("deinitialize", &Operator::deinitialize)
         .def("getParameter", &getParameterWrap)
-        .def("getParameter", &getParameterWithTimoutWrap)
+        .def("getParameter", &getParameterWithTimeoutWrap)
         .def("setParameter", &setParameterWrap)
-        .def("setParameter", &setParameterWrap)
+        .def("setParameter", &setParameterWithTimeoutWrap)
         .def("getOutputData", &getOutputDataWrap)
         .def("setInputData", &setInputDataWrap)
         .def("clearOutputData", &clearOutputDataWrap)
