@@ -15,14 +15,14 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ConvertPixelTypeTest.h"
-#include "../ConvertPixelType.h"
-#include "../Image.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/ConvertPixelType.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ConvertPixelTypeTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ConvertPixelTypeTest);
 

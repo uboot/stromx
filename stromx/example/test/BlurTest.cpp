@@ -19,9 +19,9 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "BlurTest.h"
-#include "../Blur.h"
-#include "../Image.h"
+#include "stromx/example/Blur.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/BlurTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::BlurTest);
 

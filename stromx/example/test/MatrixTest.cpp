@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "MatrixTest.h"
-#include "../Config.h"
-#include "../Matrix.h"
+#include <opencv2/core/core.hpp>
 #include <stromx/runtime/DirectoryFileInput.h>
 #include <stromx/runtime/DirectoryFileOutput.h>
-#include <opencv2/core/core.hpp>
+#include "stromx/example/Config.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/test/MatrixTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::MatrixTest);
 

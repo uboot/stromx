@@ -19,10 +19,9 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "../Image.h"
-#include "../ImageFilter.h"
-
-#include "MorphologicalFilterTest.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/ImageFilter.h"
+#include "stromx/example/test/MorphologicalFilterTest.h"
 
 namespace stromx
 {

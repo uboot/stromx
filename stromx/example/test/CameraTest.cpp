@@ -14,17 +14,17 @@
 *  limitations under the License.
 */
 
-#include <cppunit/TestAssert.h>
-#include "CameraTest.h"
-#include "../Camera.h"
-#include "../Image.h"
 #include <boost/thread.hpp>
+#include <cppunit/TestAssert.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/TriggerData.h>
+#include "stromx/example/Camera.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/CameraTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::CameraTest);
 

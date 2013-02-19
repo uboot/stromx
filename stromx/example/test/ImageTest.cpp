@@ -15,13 +15,13 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ImageTest.h"
-#include "../Config.h"
-#include "../Image.h"
-#include <stromx/runtime/Exception.h>
+#include <opencv2/core/core.hpp>
 #include <stromx/runtime/DirectoryFileInput.h>
 #include <stromx/runtime/DirectoryFileOutput.h>
-#include <opencv2/core/core.hpp>
+#include <stromx/runtime/Exception.h>
+#include "stromx/example/Config.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ImageTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ImageTest);
 

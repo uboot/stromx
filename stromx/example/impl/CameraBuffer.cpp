@@ -15,15 +15,15 @@
 */
 
 #include <iostream>
-#include "stromx/example/Config.h"
-#include "stromx/example/Image.h"
-#include "stromx/example/impl/CameraBuffer.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
+#include "stromx/example/Config.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/impl/CameraBuffer.h"
 
 namespace stromx
 {

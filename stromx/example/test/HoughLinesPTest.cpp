@@ -15,13 +15,13 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "HoughLinesPTest.h"
-#include "../HoughLinesP.h"
-#include "../Matrix.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/HoughLinesP.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/test/HoughLinesPTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::HoughLinesPTest);
 

@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#include "WebCameraTest.h"
-#include "../Image.h"
-#include "../WebCamera.h"
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/Image.h"
+#include "stromx/example/WebCamera.h"
+#include "stromx/example/test/WebCameraTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::WebCameraTest);
 
