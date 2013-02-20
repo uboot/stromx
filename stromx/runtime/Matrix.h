@@ -41,6 +41,8 @@ namespace stromx
                 DOUBLE
             };
             
+            static const DataVariant & classVariant() { return DataVariant::MATRIX; }
+            
             virtual ~Matrix() {}
 
             /** 
