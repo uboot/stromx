@@ -187,6 +187,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::RGB_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT(m_image->variant().isVariant(stromx::runtime::Image::classVariant()));
             delete m_image;
             
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, runtime::Image::RGB_24));
@@ -204,6 +205,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
             CPPUNIT_ASSERT(m_image->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::MONO_8_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT(m_image->variant().isVariant(stromx::runtime::Image::classVariant()));
             delete m_image;
             
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image(0, 0, runtime::Image::MONO_8));
