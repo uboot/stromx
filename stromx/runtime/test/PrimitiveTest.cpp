@@ -30,6 +30,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_EQUAL(int(0), int(m_int32));
             CPPUNIT_ASSERT(m_int32.isVariant(DataVariant::INT_32));
+            CPPUNIT_ASSERT(m_int32.isVariant(Int32::classVariant()));
             
             m_int32 = Int32(-235);
             Int32 copy(m_int32);
@@ -52,6 +53,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(UInt32::MIN));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(UINT32_MAX), (unsigned int)(UInt32::MAX));
             CPPUNIT_ASSERT(m_uint32.isVariant(DataVariant::UINT_32));
+            CPPUNIT_ASSERT(m_uint32.isVariant(UInt32::classVariant()));
             
             DummyOutput out;
             m_uint32 = UInt32(235);
@@ -69,6 +71,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_EQUAL(int(0), int(m_int8));
             CPPUNIT_ASSERT(m_int8.isVariant(DataVariant::INT_8));
+            CPPUNIT_ASSERT(m_int8.isVariant(Int8::classVariant()));
             
             DummyOutput out;
             m_int8 = Int8(-35);
@@ -88,6 +91,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(UInt8::MIN));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(UINT8_MAX), (unsigned int)(UInt8::MAX));
             CPPUNIT_ASSERT(m_uint8.isVariant(DataVariant::UINT_8));
+            CPPUNIT_ASSERT(m_uint8.isVariant(UInt8::classVariant()));
             
             DummyOutput out;
             m_uint8 = UInt8(235);
