@@ -35,6 +35,13 @@ namespace stromx
             /** Constructs an enumeration value and initializes it to \c value. */
             explicit Enum(const unsigned int value) : UInt32(value) {}
             
+            /** Assigns \c value to the enum. */
+            const Enum operator=(const unsigned int value)
+            { 
+                *this = Enum(value);
+                return *this;
+            }
+            
             virtual const DataVariant & variant() const { return DataVariant::ENUM; }
             virtual const std::string & type() const { return TYPE; }
             virtual Data* clone() const { return new Enum(*this); }

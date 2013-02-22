@@ -80,6 +80,7 @@ set(SOURCES
     DataTest.cpp
     DoubleTest.cpp
     DumpTest.cpp
+    EnumTest.cpp
     ExceptionTest.cpp
     ForkTest.cpp
     Id2DataCompositeTest.cpp

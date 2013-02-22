@@ -80,7 +80,8 @@ namespace stromx
             
             void testIsVariant()
             {
-                CPPUNIT_ASSERT_EQUAL(m_value.variant(), variant());
+                CPPUNIT_ASSERT(m_value.variant().isVariant(variant()));
+                CPPUNIT_ASSERT(! m_value.variant().isVariant(DataVariant::NONE));
             }
             
             void testPtrCast()

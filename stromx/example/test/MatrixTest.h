@@ -54,6 +54,9 @@ namespace stromx
             CPPUNIT_TEST (testSaveDouble);
             CPPUNIT_TEST (testSaveUInt16);
             CPPUNIT_TEST (testSaveEmpty);
+            CPPUNIT_TEST(testIsVariant);
+            CPPUNIT_TEST(testPtrCast);
+            CPPUNIT_TEST(testRefCast);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -88,6 +91,9 @@ namespace stromx
                 void testSaveDouble();
                 void testSaveUInt16();
                 void testSaveEmpty();
+                void testIsVariant();
+                void testPtrCast();
+                void testRefCast();
                 
             private:
                 const static stromx::runtime::Version VERSION;
