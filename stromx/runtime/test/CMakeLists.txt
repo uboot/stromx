@@ -72,12 +72,13 @@ set(SOURCES
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
-    RuntimeTest.cpp
+    BoolTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp
     DataRefTest.cpp
     DataVariantTest.cpp
     DataTest.cpp
+    DoubleTest.cpp
     DumpTest.cpp
     ExceptionTest.cpp
     ForkTest.cpp
@@ -85,6 +86,7 @@ set(SOURCES
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
     InputNodeTest.cpp
+    Int32Test.cpp
     JoinTest.cpp
     OperatorKernelTest.cpp
     OperatorTest.cpp
@@ -99,15 +101,16 @@ set(SOURCES
     ThreadTest.cpp
     NetworkTest.cpp
     FactoryTest.cpp
-    PrimitiveTest.cpp
+    RuntimeTest.cpp
     StringTest.cpp
     TestData.cpp
     TriggerTest.cpp
     TryTest.cpp
-    WriteAccessTest.cpp
     SortInputsAlgorithmTest.cpp
     StreamTest.cpp
     TestUtilities.cpp
+    UInt8Test.cpp
+    WriteAccessTest.cpp
     main.cpp
 )
 

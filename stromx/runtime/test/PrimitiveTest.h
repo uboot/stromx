@@ -20,6 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/None.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/Primitive.h"
 
@@ -27,26 +28,78 @@ namespace stromx
 {
     namespace runtime
     {
+        template<class primitive_t, class repr_t>
         class PrimitiveTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (PrimitiveTest);
-            CPPUNIT_TEST(testInt32);
-            CPPUNIT_TEST(testUInt32);
-            CPPUNIT_TEST(testInt8);
-            CPPUNIT_TEST(testUInt8);
-            CPPUNIT_TEST_SUITE_END ();
-
         public:
-            PrimitiveTest() {}
-            
             void setUp() {}
             void tearDown() {}
 
         protected:
-            void testInt32();
-            void testUInt32();
-            void testInt8();
-            void testUInt8();
+            void testDefaultConstructor()
+            {
+                CPPUNIT_ASSERT_EQUAL(repr_t(m_value), repr_t(0));
+            }
+            
+            void testConstructor()
+            {
+                m_value = primitive_t(value());
+                
+                CPPUNIT_ASSERT_EQUAL(repr_t(m_value), value());
+            }
+            
+            void testAssignment()
+            {
+                m_value = value();
+                
+                CPPUNIT_ASSERT_EQUAL(repr_t(m_value), value());
+            }
+            
+            void testCopyConstructor()
+            {
+                m_value = value();
+                primitive_t copy = primitive_t(m_value);
+                
+                CPPUNIT_ASSERT_EQUAL(repr_t(copy), value());
+            }
+            
+            void testSerialize()
+            {
+                DummyOutput out;
+                m_value = value();
+                m_value.serialize(out);
+                CPPUNIT_ASSERT_EQUAL(str(), out.value());
+            }
+            
+            void testDeserialize()
+            {
+                DummyInput in(str());
+                m_value.deserialize(in, VERSION);
+                CPPUNIT_ASSERT_EQUAL(primitive_t(value()), m_value);
+            }
+            
+            void testIsVariant()
+            {
+                CPPUNIT_ASSERT_EQUAL(m_value.variant(), variant());
+            }
+            
+            void testPtrCast()
+            {
+                CPPUNIT_ASSERT(data_cast<Data>(&m_value));
+                CPPUNIT_ASSERT(data_cast<primitive_t>(&m_value));
+                CPPUNIT_ASSERT_EQUAL(data_cast<None>(&m_value), static_cast<None*>(0));
+            }
+            
+            void testRefCast()
+            {
+                CPPUNIT_ASSERT_NO_THROW(data_cast<Data>(m_value));
+                CPPUNIT_ASSERT_NO_THROW(data_cast<primitive_t>(m_value));
+                CPPUNIT_ASSERT_THROW(data_cast<None>(m_value), BadCast);
+            }
+            
+            virtual repr_t value() const = 0;
+            virtual std::string str() const = 0;
+            virtual DataVariant variant() const = 0;
                 
         private: 
             class DummyInput : public InputProvider
@@ -83,11 +136,11 @@ namespace stromx
             
             const static Version VERSION;
             
-            Int8 m_int8;
-            UInt8 m_uint8;
-            Int32 m_int32;
-            UInt32 m_uint32;
+            primitive_t m_value;
         };
+        
+        template<class primitive_t, class repr_t>
+        const Version PrimitiveTest<primitive_t, repr_t>::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
     }
 }
 

@@ -27,6 +27,8 @@ namespace stromx
         class STROMX_RUNTIME_API None : public Data
         {
         public:
+            static const DataVariant & classVariant() { return DataVariant::NONE; };
+            
             None() {}
             
             virtual const Version & version() const { return VERSION; }
