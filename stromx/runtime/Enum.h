@@ -49,6 +49,13 @@ namespace stromx
         private:
             static const std::string TYPE;
         };
+        
+        template <>
+        class data_traits<Enum>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::ENUM; }
+        };
     }
 }
 

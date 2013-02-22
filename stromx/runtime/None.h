@@ -43,6 +43,13 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const Version VERSION;
+        };     
+        
+        template <>
+        class data_traits<None>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::NONE; }
         };
     }
 }

@@ -104,6 +104,13 @@ namespace stromx
         {
             return dynamic_cast<const data_t*>(data);
         }
+        
+        template<class data_t>
+        class data_traits
+        {
+        public:
+            static const DataVariant & variant();
+        };
     }
 }
 

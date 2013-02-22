@@ -95,6 +95,13 @@ namespace stromx
             /** Returns the data variant defined by the input \c valueType. */
             static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);
         };
+        
+        template <>
+        class data_traits<Matrix>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::MATRIX; }
+        };
     }
 }
 

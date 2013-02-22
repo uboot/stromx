@@ -58,6 +58,13 @@ namespace stromx
             
             int m_value;
         };
+        
+        template <>
+        class data_traits<TestData>
+        {
+        public:
+            static const DataVariant & variant() { return TestData::TEST_DATA; }
+        };
     }
 }
 

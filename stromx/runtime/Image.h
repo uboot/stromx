@@ -83,6 +83,13 @@ namespace stromx
             /** Returns the data variant defined by the input \c pixelType. */
             static const runtime::DataVariant dataVariantFromPixelType(const PixelType pixelType);
         };
+        
+        template <>
+        class data_traits<Image>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::IMAGE; }
+        };
     }
 }
 
