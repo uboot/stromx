@@ -50,12 +50,14 @@ namespace stromx
             static const std::string TYPE;
         };
         
+        /** \cond */
         template <>
         class data_traits<Enum>
         {
         public:
             static const DataVariant & variant() { return DataVariant::ENUM; }
         };
+        /** \endcond */
     }
 }
 

@@ -45,12 +45,14 @@ namespace stromx
             static const Version VERSION;
         };     
         
+        /** \cond */
         template <>
         class data_traits<None>
         {
         public:
             static const DataVariant & variant() { return DataVariant::NONE; }
         };
+        /** \endcond */
     }
 }
 

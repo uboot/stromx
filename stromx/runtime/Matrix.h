@@ -96,12 +96,14 @@ namespace stromx
             static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);
         };
         
+        /** \cond */
         template <>
         class data_traits<Matrix>
         {
         public:
             static const DataVariant & variant() { return DataVariant::MATRIX; }
         };
+        /** \endcond */
     }
 }
 

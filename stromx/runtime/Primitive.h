@@ -97,12 +97,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Bool::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Bool>
         {
         public:
             static const DataVariant & variant() { return DataVariant::BOOL; }
         };
+        /** \endcond */
         
         /** \brief Signed 8-bit integer */
         typedef Primitive<int, int8_t> Int8;
@@ -115,12 +117,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Int8::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Int8>
         {
         public:
             static const DataVariant & variant() { return DataVariant::INT_8; }
-        };
+        };  
+        /** \endcond */
         
         /** \brief Unsigned 8-bit integer */
         typedef Primitive<unsigned int, uint8_t> UInt8;
@@ -133,12 +137,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void UInt8::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<UInt8>
         {
         public:
             static const DataVariant & variant() { return DataVariant::UINT_8; }
-        };
+        };  
+        /** \endcond */
         
         /** \brief Signed 16-bit integer */
         typedef Primitive<int, int16_t> Int16;
@@ -151,12 +157,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Int16::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Int16>
         {
         public:
             static const DataVariant & variant() { return DataVariant::INT_16; }
-        };
+        };  
+        /** \endcond */
 
         /** \brief Unsigned 16-bit integer */
         typedef Primitive<unsigned int, uint16_t> UInt16;
@@ -169,12 +177,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void UInt16::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<UInt16>
         {
         public:
             static const DataVariant & variant() { return DataVariant::UINT_16; }
-        };
+        };  
+        /** \endcond */
         
         /** \brief Signed 32-bit integer */
         typedef Primitive<int, int32_t> Int32;
@@ -187,12 +197,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Int32::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Int32>
         {
         public:
             static const DataVariant & variant() { return DataVariant::INT_32; }
-        };
+        };  
+        /** \endcond */
         
         /** \brief Unsigned 32-bit integer */
         typedef Primitive<unsigned int, uint32_t> UInt32;
@@ -205,12 +217,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void UInt32::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<UInt32>
         {
         public:
             static const DataVariant & variant() { return DataVariant::UINT_32; }
-        };
+        };  
+        /** \endcond */
         
         /** \brief Single precision floating point number */
         typedef Primitive<double, float> Float;
@@ -223,12 +237,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Float::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Float>
         {
         public:
             static const DataVariant & variant() { return DataVariant::FLOAT; }
-        };
+        };  
+        /** \endcond */
 
         /** \brief Double precision floating point number */
         typedef Primitive<double, double> Double;
@@ -241,12 +257,14 @@ namespace stromx
         template <>
         STROMX_RUNTIME_API void Double::deserialize(InputProvider & in, const Version & version);
         
+        /** \cond */
         template <>
         class data_traits<Double>
         {
         public:
             static const DataVariant & variant() { return DataVariant::DOUBLE; }
-        };
+        };  
+        /** \endcond */
 
 #ifdef WIN32
         /** \cond */
