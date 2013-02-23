@@ -37,6 +37,9 @@ namespace stromx
             CPPUNIT_TEST(testCastToStdString);
             CPPUNIT_TEST(testEquality);
             CPPUNIT_TEST(testInequality);
+            CPPUNIT_TEST(testIsVariant);
+            CPPUNIT_TEST(testPtrCast);
+            CPPUNIT_TEST(testRefCast);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -54,6 +57,9 @@ namespace stromx
             void testEquality();
             void testInequality();
             void testClone();
+            void testIsVariant();
+            void testPtrCast();
+            void testRefCast();
                 
         private: 
             class DummyInput : public InputProvider

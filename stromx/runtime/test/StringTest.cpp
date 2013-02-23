@@ -16,6 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Config.h"
+#include "stromx/runtime/None.h"
 #include "stromx/runtime/test/StringTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::StringTest);
@@ -80,6 +81,29 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(std::string("test"), std::string(*data_cast<String>(clone)));
             delete clone;
+        }   
+        
+        void StringTest::testIsVariant()
+        {
+            String str("test");
+            CPPUNIT_ASSERT(str.variant().isVariant(runtime::DataVariant::STRING));
+            CPPUNIT_ASSERT(! str.variant().isVariant(runtime::DataVariant::NONE));
+        }
+        
+        void StringTest::testPtrCast()
+        {
+            String str("test");
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::Data>(&str));
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::String>(&str));
+            CPPUNIT_ASSERT_EQUAL(runtime::data_cast<runtime::None>(&str), static_cast<runtime::None*>(0));
+        }
+        
+        void StringTest::testRefCast()
+        {
+            String str("test");
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Data>(str));
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::String>(str));
+            CPPUNIT_ASSERT_THROW(runtime::data_cast<runtime::None>(str), runtime::BadCast);
         }
     }
 }

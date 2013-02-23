@@ -65,6 +65,10 @@ namespace stromx
             
         bool DataVariant::isVariant(const runtime::DataVariant& variant) const
         {
+            // per default each data type is derived from Data
+            if(variant == DataVariant::DATA)
+                return true;
+            
             if(variant.package() != package())
                 return false;
             
