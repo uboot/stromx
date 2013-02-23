@@ -85,7 +85,7 @@ namespace stromx
             return new Matrix(*this);
         }
                 
-        void Matrix::doDeserialize(std::istream& in)
+        void Matrix::doDeserialize(std::istream& in, example::Matrix & matrix)
         {
             /*
             * TODO
@@ -145,15 +145,15 @@ namespace stromx
             
             // get the value type and allocate the matrix
             Matrix::ValueType valueType = valueTypeFromNpyHeader(what[2].str()[0], wordSize);
-            allocate(numRows, numCols, valueType);
+            matrix.allocate(numRows, numCols, valueType);
             
             // read data
-            const uint8_t* rowPtr = data();
-            unsigned int rowSize = cols() * valueSize();
-            for(unsigned int i = 0; i < rows(); ++i)
+            const uint8_t* rowPtr = matrix.data();
+            unsigned int rowSize = matrix.cols() * matrix.valueSize();
+            for(unsigned int i = 0; i < matrix.rows(); ++i)
             {
                 in.read((char*)(rowPtr), rowSize);
-                rowPtr += stride();
+                rowPtr += matrix.stride();
             }
             
             if(in.fail())
@@ -166,7 +166,7 @@ namespace stromx
             input.openFile(runtime::InputProvider::BINARY);
             
             // call the actual deserialization method
-            doDeserialize(input.file());
+            doDeserialize(input.file(), *this);
         }
         
         Matrix::ValueType Matrix::valueTypeFromNpyHeader(const char valueType,
@@ -249,7 +249,7 @@ namespace stromx
             throw stromx::runtime::Exception("Attempt to serialize unsupported matrix value type.");
         }
         
-        void Matrix::doSerialize(std::ostream& out) const
+        void Matrix::doSerialize(std::ostream& out, const runtime::Matrix & matrix)
         {
             /*
             * TODO
@@ -266,10 +266,10 @@ namespace stromx
             std::ostringstream header;
             header << "{'descr': '";
             header << '<';
-            header << npyTypeSymbol(valueType());
-            header << valueSize();
+            header << npyTypeSymbol(matrix.valueType());
+            header << matrix.valueSize();
             header << "', 'fortran_order': False, 'shape': (";
-            header << rows() << ", " << cols();
+            header << matrix.rows() << ", " << matrix.cols();
             header << "), }";
             
             // extract the header string and pad it
@@ -290,9 +290,9 @@ namespace stromx
             out << '\n';
             
             // write data
-            const uint8_t* rowPtr = data();
-            unsigned int rowSize = cols() * valueSize();
-            for(unsigned int i = 0; i < rows(); ++i)
+            const uint8_t* rowPtr = matrix.data();
+            unsigned int rowSize = matrix.cols() * matrix.valueSize();
+            for(unsigned int i = 0; i < matrix.rows(); ++i)
             {
                 out.write((const char*)(rowPtr), rowSize);
                 rowPtr += rowSize;
@@ -308,7 +308,7 @@ namespace stromx
             std::ostream & outStream = output.openFile("npy", runtime::OutputProvider::BINARY);
             
             // call the actual serialization function
-            doSerialize(outStream);
+            doSerialize(outStream, *this);
         }
 
         void Matrix::copy(const stromx::runtime::Matrix& matrix)
@@ -342,16 +342,12 @@ namespace stromx
             std::ifstream in(filename.c_str(), std::ios_base::in | std::ios_base::binary);
             
             // deserialize the matrix
-            doDeserialize(in);
+            doDeserialize(in, *this);
         }
 
         void Matrix::save(const std::string& filename) const
         {
-            // open the file
-            std::ofstream out(filename.c_str(), std::ios_base::out | std::ios_base::binary);
-            
-            // deserialize the matrix
-            doSerialize(out);
+            save(filename, *this);
         }
 
         void Matrix::allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType)
@@ -444,7 +440,11 @@ namespace stromx
         
         void Matrix::save(const std::string& filename, const runtime::Matrix& matrix)
         {
-            Matrix(matrix).save(filename);
+            // open the file
+            std::ofstream out(filename.c_str(), std::ios_base::out | std::ios_base::binary);
+            
+            // deserialize the matrix
+            doSerialize(out, matrix);
         }
     }
 }
