@@ -27,10 +27,27 @@ namespace stromx
 {
     namespace runtime
     {
+        class Data;
         class DataRef;
         class InputProvider;
         class OutputProvider;
         class Version;
+        
+        /** \cond */
+        template<class data_t>
+        class data_traits
+        {
+        public:
+            static const DataVariant & variant();
+        };  
+        
+        template<>
+        class data_traits<Data>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::DATA; }
+        };  
+        /** \endcond */
         
         /** \brief Abstract data object. */
         class STROMX_RUNTIME_API Data : public DataInterface
@@ -57,14 +74,10 @@ namespace stromx
         template<typename data_t>
         data_t & data_cast(Data & data)
         {
-            try
-            {
-                return dynamic_cast<data_t &>(data);
-            }
-            catch(std::bad_cast &)
-            {
+            if(data.isVariant(data_traits<data_t>::variant()))
+                return reinterpret_cast<data_t &>(data);
+            else
                 throw BadCast();
-            }
         }
         
         /** 
@@ -75,14 +88,10 @@ namespace stromx
         template<typename data_t>
         const data_t & data_cast(const Data & data)
         {
-            try
-            {
-                return dynamic_cast<const data_t &>(data);
-            }
-            catch(std::bad_cast &)
-            {
+            if(data.isVariant(data_traits<data_t>::variant()))
+                return reinterpret_cast<const data_t &>(data);
+            else
                 throw BadCast();
-            }
         }
         
         /** 
@@ -92,7 +101,10 @@ namespace stromx
         template<typename data_t>
         data_t* data_cast(Data * data)
         {
-            return dynamic_cast<data_t*>(data);
+            if(data->isVariant(data_traits<data_t>::variant()))
+                return reinterpret_cast<data_t*>(data);
+            else
+                return 0;
         }
         
         /** 
@@ -102,17 +114,11 @@ namespace stromx
         template<typename data_t>
         const data_t* data_cast(const Data * data)
         {
-            return dynamic_cast<const data_t*>(data);
+            if(data->isVariant(data_traits<data_t>::variant()))
+                return reinterpret_cast<const data_t*>(data);
+            else
+                return 0;
         }
-        
-        /** \cond */
-        template<class data_t>
-        class data_traits
-        {
-        public:
-            static const DataVariant & variant();
-        };  
-        /** \endcond */
     }
 }
 

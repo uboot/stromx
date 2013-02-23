@@ -44,10 +44,10 @@ namespace stromx
         {
             runtime::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             
-            image.save("ConstImageTest_testExecute.png");
+            example::Image::save("ConstImageTest_testExecute.png", image);
         }
         
         void ConstImageTest::tearDown ( void )

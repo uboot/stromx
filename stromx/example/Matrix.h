@@ -37,6 +37,12 @@ namespace stromx
             friend cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
         
         public:
+            
+            /** 
+             * Saves the input \c matrix to \c filename. The matrix is stored in the NPY format.
+             */
+            static void save(const std::string& filename, const runtime::Matrix & matrix);
+            
             /** 
              * Constructs an empty matrix with zero rows and columns and value type Matrix::NONE.
              * No data is associated with the matrix, i.e. its data and buffer pointers are 0.

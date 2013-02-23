@@ -72,7 +72,16 @@ namespace stromx
         STROMX_RUNTIME_API bool operator==(const String & lhs, const String & rhs);
         
         /** Returns true if the contents of \c lhs and \c rhs are different. */
-        STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);
+        STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);       
+        
+        /** \cond */
+        template <>
+        class data_traits<String>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::STRING; }
+        };  
+        /** \endcond */
     }
 }
     

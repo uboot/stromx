@@ -180,10 +180,10 @@ namespace stromx
                 m_operator->activate();
                 runtime::DataContainer output = m_operator->getOutputData(WebCamera::OUTPUT);
             
-                runtime::ReadAccess<Image> access(output);
-                const Image& image = access();
+                runtime::ReadAccess<runtime::Image> access(output);
+                const runtime::Image& image = access();
             
-                image.save("WebCameraTest_testExecute.png");
+                example::Image::save("WebCameraTest_testExecute.png", image);
                 m_operator->deactivate();
             }
         }

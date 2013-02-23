@@ -51,13 +51,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Blur::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("BlurTest_testExecuteCopy.png");
+            example::Image::save("BlurTest_testExecuteCopy.png", resultImage);
         }
         
         void BlurTest::testExecuteGaussianColor()
@@ -73,13 +73,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Blur::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("BlurTest_testExecuteGaussianColor.png");
+            example::Image::save("BlurTest_testExecuteGaussianColor.png", resultImage);
         }
         
         void BlurTest::testExecuteGaussianMono()
@@ -95,13 +95,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Blur::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("BlurTest_testExecuteGaussianMono.png");
+            example::Image::save("BlurTest_testExecuteGaussianMono.png", resultImage);
         }
 
         void BlurTest::testExecuteMedianColor()
@@ -117,13 +117,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Blur::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("BlurTest_testExecuteMedianColor.png");
+            example::Image::save("BlurTest_testExecuteMedianColor.png", resultImage);
         }
 
         void BlurTest::testExecuteMedianMono()
@@ -139,13 +139,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Blur::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("BlurTest_testExecuteMedianMono.png");
+            example::Image::save("BlurTest_testExecuteMedianMono.png", resultImage);
         }
         
         void BlurTest::tearDown ( void )

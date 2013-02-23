@@ -124,8 +124,8 @@ namespace stromx
             Id2DataPair srcMapper(IMAGE);
             provider.receiveInputData(srcMapper);
             
-            WriteAccess<Image> src(srcMapper.data());
-            Image& image = src();
+            WriteAccess<runtime::Image> src(srcMapper.data());
+            runtime::Image& image = src();
             
             if(image.pixelType() != Image::MONO_8)
                 throw InputError(HoughLinesP::IMAGE, *this, "Source image must be an 8-bit monochrome image.");

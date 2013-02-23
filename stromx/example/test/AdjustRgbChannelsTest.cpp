@@ -47,10 +47,10 @@ namespace stromx
             m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
             
             runtime::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             
-            image.save("AdjustRgbChannelsTest_testExecute.png");
+            example::Image::save("AdjustRgbChannelsTest_testExecute.png", image);
         }
         
         void AdjustRgbChannelsTest::tearDown ( void )

@@ -441,5 +441,10 @@ namespace stromx
                 throw runtime::WrongArgument("Unsupported OpenCV element type.");  
             }
         }
+        
+        void Matrix::save(const std::string& filename, const runtime::Matrix& matrix)
+        {
+            Matrix(matrix).save(filename);
+        }
     }
 }

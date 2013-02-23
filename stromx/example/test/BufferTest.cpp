@@ -47,7 +47,7 @@ namespace stromx
             
             {
                 // assert that the data is image data
-                ReadAccess<Image> access(output);
+                ReadAccess<runtime::Image> access(output);
                 CPPUNIT_ASSERT_NO_THROW(access());
             }
             
@@ -62,7 +62,7 @@ namespace stromx
             
             {
                 // assert that the data is image data
-                ReadAccess<Image> access(output);
+                ReadAccess<runtime::Image> access(output);
                 CPPUNIT_ASSERT_NO_THROW(access());
             }
         }

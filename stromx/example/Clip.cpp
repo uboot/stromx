@@ -92,8 +92,8 @@ namespace stromx
             provider.receiveInputData(inputDataMapper);
             
             DataContainer container = inputDataMapper.data();
-            WriteAccess<Image> access(container);
-            Image& image = access();
+            WriteAccess<runtime::Image> access(container);
+            runtime::Image& image = access();
             
             unsigned int top = m_top;
             unsigned int left = m_left;

@@ -83,7 +83,7 @@ namespace stromx
                 
                 try
                 {
-                    return data_cast<data_t &>(m_impl->get());
+                    return data_cast<data_t>(m_impl->get());
                 }
                 catch(std::bad_cast &)
                 {

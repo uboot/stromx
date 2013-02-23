@@ -43,10 +43,10 @@ namespace stromx
             m_operator->setInputData(HoughLinesP::IMAGE, source);
             
             runtime::DataContainer result = m_operator->getOutputData(HoughLinesP::LINES);
-            runtime::ReadAccess<Matrix> access(result);
-            const Matrix& resultLines = access();
+            runtime::ReadAccess<runtime::Matrix> access(result);
+            const runtime::Matrix& resultLines = access();
             
-            resultLines.save("HoughLinesPTest_testExecute.npy");
+            example::Matrix::save("HoughLinesPTest_testExecute.npy", resultLines);
         }
         
         void HoughLinesPTest::tearDown ( void )

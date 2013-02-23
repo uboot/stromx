@@ -148,7 +148,7 @@ namespace stromx
                     }
                     case SATURATION:
                     {
-                        runtime::Double saturation = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double saturation = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_SATURATION, saturation);
                         break;
                     }

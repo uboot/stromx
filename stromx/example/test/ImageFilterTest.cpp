@@ -87,9 +87,9 @@ namespace stromx
             
             DataContainer result = m_operator->getOutputData(ImageFilter::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(destinationImage), &resultImage);
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
+            CPPUNIT_ASSERT_EQUAL(static_cast<const runtime::Image*>(destinationImage), &resultImage);
         }
 
         void ImageFilterTest::testOneInput()
@@ -104,9 +104,9 @@ namespace stromx
             
             DataContainer result = m_operator->getOutputData(ImageFilter::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(sourceImage), &resultImage);
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
+            CPPUNIT_ASSERT_EQUAL(static_cast<const runtime::Image*>(sourceImage), &resultImage);
         }
 
 
@@ -123,9 +123,9 @@ namespace stromx
             
             DataContainer result = m_operator->getOutputData(ImageFilter::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
-            CPPUNIT_ASSERT_EQUAL(static_cast<const Image*>(sourceImage), &resultImage);
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
+            CPPUNIT_ASSERT_EQUAL(static_cast<const runtime::Image*>(sourceImage), &resultImage);
         }
         
         void ImageFilterTest::testWrongSource()

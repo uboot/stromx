@@ -49,12 +49,12 @@ namespace stromx
 
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
                 
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image.height());
             
-            image.save("ClipTest_testExecute.png");
+            example::Image::save("ClipTest_testExecute.png", image);
         }
         
         void ClipTest::testAdjustClipRegion1()
@@ -65,13 +65,13 @@ namespace stromx
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-            ReadAccess<Image> access(result);
+            ReadAccess<runtime::Image> access(result);
             
-            const Image& image = access();
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image.height());
             
-            image.save("ClipTest_testAdjustClipRegion1.png");
+            example::Image::save("ClipTest_testAdjustClipRegion1.png", image);
         }
         
         void ClipTest::testAdjustClipRegion2()
@@ -82,9 +82,9 @@ namespace stromx
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-            ReadAccess<Image> access(result);
+            ReadAccess<runtime::Image> access(result);
             
-            const Image& image = access();
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.height());
         }

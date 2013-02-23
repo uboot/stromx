@@ -54,13 +54,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("CannyTest_testExecute.png");
+            example::Image::save("CannyTest_testExecute.png", resultImage);
         }
         
         void CannyTest::testExecuteInPlace()
@@ -77,13 +77,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save("CannyTest_testExecuteInPlace.png");
+            example::Image::save("CannyTest_testExecuteInPlace.png", resultImage);
         }
         
         void CannyTest::tearDown ( void )

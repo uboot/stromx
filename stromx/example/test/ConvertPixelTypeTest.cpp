@@ -51,13 +51,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConvertPixelTypeTest_testExecuteMono8.png");
+            example::Image::save("ConvertPixelTypeTest_testExecuteMono8.png", image);
         }
         
         void ConvertPixelTypeTest::testExecuteBayerBg8()
@@ -68,13 +68,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BAYERBG_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConvertPixelTypeTest_testExecuteBayerBg8.png");
+            example::Image::save("ConvertPixelTypeTest_testExecuteBayerBg8.png", image);
         }
         
         void ConvertPixelTypeTest::testExecuteBayerRgb24()
@@ -85,13 +85,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            image.save("ConvertPixelTypeTest_testExecuteBayerRgb24.png");
+            example::Image::save("ConvertPixelTypeTest_testExecuteBayerRgb24.png", image);
         }
         
         void ConvertPixelTypeTest::testExecuteIdenticalInputs()

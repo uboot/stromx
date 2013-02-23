@@ -63,8 +63,8 @@ namespace stromx
                 UInt32 index = ReadAccess<UInt32>(indexContainer)();
                 CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
                 
-                const Image & image = ReadAccess<Image>(imageContainer)();
-                image.save("CameraTest_testExecuteSoftwareTrigger.png");
+                const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+                example::Image::save("CameraTest_testExecuteSoftwareTrigger.png", image);
             }
             
             m_operator->clearOutputData(Camera::OUTPUT);
@@ -110,10 +110,10 @@ namespace stromx
             m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::BAYERBG_8));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-            const Image & image = ReadAccess<Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
             
             CPPUNIT_ASSERT_EQUAL(image.pixelType(), runtime::Image::BAYERBG_8);
-            image.save("CameraTest_testAdjustPixelTypeBayerBg8.png");
+            example::Image::save("CameraTest_testAdjustPixelTypeBayerBg8.png", image);
         }
 
         void CameraTest::testAdjustRoi()
@@ -124,11 +124,11 @@ namespace stromx
             m_operator->setParameter(Camera::TOP, UInt32(46));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-            const Image & image = ReadAccess<Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
             
             CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
             CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
-            image.save("CameraTest_testAdjustRoi.png");
+            example::Image::save("CameraTest_testAdjustRoi.png", image);
         }
         
         void CameraTest::testAdjustExposure()
@@ -137,9 +137,9 @@ namespace stromx
             m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-            const Image & image = ReadAccess<Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
             
-            image.save("CameraTest_testAdjustExposure.png");
+            example::Image::save("CameraTest_testAdjustExposure.png", image);
         }
 
         void CameraTest::testAdjustWhiteBalance()
@@ -150,9 +150,9 @@ namespace stromx
             m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);
-            const Image & image = ReadAccess<Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
             
-            image.save("CameraTest_testAdjustWhiteBalance.png");
+            example::Image::save("CameraTest_testAdjustWhiteBalance.png", image);
         }
         
         void CameraTest::testValidateBufferSize()

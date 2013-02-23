@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Primitive.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/graph/graph_concepts.hpp>
 #include <cfloat>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/InputProvider.h"

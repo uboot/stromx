@@ -83,8 +83,8 @@ namespace stromx
                 Id2DataPair srcMapper(SOURCE);
                 provider.receiveInputData(srcMapper);
                 
-                WriteAccess<Image> src(srcMapper.data());
-                Image& image = src();
+                WriteAccess<runtime::Image> src(srcMapper.data());
+                runtime::Image& image = src();
                 
                 validateSourceImage(image);
                 cv::Mat cvImage = getOpenCvMat(image);
@@ -103,11 +103,11 @@ namespace stromx
                 // check whether source and destination contain different data objects
                 if(srcMapper.data() != destMapper.data())
                 {
-                    ReadAccess<Image> src(srcMapper.data());
-                    WriteAccess<Image> dest(destMapper.data());
+                    ReadAccess<runtime::Image> src(srcMapper.data());
+                    WriteAccess<runtime::Image> dest(destMapper.data());
                     
-                    const Image& srcImage = src();
-                    Image& destImage = dest();
+                    const runtime::Image& srcImage = src();
+                    runtime::Image& destImage = dest();
                     
                     validateSourceImage(srcImage);
                     if(destImage.bufferSize() < computeDestinationSize(srcImage))
@@ -128,8 +128,8 @@ namespace stromx
                     // If source and destination contain the same data object a read and write access
                     // can not be obtained at the same time. Instead, we get a write access to the
                     // source and treat it as in the single input case.
-                    WriteAccess<Image> src(srcMapper.data());
-                    Image& image = src();
+                    WriteAccess<runtime::Image> src(srcMapper.data());
+                    runtime::Image& image = src();
                     
                     validateSourceImage(image);
                     cv::Mat cvImage = getOpenCvMat(image);
