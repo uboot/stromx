@@ -184,6 +184,7 @@ class OutputArgument(Argument):
         
 class Parameter(InputArgument):
     inPlace = False
+    isInit = False
     default = None
     
     def accept(self, visitor):
