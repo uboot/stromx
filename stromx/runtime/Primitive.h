@@ -39,8 +39,6 @@ namespace stromx
         class STROMX_RUNTIME_API Primitive : public Data
         {
         public:
-            static const DataVariant & classVariant();
-            
             /** Constructs a primitive and initializes it with 0. */
             explicit Primitive() : m_value(0) {}
             
@@ -89,8 +87,6 @@ namespace stromx
         /** \brief Boolean value */
         typedef Primitive<bool, bool> Bool;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Bool::classVariant();
-        template<>
         STROMX_RUNTIME_API const DataVariant & Bool::variant() const;
         template <>
         STROMX_RUNTIME_API void Bool::serialize(OutputProvider & out) const;
@@ -108,8 +104,6 @@ namespace stromx
         
         /** \brief Signed 8-bit integer */
         typedef Primitive<int, int8_t> Int8;
-        template<>
-        STROMX_RUNTIME_API const DataVariant & Int8::classVariant();
         template<>
         STROMX_RUNTIME_API const DataVariant & Int8::variant() const;
         template <>
@@ -129,8 +123,6 @@ namespace stromx
         /** \brief Unsigned 8-bit integer */
         typedef Primitive<unsigned int, uint8_t> UInt8;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt8::classVariant();
-        template<>
         STROMX_RUNTIME_API const DataVariant & UInt8::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt8::serialize(OutputProvider & out) const;
@@ -148,8 +140,6 @@ namespace stromx
         
         /** \brief Signed 16-bit integer */
         typedef Primitive<int, int16_t> Int16;
-        template<>
-        STROMX_RUNTIME_API const DataVariant & Int16::classVariant();
         template<>
         STROMX_RUNTIME_API const DataVariant & Int16::variant() const;
         template <>
@@ -169,8 +159,6 @@ namespace stromx
         /** \brief Unsigned 16-bit integer */
         typedef Primitive<unsigned int, uint16_t> UInt16;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt16::classVariant();
-        template<>
         STROMX_RUNTIME_API const DataVariant & UInt16::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt16::serialize(OutputProvider & out) const;
@@ -188,8 +176,6 @@ namespace stromx
         
         /** \brief Signed 32-bit integer */
         typedef Primitive<int, int32_t> Int32;
-        template<>
-        STROMX_RUNTIME_API const DataVariant & Int32::classVariant();
         template<>
         STROMX_RUNTIME_API const DataVariant & Int32::variant() const;
         template <>
@@ -209,8 +195,6 @@ namespace stromx
         /** \brief Unsigned 32-bit integer */
         typedef Primitive<unsigned int, uint32_t> UInt32;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt32::classVariant();
-        template<>
         STROMX_RUNTIME_API const DataVariant & UInt32::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt32::serialize(OutputProvider & out) const;
@@ -229,8 +213,6 @@ namespace stromx
         /** \brief Single precision floating point number */
         typedef Primitive<double, float> Float;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Float::classVariant();
-        template<>
         STROMX_RUNTIME_API const DataVariant & Float::variant() const;
         template <>
         STROMX_RUNTIME_API void Float::serialize(OutputProvider & out) const;
@@ -248,8 +230,6 @@ namespace stromx
 
         /** \brief Double precision floating point number */
         typedef Primitive<double, double> Double;
-        template<>
-        STROMX_RUNTIME_API const DataVariant & Double::classVariant();
         template<>
         STROMX_RUNTIME_API const DataVariant & Double::variant() const;
         template <>

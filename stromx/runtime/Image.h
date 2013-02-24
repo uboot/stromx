@@ -43,8 +43,6 @@ namespace stromx
                 BAYERGB_16
             };
             
-            static const DataVariant & classVariant() { return DataVariant::IMAGE; }
-            
             virtual ~Image() {}
             
             /** Returns the width of the image. */

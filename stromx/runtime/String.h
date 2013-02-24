@@ -31,8 +31,6 @@ namespace stromx
             friend STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);
             
         public:
-            static const DataVariant & classVariant();
-            
             /** Constructs an empty string. */
             explicit String() {}
             

@@ -67,7 +67,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(400), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::FLOAT_MATRIX, m_matrix->variant());
-            CPPUNIT_ASSERT(m_matrix->variant().isVariant(stromx::runtime::Matrix::classVariant()));
         }
 
         void MatrixTest::testMatrixInt16()
@@ -79,7 +78,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::INT_16_MATRIX, m_matrix->variant());
-            CPPUNIT_ASSERT(m_matrix->variant().isVariant(stromx::runtime::Matrix::classVariant()));
         }
 
         void MatrixTest::testMatrixDefaultCopyConstructor()
@@ -131,7 +129,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1600), m_matrix->stride());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::DOUBLE_MATRIX, m_matrix->variant());
-            CPPUNIT_ASSERT(m_matrix->variant().isVariant(stromx::runtime::Matrix::classVariant()));
         }
         
         void MatrixTest::testMatrixCvMatrix16SC3()

@@ -28,8 +28,6 @@ namespace stromx
         public:
             static const DataVariant TEST_DATA;
             
-            static const DataVariant & classVariant() { return TEST_DATA; }
-            
             TestData() : m_value(0) { wasDestructed = false; }
             explicit TestData(const int value) : m_value(value) { wasDestructed = false; }
             ~TestData() { wasDestructed = true; }

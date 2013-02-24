@@ -22,11 +22,6 @@ namespace stromx
 {
     namespace runtime
     {
-        const stromx::runtime::DataVariant& Data::classVariant()
-        {
-            return DataVariant::DATA;
-        }
-        
         void Data::serialize(OutputProvider &) const
         {
             throw Exception("This data type does not support serialization.");

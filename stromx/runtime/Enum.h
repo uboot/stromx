@@ -27,8 +27,6 @@ namespace stromx
         class STROMX_RUNTIME_API Enum : public UInt32
         {
         public:
-            static const DataVariant & classVariant() { return DataVariant::ENUM; }
-            
             /** Constructs an enumeration value and initializes it to 0. */
             Enum() : UInt32() {}
             

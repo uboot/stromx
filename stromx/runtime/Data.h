@@ -52,14 +52,7 @@ namespace stromx
         /** \brief Abstract data object. */
         class STROMX_RUNTIME_API Data : public DataInterface
         {
-        public:
-            /** 
-             * The most general variant of this data class. 
-             * For an object \c data of type \c SomeData the expression
-             * <tt>data.isVariant(SomeData.classVariant())</tt> is always true.
-             */
-            static const DataVariant & classVariant();
-            
+        public:            
             virtual ~Data() {}
             
             virtual void serialize(OutputProvider & out) const;
