@@ -73,7 +73,57 @@ class OpHeaderGenerator(MethodGenerator):
     >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
     >>> m.options.append(opt)
     >>> g = OpHeaderGenerator()
-    >>> g.save(p, m, True)
+    >>> g.save(p, m, True)   
+    #ifndef STROMX_IMGPROC_MEDIANBLUR_H
+    #define STROMX_IMGPROC_MEDIANBLUR_H
+    <BLANKLINE>
+    #include "Config.h"
+    #include <stromx/runtime/Enum.h>
+    #include <stromx/runtime/OperatorKernel.h>
+    #include <stromx/runtime/Primitive.h>
+    <BLANKLINE>
+    namespace stromx
+    {
+        namespace imgproc
+        {
+            class STROMX_IMGPROC_API MedianBlur : public runtime::OperatorKernel
+            {
+            public:
+                enum InputId
+                {
+                    SRC
+                }
+                enum OutputId
+                {
+                    RESULT
+                }
+                enum ParameterId
+                {
+                    KSIZE,
+                    DATA_FLOW
+                }
+                virtual OperatorKernel* clone() const { return new MedianBlur; }
+                virtual void setParameter(const unsigned int id, const runtime::Data& value);
+                virtual const runtime::DataRef getParameter(const unsigned int id) const;
+                void initialize();
+                virtual void execute(runtime::DataProvider& provider);
+    <BLANKLINE>
+            private:
+                static const std::string PACKAGE;
+                static const runtime::Version VERSION;
+                static const std::string TYPE;
+    <BLANKLINE>
+                const std::vector<const runtime::Parameter*> setupInitParameters();
+                const std::vector<const runtime::Parameter*> setupParameters();
+                const std::vector<const runtime::Description*> setupInputs();
+                const std::vector<const runtime::Description*> setupOutputs();
+    <BLANKLINE>
+                runtime::UInt32 m_ksize;
+            };
+        }
+    }
+    <BLANKLINE>
+    #endif // STROMX_IMGPROC_MEDIANBLUR_H
     <BLANKLINE>
     """
     class InputEnumVisitor(ArgumentVisitor):
@@ -140,7 +190,11 @@ class OpHeaderGenerator(MethodGenerator):
         self.visitAll(v)
         v.export(self.doc, len(self.m.options) > 1)
         
+        self.__kernelOverloads()
+        
         self.__private()
+        self.__statics()
+        self.__setupFunctions()
         
         v = OpHeaderGenerator.DataMemberVisitor()
         self.visitAll(v)
@@ -149,7 +203,6 @@ class OpHeaderGenerator(MethodGenerator):
         self.__classExit()
         self.__namespaceExit()
         self.__includeGuardExit()
-        
         
         with file("{0}.h".format(self.m.ident.className()), "w") as f:
             f.write(self.doc.string())
@@ -179,8 +232,36 @@ class OpHeaderGenerator(MethodGenerator):
     def __public(self):
         self.doc.label("public")
         
+    def __kernelOverloads(self):
+        self.doc.line("virtual OperatorKernel* clone() const "
+                      "{{ return new {0}; }}".format(self.m.ident.className()))
+        self.doc.line("virtual void setParameter(const unsigned int id, "
+                      "const runtime::Data& value);")
+        self.doc.line("virtual const runtime::DataRef getParameter("
+                      "const unsigned int id) const;")
+        self.doc.line("void initialize();")
+        self.doc.line("virtual void execute(runtime::DataProvider& provider);")
+        self.doc.blank()
+        
     def __private(self):
         self.doc.label("private")
+        
+    def __statics(self):
+        self.doc.line("static const std::string PACKAGE;")
+        self.doc.line("static const runtime::Version VERSION;")
+        self.doc.line("static const std::string TYPE;")
+        self.doc.blank()
+        
+    def __setupFunctions(self):
+        self.doc.line("const std::vector<const runtime::Parameter*> "
+                      "setupInitParameters();")
+        self.doc.line("const std::vector<const runtime::Parameter*> "
+                      "setupParameters();")
+        self.doc.line("const std::vector<const runtime::Description*> "
+                      "setupInputs();")
+        self.doc.line("const std::vector<const runtime::Description*> "
+                      "setupOutputs();")
+        self.doc.blank()
         
     def __classExit(self):
         self.doc.decreaseIndent()
