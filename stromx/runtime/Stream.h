@@ -75,6 +75,7 @@ namespace stromx
             /**
              * Connects the output \c outputId of the operator \c sourceOp to the input \c inputId of
              * the operator \c targetOp. 
+             * 
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not belong to the stream.
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not have 
              *                       inputs \c outputId or \c inputId, respectively.
@@ -86,6 +87,7 @@ namespace stromx
             /**
              * Disconnects the input \c inputId of the operator \c targetOp from any
              * output.
+             * 
              * \throws WrongState If the stream is not inactive.
              * \throws WrongArgument If the operator \c targetOp does not belong to the stream.
              * \throws WrongArgument If the operator \c targetOp does not have an input \c inputId.
@@ -95,6 +97,7 @@ namespace stromx
             /**
              * Returns the output which is connected to the input \c inputId of the 
              * operator \c targetOp.
+             * 
              * \return A valid output if the input is connected to another operator. The 
              *         returned output is invalid if no output is connected to the input. 
              * \throws WrongArgument If the operator \c targetOp does not belong to the stream.
@@ -103,7 +106,9 @@ namespace stromx
             const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             /** 
-             * Adds the operator \c op to the stream.
+             * Adds the operator \c op to the stream. The ownership of the operators is transfered
+             * to the stream, i.e. it must not be deleted by the caller.
+             * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is not valid (equal to 0).
              * \throws WrongArgument If the object referenced by the pointer \c op is not initialized.
@@ -115,6 +120,7 @@ namespace stromx
              * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
              * In addition, if the operator \c op is used by any thread it is automatically removed from this thread.
              * The operator is \em not deleted, i.e. the ownership of the operator returns to the caller. 
+             * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is not valid (equal to 0).
              * \throws WrongArgument If the operator referenced by the pointer \c op is not known by the stream.
@@ -123,15 +129,21 @@ namespace stromx
             
             /**
              * Creates a thread, adds it to the stream and returns a pointer to it.
-             * \return A pointer to the created thread. The thread is owned by the stream.
+             * 
+             * \return A pointer to the created thread. The thread is owned by the stream and
+             *         must not be deleted by the caller.
              */
             Thread* addThread();
             
             /**
-             * Removes the thread \c thr from the stream.
+             * Removes the thread \c thr from the stream and deletes it.
+             * 
+             * \param thread The thread which is deleted. The pointer is invalid after 
+             *               this function has been called. 
+             * 
              * \throws WrongArgument If the thread \c thr is a null pointer or does not belong to the stream.
              */
-            void removeThread(Thread* const thr);
+            void removeThread(Thread* const thread);
             
             /**
              * Returns the threads of the stream.

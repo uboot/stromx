@@ -15,13 +15,14 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ImageTest.h"
-#include "../Config.h"
-#include "../Image.h"
-#include <stromx/runtime/Exception.h>
+#include <opencv2/core/core.hpp>
 #include <stromx/runtime/DirectoryFileInput.h>
 #include <stromx/runtime/DirectoryFileOutput.h>
-#include <opencv2/core/core.hpp>
+#include <stromx/runtime/Exception.h>
+#include <stromx/runtime/None.h>
+#include "stromx/example/Config.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ImageTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ImageTest);
 
@@ -303,6 +304,29 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_image->height());
             CPPUNIT_ASSERT_EQUAL(runtime::Image::NONE, m_image->pixelType());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::IMAGE, m_image->variant());
+        }       
+        
+        void ImageTest::testIsVariant()
+        {
+            m_image = new Image("lenna.jpg");
+            CPPUNIT_ASSERT(m_image->variant().isVariant(runtime::DataVariant::IMAGE));
+            CPPUNIT_ASSERT(! m_image->variant().isVariant(runtime::DataVariant::NONE));
+        }
+        
+        void ImageTest::testPtrCast()
+        {
+            m_image = new Image("lenna.jpg");
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::Data>(m_image));
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::Image>(m_image));
+            CPPUNIT_ASSERT_EQUAL(runtime::data_cast<runtime::None>(m_image), static_cast<runtime::None*>(0));
+        }
+        
+        void ImageTest::testRefCast()
+        {
+            m_image = new Image("lenna.jpg");
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Data>(*m_image));
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Image>(*m_image));
+            CPPUNIT_ASSERT_THROW(runtime::data_cast<runtime::None>(*m_image), runtime::BadCast);
         }
 
         void ImageTest::tearDown ( void )

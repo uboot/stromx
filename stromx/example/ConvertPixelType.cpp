@@ -83,11 +83,11 @@ namespace stromx
             if(srcMapper.data() == destMapper.data())
                 throw InputError(DESTINATION, *this, "Destination image must not be the same image as the source image."); 
             
-            ReadAccess<Image> src(srcMapper.data());
-            WriteAccess<Image> dest(destMapper.data());
+            ReadAccess<runtime::Image> src(srcMapper.data());
+            WriteAccess<runtime::Image> dest(destMapper.data());
             
-            const Image& srcImage = src();
-            Image& destImage = dest();
+            const runtime::Image& srcImage = src();
+            runtime::Image& destImage = dest();
             
             runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
             

@@ -17,7 +17,7 @@
 #ifndef STROMX_EXAMPLE_ERODETEST_H
 #define STROMX_EXAMPLE_ERODETEST_H
 
-#include "MorphologicalFilterTest.h"
+#include "stromx/example/test/MorphologicalFilterTest.h"
 
 namespace stromx
 {

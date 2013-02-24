@@ -160,7 +160,7 @@ namespace stromx
             return m_kernel->getOutputData(id); 
         }
         
-        void Operator::setInputData(const unsigned int id, const DataContainer data)
+        void Operator::setInputData(const unsigned int id, const DataContainer & data)
         {
             m_kernel->setInputData(id, data);
         }

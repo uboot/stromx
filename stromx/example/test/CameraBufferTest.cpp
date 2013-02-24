@@ -15,10 +15,10 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "CameraBufferTest.h"
-#include "../impl/CameraBuffer.h"
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/impl/CameraBuffer.h"
+#include "stromx/example/test/CameraBufferTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::CameraBufferTest);
 

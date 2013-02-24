@@ -51,7 +51,7 @@ namespace stromx
             return m_impl->get(true, timeout);
         }
         
-        void RecycleAccess::add(const DataContainer data)
+        void RecycleAccess::add(const DataContainer & data)
         {
             if(! m_impl.get())
                 m_impl = std::tr1::shared_ptr<impl::RecycleAccessImpl>(new impl::RecycleAccessImpl(data));

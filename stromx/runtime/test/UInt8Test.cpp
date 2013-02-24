@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2013 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,22 +14,6 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Data.h"
-#include "stromx/runtime/DataRef.h"
-#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/test/UInt8Test.h"
 
-namespace stromx
-{
-    namespace runtime
-    {
-        void Data::serialize(OutputProvider &) const
-        {
-            throw Exception("This data type does not support serialization.");
-        }
-
-        void Data::deserialize(InputProvider &, const Version &)
-        {
-            throw Exception("This data type does not support deserialization.");
-        }
-    }
-}
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::UInt8Test);

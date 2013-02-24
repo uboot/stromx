@@ -19,10 +19,9 @@
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "../Image.h"
-#include "../ImageFilter.h"
-
-#include "MorphologicalFilterTest.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/ImageFilter.h"
+#include "stromx/example/test/MorphologicalFilterTest.h"
 
 namespace stromx
 {
@@ -47,13 +46,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ImageFilter::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save(getTestName() + "_testExecuteMono.png");
+            example::Image::save(getTestName() + "_testExecuteMono.png", resultImage);
         }
         
         void MorphologicalFilterTest::testExecuteColor()
@@ -68,13 +67,13 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ImageFilter::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& resultImage = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& resultImage = access();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, resultImage.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500), resultImage.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(512), resultImage.height());
             
-            resultImage.save(getTestName() + "_testExecuteColor.png");
+            example::Image::save(getTestName() + "_testExecuteColor.png", resultImage);
         }
         
         void MorphologicalFilterTest::tearDown ( void )

@@ -33,12 +33,12 @@ namespace stromx
         {
         public:
             /** Constructs an enumeration description. */
-            explicit EnumDescription(const Enum value)
+            explicit EnumDescription(const Enum & value)
               : m_value(value)
             {}
             
             /** Constructs an enumeration description with a documentation title . */
-            EnumDescription(const Enum value, const std::string & title)
+            EnumDescription(const Enum & value, const std::string & title)
               : m_value(value),
                 m_title(title)
             {}

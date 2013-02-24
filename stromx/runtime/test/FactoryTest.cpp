@@ -107,7 +107,7 @@ namespace stromx
             
             // test if it has been successfully added
             CPPUNIT_ASSERT_EQUAL(1, (int)m_factory->availableOperators().size());
-            CPPUNIT_ASSERT_EQUAL((const OperatorKernel*)(op), m_factory->availableOperators()[0]);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const OperatorKernel*>(op), m_factory->availableOperators()[0]);
             
             // now we try to add another operator of the same type
             // this should result in an exception, because an operator with the same name()

@@ -14,9 +14,8 @@
 *  limitations under the License.
 */
 
-#include "../Erode.h"
-
-#include "ErodeTest.h"
+#include "stromx/example/Erode.h"
+#include "stromx/example/test/ErodeTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ErodeTest);
 

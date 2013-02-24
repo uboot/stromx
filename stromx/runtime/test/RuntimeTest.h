@@ -33,7 +33,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            RuntimeTest() {}
+            RuntimeTest() : m_factory(0) {}
             
             void setUp();
             void tearDown();

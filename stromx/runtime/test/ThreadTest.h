@@ -42,7 +42,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ThreadTest() {}
+            ThreadTest() : m_network(0), m_thread(0), m_op1(0), m_op2(0) {}
             
             void setUp();
             void tearDown();

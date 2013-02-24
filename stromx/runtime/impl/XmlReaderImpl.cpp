@@ -224,7 +224,10 @@ namespace stromx
                     if(! streamNodes->getLength())
                         throw FileAccessFailed(filename, "Found no element <Stream/>.");
                     
-                    DOMElement* stream = dynamic_cast<DOMElement*>(streamNodes->item(0));
+                    if(streamNodes->item(0)->getNodeType() != DOMNode::ELEMENT_NODE)
+                        throw FileAccessFailed(filename, "Found no element <Stream/>.");
+                    
+                    DOMElement* stream = reinterpret_cast<DOMElement*>(streamNodes->item(0));
                     
                     Xml2Str name(stream->getAttribute(Str2Xml("name")));
                     m_stream->setName(std::string(name));
@@ -235,15 +238,21 @@ namespace stromx
                     // read the operators
                     for(unsigned int i = 0; i < numOperators; ++i)
                     {
-                        DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
-                        readOperator(op);
+                        if(operators->item(i)->getNodeType() == DOMElement::ELEMENT_NODE)
+                        {
+                            DOMElement* op = reinterpret_cast<DOMElement*>(operators->item(i));
+                            readOperator(op);
+                        }
                     }
                     
                     // read the inputs of each operator
                     for(unsigned int i = 0; i < numOperators; ++i)
                     {
-                        DOMElement* op = dynamic_cast<DOMElement*>(operators->item(i));
-                        readOperatorInputs(op);
+                        if(operators->item(i)->getNodeType() == DOMNode::ELEMENT_NODE)
+                        {
+                            DOMElement* op = reinterpret_cast<DOMElement*>(operators->item(i));
+                            readOperatorInputs(op);
+                        }
                     }
                     
                     DOMNodeList* threads = stream->getElementsByTagName(Str2Xml("Thread"));
@@ -251,9 +260,12 @@ namespace stromx
                     
                     for(unsigned int i = 0; i < numThreads; ++i)
                     {
-                        DOMElement* threadElement = dynamic_cast<DOMElement*>(threads->item(i));
-                        Thread* thread = m_stream->addThread();
-                        readThread(threadElement, thread);
+                        if(threads->item(i)->getNodeType() == DOMNode::ELEMENT_NODE)
+                        {
+                            DOMElement* threadElement = reinterpret_cast<DOMElement*>(threads->item(i));
+                            Thread* thread = m_stream->addThread();
+                            readThread(threadElement, thread);
+                        }
                     }
                 }
                 catch(xercesc::XMLException& toCatch)
@@ -290,7 +302,7 @@ namespace stromx
                 return m_stream;
             }  
             
-            void XmlReaderImpl::readParameters(FileInput& input, const std::string filename, const std::vector< stromx::runtime::Operator* > operators)
+            void XmlReaderImpl::readParameters(FileInput& input, const std::string & filename, const std::vector< stromx::runtime::Operator* > & operators)
             {
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
                 std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
@@ -351,7 +363,10 @@ namespace stromx
                     if(! parameterNodes->getLength())
                         throw FileAccessFailed(filename, "Found no element <Parameters/>.");
                     
-                    DOMElement* parametersItem = dynamic_cast<DOMElement*>(parameterNodes->item(0));
+                    if(parameterNodes->item(0)->getNodeType() != DOMElement::ELEMENT_NODE)
+                        throw FileAccessFailed(filename, "Found no element <Parameters/>.");
+                    
+                    DOMElement* parametersItem = reinterpret_cast<DOMElement*>(parameterNodes->item(0));
                     
                     DOMNodeList* operatorNodes = parametersItem->getElementsByTagName(Str2Xml("Operator"));
                     XMLSize_t numOperators = operatorNodes->getLength();
@@ -362,7 +377,10 @@ namespace stromx
                     // read the operators
                     for(unsigned int i = 0; i < numOperators; ++i)
                     {
-                        DOMElement* opElement = dynamic_cast<DOMElement*>(operatorNodes->item(i));
+                        if(operatorNodes->item(i)->getNodeType() != DOMElement::ELEMENT_NODE)
+                            continue;
+                        
+                        DOMElement* opElement = reinterpret_cast<DOMElement*>(operatorNodes->item(i));
                         Xml2Str idStr(opElement->getAttribute(Str2Xml("id")));
                         unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
                         
@@ -378,8 +396,11 @@ namespace stromx
                         // read the parameters of the current operator
                         for(unsigned int i = 0; i < numParameters; ++i)
                         {
-                            DOMElement* paramElement = dynamic_cast<DOMElement*>(parameters->item(i));
-                            readParameter(paramElement);
+                            if(parameters->item(i)->getNodeType() == DOMElement::ELEMENT_NODE)
+                            {
+                                DOMElement* paramElement = reinterpret_cast<DOMElement*>(parameters->item(i));
+                                readParameter(paramElement);
+                            }
                         }
                     
                         // set parameters
@@ -451,8 +472,11 @@ namespace stromx
                 // read the parameters
                 for(unsigned int i = 0; i < numParameters; ++i)
                 {
-                    DOMElement* paramElement = dynamic_cast<DOMElement*>(parameters->item(i));
-                    readParameter(paramElement);
+                    if(parameters->item(i)->getNodeType() == DOMElement::ELEMENT_NODE)
+                    {
+                        DOMElement* paramElement = reinterpret_cast<DOMElement*>(parameters->item(i));
+                        readParameter(paramElement);
+                    }
                 }
             
                 // set parameters before initialization
@@ -518,8 +542,11 @@ namespace stromx
                 // read the parameters
                 for(unsigned int i = 0; i < numInputs; ++i)
                 {
-                    DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
-                    readInput(inputElement, m_id2OperatorMap[id]);
+                    if(inputs->item(i)->getNodeType() == DOMElement::ELEMENT_NODE)
+                    {
+                        DOMElement* inputElement = reinterpret_cast<DOMElement*>(inputs->item(i));
+                        readInput(inputElement, m_id2OperatorMap[id]);
+                    }
                 }
             }
             
@@ -538,7 +565,10 @@ namespace stromx
                 if(numDataElements != 1)
                     throw XmlError("More than one <Data/> elements for parameter.");
                 
-                DOMElement* dataElement = dynamic_cast<DOMElement*>(dataElements->item(0));
+                if(dataElements->item(0)->getNodeType() != DOMElement::ELEMENT_NODE)
+                    throw XmlError("No <Data/> element for parameter.");
+                    
+                DOMElement* dataElement = reinterpret_cast<DOMElement*>(dataElements->item(0));
                 Data* data = readData(dataElement);
                 
                 if(m_id2DataMap.count(id))
@@ -602,8 +632,11 @@ namespace stromx
                 
                 for(unsigned int i = 0; i < numInputs; ++i)
                 {
-                    DOMElement* inputElement = dynamic_cast<DOMElement*>(inputs->item(i));
-                    readInputConnector(inputElement, thread);
+                    if(inputs->item(i)->getNodeType() == DOMElement::ELEMENT_NODE)
+                    {
+                        DOMElement* inputElement = reinterpret_cast<DOMElement*>(inputs->item(i));
+                        readInputConnector(inputElement, thread);
+                    }
                 }
             }
             

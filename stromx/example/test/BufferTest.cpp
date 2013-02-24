@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "BufferTest.h"
-#include "../Buffer.h"
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/Buffer.h"
+#include "stromx/example/test/BufferTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::BufferTest);
 
@@ -47,7 +47,7 @@ namespace stromx
             
             {
                 // assert that the data is image data
-                ReadAccess<Image> access(output);
+                ReadAccess<runtime::Image> access(output);
                 CPPUNIT_ASSERT_NO_THROW(access());
             }
             
@@ -62,7 +62,7 @@ namespace stromx
             
             {
                 // assert that the data is image data
-                ReadAccess<Image> access(output);
+                ReadAccess<runtime::Image> access(output);
                 CPPUNIT_ASSERT_NO_THROW(access());
             }
         }

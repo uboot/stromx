@@ -188,7 +188,7 @@ namespace stromx
             void ThreadImpl::loop()
             {
                 // return immediately if there are no inputs to process
-                if(! m_inputSequence.size())
+                if(m_inputSequence.empty())
                     return;
                 
                 try

@@ -29,6 +29,8 @@ namespace stromx
         const std::string TestData::PACKAGE = "TestPackage";
         const Version TestData::VERSION = Version(0, 1, 0);
         
+        const DataVariant TestData::TEST_DATA = DataVariant(TEST_DATA_ID, "TestPackage");
+        
         void TestData::serialize(OutputProvider & output) const
         {
             output.openFile("txt", OutputProvider::TEXT) << m_value;

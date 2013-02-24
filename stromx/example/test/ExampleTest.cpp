@@ -15,11 +15,11 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ExampleTest.h"
-#include "../Example.h"
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/Factory.h>
 #include <stromx/runtime/Operator.h>
+#include "stromx/example/Example.h"
+#include "stromx/example/test/ExampleTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ExampleTest);
 

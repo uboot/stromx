@@ -46,8 +46,8 @@ namespace stromx
                 
                 Stream* readStream(FileInput & input, const std::string & filename);
                 
-                void readParameters(FileInput & input, const std::string filename, 
-                                    const std::vector<stromx::runtime::Operator*> operators);
+                void readParameters(FileInput & input, const std::string & filename, 
+                                    const std::vector<stromx::runtime::Operator*> & operators);
                 
             private:
                 void readOperator(xercesc::DOMElement* const opElement);

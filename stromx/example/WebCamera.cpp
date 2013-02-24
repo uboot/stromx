@@ -130,43 +130,43 @@ namespace stromx
                 {
                     case FRAMERATE:
                     {
-                        runtime::Double frameRate = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double frameRate = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_FPS, frameRate);
                         break;
                     }
                     case BRIGHTNESS:
                     {
-                        runtime::Double brightness = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double brightness = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_BRIGHTNESS, brightness);
                         break;
                     }
                     case CONTRAST:
                     {
-                        runtime::Double contrast = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double contrast = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_CONTRAST, contrast);
                         break;
                     }
                     case SATURATION:
                     {
-                        runtime::Double saturation = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double saturation = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_SATURATION, saturation);
                         break;
                     }
                     case HUE:
                     {
-                        runtime::Double hue = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double hue = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_HUE, hue);
                         break;
                     }
                     case GAIN:
                     {
-                        runtime::Double gain = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double gain = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_GAIN, gain);
                         break;
                     }
                     case EXPOSURE:
                     {
-                        runtime::Double exposure = runtime::data_cast<const runtime::Double&>(value);
+                        runtime::Double exposure = runtime::data_cast<runtime::Double>(value);
                         m_webcam->set(CV_CAP_PROP_EXPOSURE, exposure);
                         break;
                     }

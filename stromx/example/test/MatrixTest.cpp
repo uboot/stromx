@@ -15,12 +15,13 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "MatrixTest.h"
-#include "../Config.h"
-#include "../Matrix.h"
+#include <opencv2/core/core.hpp>
 #include <stromx/runtime/DirectoryFileInput.h>
 #include <stromx/runtime/DirectoryFileOutput.h>
-#include <opencv2/core/core.hpp>
+#include "stromx/runtime/None.h"
+#include "stromx/example/Config.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/test/MatrixTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::MatrixTest);
 
@@ -316,6 +317,29 @@ namespace stromx
             m_matrix = new Matrix();
             CPPUNIT_ASSERT_NO_THROW(m_matrix->resize(1024));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_matrix->bufferSize());
+        }
+        
+        void MatrixTest::testIsVariant()
+        {
+            m_matrix = new Matrix(0, 100, Matrix::INT_8);
+            CPPUNIT_ASSERT(m_matrix->variant().isVariant(runtime::DataVariant::MATRIX));
+            CPPUNIT_ASSERT(! m_matrix->variant().isVariant(runtime::DataVariant::NONE));
+        }
+        
+        void MatrixTest::testPtrCast()
+        {
+            m_matrix = new Matrix(0, 100, Matrix::INT_8);
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::Data>(m_matrix));
+            CPPUNIT_ASSERT(runtime::data_cast<runtime::Matrix>(m_matrix));
+            CPPUNIT_ASSERT_EQUAL(runtime::data_cast<runtime::None>(m_matrix), static_cast<runtime::None*>(0));
+        }
+        
+        void MatrixTest::testRefCast()
+        {
+            m_matrix = new Matrix(0, 100, Matrix::INT_8);
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Data>(*m_matrix));
+            CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Matrix>(*m_matrix));
+            CPPUNIT_ASSERT_THROW(runtime::data_cast<runtime::None>(*m_matrix), runtime::BadCast);
         }
      
         void MatrixTest::tearDown ( void )

@@ -53,16 +53,16 @@ namespace stromx
                 switch(id)
                 {
                 case BUFFER_SIZE:
-                    m_bufferSize = dynamic_cast<const UInt32&>(value);
+                    m_bufferSize = data_cast<UInt32>(value);
                     break;
                 case SLEEP_TIME:
-                    m_sleepTime = dynamic_cast<const UInt32&>(value);
+                    m_sleepTime = data_cast<UInt32>(value);
                     break;
                 case THROW_EXCEPTION:
-                    m_throwException = dynamic_cast<const Bool&>(value);
+                    m_throwException = data_cast<Bool>(value);
                     break;
                 case TEST_DATA:
-                    m_testData = dynamic_cast<const TestData&>(value);
+                    m_testData = data_cast<TestData>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -131,7 +131,7 @@ namespace stromx
         const std::vector<const Description*> TestOperator::setupInitOutputs()
         {
             std::vector<const Description*> outputs;
-            outputs.push_back(new Description(OUTPUT_1, DataVariant::NONE));
+            outputs.push_back(new Description(OUTPUT_1, TestData::TEST_DATA));
             
             return outputs;
         }
@@ -139,7 +139,7 @@ namespace stromx
         const std::vector<const Description*> TestOperator::setupOutputs()
         {
             std::vector<const Description*> outputs;
-            outputs.push_back(new Description(OUTPUT_2, DataVariant::NONE));
+            outputs.push_back(new Description(OUTPUT_2, TestData::TEST_DATA));
             
             return outputs;
         }
@@ -158,7 +158,7 @@ namespace stromx
             ParameterGroup* group = new ParameterGroup(DATA_GROUP);
             parameters.push_back(group);
             
-            param = new Parameter(TEST_DATA, DataVariant::NONE, group);
+            param = new Parameter(TEST_DATA, TestData::TEST_DATA, group);
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             

@@ -45,7 +45,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            XmlReaderTest() : m_factory(0) {}
+            XmlReaderTest() : m_factory(0), m_stream(0) {}
             
             void setUp();
             void tearDown();

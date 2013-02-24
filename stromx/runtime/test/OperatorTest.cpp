@@ -357,7 +357,7 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastConnector().type());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastConnector().id());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer1.lastData());
             
             m_operator->setInputData(TestOperator::INPUT_2, m_container);
@@ -365,14 +365,14 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastConnector().type());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastConnector().id());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT(! m_observer1.lastData().empty());
             
             m_operator->clearOutputData(TestOperator::OUTPUT_2);
             
             CPPUNIT_ASSERT_EQUAL(Connector::OUTPUT, m_observer1.lastConnector().type());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::OUTPUT_2), m_observer1.lastConnector().id());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT(m_observer1.lastData().empty());
         }
         
@@ -384,12 +384,12 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer1.lastConnector().type());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer1.lastConnector().id());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer1.lastConnector().op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_operator), m_observer1.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer1.lastData());
             
             CPPUNIT_ASSERT_EQUAL(Connector::INPUT, m_observer2.lastConnector().type());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(TestOperator::INPUT_1), m_observer2.lastConnector().id());
-            CPPUNIT_ASSERT_EQUAL((const Operator*)(m_operator), m_observer2.lastConnector().op());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_operator), m_observer2.lastConnector().op());
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer2.lastData());
 
         }

@@ -83,7 +83,16 @@ namespace stromx
             
             impl::BoostConditionVariable* m_cond;
             runtime::Enum m_state;
-        };
+        };       
+        
+        /** \cond */
+        template <>
+        class data_traits<Trigger>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::TRIGGER; }
+        };  
+        /** \endcond */
     }
 }
 

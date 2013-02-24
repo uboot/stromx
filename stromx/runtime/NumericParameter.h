@@ -32,7 +32,7 @@ namespace stromx
         public:
             /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, ParameterGroup* const group = 0)
-              : Parameter(id, data_t::classVariant(), group),
+              : Parameter(id, data_traits<data_t>::variant(), group),
                 m_min(data_t::MIN),
                 m_max(data_t::MAX),
                 m_step(data_t(1))
@@ -40,7 +40,7 @@ namespace stromx
             
             /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, const data_t min, const data_t max)
-              : Parameter(id, data_t::classVariant()),
+              : Parameter(id, data_traits<data_t>::variant()),
                 m_min(min), 
                 m_max(max)
             {}
@@ -48,7 +48,7 @@ namespace stromx
             /** Constructs a numeric parameter. */
             NumericParameter(const unsigned int id, const data_t min, const data_t max,
                              const data_t step)
-              : Parameter(id, data_t::classVariant()),
+              : Parameter(id, data_traits<data_t>::variant()),
                 m_min(min),
                 m_max(max)
             {}

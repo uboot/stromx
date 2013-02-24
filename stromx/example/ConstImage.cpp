@@ -88,13 +88,10 @@ namespace stromx
             Data* outData = m_imageAccess();
             provider.lockParameters();
             
-            example::Image* outImage = stromx::runtime::data_cast<example::Image>(outData);
+            if(! outData)
+                outData = new example::Image(m_image->width(), m_image->height(), m_image->pixelType());
             
-            if(! outImage)
-            {
-                delete outData;
-                outImage = new example::Image(m_image->width(), m_image->height(), m_image->pixelType());
-            }
+            example::Image* outImage = reinterpret_cast<example::Image*>(outData);
             
             if(outImage->pixelType() != m_image->pixelType()
                 || outImage->width() != m_image->width()

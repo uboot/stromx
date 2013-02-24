@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Primitive.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/graph/graph_concepts.hpp>
 #include <cfloat>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/InputProvider.h"
@@ -25,8 +26,6 @@ namespace stromx
 {
     namespace runtime
     {
-        template<>
-        const DataVariant & Bool::classVariant() { return DataVariant::BOOL; }
         template<>
         const DataVariant & Bool::variant() const { return DataVariant::BOOL; }
         template<>
@@ -48,8 +47,6 @@ namespace stromx
             in.text() >> m_value;
         }
         
-        template<>
-        const DataVariant & Int8::classVariant() { return DataVariant::INT_8; }
         template<>
         const DataVariant & Int8::variant() const { return DataVariant::INT_8; }
         template<>
@@ -78,8 +75,6 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & UInt8::classVariant() { return DataVariant::UINT_8; }
-        template<>
         const DataVariant & UInt8::variant() const { return DataVariant::UINT_8; }
         template<>
         const std::string UInt8::TYPE = "UInt8";
@@ -107,8 +102,6 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Int16::classVariant() { return DataVariant::INT_16; }
-        template<>
         const DataVariant & Int16::variant() const { return DataVariant::INT_16; }
         template<>
         const std::string Int16::TYPE = "Int16";
@@ -133,8 +126,6 @@ namespace stromx
             in.text() >> m_value;
         }
         
-        template<>
-        const DataVariant & UInt16::classVariant() { return DataVariant::UINT_16; }
         template<>
         const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
         template<>
@@ -161,8 +152,6 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Int32::classVariant() { return DataVariant::INT_32; }
-        template<>
         const DataVariant & Int32::variant() const { return DataVariant::INT_32; }
         template<>
         const std::string Int32::TYPE = "Int32";
@@ -187,8 +176,6 @@ namespace stromx
             in.text() >> m_value;
         }
         
-        template<>
-        const DataVariant & UInt32::classVariant() { return DataVariant::UINT_32; }
         template<>
         const DataVariant & UInt32::variant() const { return DataVariant::UINT_32; }
         template<>
@@ -215,8 +202,6 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Float::classVariant() { return DataVariant::FLOAT; }
-        template<>
         const DataVariant & Float::variant() const { return DataVariant::FLOAT; }
         template<>
         const std::string Float::TYPE = "Float";
@@ -241,8 +226,6 @@ namespace stromx
             in.text() >> m_value;
         }
         
-        template<>
-        const DataVariant & Double::classVariant() { return DataVariant::DOUBLE; }
         template<>
         const DataVariant & Double::variant() const { return DataVariant::DOUBLE; }
         template<>

@@ -193,7 +193,7 @@ namespace stromx
              * \throws Interrupt
              * \throws WrongOperatorState
              */
-            void setInputData(const unsigned int id, const DataContainer data);
+            void setInputData(const unsigned int id, const DataContainer & data);
             
             /**
              * Removes any output data from the output \c id.
@@ -239,6 +239,8 @@ namespace stromx
         private:
             class MutexHandle;
             class InternalObserver;
+            
+            Operator(const Operator& op);
             
             impl::InputNode* getInputNode(const unsigned int id) const;
             impl::OutputNode* getOutputNode(const unsigned int id) const;

@@ -15,13 +15,13 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "HoughLinesPTest.h"
-#include "../HoughLinesP.h"
-#include "../Matrix.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/HoughLinesP.h"
+#include "stromx/example/Matrix.h"
+#include "stromx/example/test/HoughLinesPTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::HoughLinesPTest);
 
@@ -43,10 +43,10 @@ namespace stromx
             m_operator->setInputData(HoughLinesP::IMAGE, source);
             
             runtime::DataContainer result = m_operator->getOutputData(HoughLinesP::LINES);
-            runtime::ReadAccess<Matrix> access(result);
-            const Matrix& resultLines = access();
+            runtime::ReadAccess<runtime::Matrix> access(result);
+            const runtime::Matrix& resultLines = access();
             
-            resultLines.save("HoughLinesPTest_testExecute.npy");
+            example::Matrix::save("HoughLinesPTest_testExecute.npy", resultLines);
         }
         
         void HoughLinesPTest::tearDown ( void )

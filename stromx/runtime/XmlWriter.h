@@ -77,7 +77,7 @@ namespace stromx
              *                       is unknown.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
-            void writeStream(FileOutput & output, const std::string basename, const Stream& stream) const;
+            void writeStream(FileOutput & output, const std::string & basename, const Stream& stream) const;
                         
             /** 
              * Writes a parameter file.
@@ -111,7 +111,7 @@ namespace stromx
              * \throws WrongArgument The base name of the file name is empty.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */                  
-            void writeParameters(FileOutput & output, const std::string basename,
+            void writeParameters(FileOutput & output, const std::string & basename,
                                  const std::vector<const stromx::runtime::Operator*>& operators) const; 
             /** 
              * Writes a parameter file to a file output
@@ -122,7 +122,7 @@ namespace stromx
              * \throws WrongArgument The base name of the file name is empty.
              * \throws SerializationError Failed to serialize data referenced in the XML file.
              */
-            void writeParameters(FileOutput & output, const std::string basename,
+            void writeParameters(FileOutput & output, const std::string & basename,
                                  const std::vector<stromx::runtime::Operator*>& operators) const; 
         };
     }

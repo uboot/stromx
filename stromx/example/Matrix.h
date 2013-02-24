@@ -37,6 +37,12 @@ namespace stromx
             friend cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
         
         public:
+            
+            /** 
+             * Saves the input \c matrix to \c filename. The matrix is stored in the NPY format.
+             */
+            static void save(const std::string& filename, const runtime::Matrix & matrix);
+            
             /** 
              * Constructs an empty matrix with zero rows and columns and value type Matrix::NONE.
              * No data is associated with the matrix, i.e. its data and buffer pointers are 0.
@@ -106,18 +112,18 @@ namespace stromx
             static const runtime::Version VERSION;
             static const char NUMPY_MAGIC_BYTE = char(0x93);
             
+            static void doSerialize(std::ostream & out, const runtime::Matrix & matrix);
+            static void doDeserialize(std::istream & in, example::Matrix & matrix);
             static int cvTypeFromValueType(const runtime::Matrix::ValueType valueType);
             static runtime::Matrix::ValueType valueTypeFromCvType(const int cvType);
             static bool isLittleEndian();
             static char npyTypeSymbol(const runtime::Matrix::ValueType valueType);
-            Matrix::ValueType valueTypeFromNpyHeader(const char valueType, const int wordSize);
+            static Matrix::ValueType valueTypeFromNpyHeader(const char valueType, const int wordSize);
             
             void copy(const stromx::runtime::Matrix & matrix);
             void allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType);
             void getDataFromCvMatrix(const ValueType valueType);
             
-            void doSerialize(std::ostream & out) const;
-            void doDeserialize(std::istream & in);
                 
             cv::Mat* m_matrix;
         };

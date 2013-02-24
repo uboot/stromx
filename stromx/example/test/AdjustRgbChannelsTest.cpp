@@ -15,13 +15,13 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "AdjustRgbChannelsTest.h"
-#include "../AdjustRgbChannels.h"
-#include "../Image.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/AdjustRgbChannels.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/AdjustRgbChannelsTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::AdjustRgbChannelsTest);
 
@@ -47,10 +47,10 @@ namespace stromx
             m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
             
             runtime::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             
-            image.save("AdjustRgbChannelsTest_testExecute.png");
+            example::Image::save("AdjustRgbChannelsTest_testExecute.png", image);
         }
         
         void AdjustRgbChannelsTest::tearDown ( void )

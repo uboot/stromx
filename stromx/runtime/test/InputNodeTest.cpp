@@ -57,7 +57,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_inputNode->source(), WrongOperatorState);
             
             m_inputNode->connect(m_sourceNode);
-            CPPUNIT_ASSERT_EQUAL((const OutputNode*)(m_sourceNode), &(m_inputNode->source()));
+            CPPUNIT_ASSERT_EQUAL(static_cast<const OutputNode*>(m_sourceNode), &(m_inputNode->source()));
         }
 
         void InputNodeTest::testDisconnect()

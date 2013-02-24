@@ -146,7 +146,7 @@ namespace stromx
                 }
             }
             
-            void XmlWriterImpl::createThreads(const std::vector<Thread*> threads)
+            void XmlWriterImpl::createThreads(const std::vector<Thread*> & threads)
             {
                 //Add Thread branches (tree structure: Stream:Thread)
                 //Processed for each thread belonging to the strom object (multiple entries for strom possible)
@@ -296,7 +296,7 @@ namespace stromx
                 }
             }
             
-            void XmlWriterImpl::createOperators(const std::vector<const Operator*> operators, xercesc::DOMElement* const parentElement)
+            void XmlWriterImpl::createOperators(const std::vector<const Operator*> & operators, xercesc::DOMElement* const parentElement)
             {
                 //Add operator branches (tree structure: strom:operator)
                 //Processed for each operator belonging to the strom object (multiple entries for strom possible)

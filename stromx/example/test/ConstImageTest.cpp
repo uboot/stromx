@@ -15,12 +15,12 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "ConstImageTest.h"
-#include "../ConstImage.h"
-#include "../Image.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/ConstImage.h"
+#include "stromx/example/Image.h"
+#include "stromx/example/test/ConstImageTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::ConstImageTest);
 
@@ -44,10 +44,10 @@ namespace stromx
         {
             runtime::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
             
-            ReadAccess<Image> access(result);
-            const Image& image = access();
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
             
-            image.save("ConstImageTest_testExecute.png");
+            example::Image::save("ConstImageTest_testExecute.png", image);
         }
         
         void ConstImageTest::tearDown ( void )

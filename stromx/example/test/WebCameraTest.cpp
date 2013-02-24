@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#include "WebCameraTest.h"
-#include "../Image.h"
-#include "../WebCamera.h"
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
+#include "stromx/example/Image.h"
+#include "stromx/example/WebCamera.h"
+#include "stromx/example/test/WebCameraTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::example::WebCameraTest);
 
@@ -180,10 +180,10 @@ namespace stromx
                 m_operator->activate();
                 runtime::DataContainer output = m_operator->getOutputData(WebCamera::OUTPUT);
             
-                runtime::ReadAccess<Image> access(output);
-                const Image& image = access();
+                runtime::ReadAccess<runtime::Image> access(output);
+                const runtime::Image& image = access();
             
-                image.save("WebCameraTest_testExecute.png");
+                example::Image::save("WebCameraTest_testExecute.png", image);
                 m_operator->deactivate();
             }
         }

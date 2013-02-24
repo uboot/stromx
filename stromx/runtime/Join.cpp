@@ -46,7 +46,7 @@ namespace stromx
             switch(id)
             {
             case NUM_INPUTS:
-                uintValue = dynamic_cast<const UInt32 &>(value);
+                uintValue = data_cast<UInt32>(value);
                 if(uintValue < MIN_INPUTS)
                     throw WrongParameterValue(parameter(NUM_INPUTS), *this, "Too little inputs.");
                 if(uintValue > MAX_INPUTS)

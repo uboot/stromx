@@ -178,7 +178,7 @@ An example is an operator which merges several inputs to one output. After insta
             switch(id)
             {
             case OFFSET:
-                m_offset = runtime::data_cast<const runtime::UInt32&>(value);
+                m_offset = runtime::data_cast<runtime::UInt32>(value);
                 break;
             default:
                 throw runtime::WrongParameterId(id, *this);
