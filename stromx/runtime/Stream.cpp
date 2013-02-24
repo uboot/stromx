@@ -215,9 +215,9 @@ namespace stromx
             return thread;
         }
         
-        void Stream::removeThread(Thread* const thr)
+        void Stream::removeThread(Thread* const thread)
         {
-            if (thr == 0)
+            if (thread == 0)
             {
                 throw WrongArgument("Invalid argument: Null pointer");
             }
@@ -226,10 +226,10 @@ namespace stromx
                 iter != m_threads.end();
                 ++iter)
             {
-                if ((*iter) == thr)
+                if ((*iter) == thread)
                 {
                     m_threads.erase(iter);
-                    delete thr;
+                    delete thread;
                     return;
                 }
             }

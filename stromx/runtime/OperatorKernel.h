@@ -116,6 +116,14 @@ namespace stromx
         protected:
             /**
              * Constructs an operator kernel.
+             * 
+             * \param parameters A list of parameter descriptions. The descriptions will
+             *                   be owned by the parent class, i.e. they must not be 
+             *                   manually deleted. The list must contain descriptions of
+             *                   all operator parameters which
+             *                   can be edited before initialization. It can contain the 
+             *                   description of parameters which can be edited only
+             *                   after initialization.
              */
             OperatorKernel(const std::string & type,
                     const std::string & package,
@@ -124,6 +132,22 @@ namespace stromx
                 
             /**
              * Constructs an operator kernel.
+             * 
+             * \param inputs A list of operator input descriptions. The descriptions will
+             *               be owned by the parent class, i.e. they must not be 
+             *               manually deleted.
+             * 
+             * \param outputs A list of operator input descriptions. The descriptions will
+             *                be owned by the parent class, i.e. they must not be 
+             *                manually deleted.
+             * 
+             * \param parameters A list of parameter descriptions. The descriptions will
+             *                   be owned by the parent class, i.e. they must not be 
+             *                   manually deleted. The list must contain descriptions of
+             *                   all operator parameters which
+             *                   can be edited before initialization. It can contain the 
+             *                   description of parameters which can be edited only
+             *                   after initialization.
              */    
             OperatorKernel(const std::string & type,
                     const std::string & package,
@@ -134,6 +158,14 @@ namespace stromx
 
 	    /**
              * Constructs an operator kernel.
+             * 
+             * \param inputs A list of operator input descriptions. The descriptions will
+             *               be owned by the parent class, i.e. they must not be 
+             *               manually deleted.
+             * 
+             * \param outputs A list of operator input descriptions. The descriptions will
+             *                be owned by the parent class, i.e. they must not be 
+             *                manually deleted.
              */  
             OperatorKernel(const std::string& type,
                     const std::string& package,
@@ -151,6 +183,20 @@ namespace stromx
              * Initializes an operator kernel. Must only be called from
              * OperatorKernel::initialize() and overloads of this function
              * in derived classes.
+             * 
+             * \param inputs A list of operator input descriptions. The descriptions will
+             *               be owned by the parent class, i.e. they must not be 
+             *               manually deleted.
+             * 
+             * \param outputs A list of operator input descriptions. The descriptions will
+             *                be owned by the parent class, i.e. they must not be 
+             *                manually deleted.
+             * 
+             * \param parameters A list of parameter descriptions. The descriptions will
+             *                   be owned by the parent class, i.e. they must not be 
+             *                   manually deleted. Note that adding parameters which 
+             *                   should be edited before initialization at this stage does
+             *                   not make any sense but should be done in the constructor.
              */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
