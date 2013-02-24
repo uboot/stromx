@@ -57,16 +57,12 @@ class Format:
     SCOPE_EXIT = 3
     
 class Package(object):
-    ident = ""
-    name = ""
-    description = ""
-    methods = []
-    major = 0
-    minor = 0
-    patch = 0
     
     def __init__(self, ident, major, minor, patch):
         self.ident = Ident(ident)
+        self.name = ""
+        self.description = ""
+        self.methods = []
         self.major = major
         self.minor = minor
         self.patch = patch
@@ -133,18 +129,14 @@ class MethodFragment(object):
         return []
 
 class Argument(MethodFragment):
-    ident = ""
-    name = ""
-    description = ""
-    cvType = cvtype.CvType()
-    dataType = datatype.DataType()
-    rules = []
     
     def __init__(self, ident, name, cvType, dataType):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
         self.dataType = dataType
+        self.description = ""
+        self.rules = []
             
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -158,12 +150,13 @@ class Argument(MethodFragment):
         raise NotImplementedError
     
 class InputArgument(Argument):
-    def __repr__(self):
-        return "InputArgument()"
+    pass
 
 class OutputArgument(Argument):
-    initIn = []
-    initOut = []
+    def __init__(self, ident, name, cvType, dataType):
+        super(OutputArgument, self).__init__(ident, name, cvType, dataType)
+        self.initIn = []
+        self.initOut = []
     
     def copyFrom(self, arg):
         super(OutputArgument, self).copyFrom(arg)
@@ -183,9 +176,11 @@ class OutputArgument(Argument):
         return [lines]
         
 class Parameter(InputArgument):
-    inPlace = False
-    isInit = False
-    default = None
+    def __init__(self, ident, name, cvType, dataType):
+        super(Parameter, self).__init__(ident, name, cvType, dataType)
+        self.inPlace = False
+        self.isInit = False
+        self.default = None
     
     def accept(self, visitor):
         visitor.visitParameter(self)
@@ -270,19 +265,21 @@ class Size(Parameter):
         return [l]
 
 class NumericParameter(Parameter):
-    minValue = None
-    maxValue = None
-    step = None
+    def __init__(self, ident, name, cvType, dataType):
+        super(NumericParameter, self).__init__(ident, name, cvType, dataType)
+        self.minValue = None
+        self.maxValue = None
+        self.step = None
     
     def accept(self, visitor):
         visitor.visitNumericParameter(self)
     
 class EnumParameter(Parameter):
-    descriptions = [] 
     
     def __init__(self, ident, name):
         super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
                                             datatype.Enum())
+        self.descriptions = []
     
     def accept(self, visitor):
         visitor.visitEnumParameter(self)
@@ -370,14 +367,13 @@ class Options(EnumParameter):
         return []
         
 class Method(object):
-    ident = ""
-    name = ""
-    doc = ""
-    functions = []
-    options = []
     
     def __init__(self, ident):
         self.ident = Ident(ident)
+        self.name = ""
+        self.doc = ""
+        self.functions = []
+        self.options = []
         
     def call(self, option):
         if len(self.customCall):
@@ -397,7 +393,6 @@ class Option(object):
         self.args = []
 
 class Constant(Argument):
-    value = ""
     
     def __init__(self, ident, cvType, value):
         self.cvType = cvType
@@ -415,7 +410,6 @@ class Constant(Argument):
         return [l]
     
 class Input(InputArgument):
-    inPlace = False
             
     def __init__(self, arg, inPlace = False):
         if arg:
@@ -545,8 +539,6 @@ class Allocation(OutputArgument):
         return lines
 
 class EnumDescription(object):
-    ident = Ident()
-    name = ""
     
     def __init__(self, ident, name, cvIdent = None):
         self.ident = ident

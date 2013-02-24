@@ -35,8 +35,10 @@ class ArgumentVisitor(object):
         
         
 class MethodGenerator(ArgumentVisitor):
-    class ParameterVisitor(ArgumentVisitor):
-        params = set()
+    
+    class CollectParametersVisitor(ArgumentVisitor):
+        def __init__(self):
+            self.params = set()
     
         def visitParameter(self, parameter):
             self.params.add(parameter)
@@ -46,15 +48,6 @@ class MethodGenerator(ArgumentVisitor):
             
         def visitEnumParameter(self, parameter):
             self.params.add(parameter)
-            
-        def removeDuplicates(self):
-            paramIdents = set()
-            params = set()
-            for p in self.params:
-                if str(p.ident) not in paramIdents:
-                    paramIdents.add(str(p.ident))
-                    params.add(p)
-            self.params = params
             
     p = None
     m = None
@@ -83,16 +76,23 @@ class MethodGenerator(ArgumentVisitor):
         return p
             
     def visitAll(self, visitor):
+        args = set()
         for opt in self.m.options:
             for arg in opt.args:
+                args.add(arg)
+                
+        argIdents = set()
+        filteredArgs = set()
+        for arg in args:
+            if str(arg.ident) not in argIdents:
+                argIdents.add(str(arg.ident))
+                filteredArgs.add(arg)
+                
+        for arg in filteredArgs:
                 arg.accept(visitor)
                 
         if self.optionParam:
             self.optionParam.accept(visitor)
-            
-    def visitOption(self, visitor, opt):
-        for arg in opt.args:
-            arg.accept(visitor)
         
     def namespaceEnter(self):
         self.doc.namespaceEnter("stromx")
@@ -194,12 +194,12 @@ class OpHeaderGenerator(MethodGenerator):
             if len(self.outputs) > 0:
                 doc.enum("OutputId", ["RESULT"])
             
-    class ParameterEnumVisitor(MethodGenerator.ParameterVisitor):
+    class ParameterEnumVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
             paramIds = [p.ident.constant() for p in self.params]
             doc.enum("ParameterId", set(paramIds))
         
-    class DataMemberVisitor(MethodGenerator.ParameterVisitor):
+    class DataMemberVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
             for p in self.params:
                 l = "{0} {1};".format(p.dataType.typeId(), p.ident.attribute())
@@ -324,10 +324,8 @@ class OpImplGenerator(MethodGenerator):
     >>> g = OpImplGenerator()
     >>> g.save(p, m, True) 
     """     
-    class ParameterInitVisitor(MethodGenerator.ParameterVisitor):
+    class ParameterInitVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
-            self.removeDuplicates()
-            
             for i, p in enumerate(self.params):
                 defaultValue = p.default if p.default != None else ""
                 init = "{0}({1})".format(p.ident.attribute(), defaultValue)
@@ -336,18 +334,63 @@ class OpImplGenerator(MethodGenerator):
                 else:
                     doc.line(init)
                     
-    class GetParameterVisitor(MethodGenerator.ParameterVisitor):
-        def export(self, doc):
-            self.removeDuplicates()
-            for p in self.params:
-                doc.label("case {0}".format(p.ident.constant()))
-                doc.line("return {0};".format(p.ident.attribute()))
+    class ParameterVisitor(ArgumentVisitor):
+        def __init__(self, doc):
+            self.doc = doc
+            
+        def visitNumericParameter(self, parameter):
+            self.visitParameter(parameter)
+            
+        def visitEnumParameter(self, parameter):
+            self.visitParameter(parameter)
+            
+    class GetParametersVisitor(ParameterVisitor):
+            
+        def visitParameter(self, parameter):
+            self.doc.label("case {0}".format(parameter.ident.constant()))
+            self.doc.line("return {0};".format(parameter.ident.attribute()))
+                    
+    class SetParametersVisitor(ParameterVisitor):
+            
+        def visitParameter(self, parameter):
+            self.doc.label("case {0}".format(parameter.ident.constant()))
+            self.doc.line("{0} = runtime::data_cast<{1}>(value);"\
+                .format(parameter.ident.attribute(),
+                        parameter.dataType.typeId()))
+            self.doc.line("break;")
+                
+    class SetupInitParametersVisitor(ArgumentVisitor):
+        def __init__(self, doc):
+            self.doc = doc
+            
+        def visitParameter(self, parameter):
+            l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
+                .format(parameter.ident, parameter.ident.constant(),
+                        parameter.dataType.variant())
+            self.doc.line(l)
+            l = "{0}->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);"\
+                .format(parameter.ident)
+            self.doc.line(l)
+            l = '{0}->setTitle("{1}");'\
+                .format(parameter.ident, parameter.name)
+            self.doc.line(l)
+            l = "parameters.push_back({0});".format(parameter.ident)
+            self.doc.line(l)
+            self.doc.blank()
+            
+        def visitNumericParameter(self, parameter):
+            self.visitParameter(parameter)
+            
+        def visitEnumParameter(self, parameter):
+            self.visitParameter(parameter)
         
     def generate(self):        
         self.__includes()
         self.namespaceEnter()
         self.__constructor()
         self.__getParameter()
+        self.__setParameter()
+        self.__setupInitParameters()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -385,6 +428,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.decreaseIndent()
         self.doc.scopeEnter()
         self.doc.scopeExit()
+        self.doc.blank()
         
     def __getParameter(self):
         self.doc.line("const runtime::DataRef {0}::getParameter"
@@ -394,13 +438,52 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line("switch(id)")
         self.doc.scopeEnter()
         
-        v = OpImplGenerator.GetParameterVisitor()
+        v = OpImplGenerator.GetParametersVisitor(self.doc)
         self.visitAll(v)
-        v.export(self.doc)
         
         self.doc.label("default")
         self.doc.line("throw runtime::WrongParameterId(id, *this);")
         self.doc.scopeExit()
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __setParameter(self):
+        self.doc.line("const runtime::DataRef {0}::setParameter"
+                      "(unsigned int id) const"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("try")
+        self.doc.scopeEnter()
+        self.doc.line("switch(id)")
+        self.doc.scopeEnter()
+        
+        v = OpImplGenerator.SetParametersVisitor(self.doc)
+        self.visitAll(v)
+        
+        self.doc.label("default")
+        self.doc.line("throw runtime::WrongParameterId(id, *this);")
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        self.doc.line("catch(runtime::BadCast&)")
+        self.doc.scopeEnter()
+        self.doc.line("throw runtime::WrongParameterType(parameter(id), *this);")
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __setupInitParameters(self):
+        
+        self.doc.line("const std::vector<const runtime::Parameter*> "
+                      "{0}::setupInitParameters()"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("std::vector<const runtime::Parameter*> parameters;")
+        self.doc.blank()
+        
+        v = OpImplGenerator.SetupInitParametersVisitor(self.doc)
+        self.visitAll(v)
+        
+        self.doc.line("return parameters;")
         self.doc.scopeExit()
         
             
