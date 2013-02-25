@@ -49,6 +49,16 @@ class MethodGenerator(ArgumentVisitor):
         def visitEnumParameter(self, parameter):
             self.params.add(parameter)
             
+    class ParameterVisitor(ArgumentVisitor):
+        def __init__(self, doc):
+            self.doc = doc
+            
+        def visitNumericParameter(self, parameter):
+            self.visitParameter(parameter)
+            
+        def visitEnumParameter(self, parameter):
+            self.visitParameter(parameter)
+            
     p = None
     m = None
     doc = None
@@ -199,11 +209,11 @@ class OpHeaderGenerator(MethodGenerator):
             paramIds = [p.ident.constant() for p in self.params]
             doc.enum("ParameterId", set(paramIds))
         
-    class DataMemberVisitor(MethodGenerator.CollectParametersVisitor):
-        def export(self, doc):
-            for p in self.params:
-                l = "{0} {1};".format(p.dataType.typeId(), p.ident.attribute())
-                doc.line(l)
+    class DataMemberVisitor(MethodGenerator.ParameterVisitor):
+        def visitParameter(self, parameter):
+            l = "{0} {1};".format(parameter.dataType.typeId(),
+                                  parameter.ident.attribute())
+            self.doc.line(l)
     
     def generate(self):
         self.__includeGuardEnter()
@@ -230,9 +240,8 @@ class OpHeaderGenerator(MethodGenerator):
         self.__statics()
         self.__setupFunctions()
         
-        v = OpHeaderGenerator.DataMemberVisitor()
+        v = OpHeaderGenerator.DataMemberVisitor(self.doc)
         self.visitAll(v)
-        v.export(self.doc)
         
         self.__classExit()
         self.namespaceExit()
@@ -333,24 +342,14 @@ class OpImplGenerator(MethodGenerator):
                     doc.line("{0},".format(init))
                 else:
                     doc.line(init)
-                    
-    class ParameterVisitor(ArgumentVisitor):
-        def __init__(self, doc):
-            self.doc = doc
             
-        def visitNumericParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-        def visitEnumParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-    class GetParametersVisitor(ParameterVisitor):
+    class GetParametersVisitor(MethodGenerator.ParameterVisitor):
             
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.line("return {0};".format(parameter.ident.attribute()))
                     
-    class SetParametersVisitor(ParameterVisitor):
+    class SetParametersVisitor(MethodGenerator.ParameterVisitor):
             
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
@@ -397,7 +396,8 @@ class OpImplGenerator(MethodGenerator):
             f.write(self.doc.string())
     
     def __includes(self):
-        self.doc.line('#include "{0}.h"'.format(self.m.ident.className()))
+        self.doc.line('#include "stromx/{0}/{1}.h"'\
+            .format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
         self.doc.line('#include <stromx/example/Image.h>')
         self.doc.line('#include <stromx/example/Matrix.h>')
