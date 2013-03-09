@@ -435,6 +435,7 @@ class OpImplGenerator(MethodGenerator):
         self.__setupInputs()
         self.__setupOutputs()
         self.__initialize()
+        self.__execute()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -621,6 +622,24 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeEnter()
         self.doc.line("runtime::OperatorKernel::initialize(setupInputs(), "
                       "setupOutputs(), setupParameters());")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __execute(self):
+        self.doc.line("void {0}::execute(runtime::DataProvider & provider)"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        
+        self.doc.line("switch(int({0}))".format(
+                                        self.optionParam.ident.attribute()))
+        self.doc.scopeEnter()
+        for o in self.m.options:
+            self.doc.label("case({0})".format(o.ident.constant()))
+            self.doc.scopeEnter()
+                
+            self.doc.scopeExit()
+            self.doc.line("break;")
+        self.doc.scopeExit()
         self.doc.scopeExit()
         self.doc.blank()
         
