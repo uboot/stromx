@@ -150,7 +150,7 @@ class OpHeaderGenerator(MethodGenerator):
                 }
                 enum OutputId
                 {
-                    RESULT
+                    DST
                 }
                 enum ParameterId
                 {
@@ -183,16 +183,19 @@ class OpHeaderGenerator(MethodGenerator):
     <BLANKLINE>
     """
     class InputEnumVisitor(ArgumentVisitor):
-        inputs = set()
+        def __init__(self):
+            self.inputs = set()
     
         def visitInput(self, inputArg):
             self.inputs.add(inputArg)
             
         def export(self, doc):
-            doc.enum("InputId", set([i.ident.constant() for i in self.inputs]))
+            inputIds = [i.ident.constant() for i in self.inputs]
+            doc.enum("InputId", set(inputIds))
             
     class OutputEnumVisitor(ArgumentVisitor):
-        outputs = set()
+        def __init__(self):
+            self.outputs = set()
     
         def visitOutput(self, output):
             self.outputs.add(output)
@@ -201,8 +204,8 @@ class OpHeaderGenerator(MethodGenerator):
             self.outputs.add(allocation)
             
         def export(self, doc):
-            if len(self.outputs) > 0:
-                doc.enum("OutputId", ["RESULT"])
+            outputIds = [o.ident.constant() for o in self.outputs]
+            doc.enum("OutputId", set(outputIds))
             
     class ParameterEnumVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
@@ -358,7 +361,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.typeId()))
             self.doc.line("break;")
                 
-    class SetupInitParametersVisitor(ArgumentVisitor):
+    class SetupParametersVisitor(ArgumentVisitor):
         def __init__(self, doc):
             self.doc = doc
             
@@ -382,6 +385,44 @@ class OpImplGenerator(MethodGenerator):
             
         def visitEnumParameter(self, parameter):
             self.visitParameter(parameter)
+            
+    class SetupOutputsVistor(ArgumentVisitor):
+        def __init__(self, doc):
+            self.doc = doc
+    
+        def visitOutput(self, output):
+            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
+                .format(output.ident, output.ident.constant(),
+                        output.dataType.variant())
+            self.doc.line(l)
+            l = '{0}->setTitle("{1}");'\
+                .format(output.ident, output.name)
+            self.doc.line(l)
+            l = "outputs.push_back({0});".format(output.ident)
+            self.doc.line(l)
+            self.doc.blank()
+        
+        def visitAllocation(self, allocation):
+            self.visitOutput(allocation)
+            
+    class SetupInputsVistor(ArgumentVisitor):
+        def __init__(self, doc):
+            self.doc = doc
+    
+        def visitOutput(self, output):
+            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
+                .format(output.ident, output.ident.constant(),
+                        output.dataType.variant())
+            self.doc.line(l)
+            l = '{0}->setTitle("{1}");'\
+                .format(output.ident, output.name)
+            self.doc.line(l)
+            l = "outputs.push_back({0});".format(output.ident)
+            self.doc.line(l)
+            self.doc.blank()
+        
+        def visitAllocation(self, allocation):
+            self.visitOutput(allocation)
         
     def generate(self):        
         self.__includes()
@@ -390,6 +431,10 @@ class OpImplGenerator(MethodGenerator):
         self.__getParameter()
         self.__setParameter()
         self.__setupInitParameters()
+        self.__setupParameters()
+        self.__setupInputs()
+        self.__setupOutputs()
+        self.__initialize()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -472,7 +517,6 @@ class OpImplGenerator(MethodGenerator):
         self.doc.blank()
         
     def __setupInitParameters(self):
-        
         self.doc.line("const std::vector<const runtime::Parameter*> "
                       "{0}::setupInitParameters()"\
                       .format(self.m.ident.className()))
@@ -480,11 +524,106 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line("std::vector<const runtime::Parameter*> parameters;")
         self.doc.blank()
         
-        v = OpImplGenerator.SetupInitParametersVisitor(self.doc)
-        self.visitAll(v)
+        v = OpImplGenerator.SetupParametersVisitor(self.doc)
+        self.optionParam.accept(v)
         
         self.doc.line("return parameters;")
         self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __setupParameters(self):
+        self.doc.line("const std::vector<const runtime::Parameter*> "
+                      "{0}::setupParameters()"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("std::vector<const runtime::Parameter*> parameters;")
+        self.doc.blank()
+        
+        self.doc.line("switch(int({0}))".format(
+                                        self.optionParam.ident.attribute()))
+        self.doc.scopeEnter()
+        for o in self.m.options:
+            self.doc.label("case({0})".format(o.ident.constant()))
+            self.doc.scopeEnter()
+            
+            v = OpImplGenerator.SetupParametersVisitor(self.doc)
+            for arg in o.args:
+                arg.accept(v)
+                
+            self.doc.scopeExit()
+            self.doc.line("break;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+        self.doc.line("return parameters;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __setupInputs(self):
+        self.doc.line("const std::vector<const runtime::Description*> "
+                      "{0}::setupInputs()"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("std::vector<const runtime::Description*> inputs;")
+        self.doc.blank()
+        
+        self.doc.line("switch(int({0}))".format(
+                                        self.optionParam.ident.attribute()))
+        self.doc.scopeEnter()
+        for o in self.m.options:
+            self.doc.label("case({0})".format(o.ident.constant()))
+            self.doc.scopeEnter()
+            
+            v = OpImplGenerator.SetupInputsVistor(self.doc)
+            for arg in o.args:
+                arg.accept(v)
+                
+            self.doc.scopeExit()
+            self.doc.line("break;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+        self.doc.line("return inputs;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __setupOutputs(self):
+        self.doc.line("const std::vector<const runtime::Description*> "
+                      "{0}::setupOutputs()"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("std::vector<const runtime::Description*> outputs;")
+        self.doc.blank()
+        
+        self.doc.line("switch(int({0}))".format(
+                                        self.optionParam.ident.attribute()))
+        self.doc.scopeEnter()
+        for o in self.m.options:
+            self.doc.label("case({0})".format(o.ident.constant()))
+            self.doc.scopeEnter()
+            
+            v = OpImplGenerator.SetupOutputsVistor(self.doc)
+            for arg in o.args:
+                arg.accept(v)
+                
+            self.doc.scopeExit()
+            self.doc.line("break;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+        self.doc.line("return outputs;")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __initialize(self):
+        self.doc.line("void {0}::initialize()"\
+                      .format(self.m.ident.className()))
+        self.doc.scopeEnter()
+        self.doc.line("runtime::OperatorKernel::initialize(setupInputs(), "
+                      "setupOutputs(), setupParameters());")
+        self.doc.scopeExit()
+        self.doc.blank()
+        
         
             
 if __name__ == "__main__":
