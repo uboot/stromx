@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
-   <!-- validate: xmllint \-\-valid \-\-noout stream.xml
-                  (remove backslashes)
-                  xmllint \-\-dtdvalid stromx.dtd \-\-noout stream.xml
-   -->
+<!-- validate: xmllint \-\-schema stromx.xsd \-\-noout stream.xml -->
 
-<Stromx version="0.1.0">
+<Stromx version="0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stromx.xsd">
     <Stream name="Sample stream">
         <Operator id="0" package="Example" type="ConstImage" version="0.1.0" name="Source image">
             <Parameter id="0">

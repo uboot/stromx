@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
-<Stromx version="0.1.0">
+<Stromx version="0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stromx.xsd">
     <Stream name="TestStream">
         <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 1">
             <Parameter id="0">

@@ -75,8 +75,7 @@ namespace stromx
             
             void XmlWriterImpl::createDoc()
             {
-                DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
-                m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+                m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), 0);
             }
             
             void XmlWriterImpl::createComm()
