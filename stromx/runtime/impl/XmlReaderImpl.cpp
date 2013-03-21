@@ -237,6 +237,14 @@ namespace stromx
                     XMLString::release(&message);
                     throw ex;
                 }
+                catch (const SAXException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InvalidFileFormat ex(filename, "", "SAX exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
                 catch (Exception&)
                 {
                     throw;
@@ -378,6 +386,14 @@ namespace stromx
                     char* message = XMLString::transcode(toCatch.msg);
                     
                     InternalError ex("DOM exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+                catch (const SAXException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InvalidFileFormat ex(filename, "", "SAX exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
