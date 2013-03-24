@@ -2,24 +2,7 @@
 
 In this tutorial the very same stream as in \ref simple is constructed. However, this time it is deserialized from an XML file instead of manually assembled by \em runtime library functions. The XML file which encodes this stream looks as follows:
 
-\code
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<Stromx version="0.1.0">
-    <Stream>
-        <Operator id="0" package="Runtime" type="Counter" version="0.1.0"/>
-        <Operator id="1" package="Runtime" type="PeriodicDelay" version="0.1.0">
-            <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1000</Data>
-            </Parameter>
-            <Input id="0" operator="0" output="0"/>
-        </Operator>
-        <Thread>
-            <InputNode operator="1" input="0"/>
-        </Thread> 
-    </Stream>
-</Stromx>
-\endcode
+\include file.xml
 
 A stream is described as a list of all its operators and its threads. Each operator must be assigned a unique ID which is used to refer to the same operator when defining connections between operators and when assiging operator connectors to threads. The type of an operator is identified by the a combination of \em package and \em type. This allows the use of operators which are defined in third party packages but are not known to the \em runtime library. Parameters of operators can be set by the respective \em Parameter element. This element contains exactly one \em Data element which contains the value of the parameter. The type of the data is also specified by the combination of \em package and \em type. Again this allows allows to set parameters whose type is defined in an external library and thus not know to runtime runtime.
 
@@ -27,65 +10,32 @@ In addition to parameters the \em Operator element contains a list of its inputs
 
 The same principle holds for the list of input connector elements of a \em Thread element. Here, the only thread in the stream operates the input connector \c 0 of the operator with ID \c 1. The code which reads this XML file is explained in the following:
 
-\code
-#include <stromx/runtime/Factory.h>
-#include <stromx/runtime/XmlReader.h>
-#include <stromx/runtime/Stream.h>
-#include <stromx/runtime/Runtime.h>
-#include <stromx/runtime/Operator.h>
-#include <stromx/runtime/Primitive.h>
-#include <stromx/runtime/ReadAccess.h>
-
-#include <iostream>
-\endcode
+\dontinclude file.cpp
+\skip #include
+\until #include <iostream>
 
 Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the runtime library are required. On the other hand, the inclusion of the operator headers in the \em example library is not required anymore. The file example/Example.h is the only one which is needed from this library.
 
-\code
-using namespace stromx;
-
-int main (int, char**)
-{
-    runtime::Factory factory;  
- 
-    stromxRegisterRuntime(factory);
-\endcode
+\skip using
+\until stromxRegisterRuntime
 
 As a first step a <em>factory</em> is instantiated. The factory will be used to instantiate all operators and data types which appear in the XML file. After construction the factory is empty, i.e. it does not know any operator or data type. Only after registering a <em>runtime package</em> the factory can produce operators or data types from this package.
 
 \note
 If the above way of registering a package is used the package must be known at compile time. However, a package can be used even later if the library which contains its code is loaded dynamically during program execution. If the package \em MyPackage was loaded this way then the function <code>registerMyPackage()</code> would have to be called to allow the import of XML files which use \em MyPackage.
 
-\code
-    runtime::Stream* stream = runtime::XmlReader().readStream("file.xml", factory);
-    
-    stream->start();
-\endcode
+\skip runtime::Stream
+\until stream->start()
 
 In the next step a stream is instantiated according the XML file using a runtime::XmlReader. Note that the previously configured factory is passed to the constructor of runtime::XmlReader. This way it knows which classes to instantiate if operators or data types are defined by combinations of package and type names. Because the complete configuration of the stream is given in the file the stream is ready to be started after it has been read. In other words, all operators have automatically been initialized, the connections between them have been established and each thread has been informed about its input connectors.
 
-\code   
-    runtime::Operator* timer = stream->operators()[1];
-\endcode
+\line runtime::Operator
 
 So far a stream was build and started without knowing anything about its internal structure. To have a look at the processed data a specific operator must obviously be addressed. The above line obtains a pointer to the second operator in the stream. Note that \em second refers to the zero-exampled position of the operator in the XML file not its ID there.
 
-\code 
-    for(unsigned int i = 0; i < 5; ++i)
-    {
-        runtime::DataContainer data = timer->getOutputData(0);
-        runtime::ReadAccess<runtime::UInt32> count(data);
-        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
-        
-        timer->clearOutputData(0);
-    }
-    
-    stream->stop();
-    stream->join();
-    
-    delete stream;
-}
-\endcode
+\skip for
+\until }
+\until }
 
 The rest of the code is exactly the same as in the previous example.
 

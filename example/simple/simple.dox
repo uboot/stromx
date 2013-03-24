@@ -20,81 +20,46 @@ Not every input connector must be assigned to a thread. However, if data is requ
 The \em simple tutorial assembles the stream in the image above and operates it. The \em Counter operator in the stream simply pushes an integer to its output each time it is executed. With each call it increments the integer by one. The \em PeriodicDelay operator simple passes data at its input to its output. However, it makes sure that new data appears at the output at most once within a certain amount of time (one second in this example). In this sense it acts as a timer, which delays the transport of data by predefined timespan.
 In the following, the source code of \em simple.cpp is printed with comments under each part.
 
-\code
-#include <stromx/runtime/Counter.h>
-#include <stromx/runtime/Operator.h>
-#include <stromx/runtime/PeriodicDelay.h>
-#include <stromx/runtime/ReadAccess.h>
-#include <stromx/runtime/Stream.h>
-#include <stromx/runtime/Thread.h>
-
-#include <iostream>
-\endcode
+\dontinclude simple.cpp
+\skip #include
+\until iostream
 
 As usual the program starts be including the required header files. Stromx uses a fine grained approach to the inclusion of headers, i.e. only the necessary headers are included by the library headers and forward declarations are used wherever possible. As a consequence the headers of all classes which are used in the code are included here.
 
 The first four headers are part of the runtime library. This library provides all infrastructure to support streams, operators and threads but does not contain any actual operators. The operators which are used in the example are imported next. The final header is necessary to write the results of the running stream to the standard output.
 
-\code
-using namespace stromx;
-
-int main (int, char**)
-{
-    runtime::Stream stream;
-\endcode
+\skip using namespace
+\until runtime::Stream
 
 The program starts by creating an empty stream object which will populated with operators and threads in the following.
 
-\code
-    runtime::Operator* source = new runtime::Operator(new runtime::Counter);
-    source->initialize();
-    stream.addOperator(source);
-    
-    runtime::Operator* timer = new runtime::Operator(new runtime::PeriodicDelay);
-    timer->initialize();
-    stream.addOperator(timer);
-\endcode
+\skip runtime::Operator*
+\until addOperator(timer)
 
 First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operators can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
 
-\code
-    timer->setParameter(runtime::PeriodicDelay::PERIOD, runtime::UInt32(1000));
-\endcode
+\skipline setParameter
 
 In the next step the time delay of the timer operator is set to one second. All data passed as parameter to the function runtime::Operator::setParameter must be derived from runtime::Data. Versions of primitive data types which are derived from runtime::Data are defined in runtime::Primitive. Here runtime::UInt32 is used which obviously wraps a 32-bit unsigned integer.
 
 \note
 Each parameter has an access mode which controls when the associated value can be written and read. In case of the period of runtime::PeriodicCounter the access mode is runtime::Parameter::ACTIVATED_WRITE which means that the parameter can be written (and read) at any time as soon the operator is initialized.
 
-\code    
-    stream.connect(source, runtime::Counter::OUTPUT, timer, runtime::PeriodicDelay::INPUT);
-\endcode
+\skipline connect
 
 This line connects the output of the counter to the input of the \c timer operator. Note that input and output connectors are identified by the operator the belong to (\c source and \c timer) and their IDs (runtime::Counter::OUTPUT and runtime::PeriodicDelay::INPUT).
   
-\code  
-    runtime::Thread* thread = stream.addThread();
-    thread->addInput(timer, runtime::PeriodicDelay::INPUT);
-\endcode
+\skip runtime::Thread
+\until addInput
 
 Now the operating thread is added to the stream. In the next line the input connector of \em timer is added as the only input connector which is operated by \em thread. As before the input connector is addressed by its operator and its ID.
 
-\code
-    stream.start();
-\endcode
+\skipline stream.start()
 
 This step starts all threads (i.e. is one in our case) of the stream. The thread begins to process its input connectors immediately. As mentioned in the introduction it executes the operators in the stream and moves processed data to the output of \em timer. The following loop gets this data from the final output and writes it to the standard input.
-   
-\code   
-    for(unsigned int i = 0; i < 5; ++i)
-    {
-        runtime::DataContainer data = timer->getOutputData(runtime::PeriodicDelay::OUTPUT);
-        runtime::ReadAccess<runtime::UInt32> count(data);
-        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
-
-        timer->clearOutputData(runtime::PeriodicDelay::OUTPUT);
-    }
-\endcode
+  
+\skip for
+\until }
 
 Each iteration of the loop starts by obtaining the current data at the output of \c timer. If data is present at the output function stream::Operator::getOutputData() returns it immediately, otherwise it blocks until data arrives. The data is packaged in a <em>data container</em>. Data containers are basically references to data objects and can be easily copied and therefore moved from one part of the stream to another. They are implemented via shared pointers and make sure the data inside them is deleted as soon nobody holds any referenece (i.e. no containers exist anymore) to it.
 As their real world counterparts data containers do not only faciliate the transport of data, they also protect it in the sense that they do not allow direct access to the data inside them.To actually read the data stored in the data container a <em>read accessor</em> \c count has to be constructed around the container. It allows reading \c data using the () operator as in the next line of the loop. 
@@ -104,11 +69,8 @@ As the existence of a read accessor suggests there is also a class runtime::Writ
 
 Finally the output of \c timer has be be cleared. Otherwise the data there would block \c counter from depositing new data and would eventually obstruct the complete stream.
     
-\code  
-    stream.stop();
-    stream.join();
-}
-\endcode
+\skip stop
+\until }
 
 After the output of the stream has been received a couple of times the stream is ordered to stop. While runtime::Stream::stop() is an asynchronous method, joining the stream waits until each thread has come to halt and the stream is inactive.
 
