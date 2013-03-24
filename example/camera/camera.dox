@@ -15,7 +15,6 @@ The illustrated stream is configured by the XML file below. The parameter settin
 
 \code
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
 <Stromx version="0.1.0">
     <Stream>

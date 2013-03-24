@@ -17,6 +17,7 @@
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <iostream>
+#include <xercesc/framework/MemBufFormatTarget.hpp>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Exception.h"
@@ -75,8 +76,7 @@ namespace stromx
             
             void XmlWriterImpl::createDoc()
             {
-                DOMDocumentType* docType = m_impl->createDocumentType(Str2Xml("Stromx"), 0, Str2Xml("stromx.dtd"));
-                m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), docType);
+                m_doc = m_impl->createDocument(0, Str2Xml("Stromx"), 0);
             }
             
             void XmlWriterImpl::createComm()
@@ -378,22 +378,29 @@ namespace stromx
                     //Create Threads of Stream (multiple entries for Stream possible)
                     createThreads(m_stream->threads());
                     
+                    DOMLSOutput* output = m_impl->createLSOutput();
+                    MemBufFormatTarget formatTarget;
+                    output->setByteStream(&formatTarget);
                     DOMLSSerializer* serializer = m_impl->createLSSerializer();
                     serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-                    char* content = XMLString::transcode(serializer->writeToString(m_doc));
+                    
+                    serializer->write(m_doc, output);
                     
                     try
                     {
                         m_output->initialize(basename);
                         m_output->openFile("xml");
-                        m_output->file() << content;
+                        m_output->file().write((const char*)(formatTarget.getRawBuffer()),
+                                               formatTarget.getLen());
                     }
                     catch(Exception&)
                     {
+                        output->release();
+                        serializer->release();
                         throw; 
                     }
                     
-                    XMLString::release(&content);
+                    output->release();
                     serializer->release();
 
                     // done with the document, must call release() to release the entire document resources
@@ -443,24 +450,33 @@ namespace stromx
                     //Create Operator branches
                     createOperators(m_opList, m_parsElement);
                     
-                    
-                    
+                    DOMLSOutput* output = m_impl->createLSOutput();
+                    MemBufFormatTarget formatTarget;
+                    output->setByteStream(&formatTarget);
                     DOMLSSerializer* serializer = m_impl->createLSSerializer();
                     serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-                    char* content = XMLString::transcode(serializer->writeToString(m_doc));
+                    
+                    serializer->write(m_doc, output);
                     
                     try
                     {
                         m_output->initialize(basename);
                         m_output->openFile("xml");
-                        m_output->file() << content;
+                        m_output->file().write((const char*)(formatTarget.getRawBuffer()),
+                                               formatTarget.getLen());
                     }
                     catch(Exception&)
                     {
+                        output->release();
+                        serializer->release();
+
+                        // done with the document, must call release() to release the entire document resources
+                        m_doc->release();
+                    
                         throw; 
                     }
                     
-                    XMLString::release(&content);
+                    output->release();
                     serializer->release();
 
                     // done with the document, must call release() to release the entire document resources

@@ -20,6 +20,7 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/XMLEntityResolver.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <fstream>
 #include <iostream>
@@ -43,59 +44,91 @@ namespace stromx
             
             namespace
             {
-                 const std::string DTD =
+                 const std::string XSD =
 " \
-<!ELEMENT Stromx (Stream?, Parameters?)> \
-<!ATTLIST Stromx \
-    version CDATA #REQUIRED \
-> \
-\
-<!ELEMENT Stream (Operator*, Thread*)> \
-<!ATTLIST Stream \
-    name CDATA #IMPLIED \
-> \
-\
-<!ELEMENT Parameters (Operator*)> \
-\
-<!ELEMENT Thread (InputConnector*)> \
-<!ATTLIST Thread \
-    name CDATA #IMPLIED \
-> \
-\
-<!ELEMENT Operator (Parameter*, Input*)> \
-<!ATTLIST Operator \
-    id NMTOKEN #REQUIRED \
-    package CDATA #REQUIRED \
-    type CDATA #REQUIRED \
-    name CDATA #IMPLIED \
-    version CDATA #REQUIRED \
-> \
-\
-<!ELEMENT Parameter (Data)> \
-<!ATTLIST Parameter \
-    id NMTOKEN #REQUIRED \
-> \
-\
-<!ELEMENT Data (#PCDATA)> \
-<!ATTLIST Data \
-    type CDATA #REQUIRED \
-    package CDATA #REQUIRED \
-    version CDATA #REQUIRED \
-    file CDATA #IMPLIED \
-> \
-\
-<!ELEMENT Input EMPTY> \
-<!ATTLIST Input \
-    id NMTOKEN #REQUIRED \
-    operator NMTOKEN #REQUIRED \
-    output NMTOKEN #REQUIRED \
-> \
-\
-<!ELEMENT InputConnector EMPTY> \
-<!ATTLIST InputConnector \
-    operator NMTOKEN #REQUIRED \
-    input NMTOKEN #REQUIRED \
-> \
+<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\"> \
+  <xs:element name=\"Stromx\"> \
+    <xs:complexType> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" ref=\"Stream\"/> \
+        <xs:element minOccurs=\"0\" ref=\"Parameters\"/> \
+      </xs:sequence> \
+      <xs:attribute name=\"version\" use=\"required\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Stream\"> \
+    <xs:complexType> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"Operator\"/> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"Thread\"/> \
+      </xs:sequence> \
+      <xs:attribute name=\"name\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Parameters\"> \
+    <xs:complexType> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"Operator\"/> \
+      </xs:sequence> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Thread\"> \
+    <xs:complexType> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"InputConnector\"/> \
+      </xs:sequence> \
+      <xs:attribute name=\"name\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Operator\"> \
+    <xs:complexType> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"Parameter\"/> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"Input\"/> \
+      </xs:sequence> \
+      <xs:attribute name=\"id\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+      <xs:attribute name=\"package\" use=\"required\"/> \
+      <xs:attribute name=\"type\" use=\"required\"/> \
+      <xs:attribute name=\"name\"/> \
+      <xs:attribute name=\"version\" use=\"required\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Parameter\"> \
+    <xs:complexType> \
+      <xs:complexContent> \
+        <xs:extension base=\"Data\"> \
+          <xs:attribute name=\"id\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+        </xs:extension> \
+      </xs:complexContent> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:complexType name=\"Data\"> \
+    <xs:sequence> \
+      <xs:element ref=\"Data\"/> \
+    </xs:sequence> \
+  </xs:complexType> \
+  <xs:element name=\"Data\"> \
+    <xs:complexType mixed=\"true\"> \
+      <xs:attribute name=\"type\" use=\"required\"/> \
+      <xs:attribute name=\"package\" use=\"required\"/> \
+      <xs:attribute name=\"version\" use=\"required\"/> \
+      <xs:attribute name=\"file\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"Input\"> \
+    <xs:complexType> \
+      <xs:attribute name=\"id\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+      <xs:attribute name=\"operator\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+      <xs:attribute name=\"output\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+    </xs:complexType> \
+  </xs:element> \
+  <xs:element name=\"InputConnector\"> \
+    <xs:complexType> \
+      <xs:attribute name=\"operator\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+      <xs:attribute name=\"input\" use=\"required\" type=\"xs:NMTOKEN\"/> \
+    </xs:complexType> \
+  </xs:element> \
+</xs:schema> \
 "
                 ;
             
@@ -113,12 +146,12 @@ namespace stromx
                     std::string m_filename;
                 };
                 
-                class XercesEntityResolver : public HandlerBase
+                class EntityResolver : public XMLEntityResolver
                 {
                 public:
-                    virtual InputSource* resolveEntity (const XMLCh *const /*publicId*/, const XMLCh *const /*systemId*/)
+                    virtual InputSource* resolveEntity (XMLResourceIdentifier* /*resourceIdentifier*/)
                     {
-                        InputSource* grammar = new MemBufInputSource(reinterpret_cast<const XMLByte*>(DTD.c_str()), DTD.size(), "");
+                        InputSource* grammar = new MemBufInputSource(reinterpret_cast<const XMLByte*>(XSD.c_str()), XSD.size(), "");
                         return grammar;
                     }
                 };
@@ -164,12 +197,15 @@ namespace stromx
             Stream* XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
             {    
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
-                std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
+                std::auto_ptr<XMLEntityResolver> entityResolver(new EntityResolver);
                 
                 std::auto_ptr<XercesDOMParser> parser(new XercesDOMParser());
 
                 parser->setErrorHandler(errHandler.get());
-                parser->setEntityResolver(entityResolver.get());
+                parser->setXMLEntityResolver(entityResolver.get());
+                parser->setDoNamespaces(true);
+                parser->setDoSchema(true);
+                parser->setExternalNoNamespaceSchemaLocation("stromx.xsd");
                 parser->setValidationScheme(XercesDOMParser::Val_Always);
 
                 std::stringbuf contentBuffer;
@@ -198,6 +234,14 @@ namespace stromx
                     char* message = XMLString::transcode(toCatch.msg);
                     
                     InternalError ex("DOM exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+                catch (const SAXException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InvalidFileFormat ex(filename, "", "SAX exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
@@ -305,12 +349,15 @@ namespace stromx
             void XmlReaderImpl::readParameters(FileInput& input, const std::string & filename, const std::vector< stromx::runtime::Operator* > & operators)
             {
                 std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
-                std::auto_ptr<EntityResolver> entityResolver(new XercesEntityResolver);
+                std::auto_ptr<XMLEntityResolver> entityResolver(new EntityResolver);
                 
                 XercesDOMParser* parser = new XercesDOMParser();
 
                 parser->setErrorHandler(errHandler.get());
-                parser->setEntityResolver(entityResolver.get());
+                parser->setXMLEntityResolver(entityResolver.get());
+                parser->setDoNamespaces(true);
+                parser->setDoSchema(true);
+                parser->setExternalNoNamespaceSchemaLocation("stromx.xsd");
                 parser->setValidationScheme(XercesDOMParser::Val_Always);
 
                 std::stringbuf contentBuffer;
@@ -339,6 +386,14 @@ namespace stromx
                     char* message = XMLString::transcode(toCatch.msg);
                     
                     InternalError ex("DOM exception: " + std::string(message));
+                    XMLString::release(&message);
+                    throw ex;
+                }
+                catch (const SAXException& toCatch)
+                {
+                    char* message = XMLString::transcode(toCatch.getMessage());
+                    
+                    InvalidFileFormat ex(filename, "", "SAX exception: " + std::string(message));
                     XMLString::release(&message);
                     throw ex;
                 }
