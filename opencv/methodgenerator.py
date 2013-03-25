@@ -34,7 +34,7 @@ class ArgumentVisitor(object):
         pass
         
         
-class MethodGenerator(ArgumentVisitor):
+class MethodGenerator(object):
     
     class CollectParametersVisitor(ArgumentVisitor):
         def __init__(self):
@@ -49,10 +49,11 @@ class MethodGenerator(ArgumentVisitor):
         def visitEnumParameter(self, parameter):
             self.params.add(parameter)
             
-    class ParameterVisitor(ArgumentVisitor):
+    class DocVisitor(ArgumentVisitor):
         def __init__(self, doc):
             self.doc = doc
             
+    class ParameterVisitor(DocVisitor):            
         def visitNumericParameter(self, parameter):
             self.visitParameter(parameter)
             
@@ -103,6 +104,10 @@ class MethodGenerator(ArgumentVisitor):
                 
         if self.optionParam:
             self.optionParam.accept(visitor)
+            
+    def visitOption(self, opt, visitor):
+        for arg in opt.args:
+            arg.accept(visitor)
         
     def namespaceEnter(self):
         self.doc.namespaceEnter("stromx")
@@ -361,10 +366,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.typeId()))
             self.doc.line("break;")
                 
-    class SetupParametersVisitor(ArgumentVisitor):
-        def __init__(self, doc):
-            self.doc = doc
-            
+    class SetupParametersVisitor(MethodGenerator.DocVisitor):
         def visitParameter(self, parameter):
             l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
                 .format(parameter.ident, parameter.ident.constant(),
@@ -386,10 +388,7 @@ class OpImplGenerator(MethodGenerator):
         def visitEnumParameter(self, parameter):
             self.visitParameter(parameter)
             
-    class SetupOutputsVistor(ArgumentVisitor):
-        def __init__(self, doc):
-            self.doc = doc
-    
+    class SetupOutputsVistor(MethodGenerator.DocVisitor):
         def visitOutput(self, output):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
                 .format(output.ident, output.ident.constant(),
@@ -405,10 +404,7 @@ class OpImplGenerator(MethodGenerator):
         def visitAllocation(self, allocation):
             self.visitOutput(allocation)
             
-    class SetupInputsVistor(ArgumentVisitor):
-        def __init__(self, doc):
-            self.doc = doc
-    
+    class SetupInputsVisitor(MethodGenerator.DocVisitor):
         def visitOutput(self, output):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
                 .format(output.ident, output.ident.constant(),
@@ -423,6 +419,54 @@ class OpImplGenerator(MethodGenerator):
         
         def visitAllocation(self, allocation):
             self.visitOutput(allocation)
+            
+    class InputMapperVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            self.__visit(inputArg)
+            
+        def visitOutput(self, output):
+            self.__visit(output)
+            
+        def __visit(self, arg):
+            ident = arg.ident
+            constant = arg.ident.constant()
+            l = "runtime::Id2DataPair {0}InMapper({1})".format(ident, constant)
+            self.doc.line(l)
+    
+    class ReceiveInputDataVisitor(ArgumentVisitor):
+        def __init__(self):
+            self.line = ""
+            
+        def visitInput(self, inputArg):
+            self.__visit(inputArg)
+            
+        def visitOutput(self, output):
+            self.__visit(output)
+            
+        def export(self, doc):
+            if self.line != "":
+                doc.line("provider.receiveInputData({0});".format(self.line))
+            
+        def __visit(self, arg):
+            if self.line == "":
+                self.line = "{0}InMapper".format(arg.ident)
+            else:
+                self.line += " && {0}InMapper".format(arg.ident)
+           
+    class DataVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            self.doc.line(("const runtime::Data* "
+                           "{0}Data = 0;").format(inputArg.ident))
+            
+        def visitOutput(self, output):
+            self.doc.line("runtime::Data* {0}Data = 0;".format(output.ident))
+            
+    class AccessVisitor(ArgumentVisitor):
+        pass
+            
+        def export(self, doc):
+            pass
+        
         
     def generate(self):        
         self.__includes()
@@ -575,7 +619,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.label("case({0})".format(o.ident.constant()))
             self.doc.scopeEnter()
             
-            v = OpImplGenerator.SetupInputsVistor(self.doc)
+            v = OpImplGenerator.SetupInputsVisitor(self.doc)
             for arg in o.args:
                 arg.accept(v)
                 
@@ -604,8 +648,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.scopeEnter()
             
             v = OpImplGenerator.SetupOutputsVistor(self.doc)
-            for arg in o.args:
-                arg.accept(v)
+            self.visitOption(o, v)
                 
             self.doc.scopeExit()
             self.doc.line("break;")
@@ -636,6 +679,26 @@ class OpImplGenerator(MethodGenerator):
         for o in self.m.options:
             self.doc.label("case({0})".format(o.ident.constant()))
             self.doc.scopeEnter()
+            
+            v = OpImplGenerator.InputMapperVisitor(self.doc)
+            self.visitOption(o, v)
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.ReceiveInputDataVisitor()
+            self.visitOption(o, v)
+            v.export(self.doc)   
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.DataVisitor(self.doc)
+            self.visitOption(o, v)    
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.AccessVisitor()
+            self.visitOption(o, v)  
+            v.export(self.doc)
                 
             self.doc.scopeExit()
             self.doc.line("break;")
@@ -643,8 +706,6 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeExit()
         self.doc.blank()
         
-        
-            
 if __name__ == "__main__":
     import doctest
     doctest.testmod()     
