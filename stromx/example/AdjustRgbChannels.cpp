@@ -64,7 +64,7 @@ namespace stromx
             }
             catch(std::bad_cast&)
             {
-                throw WrongParameterId(id, *this);
+                throw WrongParameterType(parameter(id), *this);
             }
         }
 

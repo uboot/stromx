@@ -69,7 +69,7 @@ namespace math
         }
         catch(runtime::BadCast&)
         {
-            throw runtime::WrongParameterId(id, *this);
+            throw runtime::WrongParameterType(parameter(id), *this);
         }
     }
 
