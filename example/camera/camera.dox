@@ -13,122 +13,24 @@ The camera has an additional output which contains the index of the current imag
 
 The illustrated stream is configured by the XML file below. The parameter settings of the operators a commented in the file.
 
-\code
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<Stromx version="0.1.0">
-    <Stream>
-        <Operator id="0" package="Example" type="Camera" version="0.1.0">
-            <!-- output image index -->
-            <Parameter id="0">
-                <Data package="Runtime" type="Bool" version="0.1.0">1</Data>
-            </Parameter>
-            <!-- image for camera simulator -->
-            <Parameter id="0">
-                <Data type="Image" package="Example" version="0.1.0">lenna.jpg</Data>
-            </Parameter>
-            <!-- software trigger mode -->
-            <Parameter id="1">
-                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
-            </Parameter>
-            <!-- the buffer size is 1 MB -->
-            <Parameter id="5">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
-            </Parameter>
-            <!-- one buffer -->
-            <Parameter id="6">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
-            </Parameter>
-            <!-- 8-bit grayscale output -->
-            <Parameter id="14">
-                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
-            </Parameter>
-        </Operator>
-        <Operator id="1" package="Example" type="Buffer" version="0.1.0">
-            <!-- one buffer -->
-            <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
-            </Parameter>
-            <!-- the buffer size is 1 MB -->
-            <Parameter id="1">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
-            </Parameter>
-        </Operator>
-        <Operator id="2" package="Example" type="Canny" version="0.1.0">
-            <!-- threshold 1 -->
-            <Parameter id="0">
-                <Data type="Double" package="Runtime" version="0.1.0">50</Data>
-            </Parameter>
-            <!-- threshold 2 -->
-            <Parameter id="1">
-                <Data type="Double" package="Runtime" version="0.1.0">150</Data>
-            </Parameter>
-            <Input id="0" operator="0" output="0"/>
-            <Input id="1" operator="1" output="0"/>
-        </Operator>
-        <Thread>
-            <InputConnector operator="2" input="0"/>
-            <InputConnector operator="2" input="1"/>
-        </Thread> 
-    </Stream>
-</Stromx>
-\endcode
+\include camera.xml
 
 The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em example libraries.
 
-\code
-#include <stromx/runtime/Factory.h>
-#include <stromx/runtime/XmlReader.h>
-#include <stromx/runtime/Stream.h>
-#include <stromx/runtime/Runtime.h>
-#include <stromx/runtime/Operator.h>
-#include <stromx/runtime/ReadAccess.h>
-#include <stromx/runtime/Image.h>
-
-#include <stromx/example/Example.h.h>
-#include <stromx/example/Camera.h>
-
-#include <iostream>
-
-using namespace stromx;
-
-int main (int, char**)
-{
-    runtime::Factory factory;
-    
-    stromxRegisterRuntime(factory);
-    stromxRegisterExample(factory);
-\endcode
+\dontinclude camera.cpp
+\skip #include
+\until stromxRegisterExample
 
 Next the stream is read from the XML file and started.
  
-\code   
-    runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
-    
-    stream->start();
-    
-    runtime::Operator* camera = stream->operators()[0];
-    runtime::Operator* canny = stream->operators()[2];
-    
-    for(unsigned int i = 0; i < 5; ++i)
-    {
-        runtime::DataContainer data = canny->getOutputData(0);
-        runtime::ReadAccess<runtime::Image> image(data);
-        std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
-        
-        canny->clearOutputData(0);
-        camera->clearOutputData(1);
-    }
-\endcode
+\skip readStream
+\until clearOutputData
+\until }
 
 Before starting the iteration explicit references to the \em Camera and \em Canny operators are acquired. In each step the output image of the edge detector is obtained and its dimension are written to the command line. After that the output of the edge detector and the index output of the camera are cleared. It is important to clear \em all outputs which are not connected to other operators. Not doing so would eventually stop stream because no further data can be send to the outputs.
-\code 
-    stream->stop();
-    stream->join();
-    
-    delete stream;
-}
-\endcode
+
+\skip stop
+\until }
 
 Finally, the stream is stopped and deleted. 
 
