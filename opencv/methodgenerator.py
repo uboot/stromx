@@ -338,6 +338,9 @@ class OpImplGenerator(MethodGenerator):
     >>> opt = package.Option("allocate")
     >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
     >>> m.options.append(opt)
+    >>> opt = package.Option("inPlace")
+    >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
+    >>> m.options.append(opt)
     >>> g = OpImplGenerator()
     >>> g.save(p, m, True) 
     """     
@@ -430,7 +433,7 @@ class OpImplGenerator(MethodGenerator):
         def __visit(self, arg):
             ident = arg.ident
             constant = arg.ident.constant()
-            l = "runtime::Id2DataPair {0}InMapper({1})".format(ident, constant)
+            l = "runtime::Id2DataPair {0}InMapper({1});".format(ident, constant)
             self.doc.line(l)
     
     class ReceiveInputDataVisitor(ArgumentVisitor):
@@ -461,11 +464,66 @@ class OpImplGenerator(MethodGenerator):
         def visitOutput(self, output):
             self.doc.line("runtime::Data* {0}Data = 0;".format(output.ident))
             
-    class AccessVisitor(ArgumentVisitor):
-        pass
+    class AccessVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            self.doc.line(("runtime::ReadAccess<> "
+                           "{0}ReadAccess;").format(inputArg.ident))
+                        
+        def visitOutput(self, output):
+            mapper = "{0}InMapper".format(output.ident)
+            data = "{0}Data".format(output.ident)
+            self.doc.line(("runtime::DataContainer inContainer = "
+                           "{0}.data();").format(mapper))
+            self.doc.line("runtime::WriteAccess<> writeAccess(inContainer);")
+            self.doc.line("{0} = &writeAccess();".format(data))
+            
+    class CopyWriteAccessVisitor(ArgumentVisitor):
+        def __init__(self):
+            self.output = None
+            self.inputs = []
+            
+        def visitInput(self, inputArg):
+            self.inputs.append(inputArg)
+            
+        def visitOutput(self, output):
+            assert(self.output == None)
+            self.output = output
             
         def export(self, doc):
-            pass
+            if self.output == None:
+                return
+                
+            if len(self.inputs) == 0:
+                return
+                
+            for i in self.inputs:
+                l = "if({0}InMapper.data() == inContainer)".format(i.ident)
+                doc.line(l)
+                doc.scopeEnter()
+                doc.line("srcData = &writeAccess();")
+                doc.scopeExit()
+                doc.line("else")
+                doc.scopeEnter()
+                l = ("{0}ReadAccess = runtime::ReadAccess<>("
+                     "{0}InMapper.data());").format(i.ident)
+                doc.line(l)
+                l = "{0}Data = &{0}ReadAccess();".format(i.ident)
+                doc.line(l)
+                doc.scopeExit()
+                doc.blank()
+                
+    class CastedDataVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            l = ("const runtime::Data* {0}CastedData = "
+                 "runtime::data_cast<{1}>({0}Data);").format(inputArg.ident,
+                inputArg.dataType.typeId())
+            self.doc.line(l)
+            
+        def visitOutput(self, output):
+            l = ("runtime::Data* {0}CastedData = "
+                 "runtime::data_cast<{1}>({0}Data);").format(output.ident,
+                output.dataType.typeId())
+            self.doc.line(l)
         
         
     def generate(self):        
@@ -696,9 +754,17 @@ class OpImplGenerator(MethodGenerator):
             
             self.doc.blank()
             
-            v = OpImplGenerator.AccessVisitor()
+            v = OpImplGenerator.AccessVisitor(self.doc)
             self.visitOption(o, v)  
-            v.export(self.doc)
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.CopyWriteAccessVisitor()
+            self.visitOption(o, v)
+            v.export(self.doc)    
+            
+            v = OpImplGenerator.CastedDataVisitor(self.doc)
+            self.visitOption(o, v) 
                 
             self.doc.scopeExit()
             self.doc.line("break;")

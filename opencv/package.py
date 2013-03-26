@@ -510,6 +510,9 @@ class RefInput(OutputArgument):
     def outputCreate(self):
         return []
         
+    def accept(self, visitor):
+        visitor.visitRefInput(self)
+        
 class Allocation(OutputArgument):
     def __init__(self, arg):
         self.copyFrom(arg)
