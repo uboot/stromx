@@ -137,6 +137,9 @@ class Argument(MethodFragment):
         self.dataType = dataType
         self.description = ""
         self.rules = []
+        self.initIn = []
+        self.initOut = []
+        
             
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -145,6 +148,8 @@ class Argument(MethodFragment):
         self.cvType = arg.cvType
         self.dataType = arg.dataType
         self.rules = arg.rules
+        self.initIn = arg.initIn
+        self.initOut = arg.initOut
         
     def accept(self, visitor):
         raise NotImplementedError
@@ -155,14 +160,6 @@ class InputArgument(Argument):
 class OutputArgument(Argument):
     def __init__(self, ident, name, cvType, dataType):
         super(OutputArgument, self).__init__(ident, name, cvType, dataType)
-        self.initIn = []
-        self.initOut = []
-    
-    def copyFrom(self, arg):
-        super(OutputArgument, self).copyFrom(arg)
-        if isinstance(arg, OutputArgument):
-            self.initIn = arg.initIn
-            self.initOut = arg.initOut
     
     def __repr__(self):
         return "OutputArgument()"

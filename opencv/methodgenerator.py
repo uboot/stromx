@@ -132,6 +132,9 @@ class OpHeaderGenerator(MethodGenerator):
     >>> opt = package.Option("allocate")
     >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
     >>> m.options.append(opt)
+    >>> opt = package.Option("inPlace")
+    >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
+    >>> m.options.append(opt)
     >>> g = OpHeaderGenerator()
     >>> g.save(p, m, True)   
     #ifndef STROMX_IMGPROC_MEDIANBLUR_H
@@ -151,10 +154,10 @@ class OpHeaderGenerator(MethodGenerator):
             public:
                 enum InputId
                 {
-                    SRC
                 }
                 enum OutputId
                 {
+                    SRC,
                     DST
                 }
                 enum ParameterId
@@ -332,6 +335,14 @@ class OpImplGenerator(MethodGenerator):
     >>> arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
     >>> arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
     >>> arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
+    >>> initIn = ("{1}->initializeImage({0}->width(), {0}->height(), "\
+                  "{0}->stride(), {1}->data(), {0}->pixelType());")\
+                 .format("srcCastedData", "dstCastedData")
+    >>> arg2.initIn.append(initIn)    
+    >>> initOut = ("{1}->initializeImage({1}->width(), {1}->height(), "\
+                  "{1}->stride(), {1}->data(), {0}->pixelType());")\
+                 .format("srcCastedData", "dstCastedData")
+    >>> arg2.initOut.append(initOut)
     >>> opt = package.Option("manual")
     >>> opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
     >>> m.options.append(opt)
@@ -524,7 +535,53 @@ class OpImplGenerator(MethodGenerator):
                  "runtime::data_cast<{1}>({0}Data);").format(output.ident,
                 output.dataType.typeId())
             self.doc.line(l)
-        
+    
+    class InitInVisitor(MethodGenerator.DocVisitor):
+        def visitOutput(self, output):
+            for l in output.initIn:
+                self.doc.line(l)
+            
+    class CvDataVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            cvData = "{0} {1}CvData".format(inputArg.cvType.typeId(), 
+                                            inputArg.ident)
+            castedData = "*{0}CastedData".format(inputArg.ident)
+            cast = inputArg.cvType.cast(castedData)
+            l = "{0} = {1};".format(cvData, cast)
+            self.doc.line(l)
+            
+        def visitOutput(self, inputArg):
+            cvData = "{0} {1}CvData".format(inputArg.cvType.typeId(), 
+                                            inputArg.ident)
+            castedData = "*{0}CastedData".format(inputArg.ident)
+            cast = inputArg.cvType.cast(castedData)
+            l = "{0} = {1};".format(cvData, cast)
+            self.doc.line(l)
+            
+        def visitAllocation(self, allocation):
+            cvData = "{0} {1}CvData;".format(allocation.cvType.typeId(), 
+                                             allocation.ident)
+            self.doc.line(cvData)
+            
+        def visitParameter(self, parameter):
+            cvData = "{0} {1}CvData;".format(parameter.cvType.typeId(), 
+                                             parameter.ident)
+            castedData = parameter.cvType.cast(parameter.ident.attribute())
+            self.doc.line("{0} = {1};".format(cvData, castedData))
+            
+        def visitNumericParameter(self, numericParameter):
+            self.visitParameter(numericParameter)
+            
+        def visitRefInput(self, refInput):
+            cvData = "{0} {1}CvData;".format(refInput.cvType.typeId(), 
+                                             refInput.ident)
+            rhs = "{0}CvData".format(refInput.refArg.ident)
+            self.doc.line("{0} = {1};".format(cvData, rhs))
+    
+    class InitOutVisitor(MethodGenerator.DocVisitor):
+        def visitAllocation(self, allocation):
+            for l in allocation.initOut:
+                self.doc.line(l)
         
     def generate(self):        
         self.__includes()
@@ -765,6 +822,26 @@ class OpImplGenerator(MethodGenerator):
             
             v = OpImplGenerator.CastedDataVisitor(self.doc)
             self.visitOption(o, v) 
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.InitInVisitor(self.doc)
+            self.visitOption(o, v) 
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.CvDataVisitor(self.doc)
+            self.visitOption(o, v)
+            
+            self.doc.blank()
+            
+            self.doc.line("{0}::{1}({2});"\
+                .format(self.p.ident, self.m.ident, ""))  
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.InitOutVisitor(self.doc)
+            self.visitOption(o, v)
                 
             self.doc.scopeExit()
             self.doc.line("break;")
