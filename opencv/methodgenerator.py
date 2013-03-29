@@ -467,7 +467,7 @@ class OpImplGenerator(MethodGenerator):
             else:
                 self.line += " && {0}InMapper".format(arg.ident)
            
-    class DataVisitor(MethodGenerator.DocVisitor):
+    class InDataVisitor(MethodGenerator.DocVisitor):
         def visitInput(self, inputArg):
             self.doc.line(("const runtime::Data* "
                            "{0}Data = 0;").format(inputArg.ident))
@@ -525,13 +525,13 @@ class OpImplGenerator(MethodGenerator):
                 
     class CastedDataVisitor(MethodGenerator.DocVisitor):
         def visitInput(self, inputArg):
-            l = ("const runtime::Data* {0}CastedData = "
+            l = ("const {1}* {0}CastedData = "
                  "runtime::data_cast<{1}>({0}Data);").format(inputArg.ident,
                 inputArg.dataType.typeId())
             self.doc.line(l)
             
         def visitOutput(self, output):
-            l = ("runtime::Data* {0}CastedData = "
+            l = ("{1} * {0}CastedData = "
                  "runtime::data_cast<{1}>({0}Data);").format(output.ident,
                 output.dataType.typeId())
             self.doc.line(l)
@@ -564,7 +564,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(cvData)
             
         def visitParameter(self, parameter):
-            cvData = "{0} {1}CvData;".format(parameter.cvType.typeId(), 
+            cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
                                              parameter.ident)
             castedData = parameter.cvType.cast(parameter.ident.attribute())
             self.doc.line("{0} = {1};".format(cvData, castedData))
@@ -573,11 +573,60 @@ class OpImplGenerator(MethodGenerator):
             self.visitParameter(numericParameter)
             
         def visitRefInput(self, refInput):
-            cvData = "{0} {1}CvData;".format(refInput.cvType.typeId(), 
+            cvData = "{0} {1}CvData".format(refInput.cvType.typeId(), 
                                              refInput.ident)
             rhs = "{0}CvData".format(refInput.refArg.ident)
             self.doc.line("{0} = {1};".format(cvData, rhs))
-    
+            
+    class MethodArgumentVisitor(ArgumentVisitor):
+        def __init__(self):
+            self.args = []
+            
+        def visitInput(self, inputArg):
+            self.visit(inputArg)
+            
+        def visitOutput(self, output):
+            self.visit(output)
+            
+        def visitAllocation(self, allocation):
+            self.visit(allocation)
+            
+        def visitParameter(self, parameter):
+            self.visit(parameter)
+            
+        def visitNumericParameter(self, numericParameter):
+            self.visit(numericParameter)
+            
+        def visitRefInput(self, refInput):
+            self.visit(refInput)
+            
+        def visit(self, arg):
+            self.args.append(str(arg.ident))
+            
+        def export(self):
+            argStr = ""
+            for i, arg in enumerate(self.args):
+                argStr += "{0}CvData".format(arg)
+                if i < len(self.args) - 1:
+                    argStr += ", "
+            return argStr
+            
+    class OutDataVisitor(MethodGenerator.DocVisitor):
+        def visitOutput(self, output):
+            l = "runtime::DataContainer outContainer = inContainer;";
+            self.doc.line(l)
+            
+        def visitAllocation(self, allocation):
+            dataType = allocation.dataType.typeId()
+            ident = allocation.ident
+            cvData = "{0}CvData".format(ident)
+            cast = allocation.dataType.cast(cvData)
+            l = "{0}* {1}CastedData = new {2};".format(dataType, ident, cast)
+            self.doc.line(l)
+            l = ("runtime::DataContainer outContainer = "
+                 "runtime::DataContainer({0}CastedData);").format(ident)
+            self.doc.line(l)
+        
     class InitOutVisitor(MethodGenerator.DocVisitor):
         def visitAllocation(self, allocation):
             for l in allocation.initOut:
@@ -806,7 +855,7 @@ class OpImplGenerator(MethodGenerator):
             
             self.doc.blank()
             
-            v = OpImplGenerator.DataVisitor(self.doc)
+            v = OpImplGenerator.InDataVisitor(self.doc)
             self.visitOption(o, v)    
             
             self.doc.blank()
@@ -835,13 +884,25 @@ class OpImplGenerator(MethodGenerator):
             
             self.doc.blank()
             
-            self.doc.line("{0}::{1}({2});"\
-                .format(self.p.ident, self.m.ident, ""))  
+            v = OpImplGenerator.MethodArgumentVisitor()   
+            self.visitOption(o, v)
+            argStr = v.export()
+            self.doc.line("cv::{0}({1});".format(self.m.ident, argStr))
+            
+            self.doc.blank()
+            
+            v = OpImplGenerator.OutDataVisitor(self.doc)
+            self.visitOption(o, v)
             
             self.doc.blank()
             
             v = OpImplGenerator.InitOutVisitor(self.doc)
             self.visitOption(o, v)
+            
+            l = "runtime::Id2DataPair outputMapper(RESULT, outContainer);"
+            self.doc.line(l)
+            l = "provider.sendOutputData(outputMapper);";
+            self.doc.line(l)
                 
             self.doc.scopeExit()
             self.doc.line("break;")

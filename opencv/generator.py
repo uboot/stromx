@@ -128,6 +128,8 @@ class CMakeGenerator(LibGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
     >>> g = CMakeGenerator()
     >>> g.save(p, True)        
     project(stromx_imgproc)
@@ -147,6 +149,8 @@ class CMakeGenerator(LibGenerator):
     )
     <BLANKLINE>
     set (SOURCES 
+        Imgproc.cpp
+        MedianBlur.cpp
     )
     <BLANKLINE>
     add_library (stromx_imgproc SHARED ${SOURCES})
@@ -195,9 +199,9 @@ class CMakeGenerator(LibGenerator):
         
         self.doc.line("set (SOURCES ")
         self.doc.increaseIndent()
+        self.doc.line("{0}.cpp".format(self.p.ident.className()))
         for m in self.p.methods:
             self.doc.line("{0}.cpp".format(m.ident.className()))
-            self.doc.line("{0}.cpp".format(self.p.ident.className()))
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
@@ -237,42 +241,32 @@ class ConfigGenerator(LibGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
-    >>> g = CMakeGenerator()
+    >>> g = ConfigGenerator()
     >>> g.save(p, True)
-    project(stromx_imgproc)
+    #ifndef STROMX_IMGPROC_CONFIG_H
+    #define STROMX_IMGPROC_CONFIG_H
     <BLANKLINE>
-    set (IMGPROC_VERSION_MAJOR 0)
-    set (IMGPROC_VERSION_MINOR 0)
-    set (IMGPROC_VERSION_PATCH 1)
+    #define IMGPROC_VERSION_MAJOR @IMGPROC_VERSION_MAJOR@
+    #define IMGPROC_VERSION_MINOR @IMGPROC_VERSION_MINOR@
+    #define IMGPROC_VERSION_PATCH @IMGPROC_VERSION_PATCH@
     <BLANKLINE>
-    configure_file (
-        ${PROJECT_SOURCE_DIR}/Config.h.in
-        ${PROJECT_SOURCE_DIR}/Config.h
-    )
+    #define STROMX_IMGPROC_PACKAGE_NAME "Imgproc"
     <BLANKLINE>
-    include_directories (
-        ../..
-        ${Boost_INCLUDE_DIRS}
-    )
+    #ifdef WIN32
+        #ifdef STROMX_IMGPROC_STATIC
+            #define STROMX_IMGPROC_STATIC
+        #else // STROMX_IMGPROC_STATIC
+            #ifdef stromx_imgproc_EXPORTS
+                #define STROMX_IMGPROC_API __declspec(dllexport)
+            #else // stromx_imgproc_EXPORTS
+                #define STROMX_IMGPROC_API __declspec(dllimport)
+            #endif // stromx_imgproc_EXPORTS
+        #endif // STROMX_IMGPROC_STATIC
+    #else // WIN32
+        #define STROMX_IMGPROC_API
+    #endif // WIN32
     <BLANKLINE>
-    set (SOURCES 
-    )
-    <BLANKLINE>
-    add_library (stromx_imgproc SHARED ${SOURCES})
-    <BLANKLINE>
-    set(VERSION_STRING "${IMGPROC_VERSION_MAJOR}.${IMGPROC_VERSION_MINOR}.${IMGPROC_VERSION_PATCH}")
-    <BLANKLINE>
-    set_target_properties (stromx_imgproc PROPERTIES
-        VERSION ${VERSION_STRING}
-        SOVERSION ${VERSION_STRING}
-    )
-    <BLANKLINE>
-    target_link_libraries (stromx_imgproc
-        ${OpenCV_LIBS}
-        stromx_runtime
-        stromx_example
-    )
-    <BLANKLINE>
+    #endif // STROMX_IMGPROC_CONFIG_H
     <BLANKLINE>
     """
     def generate(self):

@@ -12,6 +12,7 @@ class Document(object):
     def __init__(self):
         self.lines = []
         self.indent = 0
+        self.lastCmdWasBlank = False
         
     def string(self):
         s = ""
@@ -21,6 +22,7 @@ class Document(object):
     
     def line(self, line):
         self.lines.append("{0}{1}".format(" " * self.indent, line))
+        self.lastCmdWasBlank = False
         
     def increaseIndent(self):
         self.indent += Document.INDENT
@@ -29,7 +31,9 @@ class Document(object):
         self.indent -= Document.INDENT
         
     def blank(self):
-        self.line("")
+        if not self.lastCmdWasBlank:
+            self.line("")
+            self.lastCmdWasBlank = True
         
     def className(self):
         return self.m.ident.className()
@@ -44,15 +48,18 @@ class Document(object):
     def scopeEnter(self):
         self.line("{")
         self.increaseIndent()
+        self.lastCmdWasBlank = False
         
     def scopeExit(self):
         self.decreaseIndent()
         self.line("}")
+        self.lastCmdWasBlank = False
         
     def label(self, key):
         self.decreaseIndent()
         self.line("{0}:".format(key))
         self.increaseIndent()
+        self.lastCmdWasBlank = False
         
     def enum(self, name, keys):
         self.line("enum {0}".format(name))
@@ -64,3 +71,4 @@ class Document(object):
                 self.line(key)
                 
         self.scopeExit()
+        self.lastCmdWasBlank = False
