@@ -5,7 +5,6 @@ Created on Thu Jan 31 21:41:06 2013
 @author: matz
 """
 
-
 class Document(object):
     INDENT = 4
     

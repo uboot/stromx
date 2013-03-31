@@ -152,12 +152,9 @@ class OpHeaderGenerator(MethodGenerator):
             class STROMX_IMGPROC_API MedianBlur : public runtime::OperatorKernel
             {
             public:
-                enum InputId
+                enum ConnectorId
                 {
-                    SRC
-                }
-                enum OutputId
-                {
+                    SRC,
                     DST
                 }
                 enum ParameterId
@@ -190,30 +187,22 @@ class OpHeaderGenerator(MethodGenerator):
     #endif // STROMX_IMGPROC_MEDIANBLUR_H
     <BLANKLINE>
     """
-    class InputEnumVisitor(ArgumentVisitor):
+    class ConnectorEnumVisitor(ArgumentVisitor):
         def __init__(self):
-            self.inputs = set()
+            self.connectors = set()
     
         def visitInput(self, inputArg):
-            self.inputs.add(inputArg)
-            
-        def export(self, doc):
-            inputIds = [i.ident.constant() for i in self.inputs]
-            doc.enum("InputId", set(inputIds))
-            
-    class OutputEnumVisitor(ArgumentVisitor):
-        def __init__(self):
-            self.outputs = set()
+            self.connectors.add(inputArg)
     
         def visitOutput(self, output):
-            self.outputs.add(output)
+            self.connectors.add(output)
             
         def visitAllocation(self, allocation):
-            self.outputs.add(allocation)
+            self.connectors.add(allocation)
             
         def export(self, doc):
-            outputIds = [o.ident.constant() for o in self.outputs]
-            doc.enum("OutputId", set(outputIds))
+            connectorIds = [i.ident.constant() for i in self.connectors]
+            doc.enum("ConnectorId", set(connectorIds))
             
     class ParameterEnumVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
@@ -233,11 +222,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.__classEnter()
         self.__public()
         
-        v = OpHeaderGenerator.InputEnumVisitor()
-        self.visitAll(v)
-        v.export(self.doc)
-        
-        v = OpHeaderGenerator.OutputEnumVisitor()
+        v = OpHeaderGenerator.ConnectorEnumVisitor()
         self.visitAll(v)
         v.export(self.doc)
         
