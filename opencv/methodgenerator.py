@@ -152,16 +152,23 @@ class OpHeaderGenerator(MethodGenerator):
             class STROMX_IMGPROC_API MedianBlur : public runtime::OperatorKernel
             {
             public:
+                enum OptionId
+                {
+                    MANUAL,
+                    ALLOCATE,
+                    IN_PLACE
+                };
                 enum ConnectorId
                 {
                     SRC,
                     DST
-                }
+                };
                 enum ParameterId
                 {
                     KSIZE,
                     DATA_FLOW
-                }
+                };
+                MedianBlur();
                 virtual OperatorKernel* clone() const { return new MedianBlur; }
                 virtual void setParameter(const unsigned int id, const runtime::Data& value);
                 virtual const runtime::DataRef getParameter(const unsigned int id) const;
@@ -222,6 +229,8 @@ class OpHeaderGenerator(MethodGenerator):
         self.__classEnter()
         self.__public()
         
+        self.__optionEnum()
+        
         v = OpHeaderGenerator.ConnectorEnumVisitor()
         self.visitAll(v)
         v.export(self.doc)
@@ -230,6 +239,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.visitAll(v)
         v.export(self.doc)
         
+        self.__constructor()
         self.__kernelOverloads()
         
         self.__private()
@@ -266,6 +276,13 @@ class OpHeaderGenerator(MethodGenerator):
         
     def __public(self):
         self.doc.label("public")
+        
+    def __optionEnum(self):
+        optionIds = [o.ident.constant() for o in self.m.options]
+        self.doc.enum("OptionId", optionIds)
+        
+    def __constructor(self):
+        self.doc.line("{0}();".format(self.m.ident.className()))
         
     def __kernelOverloads(self):
         self.doc.line("virtual OperatorKernel* clone() const "
@@ -380,7 +397,7 @@ class OpImplGenerator(MethodGenerator):
                 }
             }
     <BLANKLINE>
-            const runtime::DataRef MedianBlur::setParameter(unsigned int id) const
+            void MedianBlur::setParameter(unsigned int id, const runtime::Data& value)
             {
                 try
                 {
@@ -462,7 +479,7 @@ class OpImplGenerator(MethodGenerator):
                     {
                         runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
                         dst->setTitle("Destination");
-                        outputs.push_back(dst);
+                        inputs.push_back(dst);
     <BLANKLINE>
                     }
                     break;
@@ -470,7 +487,7 @@ class OpImplGenerator(MethodGenerator):
                     {
                         runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
                         dst->setTitle("Destination");
-                        outputs.push_back(dst);
+                        inputs.push_back(dst);
     <BLANKLINE>
                     }
                     break;
@@ -478,7 +495,7 @@ class OpImplGenerator(MethodGenerator):
                     {
                         runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
                         src->setTitle("Source");
-                        outputs.push_back(src);
+                        inputs.push_back(src);
     <BLANKLINE>
                     }
                     break;
@@ -568,8 +585,8 @@ class OpImplGenerator(MethodGenerator):
                         cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
     <BLANKLINE>
                         runtime::DataContainer outContainer = inContainer;
+                        runtime::Id2DataPair outputMapper(DST, outContainer);
     <BLANKLINE>
-                        runtime::Id2DataPair outputMapper(RESULT, outContainer);
                         provider.sendOutputData(outputMapper);
                     }
                     break;
@@ -593,9 +610,9 @@ class OpImplGenerator(MethodGenerator):
     <BLANKLINE>
                         runtime::Image* dstCastedData = new example::Image(dstCvData);
                         runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
+                        runtime::Id2DataPair outputMapper(DST, outContainer);
     <BLANKLINE>
                         dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
-                        runtime::Id2DataPair outputMapper(RESULT, outContainer);
                         provider.sendOutputData(outputMapper);
                     }
                     break;
@@ -620,8 +637,8 @@ class OpImplGenerator(MethodGenerator):
                         cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
     <BLANKLINE>
                         runtime::DataContainer outContainer = inContainer;
+                        runtime::Id2DataPair outputMapper(SRC, outContainer);
     <BLANKLINE>
-                        runtime::Id2DataPair outputMapper(RESULT, outContainer);
                         provider.sendOutputData(outputMapper);
                     }
                     break;
@@ -705,7 +722,7 @@ class OpImplGenerator(MethodGenerator):
             l = '{0}->setTitle("{1}");'\
                 .format(output.ident, output.name)
             self.doc.line(l)
-            l = "outputs.push_back({0});".format(output.ident)
+            l = "inputs.push_back({0});".format(output.ident)
             self.doc.line(l)
             self.doc.blank()
         
@@ -893,6 +910,9 @@ class OpImplGenerator(MethodGenerator):
         def visitOutput(self, output):
             l = "runtime::DataContainer outContainer = inContainer;";
             self.doc.line(l)
+            l = ("runtime::Id2DataPair outputMapper({0}, "
+                 "outContainer);").format(output.ident.constant());
+            self.doc.line(l)
             
         def visitAllocation(self, allocation):
             dataType = allocation.dataType.typeId()
@@ -903,6 +923,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             l = ("runtime::DataContainer outContainer = "
                  "runtime::DataContainer({0}CastedData);").format(ident)
+            self.doc.line(l)
+            l = ("runtime::Id2DataPair outputMapper({0}, "
+                 "outContainer);").format(allocation.ident.constant());
             self.doc.line(l)
         
     class InitOutVisitor(MethodGenerator.DocVisitor):
@@ -980,8 +1003,8 @@ class OpImplGenerator(MethodGenerator):
         self.doc.blank()
         
     def __setParameter(self):
-        self.doc.line("const runtime::DataRef {0}::setParameter"
-                      "(unsigned int id) const"\
+        self.doc.line("void {0}::setParameter"
+                      "(unsigned int id, const runtime::Data& value)"\
                       .format(self.m.ident.className()))
         self.doc.scopeEnter()
         self.doc.line("try")
@@ -1177,8 +1200,6 @@ class OpImplGenerator(MethodGenerator):
             v = OpImplGenerator.InitOutVisitor(self.doc)
             self.visitOption(o, v)
             
-            l = "runtime::Id2DataPair outputMapper(RESULT, outContainer);"
-            self.doc.line(l)
             l = "provider.sendOutputData(outputMapper);";
             self.doc.line(l)
                 

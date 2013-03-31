@@ -27,6 +27,8 @@ class LibHeaderGenerator(LibGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
     >>> g = LibHeaderGenerator()
     >>> g.save(p, True)    
     #ifndef STROMX_IMGPROC_IMGPROC_H
@@ -87,16 +89,20 @@ class LibImplGenerator(LibGenerator):
     >>> p = package.Package("imgproc", 0, 0, 1)
     >>> p.ident = package.Ident("imgproc")
     >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
     >>> g = LibImplGenerator()
     >>> g.save(p, True)       
     #include "Imgproc.h"
     <BLANKLINE>
+    #include "MedianBlur.h"
     #include <stromx/runtime/Registry.h>
     <BLANKLINE>
     void stromxRegisterImgproc(stromx::runtime::Registry& registry)
     {
         using namespace stromx::imgproc;
     <BLANKLINE>
+        registry.registerOperator(new MedianBlur);
     }
     <BLANKLINE>
     """

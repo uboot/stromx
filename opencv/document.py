@@ -69,5 +69,6 @@ class Document(object):
             else:
                 self.line(key)
                 
-        self.scopeExit()
+        self.decreaseIndent()
+        self.line("};")
         self.lastCmdWasBlank = False
