@@ -140,7 +140,7 @@ class OpHeaderGenerator(MethodGenerator):
     #ifndef STROMX_IMGPROC_MEDIANBLUR_H
     #define STROMX_IMGPROC_MEDIANBLUR_H
     <BLANKLINE>
-    #include "Config.h"
+    #include "stromx/imgproc/Config.h"
     #include <stromx/runtime/Enum.h>
     #include <stromx/runtime/OperatorKernel.h>
     #include <stromx/runtime/Primitive.h>
@@ -257,7 +257,7 @@ class OpHeaderGenerator(MethodGenerator):
             f.write(self.doc.string())
     
     def __includes(self):
-        self.doc.line('#include "Config.h"')
+        self.doc.line('#include "stromx/{0}/Config.h"'.format(self.p.ident))
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/OperatorKernel.h>')
         self.doc.line('#include <stromx/runtime/Primitive.h>')
