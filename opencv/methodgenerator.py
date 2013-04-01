@@ -64,7 +64,7 @@ class MethodGenerator(object):
     m = None
     doc = None
     
-    def save(self, package, method, printResult):
+    def save(self, package, method, printResult = False):
         self.p = package
         self.m = method
         self.doc = document.Document()
@@ -76,9 +76,6 @@ class MethodGenerator(object):
             print self.doc.string()
             
     def createOptionParameter(self):
-        if len(self.m.options) <= 1:
-            return None
-            
         p = package.EnumParameter("dataFlow", "Data flow")
         p.isInit = True
         for opt in self.m.options:
@@ -1224,6 +1221,13 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeExit()
         self.doc.scopeExit()
         self.doc.blank()
+        
+def generateMethodFiles(package, method):
+    g = OpHeaderGenerator()
+    g.save(package, method)
+    
+    g = OpImplGenerator()
+    g.save(package, method)
         
 if __name__ == "__main__":
     import doctest

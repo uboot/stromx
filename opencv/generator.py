@@ -14,7 +14,7 @@ class LibGenerator(object):
     p = None
     doc = None
     
-    def save(self, package, printResult):
+    def save(self, package, printResult = False):
         self.p = package
         self.doc = document.Document()
         
@@ -359,6 +359,22 @@ class ConfigGenerator(LibGenerator):
 
         with file("Config.h.in", "w") as f:
             f.write(self.doc.string())
+            
+def generatePackageFiles(package):
+    g = LibHeaderGenerator()
+    g.save(package)
+    
+    g = LibImplGenerator()
+    g.save(package)
+    
+    g = ConfigGenerator()
+    g.save(package)
+    
+    g = CMakeGenerator()
+    g.save(package)
+    
+    for m in package.methods:
+        generateMethodFiles(package, m)
         
 if __name__ == "__main__":
     import doctest
