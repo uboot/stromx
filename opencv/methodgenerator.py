@@ -377,6 +377,10 @@ class OpImplGenerator(MethodGenerator):
     {
         namespace imgproc
         {
+            const std::string MedianBlur::PACKAGE(STROMX_IMGPROC_PACKAGE_NAME);
+            const runtime::Version MedianBlur::VERSION(STROMX_IMGPROC_VERSION_MAJOR, STROMX_IMGPROC_VERSION_MINOR, STROMX_IMGPROC_VERSION_PATCH);
+            const std::string MedianBlur::TYPE("MedianBlur");
+    <BLANKLINE>
             MedianBlur::MedianBlur()
               : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
                 m_ksize(),
@@ -936,6 +940,7 @@ class OpImplGenerator(MethodGenerator):
     def generate(self):        
         self.__includes()
         self.namespaceEnter()
+        self.__statics()
         self.__constructor()
         self.__getParameter()
         self.__setParameter()
@@ -969,6 +974,17 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include <boost/assert.hpp>')
         self.doc.line('#include <opencv2/{0}/{0}.hpp>'.format(self.p.ident))
         self.doc.blank()    
+        
+    def __statics(self):
+        method = self.m.ident.className()
+        package = self.p.ident.constant()
+        self.doc.line(("const std::string {0}::PACKAGE(STROMX_{1}_PACKAGE_"
+                       "NAME);").format(method, package))
+        self.doc.line(("const runtime::Version {0}::VERSION("
+                       "STROMX_{1}_VERSION_MAJOR, STROMX_{1}_VERSION_MINOR, "
+                       "STROMX_{1}_VERSION_PATCH);".format(method, package)))
+        self.doc.line('const std::string {0}::TYPE("{0}");'.format(method))
+        self.doc.blank()
         
     def __constructor(self):
         self.doc.line("{0}::{0}()".format(self.m.ident.className()))

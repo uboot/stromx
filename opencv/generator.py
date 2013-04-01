@@ -174,6 +174,19 @@ class CMakeGenerator(LibGenerator):
         stromx_example
     )
     <BLANKLINE>
+    if(WIN32)
+        install (TARGETS stromx_imgproc
+            RUNTIME DESTINATION .
+            LIBRARY DESTINATION ${LIB_DIR}
+            ARCHIVE DESTINATION ${LIB_DIR}
+        )
+    else(WIN32)
+        install (TARGETS stromx_imgproc
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION ${LIB_DIR}
+            ARCHIVE DESTINATION ${LIB_DIR}
+        )
+    endif(WIN32)
     <BLANKLINE>
     """
     def generate(self):
@@ -239,6 +252,28 @@ class CMakeGenerator(LibGenerator):
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
+        
+        self.doc.line("if(WIN32)")
+        self.doc.increaseIndent()
+        self.doc.line("install (TARGETS stromx_{0}".format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("RUNTIME DESTINATION .")
+        self.doc.line("LIBRARY DESTINATION ${LIB_DIR}")
+        self.doc.line("ARCHIVE DESTINATION ${LIB_DIR}")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.decreaseIndent()
+        self.doc.line("else(WIN32)")
+        self.doc.increaseIndent()
+        self.doc.line("install (TARGETS stromx_{0}".format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("RUNTIME DESTINATION bin")
+        self.doc.line("LIBRARY DESTINATION ${LIB_DIR}")
+        self.doc.line("ARCHIVE DESTINATION ${LIB_DIR}")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.decreaseIndent()
+        self.doc.line("endif(WIN32)")
     
         with file("CMakeLists.txt", "w") as f:
             f.write(self.doc.string())
@@ -252,9 +287,9 @@ class ConfigGenerator(LibGenerator):
     #ifndef STROMX_IMGPROC_CONFIG_H
     #define STROMX_IMGPROC_CONFIG_H
     <BLANKLINE>
-    #define IMGPROC_VERSION_MAJOR @IMGPROC_VERSION_MAJOR@
-    #define IMGPROC_VERSION_MINOR @IMGPROC_VERSION_MINOR@
-    #define IMGPROC_VERSION_PATCH @IMGPROC_VERSION_PATCH@
+    #define STROMX_IMGPROC_VERSION_MAJOR @IMGPROC_VERSION_MAJOR@
+    #define STROMX_IMGPROC_VERSION_MINOR @IMGPROC_VERSION_MINOR@
+    #define STROMX_IMGPROC_VERSION_PATCH @IMGPROC_VERSION_PATCH@
     <BLANKLINE>
     #define STROMX_IMGPROC_PACKAGE_NAME "Imgproc"
     <BLANKLINE>
@@ -284,9 +319,9 @@ class ConfigGenerator(LibGenerator):
         self.doc.blank()
         
         version = "{0}_VERSION".format(p)
-        self.doc.line("#define {0}_MAJOR @{0}_MAJOR@".format(version))
-        self.doc.line("#define {0}_MINOR @{0}_MINOR@".format(version))
-        self.doc.line("#define {0}_PATCH @{0}_PATCH@".format(version))
+        self.doc.line("#define STROMX_{0}_MAJOR @{0}_MAJOR@".format(version))
+        self.doc.line("#define STROMX_{0}_MINOR @{0}_MINOR@".format(version))
+        self.doc.line("#define STROMX_{0}_PATCH @{0}_PATCH@".format(version))
         self.doc.blank()
         
         self.doc.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
