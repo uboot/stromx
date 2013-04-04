@@ -29,10 +29,34 @@ class ArgumentVisitor(object):
         
     def visitOutput(self, output):
         pass
+    
+class CollectVisitor(ArgumentVisitor):
+    def __init__(self):
+        self.args = set()
         
-    def visitSize(self, size):
-        pass
+    def visitInput(self, inputArg):
+        self.args.add(inputArg)
         
+    def visitParameter(self, parameter):
+        self.args.add(parameter)
+        
+    def visitNumericParameter(self, numericParameter):
+        self.args.add(numericParameter)
+        
+    def visitConstant(self, const):
+        self.args.add(const)
+        
+    def visitEnumParameter(self, enumParameter):
+        self.args.add(enumParameter)
+        
+    def visitRefInput(self, refInput):
+        self.args.add(refInput)
+        
+    def visitAllocation(self, allocation):
+        self.args.add(allocation)
+        
+    def visitOutput(self, output):
+        self.args.add(output)
         
 class MethodGenerator(object):
     
@@ -84,11 +108,12 @@ class MethodGenerator(object):
         return p
             
     def visitAll(self, visitor):
-        args = set()
+        v = CollectVisitor()
         for opt in self.m.options:
             for arg in opt.args:
-                args.add(arg)
+                arg.accept(v)
                 
+        args = v.args
         argIdents = set()
         filteredArgs = set()
         for arg in args:
@@ -425,7 +450,7 @@ class OpImplGenerator(MethodGenerator):
                 std::vector<const runtime::Parameter*> parameters;
     <BLANKLINE>
                 runtime::Parameter* dataFlow = new runtime::Parameter(DATA_FLOW, runtime::DataVariant::ENUM);
-                dataFlow->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                dataFlow->setAccessMode(runtime::Parameter::NONE_WRITE);
                 dataFlow->setTitle("Data flow");
                 parameters.push_back(dataFlow);
     <BLANKLINE>
@@ -676,7 +701,23 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.typeId()))
             self.doc.line("break;")
                 
-    class SetupParametersVisitor(MethodGenerator.DocVisitor):
+    class SetupInitParametersVisitor(MethodGenerator.ParameterVisitor):
+        def visitParameter(self, parameter):
+            l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
+                .format(parameter.ident, parameter.ident.constant(),
+                        parameter.dataType.variant())
+            self.doc.line(l)
+            l = "{0}->setAccessMode(runtime::Parameter::NONE_WRITE);"\
+                .format(parameter.ident)
+            self.doc.line(l)
+            l = '{0}->setTitle("{1}");'\
+                .format(parameter.ident, parameter.name)
+            self.doc.line(l)
+            l = "parameters.push_back({0});".format(parameter.ident)
+            self.doc.line(l)
+            self.doc.blank()
+                
+    class SetupParametersVisitor(MethodGenerator.ParameterVisitor):
         def visitParameter(self, parameter):
             l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
                 .format(parameter.ident, parameter.ident.constant(),
@@ -691,12 +732,6 @@ class OpImplGenerator(MethodGenerator):
             l = "parameters.push_back({0});".format(parameter.ident)
             self.doc.line(l)
             self.doc.blank()
-            
-        def visitNumericParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-        def visitEnumParameter(self, parameter):
-            self.visitParameter(parameter)
             
     class SetupOutputsVistor(MethodGenerator.DocVisitor):
         def visitOutput(self, output):
@@ -1047,7 +1082,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line("std::vector<const runtime::Parameter*> parameters;")
         self.doc.blank()
         
-        v = OpImplGenerator.SetupParametersVisitor(self.doc)
+        v = OpImplGenerator.SetupInitParametersVisitor(self.doc)
         self.optionParam.accept(v)
         
         self.doc.line("return parameters;")
@@ -1200,6 +1235,7 @@ class OpImplGenerator(MethodGenerator):
             
             v = OpImplGenerator.MethodArgumentVisitor()   
             self.visitOption(o, v)
+            
             argStr = v.export()
             self.doc.line("cv::{0}({1});".format(self.m.ident, argStr))
             

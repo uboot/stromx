@@ -50,8 +50,32 @@ class Package(object):
         self.major = major
         self.minor = minor
         self.patch = patch
+        
+class Acceptor(object):
+    def accept(self, visitor):
+        raise NotImplementedError
+        
+class Compound(object):
+    def __init__(self, args):
+        self.args = args
+        
+    def create(self):
+        raise NotImplementedError
+        
+    def accept(self, visitor):
+        for arg in self.args:
+            arg.accept(visitor)
+            
+class Size(Compound):
+    def __init__(self, xArg, yArg):
+        self.args = [xArg, yArg]
+        
+    def create(self):
+        xCvData = "{0}".format(self.args[0].ident)
+        yCvData = "{0}".format(self.args[1].ident)
+        return "cv::Size({0}CvData, {1}CvData)".format(xCvData, yCvData)
 
-class Argument(object):
+class Argument(Acceptor):
     def __init__(self, ident, name, cvType, dataType):
         self.ident = Ident(ident)
         self.name = name
@@ -71,9 +95,6 @@ class Argument(object):
         self.rules = arg.rules
         self.initIn = arg.initIn
         self.initOut = arg.initOut
-        
-    def accept(self, visitor):
-        raise NotImplementedError
     
 class InputArgument(Argument):
     pass
@@ -90,11 +111,7 @@ class Parameter(InputArgument):
         self.default = None
     
     def accept(self, visitor):
-        visitor.visitParameter(self)
-        
-class Size(Parameter):
-    def accept(self, visitor):
-        visitor.visitSize(self)
+        visitor.visitParameter(self)     
 
 class NumericParameter(Parameter):
     def __init__(self, ident, name, cvType, dataType):
