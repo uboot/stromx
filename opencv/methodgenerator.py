@@ -29,8 +29,17 @@ class ArgumentVisitor(object):
         
     def visitOutput(self, output):
         pass
+        
+    def visitCompound(self, compound):
+        pass
     
-class CollectVisitor(ArgumentVisitor):
+class SingleArgumentVisitor(ArgumentVisitor):
+    def visitCompound(self, compound):
+        for arg in compound.args:
+            arg.accept(self)
+            
+    
+class CollectVisitor(SingleArgumentVisitor):
     def __init__(self):
         self.args = set()
         
@@ -60,7 +69,7 @@ class CollectVisitor(ArgumentVisitor):
         
 class MethodGenerator(object):
     
-    class CollectParametersVisitor(ArgumentVisitor):
+    class CollectParametersVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.params = set()
     
@@ -73,7 +82,7 @@ class MethodGenerator(object):
         def visitEnumParameter(self, parameter):
             self.params.add(parameter)
             
-    class DocVisitor(ArgumentVisitor):
+    class DocVisitor(SingleArgumentVisitor):
         def __init__(self, doc):
             self.doc = doc
             
@@ -216,7 +225,7 @@ class OpHeaderGenerator(MethodGenerator):
     #endif // STROMX_IMGPROC_MEDIANBLUR_H
     <BLANKLINE>
     """
-    class ConnectorEnumVisitor(ArgumentVisitor):
+    class ConnectorEnumVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.connectors = set()
     
@@ -405,8 +414,8 @@ class OpImplGenerator(MethodGenerator):
     <BLANKLINE>
             MedianBlur::MedianBlur()
               : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-                m_ksize(),
-                m_dataFlow()
+                m_dataFlow(),
+                m_ksize()
             {
             }
     <BLANKLINE>
@@ -778,7 +787,7 @@ class OpImplGenerator(MethodGenerator):
             l = "runtime::Id2DataPair {0}InMapper({1});".format(ident, constant)
             self.doc.line(l)
     
-    class ReceiveInputDataVisitor(ArgumentVisitor):
+    class ReceiveInputDataVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.line = ""
             
@@ -819,7 +828,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line("runtime::WriteAccess<> writeAccess(inContainer);")
             self.doc.line("{0} = &writeAccess();".format(data))
             
-    class CopyWriteAccessVisitor(ArgumentVisitor):
+    class CopyWriteAccessVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.output = None
             self.inputs = []
@@ -928,16 +937,25 @@ class OpImplGenerator(MethodGenerator):
         def visitNumericParameter(self, numericParameter):
             self.visit(numericParameter)
             
+        def visitEnumParameter(self, refInput):
+            self.visit(refInput)
+            
+        def visitConstant(self, refInput):
+            self.visit(refInput)
+            
         def visitRefInput(self, refInput):
             self.visit(refInput)
             
         def visit(self, arg):
-            self.args.append(str(arg.ident))
+            self.args.append("{0}CvData".format(arg.ident))
+            
+        def visitCompound(self, compound):
+            self.args.append(compound.create())
             
         def export(self):
             argStr = ""
             for i, arg in enumerate(self.args):
-                argStr += "{0}CvData".format(arg)
+                argStr += arg
                 if i < len(self.args) - 1:
                     argStr += ", "
             return argStr

@@ -54,7 +54,7 @@ arg5 = package.Constant("fy", cvtype.Int(), 0)
 arg6 = package.EnumParameter("interpolation", "Interpolation")
 arg6.descriptions = [package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
                      package.EnumDescription("INTER_LINEAR", "Bilinear")]
-arg6.default = "cv::INTER_LINEAR"
+arg6.default = 1
 
 opt = package.Option("manual")
 opt.args.extend([package.Input(arg1), package.Output(arg2),

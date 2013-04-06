@@ -59,12 +59,8 @@ class Compound(object):
     def __init__(self, args):
         self.args = args
         
-    def create(self):
-        raise NotImplementedError
-        
     def accept(self, visitor):
-        for arg in self.args:
-            arg.accept(visitor)
+        visitor.visitCompound(self)
             
 class Size(Compound):
     def __init__(self, xArg, yArg):
