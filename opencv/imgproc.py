@@ -60,6 +60,10 @@ opt = package.Option("manual")
 opt.args.extend([package.Input(arg1), package.Output(arg2),
                  package.Size(arg3x, arg3y), arg4, arg5, arg6])
 m.options.append(opt)
+opt = package.Option("inPlace")
+opt.args.extend([package.Input(arg1), package.Output(arg2),
+                 package.Size(arg3x, arg3y), arg4, arg5, arg6])
+m.options.append(opt)
 p.methods.append(m)
 
 generator.generatePackageFiles(p) 

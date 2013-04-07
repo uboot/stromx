@@ -71,16 +71,16 @@ class MethodGenerator(object):
     
     class CollectParametersVisitor(SingleArgumentVisitor):
         def __init__(self):
-            self.params = set()
+            self.params = [] #set()
     
         def visitParameter(self, parameter):
-            self.params.add(parameter)
+            self.params.append(parameter) #add(parameter)
             
         def visitNumericParameter(self, parameter):
-            self.params.add(parameter)
+            self.visitParameter(parameter)
             
         def visitEnumParameter(self, parameter):
-            self.params.add(parameter)
+            self.visitParameter(parameter)
             
     class DocVisitor(SingleArgumentVisitor):
         def __init__(self, doc):
@@ -414,8 +414,8 @@ class OpImplGenerator(MethodGenerator):
     <BLANKLINE>
             MedianBlur::MedianBlur()
               : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-                m_dataFlow(),
-                m_ksize()
+                m_ksize(),
+                m_dataFlow()
             {
             }
     <BLANKLINE>
@@ -710,37 +710,34 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.typeId()))
             self.doc.line("break;")
                 
-    class SetupInitParametersVisitor(MethodGenerator.ParameterVisitor):
-        def visitParameter(self, parameter):
-            l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
-                .format(parameter.ident, parameter.ident.constant(),
-                        parameter.dataType.variant())
-            self.doc.line(l)
-            l = "{0}->setAccessMode(runtime::Parameter::NONE_WRITE);"\
-                .format(parameter.ident)
-            self.doc.line(l)
-            l = '{0}->setTitle("{1}");'\
-                .format(parameter.ident, parameter.name)
-            self.doc.line(l)
-            l = "parameters.push_back({0});".format(parameter.ident)
-            self.doc.line(l)
-            self.doc.blank()
-                
     class SetupParametersVisitor(MethodGenerator.ParameterVisitor):
+        def __init__(self, doc, isInit = False):
+            super(OpImplGenerator.SetupParametersVisitor, self).__init__(doc)
+            self.isInit = isInit
+            
         def visitParameter(self, parameter):
             l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
                 .format(parameter.ident, parameter.ident.constant(),
                         parameter.dataType.variant())
             self.doc.line(l)
-            l = "{0}->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);"\
-                .format(parameter.ident)
-            self.doc.line(l)
+            self.__accessMode(parameter)
             l = '{0}->setTitle("{1}");'\
                 .format(parameter.ident, parameter.name)
             self.doc.line(l)
             l = "parameters.push_back({0});".format(parameter.ident)
             self.doc.line(l)
             self.doc.blank()
+            
+        def __accessMode(self, parameter):
+            if self.isInit:
+                accessMode = "NONE_WRITE"
+            else:
+                accessMode = "ACTIVATED_WRITE"
+                
+            l = "{0}->setAccessMode(runtime::Parameter::{1});"\
+                .format(parameter.ident, accessMode)
+            self.doc.line(l)
+            
             
     class SetupOutputsVistor(MethodGenerator.DocVisitor):
         def visitOutput(self, output):
@@ -905,12 +902,22 @@ class OpImplGenerator(MethodGenerator):
             
         def visitParameter(self, parameter):
             cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
-                                             parameter.ident)
+                                            parameter.ident)
             castedData = parameter.cvType.cast(parameter.ident.attribute())
             self.doc.line("{0} = {1};".format(cvData, castedData))
             
         def visitNumericParameter(self, numericParameter):
             self.visitParameter(numericParameter)
+            
+        def visitEnumParameter(self, numericParameter):
+            self.visitParameter(numericParameter)
+            
+        def visitConstant(self, constant):
+            cvData = "{0} {1}CvData".format(constant.cvType.typeId(), 
+                                            constant.ident)
+            castedData = constant.cvType.cast(constant.value)
+            self.doc.line("{0} = {1};".format(cvData, castedData))
+            
             
         def visitRefInput(self, refInput):
             cvData = "{0} {1}CvData".format(refInput.cvType.typeId(), 
@@ -1100,7 +1107,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line("std::vector<const runtime::Parameter*> parameters;")
         self.doc.blank()
         
-        v = OpImplGenerator.SetupInitParametersVisitor(self.doc)
+        v = OpImplGenerator.SetupParametersVisitor(self.doc, True)
         self.optionParam.accept(v)
         
         self.doc.line("return parameters;")
