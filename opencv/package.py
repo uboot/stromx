@@ -137,8 +137,9 @@ class Method(object):
         self.options = []
         
 class Option(object):
-    def __init__(self, ident):
+    def __init__(self, ident, name):
         self.ident = Ident(ident)
+        self.name = name
         self.args = []
 
 class Constant(Argument):
@@ -183,7 +184,6 @@ class Allocation(OutputArgument):
         visitor.visitAllocation(self)
 
 class EnumDescription(object):
-    
     def __init__(self, ident, name, cvIdent = None):
         self.ident = ident
         self.name = name

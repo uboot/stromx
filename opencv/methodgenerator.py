@@ -71,10 +71,10 @@ class MethodGenerator(object):
     
     class CollectParametersVisitor(SingleArgumentVisitor):
         def __init__(self):
-            self.params = [] #set()
+            self.params = []
     
         def visitParameter(self, parameter):
-            self.params.append(parameter) #add(parameter)
+            self.params.append(parameter)
             
         def visitNumericParameter(self, parameter):
             self.visitParameter(parameter)
@@ -112,8 +112,9 @@ class MethodGenerator(object):
         p = package.EnumParameter("dataFlow", "Data flow")
         p.isInit = True
         for opt in self.m.options:
-            p.descriptions.append(package.EnumDescription(opt.ident,
-                                                          str(opt.ident)))
+            desc = package.EnumDescription(opt.ident.constant(), str(opt.name))
+            desc.name = opt.name
+            p.descriptions.append(desc)
         return p
             
     def visitAll(self, visitor):
@@ -157,13 +158,13 @@ class OpHeaderGenerator(MethodGenerator):
     >>> arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
     >>> arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
     >>> arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
-    >>> opt = package.Option("manual")
+    >>> opt = package.Option("manual", "Manual")
     >>> opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
     >>> m.options.append(opt)
-    >>> opt = package.Option("allocate")
+    >>> opt = package.Option("allocate", "Allocate")
     >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
     >>> m.options.append(opt)
-    >>> opt = package.Option("inPlace")
+    >>> opt = package.Option("inPlace", "In place")
     >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
     >>> m.options.append(opt)
     >>> g = OpHeaderGenerator()
@@ -183,7 +184,7 @@ class OpHeaderGenerator(MethodGenerator):
             class STROMX_IMGPROC_API MedianBlur : public runtime::OperatorKernel
             {
             public:
-                enum OptionId
+                enum DataFlowId
                 {
                     MANUAL,
                     ALLOCATE,
@@ -252,6 +253,14 @@ class OpHeaderGenerator(MethodGenerator):
             l = "{0} {1};".format(parameter.dataType.typeId(),
                                   parameter.ident.attribute())
             self.doc.line(l)
+            
+    class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
+        def visitEnumParameter(self, parameter):
+            keys = []
+            for desc in parameter.descriptions:
+                keys.append(desc.ident)
+            enumName = "{0}Id".format(parameter.ident.className())
+            self.doc.enum(enumName, keys)
     
     def generate(self):
         self.__includeGuardEnter()
@@ -260,7 +269,8 @@ class OpHeaderGenerator(MethodGenerator):
         self.__classEnter()
         self.__public()
         
-        self.__optionEnum()
+        v = OpHeaderGenerator.EnumParameterIdVisitor(self.doc)
+        self.visitAll(v)
         
         v = OpHeaderGenerator.ConnectorEnumVisitor()
         self.visitAll(v)
@@ -307,10 +317,6 @@ class OpHeaderGenerator(MethodGenerator):
         
     def __public(self):
         self.doc.label("public")
-        
-    def __optionEnum(self):
-        optionIds = [o.ident.constant() for o in self.m.options]
-        self.doc.enum("OptionId", optionIds)
         
     def __constructor(self):
         self.doc.line("{0}();".format(self.m.ident.className()))
@@ -376,13 +382,13 @@ class OpImplGenerator(MethodGenerator):
                   "{1}->stride(), {1}->data(), {0}->pixelType());")\
                  .format("srcCastedData", "dstCastedData")
     >>> arg2.initOut.append(initOut)
-    >>> opt = package.Option("manual")
+    >>> opt = package.Option("manual", "Manual")
     >>> opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
     >>> m.options.append(opt)
-    >>> opt = package.Option("allocate")
+    >>> opt = package.Option("allocate", "Allocate")
     >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
     >>> m.options.append(opt)
-    >>> opt = package.Option("inPlace")
+    >>> opt = package.Option("inPlace", "In place")
     >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
     >>> m.options.append(opt)
     >>> g = OpImplGenerator()
@@ -458,9 +464,12 @@ class OpImplGenerator(MethodGenerator):
             {
                 std::vector<const runtime::Parameter*> parameters;
     <BLANKLINE>
-                runtime::Parameter* dataFlow = new runtime::Parameter(DATA_FLOW, runtime::DataVariant::ENUM);
+                runtime::EnumParameter* dataFlow = new runtime::EnumParameter(DATA_FLOW);
                 dataFlow->setAccessMode(runtime::Parameter::NONE_WRITE);
                 dataFlow->setTitle("Data flow");
+                dataFlow->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
+                dataFlow->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
+                dataFlow->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), "In place"));
                 parameters.push_back(dataFlow);
     <BLANKLINE>
                 return parameters;
@@ -512,6 +521,10 @@ class OpImplGenerator(MethodGenerator):
                 {
                 case(MANUAL):
                     {
+                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
+                        src->setTitle("Source");
+                        inputs.push_back(src);
+    <BLANKLINE>
                         runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
                         dst->setTitle("Destination");
                         inputs.push_back(dst);
@@ -520,9 +533,9 @@ class OpImplGenerator(MethodGenerator):
                     break;
                 case(ALLOCATE):
                     {
-                        runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                        dst->setTitle("Destination");
-                        inputs.push_back(dst);
+                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
+                        src->setTitle("Source");
+                        inputs.push_back(src);
     <BLANKLINE>
                     }
                     break;
@@ -696,13 +709,11 @@ class OpImplGenerator(MethodGenerator):
                     doc.line(init)
             
     class GetParametersVisitor(MethodGenerator.ParameterVisitor):
-            
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.line("return {0};".format(parameter.ident.attribute()))
                     
     class SetParametersVisitor(MethodGenerator.ParameterVisitor):
-            
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.line("{0} = runtime::data_cast<{1}>(value);"\
@@ -710,7 +721,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.typeId()))
             self.doc.line("break;")
                 
-    class SetupParametersVisitor(MethodGenerator.ParameterVisitor):
+    class SetupParametersVisitor(MethodGenerator.DocVisitor):
         def __init__(self, doc, isInit = False):
             super(OpImplGenerator.SetupParametersVisitor, self).__init__(doc)
             self.isInit = isInit
@@ -727,6 +738,28 @@ class OpImplGenerator(MethodGenerator):
             l = "parameters.push_back({0});".format(parameter.ident)
             self.doc.line(l)
             self.doc.blank()
+            
+        def visitEnumParameter(self, parameter):
+            ident = str(parameter.ident)
+            l = ("runtime::EnumParameter* {0} = new "
+                 "runtime::EnumParameter({1});")\
+                .format(ident, parameter.ident.constant())
+            self.doc.line(l)
+            self.__accessMode(parameter)
+            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
+            self.doc.line(l)
+
+            for desc in parameter.descriptions:
+                d = 'runtime::Enum({0})'.format(desc.ident)
+                l = '{0}->add(runtime::EnumDescription({1}, "{2}"));'\
+                    .format(ident, d, desc.name)
+                self.doc.line(l)
+            l = "parameters.push_back({0});".format(parameter.ident)
+            self.doc.line(l)
+            self.doc.blank()
+            
+        def visitNumericParameter(self, parameter):
+            self.visitParameter(parameter)
             
         def __accessMode(self, parameter):
             if self.isInit:
@@ -768,7 +801,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             self.doc.blank()
         
-        def visitAllocation(self, allocation):
+        def visitInput(self, allocation):
             self.visitOutput(allocation)
             
     class InputMapperVisitor(MethodGenerator.DocVisitor):
