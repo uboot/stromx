@@ -117,7 +117,7 @@ class MethodGenerator(object):
             p.descriptions.append(desc)
         return p
             
-    def visitAll(self, visitor):
+    def visitAll(self, visitor, visitOptionParam = True):
         v = CollectVisitor()
         for opt in self.m.options:
             for arg in opt.args:
@@ -134,7 +134,7 @@ class MethodGenerator(object):
         for arg in filteredArgs:
                 arg.accept(visitor)
                 
-        if self.optionParam:
+        if visitOptionParam and self.optionParam:
             self.optionParam.accept(visitor)
             
     def visitOption(self, opt, visitor):
@@ -261,6 +261,12 @@ class OpHeaderGenerator(MethodGenerator):
                 keys.append(desc.ident)
             enumName = "{0}Id".format(parameter.ident.className())
             self.doc.enum(enumName, keys)
+            
+    class EnumConversionDeclVisitor(MethodGenerator.DocVisitor):
+        def visitEnumParameter(self, parameter):
+            name = parameter.ident.className()
+            l = "int convert{0}(const runtime::Enum & value);".format(name)
+            self.doc.line(l)
     
     def generate(self):
         self.__includeGuardEnter()
@@ -286,6 +292,10 @@ class OpHeaderGenerator(MethodGenerator):
         self.__private()
         self.__statics()
         self.__setupFunctions()
+        
+        v = OpHeaderGenerator.EnumConversionDeclVisitor(self.doc)
+        self.visitAll(v, False)
+        self.doc.blank()
         
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
         self.visitAll(v)
@@ -374,6 +384,7 @@ class OpImplGenerator(MethodGenerator):
     >>> arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
     >>> arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
     >>> arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
+    >>> arg3.minValue = 0
     >>> initIn = ("{1}->initializeImage({0}->width(), {0}->height(), "\
                   "{0}->stride(), {1}->data(), {0}->pixelType());")\
                  .format("srcCastedData", "dstCastedData")
@@ -483,27 +494,30 @@ class OpImplGenerator(MethodGenerator):
                 {
                 case(MANUAL):
                     {
-                        runtime::Parameter* ksize = new runtime::Parameter(KSIZE, runtime::DataVariant::UINT_32);
+                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                         ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                         ksize->setTitle("Kernel size");
+                        ksize->setMin(runtime::UInt32(0));
                         parameters.push_back(ksize);
     <BLANKLINE>
                     }
                     break;
                 case(ALLOCATE):
                     {
-                        runtime::Parameter* ksize = new runtime::Parameter(KSIZE, runtime::DataVariant::UINT_32);
+                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                         ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                         ksize->setTitle("Kernel size");
+                        ksize->setMin(runtime::UInt32(0));
                         parameters.push_back(ksize);
     <BLANKLINE>
                     }
                     break;
                 case(IN_PLACE):
                     {
-                        runtime::Parameter* ksize = new runtime::Parameter(KSIZE, runtime::DataVariant::UINT_32);
+                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                         ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                         ksize->setTitle("Kernel size");
+                        ksize->setMin(runtime::UInt32(0));
                         parameters.push_back(ksize);
     <BLANKLINE>
                     }
@@ -759,7 +773,31 @@ class OpImplGenerator(MethodGenerator):
             self.doc.blank()
             
         def visitNumericParameter(self, parameter):
-            self.visitParameter(parameter)
+            ident = str(parameter.ident)
+            l = ("runtime::NumericParameter<{2}>* {0} = new "
+                 "runtime::NumericParameter<{2}>({1});"
+                ).format(ident, parameter.ident.constant(),
+                         parameter.dataType.typeId())
+            self.doc.line(l)
+            self.__accessMode(parameter)
+            l = '{0}->setTitle("{1}");'\
+                .format(ident, parameter.name)
+            self.doc.line(l)
+            if parameter.maxValue != None:
+                l = "{0}->setMax({1});".format(ident,
+                                 parameter.dataType.cast(parameter.maxValue))
+                self.doc.line(l)
+            if parameter.minValue != None:
+                l = "{0}->setMin({1});".format(ident,
+                                 parameter.dataType.cast(parameter.minValue))
+                self.doc.line(l)
+            if parameter.step != None:
+                l = "{0}->setStep({1});".format(ident,
+                                 parameter.dataType.cast(parameter.step))
+                self.doc.line(l)
+            l = "parameters.push_back({0});".format(parameter.ident)
+            self.doc.line(l)
+            self.doc.blank()
             
         def __accessMode(self, parameter):
             if self.isInit:
@@ -942,15 +980,19 @@ class OpImplGenerator(MethodGenerator):
         def visitNumericParameter(self, numericParameter):
             self.visitParameter(numericParameter)
             
-        def visitEnumParameter(self, numericParameter):
-            self.visitParameter(numericParameter)
+        def visitEnumParameter(self, parameter):
+            ident = parameter.ident
+            cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
+                                            ident)
+            castedData = "convert{0}({1})".format(ident.className(),
+                                                   ident.attribute())
+            self.doc.line("{0} = {1};".format(cvData, castedData))
             
         def visitConstant(self, constant):
             cvData = "{0} {1}CvData".format(constant.cvType.typeId(), 
                                             constant.ident)
             castedData = constant.cvType.cast(constant.value)
             self.doc.line("{0} = {1};".format(cvData, castedData))
-            
             
         def visitRefInput(self, refInput):
             cvData = "{0} {1}CvData".format(refInput.cvType.typeId(), 
@@ -1026,6 +1068,29 @@ class OpImplGenerator(MethodGenerator):
         def visitAllocation(self, allocation):
             for l in allocation.initOut:
                 self.doc.line(l)
+                
+    class EnumConversionDefVisitor(MethodGenerator.DocVisitor):
+        def __init__(self, doc, m):
+            super(OpImplGenerator.EnumConversionDefVisitor, self).__init__(doc)
+            self.m = m
+            
+        def visitEnumParameter(self, parameter):
+            name = parameter.ident.className()
+            l = ("int {1}::convert{0}(const runtime::Enum & value)"
+                ).format(name, self.m.ident.className())
+            self.doc.line(l)
+            self.doc.scopeEnter()
+            self.doc.line("switch(int(value))")
+            self.doc.scopeEnter()
+            for desc in parameter.descriptions:
+                self.doc.label("case {0}".format(desc.ident))
+                self.doc.line("return {0};".format(desc.cvIdent))
+            self.doc.label("default")
+            self.doc.line(("throw runtime::WrongParameterValue(parameter({0}),"
+                           " *this);").format(parameter.ident.constant()))
+            self.doc.scopeExit()
+            self.doc.scopeExit()
+            self.doc.blank()
         
     def generate(self):        
         self.__includes()
@@ -1040,6 +1105,7 @@ class OpImplGenerator(MethodGenerator):
         self.__setupOutputs()
         self.__initialize()
         self.__execute()
+        self.__convertEnumValues()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -1315,6 +1381,10 @@ class OpImplGenerator(MethodGenerator):
         self.doc.scopeExit()
         self.doc.scopeExit()
         self.doc.blank()
+        
+    def __convertEnumValues(self):
+        v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
+        self.visitAll(v, False)
         
 def generateMethodFiles(package, method):
     g = OpHeaderGenerator()

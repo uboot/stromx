@@ -19,6 +19,10 @@ m = package.Method("medianBlur")
 arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
 arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
 arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
+arg3.minValue = 1
+arg3.step = 2
+arg3.default = 1
+arg3.rules.append(package.OddRule())
 initIn = ("{1}->initializeImage({0}->width(), {0}->height(), "
           "{0}->stride(), {1}->data(), {0}->pixelType());"
          ).format("srcCastedData", "dstCastedData")  

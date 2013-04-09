@@ -190,7 +190,7 @@ class EnumDescription(object):
         if cvIdent:
             self.cvIdent = cvIdent
         else:
-            self.cvIdent = ident        
+            self.cvIdent = "cv::{0}".format(ident)     
     
 class ParameterRule(object):
     def check(self):
