@@ -197,6 +197,16 @@ class OpHeaderGenerator(MethodGenerator):
             l = "{0} {1};".format(parameter.dataType.typeId(),
                                   parameter.ident.attribute())
             self.doc.line(l)
+        
+    class ParameterDescriptionsVisitor(MethodGenerator.DocVisitor):
+        def visitEnumParameter(self, parameter):
+            self.doc.line(("runtime::EnumParameter* m_{0}Parameter;"
+                          ).format(parameter.ident))
+                          
+        def visitNumericParameter(self, parameter):
+            self.doc.line(("runtime::NumericParameter<{1}>* m_{0}Parameter;"
+                          ).format(parameter.ident,
+                                   parameter.dataType.typeId()))
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         def visitEnumParameter(self, parameter):
@@ -244,6 +254,9 @@ class OpHeaderGenerator(MethodGenerator):
         self.__checkValues()
         
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
+        self.visitAll(v)
+        
+        v = OpHeaderGenerator.ParameterDescriptionsVisitor(self.doc)
         self.visitAll(v)
         
         self.__classExit()
@@ -386,9 +399,13 @@ class OpImplGenerator(MethodGenerator):
     class SetParametersVisitor(MethodGenerator.ParameterVisitor):
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
-            self.doc.line("{0} = runtime::data_cast<{1}>(value);"\
-                .format(parameter.ident.attribute(),
-                        parameter.dataType.typeId()))
+            self.doc.scopeEnter()
+            self.doc.line(("{0} castedValue = runtime::data_cast<{1}>(value);"
+                          ).format(parameter.dataType.typeId(),
+                                   parameter.dataType.typeId()))
+            self.doc.line(("{0} = castedValue;"
+                          ).format(parameter.ident.attribute()))
+            self.doc.scopeExit()
             self.doc.line("break;")
                 
     class SetupParametersVisitor(MethodGenerator.DocVisitor):
@@ -401,7 +418,7 @@ class OpImplGenerator(MethodGenerator):
                 .format(parameter.ident, parameter.ident.constant(),
                         parameter.dataType.variant())
             self.doc.line(l)
-            self.__accessMode(parameter)
+            self.__accessMode(parameter.ident)
             l = '{0}->setTitle("{1}");'\
                 .format(parameter.ident, parameter.name)
             self.doc.line(l)
@@ -410,12 +427,11 @@ class OpImplGenerator(MethodGenerator):
             self.doc.blank()
             
         def visitEnumParameter(self, parameter):
-            ident = str(parameter.ident)
-            l = ("runtime::EnumParameter* {0} = new "
-                 "runtime::EnumParameter({1});")\
-                .format(ident, parameter.ident.constant())
+            ident = "m_{0}Parameter".format(parameter.ident)
+            l = ("{0} = new runtime::EnumParameter({1});"
+                ).format(ident, parameter.ident.constant())
             self.doc.line(l)
-            self.__accessMode(parameter)
+            self.__accessMode(ident)
             l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
             self.doc.line(l)
 
@@ -424,18 +440,17 @@ class OpImplGenerator(MethodGenerator):
                 l = '{0}->add(runtime::EnumDescription({1}, "{2}"));'\
                     .format(ident, d, desc.name)
                 self.doc.line(l)
-            l = "parameters.push_back({0});".format(parameter.ident)
+            l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
             self.doc.blank()
             
         def visitNumericParameter(self, parameter):
-            ident = str(parameter.ident)
-            l = ("runtime::NumericParameter<{2}>* {0} = new "
-                 "runtime::NumericParameter<{2}>({1});"
+            ident = "m_{0}Parameter".format(parameter.ident)
+            l = ("{0} = new runtime::NumericParameter<{2}>({1});"
                 ).format(ident, parameter.ident.constant(),
                          parameter.dataType.typeId())
             self.doc.line(l)
-            self.__accessMode(parameter)
+            self.__accessMode(ident)
             l = '{0}->setTitle("{1}");'\
                 .format(ident, parameter.name)
             self.doc.line(l)
@@ -451,18 +466,18 @@ class OpImplGenerator(MethodGenerator):
                 l = "{0}->setStep({1});".format(ident,
                                  parameter.dataType.cast(parameter.step))
                 self.doc.line(l)
-            l = "parameters.push_back({0});".format(parameter.ident)
+            l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
             self.doc.blank()
             
-        def __accessMode(self, parameter):
+        def __accessMode(self, ident):
             if self.isInit:
                 accessMode = "NONE_WRITE"
             else:
                 accessMode = "ACTIVATED_WRITE"
                 
             l = "{0}->setAccessMode(runtime::Parameter::{1});"\
-                .format(parameter.ident, accessMode)
+                .format(ident, accessMode)
             self.doc.line(l)
             
             
