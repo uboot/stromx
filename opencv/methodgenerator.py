@@ -168,63 +168,7 @@ class OpHeaderGenerator(MethodGenerator):
     >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
     >>> m.options.append(opt)
     >>> g = OpHeaderGenerator()
-    >>> g.save(p, m, True)   
-    #ifndef STROMX_IMGPROC_MEDIANBLUR_H
-    #define STROMX_IMGPROC_MEDIANBLUR_H
-    <BLANKLINE>
-    #include "stromx/imgproc/Config.h"
-    #include <stromx/runtime/Enum.h>
-    #include <stromx/runtime/OperatorKernel.h>
-    #include <stromx/runtime/Primitive.h>
-    <BLANKLINE>
-    namespace stromx
-    {
-        namespace imgproc
-        {
-            class STROMX_IMGPROC_API MedianBlur : public runtime::OperatorKernel
-            {
-            public:
-                enum DataFlowId
-                {
-                    MANUAL,
-                    ALLOCATE,
-                    IN_PLACE
-                };
-                enum ConnectorId
-                {
-                    SRC,
-                    DST
-                };
-                enum ParameterId
-                {
-                    KSIZE,
-                    DATA_FLOW
-                };
-                MedianBlur();
-                virtual OperatorKernel* clone() const { return new MedianBlur; }
-                virtual void setParameter(const unsigned int id, const runtime::Data& value);
-                virtual const runtime::DataRef getParameter(const unsigned int id) const;
-                void initialize();
-                virtual void execute(runtime::DataProvider& provider);
-    <BLANKLINE>
-            private:
-                static const std::string PACKAGE;
-                static const runtime::Version VERSION;
-                static const std::string TYPE;
-    <BLANKLINE>
-                const std::vector<const runtime::Parameter*> setupInitParameters();
-                const std::vector<const runtime::Parameter*> setupParameters();
-                const std::vector<const runtime::Description*> setupInputs();
-                const std::vector<const runtime::Description*> setupOutputs();
-    <BLANKLINE>
-                runtime::UInt32 m_ksize;
-                runtime::Enum m_dataFlow;
-            };
-        }
-    }
-    <BLANKLINE>
-    #endif // STROMX_IMGPROC_MEDIANBLUR_H
-    <BLANKLINE>
+    >>> g.save(p, m, False)
     """
     class ConnectorEnumVisitor(SingleArgumentVisitor):
         def __init__(self):
@@ -297,6 +241,8 @@ class OpHeaderGenerator(MethodGenerator):
         self.visitAll(v, False)
         self.doc.blank()
         
+        self.__checkValues()
+        
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
         self.visitAll(v)
         
@@ -310,6 +256,9 @@ class OpHeaderGenerator(MethodGenerator):
     def __includes(self):
         self.doc.line('#include "stromx/{0}/Config.h"'.format(self.p.ident))
         self.doc.line('#include <stromx/runtime/Enum.h>')
+        self.doc.line('#include <stromx/runtime/EnumParameter.h>')
+        self.doc.line('#include <stromx/runtime/NumericParameter.h>')
+        self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/OperatorKernel.h>')
         self.doc.line('#include <stromx/runtime/Primitive.h>')
         self.doc.blank()
@@ -362,6 +311,20 @@ class OpHeaderGenerator(MethodGenerator):
                       "setupOutputs();")
         self.doc.blank()
         
+    def __checkValues(self):
+        self.doc.line("void checkEnumValue(const runtime::Enum & value, const "
+                      "runtime::EnumParameter* param);")
+        self.doc.blank();
+        self.doc.line("template<class T>");
+        self.doc.line("void checkNumericParameterValue(const T & value, const "
+                      "runtime::NumericParameter<T>* param)");
+        self.doc.scopeEnter()
+        self.doc.line("if(value < runtime::data_cast<T>(param->min()))")
+        self.doc.increaseIndent()
+        self.doc.line("throw runtime::WrongParameterValue(*param, *this);")
+        self.doc.decreaseIndent()
+        self.doc.scopeExit()
+        
     def __classExit(self):
         self.doc.decreaseIndent()
         self.doc.line("};")
@@ -403,314 +366,7 @@ class OpImplGenerator(MethodGenerator):
     >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
     >>> m.options.append(opt)
     >>> g = OpImplGenerator()
-    >>> g.save(p, m, True)
-    #include "stromx/imgproc/MedianBlur.h"
-    <BLANKLINE>
-    #include <stromx/example/Image.h>
-    #include <stromx/example/Matrix.h>
-    #include <stromx/example/Utilities.h>
-    #include <stromx/runtime/DataContainer.h>
-    #include <stromx/runtime/DataProvider.h>
-    #include <stromx/runtime/EnumParameter.h>
-    #include <stromx/runtime/Id2DataComposite.h>
-    #include <stromx/runtime/Id2DataPair.h>
-    #include <stromx/runtime/NumericParameter.h>
-    #include <stromx/runtime/OperatorException.h>
-    #include <stromx/runtime/ReadAccess.h>
-    #include <stromx/runtime/WriteAccess.h>
-    #include <boost/assert.hpp>
-    #include <opencv2/imgproc/imgproc.hpp>
-    <BLANKLINE>
-    namespace stromx
-    {
-        namespace imgproc
-        {
-            const std::string MedianBlur::PACKAGE(STROMX_IMGPROC_PACKAGE_NAME);
-            const runtime::Version MedianBlur::VERSION(STROMX_IMGPROC_VERSION_MAJOR, STROMX_IMGPROC_VERSION_MINOR, STROMX_IMGPROC_VERSION_PATCH);
-            const std::string MedianBlur::TYPE("MedianBlur");
-    <BLANKLINE>
-            MedianBlur::MedianBlur()
-              : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-                m_ksize(),
-                m_dataFlow()
-            {
-            }
-    <BLANKLINE>
-            const runtime::DataRef MedianBlur::getParameter(unsigned int id) const
-            {
-                switch(id)
-                {
-                case KSIZE:
-                    return m_ksize;
-                case DATA_FLOW:
-                    return m_dataFlow;
-                default:
-                    throw runtime::WrongParameterId(id, *this);
-                }
-            }
-    <BLANKLINE>
-            void MedianBlur::setParameter(unsigned int id, const runtime::Data& value)
-            {
-                try
-                {
-                    switch(id)
-                    {
-                    case KSIZE:
-                        m_ksize = runtime::data_cast<runtime::UInt32>(value);
-                        break;
-                    case DATA_FLOW:
-                        m_dataFlow = runtime::data_cast<runtime::Enum>(value);
-                        break;
-                    default:
-                        throw runtime::WrongParameterId(id, *this);
-                    }
-                }
-                catch(runtime::BadCast&)
-                {
-                    throw runtime::WrongParameterType(parameter(id), *this);
-                }
-            }
-    <BLANKLINE>
-            const std::vector<const runtime::Parameter*> MedianBlur::setupInitParameters()
-            {
-                std::vector<const runtime::Parameter*> parameters;
-    <BLANKLINE>
-                runtime::EnumParameter* dataFlow = new runtime::EnumParameter(DATA_FLOW);
-                dataFlow->setAccessMode(runtime::Parameter::NONE_WRITE);
-                dataFlow->setTitle("Data flow");
-                dataFlow->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
-                dataFlow->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
-                dataFlow->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), "In place"));
-                parameters.push_back(dataFlow);
-    <BLANKLINE>
-                return parameters;
-            }
-    <BLANKLINE>
-            const std::vector<const runtime::Parameter*> MedianBlur::setupParameters()
-            {
-                std::vector<const runtime::Parameter*> parameters;
-    <BLANKLINE>
-                switch(int(m_dataFlow))
-                {
-                case(MANUAL):
-                    {
-                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
-                        ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                        ksize->setTitle("Kernel size");
-                        ksize->setMin(runtime::UInt32(0));
-                        parameters.push_back(ksize);
-    <BLANKLINE>
-                    }
-                    break;
-                case(ALLOCATE):
-                    {
-                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
-                        ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                        ksize->setTitle("Kernel size");
-                        ksize->setMin(runtime::UInt32(0));
-                        parameters.push_back(ksize);
-    <BLANKLINE>
-                    }
-                    break;
-                case(IN_PLACE):
-                    {
-                        runtime::NumericParameter<runtime::UInt32>* ksize = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
-                        ksize->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                        ksize->setTitle("Kernel size");
-                        ksize->setMin(runtime::UInt32(0));
-                        parameters.push_back(ksize);
-    <BLANKLINE>
-                    }
-                    break;
-                }
-    <BLANKLINE>
-                return parameters;
-            }
-    <BLANKLINE>
-            const std::vector<const runtime::Description*> MedianBlur::setupInputs()
-            {
-                std::vector<const runtime::Description*> inputs;
-    <BLANKLINE>
-                switch(int(m_dataFlow))
-                {
-                case(MANUAL):
-                    {
-                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                        src->setTitle("Source");
-                        inputs.push_back(src);
-    <BLANKLINE>
-                        runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                        dst->setTitle("Destination");
-                        inputs.push_back(dst);
-    <BLANKLINE>
-                    }
-                    break;
-                case(ALLOCATE):
-                    {
-                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                        src->setTitle("Source");
-                        inputs.push_back(src);
-    <BLANKLINE>
-                    }
-                    break;
-                case(IN_PLACE):
-                    {
-                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                        src->setTitle("Source");
-                        inputs.push_back(src);
-    <BLANKLINE>
-                    }
-                    break;
-                }
-    <BLANKLINE>
-                return inputs;
-            }
-    <BLANKLINE>
-            const std::vector<const runtime::Description*> MedianBlur::setupOutputs()
-            {
-                std::vector<const runtime::Description*> outputs;
-    <BLANKLINE>
-                switch(int(m_dataFlow))
-                {
-                case(MANUAL):
-                    {
-                        runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                        dst->setTitle("Destination");
-                        outputs.push_back(dst);
-    <BLANKLINE>
-                    }
-                    break;
-                case(ALLOCATE):
-                    {
-                        runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                        dst->setTitle("Destination");
-                        outputs.push_back(dst);
-    <BLANKLINE>
-                    }
-                    break;
-                case(IN_PLACE):
-                    {
-                        runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                        src->setTitle("Source");
-                        outputs.push_back(src);
-    <BLANKLINE>
-                    }
-                    break;
-                }
-    <BLANKLINE>
-                return outputs;
-            }
-    <BLANKLINE>
-            void MedianBlur::initialize()
-            {
-                runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
-            }
-    <BLANKLINE>
-            void MedianBlur::execute(runtime::DataProvider & provider)
-            {
-                switch(int(m_dataFlow))
-                {
-                case(MANUAL):
-                    {
-                        runtime::Id2DataPair srcInMapper(SRC);
-                        runtime::Id2DataPair dstInMapper(DST);
-    <BLANKLINE>
-                        provider.receiveInputData(srcInMapper && dstInMapper);
-    <BLANKLINE>
-                        const runtime::Data* srcData = 0;
-                        runtime::Data* dstData = 0;
-    <BLANKLINE>
-                        runtime::ReadAccess<> srcReadAccess;
-                        runtime::DataContainer inContainer = dstInMapper.data();
-                        runtime::WriteAccess<> writeAccess(inContainer);
-                        dstData = &writeAccess();
-    <BLANKLINE>
-                        if(srcInMapper.data() == inContainer)
-                        {
-                            srcData = &writeAccess();
-                        }
-                        else
-                        {
-                            srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                            srcData = &srcReadAccess();
-                        }
-    <BLANKLINE>
-                        const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
-                        runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
-    <BLANKLINE>
-                        dstCastedData->initializeImage(srcCastedData->width(), srcCastedData->height(), srcCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
-    <BLANKLINE>
-                        cv::Mat srcCvData = example::getOpenCvMat(*srcCastedData);
-                        cv::Mat dstCvData = example::getOpenCvMat(*dstCastedData);
-                        int ksizeCvData = int(m_ksize);
-    <BLANKLINE>
-                        cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
-    <BLANKLINE>
-                        runtime::DataContainer outContainer = inContainer;
-                        runtime::Id2DataPair outputMapper(DST, outContainer);
-    <BLANKLINE>
-                        provider.sendOutputData(outputMapper);
-                    }
-                    break;
-                case(ALLOCATE):
-                    {
-                        runtime::Id2DataPair srcInMapper(SRC);
-    <BLANKLINE>
-                        provider.receiveInputData(srcInMapper);
-    <BLANKLINE>
-                        const runtime::Data* srcData = 0;
-    <BLANKLINE>
-                        runtime::ReadAccess<> srcReadAccess;
-    <BLANKLINE>
-                        const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
-    <BLANKLINE>
-                        cv::Mat srcCvData = example::getOpenCvMat(*srcCastedData);
-                        cv::Mat dstCvData;
-                        int ksizeCvData = int(m_ksize);
-    <BLANKLINE>
-                        cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
-    <BLANKLINE>
-                        runtime::Image* dstCastedData = new example::Image(dstCvData);
-                        runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                        runtime::Id2DataPair outputMapper(DST, outContainer);
-    <BLANKLINE>
-                        dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
-                        provider.sendOutputData(outputMapper);
-                    }
-                    break;
-                case(IN_PLACE):
-                    {
-                        runtime::Id2DataPair srcInMapper(SRC);
-    <BLANKLINE>
-                        provider.receiveInputData(srcInMapper);
-    <BLANKLINE>
-                        runtime::Data* srcData = 0;
-    <BLANKLINE>
-                        runtime::DataContainer inContainer = srcInMapper.data();
-                        runtime::WriteAccess<> writeAccess(inContainer);
-                        srcData = &writeAccess();
-    <BLANKLINE>
-                        runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
-    <BLANKLINE>
-                        cv::Mat srcCvData = example::getOpenCvMat(*srcCastedData);
-                        cv::Mat dstCvData = srcCvData;
-                        int ksizeCvData = int(m_ksize);
-    <BLANKLINE>
-                        cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
-    <BLANKLINE>
-                        runtime::DataContainer outContainer = inContainer;
-                        runtime::Id2DataPair outputMapper(SRC, outContainer);
-    <BLANKLINE>
-                        provider.sendOutputData(outputMapper);
-                    }
-                    break;
-                }
-            }
-    <BLANKLINE>
-        }
-    }
-    <BLANKLINE>
-    <BLANKLINE>
+    >>> g.save(p, m, False)
     """     
     class ParameterInitVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
@@ -1106,6 +762,7 @@ class OpImplGenerator(MethodGenerator):
         self.__initialize()
         self.__execute()
         self.__convertEnumValues()
+        self.__checkEnumValues()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -1120,11 +777,8 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include <stromx/example/Utilities.h>')
         self.doc.line('#include <stromx/runtime/DataContainer.h>')
         self.doc.line('#include <stromx/runtime/DataProvider.h>')
-        self.doc.line('#include <stromx/runtime/EnumParameter.h>')
         self.doc.line('#include <stromx/runtime/Id2DataComposite.h>')
         self.doc.line('#include <stromx/runtime/Id2DataPair.h>')
-        self.doc.line('#include <stromx/runtime/NumericParameter.h>')
-        self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
         self.doc.line('#include <stromx/runtime/WriteAccess.h>')
         self.doc.line('#include <boost/assert.hpp>')
@@ -1385,6 +1039,24 @@ class OpImplGenerator(MethodGenerator):
     def __convertEnumValues(self):
         v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
         self.visitAll(v, False)
+        
+    def __checkEnumValues(self):
+        self.doc.line(("void {0}::checkEnumValue(const runtime::Enum & "
+                       "value, const runtime::EnumParameter* param)"
+                      ).format(self.m.ident.className()));
+        self.doc.scopeEnter()
+        self.doc.line("using namespace runtime;");
+        self.doc.line("for(std::vector<EnumDescription>::const_iterator "
+                      "iter = param->descriptions().begin(); iter != "
+                      "param->descriptions().end(); ++iter)")
+        self.doc.scopeEnter()
+        self.doc.line("if(value == iter->value())")
+        self.doc.increaseIndent()
+        self.doc.line("return;")
+        self.doc.decreaseIndent()
+        self.doc.scopeExit()
+        self.doc.line("throw WrongParameterValue(*param, *this);")
+        self.doc.scopeExit()
         
 def generateMethodFiles(package, method):
     g = OpHeaderGenerator()
