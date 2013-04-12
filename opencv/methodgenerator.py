@@ -329,10 +329,14 @@ class OpHeaderGenerator(MethodGenerator):
                       "runtime::EnumParameter* param);")
         self.doc.blank();
         self.doc.line("template<class T>");
-        self.doc.line("void checkNumericParameterValue(const T & value, const "
+        self.doc.line("void checkNumericValue(const T & value, const "
                       "runtime::NumericParameter<T>* param)");
         self.doc.scopeEnter()
         self.doc.line("if(value < runtime::data_cast<T>(param->min()))")
+        self.doc.increaseIndent()
+        self.doc.line("throw runtime::WrongParameterValue(*param, *this);")
+        self.doc.decreaseIndent()
+        self.doc.line("if(value > runtime::data_cast<T>(param->max()))")
         self.doc.increaseIndent()
         self.doc.line("throw runtime::WrongParameterValue(*param, *this);")
         self.doc.decreaseIndent()
@@ -396,13 +400,28 @@ class OpImplGenerator(MethodGenerator):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.line("return {0};".format(parameter.ident.attribute()))
                     
-    class SetParametersVisitor(MethodGenerator.ParameterVisitor):
+    class SetParametersVisitor(MethodGenerator.DocVisitor):
         def visitParameter(self, parameter):
+            self.__setParameterWithCheck(parameter)
+            
+        def visitEnumParameter(self, parameter):
+            l = ("checkEnumValue(castedValue, {0}Parameter);"
+                ).format(parameter.ident.attribute())
+            self.__setParameterWithCheck(parameter, l)
+            
+        def visitNumericParameter(self, parameter):
+            l = ("checkNumericValue(castedValue, {0}Parameter);"
+                ).format(parameter.ident.attribute())
+            self.__setParameterWithCheck(parameter, l)
+            
+        def __setParameterWithCheck(self, parameter, check = ""):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.scopeEnter()
             self.doc.line(("{0} castedValue = runtime::data_cast<{1}>(value);"
                           ).format(parameter.dataType.typeId(),
                                    parameter.dataType.typeId()))
+            if check != "":
+                self.doc.line(check)
             self.doc.line(("{0} = castedValue;"
                           ).format(parameter.ident.attribute()))
             self.doc.scopeExit()
