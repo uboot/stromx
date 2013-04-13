@@ -28,7 +28,10 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (DataTest);
             CPPUNIT_TEST(testCastReference);
+            CPPUNIT_TEST(testInvalidCastReference);
             CPPUNIT_TEST(testCastPointer);
+            CPPUNIT_TEST(testInvalidCastPointer);
+            CPPUNIT_TEST(testCastNullPointer);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,7 +42,10 @@ namespace stromx
 
         protected:
             void testCastReference();
+            void testInvalidCastReference();
             void testCastPointer();
+            void testInvalidCastPointer();
+            void testCastNullPointer();
         };
     }
 }

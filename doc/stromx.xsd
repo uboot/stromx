@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="Stromx">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Stream"/>
+        <xs:element minOccurs="0" ref="Parameters"/>
+      </xs:sequence>
+      <xs:attribute name="version" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Stream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Operator"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Thread"/>
+      </xs:sequence>
+      <xs:attribute name="name"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Operator"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Thread">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="InputConnector"/>
+      </xs:sequence>
+      <xs:attribute name="name"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Operator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Parameter"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Input"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="package" use="required"/>
+      <xs:attribute name="type" use="required"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="version" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Parameter">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="Data">
+          <xs:attribute name="id" use="required" type="xs:NMTOKEN"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Data">
+    <xs:sequence>
+      <xs:element ref="Data"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Data">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required"/>
+      <xs:attribute name="package" use="required"/>
+      <xs:attribute name="version" use="required"/>
+      <xs:attribute name="file"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Input">
+    <xs:complexType>
+      <xs:attribute name="id" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="operator" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="output" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InputConnector">
+    <xs:complexType>
+      <xs:attribute name="operator" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="input" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
