@@ -599,12 +599,20 @@ class OpImplGenerator(MethodGenerator):
             self.output = output
             
         def export(self, doc):
+            # no danger of reading a write access if there is no output (i.e.
+            # no write access)
             if self.output == None:
+                for i in self.inputs:
+                    l = ("{0}ReadAccess = runtime::ReadAccess<>("
+                         "{0}InMapper.data());").format(i.ident)
+                    doc.line(l)
+                    l = "{0}Data = &{0}ReadAccess();".format(i.ident)
+                    doc.line(l)
+                doc.blank()
                 return
                 
-            if len(self.inputs) == 0:
-                return
-                
+            # check if a read access refers to the same data as the write
+            # acess and handle this situation accordingly
             for i in self.inputs:
                 l = "if({0}InMapper.data() == inContainer)".format(i.ident)
                 doc.line(l)

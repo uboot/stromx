@@ -48,7 +48,7 @@ m = package.Method("resize")
 arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
 arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
 initIn = ("{1}->initializeImage(int(m_dsizex), "
-          "int(m_dsizey), int(m_dsizey) * {0}->pixelSize(), "
+          "int(m_dsizey), int(m_dsizex) * {0}->pixelSize(), "
           "{1}->data(), {0}->pixelType());"
          ).format("srcCastedData", "dstCastedData")
 initOut = ("{1}->initializeImage({1}->width(), {1}->height(), "

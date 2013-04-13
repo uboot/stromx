@@ -19,7 +19,6 @@
 #include "stromx/example/Utilities.h"
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/Exception.h>
-//#include <stromx/runtime/Image.h>
 
 namespace stromx
 {
