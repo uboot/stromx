@@ -34,6 +34,13 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(data));
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(constData));
+        }
+        
+        void DataTest::testInvalidCastReference()
+        {
+            TestData testData;
+            Data & data(testData);
+            const Data & constData(testData);
             
             CPPUNIT_ASSERT_THROW(data_cast<None>(data), BadCast);
             CPPUNIT_ASSERT_THROW(data_cast<None>(constData), BadCast);
@@ -47,6 +54,22 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(data));
             CPPUNIT_ASSERT_NO_THROW(data_cast<TestData>(constData));
+        }
+        
+        void DataTest::testInvalidCastPointer()
+        {
+            TestData testData;
+            Data* data = &testData;
+            const Data* constData= &testData;
+            
+            CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None>(data));
+            CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<None>(constData));
+        }
+        
+        void DataTest::testCastNullPointer()
+        {
+            Data* data = 0;
+            const Data* constData= 0;
             
             CPPUNIT_ASSERT_EQUAL((None *)(0), data_cast<None>(data));
             CPPUNIT_ASSERT_EQUAL((const None *)(0), data_cast<None>(constData));
