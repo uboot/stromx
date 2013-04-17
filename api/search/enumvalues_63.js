@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['color',['COLOR',['../classstromx_1_1base_1_1_image.html#ada56c43bb57351c5e9593d04e33d7c83a766ec4c7e5d78ce58fb860d8ba89f528',1,'stromx::base::Image']]]
+  ['color',['COLOR',['../classstromx_1_1example_1_1_image.html#ad50d7d11140c2848c172e5b9b889668ca5bc728e14cf9a76af1b16a041a214bab',1,'stromx::example::Image']]]
 ];

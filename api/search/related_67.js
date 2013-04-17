@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getopencvmat',['getOpenCvMat',['../classstromx_1_1base_1_1_image.html#af16555ac79704d295bc9d9bfcdb104f4',1,'stromx::base::Image::getOpenCvMat()'],['../classstromx_1_1base_1_1_matrix.html#aec98eb3e2bf4f48f398f7852eb4b9b8a',1,'stromx::base::Matrix::getOpenCvMat()']]]
+  ['getopencvmat',['getOpenCvMat',['../classstromx_1_1example_1_1_image.html#ac39b0456099e36e41facd914a276ad79',1,'stromx::example::Image::getOpenCvMat()'],['../classstromx_1_1example_1_1_matrix.html#a8c14a45e768d9b25c4bef253420b4613',1,'stromx::example::Matrix::getOpenCvMat()']]]
 ];

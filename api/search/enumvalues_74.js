@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['text',['TEXT',['../classstromx_1_1core_1_1_input_provider.html#abd80039dcc0a02eb3487e9ee160ed1e5a78e0e13aabde5103e9a9dafe7d64e22f',1,'stromx::core::InputProvider::TEXT()'],['../classstromx_1_1core_1_1_output_provider.html#aa9ed12628eddb8a7c2a364d9ae69f2cca991b6109e500e87d220df16be4116cf7',1,'stromx::core::OutputProvider::TEXT()']]]
+  ['text',['TEXT',['../classstromx_1_1runtime_1_1_input_provider.html#ab103287f9e7a503bdd0467ab2f9fbae8a21e3b6ac586cea2fee4523dcf1916f08',1,'stromx::runtime::InputProvider::TEXT()'],['../classstromx_1_1runtime_1_1_output_provider.html#a9f8f974f188fc8abea625be6906be934a44ce9649e0edb90fa05ec851b0700c2f',1,'stromx::runtime::OutputProvider::TEXT()']]]
 ];

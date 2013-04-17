@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['string',['STRING',['../classstromx_1_1core_1_1_data_variant.html#a06e7fc5268806d53be48a78382c8002e',1,'stromx::core::DataVariant']]]
+  ['string',['STRING',['../classstromx_1_1runtime_1_1_data_variant.html#acd01f7fffed84be92a6ca84243da25dd',1,'stromx::runtime::DataVariant']]]
 ];

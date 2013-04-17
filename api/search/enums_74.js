@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type',['Type',['../classstromx_1_1core_1_1_connector.html#a772f34ee69131785e6e8e2a5bc7e56d3',1,'stromx::core::Connector']]]
+  ['type',['Type',['../classstromx_1_1runtime_1_1_connector.html#a646b6e04604f429714364bb9d4c94d8f',1,'stromx::runtime::Connector']]]
 ];

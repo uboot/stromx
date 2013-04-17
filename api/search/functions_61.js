@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['accessmode',['accessMode',['../classstromx_1_1core_1_1_parameter.html#a78e9fa56142e0628eebc18ce7a70781f',1,'stromx::core::Parameter']]],
-  ['activate',['activate',['../classstromx_1_1base_1_1_buffer.html#a54e14899a5739e47ec2c75edd89ad1ff',1,'stromx::base::Buffer::activate()'],['../classstromx_1_1base_1_1_camera.html#a5d9ae403eaba2d4a49e2b3920b3bcf33',1,'stromx::base::Camera::activate()'],['../classstromx_1_1core_1_1_counter.html#a67668b38a87af3ef317a5a618e64dea0',1,'stromx::core::Counter::activate()'],['../classstromx_1_1core_1_1_operator_kernel.html#a9ab75502281ed8809d91fe0b6aaf42ce',1,'stromx::core::OperatorKernel::activate()'],['../classstromx_1_1core_1_1_periodic_delay.html#afde84c75b16a2c9f1586f7a9592d7fed',1,'stromx::core::PeriodicDelay::activate()']]],
-  ['add',['add',['../classstromx_1_1core_1_1_enum_parameter.html#a1ec9e086d1fa96775e630599e4111094',1,'stromx::core::EnumParameter::add()'],['../classstromx_1_1core_1_1_recycle_access.html#af26e07794f3220e1c1387329480c28c1',1,'stromx::core::RecycleAccess::add()']]],
-  ['addinput',['addInput',['../classstromx_1_1core_1_1_thread.html#a65546a29a73582b9cde4b04987d4a732',1,'stromx::core::Thread']]],
-  ['addobserver',['addObserver',['../classstromx_1_1core_1_1_operator.html#a6c2bc587d8781198fb76dbf1825484bc',1,'stromx::core::Operator::addObserver()'],['../classstromx_1_1core_1_1_stream.html#a56fc75022ef7cb706358b83f05743dbe',1,'stromx::core::Stream::addObserver()']]],
-  ['addoperator',['addOperator',['../classstromx_1_1core_1_1_stream.html#a16706c888d08c2f5e009f1b450a2bac4',1,'stromx::core::Stream']]],
-  ['addthread',['addThread',['../classstromx_1_1core_1_1_stream.html#a4c221d86c72eac2c81f028597f69059d',1,'stromx::core::Stream']]],
-  ['apply',['apply',['../classstromx_1_1core_1_1_sort_inputs_algorithm.html#a89ac48447b49ebcc7814f6d737a63971',1,'stromx::core::SortInputsAlgorithm']]],
-  ['availableoperators',['availableOperators',['../classstromx_1_1core_1_1_factory.html#af783f9e2bfc10fe227bc1e10a1c851fd',1,'stromx::core::Factory']]]
+  ['accessmode',['accessMode',['../classstromx_1_1runtime_1_1_parameter.html#a3a6706f6646034500afe2a44d91bba8d',1,'stromx::runtime::Parameter']]],
+  ['activate',['activate',['../classstromx_1_1example_1_1_buffer.html#a646e113bd3f00377730c724177ccd8fb',1,'stromx::example::Buffer::activate()'],['../classstromx_1_1example_1_1_camera.html#ac062eefeaab37a5f1f44919cf8d69f19',1,'stromx::example::Camera::activate()'],['../classstromx_1_1runtime_1_1_counter.html#a229970e8b80979c11952ebf5afa9b3b5',1,'stromx::runtime::Counter::activate()'],['../classstromx_1_1runtime_1_1_operator_kernel.html#a851ac2c2e95bdf0710d6dd454ffa9ea3',1,'stromx::runtime::OperatorKernel::activate()'],['../classstromx_1_1runtime_1_1_periodic_delay.html#a0f13f53f13981f4b4e5f153abb2ddf1d',1,'stromx::runtime::PeriodicDelay::activate()']]],
+  ['add',['add',['../classstromx_1_1runtime_1_1_enum_parameter.html#a036c1d0cd9a9657ef4ca7db447f47d1e',1,'stromx::runtime::EnumParameter::add()'],['../classstromx_1_1runtime_1_1_recycle_access.html#a2f655a9e864cf3acfc826b14f2d1f58a',1,'stromx::runtime::RecycleAccess::add()']]],
+  ['addinput',['addInput',['../classstromx_1_1runtime_1_1_thread.html#a2ee225c0b8ab1662c571361f16d4bb9e',1,'stromx::runtime::Thread']]],
+  ['addobserver',['addObserver',['../classstromx_1_1runtime_1_1_operator.html#a225ea553e6ab51fc9e4356f0821b7dee',1,'stromx::runtime::Operator::addObserver()'],['../classstromx_1_1runtime_1_1_stream.html#adce16f067ff2b92a74cbe76824a0f15c',1,'stromx::runtime::Stream::addObserver()']]],
+  ['addoperator',['addOperator',['../classstromx_1_1runtime_1_1_stream.html#a3fcdd80316848d63981621c3b3d60bf5',1,'stromx::runtime::Stream']]],
+  ['addthread',['addThread',['../classstromx_1_1runtime_1_1_stream.html#a702f7dc944dc8c851d8de0d8a6802da8',1,'stromx::runtime::Stream']]],
+  ['apply',['apply',['../classstromx_1_1runtime_1_1_sort_inputs_algorithm.html#a0e7950287e8bfa84f93f0df824e08c37',1,'stromx::runtime::SortInputsAlgorithm']]],
+  ['availableoperators',['availableOperators',['../classstromx_1_1runtime_1_1_factory.html#a61e7e43981be6c94b2f58a942b969b0f',1,'stromx::runtime::Factory']]]
 ];

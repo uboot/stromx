@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rgb_5f24_5fimage',['RGB_24_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a735d135519ce91ae9e73398e49a06eb8',1,'stromx::core::DataVariant']]],
-  ['rgb_5f48_5fimage',['RGB_48_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a49e7e29da058502bb9a96e586dfdb9aa',1,'stromx::core::DataVariant']]],
-  ['rgb_5fimage',['RGB_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a73296e1a8526fd18477e94e9882b3c1c',1,'stromx::core::DataVariant']]]
+  ['rgb_5f24_5fimage',['RGB_24_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#a8d42141230879d65f02c643ee852d47f',1,'stromx::runtime::DataVariant']]],
+  ['rgb_5f48_5fimage',['RGB_48_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#a064e2ae446c0cbfcf7fb6f17d8e2adde',1,'stromx::runtime::DataVariant']]],
+  ['rgb_5fimage',['RGB_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#afc5bdc9211e8cc255dbe0516e676e29c',1,'stromx::runtime::DataVariant']]]
 ];

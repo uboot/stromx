@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['badcast',['BadCast',['../classstromx_1_1core_1_1_bad_cast.html',1,'stromx::core']]],
-  ['bayerbg_5f8_5fimage',['BAYERBG_8_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a49b28f1ffaab85e09794c8a5ff05e71b',1,'stromx::core::DataVariant']]],
-  ['bayergb_5f8_5fimage',['BAYERGB_8_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a93a28676508d92bf9a1bf318b3365b4f',1,'stromx::core::DataVariant']]],
-  ['bgr_5f24_5fimage',['BGR_24_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#ac9419c5ae83ff123ecd8f3aabfd33c7f',1,'stromx::core::DataVariant']]],
-  ['bgr_5f48_5fimage',['BGR_48_IMAGE',['../classstromx_1_1core_1_1_data_variant.html#a0c372b74bb59f4b50acc5f196502d951',1,'stromx::core::DataVariant']]],
-  ['binary',['BINARY',['../classstromx_1_1core_1_1_input_provider.html#abd80039dcc0a02eb3487e9ee160ed1e5a9c8818dbfb9bf006656e98c9d8f3a8e5',1,'stromx::core::InputProvider::BINARY()'],['../classstromx_1_1core_1_1_output_provider.html#aa9ed12628eddb8a7c2a364d9ae69f2cca9427acfae7cbe64aade0d300feff7540',1,'stromx::core::OutputProvider::BINARY()']]],
-  ['blur',['Blur',['../classstromx_1_1base_1_1_blur.html',1,'stromx::base']]],
-  ['bool',['BOOL',['../classstromx_1_1core_1_1_data_variant.html#a0ce85e5f975247c2b4e92fe0cec10e30',1,'stromx::core::DataVariant::BOOL()'],['../namespacestromx_1_1core.html#a9dfa31f24d37a6326df5ab8e24b4c8aa',1,'stromx::core::Bool()']]],
-  ['buffer',['Buffer',['../classstromx_1_1base_1_1_buffer.html',1,'stromx::base']]],
-  ['buffer',['buffer',['../classstromx_1_1core_1_1_image_wrapper.html#a9677d7a45d3d94e60b820f788fd2ee0e',1,'stromx::core::ImageWrapper::buffer()'],['../classstromx_1_1core_1_1_matrix.html#a9ca311deedb9baea0440b4b78f2a99b5',1,'stromx::core::Matrix::buffer()'],['../classstromx_1_1core_1_1_matrix_wrapper.html#a2f66508dae425cc65c1a24be5252911f',1,'stromx::core::MatrixWrapper::buffer()']]],
-  ['buffersize',['bufferSize',['../classstromx_1_1core_1_1_image_wrapper.html#afb6afb115dd77006a45b87b79ec93b0a',1,'stromx::core::ImageWrapper::bufferSize()'],['../classstromx_1_1core_1_1_matrix.html#a93eba5b5cd3949c2ce2bf2842692a738',1,'stromx::core::Matrix::bufferSize()'],['../classstromx_1_1core_1_1_matrix_wrapper.html#a34a040f3658ff6ca4f38e2908be83f56',1,'stromx::core::MatrixWrapper::bufferSize()']]]
+  ['badcast',['BadCast',['../classstromx_1_1runtime_1_1_bad_cast.html',1,'stromx::runtime']]],
+  ['bayerbg_5f8_5fimage',['BAYERBG_8_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#ad0cf3e450f5148f054a4854c44b78b1f',1,'stromx::runtime::DataVariant']]],
+  ['bayergb_5f8_5fimage',['BAYERGB_8_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#a84bef25e7fb4b46a645020f132266ac2',1,'stromx::runtime::DataVariant']]],
+  ['bgr_5f24_5fimage',['BGR_24_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#aca2fd796abc9f7545e3f9e2c3a8b4a1e',1,'stromx::runtime::DataVariant']]],
+  ['bgr_5f48_5fimage',['BGR_48_IMAGE',['../classstromx_1_1runtime_1_1_data_variant.html#a88b1a38452e72837fb5a74af4c925724',1,'stromx::runtime::DataVariant']]],
+  ['binary',['BINARY',['../classstromx_1_1runtime_1_1_input_provider.html#ab103287f9e7a503bdd0467ab2f9fbae8a76335a96a95faad521b7e7434d29c379',1,'stromx::runtime::InputProvider::BINARY()'],['../classstromx_1_1runtime_1_1_output_provider.html#a9f8f974f188fc8abea625be6906be934a7e73533ba440c2ad742443a552389280',1,'stromx::runtime::OutputProvider::BINARY()']]],
+  ['blur',['Blur',['../classstromx_1_1example_1_1_blur.html',1,'stromx::example']]],
+  ['bool',['BOOL',['../classstromx_1_1runtime_1_1_data_variant.html#a67d1ee9d4cffa96a102b1675ec0a9c26',1,'stromx::runtime::DataVariant::BOOL()'],['../namespacestromx_1_1runtime.html#a33edc94e1549002a5e597dcfc921798d',1,'stromx::runtime::Bool()']]],
+  ['buffer',['Buffer',['../classstromx_1_1example_1_1_buffer.html',1,'stromx::example']]],
+  ['buffer',['buffer',['../classstromx_1_1runtime_1_1_image_wrapper.html#a71c33792d5da530571528ee4c5fdf8d0',1,'stromx::runtime::ImageWrapper::buffer()'],['../classstromx_1_1runtime_1_1_matrix.html#a3b8d78aa5ec33b60f923a0eb2ccefd4e',1,'stromx::runtime::Matrix::buffer()'],['../classstromx_1_1runtime_1_1_matrix_wrapper.html#af8265bda4a51eb943d2216c729dd397b',1,'stromx::runtime::MatrixWrapper::buffer()']]],
+  ['buffersize',['bufferSize',['../classstromx_1_1runtime_1_1_image_wrapper.html#a6b5199a428ef0967a5c942ed1409baa9',1,'stromx::runtime::ImageWrapper::bufferSize()'],['../classstromx_1_1runtime_1_1_matrix.html#abc15004aea938149053bdf2e33f4c698',1,'stromx::runtime::Matrix::bufferSize()'],['../classstromx_1_1runtime_1_1_matrix_wrapper.html#afd60f148222fb8fa5e934070b4367793',1,'stromx::runtime::MatrixWrapper::bufferSize()']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['none',['NONE',['../classstromx_1_1core_1_1_data_variant.html#a02aa47f19a9837919b72e6cda47c89b2',1,'stromx::core::DataVariant']]]
+  ['none',['NONE',['../classstromx_1_1runtime_1_1_data_variant.html#a87ffc9d5b102d1155d4b552bc72649f7',1,'stromx::runtime::DataVariant']]]
 ];

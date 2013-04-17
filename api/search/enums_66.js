@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fileaccess',['FileAccess',['../classstromx_1_1base_1_1_image.html#ada56c43bb57351c5e9593d04e33d7c83',1,'stromx::base::Image']]]
+  ['fileaccess',['FileAccess',['../classstromx_1_1example_1_1_image.html#ad50d7d11140c2848c172e5b9b889668c',1,'stromx::example::Image']]]
 ];

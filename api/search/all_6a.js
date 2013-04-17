@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['join',['Join',['../classstromx_1_1core_1_1_join.html',1,'stromx::core']]],
-  ['join',['join',['../classstromx_1_1core_1_1_stream.html#a33291f71e13537ba2e148f8daf2c45c9',1,'stromx::core::Stream']]]
+  ['join',['Join',['../classstromx_1_1runtime_1_1_join.html',1,'stromx::runtime']]],
+  ['join',['join',['../classstromx_1_1runtime_1_1_stream.html#aae6cddb319764a58545c9739f698b3ae',1,'stromx::runtime::Stream']]]
 ];
