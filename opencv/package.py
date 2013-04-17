@@ -197,11 +197,20 @@ class ParameterRule(object):
         return ""
 
 class OddRule(ParameterRule):
-    pass
+    def check(self, parameter, doc):
+        doc.line("if(int(castedValue) % 2 == 0)")
+        doc.increaseIndent()
+        doc.line(("throw runtime::WrongParameterValue(*{0}Parameter, "
+            "*this);").format(parameter.ident.attribute()))
+        doc.decreaseIndent()
 
-class MinRule(ParameterRule):
-    pass
+class EvenRule(ParameterRule):
+    def check(self, parameter, doc):
+        doc.line("if(int(castedValue) % 2 == 1)")
+        doc.increaseIndent()
+        doc.line(("throw runtime::WrongParameterValue(*{0}Parameter, "
+            "*this);").format(parameter.ident.attribute()))
+        doc.decreaseIndent()
 
-class MaxRule(ParameterRule):
-    pass
+
     
