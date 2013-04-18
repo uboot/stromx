@@ -20,6 +20,10 @@ class Int(CvType):
     def typeId(self):
         return "int"
         
+class Double(CvType):
+    def typeId(self):
+        return "double"
+        
 class Mat(CvType):
     def typeId(self):
         return "cv::Mat"

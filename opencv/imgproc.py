@@ -47,19 +47,30 @@ p.methods.append(m)
 m = package.Method("resize")
 arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
 arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
-initIn = ("{1}->initializeImage(int(m_dsizex), "
-          "int(m_dsizey), int(m_dsizex) * {0}->pixelSize(), "
-          "{1}->data(), {0}->pixelType());"
-         ).format("srcCastedData", "dstCastedData")
+initIn = []
+initIn.append(
+    "int width = int(m_dsizex) ? int(m_dsizex) : "
+    "srcCastedData->width() * double(m_fx);")
+initIn.append(
+    "int height = int(m_dsizey) ? int(m_dsizey) : "
+    "srcCastedData->height() * double(m_fy);")
+    
+initIn.append((
+    "{1}->initializeImage(width, height, "
+    "width * {0}->pixelSize(), "
+    "{1}->data(), {0}->pixelType());"
+    ).format("srcCastedData", "dstCastedData"))
+arg2.initIn.extend(initIn)
 initOut = ("{1}->initializeImage({1}->width(), {1}->height(), "
            "{1}->stride(), {1}->data(), {0}->pixelType());"
           ).format("srcCastedData", "dstCastedData")
-arg2.initIn.append(initIn)
 arg2.initOut.append(initOut)
 arg3x = package.NumericParameter("dsizex", "Size X", cvtype.Int(), datatype.UInt32())
 arg3y = package.NumericParameter("dsizey", "Size Y", cvtype.Int(), datatype.UInt32())
-arg4 = package.Constant("fx", cvtype.Int(), 0)
-arg5 = package.Constant("fy", cvtype.Int(), 0)
+arg4 = package.NumericParameter("fx", "Scale X", cvtype.Double(), datatype.Double())
+arg5 = package.NumericParameter("fy", "Scale Y", cvtype.Double(), datatype.Double())
+arg4.default = 1.0
+arg5.default = 1.0
 arg6 = package.EnumParameter("interpolation", "Interpolation")
 arg6.descriptions = [package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
                      package.EnumDescription("INTER_LINEAR", "Bilinear")]
