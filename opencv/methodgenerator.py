@@ -151,25 +151,6 @@ class MethodGenerator(object):
         self.doc.blank()
             
 class OpHeaderGenerator(MethodGenerator):
-    """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
-    >>> arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
-    >>> arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
-    >>> opt = package.Option("manual", "Manual")
-    >>> opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
-    >>> m.options.append(opt)
-    >>> opt = package.Option("allocate", "Allocate")
-    >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
-    >>> m.options.append(opt)
-    >>> opt = package.Option("inPlace", "In place")
-    >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
-    >>> m.options.append(opt)
-    >>> g = OpHeaderGenerator()
-    >>> g.save(p, m, False)
-    """
     class ConnectorEnumVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.connectors = set()
@@ -357,35 +338,6 @@ class OpHeaderGenerator(MethodGenerator):
         return "STROMX_{0}_API".format(self.p.ident.upper())
             
 class OpImplGenerator(MethodGenerator):
-    """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
-    >>> arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
-    >>> arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
-    >>> arg3.minValue = 0
-    >>> arg3.rules.append(package.OddRule())
-    >>> initIn = ("{1}->initializeImage({0}->width(), {0}->height(), "\
-                  "{0}->stride(), {1}->data(), {0}->pixelType());")\
-                 .format("srcCastedData", "dstCastedData")
-    >>> arg2.initIn.append(initIn)    
-    >>> initOut = ("{1}->initializeImage({1}->width(), {1}->height(), "\
-                  "{1}->stride(), {1}->data(), {0}->pixelType());")\
-                 .format("srcCastedData", "dstCastedData")
-    >>> arg2.initOut.append(initOut)
-    >>> opt = package.Option("manual", "Manual")
-    >>> opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
-    >>> m.options.append(opt)
-    >>> opt = package.Option("allocate", "Allocate")
-    >>> opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
-    >>> m.options.append(opt)
-    >>> opt = package.Option("inPlace", "In place")
-    >>> opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
-    >>> m.options.append(opt)
-    >>> g = OpImplGenerator()
-    >>> g.save(p, m, False)
-    """     
     class ParameterInitVisitor(MethodGenerator.CollectParametersVisitor):
         def export(self, doc):
             for i, p in enumerate(self.params):

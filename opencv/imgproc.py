@@ -16,29 +16,33 @@ p.name = "OpenCV image processing"
 # medianBlur
 
 m = package.Method("medianBlur")
-arg1 = package.Argument("src", "Source", cvtype.Mat(), datatype.Image())
-arg2 = package.Argument("dst", "Destination", cvtype.Mat(), datatype.Image())
-arg3 = package.NumericParameter("ksize", "Kernel size", cvtype.Int(), datatype.UInt32())
-arg3.minValue = 1
-arg3.step = 2
-arg3.default = 1
-arg3.rules.append(package.OddRule())
-initIn = ("{1}->initializeImage({0}->width(), {0}->height(), "
-          "{0}->stride(), {1}->data(), {0}->pixelType());"
-         ).format("srcCastedData", "dstCastedData")  
-initOut = ("{1}->initializeImage({1}->width(), {1}->height(), "
-           "{1}->stride(), {1}->data(), {0}->pixelType());"
-          ).format("srcCastedData", "dstCastedData")
-arg2.initIn.append(initIn)  
-arg2.initOut.append(initOut)
-opt = package.Option("manual", "Manual")
-opt.args.extend([package.Input(arg1, True), package.Output(arg2), arg3])
+arg1 = package.Argument(
+    "src", "Source", cvtype.Mat(), datatype.Image()
+)
+initIn = [(
+    "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+)]
+initOut = [(
+    "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+)]
+arg2 = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
+    initOut = initOut
+)
+arg3 = package.NumericParameter(
+    "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
+    step = 2, default = 1, rules = [package.OddRule()]
+)
+opt = package.Option("manual", "Manual", 
+                     [package.Input(arg1, True), package.Output(arg2), arg3])
 m.options.append(opt)
-opt = package.Option("allocate", "Allocate")
-opt.args.extend([package.Input(arg1), package.Allocation(arg2), arg3])
+opt = package.Option("allocate", "Allocate", 
+                     [package.Input(arg1), package.Allocation(arg2), arg3])
 m.options.append(opt)
-opt = package.Option("inPlace", "In place")
-opt.args.extend([package.Output(arg1), package.RefInput(arg2, arg1), arg3])
+opt = package.Option("inPlace", "In place",
+                     [package.Output(arg1), package.RefInput(arg2, arg1), arg3])
 m.options.append(opt)
 p.methods.append(m)
 
