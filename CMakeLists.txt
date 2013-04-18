@@ -73,6 +73,11 @@ endif()
 if(BUILD_EXAMPLE)
    add_subdirectory(example)
    add_subdirectory(stromx/example)
+endif()
+
+option(BUILD_IMGPROC "Build imgproc" OFF)
+
+if(BUILD_IMGPROC)
    add_subdirectory(stromx/imgproc)
 endif()
 
