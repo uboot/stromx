@@ -193,23 +193,27 @@ class EnumDescription(object):
             self.cvIdent = "cv::{0}".format(ident)     
     
 class ParameterRule(object):
-    def check(self):
+    def check(self, parameter, doc):
         return ""
 
 class OddRule(ParameterRule):
     def check(self, parameter, doc):
         doc.line("if(int(castedValue) % 2 == 0)")
         doc.increaseIndent()
-        doc.line(("throw runtime::WrongParameterValue(*{0}Parameter, "
-            "*this);").format(parameter.ident.attribute()))
+        doc.line((
+            'throw runtime::WrongParameterValue(*{0}Parameter, '
+            '*this, "Only odd values are allowed");'
+            ).format(parameter.ident.attribute()))
         doc.decreaseIndent()
 
 class EvenRule(ParameterRule):
     def check(self, parameter, doc):
         doc.line("if(int(castedValue) % 2 == 1)")
         doc.increaseIndent()
-        doc.line(("throw runtime::WrongParameterValue(*{0}Parameter, "
-            "*this);").format(parameter.ident.attribute()))
+        doc.line((
+            'throw runtime::WrongParameterValue(*{0}Parameter, '
+            '*this, "Only even values are allowed");'
+            ).format(parameter.ident.attribute()))
         doc.decreaseIndent()
 
 
