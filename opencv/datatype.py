@@ -29,6 +29,13 @@ class UInt32(DataType):
     def variant(self):
         return "runtime::DataVariant::UINT_32"
         
+class Double(DataType):
+    def typeId(self):
+        return "runtime::Double"
+        
+    def variant(self):
+        return "runtime::DataVariant::DOUBLE"
+        
 class Enum(DataType):
     def typeId(self):
         return "runtime::Enum"

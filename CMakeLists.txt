@@ -71,8 +71,14 @@ if(BUILD_RUNTIME)
 endif()
 
 if(BUILD_EXAMPLE)
-   add_subdirectory(stromx/example)
    add_subdirectory(example)
+   add_subdirectory(stromx/example)
+endif()
+
+option(BUILD_IMGPROC "Build imgproc" OFF)
+
+if(BUILD_IMGPROC)
+   add_subdirectory(stromx/imgproc)
 endif()
 
 find_package(Boost 1.36.0 COMPONENTS thread filesystem python)

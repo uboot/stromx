@@ -42,11 +42,12 @@ class Ident(object):
         return self.ident
     
 class Package(object):
-    def __init__(self, ident, major, minor, patch):
+    def __init__(self, ident, major, minor, patch,
+                 description = "", methods = None):
         self.ident = Ident(ident)
         self.name = ""
-        self.description = ""
-        self.methods = []
+        self.description = description
+        self.methods = [] if methods == None else methods
         self.major = major
         self.minor = minor
         self.patch = patch
@@ -72,15 +73,15 @@ class Size(Compound):
         return "cv::Size({0}CvData, {1}CvData)".format(xCvData, yCvData)
 
 class Argument(Acceptor):
-    def __init__(self, ident, name, cvType, dataType):
+    def __init__(self, ident, name, cvType, dataType, description = "",
+                 initIn = None, initOut = None):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
         self.dataType = dataType
-        self.description = ""
-        self.rules = []
-        self.initIn = []
-        self.initOut = []
+        self.description = description
+        self.initIn = [] if initIn == None else initIn
+        self.initOut = [] if initOut == None else initOut
         
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -88,7 +89,6 @@ class Argument(Acceptor):
         self.description = arg.description
         self.cvType = arg.cvType
         self.dataType = arg.dataType
-        self.rules = arg.rules
         self.initIn = arg.initIn
         self.initOut = arg.initOut
     
@@ -100,47 +100,52 @@ class OutputArgument(Argument):
         super(OutputArgument, self).__init__(ident, name, cvType, dataType)
         
 class Parameter(InputArgument):
-    def __init__(self, ident, name, cvType, dataType):
+    def __init__(self, ident, name, cvType, dataType, inPlace = False,
+                 isInit = False, default = None, rules = None):
         super(Parameter, self).__init__(ident, name, cvType, dataType)
-        self.inPlace = False
-        self.isInit = False
-        self.default = None
+        self.inPlace = inPlace
+        self.isInit = isInit
+        self.default = default
+        self.rules = [] if rules == None else rules
     
     def accept(self, visitor):
         visitor.visitParameter(self)     
 
 class NumericParameter(Parameter):
-    def __init__(self, ident, name, cvType, dataType):
-        super(NumericParameter, self).__init__(ident, name, cvType, dataType)
-        self.minValue = None
-        self.maxValue = None
-        self.step = None
+    def __init__(self, ident, name, cvType, dataType, default = None,
+                 minValue = None, maxValue = None, step = None, rules = None):
+        super(NumericParameter, self).__init__(
+            ident, name, cvType, dataType, default = default, rules = rules)
+        self.minValue = minValue
+        self.maxValue = maxValue
+        self.step = step
     
     def accept(self, visitor):
         visitor.visitNumericParameter(self)
     
 class EnumParameter(Parameter):
-    def __init__(self, ident, name):
+    def __init__(self, ident, name, descriptions = None, default = None):
         super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
-                                            datatype.Enum())
-        self.descriptions = []
+                                            datatype.Enum(), default = default)
+        self.descriptions = [] if descriptions == None else descriptions
     
     def accept(self, visitor):
         visitor.visitEnumParameter(self)
         
 class Method(object):
-    def __init__(self, ident):
-        self.ident = Ident(ident)
-        self.name = ""
-        self.doc = ""
-        self.functions = []
-        self.options = []
-        
-class Option(object):
-    def __init__(self, ident, name):
+    def __init__(self, ident, name = "", description = "", functions = None,
+                 options = None):
         self.ident = Ident(ident)
         self.name = name
-        self.args = []
+        self.description = description
+        self.functions = [] if functions == None else functions
+        self.options = [] if options == None else options
+        
+class Option(object):
+    def __init__(self, ident, name, args = None):
+        self.ident = Ident(ident)
+        self.name = name
+        self.args = [] if args == None else args
 
 class Constant(Argument):
     def __init__(self, ident, cvType, value):
@@ -193,15 +198,28 @@ class EnumDescription(object):
             self.cvIdent = "cv::{0}".format(ident)     
     
 class ParameterRule(object):
-    def check(self):
+    def check(self, parameter, doc):
         return ""
 
 class OddRule(ParameterRule):
-    pass
+    def check(self, parameter, doc):
+        doc.line("if(int(castedValue) % 2 == 0)")
+        doc.increaseIndent()
+        doc.line((
+            'throw runtime::WrongParameterValue(*{0}Parameter, '
+            '*this, "Only odd values are allowed");'
+            ).format(parameter.ident.attribute()))
+        doc.decreaseIndent()
 
-class MinRule(ParameterRule):
-    pass
+class EvenRule(ParameterRule):
+    def check(self, parameter, doc):
+        doc.line("if(int(castedValue) % 2 == 1)")
+        doc.increaseIndent()
+        doc.line((
+            'throw runtime::WrongParameterValue(*{0}Parameter, '
+            '*this, "Only even values are allowed");'
+            ).format(parameter.ident.attribute()))
+        doc.decreaseIndent()
 
-class MaxRule(ParameterRule):
-    pass
+
     
