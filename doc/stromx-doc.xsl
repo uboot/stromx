@@ -16,6 +16,7 @@
           <xsl:variable name="packageId" select="@id" />
           <h1>
             <xsl:value-of select="@name"/></h1>
+          <xsl:apply-templates select="Description"/>
           <h2>Data variants</h2>
           <xsl:for-each select="DataVariant">
             <xsl:variable name="packageFile" select="concat(@variantPackageId,'.xml')"/>
@@ -52,9 +53,7 @@
                       </a>
                     </xsl:for-each>
                   </p>
-                  <p>
-                    <xsl:value-of select="Description"/>
-                  </p>
+                  <xsl:apply-templates select="Description"/>
                 </body>
               </html>
             </xsl:result-document>
@@ -82,9 +81,7 @@
                       <xsl:value-of select="$package"/>
                     </a>)
                   </h1>
-                  <p>
-                    <xsl:value-of select="Description"/>
-                  </p>
+                  <xsl:apply-templates select="Description"/>
                   <h2>Parameters</h2>
                   <xsl:for-each select="Parameter">
                     <h3>
@@ -101,9 +98,7 @@
                         </a>)
                       </xsl:for-each>
                     </h3>
-                    <p>
-                        <xsl:value-of select="Description"/>
-                    </p>
+                    <xsl:apply-templates select="Description"/>
                   </xsl:for-each>
 
                   <h2>Inputs</h2>
@@ -122,9 +117,7 @@
                         </a>)
                       </xsl:for-each>
                     </h3>
-                    <p>
-                        <xsl:value-of select="Description"/>
-                    </p>
+                    <xsl:apply-templates select="Description"/>
                   </xsl:for-each>
 
                   <h2>Outputs</h2>
@@ -143,9 +136,7 @@
                         </a>)
                       </xsl:for-each>
                     </h3>
-                    <p>
-                        <xsl:value-of select="Description"/>
-                    </p>
+                    <xsl:apply-templates select="Description"/>
                   </xsl:for-each>
                 </body>
               </html>
@@ -154,5 +145,9 @@
         </xsl:for-each>
       </body>
     </html>
+  </xsl:template>
+
+  <xsl:template match="Description">
+    <p><xsl:value-of select="."/></p>
   </xsl:template>
 </xsl:stylesheet> 

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Package id="example" name="Example">
+    <Description>
+        This package contains some image processing operators based on functions
+        of the OpenCV library.
+    </Description>
     <DataVariant id="opencv_image" title="OpenCV image 8-bit" variantPackageId="runtime" variantId="image">
         <Description>
             Image based on the OpenCV matrix implementation.

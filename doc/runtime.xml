@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Package id="runtime" name="Runtime">
+    <Description>
+        This package contains infrastructure operators and general data types
+        for primitive data, images and matrices.
+    </Description>
     <!-- Als erstes kommen die Datentypen (=DataVariant), welche in diesem Package definiert sind. -->
     <DataVariant id="data" title="Data" variantPackageId="runtime" variantId="data">
         The parent of all data.
