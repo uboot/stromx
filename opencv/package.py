@@ -42,11 +42,12 @@ class Ident(object):
         return self.ident
     
 class Package(object):
-    def __init__(self, ident, major, minor, patch):
+    def __init__(self, ident, major, minor, patch,
+                 description = "", methods = None):
         self.ident = Ident(ident)
         self.name = ""
-        self.description = ""
-        self.methods = []
+        self.description = description
+        self.methods = [] if methods == None else methods
         self.major = major
         self.minor = minor
         self.patch = patch
@@ -123,21 +124,22 @@ class NumericParameter(Parameter):
         visitor.visitNumericParameter(self)
     
 class EnumParameter(Parameter):
-    def __init__(self, ident, name):
+    def __init__(self, ident, name, descriptions = None, default = None):
         super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
-                                            datatype.Enum())
-        self.descriptions = []
+                                            datatype.Enum(), default = default)
+        self.descriptions = [] if descriptions == None else descriptions
     
     def accept(self, visitor):
         visitor.visitEnumParameter(self)
         
 class Method(object):
-    def __init__(self, ident):
+    def __init__(self, ident, name = "", description = "", functions = None,
+                 options = None):
         self.ident = Ident(ident)
-        self.name = ""
-        self.doc = ""
-        self.functions = []
-        self.options = []
+        self.name = name
+        self.description = description
+        self.functions = [] if functions == None else functions
+        self.options = [] if options == None else options
         
 class Option(object):
     def __init__(self, ident, name, args = None):
