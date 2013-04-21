@@ -8,10 +8,13 @@ Created on Thu Jan 31 21:41:06 2013
 class Document(object):
     INDENT = 4
     
-    def __init__(self):
+    def __init__(self, text = None):
         self.lines = []
         self.indent = 0
         self.lastCmdWasBlank = False
+        
+        if text != None:
+            self.lines = text.split("\n")
         
     def string(self):
         s = ""
@@ -22,6 +25,13 @@ class Document(object):
     def line(self, line):
         self.lines.append("{0}{1}".format(" " * self.indent, line))
         self.lastCmdWasBlank = False
+        
+    def document(self, doc):
+        if doc == None:
+            return
+            
+        for l in doc.lines:
+            self.line(l)
         
     def increaseIndent(self):
         self.indent += Document.INDENT

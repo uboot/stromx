@@ -93,9 +93,10 @@ class MethodGenerator(object):
         def visitEnumParameter(self, parameter):
             self.visitParameter(parameter)
             
-    p = None
-    m = None
-    doc = None
+    def __init__(self):
+        self.p = None
+        self.m = None
+        self.doc = None
     
     def save(self, package, method, printResult = False):
         self.p = package
@@ -601,8 +602,7 @@ class OpImplGenerator(MethodGenerator):
     
     class InitInVisitor(MethodGenerator.DocVisitor):
         def visitOutput(self, output):
-            for l in output.initIn:
-                self.doc.line(l)
+            self.doc.document(output.initIn)
             
     class CvDataVisitor(MethodGenerator.DocVisitor):
         def visitInput(self, inputArg):
@@ -643,12 +643,6 @@ class OpImplGenerator(MethodGenerator):
                                                    ident.attribute())
             self.doc.line("{0} = {1};".format(cvData, castedData))
             
-        def visitConstant(self, constant):
-            cvData = "{0} {1}CvData".format(constant.cvType.typeId(), 
-                                            constant.ident)
-            castedData = constant.cvType.cast(constant.value)
-            self.doc.line("{0} = {1};".format(cvData, castedData))
-            
         def visitRefInput(self, refInput):
             cvData = "{0} {1}CvData".format(refInput.cvType.typeId(), 
                                              refInput.ident)
@@ -677,8 +671,8 @@ class OpImplGenerator(MethodGenerator):
         def visitEnumParameter(self, refInput):
             self.visit(refInput)
             
-        def visitConstant(self, refInput):
-            self.visit(refInput)
+        def visitConstant(self, constant):
+            self.args.append(constant.value)
             
         def visitRefInput(self, refInput):
             self.visit(refInput)
@@ -721,8 +715,7 @@ class OpImplGenerator(MethodGenerator):
         
     class InitOutVisitor(MethodGenerator.DocVisitor):
         def visitAllocation(self, allocation):
-            for l in allocation.initOut:
-                self.doc.line(l)
+            self.doc.document(allocation.initOut)
                 
     class EnumConversionDefVisitor(MethodGenerator.DocVisitor):
         def __init__(self, doc, m):

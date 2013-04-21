@@ -80,8 +80,8 @@ class Argument(Acceptor):
         self.cvType = cvType
         self.dataType = dataType
         self.description = description
-        self.initIn = [] if initIn == None else initIn
-        self.initOut = [] if initOut == None else initOut
+        self.initIn = initIn
+        self.initOut = initOut
         
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -114,6 +114,7 @@ class Parameter(InputArgument):
 class NumericParameter(Parameter):
     def __init__(self, ident, name, cvType, dataType, default = None,
                  minValue = None, maxValue = None, step = None, rules = None):
+        default = minValue if default == None else default
         super(NumericParameter, self).__init__(
             ident, name, cvType, dataType, default = default, rules = rules)
         self.minValue = minValue
@@ -148,10 +149,9 @@ class Option(object):
         self.args = [] if args == None else args
 
 class Constant(Argument):
-    def __init__(self, ident, cvType, value):
-        self.cvType = cvType
+    def __init__(self, value):
+        self.ident = Ident()
         self.value = value
-        self.ident = ident
     
     def accept(self, visitor):
         visitor.visitConstant(self)
