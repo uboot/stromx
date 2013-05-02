@@ -64,7 +64,7 @@ class LibHeaderGenerator(LibGenerator):
         
         self.doc.line("namespace stromx")
         self.doc.scopeEnter()
-        self.doc.line("namespace runtime".format(self.p.ident))
+        self.doc.line("namespace runtime")
         self.doc.scopeEnter()
         self.doc.line("class Registry;")
         self.doc.scopeExit()
@@ -156,6 +156,7 @@ class CMakeGenerator(LibGenerator):
     <BLANKLINE>
     set (SOURCES 
         Imgproc.cpp
+        Utility.cpp
         MedianBlur.cpp
     )
     <BLANKLINE>
@@ -219,6 +220,7 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("set (SOURCES ")
         self.doc.increaseIndent()
         self.doc.line("{0}.cpp".format(self.p.ident.className()))
+        self.doc.line("Utility.cpp")
         for m in self.p.methods:
             self.doc.line("{0}.cpp".format(m.ident.className()))
         self.doc.decreaseIndent()
@@ -277,6 +279,86 @@ class CMakeGenerator(LibGenerator):
     
         with file("CMakeLists.txt", "w") as f:
             f.write(self.doc.string())
+            
+class UtilityHeaderGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> g = UtilityHeaderGenerator()
+    >>> g.save(p, True)
+    #ifndef STROMX_IMGPROC_UTILITY_H
+    #define STROMX_IMGPROC_UTILITY_H
+    <BLANKLINE>
+    #endif // STROMX_IMGPROC_UTILITY_H
+    <BLANKLINE>
+    """
+    def generate(self):
+        p = self.p.ident.constant()
+        guard = "STROMX_{0}_UTILITY_H".format(p)
+        
+        self.doc.line("#ifndef {0}".format(guard))
+        self.doc.line("#define {0}".format(guard))
+        self.doc.blank()
+        
+        
+        includes = set()
+        for f in self.p.functions:
+            includes = includes.union(set(f.dclIncludes))
+        
+        for i in includes:
+            self.doc.line("#include {0}".format(i))
+        self.doc.blank()
+        
+        self.doc.line("namespace stromx")
+        self.doc.scopeEnter()
+        self.doc.line("namespace {0}".format(self.p.ident))
+        self.doc.scopeEnter()
+        
+        for f in self.p.functions:
+            self.doc.document(f.declaration)
+            self.doc.blank()
+        self.doc.blank()
+        
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        
+        self.doc.line("#endif // {0}".format(guard))
+        
+        with file("Utility.h", "w") as f:
+            f.write(self.doc.string())
+       
+class UtilityImplGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> g = UtilityImplGenerator()
+    >>> g.save(p, True)
+    """
+    def generate(self):
+        self.doc.line('#include "Utility.h"')
+        self.doc.blank()
+        
+        includes = set()
+        for f in self.p.functions:
+            includes = includes.union(set(f.dfnIncludes))
+        
+        for i in includes:
+            self.doc.line("#include {0}".format(i))
+        self.doc.blank()
+        
+        self.doc.line("namespace stromx")
+        self.doc.scopeEnter()
+        self.doc.line("namespace {0}".format(self.p.ident))
+        self.doc.scopeEnter()
+        
+        for f in self.p.functions:
+            self.doc.document(f.definition)
+            self.doc.blank()
+        self.doc.blank()
+        
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        
+        with file("Utility.cpp", "w") as f:
+            f.write(self.doc.string()) 
             
 class ConfigGenerator(LibGenerator):
     """
@@ -368,6 +450,12 @@ def generatePackageFiles(package):
     g.save(package)
     
     g = ConfigGenerator()
+    g.save(package)
+    
+    g = UtilityHeaderGenerator()
+    g.save(package)
+    
+    g = UtilityImplGenerator()
     g.save(package)
     
     g = CMakeGenerator()

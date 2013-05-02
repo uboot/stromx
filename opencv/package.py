@@ -3,6 +3,14 @@
 import datatype
 import cvtype
 
+class Function(object):
+    def __init__(self, declaration = None, dclIncludes = None,
+                 definition = None, dfnIncludes = None):
+        self.dclIncludes = [] if dclIncludes == None else dclIncludes
+        self.declaration = declaration
+        self.dfnIncludes = [] if dfnIncludes == None else dfnIncludes
+        self.definition = definition
+        
 class Ident(object):
     def __init__(self, ident = ""):
         self.ident = ident
@@ -43,11 +51,12 @@ class Ident(object):
     
 class Package(object):
     def __init__(self, ident, major, minor, patch,
-                 description = "", methods = None):
+                 description = "", methods = None, functions = None):
         self.ident = Ident(ident)
         self.name = ""
         self.description = description
         self.methods = [] if methods == None else methods
+        self.functions = [] if functions == None else functions
         self.major = major
         self.minor = minor
         self.patch = patch

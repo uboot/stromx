@@ -233,8 +233,6 @@ class OpHeaderGenerator(MethodGenerator):
         self.visitAll(v, False)
         self.doc.blank()
         
-        self.__checkValues()
-        
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
         self.visitAll(v)
         
@@ -306,24 +304,6 @@ class OpHeaderGenerator(MethodGenerator):
                       "setupOutputs();")
         self.doc.blank()
         
-    def __checkValues(self):
-        self.doc.line("void checkEnumValue(const runtime::Enum & value, const "
-                      "runtime::EnumParameter* param);")
-        self.doc.blank();
-        self.doc.line("template<class T>");
-        self.doc.line("void checkNumericValue(const T & value, const "
-                      "runtime::NumericParameter<T>* param)");
-        self.doc.scopeEnter()
-        self.doc.line("if(value < runtime::data_cast<T>(param->min()))")
-        self.doc.increaseIndent()
-        self.doc.line("throw runtime::WrongParameterValue(*param, *this);")
-        self.doc.decreaseIndent()
-        self.doc.line("if(value > runtime::data_cast<T>(param->max()))")
-        self.doc.increaseIndent()
-        self.doc.line("throw runtime::WrongParameterValue(*param, *this);")
-        self.doc.decreaseIndent()
-        self.doc.scopeExit()
-        
     def __classExit(self):
         self.doc.decreaseIndent()
         self.doc.line("};")
@@ -359,12 +339,12 @@ class OpImplGenerator(MethodGenerator):
             self.__setParameterWithCheck(parameter)
             
         def visitEnumParameter(self, parameter):
-            l = ("checkEnumValue(castedValue, {0}Parameter);"
+            l = ("checkEnumValue(castedValue, {0}Parameter, *this);"
                 ).format(parameter.ident.attribute())
             self.__setParameterWithCheck(parameter, l)
             
         def visitNumericParameter(self, parameter):
-            l = ("checkNumericValue(castedValue, {0}Parameter);"
+            l = ("checkNumericValue(castedValue, {0}Parameter, *this);"
                 ).format(parameter.ident.attribute())
             self.__setParameterWithCheck(parameter, l)
             
@@ -754,7 +734,6 @@ class OpImplGenerator(MethodGenerator):
         self.__initialize()
         self.__execute()
         self.__convertEnumValues()
-        self.__checkEnumValues()
         self.namespaceExit()
         
         with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
@@ -764,6 +743,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include "stromx/{0}/{1}.h"'\
             .format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
+        self.doc.line('#include "stromx/{0}/Utility.h"'.format(self.p.ident))
         self.doc.line('#include <stromx/example/Image.h>')
         self.doc.line('#include <stromx/example/Matrix.h>')
         self.doc.line('#include <stromx/example/Utilities.h>')
@@ -1031,24 +1011,6 @@ class OpImplGenerator(MethodGenerator):
     def __convertEnumValues(self):
         v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
         self.visitAll(v, False)
-        
-    def __checkEnumValues(self):
-        self.doc.line(("void {0}::checkEnumValue(const runtime::Enum & "
-                       "value, const runtime::EnumParameter* param)"
-                      ).format(self.m.ident.className()));
-        self.doc.scopeEnter()
-        self.doc.line("using namespace runtime;");
-        self.doc.line("for(std::vector<EnumDescription>::const_iterator "
-                      "iter = param->descriptions().begin(); iter != "
-                      "param->descriptions().end(); ++iter)")
-        self.doc.scopeEnter()
-        self.doc.line("if(value == iter->value())")
-        self.doc.increaseIndent()
-        self.doc.line("return;")
-        self.doc.decreaseIndent()
-        self.doc.scopeExit()
-        self.doc.line("throw WrongParameterValue(*param, *this);")
-        self.doc.scopeExit()
         
 def generateMethodFiles(package, method):
     g = OpHeaderGenerator()

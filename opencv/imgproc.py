@@ -11,6 +11,52 @@ import document
 import generator
 import package
 
+# utilitiy functions
+dcl = document.Document()
+dcl.line("void checkEnumValue(const stromx::runtime::Enum & value, "
+         "const stromx::runtime::EnumParameter* param, "
+         "const stromx::runtime::OperatorKernel& op);")
+dclIncludes = ["<stromx/runtime/Enum.h>",
+               "<stromx/runtime/EnumParameter.h>",
+               "<stromx/runtime/OperatorKernel.h>"]
+dfn = document.Document()
+dfn.line("void checkEnumValue(const stromx::runtime::Enum & value, "
+         "const stromx::runtime::EnumParameter* param, "
+         "const stromx::runtime::OperatorKernel& op)")
+dfn.scopeEnter()
+dfn.line("using namespace runtime;")
+dfn.blank()
+dfn.line("for(std::vector<EnumDescription>::const_iterator "
+         "iter = param->descriptions().begin(); iter != "
+         "param->descriptions().end(); ++iter)")
+dfn.scopeEnter()
+dfn.line(" if(value == iter->value())")
+dfn.line("return;")
+dfn.scopeExit()
+dfn.line("throw stromx::runtime::WrongParameterValue(*param, op);")
+dfn.scopeExit()
+dfnIncludes = ["<stromx/runtime/OperatorException.h>"]
+checkEnumValue = package.Function(dcl, dclIncludes, dfn, dfnIncludes)
+
+dcl = document.Document()
+dclIncludes = ["<stromx/runtime/NumericParameter.h>",
+               "<stromx/runtime/OperatorException.h>"]
+dcl.line("template<class T>");
+dcl.line("void checkNumericValue(const T & value, const "
+         "runtime::NumericParameter<T>* param, "
+         "const stromx::runtime::OperatorKernel& op)");
+dcl.scopeEnter()
+dcl.line("if(value < runtime::data_cast<T>(param->min()))")
+dcl.increaseIndent()
+dcl.line("throw runtime::WrongParameterValue(*param, op);")
+dcl.decreaseIndent()
+dcl.line("if(value > runtime::data_cast<T>(param->max()))")
+dcl.increaseIndent()
+dcl.line("throw runtime::WrongParameterValue(*param, op);")
+dcl.decreaseIndent()
+dcl.scopeExit()
+checkNumericValue = package.Function(dcl, dclIncludes)
+
 # boxFilter
 src = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
@@ -192,6 +238,10 @@ imgproc = package.Package(
         dilate,
         medianBlur,
         resize
+    ],
+    functions = [
+        checkEnumValue,
+        checkNumericValue
     ]
 )
 
