@@ -117,8 +117,24 @@ dst = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
     initOut = initOut
 )
-kernel = package.Constant(
-    "cv::Mat()"
+ksizex = package.NumericParameter(
+    "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32()
+)
+ksizey = package.NumericParameter(
+    "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32()
+)
+descriptions = [
+    package.EnumDescription("MORPH_RECT", "Rectangle"),
+    package.EnumDescription("MORPH_ELLIPSE", "Ellipse"),
+    package.EnumDescription("MORPH_CROSS", "Cross")
+]
+shape = package.EnumParameter(
+    "shape", "Kernel shape", descriptions = descriptions,
+    default = 1
+)
+kernel = package.Call(
+    "getStructuringElement(shapeCvData, cv::Size(ksizexCvData, ksizeyCvData))",
+    [ksizex, ksizey, shape]
 )
 anchor = package.Constant(
     "cv::Point(-1, -1)"
@@ -196,13 +212,13 @@ initOut = document.Document((
 dst = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
     initOut = initOut
-)
+    )
 dsizex = package.NumericParameter(
-    "dsizex", "Size X", cvtype.Int(), datatype.UInt32()
-)
+        "dsizex", "Size X", cvtype.Int(), datatype.UInt32()
+    )
 dsizey = package.NumericParameter(
-    "dsizey", "Size Y", cvtype.Int(), datatype.UInt32()
-)
+        "dsizey", "Size Y", cvtype.Int(), datatype.UInt32()
+    )
 fx = package.NumericParameter(
     "fx", "Scale X", cvtype.Double(), datatype.Double(), default = 1.0
 )

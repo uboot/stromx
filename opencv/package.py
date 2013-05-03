@@ -71,6 +71,14 @@ class Compound(object):
         
     def accept(self, visitor):
         visitor.visitCompound(self)
+
+class Call(Compound):
+    def __init__(self, call, args):
+        self.args = args
+        self.call = call
+        
+    def create(self):
+        return self.call
             
 class Size(Compound):
     def __init__(self, xArg, yArg):
