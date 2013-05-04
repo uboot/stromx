@@ -58,43 +58,45 @@ dcl.scopeExit()
 checkNumericValue = package.Function(dcl, dclIncludes)
 
 # boxFilter
-src = package.Argument(
+srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
-initIn = document.Document((
+initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-initOut = document.Document((
+initOutCopy = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-dst = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
-    initOut = initOut
+dstImg = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
+    initOut = initOutCopy
 )
 ddepth = package.Constant(
     "-1"
 )
 ksizex = package.NumericParameter(
-    "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32(), minValue = 1
+    "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32(), default = 3,
+    minValue = 1
 )
 ksizey = package.NumericParameter(
-    "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32(), minValue = 1
+    "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32(), default = 3,
+    minValue = 1
 )
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(src, True), package.Output(dst), ddepth,
+    [package.Input(srcImg, True), package.Output(dstImg), ddepth,
      package.Size(ksizex, ksizey)]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(src), package.Allocation(dst), ddepth,
+    [package.Input(srcImg), package.Allocation(dstImg), ddepth,
      package.Size(ksizex, ksizey)]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(src), package.RefInput(dst, src), ddepth,
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepth,
      package.Size(ksizex, ksizey)]
 )
 boxFilter = package.Method(
@@ -102,20 +104,20 @@ boxFilter = package.Method(
 )
 
 # dilate
-src = package.Argument(
+srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
-initIn = document.Document((
+initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-initOut = document.Document((
+initOutCopy = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-dst = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
-    initOut = initOut
+dstImg = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
+    initOut = initOutCopy
 )
 ksizex = package.NumericParameter(
     "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32()
@@ -145,35 +147,35 @@ iterations = package.NumericParameter(
 )
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(src, True), package.Output(dst), kernel, anchor, iterations]
+    [package.Input(srcImg, True), package.Output(dstImg), kernel, anchor, iterations]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(src), package.Allocation(dst), kernel, anchor, iterations]
+    [package.Input(srcImg), package.Allocation(dstImg), kernel, anchor, iterations]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(src), package.RefInput(dst, src), kernel, anchor, iterations]
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg), kernel, anchor, iterations]
 )
 dilate = package.Method(
     "dilate", options = [manual, allocate, inPlace]
 )
 
 # medianBlur
-src = package.Argument(
+srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
-initIn = document.Document((
+initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-initOut = document.Document((
+initOutCopy = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
-dst = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
-    initOut = initOut
+dstImg = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
+    initOut = initOutCopy
 )
 ksize = package.NumericParameter(
     "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
@@ -181,22 +183,91 @@ ksize = package.NumericParameter(
 )
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(src, True), package.Output(dst), ksize]
+    [package.Input(srcImg, True), package.Output(dstImg), ksize]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(src), package.Allocation(dst), ksize]
+    [package.Input(srcImg), package.Allocation(dstImg), ksize]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(src), package.RefInput(dst, src), ksize]
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ksize]
 )
 medianBlur = package.Method(
     "medianBlur", options = [manual, allocate, inPlace]
 )
 
+# morphologyEx
+srcImg = package.Argument(
+    "src", "Source", cvtype.Mat(), datatype.Image()
+)
+initInCopy = document.Document((
+    "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+))
+initOutCopy = document.Document((
+    "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+))
+dstImg = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
+    initOut = initOutCopy
+)
+descriptions = [
+    package.EnumDescription("MORPH_OPEN", "Open"),
+    package.EnumDescription("MORPH_CLOSE", "Close"),
+    package.EnumDescription("MORPH_GRADIENT", "Gradient"),
+    package.EnumDescription("MORPH_TOPHAT", "Tophat"),
+    package.EnumDescription("MORPH_BLACKHAT", "Blackhat")
+]
+op = package.EnumParameter(
+    "op", "Operation", descriptions = descriptions,
+    default = 1
+)
+ksizex = package.NumericParameter(
+    "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32()
+)
+ksizey = package.NumericParameter(
+    "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32()
+)
+descriptions = [
+    package.EnumDescription("MORPH_RECT", "Rectangle"),
+    package.EnumDescription("MORPH_ELLIPSE", "Ellipse"),
+    package.EnumDescription("MORPH_CROSS", "Cross")
+]
+shape = package.EnumParameter(
+    "shape", "Kernel shape", descriptions = descriptions,
+    default = 1
+)
+kernel = package.Call(
+    "getStructuringElement(shapeCvData, cv::Size(ksizexCvData, ksizeyCvData))",
+    [ksizex, ksizey, shape]
+)
+anchor = package.Constant(
+    "cv::Point(-1, -1)"
+)
+iterations = package.NumericParameter(
+    "iterations", "Number of iterations", cvtype.Int(), datatype.UInt32(),
+    minValue = 1
+)
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImg), op, kernel, anchor, iterations]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImg), op, kernel, anchor, iterations]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg), op, kernel, anchor, iterations]
+)
+morphologyEx = package.Method(
+    "morphologyEx", options = [manual, allocate, inPlace]
+)
+
 # resize
-src = package.Argument(
+srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
 initIn = document.Document((
@@ -209,7 +280,7 @@ initOut = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
-dst = package.Argument(
+dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initIn,
     initOut = initOut
     )
@@ -235,12 +306,12 @@ interpolation = package.EnumParameter(
 )
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(src), package.Output(dst),
+    [package.Input(srcImg), package.Output(dstImg),
      package.Size(dsizex, dsizey), fx, fy, interpolation]
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(src), package.Allocation(dst),
+    [package.Input(srcImg), package.Allocation(dstImg),
      package.Size(dsizex, dsizey), fx, fy, interpolation]
 )
 resize = package.Method(
@@ -253,6 +324,7 @@ imgproc = package.Package(
         boxFilter,
         dilate,
         medianBlur,
+        morphologyEx,
         resize
     ],
     functions = [
