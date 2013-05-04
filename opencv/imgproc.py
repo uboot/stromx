@@ -96,6 +96,14 @@ ksizey = package.NumericParameter(
     "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32(), default = 3,
     minValue = 1
 )
+ksizexOdd = package.NumericParameter(
+    "ksizex", "Kernel size X", cvtype.Int(), datatype.UInt32(), default = 3,
+    minValue = 1, rules = [package.OddRule()]
+)
+ksizeyOdd = package.NumericParameter(
+    "ksizey", "Kernel size Y", cvtype.Int(), datatype.UInt32(), default = 3,
+    minValue = 1, rules = [package.OddRule()]
+)
 descriptions = [
     package.EnumDescription("MORPH_RECT", "Rectangle"),
     package.EnumDescription("MORPH_ELLIPSE", "Ellipse"),
@@ -133,15 +141,21 @@ op = package.EnumParameter(
 )
 dsizex = package.NumericParameter(
         "dsizex", "Size X", cvtype.Int(), datatype.UInt32()
-    )
+)
 dsizey = package.NumericParameter(
         "dsizey", "Size Y", cvtype.Int(), datatype.UInt32()
-    )
+)
 fx = package.NumericParameter(
     "fx", "Scale X", cvtype.Double(), datatype.Double(), default = 1.0
 )
 fy = package.NumericParameter(
     "fy", "Scale Y", cvtype.Double(), datatype.Double(), default = 1.0
+)
+sigmaX = package.NumericParameter(
+    "sigmaX", "Sigma X", cvtype.Double(), datatype.Double(), default = 0.0
+)
+sigmaY = package.NumericParameter(
+    "sigmaY", "Sigma Y", cvtype.Double(), datatype.Double(), default = 0.0
 )
 descriptions = [
     package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
@@ -150,6 +164,23 @@ descriptions = [
 interpolation = package.EnumParameter(
     "interpolation", "Interpolation", descriptions = descriptions,
     default = 1
+)
+
+# blur
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImg), package.Size(ksizex, ksizey)]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImg), package.Size(ksizex, ksizey)]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg), package.Size(ksizex, ksizey)]
+)
+blur = package.Method(
+    "blur", options = [manual, allocate, inPlace]
 )
 
 # boxFilter
@@ -190,6 +221,26 @@ dilate = package.Method(
 )
 erode = package.Method(
     "erode", options = [manual, allocate, inPlace]
+)
+
+# GaussianBlur
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImg),
+     package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImg),
+     package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImg, srcImg),
+     package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
+)
+GaussianBlur = package.Method(
+    "GaussianBlur", options = [manual, allocate, inPlace]
 )
 
 # medianBlur
@@ -244,9 +295,11 @@ resize = package.Method(
 imgproc = package.Package(
     "imgproc", 0, 0, 1,
     methods = [
+        blur,
         boxFilter,
         dilate,
         erode,
+        GaussianBlur,
         medianBlur,
         morphologyEx,
         resize
