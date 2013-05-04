@@ -25,7 +25,7 @@ namespace stromx
 {
     namespace runtime
     {
-        const Version StringTest::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
+        const Version StringTest::VERSION(0, 1, 0);
         
         void StringTest::testStdStringConstructor()
         {

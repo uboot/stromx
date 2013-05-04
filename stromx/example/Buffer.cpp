@@ -32,7 +32,7 @@ namespace stromx
     {
         const std::string Buffer::TYPE("Buffer");
         const std::string Buffer::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version Buffer::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
+        const Version Buffer::VERSION(0, 1, 0);
         
         Buffer::Buffer()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

@@ -34,7 +34,7 @@ namespace stromx
         const std::string Clip::TYPE("Clip");
         
         const std::string Clip::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version Clip::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
+        const Version Clip::VERSION(0, 1, 0);
         
         Clip::Clip()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())

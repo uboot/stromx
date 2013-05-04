@@ -36,6 +36,11 @@ namespace stromx
     {
         namespace impl
         {
+            
+            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MAJOR = 0;
+            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MINOR = 1;
+            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_PATCH = 0;
+                
             XmlWriterImpl::XmlWriterImpl() 
                 : m_stream(0),
                   m_opList(0),
@@ -92,9 +97,9 @@ namespace stromx
             
                 //Create attribute version of Stromx
                 DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                std::string str = boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_MAJOR) + "." +
-                                    boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_MINOR) + "." + 
-                                    boost::lexical_cast<std::string>(STROMX_RUNTIME_VERSION_PATCH);
+                std::string str = boost::lexical_cast<std::string>(XML_FORMAT_VERSION_MAJOR) + "." +
+                                    boost::lexical_cast<std::string>(XML_FORMAT_VERSION_MINOR) + "." + 
+                                    boost::lexical_cast<std::string>(XML_FORMAT_VERSION_PATCH);
                 verAttr->setValue(Str2Xml(str.c_str()));
                 m_stromxElement->setAttributeNode(verAttr);
             }

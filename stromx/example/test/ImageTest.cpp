@@ -30,7 +30,7 @@ namespace stromx
 {
     namespace example
     {
-        const stromx::runtime::Version ImageTest::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
+        const stromx::runtime::Version ImageTest::VERSION(0, 1, 0);
         
         void ImageTest::setUp ( void )
         {

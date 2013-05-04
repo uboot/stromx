@@ -29,7 +29,7 @@ namespace stromx
     {
         const std::string Fork::TYPE("Fork");
         const std::string Fork::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Fork::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
+        const Version Fork::VERSION(0, 1, 0);
         const unsigned int Fork::MIN_OUTPUTS = 2;
         const unsigned int Fork::MAX_OUTPUTS = 4;
         

@@ -55,6 +55,10 @@ namespace stromx
                 void createData(const Parameter* const currPar, const Operator* const currOp, xercesc::DOMElement* const parElement);
                 void createInputs(const Operator* const currOp, xercesc::DOMElement* const opElement);
                 
+                static const unsigned int XML_FORMAT_VERSION_MAJOR;
+                static const unsigned int XML_FORMAT_VERSION_MINOR;
+                static const unsigned int XML_FORMAT_VERSION_PATCH;
+                
                 const Stream* m_stream;
                 std::vector<const Operator*> m_opList;
                 FileOutput* m_output;

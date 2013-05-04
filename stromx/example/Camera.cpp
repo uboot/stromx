@@ -45,7 +45,7 @@ namespace stromx
         const std::string Camera::TYPE("Camera");
         
         const std::string Camera::PACKAGE(STROMX_EXAMPLE_PACKAGE_NAME);
-        const Version Camera::VERSION(STROMX_EXAMPLE_VERSION_MAJOR, STROMX_EXAMPLE_VERSION_MINOR, STROMX_EXAMPLE_VERSION_PATCH);
+        const Version Camera::VERSION(0, 1, 0);
         
         Camera::Camera()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
