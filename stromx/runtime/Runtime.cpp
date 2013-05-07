@@ -53,3 +53,16 @@ void stromxRegisterRuntime(stromx::runtime::Registry& registry)
     registry.registerData(new None);
     registry.registerData(new TriggerData);
 }
+
+namespace stromx
+{
+    namespace runtime
+    {
+        Version version()
+        {
+            return Version(STROMX_RUNTIME_VERSION_MAJOR,
+                           STROMX_RUNTIME_VERSION_MINOR,
+                           STROMX_RUNTIME_VERSION_PATCH);
+        }
+    }
+}

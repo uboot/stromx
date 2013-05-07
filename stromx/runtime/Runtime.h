@@ -18,12 +18,20 @@
 #define STROMX_RUNTIME_RUNTIME_H
 
 #include "stromx/runtime/Config.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {
     namespace runtime
     {
         class Registry;
+        
+        /** 
+         * \brief Returns the version of the stromx runtime library.
+         * 
+         * \since 0.2
+         */
+        STROMX_RUNTIME_API Version version();
     }
 }
 
