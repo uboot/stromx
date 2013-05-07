@@ -131,9 +131,9 @@ class MethodGenerator(object):
             if str(arg.ident) not in argIdents:
                 argIdents.add(str(arg.ident))
                 filteredArgs.add(arg)
-                
+            
         for arg in filteredArgs:
-                arg.accept(visitor)
+            arg.accept(visitor)
                 
         if visitOptionParam and self.optionParam:
             self.optionParam.accept(visitor)
@@ -155,6 +155,9 @@ class OpHeaderGenerator(MethodGenerator):
     class ConnectorEnumVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.connectors = set()
+            
+        def visitRefInput(self, refInputArg):
+            self.connectors.add(refInputArg)
     
         def visitInput(self, inputArg):
             self.connectors.add(inputArg)
@@ -753,7 +756,6 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include <stromx/runtime/Id2DataPair.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
         self.doc.line('#include <stromx/runtime/WriteAccess.h>')
-        self.doc.line('#include <boost/assert.hpp>')
         self.doc.line('#include <opencv2/{0}/{0}.hpp>'.format(self.p.ident))
         self.doc.blank()    
         
