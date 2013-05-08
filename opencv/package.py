@@ -219,24 +219,12 @@ class ParameterRule(object):
         return ""
 
 class OddRule(ParameterRule):
-    def check(self, parameter, doc):
-        doc.line("if(int(castedValue) % 2 == 0)")
-        doc.increaseIndent()
-        doc.line((
-            'throw runtime::WrongParameterValue(*{0}Parameter, '
-            '*this, "Only odd values are allowed");'
-            ).format(parameter.ident.attribute()))
-        doc.decreaseIndent()
+    def accept(self, visitor):
+        visitor.visitOddRule(self)
 
 class EvenRule(ParameterRule):
-    def check(self, parameter, doc):
-        doc.line("if(int(castedValue) % 2 == 1)")
-        doc.increaseIndent()
-        doc.line((
-            'throw runtime::WrongParameterValue(*{0}Parameter, '
-            '*this, "Only even values are allowed");'
-            ).format(parameter.ident.attribute()))
-        doc.decreaseIndent()
+    def accept(self, visitor):
+        visitor.visitEvenRule(self)
 
 
     

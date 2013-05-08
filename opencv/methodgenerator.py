@@ -5,6 +5,8 @@ import document
 import package
 import cvtype
 
+from rulegenerator import *
+
 class ArgumentVisitor(object):
     def visitInput(self, inputArg):
         pass
@@ -360,8 +362,9 @@ class OpImplGenerator(MethodGenerator):
             if check != "":
                 self.doc.line(check)
             
+            checkParams = CheckParameterVisitor(self.doc, parameter)
             for rule in parameter.rules:
-                rule.check(parameter, self.doc)
+                rule.accept(checkParams)
                 
             self.doc.line(("{0} = castedValue;"
                           ).format(parameter.ident.attribute()))
