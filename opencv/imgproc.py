@@ -81,9 +81,13 @@ initSizeOut = document.Document((
 srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
-dstImg = package.Argument(
+dstImgCopy = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
     initOut = initOutCopy
+)
+dstImgSize = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initSizeIn,
+    initOut = initSizeOut
 )
 ddepth = package.Constant(
     "-1"
@@ -139,6 +143,9 @@ op = package.EnumParameter(
     "op", "Operation", descriptions = descriptions,
     default = 1
 )
+d = package.NumericParameter(
+        "d", "Pixel neigbourhood diameter", cvtype.Int(), datatype.UInt32()
+)
 dsizex = package.NumericParameter(
         "dsizex", "Size X", cvtype.Int(), datatype.UInt32()
 )
@@ -150,6 +157,14 @@ fx = package.NumericParameter(
 )
 fy = package.NumericParameter(
     "fy", "Scale Y", cvtype.Double(), datatype.Double(), default = 1.0
+)
+sigmaColor = package.NumericParameter(
+    "sigmaColor", "Sigma color", cvtype.Double(), datatype.Double(),
+    default = 10.0
+)
+sigmaSpace = package.NumericParameter(
+    "sigmaSpace", "Sigma space", cvtype.Double(), datatype.Double(),
+    default = 10.0
 )
 sigmaX = package.NumericParameter(
     "sigmaX", "Sigma X", cvtype.Double(), datatype.Double(), default = 0.0
@@ -165,19 +180,52 @@ interpolation = package.EnumParameter(
     "interpolation", "Interpolation", descriptions = descriptions,
     default = 1
 )
+descriptions = [
+    package.EnumDescription("DDEPTH_8_BIT", "8-bit", 8),
+    package.EnumDescription("DDEPTH_16_BIT", "16-bit", 16),
+    package.EnumDescription("DDEPTH_32_BIT", "32-bit", 32),
+]
+ddepth = package.EnumParameter(
+    "ddepth", "Destination depth", descriptions = descriptions,
+    default = 0
+)
+scale = package.NumericParameter(
+    "scale", "Scale", cvtype.Double(), datatype.Double(), default = 1.0
+)
+delta = package.NumericParameter(
+    "delta", "Delta", cvtype.Double(), datatype.Double(), default = 0.0
+)
+
+# bilateralFilter
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImgCopy), d, sigmaColor,
+     sigmaSpace]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgCopy), d, sigmaColor,
+     sigmaSpace]
+)
+bilateralFilter = package.Method(
+    "bilateralFilter", options = [manual, allocate]
+)
 
 # blur
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg), package.Size(ksizex, ksizey)]
+    [package.Input(srcImg, True), package.Output(dstImgCopy),
+     package.Size(ksizex, ksizey)]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg), package.Size(ksizex, ksizey)]
+    [package.Input(srcImg), package.Allocation(dstImgCopy),
+     package.Size(ksizex, ksizey)]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), package.Size(ksizex, ksizey)]
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg),
+     package.Size(ksizex, ksizey)]
 )
 blur = package.Method(
     "blur", options = [manual, allocate, inPlace]
@@ -186,17 +234,17 @@ blur = package.Method(
 # boxFilter
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg), ddepth,
+    [package.Input(srcImg, True), package.Output(dstImgCopy), ddepth,
      package.Size(ksizex, ksizey)]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg), ddepth,
+    [package.Input(srcImg), package.Allocation(dstImgCopy), ddepth,
      package.Size(ksizex, ksizey)]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepth,
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg), ddepth,
      package.Size(ksizex, ksizey)]
 )
 boxFilter = package.Method(
@@ -206,15 +254,18 @@ boxFilter = package.Method(
 # dilate and erode
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg), kernel, anchor, iterations]
+    [package.Input(srcImg, True), package.Output(dstImgCopy), kernel, anchor,
+     iterations]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg), kernel, anchor, iterations]
+    [package.Input(srcImg), package.Allocation(dstImgCopy), kernel, anchor,
+     iterations]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), kernel, anchor, iterations]
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg), kernel,
+     anchor, iterations]
 )
 dilate = package.Method(
     "dilate", options = [manual, allocate, inPlace]
@@ -226,17 +277,17 @@ erode = package.Method(
 # GaussianBlur
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg),
+    [package.Input(srcImg, True), package.Output(dstImgCopy),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg),
+    [package.Input(srcImg), package.Allocation(dstImgCopy),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg),
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY]
 )
 GaussianBlur = package.Method(
@@ -246,15 +297,15 @@ GaussianBlur = package.Method(
 # medianBlur
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg), ksize]
+    [package.Input(srcImg, True), package.Output(dstImgCopy), ksize]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg), ksize]
+    [package.Input(srcImg), package.Allocation(dstImgCopy), ksize]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ksize]
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg), ksize]
 )
 medianBlur = package.Method(
     "medianBlur", options = [manual, allocate, inPlace]
@@ -263,29 +314,92 @@ medianBlur = package.Method(
 # morphologyEx
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImg), op, kernel, anchor, iterations]
+    [package.Input(srcImg, True), package.Output(dstImgCopy), op, kernel,
+     anchor, iterations]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImg), op, kernel, anchor, iterations]
+    [package.Input(srcImg), package.Allocation(dstImgCopy), op, kernel,
+     anchor, iterations]
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), op, kernel, anchor, iterations]
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg), op, kernel,
+     anchor, iterations]
 )
 morphologyEx = package.Method(
     "morphologyEx", options = [manual, allocate, inPlace]
 )
 
+# Laplacian
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImgCopy), ddepth, ksize,
+     scale, delta]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgCopy), ddepth, ksize,
+     scale, delta]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImgCopy, srcImg), ddepth,
+     ksize, scale, delta]
+)
+laplacian = package.Method(
+    "Laplacian", options = [manual, allocate, inPlace]
+)
+
+# pyrDown
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImgSize), 
+     package.Size(dsizex, dsizey)]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgSize), 
+     package.Size(dsizex, dsizey)]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImgSize, srcImg), 
+     package.Size(dsizex, dsizey)]
+)
+pyrDown = package.Method(
+    "pyrDown", options = [manual, allocate, inPlace]
+)
+
+# pyrUp
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImgSize), 
+     package.Size(dsizex, dsizey)]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgSize), 
+     package.Size(dsizex, dsizey)]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImg), package.RefInput(dstImgSize, srcImg), 
+     package.Size(dsizex, dsizey)]
+)
+pyrUp = package.Method(
+    "pyrUp", options = [manual, allocate, inPlace]
+)
+
 # resize
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg), package.Output(dstImg),
+    [package.Input(srcImg), package.Output(dstImgSize),
      package.Size(dsizex, dsizey), fx, fy, interpolation]
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(srcImg), package.Allocation(dstImg),
+    [package.Input(srcImg), package.Allocation(dstImgSize),
      package.Size(dsizex, dsizey), fx, fy, interpolation]
 )
 resize = package.Method(
@@ -295,6 +409,7 @@ resize = package.Method(
 imgproc = package.Package(
     "imgproc", 0, 0, 1,
     methods = [
+        bilateralFilter,
         blur,
         boxFilter,
         dilate,
@@ -302,6 +417,9 @@ imgproc = package.Package(
         GaussianBlur,
         medianBlur,
         morphologyEx,
+        laplacian,
+        pyrDown,
+        pyrUp,
         resize
     ],
     functions = [
