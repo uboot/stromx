@@ -51,7 +51,8 @@ class Ident(object):
     
 class Package(object):
     def __init__(self, ident, major, minor, patch,
-                 description = "", methods = None, functions = None):
+                 description = "", methods = None, functions = None,
+                 testFiles = None):
         self.ident = Ident(ident)
         self.name = ""
         self.description = description
@@ -60,6 +61,7 @@ class Package(object):
         self.major = major
         self.minor = minor
         self.patch = patch
+        self.testFiles = [] if testFiles == None else testFiles
         
 class Acceptor(object):
     def accept(self, visitor):

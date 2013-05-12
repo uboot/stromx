@@ -5,6 +5,8 @@ Created on Thu Jan 31 21:48:28 2013
 @author: matz
 """
 
+import os
+
 import document
 import package
 
@@ -280,6 +282,75 @@ class CMakeGenerator(LibGenerator):
         with file("CMakeLists.txt", "w") as f:
             f.write(self.doc.string())
             
+            
+class TestCMakeGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
+    >>> p.testFiles.append("lenna.jpg")
+    >>> g = TestCMakeGenerator()
+    >>> g.save(p, True)        
+
+    """
+    def generate(self):
+        self.doc.line("project(stromx_{0}_test)".format(self.p.ident))
+        self.doc.blank()
+        self.doc.line((
+            "add_test(NAME stromx_{0}_test COMMAND stromx_{0}_test"
+        ).format(self.p.ident))
+        self.doc.blank()
+        self.doc.line("if(MSVC)")
+        self.doc.increaseIndent()
+        self.doc.line("add_definitions(/DSTROMX_EXAMPLE_STATIC)")
+        self.doc.decreaseIndent()
+        self.doc.line("endif(MSVC)")
+        
+        self.doc.line("include_directories (")
+        self.doc.increaseIndent()
+        self.doc.line(r"${CMAKE_SOURCE_DIR}")
+        self.doc.line(r"${CPPUNIT_INCLUDE_DIR}")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
+        
+        for f in self.p.testFiles:
+            self.doc.line(("file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{0} "
+                "DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}})").format(f))
+        self.doc.blank()
+        
+        self.doc.line("set (SOURCES ")
+        self.doc.increaseIndent()
+        for m in self.p.methods:
+            self.doc.line("../{0}.cpp".format(m.ident.className()))
+        for m in self.p.methods:
+            self.doc.line("{0}Test.cpp".format(m.ident.className()))
+        self.doc.line("main.cpp")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
+        self.doc.line("add_executable (stromx_{0}_test SHARED ${{SOURCES}})"\
+            .format(self.p.ident))
+        self.doc.blank()
+        
+        self.doc.line("target_link_libraries (stromx_{0}_test"\
+            .format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("${CPPUNIT_LIBRARY}")
+        self.doc.line("${CMAKE_DL_LIBS}")
+        self.doc.line("${OpenCV_LIBS}")
+        self.doc.line("stromx_runtime")
+        self.doc.line("stromx_example")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+    
+        with file("test/CMakeLists.txt", "w") as f:
+            f.write(self.doc.string())
+            
 class UtilityHeaderGenerator(LibGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
@@ -288,6 +359,13 @@ class UtilityHeaderGenerator(LibGenerator):
     #ifndef STROMX_IMGPROC_UTILITY_H
     #define STROMX_IMGPROC_UTILITY_H
     <BLANKLINE>
+    namespace stromx
+    {
+        namespace imgproc
+        {
+    <BLANKLINE>
+        }
+    }
     #endif // STROMX_IMGPROC_UTILITY_H
     <BLANKLINE>
     """
@@ -331,6 +409,16 @@ class UtilityImplGenerator(LibGenerator):
     >>> p = package.Package("imgproc", 0, 0, 1)
     >>> g = UtilityImplGenerator()
     >>> g.save(p, True)
+    #include "Utility.h"
+    <BLANKLINE>
+    namespace stromx
+    {
+        namespace imgproc
+        {
+    <BLANKLINE>
+        }
+    }
+    <BLANKLINE>
     """
     def generate(self):
         self.doc.line('#include "Utility.h"')
@@ -459,6 +547,11 @@ def generatePackageFiles(package):
     g.save(package)
     
     g = CMakeGenerator()
+    g.save(package)
+    
+    if not os.path.exists("test"):
+        os.mkdir("test")
+    g = TestCMakeGenerator()
     g.save(package)
     
     for m in package.methods:

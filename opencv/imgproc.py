@@ -419,6 +419,10 @@ imgproc = package.Package(
     functions = [
         checkEnumValue,
         checkNumericValue
+    ],
+    testFiles = [
+        "lenna.jpg",
+        "lenna_bw.jpg"
     ]
 )
 
