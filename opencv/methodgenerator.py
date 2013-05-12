@@ -1016,12 +1016,29 @@ class OpImplGenerator(MethodGenerator):
     def __convertEnumValues(self):
         v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
         self.visitAll(v, False)
+
+
+class OpTestHeaderGenerator(MethodGenerator):
+    def generate(self):  
+        with file("test/{0}Test.h".format(self.m.ident.className()), "w") as f:
+            f.write(self.doc.string())
+            
+class OpTestImplGenerator(MethodGenerator):
+    def generate(self):  
+        with file("test/{0}Test.cpp".format(self.m.ident.className()), "w") as f:
+            f.write(self.doc.string())
         
 def generateMethodFiles(package, method):
     g = OpHeaderGenerator()
     g.save(package, method)
     
     g = OpImplGenerator()
+    g.save(package, method)
+    
+    g = OpTestHeaderGenerator()
+    g.save(package, method)
+    
+    g = OpTestImplGenerator()
     g.save(package, method)
         
 if __name__ == "__main__":

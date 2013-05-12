@@ -26,6 +26,10 @@ class Document(object):
         self.lines.append("{0}{1}".format(" " * self.indent, line))
         self.lastCmdWasBlank = False
         
+    def text(self, text):
+        for l in text.split("\n"):
+            self.lines.append(l)
+        
     def document(self, doc):
         if doc == None:
             return

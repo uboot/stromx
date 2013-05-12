@@ -85,7 +85,7 @@ class LibHeaderGenerator(LibGenerator):
         
         with file("{0}.h".format(self.p.ident.className()), "w") as f:
             f.write(self.doc.string())
-            
+           
 class LibImplGenerator(LibGenerator):
     """
     >>> p = package.Package("imgproc", 0, 0, 1)
@@ -130,7 +130,53 @@ class LibImplGenerator(LibGenerator):
         
         with file("{0}.cpp".format(self.p.ident.className()), "w") as f:
             f.write(self.doc.string())
+           
+class LibTestGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> g = LibTestGenerator()
+    >>> g.save(p)      
+    """
+    def generate(self):
+        text = """
+/* Copied from http://www.evocomp.de/tutorials/tutorium_cppunit/howto_tutorial_cppunit.html */
 
+#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/CompilerOutputter.h>
+#include <cppunit/TestResult.h>
+#include <cppunit/TestResultCollector.h>
+#include <cppunit/TestRunner.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+
+int main (int, char**)
+{
+    // Informiert Test-Listener ueber Testresultate
+    CPPUNIT_NS :: TestResult testresult;
+
+    // Listener zum Sammeln der Testergebnisse registrieren
+    CPPUNIT_NS :: TestResultCollector collectedresults;
+    testresult.addListener (&collectedresults);
+
+    // Listener zur Ausgabe der Ergebnisse einzelner Tests
+    CPPUNIT_NS :: BriefTestProgressListener progress;
+    testresult.addListener (&progress);
+
+    // Test-Suite ueber die Registry im Test-Runner einfuegen
+    CPPUNIT_NS :: TestRunner testrunner;
+    testrunner.addTest (CPPUNIT_NS :: TestFactoryRegistry :: getRegistry ().makeTest ());
+    testrunner.run (testresult);
+
+    // Resultate im Compiler-Format ausgeben
+    CPPUNIT_NS :: CompilerOutputter compileroutputter (&collectedresults, std::cerr);
+    compileroutputter.write ();
+
+    // Rueckmeldung, ob Tests erfolgreich waren
+    return collectedresults.wasSuccessful () ? 0 : 1;
+}
+"""
+        self.doc.text(text)
+        with file("test/main.cpp", "w") as f:
+            f.write(self.doc.string())
 
 class CMakeGenerator(LibGenerator):
     """
@@ -190,6 +236,10 @@ class CMakeGenerator(LibGenerator):
             ARCHIVE DESTINATION ${LIB_DIR}
         )
     endif(WIN32)
+    <BLANKLINE>
+    if(BUILD_TESTS)
+        add_subdirectory(test)
+    endif(BUILD_TESTS)
     <BLANKLINE>
     """
     def generate(self):
@@ -278,6 +328,13 @@ class CMakeGenerator(LibGenerator):
         self.doc.line(")")
         self.doc.decreaseIndent()
         self.doc.line("endif(WIN32)")
+        self.doc.blank()
+        
+        self.doc.line("if(BUILD_TESTS)")
+        self.doc.increaseIndent()
+        self.doc.line("add_subdirectory(test)")
+        self.doc.decreaseIndent()
+        self.doc.line("endif(BUILD_TESTS)")
     
         with file("CMakeLists.txt", "w") as f:
             f.write(self.doc.string())
@@ -298,7 +355,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line("project(stromx_{0}_test)".format(self.p.ident))
         self.doc.blank()
         self.doc.line((
-            "add_test(NAME stromx_{0}_test COMMAND stromx_{0}_test"
+            "add_test(NAME stromx_{0}_test COMMAND stromx_{0}_test)"
         ).format(self.p.ident))
         self.doc.blank()
         self.doc.line("if(MSVC)")
@@ -306,6 +363,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line("add_definitions(/DSTROMX_EXAMPLE_STATIC)")
         self.doc.decreaseIndent()
         self.doc.line("endif(MSVC)")
+        self.doc.blank()
         
         self.doc.line("include_directories (")
         self.doc.increaseIndent()
@@ -325,6 +383,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.increaseIndent()
         for m in self.p.methods:
             self.doc.line("../{0}.cpp".format(m.ident.className()))
+        self.doc.line("../Utility.cpp")
         for m in self.p.methods:
             self.doc.line("{0}Test.cpp".format(m.ident.className()))
         self.doc.line("main.cpp")
@@ -332,7 +391,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line(")")
         self.doc.blank()
         
-        self.doc.line("add_executable (stromx_{0}_test SHARED ${{SOURCES}})"\
+        self.doc.line("add_executable (stromx_{0}_test ${{SOURCES}})"\
             .format(self.p.ident))
         self.doc.blank()
         
@@ -551,6 +610,10 @@ def generatePackageFiles(package):
     
     if not os.path.exists("test"):
         os.mkdir("test")
+        
+    g = LibTestGenerator()
+    g.save(package)
+    
     g = TestCMakeGenerator()
     g.save(package)
     
