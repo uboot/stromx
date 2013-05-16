@@ -1020,11 +1020,123 @@ class OpImplGenerator(MethodGenerator):
 
 class OpTestHeaderGenerator(MethodGenerator):
     def generate(self):  
+        self.__includeGuardEnter()
+        self.__includes()
+        self.namespaceEnter()
+        self.__classEnter()
+        self.__testSuiteEnter()
+        self.__testSuiteExit()
+        self.doc.blank()
+        
+        self.doc.label("public")
+        self.__constructor()
+        self.doc.blank()
+        
+        self.doc.label("protected")
+        self.doc.line("void setUp();")
+        self.doc.line("void tearDown();")
+        self.doc.blank()
+        
+        self.doc.label("private")
+        self.doc.line("runtime::OperatorTester* m_operator;")
+        self.__classExit()
+        self.namespaceExit()
+        self.__includeGuardExit()
+        
         with file("test/{0}Test.h".format(self.m.ident.className()), "w") as f:
             f.write(self.doc.string())
+        
+    def __includeGuardEnter(self):
+        self.doc.line("#ifndef {0}".format(self.__includeGuard()))
+        self.doc.line("#define {0}".format(self.__includeGuard()))
+        self.doc.blank()
+    
+    def __includes(self):
+        self.doc.line('#include "stromx/{0}/Config.h"'.format(self.p.ident))
+        self.doc.blank()
+        self.doc.line('#include <cppunit/extensions/HelperMacros.h>')
+        self.doc.line('#include <cppunit/TestFixture.h>')
+        self.doc.blank()
+        self.doc.line('#include "stromx/runtime/OperatorTester.h"')
+        self.doc.blank()
             
-class OpTestImplGenerator(MethodGenerator):
+    def __includeGuardExit(self):
+        self.doc.line("#endif // {0}".format(self.__includeGuard()))
+        
+    def __includeGuard(self):
+        return "STROMX_{0}_{1}TEST_H".format(self.p.ident.upper(),
+                                             self.m.ident.upper())
+    def __classEnter(self):
+        self.doc.line((
+            "class {0}Test : public CPPUNIT_NS::TestFixture"
+        ).format(self.m.ident.className()))
+        self.doc.line("{")
+        self.doc.increaseIndent()  
+    
+    def __testSuiteEnter(self):
+        self.doc.line((
+        "CPPUNIT_TEST_SUITE({0}Test);"
+    ).format(self.m.ident.className()))
+    
+    def __testSuiteExit(self):
+        self.doc.line("CPPUNIT_TEST_SUITE_END();")
+        
+    def __constructor(self):
+        self.doc.line((
+            "{0}Test() : m_operator(0) {{}}"
+        ).format(self.m.ident.className()))
+        
+    def __classExit(self):
+        self.doc.decreaseIndent()
+        self.doc.line("};")       
+            
+class OpTestImplGenerator(MethodGenerator):    
+    def __includes(self):
+        self.doc.line((
+            '#include "stromx/{0}/test/{1}Test.h"'
+            ).format(self.p.ident, self.m.ident.className()))
+        self.doc.blank()
+        
+        self.doc.line('#include <stromx/runtime/OperatorException.h>')
+        self.doc.line('#include <stromx/runtime/ReadAccess.h>')
+        self.doc.line('#include "stromx/example/Image.h"')
+        self.doc.line((
+            '#include "stromx/{0}/{1}.h"'
+            ).format(self.p.ident, self.m.ident.className()))
+        self.doc.blank()
+        
+    def __testSuite(self):
+        self.doc.line((
+            "CPPUNIT_TEST_SUITE_REGISTRATION (stromx::{0}::{1}Test);"
+            ).format(self.p.ident, self.m.ident.className()))
+        self.doc.blank()
+        
+    def __setUp(self):
+        className = self.m.ident.className()
+        self.doc.line("void {0}Test::setUp()".format(className))
+        self.doc.scopeEnter()
+        self.doc.line((
+            "m_operator = new stromx::runtime::OperatorTester(new {0});"
+            ).format(self.m.ident.className()))
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+    def __tearDown(self):
+        className = self.m.ident.className()
+        self.doc.line("void {0}Test::tearDown()".format(className))
+        self.doc.scopeEnter()
+        self.doc.line("delete m_operator;")
+        self.doc.scopeExit()
+        self.doc.blank()
+
     def generate(self):  
+        self.__includes()
+        self.__testSuite()
+        self.namespaceEnter()
+        self.__setUp()
+        self.__tearDown()
+        self.namespaceExit()
+        
         with file("test/{0}Test.cpp".format(self.m.ident.className()), "w") as f:
             f.write(self.doc.string())
         
