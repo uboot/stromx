@@ -1017,24 +1017,27 @@ class OpImplGenerator(MethodGenerator):
         v = OpImplGenerator.EnumConversionDefVisitor(self.doc, self.m)
         self.visitAll(v, False)
 
-
-class OpTestHeaderGenerator(MethodGenerator):
+class OpTestGenerator(object):
+    def testList(self):
+        return ["test{0}".format(o.ident.className()) for o in self.m.options]
+    
+class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
     def generate(self):  
         self.__includeGuardEnter()
         self.__includes()
         self.namespaceEnter()
         self.__classEnter()
-        self.__testSuiteEnter()
-        self.__testSuiteExit()
+        self.__testSuite()
         self.doc.blank()
         
         self.doc.label("public")
         self.__constructor()
+        self.doc.line("void setUp();")
+        self.doc.line("void tearDown();")
         self.doc.blank()
         
         self.doc.label("protected")
-        self.doc.line("void setUp();")
-        self.doc.line("void tearDown();")
+        self.__testMethods()
         self.doc.blank()
         
         self.doc.label("private")
@@ -1073,12 +1076,12 @@ class OpTestHeaderGenerator(MethodGenerator):
         self.doc.line("{")
         self.doc.increaseIndent()  
     
-    def __testSuiteEnter(self):
+    def __testSuite(self):
         self.doc.line((
-        "CPPUNIT_TEST_SUITE({0}Test);"
-    ).format(self.m.ident.className()))
-    
-    def __testSuiteExit(self):
+            "CPPUNIT_TEST_SUITE({0}Test);"
+        ).format(self.m.ident.className()))
+        for test in self.testList():
+            self.doc.line("CPPUNIT_TEST({0});".format(test))
         self.doc.line("CPPUNIT_TEST_SUITE_END();")
         
     def __constructor(self):
@@ -1086,11 +1089,15 @@ class OpTestHeaderGenerator(MethodGenerator):
             "{0}Test() : m_operator(0) {{}}"
         ).format(self.m.ident.className()))
         
+    def __testMethods(self):
+        for test in self.testList():
+            self.doc.line("void {0}();".format(test))
+        
     def __classExit(self):
         self.doc.decreaseIndent()
         self.doc.line("};")       
             
-class OpTestImplGenerator(MethodGenerator):    
+class OpTestImplGenerator(MethodGenerator, OpTestGenerator):    
     def __includes(self):
         self.doc.line((
             '#include "stromx/{0}/test/{1}Test.h"'
@@ -1128,6 +1135,14 @@ class OpTestImplGenerator(MethodGenerator):
         self.doc.line("delete m_operator;")
         self.doc.scopeExit()
         self.doc.blank()
+        
+    def __testMethods(self):
+        className = self.m.ident.className()
+        for test in self.testList():
+            self.doc.line("void {0}Test::{1}()".format(className, test))
+            self.doc.scopeEnter()
+            self.doc.scopeExit()
+            self.doc.blank()
 
     def generate(self):  
         self.__includes()
@@ -1135,6 +1150,7 @@ class OpTestImplGenerator(MethodGenerator):
         self.namespaceEnter()
         self.__setUp()
         self.__tearDown()
+        self.__testMethods()
         self.namespaceExit()
         
         with file("test/{0}Test.cpp".format(self.m.ident.className()), "w") as f:
