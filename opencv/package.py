@@ -67,7 +67,7 @@ class Acceptor(object):
     def accept(self, visitor):
         raise NotImplementedError
         
-class Compound(object):
+class Compound(Acceptor):
     def __init__(self, args):
         self.args = args
         
@@ -162,10 +162,11 @@ class Method(object):
         self.options = [] if options == None else options
         
 class Option(object):
-    def __init__(self, ident, name, args = None):
+    def __init__(self, ident, name, args = None, tests = None):
         self.ident = Ident(ident)
         self.name = name
         self.args = [] if args == None else args
+        self.tests = [] if tests == None else tests
 
 class Constant(Argument):
     def __init__(self, value):

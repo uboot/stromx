@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import datatype
 import document
 import package
-import cvtype
 
-from rulegenerator import *
+import rulegenerator
+import testgenerator
 
 class ArgumentVisitor(object):
     def visitInput(self, inputArg):
@@ -362,7 +361,8 @@ class OpImplGenerator(MethodGenerator):
             if check != "":
                 self.doc.line(check)
             
-            checkParams = CheckParameterVisitor(self.doc, parameter)
+            checkParams = rulegenerator.CheckParameterVisitor(self.doc,
+                                                              parameter)
             for rule in parameter.rules:
                 rule.accept(checkParams)
                 
@@ -1018,8 +1018,12 @@ class OpImplGenerator(MethodGenerator):
         self.visitAll(v, False)
 
 class OpTestGenerator(object):
-    def testList(self):
-        return ["test{0}".format(o.ident.className()) for o in self.m.options]
+    def testNames(self):
+        l = []
+        for o in self.m.options:
+            for i in range(len(o.tests)):
+                l.append("test{0}{1}".format(o.ident.className(), i))
+        return l
     
 class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
     def generate(self):  
@@ -1080,7 +1084,7 @@ class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
         self.doc.line((
             "CPPUNIT_TEST_SUITE({0}Test);"
         ).format(self.m.ident.className()))
-        for test in self.testList():
+        for test in self.testNames():
             self.doc.line("CPPUNIT_TEST({0});".format(test))
         self.doc.line("CPPUNIT_TEST_SUITE_END();")
         
@@ -1090,7 +1094,7 @@ class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
         ).format(self.m.ident.className()))
         
     def __testMethods(self):
-        for test in self.testList():
+        for test in self.testNames():
             self.doc.line("void {0}();".format(test))
         
     def __classExit(self):
@@ -1138,11 +1142,17 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
         
     def __testMethods(self):
         className = self.m.ident.className()
-        for test in self.testList():
-            self.doc.line("void {0}Test::{1}()".format(className, test))
-            self.doc.scopeEnter()
-            self.doc.scopeExit()
-            self.doc.blank()
+        for o in self.m.options:
+            for i, test in enumerate(o.tests):
+                testName = "test{0}{1}".format(o.ident.className(), i)
+                
+                self.doc.line(
+                    "void {0}Test::{1}()".format(className, testName)
+                )
+                self.doc.scopeEnter()
+                testgenerator.generate(self.doc, o.args, test)
+                self.doc.scopeExit()
+                self.doc.blank()
 
     def generate(self):  
         self.__includes()

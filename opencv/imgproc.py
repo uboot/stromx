@@ -10,6 +10,7 @@ import datatype
 import document
 import generator
 import package
+import test
 
 # utilitiy functions
 dcl = document.Document()
@@ -228,10 +229,16 @@ blur = package.Method(
 )
 
 # boxFilter
+lenna = test.ImageFile("lenna")
+memory = test.ImageBuffer(1000000)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg, True), package.Output(dstImg), ddepth,
-     package.Size(ksizex, ksizey)]
+     package.Size(ksizex, ksizey)],
+    tests = [
+        [lenna, memory, 5, (100, 300)],
+        [lenna, test.InPlace(lenna), test.Default(), test.Default()]
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
