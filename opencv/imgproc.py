@@ -229,7 +229,7 @@ blur = package.Method(
 )
 
 # boxFilter
-lenna = test.ImageFile("lenna")
+lenna = test.ImageFile("lenna.jpg")
 memory = test.ImageBuffer(1000000)
 manual = package.Option(
     "manual", "Manual", 
@@ -237,7 +237,7 @@ manual = package.Option(
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, memory, 5, (100, 300)],
-        [lenna, test.InPlace(lenna), test.Default(), test.Default()]
+        [lenna, test.RefData(lenna), test.Default(), test.Default()]
     ]
 )
 allocate = package.Option(

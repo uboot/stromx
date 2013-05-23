@@ -1,40 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import document
+import interface
 import package
 
 import rulegenerator
 import testgenerator
-
-class ArgumentVisitor(object):
-    def visitInput(self, inputArg):
-        pass
-        
-    def visitParameter(self, parameter):
-        pass
-        
-    def visitNumericParameter(self, numericParameter):
-        pass
-        
-    def visitConstant(self, const):
-        pass
-        
-    def visitEnumParameter(self, enumParameter):
-        pass
-        
-    def visitRefInput(self, refInput):
-        pass
-        
-    def visitAllocation(self, allocation):
-        pass
-        
-    def visitOutput(self, output):
-        pass
-        
-    def visitCompound(self, compound):
-        pass
     
-class SingleArgumentVisitor(ArgumentVisitor):
+class SingleArgumentVisitor(interface.ArgumentVisitor):
     def visitCompound(self, compound):
         for arg in compound.args:
             arg.accept(self)
@@ -635,7 +608,7 @@ class OpImplGenerator(MethodGenerator):
             rhs = "{0}CvData".format(refInput.refArg.ident)
             self.doc.line("{0} = {1};".format(cvData, rhs))
             
-    class MethodArgumentVisitor(ArgumentVisitor):
+    class MethodArgumentVisitor(interface.ArgumentVisitor):
         def __init__(self):
             self.args = []
             
