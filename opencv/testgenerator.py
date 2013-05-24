@@ -35,30 +35,74 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
         self.doc.line(l)
     
 class SetDataVisitor(interface.TestArgumentVisitor):
-    def __init__(self, doc):
+    def __init__(self, doc, method):
         self.doc = doc
+        self.m = method
         
     def __visitData(self, arg):
+        index = "{0}::{1}".format(self.m.ident.className(),
+                                  arg.ident.constant())
         if _isParameter(arg):
             l = ("m_operator->setParameter({0}, "
-                "{1});".format(arg.ident.constant(), arg.ident))
+                "{1});".format(index, arg.ident))
             self.doc.line(l)
         else:
             l = ("m_operator->setInputData({0}, "
-                "{1});".format(arg.ident.constant(), arg.ident))
+                "{1});".format(index, arg.ident))
             self.doc.line(l)
             
     def visitImageFile(self, testData):
+        self.__visitData(testData.arg)
+            
+    def visitImageBuffer(self, testData):
         self.__visitData(testData.arg)
     
     def visitValue(self, testData):
         self.__visitData(testData.arg)
     
     def visitRefData(self, testData):
+        index = "{0}::{1}".format(self.m.ident.className(),
+                                  testData.arg.ident.constant())
         l = ((
             "m_operator->setInputData({0}, {1});"
-        ).format(testData.arg.ident.constant(), testData.data.arg.ident))
+        ).format(index, testData.data.arg.ident))
         self.doc.line(l)
+    
+class GetDataVisitor(interface.TestArgumentVisitor):
+    def __init__(self, doc, method):
+        self.doc = doc
+        self.m = method
+        
+    def __visitData(self, arg):
+        if not (isinstance(arg, package.Output) or 
+            isinstance(arg, package.RefInput)):
+            return
+            
+        if isinstance(arg, package.Output):
+            index = "{0}::{1}".format(self.m.ident.className(),
+                                      arg.ident.constant())
+        elif isinstance(arg, package.RefInput):
+            index = "{0}::{1}".format(self.m.ident.className(),
+                                      arg.data.ident.constant())
+        else:
+            return
+                                  
+        l = (
+            "runtime::DataContainer result = m_operator->getOutputData({0});"
+        ).format(index)
+        self.doc.line(l)
+            
+    def visitImageFile(self, testData):
+        self.__visitData(testData.arg)
+            
+    def visitImageBuffer(self, testData):
+        self.__visitData(testData.arg)
+    
+    def visitValue(self, testData):
+        self.__visitData(testData.arg)
+    
+    def visitRefData(self, testData):
+        self.__visitData(testData.arg)
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   
@@ -75,12 +119,17 @@ def _visitTest(doc, args, testData, visitor):
         data.arg = arg
         data.accept(visitor)
     
-def generate(doc, args, testData):
+def generate(doc, method, args, testData):
     visitor = CreateDataVisitor(doc)
     _visitTest(doc, args, testData, visitor)
     
     doc.blank()
     
-    visitor = SetDataVisitor(doc)
+    visitor = SetDataVisitor(doc, method)
+    _visitTest(doc, args, testData, visitor)
+    
+    doc.blank()
+    
+    visitor = GetDataVisitor(doc, method)
     _visitTest(doc, args, testData, visitor)
         

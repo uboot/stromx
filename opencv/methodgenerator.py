@@ -1123,7 +1123,18 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
                     "void {0}Test::{1}()".format(className, testName)
                 )
                 self.doc.scopeEnter()
-                testgenerator.generate(self.doc, o.args, test)
+                
+                index = "{0}::DATA_FLOW".format(self.m.ident.className())
+                value = (
+                    "runtime::Enum({0}::{1})"
+                    ).format(self.m.ident.className(), o.ident.constant())
+                l = "m_operator->setParameter({0}, {1});".format(index, value)
+                self.doc.line(l)
+                self.doc.line("m_operator->initialize();")
+                self.doc.line("m_operator->activate();")
+                self.doc.blank();
+                
+                testgenerator.generate(self.doc, self.m, o.args, test)
                 self.doc.scopeExit()
                 self.doc.blank()
 

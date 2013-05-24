@@ -236,7 +236,7 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), ddepth,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, memory, 5, (100, 300)],
+        [lenna, memory, test.Default(), (5, 3)],
         [lenna, test.RefData(lenna), test.Default(), test.Default()]
     ]
 )
@@ -248,7 +248,10 @@ allocate = package.Option(
 inPlace = package.Option(
     "inPlace", "In place",
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepth,
-     package.Size(ksizex, ksizey)]
+     package.Size(ksizex, ksizey)],
+    tests = [
+        [lenna, test.Default(), test.Default(), (5, 3)],
+    ]
 )
 boxFilter = package.Method(
     "boxFilter", options = [manual, allocate, inPlace]
