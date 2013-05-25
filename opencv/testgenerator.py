@@ -74,18 +74,11 @@ class GetDataVisitor(interface.TestArgumentVisitor):
         self.m = method
         
     def __visitData(self, arg):
-        if not (isinstance(arg, package.Output) or 
-            isinstance(arg, package.RefInput)):
+        if not isinstance(arg, package.OutputArgument):
             return
             
-        if isinstance(arg, package.Output):
-            index = "{0}::{1}".format(self.m.ident.className(),
-                                      arg.ident.constant())
-        elif isinstance(arg, package.RefInput):
-            index = "{0}::{1}".format(self.m.ident.className(),
-                                      arg.data.ident.constant())
-        else:
-            return
+        index = "{0}::{1}".format(self.m.ident.className(),
+                                  arg.ident.constant())
                                   
         l = (
             "runtime::DataContainer result = m_operator->getOutputData({0});"
@@ -101,14 +94,14 @@ class GetDataVisitor(interface.TestArgumentVisitor):
     def visitValue(self, testData):
         self.__visitData(testData.arg)
     
+    def visitDefault(self, testData):
+        self.__visitData(testData.arg)
+    
     def visitRefData(self, testData):
         self.__visitData(testData.arg)
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   
-        if isinstance(data, test.Default):
-            continue
-        
         if isinstance(arg, package.Compound):
             _visitTest(doc, arg.args, data, visitor)
             continue

@@ -237,13 +237,16 @@ manual = package.Option(
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, memory, test.Default(), (5, 3)],
-        [lenna, test.RefData(lenna), test.Default(), test.Default()]
+        [lenna, test.RefData(lenna), test.Default(), (test.Default(), test.Default())]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImg), ddepth,
-     package.Size(ksizex, ksizey)]
+     package.Size(ksizex, ksizey)],
+    tests = [
+        [lenna, test.Default(), test.Default(), (5, 5)],
+    ]
 )
 inPlace = package.Option(
     "inPlace", "In place",

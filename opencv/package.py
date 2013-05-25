@@ -193,7 +193,7 @@ class Output(OutputArgument):
     def accept(self, visitor):
         visitor.visitOutput(self)
         
-class RefInput(OutputArgument):
+class RefInput(InputArgument):
     def __init__(self, arg, refArg):
         self.copyFrom(arg)
         self.refArg = refArg
