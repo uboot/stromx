@@ -253,7 +253,7 @@ inPlace = package.Option(
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepth,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, test.Default(), test.Default(), (5, 3)],
+        [lenna, test.Default(), test.Default(), test.Default()],
     ]
 )
 boxFilter = package.Method(

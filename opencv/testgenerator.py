@@ -103,7 +103,12 @@ class GetDataVisitor(interface.TestArgumentVisitor):
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   
         if isinstance(arg, package.Compound):
-            _visitTest(doc, arg.args, data, visitor)
+            if isinstance(data, test.Default):
+                compoundData = [test.Default()] * len(arg.args)
+            else:
+                compoundData = data
+                
+            _visitTest(doc, arg.args, compoundData, visitor)
             continue
         
         if not isinstance(data, test.TestData):
