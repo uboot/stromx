@@ -99,6 +99,22 @@ class GetDataVisitor(interface.TestArgumentVisitor):
     
     def visitRefData(self, testData):
         self.__visitData(testData.arg)
+        
+class SaveResultVisitor(interface.ArgumentVisitor):
+    def __init__(self, doc, testFileName):
+        self.doc = doc
+        self.testFileName = testFileName
+        
+    def visitAllocation(self, allocation):
+        self.visitOutput(allocation)
+        
+    def visitOutput(self, output):
+        self.doc.line("runtime::ReadAccess<runtime::Image> access(result);")
+        
+        fileName = "{0}.png".format(self.testFileName)
+        self.doc.line((
+            'example::Image::save("{0}", access());'
+        ).format(fileName))
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   
@@ -117,7 +133,7 @@ def _visitTest(doc, args, testData, visitor):
         data.arg = arg
         data.accept(visitor)
     
-def generate(doc, method, args, testData):
+def generate(doc, method, args, testData, testName):
     visitor = CreateDataVisitor(doc)
     _visitTest(doc, args, testData, visitor)
     
@@ -130,4 +146,11 @@ def generate(doc, method, args, testData):
     
     visitor = GetDataVisitor(doc, method)
     _visitTest(doc, args, testData, visitor)
+    
+    doc.blank()
+    
+    testFileName = "{0}Test_{1}".format(method.ident.className(), testName)
+    visitor = SaveResultVisitor(doc, testFileName)
+    for arg in args:
+        arg.accept(visitor)
         

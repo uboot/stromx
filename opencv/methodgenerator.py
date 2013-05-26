@@ -1134,7 +1134,8 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
                 self.doc.line("m_operator->activate();")
                 self.doc.blank();
                 
-                testgenerator.generate(self.doc, self.m, o.args, test)
+                testgenerator.generate(self.doc, self.m, o.args,
+                                       test, testName)
                 self.doc.scopeExit()
                 self.doc.blank()
 
