@@ -20,8 +20,13 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
         self.doc = doc
         
     def visitImageFile(self, testData):
-        l = _createTestData(testData.arg, "example::Image", 
-                            '"{0}"'.format(testData.value))
+        if testData.color:
+            l = _createTestData(testData.arg, "example::Image", 
+                                '"{0}"'.format(testData.value))
+        else:
+            gray = "example::Image::GRAYSCALE"
+            l = _createTestData(testData.arg, "example::Image", 
+                                '"{0}", {1}'.format(testData.value, gray))
         self.doc.line(l)
         
     def visitImageBuffer(self, testData):
