@@ -1,4 +1,4 @@
-project(python_runtime)
+project(python_stromx_runtime)
 
 if(BUILD_RUNTIME)
     add_subdirectory(runtime)

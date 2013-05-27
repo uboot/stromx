@@ -1,4 +1,4 @@
-project(python_base)
+project(python_stromx_example)
 
 set(SOURCES
     Example.cpp

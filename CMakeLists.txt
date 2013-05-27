@@ -31,7 +31,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-
 include(UseDoxygen OPTIONAL)
 
 find_package(Boost 1.36.0)
@@ -60,25 +59,18 @@ endif()
 
 if(OpenCV_FOUND)
     option(BUILD_EXAMPLE "Build example operators" ON)
+    option(BUILD_OPENCV_WRAPPER "Build OpenCV wrappers" OFF)
 endif()
 
 if(XERCES_FOUND AND LIBZIP_FOUND)
     option(BUILD_FILE_PERSISTENCE "Build file persistence" ON)
 endif()
 
-if(BUILD_RUNTIME)
-    add_subdirectory(stromx/runtime)
-endif()
+add_subdirectory(stromx)
+add_subdirectory(doc)
 
 if(BUILD_EXAMPLE)
    add_subdirectory(example)
-   add_subdirectory(stromx/example)
-endif()
-
-option(BUILD_IMGPROC "Build imgproc" OFF)
-
-if(BUILD_IMGPROC)
-   add_subdirectory(stromx/imgproc)
 endif()
 
 find_package(Boost 1.36.0 COMPONENTS thread filesystem python)
@@ -91,8 +83,6 @@ endif()
 if(BUILD_PYTHON)
     add_subdirectory(python)
 endif()
-
-add_subdirectory(doc)
 
 configure_file (
     "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
