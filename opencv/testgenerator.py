@@ -21,16 +21,16 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
         
     def visitImageFile(self, testData):
         if testData.color:
-            l = _createTestData(testData.arg, "example::Image", 
+            l = _createTestData(testData.arg, "imgutil::Image", 
                                 '"{0}"'.format(testData.value))
         else:
-            gray = "example::Image::GRAYSCALE"
-            l = _createTestData(testData.arg, "example::Image", 
+            gray = "imgutil::Image::GRAYSCALE"
+            l = _createTestData(testData.arg, "imgutil::Image", 
                                 '"{0}", {1}'.format(testData.value, gray))
         self.doc.line(l)
         
     def visitImageBuffer(self, testData):
-        l = _createTestData(testData.arg, "example::Image", 
+        l = _createTestData(testData.arg, "imgutil::Image", 
                             '{0}'.format(testData.value))
         self.doc.line(l)
     
@@ -118,7 +118,7 @@ class SaveResultVisitor(interface.ArgumentVisitor):
         
         fileName = "{0}.png".format(self.testFileName)
         self.doc.line((
-            'example::Image::save("{0}", access());'
+            'imgutil::Image::save("{0}", access());'
         ).format(fileName))
     
 def _visitTest(doc, args, testData, visitor):

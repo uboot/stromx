@@ -29,7 +29,7 @@ class Mat(CvType):
         return "cv::Mat"
     
     def cast(self, src):
-        return "example::getOpenCvMat({0})".format(src)
+        return "imgutil::getOpenCvMat({0})".format(src)
         
 if __name__ == "__main__":
     import doctest

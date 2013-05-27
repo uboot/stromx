@@ -51,7 +51,7 @@ class Image(DataType):
         return "runtime::DataVariant::IMAGE"
         
     def cast(self, src):
-        return "example::Image({0})".format(src)
+        return "imgutil::Image({0})".format(src)
             
 if __name__ == "__main__":
     import doctest

@@ -220,7 +220,7 @@ class CMakeGenerator(LibGenerator):
     target_link_libraries (stromx_imgproc
         ${OpenCV_LIBS}
         stromx_runtime
-        stromx_example
+        stromx_imgutil
     )
     <BLANKLINE>
     if(WIN32)
@@ -302,7 +302,7 @@ class CMakeGenerator(LibGenerator):
         self.doc.increaseIndent()
         self.doc.line("${OpenCV_LIBS}")
         self.doc.line("stromx_runtime")
-        self.doc.line("stromx_example")
+        self.doc.line("stromx_imgutil")
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
@@ -402,7 +402,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line("${CMAKE_DL_LIBS}")
         self.doc.line("${OpenCV_LIBS}")
         self.doc.line("stromx_runtime")
-        self.doc.line("stromx_example")
+        self.doc.line("stromx_imgutil")
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
