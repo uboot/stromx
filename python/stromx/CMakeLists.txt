@@ -10,6 +10,10 @@ if(BUILD_EXAMPLE)
     set (AVAILABLE_PACKAGES "\"runtime\", \"example\"")
 endif()
 
+if(BUILD_OPENCV_WRAPPER)
+    add_subdirectory(imgutil)
+endif()
+
 configure_file (
   "${PROJECT_SOURCE_DIR}/__init__.py.in"
   "${PROJECT_BINARY_DIR}/__init__.py"
