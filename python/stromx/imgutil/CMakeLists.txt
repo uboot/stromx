@@ -3,6 +3,7 @@ project(python_stromx_imgutil)
 set(SOURCES
     Imgutil.cpp
     Image.cpp
+    Matrix.cpp
 )
 
 add_library(imgutil SHARED ${SOURCES})

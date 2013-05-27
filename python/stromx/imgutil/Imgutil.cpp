@@ -28,6 +28,7 @@
 #include <stromx/imgutil/Clip.h>
 
 void exportImage();
+void exportMatrix();
 
 using namespace boost::python;
 using namespace stromx::imgutil;
@@ -37,6 +38,7 @@ BOOST_PYTHON_MODULE(libimgutil)
     def("registerImgutil", stromxRegisterImgutil);
     
     exportImage();
+    exportMatrix();
     
     stromx::python::exportOperatorKernel<AdjustRgbChannels>("AdjustRgbChannels");
     stromx::python::exportOperatorKernel<Buffer>("Buffer");
