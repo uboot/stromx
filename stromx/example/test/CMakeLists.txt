@@ -7,7 +7,8 @@ if(MSVC)
 endif(MSVC)
 
 include_directories(
-    ../../..
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     ${CPPUNIT_INCLUDE_DIR}
     ${Boost_INCLUDE_DIRS}
 )

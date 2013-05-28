@@ -5,8 +5,8 @@ set (STROMX_EXAMPLE_VERSION_MINOR 2)
 set (STROMX_EXAMPLE_VERSION_PATCH 0)
 
 configure_file (
-  "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_SOURCE_DIR}/Config.h"
+  "Config.h.in"
+  "Config.h"
 )
 
 if(BUILD_TESTS)
@@ -14,7 +14,8 @@ if(BUILD_TESTS)
 endif()
 
 include_directories(
-    ../..
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
 )
 

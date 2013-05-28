@@ -1,6 +1,9 @@
 project(file)
 
-include_directories(../..)
+include_directories(
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+)
 
 add_executable(file
     file.cpp

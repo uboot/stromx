@@ -198,7 +198,8 @@ class CMakeGenerator(LibGenerator):
     )
     <BLANKLINE>
     include_directories (
-        ../..
+        ${CMAKE_SOURCE_DIR}
+        ${CMAKE_BINARY_DIR}
         ${Boost_INCLUDE_DIRS}
     )
     <BLANKLINE>
@@ -263,7 +264,8 @@ class CMakeGenerator(LibGenerator):
         
         self.doc.line("include_directories (")
         self.doc.increaseIndent()
-        self.doc.line(r"../..")
+        self.doc.line(r"${CMAKE_SOURCE_DIR}")
+        self.doc.line(r"${CMAKE_BINARY_DIR}")
         self.doc.line(r"${Boost_INCLUDE_DIRS}")
         self.doc.decreaseIndent()
         self.doc.line(")")
@@ -349,7 +351,40 @@ class TestCMakeGenerator(LibGenerator):
     >>> p.testFiles.append("lenna.jpg")
     >>> g = TestCMakeGenerator()
     >>> g.save(p, True)        
-
+    project(stromx_imgproc_test)
+    <BLANKLINE>
+    add_test(NAME stromx_imgproc_test COMMAND stromx_imgproc_test)
+    <BLANKLINE>
+    if(MSVC)
+        add_definitions(/DSTROMX_EXAMPLE_STATIC)
+    endif(MSVC)
+    <BLANKLINE>
+    include_directories (
+        ${CMAKE_SOURCE_DIR}
+        ${CMAKE_BINARY_DIR}
+        ${CPPUNIT_INCLUDE_DIR}
+    )
+    <BLANKLINE>
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    <BLANKLINE>
+    set (SOURCES 
+        ../MedianBlur.cpp
+        ../Utility.cpp
+        MedianBlurTest.cpp
+        main.cpp
+    )
+    <BLANKLINE>
+    add_executable (stromx_imgproc_test ${SOURCES})
+    <BLANKLINE>
+    target_link_libraries (stromx_imgproc_test
+        ${CPPUNIT_LIBRARY}
+        ${CMAKE_DL_LIBS}
+        ${OpenCV_LIBS}
+        stromx_runtime
+        stromx_imgutil
+    )
+    <BLANKLINE>
+    <BLANKLINE>
     """
     def generate(self):
         self.doc.line("project(stromx_{0}_test)".format(self.p.ident))
@@ -368,6 +403,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line("include_directories (")
         self.doc.increaseIndent()
         self.doc.line(r"${CMAKE_SOURCE_DIR}")
+        self.doc.line(r"${CMAKE_BINARY_DIR}")
         self.doc.line(r"${CPPUNIT_INCLUDE_DIR}")
         self.doc.decreaseIndent()
         self.doc.line(")")

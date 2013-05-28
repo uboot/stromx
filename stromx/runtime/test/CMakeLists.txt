@@ -8,6 +8,7 @@ endif(MSVC)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
     ${CPPUNIT_INCLUDE_DIR}
 )

@@ -1,8 +1,8 @@
 project(stromx_runtime)
 
 configure_file (
-  "${PROJECT_SOURCE_DIR}/Config.h.in"
-  "${PROJECT_SOURCE_DIR}/Config.h"
+  "Config.h.in"
+  "Config.h"
 )
 
 if(BUILD_TESTS)
@@ -85,6 +85,7 @@ set_target_properties(stromx_runtime PROPERTIES
 
 include_directories(
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
 )
 

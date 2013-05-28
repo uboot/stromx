@@ -2,6 +2,5 @@
 *.vpp~*
 *.vpp.*
 *~
-Config.h
 *.pyc
 
