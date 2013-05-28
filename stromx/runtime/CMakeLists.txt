@@ -104,8 +104,6 @@ if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_runtime ${LIBZIP_LIBRARY})
 endif()
 
-
-
 if(WIN32)
     install (TARGETS stromx_runtime 
         RUNTIME DESTINATION .
@@ -120,9 +118,14 @@ else(WIN32)
     )
 endif(WIN32)
 
-install(DIRECTORY . 
-    DESTINATION include/stromx/runtime
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/runtime
+    DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
     PATTERN "test*" EXCLUDE
+)
+
+install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/runtime
+    DESTINATION include/stromx
+    FILES_MATCHING PATTERN "*.h"
 )
 

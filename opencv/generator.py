@@ -338,6 +338,23 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("endif(WIN32)")
         self.doc.blank()
         
+        self.doc.line("install(DIRECTORY ${{CMAKE_SOURCE_DIR}}/stromx/{0}".format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("DESTINATION include/stromx")
+        self.doc.line('FILES_MATCHING PATTERN "*.h"')
+        self.doc.line('PATTERN "test*" EXCLUDE')
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+    
+        self.doc.line("install(DIRECTORY ${{CMAKE_BINARY_DIR}}/stromx/{0}".format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("DESTINATION include/stromx")
+        self.doc.line('FILES_MATCHING PATTERN "*.h"')
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
         self.doc.line("if(BUILD_TESTS)")
         self.doc.increaseIndent()
         self.doc.line("add_subdirectory(test)")

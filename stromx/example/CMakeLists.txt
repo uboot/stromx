@@ -73,8 +73,13 @@ else(WIN32)
     )
 endif(WIN32)
 
-install(DIRECTORY . 
-    DESTINATION include/stromx/example
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/example
+    DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
     PATTERN "test*" EXCLUDE
+)
+
+install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/example
+    DESTINATION include/stromx
+    FILES_MATCHING PATTERN "*.h"
 )

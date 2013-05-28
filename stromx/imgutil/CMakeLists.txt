@@ -48,7 +48,6 @@ target_link_libraries(stromx_imgutil
     stromx_runtime
 )
 
-
 if(WIN32)    
     install (TARGETS stromx_imgutil
         RUNTIME DESTINATION .
@@ -64,8 +63,13 @@ else(WIN32)
     )
 endif(WIN32)
 
-install(DIRECTORY . 
-    DESTINATION include/stromx/imgutil
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/imgutil
+    DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
     PATTERN "test*" EXCLUDE
+)
+
+install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/imgutil
+    DESTINATION include/stromx
+    FILES_MATCHING PATTERN "*.h"
 )
