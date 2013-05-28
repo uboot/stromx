@@ -220,7 +220,9 @@ class OpHeaderGenerator(MethodGenerator):
         self.namespaceExit()
         self.__includeGuardExit()
         
-        with file("{0}.h".format(self.m.ident.className()), "w") as f:
+        filename = "stromx/{0}/{1}.h".format(self.p.ident,
+                                             self.m.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
     
     def __includes(self):
@@ -715,7 +717,10 @@ class OpImplGenerator(MethodGenerator):
         self.__convertEnumValues()
         self.namespaceExit()
         
-        with file("{0}.cpp".format(self.m.ident.className()), "w") as f:
+        
+        filename = "stromx/{0}/{1}.cpp".format(self.p.ident,
+                                               self.m.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
     
     def __includes(self):
@@ -1023,7 +1028,9 @@ class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
         self.namespaceExit()
         self.__includeGuardExit()
         
-        with file("test/{0}Test.h".format(self.m.ident.className()), "w") as f:
+        filename = "stromx/{0}/test/{1}Test.h".format(self.p.ident,
+                                                      self.m.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
         
     def __includeGuardEnter(self):
@@ -1148,7 +1155,9 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
         self.__testMethods()
         self.namespaceExit()
         
-        with file("test/{0}Test.cpp".format(self.m.ident.className()), "w") as f:
+        filename = "stromx/{0}/test/{1}Test.cpp".format(self.p.ident,
+                                                        self.m.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
         
 def generateMethodFiles(package, method):

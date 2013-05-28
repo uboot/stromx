@@ -83,7 +83,9 @@ class LibHeaderGenerator(LibGenerator):
         
         self.doc.line("#endif // STROMX_{0}_{0}_H".format(p))
         
-        with file("{0}.h".format(self.p.ident.className()), "w") as f:
+        filename = "stromx/{0}/{1}.h".format(self.p.ident, 
+                                             self.p.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
            
 class LibImplGenerator(LibGenerator):
@@ -128,7 +130,9 @@ class LibImplGenerator(LibGenerator):
         
         self.doc.scopeExit()
         
-        with file("{0}.cpp".format(self.p.ident.className()), "w") as f:
+        filename = "stromx/{0}/{1}.cpp".format(self.p.ident, 
+                                             self.p.ident.className())
+        with file(filename, "w") as f:
             f.write(self.doc.string())
            
 class LibTestGenerator(LibGenerator):
@@ -175,7 +179,9 @@ int main (int, char**)
 }
 """
         self.doc.text(text)
-        with file("test/main.cpp", "w") as f:
+        
+        filename = "stromx/{0}/test/main.cpp".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string())
 
 class CMakeGenerator(LibGenerator):
@@ -338,9 +344,128 @@ class CMakeGenerator(LibGenerator):
         self.doc.decreaseIndent()
         self.doc.line("endif(BUILD_TESTS)")
     
-        with file("CMakeLists.txt", "w") as f:
+        
+        filename = "stromx/{0}/CMakeLists.txt".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string())
             
+
+class PythonCMakeGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
+    >>> g = PythonCMakeGenerator()
+    >>> g.save(p, True)        
+    """
+    def generate(self):
+        self.doc.line("project(python_stromx_{0})".format(self.p.ident))
+        self.doc.blank()
+        
+        self.doc.line("set (SOURCES ")
+        self.doc.increaseIndent()
+        self.doc.line("{0}.cpp".format(self.p.ident.className()))
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
+        self.doc.line("add_library ({0} SHARED ${{SOURCES}})"\
+            .format(self.p.ident))
+        self.doc.blank()
+        
+        self.doc.line("include_directories (")
+        self.doc.increaseIndent()
+        self.doc.line(r"${CMAKE_SOURCE_DIR}")
+        self.doc.line(r"${CMAKE_BINARY_DIR}")
+        self.doc.line(r"${Boost_INCLUDE_DIRS}")
+        self.doc.line(r"${OpenCV2_INCLUDE_DIR}")
+        self.doc.line(r"${PYTHON_INCLUDE_DIRS}")
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
+        self.doc.line("target_link_libraries ({0}"\
+            .format(self.p.ident))
+        self.doc.increaseIndent()
+        self.doc.line("${Boost_LIBRARIES}")
+        self.doc.line("${PYTHON_LIBRARY}")
+        self.doc.line("stromx_runtime")
+        self.doc.line("stromx_imgutil")
+        self.doc.line("stromx_{0}".format(self.p.ident))
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.blank()
+        
+        self.doc.line("file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py "
+                      "DESTINATION ${CMAKE_CURRENT_BINARY_DIR})")
+        self.doc.blank()
+        
+        self.doc.line("if(PYTHON_INSTALL_DIR)")
+        self.doc.increaseIndent()
+        self.doc.line("install(DIRECTORY . ")
+        self.doc.increaseIndent()
+        self.doc.line("DESTINATION ${{PYTHON_INSTALL_DIR}}/stromx/{0}".format(self.p.ident))
+        self.doc.line('FILES_MATCHING PATTERN "*.py"')
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.line("install(TARGETS imgutil")
+        self.doc.increaseIndent()
+        self.doc.line("DESTINATION ${{PYTHON_INSTALL_DIR}}/stromx/{0}".format(self.p.ident))
+        self.doc.decreaseIndent()
+        self.doc.line(")")
+        self.doc.decreaseIndent()
+        self.doc.line("endif()")
+    
+        filename = "python/stromx/{0}/CMakeLists.txt".format(self.p.ident)
+        with file(filename, "w") as f:
+            f.write(self.doc.string())
+            
+class PythonInitGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
+    >>> g = PythonInitGenerator()
+    >>> g.save(p, True)        
+    """
+    def generate(self):
+        self.doc.line("from lib{0} import *".format(self.p.ident))
+        
+        filename = "python/stromx/{0}/__init__.py".format(self.p.ident)
+        with file(filename, "w") as f:
+            f.write(self.doc.string())
+            
+class PythonExportGenerator(LibGenerator):
+    """
+    >>> p = package.Package("imgproc", 0, 0, 1)
+    >>> p.name = "OpenCV image processing"
+    >>> m = package.Method("medianBlur")
+    >>> p.methods.append(m)
+    >>> g = PythonExportGenerator()
+    >>> g.save(p, True)        
+    """
+    def generate(self):
+        self.doc.line("#include <boost/python.hpp>")
+        self.doc.line((
+            "#include <stromx/{0}/{1}.h>"
+        ).format(self.p.ident, self.p.ident.className()))
+        self.doc.line("#include <stromx/runtime/Registry.h>")
+        self.doc.blank()
+        
+        self.doc.line("using namespace boost::python;")
+        self.doc.blank()
+    
+        self.doc.line("BOOST_PYTHON_MODULE(lib{0})".format(self.p.ident))
+        self.doc.scopeEnter()
+        self.doc.line('def("register{0}", stromxRegister{0});'.format(self.p.ident.className()))
+        self.doc.scopeExit()
+        
+        filename = "python/stromx/{0}/{1}.cpp".format(self.p.ident,
+                                                      self.p.ident.className())
+        with file(filename, "w") as f:
+            f.write(self.doc.string())
             
 class TestCMakeGenerator(LibGenerator):
     """
@@ -443,7 +568,10 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line(")")
         self.doc.blank()
     
-        with file("test/CMakeLists.txt", "w") as f:
+    
+        
+        filename = "stromx/{0}/test/CMakeLists.txt".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string())
             
 class UtilityHeaderGenerator(LibGenerator):
@@ -496,7 +624,9 @@ class UtilityHeaderGenerator(LibGenerator):
         
         self.doc.line("#endif // {0}".format(guard))
         
-        with file("Utility.h", "w") as f:
+        
+        filename = "stromx/{0}/Utility.h".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string())
        
 class UtilityImplGenerator(LibGenerator):
@@ -540,7 +670,8 @@ class UtilityImplGenerator(LibGenerator):
         self.doc.scopeExit()
         self.doc.scopeExit()
         
-        with file("Utility.cpp", "w") as f:
+        filename = "stromx/{0}/Utility.cpp".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string()) 
             
 class ConfigGenerator(LibGenerator):
@@ -622,7 +753,8 @@ class ConfigGenerator(LibGenerator):
         
         self.doc.line("#endif // {0}".format(guard))
 
-        with file("Config.h.in", "w") as f:
+        filename = "stromx/{0}/Config.h.in".format(self.p.ident)
+        with file(filename, "w") as f:
             f.write(self.doc.string())
             
 def generatePackageFiles(package):
@@ -643,14 +775,20 @@ def generatePackageFiles(package):
     
     g = CMakeGenerator()
     g.save(package)
-    
-    if not os.path.exists("test"):
-        os.mkdir("test")
         
     g = LibTestGenerator()
     g.save(package)
     
     g = TestCMakeGenerator()
+    g.save(package)
+    
+    g = PythonCMakeGenerator()
+    g.save(package)
+        
+    g = PythonInitGenerator()
+    g.save(package)
+    
+    g = PythonExportGenerator()
     g.save(package)
     
     for m in package.methods:

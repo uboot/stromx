@@ -12,7 +12,8 @@ endif()
 
 if(BUILD_OPENCV_WRAPPER)
     add_subdirectory(imgutil)
-    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, imgutil")
+    add_subdirectory(imgproc)
+    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, imgutil, imgproc")
 endif()
 
 configure_file (

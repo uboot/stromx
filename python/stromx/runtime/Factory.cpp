@@ -37,7 +37,7 @@ namespace
     std::auto_ptr<Data> newDataWrap(const Factory & factory, const std::string & package, const std::string & name)
     {
         return std::auto_ptr<Data>(factory.newData(package, name));
-    } 
+    }
 }
 
 

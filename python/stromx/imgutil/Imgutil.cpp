@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#include "../runtime/ExportOperatorKernel.h"
+#include "python/stromx/runtime/ExportOperatorKernel.h"
 
 #include <boost/python.hpp>
 
