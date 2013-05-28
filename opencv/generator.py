@@ -431,6 +431,8 @@ class PythonInitGenerator(LibGenerator):
     >>> g.save(p, True)        
     """
     def generate(self):
+        self.doc.line("import stromx.runtime".format(self.p.ident))
+        self.doc.blank()
         self.doc.line("from lib{0} import *".format(self.p.ident))
         
         filename = "python/stromx/{0}/__init__.py".format(self.p.ident)
@@ -448,18 +450,32 @@ class PythonExportGenerator(LibGenerator):
     """
     def generate(self):
         self.doc.line("#include <boost/python.hpp>")
+        self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.line((
             "#include <stromx/{0}/{1}.h>"
         ).format(self.p.ident, self.p.ident.className()))
-        self.doc.line("#include <stromx/runtime/Registry.h>")
+        
+        for m in self.p.methods:
+            self.doc.line("#include <stromx/{0}/{1}.h>".format(
+                                            self.p.ident, m.ident.className()))
+        
+        self.doc.line("#include <python/stromx/runtime/ExportOperatorKernel.h>")
         self.doc.blank()
         
         self.doc.line("using namespace boost::python;")
+        self.doc.line("using namespace stromx::{0};".format(self.p.ident))
         self.doc.blank()
     
         self.doc.line("BOOST_PYTHON_MODULE(lib{0})".format(self.p.ident))
         self.doc.scopeEnter()
         self.doc.line('def("register{0}", stromxRegister{0});'.format(self.p.ident.className()))
+        self.doc.blank()
+        
+        for m in self.p.methods:
+            l = 'stromx::python::exportOperatorKernel<{0}>("{0}");'.format(
+                                                        m.ident.className())
+            self.doc.line(l)
+        
         self.doc.scopeExit()
         
         filename = "python/stromx/{0}/{1}.cpp".format(self.p.ident,

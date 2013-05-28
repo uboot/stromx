@@ -16,4 +16,6 @@
 #  limitations under the License.
 #
 
+import stromx.runtime
+
 from libimgutil import *
