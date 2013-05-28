@@ -86,7 +86,7 @@ dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
     initOut = initOutCopy
 )
-ddepth = package.Constant(
+ddepthDefault = package.Constant(
     "-1"
 )
 ksizex = package.NumericParameter(
@@ -178,9 +178,9 @@ interpolation = package.EnumParameter(
     default = 1
 )
 descriptions = [
-    package.EnumDescription("DDEPTH_8_BIT", "8-bit", 8),
-    package.EnumDescription("DDEPTH_16_BIT", "16-bit", 16),
-    package.EnumDescription("DDEPTH_32_BIT", "32-bit", 32),
+    package.EnumDescription("SAME", "Same as input", -1),
+    package.EnumDescription("DEPTH_8_BIT", "8-bit", "CV_8U"),
+    package.EnumDescription("DEPTH_16_BIT", "16-bit", "CV_16U")
 ]
 ddepth = package.EnumParameter(
     "ddepth", "Destination depth", descriptions = descriptions,
@@ -192,6 +192,11 @@ scale = package.NumericParameter(
 delta = package.NumericParameter(
     "delta", "Delta", cvtype.Double(), datatype.Double(), default = 0.0
 )
+
+# test data
+lenna = test.ImageFile("lenna.jpg")
+lenna_bw = test.ImageFile("lenna.jpg", color = False)
+memory = test.ImageBuffer(1000000)
 
 # bilateralFilter
 manual = package.Option(
@@ -229,9 +234,6 @@ blur = package.Method(
 )
 
 # boxFilter
-lenna = test.ImageFile("lenna.jpg")
-lenna_bw = test.ImageFile("lenna.jpg", False)
-memory = test.ImageBuffer(1000000)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg, True), package.Output(dstImg), ddepth,
@@ -435,8 +437,7 @@ imgproc = package.Package(
         checkNumericValue
     ],
     testFiles = [
-        "lenna.jpg",
-        "lenna_bw.jpg"
+        "lenna.jpg"
     ]
 )
 

@@ -536,7 +536,14 @@ class OpImplGenerator(MethodGenerator):
                 l = "if({0}InMapper.data() == inContainer)".format(i.ident)
                 doc.line(l)
                 doc.scopeEnter()
-                doc.line("srcData = &writeAccess();")
+                if i.inPlace:
+                    doc.line("srcData = &writeAccess();")
+                else:
+                    message = '"Can not operate in place."'
+                    ex = (
+                        "throw runtime::InputError({0}, *this, {1});"
+                    ).format(i.ident.constant(), message)
+                    doc.line(ex)
                 doc.scopeExit()
                 doc.line("else")
                 doc.scopeEnter()
