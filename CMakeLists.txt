@@ -33,17 +33,15 @@ endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 include(UseDoxygen OPTIONAL)
 
-find_package(Boost 1.36.0)
-
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.36.0 COMPONENTS thread date_time filesystem regex system)
+find_package(Boost 1.47.0 COMPONENTS thread date_time filesystem regex system)
 
 find_package(CppUnit)
 
 find_package(Threads)
 
-find_package(OpenCV)
+find_package(OpenCV REQUIRED core imgproc highgui)
 
 find_package(XercesC)
 
@@ -73,7 +71,7 @@ if(BUILD_EXAMPLE)
    add_subdirectory(example)
 endif()
 
-find_package(Boost 1.36.0 COMPONENTS thread filesystem python)
+find_package(Boost 1.47.0 COMPONENTS thread filesystem python)
 find_package(PythonLibs)
 
 if(Boost_FOUND AND PYTHON_INCLUDE_PATH)
