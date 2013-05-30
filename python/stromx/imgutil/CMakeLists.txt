@@ -1,5 +1,3 @@
-project(python_stromx_imgutil)
-
 set(SOURCES
     Imgutil.cpp
     Image.cpp

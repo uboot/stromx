@@ -1,5 +1,3 @@
-project(stromx_example_test)
-
 add_test(NAME stromx_example_test COMMAND stromx_example_test)
 
 if(MSVC)

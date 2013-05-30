@@ -1,12 +1,10 @@
-project(stromx_example)
-
 set (STROMX_EXAMPLE_VERSION_MAJOR 0)
 set (STROMX_EXAMPLE_VERSION_MINOR 2)
 set (STROMX_EXAMPLE_VERSION_PATCH 0)
 
 configure_file (
-  "Config.h.in"
-  "Config.h"
+  ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/Config.h
 )
 
 if(BUILD_TESTS)

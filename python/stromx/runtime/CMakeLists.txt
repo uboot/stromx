@@ -1,5 +1,3 @@
-project(python_runtime)
-
 set(SOURCES
     Runtime.cpp
     Data.cpp

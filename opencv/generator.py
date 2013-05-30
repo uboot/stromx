@@ -191,16 +191,14 @@ class CMakeGenerator(LibGenerator):
     >>> m = package.Method("medianBlur")
     >>> p.methods.append(m)
     >>> g = CMakeGenerator()
-    >>> g.save(p, True)        
-    project(stromx_imgproc)
-    <BLANKLINE>
+    >>> g.save(p, True)
     set (IMGPROC_VERSION_MAJOR 0)
     set (IMGPROC_VERSION_MINOR 0)
     set (IMGPROC_VERSION_PATCH 1)
     <BLANKLINE>
     configure_file (
-        ${PROJECT_SOURCE_DIR}/Config.h.in
-        ${PROJECT_SOURCE_DIR}/Config.h
+        ${PROJECT_CURRENT_SOURCE_DIR}/Config.h.in
+        ${PROJECT_CURRENT_SOURCE_DIR}/Config.h
     )
     <BLANKLINE>
     include_directories (
@@ -250,8 +248,6 @@ class CMakeGenerator(LibGenerator):
     <BLANKLINE>
     """
     def generate(self):
-        self.doc.line("project(stromx_{0})".format(self.p.ident))
-        self.doc.blank()
         self.doc.line("set ({0}_VERSION_MAJOR {1})"\
             .format(self.p.ident.constant(), self.p.major))
         self.doc.line("set ({0}_VERSION_MINOR {1})"\
@@ -262,8 +258,8 @@ class CMakeGenerator(LibGenerator):
         
         self.doc.line("configure_file (")
         self.doc.increaseIndent()
-        self.doc.line(r"${PROJECT_SOURCE_DIR}/Config.h.in")
-        self.doc.line(r"${PROJECT_SOURCE_DIR}/Config.h")
+        self.doc.line(r"${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in")
+        self.doc.line(r"${CMAKE_CURRENT_BINARY_DIR}/Config.h")
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
@@ -361,7 +357,6 @@ class CMakeGenerator(LibGenerator):
         self.doc.decreaseIndent()
         self.doc.line("endif(BUILD_TESTS)")
     
-        
         filename = "stromx/{0}/CMakeLists.txt".format(self.p.ident)
         with file(filename, "w") as f:
             f.write(self.doc.string())
@@ -508,9 +503,7 @@ class TestCMakeGenerator(LibGenerator):
     >>> p.methods.append(m)
     >>> p.testFiles.append("lenna.jpg")
     >>> g = TestCMakeGenerator()
-    >>> g.save(p, True)        
-    project(stromx_imgproc_test)
-    <BLANKLINE>
+    >>> g.save(p, True)
     add_test(NAME stromx_imgproc_test COMMAND stromx_imgproc_test)
     <BLANKLINE>
     if(MSVC)
@@ -545,8 +538,6 @@ class TestCMakeGenerator(LibGenerator):
     <BLANKLINE>
     """
     def generate(self):
-        self.doc.line("project(stromx_{0}_test)".format(self.p.ident))
-        self.doc.blank()
         self.doc.line((
             "add_test(NAME stromx_{0}_test COMMAND stromx_{0}_test)"
         ).format(self.p.ident))

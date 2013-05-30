@@ -1,8 +1,6 @@
-project(stromx_runtime)
-
 configure_file (
-  "Config.h.in"
-  "Config.h"
+  ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/Config.h
 )
 
 if(BUILD_TESTS)

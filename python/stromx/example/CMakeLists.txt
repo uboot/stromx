@@ -1,5 +1,3 @@
-project(python_stromx_example)
-
 set(SOURCES
     Example.cpp
     Image.cpp

@@ -1,5 +1,3 @@
-project(python_stromx_runtime)
-
 if(BUILD_RUNTIME)
     add_subdirectory(runtime)
     set (AVAILABLE_PACKAGES "\"runtime\"")
@@ -17,8 +15,8 @@ if(BUILD_OPENCV_WRAPPER)
 endif()
 
 configure_file (
-  "${PROJECT_SOURCE_DIR}/__init__.py.in"
-  "${PROJECT_BINARY_DIR}/__init__.py"
+  ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.in
+  ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
 )
 
 if(PYTHON_INSTALL_DIR)
