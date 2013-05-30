@@ -5,6 +5,8 @@ set(SOURCES
 
 add_library(example SHARED ${SOURCES})
 
+add_dependencies(example stromx_example)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

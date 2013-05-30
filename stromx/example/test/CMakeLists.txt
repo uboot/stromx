@@ -63,6 +63,8 @@ add_executable(stromx_example_test
     WebCameraTest.cpp
 )
 
+add_dependencies(stromx_example_test stromx_example)
+
 target_link_libraries(stromx_example_test 
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}

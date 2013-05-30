@@ -6,6 +6,8 @@ set(SOURCES
 
 add_library(imgutil SHARED ${SOURCES})
 
+add_dependencies(imgutil stromx_imgutil)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

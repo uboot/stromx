@@ -7,6 +7,8 @@ add_executable(simple
     simple.cpp
 )
 
+add_dependencies(simple stromx_runtime)
+
 target_link_libraries(simple
     stromx_runtime
 )

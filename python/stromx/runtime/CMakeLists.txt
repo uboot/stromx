@@ -37,6 +37,8 @@ endif(BUILD_FILE_PERSISTENCE)
 
 add_library(runtime SHARED ${SOURCES})
 
+add_dependencies(runtime stromx_runtime)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

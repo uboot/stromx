@@ -43,6 +43,8 @@ set(SOURCES
 
 add_library(stromx_example SHARED ${SOURCES})
 
+add_dependencies(stromx_example stromx_runtime)
+
 set(VERSION_STRING "${STROMX_EXAMPLE_VERSION_MAJOR}.${STROMX_EXAMPLE_VERSION_MINOR}.${STROMX_EXAMPLE_VERSION_PATCH}")
 
 set_target_properties(stromx_example PROPERTIES

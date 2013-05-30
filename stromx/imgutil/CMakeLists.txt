@@ -34,6 +34,8 @@ set(SOURCES
 
 add_library(stromx_imgutil SHARED ${SOURCES})
 
+add_dependencies(stromx_imgutil stromx_runtime)
+
 set(VERSION_STRING "${STROMX_IMGUTIL_VERSION_MAJOR}.${STROMX_IMGUTIL_VERSION_MINOR}.${STROMX_IMGUTIL_VERSION_PATCH}")
 
 set_target_properties(stromx_imgutil PROPERTIES

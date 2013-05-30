@@ -8,9 +8,10 @@ add_executable(operator
     math/Add.cpp
 )
 
+add_dependencies(operator stromx_runtime)
+
 target_link_libraries(operator
     stromx_runtime
-    stromx_example
 )
 
 add_test(NAME example_operator COMMAND operator)

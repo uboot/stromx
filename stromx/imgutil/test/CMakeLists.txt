@@ -51,3 +51,5 @@ target_link_libraries(stromx_imgutil_test
     ${OpenCV_LIBS}
     stromx_runtime
 )
+
+add_dependencies(stromx_imgutil_test stromx_imgutil)

@@ -7,9 +7,10 @@ add_executable(file
     file.cpp
 )
 
+add_dependencies(file stromx_runtime)
+
 target_link_libraries(file
     stromx_runtime
-    stromx_example
 )
 
 add_test(NAME example_file COMMAND file)

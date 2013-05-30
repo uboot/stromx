@@ -139,6 +139,8 @@ endif(BUILD_FILE_PERSISTENCE)
 
 add_executable(stromx_runtime_test ${SOURCES})
 
+add_dependencies(stromx_runtime_test stromx_runtime)
+
 target_link_libraries(stromx_runtime_test
     ${Boost_LIBRARIES}
     ${CPPUNIT_LIBRARY}

@@ -215,6 +215,8 @@ class CMakeGenerator(LibGenerator):
     <BLANKLINE>
     add_library (stromx_imgproc SHARED ${SOURCES})
     <BLANKLINE>
+    add_dependencies(stromx_imgproc stromx_runtime)
+    <BLANKLINE>
     set(VERSION_STRING "${IMGPROC_VERSION_MAJOR}.${IMGPROC_VERSION_MINOR}.${IMGPROC_VERSION_PATCH}")
     <BLANKLINE>
     set_target_properties (stromx_imgproc PROPERTIES
@@ -284,6 +286,9 @@ class CMakeGenerator(LibGenerator):
         self.doc.blank()
         
         self.doc.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
+            .format(self.p.ident))
+        self.doc.blank()
+        self.doc.line("add_dependencies(stromx_{0} stromx_runtime)"\
             .format(self.p.ident))
         self.doc.blank()
         
@@ -383,6 +388,9 @@ class PythonCMakeGenerator(LibGenerator):
         self.doc.blank()
         
         self.doc.line("add_library ({0} SHARED ${{SOURCES}})"\
+            .format(self.p.ident))
+        self.doc.blank()
+        self.doc.line("add_dependencies({0} stromx_{0})"\
             .format(self.p.ident))
         self.doc.blank()
         
@@ -525,7 +533,9 @@ class TestCMakeGenerator(LibGenerator):
         main.cpp
     )
     <BLANKLINE>
-    add_executable (stromx_imgproc_test ${SOURCES})
+    add_executable(stromx_imgproc_test ${SOURCES})
+    <BLANKLINE>
+    add_dependencies(stromx_imgproc_test stromx_imgproc)
     <BLANKLINE>
     target_link_libraries (stromx_imgproc_test
         ${CPPUNIT_LIBRARY}
@@ -576,7 +586,10 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line(")")
         self.doc.blank()
         
-        self.doc.line("add_executable (stromx_{0}_test ${{SOURCES}})"\
+        self.doc.line("add_executable(stromx_{0}_test ${{SOURCES}})"\
+            .format(self.p.ident))
+        self.doc.blank()
+        self.doc.line("add_dependencies(stromx_{0}_test stromx_{0})"\
             .format(self.p.ident))
         self.doc.blank()
         

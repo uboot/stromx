@@ -7,6 +7,8 @@ add_executable(camera
     camera.cpp
 )
 
+add_dependencies(camera stromx_example)
+
 target_link_libraries(camera
     stromx_runtime
     stromx_example
