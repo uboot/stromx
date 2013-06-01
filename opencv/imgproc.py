@@ -12,6 +12,9 @@ import generator
 import package
 import test
 
+# abbreviations
+dt = test.Default()
+
 # utilitiy functions
 dcl = document.Document()
 dcl.line("void checkEnumValue(const stromx::runtime::Enum & value, "
@@ -20,24 +23,24 @@ dcl.line("void checkEnumValue(const stromx::runtime::Enum & value, "
 dclIncludes = ["<stromx/runtime/Enum.h>",
                "<stromx/runtime/EnumParameter.h>",
                "<stromx/runtime/OperatorKernel.h>"]
-dfn = document.Document()
-dfn.line("void checkEnumValue(const stromx::runtime::Enum & value, "
+dtn = document.Document()
+dtn.line("void checkEnumValue(const stromx::runtime::Enum & value, "
          "const stromx::runtime::EnumParameter* param, "
          "const stromx::runtime::OperatorKernel& op)")
-dfn.scopeEnter()
-dfn.line("using namespace runtime;")
-dfn.blank()
-dfn.line("for(std::vector<EnumDescription>::const_iterator "
+dtn.scopeEnter()
+dtn.line("using namespace runtime;")
+dtn.blank()
+dtn.line("for(std::vector<EnumDescription>::const_iterator "
          "iter = param->descriptions().begin(); iter != "
          "param->descriptions().end(); ++iter)")
-dfn.scopeEnter()
-dfn.line(" if(value == iter->value())")
-dfn.line("return;")
-dfn.scopeExit()
-dfn.line("throw stromx::runtime::WrongParameterValue(*param, op);")
-dfn.scopeExit()
-dfnIncludes = ["<stromx/runtime/OperatorException.h>"]
-checkEnumValue = package.Function(dcl, dclIncludes, dfn, dfnIncludes)
+dtn.scopeEnter()
+dtn.line(" if(value == iter->value())")
+dtn.line("return;")
+dtn.scopeExit()
+dtn.line("throw stromx::runtime::WrongParameterValue(*param, op);")
+dtn.scopeExit()
+dtnIncludes = ["<stromx/runtime/OperatorException.h>"]
+checkEnumValue = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
 dcl = document.Document()
 dclIncludes = ["<stromx/runtime/NumericParameter.h>",
@@ -73,8 +76,16 @@ initInResize = document.Document((
     "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
-initInPyr = document.Document((
-    "{1}->initializeImage(m_dsizex, m_dsizey, m_dsizey * {0}->pixelSize(), "
+initInPyrDown = document.Document((
+    "int width = int((srcCastedData->width() + 1) / 2 );\n"
+    "int height = int((srcCastedData->height() + 1) / 2 );\n"
+    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
+)
+initInPyrUp = document.Document((
+    "int width = 2  * srcCastedData->width();\n"
+    "int height = 2 * srcCastedData->height();\n"
+    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
 
@@ -127,7 +138,7 @@ iterations = package.NumericParameter(
 )
 ksize = package.NumericParameter(
     "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
-    step = 2, default = 1, rules = [package.OddRule()]
+    step = 2, default = 3, rules = [package.OddRule()]
 )
 descriptions = [
     package.EnumDescription("MORPH_OPEN", "Open"),
@@ -198,6 +209,7 @@ delta = package.NumericParameter(
 lenna = test.ImageFile("lenna.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", color = False)
 memory = test.ImageBuffer(1000000)
+bigMemory = test.ImageBuffer(10000000)
 
 # bilateralFilter
 manual = package.Option(
@@ -213,8 +225,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), d, sigmaColor,
      sigmaSpace],
     tests = [
-        [lenna, test.Default(), test.Default(), test.Default(), test.Default()],
-        [lenna_bw, test.Default(), 9, 100, 75]
+        [lenna, dt, dt, dt, dt],
+        [lenna_bw, dt, 9, 100, 75]
     ]
 )
 bilateralFilter = package.Method(
@@ -228,7 +240,7 @@ manual = package.Option(
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, memory, (3, 4)],
-        [lenna_bw, test.RefData(lenna), test.Default()]
+        [lenna_bw, test.RefData(lenna), dt]
     ]
 )
 allocate = package.Option(
@@ -236,8 +248,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg),
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, test.Default(), test.Default()],
-        [lenna_bw, test.Default(), test.Default()]
+        [lenna, dt, dt],
+        [lenna_bw, dt, dt]
     ]
 )
 inPlace = package.Option(
@@ -245,7 +257,7 @@ inPlace = package.Option(
     [package.Output(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, test.Default(), test.Default()]
+        [lenna, dt, dt]
     ]
 )
 blur = package.Method(
@@ -258,8 +270,8 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, memory, test.Default(), (5, 4)],
-        [lenna, test.RefData(lenna), test.Default(), test.Default()]
+        [lenna, memory, dt, (5, 4)],
+        [lenna, test.RefData(lenna), dt, dt]
     ]
 )
 allocate = package.Option(
@@ -267,7 +279,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna_bw, test.Default(), test.Default(), (4, 5)],
+        [lenna_bw, dt, dt, (4, 5)],
     ]
 )
 inPlace = package.Option(
@@ -275,7 +287,7 @@ inPlace = package.Option(
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, test.Default(), test.Default(), test.Default()],
+        [lenna, dt, dt, dt],
     ]
 )
 boxFilter = package.Method(
@@ -288,8 +300,8 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), kernel, anchor,
      iterations],
     tests = [
-        [lenna, memory, (3, 4, 1), test.Default(), 2],
-        [lenna_bw, memory, test.Default(), test.Default(), test.Default()]
+        [lenna, memory, (3, 4, 1), dt, 2],
+        [lenna_bw, memory, dt, dt, dt]
     ]
 )
 allocate = package.Option(
@@ -297,7 +309,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), kernel, anchor,
      iterations],
     tests = [
-        [lenna, test.Default(), test.Default(), test.Default(), test.Default()]
+        [lenna, dt, dt, dt, dt]
     ]
 )
 inPlace = package.Option(
@@ -305,8 +317,7 @@ inPlace = package.Option(
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), kernel,
      anchor, iterations],
     tests = [
-        [lenna_bw, test.Default(), (test.Default(), test.Default(), 2),
-         test.Default(), test.Default()]
+        [lenna_bw, dt, (dt, dt, 2), dt, dt]
     ]
 )
 dilate = package.Method(
@@ -323,8 +334,7 @@ manual = package.Option(
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
         [lenna, memory, (3, 5), 1.5, 2.5],
-        [lenna, test.RefData(lenna), test.Default(), test.Default(),
-         test.Default()]
+        [lenna, test.RefData(lenna), dt, dt, dt]
     ]
 )
 allocate = package.Option(
@@ -332,7 +342,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
-        [lenna, test.Default(), (3, 5), -1, -1]
+        [lenna, dt, (3, 5), -1, -1]
     ]
 )
 inPlace = package.Option(
@@ -340,7 +350,7 @@ inPlace = package.Option(
     [package.Output(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
-        [lenna, test.Default(), test.Default(), 0, 0]
+        [lenna, dt, dt, 0, 0]
     ]
 )
 GaussianBlur = package.Method(
@@ -352,7 +362,7 @@ manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg, True), package.Output(dstImg), ksize],
     tests = [
-        [lenna, memory, 4],
+        [lenna, memory, 3],
         [lenna_bw, test.RefData(lenna), 5]
     ]
 )
@@ -360,14 +370,14 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImg), ksize],
     tests = [
-        [lenna_bw, test.Default(), test.Default()]
+        [lenna_bw, dt, dt]
     ]
 )
 inPlace = package.Option(
     "inPlace", "In place",
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), ksize],
     tests = [
-        [lenna, test.Default(), test.Default()]
+        [lenna, dt, dt]
     ]
 )
 medianBlur = package.Method(
@@ -380,20 +390,27 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), op, kernel,
      anchor, iterations],
     tests = [
-        [lenna, memory, 0, (3, 4, 0), test.Default(), test.Default()],
-        
-        [lenna, memory, 0, (test.Default(), test.Default(), 1), test.Default(), 3]
+        [lenna, memory, 0, (3, 4, 0), dt, dt],
+        [lenna, test.RefData(lenna), 2, (dt, dt, 1), dt, 3]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImg), op, kernel,
-     anchor, iterations]
+     anchor, iterations],
+    tests = [
+        [lenna_bw, dt, 0, dt, dt, dt],
+        [lenna, dt, 3, (dt, dt, 2), dt, dt]
+    ]
 )
 inPlace = package.Option(
     "inPlace", "In place",
     [package.Output(srcImg), package.RefInput(dstImg, srcImg), op, kernel,
-     anchor, iterations]
+     anchor, iterations],
+    tests = [
+        [lenna_bw, dt, 1, (dt, dt, 1), dt, dt],
+        [lenna, dt, 3, dt, dt, dt]
+    ]
 )
 morphologyEx = package.Method(
     "morphologyEx", options = [manual, allocate, inPlace]
@@ -422,32 +439,44 @@ laplacian = package.Method(
 # pyrDown
 dstImgPyr = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
-    initIn = initInPyr, initOut = initOutCopy
+    initIn = initInPyrDown, initOut = initOutCopy
 )
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg), package.Output(dstImgPyr), 
-     package.Size(dsizex, dsizey)]
+    [package.Input(srcImg), package.Output(dstImgPyr)],
+    tests = [
+        [lenna, memory]
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImgPyr), 
-     package.Size(dsizex, dsizey)]
+    [package.Input(srcImg), package.Allocation(dstImgPyr)],
+    tests = [
+        [lenna_bw, dt]
+    ]
 )
 pyrDown = package.Method(
     "pyrDown", options = [manual, allocate]
 )
 
 # pyrUp
+dstImgPyr = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(),
+    initIn = initInPyrUp, initOut = initOutCopy
+)
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg), package.Output(dstImgPyr), 
-     package.Size(dsizex, dsizey)]
+    [package.Input(srcImg), package.Output(dstImgPyr)],
+    tests = [
+        [lenna, bigMemory]
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImgPyr), 
-     package.Size(dsizex, dsizey)]
+    [package.Input(srcImg), package.Allocation(dstImgPyr)],
+    tests = [
+        [lenna_bw, dt]
+    ]
 )
 pyrUp = package.Method(
     "pyrUp", options = [manual, allocate]
@@ -461,12 +490,20 @@ dstImgResize = package.Argument(
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgResize),
-     package.Size(dsizex, dsizey), fx, fy, interpolation]
+     package.Size(dsizex, dsizey), fx, fy, interpolation],
+    tests = [
+        [lenna, memory, dt, dt, dt],
+        [lenna, memory, (100, 200), 0],
+        [lenna_bw, memory, (100, 200), 0.5, 0.3, dt]
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImg), package.Allocation(dstImgResize),
-     package.Size(dsizex, dsizey), fx, fy, interpolation]
+     package.Size(dsizex, dsizey), fx, fy, interpolation],
+    tests = [
+        [lenna_bw, dt, dt, 0.5, 0.3, dt]
+    ]
 )
 resize = package.Method(
     "resize", options = [manual, allocate]
