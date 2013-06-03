@@ -35,7 +35,7 @@ include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.47.0 COMPONENTS thread date_time filesystem regex system)
+find_package(Boost 1.47.0 REQUIRED COMPONENTS thread date_time filesystem regex system)
 
 find_package(CppUnit)
 

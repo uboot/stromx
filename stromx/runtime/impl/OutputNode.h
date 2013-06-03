@@ -17,6 +17,7 @@
 #ifndef STROMX_RUNTIME_IMPL_OUTPUTNODE_H
 #define STROMX_RUNTIME_IMPL_OUTPUTNODE_H
 
+#include <boost/thread/locks.hpp>
 #include <boost/thread/mutex.hpp>
 #include <set>
 

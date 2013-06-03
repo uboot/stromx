@@ -18,6 +18,7 @@
 #define STROMX_RUNTIME_IMPL_DATACONTAINERIMPL_H
 
 #include <boost/thread/condition_variable.hpp>
+#include <boost/thread/locks.hpp>
 #include <boost/thread/mutex.hpp>
 #include "stromx/runtime/Config.h"
 
