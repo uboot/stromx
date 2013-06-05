@@ -149,6 +149,12 @@ namespace stromx
             /** An Image object with Image::BAYERGB_8 pixel type. */
             const static DataVariant BAYERGB_8_IMAGE;
             
+            /** An Image object with Image::BAYERBG_16 pixel type. */
+            const static DataVariant BAYERBG_16_IMAGE;
+            
+            /** An Image object with Image::BAYERGB_16 pixel type. */
+            const static DataVariant BAYERGB_16_IMAGE;
+            
             /** An Image object with Image::MONO_16 pixel type. */
             const static DataVariant MONO_16_IMAGE;
             
@@ -231,6 +237,8 @@ namespace stromx
                 BGR_24_IMAGE_ID,
                 BAYERBG_8_IMAGE_ID,
                 BAYERGB_8_IMAGE_ID,
+                BAYERBG_16_IMAGE_ID,
+                BAYERGB_16_IMAGE_ID,
                 MONO_16_IMAGE_ID,
                 RGB_48_IMAGE_ID,
                 BGR_48_IMAGE_ID

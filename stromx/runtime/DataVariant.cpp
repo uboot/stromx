@@ -59,6 +59,8 @@ namespace stromx
         const DataVariant DataVariant::BGR_24_IMAGE = DataVariant(BGR_24_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "BGR image 24-bit");
         const DataVariant DataVariant::BAYERBG_8_IMAGE = DataVariant(BAYERBG_8_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "Bayer BG image 8-bit");
         const DataVariant DataVariant::BAYERGB_8_IMAGE = DataVariant(BAYERGB_8_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "Bayer GB image 8-bit");
+        const DataVariant DataVariant::BAYERBG_16_IMAGE = DataVariant(BAYERBG_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "Bayer BG image 16-bit");
+        const DataVariant DataVariant::BAYERGB_16_IMAGE = DataVariant(BAYERGB_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "Bayer GB image 16-bit");
         const DataVariant DataVariant::MONO_16_IMAGE = DataVariant(MONO_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "Mono image 16-bit");
         const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "RGB image 48-bit");
         const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME, "BGR image 48-bit");
@@ -112,7 +114,9 @@ namespace stromx
                 return isVariant(MONO_IMAGE)
                     || isVariant(RGB_IMAGE)
                     || isVariant(BAYERBG_8_IMAGE)
-                    || isVariant(BAYERGB_8_IMAGE);
+                    || isVariant(BAYERGB_8_IMAGE)
+                    || isVariant(BAYERBG_16_IMAGE)
+                    || isVariant(BAYERGB_16_IMAGE);;
             case MONO_IMAGE_ID:
                 return isVariant(MONO_8_IMAGE)
                     || isVariant(MONO_16_IMAGE);

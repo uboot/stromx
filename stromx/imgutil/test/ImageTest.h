@@ -32,6 +32,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (ImageTest);
             CPPUNIT_TEST (testOpenUnknownFile);
             CPPUNIT_TEST (testOpenJpeg);
+            CPPUNIT_TEST (testOpen16Bit);
             CPPUNIT_TEST (testOpenAsColor);
             CPPUNIT_TEST (testOpenAsGrayscale);
             CPPUNIT_TEST (testOpenUnchanged);
@@ -44,6 +45,7 @@ namespace stromx
             CPPUNIT_TEST (testImageRgb24);
             CPPUNIT_TEST (testImageMono8);
             CPPUNIT_TEST (testSaveJpeg);
+            CPPUNIT_TEST (testSave16Bit);
             CPPUNIT_TEST (testSaveUnknownDirectory);
             CPPUNIT_TEST (testImageDefault);
             CPPUNIT_TEST (testSerialize);
@@ -66,6 +68,7 @@ namespace stromx
 
             protected:
                 void testOpenJpeg();
+                void testOpen16Bit();
                 void testOpenAsColor();
                 void testOpenAsGrayscale();
                 void testOpenUnchanged();
@@ -80,6 +83,7 @@ namespace stromx
                 void testImageMono8();
                 void testImageDefault();
                 void testSaveJpeg();
+                void testSave16Bit();
                 void testSaveUnknownDirectory();
                 void testSerialize();
                 void testSerializeEmpty();

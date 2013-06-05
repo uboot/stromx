@@ -125,7 +125,7 @@ void exportImage()
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))
         .def("pixelType", pure_virtual(&Image::pixelType))
-        .def("pixelSize", pure_virtual(&Image::pixelSize))
+        .def("pixelSize", pure_virtual(static_cast<unsigned int (stromx::runtime::Image::*)() const>(&Image::pixelSize)))
     ;
     
     enum_<Image::PixelType>("PixelType")

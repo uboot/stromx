@@ -70,7 +70,10 @@ namespace stromx
                                          const unsigned int stride, 
                                          uint8_t* data, 
                                          const PixelType pixelType) = 0;
-                                    
+            
+            /** Returns the size of a single pixel of type \c pixelType in bytes. */
+            static unsigned int pixelSize(const PixelType pixelType);
+                      
             /** Returns the number of channels for a given pixel type. */
             static int numChannels(const PixelType pixelType);
             

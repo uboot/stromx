@@ -88,6 +88,22 @@ initInPyrUp = document.Document((
     "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
+initInDdepth = document.Document((
+    "runtime::Image::PixelType pixelType = imgutil::computeOutPixelType("
+    "convertDdepth(m_ddepth), srcCastedData->pixelType());\n"
+    "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
+    "srcCastedData->width();\n"
+    "{1}->initializeImage({0}->width(), {0}->height(), stride, "
+    "{1}->data(), pixelType);").format("srcCastedData", "dstCastedData"
+))
+initOutDdepth = document.Document((
+    "runtime::Image::PixelType pixelType = imgutil::computeOutPixelType("
+    "convertDdepth(m_ddepth), srcCastedData->pixelType());\n"
+    "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
+    "srcCastedData->width();\n"
+    "{1}->initializeImage({1}->width(), {1}->height(), stride, "
+    "{1}->data(), pixelType);").format("srcCastedData", "dstCastedData"
+))
 
 # arguments
 srcImg = package.Argument(
@@ -417,20 +433,27 @@ morphologyEx = package.Method(
 )
 
 # Laplacian
-initInLaplacian = initInCopy
 dstImgLaplacian = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
-    initIn = initInLaplacian, initOut = initOutCopy
+    initIn = initInDdepth, initOut = initOutDdepth
 )
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgLaplacian), ddepth,
-     ksize, scale, delta]
+     ksize, scale, delta],
+    tests = [
+        [lenna, memory, 0, 3, 1, 0],
+        [lenna_bw, memory, 1, 3, 1, 0]
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImgLaplacian), ddepth,
-     ksize, scale, delta]
+     ksize, scale, delta],
+    tests = [
+        [lenna_bw, dt, 2, 5, 100, 1000],
+        [lenna, dt, 2, 7, 50, 500]
+    ]
 )
 laplacian = package.Method(
     "Laplacian", options = [manual, allocate]

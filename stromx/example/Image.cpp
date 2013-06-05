@@ -293,7 +293,7 @@ namespace stromx
             case CV_8UC3:
                 return runtime::Image::BGR_24;
             default:
-                throw runtime::WrongArgument("Unknown OpenCV element type.");  
+                throw runtime::WrongArgument("Unknown OpenCV pixel type.");  
             }
         }
 

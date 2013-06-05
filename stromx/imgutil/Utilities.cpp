@@ -14,11 +14,13 @@
 *  limitations under the License.
 */
 
-#include "stromx/imgutil/Matrix.h"
-#include "stromx/imgutil/Image.h"
 #include "stromx/imgutil/Utilities.h"
+
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/Exception.h>
+
+#include "stromx/imgutil/Matrix.h"
+#include "stromx/imgutil/Image.h"
 
 namespace stromx
 {
@@ -40,6 +42,89 @@ namespace stromx
             uint8_t* data = const_cast<uint8_t*>(matrix.data());
             
             return cv::Mat(matrix.cols(), matrix.rows(), cvType, data, matrix.stride());
+        }
+        
+        runtime::Image::PixelType computeOutPixelType(const int outDdepth,
+                                    const runtime::Image::PixelType inPixelType)
+        {
+            int inDdepth = 0;
+            switch(inPixelType)
+            {
+            case runtime::Image::MONO_8:
+            case runtime::Image::RGB_24:
+            case runtime::Image::BGR_24:
+                inDdepth = 0;
+                break;
+            case runtime::Image::MONO_16:
+            case runtime::Image::RGB_48:
+            case runtime::Image::BGR_48:
+                inDdepth = 1;
+                break;
+            default:
+                throw runtime::WrongArgument("Invalid input pixel type.");
+            }
+            
+            int ddepth = 0;
+            switch(outDdepth)
+            {
+            case -1:
+                ddepth = inDdepth;
+                break;
+            case CV_8U:
+                ddepth = 0;
+                break;
+            case CV_16U:
+                ddepth = 1;
+                break;
+            default:
+                throw runtime::WrongArgument("Invalid output pixel depth.");
+            }
+            
+            int pixelType = 0;
+            switch(inPixelType)
+            {
+            case runtime::Image::MONO_8:
+            case runtime::Image::MONO_16:
+                pixelType = 0;
+                break;
+            case runtime::Image::RGB_24:
+            case runtime::Image::RGB_48:
+                pixelType = 1;
+                break;
+            case runtime::Image::BGR_24:
+            case runtime::Image::BGR_48:
+                pixelType = 2;
+                break;
+            default:
+                throw runtime::WrongArgument("Invalid input pixel type.");
+            }
+                
+            
+            // the decision table
+            int table[2][3] =
+            /* ddepth      0  0  0    1  1  1 
+             * pixelType   0  1  2    0  1  2 */
+            /* result */ {{0, 1, 2}, {3, 4, 5}};
+            
+            int result = table[ddepth][pixelType];
+            
+            switch(result)
+            {
+            case 0:
+                return runtime::Image::MONO_8;
+            case 1:
+                return runtime::Image::RGB_24;
+            case 2:
+                return runtime::Image::BGR_24;
+            case 3:
+                return runtime::Image::MONO_16;
+            case 4:
+                return runtime::Image::RGB_48;
+            case 5:
+                return runtime::Image::BGR_48;
+            default:
+                throw runtime::InternalError("Invalid output pixel type.");
+            }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace stromx
         
         unsigned int ImageWrapper::pixelSize() const
         {
-            return depth(m_pixelType) * numChannels(m_pixelType);
+            return Image::pixelSize(m_pixelType);
         }
         
         void ImageWrapper::initializeImage(const unsigned int width, const unsigned int height, 

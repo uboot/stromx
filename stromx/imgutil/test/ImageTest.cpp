@@ -22,6 +22,7 @@
 #include <stromx/runtime/None.h>
 #include "stromx/imgutil/Config.h"
 #include "stromx/imgutil/Image.h"
+#include "stromx/imgutil/Utilities.h"
 #include "stromx/imgutil/test/ImageTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::imgutil::ImageTest);
@@ -76,6 +77,12 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna.jpg", Image::GRAYSCALE));
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
+        }
+
+        void ImageTest::testOpen16Bit()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_16bit.png"));
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
         }
 
         void ImageTest::testOpenUnchanged()
@@ -219,6 +226,18 @@ namespace stromx
             m_image = new Image("ImageTest_testSaveJpeg.jpg");
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_image->height());
+        }
+        
+        void ImageTest::testSave16Bit()
+        {
+            m_image = new Image("lenna.jpg");
+            Image deepImage(m_image->width(), m_image->height(), Image::BGR_48);
+            
+            cv::Mat cvInImage = getOpenCvMat(*m_image);
+            cv::Mat cvOutImage = getOpenCvMat(deepImage);
+            cvInImage.convertTo(cvOutImage, CV_8U, 256);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_image->save("ImageTest_testSave16Bit.png"));
         }
         
         void ImageTest::testSaveUnknownDirectory()

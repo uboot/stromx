@@ -230,10 +230,20 @@ namespace stromx
                     throw runtime::FileAccessFailed(filename, "Failed to save image.");
                 break;
             }
+            case runtime::Image::RGB_48:
+            {
+                cv::Mat tempImage;
+                cv::cvtColor(inImage, tempImage, CV_RGB2BGR); 
+                if(! cv::imwrite(filename.c_str(), tempImage))
+                    throw runtime::FileAccessFailed(filename, "Failed to save image.");
+                break;
+            }
             case runtime::Image::BGR_24:
             case runtime::Image::MONO_8:
             case runtime::Image::BAYERBG_8:
             case runtime::Image::BAYERGB_8:
+            case runtime::Image::MONO_16:
+            case runtime::Image::BGR_48:
             {
                 if(! cv::imwrite(filename, inImage))
                     throw runtime::FileAccessFailed(filename, "Failed to save image.");
@@ -279,6 +289,13 @@ namespace stromx
             case runtime::Image::RGB_24:
             case runtime::Image::BGR_24:
                 return CV_8UC3;
+            case runtime::Image::MONO_16:
+            case runtime::Image::BAYERBG_16:
+            case runtime::Image::BAYERGB_16:
+                return CV_16UC1;
+            case runtime::Image::RGB_48:
+            case runtime::Image::BGR_48:
+                return CV_16UC3;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }
@@ -292,8 +309,12 @@ namespace stromx
                 return runtime::Image::MONO_8;
             case CV_8UC3:
                 return runtime::Image::BGR_24;
+            case CV_16UC1:
+                return runtime::Image::MONO_16;
+            case CV_16UC3:
+                return runtime::Image::BGR_48;
             default:
-                throw runtime::WrongArgument("Unknown OpenCV element type.");  
+                throw runtime::WrongArgument("Unknown OpenCV pixel type.");  
             }
         }
 

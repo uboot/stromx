@@ -37,6 +37,13 @@ namespace stromx
         
         /** Returns an OpenCV matrix header for \c matrix. */
         cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
+        
+        /** 
+         * Computes the stromx pixel type of the input type \c inPixelType 
+         * after conversion to the OpenCV depth \c outDdepth.
+         */
+        runtime::Image::PixelType computeOutPixelType(const int outDdepth,
+                                    const runtime::Image::PixelType inPixelType);
     }
 }
 

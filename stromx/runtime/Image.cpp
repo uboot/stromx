@@ -64,6 +64,11 @@ namespace stromx
             }
         }
         
+        unsigned int Image::pixelSize(const PixelType pixelType)
+        {
+            return depth(pixelType) * numChannels(pixelType);
+        }
+        
         const runtime::DataVariant Image::dataVariantFromPixelType(const runtime::Image::PixelType pixelType)
         {
             switch(pixelType)
@@ -72,14 +77,24 @@ namespace stromx
                 return runtime::DataVariant::IMAGE;
             case runtime::Image::MONO_8:
                 return runtime::DataVariant::MONO_8_IMAGE;
+            case runtime::Image::MONO_16:
+                return runtime::DataVariant::MONO_16_IMAGE;
             case runtime::Image::BAYERBG_8:
                 return runtime::DataVariant::BAYERBG_8_IMAGE;
+            case runtime::Image::BAYERBG_16:
+                return runtime::DataVariant::BAYERBG_16_IMAGE;
             case runtime::Image::BAYERGB_8:
                 return runtime::DataVariant::BAYERGB_8_IMAGE;
+            case runtime::Image::BAYERGB_16:
+                return runtime::DataVariant::BAYERGB_16_IMAGE;
             case runtime::Image::RGB_24:
                 return runtime::DataVariant::RGB_24_IMAGE;
+            case runtime::Image::RGB_48:
+                return runtime::DataVariant::RGB_48_IMAGE;
             case runtime::Image::BGR_24:
                 return runtime::DataVariant::BGR_24_IMAGE;
+            case runtime::Image::BGR_48:
+                return runtime::DataVariant::BGR_48_IMAGE;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }
