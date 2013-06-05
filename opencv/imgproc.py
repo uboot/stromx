@@ -177,6 +177,12 @@ dsizex = package.NumericParameter(
 dsizey = package.NumericParameter(
         "dsizey", "Size Y", cvtype.Int(), datatype.UInt32()
 )
+dx = package.NumericParameter(
+    "dx", "Order X derivative", cvtype.Int(), datatype.UInt32(), default = 1
+)
+dy = package.NumericParameter(
+    "dy", "Order Y derivative", cvtype.Int(), datatype.UInt32(), default = 1
+)
 fx = package.NumericParameter(
     "fx", "Scale X", cvtype.Double(), datatype.Double(), default = 1.0
 )
@@ -219,6 +225,10 @@ scale = package.NumericParameter(
 )
 delta = package.NumericParameter(
     "delta", "Delta", cvtype.Double(), datatype.Double(), default = 0.0
+)
+dstImgDdepth = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(),
+    initIn = initInDdepth, initOut = initOutDdepth
 )
 
 # test data
@@ -433,22 +443,18 @@ morphologyEx = package.Method(
 )
 
 # Laplacian
-dstImgLaplacian = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(),
-    initIn = initInDdepth, initOut = initOutDdepth
-)
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg), package.Output(dstImgLaplacian), ddepth,
+    [package.Input(srcImg), package.Output(dstImgDdepth), ddepth,
      ksize, scale, delta],
     tests = [
-        [lenna, memory, 0, 3, 1, 0],
+        [lenna, memory, 0, 3, dt, dt],
         [lenna_bw, memory, 1, 3, 1, 0]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
-    [package.Input(srcImg), package.Allocation(dstImgLaplacian), ddepth,
+    [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
      ksize, scale, delta],
     tests = [
         [lenna_bw, dt, 2, 5, 100, 1000],
@@ -457,6 +463,33 @@ allocate = package.Option(
 )
 laplacian = package.Method(
     "Laplacian", options = [manual, allocate]
+)
+
+# Sobel
+sobelKsize = package.NumericParameter(
+    "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
+    step = 2, default = 1, rules = [package.OddRule()]
+)
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg), package.Output(dstImgDdepth), ddepth, 
+     sobelKsize, dx, dy, scale, delta],
+    tests = [
+        [lenna, memory, 0, 1, 1, 1, 1, 0],
+        [lenna_bw, memory, 1, 1, 2, 1, 1, 0]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
+     sobelKsize, dx, dy, scale, delta],
+    tests = [
+        [lenna, dt, 0, dt, 2, 1, 2, dt],
+        [lenna_bw, dt, 2, dt, dt, dt, 100, dt]
+    ]
+)
+sobel = package.Method(
+    "Sobel", options = [manual, allocate]
 )
 
 # pyrDown
@@ -546,7 +579,8 @@ imgproc = package.Package(
         laplacian,
         pyrDown,
         pyrUp,
-        resize
+        resize,
+        sobel
     ],
     functions = [
         checkEnumValue,
