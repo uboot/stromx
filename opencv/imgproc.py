@@ -181,7 +181,7 @@ dx = package.NumericParameter(
     "dx", "Order X derivative", cvtype.Int(), datatype.UInt32(), default = 1
 )
 dy = package.NumericParameter(
-    "dy", "Order Y derivative", cvtype.Int(), datatype.UInt32(), default = 1
+    "dy", "Order Y derivative", cvtype.Int(), datatype.UInt32(), default = 0
 )
 fx = package.NumericParameter(
     "fx", "Scale X", cvtype.Double(), datatype.Double(), default = 1.0
@@ -468,28 +468,51 @@ laplacian = package.Method(
 # Sobel
 sobelKsize = package.NumericParameter(
     "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
-    step = 2, default = 1, rules = [package.OddRule()]
+    maxValue = 7, step = 2, default = 3, rules = [package.OddRule()]
 )
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgDdepth), ddepth, 
-     sobelKsize, dx, dy, scale, delta],
+     dx, dy, sobelKsize, scale, delta],
     tests = [
         [lenna, memory, 0, 1, 1, 1, 1, 0],
-        [lenna_bw, memory, 1, 1, 2, 1, 1, 0]
+        [lenna_bw, memory, 1, 2, 0, 3, 1, 0]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
-     sobelKsize, dx, dy, scale, delta],
+     dx, dy, sobelKsize, scale, delta],
     tests = [
-        [lenna, dt, 0, dt, 2, 1, 2, dt],
+        [lenna, dt, 0, dt, 2, 5, 2, dt],
         [lenna_bw, dt, 2, dt, dt, dt, 100, dt]
     ]
 )
 sobel = package.Method(
     "Sobel", options = [manual, allocate]
+)
+
+# Scharr
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg), package.Output(dstImgDdepth), ddepth, 
+     dx, dy, scale, delta],
+    tests = [
+        [lenna, memory, 0, 0, 1, 1, 0],
+        [lenna_bw, memory, 1, 1, 0, 1, 0]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
+     dx, dy, scale, delta],
+    tests = [
+        [lenna, dt, 0, dt, dt, 2, dt],
+        [lenna_bw, dt, 2, 0, 1, 100, dt]
+    ]
+)
+scharr = package.Method(
+    "Scharr", options = [manual, allocate]
 )
 
 # pyrDown
@@ -580,6 +603,7 @@ imgproc = package.Package(
         pyrDown,
         pyrUp,
         resize,
+        scharr,
         sobel
     ],
     functions = [
