@@ -1,0 +1,130 @@
+#include "stromx/imgproc/test/SobelTest.h"
+
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
+#include "stromx/imgutil/Image.h"
+#include "stromx/imgproc/Sobel.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::imgproc::SobelTest);
+
+namespace stromx
+{
+    namespace imgproc
+    {
+        void SobelTest::setUp()
+        {
+            m_operator = new stromx::runtime::OperatorTester(new Sobel);
+        }
+        
+        void SobelTest::tearDown()
+        {
+            delete m_operator;
+        }
+        
+        void SobelTest::testManual0()
+        {
+            m_operator->setParameter(Sobel::DATA_FLOW, runtime::Enum(Sobel::MANUAL));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new imgutil::Image("lenna.jpg"));
+            runtime::DataContainer dst(new imgutil::Image(1000000));
+            runtime::Enum ddepth(0);
+            runtime::UInt32 dx(1);
+            runtime::UInt32 dy(1);
+            runtime::UInt32 ksize(1);
+            runtime::Double scale(1);
+            runtime::Double delta(0);
+            
+            m_operator->setInputData(Sobel::SRC, src);
+            m_operator->setInputData(Sobel::DST, dst);
+            m_operator->setParameter(Sobel::DDEPTH, ddepth);
+            m_operator->setParameter(Sobel::DX, dx);
+            m_operator->setParameter(Sobel::DY, dy);
+            m_operator->setParameter(Sobel::KSIZE, ksize);
+            m_operator->setParameter(Sobel::SCALE, scale);
+            m_operator->setParameter(Sobel::DELTA, delta);
+            
+            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            imgutil::Image::save("SobelTest_testManual0.png", access());
+        }
+        
+        void SobelTest::testManual1()
+        {
+            m_operator->setParameter(Sobel::DATA_FLOW, runtime::Enum(Sobel::MANUAL));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new imgutil::Image("lenna.jpg", imgutil::Image::GRAYSCALE));
+            runtime::DataContainer dst(new imgutil::Image(1000000));
+            runtime::Enum ddepth(1);
+            runtime::UInt32 dx(2);
+            runtime::UInt32 dy(0);
+            runtime::UInt32 ksize(3);
+            runtime::Double scale(1);
+            runtime::Double delta(0);
+            
+            m_operator->setInputData(Sobel::SRC, src);
+            m_operator->setInputData(Sobel::DST, dst);
+            m_operator->setParameter(Sobel::DDEPTH, ddepth);
+            m_operator->setParameter(Sobel::DX, dx);
+            m_operator->setParameter(Sobel::DY, dy);
+            m_operator->setParameter(Sobel::KSIZE, ksize);
+            m_operator->setParameter(Sobel::SCALE, scale);
+            m_operator->setParameter(Sobel::DELTA, delta);
+            
+            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            imgutil::Image::save("SobelTest_testManual1.png", access());
+        }
+        
+        void SobelTest::testAllocate0()
+        {
+            m_operator->setParameter(Sobel::DATA_FLOW, runtime::Enum(Sobel::ALLOCATE));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new imgutil::Image("lenna.jpg"));
+            runtime::Enum ddepth(0);
+            runtime::UInt32 dy(2);
+            runtime::UInt32 ksize(5);
+            runtime::Double scale(2);
+            
+            m_operator->setInputData(Sobel::SRC, src);
+            m_operator->setParameter(Sobel::DDEPTH, ddepth);
+            m_operator->setParameter(Sobel::DY, dy);
+            m_operator->setParameter(Sobel::KSIZE, ksize);
+            m_operator->setParameter(Sobel::SCALE, scale);
+            
+            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            imgutil::Image::save("SobelTest_testAllocate0.png", access());
+        }
+        
+        void SobelTest::testAllocate1()
+        {
+            m_operator->setParameter(Sobel::DATA_FLOW, runtime::Enum(Sobel::ALLOCATE));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new imgutil::Image("lenna.jpg", imgutil::Image::GRAYSCALE));
+            runtime::Enum ddepth(2);
+            runtime::Double scale(100);
+            
+            m_operator->setInputData(Sobel::SRC, src);
+            m_operator->setParameter(Sobel::DDEPTH, ddepth);
+            m_operator->setParameter(Sobel::SCALE, scale);
+            
+            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            imgutil::Image::save("SobelTest_testAllocate1.png", access());
+        }
+        
+    }
+}
+
