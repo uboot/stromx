@@ -57,7 +57,7 @@ endif()
 
 if(OpenCV_FOUND)
     option(BUILD_EXAMPLE "Build example operators" ON)
-    option(BUILD_OPENCV_WRAPPER "Build OpenCV wrappers" OFF)
+    option(BUILD_OPENCV_WRAPPER "Build OpenCV wrappers" ON)
 endif()
 
 if(XERCES_FOUND AND LIBZIP_FOUND)
@@ -82,11 +82,15 @@ if(BUILD_PYTHON)
     add_subdirectory(python)
 endif()
 
-configure_file (
-    "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
-    "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
-    @ONLY
-)
+# create the configure file only if all packages are built; otherwise the file 
+# must be adapted accordingly
+if(BUILD_EXAMPLE AND BUILD_OPENCV_WRAPPER)
+    configure_file (
+        "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
+        "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
+        @ONLY
+    )
+endif()
 
 if(WIN32)
     install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
