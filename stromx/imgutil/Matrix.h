@@ -34,7 +34,7 @@ namespace stromx
         /** \brief %Matrix implementation based on OpenCV matrices. */
         class STROMX_IMGUTIL_API Matrix : public runtime::MatrixWrapper
         {
-            friend cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
+            friend STROMX_IMGUTIL_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
         
         public:
             

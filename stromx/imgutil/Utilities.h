@@ -20,6 +20,8 @@
 #include <opencv2/core/core.hpp>
 #include <stromx/runtime/Image.h>
 
+#include "stromx/imgutil/Config.h"
+
 namespace stromx
 {
     namespace runtime
@@ -33,16 +35,16 @@ namespace stromx
         class Image;
         
         /** Returns an OpenCV matrix header for \c image. */
-        cv::Mat getOpenCvMat(const runtime::Image& image);
+        STROMX_IMGUTIL_API cv::Mat getOpenCvMat(const runtime::Image& image);
         
         /** Returns an OpenCV matrix header for \c matrix. */
-        cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
+        STROMX_IMGUTIL_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
         
         /** 
          * Computes the stromx pixel type of the input type \c inPixelType 
          * after conversion to the OpenCV depth \c outDdepth.
          */
-        runtime::Image::PixelType computeOutPixelType(const int outDdepth,
+        STROMX_IMGUTIL_API runtime::Image::PixelType computeOutPixelType(const int outDdepth,
                                     const runtime::Image::PixelType inPixelType);
     }
 }

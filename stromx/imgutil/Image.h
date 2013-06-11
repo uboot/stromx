@@ -33,7 +33,7 @@ namespace stromx
         /** \brief %Image with support for reading and writing. */
         class STROMX_IMGUTIL_API Image : public runtime::ImageWrapper
         {
-             friend cv::Mat getOpenCvMat(const runtime::Image& image);
+             friend STROMX_IMGUTIL_API cv::Mat getOpenCvMat(const runtime::Image& image);
              
         public:
             /** Conversion options when reading images. */
