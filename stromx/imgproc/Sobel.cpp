@@ -22,11 +22,11 @@ namespace stromx
         
         Sobel::Sobel()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_ddepth(0),
             m_scale(1.0),
             m_dx(1),
             m_ksize(3),
             m_delta(0.0),
+            m_ddepth(0),
             m_dy(0),
             m_dataFlow()
         {
@@ -36,8 +36,6 @@ namespace stromx
         {
             switch(id)
             {
-            case DDEPTH:
-                return m_ddepth;
             case SCALE:
                 return m_scale;
             case DX:
@@ -46,6 +44,8 @@ namespace stromx
                 return m_ksize;
             case DELTA:
                 return m_delta;
+            case DDEPTH:
+                return m_ddepth;
             case DY:
                 return m_dy;
             case DATA_FLOW:
@@ -61,13 +61,6 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DDEPTH:
-                    {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
-                        m_ddepth = castedValue;
-                    }
-                    break;
                 case SCALE:
                     {
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
@@ -96,6 +89,13 @@ namespace stromx
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
+                    }
+                    break;
+                case DDEPTH:
+                    {
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_ddepthParameter, *this);
+                        m_ddepth = castedValue;
                     }
                     break;
                 case DY:

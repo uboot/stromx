@@ -31,7 +31,7 @@ if(PYTHON_INSTALL_DIR)
         DESTINATION ${PYTHON_INSTALL_DIR}/stromx/imgproc
         FILES_MATCHING PATTERN "*.py"
     )
-    install(TARGETS imgutil
+    install(TARGETS imgproc
         DESTINATION ${PYTHON_INSTALL_DIR}/stromx/imgproc
     )
 endif()

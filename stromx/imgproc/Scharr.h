@@ -35,10 +35,10 @@ namespace stromx
             enum ParameterId
             {
                 SCALE,
-                DY,
+                DELTA,
                 DDEPTH,
                 DX,
-                DELTA,
+                DY,
                 DATA_FLOW
             };
             Scharr();
@@ -60,17 +60,17 @@ namespace stromx
             
             int convertDdepth(const runtime::Enum & value);
             
-            runtime::UInt32 m_dy;
-            runtime::Enum m_ddepth;
             runtime::Double m_scale;
+            runtime::Enum m_ddepth;
             runtime::UInt32 m_dx;
             runtime::Double m_delta;
+            runtime::UInt32 m_dy;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::UInt32>* m_dyParameter;
-            runtime::EnumParameter* m_ddepthParameter;
             runtime::NumericParameter<runtime::Double>* m_scaleParameter;
+            runtime::EnumParameter* m_ddepthParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dxParameter;
             runtime::NumericParameter<runtime::Double>* m_deltaParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_dyParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

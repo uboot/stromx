@@ -16,6 +16,12 @@ namespace stromx
         class STROMX_IMGPROC_API MorphologyEx : public runtime::OperatorKernel
         {
         public:
+            enum ShapeId
+            {
+                MORPH_RECT,
+                MORPH_ELLIPSE,
+                MORPH_CROSS
+            };
             enum OpId
             {
                 MORPH_OPEN,
@@ -23,12 +29,6 @@ namespace stromx
                 MORPH_GRADIENT,
                 MORPH_TOPHAT,
                 MORPH_BLACKHAT
-            };
-            enum ShapeId
-            {
-                MORPH_RECT,
-                MORPH_ELLIPSE,
-                MORPH_CROSS
             };
             enum DataFlowId
             {
@@ -67,20 +67,20 @@ namespace stromx
             const std::vector<const runtime::Description*> setupInputs();
             const std::vector<const runtime::Description*> setupOutputs();
             
-            int convertOp(const runtime::Enum & value);
             int convertShape(const runtime::Enum & value);
+            int convertOp(const runtime::Enum & value);
             
-            runtime::UInt32 m_ksizex;
-            runtime::Enum m_op;
             runtime::UInt32 m_ksizey;
-            runtime::UInt32 m_iterations;
             runtime::Enum m_shape;
+            runtime::UInt32 m_ksizex;
+            runtime::UInt32 m_iterations;
+            runtime::Enum m_op;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
-            runtime::EnumParameter* m_opParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
             runtime::EnumParameter* m_shapeParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
+            runtime::EnumParameter* m_opParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

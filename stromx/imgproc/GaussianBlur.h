@@ -53,14 +53,14 @@ namespace stromx
             const std::vector<const runtime::Description*> setupOutputs();
             
             runtime::Double m_sigmaY;
-            runtime::UInt32 m_ksizey;
             runtime::UInt32 m_ksizex;
             runtime::Double m_sigmaX;
+            runtime::UInt32 m_ksizey;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::Double>* m_sigmaYParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
             runtime::NumericParameter<runtime::Double>* m_sigmaXParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

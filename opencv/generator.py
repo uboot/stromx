@@ -61,7 +61,7 @@ class LibHeaderGenerator(LibGenerator):
         self.doc.line("#define STROMX_{0}_{0}_H".format(p))
         self.doc.blank()
         
-        self.doc.line('#include "Config.h"')
+        self.doc.line('#include "stromx/{0}/Config.h"'.format(self.p.ident))
         self.doc.blank()
         
         self.doc.line("namespace stromx")
@@ -429,7 +429,7 @@ class PythonCMakeGenerator(LibGenerator):
         self.doc.line('FILES_MATCHING PATTERN "*.py"')
         self.doc.decreaseIndent()
         self.doc.line(")")
-        self.doc.line("install(TARGETS imgutil")
+        self.doc.line("install(TARGETS {0}".format(self.p.ident))
         self.doc.increaseIndent()
         self.doc.line("DESTINATION ${{PYTHON_INSTALL_DIR}}/stromx/{0}".format(self.p.ident))
         self.doc.decreaseIndent()

@@ -24,8 +24,8 @@ namespace stromx
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_ksizex(3),
             m_ksizey(3),
-            m_iterations(1),
             m_shape(0),
+            m_iterations(1),
             m_dataFlow()
         {
         }
@@ -38,10 +38,10 @@ namespace stromx
                 return m_ksizex;
             case KSIZEY:
                 return m_ksizey;
-            case ITERATIONS:
-                return m_iterations;
             case SHAPE:
                 return m_shape;
+            case ITERATIONS:
+                return m_iterations;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -69,18 +69,18 @@ namespace stromx
                         m_ksizey = castedValue;
                     }
                     break;
-                case ITERATIONS:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_iterationsParameter, *this);
-                        m_iterations = castedValue;
-                    }
-                    break;
                 case SHAPE:
                     {
                         runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_shapeParameter, *this);
                         m_shape = castedValue;
+                    }
+                    break;
+                case ITERATIONS:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_iterationsParameter, *this);
+                        m_iterations = castedValue;
                     }
                     break;
                 case DATA_FLOW:

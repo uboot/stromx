@@ -1,7 +1,7 @@
 #ifndef STROMX_IMGPROC_IMGPROC_H
 #define STROMX_IMGPROC_IMGPROC_H
 
-#include "Config.h"
+#include "stromx/imgproc/Config.h"
 
 namespace stromx
 {
