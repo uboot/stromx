@@ -1,7 +1,7 @@
 add_test(NAME stromx_imgproc_test COMMAND stromx_imgproc_test)
 
 if(MSVC)
-    add_definitions(/DSTROMX_EXAMPLE_STATIC)
+    add_definitions(/DSTROMX_IMGPROC_STATIC)
 endif(MSVC)
 
 include_directories (

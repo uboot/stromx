@@ -554,7 +554,9 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.blank()
         self.doc.line("if(MSVC)")
         self.doc.increaseIndent()
-        self.doc.line("add_definitions(/DSTROMX_EXAMPLE_STATIC)")
+        self.doc.line((
+            "add_definitions(/DSTROMX_{0}_STATIC)"
+            ).format(self.p.ident.constant()))
         self.doc.decreaseIndent()
         self.doc.line("endif(MSVC)")
         self.doc.blank()
@@ -728,7 +730,7 @@ class ConfigGenerator(LibGenerator):
     <BLANKLINE>
     #ifdef WIN32
         #ifdef STROMX_IMGPROC_STATIC
-            #define STROMX_IMGPROC_STATIC
+            #define STROMX_IMGPROC_API
         #else // STROMX_IMGPROC_STATIC
             #ifdef stromx_imgproc_EXPORTS
                 #define STROMX_IMGPROC_API __declspec(dllexport)
@@ -765,7 +767,7 @@ class ConfigGenerator(LibGenerator):
         self.doc.increaseIndent()
         self.doc.line("#ifdef STROMX_{0}_STATIC".format(p))
         self.doc.increaseIndent()
-        self.doc.line("#define STROMX_{0}_STATIC".format(p))
+        self.doc.line("#define STROMX_{0}_API".format(p))
         self.doc.decreaseIndent()
         self.doc.line("#else // STROMX_{0}_STATIC".format(p))
         self.doc.increaseIndent()

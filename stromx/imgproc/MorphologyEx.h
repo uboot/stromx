@@ -70,17 +70,17 @@ namespace stromx
             int convertShape(const runtime::Enum & value);
             int convertOp(const runtime::Enum & value);
             
-            runtime::UInt32 m_ksizey;
             runtime::Enum m_shape;
+            runtime::UInt32 m_ksizey;
+            runtime::Enum m_op;
             runtime::UInt32 m_ksizex;
             runtime::UInt32 m_iterations;
-            runtime::Enum m_op;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_shapeParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
+            runtime::EnumParameter* m_opParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
-            runtime::EnumParameter* m_opParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

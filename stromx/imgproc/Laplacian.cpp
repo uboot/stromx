@@ -22,10 +22,10 @@ namespace stromx
         
         Laplacian::Laplacian()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_scale(1.0),
-            m_ksize(3),
             m_ddepth(0),
             m_delta(0.0),
+            m_scale(1.0),
+            m_ksize(3),
             m_dataFlow()
         {
         }
@@ -34,14 +34,14 @@ namespace stromx
         {
             switch(id)
             {
-            case SCALE:
-                return m_scale;
-            case KSIZE:
-                return m_ksize;
             case DDEPTH:
                 return m_ddepth;
             case DELTA:
                 return m_delta;
+            case SCALE:
+                return m_scale;
+            case KSIZE:
+                return m_ksize;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -55,6 +55,20 @@ namespace stromx
             {
                 switch(id)
                 {
+                case DDEPTH:
+                    {
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_ddepthParameter, *this);
+                        m_ddepth = castedValue;
+                    }
+                    break;
+                case DELTA:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_deltaParameter, *this);
+                        m_delta = castedValue;
+                    }
+                    break;
                 case SCALE:
                     {
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
@@ -69,20 +83,6 @@ namespace stromx
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
                         m_ksize = castedValue;
-                    }
-                    break;
-                case DDEPTH:
-                    {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
-                        m_ddepth = castedValue;
-                    }
-                    break;
-                case DELTA:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_deltaParameter, *this);
-                        m_delta = castedValue;
                     }
                     break;
                 case DATA_FLOW:

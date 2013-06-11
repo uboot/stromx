@@ -22,11 +22,11 @@ namespace stromx
         
         MorphologyEx::MorphologyEx()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_ksizey(3),
             m_shape(0),
+            m_ksizey(3),
+            m_op(1),
             m_ksizex(3),
             m_iterations(1),
-            m_op(1),
             m_dataFlow()
         {
         }
@@ -35,16 +35,16 @@ namespace stromx
         {
             switch(id)
             {
-            case KSIZEY:
-                return m_ksizey;
             case SHAPE:
                 return m_shape;
+            case KSIZEY:
+                return m_ksizey;
+            case OP:
+                return m_op;
             case KSIZEX:
                 return m_ksizex;
             case ITERATIONS:
                 return m_iterations;
-            case OP:
-                return m_op;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -58,6 +58,13 @@ namespace stromx
             {
                 switch(id)
                 {
+                case SHAPE:
+                    {
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_shapeParameter, *this);
+                        m_shape = castedValue;
+                    }
+                    break;
                 case KSIZEY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
@@ -65,11 +72,11 @@ namespace stromx
                         m_ksizey = castedValue;
                     }
                     break;
-                case SHAPE:
+                case OP:
                     {
                         runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_shapeParameter, *this);
-                        m_shape = castedValue;
+                        checkEnumValue(castedValue, m_opParameter, *this);
+                        m_op = castedValue;
                     }
                     break;
                 case KSIZEX:
@@ -84,13 +91,6 @@ namespace stromx
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_iterationsParameter, *this);
                         m_iterations = castedValue;
-                    }
-                    break;
-                case OP:
-                    {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_opParameter, *this);
-                        m_op = castedValue;
                     }
                     break;
                 case DATA_FLOW:

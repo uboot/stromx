@@ -22,8 +22,8 @@ namespace stromx
         
         BoxFilter::BoxFilter()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_ksizex(3),
             m_ksizey(3),
+            m_ksizex(3),
             m_dataFlow()
         {
         }
@@ -32,10 +32,10 @@ namespace stromx
         {
             switch(id)
             {
-            case KSIZEX:
-                return m_ksizex;
             case KSIZEY:
                 return m_ksizey;
+            case KSIZEX:
+                return m_ksizex;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -49,18 +49,18 @@ namespace stromx
             {
                 switch(id)
                 {
-                case KSIZEX:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_ksizexParameter, *this);
-                        m_ksizex = castedValue;
-                    }
-                    break;
                 case KSIZEY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_ksizeyParameter, *this);
                         m_ksizey = castedValue;
+                    }
+                    break;
+                case KSIZEX:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_ksizexParameter, *this);
+                        m_ksizex = castedValue;
                     }
                     break;
                 case DATA_FLOW:

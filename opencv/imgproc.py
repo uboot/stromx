@@ -71,8 +71,8 @@ initOutCopy = document.Document((
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
 ))
 initInResize = document.Document((
-    "int width = int(m_dsizex) ? int(m_dsizex) : srcCastedData->width() * double(m_fx);\n"
-    "int height = int(m_dsizey) ? int(m_dsizey) : srcCastedData->height() * double(m_fy);\n"
+    "int width = int(m_dsizex) ? int(m_dsizex) : int(srcCastedData->width() * double(m_fx));\n"
+    "int height = int(m_dsizey) ? int(m_dsizey) : int(srcCastedData->height() * double(m_fy));\n"
     "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )

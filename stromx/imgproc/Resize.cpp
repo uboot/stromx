@@ -22,11 +22,11 @@ namespace stromx
         
         Resize::Resize()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_fy(1.0),
             m_dsizex(),
             m_fx(1.0),
-            m_interpolation(1),
             m_dsizey(),
+            m_fy(1.0),
+            m_interpolation(1),
             m_dataFlow()
         {
         }
@@ -35,16 +35,16 @@ namespace stromx
         {
             switch(id)
             {
-            case FY:
-                return m_fy;
             case DSIZEX:
                 return m_dsizex;
             case FX:
                 return m_fx;
-            case INTERPOLATION:
-                return m_interpolation;
             case DSIZEY:
                 return m_dsizey;
+            case FY:
+                return m_fy;
+            case INTERPOLATION:
+                return m_interpolation;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -58,13 +58,6 @@ namespace stromx
             {
                 switch(id)
                 {
-                case FY:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_fyParameter, *this);
-                        m_fy = castedValue;
-                    }
-                    break;
                 case DSIZEX:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
@@ -79,18 +72,25 @@ namespace stromx
                         m_fx = castedValue;
                     }
                     break;
-                case INTERPOLATION:
-                    {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_interpolationParameter, *this);
-                        m_interpolation = castedValue;
-                    }
-                    break;
                 case DSIZEY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dsizeyParameter, *this);
                         m_dsizey = castedValue;
+                    }
+                    break;
+                case FY:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_fyParameter, *this);
+                        m_fy = castedValue;
+                    }
+                    break;
+                case INTERPOLATION:
+                    {
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_interpolationParameter, *this);
+                        m_interpolation = castedValue;
                     }
                     break;
                 case DATA_FLOW:
@@ -292,8 +292,8 @@ namespace stromx
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
-                    int width = int(m_dsizex) ? int(m_dsizex) : srcCastedData->width() * double(m_fx);
-                    int height = int(m_dsizey) ? int(m_dsizey) : srcCastedData->height() * double(m_fy);
+                    int width = int(m_dsizex) ? int(m_dsizex) : int(srcCastedData->width() * double(m_fx));
+                    int height = int(m_dsizey) ? int(m_dsizey) : int(srcCastedData->height() * double(m_fy));
                     dstCastedData->initializeImage(width, height, width * srcCastedData->pixelSize(), dstCastedData->data(), srcCastedData->pixelType());
                     
                     cv::Mat srcCvData = imgutil::getOpenCvMat(*srcCastedData);

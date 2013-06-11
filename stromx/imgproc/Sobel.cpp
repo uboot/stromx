@@ -22,12 +22,12 @@ namespace stromx
         
         Sobel::Sobel()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_scale(1.0),
-            m_dx(1),
-            m_ksize(3),
-            m_delta(0.0),
             m_ddepth(0),
+            m_ksize(3),
+            m_dx(1),
+            m_delta(0.0),
             m_dy(0),
+            m_scale(1.0),
             m_dataFlow()
         {
         }
@@ -36,18 +36,18 @@ namespace stromx
         {
             switch(id)
             {
-            case SCALE:
-                return m_scale;
-            case DX:
-                return m_dx;
-            case KSIZE:
-                return m_ksize;
-            case DELTA:
-                return m_delta;
             case DDEPTH:
                 return m_ddepth;
+            case KSIZE:
+                return m_ksize;
+            case DX:
+                return m_dx;
+            case DELTA:
+                return m_delta;
             case DY:
                 return m_dy;
+            case SCALE:
+                return m_scale;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -61,18 +61,11 @@ namespace stromx
             {
                 switch(id)
                 {
-                case SCALE:
+                case DDEPTH:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_scaleParameter, *this);
-                        m_scale = castedValue;
-                    }
-                    break;
-                case DX:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_dxParameter, *this);
-                        m_dx = castedValue;
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_ddepthParameter, *this);
+                        m_ddepth = castedValue;
                     }
                     break;
                 case KSIZE:
@@ -84,6 +77,13 @@ namespace stromx
                         m_ksize = castedValue;
                     }
                     break;
+                case DX:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_dxParameter, *this);
+                        m_dx = castedValue;
+                    }
+                    break;
                 case DELTA:
                     {
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
@@ -91,18 +91,18 @@ namespace stromx
                         m_delta = castedValue;
                     }
                     break;
-                case DDEPTH:
-                    {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
-                        m_ddepth = castedValue;
-                    }
-                    break;
                 case DY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dyParameter, *this);
                         m_dy = castedValue;
+                    }
+                    break;
+                case SCALE:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_scaleParameter, *this);
+                        m_scale = castedValue;
                     }
                     break;
                 case DATA_FLOW:

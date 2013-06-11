@@ -23,8 +23,8 @@ namespace stromx
         BilateralFilter::BilateralFilter()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_d(9),
-            m_sigmaColor(50.0),
             m_sigmaSpace(50.0),
+            m_sigmaColor(50.0),
             m_dataFlow()
         {
         }
@@ -35,10 +35,10 @@ namespace stromx
             {
             case D:
                 return m_d;
-            case SIGMA_COLOR:
-                return m_sigmaColor;
             case SIGMA_SPACE:
                 return m_sigmaSpace;
+            case SIGMA_COLOR:
+                return m_sigmaColor;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -59,18 +59,18 @@ namespace stromx
                         m_d = castedValue;
                     }
                     break;
-                case SIGMA_COLOR:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_sigmaColorParameter, *this);
-                        m_sigmaColor = castedValue;
-                    }
-                    break;
                 case SIGMA_SPACE:
                     {
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_sigmaSpaceParameter, *this);
                         m_sigmaSpace = castedValue;
+                    }
+                    break;
+                case SIGMA_COLOR:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_sigmaColorParameter, *this);
+                        m_sigmaColor = castedValue;
                     }
                     break;
                 case DATA_FLOW:

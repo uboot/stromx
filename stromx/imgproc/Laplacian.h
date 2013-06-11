@@ -34,11 +34,11 @@ namespace stromx
             };
             enum ParameterId
             {
-                SCALE,
-                DELTA,
-                KSIZE,
                 DATA_FLOW,
-                DDEPTH
+                SCALE,
+                DDEPTH,
+                KSIZE,
+                DELTA
             };
             Laplacian();
             virtual OperatorKernel* clone() const { return new Laplacian; }
@@ -59,15 +59,15 @@ namespace stromx
             
             int convertDdepth(const runtime::Enum & value);
             
-            runtime::Double m_scale;
-            runtime::UInt32 m_ksize;
             runtime::Enum m_ddepth;
             runtime::Double m_delta;
+            runtime::Double m_scale;
+            runtime::UInt32 m_ksize;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::Double>* m_scaleParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
             runtime::EnumParameter* m_ddepthParameter;
             runtime::NumericParameter<runtime::Double>* m_deltaParameter;
+            runtime::NumericParameter<runtime::Double>* m_scaleParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

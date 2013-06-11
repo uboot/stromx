@@ -37,8 +37,8 @@ namespace stromx
             {
                 DATA_FLOW,
                 SHAPE,
-                ITERATIONS,
                 KSIZEX,
+                ITERATIONS,
                 KSIZEY
             };
             Erode();
@@ -60,15 +60,15 @@ namespace stromx
             
             int convertShape(const runtime::Enum & value);
             
-            runtime::UInt32 m_ksizex;
-            runtime::UInt32 m_ksizey;
             runtime::Enum m_shape;
             runtime::UInt32 m_iterations;
+            runtime::UInt32 m_ksizex;
+            runtime::UInt32 m_ksizey;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_shapeParameter;
             runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
+            runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }
