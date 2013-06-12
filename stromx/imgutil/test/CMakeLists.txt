@@ -47,6 +47,10 @@ add_executable(stromx_imgutil_test
     WebCameraTest.cpp
 )
 
+set_target_properties(stromx_imgutil_test PROPERTIES
+    FOLDER "tests"
+)
+
 target_link_libraries(stromx_imgutil_test 
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}

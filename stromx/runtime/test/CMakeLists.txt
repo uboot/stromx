@@ -139,6 +139,10 @@ endif(BUILD_FILE_PERSISTENCE)
 
 add_executable(stromx_runtime_test ${SOURCES})
 
+set_target_properties(stromx_runtime_test PROPERTIES
+    FOLDER "tests"
+)
+
 add_dependencies(stromx_runtime_test stromx_runtime)
 
 target_link_libraries(stromx_runtime_test

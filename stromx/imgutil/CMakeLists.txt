@@ -41,6 +41,7 @@ set(VERSION_STRING "${STROMX_IMGUTIL_VERSION_MAJOR}.${STROMX_IMGUTIL_VERSION_MIN
 set_target_properties(stromx_imgutil PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
+    FOLDER "libraries"
 )
 
 target_link_libraries(stromx_imgutil

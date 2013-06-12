@@ -8,7 +8,7 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
 
 build/stromx::
-	cd $(DEB_BUILDDIR) && env LD_LIBRARY_PATH=`pwd`/stromx/runtime:`pwd`/stromx/example PYTHONPATH=`pwd`/python $(MAKE) test ARGS="-V"
+	cd $(DEB_BUILDDIR) && env LD_LIBRARY_PATH=`pwd`/stromx/runtime:`pwd`/stromx/example:`pwd`/stromx/imgutil:`pwd`/stromx/imgproc PYTHONPATH=`pwd`/python $(MAKE) test ARGS="-V"
 
 build/stromx-doc::
 	cd $(DEB_BUILDDIR) && $(MAKE) doc

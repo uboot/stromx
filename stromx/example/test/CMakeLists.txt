@@ -63,6 +63,10 @@ add_executable(stromx_example_test
     WebCameraTest.cpp
 )
 
+set_target_properties(stromx_example_test PROPERTIES
+    FOLDER "tests"
+)
+
 add_dependencies(stromx_example_test stromx_example)
 
 target_link_libraries(stromx_example_test 

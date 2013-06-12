@@ -222,6 +222,7 @@ class CMakeGenerator(LibGenerator):
     set_target_properties (stromx_imgproc PROPERTIES
         VERSION ${VERSION_STRING}
         SOVERSION ${VERSION_STRING}
+        FOLDER "libraries"
     )
     <BLANKLINE>
     target_link_libraries (stromx_imgproc
@@ -302,6 +303,7 @@ class CMakeGenerator(LibGenerator):
         self.doc.increaseIndent()
         self.doc.line("VERSION ${VERSION_STRING}")
         self.doc.line("SOVERSION ${VERSION_STRING}")
+        self.doc.line('FOLDER "libraries"')
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
@@ -535,6 +537,8 @@ class TestCMakeGenerator(LibGenerator):
     <BLANKLINE>
     add_executable(stromx_imgproc_test ${SOURCES})
     <BLANKLINE>
+    set_target_properties(stromx_imgproc_test PROPERTIES FOLDER "tests")
+    <BLANKLINE>
     add_dependencies(stromx_imgproc_test stromx_imgproc)
     <BLANKLINE>
     target_link_libraries (stromx_imgproc_test
@@ -590,6 +594,10 @@ class TestCMakeGenerator(LibGenerator):
         
         self.doc.line("add_executable(stromx_{0}_test ${{SOURCES}})"\
             .format(self.p.ident))
+        self.doc.blank()
+        self.doc.line((
+            'set_target_properties(stromx_{0}_test PROPERTIES FOLDER '
+            '"test")').format(self.p.ident))
         self.doc.blank()
         self.doc.line("add_dependencies(stromx_{0}_test stromx_{0})"\
             .format(self.p.ident))

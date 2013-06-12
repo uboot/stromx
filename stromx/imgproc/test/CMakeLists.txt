@@ -47,6 +47,8 @@ set (SOURCES
 
 add_executable(stromx_imgproc_test ${SOURCES})
 
+set_target_properties(stromx_imgproc_test PROPERTIES FOLDER "test")
+
 add_dependencies(stromx_imgproc_test stromx_imgproc)
 
 target_link_libraries (stromx_imgproc_test

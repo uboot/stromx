@@ -79,6 +79,7 @@ set(VERSION_STRING "${STROMX_RUNTIME_VERSION_MAJOR}.${STROMX_RUNTIME_VERSION_MIN
 set_target_properties(stromx_runtime PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
+    FOLDER "libraries"
 )
 
 include_directories(
