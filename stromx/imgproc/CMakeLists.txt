@@ -41,7 +41,7 @@ set(VERSION_STRING "${IMGPROC_VERSION_MAJOR}.${IMGPROC_VERSION_MINOR}.${IMGPROC_
 set_target_properties (stromx_imgproc PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
-    FOLDER "libraries"
+    FOLDER "library"
 )
 
 target_link_libraries (stromx_imgproc

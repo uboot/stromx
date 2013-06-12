@@ -8,6 +8,8 @@ add_library(imgutil SHARED ${SOURCES})
 
 add_dependencies(imgutil stromx_imgutil)
 
+set_target_properties(imgutil PROPERTIES FOLDER "python")
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

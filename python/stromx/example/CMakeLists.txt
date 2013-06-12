@@ -7,6 +7,8 @@ add_library(example SHARED ${SOURCES})
 
 add_dependencies(example stromx_example)
 
+set_target_properties(example PROPERTIES FOLDER "python")
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

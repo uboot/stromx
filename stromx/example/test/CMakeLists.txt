@@ -64,7 +64,7 @@ add_executable(stromx_example_test
 )
 
 set_target_properties(stromx_example_test PROPERTIES
-    FOLDER "tests"
+    FOLDER "test"
 )
 
 add_dependencies(stromx_example_test stromx_example)

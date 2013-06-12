@@ -50,7 +50,7 @@ set(VERSION_STRING "${STROMX_EXAMPLE_VERSION_MAJOR}.${STROMX_EXAMPLE_VERSION_MIN
 set_target_properties(stromx_example PROPERTIES
     VERSION ${VERSION_STRING}
     SOVERSION ${VERSION_STRING}
-    FOLDER "libraries"
+    FOLDER "library"
 )
 
 target_link_libraries(stromx_example

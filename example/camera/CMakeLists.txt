@@ -7,6 +7,8 @@ add_executable(camera
     camera.cpp
 )
 
+set_target_properties(camera PROPERTIES FOLDER "example")
+
 add_dependencies(camera stromx_example)
 
 target_link_libraries(camera

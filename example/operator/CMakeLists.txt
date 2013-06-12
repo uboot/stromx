@@ -8,6 +8,8 @@ add_executable(operator
     math/Add.cpp
 )
 
+set_target_properties(operator PROPERTIES FOLDER "example")
+
 add_dependencies(operator stromx_runtime)
 
 target_link_libraries(operator

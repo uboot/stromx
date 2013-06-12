@@ -39,6 +39,8 @@ add_library(runtime SHARED ${SOURCES})
 
 add_dependencies(runtime stromx_runtime)
 
+set_target_properties(runtime PROPERTIES FOLDER "python")
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

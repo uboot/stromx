@@ -48,7 +48,7 @@ add_executable(stromx_imgutil_test
 )
 
 set_target_properties(stromx_imgutil_test PROPERTIES
-    FOLDER "tests"
+    FOLDER "test"
 )
 
 target_link_libraries(stromx_imgutil_test 

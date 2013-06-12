@@ -7,6 +7,8 @@ add_executable(file
     file.cpp
 )
 
+set_target_properties(file PROPERTIES FOLDER "example")
+
 add_dependencies(file stromx_runtime)
 
 target_link_libraries(file
