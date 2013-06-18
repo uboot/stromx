@@ -24,8 +24,8 @@ namespace stromx
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_ddepth(0),
             m_delta(0.0),
-            m_scale(1.0),
             m_ksize(3),
+            m_scale(1.0),
             m_dataFlow()
         {
         }
@@ -38,10 +38,10 @@ namespace stromx
                 return m_ddepth;
             case DELTA:
                 return m_delta;
-            case SCALE:
-                return m_scale;
             case KSIZE:
                 return m_ksize;
+            case SCALE:
+                return m_scale;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -69,13 +69,6 @@ namespace stromx
                         m_delta = castedValue;
                     }
                     break;
-                case SCALE:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_scaleParameter, *this);
-                        m_scale = castedValue;
-                    }
-                    break;
                 case KSIZE:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
@@ -83,6 +76,13 @@ namespace stromx
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
                         m_ksize = castedValue;
+                    }
+                    break;
+                case SCALE:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_scaleParameter, *this);
+                        m_scale = castedValue;
                     }
                     break;
                 case DATA_FLOW:

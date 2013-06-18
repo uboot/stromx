@@ -22,9 +22,9 @@ namespace stromx
         
         Scharr::Scharr()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_dx(1),
             m_ddepth(0),
             m_delta(0.0),
+            m_dx(1),
             m_dy(0),
             m_scale(1.0),
             m_dataFlow()
@@ -35,12 +35,12 @@ namespace stromx
         {
             switch(id)
             {
-            case DX:
-                return m_dx;
             case DDEPTH:
                 return m_ddepth;
             case DELTA:
                 return m_delta;
+            case DX:
+                return m_dx;
             case DY:
                 return m_dy;
             case SCALE:
@@ -58,13 +58,6 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DX:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_dxParameter, *this);
-                        m_dx = castedValue;
-                    }
-                    break;
                 case DDEPTH:
                     {
                         runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
@@ -77,6 +70,13 @@ namespace stromx
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
+                    }
+                    break;
+                case DX:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_dxParameter, *this);
+                        m_dx = castedValue;
                     }
                     break;
                 case DY:

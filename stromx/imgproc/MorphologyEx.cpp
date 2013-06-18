@@ -22,11 +22,11 @@ namespace stromx
         
         MorphologyEx::MorphologyEx()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_shape(0),
+            m_iterations(1),
+            m_ksizex(3),
             m_ksizey(3),
             m_op(1),
-            m_ksizex(3),
-            m_iterations(1),
+            m_shape(0),
             m_dataFlow()
         {
         }
@@ -35,16 +35,16 @@ namespace stromx
         {
             switch(id)
             {
-            case SHAPE:
-                return m_shape;
+            case ITERATIONS:
+                return m_iterations;
+            case KSIZEX:
+                return m_ksizex;
             case KSIZEY:
                 return m_ksizey;
             case OP:
                 return m_op;
-            case KSIZEX:
-                return m_ksizex;
-            case ITERATIONS:
-                return m_iterations;
+            case SHAPE:
+                return m_shape;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -58,11 +58,18 @@ namespace stromx
             {
                 switch(id)
                 {
-                case SHAPE:
+                case ITERATIONS:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
-                        checkEnumValue(castedValue, m_shapeParameter, *this);
-                        m_shape = castedValue;
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_iterationsParameter, *this);
+                        m_iterations = castedValue;
+                    }
+                    break;
+                case KSIZEX:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_ksizexParameter, *this);
+                        m_ksizex = castedValue;
                     }
                     break;
                 case KSIZEY:
@@ -79,18 +86,11 @@ namespace stromx
                         m_op = castedValue;
                     }
                     break;
-                case KSIZEX:
+                case SHAPE:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_ksizexParameter, *this);
-                        m_ksizex = castedValue;
-                    }
-                    break;
-                case ITERATIONS:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_iterationsParameter, *this);
-                        m_iterations = castedValue;
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        checkEnumValue(castedValue, m_shapeParameter, *this);
+                        m_shape = castedValue;
                     }
                     break;
                 case DATA_FLOW:
@@ -451,21 +451,6 @@ namespace stromx
             }
         }
         
-        int MorphologyEx::convertShape(const runtime::Enum & value)
-        {
-            switch(int(value))
-            {
-            case MORPH_RECT:
-                return cv::MORPH_RECT;
-            case MORPH_ELLIPSE:
-                return cv::MORPH_ELLIPSE;
-            case MORPH_CROSS:
-                return cv::MORPH_CROSS;
-            default:
-                throw runtime::WrongParameterValue(parameter(SHAPE), *this);
-            }
-        }
-        
         int MorphologyEx::convertOp(const runtime::Enum & value)
         {
             switch(int(value))
@@ -482,6 +467,21 @@ namespace stromx
                 return cv::MORPH_BLACKHAT;
             default:
                 throw runtime::WrongParameterValue(parameter(OP), *this);
+            }
+        }
+        
+        int MorphologyEx::convertShape(const runtime::Enum & value)
+        {
+            switch(int(value))
+            {
+            case MORPH_RECT:
+                return cv::MORPH_RECT;
+            case MORPH_ELLIPSE:
+                return cv::MORPH_ELLIPSE;
+            case MORPH_CROSS:
+                return cv::MORPH_CROSS;
+            default:
+                throw runtime::WrongParameterValue(parameter(SHAPE), *this);
             }
         }
         

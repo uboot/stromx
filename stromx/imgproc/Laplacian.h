@@ -61,13 +61,13 @@ namespace stromx
             
             runtime::Enum m_ddepth;
             runtime::Double m_delta;
-            runtime::Double m_scale;
             runtime::UInt32 m_ksize;
+            runtime::Double m_scale;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_ddepthParameter;
             runtime::NumericParameter<runtime::Double>* m_deltaParameter;
-            runtime::NumericParameter<runtime::Double>* m_scaleParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
+            runtime::NumericParameter<runtime::Double>* m_scaleParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

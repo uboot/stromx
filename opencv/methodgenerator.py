@@ -106,7 +106,7 @@ class MethodGenerator(object):
                 argIdents.add(str(arg.ident))
                 filteredArgs.add(arg)
             
-        for arg in filteredArgs:
+        for arg in sorted(filteredArgs, key=lambda arg: str(arg.ident)):
             arg.accept(visitor)
                 
         if visitOptionParam and self.optionParam:

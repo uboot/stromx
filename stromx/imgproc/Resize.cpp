@@ -23,8 +23,8 @@ namespace stromx
         Resize::Resize()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_dsizex(),
-            m_fx(1.0),
             m_dsizey(),
+            m_fx(1.0),
             m_fy(1.0),
             m_interpolation(1),
             m_dataFlow()
@@ -37,10 +37,10 @@ namespace stromx
             {
             case DSIZEX:
                 return m_dsizex;
-            case FX:
-                return m_fx;
             case DSIZEY:
                 return m_dsizey;
+            case FX:
+                return m_fx;
             case FY:
                 return m_fy;
             case INTERPOLATION:
@@ -65,18 +65,18 @@ namespace stromx
                         m_dsizex = castedValue;
                     }
                     break;
-                case FX:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_fxParameter, *this);
-                        m_fx = castedValue;
-                    }
-                    break;
                 case DSIZEY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dsizeyParameter, *this);
                         m_dsizey = castedValue;
+                    }
+                    break;
+                case FX:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_fxParameter, *this);
+                        m_fx = castedValue;
                     }
                     break;
                 case FY:

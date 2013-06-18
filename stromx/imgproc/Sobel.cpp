@@ -23,10 +23,10 @@ namespace stromx
         Sobel::Sobel()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_ddepth(0),
-            m_ksize(3),
-            m_dx(1),
             m_delta(0.0),
+            m_dx(1),
             m_dy(0),
+            m_ksize(3),
             m_scale(1.0),
             m_dataFlow()
         {
@@ -38,14 +38,14 @@ namespace stromx
             {
             case DDEPTH:
                 return m_ddepth;
-            case KSIZE:
-                return m_ksize;
-            case DX:
-                return m_dx;
             case DELTA:
                 return m_delta;
+            case DX:
+                return m_dx;
             case DY:
                 return m_dy;
+            case KSIZE:
+                return m_ksize;
             case SCALE:
                 return m_scale;
             case DATA_FLOW:
@@ -68,13 +68,11 @@ namespace stromx
                         m_ddepth = castedValue;
                     }
                     break;
-                case KSIZE:
+                case DELTA:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_ksizeParameter, *this);
-                        if(int(castedValue) % 2 == 0)
-                            throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
-                        m_ksize = castedValue;
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_deltaParameter, *this);
+                        m_delta = castedValue;
                     }
                     break;
                 case DX:
@@ -84,18 +82,20 @@ namespace stromx
                         m_dx = castedValue;
                     }
                     break;
-                case DELTA:
-                    {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_deltaParameter, *this);
-                        m_delta = castedValue;
-                    }
-                    break;
                 case DY:
                     {
                         runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dyParameter, *this);
                         m_dy = castedValue;
+                    }
+                    break;
+                case KSIZE:
+                    {
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_ksizeParameter, *this);
+                        if(int(castedValue) % 2 == 0)
+                            throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
+                        m_ksize = castedValue;
                     }
                     break;
                 case SCALE:

@@ -22,10 +22,10 @@ namespace stromx
         
         GaussianBlur::GaussianBlur()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_sigmaX(0.0),
-            m_ksizey(3),
-            m_sigmaY(0.0),
             m_ksizex(3),
+            m_ksizey(3),
+            m_sigmaX(0.0),
+            m_sigmaY(0.0),
             m_dataFlow()
         {
         }
@@ -34,14 +34,14 @@ namespace stromx
         {
             switch(id)
             {
-            case SIGMA_X:
-                return m_sigmaX;
-            case KSIZEY:
-                return m_ksizey;
-            case SIGMA_Y:
-                return m_sigmaY;
             case KSIZEX:
                 return m_ksizex;
+            case KSIZEY:
+                return m_ksizey;
+            case SIGMA_X:
+                return m_sigmaX;
+            case SIGMA_Y:
+                return m_sigmaY;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -55,11 +55,13 @@ namespace stromx
             {
                 switch(id)
                 {
-                case SIGMA_X:
+                case KSIZEX:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
-                        checkNumericValue(castedValue, m_sigmaXParameter, *this);
-                        m_sigmaX = castedValue;
+                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_ksizexParameter, *this);
+                        if(int(castedValue) % 2 == 0)
+                            throw runtime::WrongParameterValue(*m_ksizexParameter, *this, "Only odd values are allowed");
+                        m_ksizex = castedValue;
                     }
                     break;
                 case KSIZEY:
@@ -71,20 +73,18 @@ namespace stromx
                         m_ksizey = castedValue;
                     }
                     break;
+                case SIGMA_X:
+                    {
+                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        checkNumericValue(castedValue, m_sigmaXParameter, *this);
+                        m_sigmaX = castedValue;
+                    }
+                    break;
                 case SIGMA_Y:
                     {
                         runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_sigmaYParameter, *this);
                         m_sigmaY = castedValue;
-                    }
-                    break;
-                case KSIZEX:
-                    {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        checkNumericValue(castedValue, m_ksizexParameter, *this);
-                        if(int(castedValue) % 2 == 0)
-                            throw runtime::WrongParameterValue(*m_ksizexParameter, *this, "Only odd values are allowed");
-                        m_ksizex = castedValue;
                     }
                     break;
                 case DATA_FLOW:

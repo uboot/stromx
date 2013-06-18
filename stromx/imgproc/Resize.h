@@ -60,14 +60,14 @@ namespace stromx
             int convertInterpolation(const runtime::Enum & value);
             
             runtime::UInt32 m_dsizex;
-            runtime::Double m_fx;
             runtime::UInt32 m_dsizey;
+            runtime::Double m_fx;
             runtime::Double m_fy;
             runtime::Enum m_interpolation;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_dsizexParameter;
-            runtime::NumericParameter<runtime::Double>* m_fxParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizeyParameter;
+            runtime::NumericParameter<runtime::Double>* m_fxParameter;
             runtime::NumericParameter<runtime::Double>* m_fyParameter;
             runtime::EnumParameter* m_interpolationParameter;
             runtime::EnumParameter* m_dataFlowParameter;

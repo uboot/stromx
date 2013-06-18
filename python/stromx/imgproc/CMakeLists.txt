@@ -8,7 +8,7 @@ add_library (imgproc SHARED ${SOURCES})
 
 add_dependencies(imgproc stromx_imgproc)
 
-set_target_properties(imgproc PROPERTIES FOLDER "python")
+set_target_properties (imgproc PROPERTIES FOLDER "python")
 
 include_directories (
     ${CMAKE_SOURCE_DIR}
