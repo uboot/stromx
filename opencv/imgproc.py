@@ -109,6 +109,10 @@ initOutDdepth = document.Document((
 srcImg = package.Argument(
     "src", "Source", cvtype.Mat(), datatype.Image()
 )
+srcImgMono = package.Argument(
+    "src", "Source", cvtype.Mat(),
+    datatype.Image("runtime::DataVariant::MONO_IMAGE")
+)
 dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
     initOut = initOutCopy
@@ -229,6 +233,25 @@ delta = package.NumericParameter(
 dstImgDdepth = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInDdepth, initOut = initOutDdepth
+)
+thresh = package.NumericParameter(
+    "threshold", "Threshold", cvtype.Double(), datatype.Double(),
+    default = 127.0
+)
+maxval = package.NumericParameter(
+    "maxval", "Maximal value", cvtype.Double(), datatype.Double(),
+    default = 255.0
+)
+descriptions = [
+    package.EnumDescription("THRESH_BINARY", "Binary"),
+    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted"),
+    package.EnumDescription("THRESH_TRUNC", "Truncate"),
+    package.EnumDescription("THRESH_TOZERO", "Truncate to zero"),
+    package.EnumDescription("THRESH_TOZERO_INV", "Truncate to zero inverted")
+]
+thresholdType = package.EnumParameter(
+    "thresholdType", "Threshold type", descriptions = descriptions,
+    default = 0
 )
 
 # test data
@@ -588,6 +611,36 @@ resize = package.Method(
     "resize", options = [manual, allocate]
 )
 
+# threshold
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono, True), package.Output(dstImg), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, memory, dt, dt, dt],
+        [lenna_bw, test.RefData(lenna_bw), 128, dt, 2]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImg), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, dt, dt, dt, 3]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImgMono), package.RefInput(dstImg, srcImg), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, dt, dt, dt, 4]
+    ]
+)
+threshold = package.Method(
+    "threshold", options = [manual, allocate, inPlace]
+)
+
 imgproc = package.Package(
     "imgproc", 0, 0, 1,
     methods = [
@@ -602,9 +655,10 @@ imgproc = package.Package(
         laplacian,
         pyrDown,
         pyrUp,
-        resize,
         scharr,
-        sobel
+        sobel,
+        resize,
+        threshold
     ],
     functions = [
         checkEnumValue,
