@@ -262,6 +262,14 @@ namespace stromx
                         srcData = &srcReadAccess();
                     }
                     
+                    if(! srcData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    {
+                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                    }
+                    if(! dstData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    {
+                        throw runtime::InputError(DST, *this, "Wrong input data variant.");
+                    }
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
@@ -293,6 +301,10 @@ namespace stromx
                     srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
                     srcData = &srcReadAccess();
                     
+                    if(! srcData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    {
+                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                    }
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
                     cv::Mat srcCvData = imgutil::getOpenCvMat(*srcCastedData);
@@ -322,6 +334,10 @@ namespace stromx
                     runtime::WriteAccess<> writeAccess(inContainer);
                     srcData = &writeAccess();
                     
+                    if(! srcData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    {
+                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                    }
                     runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
                     cv::Mat srcCvData = imgutil::getOpenCvMat(*srcCastedData);

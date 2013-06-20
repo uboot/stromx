@@ -12,9 +12,11 @@
 #include <stromx/imgproc/Laplacian.h>
 #include <stromx/imgproc/PyrDown.h>
 #include <stromx/imgproc/PyrUp.h>
-#include <stromx/imgproc/Resize.h>
 #include <stromx/imgproc/Scharr.h>
 #include <stromx/imgproc/Sobel.h>
+#include <stromx/imgproc/Resize.h>
+#include <stromx/imgproc/AdaptiveThreshold.h>
+#include <stromx/imgproc/Threshold.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -35,7 +37,9 @@ BOOST_PYTHON_MODULE(libimgproc)
     stromx::python::exportOperatorKernel<Laplacian>("Laplacian");
     stromx::python::exportOperatorKernel<PyrDown>("PyrDown");
     stromx::python::exportOperatorKernel<PyrUp>("PyrUp");
-    stromx::python::exportOperatorKernel<Resize>("Resize");
     stromx::python::exportOperatorKernel<Scharr>("Scharr");
     stromx::python::exportOperatorKernel<Sobel>("Sobel");
+    stromx::python::exportOperatorKernel<Resize>("Resize");
+    stromx::python::exportOperatorKernel<AdaptiveThreshold>("AdaptiveThreshold");
+    stromx::python::exportOperatorKernel<Threshold>("Threshold");
 }

@@ -555,6 +555,25 @@ class OpImplGenerator(MethodGenerator):
                 doc.scopeExit()
                 doc.blank()
                 
+    class CheckVariantVisitor(MethodGenerator.DocVisitor):
+        def visitInput(self, inputArg):
+            self.__visit(inputArg)
+            
+        def visitOutput(self, output):
+            self.__visit(output)
+            
+        def __visit(self, arg):
+            l = ("if(! {0}Data->variant().isVariant({1}))".format(arg.ident,
+                 arg.dataType.variant()))
+            self.doc.line(l)
+            self.doc.scopeEnter()
+            l = (
+                'throw runtime::InputError({0}, *this, "Wrong input data '
+                'variant.");'
+            ).format(arg.ident.constant())
+            self.doc.line(l)
+            self.doc.scopeExit()
+                
     class CastedDataVisitor(MethodGenerator.DocVisitor):
         def visitInput(self, inputArg):
             l = ("const {1}* {0}CastedData = "
@@ -957,6 +976,9 @@ class OpImplGenerator(MethodGenerator):
             v = OpImplGenerator.CopyWriteAccessVisitor()
             self.visitOption(o, v)
             v.export(self.doc)    
+            
+            v = OpImplGenerator.CheckVariantVisitor(self.doc)
+            self.visitOption(o, v) 
             
             v = OpImplGenerator.CastedDataVisitor(self.doc)
             self.visitOption(o, v) 

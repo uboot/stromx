@@ -27,9 +27,11 @@ set (SOURCES
     Laplacian.cpp
     PyrDown.cpp
     PyrUp.cpp
-    Resize.cpp
     Scharr.cpp
     Sobel.cpp
+    Resize.cpp
+    AdaptiveThreshold.cpp
+    Threshold.cpp
 )
 
 add_library (stromx_imgproc SHARED ${SOURCES})

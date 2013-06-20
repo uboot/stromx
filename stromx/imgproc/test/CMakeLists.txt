@@ -24,9 +24,11 @@ set (SOURCES
     ../Laplacian.cpp
     ../PyrDown.cpp
     ../PyrUp.cpp
-    ../Resize.cpp
     ../Scharr.cpp
     ../Sobel.cpp
+    ../Resize.cpp
+    ../AdaptiveThreshold.cpp
+    ../Threshold.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -39,9 +41,11 @@ set (SOURCES
     LaplacianTest.cpp
     PyrDownTest.cpp
     PyrUpTest.cpp
-    ResizeTest.cpp
     ScharrTest.cpp
     SobelTest.cpp
+    ResizeTest.cpp
+    AdaptiveThresholdTest.cpp
+    ThresholdTest.cpp
     main.cpp
 )
 

@@ -11,9 +11,11 @@
 #include "Laplacian.h"
 #include "PyrDown.h"
 #include "PyrUp.h"
-#include "Resize.h"
 #include "Scharr.h"
 #include "Sobel.h"
+#include "Resize.h"
+#include "AdaptiveThreshold.h"
+#include "Threshold.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxRegisterImgproc(stromx::runtime::Registry& registry)
@@ -31,7 +33,9 @@ void stromxRegisterImgproc(stromx::runtime::Registry& registry)
     registry.registerOperator(new Laplacian);
     registry.registerOperator(new PyrDown);
     registry.registerOperator(new PyrUp);
-    registry.registerOperator(new Resize);
     registry.registerOperator(new Scharr);
     registry.registerOperator(new Sobel);
+    registry.registerOperator(new Resize);
+    registry.registerOperator(new AdaptiveThreshold);
+    registry.registerOperator(new Threshold);
 }

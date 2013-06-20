@@ -113,6 +113,10 @@ srcImgMono = package.Argument(
     "src", "Source", cvtype.Mat(),
     datatype.Image("runtime::DataVariant::MONO_IMAGE")
 )
+srcImgMono8bit = package.Argument(
+    "src", "Source", cvtype.Mat(),
+    datatype.Image("runtime::DataVariant::MONO_8_IMAGE")
+)
 dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
     initOut = initOutCopy
@@ -253,6 +257,28 @@ thresholdType = package.EnumParameter(
     "thresholdType", "Threshold type", descriptions = descriptions,
     default = 0
 )
+descriptions = [
+    package.EnumDescription("THRESH_BINARY", "Binary"),
+    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted")
+]
+adaptiveThresholdType = package.EnumParameter(
+    "thresholdType", "Threshold type", descriptions = descriptions,
+    default = 0
+)
+descriptions = [
+    package.EnumDescription("ADAPTIVE_THRESH_MEAN_C", "Mean of block"),
+    package.EnumDescription(" ADAPTIVE_THRESH_GAUSSIAN_C",
+                            "Weighted sum of block")
+]
+adaptiveMethod = package.EnumParameter(
+    "adaptiveMethod", "Adaptive method", descriptions = descriptions,
+    default = 0
+)
+blockSize = package.NumericParameter(
+    "blockSize", "Block size", cvtype.Int(), datatype.UInt32(),
+    default = 3, minValue = 1, rules = [package.OddRule()]
+)
+subtractedC = package.Constant("0")
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -611,6 +637,36 @@ resize = package.Method(
     "resize", options = [manual, allocate]
 )
 
+# adaptiveThreshold
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono8bit, True), package.Output(dstImg), maxval,
+     adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, memory, dt, dt, dt, dt, dt],
+        [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, dt]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono8bit, True), package.Allocation(dstImg), maxval,
+     adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, dt, 200, 1, 0, 9, dt]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
+     maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, dt, 80, 0, 1, 7, dt]
+    ]
+)
+adaptiveThreshold = package.Method(
+    "adaptiveThreshold", options = [manual, allocate, inPlace]
+)
+
 # threshold
 manual = package.Option(
     "manual", "Manual", 
@@ -631,7 +687,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImgMono), package.RefInput(dstImg, srcImg), thresh, maxval,
+    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
      thresholdType],
     tests = [
         [lenna_bw, dt, dt, dt, 4]
@@ -658,6 +714,7 @@ imgproc = package.Package(
         scharr,
         sobel,
         resize,
+        adaptiveThreshold,
         threshold
     ],
     functions = [

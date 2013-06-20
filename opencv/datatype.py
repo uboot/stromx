@@ -44,11 +44,14 @@ class Enum(DataType):
         return "runtime::DataVariant::ENUM"
         
 class Image(DataType):
+    def __init__(self, variant = "runtime::DataVariant::IMAGE"):
+        self.__variant = variant
+        
     def typeId(self):
         return "runtime::Image"
         
     def variant(self):
-        return "runtime::DataVariant::IMAGE"
+        return self.__variant
         
     def cast(self, src):
         return "imgutil::Image({0})".format(src)
