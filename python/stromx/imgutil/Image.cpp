@@ -47,12 +47,6 @@ namespace
 
 void exportImage()
 {
-    enum_<stromx::imgutil::Image::FileAccess>("ImageFileAccess")
-        .value("UNCHANGED", stromx::imgutil::Image::UNCHANGED)
-        .value("GRAYSCALE", stromx::imgutil::Image::GRAYSCALE)
-        .value("COLOR", stromx::imgutil::Image::COLOR)
-    ;
-    
     scope in_Operator =
     class_<stromx::imgutil::Image, bases<stromx::runtime::Image>, std::auto_ptr<stromx::imgutil::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
@@ -62,7 +56,13 @@ void exportImage()
         .def<void (stromx::imgutil::Image::*)(const std::string &)>("open", &stromx::imgutil::Image::open)
         .def<void (stromx::imgutil::Image::*)(const std::string &, const stromx::imgutil::Image::FileAccess)>("open", &stromx::imgutil::Image::open)
         .def<void (stromx::imgutil::Image::*)(const unsigned int, const unsigned int, const Image::PixelType)>("resize", &stromx::imgutil::Image::resize)
-     ;
+    ;
      
+    enum_<stromx::imgutil::Image::FileAccess>("FileAccess")
+        .value("UNCHANGED", stromx::imgutil::Image::UNCHANGED)
+        .value("GRAYSCALE", stromx::imgutil::Image::GRAYSCALE)
+        .value("COLOR", stromx::imgutil::Image::COLOR)
+    ;
+    
     implicitly_convertible< std::auto_ptr<stromx::imgutil::Image>, std::auto_ptr<Data> >();
 }
