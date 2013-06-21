@@ -46,13 +46,20 @@ namespace stromx
                  * The image data is converted to grayscale. I.e. the resulting image
                  * is always a single-channel image.
                  */
-                GRAYSCALE,
+                GRAYSCALE = 0x2,
                 
                 /**
                  * The image data is converted to color. I.e. the resulting image is always 
                  * 3-channel image.
                  */
-                COLOR
+                COLOR = 0x4,
+                
+                /**
+                 * The image data is converted to 16-bits per channel. I.e. the resulting
+                 * image is always 16-bit or 48-bit image. If an 8-bit image is converted
+                 * to 16-bit its pixel values are multiplied by 256.
+                 */
+                DEPTH_16 = 0x8
             };
             
             /** 

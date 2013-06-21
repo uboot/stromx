@@ -79,10 +79,16 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, m_image->pixelType());
         }
 
-        void ImageTest::testOpen16Bit()
+        void ImageTest::testOpenAs16BitColor()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_16bit.png"));
-            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna.jpg", Image::DEPTH_16));
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_48, m_image->pixelType());
+        }
+
+        void ImageTest::testOpenAs16BitGrayscale()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_image = new Image("lenna_bw.jpg", Image::DEPTH_16));
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_16, m_image->pixelType());
         }
 
         void ImageTest::testOpenUnchanged()

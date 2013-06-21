@@ -191,6 +191,26 @@ namespace stromx
             *m_image = cv::imread(filename, cvAccessType);
             if(! m_image->data)
                 throw runtime::FileAccessFailed(filename, "Failed to load image.");
+            
+            if(access & DEPTH_16 && m_image->depth() != CV_16U)
+            {
+                if(m_image->depth() != CV_8U)
+                    throw runtime::Exception("Only 8-bit images can be converted to 16-bit.");
+                
+                if(m_image->channels() != 1 && m_image->channels() != 3)
+                {
+                    throw runtime::Exception(
+                        "Only images with one or three channels can be converted to 16-bit.");
+                }
+                
+                // convert the image to a 16-bit image
+                int type = m_image->channels() == 1 ? CV_16UC1 : CV_16UC3;
+                cv::Mat image16Bit(m_image->rows, m_image->cols, type);
+                m_image->convertTo(image16Bit, type, 256);
+                
+                // remember the 16-bit image
+                *m_image = image16Bit;
+            }
                 
             getDataFromCvImage(pixelTypeFromCvType(m_image->type()));
         } 
@@ -341,7 +361,7 @@ namespace stromx
         
         int Image::getCvAccessType(const stromx::imgutil::Image::FileAccess access)
         {
-            switch(access)
+            switch(access & (GRAYSCALE | COLOR))
             {
                 case UNCHANGED:
                     return CV_LOAD_IMAGE_UNCHANGED;

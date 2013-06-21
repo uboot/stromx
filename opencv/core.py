@@ -64,11 +64,27 @@ checkNumericValue = package.Function(dcl, dclIncludes)
 # initializations
 initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
-    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+    "{1}->data(), {0}->pixelType());").format("src1CastedData", "dstCastedData"
 ))
 initOutCopy = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), {1}->stride(), "
-    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData"
+    "{1}->data(), {0}->pixelType());").format("src1CastedData", "dstCastedData"
+))
+initInDdepth = document.Document((
+    "runtime::Image::PixelType pixelType = imgutil::computeOutPixelType("
+    "convertDdepth(m_ddepth), src1CastedData->pixelType());\n"
+    "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
+    "src1CastedData->width();\n"
+    "{1}->initializeImage({0}->width(), {0}->height(), stride, "
+    "{1}->data(), pixelType);").format("src1CastedData", "dstCastedData"
+))
+initOutDdepth = document.Document((
+    "runtime::Image::PixelType pixelType = imgutil::computeOutPixelType("
+    "convertDdepth(m_ddepth), src1CastedData->pixelType());\n"
+    "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
+    "src1CastedData->width();\n"
+    "{1}->initializeImage({1}->width(), {1}->height(), stride, "
+    "{1}->data(), pixelType);").format("src1CastedData", "dstCastedData"
 ))
 
 # arguments
@@ -79,27 +95,47 @@ srcImg2 = package.Argument(
     "src2", "Source 2", cvtype.Mat(), datatype.Image()
 )
 dstImg = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
-    initOut = initOutCopy
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInDdepth,
+    initOut = initOutDdepth
 )
+descriptions = [
+    package.EnumDescription("SAME", "Same as inputs", -1),
+    package.EnumDescription("DEPTH_8_BIT", "8-bit", "CV_8U"),
+    package.EnumDescription("DEPTH_16_BIT", "16-bit", "CV_16U")
+]
+ddepth = package.EnumParameter(
+    "ddepth", "Destination depth", descriptions = descriptions,
+    default = 0
+)
+noArray = package.Constant("cv::noArray()")
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
+barbara = test.ImageFile("barbara.jpg")
+lenna_16bit = test.ImageFile("lenna.jpg", deepColor = True)
+barbara_16bit = test.ImageFile("barbara.jpg", deepColor = True)
+barbara = test.ImageFile("barbara.jpg")
+lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
+barbara_bw = test.ImageFile("barbara.jpg", grayscale = True)
 memory = test.ImageBuffer(1000000)
 
 # add
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg),
+     noArray, ddepth],
     tests = [
-        [lenna, lenna, memory]
+        [lenna, barbara, memory, dt, dt],
+        [lenna_bw, barbara_bw, memory, dt, dt]
     ]
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
+    [package.Input(srcImg1), package.Input(srcImg2),
+     package.Allocation(dstImg), noArray, ddepth],
     tests = [
-        [lenna, lenna, dt]
+        [lenna_16bit, barbara_16bit, dt, dt, dt],
+        [lenna_16bit, barbara, dt, dt, 2]
     ]
 )
 add = package.Method(
@@ -116,6 +152,7 @@ core = package.Package(
         checkNumericValue
     ],
     testFiles = [
+        "barbara.jpg",
         "lenna.jpg"
     ]
 )

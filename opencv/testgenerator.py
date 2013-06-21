@@ -20,13 +20,28 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
         self.doc = doc
         
     def visitImageFile(self, testData):
-        if testData.color:
+        flags = []
+        if testData.grayscale:
+            flags.append("imgutil::Image::GRAYSCALE")
+
+        if testData.deepColor:
+            flags.append("imgutil::Image::DEPTH_16")
+          
+        word = ""
+        for i, flag in enumerate(flags):
+            if i == len(flags) - 1:
+                word += flag
+            else:
+                word += flag + " & "
+        
+        if word != "":
+            l = _createTestData(testData.arg, "imgutil::Image", 
+                                '"{0}", {1}'.format(testData.value, word))
+        else:
             l = _createTestData(testData.arg, "imgutil::Image", 
                                 '"{0}"'.format(testData.value))
-        else:
-            gray = "imgutil::Image::GRAYSCALE"
-            l = _createTestData(testData.arg, "imgutil::Image", 
-                                '"{0}", {1}'.format(testData.value, gray))
+            
+                    
         self.doc.line(l)
         
     def visitImageBuffer(self, testData):

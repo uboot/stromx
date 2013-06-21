@@ -16,9 +16,10 @@ class Value(TestData):
         visitor.visitValue(self)
     
 class ImageFile(Value):
-    def __init__(self, value, color = True):
+    def __init__(self, value, grayscale = False, deepColor = False):
         super(ImageFile, self).__init__(value)
-        self.color = color
+        self.grayscale = grayscale
+        self.deepColor = deepColor
         
     def accept(self, visitor):
         visitor.visitImageFile(self)

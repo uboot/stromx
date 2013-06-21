@@ -8,6 +8,7 @@ endif()
 
 
 if(BUILD_OPENCV_WRAPPER)
+   add_subdirectory(core)
    add_subdirectory(imgutil)
    add_subdirectory(imgproc)
 endif()

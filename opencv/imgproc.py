@@ -282,7 +282,7 @@ subtractedC = package.Constant("0")
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
-lenna_bw = test.ImageFile("lenna.jpg", color = False)
+lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000)
 
