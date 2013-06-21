@@ -37,7 +37,7 @@ namespace stromx
              
         public:
             /** Conversion options when reading images. */
-            enum FileAccess
+            enum Conversion
             {
                 /** The image data is not converted. */
                 UNCHANGED,
@@ -84,7 +84,7 @@ namespace stromx
              * Allocates an image and reads its content from the image file \c filename. 
              * The image data is converted according to \c access. 
              */
-            explicit Image(const std::string & filename, const FileAccess access);
+            explicit Image(const std::string & filename, const Conversion access);
                         
             /** Copy constructs an image from \c image. */
             explicit Image(const stromx::runtime::Image& image);
@@ -137,7 +137,7 @@ namespace stromx
              * Reads the image \c filename. The data of the current image is replaced 
              * by the data of the new image. The read image data is converted according to \c access. 
              */ 
-            void open(const std::string & filename, const FileAccess access);
+            void open(const std::string & filename, const Conversion access);
             
             /** 
              * Saves the image to the file \c filename. The file format is automatically 
@@ -161,7 +161,7 @@ namespace stromx
             static const runtime::Version VERSION;
             
             static PixelType pixelTypeFromParameters(const int depth, const int numChannels);
-            static int getCvAccessType(const FileAccess access);
+            static int getCvAccessType(const Conversion access);
             static int cvTypeFromPixelType(const runtime::Image::PixelType pixelType);
             static runtime::Image::PixelType pixelTypeFromCvType(const int cvType);
             

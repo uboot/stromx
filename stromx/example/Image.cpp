@@ -75,7 +75,7 @@ namespace stromx
             open(filename);
         }
         
-        Image::Image(const std::string& filename, const FileAccess access)
+        Image::Image(const std::string& filename, const Conversion access)
           : m_image(new cv::Mat())
         {
             open(filename, access);
@@ -184,7 +184,7 @@ namespace stromx
             }
         }
         
-        void Image::open(const std::string & filename, const FileAccess access)
+        void Image::open(const std::string & filename, const Conversion access)
         {
             int cvAccessType = getCvAccessType(access);
             
@@ -318,7 +318,7 @@ namespace stromx
             }         
         }
         
-        int Image::getCvAccessType(const stromx::example::Image::FileAccess access)
+        int Image::getCvAccessType(const stromx::example::Image::Conversion access)
         {
             switch(access)
             {

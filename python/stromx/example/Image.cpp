@@ -39,7 +39,7 @@ namespace
         return std::auto_ptr<stromx::example::Image>(new stromx::example::Image(filename));
     } 
     
-    std::auto_ptr<stromx::example::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::example::Image::FileAccess access)
+    std::auto_ptr<stromx::example::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::example::Image::Conversion access)
     {
         return std::auto_ptr<stromx::example::Image>(new stromx::example::Image(filename, access));
     } 
@@ -47,21 +47,22 @@ namespace
 
 void exportImage()
 {
-    enum_<stromx::example::Image::FileAccess>("ImageFileAccess")
-        .value("UNCHANGED", stromx::example::Image::UNCHANGED)
-        .value("GRAYSCALE", stromx::example::Image::GRAYSCALE)
-        .value("COLOR", stromx::example::Image::COLOR)
-    ;
-    
+    scope in_Operator =
     class_<stromx::example::Image, bases<stromx::runtime::Image>, std::auto_ptr<stromx::example::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
         .def("__init__", make_constructor(&allocateFromFileWithAccess))
         .def<void (stromx::example::Image::*)(const std::string &) const>("save", &stromx::example::Image::save)
         .def<void (stromx::example::Image::*)(const std::string &)>("open", &stromx::example::Image::open)
-        .def<void (stromx::example::Image::*)(const std::string &, const stromx::example::Image::FileAccess)>("open", &stromx::example::Image::open)
+        .def<void (stromx::example::Image::*)(const std::string &, const stromx::example::Image::Conversion)>("open", &stromx::example::Image::open)
         .def<void (stromx::example::Image::*)(const unsigned int, const unsigned int, const Image::PixelType)>("resize", &stromx::example::Image::resize)
-     ;
+    ;
      
+    enum_<stromx::example::Image::Conversion>("Conversion")
+        .value("UNCHANGED", stromx::example::Image::UNCHANGED)
+        .value("GRAYSCALE", stromx::example::Image::GRAYSCALE)
+        .value("COLOR", stromx::example::Image::COLOR)
+    ;
+    
     implicitly_convertible< std::auto_ptr<stromx::example::Image>, std::auto_ptr<Data> >();
 }

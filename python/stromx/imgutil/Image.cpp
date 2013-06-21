@@ -39,7 +39,7 @@ namespace
         return std::auto_ptr<stromx::imgutil::Image>(new stromx::imgutil::Image(filename));
     } 
     
-    std::auto_ptr<stromx::imgutil::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::imgutil::Image::FileAccess access)
+    std::auto_ptr<stromx::imgutil::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::imgutil::Image::Conversion access)
     {
         return std::auto_ptr<stromx::imgutil::Image>(new stromx::imgutil::Image(filename, access));
     } 
@@ -54,11 +54,11 @@ void exportImage()
         .def("__init__", make_constructor(&allocateFromFileWithAccess))
         .def<void (stromx::imgutil::Image::*)(const std::string &) const>("save", &stromx::imgutil::Image::save)
         .def<void (stromx::imgutil::Image::*)(const std::string &)>("open", &stromx::imgutil::Image::open)
-        .def<void (stromx::imgutil::Image::*)(const std::string &, const stromx::imgutil::Image::FileAccess)>("open", &stromx::imgutil::Image::open)
+        .def<void (stromx::imgutil::Image::*)(const std::string &, const stromx::imgutil::Image::Conversion)>("open", &stromx::imgutil::Image::open)
         .def<void (stromx::imgutil::Image::*)(const unsigned int, const unsigned int, const Image::PixelType)>("resize", &stromx::imgutil::Image::resize)
     ;
      
-    enum_<stromx::imgutil::Image::FileAccess>("FileAccess")
+    enum_<stromx::imgutil::Image::Conversion>("Conversion")
         .value("UNCHANGED", stromx::imgutil::Image::UNCHANGED)
         .value("GRAYSCALE", stromx::imgutil::Image::GRAYSCALE)
         .value("COLOR", stromx::imgutil::Image::COLOR)
