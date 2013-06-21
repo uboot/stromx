@@ -53,6 +53,7 @@ void exportImage()
         .value("COLOR", stromx::imgutil::Image::COLOR)
     ;
     
+    scope in_Operator =
     class_<stromx::imgutil::Image, bases<stromx::runtime::Image>, std::auto_ptr<stromx::imgutil::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
