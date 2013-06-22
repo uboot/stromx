@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+class ParameterRuleVisitor(object):
+    def visitOddRule(self, rule):
+        pass
+        
+    def visitEvenRule(self, rule):
+        pass
+
 class ArgumentVisitor(object):
     def visitInput(self, inputArg):
         pass

@@ -58,7 +58,13 @@ namespace stromx
             virtual PixelType pixelType() const = 0;
             
             /** Returns the size of a single pixel in bytes. */
-            virtual unsigned int pixelSize() const = 0;
+            virtual unsigned int pixelSize() const;
+            
+            /** Returns the number of channels of the image. */
+            virtual unsigned int numChannels() const;
+            
+            /** Returns the size of a pixel of a single channel of the image in bytes. */
+            virtual unsigned int depth() const;
             
             /** 
              * Initializes the image to the given data. Note that this function does not
@@ -75,10 +81,10 @@ namespace stromx
             static unsigned int pixelSize(const PixelType pixelType);
                       
             /** Returns the number of channels for a given pixel type. */
-            static int numChannels(const PixelType pixelType);
+            static unsigned int numChannels(const PixelType pixelType);
             
             /** Returns the size of a single channel of a given pixel type in bytes. */
-            static int depth(const PixelType pixelType);
+            static unsigned depth(const PixelType pixelType);
             
         protected:
             /** Returns the data variant defined by the input \c pixelType. */

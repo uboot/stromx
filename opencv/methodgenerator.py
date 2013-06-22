@@ -980,10 +980,16 @@ class OpImplGenerator(MethodGenerator):
             v = OpImplGenerator.CheckVariantVisitor(self.doc)
             self.visitOption(o, v) 
             
+            self.doc.blank()
+            
             v = OpImplGenerator.CastedDataVisitor(self.doc)
             self.visitOption(o, v) 
             
             self.doc.blank()
+            
+            if o.inputCheck != None:
+                self.doc.document(o.inputCheck)
+                self.doc.blank()
             
             v = OpImplGenerator.InitInVisitor(self.doc)
             self.visitOption(o, v) 

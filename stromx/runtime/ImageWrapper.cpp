@@ -55,11 +55,6 @@ namespace stromx
             m_buffer = buffer;
         }
         
-        unsigned int ImageWrapper::pixelSize() const
-        {
-            return Image::pixelSize(m_pixelType);
-        }
-        
         void ImageWrapper::initializeImage(const unsigned int width, const unsigned int height, 
                                            const unsigned int stride, uint8_t*const data, 
                                            const PixelType pixelType)

@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 
-class RuleVisitor(object):
-    def visitOddRule(self, rule):
-        pass
-        
-    def visitEvenRule(self, rule):
-        pass
+import interface
     
-class CheckParameterVisitor(RuleVisitor):
+class CheckParameterVisitor(interface.ParameterRuleVisitor):
     def __init__(self, doc, param):
         self.doc = doc
         self.param = param

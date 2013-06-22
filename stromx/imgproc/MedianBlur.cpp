@@ -247,6 +247,7 @@ namespace stromx
                     {
                         throw runtime::InputError(DST, *this, "Wrong input data variant.");
                     }
+                    
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
@@ -281,6 +282,7 @@ namespace stromx
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }
+                    
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
                     cv::Mat srcCvData = imgutil::getOpenCvMat(*srcCastedData);
@@ -313,6 +315,7 @@ namespace stromx
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }
+                    
                     runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
                     cv::Mat srcCvData = imgutil::getOpenCvMat(*srcCastedData);

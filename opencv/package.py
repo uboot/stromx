@@ -162,11 +162,12 @@ class Method(object):
         self.options = [] if options == None else options
         
 class Option(object):
-    def __init__(self, ident, name, args = None, tests = None):
+    def __init__(self, ident, name, args = None, tests = None, inputCheck = None):
         self.ident = Ident(ident)
         self.name = name
         self.args = [] if args == None else args
         self.tests = [] if tests == None else tests
+        self.inputCheck = inputCheck
 
 class Constant(Argument):
     def __init__(self, value):

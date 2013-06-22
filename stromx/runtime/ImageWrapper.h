@@ -60,7 +60,6 @@ namespace stromx
             virtual unsigned int width() const { return m_width; }
             virtual unsigned int height() const { return m_height; }
             virtual PixelType pixelType() const { return m_pixelType; }
-            virtual unsigned int pixelSize() const;
             virtual void initializeImage(const unsigned int width, 
                                          const unsigned int height, 
                                          const unsigned int stride, 

@@ -80,11 +80,6 @@ namespace
             return this->get_override("pixelType")();
         }
         
-        unsigned int pixelSize() const
-        {
-            return this->get_override("pixelSize")();
-        }
-        
         uint8_t* data()
         {
             return this->get_override("data")();
@@ -125,7 +120,9 @@ void exportImage()
         .def("width", pure_virtual(&Image::width))
         .def("height", pure_virtual(&Image::height))
         .def("pixelType", pure_virtual(&Image::pixelType))
-        .def("pixelSize", pure_virtual(static_cast<unsigned int (stromx::runtime::Image::*)() const>(&Image::pixelSize)))
+        .def<unsigned int (stromx::runtime::Image::*)() const>("pixelSize", &Image::pixelSize)
+        .def<unsigned int (stromx::runtime::Image::*)() const>("depth", &Image::depth)
+        .def<unsigned int (stromx::runtime::Image::*)() const>("numChannels", &Image::numChannels)
     ;
     
     enum_<Image::PixelType>("PixelType")

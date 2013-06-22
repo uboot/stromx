@@ -33,8 +33,16 @@ class Document(object):
     def document(self, doc):
         if doc == None:
             return
+        
+        # remove leading and trailing empty lines
+        lines = doc.lines
+        if len(lines) and lines[0] == "":
+            lines = lines[1:]
             
-        for l in doc.lines:
+        if len(lines) and lines[-1] == "":
+            lines = lines[:-1]
+            
+        for l in lines:
             self.line(l)
         
     def increaseIndent(self):

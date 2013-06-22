@@ -20,7 +20,22 @@ namespace stromx
 {
     namespace runtime
     {
-        int Image::numChannels(const PixelType pixelType)
+        unsigned int Image::pixelSize() const
+        {
+            return Image::pixelSize(pixelType());
+        }
+        
+        unsigned int Image::depth() const
+        {
+            return Image::depth(pixelType());
+        }
+
+        unsigned int Image::numChannels() const
+        {
+            return Image::numChannels(pixelType());
+        }
+        
+        unsigned int Image::numChannels(const PixelType pixelType)
         {
             switch(pixelType)
             {
@@ -42,7 +57,7 @@ namespace stromx
             }
         }
         
-        int Image::depth(const PixelType pixelType)
+        unsigned int Image::depth(const PixelType pixelType)
         {
             switch(pixelType)
             {

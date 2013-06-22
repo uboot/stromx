@@ -86,6 +86,12 @@ initOutDdepth = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), stride, "
     "{1}->data(), pixelType);").format("src1CastedData", "dstCastedData"
 ))
+pixelTypeCheck = document.Document(
+"""
+if(src1CastedData->numChannels() != src2CastedData->numChannels())
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+"""
+)
 
 # arguments
 srcImg1 = package.Argument(
@@ -127,7 +133,8 @@ manual = package.Option(
     tests = [
         [lenna, barbara, memory, dt, dt],
         [lenna_bw, barbara_bw, memory, dt, dt]
-    ]
+    ],
+    inputCheck = pixelTypeCheck
 )
 allocate = package.Option(
     "allocate", "Allocate",
