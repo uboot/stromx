@@ -251,6 +251,9 @@ namespace stromx
                     
                     if(src1CastedData->numChannels() != src2CastedData->numChannels())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+                        
+                    if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
+                        throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
                     runtime::Image::PixelType pixelType = imgutil::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
@@ -298,6 +301,12 @@ namespace stromx
                     
                     const runtime::Image* src1CastedData = runtime::data_cast<runtime::Image>(src1Data);
                     const runtime::Image* src2CastedData = runtime::data_cast<runtime::Image>(src2Data);
+                    
+                    if(src1CastedData->numChannels() != src2CastedData->numChannels())
+                        throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+                        
+                    if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
+                        throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
                     cv::Mat src1CvData = imgutil::getOpenCvMat(*src1CastedData);
                     cv::Mat src2CvData = imgutil::getOpenCvMat(*src2CastedData);

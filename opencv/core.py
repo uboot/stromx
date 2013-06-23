@@ -90,6 +90,9 @@ pixelTypeCheck = document.Document(
 """
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
     throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+    
+if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
 """
 )
 
@@ -143,7 +146,8 @@ allocate = package.Option(
     tests = [
         [lenna_16bit, barbara_16bit, dt, dt, dt],
         [lenna_16bit, barbara, dt, dt, 2]
-    ]
+    ],
+    inputCheck = pixelTypeCheck
 )
 add = package.Method(
     "add", options = [manual, allocate]
