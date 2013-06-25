@@ -8,12 +8,21 @@ import rulegenerator
 import testgenerator
     
 class SingleArgumentVisitor(interface.ArgumentVisitor):
+    """
+    Visitor which handles compound arguments and calls the accept methods
+    of each component of the compound arguments. I.e. derived visitors do not
+    have to care about compound arguments they only have to consider "single"
+    arguments.
+    """
     def visitCompound(self, compound):
         for arg in compound.args:
             arg.accept(self)
             
     
 class CollectVisitor(SingleArgumentVisitor):
+    """
+    Visitor stores all arguments it visits the common set self.args.
+    """
     def __init__(self):
         self.args = set()
         
@@ -42,7 +51,10 @@ class CollectVisitor(SingleArgumentVisitor):
         self.args.add(output)
         
 class MethodGenerator(object):
-    
+    """
+    Abstract base class of all generators which output files depending on 
+    operators. It provides utility functions used by the derived classes.
+    """
     class CollectParametersVisitor(SingleArgumentVisitor):
         def __init__(self):
             self.params = []
@@ -57,10 +69,17 @@ class MethodGenerator(object):
             self.visitParameter(parameter)
             
     class DocVisitor(SingleArgumentVisitor):
+        """ 
+        Visitor which holds a document.
+        """
         def __init__(self, doc):
             self.doc = doc
             
-    class ParameterVisitor(DocVisitor):            
+    class ParameterVisitor(DocVisitor):
+        """
+        Visitor which maps all visits of parameter arguments to a common
+        function which handles all parameters regardless of their exact type.
+        """          
         def visitNumericParameter(self, parameter):
             self.visitParameter(parameter)
             
@@ -73,6 +92,10 @@ class MethodGenerator(object):
         self.doc = None
     
     def save(self, package, method, printResult = False):
+        """
+        Writes the output of the generator for the input method to the current
+        document and optionally prints it to the standard output.
+        """
         self.p = package
         self.m = method
         self.doc = document.Document()

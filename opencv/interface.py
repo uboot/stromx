@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 class ParameterRuleVisitor(object):
+    """
+    Visitor fordifferent parameter rules.
+    """
     def visitOddRule(self, rule):
         pass
         
@@ -8,6 +11,9 @@ class ParameterRuleVisitor(object):
         pass
 
 class ArgumentVisitor(object):
+    """
+    Visitor for different argument types.
+    """
     def visitInput(self, inputArg):
         pass
         
@@ -36,6 +42,9 @@ class ArgumentVisitor(object):
         pass
     
 class TestArgumentVisitor(object):
+    """
+    Visitor for different test data types.
+    """
     def visitImageFile(self, testData):
         pass
     

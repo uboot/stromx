@@ -22,8 +22,8 @@ class LibGenerator(object):
     
     def save(self, package, printResult = False):
         """
-        Writes the output of the generator to the current document and 
-        optionally prints it to the standard output.
+        Writes the output of the generator for the input package to the current
+        document and optionally prints it to the standard output.
         """
         self.p = package
         self.doc = document.Document()
