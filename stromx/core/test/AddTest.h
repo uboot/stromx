@@ -17,6 +17,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE(AddTest);
             CPPUNIT_TEST(testManual0);
             CPPUNIT_TEST(testManual1);
+            CPPUNIT_TEST(testManual2);
             CPPUNIT_TEST(testAllocate0);
             CPPUNIT_TEST(testAllocate1);
             CPPUNIT_TEST_SUITE_END();
@@ -29,6 +30,7 @@ namespace stromx
         protected:
             void testManual0();
             void testManual1();
+            void testManual2();
             void testAllocate0();
             void testAllocate1();
             

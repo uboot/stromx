@@ -61,6 +61,28 @@ namespace stromx
             imgutil::Image::save("AddTest_testManual1.png", access());
         }
         
+        void AddTest::testManual2()
+        {
+            m_operator->setParameter(Add::DATA_FLOW, runtime::Enum(Add::MANUAL));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src1(new imgutil::Image("lenna.jpg", imgutil::Image::DEPTH_16));
+            runtime::DataContainer src2(new imgutil::Image("barbara.jpg"));
+            runtime::DataContainer dst(new imgutil::Image(1000000));
+            runtime::Enum ddepth(1);
+            
+            m_operator->setInputData(Add::SRC_1, src1);
+            m_operator->setInputData(Add::SRC_2, src2);
+            m_operator->setInputData(Add::DST, dst);
+            m_operator->setParameter(Add::DDEPTH, ddepth);
+            
+            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            imgutil::Image::save("AddTest_testManual2.png", access());
+        }
+        
         void AddTest::testAllocate0()
         {
             m_operator->setParameter(Add::DATA_FLOW, runtime::Enum(Add::ALLOCATE));

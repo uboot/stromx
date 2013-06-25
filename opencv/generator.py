@@ -13,10 +13,18 @@ import package
 from methodgenerator import *
 
 class LibGenerator(object):
+    """
+    Base class of generator classes which output files depending on a package
+    but not on a specific operator.
+    """
     p = None
     doc = None
     
     def save(self, package, printResult = False):
+        """
+        Writes the output of the generator to the current document and 
+        optionally prints it to the standard output.
+        """
         self.p = package
         self.doc = document.Document()
         
@@ -27,32 +35,7 @@ class LibGenerator(object):
         
 class LibHeaderGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = LibHeaderGenerator()
-    >>> g.save(p, True)    
-    #ifndef STROMX_IMGPROC_IMGPROC_H
-    #define STROMX_IMGPROC_IMGPROC_H
-    <BLANKLINE>
-    #include "Config.h"
-    <BLANKLINE>
-    namespace stromx
-    {
-        namespace runtime
-        {
-            class Registry;
-        }
-    }
-    <BLANKLINE>
-    extern "C"
-    {
-        STROMX_IMGPROC_API void stromxRegisterImgproc(stromx::runtime::Registry& registry);
-    }
-    <BLANKLINE>
-    #endif // STROMX_IMGPROC_IMGPROC_H
-    <BLANKLINE>
+    Generator of package header files.
     """
     def generate(self):
         p = self.p.ident.constant()
@@ -90,25 +73,7 @@ class LibHeaderGenerator(LibGenerator):
            
 class LibImplGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.ident = package.Ident("imgproc")
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = LibImplGenerator()
-    >>> g.save(p, True)       
-    #include "Imgproc.h"
-    <BLANKLINE>
-    #include "MedianBlur.h"
-    #include <stromx/runtime/Registry.h>
-    <BLANKLINE>
-    void stromxRegisterImgproc(stromx::runtime::Registry& registry)
-    {
-        using namespace stromx::imgproc;
-    <BLANKLINE>
-        registry.registerOperator(new MedianBlur);
-    }
-    <BLANKLINE>
+    Generator of package implementation files.
     """
     def generate(self):
         self.doc.line('#include "{0}.h"'.format(self.p.ident.className()))
@@ -137,9 +102,7 @@ class LibImplGenerator(LibGenerator):
            
 class LibTestGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> g = LibTestGenerator()
-    >>> g.save(p)      
+    Generator of the package test main() function file.
     """
     def generate(self):
         text = """
@@ -186,69 +149,7 @@ int main (int, char**)
 
 class CMakeGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = CMakeGenerator()
-    >>> g.save(p, True)
-    set (IMGPROC_VERSION_MAJOR 0)
-    set (IMGPROC_VERSION_MINOR 0)
-    set (IMGPROC_VERSION_PATCH 1)
-    <BLANKLINE>
-    configure_file (
-        ${PROJECT_CURRENT_SOURCE_DIR}/Config.h.in
-        ${PROJECT_CURRENT_SOURCE_DIR}/Config.h
-    )
-    <BLANKLINE>
-    include_directories (
-        ${CMAKE_SOURCE_DIR}
-        ${CMAKE_BINARY_DIR}
-        ${Boost_INCLUDE_DIRS}
-    )
-    <BLANKLINE>
-    set (SOURCES 
-        Imgproc.cpp
-        Utility.cpp
-        MedianBlur.cpp
-    )
-    <BLANKLINE>
-    add_library (stromx_imgproc SHARED ${SOURCES})
-    <BLANKLINE>
-    add_dependencies(stromx_imgproc stromx_runtime)
-    <BLANKLINE>
-    set(VERSION_STRING "${IMGPROC_VERSION_MAJOR}.${IMGPROC_VERSION_MINOR}.${IMGPROC_VERSION_PATCH}")
-    <BLANKLINE>
-    set_target_properties (stromx_imgproc PROPERTIES
-        VERSION ${VERSION_STRING}
-        SOVERSION ${VERSION_STRING}
-        FOLDER "library"
-    )
-    <BLANKLINE>
-    target_link_libraries (stromx_imgproc
-        ${OpenCV_LIBS}
-        stromx_runtime
-        stromx_imgutil
-    )
-    <BLANKLINE>
-    if(WIN32)
-        install (TARGETS stromx_imgproc
-            RUNTIME DESTINATION .
-            LIBRARY DESTINATION ${LIB_DIR}
-            ARCHIVE DESTINATION ${LIB_DIR}
-        )
-    else(WIN32)
-        install (TARGETS stromx_imgproc
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${LIB_DIR}
-            ARCHIVE DESTINATION ${LIB_DIR}
-        )
-    endif(WIN32)
-    <BLANKLINE>
-    if(BUILD_TESTS)
-        add_subdirectory(test)
-    endif(BUILD_TESTS)
-    <BLANKLINE>
+    Generator of the CMake file for the package.
     """
     def generate(self):
         self.doc.line("set ({0}_VERSION_MAJOR {1})"\
@@ -371,12 +272,7 @@ class CMakeGenerator(LibGenerator):
 
 class PythonCMakeGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = PythonCMakeGenerator()
-    >>> g.save(p, True)        
+    Generator of the CMake file for the pyton bindings of the package.
     """
     def generate(self):
         self.doc.line("project(python_stromx_{0})".format(self.p.ident))
@@ -448,12 +344,7 @@ class PythonCMakeGenerator(LibGenerator):
             
 class PythonInitGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = PythonInitGenerator()
-    >>> g.save(p, True)        
+    Generator of the Python module file (__init__.py) of the package.
     """
     def generate(self):
         self.doc.line("import stromx.runtime".format(self.p.ident))
@@ -466,12 +357,8 @@ class PythonInitGenerator(LibGenerator):
             
 class PythonExportGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> g = PythonExportGenerator()
-    >>> g.save(p, True)        
+    Generator of the main export function file of the Python wrapper of the 
+    package.
     """
     def generate(self):
         self.doc.line("#include <boost/python.hpp>")
@@ -510,49 +397,7 @@ class PythonExportGenerator(LibGenerator):
             
 class TestCMakeGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> m = package.Method("medianBlur")
-    >>> p.methods.append(m)
-    >>> p.testFiles.append("lenna.jpg")
-    >>> g = TestCMakeGenerator()
-    >>> g.save(p, True)
-    add_test(NAME stromx_imgproc_test COMMAND stromx_imgproc_test)
-    <BLANKLINE>
-    if(MSVC)
-        add_definitions(/DSTROMX_EXAMPLE_STATIC)
-    endif(MSVC)
-    <BLANKLINE>
-    include_directories (
-        ${CMAKE_SOURCE_DIR}
-        ${CMAKE_BINARY_DIR}
-        ${CPPUNIT_INCLUDE_DIR}
-    )
-    <BLANKLINE>
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-    <BLANKLINE>
-    set (SOURCES 
-        ../MedianBlur.cpp
-        ../Utility.cpp
-        MedianBlurTest.cpp
-        main.cpp
-    )
-    <BLANKLINE>
-    add_executable(stromx_imgproc_test ${SOURCES})
-    <BLANKLINE>
-    set_target_properties(stromx_imgproc_test PROPERTIES FOLDER "test")
-    <BLANKLINE>
-    add_dependencies(stromx_imgproc_test stromx_imgproc)
-    <BLANKLINE>
-    target_link_libraries (stromx_imgproc_test
-        ${CPPUNIT_LIBRARY}
-        ${CMAKE_DL_LIBS}
-        ${OpenCV_LIBS}
-        stromx_runtime
-        stromx_imgutil
-    )
-    <BLANKLINE>
-    <BLANKLINE>
+    Generator of the CMake file for the package tests.
     """
     def generate(self):
         self.doc.line((
@@ -626,21 +471,7 @@ class TestCMakeGenerator(LibGenerator):
             
 class UtilityHeaderGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> g = UtilityHeaderGenerator()
-    >>> g.save(p, True)
-    #ifndef STROMX_IMGPROC_UTILITY_H
-    #define STROMX_IMGPROC_UTILITY_H
-    <BLANKLINE>
-    namespace stromx
-    {
-        namespace imgproc
-        {
-    <BLANKLINE>
-        }
-    }
-    #endif // STROMX_IMGPROC_UTILITY_H
-    <BLANKLINE>
+    Generator of the package utility header.
     """
     def generate(self):
         p = self.p.ident.constant()
@@ -681,19 +512,7 @@ class UtilityHeaderGenerator(LibGenerator):
        
 class UtilityImplGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> g = UtilityImplGenerator()
-    >>> g.save(p, True)
-    #include "Utility.h"
-    <BLANKLINE>
-    namespace stromx
-    {
-        namespace imgproc
-        {
-    <BLANKLINE>
-        }
-    }
-    <BLANKLINE>
+    Generator of the package utility implementation.
     """
     def generate(self):
         self.doc.line('#include "Utility.h"')
@@ -726,35 +545,7 @@ class UtilityImplGenerator(LibGenerator):
             
 class ConfigGenerator(LibGenerator):
     """
-    >>> p = package.Package("imgproc", 0, 0, 1)
-    >>> p.name = "OpenCV image processing"
-    >>> g = ConfigGenerator()
-    >>> g.save(p, True)
-    #ifndef STROMX_IMGPROC_CONFIG_H
-    #define STROMX_IMGPROC_CONFIG_H
-    <BLANKLINE>
-    #define STROMX_IMGPROC_VERSION_MAJOR @IMGPROC_VERSION_MAJOR@
-    #define STROMX_IMGPROC_VERSION_MINOR @IMGPROC_VERSION_MINOR@
-    #define STROMX_IMGPROC_VERSION_PATCH @IMGPROC_VERSION_PATCH@
-    <BLANKLINE>
-    #define STROMX_IMGPROC_PACKAGE_NAME "Imgproc"
-    <BLANKLINE>
-    #ifdef WIN32
-        #ifdef STROMX_IMGPROC_STATIC
-            #define STROMX_IMGPROC_API
-        #else // STROMX_IMGPROC_STATIC
-            #ifdef stromx_imgproc_EXPORTS
-                #define STROMX_IMGPROC_API __declspec(dllexport)
-            #else // stromx_imgproc_EXPORTS
-                #define STROMX_IMGPROC_API __declspec(dllimport)
-            #endif // stromx_imgproc_EXPORTS
-        #endif // STROMX_IMGPROC_STATIC
-    #else // WIN32
-        #define STROMX_IMGPROC_API
-    #endif // WIN32
-    <BLANKLINE>
-    #endif // STROMX_IMGPROC_CONFIG_H
-    <BLANKLINE>
+    Generator of the package configure header template.
     """
     def generate(self):
         p = self.p.ident.constant()
@@ -808,6 +599,9 @@ class ConfigGenerator(LibGenerator):
             f.write(self.doc.string())
             
 def generatePackageFiles(package):
+    """
+    Generates all files for the given package (including all operator files).
+    """
     g = LibHeaderGenerator()
     g.save(package)
     

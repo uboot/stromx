@@ -93,8 +93,7 @@ if(src1CastedData->numChannels() != src2CastedData->numChannels())
     
 if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
     throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
-"""
-)
+""")
 
 # arguments
 srcImg1 = package.Argument(
@@ -135,7 +134,8 @@ manual = package.Option(
      noArray, ddepth],
     tests = [
         [lenna, barbara, memory, dt, dt],
-        [lenna_bw, barbara_bw, memory, dt, dt]
+        [lenna_bw, barbara_bw, memory, dt, dt],
+        [lenna_16bit, barbara, memory, dt, 1]
     ],
     inputCheck = pixelTypeCheck
 )
