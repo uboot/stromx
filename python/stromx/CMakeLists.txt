@@ -9,8 +9,9 @@ if(BUILD_EXAMPLE)
 endif()
 
 if(BUILD_OPENCV_WRAPPER)
-    add_subdirectory(imgutil)
+    add_subdirectory(core)
     add_subdirectory(imgproc)
+    add_subdirectory(imgutil)
     set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"core\", \"imgutil\", \"imgproc\"")
 endif()
 
