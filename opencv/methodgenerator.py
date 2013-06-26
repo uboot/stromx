@@ -107,6 +107,10 @@ class MethodGenerator(object):
             print self.doc.string()
             
     def createOptionParameter(self):
+        """
+        Creates and returns an enum parameters which provides one value for
+        each option of the method.
+        """
         p = package.EnumParameter("dataFlow", "Data flow")
         p.isInit = True
         for opt in self.m.options:
@@ -116,6 +120,12 @@ class MethodGenerator(object):
         return p
             
     def visitAll(self, visitor, visitOptionParam = True):
+        """
+        Collects all arguments of all options and removes duplicates (i.e. 
+        arguments with common identifier). Then the visitor visits all 
+        remaining arguments and the option parameter if the according flag is
+        set to true.
+        """
         v = CollectVisitor()
         for opt in self.m.options:
             for arg in opt.args:
@@ -136,20 +146,36 @@ class MethodGenerator(object):
             self.optionParam.accept(visitor)
             
     def visitOption(self, opt, visitor):
+        """
+        The visitor visits all arguments of the given option.
+        """
         for arg in opt.args:
             arg.accept(visitor)
         
     def namespaceEnter(self):
+        """
+        Enters the namespace of the package the method belongs to.
+        """
         self.doc.namespaceEnter("stromx")
         self.doc.namespaceEnter(self.p.ident)
         
     def namespaceExit(self):
+        """
+        Exits the package namespace.
+        """
         self.doc.namespaceExit()
         self.doc.namespaceExit()
         self.doc.blank()
             
 class OpHeaderGenerator(MethodGenerator):
+    """
+    Generates the header of a method operator.
+    """
     class ConnectorEnumVisitor(SingleArgumentVisitor):
+        """
+        Exports the enumeration of the IDs of all visited input and output
+        connectors.
+        """
         def __init__(self):
             self.connectors = set()
             
@@ -170,17 +196,27 @@ class OpHeaderGenerator(MethodGenerator):
             doc.enum("ConnectorId", set(connectorIds))
             
     class ParameterEnumVisitor(MethodGenerator.CollectParametersVisitor):
+        """
+        Exports the enumeration of the parameter IDs of all visited parameters.
+        """
         def export(self, doc):
             paramIds = [p.ident.constant() for p in self.params]
             doc.enum("ParameterId", set(paramIds))
         
     class DataMemberVisitor(MethodGenerator.ParameterVisitor):
+        """
+        Exports class members for the values of all visited parameters.
+        """
         def visitParameter(self, parameter):
             l = "{0} {1};".format(parameter.dataType.typeId(),
                                   parameter.ident.attribute())
             self.doc.line(l)
         
     class ParameterDescriptionsVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports class members for the parameter description of all visited
+        enumeration and numeric parameters.
+        """
         def visitEnumParameter(self, parameter):
             self.doc.line(("runtime::EnumParameter* m_{0}Parameter;"
                           ).format(parameter.ident))
@@ -191,6 +227,9 @@ class OpHeaderGenerator(MethodGenerator):
                                    parameter.dataType.typeId()))
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports enumerations for the IDs of all visited enumeration parameters.
+        """
         def visitEnumParameter(self, parameter):
             keys = []
             for desc in parameter.descriptions:
@@ -199,6 +238,10 @@ class OpHeaderGenerator(MethodGenerator):
             self.doc.enum(enumName, keys)
             
     class EnumConversionDeclVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports declarations of conversion functions for each visited 
+        enumeration parameter.
+        """
         def visitEnumParameter(self, parameter):
             name = parameter.ident.className()
             l = "int convert{0}(const runtime::Enum & value);".format(name)
@@ -321,7 +364,14 @@ class OpHeaderGenerator(MethodGenerator):
         return "STROMX_{0}_API".format(self.p.ident.upper())
             
 class OpImplGenerator(MethodGenerator):
+    """
+    Generates the header of a method operator.
+    """
     class ParameterInitVisitor(MethodGenerator.CollectParametersVisitor):
+        """
+        Exports the constructor initialization for all visited parameter data 
+        members .
+        """
         def export(self, doc):
             for i, p in enumerate(self.params):
                 defaultValue = p.default if p.default != None else ""
@@ -332,11 +382,18 @@ class OpImplGenerator(MethodGenerator):
                     doc.line(init)
             
     class GetParametersVisitor(MethodGenerator.ParameterVisitor):
+        """
+        Exports case sections which return the values of all visited 
+        parameters.
+        """
         def visitParameter(self, parameter):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.line("return {0};".format(parameter.ident.attribute()))
                     
     class SetParametersVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports case sections which set the values of all visited parameters.
+        """
         def visitParameter(self, parameter):
             self.__setParameterWithCheck(parameter)
             
@@ -370,6 +427,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line("break;")
                 
     class SetupParametersVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the allocation of the descriptions of all visited parameters.
+        """
         def __init__(self, doc, isInit = False):
             super(OpImplGenerator.SetupParametersVisitor, self).__init__(doc)
             self.isInit = isInit
@@ -443,6 +503,9 @@ class OpImplGenerator(MethodGenerator):
             
             
     class SetupOutputsVistor(MethodGenerator.DocVisitor):
+        """
+        Exports the allocation of the descriptions of all visited outputs.
+        """
         def visitOutput(self, output):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
                 .format(output.ident, output.ident.constant(),
@@ -459,6 +522,9 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(allocation)
             
     class SetupInputsVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the allocation of the descriptions of all visited inputs.
+        """
         def visitOutput(self, output):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
                 .format(output.ident, output.ident.constant(),
@@ -475,6 +541,9 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(allocation)
             
     class InputMapperVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports input mappers for all visited inputs and outputs.
+        """
         def visitInput(self, inputArg):
             self.__visit(inputArg)
             
@@ -488,6 +557,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
     
     class ReceiveInputDataVisitor(SingleArgumentVisitor):
+        """
+        Exports the receive input command for all visited inputs and outputs.
+        """
         def __init__(self):
             self.line = ""
             
@@ -508,6 +580,9 @@ class OpImplGenerator(MethodGenerator):
                 self.line += " && {0}InMapper".format(arg.ident)
            
     class InDataVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports stromx::Data* variables for all visited inputs and outputs.
+        """
         def visitInput(self, inputArg):
             self.doc.line(("const runtime::Data* "
                            "{0}Data = 0;").format(inputArg.ident))
@@ -516,6 +591,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line("runtime::Data* {0}Data = 0;".format(output.ident))
             
     class AccessVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports data accessors for all visited inputs and outputs.
+        """
         def visitInput(self, inputArg):
             self.doc.line(("runtime::ReadAccess<> "
                            "{0}ReadAccess;").format(inputArg.ident))
