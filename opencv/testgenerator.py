@@ -22,10 +22,10 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
     def visitImageFile(self, testData):
         flags = []
         if testData.grayscale:
-            flags.append("imgutil::Image::GRAYSCALE")
+            flags.append("cvimgutil::Image::GRAYSCALE")
 
         if testData.deepColor:
-            flags.append("imgutil::Image::DEPTH_16")
+            flags.append("cvimgutil::Image::DEPTH_16")
           
         word = ""
         for i, flag in enumerate(flags):
@@ -35,17 +35,17 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
                 word += flag + " & "
         
         if word != "":
-            l = _createTestData(testData.arg, "imgutil::Image", 
+            l = _createTestData(testData.arg, "cvimgutil::Image", 
                                 '"{0}", {1}'.format(testData.value, word))
         else:
-            l = _createTestData(testData.arg, "imgutil::Image", 
+            l = _createTestData(testData.arg, "cvimgutil::Image", 
                                 '"{0}"'.format(testData.value))
             
                     
         self.doc.line(l)
         
     def visitImageBuffer(self, testData):
-        l = _createTestData(testData.arg, "imgutil::Image", 
+        l = _createTestData(testData.arg, "cvimgutil::Image", 
                             '{0}'.format(testData.value))
         self.doc.line(l)
     
@@ -133,7 +133,7 @@ class SaveResultVisitor(interface.ArgumentVisitor):
         
         fileName = "{0}.png".format(self.testFileName)
         self.doc.line((
-            'imgutil::Image::save("{0}", access());'
+            'cvimgutil::Image::save("{0}", access());'
         ).format(fileName))
     
 def _visitTest(doc, args, testData, visitor):

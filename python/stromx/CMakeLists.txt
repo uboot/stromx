@@ -9,10 +9,10 @@ if(BUILD_EXAMPLE)
 endif()
 
 if(BUILD_OPENCV_WRAPPER)
-    add_subdirectory(core)
-    add_subdirectory(imgproc)
-    add_subdirectory(imgutil)
-    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"core\", \"imgutil\", \"imgproc\"")
+    add_subdirectory(cvcore)
+    add_subdirectory(cvimgproc)
+    add_subdirectory(cvimgutil)
+    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"cvcore\", \"cvimgutil\", \"cvimgproc\"")
 endif()
 
 configure_file (

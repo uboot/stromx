@@ -851,20 +851,21 @@ class OpImplGenerator(MethodGenerator):
             f.write(self.doc.string())
     
     def __includes(self):
+        cvModule = str(self.p.ident)[2:]
         self.doc.line('#include "stromx/{0}/{1}.h"'\
             .format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
         self.doc.line('#include "stromx/{0}/Utility.h"'.format(self.p.ident))
-        self.doc.line('#include <stromx/imgutil/Image.h>')
-        self.doc.line('#include <stromx/imgutil/Matrix.h>')
-        self.doc.line('#include <stromx/imgutil/Utilities.h>')
+        self.doc.line('#include <stromx/cvimgutil/Image.h>')
+        self.doc.line('#include <stromx/cvimgutil/Matrix.h>')
+        self.doc.line('#include <stromx/cvimgutil/Utilities.h>')
         self.doc.line('#include <stromx/runtime/DataContainer.h>')
         self.doc.line('#include <stromx/runtime/DataProvider.h>')
         self.doc.line('#include <stromx/runtime/Id2DataComposite.h>')
         self.doc.line('#include <stromx/runtime/Id2DataPair.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
         self.doc.line('#include <stromx/runtime/WriteAccess.h>')
-        self.doc.line('#include <opencv2/{0}/{0}.hpp>'.format(self.p.ident))
+        self.doc.line('#include <opencv2/{0}/{0}.hpp>'.format(cvModule))
         self.doc.blank()    
         
     def __statics(self):
@@ -1226,7 +1227,7 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
         
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
-        self.doc.line('#include "stromx/imgutil/Image.h"')
+        self.doc.line('#include "stromx/cvimgutil/Image.h"')
         self.doc.line((
             '#include "stromx/{0}/{1}.h"'
             ).format(self.p.ident, self.m.ident.className()))

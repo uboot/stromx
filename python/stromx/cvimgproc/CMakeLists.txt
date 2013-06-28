@@ -1,0 +1,39 @@
+project(python_stromx_cvimgproc)
+
+set (SOURCES 
+    Cvimgproc.cpp
+)
+
+add_library (cvimgproc SHARED ${SOURCES})
+
+add_dependencies(cvimgproc stromx_cvimgproc)
+
+set_target_properties (cvimgproc PROPERTIES FOLDER "python")
+
+include_directories (
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+    ${Boost_INCLUDE_DIRS}
+    ${OpenCV2_INCLUDE_DIR}
+    ${PYTHON_INCLUDE_DIRS}
+)
+
+target_link_libraries (cvimgproc
+    ${Boost_LIBRARIES}
+    ${PYTHON_LIBRARY}
+    stromx_runtime
+    stromx_cvimgutil
+    stromx_cvimgproc
+)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+if(PYTHON_INSTALL_DIR)
+    install(DIRECTORY . 
+        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/cvimgproc
+        FILES_MATCHING PATTERN "*.py"
+    )
+    install(TARGETS cvimgproc
+        DESTINATION ${PYTHON_INSTALL_DIR}/stromx/cvimgproc
+    )
+endif()

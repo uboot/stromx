@@ -1,0 +1,24 @@
+#ifndef STROMX_CVCORE_CONFIG_H
+#define STROMX_CVCORE_CONFIG_H
+
+#define STROMX_CVCORE_VERSION_MAJOR @CVCORE_VERSION_MAJOR@
+#define STROMX_CVCORE_VERSION_MINOR @CVCORE_VERSION_MINOR@
+#define STROMX_CVCORE_VERSION_PATCH @CVCORE_VERSION_PATCH@
+
+#define STROMX_CVCORE_PACKAGE_NAME "Cvcore"
+
+#ifdef WIN32
+    #ifdef STROMX_CVCORE_STATIC
+        #define STROMX_CVCORE_API
+    #else // STROMX_CVCORE_STATIC
+        #ifdef stromx_cvcore_EXPORTS
+            #define STROMX_CVCORE_API __declspec(dllexport)
+        #else // stromx_cvcore_EXPORTS
+            #define STROMX_CVCORE_API __declspec(dllimport)
+        #endif // stromx_cvcore_EXPORTS
+    #endif // STROMX_CVCORE_STATIC
+#else // WIN32
+    #define STROMX_CVCORE_API
+#endif // WIN32
+
+#endif // STROMX_CVCORE_CONFIG_H
