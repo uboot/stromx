@@ -19,22 +19,22 @@
 #include <stromx/runtime/Factory.h>
 #include <stromx/runtime/Operator.h>
 #include "stromx/cvimgutil/CvImgutil.h"
-#include "stromx/cvimgutil/test/ImgutilTest.h"
+#include "stromx/cvimgutil/test/CvimgutilTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgutil::ImgutilTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgutil::CvimgutilTest);
 
 namespace stromx
 {
     namespace cvimgutil
     {
-        void ImgutilTest::setUp ( void )
+        void CvimgutilTest::setUp ( void )
         {
             m_factory = new runtime::Factory;
         }
         
-        void ImgutilTest::testRegisterImgutil()
+        void CvimgutilTest::testRegisterCvimgutil()
         {
-            CPPUNIT_ASSERT_NO_THROW(stromxRegisterImgutil(*m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxRegisterCvimgutil(*m_factory));
             
             runtime::Operator* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("CvImgutil", "Camera"));
@@ -47,7 +47,7 @@ namespace stromx
             delete data;
         }
         
-        void ImgutilTest::tearDown ( void )
+        void CvimgutilTest::tearDown ( void )
         {
             delete m_factory;
         }

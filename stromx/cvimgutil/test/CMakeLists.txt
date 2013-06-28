@@ -39,7 +39,7 @@ add_executable(stromx_cvimgutil_test
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
     ImageTest.cpp
-    ImgutilTest.cpp
+    CvimgutilTest.cpp
     main.cpp
     MatrixTest.cpp
     UtilitiesTest.cpp

@@ -35,7 +35,7 @@ using namespace stromx::cvimgutil;
     
 BOOST_PYTHON_MODULE(libcvimgutil)
 {
-    def("registerCvimgutil", stromxRegisterImgutil);
+    def("registerCvimgutil", stromxRegisterCvimgutil);
     
     exportImage();
     exportMatrix();

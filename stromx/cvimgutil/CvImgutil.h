@@ -29,7 +29,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_IMGUTIL_API void stromxRegisterImgutil(stromx::runtime::Registry& registry);
+    STROMX_IMGUTIL_API void stromxRegisterCvimgutil(stromx::runtime::Registry& registry);
 }
 
 #endif // STROMX_IMGUTIL_EXAMPLE_H

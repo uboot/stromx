@@ -26,7 +26,7 @@
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 
-void stromxRegisterImgutil(stromx::runtime::Registry& registry)
+void stromxRegisterCvimgutil(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvimgutil;
     

@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_IMGUTIL_EXAMPLETEST_H
-#define STROMX_IMGUTIL_EXAMPLETEST_H
+#ifndef STROMX_CVIMGUTIL_EXAMPLETEST_H
+#define STROMX_CVIMGUTIL_EXAMPLETEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -32,20 +32,20 @@ namespace stromx
     {
         class Image;
 
-        class ImgutilTest : public CPPUNIT_NS :: TestFixture
+        class CvimgutilTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (ImgutilTest);
-            CPPUNIT_TEST (testRegisterImgutil);
+            CPPUNIT_TEST_SUITE (CvimgutilTest);
+            CPPUNIT_TEST (testRegisterCvimgutil);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                ImgutilTest() : m_factory(0) {}
+                CvimgutilTest() : m_factory(0) {}
                 
                 void setUp();
                 void tearDown();
 
             protected:
-                void testRegisterImgutil();
+                void testRegisterCvimgutil();
                 
             private:
                 runtime::Factory* m_factory;
@@ -53,4 +53,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_IMGUTIL_EXAMPLETEST_H
+#endif // STROMX_CVIMGUTIL_EXAMPLETEST_H

@@ -562,7 +562,7 @@ class ConfigGenerator(LibGenerator):
         self.doc.blank()
         
         self.doc.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
-            .format(p, self.p.ident.className()))
+            .format(p, self.p.ident))
         self.doc.blank()
         
         self.doc.line("#ifdef WIN32")
