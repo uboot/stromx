@@ -80,10 +80,10 @@ namespace stromx
             /** 
              * Sets a new image buffer. Note that the image data defined by width, height, pixel type
              * and data must always be contained in the image buffer.
-	     * 
-	     * \param buffer The new buffer. Note that this memory is \em not released by
-	     *               the ImageWrapper.
-	     * \param bufferSize The size of \a buffer in bytes.
+             * 
+             * \param buffer The new buffer. Note that this memory is \em not released by
+             *               the ImageWrapper.
+             * \param bufferSize The size of \a buffer in bytes.
              */
             void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
             
