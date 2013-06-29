@@ -1,9 +1,9 @@
 #include "stromx/cvimgproc/Laplacian.h"
 
 #include "stromx/cvimgproc/Utility.h"
-#include <stromx/cvimgutil/Image.h>
-#include <stromx/cvimgutil/Matrix.h>
-#include <stromx/cvimgutil/Utilities.h>
+#include <stromx/cvsupport/Image.h>
+#include <stromx/cvsupport/Matrix.h>
+#include <stromx/cvsupport/Utilities.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
@@ -289,12 +289,12 @@ namespace stromx
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
-                    runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType(convertDdepth(m_ddepth), srcCastedData->pixelType());
+                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), srcCastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * srcCastedData->width();
                     dstCastedData->initializeImage(srcCastedData->width(), srcCastedData->height(), stride, dstCastedData->data(), pixelType);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData = cvimgutil::getOpenCvMat(*dstCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+                    cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     int ddepthCvData = convertDdepth(m_ddepth);
                     int ksizeCvData = int(m_ksize);
                     double scaleCvData = double(m_scale);
@@ -328,7 +328,7 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData;
                     int ddepthCvData = convertDdepth(m_ddepth);
                     int ksizeCvData = int(m_ksize);
@@ -337,11 +337,11 @@ namespace stromx
                     
                     cv::Laplacian(srcCvData, dstCvData, ddepthCvData, ksizeCvData, scaleCvData, deltaCvData);
                     
-                    runtime::Image* dstCastedData = new cvimgutil::Image(dstCvData);
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
-                    runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType(convertDdepth(m_ddepth), srcCastedData->pixelType());
+                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), srcCastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * srcCastedData->width();
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), stride, dstCastedData->data(), pixelType);
                     provider.sendOutputData(outputMapper);

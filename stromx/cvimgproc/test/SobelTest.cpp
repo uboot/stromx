@@ -2,7 +2,7 @@
 
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "stromx/cvimgutil/Image.h"
+#include "stromx/cvsupport/Image.h"
 #include "stromx/cvimgproc/Sobel.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgproc::SobelTest);
@@ -27,8 +27,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg"));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::Enum ddepth(0);
             runtime::UInt32 dx(1);
             runtime::UInt32 dy(1);
@@ -48,7 +48,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("SobelTest_testManual0.png", access());
+            cvsupport::Image::save("SobelTest_testManual0.png", access());
         }
         
         void SobelTest::testManual1()
@@ -57,8 +57,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::Enum ddepth(1);
             runtime::UInt32 dx(2);
             runtime::UInt32 dy(0);
@@ -78,7 +78,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("SobelTest_testManual1.png", access());
+            cvsupport::Image::save("SobelTest_testManual1.png", access());
         }
         
         void SobelTest::testAllocate0()
@@ -87,7 +87,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg"));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::Enum ddepth(0);
             runtime::UInt32 dy(2);
             runtime::UInt32 ksize(5);
@@ -102,7 +102,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("SobelTest_testAllocate0.png", access());
+            cvsupport::Image::save("SobelTest_testAllocate0.png", access());
         }
         
         void SobelTest::testAllocate1()
@@ -111,7 +111,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum ddepth(2);
             runtime::Double scale(100);
             
@@ -122,7 +122,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("SobelTest_testAllocate1.png", access());
+            cvsupport::Image::save("SobelTest_testAllocate1.png", access());
         }
         
     }

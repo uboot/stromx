@@ -31,6 +31,6 @@ target_link_libraries (stromx_cvcore_test
     ${CMAKE_DL_LIBS}
     ${OpenCV_LIBS}
     stromx_runtime
-    stromx_cvimgutil
+    stromx_cvsupport
 )
 

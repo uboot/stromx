@@ -11,8 +11,8 @@ endif()
 if(BUILD_OPENCV_WRAPPER)
     add_subdirectory(cvcore)
     add_subdirectory(cvimgproc)
-    add_subdirectory(cvimgutil)
-    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"cvcore\", \"cvimgutil\", \"cvimgproc\"")
+    add_subdirectory(cvsupport)
+    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"cvcore\", \"cvsupport\", \"cvimgproc\"")
 endif()
 
 configure_file (

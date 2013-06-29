@@ -2,7 +2,7 @@
 
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "stromx/cvimgutil/Image.h"
+#include "stromx/cvsupport/Image.h"
 #include "stromx/cvimgproc/AdaptiveThreshold.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgproc::AdaptiveThresholdTest);
@@ -27,8 +27,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             
             m_operator->setInputData(AdaptiveThreshold::SRC, src);
             m_operator->setInputData(AdaptiveThreshold::DST, dst);
@@ -36,7 +36,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AdaptiveThresholdTest_testManual0.png", access());
+            cvsupport::Image::save("AdaptiveThresholdTest_testManual0.png", access());
         }
         
         void AdaptiveThresholdTest::testManual1()
@@ -45,7 +45,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Double maxval(128);
             runtime::Enum adaptiveMethod(1);
             runtime::Enum thresholdType(1);
@@ -61,7 +61,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AdaptiveThresholdTest_testManual1.png", access());
+            cvsupport::Image::save("AdaptiveThresholdTest_testManual1.png", access());
         }
         
         void AdaptiveThresholdTest::testAllocate0()
@@ -70,7 +70,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Double maxval(200);
             runtime::Enum adaptiveMethod(1);
             runtime::Enum thresholdType(0);
@@ -85,7 +85,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AdaptiveThresholdTest_testAllocate0.png", access());
+            cvsupport::Image::save("AdaptiveThresholdTest_testAllocate0.png", access());
         }
         
         void AdaptiveThresholdTest::testInPlace0()
@@ -94,7 +94,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Double maxval(80);
             runtime::Enum adaptiveMethod(0);
             runtime::Enum thresholdType(1);
@@ -109,7 +109,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::SRC);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AdaptiveThresholdTest_testInPlace0.png", access());
+            cvsupport::Image::save("AdaptiveThresholdTest_testInPlace0.png", access());
         }
         
     }

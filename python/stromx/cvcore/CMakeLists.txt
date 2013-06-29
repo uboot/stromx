@@ -22,7 +22,7 @@ target_link_libraries (cvcore
     ${Boost_LIBRARIES}
     ${PYTHON_LIBRARY}
     stromx_runtime
-    stromx_cvimgutil
+    stromx_cvsupport
     stromx_cvcore
 )
 

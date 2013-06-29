@@ -1,9 +1,9 @@
 #include "stromx/cvimgproc/BilateralFilter.h"
 
 #include "stromx/cvimgproc/Utility.h"
-#include <stromx/cvimgutil/Image.h>
-#include <stromx/cvimgutil/Matrix.h>
-#include <stromx/cvimgutil/Utilities.h>
+#include <stromx/cvsupport/Image.h>
+#include <stromx/cvsupport/Matrix.h>
+#include <stromx/cvsupport/Utilities.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
@@ -259,8 +259,8 @@ namespace stromx
                     
                     dstCastedData->initializeImage(srcCastedData->width(), srcCastedData->height(), srcCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData = cvimgutil::getOpenCvMat(*dstCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+                    cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     int dCvData = int(m_d);
                     double sigmaColorCvData = double(m_sigmaColor);
                     double sigmaSpaceCvData = double(m_sigmaSpace);
@@ -293,7 +293,7 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData;
                     int dCvData = int(m_d);
                     double sigmaColorCvData = double(m_sigmaColor);
@@ -301,7 +301,7 @@ namespace stromx
                     
                     cv::bilateralFilter(srcCvData, dstCvData, dCvData, sigmaColorCvData, sigmaSpaceCvData);
                     
-                    runtime::Image* dstCastedData = new cvimgutil::Image(dstCvData);
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     

@@ -9,6 +9,6 @@ endif()
 
 if(BUILD_OPENCV_WRAPPER)
    add_subdirectory(cvcore)
-   add_subdirectory(cvimgutil)
+   add_subdirectory(cvsupport)
    add_subdirectory(cvimgproc)
 endif()

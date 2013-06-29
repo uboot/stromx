@@ -1,9 +1,9 @@
 #include "stromx/cvcore/Add.h"
 
 #include "stromx/cvcore/Utility.h"
-#include <stromx/cvimgutil/Image.h>
-#include <stromx/cvimgutil/Matrix.h>
-#include <stromx/cvimgutil/Utilities.h>
+#include <stromx/cvsupport/Image.h>
+#include <stromx/cvsupport/Matrix.h>
+#include <stromx/cvsupport/Utilities.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
@@ -255,13 +255,13 @@ namespace stromx
                     if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
-                    runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
+                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
                     dstCastedData->initializeImage(src1CastedData->width(), src1CastedData->height(), stride, dstCastedData->data(), pixelType);
                     
-                    cv::Mat src1CvData = cvimgutil::getOpenCvMat(*src1CastedData);
-                    cv::Mat src2CvData = cvimgutil::getOpenCvMat(*src2CastedData);
-                    cv::Mat dstCvData = cvimgutil::getOpenCvMat(*dstCastedData);
+                    cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
+                    cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
+                    cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     int ddepthCvData = convertDdepth(m_ddepth);
                     
                     cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
@@ -308,18 +308,18 @@ namespace stromx
                     if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
-                    cv::Mat src1CvData = cvimgutil::getOpenCvMat(*src1CastedData);
-                    cv::Mat src2CvData = cvimgutil::getOpenCvMat(*src2CastedData);
+                    cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
+                    cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
                     cv::Mat dstCvData;
                     int ddepthCvData = convertDdepth(m_ddepth);
                     
                     cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
                     
-                    runtime::Image* dstCastedData = new cvimgutil::Image(dstCvData);
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
-                    runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
+                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), stride, dstCastedData->data(), pixelType);
                     provider.sendOutputData(outputMapper);

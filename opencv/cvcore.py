@@ -71,7 +71,7 @@ initOutCopy = document.Document((
     "{1}->data(), {0}->pixelType());").format("src1CastedData", "dstCastedData"
 ))
 initInDdepth = document.Document((
-    "runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType("
+    "runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType("
     "convertDdepth(m_ddepth), src1CastedData->pixelType());\n"
     "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
     "src1CastedData->width();\n"
@@ -79,7 +79,7 @@ initInDdepth = document.Document((
     "{1}->data(), pixelType);").format("src1CastedData", "dstCastedData"
 ))
 initOutDdepth = document.Document((
-    "runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType("
+    "runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType("
     "convertDdepth(m_ddepth), src1CastedData->pixelType());\n"
     "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
     "src1CastedData->width();\n"

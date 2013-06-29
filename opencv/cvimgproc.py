@@ -89,7 +89,7 @@ initInPyrUp = document.Document((
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
 initInDdepth = document.Document((
-    "runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType("
+    "runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType("
     "convertDdepth(m_ddepth), srcCastedData->pixelType());\n"
     "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
     "srcCastedData->width();\n"
@@ -97,7 +97,7 @@ initInDdepth = document.Document((
     "{1}->data(), pixelType);").format("srcCastedData", "dstCastedData"
 ))
 initOutDdepth = document.Document((
-    "runtime::Image::PixelType pixelType = cvimgutil::computeOutPixelType("
+    "runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType("
     "convertDdepth(m_ddepth), srcCastedData->pixelType());\n"
     "unsigned int stride = runtime::Image::pixelSize(pixelType) * "
     "srcCastedData->width();\n"

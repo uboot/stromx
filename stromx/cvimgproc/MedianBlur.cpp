@@ -1,9 +1,9 @@
 #include "stromx/cvimgproc/MedianBlur.h"
 
 #include "stromx/cvimgproc/Utility.h"
-#include <stromx/cvimgutil/Image.h>
-#include <stromx/cvimgutil/Matrix.h>
-#include <stromx/cvimgutil/Utilities.h>
+#include <stromx/cvsupport/Image.h>
+#include <stromx/cvsupport/Matrix.h>
+#include <stromx/cvsupport/Utilities.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
@@ -253,8 +253,8 @@ namespace stromx
                     
                     dstCastedData->initializeImage(srcCastedData->width(), srcCastedData->height(), srcCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData = cvimgutil::getOpenCvMat(*dstCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+                    cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     int ksizeCvData = int(m_ksize);
                     
                     cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
@@ -285,13 +285,13 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData;
                     int ksizeCvData = int(m_ksize);
                     
                     cv::medianBlur(srcCvData, dstCvData, ksizeCvData);
                     
-                    runtime::Image* dstCastedData = new cvimgutil::Image(dstCvData);
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
@@ -318,7 +318,7 @@ namespace stromx
                     
                     runtime::Image * srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData = srcCvData;
                     int ksizeCvData = int(m_ksize);
                     

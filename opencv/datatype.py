@@ -70,7 +70,7 @@ class Enum(DataType):
         
 class Image(DataType):
     """
-    Stromx runtime::Image type. Uses the implementation cvimgutil::Image to cast
+    Stromx runtime::Image type. Uses the implementation cvsupport::Image to cast
     input data to an runtime::Image object.
     """
     def __init__(self, variant = "runtime::DataVariant::IMAGE"):
@@ -83,7 +83,7 @@ class Image(DataType):
         return self.__variant
         
     def cast(self, src):
-        return "cvimgutil::Image({0})".format(src)
+        return "cvsupport::Image({0})".format(src)
             
 if __name__ == "__main__":
     import doctest

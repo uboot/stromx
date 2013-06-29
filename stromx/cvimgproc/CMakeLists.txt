@@ -49,7 +49,7 @@ set_target_properties (stromx_cvimgproc PROPERTIES
 target_link_libraries (stromx_cvimgproc
     ${OpenCV_LIBS}
     stromx_runtime
-    stromx_cvimgutil
+    stromx_cvsupport
 )
 
 if(WIN32)

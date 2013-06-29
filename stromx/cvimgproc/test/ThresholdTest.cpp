@@ -2,7 +2,7 @@
 
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "stromx/cvimgutil/Image.h"
+#include "stromx/cvsupport/Image.h"
 #include "stromx/cvimgproc/Threshold.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgproc::ThresholdTest);
@@ -27,8 +27,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             
             m_operator->setInputData(Threshold::SRC, src);
             m_operator->setInputData(Threshold::DST, dst);
@@ -36,7 +36,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("ThresholdTest_testManual0.png", access());
+            cvsupport::Image::save("ThresholdTest_testManual0.png", access());
         }
         
         void ThresholdTest::testManual1()
@@ -45,7 +45,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Double threshold(128);
             runtime::Enum thresholdType(2);
             
@@ -57,7 +57,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("ThresholdTest_testManual1.png", access());
+            cvsupport::Image::save("ThresholdTest_testManual1.png", access());
         }
         
         void ThresholdTest::testAllocate0()
@@ -66,7 +66,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum thresholdType(3);
             
             m_operator->setInputData(Threshold::SRC, src);
@@ -75,7 +75,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("ThresholdTest_testAllocate0.png", access());
+            cvsupport::Image::save("ThresholdTest_testAllocate0.png", access());
         }
         
         void ThresholdTest::testInPlace0()
@@ -84,7 +84,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum thresholdType(4);
             
             m_operator->setInputData(Threshold::SRC, src);
@@ -93,7 +93,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Threshold::SRC);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("ThresholdTest_testInPlace0.png", access());
+            cvsupport::Image::save("ThresholdTest_testInPlace0.png", access());
         }
         
     }

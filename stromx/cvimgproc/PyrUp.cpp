@@ -1,9 +1,9 @@
 #include "stromx/cvimgproc/PyrUp.h"
 
 #include "stromx/cvimgproc/Utility.h"
-#include <stromx/cvimgutil/Image.h>
-#include <stromx/cvimgutil/Matrix.h>
-#include <stromx/cvimgutil/Utilities.h>
+#include <stromx/cvsupport/Image.h>
+#include <stromx/cvsupport/Matrix.h>
+#include <stromx/cvsupport/Utilities.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
@@ -201,8 +201,8 @@ namespace stromx
                     int height = 2 * srcCastedData->height();
                     dstCastedData->initializeImage(width, height, width * srcCastedData->pixelSize(), dstCastedData->data(), srcCastedData->pixelType());
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData = cvimgutil::getOpenCvMat(*dstCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+                    cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     
                     cv::pyrUp(srcCvData, dstCvData);
                     
@@ -232,12 +232,12 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
-                    cv::Mat srcCvData = cvimgutil::getOpenCvMat(*srcCastedData);
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData;
                     
                     cv::pyrUp(srcCvData, dstCvData);
                     
-                    runtime::Image* dstCastedData = new cvimgutil::Image(dstCvData);
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     

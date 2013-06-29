@@ -2,7 +2,7 @@
 
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "stromx/cvimgutil/Image.h"
+#include "stromx/cvsupport/Image.h"
 #include "stromx/cvcore/Add.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvcore::AddTest);
@@ -27,9 +27,9 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvimgutil::Image("lenna.jpg"));
-            runtime::DataContainer src2(new cvimgutil::Image("barbara.jpg"));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg"));
+            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             
             m_operator->setInputData(Add::SRC_1, src1);
             m_operator->setInputData(Add::SRC_2, src2);
@@ -38,7 +38,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Add::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AddTest_testManual0.png", access());
+            cvsupport::Image::save("AddTest_testManual0.png", access());
         }
         
         void AddTest::testManual1()
@@ -47,9 +47,9 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::GRAYSCALE));
-            runtime::DataContainer src2(new cvimgutil::Image("barbara.jpg", cvimgutil::Image::GRAYSCALE));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::GRAYSCALE));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             
             m_operator->setInputData(Add::SRC_1, src1);
             m_operator->setInputData(Add::SRC_2, src2);
@@ -58,7 +58,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Add::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AddTest_testManual1.png", access());
+            cvsupport::Image::save("AddTest_testManual1.png", access());
         }
         
         void AddTest::testManual2()
@@ -67,9 +67,9 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::DEPTH_16));
-            runtime::DataContainer src2(new cvimgutil::Image("barbara.jpg"));
-            runtime::DataContainer dst(new cvimgutil::Image(1000000));
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
+            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::Enum ddepth(1);
             
             m_operator->setInputData(Add::SRC_1, src1);
@@ -80,7 +80,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Add::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AddTest_testManual2.png", access());
+            cvsupport::Image::save("AddTest_testManual2.png", access());
         }
         
         void AddTest::testAllocate0()
@@ -89,8 +89,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::DEPTH_16));
-            runtime::DataContainer src2(new cvimgutil::Image("barbara.jpg", cvimgutil::Image::DEPTH_16));
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
+            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg", cvsupport::Image::DEPTH_16));
             
             m_operator->setInputData(Add::SRC_1, src1);
             m_operator->setInputData(Add::SRC_2, src2);
@@ -98,7 +98,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Add::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AddTest_testAllocate0.png", access());
+            cvsupport::Image::save("AddTest_testAllocate0.png", access());
         }
         
         void AddTest::testAllocate1()
@@ -107,8 +107,8 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer src1(new cvimgutil::Image("lenna.jpg", cvimgutil::Image::DEPTH_16));
-            runtime::DataContainer src2(new cvimgutil::Image("barbara.jpg"));
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
+            runtime::DataContainer src2(new cvsupport::Image("barbara.jpg"));
             runtime::Enum ddepth(2);
             
             m_operator->setInputData(Add::SRC_1, src1);
@@ -118,7 +118,7 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(Add::DST);
             
             runtime::ReadAccess<runtime::Image> access(result);
-            cvimgutil::Image::save("AddTest_testAllocate1.png", access());
+            cvsupport::Image::save("AddTest_testAllocate1.png", access());
         }
         
     }
