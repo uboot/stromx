@@ -48,6 +48,8 @@ set(SOURCES
     ../Join.cpp
     ../Id2DataComposite.cpp
     ../Id2DataPair.cpp
+    ../Image.cpp
+    ../ImageWrapper.cpp
     ../Matrix.cpp
     ../MatrixWrapper.cpp
     ../None.cpp
@@ -91,6 +93,7 @@ set(SOURCES
     Id2DataCompositeTest.cpp
     Id2DataMapTest.cpp
     Id2DataPairTest.cpp
+    ImageWrapperTest.cpp
     InputNodeTest.cpp
     Int32Test.cpp
     JoinTest.cpp

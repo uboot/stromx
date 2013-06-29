@@ -54,8 +54,6 @@ namespace stromx
             CPPUNIT_TEST (testDeserialize);
             CPPUNIT_TEST (testDeserializeWithType);
             CPPUNIT_TEST (testDeserializeEmpty);
-            CPPUNIT_TEST (testResizeDimension);
-            CPPUNIT_TEST (testResizeBuffer);
             CPPUNIT_TEST(testIsVariant);
             CPPUNIT_TEST(testPtrCast);
             CPPUNIT_TEST(testRefCast);

@@ -40,14 +40,6 @@ namespace stromx
             CPPUNIT_TEST (testMatrixCvMatrix32UC4);
             CPPUNIT_TEST (testMatrixFloat);
             CPPUNIT_TEST (testMatrixDefault);
-            CPPUNIT_TEST (testSerializeInt16);
-            CPPUNIT_TEST (testSerializeUInt8);
-            CPPUNIT_TEST (testSerializeEmpty);
-            CPPUNIT_TEST (testDeserializeDouble);
-            CPPUNIT_TEST (testDeserializeUInt16);
-            CPPUNIT_TEST (testDeserializeEmpty);
-            CPPUNIT_TEST (testResizeDimension);
-            CPPUNIT_TEST (testResizeBuffer);
             CPPUNIT_TEST (testOpenUInt16);
             CPPUNIT_TEST (testOpenDouble);
             CPPUNIT_TEST (testOpenEmpty);
