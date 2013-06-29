@@ -28,6 +28,11 @@ namespace stromx
         {
         public:
             /** 
+             * Saves the input \c matrix to \c filename. The matrix is stored in the NPY format.
+             */
+            static void save(const std::string& filename, const runtime::Matrix & matrix);
+            
+            /** 
              * Constructs an matrix wrapper from a given memory buffer. The buffer is not
              * owned by the matrix and is thus not freed upon destruction of the matrix wrapper.
              */
@@ -55,6 +60,29 @@ namespace stromx
                                           const unsigned int stride, 
                                           uint8_t* data, 
                                           const ValueType valueType);
+            virtual void serialize(runtime::OutputProvider & output) const;
+            virtual void deserialize(runtime::InputProvider & input, const stromx::runtime::Version & version);
+            
+            /** Resizes the matrix and changes the value type of the matrix. */
+            void resize(const unsigned int rows, const unsigned int cols, const ValueType valueType);
+            
+            /**
+             * Resizes the buffer of the matrix to the given size in bytes. The resized matrix has
+             * 1 row and \c size columns. Its value type is Matrix::NONE. The buffer size of the matrix
+             * is guaranteed to be at least \c size.
+             */
+            void resize(const unsigned int size);
+            
+            /** 
+             * Reads the file \c filename. The data of the current matrix is replaced 
+             * by the data of the new image.
+             */ 
+            void open(const std::string& filename);
+            
+            /** 
+             * Saves the matrix to the file \c filename. The matrix is stored in the NPY format.
+             */
+            void save(const std::string& filename) const;
             
         protected:
             /** 
@@ -65,9 +93,26 @@ namespace stromx
              *               the MatrixWrapper.
              * \param bufferSize The size of \a buffer in bytes.
              */
-            virtual void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
+            void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
+            
+            /**
+             * Allocates or resizes the matrix to the given dimension. Must be defined
+             * in derived class which implement the memory management. Implementations
+             * of this function should call setBuffer() and initializeMatrix().
+             */
+            virtual void allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType) = 0;
+            
+            
             
         private:
+            static const char NUMPY_MAGIC_BYTE = char(0x93);
+            
+            static void doSerialize(std::ostream & out, const runtime::Matrix & matrix);
+            static void doDeserialize(std::istream & in, MatrixWrapper & matrix);
+            static bool isLittleEndian();
+            static char npyTypeSymbol(const runtime::Matrix::ValueType valueType);
+            static Matrix::ValueType valueTypeFromNpyHeader(const char valueType, const int wordSize);
+            
             void validate(const unsigned int rows,
                         const unsigned int cols,
                         const unsigned int stride,

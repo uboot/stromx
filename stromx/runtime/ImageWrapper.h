@@ -66,6 +66,16 @@ namespace stromx
                                          uint8_t* data, 
                                          const PixelType pixelType);
             
+            /** Resizes the image and changes the pixel type of the image. */
+            void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
+            
+            /**
+             * Resizes the buffer of the image to the given size in bytes. The width of the resized image is
+             * \c size and its height is 1. Its pixel type is Image::NONE. The buffer size of the image is 
+             * guaranteed to be at least \c size.
+             */
+            void resize(const unsigned int size);
+            
         protected:
             /** 
              * Sets a new image buffer. Note that the image data defined by width, height, pixel type
@@ -75,7 +85,16 @@ namespace stromx
 	     *               the ImageWrapper.
 	     * \param bufferSize The size of \a buffer in bytes.
              */
-            virtual void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
+            void setBuffer(uint8_t* const buffer, const unsigned int bufferSize);
+            
+            /**
+             * Allocates or resizes the image to the given dimension. Must be defined
+             * in derived class which implement the memory management. Implementations
+             * of this function should call setBuffer() and initializeImage().
+             */
+            virtual void allocate(const unsigned int width, const unsigned int height,
+                                  const Image::PixelType pixelType) = 0;
+        
             
         private:            
             void validate(const unsigned int width,

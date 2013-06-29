@@ -112,5 +112,15 @@ namespace stromx
             m_cols = cols;
             m_valueType = valueType;
         }
+        
+        void ImageWrapper::resize(const unsigned int width, const unsigned int height, const runtime::Image::PixelType pixelType)
+        {
+            allocate(width, height, pixelType);
+        }
+        
+        void ImageWrapper::resize(const unsigned int size)
+        {
+            allocate(size, 1, runtime::Image::NONE);
+        }
     }
 }

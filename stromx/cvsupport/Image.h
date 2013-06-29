@@ -145,16 +145,6 @@ namespace stromx
              */
             void save(const std::string& filename) const;
             
-            /** Resizes the image and changes the pixel type of the image. */
-            void resize(const unsigned int width, const unsigned int height, const PixelType pixelType);
-            
-            /**
-             * Resizes the buffer of the image to the given size in bytes. The width of the resized image is
-             * \c size and its height is 1. Its pixel type is Image::NONE. The buffer size of the image is 
-             * guaranteed to be at least \c size.
-             */
-            void resize(const unsigned int size);
-            
         private:
             static const std::string TYPE;
             static const std::string PACKAGE;

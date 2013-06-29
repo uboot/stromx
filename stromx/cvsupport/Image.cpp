@@ -226,16 +226,6 @@ namespace stromx
             initializeImage(m_image->cols, m_image->rows, m_image->step, (uint8_t*)(m_image->data), pixelType);
         }
         
-        void Image::resize(const unsigned int width, const unsigned int height, const runtime::Image::PixelType pixelType)
-        {
-            allocate(width, height, pixelType);
-        }
-        
-        void Image::resize(const unsigned int size)
-        {
-            allocate(size, 1, runtime::Image::NONE);
-        }
-        
         void Image::save(const std::string& filename, const runtime::Image & image)
         {
             cv::Mat inImage = getOpenCvMat(image);
