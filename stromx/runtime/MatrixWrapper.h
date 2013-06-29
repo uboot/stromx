@@ -52,7 +52,6 @@ namespace stromx
             virtual unsigned int cols() const { return m_cols; }
             virtual unsigned int stride() const { return m_stride; }
             virtual ValueType valueType() const { return m_valueType; }
-            virtual unsigned int valueSize() const;
             virtual uint8_t* data() { return m_data; }
             virtual const uint8_t* data() const { return m_data; }
             virtual void initializeMatrix(const unsigned int rows, 

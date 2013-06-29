@@ -56,11 +56,6 @@ namespace stromx
             m_buffer = buffer;
         }
         
-        unsigned int MatrixWrapper::valueSize() const
-        {
-            return Matrix::valueSizeFromValueType(m_valueType);
-        }
-        
         void MatrixWrapper::initializeMatrix(const unsigned int rows, const unsigned int cols,
                                              const unsigned int stride, uint8_t* data, 
                                              const ValueType valueType) 
@@ -85,7 +80,7 @@ namespace stromx
                 return;
             
             // check row length
-            if(cols * Matrix::valueSizeFromValueType(valueType) > stride)
+            if(cols * Matrix::valueSize(valueType) > stride)
                 throw WrongArgument("Too small stride.");
             
             // check total data size

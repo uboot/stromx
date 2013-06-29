@@ -66,7 +66,7 @@ namespace stromx
             virtual ValueType valueType() const = 0;
             
             /** Returns the size of a single value in bytes. */
-            virtual unsigned int valueSize() const = 0;
+            virtual unsigned int valueSize() const;
             
             /** Returns the address of the matrix data. */
             virtual uint8_t* data() = 0;
@@ -85,10 +85,10 @@ namespace stromx
                                           uint8_t* data, 
                                           const ValueType valueType) = 0;
                                      
+            /** Returns the size of a single value of type \c valueType in bytes. */  
+            static unsigned int valueSize(const ValueType valueType);  
             
         protected:
-            /** Returns the size of a single value of type \c valueType in bytes. */  
-            static unsigned int valueSizeFromValueType(const ValueType valueType);  
             
             /** Returns the data variant defined by the input \c valueType. */
             static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);

@@ -26,6 +26,9 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/parameters.stromx DESTINATION ${CMAKE_CURR
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.zip DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/stream.stromx DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/double_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/empty_float_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
     ../Connector.cpp
@@ -45,6 +48,8 @@ set(SOURCES
     ../Join.cpp
     ../Id2DataComposite.cpp
     ../Id2DataPair.cpp
+    ../Matrix.cpp
+    ../MatrixWrapper.cpp
     ../None.cpp
     ../Operator.cpp
     ../OperatorKernel.cpp
@@ -89,6 +94,7 @@ set(SOURCES
     InputNodeTest.cpp
     Int32Test.cpp
     JoinTest.cpp
+    MatrixWrapperTest.cpp
     OperatorKernelTest.cpp
     OperatorTest.cpp
     OutputNodeTest.cpp

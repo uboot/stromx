@@ -54,9 +54,9 @@ namespace stromx
             CPPUNIT_TEST (testSaveDouble);
             CPPUNIT_TEST (testSaveUInt16);
             CPPUNIT_TEST (testSaveEmpty);
-            CPPUNIT_TEST(testIsVariant);
-            CPPUNIT_TEST(testPtrCast);
-            CPPUNIT_TEST(testRefCast);
+            CPPUNIT_TEST (testIsVariant);
+            CPPUNIT_TEST (testPtrCast);
+            CPPUNIT_TEST (testRefCast);
             CPPUNIT_TEST_SUITE_END ();
 
             public:

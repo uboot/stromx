@@ -94,14 +94,14 @@ namespace stromx
         
         unsigned int ImageWrapper::valueSize() const
         {
-            return Matrix::valueSizeFromValueType(valueType());
+            return Matrix::valueSize(valueType());
         }
 
         void ImageWrapper::initializeMatrix(const unsigned int rows, const unsigned int cols, const unsigned int stride, uint8_t*const data, const stromx::runtime::Matrix::ValueType valueType)
         {
-            validate(cols * Matrix::valueSizeFromValueType(valueType), rows, stride, data, NONE);
+            validate(cols * Matrix::valueSize(valueType), rows, stride, data, NONE);
             
-            m_width = cols * Matrix::valueSizeFromValueType(valueType);
+            m_width = cols * Matrix::valueSize(valueType);
             m_height = rows;
             m_stride = stride;
             m_data = data;

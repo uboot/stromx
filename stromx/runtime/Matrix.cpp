@@ -20,7 +20,12 @@ namespace stromx
 {
     namespace runtime
     {
-        unsigned int Matrix::valueSizeFromValueType(const stromx::runtime::Matrix::ValueType valueType)
+        unsigned int Matrix::valueSize() const
+        {
+            return valueSize(valueType());
+        }
+        
+        unsigned int Matrix::valueSize(const stromx::runtime::Matrix::ValueType valueType)
         {
             switch(valueType)
             {

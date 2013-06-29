@@ -106,7 +106,7 @@ void exportMatrix()
         .def("cols", pure_virtual(&Matrix::cols))
         .def("stride", pure_virtual(&Matrix::stride))
         .def("valueType", pure_virtual(&Matrix::valueType))
-        .def("valueSize", pure_virtual(&Matrix::valueSize))
+        .def<unsigned int (stromx::runtime::Matrix::*)() const>("valueSize", &Matrix::valueSize)
         .def("_data", pure_virtual(reinterpret_cast<unsigned int (Matrix::*)()>(static_cast<uint8_t*(Matrix::*)()>(&Matrix::data))))
     ;
     
