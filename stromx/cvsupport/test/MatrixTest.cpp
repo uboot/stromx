@@ -197,19 +197,19 @@ namespace stromx
         void MatrixTest::testSaveUInt16()
         {
             Matrix matrix(200, 100, Matrix::UINT_16);
-            matrix.save("MatrixTest_testSaveUInt16");
+            matrix.save("MatrixTest_testSaveUInt16.npy");
         }
 
         void MatrixTest::testSaveDouble()
         {
             Matrix matrix(50, 10, Matrix::DOUBLE);
-            matrix.save("MatrixTest_testSaveDouble");
+            matrix.save("MatrixTest_testSaveDouble.npy");
         }
 
         void MatrixTest::testSaveEmpty()
         {
             Matrix matrix(0, 10, Matrix::INT_32);
-            matrix.save("MatrixTest_testSaveEmpty");
+            matrix.save("MatrixTest_testSaveEmpty.npy");
         }
         
         void MatrixTest::testIsVariant()
