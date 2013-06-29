@@ -37,12 +37,12 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(stromxRegisterCvsupport(*m_factory));
             
             runtime::Operator* kernel = 0;
-            CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cvsupport", "Camera"));
+            CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cv::support", "Camera"));
             CPPUNIT_ASSERT(kernel);
             delete kernel;
             
             runtime::Data* data = 0;
-            CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("cvsupport", "Image"));
+            CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("cv::support", "Image"));
             CPPUNIT_ASSERT(data);
             delete data;
         }
