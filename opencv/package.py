@@ -93,7 +93,7 @@ class Size(Compound):
 
 class Argument(Acceptor):
     def __init__(self, ident, name, cvType, dataType, description = "",
-                 initIn = None, initOut = None):
+                 initIn = None, initOut = None, rules = None):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
@@ -101,6 +101,7 @@ class Argument(Acceptor):
         self.description = description
         self.initIn = initIn
         self.initOut = initOut
+        self.rules = [] if rules == None else rules
         
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -110,6 +111,7 @@ class Argument(Acceptor):
         self.dataType = arg.dataType
         self.initIn = arg.initIn
         self.initOut = arg.initOut
+        self.rules = arg.rules
     
 class InputArgument(Argument):
     pass
@@ -121,11 +123,11 @@ class OutputArgument(Argument):
 class Parameter(InputArgument):
     def __init__(self, ident, name, cvType, dataType, inPlace = False,
                  isInit = False, default = None, rules = None):
-        super(Parameter, self).__init__(ident, name, cvType, dataType)
+        super(Parameter, self).__init__(ident, name, cvType, dataType,
+                                        rules = rules)
         self.inPlace = inPlace
         self.isInit = isInit
         self.default = default
-        self.rules = [] if rules == None else rules
     
     def accept(self, visitor):
         visitor.visitParameter(self)     
