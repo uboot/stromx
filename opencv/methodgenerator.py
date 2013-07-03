@@ -607,6 +607,10 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line("{0} = &writeAccess();".format(data))
             
     class CopyWriteAccessVisitor(SingleArgumentVisitor):
+        """
+        Exports the if-conditions which either create a read access or 
+        reference an existing write access to read each visited input.
+        """
         def __init__(self):
             self.output = None
             self.inputs = []
@@ -657,6 +661,9 @@ class OpImplGenerator(MethodGenerator):
                 doc.blank()
                 
     class CheckVariantVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the variant check for each visited input.
+        """
         def visitInput(self, inputArg):
             self.__visit(inputArg)
             
@@ -676,6 +683,10 @@ class OpImplGenerator(MethodGenerator):
             self.doc.scopeExit()
                 
     class CastedDataVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the cast to a concrete stromx data type for each visted
+        input and output.
+        """
         def visitInput(self, inputArg):
             l = ("const {1}* {0}CastedData = "
                  "runtime::data_cast<{1}>({0}Data);").format(inputArg.ident,
