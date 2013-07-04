@@ -2,6 +2,7 @@
 #define STROMX_CVIMGPROC_DILATE_H
 
 #include "stromx/cvimgproc/Config.h"
+#include <stromx/cvsupport/Matrix.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/NumericParameter.h>

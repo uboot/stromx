@@ -54,28 +54,28 @@ namespace stromx
                 {
                 case MAXVAL:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_maxvalParameter, *this);
                         m_maxval = castedValue;
                     }
                     break;
                 case THRESHOLD:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_thresholdParameter, *this);
                         m_threshold = castedValue;
                     }
                     break;
                 case THRESHOLD_TYPE:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_thresholdTypeParameter, *this);
                         m_thresholdType = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

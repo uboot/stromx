@@ -76,6 +76,12 @@ initInResize = document.Document((
     "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
+initInDsize = document.Document((
+    "int width = int(m_dsizex);\n"
+    "int height = int(m_dsizey);\n"
+    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
+)
 initInPyrDown = document.Document((
     "int width = int((srcCastedData->width() + 1) / 2 );\n"
     "int height = int((srcCastedData->height() + 1) / 2 );\n"
@@ -120,6 +126,14 @@ srcImgMono8bit = package.Argument(
 dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
     initOut = initOutCopy
+)
+dstImgResize = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(),
+    initIn = initInResize, initOut = initOutCopy
+)
+dstImgDsize = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(),
+    initIn = initInDsize, initOut = initOutCopy
 )
 ddepthDefault = package.Constant(
     "-1"
@@ -279,10 +293,15 @@ blockSize = package.NumericParameter(
     default = 3, minValue = 1, rules = [package.OddRule()]
 )
 subtractedC = package.Constant("0")
+affineM = package.Parameter(
+    "affineM", "2x3 affine transformation", cvtype.Mat(), datatype.Matrix(), 
+    rules = [package.NumRowsRule(2), package.NumColsRule(3)]
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
+affine_transformation = test.MatrixFile("affine.npy")
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000)
 
@@ -611,10 +630,6 @@ pyrUp = package.Method(
 )
 
 # resize
-dstImgResize = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Image(),
-    initIn = initInResize, initOut = initOutCopy
-)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgResize),
@@ -697,6 +712,19 @@ threshold = package.Method(
     "threshold", options = [manual, allocate, inPlace]
 )
 
+# warpAffine
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg, True), package.Output(dstImgDsize), affineM, 
+     package.Size(dsizex, dsizey)],
+    tests = [
+        [lenna_bw, memory, affine_transformation, (400, 500)]
+    ]
+)
+warpAffine = package.Method(
+    "warpAffine", options = [manual]
+)
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -715,14 +743,16 @@ imgproc = package.Package(
         sobel,
         resize,
         adaptiveThreshold,
-        threshold
+        threshold,
+        warpAffine
     ],
     functions = [
         checkEnumValue,
         checkNumericValue
     ],
     testFiles = [
-        "lenna.jpg"
+        "lenna.jpg",
+        "affine.npy"
     ]
 )
 

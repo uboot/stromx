@@ -60,42 +60,42 @@ namespace stromx
                 {
                 case DSIZEX:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dsizexParameter, *this);
                         m_dsizex = castedValue;
                     }
                     break;
                 case DSIZEY:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dsizeyParameter, *this);
                         m_dsizey = castedValue;
                     }
                     break;
                 case FX:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_fxParameter, *this);
                         m_fx = castedValue;
                     }
                     break;
                 case FY:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_fyParameter, *this);
                         m_fy = castedValue;
                     }
                     break;
                 case INTERPOLATION:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_interpolationParameter, *this);
                         m_interpolation = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

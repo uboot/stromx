@@ -11,6 +11,7 @@ include_directories (
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/affine.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -29,6 +30,7 @@ set (SOURCES
     ../Resize.cpp
     ../AdaptiveThreshold.cpp
     ../Threshold.cpp
+    ../WarpAffine.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -46,6 +48,7 @@ set (SOURCES
     ResizeTest.cpp
     AdaptiveThresholdTest.cpp
     ThresholdTest.cpp
+    WarpAffineTest.cpp
     main.cpp
 )
 

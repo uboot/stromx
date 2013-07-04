@@ -84,6 +84,12 @@ namespace stromx
         {
             return new Matrix(*this);
         }
+        
+        const Matrix & Matrix::operator=(const runtime::Matrix& matrix)
+        {
+            copy(matrix);
+            return *this;
+        }
 
         void Matrix::copy(const stromx::runtime::Matrix& matrix)
         {

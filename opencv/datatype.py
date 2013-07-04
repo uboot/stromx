@@ -11,9 +11,15 @@ class DataType(object):
     """
     def typeId(self):
         """
-        Returns the name of the type, e.g. "runtime::Bool".
+        Returns the name of the abstract type, e.g. "runtime::Image".
         """
         raise NotImplementedError()
+        
+    def concreteTypeId(self):
+        """
+        Returns the name of a concrete type, e.g. "cvsupport::Image".
+        """
+        return self.typeId()
         
     def variant(self):
         """
@@ -24,9 +30,9 @@ class DataType(object):
     def cast(self, src):
         """
         Returns a conversion of the input variable to the type, e.g. 
-        "runtime::Bool(src)".
+        "cvsupport::Image(img)".
         """
-        return "{0}({1})".format(self.typeId(), src)
+        return "{0}({1})".format(self.concreteTypeId(), src)
         
 class Bool(DataType):
     """
@@ -79,11 +85,28 @@ class Image(DataType):
     def typeId(self):
         return "runtime::Image"
         
+    def concreteTypeId(self):
+        return "cvsupport::Image"
+        
     def variant(self):
         return self.__variant
         
-    def cast(self, src):
-        return "cvsupport::Image({0})".format(src)
+class Matrix(DataType):
+    """
+    Stromx runtime::Image type. Uses the implementation cvsupport::Image to cast
+    input data to an runtime::Image object.
+    """
+    def __init__(self, variant = "runtime::DataVariant::MATRIX"):
+        self.__variant = variant
+        
+    def typeId(self):
+        return "runtime::Matrix"
+        
+    def concreteTypeId(self):
+        return "cvsupport::Matrix"
+        
+    def variant(self):
+        return self.__variant
             
 if __name__ == "__main__":
     import doctest

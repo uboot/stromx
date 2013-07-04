@@ -32,6 +32,7 @@ set (SOURCES
     Resize.cpp
     AdaptiveThreshold.cpp
     Threshold.cpp
+    WarpAffine.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

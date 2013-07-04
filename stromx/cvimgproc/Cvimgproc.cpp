@@ -16,6 +16,7 @@
 #include "Resize.h"
 #include "AdaptiveThreshold.h"
 #include "Threshold.h"
+#include "WarpAffine.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
@@ -38,4 +39,5 @@ void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
     registry.registerOperator(new Resize);
     registry.registerOperator(new AdaptiveThreshold);
     registry.registerOperator(new Threshold);
+    registry.registerOperator(new WarpAffine);
 }

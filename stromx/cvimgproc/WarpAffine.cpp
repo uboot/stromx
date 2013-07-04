@@ -1,4 +1,4 @@
-#include "stromx/cvimgproc/PyrUp.h"
+#include "stromx/cvimgproc/WarpAffine.h"
 
 #include "stromx/cvimgproc/Utility.h"
 #include <stromx/cvsupport/Image.h>
@@ -16,20 +16,29 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        const std::string PyrUp::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
-        const runtime::Version PyrUp::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
-        const std::string PyrUp::TYPE("PyrUp");
+        const std::string WarpAffine::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
+        const runtime::Version WarpAffine::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
+        const std::string WarpAffine::TYPE("WarpAffine");
         
-        PyrUp::PyrUp()
+        WarpAffine::WarpAffine()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
+            m_affineM(),
+            m_dsizex(),
+            m_dsizey(),
             m_dataFlow()
         {
         }
         
-        const runtime::DataRef PyrUp::getParameter(unsigned int id) const
+        const runtime::DataRef WarpAffine::getParameter(unsigned int id) const
         {
             switch(id)
             {
+            case AFFINE_M:
+                return m_affineM;
+            case DSIZEX:
+                return m_dsizex;
+            case DSIZEY:
+                return m_dsizey;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -37,12 +46,32 @@ namespace stromx
             }
         }
         
-        void PyrUp::setParameter(unsigned int id, const runtime::Data& value)
+        void WarpAffine::setParameter(unsigned int id, const runtime::Data& value)
         {
             try
             {
                 switch(id)
                 {
+                case AFFINE_M:
+                    {
+                        const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
+                        m_affineM = castedValue;
+                    }
+                    break;
+                case DSIZEX:
+                    {
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_dsizexParameter, *this);
+                        m_dsizex = castedValue;
+                    }
+                    break;
+                case DSIZEY:
+                    {
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        checkNumericValue(castedValue, m_dsizeyParameter, *this);
+                        m_dsizey = castedValue;
+                    }
+                    break;
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
@@ -60,7 +89,7 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Parameter*> PyrUp::setupInitParameters()
+        const std::vector<const runtime::Parameter*> WarpAffine::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -68,13 +97,12 @@ namespace stromx
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
         }
         
-        const std::vector<const runtime::Parameter*> PyrUp::setupParameters()
+        const std::vector<const runtime::Parameter*> WarpAffine::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -82,10 +110,21 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                }
-                break;
-            case(ALLOCATE):
-                {
+                    runtime::Parameter* affineM = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    affineM->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    affineM->setTitle("2x3 affine transformation");
+                    parameters.push_back(affineM);
+                    
+                    m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
+                    m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_dsizexParameter->setTitle("Size X");
+                    parameters.push_back(m_dsizexParameter);
+                    
+                    m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
+                    m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_dsizeyParameter->setTitle("Size Y");
+                    parameters.push_back(m_dsizeyParameter);
+                    
                 }
                 break;
             }
@@ -93,7 +132,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> PyrUp::setupInputs()
+        const std::vector<const runtime::Description*> WarpAffine::setupInputs()
         {
             std::vector<const runtime::Description*> inputs;
             
@@ -111,20 +150,12 @@ namespace stromx
                     
                 }
                 break;
-            case(ALLOCATE):
-                {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                    src->setTitle("Source");
-                    inputs.push_back(src);
-                    
-                }
-                break;
             }
             
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> PyrUp::setupOutputs()
+        const std::vector<const runtime::Description*> WarpAffine::setupOutputs()
         {
             std::vector<const runtime::Description*> outputs;
             
@@ -138,25 +169,17 @@ namespace stromx
                     
                 }
                 break;
-            case(ALLOCATE):
-                {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
-                    outputs.push_back(dst);
-                    
-                }
-                break;
             }
             
             return outputs;
         }
         
-        void PyrUp::initialize()
+        void WarpAffine::initialize()
         {
             runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
-        void PyrUp::execute(runtime::DataProvider & provider)
+        void WarpAffine::execute(runtime::DataProvider & provider)
         {
             switch(int(m_dataFlow))
             {
@@ -177,7 +200,7 @@ namespace stromx
                     
                     if(srcInMapper.data() == inContainer)
                     {
-                        throw runtime::InputError(SRC, *this, "Can not operate in place.");
+                        srcData = &writeAccess();
                     }
                     else
                     {
@@ -197,51 +220,21 @@ namespace stromx
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
-                    int width = 2  * srcCastedData->width();
-                    int height = 2 * srcCastedData->height();
+                    int width = int(m_dsizex);
+                    int height = int(m_dsizey);
                     dstCastedData->initializeImage(width, height, width * srcCastedData->pixelSize(), dstCastedData->data(), srcCastedData->pixelType());
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
+                    cv::Mat affineMCvData = cvsupport::getOpenCvMat(m_affineM);
+                    int dsizexCvData = int(m_dsizex);
+                    int dsizeyCvData = int(m_dsizey);
                     
-                    cv::pyrUp(srcCvData, dstCvData);
+                    cv::warpAffine(srcCvData, dstCvData, affineMCvData, cv::Size(dsizexCvData, dsizeyCvData));
                     
                     runtime::DataContainer outContainer = inContainer;
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
-                    provider.sendOutputData(outputMapper);
-                }
-                break;
-            case(ALLOCATE):
-                {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    
-                    provider.receiveInputData(srcInMapper);
-                    
-                    const runtime::Data* srcData = 0;
-                    
-                    runtime::ReadAccess<> srcReadAccess;
-                    
-                    srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                    srcData = &srcReadAccess();
-                    
-                    if(! srcData->variant().isVariant(runtime::DataVariant::IMAGE))
-                    {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
-                    }
-                    
-                    const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
-                    
-                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData;
-                    
-                    cv::pyrUp(srcCvData, dstCvData);
-                    
-                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
-                    
-                    dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     provider.sendOutputData(outputMapper);
                 }
                 break;

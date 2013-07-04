@@ -2,7 +2,7 @@
 
 import interface
     
-class CheckParameterVisitor(interface.ParameterRuleVisitor):
+class CheckParameterVisitor(interface.DataRuleVisitor):
     def __init__(self, doc, param):
         self.doc = doc
         self.param = param
@@ -24,4 +24,3 @@ class CheckParameterVisitor(interface.ParameterRuleVisitor):
             '*this, "Only even values are allowed");'
             ).format(self.param.ident.attribute()))
         self.doc.decreaseIndent()
-

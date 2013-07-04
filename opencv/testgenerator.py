@@ -44,6 +44,12 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
                     
         self.doc.line(l)
         
+    def visitMatrixFile(self, testData):
+        l = _createTestData(testData.arg, "cvsupport::Matrix", 
+                            '"{0}"'.format(testData.value))
+                    
+        self.doc.line(l)
+        
     def visitImageBuffer(self, testData):
         l = _createTestData(testData.arg, "cvsupport::Image", 
                             '{0}'.format(testData.value))
@@ -75,6 +81,9 @@ class SetDataVisitor(interface.TestArgumentVisitor):
         self.__visitData(testData.arg)
             
     def visitImageBuffer(self, testData):
+        self.__visitData(testData.arg)
+            
+    def visitMatrixFile(self, testData):
         self.__visitData(testData.arg)
     
     def visitValue(self, testData):

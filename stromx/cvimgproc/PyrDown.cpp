@@ -45,7 +45,7 @@ namespace stromx
                 {
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

@@ -86,7 +86,7 @@ namespace stromx
                                           const ValueType valueType) = 0;
                                      
             /** Returns the size of a single value of type \c valueType in bytes. */  
-            static unsigned int valueSize(const ValueType valueType);  
+            static unsigned int valueSize(const ValueType valueType);
             
         protected:
             

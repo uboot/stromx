@@ -57,14 +57,14 @@ namespace stromx
                 {
                 case ADAPTIVE_METHOD:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_adaptiveMethodParameter, *this);
                         m_adaptiveMethod = castedValue;
                     }
                     break;
                 case BLOCK_SIZE:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_blockSizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_blockSizeParameter, *this, "Only odd values are allowed");
@@ -73,21 +73,21 @@ namespace stromx
                     break;
                 case MAXVAL:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_maxvalParameter, *this);
                         m_maxval = castedValue;
                     }
                     break;
                 case THRESHOLD_TYPE:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_thresholdTypeParameter, *this);
                         m_thresholdType = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

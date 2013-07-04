@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 
-class ParameterRuleVisitor(object):
+class DataRuleVisitor(object):
     """
-    Visitor fordifferent parameter rules.
+    Visitor for different data rules.
     """
     def visitOddRule(self, rule):
         pass
         
     def visitEvenRule(self, rule):
+        pass
+    
+    def visitNumRowsRule(self, rule):
+        pass
+    
+    def visitNumColsRule(self, rule):
         pass
 
 class ArgumentVisitor(object):
@@ -58,5 +64,8 @@ class TestArgumentVisitor(object):
         pass
     
     def visitRefData(self, testData):
+        pass
+    
+    def visitMatrixFile(self, testData):
         pass
     

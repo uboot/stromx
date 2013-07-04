@@ -208,7 +208,7 @@ class OpHeaderGenerator(MethodGenerator):
         Exports class members for the values of all visited parameters.
         """
         def visitParameter(self, parameter):
-            l = "{0} {1};".format(parameter.dataType.typeId(),
+            l = "{0} {1};".format(parameter.dataType.concreteTypeId(),
                                   parameter.ident.attribute())
             self.doc.line(l)
         
@@ -293,6 +293,7 @@ class OpHeaderGenerator(MethodGenerator):
     
     def __includes(self):
         self.doc.line('#include "stromx/{0}/Config.h"'.format(self.p.ident))
+        self.doc.line('#include <stromx/cvsupport/Matrix.h>')
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/EnumParameter.h>')
         self.doc.line('#include <stromx/runtime/NumericParameter.h>')
@@ -410,7 +411,7 @@ class OpImplGenerator(MethodGenerator):
         def __setParameterWithCheck(self, parameter, check = ""):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.scopeEnter()
-            self.doc.line(("{0} castedValue = runtime::data_cast<{1}>(value);"
+            self.doc.line(("const {0} & castedValue = runtime::data_cast<{1}>(value);"
                           ).format(parameter.dataType.typeId(),
                                    parameter.dataType.typeId()))
             if check != "":

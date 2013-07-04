@@ -220,17 +220,30 @@ class EnumDescription(object):
         else:
             self.cvIdent = "cv::{0}".format(ident)     
     
-class ParameterRule(object):
+class DataRule(object):
     def check(self, parameter, doc):
         return ""
 
-class OddRule(ParameterRule):
+class OddRule(DataRule):
     def accept(self, visitor):
         visitor.visitOddRule(self)
 
-class EvenRule(ParameterRule):
+class EvenRule(DataRule):
     def accept(self, visitor):
         visitor.visitEvenRule(self)
 
+class NumRowsRule(DataRule):
+    def __init__(self, numRows):
+        self.numRows = numRows
+    
+    def accept(self, visitor):
+        visitor.visitNumRowsRule(self)
+
+class NumColsRule(DataRule):
+    def __init__(self, numCols):
+        self.numCols = numCols
+    
+    def accept(self, visitor):
+        visitor.visitNumColsRule(self)
 
     

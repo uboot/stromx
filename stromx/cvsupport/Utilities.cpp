@@ -41,7 +41,7 @@ namespace stromx
             int cvType = Matrix::cvTypeFromValueType(matrix.valueType());
             uint8_t* data = const_cast<uint8_t*>(matrix.data());
             
-            return cv::Mat(matrix.cols(), matrix.rows(), cvType, data, matrix.stride());
+            return cv::Mat(matrix.rows(), matrix.cols(), cvType, data, matrix.stride());
         }
         
         runtime::Image::PixelType computeOutPixelType(const int outDdepth,

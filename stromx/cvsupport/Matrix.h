@@ -77,6 +77,9 @@ namespace stromx
             
             virtual Data* clone() const;
             
+            /** Copies the the matrix on the right hand side. */
+            const Matrix & operator=(const runtime::Matrix & matrix);
+            
         private:
             static const std::string TYPE;
             static const std::string PACKAGE;
@@ -89,7 +92,6 @@ namespace stromx
             void allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType);
             void getDataFromCvMatrix(const ValueType valueType);
             
-                
             cv::Mat* m_matrix;
         };
     }

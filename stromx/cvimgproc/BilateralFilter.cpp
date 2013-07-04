@@ -54,28 +54,28 @@ namespace stromx
                 {
                 case D:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dParameter, *this);
                         m_d = castedValue;
                     }
                     break;
                 case SIGMA_COLOR:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_sigmaColorParameter, *this);
                         m_sigmaColor = castedValue;
                     }
                     break;
                 case SIGMA_SPACE:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_sigmaSpaceParameter, *this);
                         m_sigmaSpace = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

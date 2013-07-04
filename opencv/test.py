@@ -23,6 +23,13 @@ class ImageFile(Value):
         
     def accept(self, visitor):
         visitor.visitImageFile(self)
+    
+class MatrixFile(Value):
+    def __init__(self, value):
+        super(MatrixFile, self).__init__(value)
+        
+    def accept(self, visitor):
+        visitor.visitMatrixFile(self)
 
 class ImageBuffer(Value):
     def accept(self, visitor):

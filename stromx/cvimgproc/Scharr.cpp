@@ -60,42 +60,42 @@ namespace stromx
                 {
                 case DDEPTH:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_ddepthParameter, *this);
                         m_ddepth = castedValue;
                     }
                     break;
                 case DELTA:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
                     }
                     break;
                 case DX:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dxParameter, *this);
                         m_dx = castedValue;
                     }
                     break;
                 case DY:
                     {
-                        runtime::UInt32 castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
                         checkNumericValue(castedValue, m_dyParameter, *this);
                         m_dy = castedValue;
                     }
                     break;
                 case SCALE:
                     {
-                        runtime::Double castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
                         checkNumericValue(castedValue, m_scaleParameter, *this);
                         m_scale = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
