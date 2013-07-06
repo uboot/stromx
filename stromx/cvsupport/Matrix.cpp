@@ -49,6 +49,12 @@ namespace stromx
         {
             getDataFromCvMatrix(valueTypeFromCvType(m_matrix->type()));
         }
+        
+        Matrix::Matrix(const cv::MatExpr& cvMatExpr)
+          : m_matrix(new cv::Mat(cvMatExpr))
+        {
+            getDataFromCvMatrix(valueTypeFromCvType(m_matrix->type()));
+        }
 
         Matrix::Matrix(const stromx::runtime::Matrix& matrix)
           : m_matrix(new cv::Mat())
@@ -57,7 +63,7 @@ namespace stromx
         }
 
         Matrix::Matrix(const stromx::cvsupport::Matrix& matrix)
-          : runtime::MatrixWrapper(),
+          : MatrixWrapper(), // fixes GCC warning
             m_matrix(new cv::Mat())
         {
             copy(matrix);
@@ -192,6 +198,13 @@ namespace stromx
             default:
                 throw runtime::WrongArgument("Unsupported OpenCV element type.");  
             }
+        }
+        
+        cvsupport::Matrix Matrix::eye(const unsigned int rows, const unsigned int cols,
+                                      const ValueType valueType)
+        {
+            int cvType = cvTypeFromValueType(valueType);
+            return cvsupport::Matrix(cv::Mat::eye(rows, cols, cvType));
         }
     }
 }

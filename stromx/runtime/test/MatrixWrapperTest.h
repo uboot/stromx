@@ -38,6 +38,9 @@ namespace stromx
             CPPUNIT_TEST (testDeserializeEmpty);
             CPPUNIT_TEST (testResizeDimension);
             CPPUNIT_TEST (testResizeLength);
+            CPPUNIT_TEST (testAt);
+            CPPUNIT_TEST (testAtWrongPosition);
+            CPPUNIT_TEST (testAtWrongType);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -55,6 +58,9 @@ namespace stromx
                 void testDeserializeEmpty();
                 void testResizeDimension();
                 void testResizeLength();
+                void testAt();
+                void testAtWrongPosition();
+                void testAtWrongType();
                 
             private:
                 const static stromx::runtime::Version VERSION;

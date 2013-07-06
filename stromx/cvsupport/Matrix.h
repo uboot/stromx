@@ -25,6 +25,7 @@
 namespace cv
 {
     class Mat;
+    class MatExpr;
 }
 
 namespace stromx
@@ -44,6 +45,9 @@ namespace stromx
              */
             Matrix();
             
+            /** Copy constructs a matrix from \c matrix. */
+            Matrix(const stromx::cvsupport::Matrix& matrix);
+            
             /** Constructs a matrix for the given parameters. */
             explicit Matrix(const unsigned int rows, const unsigned int cols, const ValueType valueType);
             
@@ -53,11 +57,14 @@ namespace stromx
              */
             explicit Matrix(cv::Mat& cvMatrix);
             
-            /** Copy constructs a matrix from \c matrix. */
-            explicit Matrix(const stromx::runtime::Matrix& matrix);
+            /** 
+             * Constructs a matrix from \c cvMatExpr. The data of the input matrix is copied
+             * to this matrix.
+             */
+            explicit Matrix(const cv::MatExpr& cvMatExpr);
             
             /** Copy constructs a matrix from \c matrix. */
-            explicit Matrix(const stromx::cvsupport::Matrix& matrix);
+            explicit Matrix(const stromx::runtime::Matrix& matrix);
             
             /** 
              * Allocates a matrix with a buffer of a given size in bytes. The matrix has 1 row and
@@ -79,6 +86,16 @@ namespace stromx
             
             /** Copies the the matrix on the right hand side. */
             const Matrix & operator=(const runtime::Matrix & matrix);
+            
+            
+            /** 
+            * Returns the identity matrix (or a submatrix of a larger identity matrix)
+            * with the given number of \c rows and \c cols and with values of type
+            * of \c valueType.
+            */
+            static cvsupport::Matrix eye(const unsigned int rows, 
+                                         const unsigned int cols,
+                                         const ValueType valueType);
             
         private:
             static const std::string TYPE;

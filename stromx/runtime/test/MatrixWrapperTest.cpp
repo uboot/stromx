@@ -190,6 +190,29 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_matrix->bufferSize());
         }
         
+        void MatrixWrapperTest::testAt()
+        {
+            MatrixImpl matrix(3, 2, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT_NO_THROW(matrix.at<int32_t>(0, 1) = 42);
+            CPPUNIT_ASSERT_EQUAL((int32_t)(42), const_cast<const MatrixImpl &>(matrix).at<int32_t>(0,1));
+        }
+        
+        void MatrixWrapperTest::testAtWrongPosition()
+        {
+            MatrixImpl matrix(3, 2, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT_THROW(matrix.at<int8_t>(0, 2) = 42, WrongArgument);
+            CPPUNIT_ASSERT_THROW(matrix.at<int8_t>(3, 0) = 42, WrongArgument);
+        }
+
+        void MatrixWrapperTest::testAtWrongType()
+        {
+            MatrixImpl matrix(3, 2, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT_THROW(matrix.at<int8_t>(0, 1) = 42, WrongArgument);
+        }
+            
         void MatrixWrapperTest::tearDown ( void )
         {
             delete m_matrix;

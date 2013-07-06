@@ -88,6 +88,44 @@ namespace stromx
             /** Returns the size of a single value of type \c valueType in bytes. */  
             static unsigned int valueSize(const ValueType valueType);
             
+            /** 
+             * Returns a reference of type \c T to the value at the position (\c row, \c col).
+             * \throws WrongArgument If the size of \c T does not match the value size 
+             *                       of the matrix or if the given position is not within 
+             *                       the matrix bounds.
+             **/
+            template <class T>
+            T & at(const unsigned row, const unsigned col)
+            {
+                const Matrix & mat = const_cast<const Matrix &>(*this);
+                
+                return const_cast<T &>(mat.at<T>(row, col));
+            }
+            
+            /** 
+             * Returns a constant reference of type \c T to the value at the position
+             * (\c row, \c col).
+             * \throws WrongArgument If the size of \c T does not match the value size 
+             *                       of the matrix or if the given position is not within 
+             *                       the matrix bounds.
+             **/
+            template <class T>
+            const T & at(const unsigned int row, const unsigned col) const
+            {
+                if(sizeof(T) != valueSize())
+                    throw WrongArgument("Size of access type does not match value size.");
+                
+                if(row >= rows())
+                    throw WrongArgument("Row index out of bounds.");
+                
+                if(col >= cols())
+                    throw WrongArgument("Column index out of bounds.");
+                
+                unsigned int byteOffset = row * stride() + col * valueSize();
+                
+                return *(reinterpret_cast<const T*>(data() + byteOffset));
+            }
+            
         protected:
             
             /** Returns the data variant defined by the input \c valueType. */

@@ -79,6 +79,16 @@ namespace stromx
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::INT_16_MATRIX, m_matrix->variant());
         }
+        
+        void MatrixTest::testMatrixCvMatExpr()
+        {
+            Matrix matrix(cv::Mat::eye(2, 2, CV_8S));
+            
+            CPPUNIT_ASSERT_EQUAL(int8_t(1), matrix.at<int8_t>(0, 0));
+            CPPUNIT_ASSERT_EQUAL(int8_t(0), matrix.at<int8_t>(0, 1));
+            CPPUNIT_ASSERT_EQUAL(int8_t(1), matrix.at<int8_t>(1, 1));
+            CPPUNIT_ASSERT_EQUAL(int8_t(0), matrix.at<int8_t>(1, 0));
+        }
 
         void MatrixTest::testMatrixDefaultCopyConstructor()
         {
@@ -233,6 +243,18 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Data>(*m_matrix));
             CPPUNIT_ASSERT_NO_THROW(runtime::data_cast<runtime::Matrix>(*m_matrix));
             CPPUNIT_ASSERT_THROW(runtime::data_cast<runtime::None>(*m_matrix), runtime::BadCast);
+        }
+        
+        void MatrixTest::testEye()
+        {
+            Matrix matrix = Matrix::eye(2, 3, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT_EQUAL(int32_t(1), matrix.at<int32_t>(0, 0));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 1));
+            CPPUNIT_ASSERT_EQUAL(int32_t(1), matrix.at<int32_t>(1, 1));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 0));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 2));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 2));
         }
      
         void MatrixTest::tearDown ( void )

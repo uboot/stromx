@@ -38,6 +38,7 @@ namespace stromx
             CPPUNIT_TEST (testMatrixCvMatrix32FC2);
             CPPUNIT_TEST (testMatrixCvMatrix16SC3);
             CPPUNIT_TEST (testMatrixCvMatrix32UC4);
+            CPPUNIT_TEST (testMatrixCvMatExpr);
             CPPUNIT_TEST (testMatrixFloat);
             CPPUNIT_TEST (testMatrixDefault);
             CPPUNIT_TEST (testOpenUInt16);
@@ -49,6 +50,7 @@ namespace stromx
             CPPUNIT_TEST (testIsVariant);
             CPPUNIT_TEST (testPtrCast);
             CPPUNIT_TEST (testRefCast);
+            CPPUNIT_TEST (testEye);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -66,6 +68,7 @@ namespace stromx
                 void testMatrixCvMatrix32FC2();
                 void testMatrixCvMatrix16SC3();
                 void testMatrixCvMatrix32UC4();
+                void testMatrixCvMatExpr();
                 void testMatrixFloat();
                 void testMatrixInt16();
                 void testMatrixDefault();
@@ -86,6 +89,7 @@ namespace stromx
                 void testIsVariant();
                 void testPtrCast();
                 void testRefCast();
+                void testEye();
                 
             private:
                 const static stromx::runtime::Version VERSION;
