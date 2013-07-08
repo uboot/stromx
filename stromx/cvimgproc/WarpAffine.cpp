@@ -22,7 +22,7 @@ namespace stromx
         
         WarpAffine::WarpAffine()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_affineM(),
+            m_affineM(cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)),
             m_dsizex(),
             m_dsizey(),
             m_dataFlow()
@@ -55,6 +55,10 @@ namespace stromx
                 case AFFINE_M:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
+                        if(castedValue.rows() != 2)
+                            throw runtime::WrongParameterValue(*m_affineMParameter, *this, "Number of matrix rows must be 2.");
+                        if(castedValue.cols() != 3)
+                            throw runtime::WrongParameterValue(*m_affineMParameter, *this, "Number of matrix columns must be 3.");
                         m_affineM = castedValue;
                     }
                     break;
@@ -97,6 +101,7 @@ namespace stromx
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -110,10 +115,29 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Parameter* affineM = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
-                    affineM->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    affineM->setTitle("2x3 affine transformation");
-                    parameters.push_back(affineM);
+                    m_affineMParameter = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_affineMParameter->setTitle("2x3 affine transformation");
+                    parameters.push_back(m_affineMParameter);
+                    
+                    m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
+                    m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_dsizexParameter->setTitle("Size X");
+                    parameters.push_back(m_dsizexParameter);
+                    
+                    m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
+                    m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_dsizeyParameter->setTitle("Size Y");
+                    parameters.push_back(m_dsizeyParameter);
+                    
+                }
+                break;
+            case(ALLOCATE):
+                {
+                    m_affineMParameter = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_affineMParameter->setTitle("2x3 affine transformation");
+                    parameters.push_back(m_affineMParameter);
                     
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
                     m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
@@ -150,6 +174,14 @@ namespace stromx
                     
                 }
                 break;
+            case(ALLOCATE):
+                {
+                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
+                    src->setTitle("Source");
+                    inputs.push_back(src);
+                    
+                }
+                break;
             }
             
             return inputs;
@@ -162,6 +194,14 @@ namespace stromx
             switch(int(m_dataFlow))
             {
             case(MANUAL):
+                {
+                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    dst->setTitle("Destination");
+                    outputs.push_back(dst);
+                    
+                }
+                break;
+            case(ALLOCATE):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
                     dst->setTitle("Destination");
@@ -200,7 +240,7 @@ namespace stromx
                     
                     if(srcInMapper.data() == inContainer)
                     {
-                        srcData = &writeAccess();
+                        throw runtime::InputError(SRC, *this, "Can not operate in place.");
                     }
                     else
                     {
@@ -235,6 +275,42 @@ namespace stromx
                     runtime::DataContainer outContainer = inContainer;
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
+                    provider.sendOutputData(outputMapper);
+                }
+                break;
+            case(ALLOCATE):
+                {
+                    runtime::Id2DataPair srcInMapper(SRC);
+                    
+                    provider.receiveInputData(srcInMapper);
+                    
+                    const runtime::Data* srcData = 0;
+                    
+                    runtime::ReadAccess<> srcReadAccess;
+                    
+                    srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
+                    srcData = &srcReadAccess();
+                    
+                    if(! srcData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    {
+                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
+                    }
+                    
+                    const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
+                    
+                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+                    cv::Mat dstCvData;
+                    cv::Mat affineMCvData = cvsupport::getOpenCvMat(m_affineM);
+                    int dsizexCvData = int(m_dsizex);
+                    int dsizeyCvData = int(m_dsizey);
+                    
+                    cv::warpAffine(srcCvData, dstCvData, affineMCvData, cv::Size(dsizexCvData, dsizeyCvData));
+                    
+                    runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
+                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    
+                    dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
                     provider.sendOutputData(outputMapper);
                 }
                 break;

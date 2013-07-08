@@ -45,6 +45,50 @@ namespace stromx
             cvsupport::Image::save("WarpAffineTest_testManual0.png", access());
         }
         
+        void WarpAffineTest::testManual1()
+        {
+            m_operator->setParameter(WarpAffine::DATA_FLOW, runtime::Enum(WarpAffine::MANUAL));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
+            runtime::DataContainer dst(new cvsupport::Image(1000000));
+            runtime::UInt32 dsizex(400);
+            runtime::UInt32 dsizey(500);
+            
+            m_operator->setInputData(WarpAffine::SRC, src);
+            m_operator->setInputData(WarpAffine::DST, dst);
+            m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
+            m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
+            
+            runtime::DataContainer result = m_operator->getOutputData(WarpAffine::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            cvsupport::Image::save("WarpAffineTest_testManual1.png", access());
+        }
+        
+        void WarpAffineTest::testAllocate0()
+        {
+            m_operator->setParameter(WarpAffine::DATA_FLOW, runtime::Enum(WarpAffine::ALLOCATE));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
+            cvsupport::Matrix affineM("affine.npy");
+            runtime::UInt32 dsizex(400);
+            runtime::UInt32 dsizey(500);
+            
+            m_operator->setInputData(WarpAffine::SRC, src);
+            m_operator->setParameter(WarpAffine::AFFINE_M, affineM);
+            m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
+            m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
+            
+            runtime::DataContainer result = m_operator->getOutputData(WarpAffine::DST);
+            
+            runtime::ReadAccess<runtime::Image> access(result);
+            cvsupport::Image::save("WarpAffineTest_testAllocate0.png", access());
+        }
+        
     }
 }
 

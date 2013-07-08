@@ -215,8 +215,12 @@ class OpHeaderGenerator(MethodGenerator):
     class ParameterDescriptionsVisitor(MethodGenerator.DocVisitor):
         """
         Exports class members for the parameter description of all visited
-        enumeration and numeric parameters.
+        parameters.
         """
+        def visitParameter(self, parameter):
+            self.doc.line(("runtime::Parameter* m_{0}Parameter;"
+                          ).format(parameter.ident))
+                          
         def visitEnumParameter(self, parameter):
             self.doc.line(("runtime::EnumParameter* m_{0}Parameter;"
                           ).format(parameter.ident))
@@ -436,15 +440,16 @@ class OpImplGenerator(MethodGenerator):
             self.isInit = isInit
             
         def visitParameter(self, parameter):
-            l = "runtime::Parameter* {0} = new runtime::Parameter({1}, {2});"\
-                .format(parameter.ident, parameter.ident.constant(),
+            ident = "m_{0}Parameter".format(parameter.ident)
+            l = "{0} = new runtime::Parameter({1}, {2});"\
+                .format(ident, parameter.ident.constant(),
                         parameter.dataType.variant())
             self.doc.line(l)
-            self.__accessMode(parameter.ident)
+            self.__accessMode(ident)
             l = '{0}->setTitle("{1}");'\
-                .format(parameter.ident, parameter.name)
+                .format(ident, parameter.name)
             self.doc.line(l)
-            l = "parameters.push_back({0});".format(parameter.ident)
+            l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
             self.doc.blank()
             

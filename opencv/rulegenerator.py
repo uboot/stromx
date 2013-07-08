@@ -24,3 +24,21 @@ class CheckParameterVisitor(interface.DataRuleVisitor):
             '*this, "Only even values are allowed");'
             ).format(self.param.ident.attribute()))
         self.doc.decreaseIndent()
+
+    def visitNumRowsRule(self, rule):
+        test = (
+"""
+if(castedValue.rows() != {0})
+    throw runtime::WrongParameterValue(*{1}Parameter, *this, "Number of matrix rows must be {0}.");
+"""
+        ).format(rule.numRows, self.param.ident.attribute())
+        self.doc.text(test)
+
+    def visitNumColsRule(self, rule):
+        test = (
+"""
+if(castedValue.cols() != {0})
+    throw runtime::WrongParameterValue(*{1}Parameter, *this, "Number of matrix columns must be {0}.");
+"""
+        ).format(rule.numCols, self.param.ident.attribute())
+        self.doc.text(test)

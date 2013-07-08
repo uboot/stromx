@@ -40,11 +40,16 @@ class Document(object):
     def text(self, text):
         """
         The input text is split at the line breaks and each line is added to 
-        the document.
+        the document. The lines are automatically intendended by
+        the current intendation level. If the first or the last lines of the
+        input are empty they are removed.
         """
+        doc = Document()
         for l in text.split("\n"):
-            self.lines.append(l)
-        
+            doc.line(l)
+            
+        self.document(doc)
+            
     def document(self, doc):
         """
         Inserts a document into this document by appending each line of the 

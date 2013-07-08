@@ -19,7 +19,8 @@ namespace stromx
         public:
             enum DataFlowId
             {
-                MANUAL
+                MANUAL,
+                ALLOCATE
             };
             enum ConnectorId
             {
@@ -54,6 +55,7 @@ namespace stromx
             runtime::UInt32 m_dsizex;
             runtime::UInt32 m_dsizey;
             runtime::Enum m_dataFlow;
+            runtime::Parameter* m_affineMParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizeyParameter;
             runtime::EnumParameter* m_dataFlowParameter;

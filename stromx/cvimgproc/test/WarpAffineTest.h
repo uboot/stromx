@@ -16,6 +16,8 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE(WarpAffineTest);
             CPPUNIT_TEST(testManual0);
+            CPPUNIT_TEST(testManual1);
+            CPPUNIT_TEST(testAllocate0);
             CPPUNIT_TEST_SUITE_END();
             
         public:
@@ -25,6 +27,8 @@ namespace stromx
             
         protected:
             void testManual0();
+            void testManual1();
+            void testAllocate0();
             
         private:
             runtime::OperatorTester* m_operator;

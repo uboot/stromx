@@ -294,7 +294,8 @@ blockSize = package.NumericParameter(
 )
 subtractedC = package.Constant("0")
 affineM = package.Parameter(
-    "affineM", "2x3 affine transformation", cvtype.Mat(), datatype.Matrix(), 
+    "affineM", "2x3 affine transformation", cvtype.Mat(), datatype.Matrix(),
+    default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)",
     rules = [package.NumRowsRule(2), package.NumColsRule(3)]
 )
 
@@ -715,14 +716,23 @@ threshold = package.Method(
 # warpAffine
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg, True), package.Output(dstImgDsize), affineM, 
+    [package.Input(srcImg), package.Output(dstImgDsize), affineM, 
      package.Size(dsizex, dsizey)],
     tests = [
-        [lenna_bw, memory, affine_transformation, (400, 500)]
+        [lenna_bw, memory, affine_transformation, (400, 500)],
+        [lenna, memory, dt, (400, 500)]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgDsize), affineM, 
+     package.Size(dsizex, dsizey)],
+    tests = [
+        [lenna, dt, affine_transformation, (400, 500)]
     ]
 )
 warpAffine = package.Method(
-    "warpAffine", options = [manual]
+    "warpAffine", options = [manual, allocate]
 )
 
 imgproc = package.Package(
