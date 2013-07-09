@@ -3,6 +3,10 @@
 import interface
     
 class CheckParameterVisitor(interface.DataRuleVisitor):
+    """
+    Exports a check before the parameter is set for each visited rule of the
+    parameter.
+    """
     def __init__(self, doc, param):
         self.doc = doc
         self.param = param

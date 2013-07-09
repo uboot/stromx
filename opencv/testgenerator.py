@@ -16,6 +16,9 @@ def _createTestData(arg, dataType, constructorArgs):
         )
 
 class CreateDataVisitor(interface.TestArgumentVisitor):
+    """
+    Exports the construction of test data for each visited test data object.
+    """
     def __init__(self, doc):
         self.doc = doc
         
@@ -61,6 +64,10 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
         self.doc.line(l)
     
 class SetDataVisitor(interface.TestArgumentVisitor):
+    """
+    Sets of either a parameter or an input for each visited test data depending
+    on the type of the corresponding method argument (parameter or input).
+    """
     def __init__(self, doc, method):
         self.doc = doc
         self.m = method
@@ -98,6 +105,10 @@ class SetDataVisitor(interface.TestArgumentVisitor):
         self.doc.line(l)
     
 class GetDataVisitor(interface.TestArgumentVisitor):
+    """
+    Exports the acquisition of the data at the operator output for each visited
+    test data at an output.
+    """
     def __init__(self, doc, method):
         self.doc = doc
         self.m = method
@@ -130,6 +141,10 @@ class GetDataVisitor(interface.TestArgumentVisitor):
         self.__visitData(testData.arg)
         
 class SaveResultVisitor(interface.ArgumentVisitor):
+    """
+    Creates a read access for the output data and saves it as an image for each
+    visited output.
+    """
     def __init__(self, doc, testFileName):
         self.doc = doc
         self.testFileName = testFileName
@@ -163,6 +178,9 @@ def _visitTest(doc, args, testData, visitor):
         data.accept(visitor)
     
 def generate(doc, method, args, testData, testName):
+    """
+    Generates the operator tests for the given method and test data.
+    """
     visitor = CreateDataVisitor(doc)
     _visitTest(doc, args, testData, visitor)
     
