@@ -5,6 +5,7 @@
 #include <stromx/cvsupport/Matrix.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/MatrixParameter.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/OperatorKernel.h>
@@ -55,7 +56,7 @@ namespace stromx
             runtime::UInt32 m_dsizex;
             runtime::UInt32 m_dsizey;
             runtime::Enum m_dataFlow;
-            runtime::Parameter* m_affineMParameter;
+            runtime::MatrixParameter* m_affineMParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizeyParameter;
             runtime::EnumParameter* m_dataFlowParameter;

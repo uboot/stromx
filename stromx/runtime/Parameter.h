@@ -186,6 +186,18 @@ namespace stromx
             /** Returns the possible values of an enumeration value or an empty vector. */
             virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
             
+            /** 
+             * Returns the required number of rows of a matrix parameters. Returns
+             * 0 if any number of rows is possible.
+             */
+            virtual unsigned int rows() const { return 0; }
+            
+            /** 
+             * Returns the required number of columns of a matrix parameters. Returns
+             * 0 if any number of rows is possible.
+             */
+            virtual unsigned int cols() const { return 0; }
+            
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;
             static const std::vector<const Parameter*> NO_MEMBERS;

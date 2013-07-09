@@ -154,6 +154,19 @@ class EnumParameter(Parameter):
     def accept(self, visitor):
         visitor.visitEnumParameter(self)
         
+class MatrixParameter(Parameter):
+    def __init__(self, ident, name, dataType, default = None, rows = 0, cols = 0,
+                 rules = None):
+        super(MatrixParameter, self).__init__(
+            ident, name, cvtype.Mat(), dataType, default = default, 
+            rules = rules
+        )
+        self.rows = rows
+        self.cols = cols
+    
+    def accept(self, visitor):
+        visitor.visitMatrixParameter(self)
+        
 class Method(object):
     def __init__(self, ident, name = "", description = "", functions = None,
                  options = None):
@@ -232,18 +245,5 @@ class EvenRule(DataRule):
     def accept(self, visitor):
         visitor.visitEvenRule(self)
 
-class NumRowsRule(DataRule):
-    def __init__(self, numRows):
-        self.numRows = numRows
-    
-    def accept(self, visitor):
-        visitor.visitNumRowsRule(self)
-
-class NumColsRule(DataRule):
-    def __init__(self, numCols):
-        self.numCols = numCols
-    
-    def accept(self, visitor):
-        visitor.visitNumColsRule(self)
 
     

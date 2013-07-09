@@ -44,6 +44,9 @@ class CollectVisitor(SingleArgumentVisitor):
     def visitRefInput(self, refInput):
         self.args.add(refInput)
         
+    def visitMatrixParameter(self, parameter):
+        self.args.add(parameter)
+        
     def visitAllocation(self, allocation):
         self.args.add(allocation)
         
@@ -67,6 +70,9 @@ class MethodGenerator(object):
             
         def visitEnumParameter(self, parameter):
             self.visitParameter(parameter)
+        
+        def visitMatrixParameter(self, parameter):
+                self.visitParameter(parameter)
             
     class DocVisitor(SingleArgumentVisitor):
         """ 
@@ -84,6 +90,9 @@ class MethodGenerator(object):
             self.visitParameter(parameter)
             
         def visitEnumParameter(self, parameter):
+            self.visitParameter(parameter)
+            
+        def visitMatrixParameter(self, parameter):
             self.visitParameter(parameter)
             
     def __init__(self):
@@ -229,6 +238,11 @@ class OpHeaderGenerator(MethodGenerator):
             self.doc.line(("runtime::NumericParameter<{1}>* m_{0}Parameter;"
                           ).format(parameter.ident,
                                    parameter.dataType.typeId()))
+                          
+        def visitMatrixParameter(self, parameter):
+            self.doc.line(("runtime::MatrixParameter* m_{0}Parameter;"
+                          ).format(parameter.ident,
+                                   parameter.dataType.typeId()))
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         """
@@ -300,6 +314,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line('#include <stromx/cvsupport/Matrix.h>')
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/EnumParameter.h>')
+        self.doc.line('#include <stromx/runtime/MatrixParameter.h>')
         self.doc.line('#include <stromx/runtime/NumericParameter.h>')
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/OperatorKernel.h>')
@@ -412,6 +427,11 @@ class OpImplGenerator(MethodGenerator):
                 ).format(parameter.ident.attribute())
             self.__setParameterWithCheck(parameter, l)
             
+        def visitMatrixParameter(self, parameter):
+            l = ("checkMatrixValue(castedValue, {0}Parameter, *this);"
+                ).format(parameter.ident.attribute())
+            self.__setParameterWithCheck(parameter, l)
+            
         def __setParameterWithCheck(self, parameter, check = ""):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.scopeEnter()
@@ -446,8 +466,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.variant())
             self.doc.line(l)
             self.__accessMode(ident)
-            l = '{0}->setTitle("{1}");'\
-                .format(ident, parameter.name)
+            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
             self.doc.line(l)
             l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
@@ -467,6 +486,21 @@ class OpImplGenerator(MethodGenerator):
                 l = '{0}->add(runtime::EnumDescription({1}, "{2}"));'\
                     .format(ident, d, desc.name)
                 self.doc.line(l)
+            l = "parameters.push_back({0});".format(ident)
+            self.doc.line(l)
+            self.doc.blank()
+            
+        def visitMatrixParameter(self, parameter):
+            ident = "m_{0}Parameter".format(parameter.ident)
+            l = "{0} = new runtime::MatrixParameter({1}, {2});"\
+                .format(ident, parameter.ident.constant(),
+                        parameter.dataType.variant())
+            self.doc.line(l)
+            self.__accessMode(ident)
+            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
+            self.doc.line(l)
+            self.doc.line("{0}->setRows({1});".format(ident, parameter.rows))
+            self.doc.line("{0}->setCols({1});".format(ident, parameter.cols))
             l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
             self.doc.blank()
@@ -740,6 +774,9 @@ class OpImplGenerator(MethodGenerator):
         def visitNumericParameter(self, numericParameter):
             self.visitParameter(numericParameter)
             
+        def visitMatrixParameter(self, numericParameter):
+            self.visitParameter(numericParameter)
+            
         def visitEnumParameter(self, parameter):
             ident = parameter.ident
             cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
@@ -773,8 +810,11 @@ class OpImplGenerator(MethodGenerator):
         def visitNumericParameter(self, numericParameter):
             self.visit(numericParameter)
             
-        def visitEnumParameter(self, refInput):
-            self.visit(refInput)
+        def visitEnumParameter(self, parameter):
+            self.visit(parameter)
+            
+        def visitMatrixParameter(self, parameter):
+            self.visit(parameter)
             
         def visitConstant(self, constant):
             self.args.append(constant.value)

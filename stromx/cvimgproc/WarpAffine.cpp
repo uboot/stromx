@@ -55,10 +55,7 @@ namespace stromx
                 case AFFINE_M:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
-                        if(castedValue.rows() != 2)
-                            throw runtime::WrongParameterValue(*m_affineMParameter, *this, "Number of matrix rows must be 2.");
-                        if(castedValue.cols() != 3)
-                            throw runtime::WrongParameterValue(*m_affineMParameter, *this, "Number of matrix columns must be 3.");
+                        checkMatrixValue(castedValue, m_affineMParameter, *this);
                         m_affineM = castedValue;
                     }
                     break;
@@ -115,9 +112,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_affineMParameter = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle("2x3 affine transformation");
+                    m_affineMParameter->setRows(2);
+                    m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);
                     
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
@@ -134,9 +133,11 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_affineMParameter = new runtime::Parameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle("2x3 affine transformation");
+                    m_affineMParameter->setRows(2);
+                    m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);
                     
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);

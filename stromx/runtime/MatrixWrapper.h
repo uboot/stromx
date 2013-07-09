@@ -98,6 +98,8 @@ namespace stromx
              * Allocates or resizes the matrix to the given dimension. Must be defined
              * in derived class which implement the memory management. Implementations
              * of this function should call setBuffer() and initializeMatrix().
+             * 
+             * \since 0.2
              */
             virtual void allocate(const unsigned int rows, const unsigned int cols, const runtime::Matrix::ValueType valueType) = 0;
             

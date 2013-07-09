@@ -10,12 +10,6 @@ class DataRuleVisitor(object):
     def visitEvenRule(self, rule):
         pass
     
-    def visitNumRowsRule(self, rule):
-        pass
-    
-    def visitNumColsRule(self, rule):
-        pass
-
 class ArgumentVisitor(object):
     """
     Visitor for different argument types.
@@ -33,6 +27,9 @@ class ArgumentVisitor(object):
         pass
         
     def visitEnumParameter(self, enumParameter):
+        pass
+        
+    def visitMatrixParameter(self, enumParameter):
         pass
         
     def visitRefInput(self, refInput):

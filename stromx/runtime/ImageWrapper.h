@@ -91,6 +91,8 @@ namespace stromx
              * Allocates or resizes the image to the given dimension. Must be defined
              * in derived class which implement the memory management. Implementations
              * of this function should call setBuffer() and initializeImage().
+             * 
+             * \since 0.2
              */
             virtual void allocate(const unsigned int width, const unsigned int height,
                                   const Image::PixelType pixelType) = 0;

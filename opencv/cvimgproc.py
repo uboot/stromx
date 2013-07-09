@@ -61,6 +61,42 @@ dcl.decreaseIndent()
 dcl.scopeExit()
 checkNumericValue = package.Function(dcl, dclIncludes)
 
+dcl = document.Document()
+dclIncludes = ["<stromx/runtime/Matrix.h>",
+               "<stromx/runtime/MatrixParameter.h>",
+               "<stromx/runtime/OperatorKernel.h>"]
+dcl.text(
+"""
+void checkMatrixValue(const stromx::runtime::Matrix & value,
+                      const stromx::runtime::MatrixParameter* param,
+                      const stromx::runtime::OperatorKernel& op);
+""")
+dtnIncludes = ["<sstream>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void checkMatrixValue(const stromx::runtime::Matrix & value,
+                      const stromx::runtime::MatrixParameter* param,
+                      const stromx::runtime::OperatorKernel& op)
+{
+    if(param->rows() && value.rows() != param->rows())
+    {
+        std::ostringstream str;
+        str << param->rows();
+        throw runtime::WrongParameterValue(*param, op, "Number of matrix rows must be " + str.str() + " .");
+    }
+    
+    if(param->cols() && value.cols() != param->cols())
+    {
+        std::ostringstream str;
+        str << param->cols();
+        throw runtime::WrongParameterValue(*param, op, "Number of matrix columns must be " + str.str() + " .");
+    }
+}
+""")
+checkMatrixValue = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
+
 # initializations
 initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
@@ -293,10 +329,10 @@ blockSize = package.NumericParameter(
     default = 3, minValue = 1, rules = [package.OddRule()]
 )
 subtractedC = package.Constant("0")
-affineM = package.Parameter(
-    "affineM", "2x3 affine transformation", cvtype.Mat(), datatype.Matrix(),
-    default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)",
-    rules = [package.NumRowsRule(2), package.NumColsRule(3)]
+affineM = package.MatrixParameter(
+    "affineM", "2x3 affine transformation", datatype.Matrix(),
+    default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)", rows = 2,
+    cols = 3
 )
 
 # test data
@@ -758,7 +794,8 @@ imgproc = package.Package(
     ],
     functions = [
         checkEnumValue,
-        checkNumericValue
+        checkNumericValue,
+        checkMatrixValue
     ],
     testFiles = [
         "lenna.jpg",
