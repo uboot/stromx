@@ -1,4 +1,3 @@
-
 /* Copied from http://www.evocomp.de/tutorials/tutorium_cppunit/howto_tutorial_cppunit.html */
 
 #include <cppunit/BriefTestProgressListener.h>
@@ -33,4 +32,3 @@ int main (int, char**)
     // Rueckmeldung, ob Tests erfolgreich waren
     return collectedresults.wasSuccessful () ? 0 : 1;
 }
-

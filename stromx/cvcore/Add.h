@@ -2,8 +2,10 @@
 #define STROMX_CVCORE_ADD_H
 
 #include "stromx/cvcore/Config.h"
+#include <stromx/cvsupport/Matrix.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/MatrixParameter.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/OperatorKernel.h>

@@ -37,6 +37,8 @@ void exportParameter()
             .def("min", &Parameter::min, return_internal_reference<>())
             .def("max", &Parameter::max, return_internal_reference<>())
             .def("descriptions", &Parameter::descriptions, return_internal_reference<>())
+            .def("rows", &Parameter::rows)
+            .def("cols", &Parameter::cols)
             .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
             .def("members", &Parameter::members, return_internal_reference<>())
         ;

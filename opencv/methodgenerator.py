@@ -724,7 +724,7 @@ class OpImplGenerator(MethodGenerator):
                 
     class CastedDataVisitor(MethodGenerator.DocVisitor):
         """
-        Exports the cast to a concrete stromx data type for each visted
+        Exports the cast to a concrete stromx data type for each visited
         input and output.
         """
         def visitInput(self, inputArg):
@@ -740,10 +740,18 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
     
     class InitInVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the initialization of the output argument before the OpenCV
+        function is called.
+        """
         def visitOutput(self, output):
             self.doc.document(output.initIn)
             
     class CvDataVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the conversion to a native or OpenCV data type for each visited
+        argument.
+        """
         def visitInput(self, inputArg):
             cvData = "{0} {1}CvData".format(inputArg.cvType.typeId(), 
                                             inputArg.ident)
@@ -792,6 +800,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line("{0} = {1};".format(cvData, rhs))
             
     class MethodArgumentVisitor(interface.ArgumentVisitor):
+        """
+        Exports the argument of the OpenCV function for each visited argument.
+        """
         def __init__(self):
             self.args = []
             
@@ -837,6 +848,10 @@ class OpImplGenerator(MethodGenerator):
             return argStr
             
     class OutDataVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the wrapping of the result data into a data container for
+        each visited output or allocation.
+        """
         def visitOutput(self, output):
             l = "runtime::DataContainer outContainer = inContainer;";
             self.doc.line(l)
@@ -859,10 +874,18 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
         
     class InitOutVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the initialization of the output argument after the OpenCV
+        function is called.
+        """
         def visitAllocation(self, allocation):
             self.doc.document(allocation.initOut)
                 
     class EnumConversionDefVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the function which converts an enumeration value to its 
+        OpenCV value for each visited enumeration parameter.
+        """
         def __init__(self, doc, m):
             super(OpImplGenerator.EnumConversionDefVisitor, self).__init__(doc)
             self.m = m
@@ -1190,6 +1213,9 @@ class OpImplGenerator(MethodGenerator):
         self.visitAll(v, False)
 
 class OpTestGenerator(object):
+    """
+    Abstract base class of all generators which output operator tests.
+    """
     def testNames(self):
         l = []
         for o in self.m.options:
@@ -1198,6 +1224,9 @@ class OpTestGenerator(object):
         return l
     
 class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
+    """
+    Generates the header of an operator test.
+    """
     def generate(self):  
         self.__includeGuardEnter()
         self.__includes()
@@ -1275,7 +1304,10 @@ class OpTestHeaderGenerator(MethodGenerator, OpTestGenerator):
         self.doc.decreaseIndent()
         self.doc.line("};")       
             
-class OpTestImplGenerator(MethodGenerator, OpTestGenerator):    
+class OpTestImplGenerator(MethodGenerator, OpTestGenerator):  
+    """
+    Generates the implementation of an operator test.
+    """  
     def __includes(self):
         self.doc.line((
             '#include "stromx/{0}/test/{1}Test.h"'
@@ -1355,6 +1387,9 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
             f.write(self.doc.string())
         
 def generateMethodFiles(package, method):
+    """
+    Generates the operator and the operator tests for the given method.
+    """
     g = OpHeaderGenerator()
     g.save(package, method)
     

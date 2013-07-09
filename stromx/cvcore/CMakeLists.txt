@@ -10,7 +10,6 @@ configure_file (
 include_directories (
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${Boost_INCLUDE_DIRS}
 )
 
 set (SOURCES 

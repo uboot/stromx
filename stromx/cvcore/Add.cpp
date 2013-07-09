@@ -48,14 +48,14 @@ namespace stromx
                 {
                 case DDEPTH:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_ddepthParameter, *this);
                         m_ddepth = castedValue;
                     }
                     break;
                 case DATA_FLOW:
                     {
-                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
