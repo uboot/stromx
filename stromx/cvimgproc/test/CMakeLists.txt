@@ -12,6 +12,9 @@ include_directories (
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/affine.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/perspective.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -31,6 +34,8 @@ set (SOURCES
     ../AdaptiveThreshold.cpp
     ../Threshold.cpp
     ../WarpAffine.cpp
+    ../WarpPerspective.cpp
+    ../Undistort.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -49,6 +54,8 @@ set (SOURCES
     AdaptiveThresholdTest.cpp
     ThresholdTest.cpp
     WarpAffineTest.cpp
+    WarpPerspectiveTest.cpp
+    UndistortTest.cpp
     main.cpp
 )
 

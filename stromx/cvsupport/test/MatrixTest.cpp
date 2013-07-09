@@ -256,6 +256,18 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 2));
             CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 2));
         }
+        
+        void MatrixTest::testZeros()
+        {
+            Matrix matrix = Matrix::zeros(2, 3, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 0));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 1));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 1));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 0));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(0, 2));
+            CPPUNIT_ASSERT_EQUAL(int32_t(0), matrix.at<int32_t>(1, 2));
+        }
      
         void MatrixTest::tearDown ( void )
         {

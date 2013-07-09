@@ -17,6 +17,8 @@
 #include "AdaptiveThreshold.h"
 #include "Threshold.h"
 #include "WarpAffine.h"
+#include "WarpPerspective.h"
+#include "Undistort.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
@@ -40,4 +42,6 @@ void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
     registry.registerOperator(new AdaptiveThreshold);
     registry.registerOperator(new Threshold);
     registry.registerOperator(new WarpAffine);
+    registry.registerOperator(new WarpPerspective);
+    registry.registerOperator(new Undistort);
 }

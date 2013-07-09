@@ -91,6 +91,14 @@ pixelTypeCheck = document.Document(
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
     throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
     
+if(src1CastedData->depth() != src2CastedData->depth())
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
+""")
+pixelTypeDdepthCheck = document.Document(
+"""
+if(src1CastedData->numChannels() != src2CastedData->numChannels())
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
+    
 if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
     throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
 """)
@@ -102,9 +110,13 @@ srcImg1 = package.Argument(
 srcImg2 = package.Argument(
     "src2", "Source 2", cvtype.Mat(), datatype.Image()
 )
-dstImg = package.Argument(
+dstImgDdepth = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInDdepth,
     initOut = initOutDdepth
+)
+dstImg = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,
+    initOut = initOutCopy
 )
 descriptions = [
     package.EnumDescription("SAME", "Same as inputs", -1),
@@ -125,29 +137,51 @@ barbara_16bit = test.ImageFile("barbara.jpg", deepColor = True)
 barbara = test.ImageFile("barbara.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
 barbara_bw = test.ImageFile("barbara.jpg", grayscale = True)
-memory = test.ImageBuffer(1000000)
+memory = test.ImageBuffer(5000000)
+
+# absdiff
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna, barbara, memory],
+        [lenna_bw, barbara_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna_16bit, barbara_16bit, dt]
+    ]
+)
+absdiff = package.Method(
+    "absdiff", options = [manual, allocate]
+)
 
 # add
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg),
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImgDdepth),
      noArray, ddepth],
+    inputCheck = pixelTypeDdepthCheck,
     tests = [
         [lenna, barbara, memory, dt, dt],
         [lenna_bw, barbara_bw, memory, dt, dt],
         [lenna_16bit, barbara, memory, dt, 1]
-    ],
-    inputCheck = pixelTypeCheck
+    ]
 )
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImg1), package.Input(srcImg2),
-     package.Allocation(dstImg), noArray, ddepth],
+     package.Allocation(dstImgDdepth), noArray, ddepth],
+    inputCheck = pixelTypeDdepthCheck,
     tests = [
         [lenna_16bit, barbara_16bit, dt, dt, dt],
         [lenna_16bit, barbara, dt, dt, 2]
-    ],
-    inputCheck = pixelTypeCheck
+    ]
 )
 add = package.Method(
     "add", options = [manual, allocate]
@@ -156,6 +190,7 @@ add = package.Method(
 core = package.Package(
     "cvcore", 0, 0, 1,
     methods = [
+        absdiff,
         add
     ],
     functions = [

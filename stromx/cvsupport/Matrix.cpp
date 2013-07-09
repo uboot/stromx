@@ -206,5 +206,12 @@ namespace stromx
             int cvType = cvTypeFromValueType(valueType);
             return cvsupport::Matrix(cv::Mat::eye(rows, cols, cvType));
         }
+        
+        cvsupport::Matrix Matrix::zeros(const unsigned int rows, const unsigned int cols,
+                                        const ValueType valueType)
+        {
+            int cvType = cvTypeFromValueType(valueType);
+            return cvsupport::Matrix(cv::Mat::zeros(rows, cols, cvType));
+        }
     }
 }

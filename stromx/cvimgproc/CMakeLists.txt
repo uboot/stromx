@@ -32,6 +32,8 @@ set (SOURCES
     AdaptiveThreshold.cpp
     Threshold.cpp
     WarpAffine.cpp
+    WarpPerspective.cpp
+    Undistort.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

@@ -97,6 +97,15 @@ namespace stromx
                                          const unsigned int cols,
                                          const ValueType valueType);
             
+            
+            /** 
+            * Returns the zero matrix with the given number of \c rows and 
+            * \c cols and with values of type of \c valueType.
+            */
+            static cvsupport::Matrix zeros(const unsigned int rows, 
+                                           const unsigned int cols,
+                                           const ValueType valueType);
+            
         private:
             static const std::string TYPE;
             static const std::string PACKAGE;

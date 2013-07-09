@@ -15,6 +15,7 @@ include_directories (
 set (SOURCES 
     Cvcore.cpp
     Utility.cpp
+    Absdiff.cpp
     Add.cpp
 )
 

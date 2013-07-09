@@ -51,6 +51,7 @@ namespace stromx
             CPPUNIT_TEST (testPtrCast);
             CPPUNIT_TEST (testRefCast);
             CPPUNIT_TEST (testEye);
+            CPPUNIT_TEST (testZeros);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -90,6 +91,7 @@ namespace stromx
                 void testPtrCast();
                 void testRefCast();
                 void testEye();
+                void testZeros();
                 
             private:
                 const static stromx::runtime::Version VERSION;

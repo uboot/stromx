@@ -18,6 +18,8 @@
 #include <stromx/cvimgproc/AdaptiveThreshold.h>
 #include <stromx/cvimgproc/Threshold.h>
 #include <stromx/cvimgproc/WarpAffine.h>
+#include <stromx/cvimgproc/WarpPerspective.h>
+#include <stromx/cvimgproc/Undistort.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -44,4 +46,6 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<AdaptiveThreshold>("AdaptiveThreshold");
     stromx::python::exportOperatorKernel<Threshold>("Threshold");
     stromx::python::exportOperatorKernel<WarpAffine>("WarpAffine");
+    stromx::python::exportOperatorKernel<WarpPerspective>("WarpPerspective");
+    stromx::python::exportOperatorKernel<Undistort>("Undistort");
 }

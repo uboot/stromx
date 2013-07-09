@@ -14,8 +14,10 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/barbara.jpg DESTINATION ${CMAKE_CURRENT_BI
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set (SOURCES 
+    ../Absdiff.cpp
     ../Add.cpp
     ../Utility.cpp
+    AbsdiffTest.cpp
     AddTest.cpp
     main.cpp
 )

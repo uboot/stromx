@@ -1,6 +1,7 @@
 #include <boost/python.hpp>
 #include <stromx/runtime/Registry.h>
 #include <stromx/cvcore/Cvcore.h>
+#include <stromx/cvcore/Absdiff.h>
 #include <stromx/cvcore/Add.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
@@ -11,5 +12,6 @@ BOOST_PYTHON_MODULE(libcvcore)
 {
     def("registerCvcore", stromxRegisterCvcore);
     
+    stromx::python::exportOperatorKernel<Absdiff>("Absdiff");
     stromx::python::exportOperatorKernel<Add>("Add");
 }

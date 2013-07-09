@@ -334,13 +334,31 @@ affineM = package.MatrixParameter(
     default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)", rows = 2,
     cols = 3
 )
+perspectiveM = package.MatrixParameter(
+    "affineM", "3x3 perspective transformation", datatype.Matrix(),
+    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT)", rows = 3,
+    cols = 3
+)
+cameraMatrix = package.MatrixParameter(
+    "cameraMatrix", "3x3 camera matrix", datatype.Matrix(),
+    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT)", rows = 3,
+    cols = 3
+)
+distCoeffs = package.MatrixParameter(
+    "distCoeffs", "4x1 distortion coefficients", datatype.Matrix(),
+    default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT)", 
+    rows = 4, cols = 1
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
 affine_transformation = test.MatrixFile("affine.npy")
+perspective_transformation = test.MatrixFile("perspective.npy")
+camera_matrix = test.MatrixFile("camera_matrix.npy")
+dist_coeffs = test.MatrixFile("dist_coeffs.npy")
 memory = test.ImageBuffer(1000000)
-bigMemory = test.ImageBuffer(10000000)
+bigMemory = test.ImageBuffer(10000000) 
 
 # bilateralFilter
 manual = package.Option(
@@ -771,6 +789,50 @@ warpAffine = package.Method(
     "warpAffine", options = [manual, allocate]
 )
 
+# warpPerspective
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg), package.Output(dstImgDsize), perspectiveM, 
+     package.Size(dsizex, dsizey)],
+    tests = [
+        [lenna_bw, memory, perspective_transformation, (400, 500)],
+        [lenna, memory, dt, (400, 500)]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImg), package.Allocation(dstImgDsize), perspectiveM, 
+     package.Size(dsizex, dsizey)],
+    tests = [
+        [lenna, dt, perspective_transformation, (400, 500)]
+    ]
+)
+warpPerspective = package.Method(
+    "warpPerspective", options = [manual, allocate]
+)
+
+# undistort
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg), package.Output(dstImg), cameraMatrix,
+     distCoeffs],
+    tests = [
+        [lenna_bw, memory, camera_matrix, dist_coeffs],
+        [lenna, memory, dt, dt]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",  
+    [package.Input(srcImg), package.Allocation(dstImg), cameraMatrix,
+     distCoeffs],
+    tests = [
+        [lenna, dt, camera_matrix, dist_coeffs]
+    ]
+)
+undistort = package.Method(
+    "undistort", options = [manual, allocate]
+)
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -790,7 +852,9 @@ imgproc = package.Package(
         resize,
         adaptiveThreshold,
         threshold,
-        warpAffine
+        warpAffine,
+        warpPerspective,
+        undistort
     ],
     functions = [
         checkEnumValue,
@@ -799,7 +863,10 @@ imgproc = package.Package(
     ],
     testFiles = [
         "lenna.jpg",
-        "affine.npy"
+        "affine.npy",
+        "perspective.npy",
+        "camera_matrix.npy",
+        "dist_coeffs.npy"
     ]
 )
 
