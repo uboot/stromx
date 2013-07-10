@@ -12,14 +12,16 @@
 #
 #    Optionally add:
 #    target_link_libraries(MY_TARGET_NAME ${stromx_CVSUPPORT_LIB})
-#    target_link_libraries(MY_TARGET_NAME ${stromx_IMGPROC_LIB})
+#    target_link_libraries(MY_TARGET_NAME ${stromx_CVCORE_LIB})
+#    target_link_libraries(MY_TARGET_NAME ${stromx_CVIMGPROC_LIB})
 #    target_link_libraries(MY_TARGET_NAME ${stromx_EXAMPLE_LIB})
 #
 #    This file will define the following variables:
 #      - stromx_RUNTIME_LIB          : The stromx runtime lib
-#      - stromx_CVSUPPORT_LIB          : Image utilities package based on OpenCV
-#      - stromx_IMGPROC_LIB          : The wrappers for the OpenCV 'imgproc' module
 #      - stromx_EXAMPLE_LIB          : The stromx example operators package
+#      - stromx_CVSUPPORT_LIB        : Image utilities package based on OpenCV
+#      - stromx_CVCORE_LIB           : The wrappers for the OpenCV 'core' module
+#      - stromx_CVIMGPROC_LIB        : The wrappers for the OpenCV 'imgproc' module
 #      - stromx_LIB_DIR              : The directory where lib files are. Calling LINK_DIRECTORIES
 #                                      with this path is NOT needed.
 #      - stromx_INCLUDE_DIRS         : The stromx include directories.
@@ -52,14 +54,16 @@ link_directories(${stromx_LIB_DIR})
 set(stromx_LIBS "")
 if(WIN32)
     set(stromx_RUNTIME_LIB debug stromx_runtime.lib optimized stromx_runtime.lib)
-    set(stromx_IMGPROC_LIB debug stromx_imgproc.lib optimized stromx_imgproc.lib)
-    set(stromx_CVSUPPORT_LIB debug stromx_imgutil.lib optimized stromx_imgutil.lib)
     set(stromx_EXAMPLE_LIB debug stromx_example.lib optimized stromx_example.lib)
+    set(stromx_CVCORE_LIB debug stromx_cvcore.lib optimized stromx_cvcore.lib)
+    set(stromx_CVIMGPROC_LIB debug stromx_cvimgproc.lib optimized stromx_cvimgproc.lib)
+    set(stromx_CVSUPPORT_LIB debug stromx_cvsupport.lib optimized stromx_cvsupport.lib)
 else()
     set(stromx_RUNTIME_LIB stromx_runtime)
-    set(stromx_IMGPROC_LIB stromx_imgproc)
-    set(stromx_CVSUPPORT_LIB stromx_imgutil)
     set(stromx_EXAMPLE_LIB stromx_example)
+    set(stromx_CVCORE_LIB stromx_cvcore)
+    set(stromx_CVIMGPROC_LIB stromx_cvimgproc)
+    set(stromx_CVSUPPORT_LIB stromx_cvsupport)
 endif()
 
 # ======================================================

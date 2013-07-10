@@ -30,7 +30,7 @@
             #define STROMX_CVSUPPORT_API __declspec(dllexport)
         #else
             #define STROMX_CVSUPPORT_API __declspec(dllimport)
-        #endif // stromx_imgutil_EXPORTS
+        #endif // stromx_cvsupport_EXPORTS
     #endif // STROMX_CVSUPPORT_STATIC
 #else
     #define STROMX_CVSUPPORT_API

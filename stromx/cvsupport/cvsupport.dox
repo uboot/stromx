@@ -1,4 +1,4 @@
 /**
-\namespace stromx::\bcvimgutil\b
+\namespace stromx::cvsupport
 \brief %Image utility types and functions
 */
