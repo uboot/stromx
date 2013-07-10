@@ -38,7 +38,8 @@ namespace stromx
         STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Image& image);
         
         /** Returns an OpenCV matrix header for \c matrix. */
-        STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
+        STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix,
+                                                  const unsigned int numChannels = 1);
         
         /** 
          * Computes the stromx pixel type of the input type \c inPixelType 

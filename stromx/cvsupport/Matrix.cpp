@@ -18,10 +18,12 @@
 #include <boost/regex.hpp>
 #include <opencv2/core/core.hpp>
 #include <fstream>
-#include "stromx/cvsupport/Matrix.h"
-#include "stromx/cvsupport/Utilities.h"
+#include <stromx/runtime/Exception.h>
 #include <stromx/runtime/InputProvider.h>
 #include <stromx/runtime/OutputProvider.h>
+
+#include "stromx/cvsupport/Matrix.h"
+#include "stromx/cvsupport/Utilities.h"
 
 namespace stromx
 {
@@ -132,25 +134,29 @@ namespace stromx
                              (uint8_t*)(m_matrix->data), valueType);
         }
         
-        int Matrix::cvTypeFromValueType(const runtime::Matrix::ValueType valueType)
+        int Matrix::cvTypeFromValueType(const runtime::Matrix::ValueType valueType,
+                                        const unsigned int numChannels)
         {
+            if(numChannels == 0)
+                throw runtime::WrongArgument("Number of channels must be at least 1.");
+            
             switch(valueType)
             {
             case runtime::Matrix::NONE:
             case runtime::Matrix::UINT_8:
-                return CV_8UC1;
+                return CV_8UC(numChannels);
             case runtime::Matrix::INT_8:
-                return CV_8SC1;
+                return CV_8SC(numChannels);
             case runtime::Matrix::UINT_16:
-                return CV_16UC1;
+                return CV_16UC(numChannels);
             case runtime::Matrix::INT_16:
-                return CV_16SC1;
+                return CV_16SC(numChannels);
             case runtime::Matrix::INT_32:
-                return CV_32SC1;
+                return CV_32SC(numChannels);
             case runtime::Matrix::FLOAT:
-                return CV_32FC1;
+                return CV_32FC(numChannels);
             case runtime::Matrix::DOUBLE:
-                return CV_64FC1;
+                return CV_64FC(numChannels);
             default:
                 throw runtime::WrongArgument("Unsupported value type.");  
             }

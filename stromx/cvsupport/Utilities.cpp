@@ -36,12 +36,15 @@ namespace stromx
             return cv::Mat(image.height(), image.width(), cvType, data, image.stride());
         }
         
-        cv::Mat getOpenCvMat(const runtime::Matrix& matrix)
+        cv::Mat getOpenCvMat(const runtime::Matrix& matrix, const unsigned int numChannels)
         {
-            int cvType = Matrix::cvTypeFromValueType(matrix.valueType());
+            if(matrix.cols() % numChannels != 0)
+                throw WrongArgument("Number of input matrix rows must be multiple of the number of output channels.");
+            
+            int cvType = Matrix::cvTypeFromValueType(matrix.valueType(), numChannels);
             uint8_t* data = const_cast<uint8_t*>(matrix.data());
             
-            return cv::Mat(matrix.rows(), matrix.cols(), cvType, data, matrix.stride());
+            return cv::Mat(matrix.rows(), matrix.cols() / numChannels, cvType, data, matrix.stride());
         }
         
         runtime::Image::PixelType computeOutPixelType(const int outDdepth,

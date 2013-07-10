@@ -35,7 +35,8 @@ namespace stromx
         /** \brief %Matrix implementation based on OpenCV matrices. */
         class STROMX_CVSUPPORT_API Matrix : public runtime::MatrixWrapper
         {
-            friend STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix);
+            friend STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix,
+                                                             const unsigned int numChannels);
         
         public:
             
@@ -111,7 +112,8 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
             
-            static int cvTypeFromValueType(const runtime::Matrix::ValueType valueType);
+            static int cvTypeFromValueType(const runtime::Matrix::ValueType valueType,
+                                           const unsigned int numChannels = 1);
             static runtime::Matrix::ValueType valueTypeFromCvType(const int cvType);
             
             void copy(const stromx::runtime::Matrix & matrix);

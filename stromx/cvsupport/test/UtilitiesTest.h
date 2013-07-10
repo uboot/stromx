@@ -32,6 +32,7 @@ namespace stromx
             CPPUNIT_TEST (testComputeOutPixelTypeSame);
             CPPUNIT_TEST (testComputeOutPixelType8Bit);
             CPPUNIT_TEST (testComputeOutPixelType16Bit);
+            CPPUNIT_TEST (getOpenCvMat3Channels);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -44,6 +45,7 @@ namespace stromx
                 void testComputeOutPixelTypeSame();
                 void testComputeOutPixelType8Bit();
                 void testComputeOutPixelType16Bit();
+                void getOpenCvMat3Channels();
                 
             private:
                 runtime::Factory* m_factory;
