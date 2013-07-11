@@ -74,14 +74,14 @@ namespace stromx
                     break;
                 case FX:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_fxParameter, *this);
                         m_fx = castedValue;
                     }
                     break;
                 case FY:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_fyParameter, *this);
                         m_fy = castedValue;
                     }
@@ -142,12 +142,12 @@ namespace stromx
                     m_dsizeyParameter->setTitle("Size Y");
                     parameters.push_back(m_dsizeyParameter);
                     
-                    m_fxParameter = new runtime::NumericParameter<runtime::Double>(FX);
+                    m_fxParameter = new runtime::NumericParameter<runtime::Float64>(FX);
                     m_fxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_fxParameter->setTitle("Scale X");
                     parameters.push_back(m_fxParameter);
                     
-                    m_fyParameter = new runtime::NumericParameter<runtime::Double>(FY);
+                    m_fyParameter = new runtime::NumericParameter<runtime::Float64>(FY);
                     m_fyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_fyParameter->setTitle("Scale Y");
                     parameters.push_back(m_fyParameter);
@@ -173,12 +173,12 @@ namespace stromx
                     m_dsizeyParameter->setTitle("Size Y");
                     parameters.push_back(m_dsizeyParameter);
                     
-                    m_fxParameter = new runtime::NumericParameter<runtime::Double>(FX);
+                    m_fxParameter = new runtime::NumericParameter<runtime::Float64>(FX);
                     m_fxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_fxParameter->setTitle("Scale X");
                     parameters.push_back(m_fxParameter);
                     
-                    m_fyParameter = new runtime::NumericParameter<runtime::Double>(FY);
+                    m_fyParameter = new runtime::NumericParameter<runtime::Float64>(FY);
                     m_fyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_fyParameter->setTitle("Scale Y");
                     parameters.push_back(m_fyParameter);

@@ -50,13 +50,13 @@ namespace stromx
                 switch(id)
                 {
                 case RED:
-                    m_red = stromx::runtime::data_cast<Double>(value);
+                    m_red = stromx::runtime::data_cast<Float64>(value);
                     break;
                 case GREEN:
-                    m_green = stromx::runtime::data_cast<Double>(value);
+                    m_green = stromx::runtime::data_cast<Float64>(value);
                     break;
                 case BLUE:
-                    m_blue = stromx::runtime::data_cast<Double>(value);
+                    m_blue = stromx::runtime::data_cast<Float64>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -158,17 +158,17 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            NumericParameter<Double>* red = new NumericParameter<Double>(RED, Double(0.0), Double::MAX);
+            NumericParameter<Float64>* red = new NumericParameter<Float64>(RED, Float64(0.0), Float64::MAX);
             red->setTitle("Red");
             red->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(red);
             
-            NumericParameter<Double>* green = new NumericParameter<Double>(GREEN, Double(0.0), Double::MAX);
+            NumericParameter<Float64>* green = new NumericParameter<Float64>(GREEN, Float64(0.0), Float64::MAX);
             green->setTitle("Green");
             green->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(green);
             
-            NumericParameter<Double>* blue = new NumericParameter<Double>(BLUE, Double(0.0), Double::MAX);
+            NumericParameter<Float64>* blue = new NumericParameter<Float64>(BLUE, Float64(0.0), Float64::MAX);
             blue->setTitle("Blue");
             blue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(blue);

@@ -49,8 +49,8 @@ namespace stromx
         private:
             static const std::string TYPE;
             
-            runtime::Double m_threshold1;
-            runtime::Double m_threshold2;
+            runtime::Float64 m_threshold1;
+            runtime::Float64 m_threshold2;
         };
     }
 }

@@ -61,14 +61,14 @@ namespace stromx
                     break;
                 case SIGMA_COLOR:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_sigmaColorParameter, *this);
                         m_sigmaColor = castedValue;
                     }
                     break;
                 case SIGMA_SPACE:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_sigmaSpaceParameter, *this);
                         m_sigmaSpace = castedValue;
                     }
@@ -117,12 +117,12 @@ namespace stromx
                     m_dParameter->setTitle("Pixel neigbourhood diameter");
                     parameters.push_back(m_dParameter);
                     
-                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_COLOR);
+                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaColorParameter->setTitle("Sigma color");
                     parameters.push_back(m_sigmaColorParameter);
                     
-                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_SPACE);
+                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaSpaceParameter->setTitle("Sigma space");
                     parameters.push_back(m_sigmaSpaceParameter);
@@ -136,12 +136,12 @@ namespace stromx
                     m_dParameter->setTitle("Pixel neigbourhood diameter");
                     parameters.push_back(m_dParameter);
                     
-                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_COLOR);
+                    m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaColorParameter->setTitle("Sigma color");
                     parameters.push_back(m_sigmaColorParameter);
                     
-                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_SPACE);
+                    m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaSpaceParameter->setTitle("Sigma space");
                     parameters.push_back(m_sigmaSpaceParameter);

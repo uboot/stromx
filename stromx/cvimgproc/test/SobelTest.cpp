@@ -33,8 +33,8 @@ namespace stromx
             runtime::UInt32 dx(1);
             runtime::UInt32 dy(1);
             runtime::UInt32 ksize(1);
-            runtime::Double scale(1);
-            runtime::Double delta(0);
+            runtime::Float64 scale(1);
+            runtime::Float64 delta(0);
             
             m_operator->setInputData(Sobel::SRC, src);
             m_operator->setInputData(Sobel::DST, dst);
@@ -63,8 +63,8 @@ namespace stromx
             runtime::UInt32 dx(2);
             runtime::UInt32 dy(0);
             runtime::UInt32 ksize(3);
-            runtime::Double scale(1);
-            runtime::Double delta(0);
+            runtime::Float64 scale(1);
+            runtime::Float64 delta(0);
             
             m_operator->setInputData(Sobel::SRC, src);
             m_operator->setInputData(Sobel::DST, dst);
@@ -91,7 +91,7 @@ namespace stromx
             runtime::Enum ddepth(0);
             runtime::UInt32 dy(2);
             runtime::UInt32 ksize(5);
-            runtime::Double scale(2);
+            runtime::Float64 scale(2);
             
             m_operator->setInputData(Sobel::SRC, src);
             m_operator->setParameter(Sobel::DDEPTH, ddepth);
@@ -113,7 +113,7 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum ddepth(2);
-            runtime::Double scale(100);
+            runtime::Float64 scale(100);
             
             m_operator->setInputData(Sobel::SRC, src);
             m_operator->setParameter(Sobel::DDEPTH, ddepth);

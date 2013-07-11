@@ -47,10 +47,10 @@ namespace stromx
                 switch(id)
                 {
                 case THRESHOLD_1:
-                    m_threshold1 = stromx::runtime::data_cast<Double>(value);
+                    m_threshold1 = stromx::runtime::data_cast<Float64>(value);
                     break;
                 case THRESHOLD_2:
-                    m_threshold2 = stromx::runtime::data_cast<Double>(value);
+                    m_threshold2 = stromx::runtime::data_cast<Float64>(value);
                     break;
                 default:
                     ImageFilter::setParameter(id, value);
@@ -96,12 +96,12 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* threshold1 = new NumericParameter<Double>(THRESHOLD_1);
+            Parameter* threshold1 = new NumericParameter<Float64>(THRESHOLD_1);
             threshold1->setTitle("Threshold 1");
             threshold1->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold1);
             
-            Parameter* threshold2 = new NumericParameter<Double>(THRESHOLD_2);
+            Parameter* threshold2 = new NumericParameter<Float64>(THRESHOLD_2);
             threshold2->setTitle("Threshold 2");
             threshold2->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold2);

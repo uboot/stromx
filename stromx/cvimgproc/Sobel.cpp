@@ -70,7 +70,7 @@ namespace stromx
                     break;
                 case DELTA:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
                     }
@@ -100,7 +100,7 @@ namespace stromx
                     break;
                 case SCALE:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_scaleParameter, *this);
                         m_scale = castedValue;
                     }
@@ -170,12 +170,12 @@ namespace stromx
                     m_ksizeParameter->setStep(runtime::UInt32(2));
                     parameters.push_back(m_ksizeParameter);
                     
-                    m_scaleParameter = new runtime::NumericParameter<runtime::Double>(SCALE);
+                    m_scaleParameter = new runtime::NumericParameter<runtime::Float64>(SCALE);
                     m_scaleParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_scaleParameter->setTitle("Scale");
                     parameters.push_back(m_scaleParameter);
                     
-                    m_deltaParameter = new runtime::NumericParameter<runtime::Double>(DELTA);
+                    m_deltaParameter = new runtime::NumericParameter<runtime::Float64>(DELTA);
                     m_deltaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_deltaParameter->setTitle("Delta");
                     parameters.push_back(m_deltaParameter);
@@ -210,12 +210,12 @@ namespace stromx
                     m_ksizeParameter->setStep(runtime::UInt32(2));
                     parameters.push_back(m_ksizeParameter);
                     
-                    m_scaleParameter = new runtime::NumericParameter<runtime::Double>(SCALE);
+                    m_scaleParameter = new runtime::NumericParameter<runtime::Float64>(SCALE);
                     m_scaleParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_scaleParameter->setTitle("Scale");
                     parameters.push_back(m_scaleParameter);
                     
-                    m_deltaParameter = new runtime::NumericParameter<runtime::Double>(DELTA);
+                    m_deltaParameter = new runtime::NumericParameter<runtime::Float64>(DELTA);
                     m_deltaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_deltaParameter->setTitle("Delta");
                     parameters.push_back(m_deltaParameter);

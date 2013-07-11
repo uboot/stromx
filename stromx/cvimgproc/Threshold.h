@@ -63,12 +63,12 @@ namespace stromx
             
             int convertThresholdType(const runtime::Enum & value);
             
-            runtime::Double m_maxval;
-            runtime::Double m_threshold;
+            runtime::Float64 m_maxval;
+            runtime::Float64 m_threshold;
             runtime::Enum m_thresholdType;
             runtime::Enum m_dataFlow;
-            runtime::NumericParameter<runtime::Double>* m_maxvalParameter;
-            runtime::NumericParameter<runtime::Double>* m_thresholdParameter;
+            runtime::NumericParameter<runtime::Float64>* m_maxvalParameter;
+            runtime::NumericParameter<runtime::Float64>* m_thresholdParameter;
             runtime::EnumParameter* m_thresholdTypeParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };

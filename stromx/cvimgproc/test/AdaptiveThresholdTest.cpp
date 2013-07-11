@@ -46,7 +46,7 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::Double maxval(128);
+            runtime::Float64 maxval(128);
             runtime::Enum adaptiveMethod(1);
             runtime::Enum thresholdType(1);
             runtime::UInt32 blockSize(5);
@@ -71,7 +71,7 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::Double maxval(200);
+            runtime::Float64 maxval(200);
             runtime::Enum adaptiveMethod(1);
             runtime::Enum thresholdType(0);
             runtime::UInt32 blockSize(9);
@@ -95,7 +95,7 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::Double maxval(80);
+            runtime::Float64 maxval(80);
             runtime::Enum adaptiveMethod(0);
             runtime::Enum thresholdType(1);
             runtime::UInt32 blockSize(7);

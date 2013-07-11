@@ -54,15 +54,15 @@ class UInt32(DataType):
     def variant(self):
         return "runtime::DataVariant::UINT_32"
         
-class Double(DataType):
+class Float64(DataType):
     """
-    Stromx runtime::Double type.
+    Stromx runtime::Float64 type.
     """
     def typeId(self):
-        return "runtime::Double"
+        return "runtime::Float64"
         
     def variant(self):
-        return "runtime::DataVariant::DOUBLE"
+        return "runtime::DataVariant::FLOAT64"
         
 class Enum(DataType):
     """

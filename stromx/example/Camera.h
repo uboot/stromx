@@ -133,9 +133,9 @@ namespace stromx
             unsigned int m_imageHeight;
             unsigned int m_imageDepth;
             runtime::UInt32 m_exposure;
-            runtime::Double m_wbRed;
-            runtime::Double m_wbGreen;
-            runtime::Double m_wbBlue;
+            runtime::Float64 m_wbRed;
+            runtime::Float64 m_wbGreen;
+            runtime::Float64 m_wbBlue;
             
             bool m_isFirstInitialization;
         };

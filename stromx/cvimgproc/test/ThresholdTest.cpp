@@ -46,7 +46,7 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::Double threshold(128);
+            runtime::Float64 threshold(128);
             runtime::Enum thresholdType(2);
             
             m_operator->setInputData(Threshold::SRC, src);

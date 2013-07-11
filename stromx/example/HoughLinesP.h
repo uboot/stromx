@@ -65,11 +65,11 @@ namespace stromx
             static const runtime::Version VERSION;
             static const std::string TYPE;
             
-            runtime::Double m_rho;
-            runtime::Double m_theta;
+            runtime::Float64 m_rho;
+            runtime::Float64 m_theta;
             runtime::UInt32 m_threshold;
-            runtime::Double m_minLineLength;
-            runtime::Double m_maxLineGap;
+            runtime::Float64 m_minLineLength;
+            runtime::Float64 m_maxLineGap;
         };
     }
 }

@@ -75,14 +75,14 @@ namespace stromx
                     break;
                 case SIGMA_X:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_sigmaXParameter, *this);
                         m_sigmaX = castedValue;
                     }
                     break;
                 case SIGMA_Y:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_sigmaYParameter, *this);
                         m_sigmaY = castedValue;
                     }
@@ -139,12 +139,12 @@ namespace stromx
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
-                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_X);
+                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaXParameter->setTitle("Sigma X");
                     parameters.push_back(m_sigmaXParameter);
                     
-                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_Y);
+                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaYParameter->setTitle("Sigma Y");
                     parameters.push_back(m_sigmaYParameter);
@@ -165,12 +165,12 @@ namespace stromx
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
-                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_X);
+                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaXParameter->setTitle("Sigma X");
                     parameters.push_back(m_sigmaXParameter);
                     
-                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_Y);
+                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaYParameter->setTitle("Sigma Y");
                     parameters.push_back(m_sigmaYParameter);
@@ -191,12 +191,12 @@ namespace stromx
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
-                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_X);
+                    m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaXParameter->setTitle("Sigma X");
                     parameters.push_back(m_sigmaXParameter);
                     
-                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Double>(SIGMA_Y);
+                    m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_sigmaYParameter->setTitle("Sigma Y");
                     parameters.push_back(m_sigmaYParameter);

@@ -49,8 +49,8 @@ namespace stromx
             DataContainer destination(new Image(image->width(), image->height(), runtime::Image::BAYERBG_8));
             m_operator->setInputData(Canny::DESTINATION, destination);
             
-            m_operator->setParameter(Canny::THRESHOLD_1, Double(50));
-            m_operator->setParameter(Canny::THRESHOLD_2, Double(250));
+            m_operator->setParameter(Canny::THRESHOLD_1, Float64(50));
+            m_operator->setParameter(Canny::THRESHOLD_2, Float64(250));
             
             runtime::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
             
@@ -72,8 +72,8 @@ namespace stromx
             DataContainer source(image);
             m_operator->setInputData(Canny::SOURCE, source);
             
-            m_operator->setParameter(Canny::THRESHOLD_1, Double(50));
-            m_operator->setParameter(Canny::THRESHOLD_2, Double(250));
+            m_operator->setParameter(Canny::THRESHOLD_1, Float64(50));
+            m_operator->setParameter(Canny::THRESHOLD_2, Float64(250));
             
             runtime::DataContainer result = m_operator->getOutputData(Canny::OUTPUT);
             

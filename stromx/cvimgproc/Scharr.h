@@ -63,16 +63,16 @@ namespace stromx
             int convertDdepth(const runtime::Enum & value);
             
             runtime::Enum m_ddepth;
-            runtime::Double m_delta;
+            runtime::Float64 m_delta;
             runtime::UInt32 m_dx;
             runtime::UInt32 m_dy;
-            runtime::Double m_scale;
+            runtime::Float64 m_scale;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_ddepthParameter;
-            runtime::NumericParameter<runtime::Double>* m_deltaParameter;
+            runtime::NumericParameter<runtime::Float64>* m_deltaParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dxParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dyParameter;
-            runtime::NumericParameter<runtime::Double>* m_scaleParameter;
+            runtime::NumericParameter<runtime::Float64>* m_scaleParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

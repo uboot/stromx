@@ -30,8 +30,8 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::UInt32 d(9);
-            runtime::Double sigmaColor(100);
-            runtime::Double sigmaSpace(75);
+            runtime::Float64 sigmaColor(100);
+            runtime::Float64 sigmaSpace(75);
             
             m_operator->setInputData(BilateralFilter::SRC, src);
             m_operator->setInputData(BilateralFilter::DST, dst);
@@ -69,8 +69,8 @@ namespace stromx
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::UInt32 d(9);
-            runtime::Double sigmaColor(100);
-            runtime::Double sigmaSpace(75);
+            runtime::Float64 sigmaColor(100);
+            runtime::Float64 sigmaSpace(75);
             
             m_operator->setInputData(BilateralFilter::SRC, src);
             m_operator->setParameter(BilateralFilter::D, d);

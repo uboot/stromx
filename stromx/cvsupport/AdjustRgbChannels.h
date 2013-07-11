@@ -66,9 +66,9 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION;                         
             
-            runtime::Double m_red;
-            runtime::Double m_green;
-            runtime::Double m_blue;
+            runtime::Float64 m_red;
+            runtime::Float64 m_green;
+            runtime::Float64 m_blue;
         };
     }
 }

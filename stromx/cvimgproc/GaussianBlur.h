@@ -56,13 +56,13 @@ namespace stromx
             
             runtime::UInt32 m_ksizex;
             runtime::UInt32 m_ksizey;
-            runtime::Double m_sigmaX;
-            runtime::Double m_sigmaY;
+            runtime::Float64 m_sigmaX;
+            runtime::Float64 m_sigmaY;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
-            runtime::NumericParameter<runtime::Double>* m_sigmaXParameter;
-            runtime::NumericParameter<runtime::Double>* m_sigmaYParameter;
+            runtime::NumericParameter<runtime::Float64>* m_sigmaXParameter;
+            runtime::NumericParameter<runtime::Float64>* m_sigmaYParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

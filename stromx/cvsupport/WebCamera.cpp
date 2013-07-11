@@ -54,7 +54,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_FPS) >= 0.0)
             {
-                runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::FLOAT64);
                 frameRate->setTitle("Frame rate");
                 frameRate->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
                 parameters.push_back(frameRate);
@@ -62,7 +62,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_BRIGHTNESS) >= 0.0)
             {
-                runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::FLOAT64);
                 brightness->setTitle("Brightness");
                 brightness->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(brightness);
@@ -70,7 +70,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_CONTRAST) >= 0.0)
             {
-                runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::FLOAT64);
                 contrast->setTitle("Contrast");
                 contrast->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(contrast);
@@ -78,7 +78,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_SATURATION) >= 0.0)
             {
-                runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::FLOAT64);
                 saturation->setTitle("Saturation");
                 saturation->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(saturation);
@@ -86,7 +86,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_HUE) >= 0.0)
             {
-                runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::FLOAT64);
                 hue->setTitle("Hue");
                 hue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(hue);
@@ -94,7 +94,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_GAIN) >= 0.0)
             {
-                runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::FLOAT64);
                 gain->setTitle("Gain");
                 gain->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(gain);
@@ -102,7 +102,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_EXPOSURE) >= 0.0)
             {
-                runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::DOUBLE);
+                runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::FLOAT64);
                 exposure->setTitle("Exposure");
                 exposure->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(exposure);
@@ -130,43 +130,43 @@ namespace stromx
                 {
                     case FRAMERATE:
                     {
-                        runtime::Double frameRate = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 frameRate = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_FPS, frameRate);
                         break;
                     }
                     case BRIGHTNESS:
                     {
-                        runtime::Double brightness = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 brightness = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_BRIGHTNESS, brightness);
                         break;
                     }
                     case CONTRAST:
                     {
-                        runtime::Double contrast = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 contrast = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_CONTRAST, contrast);
                         break;
                     }
                     case SATURATION:
                     {
-                        runtime::Double saturation = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 saturation = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_SATURATION, saturation);
                         break;
                     }
                     case HUE:
                     {
-                        runtime::Double hue = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 hue = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_HUE, hue);
                         break;
                     }
                     case GAIN:
                     {
-                        runtime::Double gain = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 gain = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_GAIN, gain);
                         break;
                     }
                     case EXPOSURE:
                     {
-                        runtime::Double exposure = runtime::data_cast<runtime::Double>(value);
+                        runtime::Float64 exposure = runtime::data_cast<runtime::Float64>(value);
                         m_webcam->set(CV_CAP_PROP_EXPOSURE, exposure);
                         break;
                     }
@@ -185,19 +185,19 @@ namespace stromx
             switch(id)
             {
                 case FRAMERATE:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_FPS));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_FPS));
                 case BRIGHTNESS:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_BRIGHTNESS));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_BRIGHTNESS));
                 case CONTRAST:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_CONTRAST));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_CONTRAST));
                 case SATURATION:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_SATURATION));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_SATURATION));
                 case HUE:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_HUE));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_HUE));
                 case GAIN:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_GAIN));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_GAIN));
                 case EXPOSURE:
-                    return runtime::Double(m_webcam->get(CV_CAP_PROP_EXPOSURE));
+                    return runtime::Float64(m_webcam->get(CV_CAP_PROP_EXPOSURE));
                 default:
                     throw runtime::WrongParameterId(id,*this);
             }

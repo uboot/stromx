@@ -56,39 +56,39 @@ namespace stromx
                 switch(id)
                 {
                 case RHO:
-                    if(data_cast<Double>(value) <= 0.0)
+                    if(data_cast<Float64>(value) <= 0.0)
                     {
                         throw WrongParameterValue(parameter(RHO), *this,
                                                   "Rho must be positive.");
                     }
-                    m_rho = data_cast<Double>(value);
+                    m_rho = data_cast<Float64>(value);
                     break;
                 case THETA:
-                    if(data_cast<Double>(value) <= 0.0)
+                    if(data_cast<Float64>(value) <= 0.0)
                     {
                         throw WrongParameterValue(parameter(THETA), *this,
                                                   "Theta must be positive.");
                     }
-                    m_theta = data_cast<Double>(value);
+                    m_theta = data_cast<Float64>(value);
                     break;
                 case THRESHOLD:
                     m_threshold = data_cast<UInt32>(value);
                     break;
                 case MIN_LINE_LENGTH:
-                    if(data_cast<Double>(value) < 0.0)
+                    if(data_cast<Float64>(value) < 0.0)
                     {
                         throw WrongParameterValue(parameter(MIN_LINE_LENGTH), *this,
                                                   "Minimal line length must not be negative.");
                     }
-                    m_minLineLength = data_cast<Double>(value);
+                    m_minLineLength = data_cast<Float64>(value);
                     break;
                 case MAX_LINE_GAP:
-                    if(data_cast<Double>(value) < 0.0)
+                    if(data_cast<Float64>(value) < 0.0)
                     {
                         throw WrongParameterValue(parameter(MAX_LINE_GAP), *this,
                                                   "Maximal line gap must not be negative.");
                     }
-                    m_maxLineGap = data_cast<Double>(value);
+                    m_maxLineGap = data_cast<Float64>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -156,7 +156,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* lines = new Description(LINES, DataVariant::DOUBLE_MATRIX);
+            Description* lines = new Description(LINES, DataVariant::FLOAT64_MATRIX);
             lines->setTitle("Lines");
             outputs.push_back(lines);
             
@@ -167,15 +167,15 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            NumericParameter<runtime::Double>* rho = new NumericParameter<runtime::Double>(RHO);
-            rho->setMin(Double(0.0));
+            NumericParameter<runtime::Float64>* rho = new NumericParameter<runtime::Float64>(RHO);
+            rho->setMin(Float64(0.0));
             rho->setTitle("Rho");
             rho->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(rho);
             
-            NumericParameter<runtime::Double>* theta = new NumericParameter<runtime::Double>(THETA);
-            theta->setMin(Double(0.0));
-            theta->setStep(Double(0.1));
+            NumericParameter<runtime::Float64>* theta = new NumericParameter<runtime::Float64>(THETA);
+            theta->setMin(Float64(0.0));
+            theta->setStep(Float64(0.1));
             theta->setTitle("Theta");
             theta->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(theta);
@@ -185,14 +185,14 @@ namespace stromx
             threshold->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(threshold);
             
-            NumericParameter<runtime::Double>* minLineLength = new NumericParameter<runtime::Double>(MIN_LINE_LENGTH);
-            minLineLength->setMin(Double(0.0));
+            NumericParameter<runtime::Float64>* minLineLength = new NumericParameter<runtime::Float64>(MIN_LINE_LENGTH);
+            minLineLength->setMin(Float64(0.0));
             minLineLength->setTitle("Minimal line length");
             minLineLength->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(minLineLength);
             
-            NumericParameter<runtime::Double>* maxLineGap = new NumericParameter<runtime::Double>(MAX_LINE_GAP);
-            maxLineGap->setMin(Double(0.0));
+            NumericParameter<runtime::Float64>* maxLineGap = new NumericParameter<runtime::Float64>(MAX_LINE_GAP);
+            maxLineGap->setMin(Float64(0.0));
             maxLineGap->setTitle("Maximal line gap");
             maxLineGap->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(maxLineGap);

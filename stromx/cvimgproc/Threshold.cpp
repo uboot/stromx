@@ -54,14 +54,14 @@ namespace stromx
                 {
                 case MAXVAL:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_maxvalParameter, *this);
                         m_maxval = castedValue;
                     }
                     break;
                 case THRESHOLD:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_thresholdParameter, *this);
                         m_threshold = castedValue;
                     }
@@ -113,12 +113,12 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Double>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle("Threshold");
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);
@@ -137,12 +137,12 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Double>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle("Threshold");
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);
@@ -161,12 +161,12 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_thresholdParameter = new runtime::NumericParameter<runtime::Double>(THRESHOLD);
+                    m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdParameter->setTitle("Threshold");
                     parameters.push_back(m_thresholdParameter);
                     
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);

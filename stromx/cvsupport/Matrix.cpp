@@ -155,7 +155,7 @@ namespace stromx
                 return CV_32SC(numChannels);
             case runtime::Matrix::FLOAT:
                 return CV_32FC(numChannels);
-            case runtime::Matrix::DOUBLE:
+            case runtime::Matrix::FLOAT64:
                 return CV_64FC(numChannels);
             default:
                 throw runtime::WrongArgument("Unsupported value type.");  
@@ -200,7 +200,7 @@ namespace stromx
             case CV_64FC2:
             case CV_64FC3:
             case CV_64FC4:
-                return runtime::Matrix::DOUBLE;
+                return runtime::Matrix::FLOAT64;
             default:
                 throw runtime::WrongArgument("Unsupported OpenCV element type.");  
             }

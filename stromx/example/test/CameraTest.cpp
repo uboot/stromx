@@ -144,9 +144,9 @@ namespace stromx
 
         void CameraTest::testAdjustWhiteBalance()
         {
-            m_operator->setParameter(Camera::WHITE_BALANCE_RED, Double(2.0));
-            m_operator->setParameter(Camera::WHITE_BALANCE_GREEN, Double(1.0));
-            m_operator->setParameter(Camera::WHITE_BALANCE_BLUE, Double(0.0));
+            m_operator->setParameter(Camera::WHITE_BALANCE_RED, Float64(2.0));
+            m_operator->setParameter(Camera::WHITE_BALANCE_GREEN, Float64(1.0));
+            m_operator->setParameter(Camera::WHITE_BALANCE_BLUE, Float64(0.0));
             m_operator->setParameter(Camera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(Camera::OUTPUT);

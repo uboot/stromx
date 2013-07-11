@@ -118,6 +118,6 @@ void exportMatrix()
         .value("UINT_16", Matrix::UINT_16)
         .value("UINT_32", Matrix::UINT_32)
         .value("FLOAT", Matrix::FLOAT)
-        .value("DOUBLE", Matrix::DOUBLE)
+        .value("FLOAT64", Matrix::FLOAT64)
     ;
 }

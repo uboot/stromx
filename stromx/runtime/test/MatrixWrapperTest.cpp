@@ -83,7 +83,7 @@ namespace stromx
             m_matrix = 0;
         }
         
-        void MatrixWrapperTest::testDeserializeDouble()
+        void MatrixWrapperTest::testDeserializeFloat64()
         {
             m_matrix = new MatrixImpl();
             
@@ -92,7 +92,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(50), m_matrix->rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL(Matrix::DOUBLE, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT64, m_matrix->valueType());
             
             const uint8_t* rowPtr = m_matrix->data();
             for(unsigned int i = 0; i < m_matrix->rows(); ++i)

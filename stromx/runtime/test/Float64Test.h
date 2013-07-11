@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_DOUBLETEST_H
-#define STROMX_RUNTIME_DOUBLETEST_H
+#ifndef STROMX_RUNTIME_FLOAT64TEST_H
+#define STROMX_RUNTIME_FLOAT64TEST_H
 
 #include "stromx/runtime/test/PrimitiveTest.h"
 
@@ -23,9 +23,9 @@ namespace stromx
 {
     namespace runtime
     {
-        class DoubleTest : public PrimitiveTest<Double, double>
+        class Float64Test : public PrimitiveTest<Float64, double>
         {
-            CPPUNIT_TEST_SUITE (DoubleTest);
+            CPPUNIT_TEST_SUITE (Float64Test);
             CPPUNIT_TEST (testDefaultConstructor);
             CPPUNIT_TEST (testConstructor);
             CPPUNIT_TEST (testCopyConstructor);
@@ -40,9 +40,9 @@ namespace stromx
         protected:
             virtual double value() const { return -5.3; }
             virtual std::string str() const { return "-5.3"; }
-            virtual DataVariant variant() const { return DataVariant::DOUBLE; }
+            virtual DataVariant variant() const { return DataVariant::FLOAT64; }
         };
     }
 }
 
-#endif // STROMX_RUNTIME_DOUBLETEST_H
+#endif // STROMX_RUNTIME_FLOAT64TEST_H

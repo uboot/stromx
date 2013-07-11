@@ -53,8 +53,8 @@ namespace stromx
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::Enum ddepth(1);
             runtime::UInt32 ksize(3);
-            runtime::Double scale(1);
-            runtime::Double delta(0);
+            runtime::Float64 scale(1);
+            runtime::Float64 delta(0);
             
             m_operator->setInputData(Laplacian::SRC, src);
             m_operator->setInputData(Laplacian::DST, dst);
@@ -78,8 +78,8 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
             runtime::Enum ddepth(2);
             runtime::UInt32 ksize(5);
-            runtime::Double scale(100);
-            runtime::Double delta(1000);
+            runtime::Float64 scale(100);
+            runtime::Float64 delta(1000);
             
             m_operator->setInputData(Laplacian::SRC, src);
             m_operator->setParameter(Laplacian::DDEPTH, ddepth);
@@ -102,8 +102,8 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::Enum ddepth(2);
             runtime::UInt32 ksize(7);
-            runtime::Double scale(50);
-            runtime::Double delta(500);
+            runtime::Float64 scale(50);
+            runtime::Float64 delta(500);
             
             m_operator->setInputData(Laplacian::SRC, src);
             m_operator->setParameter(Laplacian::DDEPTH, ddepth);

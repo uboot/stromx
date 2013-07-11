@@ -36,7 +36,7 @@ class Int(CvType):
     def typeId(self):
         return "int"
         
-class Double(CvType):
+class Float64(CvType):
     """
     Native C++ double type.
     """

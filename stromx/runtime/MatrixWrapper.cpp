@@ -218,7 +218,7 @@ namespace stromx
             Matrix::ValueType valueTypeTable[3][4] =
                 {{Matrix::INT_8, Matrix::INT_16, Matrix::INT_32, Matrix::NONE},
                  {Matrix::UINT_8, Matrix::UINT_16, Matrix::UINT_32, Matrix::NONE},
-                 {Matrix::NONE, Matrix::NONE, Matrix::FLOAT, Matrix::DOUBLE}};
+                 {Matrix::NONE, Matrix::NONE, Matrix::FLOAT, Matrix::FLOAT64}};
                
             int i = 0;
             switch(valueType)
@@ -282,7 +282,7 @@ namespace stromx
                 return 'u';
             }
             else if(valueType == Matrix::FLOAT
-               || valueType == Matrix::DOUBLE)
+               || valueType == Matrix::FLOAT64)
             {
                 return 'f';
             }

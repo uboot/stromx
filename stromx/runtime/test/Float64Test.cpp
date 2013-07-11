@@ -14,6 +14,6 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/test/DoubleTest.h"
+#include "stromx/runtime/test/Float64Test.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::DoubleTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Float64Test);

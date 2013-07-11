@@ -46,10 +46,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::FRAMERATE))
                 {
-                    m_operator->setParameter(WebCamera::FRAMERATE,runtime::Double(0.1));
+                    m_operator->setParameter(WebCamera::FRAMERATE,runtime::Float64(0.1));
                     runtime::DataRef frameRate = m_operator->getParameter(WebCamera::FRAMERATE);
-                    runtime::Double doubleFrameRate = runtime::data_cast<runtime::Double>(frameRate);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleFrameRate),double(runtime::Double(0.1)),m_deltaAcceptance);
+                    runtime::Float64 doubleFrameRate = runtime::data_cast<runtime::Float64>(frameRate);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleFrameRate),double(runtime::Float64(0.1)),m_deltaAcceptance);
                     std::cout << "(Frame rate is configurable)";
                 }
                 else
@@ -65,10 +65,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::BRIGHTNESS))
                 {
-                    m_operator->setParameter(WebCamera::BRIGHTNESS,runtime::Double(0.2));
+                    m_operator->setParameter(WebCamera::BRIGHTNESS,runtime::Float64(0.2));
                     runtime::DataRef brightness = m_operator->getParameter(WebCamera::BRIGHTNESS);
-                    runtime::Double doubleBrightness = runtime::data_cast<runtime::Double>(brightness);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleBrightness),double(runtime::Double(0.2)),m_deltaAcceptance);
+                    runtime::Float64 doubleBrightness = runtime::data_cast<runtime::Float64>(brightness);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleBrightness),double(runtime::Float64(0.2)),m_deltaAcceptance);
                     std::cout << "(Brightness is configurable)";
                 }
                 else
@@ -84,10 +84,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::CONTRAST))
                 {
-                    m_operator->setParameter(WebCamera::CONTRAST,runtime::Double(0.3));
+                    m_operator->setParameter(WebCamera::CONTRAST,runtime::Float64(0.3));
                     runtime::DataRef contrast = m_operator->getParameter(WebCamera::CONTRAST);
-                    runtime::Double doubleContrast = runtime::data_cast<runtime::Double>(contrast);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleContrast),double(runtime::Double(0.3)),m_deltaAcceptance);
+                    runtime::Float64 doubleContrast = runtime::data_cast<runtime::Float64>(contrast);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleContrast),double(runtime::Float64(0.3)),m_deltaAcceptance);
                     std::cout << "(Contrast is configurable)";
                 }
                 else
@@ -103,10 +103,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::SATURATION))
                 {
-                    m_operator->setParameter(WebCamera::SATURATION,runtime::Double(0.4));
+                    m_operator->setParameter(WebCamera::SATURATION,runtime::Float64(0.4));
                     runtime::DataRef saturation = m_operator->getParameter(WebCamera::SATURATION);
-                    runtime::Double doubleSaturation = runtime::data_cast<runtime::Double>(saturation);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleSaturation),double(runtime::Double(0.4)),m_deltaAcceptance);
+                    runtime::Float64 doubleSaturation = runtime::data_cast<runtime::Float64>(saturation);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleSaturation),double(runtime::Float64(0.4)),m_deltaAcceptance);
                     std::cout << "(Saturation is configurable)";
                 }
                 else
@@ -122,10 +122,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::HUE))
                 {
-                    m_operator->setParameter(WebCamera::HUE,runtime::Double(0.5));
+                    m_operator->setParameter(WebCamera::HUE,runtime::Float64(0.5));
                     runtime::DataRef hue = m_operator->getParameter(WebCamera::HUE);
-                    runtime::Double doubleHue = runtime::data_cast<runtime::Double>(hue);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleHue),double(runtime::Double(0.5)),m_deltaAcceptance);
+                    runtime::Float64 doubleHue = runtime::data_cast<runtime::Float64>(hue);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleHue),double(runtime::Float64(0.5)),m_deltaAcceptance);
                     std::cout << "(Hue is configurable)";
                 }
                 else
@@ -141,10 +141,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::GAIN))
                 {
-                    m_operator->setParameter(WebCamera::GAIN,runtime::Double(0.6));
+                    m_operator->setParameter(WebCamera::GAIN,runtime::Float64(0.6));
                     runtime::DataRef gain = m_operator->getParameter(WebCamera::GAIN);
-                    runtime::Double doubleGain = runtime::data_cast<runtime::Double>(gain);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleGain),double(runtime::Double(0.6)),m_deltaAcceptance);
+                    runtime::Float64 doubleGain = runtime::data_cast<runtime::Float64>(gain);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleGain),double(runtime::Float64(0.6)),m_deltaAcceptance);
                     std::cout << "(Gain is configurable)";
                 }
                 else
@@ -160,10 +160,10 @@ namespace stromx
             {
                 if(checkParameter(WebCamera::EXPOSURE))
                 {
-                    m_operator->setParameter(WebCamera::EXPOSURE,runtime::Double(0.7));
+                    m_operator->setParameter(WebCamera::EXPOSURE,runtime::Float64(0.7));
                     runtime::DataRef exposure = m_operator->getParameter(WebCamera::EXPOSURE);
-                    runtime::Double doubleExposure = runtime::data_cast<runtime::Double>(exposure);
-                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleExposure),double(runtime::Double(0.7)),m_deltaAcceptance);
+                    runtime::Float64 doubleExposure = runtime::data_cast<runtime::Float64>(exposure);
+                    CPPUNIT_ASSERT_DOUBLES_EQUAL(double(doubleExposure),double(runtime::Float64(0.7)),m_deltaAcceptance);
                     std::cout << "(Exposure is configurable)";
                 }
                 else

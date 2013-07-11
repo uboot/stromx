@@ -31,8 +31,8 @@ namespace stromx
             runtime::DataContainer dst(new cvsupport::Image(1000000));
             runtime::UInt32 ksizex(3);
             runtime::UInt32 ksizey(5);
-            runtime::Double sigmaX(1.5);
-            runtime::Double sigmaY(2.5);
+            runtime::Float64 sigmaX(1.5);
+            runtime::Float64 sigmaY(2.5);
             
             m_operator->setInputData(GaussianBlur::SRC, src);
             m_operator->setInputData(GaussianBlur::DST, dst);
@@ -73,8 +73,8 @@ namespace stromx
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
             runtime::UInt32 ksizex(3);
             runtime::UInt32 ksizey(5);
-            runtime::Double sigmaX(-1);
-            runtime::Double sigmaY(-1);
+            runtime::Float64 sigmaX(-1);
+            runtime::Float64 sigmaY(-1);
             
             m_operator->setInputData(GaussianBlur::SRC, src);
             m_operator->setParameter(GaussianBlur::KSIZEX, ksizex);
@@ -95,8 +95,8 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer src(new cvsupport::Image("lenna.jpg"));
-            runtime::Double sigmaX(0);
-            runtime::Double sigmaY(0);
+            runtime::Float64 sigmaX(0);
+            runtime::Float64 sigmaY(0);
             
             m_operator->setInputData(GaussianBlur::SRC, src);
             m_operator->setParameter(GaussianBlur::SIGMA_X, sigmaX);

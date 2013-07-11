@@ -242,24 +242,24 @@ dy = package.NumericParameter(
     "dy", "Order Y derivative", cvtype.Int(), datatype.UInt32(), default = 0
 )
 fx = package.NumericParameter(
-    "fx", "Scale X", cvtype.Double(), datatype.Double(), default = 1.0
+    "fx", "Scale X", cvtype.Float64(), datatype.Float64(), default = 1.0
 )
 fy = package.NumericParameter(
-    "fy", "Scale Y", cvtype.Double(), datatype.Double(), default = 1.0
+    "fy", "Scale Y", cvtype.Float64(), datatype.Float64(), default = 1.0
 )
 sigmaColor = package.NumericParameter(
-    "sigmaColor", "Sigma color", cvtype.Double(), datatype.Double(),
+    "sigmaColor", "Sigma color", cvtype.Float64(), datatype.Float64(),
     default = 50.0
 )
 sigmaSpace = package.NumericParameter(
-    "sigmaSpace", "Sigma space", cvtype.Double(), datatype.Double(),
+    "sigmaSpace", "Sigma space", cvtype.Float64(), datatype.Float64(),
     default = 50.0
 )
 sigmaX = package.NumericParameter(
-    "sigmaX", "Sigma X", cvtype.Double(), datatype.Double(), default = 0.0
+    "sigmaX", "Sigma X", cvtype.Float64(), datatype.Float64(), default = 0.0
 )
 sigmaY = package.NumericParameter(
-    "sigmaY", "Sigma Y", cvtype.Double(), datatype.Double(), default = 0.0
+    "sigmaY", "Sigma Y", cvtype.Float64(), datatype.Float64(), default = 0.0
 )
 descriptions = [
     package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
@@ -279,21 +279,21 @@ ddepth = package.EnumParameter(
     default = 0
 )
 scale = package.NumericParameter(
-    "scale", "Scale", cvtype.Double(), datatype.Double(), default = 1.0
+    "scale", "Scale", cvtype.Float64(), datatype.Float64(), default = 1.0
 )
 delta = package.NumericParameter(
-    "delta", "Delta", cvtype.Double(), datatype.Double(), default = 0.0
+    "delta", "Delta", cvtype.Float64(), datatype.Float64(), default = 0.0
 )
 dstImgDdepth = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInDdepth, initOut = initOutDdepth
 )
 thresh = package.NumericParameter(
-    "threshold", "Threshold", cvtype.Double(), datatype.Double(),
+    "threshold", "Threshold", cvtype.Float64(), datatype.Float64(),
     default = 127.0
 )
 maxval = package.NumericParameter(
-    "maxval", "Maximal value", cvtype.Double(), datatype.Double(),
+    "maxval", "Maximal value", cvtype.Float64(), datatype.Float64(),
     default = 255.0
 )
 descriptions = [

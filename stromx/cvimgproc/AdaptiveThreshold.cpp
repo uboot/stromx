@@ -73,7 +73,7 @@ namespace stromx
                     break;
                 case MAXVAL:
                     {
-                        const runtime::Double & castedValue = runtime::data_cast<runtime::Double>(value);
+                        const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
                         checkNumericValue(castedValue, m_maxvalParameter, *this);
                         m_maxval = castedValue;
                     }
@@ -125,7 +125,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);
@@ -157,7 +157,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);
@@ -189,7 +189,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_maxvalParameter = new runtime::NumericParameter<runtime::Double>(MAXVAL);
+                    m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maxvalParameter->setTitle("Maximal value");
                     parameters.push_back(m_maxvalParameter);

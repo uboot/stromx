@@ -341,7 +341,7 @@ namespace stromx
                 case WHITE_BALANCE_RED:
                     try
                     {
-                        Double fpValue = data_cast<Double>(value);
+                        Float64 fpValue = data_cast<Float64>(value);
                         m_wbRed = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -353,7 +353,7 @@ namespace stromx
                 case WHITE_BALANCE_GREEN:
                     try
                     {
-                        Double fpValue = data_cast<Double>(value);
+                        Float64 fpValue = data_cast<Float64>(value);
                         m_wbGreen = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -365,7 +365,7 @@ namespace stromx
                 case WHITE_BALANCE_BLUE:
                     try
                     {
-                        Double fpValue = data_cast<Double>(value);
+                        Float64 fpValue = data_cast<Float64>(value);
                         m_wbBlue = std::max(0.0, std::min(double(WHITE_BALANCE_MAX), double(fpValue)));
                         setRgbParameters();
                     }
@@ -533,25 +533,25 @@ namespace stromx
             wbGroup->setTitle("White balance");
             parameters.push_back(wbGroup);
             
-            NumericParameter<Double>* wbRed = new NumericParameter<Double>(WHITE_BALANCE_RED, wbGroup);
+            NumericParameter<Float64>* wbRed = new NumericParameter<Float64>(WHITE_BALANCE_RED, wbGroup);
             wbRed->setTitle("WB red");
             wbRed->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            wbRed->setMin(Double(0));
-            wbRed->setMax(Double(WHITE_BALANCE_MAX));
+            wbRed->setMin(Float64(0));
+            wbRed->setMax(Float64(WHITE_BALANCE_MAX));
             parameters.push_back(wbRed);
             
-            NumericParameter<Double>* wbGreen = new NumericParameter<Double>(WHITE_BALANCE_GREEN, wbGroup);
+            NumericParameter<Float64>* wbGreen = new NumericParameter<Float64>(WHITE_BALANCE_GREEN, wbGroup);
             wbGreen->setTitle("WB green");
             wbGreen->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            wbGreen->setMin(Double(0));
-            wbGreen->setMax(Double(WHITE_BALANCE_MAX));
+            wbGreen->setMin(Float64(0));
+            wbGreen->setMax(Float64(WHITE_BALANCE_MAX));
             parameters.push_back(wbGreen);
             
-            NumericParameter<Double>* wbBlue = new NumericParameter<Double>(WHITE_BALANCE_BLUE, wbGroup);
+            NumericParameter<Float64>* wbBlue = new NumericParameter<Float64>(WHITE_BALANCE_BLUE, wbGroup);
             wbBlue->setTitle("WB blue");
             wbBlue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            wbBlue->setMin(Double(0));
-            wbBlue->setMax(Double(WHITE_BALANCE_MAX));
+            wbBlue->setMin(Float64(0));
+            wbBlue->setMax(Float64(WHITE_BALANCE_MAX));
             parameters.push_back(wbBlue);
             
             NumericParameter<UInt32>* framePeriod = new NumericParameter<UInt32>(FRAME_PERIOD);
@@ -616,9 +616,9 @@ namespace stromx
         {
             double exposureCoeff = double(m_exposure) / double(BASE_EXPOSURE);
             
-            m_adjustRgbChannels->setParameter(AdjustRgbChannels::RED, Double(exposureCoeff * m_wbRed));
-            m_adjustRgbChannels->setParameter(AdjustRgbChannels::GREEN, Double(exposureCoeff * m_wbGreen));
-            m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Double(exposureCoeff * m_wbBlue));
+            m_adjustRgbChannels->setParameter(AdjustRgbChannels::RED, Float64(exposureCoeff * m_wbRed));
+            m_adjustRgbChannels->setParameter(AdjustRgbChannels::GREEN, Float64(exposureCoeff * m_wbGreen));
+            m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Float64(exposureCoeff * m_wbBlue));
         }
   
         bool Camera::validateBufferSize(unsigned int bufferSize, unsigned int width, unsigned int height,

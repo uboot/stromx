@@ -40,7 +40,7 @@ namespace stromx
             case runtime::Matrix::UINT_32:
             case runtime::Matrix::FLOAT:
                 return 4;
-            case runtime::Matrix::DOUBLE:
+            case runtime::Matrix::FLOAT64:
                 return 8;
             default:
                 throw runtime::WrongArgument("Unknown value type.");    
@@ -67,8 +67,8 @@ namespace stromx
                 return runtime::DataVariant::UINT_32_MATRIX;
             case runtime::Matrix::FLOAT:
                 return runtime::DataVariant::FLOAT_MATRIX;
-            case runtime::Matrix::DOUBLE:
-                return runtime::DataVariant::DOUBLE_MATRIX;
+            case runtime::Matrix::FLOAT64:
+                return runtime::DataVariant::FLOAT64_MATRIX;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }

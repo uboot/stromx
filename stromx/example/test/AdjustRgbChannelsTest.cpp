@@ -42,9 +42,9 @@ namespace stromx
         
         void AdjustRgbChannelsTest::testExecute()
         {
-            m_operator->setParameter(AdjustRgbChannels::RED, Double(0.1));
-            m_operator->setParameter(AdjustRgbChannels::GREEN, Double(1.0));
-            m_operator->setParameter(AdjustRgbChannels::BLUE, Double(1.5));
+            m_operator->setParameter(AdjustRgbChannels::RED, Float64(0.1));
+            m_operator->setParameter(AdjustRgbChannels::GREEN, Float64(1.0));
+            m_operator->setParameter(AdjustRgbChannels::BLUE, Float64(1.5));
             
             runtime::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
             ReadAccess<runtime::Image> access(result);

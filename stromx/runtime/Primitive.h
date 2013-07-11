@@ -228,21 +228,21 @@ namespace stromx
         };  
         /** \endcond */
 
-        /** \brief Double precision floating point number */
-        typedef Primitive<double, double> Double;
+        /** \brief Float64 precision floating point number */
+        typedef Primitive<double, double> Float64;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Double::variant() const;
+        STROMX_RUNTIME_API const DataVariant & Float64::variant() const;
         template <>
-        STROMX_RUNTIME_API void Double::serialize(OutputProvider & out) const;
+        STROMX_RUNTIME_API void Float64::serialize(OutputProvider & out) const;
         template <>
-        STROMX_RUNTIME_API void Double::deserialize(InputProvider & in, const Version & version);
+        STROMX_RUNTIME_API void Float64::deserialize(InputProvider & in, const Version & version);
         
         /** \cond */
         template <>
-        class data_traits<Double>
+        class data_traits<Float64>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::DOUBLE; }
+            static const DataVariant & variant() { return DataVariant::FLOAT64; }
         };  
         /** \endcond */
 

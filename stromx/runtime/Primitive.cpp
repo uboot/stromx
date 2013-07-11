@@ -234,26 +234,26 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Double::variant() const { return DataVariant::DOUBLE; }
+        const DataVariant & Float64::variant() const { return DataVariant::FLOAT64; }
         template<>
-        const std::string Double::TYPE = "Double";
+        const std::string Float64::TYPE = "Float64";
         template<>
-        const Double Double::MIN = Double(- DBL_MAX);
+        const Float64 Float64::MIN = Float64(- DBL_MAX);
         template<>
-        const Double Double::MAX = Double(DBL_MAX);
+        const Float64 Float64::MAX = Float64(DBL_MAX);
         template<>
-        const std::string Double::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
+        const std::string Float64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Double::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+        const Version Float64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
     
         template <>
-        void Double::serialize(OutputProvider & out) const
+        void Float64::serialize(OutputProvider & out) const
         {
             out.text() << m_value;
         }
         
         template <>
-        void Double::deserialize(InputProvider & in, const Version &)
+        void Float64::deserialize(InputProvider & in, const Version &)
         {
             in.text() >> m_value;
         }
