@@ -39,7 +39,7 @@ namespace stromx
             CPPUNIT_TEST (testMatrixCvMatrix16SC3);
             CPPUNIT_TEST (testMatrixCvMatrix32UC4);
             CPPUNIT_TEST (testMatrixCvMatExpr);
-            CPPUNIT_TEST (testMatrixFloat);
+            CPPUNIT_TEST (testMatrixFloat32);
             CPPUNIT_TEST (testMatrixDefault);
             CPPUNIT_TEST (testOpenUInt16);
             CPPUNIT_TEST (testOpenFloat64);
@@ -70,7 +70,7 @@ namespace stromx
                 void testMatrixCvMatrix16SC3();
                 void testMatrixCvMatrix32UC4();
                 void testMatrixCvMatExpr();
-                void testMatrixFloat();
+                void testMatrixFloat32();
                 void testMatrixInt16();
                 void testMatrixDefault();
                 void testSerializeInt16();

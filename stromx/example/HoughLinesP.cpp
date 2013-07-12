@@ -156,7 +156,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* lines = new Description(LINES, DataVariant::FLOAT64_MATRIX);
+            Description* lines = new Description(LINES, DataVariant::FLOAT_64_MATRIX);
             lines->setTitle("Lines");
             outputs.push_back(lines);
             

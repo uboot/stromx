@@ -211,20 +211,20 @@ namespace stromx
         /** \endcond */
         
         /** \brief Single precision floating point number */
-        typedef Primitive<double, float> Float;
+        typedef Primitive<double, float> Float32;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Float::variant() const;
+        STROMX_RUNTIME_API const DataVariant & Float32::variant() const;
         template <>
-        STROMX_RUNTIME_API void Float::serialize(OutputProvider & out) const;
+        STROMX_RUNTIME_API void Float32::serialize(OutputProvider & out) const;
         template <>
-        STROMX_RUNTIME_API void Float::deserialize(InputProvider & in, const Version & version);
+        STROMX_RUNTIME_API void Float32::deserialize(InputProvider & in, const Version & version);
         
         /** \cond */
         template <>
-        class data_traits<Float>
+        class data_traits<Float32>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::FLOAT; }
+            static const DataVariant & variant() { return DataVariant::FLOAT_32; }
         };  
         /** \endcond */
 
@@ -242,7 +242,7 @@ namespace stromx
         class data_traits<Float64>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::FLOAT64; }
+            static const DataVariant & variant() { return DataVariant::FLOAT_64; }
         };  
         /** \endcond */
 

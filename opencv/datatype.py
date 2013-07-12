@@ -62,7 +62,7 @@ class Float64(DataType):
         return "runtime::Float64"
         
     def variant(self):
-        return "runtime::DataVariant::FLOAT64"
+        return "runtime::DataVariant::FLOAT_64"
         
 class Enum(DataType):
     """

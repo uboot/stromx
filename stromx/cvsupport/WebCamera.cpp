@@ -54,7 +54,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_FPS) >= 0.0)
             {
-                runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* frameRate = new runtime::Parameter(FRAMERATE, runtime::DataVariant::FLOAT_64);
                 frameRate->setTitle("Frame rate");
                 frameRate->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
                 parameters.push_back(frameRate);
@@ -62,7 +62,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_BRIGHTNESS) >= 0.0)
             {
-                runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* brightness = new runtime::Parameter(BRIGHTNESS, runtime::DataVariant::FLOAT_64);
                 brightness->setTitle("Brightness");
                 brightness->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(brightness);
@@ -70,7 +70,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_CONTRAST) >= 0.0)
             {
-                runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* contrast = new runtime::Parameter(CONTRAST, runtime::DataVariant::FLOAT_64);
                 contrast->setTitle("Contrast");
                 contrast->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(contrast);
@@ -78,7 +78,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_SATURATION) >= 0.0)
             {
-                runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* saturation = new runtime::Parameter(SATURATION, runtime::DataVariant::FLOAT_64);
                 saturation->setTitle("Saturation");
                 saturation->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(saturation);
@@ -86,7 +86,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_HUE) >= 0.0)
             {
-                runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* hue = new runtime::Parameter(HUE, runtime::DataVariant::FLOAT_64);
                 hue->setTitle("Hue");
                 hue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(hue);
@@ -94,7 +94,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_GAIN) >= 0.0)
             {
-                runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* gain = new runtime::Parameter(GAIN, runtime::DataVariant::FLOAT_64);
                 gain->setTitle("Gain");
                 gain->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(gain);
@@ -102,7 +102,7 @@ namespace stromx
             
             if(webcam->get(CV_CAP_PROP_EXPOSURE) >= 0.0)
             {
-                runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::FLOAT64);
+                runtime::Parameter* exposure = new runtime::Parameter(EXPOSURE, runtime::DataVariant::FLOAT_64);
                 exposure->setTitle("Exposure");
                 exposure->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(exposure);

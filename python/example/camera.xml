@@ -45,11 +45,11 @@
             </Parameter>
             <!-- threshold 1 -->
             <Parameter id="1">
-                <Data type="Double" package="Runtime" version="0.1.0">50</Data>
+                <Data type="Float64" package="Runtime" version="0.1.0">50</Data>
             </Parameter>
             <!-- threshold 2 -->
             <Parameter id="2">
-                <Data type="Double" package="Runtime" version="0.1.0">150</Data>
+                <Data type="Float64" package="Runtime" version="0.1.0">150</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
             <Input id="1" operator="1" output="0"/>

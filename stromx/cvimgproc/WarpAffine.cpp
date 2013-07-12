@@ -22,7 +22,7 @@ namespace stromx
         
         WarpAffine::WarpAffine()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_affineM(cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT)),
+            m_affineM(cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT_32)),
             m_dsizex(),
             m_dsizey(),
             m_dataFlow()

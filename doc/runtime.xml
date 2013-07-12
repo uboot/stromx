@@ -12,7 +12,7 @@
     <DataVariant id="bool" title="Bool" variantPackageId="runtime" variantId="data">
         A Boolean value.
     </DataVariant>
-    <DataVariant id="float" title="Float" variantPackageId="runtime" variantId="data">
+    <DataVariant id="float" title="Float32" variantPackageId="runtime" variantId="data">
         A float value.
     </DataVariant>
     <DataVariant id="int32" title="32-bit integer" variantPackageId="runtime" variantId="data">

@@ -177,7 +177,7 @@ namespace stromx
             Matrix::ValueType valueTypeTable[3][4] =
                 {{Matrix::INT_8, Matrix::INT_16, Matrix::INT_32, Matrix::NONE},
                  {Matrix::UINT_8, Matrix::UINT_16, Matrix::UINT_32, Matrix::NONE},
-                 {Matrix::NONE, Matrix::NONE, Matrix::FLOAT, Matrix::FLOAT64}};
+                 {Matrix::NONE, Matrix::NONE, Matrix::FLOAT_32, Matrix::FLOAT_64}};
                
             int i = 0;
             switch(valueType)
@@ -240,8 +240,8 @@ namespace stromx
             {
                 return 'u';
             }
-            else if(valueType == Matrix::FLOAT
-               || valueType == Matrix::FLOAT64)
+            else if(valueType == Matrix::FLOAT_32
+               || valueType == Matrix::FLOAT_64)
             {
                 return 'f';
             }
@@ -385,9 +385,9 @@ namespace stromx
                 return CV_16SC1;
             case runtime::Matrix::INT_32:
                 return CV_32SC1;
-            case runtime::Matrix::FLOAT:
+            case runtime::Matrix::FLOAT_32:
                 return CV_32FC1;
-            case runtime::Matrix::FLOAT64:
+            case runtime::Matrix::FLOAT_64:
                 return CV_64FC1;
             default:
                 throw runtime::WrongArgument("Unsupported value type.");  
@@ -427,12 +427,12 @@ namespace stromx
             case CV_32FC2:
             case CV_32FC3:
             case CV_32FC4:
-                return runtime::Matrix::FLOAT;
+                return runtime::Matrix::FLOAT_32;
             case CV_64FC1:
             case CV_64FC2:
             case CV_64FC3:
             case CV_64FC4:
-                return runtime::Matrix::FLOAT64;
+                return runtime::Matrix::FLOAT_64;
             default:
                 throw runtime::WrongArgument("Unsupported OpenCV element type.");  
             }

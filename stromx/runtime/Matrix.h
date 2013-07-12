@@ -37,8 +37,8 @@ namespace stromx
                 UINT_16,
                 INT_32,
                 UINT_32,
-                FLOAT,
-                FLOAT64
+                FLOAT_32,
+                FLOAT_64
             };
             
             virtual ~Matrix() {}

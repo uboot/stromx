@@ -209,32 +209,32 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Float::variant() const { return DataVariant::FLOAT; }
+        const DataVariant & Float32::variant() const { return DataVariant::FLOAT_32; }
         template<>
-        const std::string Float::TYPE = "Float";
+        const std::string Float32::TYPE = "Float32";
         template<>
-        const Float Float::MIN = Float(- FLT_MAX);
+        const Float32 Float32::MIN = Float32(- FLT_MAX);
         template<>
-        const Float Float::MAX = Float(FLT_MAX);
+        const Float32 Float32::MAX = Float32(FLT_MAX);
         template<>
-        const std::string Float::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
+        const std::string Float32::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Float::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+        const Version Float32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
-        void Float::serialize(OutputProvider & out) const
+        void Float32::serialize(OutputProvider & out) const
         {
             out.text() << m_value;
         }
         
         template <>
-        void Float::deserialize(InputProvider & in, const Version &)
+        void Float32::deserialize(InputProvider & in, const Version &)
         {
             in.text() >> m_value;
         }
         
         template<>
-        const DataVariant & Float64::variant() const { return DataVariant::FLOAT64; }
+        const DataVariant & Float64::variant() const { return DataVariant::FLOAT_64; }
         template<>
         const std::string Float64::TYPE = "Float64";
         template<>

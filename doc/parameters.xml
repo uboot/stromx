@@ -29,24 +29,24 @@
         </Operator>
         <Operator id="2" package="Example" type="AdjustRgbChannels" version="0.1.0" name="White balance">
             <Parameter id="0">
-                <Data type="Double" package="Stream" version="0.1.0">0.1</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">0.1</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="Double" package="Stream" version="0.1.0">1.0</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">1.0</Data>
             </Parameter>
             <Parameter id="2">
-                <Data type="Double" package="Stream" version="0.1.0">1.5</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">1.5</Data>
             </Parameter>
         </Operator>
         <Operator id="3" package="Example" type="AdjustRgbChannels" version="0.1.0" name="Exposure">
             <Parameter id="0">
-                <Data type="Double" package="Stream" version="0.1.0">0.8</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">0.8</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="Double" package="Stream" version="0.1.0">0.8</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">0.8</Data>
             </Parameter>
             <Parameter id="2">
-                <Data type="Double" package="Stream" version="0.1.0">0.8</Data>
+                <Data type="Float64" package="Stream" version="0.1.0">0.8</Data>
             </Parameter>
         </Operator>
     </Parameters>

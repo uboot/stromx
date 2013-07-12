@@ -22,8 +22,8 @@ namespace stromx
         
         Undistort::Undistort()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_cameraMatrix(cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT)),
-            m_distCoeffs(cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT)),
+            m_cameraMatrix(cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)),
+            m_distCoeffs(cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)),
             m_dataFlow()
         {
         }

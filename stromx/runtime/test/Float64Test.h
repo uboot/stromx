@@ -40,9 +40,9 @@ namespace stromx
         protected:
             virtual double value() const { return -5.3; }
             virtual std::string str() const { return "-5.3"; }
-            virtual DataVariant variant() const { return DataVariant::FLOAT64; }
+            virtual DataVariant variant() const { return DataVariant::FLOAT_64; }
         };
     }
 }
 
-#endif // STROMX_RUNTIME_FLOAT64TEST_H
+#endif // STROMX_RUNTIME_FLOAT_64TEST_H

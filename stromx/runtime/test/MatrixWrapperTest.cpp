@@ -92,7 +92,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(50), m_matrix->rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT64, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT_64, m_matrix->valueType());
             
             const uint8_t* rowPtr = m_matrix->data();
             for(unsigned int i = 0; i < m_matrix->rows(); ++i)
@@ -134,7 +134,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), m_matrix->rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_matrix->cols());
-            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT_32, m_matrix->valueType());
         }
         
         void MatrixWrapperTest::testSerializeInt16()
@@ -175,12 +175,12 @@ namespace stromx
         void MatrixWrapperTest::testResizeLength()
         {
             m_matrix = new MatrixImpl();
-            CPPUNIT_ASSERT_NO_THROW(m_matrix->resize(300, 200, runtime::Matrix::FLOAT));
+            CPPUNIT_ASSERT_NO_THROW(m_matrix->resize(300, 200, runtime::Matrix::FLOAT_32));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(300), m_matrix->rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->cols());
             CPPUNIT_ASSERT(m_matrix->data());
-            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::FLOAT, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::FLOAT_MATRIX, m_matrix->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Matrix::FLOAT_32, m_matrix->valueType());
+            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::FLOAT_32_MATRIX, m_matrix->variant());
         }
 
         void MatrixWrapperTest::testResizeDimension()
