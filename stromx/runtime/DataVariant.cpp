@@ -37,6 +37,7 @@ namespace stromx
         const DataVariant DataVariant::UINT_16 = DataVariant(UINT_16_ID, STROMX_RUNTIME_PACKAGE_NAME, "UInt16");
         const DataVariant DataVariant::INT_32 = DataVariant(INT_32_ID, STROMX_RUNTIME_PACKAGE_NAME, "Int32");
         const DataVariant DataVariant::UINT_32 = DataVariant(UINT_32_ID, STROMX_RUNTIME_PACKAGE_NAME, "UInt32");
+        const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float");
         const DataVariant DataVariant::FLOAT_32 = DataVariant(FLOAT_32_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float32");
         const DataVariant DataVariant::FLOAT_64 = DataVariant(FLOAT_64_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float64");
         const DataVariant DataVariant::MATRIX = DataVariant(MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "Matrix");
@@ -48,6 +49,7 @@ namespace stromx
         const DataVariant DataVariant::UINT_16_MATRIX = DataVariant(UINT_16_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "UInt16 matrix");
         const DataVariant DataVariant::INT_32_MATRIX = DataVariant(INT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "Int32 matrix");
         const DataVariant DataVariant::UINT_32_MATRIX = DataVariant(UINT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "UInt32 matrix");
+        const DataVariant DataVariant::FLOAT_MATRIX = DataVariant(FLOAT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float matrix");
         const DataVariant DataVariant::FLOAT_32_MATRIX = DataVariant(FLOAT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float32 matrix");
         const DataVariant DataVariant::FLOAT_64_MATRIX = DataVariant(FLOAT_64_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME, "Float64 matrix");
         const DataVariant DataVariant::STRING = DataVariant(STRING_ID, STROMX_RUNTIME_PACKAGE_NAME, "String");
@@ -97,6 +99,9 @@ namespace stromx
                     || isVariant(INT_8) 
                     || isVariant(INT_16) 
                     || isVariant(INT_32);
+            case FLOAT_ID:
+                return isVariant(FLOAT_32)
+                    || isVariant(FLOAT_64);
             case MATRIX_ID:
                 return isVariant(INT_MATRIX)
                     || isVariant(UINT_MATRIX)
@@ -110,6 +115,9 @@ namespace stromx
                 return isVariant(UINT_8_MATRIX)
                     || isVariant(UINT_16_MATRIX)
                     || isVariant(UINT_32_MATRIX);
+            case FLOAT_MATRIX_ID:
+                return isVariant(FLOAT_32_MATRIX)
+                    || isVariant(FLOAT_64_MATRIX);
             case IMAGE_ID:
                 return isVariant(MONO_IMAGE)
                     || isVariant(RGB_IMAGE)

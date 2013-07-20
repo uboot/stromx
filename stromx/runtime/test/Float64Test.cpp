@@ -17,3 +17,14 @@
 #include "stromx/runtime/test/Float64Test.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Float64Test);
+
+namespace stromx
+{
+    namespace runtime
+    {
+        void Float64Test::testIsFloatVariant()
+        {
+            CPPUNIT_ASSERT(variant().isVariant(DataVariant::FLOAT));
+        }
+    }
+}

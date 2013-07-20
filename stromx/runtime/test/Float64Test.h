@@ -35,12 +35,15 @@ namespace stromx
             CPPUNIT_TEST (testIsVariant);
             CPPUNIT_TEST (testPtrCast);
             CPPUNIT_TEST (testRefCast);
+            CPPUNIT_TEST (testIsFloatVariant);
             CPPUNIT_TEST_SUITE_END ();
             
         protected:
             virtual double value() const { return -5.3; }
             virtual std::string str() const { return "-5.3"; }
             virtual DataVariant variant() const { return DataVariant::FLOAT_64; }
+            
+            void testIsFloatVariant();
         };
     }
 }

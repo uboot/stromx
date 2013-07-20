@@ -80,6 +80,9 @@ namespace stromx
             /** An UInt32 object. */
             const static DataVariant UINT_32;
             
+            /** Any of Float32 or Float64. */
+            const static DataVariant FLOAT;
+            
             /** A Float32 object. */
             const static DataVariant FLOAT_32;
             
@@ -115,6 +118,9 @@ namespace stromx
             
             /** A Matrix object with Matrix::UINT_32 value type. */
             const static DataVariant UINT_32_MATRIX;
+            
+            /** A Matrix object with value type Matrix::FLOAT_32 or Matrix::FLOAT_64. */
+            const static DataVariant FLOAT_MATRIX;
             
             /** A Matrix object with Matrix::FLOAT_32 value type. */
             const static DataVariant FLOAT_32_MATRIX;
@@ -215,6 +221,7 @@ namespace stromx
                 UINT_16_ID,
                 INT_32_ID,
                 UINT_32_ID,
+                FLOAT_ID,
                 FLOAT_32_ID,
                 FLOAT_64_ID,
                 STRING_ID,
@@ -227,6 +234,7 @@ namespace stromx
                 UINT_16_MATRIX_ID,
                 INT_32_MATRIX_ID,
                 UINT_32_MATRIX_ID,
+                FLOAT_MATRIX_ID,
                 FLOAT_32_MATRIX_ID,
                 FLOAT_64_MATRIX_ID,
                 IMAGE_ID,
