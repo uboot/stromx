@@ -112,7 +112,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle("3x3 perspective transformation");
                     m_affineMParameter->setRows(3);
@@ -133,7 +133,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle("3x3 perspective transformation");
                     m_affineMParameter->setRows(3);

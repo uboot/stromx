@@ -93,8 +93,8 @@ class Image(DataType):
         
 class Matrix(DataType):
     """
-    Stromx runtime::Image type. Uses the implementation cvsupport::Image to cast
-    input data to an runtime::Image object.
+    Stromx runtime::Image type. Uses the implementation cvsupport::Matrix to cast
+    input data to an runtime::Matrix object.
     """
     def __init__(self, variant = "runtime::DataVariant::MATRIX"):
         self.__variant = variant
@@ -107,6 +107,10 @@ class Matrix(DataType):
         
     def variant(self):
         return self.__variant
+    
+class FloatMatrix(Matrix):
+    def __init__(self):
+        super(FloatMatrix, self).__init__("runtime::DataVariant::FLOAT_MATRIX")
             
 if __name__ == "__main__":
     import doctest
