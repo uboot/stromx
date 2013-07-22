@@ -49,6 +49,10 @@ namespace stromx
                 case KSIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_ksizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
@@ -58,6 +62,10 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

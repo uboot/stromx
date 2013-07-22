@@ -52,6 +52,10 @@ namespace stromx
                 case CAMERA_MATRIX:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkMatrixValue(castedValue, m_cameraMatrixParameter, *this);
                         m_cameraMatrix = castedValue;
                     }
@@ -59,6 +63,10 @@ namespace stromx
                 case DIST_COEFFS:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkMatrixValue(castedValue, m_distCoeffsParameter, *this);
                         m_distCoeffs = castedValue;
                     }
@@ -66,6 +74,10 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

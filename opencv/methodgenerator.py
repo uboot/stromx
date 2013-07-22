@@ -438,6 +438,15 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(("const {0} & castedValue = runtime::data_cast<{1}>(value);"
                           ).format(parameter.dataType.typeId(),
                                    parameter.dataType.typeId()))
+            
+            l = ("if(! castedValue.variant().isVariant({0}))".format(
+                                                parameter.dataType.variant()))
+            self.doc.line(l)
+            self.doc.scopeEnter()
+            l = 'throw runtime::WrongParameterType(parameter(id), *this);'
+            self.doc.line(l)
+            self.doc.scopeExit()
+            
             if check != "":
                 self.doc.line(check)
             

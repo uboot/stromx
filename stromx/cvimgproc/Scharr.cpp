@@ -61,6 +61,10 @@ namespace stromx
                 case DDEPTH:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_ddepthParameter, *this);
                         m_ddepth = castedValue;
                     }
@@ -68,6 +72,10 @@ namespace stromx
                 case DELTA:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
                     }
@@ -75,6 +83,10 @@ namespace stromx
                 case DX:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_dxParameter, *this);
                         m_dx = castedValue;
                     }
@@ -82,6 +94,10 @@ namespace stromx
                 case DY:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_dyParameter, *this);
                         m_dy = castedValue;
                     }
@@ -89,6 +105,10 @@ namespace stromx
                 case SCALE:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_scaleParameter, *this);
                         m_scale = castedValue;
                     }
@@ -96,6 +116,10 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

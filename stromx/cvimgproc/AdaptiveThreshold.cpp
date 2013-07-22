@@ -58,6 +58,10 @@ namespace stromx
                 case ADAPTIVE_METHOD:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_adaptiveMethodParameter, *this);
                         m_adaptiveMethod = castedValue;
                     }
@@ -65,6 +69,10 @@ namespace stromx
                 case BLOCK_SIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_blockSizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_blockSizeParameter, *this, "Only odd values are allowed");
@@ -74,6 +82,10 @@ namespace stromx
                 case MAXVAL:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_maxvalParameter, *this);
                         m_maxval = castedValue;
                     }
@@ -81,6 +93,10 @@ namespace stromx
                 case THRESHOLD_TYPE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_thresholdTypeParameter, *this);
                         m_thresholdType = castedValue;
                     }
@@ -88,6 +104,10 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }

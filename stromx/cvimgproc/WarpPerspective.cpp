@@ -55,6 +55,10 @@ namespace stromx
                 case AFFINE_M:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkMatrixValue(castedValue, m_affineMParameter, *this);
                         m_affineM = castedValue;
                     }
@@ -62,6 +66,10 @@ namespace stromx
                 case DSIZEX:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_dsizexParameter, *this);
                         m_dsizex = castedValue;
                     }
@@ -69,6 +77,10 @@ namespace stromx
                 case DSIZEY:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkNumericValue(castedValue, m_dsizeyParameter, *this);
                         m_dsizey = castedValue;
                     }
@@ -76,6 +88,10 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
                         checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
