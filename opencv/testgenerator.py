@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datatype
 import interface
 import package
 import test
@@ -153,12 +154,18 @@ class SaveResultVisitor(interface.ArgumentVisitor):
         self.visitOutput(allocation)
         
     def visitOutput(self, output):
-        self.doc.line("runtime::ReadAccess<runtime::Image> access(result);")
-        
-        fileName = "{0}.png".format(self.testFileName)
-        self.doc.line((
-            'cvsupport::Image::save("{0}", access());'
-        ).format(fileName))
+        if isinstance(output.dataType, datatype.Image):
+            self.doc.line("runtime::ReadAccess<runtime::Image> access(result);")
+            fileName = "{0}.png".format(self.testFileName)
+            self.doc.line((
+                'cvsupport::Image::save("{0}", access());'
+            ).format(fileName))
+        elif isinstance(output.dataType, datatype.Matrix):
+            self.doc.line("runtime::ReadAccess<runtime::Matrix> access(result);")
+            fileName = "{0}.npy".format(self.testFileName)
+            self.doc.line((
+                'cvsupport::Matrix::save("{0}", access());'
+            ).format(fileName))
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   

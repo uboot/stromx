@@ -19,6 +19,7 @@
 #include "WarpAffine.h"
 #include "WarpPerspective.h"
 #include "Undistort.h"
+#include "UndistortPoints.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
@@ -44,4 +45,5 @@ void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
     registry.registerOperator(new WarpAffine);
     registry.registerOperator(new WarpPerspective);
     registry.registerOperator(new Undistort);
+    registry.registerOperator(new UndistortPoints);
 }

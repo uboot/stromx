@@ -47,11 +47,18 @@ class Mat(CvType):
     """
     OpenCV cv::Mat type.
     """
+    def __init__(self, channels = -1):
+        self.__channels = channels
+        
     def typeId(self):
         return "cv::Mat"
     
     def cast(self, src):
-        return "cvsupport::getOpenCvMat({0})".format(src)
+        if self.__channels == -1:
+            return "cvsupport::getOpenCvMat({0})".format(src)
+        else:
+            return "cvsupport::getOpenCvMat({0}, {1})".format(src,
+                                                              self.__channels)
         
 if __name__ == "__main__":
     import doctest

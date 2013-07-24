@@ -349,6 +349,12 @@ distCoeffs = package.MatrixParameter(
     default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
     rows = 4, cols = 1
 )
+srcPts = package.Argument(
+    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix()
+)
+dstPts = package.Argument(
+    "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix()
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -357,6 +363,7 @@ affine_transformation = test.MatrixFile("affine.npy")
 perspective_transformation = test.MatrixFile("perspective.npy")
 camera_matrix = test.MatrixFile("camera_matrix.npy")
 dist_coeffs = test.MatrixFile("dist_coeffs.npy")
+points_2d = test.MatrixFile("points_2d.npy")
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000) 
 
@@ -833,6 +840,20 @@ undistort = package.Method(
     "undistort", options = [manual, allocate]
 )
 
+# undistortPoints
+allocate = package.Option(
+    "allocate", "Allocate",  
+    [package.Input(srcPts), package.Allocation(dstPts), cameraMatrix,
+     distCoeffs],
+    tests = [
+        [points_2d, dt, camera_matrix, dist_coeffs],
+        [points_2d, dt, dt, dt]
+    ]
+)
+undistortPoints = package.Method(
+    "undistortPoints", options = [allocate]
+)
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -854,7 +875,8 @@ imgproc = package.Package(
         threshold,
         warpAffine,
         warpPerspective,
-        undistort
+        undistort,
+        undistortPoints
     ],
     functions = [
         checkEnumValue,
@@ -866,7 +888,8 @@ imgproc = package.Package(
         "affine.npy",
         "perspective.npy",
         "camera_matrix.npy",
-        "dist_coeffs.npy"
+        "dist_coeffs.npy",
+        "points_2d.npy"
     ]
 )
 

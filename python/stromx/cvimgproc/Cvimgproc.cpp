@@ -20,6 +20,7 @@
 #include <stromx/cvimgproc/WarpAffine.h>
 #include <stromx/cvimgproc/WarpPerspective.h>
 #include <stromx/cvimgproc/Undistort.h>
+#include <stromx/cvimgproc/UndistortPoints.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -48,4 +49,5 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<WarpAffine>("WarpAffine");
     stromx::python::exportOperatorKernel<WarpPerspective>("WarpPerspective");
     stromx::python::exportOperatorKernel<Undistort>("Undistort");
+    stromx::python::exportOperatorKernel<UndistortPoints>("UndistortPoints");
 }

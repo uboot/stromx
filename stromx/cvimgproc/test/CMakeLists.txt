@@ -15,6 +15,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/affine.npy DESTINATION ${CMAKE_CURRENT_BIN
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/perspective.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -36,6 +37,7 @@ set (SOURCES
     ../WarpAffine.cpp
     ../WarpPerspective.cpp
     ../Undistort.cpp
+    ../UndistortPoints.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -56,6 +58,7 @@ set (SOURCES
     WarpAffineTest.cpp
     WarpPerspectiveTest.cpp
     UndistortTest.cpp
+    UndistortPointsTest.cpp
     main.cpp
 )
 

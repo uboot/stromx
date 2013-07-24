@@ -34,6 +34,7 @@ set (SOURCES
     WarpAffine.cpp
     WarpPerspective.cpp
     Undistort.cpp
+    UndistortPoints.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})
