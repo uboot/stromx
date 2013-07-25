@@ -1,4 +1,7 @@
 .kdev4
+.project
+.pydevproject
+.settings
 *.vpp~*
 *.vpp.*
 *~

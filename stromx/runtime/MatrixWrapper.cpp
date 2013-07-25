@@ -171,12 +171,14 @@ namespace stromx
                 throw stromx::runtime::Exception("Failed to parse numpy header.");
             
             // only little endian files are currently supported
-            if(what[0] == ">")
+            std::string endianess = what[1];
+            if(endianess == ">")
                 throw stromx::runtime::Exception("Matrix deserialization does not support big endian files.");
             
             // only C-style arrays are currently supported
-            if(what[1] == "True")
-                throw stromx::runtime::Exception("Matrix deserialization does not support fortran-ordered array.");
+            bool isFortran = false;
+            if(what[4] == "True")
+            	isFortran = true;
             
             // extract the matrix dimensions
             int numRows = 0;
@@ -194,18 +196,41 @@ namespace stromx
             }
             
             // get the value type and allocate the matrix
-            Matrix::ValueType valueType = valueTypeFromNpyHeader(what[2].str()[0], wordSize);
+            std::string type = what[2];
+            Matrix::ValueType valueType = valueTypeFromNpyHeader(type[0], wordSize);
             matrix.allocate(numRows, numCols, valueType);
             
             // read data
-            const uint8_t* rowPtr = matrix.data();
-            unsigned int rowSize = matrix.cols() * matrix.valueSize();
-            for(unsigned int i = 0; i < matrix.rows(); ++i)
+            if (isFortran)
             {
-                in.read((char*)(rowPtr), rowSize);
-                rowPtr += matrix.stride();
+            	// in case the input stream is Fortran-style read each element
+            	// and write it to the transposed position in the matrix
+				uint8_t* dataPtr = matrix.data();
+            	for (unsigned int j = 0; j < matrix.cols(); ++j)
+            	{
+            		for (unsigned int i = 0; i < matrix.rows(); ++i)
+            		{
+            			unsigned int offsetInBytes = i * matrix.stride() +
+            										 j * matrix.valueSize();
+            			char* elementPtr = (char*)(dataPtr + offsetInBytes);
+            			in.read(elementPtr, matrix.valueSize());
+            		}
+            	}
+            }
+            else
+            {
+            	// in case the input stream is C-style read each row to the
+            	// matrix
+				uint8_t* rowPtr = matrix.data();
+				unsigned int rowSize = matrix.cols() * matrix.valueSize();
+				for(unsigned int i = 0; i < matrix.rows(); ++i)
+				{
+					in.read((char*)(rowPtr), rowSize);
+					rowPtr += matrix.stride();
+				}
             }
             
+
             if(in.fail())
                 throw stromx::runtime::Exception("Failed to load matrix.");
         }

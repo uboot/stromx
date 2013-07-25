@@ -35,6 +35,7 @@ namespace stromx
             CPPUNIT_TEST (testSerializeEmpty);
             CPPUNIT_TEST (testDeserializeFloat64);
             CPPUNIT_TEST (testDeserializeUInt16);
+            CPPUNIT_TEST (testDeserializeFortranOrder);
             CPPUNIT_TEST (testDeserializeEmpty);
             CPPUNIT_TEST (testResizeDimension);
             CPPUNIT_TEST (testResizeLength);
@@ -55,6 +56,7 @@ namespace stromx
                 void testSerializeEmpty();
                 void testDeserializeFloat64();
                 void testDeserializeUInt16();
+                void testDeserializeFortranOrder();
                 void testDeserializeEmpty();
                 void testResizeDimension();
                 void testResizeLength();

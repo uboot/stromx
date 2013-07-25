@@ -125,6 +125,27 @@ namespace stromx
             }
         }
 
+        void MatrixWrapperTest::testDeserializeFortranOrder()
+        {
+            m_matrix = new MatrixImpl();
+
+            runtime::DirectoryFileInput input(".");
+            input.initialize("", "fortran_order.npy");
+            CPPUNIT_ASSERT_NO_THROW(m_matrix->deserialize(input, VERSION));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), m_matrix->rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), m_matrix->cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::UINT_16, m_matrix->valueType());
+
+            const uint8_t* rowPtr = m_matrix->data();
+            for(unsigned int i = 0; i < m_matrix->rows(); ++i)
+            {
+                uint16_t* uint16Data = (uint16_t*)(rowPtr);
+                for(unsigned int j = 0; j < m_matrix->cols(); ++j)
+                    CPPUNIT_ASSERT_EQUAL(uint16_t(4 * i + j), uint16Data[j]);
+                rowPtr += m_matrix->stride();
+            }
+        }
+
         void MatrixWrapperTest::testDeserializeEmpty()
         {
             m_matrix = new MatrixImpl();
