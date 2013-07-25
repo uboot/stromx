@@ -1,5 +1,3 @@
-project(python_stromx_cvcore)
-
 set (SOURCES 
     Cvcore.cpp
 )

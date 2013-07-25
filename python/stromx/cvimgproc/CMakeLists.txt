@@ -1,5 +1,3 @@
-project(python_stromx_cvimgproc)
-
 set (SOURCES 
     Cvimgproc.cpp
 )

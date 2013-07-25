@@ -271,12 +271,9 @@ class CMakeGenerator(LibGenerator):
 
 class PythonCMakeGenerator(LibGenerator):
     """
-    Generator of the CMake file for the pyton bindings of the package.
+    Generator of the CMake file for the Python bindings of the package.
     """
     def generate(self):
-        self.doc.line("project(python_stromx_{0})".format(self.p.ident))
-        self.doc.blank()
-        
         self.doc.line("set (SOURCES ")
         self.doc.increaseIndent()
         self.doc.line("{0}.cpp".format(self.p.ident.className()))
