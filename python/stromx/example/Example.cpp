@@ -41,7 +41,7 @@ using namespace stromx::example;
     
 BOOST_PYTHON_MODULE(libexample)
 {
-    def("registerExample", stromxRegisterExample);
+    def("register", stromxExampleRegister);
     
     exportImage();
     

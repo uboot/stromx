@@ -33,7 +33,7 @@
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 
-void stromxRegisterExample(stromx::runtime::Registry& registry)
+void stromxExampleRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::example;
     

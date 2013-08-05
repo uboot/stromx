@@ -26,7 +26,7 @@
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 
-void stromxRegisterCvsupport(stromx::runtime::Registry& registry)
+void stromxCvsupportRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvsupport;
     

@@ -33,8 +33,8 @@ int main (int, char**)
 {
     runtime::Factory factory;
     
-    stromxRegisterRuntime(factory);
-    stromxRegisterExample(factory);
+    stromxRuntimeRegister(factory);
+    stromxExampleRegister(factory);
     
     runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
     

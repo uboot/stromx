@@ -20,7 +20,7 @@ from stromx import *
 
 factory = runtime.Factory()
 
-runtime.registerRuntime(factory)
+runtime.register(factory)
 
 stream = runtime.XmlReader().readStream("file.xml", factory)
 

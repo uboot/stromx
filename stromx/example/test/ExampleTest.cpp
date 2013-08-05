@@ -32,9 +32,9 @@ namespace stromx
             m_factory = new runtime::Factory;
         }
         
-        void ExampleTest::testRegisterExample()
+        void ExampleTest::testregister()
         {
-            CPPUNIT_ASSERT_NO_THROW(stromxRegisterExample(*m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxExampleRegister(*m_factory));
             
             runtime::Operator* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("Example", "Camera"));

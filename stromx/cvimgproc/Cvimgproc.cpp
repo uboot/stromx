@@ -22,7 +22,7 @@
 #include "UndistortPoints.h"
 #include <stromx/runtime/Registry.h>
 
-void stromxRegisterCvimgproc(stromx::runtime::Registry& registry)
+void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvimgproc;
     

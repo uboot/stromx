@@ -56,7 +56,7 @@ BOOST_PYTHON_MODULE(libruntime)
 {
     using namespace boost::python;
     
-    def("registerRuntime", stromxRegisterRuntime);
+    def("register", stromxRuntimeRegister);
     
     exportData();
     exportDataContainer();

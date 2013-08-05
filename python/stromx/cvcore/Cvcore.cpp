@@ -10,7 +10,7 @@ using namespace stromx::cvcore;
 
 BOOST_PYTHON_MODULE(libcvcore)
 {
-    def("registerCvcore", stromxRegisterCvcore);
+    def("register", stromxCvcoreRegister);
     
     stromx::python::exportOperatorKernel<Absdiff>("Absdiff");
     stromx::python::exportOperatorKernel<Add>("Add");

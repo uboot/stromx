@@ -8,4 +8,4 @@ lib = ctypes.CDLL("/home/matz/Projects/build/uboots-stream/stromx/example/libstr
 f = stromx.runtime.Factory()
 ptr = ctypes.c_void_p(f.ptr())
 
-v = lib.stromxRegisterExample(ptr)
+v = lib.stromxregister(ptr)

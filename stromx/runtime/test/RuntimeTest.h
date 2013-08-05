@@ -29,7 +29,7 @@ namespace stromx
         class RuntimeTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (RuntimeTest);
-            CPPUNIT_TEST(testRegisterRuntime);
+            CPPUNIT_TEST(testregister);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,7 +39,7 @@ namespace stromx
             void tearDown();
             
         protected:
-            void testRegisterRuntime();
+            void testregister();
                 
         private:
             runtime::Factory* m_factory;

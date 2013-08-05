@@ -35,7 +35,7 @@ namespace stromx
         class ExampleTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ExampleTest);
-            CPPUNIT_TEST (testRegisterExample);
+            CPPUNIT_TEST (testregister);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -45,7 +45,7 @@ namespace stromx
                 void tearDown();
 
             protected:
-                void testRegisterExample();
+                void testregister();
                 
             private:
                 runtime::Factory* m_factory;

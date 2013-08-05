@@ -58,7 +58,7 @@ class LibHeaderGenerator(LibGenerator):
         
         self.doc.line('extern "C"')
         self.doc.scopeEnter()
-        self.doc.line("STROMX_{0}_API void stromxRegister{1}"
+        self.doc.line("STROMX_{0}_API void stromx{1}Register"
                   "(stromx::runtime::Registry& registry);"\
                   .format(p, self.p.ident.className()))
         self.doc.scopeExit()
@@ -83,7 +83,7 @@ class LibImplGenerator(LibGenerator):
         self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.blank()
         
-        self.doc.line("void stromxRegister{0}(stromx::runtime::Registry& registry)"\
+        self.doc.line("void stromx{0}Register(stromx::runtime::Registry& registry)"\
             .format(self.p.ident.className()))
         self.doc.scopeEnter()
         self.doc.line("using namespace stromx::{0};".format(self.p.ident))
@@ -376,7 +376,7 @@ class PythonExportGenerator(LibGenerator):
     
         self.doc.line("BOOST_PYTHON_MODULE(lib{0})".format(self.p.ident))
         self.doc.scopeEnter()
-        self.doc.line('def("register{0}", stromxRegister{0});'.format(self.p.ident.className()))
+        self.doc.line('def("register", stromx{0}Register);'.format(self.p.ident.className()))
         self.doc.blank()
         
         for m in self.p.methods:

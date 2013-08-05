@@ -28,7 +28,7 @@ using namespace stromx::cvimgproc;
 
 BOOST_PYTHON_MODULE(libcvimgproc)
 {
-    def("registerCvimgproc", stromxRegisterCvimgproc);
+    def("register", stromxCvimgprocRegister);
     
     stromx::python::exportOperatorKernel<BilateralFilter>("BilateralFilter");
     stromx::python::exportOperatorKernel<Blur>("Blur");

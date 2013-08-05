@@ -29,7 +29,7 @@
 #include "stromx/runtime/Trigger.h"
 #include "stromx/runtime/TriggerData.h"
 
-void stromxRegisterRuntime(stromx::runtime::Registry& registry)
+void stromxRuntimeRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::runtime;
     

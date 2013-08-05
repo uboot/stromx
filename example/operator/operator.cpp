@@ -32,7 +32,7 @@ int main (int, char**)
 {
     runtime::Factory factory;
     
-    stromxRegisterRuntime(factory);
+    stromxRuntimeRegister(factory);
     
     runtime::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);
