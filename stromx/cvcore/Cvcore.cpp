@@ -2,6 +2,7 @@
 
 #include "Absdiff.h"
 #include "Add.h"
+#include "AddWeighted.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvcoreRegister(stromx::runtime::Registry& registry)
@@ -10,4 +11,5 @@ void stromxCvcoreRegister(stromx::runtime::Registry& registry)
     
     registry.registerOperator(new Absdiff);
     registry.registerOperator(new Add);
+    registry.registerOperator(new AddWeighted);
 }

@@ -29,6 +29,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (DataVariantTest);
             CPPUNIT_TEST (testIntTypes);
             CPPUNIT_TEST (testImageTypes);
+            CPPUNIT_TEST (testImageIsMatrix);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -38,6 +39,7 @@ namespace stromx
             protected:
                 void testIntTypes();
                 void testImageTypes();
+                void testImageIsMatrix();
         };
     }
 }

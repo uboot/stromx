@@ -17,6 +17,7 @@ set (SOURCES
     Utility.cpp
     Absdiff.cpp
     Add.cpp
+    AddWeighted.cpp
 )
 
 add_library (stromx_cvcore SHARED ${SOURCES})

@@ -51,5 +51,10 @@ namespace stromx
             CPPUNIT_ASSERT(! DataVariant::UINT.isVariant(DataVariant::UINT_16));
             CPPUNIT_ASSERT(! DataVariant::UINT.isVariant(DataVariant::UINT_32));
         }
+        
+        void DataVariantTest::testImageIsMatrix()
+        {
+            CPPUNIT_ASSERT(DataVariant::IMAGE.isVariant(DataVariant::MATRIX));
+        }
     }
 }

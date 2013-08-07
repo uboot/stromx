@@ -21,6 +21,7 @@
 #include <stromx/cvimgproc/WarpPerspective.h>
 #include <stromx/cvimgproc/Undistort.h>
 #include <stromx/cvimgproc/UndistortPoints.h>
+#include <stromx/cvimgproc/DistanceTransform.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -50,4 +51,5 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<WarpPerspective>("WarpPerspective");
     stromx::python::exportOperatorKernel<Undistort>("Undistort");
     stromx::python::exportOperatorKernel<UndistortPoints>("UndistortPoints");
+    stromx::python::exportOperatorKernel<DistanceTransform>("DistanceTransform");
 }

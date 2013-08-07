@@ -105,7 +105,8 @@ namespace stromx
             case MATRIX_ID:
                 return isVariant(INT_MATRIX)
                     || isVariant(UINT_MATRIX)
-                    || isVariant(FLOAT_MATRIX);
+                    || isVariant(FLOAT_MATRIX)
+                    || isVariant(IMAGE);
             case INT_MATRIX_ID:
                 return isVariant(INT_8_MATRIX)
                     || isVariant(INT_16_MATRIX)

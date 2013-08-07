@@ -111,6 +111,14 @@ class Matrix(DataType):
 class FloatMatrix(Matrix):
     def __init__(self):
         super(FloatMatrix, self).__init__("runtime::DataVariant::FLOAT_MATRIX")
+    
+class Float32Matrix(Matrix):
+    def __init__(self):
+        super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_32_MATRIX")
+    
+class Float64Matrix(Matrix):
+    def __init__(self):
+        super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_64_MATRIX")
             
 if __name__ == "__main__":
     import doctest

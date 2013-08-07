@@ -128,6 +128,15 @@ ddepth = package.EnumParameter(
     default = 0
 )
 noArray = package.Constant("cv::noArray()")
+alpha = package.NumericParameter(
+    "alpha", "Alpha", cvtype.Float64(), datatype.Float64(), default = 1.0
+)
+beta = package.NumericParameter(
+    "beta", "Beta", cvtype.Float64(), datatype.Float64(), default = 1.0
+)
+gamma = package.NumericParameter(
+    "gamma", "Gamma", cvtype.Float64(), datatype.Float64(), default = 1.0
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -187,11 +196,38 @@ add = package.Method(
     "add", options = [manual, allocate]
 )
 
+# addWeighted
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), alpha, package.Input(srcImg2),
+     beta, gamma, package.Output(dstImgDdepth), ddepth],
+    inputCheck = pixelTypeDdepthCheck,
+    tests = [
+        [lenna, dt, barbara, dt, dt, memory, dt],
+        [lenna_bw, 2.0, barbara_bw, 0.5, 3.0, memory, dt],
+        [lenna_16bit, 1.0, barbara, 0.5, -10, memory, 1]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), alpha, package.Input(srcImg2),
+     beta, gamma, package.Allocation(dstImgDdepth), ddepth],
+    inputCheck = pixelTypeDdepthCheck,
+    tests = [
+        [lenna_16bit, -1.0, barbara_16bit, 10.0, 2.0, dt, dt],
+        [lenna_16bit, -10.0, barbara, 2.0, 0.0, dt, 2]
+    ]
+)
+addWeighted = package.Method(
+    "addWeighted", options = [manual, allocate]
+)
+
 core = package.Package(
     "cvcore", 0, 0, 1,
     methods = [
         absdiff,
-        add
+        add,
+        addWeighted
     ],
     functions = [
         checkEnumValue,

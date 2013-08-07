@@ -20,6 +20,7 @@
 #include "WarpPerspective.h"
 #include "Undistort.h"
 #include "UndistortPoints.h"
+#include "DistanceTransform.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
@@ -46,4 +47,5 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new WarpPerspective);
     registry.registerOperator(new Undistort);
     registry.registerOperator(new UndistortPoints);
+    registry.registerOperator(new DistanceTransform);
 }

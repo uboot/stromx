@@ -16,9 +16,11 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINA
 set (SOURCES 
     ../Absdiff.cpp
     ../Add.cpp
+    ../AddWeighted.cpp
     ../Utility.cpp
     AbsdiffTest.cpp
     AddTest.cpp
+    AddWeightedTest.cpp
     main.cpp
 )
 

@@ -146,6 +146,12 @@ initOutDdepth = document.Document((
     "{1}->initializeImage({1}->width(), {1}->height(), stride, "
     "{1}->data(), pixelType);").format("srcCastedData", "dstCastedData"
 ))
+initInFloat32 = document.Document((
+    "unsigned int stride = {0}->cols() * runtime::Matrix::valueSize(runtime::Matrix::FLOAT_32);\n"
+    "{1}->initializeMatrix({0}->rows(), {0}->cols(), stride, "
+    "{1}->data(), runtime::Matrix::FLOAT_32);").format("srcCastedData",
+                                                       "dstCastedData"
+))
 
 # arguments
 srcImg = package.Argument(
@@ -170,6 +176,10 @@ dstImgResize = package.Argument(
 dstImgDsize = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInDsize, initOut = initOutCopy
+)
+dstImgFloat32 = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    initIn = initInFloat32
 )
 ddepthDefault = package.Constant(
     "-1"
@@ -355,6 +365,19 @@ srcPts = package.Argument(
 dstPts = package.Argument(
     "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix()
 )
+descriptions = [
+    package.EnumDescription("DIST_L1", "L1 distance","CV_DIST_L1"),
+    package.EnumDescription("DIST_L2", "L2 distance", "CV_DIST_L2"),
+    package.EnumDescription("DIST_C", "C", "CV_DIST_C")
+]
+distanceType = package.EnumParameter(
+    "distanceType", "Distance type", descriptions = descriptions,
+    default = 0
+)
+maskSize = package.NumericParameter(
+    "maskSize", "Mask size", cvtype.Int(), datatype.UInt32(), minValue = 3,
+    maxValue = 5, step = 2, default = 3, rules = [package.OddRule()]
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -366,6 +389,7 @@ dist_coeffs = test.MatrixFile("dist_coeffs.npy")
 points_2d = test.MatrixFile("points_2d.npy")
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000) 
+circle = test.ImageFile("circle.png", grayscale = True)
 
 # bilateralFilter
 manual = package.Option(
@@ -714,66 +738,6 @@ resize = package.Method(
     "resize", options = [manual, allocate]
 )
 
-# adaptiveThreshold
-manual = package.Option(
-    "manual", "Manual", 
-    [package.Input(srcImgMono8bit, True), package.Output(dstImg), maxval,
-     adaptiveMethod, thresholdType, blockSize, subtractedC],
-    tests = [
-        [lenna_bw, memory, dt, dt, dt, dt, dt],
-        [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, dt]
-    ]
-)
-allocate = package.Option(
-    "allocate", "Allocate",
-    [package.Input(srcImgMono8bit, True), package.Allocation(dstImg), maxval,
-     adaptiveMethod, thresholdType, blockSize, subtractedC],
-    tests = [
-        [lenna_bw, dt, 200, 1, 0, 9, dt]
-    ]
-)
-inPlace = package.Option(
-    "inPlace", "In place",
-    [package.Output(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
-     maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
-    tests = [
-        [lenna_bw, dt, 80, 0, 1, 7, dt]
-    ]
-)
-adaptiveThreshold = package.Method(
-    "adaptiveThreshold", options = [manual, allocate, inPlace]
-)
-
-# threshold
-manual = package.Option(
-    "manual", "Manual", 
-    [package.Input(srcImgMono, True), package.Output(dstImg), thresh, maxval,
-     thresholdType],
-    tests = [
-        [lenna_bw, memory, dt, dt, dt],
-        [lenna_bw, test.RefData(lenna_bw), 128, dt, 2]
-    ]
-)
-allocate = package.Option(
-    "allocate", "Allocate",
-    [package.Input(srcImgMono), package.Allocation(dstImg), thresh, maxval,
-     thresholdType],
-    tests = [
-        [lenna_bw, dt, dt, dt, 3]
-    ]
-)
-inPlace = package.Option(
-    "inPlace", "In place",
-    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
-     thresholdType],
-    tests = [
-        [lenna_bw, dt, dt, dt, 4]
-    ]
-)
-threshold = package.Method(
-    "threshold", options = [manual, allocate, inPlace]
-)
-
 # warpAffine
 manual = package.Option(
     "manual", "Manual", 
@@ -854,6 +818,90 @@ undistortPoints = package.Method(
     "undistortPoints", options = [allocate]
 )
 
+
+
+# adaptiveThreshold
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono8bit, True), package.Output(dstImg), maxval,
+     adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, memory, dt, dt, dt, dt, dt],
+        [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, dt]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono8bit, True), package.Allocation(dstImg), maxval,
+     adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, dt, 200, 1, 0, 9, dt]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
+     maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
+    tests = [
+        [lenna_bw, dt, 80, 0, 1, 7, dt]
+    ]
+)
+adaptiveThreshold = package.Method(
+    "adaptiveThreshold", options = [manual, allocate, inPlace]
+)
+
+# threshold
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono, True), package.Output(dstImg), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, memory, dt, dt, dt],
+        [lenna_bw, test.RefData(lenna_bw), 128, dt, 2]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImg), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, dt, dt, dt, 3]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
+     thresholdType],
+    tests = [
+        [lenna_bw, dt, dt, dt, 4]
+    ]
+)
+threshold = package.Method(
+    "threshold", options = [manual, allocate, inPlace]
+)
+
+# distance transform
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono), package.Output(dstImgFloat32), distanceType, 
+     maskSize],
+    tests = [
+        [circle, memory, dt, 5]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImgFloat32), distanceType, 
+     maskSize],
+    tests = [
+        [circle, dt, 1, 3],
+        [circle, dt, 2, 5]
+    ]
+)
+distanceTransform = package.Method(
+    "distanceTransform", options = [manual, allocate]
+)
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -876,7 +924,8 @@ imgproc = package.Package(
         warpAffine,
         warpPerspective,
         undistort,
-        undistortPoints
+        undistortPoints,
+        distanceTransform
     ],
     functions = [
         checkEnumValue,
@@ -885,6 +934,7 @@ imgproc = package.Package(
     ],
     testFiles = [
         "lenna.jpg",
+        "circle.png",
         "affine.npy",
         "perspective.npy",
         "camera_matrix.npy",
