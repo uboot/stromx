@@ -79,6 +79,29 @@ namespace stromx
             }
         }
         
+        Matrix::ValueType Image::valueTypeFromPixelType(const Image::PixelType pixelType)
+        {
+            switch(pixelType)
+            {
+            case runtime::Image::NONE:
+                return Matrix::NONE;
+            case runtime::Image::MONO_8:
+            case runtime::Image::RGB_24:
+            case runtime::Image::BGR_24:
+            case runtime::Image::BAYERBG_8:
+            case runtime::Image::BAYERGB_8:
+                return Matrix::UINT_8;
+            case runtime::Image::MONO_16:
+            case runtime::Image::RGB_48:
+            case runtime::Image::BGR_48:
+            case runtime::Image::BAYERBG_16:
+            case runtime::Image::BAYERGB_16:
+                return Matrix::UINT_16;
+            default:
+                throw runtime::WrongArgument("Unknown pixel type.");    
+            }
+        }
+        
         unsigned int Image::pixelSize(const PixelType pixelType)
         {
             return depth(pixelType) * numChannels(pixelType);

@@ -1,5 +1,6 @@
 #include "Utility.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
 #include <sstream>
 #include <stromx/runtime/OperatorException.h>
 
@@ -36,6 +37,15 @@ namespace stromx
                 str << param->cols();
                 throw runtime::WrongParameterValue(*param, op, "Number of matrix columns must be " + str.str() + " .");
             }
+        }
+        
+        void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
+        {
+            int channels[] = {0};
+            float range[] = {min, max};
+            const float* ranges[] = {range};
+            
+            cv::calcHist(&input, 1, channels, cv::Mat(), result, 1, &size, ranges);
         }
         
     }

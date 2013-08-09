@@ -40,6 +40,9 @@ set (SOURCES
     ../Undistort.cpp
     ../UndistortPoints.cpp
     ../DistanceTransform.cpp
+    ../FloodFill.cpp
+    ../Integral.cpp
+    ../CalcHist1D.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -62,6 +65,9 @@ set (SOURCES
     UndistortTest.cpp
     UndistortPointsTest.cpp
     DistanceTransformTest.cpp
+    FloodFillTest.cpp
+    IntegralTest.cpp
+    CalcHist1DTest.cpp
     main.cpp
 )
 

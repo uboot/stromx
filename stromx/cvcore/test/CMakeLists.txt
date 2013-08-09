@@ -17,10 +17,18 @@ set (SOURCES
     ../Absdiff.cpp
     ../Add.cpp
     ../AddWeighted.cpp
+    ../Bitwise_and.cpp
+    ../Bitwise_not.cpp
+    ../Bitwise_or.cpp
+    ../Bitwise_xor.cpp
     ../Utility.cpp
     AbsdiffTest.cpp
     AddTest.cpp
     AddWeightedTest.cpp
+    Bitwise_andTest.cpp
+    Bitwise_notTest.cpp
+    Bitwise_orTest.cpp
+    Bitwise_xorTest.cpp
     main.cpp
 )
 

@@ -52,6 +52,28 @@ void checkMatrixValue(const stromx::runtime::Matrix & value,
 """)
 checkMatrixValue = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
+# compute histogram
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
+""")
+dtnIncludes = ["<opencv2/imgproc/imgproc.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
+{
+    int channels[] = {0};
+    float range[] = {min, max};
+    const float* ranges[] = {range};
+    
+    cv::calcHist(&input, 1, channels, cv::Mat(), result, 1, &size, ranges);
+}
+
+""")
+calcHist1D = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
 # initializations
 initInCopy = document.Document((
@@ -108,6 +130,12 @@ initInFloat32 = document.Document((
     "{1}->data(), runtime::Matrix::FLOAT_32);").format("srcCastedData",
                                                        "dstCastedData"
 ))
+initInIntegral = document.Document((
+    "unsigned int stride = ({0}->cols() + 1) * runtime::Matrix::valueSize(runtime::Matrix::INT_32);\n"
+    "{1}->initializeMatrix({0}->rows() + 1, {0}->cols() + 1, stride, "
+    "{1}->data(), runtime::Matrix::INT_32);").format("srcCastedData",
+                                                       "dstCastedData"
+))
 
 # arguments
 srcImg = package.Argument(
@@ -133,9 +161,16 @@ dstImgDsize = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInDsize, initOut = initOutCopy
 )
+dstMatrix = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix()
+)
 dstImgFloat32 = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
     initIn = initInFloat32
+)
+dstImgIntegral = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    initIn = initInIntegral
 )
 ddepthDefault = package.Constant(
     "-1"
@@ -338,6 +373,24 @@ descriptions = [
 maskSize = package.EnumParameter(
     "maskSize", "Mask size", descriptions = descriptions,
     default = 0
+)
+seedPointX = package.NumericParameter(
+        "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
+)
+seedPointY = package.NumericParameter(
+        "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
+)
+newVal =  package.NumericParameter(
+        "newVal", "New value", cvtype.Float64(), datatype.Float64()
+)
+histMin = package.NumericParameter(
+        "histMin", "Minimum", cvtype.Float32(), datatype.Float32()
+)
+histMax = package.NumericParameter(
+        "histMax", "Maximum", cvtype.Float32(), datatype.Float32()
+)
+histSize = package.NumericParameter(
+        "histSize", "Number of bins", cvtype.Int(), datatype.UInt32()
 )
 
 # test data
@@ -841,7 +894,7 @@ threshold = package.Method(
     "threshold", options = [manual, allocate, inPlace]
 )
 
-# distance transform
+# distanceTransform
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono), package.Output(dstImgFloat32), distanceType, 
@@ -862,6 +915,51 @@ allocate = package.Option(
 )
 distanceTransform = package.Method(
     "distanceTransform", options = [manual, allocate]
+)
+
+# floodFill
+inPlace = package.Option(
+    "inPlace", "In place", 
+    [package.Output(srcImgMono), package.Point(seedPointX, seedPointY), newVal],
+    tests = [
+        [circle, (20, 10), 125.]
+    ]
+)
+floodFill = package.Method(
+    "floodFill", options = [inPlace]
+)
+
+
+# integral
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono), package.Output(dstImgIntegral)],
+    tests = [
+        [lenna_bw, bigMemory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImgMono), package.Allocation(dstImgIntegral)],
+    tests = [
+        [circle, dt]
+    ]
+)
+integral = package.Method(
+    "integral", options = [manual, allocate]
+)
+
+# hist
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImgMono), package.Allocation(dstMatrix), histMin, histMax, histSize],
+    tests = [
+        [circle, dt, 0, 256, 5],
+        [lenna_bw, dt, 0, 256, 20]
+    ]
+)
+calcHist = package.Method(
+    "calcHist1D", namespace = "", options = [allocate]
 )
 
 imgproc = package.Package(
@@ -887,12 +985,16 @@ imgproc = package.Package(
         warpPerspective,
         undistort,
         undistortPoints,
-        distanceTransform
+        distanceTransform,
+        floodFill,
+        integral,
+        calcHist
     ],
     functions = [
         cvcommon.checkEnumValue,
         cvcommon.checkNumericValue,
-        checkMatrixValue
+        checkMatrixValue,
+        calcHist1D
     ],
     testFiles = [
         "lenna.jpg",

@@ -54,6 +54,16 @@ class UInt32(DataType):
     def variant(self):
         return "runtime::DataVariant::UINT_32"
         
+class Float32(DataType):
+    """
+    Stromx runtime::Float32 type.
+    """
+    def typeId(self):
+        return "runtime::Float32"
+        
+    def variant(self):
+        return "runtime::DataVariant::FLOAT_32"
+        
 class Float64(DataType):
     """
     Stromx runtime::Float64 type.

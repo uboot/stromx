@@ -137,6 +137,33 @@ class Size(Compound):
         xCvData = "{0}".format(self.args[0].ident)
         yCvData = "{0}".format(self.args[1].ident)
         return "cv::Size({0}CvData, {1}CvData)".format(xCvData, yCvData)
+            
+class Point(Compound):
+    """
+    A size object constructs an cv::Point object from two stromx parameters 
+    (x and y).
+    """
+    def __init__(self, xArg, yArg):
+        self.args = [xArg, yArg]
+        
+    def create(self):
+        xCvData = "{0}".format(self.args[0].ident)
+        yCvData = "{0}".format(self.args[1].ident)
+        return "cv::Point({0}CvData, {1}CvData)".format(xCvData, yCvData)
+            
+class Scalar(Compound):
+    """
+    A size object constructs an cv::Scalar object from 1-4 stromx parameters.
+    """
+    def __init__(self, arg0, arg1 = None, arg2 = None, arg3 = None):
+        self.args = [arg0, arg1, arg2, arg3]
+        
+    def create(self):
+        cvData = ["{0}".format(self.arg.ident) for arg in self.args 
+                  if self.args != None]
+        argString = ",".join(cvData)
+        
+        return "cv::Scalar({0})".format(argString)
 
 class Argument(Acceptor):
     """
@@ -241,13 +268,14 @@ class Method(object):
     Represents an OpenCV method. The member 'ident' is the exact identifier
     of the method.
     """
-    def __init__(self, ident, name = "", description = "", functions = None,
-                 options = None):
+    def __init__(self, ident, name = "", description = "", namespace = "cv",
+                 functions = None, options = None):
         self.ident = Ident(ident)
         self.name = name
         self.description = description
         self.functions = [] if functions == None else functions
         self.options = [] if options == None else options
+        self.namespace = namespace
         
 class Option(object):
     """

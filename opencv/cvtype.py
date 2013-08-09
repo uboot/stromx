@@ -36,6 +36,13 @@ class Int(CvType):
     def typeId(self):
         return "int"
         
+class Float32(CvType):
+    """
+    Native C++ double type.
+    """
+    def typeId(self):
+        return "float"
+        
 class Float64(CvType):
     """
     Native C++ double type.

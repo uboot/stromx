@@ -1,12 +1,13 @@
 #ifndef STROMX_CVIMGPROC_UTILITY_H
 #define STROMX_CVIMGPROC_UTILITY_H
 
-#include <stromx/runtime/NumericParameter.h>
-#include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Matrix.h>
 #include <stromx/runtime/OperatorException.h>
+#include <opencv2/core/core.hpp>
+#include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/MatrixParameter.h>
+#include <stromx/runtime/Enum.h>
 #include <stromx/runtime/OperatorKernel.h>
 
 namespace stromx
@@ -27,6 +28,8 @@ namespace stromx
         void checkMatrixValue(const stromx::runtime::Matrix & value,
                               const stromx::runtime::MatrixParameter* param,
                               const stromx::runtime::OperatorKernel& op);
+        
+        void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
         
     }
 }

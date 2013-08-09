@@ -69,8 +69,8 @@ namespace stromx
             m_variant = dataVariantFromPixelType(pixelType);
             
             // set the matrix specific fields
-            m_cols = m_width * pixelSize();
-            m_valueType = pixelType == Image::NONE ? Matrix::NONE : Matrix::UINT_8;
+            m_cols = m_width * numChannels();
+            m_valueType = valueTypeFromPixelType(pixelType);
         }
         
         void ImageWrapper::validate(const unsigned int width,

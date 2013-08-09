@@ -329,6 +329,9 @@ namespace stromx
                     const runtime::Image* src2CastedData = runtime::data_cast<runtime::Image>(src2Data);
                     runtime::Image * dstCastedData = runtime::data_cast<runtime::Image>(dstData);
                     
+                    if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+                        throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+                        
                     if(src1CastedData->numChannels() != src2CastedData->numChannels())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
                         
@@ -385,6 +388,9 @@ namespace stromx
                     const runtime::Image* src1CastedData = runtime::data_cast<runtime::Image>(src1Data);
                     const runtime::Image* src2CastedData = runtime::data_cast<runtime::Image>(src2Data);
                     
+                    if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+                        throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+                        
                     if(src1CastedData->numChannels() != src2CastedData->numChannels())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
                         

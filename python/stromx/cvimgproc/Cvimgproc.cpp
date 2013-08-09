@@ -22,6 +22,9 @@
 #include <stromx/cvimgproc/Undistort.h>
 #include <stromx/cvimgproc/UndistortPoints.h>
 #include <stromx/cvimgproc/DistanceTransform.h>
+#include <stromx/cvimgproc/FloodFill.h>
+#include <stromx/cvimgproc/Integral.h>
+#include <stromx/cvimgproc/CalcHist1D.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -52,4 +55,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<Undistort>("Undistort");
     stromx::python::exportOperatorKernel<UndistortPoints>("UndistortPoints");
     stromx::python::exportOperatorKernel<DistanceTransform>("DistanceTransform");
+    stromx::python::exportOperatorKernel<FloodFill>("FloodFill");
+    stromx::python::exportOperatorKernel<Integral>("Integral");
+    stromx::python::exportOperatorKernel<CalcHist1D>("CalcHist1D");
 }

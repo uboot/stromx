@@ -1,4 +1,4 @@
-#include "stromx/cvcore/Add.h"
+#include "stromx/cvcore/Bitwise_xor.h"
 
 #include "stromx/cvcore/Utility.h"
 #include <stromx/cvsupport/Image.h>
@@ -16,23 +16,20 @@ namespace stromx
 {
     namespace cvcore
     {
-        const std::string Add::PACKAGE(STROMX_CVCORE_PACKAGE_NAME);
-        const runtime::Version Add::VERSION(STROMX_CVCORE_VERSION_MAJOR, STROMX_CVCORE_VERSION_MINOR, STROMX_CVCORE_VERSION_PATCH);
-        const std::string Add::TYPE("Add");
+        const std::string Bitwise_xor::PACKAGE(STROMX_CVCORE_PACKAGE_NAME);
+        const runtime::Version Bitwise_xor::VERSION(STROMX_CVCORE_VERSION_MAJOR, STROMX_CVCORE_VERSION_MINOR, STROMX_CVCORE_VERSION_PATCH);
+        const std::string Bitwise_xor::TYPE("Bitwise_xor");
         
-        Add::Add()
+        Bitwise_xor::Bitwise_xor()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_ddepth(0),
             m_dataFlow()
         {
         }
         
-        const runtime::DataRef Add::getParameter(unsigned int id) const
+        const runtime::DataRef Bitwise_xor::getParameter(unsigned int id) const
         {
             switch(id)
             {
-            case DDEPTH:
-                return m_ddepth;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -40,23 +37,12 @@ namespace stromx
             }
         }
         
-        void Add::setParameter(unsigned int id, const runtime::Data& value)
+        void Bitwise_xor::setParameter(unsigned int id, const runtime::Data& value)
         {
             try
             {
                 switch(id)
                 {
-                case DDEPTH:
-                    {
-                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
-                        {
-                            throw runtime::WrongParameterType(parameter(id), *this);
-                        }
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
-                        m_ddepth = castedValue;
-                    }
-                    break;
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
@@ -78,7 +64,7 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Parameter*> Add::setupInitParameters()
+        const std::vector<const runtime::Parameter*> Bitwise_xor::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -92,7 +78,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Parameter*> Add::setupParameters()
+        const std::vector<const runtime::Parameter*> Bitwise_xor::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -100,26 +86,10 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
-                    m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), "Same as inputs"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), "8-bit"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), "16-bit"));
-                    parameters.push_back(m_ddepthParameter);
-                    
                 }
                 break;
             case(ALLOCATE):
                 {
-                    m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
-                    m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), "Same as inputs"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), "8-bit"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), "16-bit"));
-                    parameters.push_back(m_ddepthParameter);
-                    
                 }
                 break;
             }
@@ -127,7 +97,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> Add::setupInputs()
+        const std::vector<const runtime::Description*> Bitwise_xor::setupInputs()
         {
             std::vector<const runtime::Description*> inputs;
             
@@ -166,7 +136,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> Add::setupOutputs()
+        const std::vector<const runtime::Description*> Bitwise_xor::setupOutputs()
         {
             std::vector<const runtime::Description*> outputs;
             
@@ -193,12 +163,12 @@ namespace stromx
             return outputs;
         }
         
-        void Add::initialize()
+        void Bitwise_xor::initialize()
         {
             runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
-        void Add::execute(runtime::DataProvider & provider)
+        void Bitwise_xor::execute(runtime::DataProvider & provider)
         {
             switch(int(m_dataFlow))
             {
@@ -263,19 +233,16 @@ namespace stromx
                     if(src1CastedData->numChannels() != src2CastedData->numChannels())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
                         
-                    if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
+                    if(src1CastedData->depth() != src2CastedData->depth())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
-                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
-                    unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
-                    dstCastedData->initializeImage(src1CastedData->width(), src1CastedData->height(), stride, dstCastedData->data(), pixelType);
+                    dstCastedData->initializeImage(src1CastedData->width(), src1CastedData->height(), src1CastedData->stride(), dstCastedData->data(), src1CastedData->pixelType());
                     
                     cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
                     cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
                     cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
-                    int ddepthCvData = convertDdepth(m_ddepth);
                     
-                    cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
+                    cv::bitwise_xor(src1CvData, src2CvData, dstCvData);
                     
                     runtime::DataContainer outContainer = inContainer;
                     runtime::Id2DataPair outputMapper(DST, outContainer);
@@ -319,41 +286,23 @@ namespace stromx
                     if(src1CastedData->numChannels() != src2CastedData->numChannels())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
                         
-                    if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
+                    if(src1CastedData->depth() != src2CastedData->depth())
                         throw runtime::InputError(SRC_1, *this, "Input images must have the same depth if the destination depth is not explicitely given.");
                     
                     cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
                     cv::Mat src2CvData = cvsupport::getOpenCvMat(*src2CastedData);
                     cv::Mat dstCvData;
-                    int ddepthCvData = convertDdepth(m_ddepth);
                     
-                    cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
+                    cv::bitwise_xor(src1CvData, src2CvData, dstCvData);
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
-                    runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
-                    unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
-                    dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), stride, dstCastedData->data(), pixelType);
+                    dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), src1CastedData->pixelType());
                     provider.sendOutputData(outputMapper);
                 }
                 break;
-            }
-        }
-        
-        int Add::convertDdepth(const runtime::Enum & value)
-        {
-            switch(int(value))
-            {
-            case SAME:
-                return -1;
-            case DEPTH_8_BIT:
-                return CV_8U;
-            case DEPTH_16_BIT:
-                return CV_16U;
-            default:
-                throw runtime::WrongParameterValue(parameter(DDEPTH), *this);
             }
         }
         

@@ -36,6 +36,9 @@ set (SOURCES
     Undistort.cpp
     UndistortPoints.cpp
     DistanceTransform.cpp
+    FloodFill.cpp
+    Integral.cpp
+    CalcHist1D.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

@@ -18,6 +18,10 @@ set (SOURCES
     Absdiff.cpp
     Add.cpp
     AddWeighted.cpp
+    Bitwise_and.cpp
+    Bitwise_not.cpp
+    Bitwise_or.cpp
+    Bitwise_xor.cpp
 )
 
 add_library (stromx_cvcore SHARED ${SOURCES})

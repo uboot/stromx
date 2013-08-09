@@ -21,6 +21,9 @@
 #include "Undistort.h"
 #include "UndistortPoints.h"
 #include "DistanceTransform.h"
+#include "FloodFill.h"
+#include "Integral.h"
+#include "CalcHist1D.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
@@ -48,4 +51,7 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Undistort);
     registry.registerOperator(new UndistortPoints);
     registry.registerOperator(new DistanceTransform);
+    registry.registerOperator(new FloodFill);
+    registry.registerOperator(new Integral);
+    registry.registerOperator(new CalcHist1D);
 }

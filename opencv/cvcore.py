@@ -43,6 +43,9 @@ initOutDdepth = document.Document((
 ))
 pixelTypeCheck = document.Document(
 """
+if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+    
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
     throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
     
@@ -51,6 +54,9 @@ if(src1CastedData->depth() != src2CastedData->depth())
 """)
 pixelTypeDdepthCheck = document.Document(
 """
+if((src1CastedData->rows() != src2CastedData->rows()) || (src1CastedData->cols() != src2CastedData->cols()))
+    throw runtime::InputError(SRC_1, *this, "Input images must have the same size.");
+    
 if(src1CastedData->numChannels() != src2CastedData->numChannels())
     throw runtime::InputError(SRC_1, *this, "Input images must have the same number of channels.");
     
@@ -177,12 +183,102 @@ addWeighted = package.Method(
     "addWeighted", options = [manual, allocate]
 )
 
+# bitwise_and
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna, barbara, memory],
+        [lenna_bw, barbara_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna_16bit, barbara_16bit, dt]
+    ]
+)
+bitwise_and = package.Method(
+    "bitwise_and", options = [manual, allocate]
+)
+
+# bitwise_not
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Output(dstImg)],
+    tests = [
+        [lenna, memory],
+        [lenna_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Allocation(dstImg)],
+    tests = [
+        [lenna_16bit, dt]
+    ]
+)
+bitwise_not = package.Method(
+    "bitwise_not", options = [manual, allocate]
+)
+
+# bitwise_or
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna, barbara, memory],
+        [lenna_bw, barbara_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna_16bit, barbara_16bit, dt]
+    ]
+)
+bitwise_or = package.Method(
+    "bitwise_or", options = [manual, allocate]
+)
+
+# bitwise_xor
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImg1), package.Input(srcImg2), package.Output(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna, barbara, memory],
+        [lenna_bw, barbara_bw, memory]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
+    inputCheck = pixelTypeCheck,
+    tests = [
+        [lenna_16bit, barbara_16bit, dt]
+    ]
+)
+bitwise_xor = package.Method(
+    "bitwise_xor", options = [manual, allocate]
+)
+
 core = package.Package(
     "cvcore", 0, 0, 1,
     methods = [
         absdiff,
         add,
-        addWeighted
+        addWeighted,
+        bitwise_and,
+        bitwise_not,
+        bitwise_or,
+        bitwise_xor
     ],
     functions = [
         cvcommon.checkEnumValue,

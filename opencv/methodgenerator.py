@@ -1196,7 +1196,12 @@ class OpImplGenerator(MethodGenerator):
             self.visitOption(o, v)
             
             argStr = v.export()
-            self.doc.line("cv::{0}({1});".format(self.m.ident, argStr))
+            namespace = ""
+            if self.m.namespace != "":
+                namespace = "{0}::".format(self.m.namespace)
+                
+            self.doc.line("{2}{0}({1});".format(self.m.ident, argStr,
+                                                namespace))
             
             self.doc.blank()
             
