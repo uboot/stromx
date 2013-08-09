@@ -5,6 +5,7 @@ Created on Mon Apr  1 18:19:38 2013
 @author: matz
 """
 
+import cvcommon
 import cvtype
 import datatype
 import document
@@ -15,52 +16,7 @@ import test
 # abbreviations
 dt = test.Default()
 
-# utilitiy functions
-dcl = document.Document()
-dcl.line("void checkEnumValue(const stromx::runtime::Enum & value, "
-         "const stromx::runtime::EnumParameter* param, "
-         "const stromx::runtime::OperatorKernel& op);")
-dclIncludes = ["<stromx/runtime/Enum.h>",
-               "<stromx/runtime/EnumParameter.h>",
-               "<stromx/runtime/OperatorKernel.h>"]
-dtn = document.Document()
-dtn.line("void checkEnumValue(const stromx::runtime::Enum & value, "
-         "const stromx::runtime::EnumParameter* param, "
-         "const stromx::runtime::OperatorKernel& op)")
-dtn.scopeEnter()
-dtn.line("using namespace runtime;")
-dtn.blank()
-dtn.line("for(std::vector<EnumDescription>::const_iterator "
-         "iter = param->descriptions().begin(); iter != "
-         "param->descriptions().end(); ++iter)")
-dtn.scopeEnter()
-dtn.line(" if(value == iter->value())")
-dtn.line("return;")
-dtn.scopeExit()
-dtn.line("throw stromx::runtime::WrongParameterValue(*param, op);")
-dtn.scopeExit()
-dtnIncludes = ["<stromx/runtime/OperatorException.h>"]
-checkEnumValue = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
-
-dcl = document.Document()
-dclIncludes = ["<stromx/runtime/NumericParameter.h>",
-               "<stromx/runtime/OperatorException.h>"]
-dcl.line("template<class T>");
-dcl.line("void checkNumericValue(const T & value, const "
-         "runtime::NumericParameter<T>* param, "
-         "const stromx::runtime::OperatorKernel& op)");
-dcl.scopeEnter()
-dcl.line("if(value < runtime::data_cast<T>(param->min()))")
-dcl.increaseIndent()
-dcl.line("throw runtime::WrongParameterValue(*param, op);")
-dcl.decreaseIndent()
-dcl.line("if(value > runtime::data_cast<T>(param->max()))")
-dcl.increaseIndent()
-dcl.line("throw runtime::WrongParameterValue(*param, op);")
-dcl.decreaseIndent()
-dcl.scopeExit()
-checkNumericValue = package.Function(dcl, dclIncludes)
-
+# checkMatrixValue
 dcl = document.Document()
 dclIncludes = ["<stromx/runtime/Matrix.h>",
                "<stromx/runtime/MatrixParameter.h>",
@@ -374,9 +330,14 @@ distanceType = package.EnumParameter(
     "distanceType", "Distance type", descriptions = descriptions,
     default = 0
 )
-maskSize = package.NumericParameter(
-    "maskSize", "Mask size", cvtype.Int(), datatype.UInt32(), minValue = 3,
-    maxValue = 5, step = 2, default = 3, rules = [package.OddRule()]
+descriptions = [
+    package.EnumDescription("SIZE_3", "3","3"),
+    package.EnumDescription("SIZE_5", "5","5"),
+    package.EnumDescription("SIZE_PRECISE", "Precise", "CV_DIST_MASK_PRECISE")
+]
+maskSize = package.EnumParameter(
+    "maskSize", "Mask size", descriptions = descriptions,
+    default = 0
 )
 
 # test data
@@ -886,7 +847,7 @@ manual = package.Option(
     [package.Input(srcImgMono), package.Output(dstImgFloat32), distanceType, 
      maskSize],
     tests = [
-        [circle, memory, dt, 5]
+        [circle, memory, dt, dt]
     ]
 )
 allocate = package.Option(
@@ -894,8 +855,9 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImgFloat32), distanceType, 
      maskSize],
     tests = [
-        [circle, dt, 1, 3],
-        [circle, dt, 2, 5]
+        [circle, dt, 2, 0],
+        [circle, dt, 1, 1],
+        [circle, dt, 0, 2]
     ]
 )
 distanceTransform = package.Method(
@@ -928,8 +890,8 @@ imgproc = package.Package(
         distanceTransform
     ],
     functions = [
-        checkEnumValue,
-        checkNumericValue,
+        cvcommon.checkEnumValue,
+        cvcommon.checkNumericValue,
         checkMatrixValue
     ],
     testFiles = [

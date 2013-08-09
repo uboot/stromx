@@ -24,6 +24,12 @@ namespace stromx
                 DIST_L2,
                 DIST_C
             };
+            enum MaskSizeId
+            {
+                SIZE_3,
+                SIZE_5,
+                SIZE_PRECISE
+            };
             enum DataFlowId
             {
                 MANUAL,
@@ -58,12 +64,13 @@ namespace stromx
             const std::vector<const runtime::Description*> setupOutputs();
             
             int convertDistanceType(const runtime::Enum & value);
+            int convertMaskSize(const runtime::Enum & value);
             
             runtime::Enum m_distanceType;
-            runtime::UInt32 m_maskSize;
+            runtime::Enum m_maskSize;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_distanceTypeParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_maskSizeParameter;
+            runtime::EnumParameter* m_maskSizeParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

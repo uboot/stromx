@@ -23,7 +23,7 @@ namespace stromx
         DistanceTransform::DistanceTransform()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_distanceType(0),
-            m_maskSize(3),
+            m_maskSize(0),
             m_dataFlow()
         {
         }
@@ -62,14 +62,12 @@ namespace stromx
                     break;
                 case MASK_SIZE:
                     {
-                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_maskSizeParameter, *this);
-                        if(int(castedValue) % 2 == 0)
-                            throw runtime::WrongParameterValue(*m_maskSizeParameter, *this, "Only odd values are allowed");
+                        checkEnumValue(castedValue, m_maskSizeParameter, *this);
                         m_maskSize = castedValue;
                     }
                     break;
@@ -124,12 +122,12 @@ namespace stromx
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_C), "C"));
                     parameters.push_back(m_distanceTypeParameter);
                     
-                    m_maskSizeParameter = new runtime::NumericParameter<runtime::UInt32>(MASK_SIZE);
+                    m_maskSizeParameter = new runtime::EnumParameter(MASK_SIZE);
                     m_maskSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maskSizeParameter->setTitle("Mask size");
-                    m_maskSizeParameter->setMax(runtime::UInt32(5));
-                    m_maskSizeParameter->setMin(runtime::UInt32(3));
-                    m_maskSizeParameter->setStep(runtime::UInt32(2));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_3), "3"));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_5), "5"));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_PRECISE), "Precise"));
                     parameters.push_back(m_maskSizeParameter);
                     
                 }
@@ -144,12 +142,12 @@ namespace stromx
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_C), "C"));
                     parameters.push_back(m_distanceTypeParameter);
                     
-                    m_maskSizeParameter = new runtime::NumericParameter<runtime::UInt32>(MASK_SIZE);
+                    m_maskSizeParameter = new runtime::EnumParameter(MASK_SIZE);
                     m_maskSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_maskSizeParameter->setTitle("Mask size");
-                    m_maskSizeParameter->setMax(runtime::UInt32(5));
-                    m_maskSizeParameter->setMin(runtime::UInt32(3));
-                    m_maskSizeParameter->setStep(runtime::UInt32(2));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_3), "3"));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_5), "5"));
+                    m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_PRECISE), "Precise"));
                     parameters.push_back(m_maskSizeParameter);
                     
                 }
@@ -269,7 +267,7 @@ namespace stromx
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData = cvsupport::getOpenCvMat(*dstCastedData);
                     int distanceTypeCvData = convertDistanceType(m_distanceType);
-                    int maskSizeCvData = int(m_maskSize);
+                    int maskSizeCvData = convertMaskSize(m_maskSize);
                     
                     cv::distanceTransform(srcCvData, dstCvData, distanceTypeCvData, maskSizeCvData);
                     
@@ -302,7 +300,7 @@ namespace stromx
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat dstCvData;
                     int distanceTypeCvData = convertDistanceType(m_distanceType);
-                    int maskSizeCvData = int(m_maskSize);
+                    int maskSizeCvData = convertMaskSize(m_maskSize);
                     
                     cv::distanceTransform(srcCvData, dstCvData, distanceTypeCvData, maskSizeCvData);
                     
@@ -328,6 +326,21 @@ namespace stromx
                 return CV_DIST_C;
             default:
                 throw runtime::WrongParameterValue(parameter(DISTANCE_TYPE), *this);
+            }
+        }
+        
+        int DistanceTransform::convertMaskSize(const runtime::Enum & value)
+        {
+            switch(int(value))
+            {
+            case SIZE_3:
+                return 3;
+            case SIZE_5:
+                return 5;
+            case SIZE_PRECISE:
+                return CV_DIST_MASK_PRECISE;
+            default:
+                throw runtime::WrongParameterValue(parameter(MASK_SIZE), *this);
             }
         }
         
