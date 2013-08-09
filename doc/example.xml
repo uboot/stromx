@@ -5,7 +5,10 @@
         This package contains some image processing operators based on functions
         of the OpenCV library.
     </Description>
-    <DataVariant id="opencv_image" title="OpenCV image 8-bit" variantPackageId="runtime" variantId="image">
+    <DataVariant id="0" title="OpenCV image 8-bit">
+        <Parents>
+            <DataVariantReference id="31" packageId = "runtime"/>
+        </Parents>
         <Description>
             Image based on the OpenCV matrix implementation.
         </Description>
@@ -20,30 +23,35 @@
         
         <!-- Der Datentyp dieses Parameters wird mit "variantPackage" und "variantId" referenziert. 
             Meinen Sie immer noch, dass das vernuenftig ist??? -->
-        <Parameter id="0" title="In place" variantPackageId="runtime" variantId="bool">
+        <Parameter id="0" title="In place">
+            <DataVariantReference id="4" packageId="runtime"/>
             <Description>
                 If true the operator is initialized with only one input and the image at
                 this input is blurred in-place. Otherwise, the operator is initialized with
                 an input and a destination input.
             </Description>
         </Parameter>
-        <Parameter id="0" title="Kernel size" variantPackageId="runtime" variantId="int32">
+        <Parameter id="0" title="Kernel size">
+            <DataVariantReference id="12" packageId="runtime"/>
             <Description>
                 The size of the Gaussian kernel.
             </Description>
         </Parameter>
-        <Input id="0" title="Source" variantPackageId="runtime" variantId="mono_image_8bit">
+        <Input id="0" title="Source">
+            <DataVariantReference id="30" packageId = "runtime"/>
             <Description>
                 The input image. If the operator is initialized as an in-place operation
                 this image will be blurred.
             </Description>
         </Input>
-        <Input id="0" title="Destination" variantPackageId="runtime" variantId="mono_image_8bit">
+        <Input id="0" title="Destination">
+            <DataVariantReference id="30" packageId = "runtime"/>
             <Description>
                 The image which will contain the blurred version of the image <em>Source</em>.
             </Description>
         </Input>
-        <Output id="0" title="Result" variantPackageId="runtime" variantId="mono_image_8bit">
+        <Output id="0" title="Result">
+            <DataVariantReference id="30" packageId = "runtime"/>
             <Description>
                 The the blurred image. This is either the destination image (no in-place operation) or
                 the input image (in-place operation).

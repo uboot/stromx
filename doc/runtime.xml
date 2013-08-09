@@ -6,19 +6,31 @@
         for primitive data, images and matrices.
     </Description>
     <!-- Als erstes kommen die Datentypen (=DataVariant), welche in diesem Package definiert sind. -->
-    <DataVariant id="data" title="Data" variantPackageId="runtime" variantId="data">
+    <DataVariant id="1" title="Data">
         The parent of all data.
     </DataVariant>
-    <DataVariant id="bool" title="Bool" variantPackageId="runtime" variantId="data">
+    <DataVariant id="4" title="Bool">
+        <Parents>
+            <DataVariantReference id="1" packageId = "runtime"/>
+        </Parents>
         A Boolean value.
     </DataVariant>
-    <DataVariant id="float" title="Float32" variantPackageId="runtime" variantId="data">
+    <DataVariant id="15" title="Float32">
+        <Parents>
+            <DataVariantReference id="14" packageId = "runtime"/>
+        </Parents>
         A float value.
     </DataVariant>
-    <DataVariant id="int32" title="32-bit integer" variantPackageId="runtime" variantId="data">
+    <DataVariant id="12" title="32-bit integer">
+        <Parents>
+            <DataVariantReference id="6" packageId = "runtime"/>
+        </Parents>
         An 32-bit integer value.
     </DataVariant>
-    <DataVariant id="image" title="Image" variantPackageId="runtime" variantId="data">
+    <DataVariant id="30" title="Image">
+        <Parents>
+            <DataVariantReference id="18" packageId = "runtime"/>
+        </Parents>
         <!-- Eigenes "Description" Element sinnvoll? -->
         <Description>
             All data objects of the variant <em>Image</em> implement the interface stromx::Image.
@@ -26,7 +38,10 @@
         </Description>
     </DataVariant>
     
-    <DataVariant id="mono_image_8bit" title="Mono image 8-bit"  variantPackageId="runtime" variantId="image">
+    <DataVariant id="31" title="Mono image 8-bit">
+        <Parents>
+            <DataVariantReference id="30" packageId = "runtime"/>
+        </Parents>
         <Description>
             Image with one channel and 8-bit pixels.
         </Description>
