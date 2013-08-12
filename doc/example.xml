@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Package id="example" name="Example">
+<Package id="example" title="Example">
     <Description>
         This package contains some image processing operators based on functions
         of the OpenCV library.
     </Description>
     <DataVariant id="0" title="OpenCV image 8-bit">
-        <Parents>
-            <DataVariantReference id="31" packageId = "runtime"/>
-        </Parents>
+        <DataVariantReference id="31" packageId = "runtime"/>
         <Description>
             Image based on the OpenCV matrix implementation.
         </Description>
     </DataVariant>
     
-    <!-- Jetzt kommen die Operatoren (hier nur einer). -->
-    <Operator id="blur" type="Blur">
+    <Operator id="Blur" title="Image blur">
         <Description>
             This operators convolutes the input image with a Gaussian kernel of a given
             width. The operator can operate in-place.
         </Description>
-        
-        <!-- Der Datentyp dieses Parameters wird mit "variantPackage" und "variantId" referenziert. 
-            Meinen Sie immer noch, dass das vernuenftig ist??? -->
         <Parameter id="0" title="In place">
             <DataVariantReference id="4" packageId="runtime"/>
             <Description>

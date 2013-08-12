@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Package id="runtime" name="Runtime">
+<Package id="runtime" title="Runtime">
     <Description>
         This package contains infrastructure operators and general data types
         for primitive data, images and matrices.
     </Description>
-    <!-- Als erstes kommen die Datentypen (=DataVariant), welche in diesem Package definiert sind. -->
     <DataVariant id="1" title="Data">
         The parent of all data.
     </DataVariant>
@@ -16,32 +15,24 @@
         A Boolean value.
     </DataVariant>
     <DataVariant id="15" title="Float32">
-        <Parents>
-            <DataVariantReference id="14" packageId = "runtime"/>
-        </Parents>
+        <DataVariantReference id="14" packageId = "runtime"/>
         A float value.
     </DataVariant>
     <DataVariant id="12" title="32-bit integer">
-        <Parents>
-            <DataVariantReference id="6" packageId = "runtime"/>
-        </Parents>
-        An 32-bit integer value.
+        <DataVariantReference id="6" packageId = "runtime"/>
+        <Description>
+            An 32-bit integer value.
+        </Description>
     </DataVariant>
     <DataVariant id="30" title="Image">
-        <Parents>
-            <DataVariantReference id="18" packageId = "runtime"/>
-        </Parents>
-        <!-- Eigenes "Description" Element sinnvoll? -->
+        <DataVariantReference id="18" packageId = "runtime"/>
         <Description>
             All data objects of the variant <em>Image</em> implement the interface stromx::Image.
             Images are two-dimensional arrays with 1-3 channels and 8-bit or 16-bit pixels.
         </Description>
     </DataVariant>
-    
     <DataVariant id="31" title="Mono image 8-bit">
-        <Parents>
-            <DataVariantReference id="30" packageId = "runtime"/>
-        </Parents>
+        <DataVariantReference id="30" packageId = "runtime"/>
         <Description>
             Image with one channel and 8-bit pixels.
         </Description>
