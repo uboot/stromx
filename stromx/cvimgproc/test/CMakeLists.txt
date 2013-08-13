@@ -43,6 +43,9 @@ set (SOURCES
     ../FloodFill.cpp
     ../Integral.cpp
     ../CalcHist1D.cpp
+    ../Canny.cpp
+    ../CornerHarris.cpp
+    ../CornerMinEigenVal.cpp
     ../Utility.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
@@ -68,6 +71,9 @@ set (SOURCES
     FloodFillTest.cpp
     IntegralTest.cpp
     CalcHist1DTest.cpp
+    CannyTest.cpp
+    CornerHarrisTest.cpp
+    CornerMinEigenValTest.cpp
     main.cpp
 )
 

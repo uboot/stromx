@@ -290,4 +290,6 @@ core = package.Package(
     ]
 )
 
+
+generator.generateMethodFiles(core, bitwise_xor)
 generator.generatePackageFiles(core) 

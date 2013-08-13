@@ -384,13 +384,28 @@ newVal =  package.NumericParameter(
         "newVal", "New value", cvtype.Float64(), datatype.Float64()
 )
 histMin = package.NumericParameter(
-        "histMin", "Minimum", cvtype.Float32(), datatype.Float32()
+        "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
+        default = 0
 )
 histMax = package.NumericParameter(
-        "histMax", "Maximum", cvtype.Float32(), datatype.Float32()
+        "histMax", "Maximum", cvtype.Float32(), datatype.Float32(),
+        default = 256
 )
 histSize = package.NumericParameter(
-        "histSize", "Number of bins", cvtype.Int(), datatype.UInt32()
+        "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
+        default = 16
+)
+threshold1 = package.NumericParameter(
+        "threshold1", "Threshold 1", cvtype.Float64(), datatype.Float64(),
+        default = 64
+)
+threshold2 = package.NumericParameter(
+        "threshold2", "Threshold 2", cvtype.Float64(), datatype.Float64(),
+        default = 128
+)
+harrisK = package.NumericParameter(
+        "k", "Harris parameter", cvtype.Float64(), datatype.Float64(),
+        default = 1
 )
 
 # test data
@@ -962,6 +977,79 @@ calcHist = package.Method(
     "calcHist1D", namespace = "", options = [allocate]
 )
 
+# Canny
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono, True), package.Output(dstImg), threshold1,
+     threshold2],
+    tests = [
+        [lenna_bw, memory, dt, dt],
+        [lenna_bw, test.RefData(lenna_bw), 64, 128]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImg), threshold1,
+     threshold2],
+    tests = [
+        [lenna_bw, dt, dt, dt]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono),  threshold1,
+     threshold2],
+    tests = [
+        [lenna_bw, dt, dt, dt]
+    ]
+)
+canny = package.Method(
+    "Canny", options = [manual, allocate, inPlace]
+)
+
+# cornerHarris
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono, False), package.Output(dstImgFloat32), blockSize,
+     ksize, harrisK],
+    tests = [
+        [lenna_bw, bigMemory, dt, dt, dt],
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImgFloat32), blockSize,
+     ksize, harrisK],
+    tests = [
+        [lenna_bw, dt, dt, dt, dt]
+    ]
+)
+cornerHarris = package.Method(
+    "cornerHarris", options = [manual, allocate]
+)
+
+# cornerMinEigenVal
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono, False), package.Output(dstImgFloat32), blockSize,
+     ksize],
+    tests = [
+        [lenna_bw, bigMemory, dt, dt, dt],
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstImgFloat32), blockSize,
+     ksize],
+    tests = [
+        [lenna_bw, dt, dt, dt, dt]
+    ]
+)
+cornerMinEigenVal = package.Method(
+    "cornerMinEigenVal", options = [manual, allocate]
+)
+
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -988,7 +1076,10 @@ imgproc = package.Package(
         distanceTransform,
         floodFill,
         integral,
-        calcHist
+        calcHist,
+        canny,
+        cornerHarris,
+        cornerMinEigenVal
     ],
     functions = [
         cvcommon.checkEnumValue,
@@ -1007,4 +1098,5 @@ imgproc = package.Package(
     ]
 )
 
+generator.generateMethodFiles(imgproc, cornerHarris)
 generator.generatePackageFiles(imgproc) 

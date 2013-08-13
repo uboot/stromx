@@ -9,9 +9,7 @@
         The parent of all data.
     </DataVariant>
     <DataVariant id="4" title="Bool">
-        <Parents>
-            <DataVariantReference id="1" packageId = "runtime"/>
-        </Parents>
+        <DataVariantReference id="1" packageId = "runtime"/>
         A Boolean value.
     </DataVariant>
     <DataVariant id="15" title="Float32">

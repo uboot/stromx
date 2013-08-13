@@ -24,6 +24,9 @@
 #include "FloodFill.h"
 #include "Integral.h"
 #include "CalcHist1D.h"
+#include "Canny.h"
+#include "CornerHarris.h"
+#include "CornerMinEigenVal.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
@@ -54,4 +57,7 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new FloodFill);
     registry.registerOperator(new Integral);
     registry.registerOperator(new CalcHist1D);
+    registry.registerOperator(new Canny);
+    registry.registerOperator(new CornerHarris);
+    registry.registerOperator(new CornerMinEigenVal);
 }

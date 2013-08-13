@@ -25,6 +25,9 @@
 #include <stromx/cvimgproc/FloodFill.h>
 #include <stromx/cvimgproc/Integral.h>
 #include <stromx/cvimgproc/CalcHist1D.h>
+#include <stromx/cvimgproc/Canny.h>
+#include <stromx/cvimgproc/CornerHarris.h>
+#include <stromx/cvimgproc/CornerMinEigenVal.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -58,4 +61,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<FloodFill>("FloodFill");
     stromx::python::exportOperatorKernel<Integral>("Integral");
     stromx::python::exportOperatorKernel<CalcHist1D>("CalcHist1D");
+    stromx::python::exportOperatorKernel<Canny>("Canny");
+    stromx::python::exportOperatorKernel<CornerHarris>("CornerHarris");
+    stromx::python::exportOperatorKernel<CornerMinEigenVal>("CornerMinEigenVal");
 }

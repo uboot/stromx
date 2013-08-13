@@ -22,9 +22,9 @@ namespace stromx
         
         CalcHist1D::CalcHist1D()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_histMax(),
-            m_histMin(),
-            m_histSize(),
+            m_histMax(256),
+            m_histMin(0),
+            m_histSize(16),
             m_dataFlow()
         {
         }

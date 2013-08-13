@@ -39,6 +39,9 @@ set (SOURCES
     FloodFill.cpp
     Integral.cpp
     CalcHist1D.cpp
+    Canny.cpp
+    CornerHarris.cpp
+    CornerMinEigenVal.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})
