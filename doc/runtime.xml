@@ -9,28 +9,28 @@
         The parent of all data.
     </DataVariant>
     <DataVariant id="4" title="Bool">
-        <DataVariantReference id="1" packageId = "runtime"/>
+        <DataVariantReference id="1" package = "runtime"/>
         A Boolean value.
     </DataVariant>
     <DataVariant id="15" title="Float32">
-        <DataVariantReference id="14" packageId = "runtime"/>
+        <DataVariantReference id="14" package = "runtime"/>
         A float value.
     </DataVariant>
     <DataVariant id="12" title="32-bit integer">
-        <DataVariantReference id="6" packageId = "runtime"/>
+        <DataVariantReference id="6" package = "runtime"/>
         <Description>
             An 32-bit integer value.
         </Description>
     </DataVariant>
     <DataVariant id="30" title="Image">
-        <DataVariantReference id="18" packageId = "runtime"/>
+        <DataVariantReference id="18" package = "runtime"/>
         <Description>
             All data objects of the variant <em>Image</em> implement the interface stromx::Image.
             Images are two-dimensional arrays with 1-3 channels and 8-bit or 16-bit pixels.
         </Description>
     </DataVariant>
     <DataVariant id="31" title="Mono image 8-bit">
-        <DataVariantReference id="30" packageId = "runtime"/>
+        <DataVariantReference id="30" package = "runtime"/>
         <Description>
             Image with one channel and 8-bit pixels.
         </Description>

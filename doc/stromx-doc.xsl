@@ -113,8 +113,8 @@
 
   <xsl:template match="DataVariantReference">
     <xsl:variable name="parentVariantId" select="@id"/>
-    <xsl:variable name="parentPackageId" select="@packageId"/>
-    <xsl:variable name="packageFile" select="concat(@packageId,'.xml')"/>
+    <xsl:variable name="parentPackageId" select="@package"/>
+    <xsl:variable name="packageFile" select="concat(@package,'.xml')"/>
     <xsl:for-each select="key('variantId', @id, document($packageFile))">
     <a>
         <xsl:attribute name="href">
