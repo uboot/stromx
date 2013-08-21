@@ -200,7 +200,18 @@ namespace stromx
                 validateParameterId(id);
                 validateReadAccess(id);
                 
-                return m_op->getParameter(id);
+                try
+                {
+                    return m_op->getParameter(id);
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
             }
                 
             void SynchronizedOperatorKernel::setParameter(unsigned int id, const Data& value, const bool waitWithTimeout, const unsigned int timeout)
@@ -215,7 +226,18 @@ namespace stromx
                 
                 validateWriteAccess(id);
                 
-                m_op->setParameter(id, value);
+                try
+                {
+                    m_op->setParameter(id, value);
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
             }
 
             void SynchronizedOperatorKernel::receiveInputData(const Id2DataMapper& mapper)
