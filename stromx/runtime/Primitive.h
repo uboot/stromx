@@ -24,7 +24,6 @@
 #endif
 
 #include "stromx/runtime/Data.h"
-#include "stromx/runtime/Description.h"
 #include "stromx/runtime/Version.h"
 
 namespace stromx

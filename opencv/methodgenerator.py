@@ -32,20 +32,11 @@ class CollectVisitor(SingleArgumentVisitor):
     def visitParameter(self, parameter):
         self.args.add(parameter)
         
-    def visitNumericParameter(self, numericParameter):
-        self.args.add(numericParameter)
-        
     def visitConstant(self, const):
         self.args.add(const)
         
-    def visitEnumParameter(self, enumParameter):
-        self.args.add(enumParameter)
-        
     def visitRefInput(self, refInput):
         self.args.add(refInput)
-        
-    def visitMatrixParameter(self, parameter):
-        self.args.add(parameter)
         
     def visitAllocation(self, allocation):
         self.args.add(allocation)
@@ -65,35 +56,12 @@ class MethodGenerator(object):
         def visitParameter(self, parameter):
             self.params.append(parameter)
             
-        def visitNumericParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-        def visitEnumParameter(self, parameter):
-            self.visitParameter(parameter)
-        
-        def visitMatrixParameter(self, parameter):
-                self.visitParameter(parameter)
-            
     class DocVisitor(SingleArgumentVisitor):
         """ 
         Visitor which holds a document.
         """
         def __init__(self, doc):
             self.doc = doc
-            
-    class ParameterVisitor(DocVisitor):
-        """
-        Visitor which maps all visits of parameter arguments to a common
-        function which handles all parameters regardless of their exact type.
-        """          
-        def visitNumericParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-        def visitEnumParameter(self, parameter):
-            self.visitParameter(parameter)
-            
-        def visitMatrixParameter(self, parameter):
-            self.visitParameter(parameter)
             
     def __init__(self):
         self.p = None
@@ -212,7 +180,7 @@ class OpHeaderGenerator(MethodGenerator):
             paramIds = [p.ident.constant() for p in self.params]
             doc.enum("ParameterId", set(paramIds))
         
-    class DataMemberVisitor(MethodGenerator.ParameterVisitor):
+    class DataMemberVisitor(MethodGenerator.DocVisitor):
         """
         Exports class members for the values of all visited parameters.
         """
@@ -227,28 +195,31 @@ class OpHeaderGenerator(MethodGenerator):
         parameters.
         """
         def visitParameter(self, parameter):
-            self.doc.line(("runtime::Parameter* m_{0}Parameter;"
-                          ).format(parameter.ident))
-                          
-        def visitEnumParameter(self, parameter):
-            self.doc.line(("runtime::EnumParameter* m_{0}Parameter;"
-                          ).format(parameter.ident))
-                          
-        def visitNumericParameter(self, parameter):
-            self.doc.line(("runtime::NumericParameter<{1}>* m_{0}Parameter;"
-                          ).format(parameter.ident,
-                                   parameter.dataType.typeId()))
-                          
-        def visitMatrixParameter(self, parameter):
-            self.doc.line(("runtime::MatrixParameter* m_{0}Parameter;"
-                          ).format(parameter.ident,
-                                   parameter.dataType.typeId()))
+            if parameter.argType == package.ArgType.PLAIN:
+                self.doc.line(("runtime::Parameter* m_{0}Parameter;"
+                              ).format(parameter.ident))
+            elif parameter.argType == package.ArgType.ENUM:
+                self.doc.line(("runtime::EnumParameter* m_{0}Parameter;"
+                              ).format(parameter.ident))
+            elif parameter.argType == package.ArgType.NUMERIC:
+                self.doc.line(("runtime::NumericParameter<{1}>* m_{0}Parameter;"
+                              ).format(parameter.ident,
+                                       parameter.dataType.typeId()))
+            elif parameter.argType == package.ArgType.MATRIX:
+                self.doc.line(("runtime::MatrixParameter* m_{0}Parameter;"
+                              ).format(parameter.ident,
+                                       parameter.dataType.typeId()))
+            else:
+                assert(False)
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         """
         Exports enumerations for the IDs of all visited enumeration parameters.
         """
-        def visitEnumParameter(self, parameter):
+        def visitParameter(self, parameter):
+            if parameter.argType != package.ArgType.ENUM:
+                return
+                
             keys = []
             for desc in parameter.descriptions:
                 keys.append(desc.ident)
@@ -260,7 +231,10 @@ class OpHeaderGenerator(MethodGenerator):
         Exports declarations of conversion functions for each visited 
         enumeration parameter.
         """
-        def visitEnumParameter(self, parameter):
+        def visitParameter(self, parameter):
+            if parameter.argType != package.ArgType.ENUM:
+                return
+                
             name = parameter.ident.className()
             l = "int convert{0}(const runtime::Enum & value);".format(name)
             self.doc.line(l)
@@ -314,6 +288,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line('#include <stromx/cvsupport/Matrix.h>')
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/EnumParameter.h>')
+        self.doc.line('#include <stromx/runtime/MatrixDescription.h>')
         self.doc.line('#include <stromx/runtime/MatrixParameter.h>')
         self.doc.line('#include <stromx/runtime/NumericParameter.h>')
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
@@ -401,7 +376,7 @@ class OpImplGenerator(MethodGenerator):
                 else:
                     doc.line(init)
             
-    class GetParametersVisitor(MethodGenerator.ParameterVisitor):
+    class GetParametersVisitor(MethodGenerator.DocVisitor):
         """
         Exports case sections which return the values of all visited 
         parameters.
@@ -415,24 +390,24 @@ class OpImplGenerator(MethodGenerator):
         Exports case sections which set the values of all visited parameters.
         """
         def visitParameter(self, parameter):
-            self.__setParameterWithCheck(parameter)
-            
-        def visitEnumParameter(self, parameter):
-            l = ("checkEnumValue(castedValue, {0}Parameter, *this);"
-                ).format(parameter.ident.attribute())
+            l = ""
+            if parameter.argType == package.ArgType.PLAIN:
+                pass
+            elif parameter.argType == package.ArgType.ENUM:
+                l = ("checkEnumValue(castedValue, {0}Parameter, *this);"
+                    ).format(parameter.ident.attribute())
+            elif parameter.argType == package.ArgType.NUMERIC:
+                l = ("checkNumericValue(castedValue, {0}Parameter, *this);"
+                    ).format(parameter.ident.attribute())
+            elif parameter.argType == package.ArgType.MATRIX:
+                l = ("checkMatrixValue(castedValue, {0}Parameter, *this);"
+                    ).format(parameter.ident.attribute())
+            else:
+                assert(False)
+                
             self.__setParameterWithCheck(parameter, l)
             
-        def visitNumericParameter(self, parameter):
-            l = ("checkNumericValue(castedValue, {0}Parameter, *this);"
-                ).format(parameter.ident.attribute())
-            self.__setParameterWithCheck(parameter, l)
-            
-        def visitMatrixParameter(self, parameter):
-            l = ("checkMatrixValue(castedValue, {0}Parameter, *this);"
-                ).format(parameter.ident.attribute())
-            self.__setParameterWithCheck(parameter, l)
-            
-        def __setParameterWithCheck(self, parameter, check = ""):
+        def __setParameterWithCheck(self, parameter, check):
             self.doc.label("case {0}".format(parameter.ident.constant()))
             self.doc.scopeEnter()
             self.doc.line(("const {0} & castedValue = runtime::data_cast<{1}>(value);"
@@ -469,6 +444,18 @@ class OpImplGenerator(MethodGenerator):
             self.isInit = isInit
             
         def visitParameter(self, parameter):
+            if parameter.argType == package.ArgType.PLAIN:
+                self.__visitPlainParameter(parameter)
+            elif parameter.argType == package.ArgType.ENUM:
+                self.__visitEnumParameter(parameter)
+            elif parameter.argType == package.ArgType.MATRIX:
+                self.__visitMatrixParameter(parameter)
+            elif parameter.argType == package.ArgType.NUMERIC:
+                self.__visitNumericParameter(parameter)
+            else:
+                assert(False)
+            
+        def __visitPlainParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
             l = "{0} = new runtime::Parameter({1}, {2});"\
                 .format(ident, parameter.ident.constant(),
@@ -481,7 +468,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             self.doc.blank()
             
-        def visitEnumParameter(self, parameter):
+        def __visitEnumParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
             l = ("{0} = new runtime::EnumParameter({1});"
                 ).format(ident, parameter.ident.constant())
@@ -499,7 +486,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             self.doc.blank()
             
-        def visitMatrixParameter(self, parameter):
+        def __visitMatrixParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
             l = "{0} = new runtime::MatrixParameter({1}, {2});"\
                 .format(ident, parameter.ident.constant(),
@@ -514,7 +501,7 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             self.doc.blank()
             
-        def visitNumericParameter(self, parameter):
+        def __visitNumericParameter(self, parameter):
             ident = "m_{0}Parameter".format(parameter.ident)
             l = ("{0} = new runtime::NumericParameter<{2}>({1});"
                 ).format(ident, parameter.ident.constant(),
@@ -783,18 +770,15 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(cvData)
             
         def visitParameter(self, parameter):
-            cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
-                                            parameter.ident)
-            castedData = parameter.cvType.cast(parameter.ident.attribute())
-            self.doc.line("{0} = {1};".format(cvData, castedData))
+            if parameter.argType == package.ArgType.ENUM:
+                self.__visitEnumParameter(parameter)
+            else:
+                cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
+                                                parameter.ident)
+                castedData = parameter.cvType.cast(parameter.ident.attribute())
+                self.doc.line("{0} = {1};".format(cvData, castedData))
             
-        def visitNumericParameter(self, numericParameter):
-            self.visitParameter(numericParameter)
-            
-        def visitMatrixParameter(self, numericParameter):
-            self.visitParameter(numericParameter)
-            
-        def visitEnumParameter(self, parameter):
+        def __visitEnumParameter(self, parameter):
             ident = parameter.ident
             cvData = "{0} {1}CvData".format(parameter.cvType.typeId(), 
                                             ident)
@@ -825,15 +809,6 @@ class OpImplGenerator(MethodGenerator):
             self.visit(allocation)
             
         def visitParameter(self, parameter):
-            self.visit(parameter)
-            
-        def visitNumericParameter(self, numericParameter):
-            self.visit(numericParameter)
-            
-        def visitEnumParameter(self, parameter):
-            self.visit(parameter)
-            
-        def visitMatrixParameter(self, parameter):
             self.visit(parameter)
             
         def visitConstant(self, constant):
@@ -899,7 +874,10 @@ class OpImplGenerator(MethodGenerator):
             super(OpImplGenerator.EnumConversionDefVisitor, self).__init__(doc)
             self.m = m
             
-        def visitEnumParameter(self, parameter):
+        def visitParameter(self, parameter):
+            if parameter.argType != package.ArgType.ENUM:
+                return
+                
             name = parameter.ident.className()
             l = ("int {1}::convert{0}(const runtime::Enum & value)"
                 ).format(name, self.m.ident.className())

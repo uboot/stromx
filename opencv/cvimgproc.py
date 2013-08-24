@@ -351,7 +351,8 @@ distCoeffs = package.MatrixParameter(
     rows = 4, cols = 1
 )
 srcPts = package.Argument(
-    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix()
+    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
+    cols = 2
 )
 dstPts = package.Argument(
     "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix()

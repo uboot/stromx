@@ -40,6 +40,7 @@ set(SOURCES
     ../DataRef.cpp
     ../DataContainer.cpp
     ../DataVariant.cpp
+    ../Description.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../EnumParameter.cpp

@@ -25,6 +25,7 @@ set(SOURCES
     Data.cpp
     DataRef.cpp
     DataVariant.cpp
+    Description.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp

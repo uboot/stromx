@@ -17,42 +17,13 @@
 #ifndef STROMX_RUNTIME_PARAMETER_H
 #define STROMX_RUNTIME_PARAMETER_H
 
-#include <vector>
 #include "stromx/runtime/Description.h"
-#include "stromx/runtime/Enum.h"
-#include "stromx/runtime/None.h"
 
 namespace stromx
 {
     namespace runtime
     {
         class ParameterGroup;
-        
-        /** \brief %Description of an enumeration value. */
-        class EnumDescription
-        {
-        public:
-            /** Constructs an enumeration description. */
-            explicit EnumDescription(const Enum & value)
-              : m_value(value)
-            {}
-            
-            /** Constructs an enumeration description with a documentation title . */
-            EnumDescription(const Enum & value, const std::string & title)
-              : m_value(value),
-                m_title(title)
-            {}
-            
-            /** Returns the value. */
-            const Enum value() const { return m_value; }
-            
-            /** Returns the description title. */
-            const std::string & title() const { return m_title; }
-            
-        private:
-            Enum m_value;
-            std::string m_title;
-        };
         
         /** \brief %Description of a parameter.
          * 
@@ -171,37 +142,8 @@ namespace stromx
              */
             virtual const std::vector<const Parameter*> & members() const { return NO_MEMBERS; }
             
-            /** Returns the maximal value of this parameter or an instance of None. */
-            virtual const Data& max() const { return NONE; }
-            
-            /** Returns the minimal value of this parameter or an instance of None. */
-            virtual const Data& min() const { return NONE; }
-            
-            /** 
-             * Returns a useful step size to decrease or increase the value of this
-             * parameter. Returns NONE if no step size is defined for this parameter.
-             */
-            virtual const Data& step() const { return NONE; }
-            
-            /** Returns the possible values of an enumeration value or an empty vector. */
-            virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
-            
-            /** 
-             * Returns the required number of rows of a matrix parameters. Returns
-             * 0 if any number of rows is possible.
-             */
-            virtual unsigned int rows() const { return 0; }
-            
-            /** 
-             * Returns the required number of columns of a matrix parameters. Returns
-             * 0 if any number of rows is possible.
-             */
-            virtual unsigned int cols() const { return 0; }
-            
         private:
-            static const std::vector<EnumDescription> NO_DESCRIPTIONS;
             static const std::vector<const Parameter*> NO_MEMBERS;
-            static const None NONE;
             
             AccessMode m_access;
             const Parameter* m_group;

@@ -45,7 +45,7 @@ namespace stromx
              * Removes a value from the possible enumeration values.
              * \throws WrongArgument If no description with the same value exists.
              */
-            virtual void remove(const Enum & value);     
+            virtual void remove(const Enum & description);     
             
         private:
             std::vector<EnumDescription> m_descriptions;

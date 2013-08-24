@@ -5,6 +5,7 @@
 #include <stromx/cvsupport/Matrix.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/MatrixDescription.h>
 #include <stromx/runtime/MatrixParameter.h>
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>

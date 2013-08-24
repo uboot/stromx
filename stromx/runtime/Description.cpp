@@ -14,23 +14,13 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Parameter.h"
-#include "stromx/runtime/ParameterGroup.h"
+#include "stromx/runtime/Description.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        const std::vector<const Parameter*> Parameter::NO_MEMBERS = std::vector<const Parameter*>();
-        
-        Parameter::Parameter(const unsigned int id, const stromx::runtime::DataVariant& variant,
-                             ParameterGroup* const group)
-          : Description(id, variant),
-            m_access(NO_ACCESS),
-            m_group(group)
-        {
-            if(group)
-                group->addMember(this);
-        }
+        const std::vector<EnumDescription> Description::NO_DESCRIPTIONS = std::vector<EnumDescription>();
+        const None Description::NONE = None();
     }
 }

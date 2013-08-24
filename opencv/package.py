@@ -164,21 +164,36 @@ class Scalar(Compound):
         argString = ",".join(cvData)
         
         return "cv::Scalar({0})".format(argString)
+        
+class ArgType(object):
+    PLAIN = 0
+    MATRIX = 1
+    NUMERIC = 2
+    ENUM = 3
 
 class Argument(Acceptor):
     """
     Base class of all arguments which are not compount arguments. 
     """
-    def __init__(self, ident, name, cvType, dataType, description = "",
-                 initIn = None, initOut = None, rules = None):
+    def __init__(self, ident, name, cvType, dataType, argType = ArgType.PLAIN,
+                 description = "", initIn = None, initOut = None,
+                 rules = None, minValue = None, maxValue = None, step = None,
+                 descriptions = None, rows = 0, cols = 0):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
         self.dataType = dataType
+        self.argType = argType
         self.description = description
         self.initIn = initIn
         self.initOut = initOut
         self.rules = [] if rules == None else rules
+        self.minValue = minValue
+        self.maxValue = maxValue
+        self.step = step
+        self.descriptions = [] if descriptions == None else descriptions
+        self.rows = rows
+        self.cols = cols
         
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -186,9 +201,16 @@ class Argument(Acceptor):
         self.description = arg.description
         self.cvType = arg.cvType
         self.dataType = arg.dataType
+        self.argType = arg.argType
         self.initIn = arg.initIn
         self.initOut = arg.initOut
         self.rules = arg.rules
+        self.minValue = arg.minValue
+        self.maxValue = arg.maxValue
+        self.step = arg.step
+        self.description = arg.descriptions
+        self.rows = arg.rows
+        self.cols = arg.cols
     
 class InputArgument(Argument):
     """
@@ -201,17 +223,25 @@ class OutputArgument(Argument):
     An argument which receives the result of the OpenCV function. Only one
     output argument per option is supported.
     """
-    def __init__(self, ident, name, cvType, dataType):
-        super(OutputArgument, self).__init__(ident, name, cvType, dataType)
+    pass
         
 class Parameter(InputArgument):
     """
     Input argument which is represented by an operator parameter.
     """
-    def __init__(self, ident, name, cvType, dataType, inPlace = False,
-                 isInit = False, default = None, rules = None):
-        super(Parameter, self).__init__(ident, name, cvType, dataType,
-                                        rules = rules)
+    def __init__(self, ident, name, cvType, dataType, argType = ArgType.PLAIN,
+                 description = "", initIn = None, initOut = None,
+                 rules = None, minValue = None, maxValue = None, step = None,
+                 descriptions = None, rows = 0, cols = 0, inPlace = False,
+                 isInit = False, default = None):
+                     
+        super(Parameter, self).__init__(
+            ident, name, cvType, dataType, argType = argType,
+            description = description, initIn = initIn, initOut = initOut,
+            rules = rules, minValue = minValue, maxValue = maxValue,
+            step = step, descriptions = descriptions, rows = rows, cols = cols
+        )
+        
         self.inPlace = inPlace
         self.isInit = isInit
         self.default = default
@@ -224,44 +254,35 @@ class NumericParameter(Parameter):
     Input argument which is represented by a numeric operator parameter.
     """
     def __init__(self, ident, name, cvType, dataType, default = None,
-                 minValue = None, maxValue = None, step = None, rules = None):
+                 minValue = None, maxValue = None, step = None, rules = None,
+                 descriptions = None, rows = 0, cols = 0):
         default = minValue if default == None else default
         super(NumericParameter, self).__init__(
-            ident, name, cvType, dataType, default = default, rules = rules)
-        self.minValue = minValue
-        self.maxValue = maxValue
-        self.step = step
-    
-    def accept(self, visitor):
-        visitor.visitNumericParameter(self)
+            ident, name, cvType, dataType, default = default, rules = rules,
+            argType = ArgType.NUMERIC, minValue = minValue,
+            maxValue = maxValue, step = step
+        )
     
 class EnumParameter(Parameter):
     """
     Input argument which is represented by an enumeration parameter.
     """
     def __init__(self, ident, name, descriptions = None, default = None):
-        super(EnumParameter, self).__init__(ident, name, cvtype.Int(),
-                                            datatype.Enum(), default = default)
-        self.descriptions = [] if descriptions == None else descriptions
-    
-    def accept(self, visitor):
-        visitor.visitEnumParameter(self)
+        super(EnumParameter, self).__init__(
+            ident, name, cvtype.Int(), datatype.Enum(), default = default, 
+            descriptions = descriptions, argType = ArgType.ENUM
+        )
         
 class MatrixParameter(Parameter):
     """
     Input argument which is represented by a matrix parameter.
     """
-    def __init__(self, ident, name, dataType, default = None, rows = 0, cols = 0,
-                 rules = None):
+    def __init__(self, ident, name, dataType, default = None, rows = 0,
+                 cols = 0, rules = None):
         super(MatrixParameter, self).__init__(
             ident, name, cvtype.Mat(), dataType, default = default, 
-            rules = rules
+            rules = rules, argType = ArgType.MATRIX, rows = rows, cols = cols
         )
-        self.rows = rows
-        self.cols = cols
-    
-    def accept(self, visitor):
-        visitor.visitMatrixParameter(self)
         
 class Method(object):
     """
