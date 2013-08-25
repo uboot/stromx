@@ -60,6 +60,8 @@ namespace stromx
             runtime::MatrixParameter* m_affineMParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizeyParameter;
+            runtime::Description* m_dstDescription;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

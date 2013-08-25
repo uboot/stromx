@@ -56,9 +56,11 @@ namespace stromx
             runtime::Float32 m_histMin;
             runtime::UInt32 m_histSize;
             runtime::Enum m_dataFlow;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float32>* m_histMaxParameter;
             runtime::NumericParameter<runtime::Float32>* m_histMinParameter;
             runtime::NumericParameter<runtime::UInt32>* m_histSizeParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

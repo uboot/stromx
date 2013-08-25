@@ -157,9 +157,9 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    src->setTitle("Source");
-                    inputs.push_back(src);
+                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription->setTitle("Source");
+                    inputs.push_back(m_srcDescription);
                     
                 }
                 break;
@@ -209,7 +209,7 @@ namespace stromx
                     srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
                     srcData = &srcReadAccess();
                     
-                    if(! srcData->variant().isVariant(runtime::DataVariant::MONO_IMAGE))
+                    if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }

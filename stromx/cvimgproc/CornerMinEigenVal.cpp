@@ -163,21 +163,21 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    src->setTitle("Source");
-                    inputs.push_back(src);
+                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription->setTitle("Source");
+                    inputs.push_back(m_srcDescription);
                     
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::MATRIX);
-                    dst->setTitle("Destination");
-                    inputs.push_back(dst);
+                    m_dstDescription = new runtime::Description(DST, runtime::DataVariant::MATRIX);
+                    m_dstDescription->setTitle("Destination");
+                    inputs.push_back(m_dstDescription);
                     
                 }
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    src->setTitle("Source");
-                    inputs.push_back(src);
+                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription->setTitle("Source");
+                    inputs.push_back(m_srcDescription);
                     
                 }
                 break;
@@ -194,7 +194,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::MATRIX);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::FLOAT_32_MATRIX);
                     dst->setTitle("Destination");
                     outputs.push_back(dst);
                     
@@ -202,7 +202,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::MATRIX);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::FLOAT_32_MATRIX);
                     dst->setTitle("Destination");
                     outputs.push_back(dst);
                     
@@ -247,11 +247,11 @@ namespace stromx
                         srcData = &srcReadAccess();
                     }
                     
-                    if(! srcData->variant().isVariant(runtime::DataVariant::MONO_IMAGE))
+                    if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }
-                    if(! dstData->variant().isVariant(runtime::DataVariant::MATRIX))
+                    if(! dstData->variant().isVariant(m_dstDescription->variant()))
                     {
                         throw runtime::InputError(DST, *this, "Wrong input data variant.");
                     }
@@ -288,7 +288,7 @@ namespace stromx
                     srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
                     srcData = &srcReadAccess();
                     
-                    if(! srcData->variant().isVariant(runtime::DataVariant::MONO_IMAGE))
+                    if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }

@@ -71,7 +71,9 @@ namespace stromx
             runtime::Enum m_maskSize;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_distanceTypeParameter;
+            runtime::Description* m_dstDescription;
             runtime::EnumParameter* m_maskSizeParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

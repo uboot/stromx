@@ -57,6 +57,8 @@ namespace stromx
             runtime::Enum m_dataFlow;
             runtime::MatrixParameter* m_cameraMatrixParameter;
             runtime::MatrixParameter* m_distCoeffsParameter;
+            runtime::Description* m_dstDescription;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

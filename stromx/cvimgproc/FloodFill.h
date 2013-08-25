@@ -58,6 +58,7 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_newValParameter;
             runtime::NumericParameter<runtime::UInt32>* m_seedPointXParameter;
             runtime::NumericParameter<runtime::UInt32>* m_seedPointYParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

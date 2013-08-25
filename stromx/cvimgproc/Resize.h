@@ -70,9 +70,11 @@ namespace stromx
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_dsizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_dsizeyParameter;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_fxParameter;
             runtime::NumericParameter<runtime::Float64>* m_fyParameter;
             runtime::EnumParameter* m_interpolationParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

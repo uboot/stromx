@@ -51,6 +51,8 @@ namespace stromx
             const std::vector<const runtime::Description*> setupOutputs();
             
             runtime::Enum m_dataFlow;
+            runtime::Description* m_dstDescription;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

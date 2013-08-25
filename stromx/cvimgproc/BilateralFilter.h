@@ -58,8 +58,10 @@ namespace stromx
             runtime::Float64 m_sigmaSpace;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_dParameter;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_sigmaColorParameter;
             runtime::NumericParameter<runtime::Float64>* m_sigmaSpaceParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

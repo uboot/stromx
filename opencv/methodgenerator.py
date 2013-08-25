@@ -223,13 +223,21 @@ class OpHeaderGenerator(MethodGenerator):
         def visitInputOutput(self, arg):
             self.visitInput(arg)
             
+        def visitAllocation(self, arg):
+            self.visitInput(arg)
+            
+        def visitRefInput(self, arg):
+            self.visitInput(arg)
+            
         def visitInput(self, arg):
             if arg.argType == package.ArgType.MATRIX:
                 self.doc.line((
                     "runtime::MatrixDescription* m_{0}Description;"
                 ).format(arg.ident))
             else:
-                pass
+                self.doc.line((
+                    "runtime::Description* m_{0}Description;"
+                ).format(arg.ident))
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         """
@@ -585,37 +593,43 @@ class OpImplGenerator(MethodGenerator):
         """
         def visitOutput(self, arg):
             if arg.argType == package.ArgType.PLAIN:
-                self.__setupDescription(arg)
+                self.__setupDescription(arg, True)
             elif arg.argType == package.ArgType.MATRIX:
-                self.__setupMatrixDescription(arg)
+                self.__setupMatrixDescription(arg, True)
             else:
                 assert(False)
         
         def visitInput(self, arg):
-            self.visitOutput(arg)
+            if arg.argType == package.ArgType.PLAIN:
+                self.__setupDescription(arg, False)
+            elif arg.argType == package.ArgType.MATRIX:
+                self.__setupMatrixDescription(arg, False)
+            else:
+                assert(False)
         
         def visitInputOutput(self, arg):
-            self.visitOutput(arg)
+            self.visitInput(arg)
             
-        def __setupDescription(self, arg):
-            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
-                .format(arg.ident, arg.ident.constant(),
-                        arg.dataType.variant())
+        def __setupDescription(self, arg, isOutput):
+            description = "{0}Description".format(arg.ident.attribute())
+            l = "{0} = new runtime::Description({1}, {2});"\
+                .format(description, arg.ident.constant(),
+                        self.__getVariant(arg, isOutput))
             self.doc.line(l)
             l = '{0}->setTitle("{1}");'\
-                .format(arg.ident, arg.name)
+                .format(description, arg.name)
             self.doc.line(l)
-            l = "inputs.push_back({0});".format(arg.ident)
+            l = "inputs.push_back({0});".format(description)
             self.doc.line(l)
             self.doc.blank()
             
-        def __setupMatrixDescription(self, arg):
+        def __setupMatrixDescription(self, arg, isOutput):
             description = "{0}Description".format(arg.ident.attribute())
             l = (
                 "{0} = new "
                 "runtime::MatrixDescription({1}, {2});"
             ).format(description, arg.ident.constant(), 
-                     arg.dataType.variant())
+                     self.__getVariant(arg, isOutput))
             self.doc.line(l)
             l = '{0}->setTitle("{1}");'.format(description, arg.name)
             self.doc.line(l)
@@ -626,6 +640,12 @@ class OpImplGenerator(MethodGenerator):
             l = "inputs.push_back({0});".format(description)
             self.doc.line(l)
             self.doc.blank()
+            
+        def __getVariant(self, arg, isOutput):
+            if isOutput:
+                return arg.dataType.parentVariant()
+            else:
+                return arg.dataType.variant()
             
     class InputMapperVisitor(MethodGenerator.DocVisitor):
         """
@@ -776,8 +796,9 @@ class OpImplGenerator(MethodGenerator):
             self.__visit(output)
             
         def __visit(self, arg):
-            l = ("if(! {0}Data->variant().isVariant({1}))".format(arg.ident,
-                 arg.dataType.variant()))
+            l = (
+                "if(! {0}Data->variant().isVariant({1}Description->variant()))"
+            ).format(arg.ident, arg.ident.attribute())
             self.doc.line(l)
             self.doc.scopeEnter()
             l = (

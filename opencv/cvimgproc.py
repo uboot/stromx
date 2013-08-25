@@ -201,7 +201,7 @@ dstMatrix = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Matrix()
 )
 dstImgFloat32 = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    "dst", "Destination", cvtype.Mat(), datatype.Float32Matrix(),
     initIn = initInFloat32
 )
 dstImgIntegral = package.Argument(

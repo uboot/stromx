@@ -78,7 +78,9 @@ namespace stromx
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_adaptiveMethodParameter;
             runtime::NumericParameter<runtime::UInt32>* m_blockSizeParameter;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_maxvalParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_thresholdTypeParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };

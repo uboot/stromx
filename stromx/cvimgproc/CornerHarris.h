@@ -58,8 +58,10 @@ namespace stromx
             runtime::UInt32 m_ksize;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt32>* m_blockSizeParameter;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_kParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

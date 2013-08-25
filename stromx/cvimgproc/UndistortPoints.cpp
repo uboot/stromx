@@ -196,7 +196,7 @@ namespace stromx
                     srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
                     srcData = &srcReadAccess();
                     
-                    if(! srcData->variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                    if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {
                         throw runtime::InputError(SRC, *this, "Wrong input data variant.");
                     }

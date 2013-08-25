@@ -68,7 +68,9 @@ namespace stromx
             runtime::Float64 m_threshold;
             runtime::Enum m_thresholdType;
             runtime::Enum m_dataFlow;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_maxvalParameter;
+            runtime::Description* m_srcDescription;
             runtime::NumericParameter<runtime::Float64>* m_thresholdParameter;
             runtime::EnumParameter* m_thresholdTypeParameter;
             runtime::EnumParameter* m_dataFlowParameter;

@@ -105,6 +105,9 @@ class Image(DataType):
     def concreteTypeId(self):
         return "cvsupport::Image"
         
+    def parentVariant(self):
+        return "runtime::DataVariant::IMAGE"
+        
     def variant(self):
         return self.__variant
         
@@ -121,6 +124,9 @@ class Matrix(DataType):
         
     def concreteTypeId(self):
         return "cvsupport::Matrix"
+        
+    def parentVariant(self):
+        return "runtime::DataVariant::MATRIX"
         
     def variant(self):
         return self.__variant

@@ -79,11 +79,13 @@ namespace stromx
             runtime::Enum m_op;
             runtime::Enum m_shape;
             runtime::Enum m_dataFlow;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::UInt32>* m_iterationsParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizexParameter;
             runtime::NumericParameter<runtime::UInt32>* m_ksizeyParameter;
             runtime::EnumParameter* m_opParameter;
             runtime::EnumParameter* m_shapeParameter;
+            runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }
