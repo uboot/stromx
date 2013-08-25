@@ -20,16 +20,7 @@ class ArgumentVisitor(object):
     def visitParameter(self, parameter):
         pass
         
-    def visitNumericParameter(self, numericParameter):
-        pass
-        
     def visitConstant(self, const):
-        pass
-        
-    def visitEnumParameter(self, enumParameter):
-        pass
-        
-    def visitMatrixParameter(self, enumParameter):
         pass
         
     def visitRefInput(self, refInput):
@@ -42,6 +33,9 @@ class ArgumentVisitor(object):
         pass
         
     def visitCompound(self, compound):
+        pass
+    
+    def visitInputOutput(self, inputOutput):
         pass
     
 class TestArgumentVisitor(object):

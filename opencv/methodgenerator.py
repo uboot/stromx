@@ -40,6 +40,9 @@ class CollectVisitor(SingleArgumentVisitor):
         
     def visitAllocation(self, allocation):
         self.args.add(allocation)
+                           
+    def visitInputOutput(self, inputOutput):
+        self.args.add(inputOutput)
         
     def visitOutput(self, output):
         self.args.add(output)
@@ -161,6 +164,9 @@ class OpHeaderGenerator(MethodGenerator):
     
         def visitInput(self, inputArg):
             self.connectors.add(inputArg)
+    
+        def visitInputOutput(self, arg):
+            self.connectors.add(arg)
     
         def visitOutput(self, output):
             self.connectors.add(output)
@@ -542,6 +548,9 @@ class OpImplGenerator(MethodGenerator):
         """
         Exports the allocation of the descriptions of all visited outputs.
         """
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
+            
         def visitOutput(self, output):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
                 .format(output.ident, output.ident.constant(),
@@ -575,16 +584,22 @@ class OpImplGenerator(MethodGenerator):
         
         def visitInput(self, allocation):
             self.visitOutput(allocation)
+        
+        def visitInputOutput(self, allocation):
+            self.visitOutput(allocation)
             
     class InputMapperVisitor(MethodGenerator.DocVisitor):
         """
         Exports input mappers for all visited inputs and outputs.
         """
-        def visitInput(self, inputArg):
-            self.__visit(inputArg)
+        def visitInput(self, arg):
+            self.__visit(arg)
             
-        def visitOutput(self, output):
-            self.__visit(output)
+        def visitOutput(self, arg):
+            self.__visit(arg)
+            
+        def visitInputOutput(self, arg):
+            self.__visit(arg)
             
         def __visit(self, arg):
             ident = arg.ident
@@ -605,6 +620,9 @@ class OpImplGenerator(MethodGenerator):
         def visitOutput(self, output):
             self.__visit(output)
             
+        def visitInputOutput(self, arg):
+            self.__visit(arg)
+            
         def export(self, doc):
             if self.line != "":
                 doc.line("provider.receiveInputData({0});".format(self.line))
@@ -622,6 +640,9 @@ class OpImplGenerator(MethodGenerator):
         def visitInput(self, inputArg):
             self.doc.line(("const runtime::Data* "
                            "{0}Data = 0;").format(inputArg.ident))
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, output):
             self.doc.line("runtime::Data* {0}Data = 0;".format(output.ident))
@@ -633,6 +654,9 @@ class OpImplGenerator(MethodGenerator):
         def visitInput(self, inputArg):
             self.doc.line(("runtime::ReadAccess<> "
                            "{0}ReadAccess;").format(inputArg.ident))
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
                         
         def visitOutput(self, output):
             mapper = "{0}InMapper".format(output.ident)
@@ -653,6 +677,9 @@ class OpImplGenerator(MethodGenerator):
             
         def visitInput(self, inputArg):
             self.inputs.append(inputArg)
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, output):
             assert(self.output == None)
@@ -702,6 +729,9 @@ class OpImplGenerator(MethodGenerator):
         """
         def visitInput(self, inputArg):
             self.__visit(inputArg)
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, output):
             self.__visit(output)
@@ -728,6 +758,9 @@ class OpImplGenerator(MethodGenerator):
                  "runtime::data_cast<{1}>({0}Data);").format(inputArg.ident,
                 inputArg.dataType.typeId())
             self.doc.line(l)
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, output):
             l = ("{1} * {0}CastedData = "
@@ -740,6 +773,9 @@ class OpImplGenerator(MethodGenerator):
         Exports the initialization of the output argument before the OpenCV
         function is called.
         """
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
+            
         def visitOutput(self, output):
             self.doc.document(output.initIn)
             
@@ -755,6 +791,9 @@ class OpImplGenerator(MethodGenerator):
             cast = inputArg.cvType.cast(castedData)
             l = "{0} = {1};".format(cvData, cast)
             self.doc.line(l)
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, inputArg):
             cvData = "{0} {1}CvData".format(inputArg.cvType.typeId(), 
@@ -801,6 +840,9 @@ class OpImplGenerator(MethodGenerator):
             
         def visitInput(self, inputArg):
             self.visit(inputArg)
+                           
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
             
         def visitOutput(self, output):
             self.visit(output)
@@ -836,6 +878,9 @@ class OpImplGenerator(MethodGenerator):
         Exports the wrapping of the result data into a data container for
         each visited output or allocation.
         """
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
+            
         def visitOutput(self, output):
             l = "runtime::DataContainer outContainer = inContainer;";
             self.doc.line(l)

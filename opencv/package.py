@@ -338,8 +338,9 @@ class Input(InputArgument):
 
 class Output(OutputArgument):
     """
-    Operator input whose data will be forwarded to the output. This is the only
-    input which is changed by the operator.
+    Operator input whose data will receive the result of the method. It will be
+    forwarded to the output. It represents the only input data among all other
+    inputs of the operation which is changed by the method.
     """
     def __init__(self, arg):
         if arg:
@@ -347,6 +348,20 @@ class Output(OutputArgument):
     
     def accept(self, visitor):
         visitor.visitOutput(self)
+
+class InputOutput(OutputArgument):
+    """
+    Operator input whose data represents an input of the method and which will
+    be overwritten by the output of the method. It represents the only input 
+    data among all other inputs of the operation which is changed by the
+    method.
+    """
+    def __init__(self, arg):
+        if arg:
+            self.copyFrom(arg)
+    
+    def accept(self, visitor):
+        visitor.visitInputOutput(self)
         
 class RefInput(InputArgument):
     """

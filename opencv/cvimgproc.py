@@ -464,7 +464,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg),
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, dt, dt]
@@ -494,7 +494,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ddepthDefault,
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, dt, dt, dt],
@@ -524,7 +524,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), kernel,
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), kernel,
      anchor, iterations],
     tests = [
         [lenna_bw, dt, (dt, dt, 2), dt, dt]
@@ -557,7 +557,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg),
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
         [lenna, dt, dt, 0, 0]
@@ -585,7 +585,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), ksize],
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), ksize],
     tests = [
         [lenna, dt, dt]
     ]
@@ -615,7 +615,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImg), package.RefInput(dstImg, srcImg), op, kernel,
+    [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), op, kernel,
      anchor, iterations],
     tests = [
         [lenna_bw, dt, 1, (dt, dt, 1), dt, dt],
@@ -848,8 +848,6 @@ undistortPoints = package.Method(
     "undistortPoints", options = [allocate]
 )
 
-
-
 # adaptiveThreshold
 manual = package.Option(
     "manual", "Manual", 
@@ -870,7 +868,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
+    [package.InputOutput(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
      maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
     tests = [
         [lenna_bw, dt, 80, 0, 1, 7, dt]
@@ -900,7 +898,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
+    [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
      thresholdType],
     tests = [
         [lenna_bw, dt, dt, dt, 4]
@@ -936,7 +934,7 @@ distanceTransform = package.Method(
 # floodFill
 inPlace = package.Option(
     "inPlace", "In place", 
-    [package.Output(srcImgMono), package.Point(seedPointX, seedPointY), newVal],
+    [package.InputOutput(srcImgMono), package.Point(seedPointX, seedPointY), newVal],
     tests = [
         [circle, (20, 10), 125.]
     ]
@@ -998,7 +996,7 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.Output(srcImgMono), package.RefInput(dstImg, srcImgMono),  threshold1,
+    [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono),  threshold1,
      threshold2],
     tests = [
         [lenna_bw, dt, dt, dt]
