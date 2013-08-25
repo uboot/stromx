@@ -195,7 +195,7 @@ class OpHeaderGenerator(MethodGenerator):
                                   parameter.ident.attribute())
             self.doc.line(l)
         
-    class ParameterDescriptionsVisitor(MethodGenerator.DocVisitor):
+    class DescriptionsVisitor(MethodGenerator.DocVisitor):
         """
         Exports class members for the parameter description of all visited
         parameters.
@@ -213,10 +213,23 @@ class OpHeaderGenerator(MethodGenerator):
                                        parameter.dataType.typeId()))
             elif parameter.argType == package.ArgType.MATRIX:
                 self.doc.line(("runtime::MatrixParameter* m_{0}Parameter;"
-                              ).format(parameter.ident,
-                                       parameter.dataType.typeId()))
+                              ).format(parameter.ident))
             else:
                 assert(False)
+        
+        def visitOutput(self, arg):
+            self.visitInput(arg)
+            
+        def visitInputOutput(self, arg):
+            self.visitInput(arg)
+            
+        def visitInput(self, arg):
+            if arg.argType == package.ArgType.MATRIX:
+                self.doc.line((
+                    "runtime::MatrixDescription* m_{0}Description;"
+                ).format(arg.ident))
+            else:
+                pass
             
     class EnumParameterIdVisitor(MethodGenerator.DocVisitor):
         """
@@ -277,7 +290,7 @@ class OpHeaderGenerator(MethodGenerator):
         v = OpHeaderGenerator.DataMemberVisitor(self.doc)
         self.visitAll(v)
         
-        v = OpHeaderGenerator.ParameterDescriptionsVisitor(self.doc)
+        v = OpHeaderGenerator.DescriptionsVisitor(self.doc)
         self.visitAll(v)
         
         self.__classExit()
@@ -570,23 +583,49 @@ class OpImplGenerator(MethodGenerator):
         """
         Exports the allocation of the descriptions of all visited inputs.
         """
-        def visitOutput(self, output):
+        def visitOutput(self, arg):
+            if arg.argType == package.ArgType.PLAIN:
+                self.__setupDescription(arg)
+            elif arg.argType == package.ArgType.MATRIX:
+                self.__setupMatrixDescription(arg)
+            else:
+                assert(False)
+        
+        def visitInput(self, arg):
+            self.visitOutput(arg)
+        
+        def visitInputOutput(self, arg):
+            self.visitOutput(arg)
+            
+        def __setupDescription(self, arg):
             l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
-                .format(output.ident, output.ident.constant(),
-                        output.dataType.variant())
+                .format(arg.ident, arg.ident.constant(),
+                        arg.dataType.variant())
             self.doc.line(l)
             l = '{0}->setTitle("{1}");'\
-                .format(output.ident, output.name)
+                .format(arg.ident, arg.name)
             self.doc.line(l)
-            l = "inputs.push_back({0});".format(output.ident)
+            l = "inputs.push_back({0});".format(arg.ident)
             self.doc.line(l)
             self.doc.blank()
-        
-        def visitInput(self, allocation):
-            self.visitOutput(allocation)
-        
-        def visitInputOutput(self, allocation):
-            self.visitOutput(allocation)
+            
+        def __setupMatrixDescription(self, arg):
+            description = "{0}Description".format(arg.ident.attribute())
+            l = (
+                "{0} = new "
+                "runtime::MatrixDescription({1}, {2});"
+            ).format(description, arg.ident.constant(), 
+                     arg.dataType.variant())
+            self.doc.line(l)
+            l = '{0}->setTitle("{1}");'.format(description, arg.name)
+            self.doc.line(l)
+            l = '{0}->setRows({1});'.format(description, arg.rows)
+            self.doc.line(l)
+            l = '{0}->setCols({1});'.format(description, arg.cols)
+            self.doc.line(l)
+            l = "inputs.push_back({0});".format(description)
+            self.doc.line(l)
+            self.doc.blank()
             
     class InputMapperVisitor(MethodGenerator.DocVisitor):
         """
@@ -731,7 +770,7 @@ class OpImplGenerator(MethodGenerator):
             self.__visit(inputArg)
                            
         def visitInputOutput(self, arg):
-            self.visitOutput(arg)
+            self.__visit(arg)
             
         def visitOutput(self, output):
             self.__visit(output)
@@ -767,6 +806,28 @@ class OpImplGenerator(MethodGenerator):
                  "runtime::data_cast<{1}>({0}Data);").format(output.ident,
                 output.dataType.typeId())
             self.doc.line(l)
+                
+    class CheckCastedDataVisitor(MethodGenerator.DocVisitor):
+        """
+        Exports the data check for the data check of each visited input.
+        """
+        def visitInput(self, inputArg):
+            self.__visit(inputArg)
+                           
+        def visitInputOutput(self, arg):
+            self.__visit(arg)
+            
+        def visitOutput(self, output):
+            self.__visit(output)
+            
+        def __visit(self, arg):
+            if arg.argType == package.ArgType.MATRIX:
+                l = (
+                    "checkMatrixData(*{0}CastedData, {1}Description, *this);"
+                ).format(arg.ident, arg.ident.attribute())
+                self.doc.line(l)
+            else:
+                pass
     
     class InitInVisitor(MethodGenerator.DocVisitor):
         """
@@ -1197,6 +1258,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.blank()
             
             v = OpImplGenerator.CastedDataVisitor(self.doc)
+            self.visitOption(o, v)  
+            
+            v = OpImplGenerator.CheckCastedDataVisitor(self.doc)
             self.visitOption(o, v) 
             
             self.doc.blank()

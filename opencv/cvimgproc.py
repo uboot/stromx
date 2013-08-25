@@ -16,6 +16,42 @@ import test
 # abbreviations
 dt = test.Default()
 
+# checkMatrixData
+dcl = document.Document()
+dclIncludes = ["<stromx/runtime/Matrix.h>",
+               "<stromx/runtime/MatrixDescription.h>",
+               "<stromx/runtime/OperatorKernel.h>"]
+dcl.text(
+"""
+void checkMatrixData(const stromx::runtime::Matrix & value,
+                     const stromx::runtime::MatrixDescription* desc,
+                     const stromx::runtime::OperatorKernel& op);
+""")
+dtnIncludes = ["<sstream>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void checkMatrixData(const stromx::runtime::Matrix & value,
+                     const stromx::runtime::MatrixDescription* desc,
+                     const stromx::runtime::OperatorKernel& op)
+{
+    if(desc->rows() && value.rows() != desc->rows())
+    {
+        std::ostringstream str;
+        str << desc->rows();
+        throw runtime::InputError(desc->id(), op, "Number of matrix rows must be " + str.str() + " .");
+    }
+    
+    if(desc->cols() && value.cols() != desc->cols())
+    {
+        std::ostringstream str;
+        str << desc->cols();
+        throw runtime::InputError(desc->id(), op, "Number of matrix columns must be " + str.str() + " .");
+    }
+}
+""")
+checkMatrixData = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # checkMatrixValue
 dcl = document.Document()
 dclIncludes = ["<stromx/runtime/Matrix.h>",
@@ -350,11 +386,11 @@ distCoeffs = package.MatrixParameter(
     default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
     rows = 4, cols = 1
 )
-srcPts = package.Argument(
+srcPts = package.MatrixArgument(
     "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
     cols = 2
 )
-dstPts = package.Argument(
+dstPts = package.MatrixArgument(
     "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix()
 )
 descriptions = [
@@ -1083,6 +1119,7 @@ imgproc = package.Package(
     functions = [
         cvcommon.checkEnumValue,
         cvcommon.checkNumericValue,
+        checkMatrixData,
         checkMatrixValue,
         calcHist1D
     ],

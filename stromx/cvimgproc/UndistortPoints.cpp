@@ -142,9 +142,11 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::FLOAT_MATRIX);
-                    src->setTitle("Source");
-                    inputs.push_back(src);
+                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::DataVariant::FLOAT_MATRIX);
+                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setRows(0);
+                    m_srcDescription->setCols(2);
+                    inputs.push_back(m_srcDescription);
                     
                 }
                 break;
@@ -200,6 +202,7 @@ namespace stromx
                     }
                     
                     const runtime::Matrix* srcCastedData = runtime::data_cast<runtime::Matrix>(srcData);
+                    checkMatrixData(*srcCastedData, m_srcDescription, *this);
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData, 2);
                     cv::Mat dstCvData;

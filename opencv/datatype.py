@@ -21,6 +21,13 @@ class DataType(object):
         """
         return self.typeId()
         
+    def parentVariant(self):
+        """
+        Returns the most general variant corresponding to this data type, e.g.
+        "runtime::DataVariant::MATRIX" for the data type Float32Matrix.
+        """
+        return self.variant()
+        
     def variant(self):
         """
         Returns the variant of the type, e.g. "runtime::DataVariant::BOOL".

@@ -20,6 +20,25 @@ namespace stromx
             throw stromx::runtime::WrongParameterValue(*param, op);
         }
         
+        void checkMatrixData(const stromx::runtime::Matrix & value,
+                             const stromx::runtime::MatrixDescription* desc,
+                             const stromx::runtime::OperatorKernel& op)
+        {
+            if(desc->rows() && value.rows() != desc->rows())
+            {
+                std::ostringstream str;
+                str << desc->rows();
+                throw runtime::InputError(desc->id(), op, "Number of matrix rows must be " + str.str() + " .");
+            }
+            
+            if(desc->cols() && value.cols() != desc->cols())
+            {
+                std::ostringstream str;
+                str << desc->cols();
+                throw runtime::InputError(desc->id(), op, "Number of matrix columns must be " + str.str() + " .");
+            }
+        }
+        
         void checkMatrixValue(const stromx::runtime::Matrix & value,
                               const stromx::runtime::MatrixParameter* param,
                               const stromx::runtime::OperatorKernel& op)
