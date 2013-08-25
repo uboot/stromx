@@ -63,6 +63,9 @@ namespace stromx
             runtime::Enum m_ddepth;
             runtime::Enum m_dataFlow;
             runtime::EnumParameter* m_ddepthParameter;
+            runtime::Description* m_dstDescription;
+            runtime::Description* m_src1Description;
+            runtime::Description* m_src2Description;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

@@ -71,7 +71,10 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_alphaParameter;
             runtime::NumericParameter<runtime::Float64>* m_betaParameter;
             runtime::EnumParameter* m_ddepthParameter;
+            runtime::Description* m_dstDescription;
             runtime::NumericParameter<runtime::Float64>* m_gammaParameter;
+            runtime::Description* m_src1Description;
+            runtime::Description* m_src2Description;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }

@@ -135,29 +135,29 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* src1 = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
-                    src1->setTitle("Source 1");
-                    inputs.push_back(src1);
+                    m_src1Description = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
+                    m_src1Description->setTitle("Source 1");
+                    inputs.push_back(m_src1Description);
                     
-                    runtime::Description* src2 = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
-                    src2->setTitle("Source 2");
-                    inputs.push_back(src2);
+                    m_src2Description = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
+                    m_src2Description->setTitle("Source 2");
+                    inputs.push_back(m_src2Description);
                     
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
-                    inputs.push_back(dst);
+                    m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    m_dstDescription->setTitle("Destination");
+                    inputs.push_back(m_dstDescription);
                     
                 }
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* src1 = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
-                    src1->setTitle("Source 1");
-                    inputs.push_back(src1);
+                    m_src1Description = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
+                    m_src1Description->setTitle("Source 1");
+                    inputs.push_back(m_src1Description);
                     
-                    runtime::Description* src2 = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
-                    src2->setTitle("Source 2");
-                    inputs.push_back(src2);
+                    m_src2Description = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
+                    m_src2Description->setTitle("Source 2");
+                    inputs.push_back(m_src2Description);
                     
                 }
                 break;
@@ -240,15 +240,15 @@ namespace stromx
                         src2Data = &src2ReadAccess();
                     }
                     
-                    if(! src1Data->variant().isVariant(runtime::DataVariant::IMAGE))
+                    if(! src1Data->variant().isVariant(m_src1Description->variant()))
                     {
                         throw runtime::InputError(SRC_1, *this, "Wrong input data variant.");
                     }
-                    if(! src2Data->variant().isVariant(runtime::DataVariant::IMAGE))
+                    if(! src2Data->variant().isVariant(m_src2Description->variant()))
                     {
                         throw runtime::InputError(SRC_2, *this, "Wrong input data variant.");
                     }
-                    if(! dstData->variant().isVariant(runtime::DataVariant::IMAGE))
+                    if(! dstData->variant().isVariant(m_dstDescription->variant()))
                     {
                         throw runtime::InputError(DST, *this, "Wrong input data variant.");
                     }
@@ -301,11 +301,11 @@ namespace stromx
                     src2ReadAccess = runtime::ReadAccess<>(src2InMapper.data());
                     src2Data = &src2ReadAccess();
                     
-                    if(! src1Data->variant().isVariant(runtime::DataVariant::IMAGE))
+                    if(! src1Data->variant().isVariant(m_src1Description->variant()))
                     {
                         throw runtime::InputError(SRC_1, *this, "Wrong input data variant.");
                     }
-                    if(! src2Data->variant().isVariant(runtime::DataVariant::IMAGE))
+                    if(! src2Data->variant().isVariant(m_src2Description->variant()))
                     {
                         throw runtime::InputError(SRC_2, *this, "Wrong input data variant.");
                     }
