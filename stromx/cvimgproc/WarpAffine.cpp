@@ -130,7 +130,7 @@ namespace stromx
                 {
                     m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_affineMParameter->setTitle("2x3 affine transformation");
+                    m_affineMParameter->setTitle("Affine transformation");
                     m_affineMParameter->setRows(2);
                     m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);
@@ -151,7 +151,7 @@ namespace stromx
                 {
                     m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_affineMParameter->setTitle("2x3 affine transformation");
+                    m_affineMParameter->setTitle("Affine transformation");
                     m_affineMParameter->setRows(2);
                     m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);

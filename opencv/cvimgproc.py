@@ -367,22 +367,22 @@ blockSize = package.NumericParameter(
 )
 subtractedC = package.Constant("0")
 affineM = package.MatrixParameter(
-    "affineM", "2x3 affine transformation", datatype.FloatMatrix(),
+    "affineM", "Affine transformation", datatype.FloatMatrix(),
     default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT_32)", rows = 2,
     cols = 3
 )
 perspectiveM = package.MatrixParameter(
-    "affineM", "3x3 perspective transformation", datatype.FloatMatrix(),
+    "affineM", "Perspective transformation", datatype.FloatMatrix(),
     default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
     cols = 3
 )
 cameraMatrix = package.MatrixParameter(
-    "cameraMatrix", "3x3 camera matrix", datatype.FloatMatrix(),
+    "cameraMatrix", "Camera matrix", datatype.FloatMatrix(),
     default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
     cols = 3
 )
 distCoeffs = package.MatrixParameter(
-    "distCoeffs", "4x1 distortion coefficients", datatype.FloatMatrix(),
+    "distCoeffs", "Distortion coefficients", datatype.FloatMatrix(),
     default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
     rows = 4, cols = 1
 )
