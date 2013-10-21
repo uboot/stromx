@@ -21,6 +21,7 @@
 #include "stromx/cvsupport/ConstImage.h"
 #include "stromx/cvsupport/ConvertPixelType.h"
 #include "stromx/cvsupport/Image.h"
+#include "stromx/cvsupport/Matrix.h"
 #include "stromx/cvsupport/Cvsupport.h"
 #include "stromx/cvsupport/WebCamera.h"
 #include <stromx/runtime/Exception.h>
@@ -31,6 +32,7 @@ void stromxCvsupportRegister(stromx::runtime::Registry& registry)
     using namespace stromx::cvsupport;
     
     registry.registerData(new Image);
+    registry.registerData(new Matrix);
     
     registry.registerOperator(new AdjustRgbChannels);
     registry.registerOperator(new Buffer);
