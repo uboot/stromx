@@ -132,6 +132,15 @@ namespace stromx
             static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);
         };
         
+        /** 
+         * Returns true if the sizes, value types and entries of both matrices
+         * are equal.
+         */
+        bool operator==(const Matrix & rhs, const Matrix & lhs);
+        
+        /**  Returns true if the matrices are not equal. */
+        bool operator!=(const Matrix & rhs, const Matrix & lhs);
+        
         /** \cond */
         template <>
         class data_traits<Matrix>

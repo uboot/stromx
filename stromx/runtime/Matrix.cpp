@@ -16,6 +16,8 @@
 
 #include "stromx/runtime/Matrix.h"
 
+#include <string.h>
+
 namespace stromx
 {
     namespace runtime
@@ -72,6 +74,36 @@ namespace stromx
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }
+        }
+        
+        bool operator==(const Matrix& rhs, const Matrix& lhs)
+        {
+            if (rhs.valueType() != lhs.valueType())
+                return false;
+            
+            if (rhs.rows() != lhs.rows())
+                return false;
+            
+            if (rhs.cols() != lhs.cols())
+                return false;
+            
+            for (unsigned int i = 0; i < rhs.rows(); ++i)
+            {
+                const uint8_t* lhsRowPtr = lhs.data() + i * lhs.stride();
+                const uint8_t* rhsRowPtr = rhs.data() + i * rhs.stride();
+                unsigned int rowBytes = rhs.cols() * rhs.valueSize();
+                int result = memcmp(lhsRowPtr, rhsRowPtr, rowBytes);
+                
+                if (result)
+                    return false;
+            }
+            
+            return true;
+        }
+        
+        bool operator!=(const Matrix& rhs, const Matrix& lhs)
+        {
+            return ! (rhs == lhs);
         }
     }
 }

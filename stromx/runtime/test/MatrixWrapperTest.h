@@ -42,6 +42,10 @@ namespace stromx
             CPPUNIT_TEST (testAt);
             CPPUNIT_TEST (testAtWrongPosition);
             CPPUNIT_TEST (testAtWrongType);
+            CPPUNIT_TEST (testEquality);
+            CPPUNIT_TEST (testEqualityWrongEntry);
+            CPPUNIT_TEST (testEqualityWrongValueType);
+            CPPUNIT_TEST (testEqualityWrongDimension);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -63,6 +67,10 @@ namespace stromx
                 void testAt();
                 void testAtWrongPosition();
                 void testAtWrongType();
+                void testEquality();
+                void testEqualityWrongEntry();
+                void testEqualityWrongValueType();
+                void testEqualityWrongDimension();
                 
             private:
                 const static stromx::runtime::Version VERSION;

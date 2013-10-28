@@ -226,6 +226,58 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(matrix.at<int8_t>(0, 2) = 42, WrongArgument);
             CPPUNIT_ASSERT_THROW(matrix.at<int8_t>(3, 0) = 42, WrongArgument);
         }
+        
+        void MatrixWrapperTest::testEquality()
+        {
+            MatrixImpl lhs(3, 2, Matrix::INT_32);
+            MatrixImpl rhs(3, 2, Matrix::INT_32);
+            
+            for (unsigned int i = 0; i < 3; ++i)
+            {
+                for (unsigned int j = 0; j < 2; ++j)
+                {
+                    lhs.at<int32_t>(i, j) = i + j;
+                    rhs.at<int32_t>(i, j) = i + j;
+                }
+            }
+            
+            CPPUNIT_ASSERT(lhs == rhs);
+        }
+        
+        void MatrixWrapperTest::testEqualityWrongEntry()
+        {
+            MatrixImpl lhs(3, 2, Matrix::INT_32);
+            MatrixImpl rhs(3, 2, Matrix::INT_32);
+            
+            for (unsigned int i = 0; i < 3; ++i)
+            {
+                for (unsigned int j = 0; j < 2; ++j)
+                {
+                    lhs.at<int32_t>(i, j) = i + j;
+                    rhs.at<int32_t>(i, j) = i + j;
+                }
+            }
+            
+            rhs.at<int32_t>(1, 1) = 0;
+            
+            CPPUNIT_ASSERT(! (lhs == rhs));
+        }
+        
+        void MatrixWrapperTest::testEqualityWrongDimension()
+        {
+            MatrixImpl lhs(3, 2, Matrix::INT_32);
+            MatrixImpl rhs(3, 2, Matrix::UINT_32);
+            
+            CPPUNIT_ASSERT(! (lhs == rhs));
+        }
+        
+        void MatrixWrapperTest::testEqualityWrongValueType()
+        {
+            MatrixImpl lhs(3, 2, Matrix::INT_32);
+            MatrixImpl rhs(2, 2, Matrix::INT_32);
+            
+            CPPUNIT_ASSERT(! (lhs == rhs));
+        }
 
         void MatrixWrapperTest::testAtWrongType()
         {
