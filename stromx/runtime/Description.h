@@ -65,7 +65,7 @@ namespace stromx
          * respective paramter. In addition, a Description can have a name which is 
          * purely informal and does not have any influence on its behavior.
          */
-        class Description
+        class STROMX_RUNTIME_API Description
         {
         public:
             /** Constructs a description. */

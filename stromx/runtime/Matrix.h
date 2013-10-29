@@ -136,10 +136,10 @@ namespace stromx
          * Returns true if the sizes, value types and entries of both matrices
          * are equal.
          */
-        bool operator==(const Matrix & rhs, const Matrix & lhs);
+        STROMX_RUNTIME_API bool operator==(const Matrix & rhs, const Matrix & lhs);
         
         /**  Returns true if the matrices are not equal. */
-        bool operator!=(const Matrix & rhs, const Matrix & lhs);
+        STROMX_RUNTIME_API bool operator!=(const Matrix & rhs, const Matrix & lhs);
         
         /** \cond */
         template <>
