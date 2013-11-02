@@ -17,7 +17,7 @@
 
 # norootforbuild
 
-Name:           stromx
+Name:           libstromx
 Version:
 Release:
 Summary:        Library for near real-time, parallel processing of data
@@ -25,7 +25,7 @@ Group:          Development/Libraries/C and C++
 
 License:        Apache 2.0
 URL:            http://www.stromx.org
-Source0:        %{name}-%{version}.tar.bz2
+Source0:        stromx-%{version}.tar.bz2
 # BuildArch:      noarch
 
 %if 0%{?suse_version}
@@ -36,38 +36,40 @@ BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python-de
 # Requires:       
 
 %description
-This package contains the %{name} library for near real-time, parallel processing of data.
+This package contains the stromx library for near real-time, parallel processing of data.
 
 
-%package        devel
-Summary:        Development files for %{name}
+%package        -n stromx-devel
+Summary:        Development files for stromx
 Group:          Development/Libraries/C and C++
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+%description    -n stromx-devel
+This package contains libraries and header files for
+developing applications that use stromx.
 
 
-%package        python
-Summary:        Python bindings for %{name}
+%package        -n python-stromx
+Summary:        Python bindings for stromx
 Group:          Development/Libraries/Python
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       python-base = %{py_ver}
 %if 0%{?suse_version}
 %py_requires
 %endif
-Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description    python
-The %{name}-python package contains Python bindings for %{name}.
-
-%package        doc
+%description    -n python-stromx
+This package contains Python bindings for stromx.
 
 
-Summary:        Documentation and examples for %{name}
+%package        -n stromx-doc
+
+Summary:        Documentation and examples for stromx
 Group:          Documentation/Other
 
-%description    doc
-This package contains the documentation and tutorials for the %{name} library.
+%description    -n stromx-doc
+This package contains the documentation and tutorials for the stromx library.
+
 
 %prep
 %setup -q
@@ -111,18 +113,18 @@ rm -rf %{buildroot}
 %{_libdir}/*.so.*
 %exclude %{_datadir}/stromx
 
-%files devel
+%files -n stromx-devel
 %defattr(0644, root, root, 0755)
 %doc
 %{_includedir}/*
 %{_libdir}/*.so
 %{_datadir}/stromx
 
-%files python
+%files -n python-stromx
 %defattr(0644, root, root, 0755)
 %{python_sitearch}/stromx
 
-%files doc
+%files -n stromx-doc
 %defattr(-, root, root, 0755)
 %{_docdir}/stromx
 
