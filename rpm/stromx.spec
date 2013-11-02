@@ -25,7 +25,7 @@ Group:          Development/Libraries/C and C++
 
 License:        Apache 2.0
 URL:            http://www.stromx.org
-Source0:        stromx-%{version}.tar.bz2
+Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
 %if 0%{?suse_version}

@@ -1,26 +1,27 @@
 Source: stromx
 Priority: extra
-Maintainer: roter_oktober <stromx-devel@googlegroups.com>
+Maintainer: Matthias Fuchs <stromx-devel@googlegroups.com>
 Build-Depends: debhelper (>= 7.0.50~), cmake, cdbs, libboost-all-dev, doxygen, python-dev, libzip-dev, libxerces-c-dev, libopencv-dev, libcppunit-dev
 Standards-Version: 3.9.1
 Section: libs
 Homepage: http://www.stromx.org
 
-Package: stromx-dev
+Package: libstromx-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, stromx (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libstromx (= ${binary:Version})
 Description: Development files for stromx
 
-Package: stromx
+Package: libstromx
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for near real-time, parallel processing of data
 
-Package: stromx-python
+Package: python-stromx
+Section: python
 Architecture: any
-Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}, libstromx (= ${binary:Version})
 Description: Python bindings for stromx
 
 Package: stromx-doc
