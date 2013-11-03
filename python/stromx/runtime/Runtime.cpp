@@ -37,6 +37,7 @@ void exportConnectorObserver();
 void exportMatrix();
 void exportNone();
 void exportOperator();
+void exportOperatorException();
 void exportOperatorInfo();
 void exportOperatorKernel();
 void exportParameter();
@@ -70,6 +71,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportConnectorObserver();
     exportNone();
     exportOperator();
+    exportOperatorException();
     exportOperatorInfo();
     exportOperatorKernel();
     exportParameter();
