@@ -200,8 +200,10 @@ namespace stromx
              */
             virtual bool isVariant(const DataVariant& type) const;
             
-        protected:
+            /** Returns the integer ID of this data variant. */
             unsigned int id() const { return m_id; }
+            
+            /** Returns the package this data variant belongs to. */
             const std::string & package() const { return m_package; }
         
         private: 

@@ -15,6 +15,7 @@
 */
 
 #include <stromx/runtime/DataVariant.h>
+#include <stromx/runtime/Data.h>
 
 #include <boost/python.hpp>
 
@@ -27,5 +28,7 @@ void exportDataVariant()
         .def_readonly("NONE", DataVariant::NONE)
         .def("title", &DataVariant::title, return_internal_reference<>())
         .def("isVariant", &DataVariant::isVariant)
+        .def("id", &DataVariant::id)
+        .def("package", &DataVariant::package, return_internal_reference<>())
     ;
 }
