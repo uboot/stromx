@@ -151,6 +151,8 @@ namespace stromx
                 return CV_16UC(numChannels);
             case runtime::Matrix::INT_16:
                 return CV_16SC(numChannels);
+            case runtime::Matrix::UINT_32:
+                return CV_32SC(numChannels);
             case runtime::Matrix::INT_32:
                 return CV_32SC(numChannels);
             case runtime::Matrix::FLOAT_32:
