@@ -48,6 +48,7 @@ set(SOURCES
     Queue.cpp
     Primitive.cpp
     RecycleAccess.cpp
+    Server.cpp
     Stream.cpp
     String.cpp
     SortInputsAlgorithm.cpp

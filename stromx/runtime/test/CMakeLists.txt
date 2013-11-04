@@ -64,6 +64,7 @@ set(SOURCES
     ../Queue.cpp
     ../RecycleAccess.cpp
     ../Thread.cpp
+    ../Server.cpp
     ../Stream.cpp
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp

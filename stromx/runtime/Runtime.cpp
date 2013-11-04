@@ -26,6 +26,7 @@
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Registry.h"
+#include "stromx/runtime/Server.h"
 #include "stromx/runtime/Trigger.h"
 #include "stromx/runtime/TriggerData.h"
 
@@ -39,6 +40,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Join);
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
+    registry.registerOperator(new Server);
     registry.registerOperator(new Trigger);
     
     registry.registerData(new Bool);
