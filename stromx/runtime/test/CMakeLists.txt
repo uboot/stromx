@@ -32,6 +32,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/fortran_order.npy DESTINATION ${CMAKE_CURR
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
+    ../Client.cpp
     ../Connector.cpp
     ../ConstDataRef.cpp
     ../Runtime.cpp

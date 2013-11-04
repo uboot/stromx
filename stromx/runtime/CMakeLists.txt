@@ -18,6 +18,7 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    Client.cpp
     Connector.cpp
     ConstDataRef.cpp
     Counter.cpp

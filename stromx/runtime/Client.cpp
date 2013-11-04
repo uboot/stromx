@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Server.h"
+#include "stromx/runtime/Client.h"
 
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
@@ -26,19 +26,19 @@ namespace stromx
 {
     namespace runtime
     {
-        const std::string Server::TYPE("Server");
-        const std::string Server::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Server::VERSION(0, 1, 0);
-        const unsigned int Server::MIN_PORT = 49152;
-        const unsigned int Server::MAX_PORT = 65535;
+        const std::string Client::TYPE("Client");
+        const std::string Client::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
+        const Version Client::VERSION(0, 1, 0);
+        const unsigned int Client::MIN_PORT = 49152;
+        const unsigned int Client::MAX_PORT = 65535;
         
-        Server::Server()
+        Client::Client()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
             m_port(MIN_PORT)
         {
         }
         
-        void Server::setParameter(unsigned int id, const runtime::Data& value)
+        void Client::setParameter(unsigned int id, const runtime::Data& value)
         {
             UInt32 uintValue;
             
@@ -57,7 +57,7 @@ namespace stromx
             }
         }
 
-        const DataRef Server::getParameter(const unsigned int id) const
+        const DataRef Client::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -68,40 +68,43 @@ namespace stromx
             }
         }
         
-        void Server::initialize()
+        void Client::initialize()
         {
             OperatorKernel::initialize(setupInputs(),
                                        setupOutputs(),
                                        std::vector<const Parameter*>());
         }
         
-        void Server::execute(DataProvider& provider)
+        void Client::execute(DataProvider& provider)
         {
-            Id2DataPair input(INPUT);
-            
-            provider.receiveInputData(input);
             
         }
         
-        const std::vector<const Description*> Server::setupInputs()
+        const std::vector<const Description*> Client::setupInputs()
         {
             std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, DataVariant::DATA);
-            input->setTitle("Input");
-            inputs.push_back(input);
-            
             return inputs;
         }
         
-        const std::vector<const Description*> Server::setupOutputs() const
+        const std::vector<const Description*> Client::setupOutputs() const
         {
             std::vector<const Description*> outputs;
+            
+            Description* ouput = new Description(OUTPUT, DataVariant::DATA);
+            ouput->setTitle("Output");
+            outputs.push_back(ouput);
+            
             return outputs;
         }
         
-        const std::vector<const Parameter*> Server::setupParameters()
+        const std::vector<const Parameter*> Client::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
+            
+            Parameter* url = new Parameter(URL, DataVariant::STRING);
+            url->setTitle("URL");
+            url->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
+            parameters.push_back(url);
             
             NumericParameter<UInt32>* port = new NumericParameter<UInt32>(PORT);
             port->setTitle("TCP port");
