@@ -40,7 +40,7 @@ namespace stromx
         
         void Server::setParameter(unsigned int id, const runtime::Data& value)
         {
-            UInt32 uintValue;
+            UInt16 uintValue;
             
             switch(id)
             {
@@ -103,11 +103,11 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            NumericParameter<UInt32>* port = new NumericParameter<UInt32>(PORT);
+            NumericParameter<UInt16>* port = new NumericParameter<UInt16>(PORT);
             port->setTitle("TCP port");
             port->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
-            port->setMin(UInt32(MIN_PORT));
-            port->setMax(UInt32(MAX_PORT));
+            port->setMin(UInt16(MIN_PORT));
+            port->setMax(UInt16(MAX_PORT));
             parameters.push_back(port);
             
             return parameters;

@@ -21,6 +21,7 @@
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
+#include <boost/graph/graph_concepts.hpp>
 
 namespace stromx
 {
@@ -34,16 +35,20 @@ namespace stromx
         
         Client::Client()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
+            m_url("localhost"),
             m_port(MIN_PORT)
         {
         }
         
         void Client::setParameter(unsigned int id, const runtime::Data& value)
         {
-            UInt32 uintValue;
+            UInt16 uintValue;
             
             switch(id)
             {
+            case URL:
+                m_url = data_cast<String>(value);
+                break;
             case PORT:
                 uintValue = data_cast<UInt16>(value);
                 if(uintValue < MIN_PORT)
@@ -61,6 +66,8 @@ namespace stromx
         {
             switch(id)
             {
+            case URL:
+                return m_url;
             case PORT:
                 return m_port;
             default:
@@ -106,11 +113,11 @@ namespace stromx
             url->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(url);
             
-            NumericParameter<UInt32>* port = new NumericParameter<UInt32>(PORT);
+            NumericParameter<UInt16>* port = new NumericParameter<UInt16>(PORT);
             port->setTitle("TCP port");
             port->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
-            port->setMin(UInt32(MIN_PORT));
-            port->setMax(UInt32(MAX_PORT));
+            port->setMin(UInt16(MIN_PORT));
+            port->setMax(UInt16(MAX_PORT));
             parameters.push_back(port);
             
             return parameters;
