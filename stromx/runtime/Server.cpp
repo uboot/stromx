@@ -17,12 +17,53 @@
 #include "stromx/runtime/Server.h"
 
 #include <boost/asio.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/ReadAccess.h"
+
+namespace
+{
+    class StreamOutput : public stromx::runtime::OutputProvider
+    {
+    public:
+        StreamOutput()
+          : m_textStream(&m_textBuffer),
+            m_fileStream(&m_fileBuffer)
+        {}
+        
+        std::ostream & text ()
+        {
+            return m_textStream;
+        }
+        
+        std::ostream & openFile (const std::string &/*ext*/, const OpenMode /*mode*/)
+        {
+            return m_fileStream;
+        }
+        
+        std::ostream & file ()
+        {
+            return m_fileStream;
+        }
+        
+        boost::asio::streambuf & textBuffer() { return m_textBuffer; }
+        
+        boost::asio::streambuf & fileBuffer() { return m_fileBuffer; }
+        
+    private:
+        boost::asio::streambuf m_textBuffer;
+        boost::asio::streambuf m_fileBuffer;
+        
+        std::ostream m_textStream;
+        std::ostream m_fileStream;
+    };
+}
 
 
 namespace stromx
@@ -84,6 +125,7 @@ namespace stromx
             
             Id2DataPair input(INPUT);
             provider.receiveInputData(input);
+            ReadAccess<> access(input.data());
             
             try
             {
@@ -92,11 +134,20 @@ namespace stromx
                 tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), m_port));
                 tcp::socket socket(io_service);
                 acceptor.accept(socket);
+                
+                StreamOutput output;
+                access().serialize(output);
+                
+                boost::asio::streambuf data;
+                std::ostream dataStream(&data);
+                dataStream << access().package() << "\n";
+                dataStream << access().type() << "\n";
+                dataStream << output.textBuffer().size() << "\n";
+                dataStream << output.fileBuffer().size() << "\n";
 
-                std::string message = "Hello world!";
-
-                boost::system::error_code ignored_error;
-                boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
+                boost::asio::write(socket, data);
+                boost::asio::write(socket, output.textBuffer());
+                boost::asio::write(socket, output.fileBuffer());
             }
             catch (std::exception& e)
             {
