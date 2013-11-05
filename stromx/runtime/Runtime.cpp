@@ -28,6 +28,7 @@
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Registry.h"
 #include "stromx/runtime/Server.h"
+#include "stromx/runtime/String.h"
 #include "stromx/runtime/Trigger.h"
 #include "stromx/runtime/TriggerData.h"
 
@@ -55,6 +56,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new Float64);
     registry.registerData(new Enum);
     registry.registerData(new None);
+    registry.registerData(new String);
     registry.registerData(new TriggerData);
 }
 

@@ -46,7 +46,7 @@ set(DOXYFILE_SOURCE_DIRS "stromx")
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.47.0 REQUIRED COMPONENTS thread date_time filesystem regex system)
+find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem regex system thread)
 
 find_package(CppUnit)
 
@@ -82,7 +82,7 @@ if(BUILD_EXAMPLE)
    add_subdirectory(example)
 endif()
 
-find_package(Boost 1.47.0 COMPONENTS thread filesystem python)
+find_package(Boost 1.47.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)
 
 if(Boost_FOUND AND PYTHON_INCLUDE_PATH)

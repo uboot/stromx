@@ -16,11 +16,14 @@
 
 #include "stromx/runtime/Server.h"
 
+#include <boost/asio.hpp>
+
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
+
 
 namespace stromx
 {
@@ -77,10 +80,28 @@ namespace stromx
         
         void Server::execute(DataProvider& provider)
         {
-            Id2DataPair input(INPUT);
+            using boost::asio::ip::tcp;
             
+            Id2DataPair input(INPUT);
             provider.receiveInputData(input);
             
+            try
+            {
+                boost::asio::io_service io_service;
+
+                tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), m_port));
+                tcp::socket socket(io_service);
+                acceptor.accept(socket);
+
+                std::string message = "Hello world!";
+
+                boost::system::error_code ignored_error;
+                boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
+            }
+            catch (std::exception& e)
+            {
+                throw;
+            }
         }
         
         const std::vector<const Description*> Server::setupInputs()
