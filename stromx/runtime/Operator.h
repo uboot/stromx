@@ -57,7 +57,7 @@ namespace stromx
          * obtain data from it.
          * 
          * Moreover, each operator has a current status and a number of parameters. If the 
-         * value of a specific parameter can be read or written dependes on the current status
+         * value of a specific parameter can be read or written depends on the current status
          * of the operators.
          */
         class STROMX_RUNTIME_API Operator
@@ -223,7 +223,7 @@ namespace stromx
              * Adds an observer which is called whenever the data at an input 
              * or output connector changes.
              * 
-             * \param observer A pointer to the observer is stored but not onwned by the operator.
+             * \param observer A pointer to the observer is stored but not owned by the operator.
              * \throws WrongArgument If \c observer is a null pointer.
              */
             void addObserver(const ConnectorObserver* const observer);
