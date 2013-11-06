@@ -42,6 +42,28 @@ namespace stromx
             delete m_factory;
         }
         
+        void FactoryTest::testCopyConstructor()
+        {
+            // add objects to the factory
+            OperatorKernel* op = new TestOperator;
+            m_factory->registerOperator(op);
+            Data* data = new TestData;
+            m_factory->registerData(data);
+
+            // construct a new factory from the existing one
+            Factory factory(*m_factory);
+            
+            // get the operator
+            Operator* newOp = 0;
+            CPPUNIT_ASSERT_NO_THROW(newOp = factory.newOperator("TestPackage", "TestOperator"));
+            CPPUNIT_ASSERT(newOp);
+            
+            // get the data
+            Data* newData = 0;
+            CPPUNIT_ASSERT_NO_THROW(newData = factory.newData("TestPackage", "TestData"));
+            CPPUNIT_ASSERT(newData);
+        }
+        
         void FactoryTest::testNewOperator()
         {
             // add a test operator to the factory

@@ -31,6 +31,15 @@ namespace stromx
         class STROMX_RUNTIME_API Factory : public Registry
         {
         public:
+            Factory() {}
+            
+            /** 
+             * The copy constructors creates a deep-copy of the input factor, i.e.
+             * it clones all operators and data objects in  input factory and 
+             * assigns them to the new factory
+             */
+            Factory(const Factory & factory);
+            
             virtual ~Factory();
             
             virtual void registerOperator(const OperatorKernel* const op);  
@@ -47,6 +56,8 @@ namespace stromx
             virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
             
         private:
+            Factory & operator=(const Factory&);
+            
             std::vector<const OperatorKernel*> m_operators;
             std::vector<const Data*> m_dataTypes;
         };

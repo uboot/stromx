@@ -29,6 +29,7 @@ namespace stromx
         class FactoryTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (FactoryTest);
+            CPPUNIT_TEST(testCopyConstructor);
             CPPUNIT_TEST(testRegisterOperator);
             CPPUNIT_TEST(testNewOperator);
             CPPUNIT_TEST(testRegisterData);
@@ -42,6 +43,7 @@ namespace stromx
             void tearDown();
 
         protected:
+            void testCopyConstructor();
             void testRegisterOperator();
             void testNewOperator();
             void testRegisterData();

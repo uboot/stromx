@@ -24,6 +24,23 @@ namespace stromx
 {
     namespace runtime
     {
+        Factory::Factory(const Factory& factory)
+        {
+            for(std::vector<const OperatorKernel*>::const_iterator iter = factory.m_operators.begin();
+                iter != factory.m_operators.end();
+                ++iter)
+            {
+                m_operators.push_back((*iter)->clone());
+            }
+            
+            for(std::vector<const Data*>::const_iterator iter = factory.m_dataTypes.begin();
+                iter != factory.m_dataTypes.end();
+                ++iter)
+            {
+                m_dataTypes.push_back((*iter)->clone());
+            }
+        }
+
         Factory::~Factory()
         {
             for(std::vector<const OperatorKernel*>::iterator iter = m_operators.begin();
