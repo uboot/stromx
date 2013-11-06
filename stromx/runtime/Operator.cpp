@@ -359,5 +359,15 @@ namespace stromx
             
             m_isPartOfStream = false;
         }
+        
+        void Operator::setFactory(const AbstractFactory*const factory)
+        {
+            m_kernel->setFactoryPtr(factory);
+        }
+        
+        const AbstractFactory* Operator::factory() const
+        {
+            return m_kernel->factoryPtr();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace stromx
 {
     namespace runtime
     {
+        class AbstractFactory;
         class Data;
         class DataContainer;
         class Id2DataMapper;
@@ -95,6 +96,13 @@ namespace stromx
              * \throws WrongState If the parameter access has already been blocked.
              */
             virtual void lockParameters() = 0;
+            
+            /**
+             * Returns the factor which is assigned to this operator. If no
+             * factory has been set the returned factory is a valid object but
+             * does not contain any data or operator instances.
+             */
+            virtual const AbstractFactory & factory() const = 0;
         };
     }
 }

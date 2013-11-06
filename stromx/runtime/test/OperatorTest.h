@@ -54,6 +54,7 @@ namespace stromx
             CPPUNIT_TEST (testRemoveObserver);
             CPPUNIT_TEST (testObserver);
             CPPUNIT_TEST (testTwoObservers);
+            CPPUNIT_TEST (testSetFactory);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -84,6 +85,7 @@ namespace stromx
             void testRemoveObserver();
             void testObserver();
             void testTwoObservers();
+            void testSetFactory();
                 
         private:
             class TestObserver : public ConnectorObserver

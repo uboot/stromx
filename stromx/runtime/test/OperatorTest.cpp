@@ -19,6 +19,7 @@
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorTester.h"
@@ -436,6 +437,16 @@ namespace stromx
             op.deactivate();
             CPPUNIT_ASSERT_NO_THROW(op.removeFromStream());
             CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
+        }
+        
+        void OperatorTest::testSetFactory()
+        {
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0), m_operator->factory());
+            
+            Factory factory;
+            m_operator->setFactory(&factory);
+            
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory), m_operator->factory());
         }
     }
 }

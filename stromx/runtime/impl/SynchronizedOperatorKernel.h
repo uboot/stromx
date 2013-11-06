@@ -30,6 +30,7 @@ namespace stromx
 {
     namespace runtime
     {
+        class AbstractFactory;
         class Operator;
         class OperatorKernel;
         
@@ -63,6 +64,8 @@ namespace stromx
                 DataContainer getOutputData(const unsigned int id);
                 void setInputData(const unsigned int id, DataContainer data);
                 void clearOutputData(unsigned int id);
+                const AbstractFactory* factoryPtr() const { return m_factory; }
+                void setFactoryPtr(const AbstractFactory* const factory);
                 
                 // DataProvider implementation
                 void receiveInputData(const Id2DataMapper& mapper);
@@ -71,6 +74,7 @@ namespace stromx
                 void sleep(const unsigned int microseconds);
                 void unlockParameters();
                 void lockParameters();
+                const AbstractFactory& factory() const;
                 
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
@@ -94,6 +98,7 @@ namespace stromx
                 boost::mutex m_mutex;
                 impl::Id2DataMap m_inputMap;
                 impl::Id2DataMap m_outputMap;
+                const AbstractFactory* m_factory;
             };
         }
     }

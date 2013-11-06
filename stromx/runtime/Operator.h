@@ -36,6 +36,7 @@ namespace stromx
 {
     namespace runtime
     {
+        class AbstractFactory;
         class Id2DataMapper;
         class OperatorInfo;
         class OperatorKernel;
@@ -235,6 +236,24 @@ namespace stromx
              * \throws WrongArgument If the observer has not been added to the operator before.
              */
             void removeObserver(const ConnectorObserver* const observer);
+            
+            /**
+             * Returns the current factory of the operator The factory is passed to the operator
+             * kernel during the execution and can be used by the operator kernel
+             * to instantiate new data objects or operators. Returns null if no
+             * current factory is set.
+             */
+            const AbstractFactory* factory() const;
+            
+            /**
+             * Sets the factory of the operator. The factory is passed to the operator
+             * kernel during the execution and can be used by the operator kernel
+             * to instantiate new data objects or operators.
+             * 
+             * \param factory A pointer to the factory is stored but not owned by the operator.
+             *                Pass null to reset the factory of this operator.
+             */
+            void setFactory(const AbstractFactory* const factory);
             
         private:
             class MutexHandle;

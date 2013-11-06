@@ -18,10 +18,16 @@
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/impl/SynchronizedOperatorKernel.h"
+
+namespace
+{
+    const stromx::runtime::Factory EMPTY_FACTORY;
+}
 
 namespace stromx
 {
@@ -32,7 +38,8 @@ namespace stromx
             SynchronizedOperatorKernel::SynchronizedOperatorKernel(OperatorKernel* const op)
               : m_op(op),
                 m_status(NONE),
-                m_parametersAreLocked(false)
+                m_parametersAreLocked(false),
+                m_factory(0)
             {
                 if(!op)
                     throw WrongArgument("Passed null pointer as operator.");
@@ -372,6 +379,19 @@ namespace stromx
             {
                 lock_t lock(m_mutex);
                 m_parametersAreLocked = false;
+            }
+            
+            const AbstractFactory& SynchronizedOperatorKernel::factory() const
+            {
+                if (m_factory)
+                    return *m_factory;
+                else
+                    return EMPTY_FACTORY;                
+            }
+
+            void SynchronizedOperatorKernel::setFactoryPtr(const AbstractFactory*const factory)
+            {
+                m_factory = factory;
             }
             
             bool SynchronizedOperatorKernel::tryExecute()
