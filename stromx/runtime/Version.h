@@ -19,6 +19,8 @@
 
 #include "stromx/runtime/Config.h"
 
+#include <iostream>
+
 namespace stromx
 {
     namespace runtime
@@ -26,6 +28,10 @@ namespace stromx
         /** \brief A version of an operator or data type. */
         class Version
         {
+            friend STROMX_RUNTIME_API bool operator== (const Version & lhs, const Version & rhs);
+            friend STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Version & version);
+            friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
+            
         public:
             /** Constructs a version object. */
             Version(const unsigned int major, const unsigned int minor, const unsigned int revision)
@@ -48,7 +54,13 @@ namespace stromx
             unsigned int m_minor;
             unsigned int m_revision;
         };
+        
+        STROMX_RUNTIME_API bool operator== (const Version & lhs, const Version & rhs);
+        STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Version & version);
+        STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
     }
 }
+
+
 
 #endif // STROMX_RUNTIME_VERSION_H

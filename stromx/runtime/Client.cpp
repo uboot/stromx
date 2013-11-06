@@ -30,6 +30,7 @@ namespace stromx
 {
     namespace runtime
     {
+        const std::string Client::LINE_DELIMITER("\r\n");
         const std::string Client::TYPE("Client");
         const std::string Client::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
         const Version Client::VERSION(0, 1, 0);
@@ -89,7 +90,8 @@ namespace stromx
         {
             using boost::asio::ip::tcp;
             
-            std::ostringstream result;
+            std::string str;
+                
             try
             {
                 std::string portString = boost::lexical_cast<std::string>(m_port);
@@ -102,27 +104,26 @@ namespace stromx
                 tcp::socket socket(io_service);
                 boost::asio::connect(socket, endpoint_iterator);
 
-                for (;;)
-                {
-                    char buf[128];
-                    boost::system::error_code error;
+                boost::system::error_code error;
+                boost::asio::streambuf buf;
 
-                    size_t len = socket.read_some(boost::asio::buffer(buf), error);
+                boost::asio::read_until(socket, buf, LINE_DELIMITER, error);
+                boost::asio::read_until(socket, buf, LINE_DELIMITER, error);
+                std::istream stream(&buf);
+                stream >> str;
+                stream >> str;
 
-                    if (error == boost::asio::error::eof)
-                        break; // Connection closed cleanly by peer.
-                    else if (error)
-                        throw boost::system::system_error(error); // Some other error.
-
-                    result << buf;
-                }
+                if (error == boost::asio::error::eof)
+                    ; // Connection closed cleanly by peer.
+                else if (error)
+                    throw boost::system::system_error(error); // Some other error.
             }
             catch (std::exception& e)
             {
                 std::cerr << e.what() << std::endl;
             }
             
-            Data* outData = new String(result.str());
+            Data* outData = new String(str);
             Id2DataPair outputDataMapper(OUTPUT, DataContainer(outData));
             provider.sendOutputData(outputDataMapper);
         }

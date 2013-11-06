@@ -48,6 +48,8 @@ namespace stromx
             virtual void execute(DataProvider& provider);
             
         private:
+            const static std::string LINE_DELIMITER;
+            
             static const std::vector<const Description*> setupInputs();
             static const std::vector<const Parameter*> setupParameters();
             const std::vector<const Description*> setupOutputs() const;

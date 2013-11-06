@@ -70,6 +70,8 @@ namespace stromx
 {
     namespace runtime
     {
+        
+        const std::string Server::LINE_DELIMITER("\r\n");
         const std::string Server::TYPE("Server");
         const std::string Server::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
         const Version Server::VERSION(0, 1, 0);
@@ -140,10 +142,10 @@ namespace stromx
                 
                 boost::asio::streambuf data;
                 std::ostream dataStream(&data);
-                dataStream << access().package() << "\n";
-                dataStream << access().type() << "\n";
-                dataStream << output.textBuffer().size() << "\n";
-                dataStream << output.fileBuffer().size() << "\n";
+                dataStream << access().package() << LINE_DELIMITER;
+                dataStream << access().type() << LINE_DELIMITER;
+                dataStream << output.textBuffer().size() << LINE_DELIMITER;
+                dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
                 boost::asio::write(socket, data);
                 boost::asio::write(socket, output.textBuffer());

@@ -58,6 +58,7 @@ set(SOURCES
     Trigger.cpp
     TriggerData.cpp
     Try.cpp
+    Version.cpp
 )
 
 if(BUILD_FILE_PERSISTENCE)

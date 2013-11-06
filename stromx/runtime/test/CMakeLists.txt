@@ -73,6 +73,7 @@ set(SOURCES
     ../Trigger.cpp
     ../TriggerData.cpp
     ../Try.cpp
+    ../Version.cpp
     ../impl/DataContainerImpl.cpp
     ../impl/Id2DataMap.cpp
     ../impl/InputNode.cpp
@@ -124,6 +125,7 @@ set(SOURCES
     StreamTest.cpp
     TestUtilities.cpp
     UInt8Test.cpp
+    VersionTest.cpp
     WriteAccessTest.cpp
     main.cpp
 )
