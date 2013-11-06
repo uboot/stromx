@@ -639,7 +639,7 @@ namespace stromx
                 std::string versionString(Xml2Str(dataElement->getAttribute(Str2Xml("version"))));
                 std::string file(Xml2Str(dataElement->getAttribute(Str2Xml("file"))));
                 
-                Version version = XmlUtilities::convertToVersion(versionString);
+                Version version = boost::lexical_cast<Version>(versionString);
                 
                 DOMNodeList* dataTextElements = dataElement->getChildNodes();
                 XMLSize_t numDataTextElements = dataTextElements->getLength();

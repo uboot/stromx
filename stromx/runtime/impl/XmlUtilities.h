@@ -67,7 +67,6 @@ namespace stromx
                 static const std::string computeName(const std::string & filepath);
                 static const std::string stripExtension(const std::string & filename);
                 static const std::string computeExtension(const std::string & filename);
-                static Version convertToVersion(const std::string & text);
             };
         }
     }

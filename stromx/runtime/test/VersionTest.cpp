@@ -27,7 +27,7 @@ namespace stromx
     {
         void VersionTest::testStreamIn()
         {
-            Version version(0, 0, 0);
+            Version version;
             
             std::istringstream in("1.2.3");
             in >> version;

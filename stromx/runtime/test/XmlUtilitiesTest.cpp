@@ -58,15 +58,5 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computeExtension("abc"));
             CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::computeExtension("abc.txt"));
         }
-                
-        void XmlUtilitiesTest::testConvertToVersion()
-        {
-            Version expected(1, 2, 3);
-            Version converted = XmlUtilities::convertToVersion("1.2.3");
-            
-            CPPUNIT_ASSERT_EQUAL(expected.major(), converted.major());
-            CPPUNIT_ASSERT_EQUAL(expected.minor(), converted.minor());
-            CPPUNIT_ASSERT_EQUAL(expected.revision(), converted.revision());
-        }
     }
 }

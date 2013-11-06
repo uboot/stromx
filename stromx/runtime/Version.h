@@ -33,6 +33,13 @@ namespace stromx
             friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
             
         public:
+            /** Constructs a version object 0.0.0. */
+            Version()
+              : m_major(0),
+                m_minor(0),
+                m_revision(0)
+            {}
+            
             /** Constructs a version object. */
             Version(const unsigned int major, const unsigned int minor, const unsigned int revision)
               : m_major(major),

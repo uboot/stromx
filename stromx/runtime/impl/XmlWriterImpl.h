@@ -57,7 +57,7 @@ namespace stromx
                 
                 static const unsigned int XML_FORMAT_VERSION_MAJOR;
                 static const unsigned int XML_FORMAT_VERSION_MINOR;
-                static const unsigned int XML_FORMAT_VERSION_PATCH;
+                static const unsigned int XML_FORMAT_VERSION_REVISION;
                 
                 const Stream* m_stream;
                 std::vector<const Operator*> m_opList;
