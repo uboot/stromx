@@ -20,6 +20,7 @@
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
@@ -90,7 +91,8 @@ namespace stromx
         {
             using boost::asio::ip::tcp;
             
-            std::string str;
+            std::string package;
+            std::string type;
                 
             try
             {
@@ -110,8 +112,8 @@ namespace stromx
                 boost::asio::read_until(socket, buf, LINE_DELIMITER, error);
                 boost::asio::read_until(socket, buf, LINE_DELIMITER, error);
                 std::istream stream(&buf);
-                stream >> str;
-                stream >> str;
+                stream >> package;
+                stream >> type;
 
                 if (error == boost::asio::error::eof)
                     ; // Connection closed cleanly by peer.
@@ -123,7 +125,7 @@ namespace stromx
                 std::cerr << e.what() << std::endl;
             }
             
-            Data* outData = new String(str);
+            Data* outData = provider.factory().newData(package, type);
             Id2DataPair outputDataMapper(OUTPUT, DataContainer(outData));
             provider.sendOutputData(outputDataMapper);
         }
