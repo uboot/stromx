@@ -17,18 +17,15 @@
 #ifndef STROMX_RUNTIME_FACTORY_H
 #define STROMX_RUNTIME_FACTORY_H
 
-#include <string>
-#include <vector>
+#include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/Registry.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        class Operator;
-        
         /** \brief %Factory of operator and data objects. */
-        class STROMX_RUNTIME_API Factory : public Registry
+        class STROMX_RUNTIME_API Factory : public Registry, public AbstractFactory
         {
         public:
             Factory() {}

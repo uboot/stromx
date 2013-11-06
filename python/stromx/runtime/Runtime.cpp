@@ -24,6 +24,7 @@
 #include <stromx/runtime/Registry.h>
 #include "ExportOperatorKernel.h"
 
+void exportAbstractFactory();
 void exportFactory();
 void exportData();
 void exportDataContainer();
@@ -59,6 +60,7 @@ BOOST_PYTHON_MODULE(libruntime)
     
     def("register", stromxRuntimeRegister);
     
+    exportAbstractFactory();
     exportData();
     exportDataContainer();
     exportDataVariant();

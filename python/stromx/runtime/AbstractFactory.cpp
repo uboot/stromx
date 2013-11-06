@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2013 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
 *  limitations under the License.
 */
 
-#include <stromx/runtime/Registry.h>
-#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/AbstractFactory.h>
 #include <stromx/runtime/Data.h>
+#include <stromx/runtime/Operator.h>
 
 #include <boost/python.hpp>
 
@@ -25,24 +25,27 @@ using namespace stromx::runtime;
 
 namespace
 {
-    struct RegistryWrap : Registry, wrapper<Registry>
+    struct AbstractFactoryWrap : AbstractFactory, wrapper<AbstractFactory>
     {
-        void registerOperator(const OperatorKernel* const op)
+        Operator* newOperator(const std::string & package, const std::string & type) const
         {
-            this->get_override("registerOperator")(op);
+            return this->get_override("newOperator")(package,type);
         }
         
-        void registerData(const Data* data)
+        Data* newData(const std::string & package, const std::string & type) const
         {
-            this->get_override("registerData")(data);
+            return this->get_override("newData")(package, type);
+        }
+        
+        const std::vector<const OperatorKernel*> & availableOperators() const
+        {
+            return this->get_override("availableOperators")();
         }
     };
 }
 
-void exportRegistry()
+void exportAbstractFactory()
 {          
-    class_<RegistryWrap, boost::noncopyable>("Registry", no_init)
-        .def("registerOperator", pure_virtual(&Registry::registerOperator))
-        .def("registerData", pure_virtual(&Registry::registerData))
+    class_<AbstractFactoryWrap, boost::noncopyable>("AbstractFactory", no_init)
     ;
 }

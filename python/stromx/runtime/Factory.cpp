@@ -45,7 +45,7 @@ void exportFactory()
 {          
     stromx::python::exportVector<const OperatorKernel*>("OperatorKernelVector");
     
-    class_<Factory, bases<Registry> >("Factory")
+    class_<Factory, bases<AbstractFactory, Registry> >("Factory")
         .def("registerOperator", &Factory::registerOperator)
         .def("registerData", &Factory::registerData)
         .def("newOperator", &newOperatorWrap)

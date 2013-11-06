@@ -1,5 +1,6 @@
 set(SOURCES
     Runtime.cpp
+    AbstractFactory.cpp
     Data.cpp
     DataContainer.cpp
     DataVariant.cpp
