@@ -157,7 +157,7 @@ namespace stromx
                 };
             }
             
-            XmlReaderImpl::XmlReaderImpl(const runtime::Factory& factory)
+            XmlReaderImpl::XmlReaderImpl(const AbstractFactory& factory)
               : m_factory(factory),
                 m_stream(0),
                 m_input(0)

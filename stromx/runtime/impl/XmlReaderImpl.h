@@ -28,8 +28,8 @@ namespace stromx
 {
         namespace runtime
     {
+        class AbstractFactory;
         class Data;
-        class Factory;
         class FileInput;
         class Stream;
         class Operator;
@@ -40,7 +40,7 @@ namespace stromx
             class XmlReaderImpl
             {
             public:
-                explicit XmlReaderImpl(const Factory& factory);
+                explicit XmlReaderImpl(const AbstractFactory& factory);
                 
                 ~XmlReaderImpl();
                 
@@ -58,7 +58,7 @@ namespace stromx
                 void readInput(xercesc::DOMElement* const inputElement, Operator* const op);
                 Data* readData(xercesc::DOMElement* const dataElement);
                 
-                const Factory& m_factory;
+                const AbstractFactory& m_factory;
                 Stream* m_stream;
                 FileInput* m_input;
                 std::map<unsigned int, Operator*> m_id2OperatorMap;
