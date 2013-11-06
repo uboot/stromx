@@ -241,14 +241,16 @@ namespace stromx
              * Returns the current factory of the operator The factory is passed to the operator
              * kernel during the execution and can be used by the operator kernel
              * to instantiate new data objects or operators. Returns null if no
-             * current factory is set.
+             * current factory is set. If the operator was instantiated by a factory
+             * the operator factory is initially set to the instantiating factory.
              */
             const AbstractFactory* factory() const;
             
             /**
              * Sets the factory of the operator. The factory is passed to the operator
              * kernel during the execution and can be used by the operator kernel
-             * to instantiate new data objects or operators.
+             * to instantiate new data objects or operators. If the operator was instantiated by a factory
+             * the operator factory is initially set to the instantiating factory.
              * 
              * \param factory A pointer to the factory is stored but not owned by the operator.
              *                Pass null to reset the factory of this operator.

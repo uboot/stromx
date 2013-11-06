@@ -106,14 +106,16 @@ namespace stromx
             {
                 if((*iter)->type() == type && (*iter)->package() == package)
                 {
-                    OperatorKernel* newOp = 0;
-                    newOp = (*iter)->clone();
-                    if (newOp == 0)
+                    OperatorKernel* newOpKernel = 0;
+                    newOpKernel = (*iter)->clone();
+                    if (newOpKernel == 0)
                     { 
                         throw InternalError("Invalid argument received: Null pointer. Cloning failed");
                     }
 
-                    return new Operator(newOp);
+                    Operator * newOp = new Operator(newOpKernel);
+                    newOp->setFactory(this);
+                    return newOp;
                 }
             }
             

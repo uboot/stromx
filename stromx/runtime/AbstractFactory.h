@@ -32,7 +32,10 @@ namespace stromx
         class AbstractFactory
         {
         public:
-            /** Allocates and returns a new operator. */
+            /** 
+             * Allocates and returns a new operator. The factory of the operator
+             * will be set to this factory.
+             */
             virtual Operator* newOperator(const std::string & package, const std::string & type) const = 0;      
             
             /** Allocates and returns a new data object. */
