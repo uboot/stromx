@@ -53,7 +53,6 @@ namespace
         }
         
         boost::asio::streambuf & textBuffer() { return m_textBuffer; }
-        
         boost::asio::streambuf & fileBuffer() { return m_fileBuffer; }
         
     private:
@@ -142,8 +141,10 @@ namespace stromx
                 
                 boost::asio::streambuf data;
                 std::ostream dataStream(&data);
+                dataStream << VERSION << LINE_DELIMITER;
                 dataStream << access().package() << LINE_DELIMITER;
                 dataStream << access().type() << LINE_DELIMITER;
+                dataStream << access().version() << LINE_DELIMITER;
                 dataStream << output.textBuffer().size() << LINE_DELIMITER;
                 dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
