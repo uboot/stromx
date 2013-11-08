@@ -170,6 +170,8 @@ namespace stromx
                 boost::asio::read(socket, textBuffer);
                 boost::asio::read(socket, fileBuffer);
                 
+                socket.close();
+                
                 StreamInput input(textBuffer, fileBuffer);
                 
                 outData = provider.factory().newData(package, type);
@@ -180,6 +182,7 @@ namespace stromx
             catch (std::exception& e)
             {
                 std::cerr << e.what() << std::endl;
+                throw;
             }
         }
         

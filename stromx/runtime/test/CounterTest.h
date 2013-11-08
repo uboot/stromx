@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_EXAMPLE_COUNTERTEST_H
-#define STROMX_EXAMPLE_COUNTERTEST_H
+#ifndef STROMX_RUNTIME_COUNTERTEST_H
+#define STROMX_RUNTIME_COUNTERTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -25,10 +25,7 @@ namespace stromx
     namespace runtime
     {
         class OperatorTester;
-    }
-
-    namespace runtime
-    {
+        
         class CounterTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (CounterTest);
@@ -50,4 +47,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_EXAMPLE_COUNTERTEST_H
+#endif // STROMX_RUNTIME_COUNTERTEST_H

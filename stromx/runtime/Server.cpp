@@ -154,6 +154,7 @@ namespace stromx
             }
             catch (std::exception& e)
             {
+                std::cerr << e.what() << std::endl;
                 throw;
             }
         }

@@ -106,39 +106,55 @@ class LibTestGenerator(LibGenerator):
     """
     def generate(self):
         text = """
-/* Copied from http://www.evocomp.de/tutorials/tutorium_cppunit/howto_tutorial_cppunit.html */
+// copied from cppunit/TestRunner.h
 
-#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
 #include <cppunit/TestRunner.h>
-#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/BriefTestProgressListener.h>
 
-int main (int, char**)
+#include <stdexcept>
+
+int main( int argc, char* argv[] )
 {
-    // Informiert Test-Listener ueber Testresultate
-    CPPUNIT_NS :: TestResult testresult;
+    std::string testPath = (argc > 1) ? std::string(argv[1]) : "";
 
-    // Listener zum Sammeln der Testergebnisse registrieren
-    CPPUNIT_NS :: TestResultCollector collectedresults;
-    testresult.addListener (&collectedresults);
+    // Create the event manager and test controller
+    CppUnit::TestResult controller;
 
-    // Listener zur Ausgabe der Ergebnisse einzelner Tests
-    CPPUNIT_NS :: BriefTestProgressListener progress;
-    testresult.addListener (&progress);
+    // Add a listener that colllects test result
+    CppUnit::TestResultCollector result;
+    controller.addListener( &result );        
 
-    // Test-Suite ueber die Registry im Test-Runner einfuegen
-    CPPUNIT_NS :: TestRunner testrunner;
-    testrunner.addTest (CPPUNIT_NS :: TestFactoryRegistry :: getRegistry ().makeTest ());
-    testrunner.run (testresult);
+    // Add a listener that print dots as test run.
+    CppUnit::BriefTestProgressListener progress;
+    controller.addListener( &progress );      
 
-    // Resultate im Compiler-Format ausgeben
-    CPPUNIT_NS :: CompilerOutputter compileroutputter (&collectedresults, std::cerr);
-    compileroutputter.write ();
+    // Add the top suite to the test runner
+    CppUnit::TestRunner runner;
+    runner.addTest( CppUnit::TestFactoryRegistry::getRegistry().makeTest() );   
+    try
+    {
+        std::cout << "Running "  <<  testPath;
+        runner.run( controller, testPath );
 
-    // Rueckmeldung, ob Tests erfolgreich waren
-    return collectedresults.wasSuccessful () ? 0 : 1;
+        std::cerr << std::endl;
+
+        // Print test in a compiler compatible format.
+        CppUnit::CompilerOutputter outputter( &result, std::cerr );
+        outputter.write();                      
+    }
+    catch ( std::invalid_argument &e )  // Test path not resolved
+    {
+        std::cerr  <<  std::endl  
+                    <<  "ERROR: "  <<  e.what()
+                    << std::endl;
+        return 0;
+    }
+
+    return result.wasSuccessful() ? 0 : 1;
 }
 """
         self.doc.text(text)

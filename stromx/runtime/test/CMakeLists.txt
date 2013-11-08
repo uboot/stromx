@@ -85,6 +85,7 @@ set(SOURCES
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
     BoolTest.cpp
+    ClientTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp
     DataRefTest.cpp
@@ -121,6 +122,7 @@ set(SOURCES
     TestData.cpp
     TriggerTest.cpp
     TryTest.cpp
+    ServerTest.cpp
     SortInputsAlgorithmTest.cpp
     StreamTest.cpp
     TestUtilities.cpp
