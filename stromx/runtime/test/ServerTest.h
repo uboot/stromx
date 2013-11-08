@@ -24,12 +24,12 @@ namespace stromx
 {
     namespace runtime
     {
-        class OperatorKernel;
+        class OperatorTester;
         
         class ServerTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ServerTest);
-            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testTransmit);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,10 +39,10 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testExecute();
+            void testTransmit();
                 
         private:
-            runtime::OperatorKernel* m_operator;
+            OperatorTester* m_operator;
         };
     }
 }
