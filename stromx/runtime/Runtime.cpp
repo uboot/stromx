@@ -53,6 +53,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new UInt16);
     registry.registerData(new Int32);
     registry.registerData(new UInt32);
+    registry.registerData(new Float32);
     registry.registerData(new Float64);
     registry.registerData(new Enum);
     registry.registerData(new None);
