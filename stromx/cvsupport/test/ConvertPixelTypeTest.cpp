@@ -35,6 +35,11 @@ namespace stromx
         void ConvertPixelTypeTest::setUp ( void )
         {
             m_operator = new runtime::OperatorTester(new ConvertPixelType());
+        }
+        
+        void ConvertPixelTypeTest::initializeOperator(unsigned int dataFlow)
+        {
+            m_operator->setParameter(ConvertPixelType::DATA_FLOW, runtime::Enum(dataFlow));
             m_operator->initialize();
             m_operator->activate();
             Image* image = new Image("lenna.jpg");
@@ -43,8 +48,10 @@ namespace stromx
             m_operator->setInputData(ConvertPixelType::SOURCE, m_source);
         }
         
-        void ConvertPixelTypeTest::testExecuteMono8()
+        void ConvertPixelTypeTest::testExecuteMono8Manual()
         {
+            initializeOperator(ConvertPixelType::MANUAL);
+            
             m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::MONO_8));
             DataContainer destination(new Image(512, 500, runtime::Image::BAYERBG_8));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
@@ -57,11 +64,13 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteMono8.png", image);
+            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteMono8Manual.png", image);
         }
         
-        void ConvertPixelTypeTest::testExecuteBayerBg8()
+        void ConvertPixelTypeTest::testExecuteBayerBg8Manual()
         {
+            initializeOperator(ConvertPixelType::MANUAL);
+            
             m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::BAYERBG_8));
             DataContainer destination(new Image(512, 500, runtime::Image::MONO_8));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
@@ -74,11 +83,13 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteBayerBg8.png", image);
+            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteBayerBg8Manual.png", image);
         }
         
-        void ConvertPixelTypeTest::testExecuteBayerRgb24()
+        void ConvertPixelTypeTest::testExecuteBayerRgb24Manual()
         {
+            initializeOperator(ConvertPixelType::MANUAL);
+            
             m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             DataContainer destination(new Image(512, 500, runtime::Image::BGR_24));
             m_operator->setInputData(ConvertPixelType::DESTINATION, destination);
@@ -91,14 +102,32 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
             
-            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteBayerRgb24.png", image);
+            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteBayerRgb24Manual.png", image);
         }
         
-        void ConvertPixelTypeTest::testExecuteIdenticalInputs()
+        void ConvertPixelTypeTest::testExecuteIdenticalInputsManual()
         {
+            initializeOperator(ConvertPixelType::MANUAL);
+            
             m_operator->setInputData(ConvertPixelType::DESTINATION, m_source);
             runtime::DataContainer result;
             CPPUNIT_ASSERT_THROW(result = m_operator->getOutputData(ConvertPixelType::OUTPUT), InputError);
+        }
+        
+        void ConvertPixelTypeTest::testExecuteMono8Allocate()
+        {
+            initializeOperator(ConvertPixelType::ALLOCATE);
+            m_operator->setParameter(ConvertPixelType::PIXEL_TYPE, Enum(runtime::Image::MONO_8));
+            
+            runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
+            
+            ReadAccess<runtime::Image> access(result);
+            const runtime::Image& image = access();
+            CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, image.pixelType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
+            
+            cvsupport::Image::save("ConvertPixelTypeTest_testExecuteMono8Allocate.png", image);
         }
         
         void ConvertPixelTypeTest::tearDown ( void )

@@ -33,10 +33,11 @@ namespace stromx
         class ConvertPixelTypeTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ConvertPixelTypeTest);
-            CPPUNIT_TEST (testExecuteMono8);
-            CPPUNIT_TEST (testExecuteBayerBg8);
-            CPPUNIT_TEST (testExecuteBayerRgb24);
-            CPPUNIT_TEST (testExecuteIdenticalInputs);
+            CPPUNIT_TEST (testExecuteMono8Manual);
+            CPPUNIT_TEST (testExecuteBayerBg8Manual);
+            CPPUNIT_TEST (testExecuteBayerRgb24Manual);
+            CPPUNIT_TEST (testExecuteIdenticalInputsManual);
+            CPPUNIT_TEST (testExecuteMono8Allocate);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -46,14 +47,17 @@ namespace stromx
                 void tearDown();
 
             protected:
-                void testExecuteMono8();
-                void testExecuteBayerBg8();
-                void testExecuteBayerRgb24();
-                void testExecuteIdenticalInputs();
+                void testExecuteMono8Manual();
+                void testExecuteBayerBg8Manual();
+                void testExecuteBayerRgb24Manual();
+                void testExecuteIdenticalInputsManual();
+                void testExecuteMono8Allocate();
                 
             private:
                 runtime::OperatorTester* m_operator;
                 runtime::DataContainer m_source;
+                
+                void initializeOperator(unsigned int dataFlow);
         };
     }
 }

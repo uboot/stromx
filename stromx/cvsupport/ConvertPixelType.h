@@ -19,6 +19,7 @@
 
 #include "stromx/cvsupport/Config.h"
 #include <stromx/runtime/Enum.h>
+#include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/RecycleAccess.h>
@@ -31,6 +32,12 @@ namespace stromx
         class STROMX_CVSUPPORT_API ConvertPixelType : public runtime::OperatorKernel
         {
         public:
+            enum DataFlowId
+            {
+                MANUAL,
+                ALLOCATE
+            };
+            
             enum InputId
             {
                 SOURCE,
@@ -44,6 +51,7 @@ namespace stromx
             
             enum ParameterId
             {
+                DATA_FLOW,
                 PIXEL_TYPE
             };
             
@@ -52,12 +60,14 @@ namespace stromx
             virtual OperatorKernel* clone() const { return new ConvertPixelType; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
+            void initialize();
             virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const runtime::Description*> setupInputs();
-            static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Parameter*> setupInitParameters();
+            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
@@ -69,6 +79,8 @@ namespace stromx
             static void openCvConversion(const runtime::Image & inImage, runtime::Image & outImage);
             
             runtime::Enum m_pixelType;
+            runtime::Enum m_dataFlow;
+            runtime::EnumParameter* m_dataFlowParameter;
         };
     }
 }

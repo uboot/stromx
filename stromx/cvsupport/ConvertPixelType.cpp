@@ -36,11 +36,12 @@ namespace stromx
         const std::string ConvertPixelType::TYPE("ConvertPixelType");
         
         const std::string ConvertPixelType::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version ConvertPixelType::VERSION(0, 1, 0);
+        const Version ConvertPixelType::VERSION(0, 2, 0);
         
         ConvertPixelType::ConvertPixelType()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-            m_pixelType(runtime::Image::MONO_8)
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
+            m_pixelType(runtime::Image::MONO_8),
+            m_dataFlow(ALLOCATE)
         {
         }
 
@@ -52,6 +53,9 @@ namespace stromx
                 {
                 case PIXEL_TYPE:
                     m_pixelType = stromx::runtime::data_cast<Enum>(value);
+                    break;
+                case DATA_FLOW:
+                    m_dataFlow = stromx::runtime::data_cast<Enum>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -69,50 +73,89 @@ namespace stromx
             {
             case PIXEL_TYPE:
                 return m_pixelType;
+            case DATA_FLOW:
+                return m_dataFlow;
             default:
                 throw WrongParameterId(id, *this);
             }
         }  
         
+        void ConvertPixelType::initialize()
+        {
+            runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
+        }
+        
         void ConvertPixelType::execute(DataProvider& provider)
         {
-            Id2DataPair srcMapper(SOURCE);
-            Id2DataPair destMapper(DESTINATION);
-            provider.receiveInputData(srcMapper && destMapper);
-            
-            if(srcMapper.data() == destMapper.data())
-                throw InputError(DESTINATION, *this, "Destination image must not be the same image as the source image."); 
-            
-            ReadAccess<runtime::Image> src(srcMapper.data());
-            WriteAccess<runtime::Image> dest(destMapper.data());
-            
-            const runtime::Image& srcImage = src();
-            runtime::Image& destImage = dest();
-            
-            runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
-            
-            unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
-            unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
-            
-            if(destImage.bufferSize() < destImageSize)
-                throw InputError(DESTINATION, *this, "Destination image is too small.");
-            
-            destImage.initializeImage(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
-            
-            if((srcImage.pixelType() == runtime::Image::RGB_24 || srcImage.pixelType() == runtime::Image::BGR_24)
-            && (pixelType == runtime::Image::BAYERBG_8 || pixelType == runtime::Image::BAYERGB_8))
+            if (m_dataFlow == MANUAL)
             {
-                // this case is not handled by OpenCV
-                rgbToBayer(srcImage, destImage);
+                Id2DataPair srcMapper(SOURCE);
+                Id2DataPair destMapper(DESTINATION);
+                provider.receiveInputData(srcMapper && destMapper);
+                
+                if(srcMapper.data() == destMapper.data())
+                    throw InputError(DESTINATION, *this, "Destination image must not be the same image as the source image."); 
+                
+                ReadAccess<runtime::Image> src(srcMapper.data());
+                WriteAccess<runtime::Image> dest(destMapper.data());
+                
+                const runtime::Image& srcImage = src();
+                runtime::Image& destImage = dest();
+                
+                runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
+                
+                unsigned int destImageSize = srcImage.width() * srcImage.height() * getDestPixelSize(pixelType);
+                unsigned int destImageStride = srcImage.width() * getDestPixelSize(pixelType);
+                
+                if(destImage.bufferSize() < destImageSize)
+                    throw InputError(DESTINATION, *this, "Destination image is too small.");
+                
+                destImage.initializeImage(srcImage.width(), srcImage.height(), destImageStride, destImage.buffer(), pixelType);
+                
+                if((srcImage.pixelType() == runtime::Image::RGB_24 || srcImage.pixelType() == runtime::Image::BGR_24)
+                && (pixelType == runtime::Image::BAYERBG_8 || pixelType == runtime::Image::BAYERGB_8))
+                {
+                    // this case is not handled by OpenCV
+                    rgbToBayer(srcImage, destImage);
+                }
+                else
+                {
+                    // use OpenCV for conversion
+                    openCvConversion(srcImage, destImage);
+                }
+                
+                Id2DataPair outputMapper(OUTPUT, destMapper.data());
+                provider.sendOutputData( outputMapper);
             }
-            else
+            else // allocate destination data on the fly
             {
-                // use OpenCV for conversion
-                openCvConversion(srcImage, destImage);
+                Id2DataPair srcMapper(SOURCE);
+                provider.receiveInputData(srcMapper);
+                
+                ReadAccess<runtime::Image> src(srcMapper.data());
+                
+                const runtime::Image& srcImage = src();
+                
+                runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
+                
+                runtime::Image* destImage = new cvsupport::Image(srcImage.width(), srcImage.height(), pixelType);
+                DataContainer destContainer(destImage);
+                
+                if((srcImage.pixelType() == runtime::Image::RGB_24 || srcImage.pixelType() == runtime::Image::BGR_24)
+                && (pixelType == runtime::Image::BAYERBG_8 || pixelType == runtime::Image::BAYERGB_8))
+                {
+                    // this case is not handled by OpenCV
+                    rgbToBayer(srcImage, *destImage);
+                }
+                else
+                {
+                    // use OpenCV for conversion
+                    openCvConversion(srcImage, *destImage);
+                }
+                
+                Id2DataPair outputMapper(OUTPUT, destContainer);
+                provider.sendOutputData( outputMapper);
             }
-            
-            Id2DataPair outputMapper(OUTPUT, destMapper.data());
-            provider.sendOutputData( outputMapper);
         }
         
         const std::vector<const runtime::Description*> ConvertPixelType::setupInputs()
@@ -123,9 +166,12 @@ namespace stromx
             source->setTitle("Source");
             inputs.push_back(source);
             
-            Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
-            destination->setTitle("Destination");
-            inputs.push_back(destination);
+            if (m_dataFlow == MANUAL)
+            {
+                Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
+                destination->setTitle("Destination");
+                inputs.push_back(destination);
+            }
             
             return inputs;
         }
@@ -139,6 +185,20 @@ namespace stromx
             outputs.push_back(output);
             
             return outputs;
+        }
+        
+        const std::vector<const runtime::Parameter*> ConvertPixelType::setupInitParameters()
+        {
+            std::vector<const runtime::Parameter*> parameters;
+            
+            EnumParameter* dataFlow = new runtime::EnumParameter(DATA_FLOW);
+            dataFlow->setAccessMode(runtime::Parameter::NONE_WRITE);
+            dataFlow->setTitle("Data flow");
+            dataFlow->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
+            dataFlow->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
+            parameters.push_back(dataFlow);
+            
+            return parameters;
         }
         
         const std::vector<const Parameter*> ConvertPixelType::setupParameters()

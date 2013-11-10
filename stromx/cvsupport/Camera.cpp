@@ -120,6 +120,9 @@ namespace stromx
         {
             OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
             
+            m_pixelType->setParameter(ConvertPixelType::DATA_FLOW,
+                                      runtime::Enum(ConvertPixelType::MANUAL));
+            
             m_input->initialize();
             m_adjustRgbChannels->initialize();
             m_clip->initialize();
