@@ -16,6 +16,7 @@ set(SOURCES
     impl/InputNode.cpp
     impl/SynchronizedOperatorKernel.cpp
     impl/OutputNode.cpp
+    impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
     Connector.cpp
