@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2012 Matthias Fuchs
+ *  Copyright 2013 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Server.h"
+#include "stromx/runtime/Send.h"
 
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
@@ -70,20 +70,20 @@ namespace stromx
     namespace runtime
     {
         
-        const std::string Server::LINE_DELIMITER("\r\n");
-        const std::string Server::TYPE("Server");
-        const std::string Server::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Server::VERSION(0, 1, 0);
-        const unsigned int Server::MIN_PORT = 49152;
-        const unsigned int Server::MAX_PORT = 65535;
+        const std::string Send::LINE_DELIMITER("\r\n");
+        const std::string Send::TYPE("Send");
+        const std::string Send::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
+        const Version Send::VERSION(0, 1, 0);
+        const unsigned int Send::MIN_PORT = 49152;
+        const unsigned int Send::MAX_PORT = 65535;
         
-        Server::Server()
+        Send::Send()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
             m_port(MIN_PORT)
         {
         }
         
-        void Server::setParameter(unsigned int id, const runtime::Data& value)
+        void Send::setParameter(unsigned int id, const runtime::Data& value)
         {
             UInt16 uintValue;
             
@@ -102,7 +102,7 @@ namespace stromx
             }
         }
 
-        const DataRef Server::getParameter(const unsigned int id) const
+        const DataRef Send::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -113,14 +113,14 @@ namespace stromx
             }
         }
         
-        void Server::initialize()
+        void Send::initialize()
         {
             OperatorKernel::initialize(setupInputs(),
                                        setupOutputs(),
                                        std::vector<const Parameter*>());
         }
         
-        void Server::execute(DataProvider& provider)
+        void Send::execute(DataProvider& provider)
         {
             using boost::asio::ip::tcp;
             
@@ -159,7 +159,7 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Server::setupInputs()
+        const std::vector<const Description*> Send::setupInputs()
         {
             std::vector<const Description*> inputs;
             Description* input = new Description(INPUT, DataVariant::DATA);
@@ -169,13 +169,13 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Server::setupOutputs() const
+        const std::vector<const Description*> Send::setupOutputs() const
         {
             std::vector<const Description*> outputs;
             return outputs;
         }
         
-        const std::vector<const Parameter*> Server::setupParameters()
+        const std::vector<const Parameter*> Send::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             

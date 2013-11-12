@@ -33,7 +33,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ClientTest() : m_operator(0) {}
+            ClientTest() {}
             
             void setUp();
             void tearDown();
@@ -42,7 +42,6 @@ namespace stromx
             void testExecute();
                 
         private:
-            runtime::OperatorKernel* m_operator;
         };
     }
 }

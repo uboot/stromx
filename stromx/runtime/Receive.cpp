@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2012 Matthias Fuchs
+ *  Copyright 2013 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Client.h"
+#include "stromx/runtime/Receive.h"
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
@@ -71,21 +71,21 @@ namespace stromx
 {
     namespace runtime
     {
-        const std::string Client::LINE_DELIMITER("\r\n");
-        const std::string Client::TYPE("Client");
-        const std::string Client::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Client::VERSION(0, 1, 0);
-        const unsigned int Client::MIN_PORT = 49152;
-        const unsigned int Client::MAX_PORT = 65535;
+        const std::string Receive::LINE_DELIMITER("\r\n");
+        const std::string Receive::TYPE("Receive");
+        const std::string Receive::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
+        const Version Receive::VERSION(0, 1, 0);
+        const unsigned int Receive::MIN_PORT = 49152;
+        const unsigned int Receive::MAX_PORT = 65535;
         
-        Client::Client()
+        Receive::Receive()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
             m_url("localhost"),
             m_port(MIN_PORT)
         {
         }
         
-        void Client::setParameter(unsigned int id, const runtime::Data& value)
+        void Receive::setParameter(unsigned int id, const runtime::Data& value)
         {
             UInt16 uintValue;
             
@@ -107,7 +107,7 @@ namespace stromx
             }
         }
 
-        const DataRef Client::getParameter(const unsigned int id) const
+        const DataRef Receive::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -120,14 +120,14 @@ namespace stromx
             }
         }
         
-        void Client::initialize()
+        void Receive::initialize()
         {
             OperatorKernel::initialize(setupInputs(),
                                        setupOutputs(),
                                        std::vector<const Parameter*>());
         }
         
-        void Client::execute(DataProvider& provider)
+        void Receive::execute(DataProvider& provider)
         {
             using boost::asio::ip::tcp;
             
@@ -186,13 +186,13 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Client::setupInputs()
+        const std::vector<const Description*> Receive::setupInputs()
         {
             std::vector<const Description*> inputs;
             return inputs;
         }
         
-        const std::vector<const Description*> Client::setupOutputs() const
+        const std::vector<const Description*> Receive::setupOutputs() const
         {
             std::vector<const Description*> outputs;
             
@@ -203,7 +203,7 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Parameter*> Client::setupParameters()
+        const std::vector<const Parameter*> Receive::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             

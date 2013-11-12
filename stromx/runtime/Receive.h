@@ -14,32 +14,34 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_SERVER_H
-#define STROMX_RUNTIME_SERVER_H
+#ifndef STROMX_RUNTIME_RECEIVE_H
+#define STROMX_RUNTIME_RECEIVE_H
 
 #include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/String.h"
 
 namespace stromx
 {
     namespace runtime
     {
         /** \brief Distributes input data to TCP clients. */
-        class STROMX_RUNTIME_API Server : public OperatorKernel
+        class STROMX_RUNTIME_API Receive : public OperatorKernel
         {
         public:
-            enum InputId
+            enum OutputId
             {
-                INPUT
+                OUTPUT
             };
             
             enum ParameterId
             {
+                URL,
                 PORT
             };
             
-            Server();
+            Receive();
             
-            virtual OperatorKernel* clone() const { return new Server; }
+            virtual OperatorKernel* clone() const { return new Receive; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();
@@ -59,9 +61,10 @@ namespace stromx
             static const unsigned int MIN_PORT;
             static const unsigned int MAX_PORT;
             
+            String m_url;
             UInt16 m_port;
         };
     }
 }
 
-#endif // STROMX_RUNTIME_SERVER_H
+#endif // STROMX_RUNTIME_RECEIVE_H

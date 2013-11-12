@@ -17,7 +17,6 @@
 #include "stromx/runtime/test/ClientTest.h"
 
 #include <cppunit/TestAssert.h>
-#include "stromx/runtime/Client.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
 
@@ -27,7 +26,6 @@ namespace stromx
     {
         void ClientTest::setUp()
         {
-            m_operator = new Client();
         }
 
         void ClientTest::testExecute()
@@ -36,7 +34,6 @@ namespace stromx
 
         void ClientTest::tearDown()
         {
-            delete m_operator;
         }
     }
 }

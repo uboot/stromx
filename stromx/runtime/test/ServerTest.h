@@ -20,6 +20,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
+#include <boost/asio.hpp>
+
 namespace stromx
 {
     namespace runtime
@@ -29,20 +31,17 @@ namespace stromx
         class ServerTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ServerTest);
-            CPPUNIT_TEST(testTransmit);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ServerTest() : m_operator(0) {}
+            ServerTest() {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testTransmit();
                 
         private:
-            OperatorTester* m_operator;
         };
     }
 }

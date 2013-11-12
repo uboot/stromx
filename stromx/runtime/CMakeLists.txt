@@ -18,7 +18,6 @@ set(SOURCES
     impl/OutputNode.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
-    Client.cpp
     Connector.cpp
     ConstDataRef.cpp
     Counter.cpp
@@ -49,10 +48,11 @@ set(SOURCES
     Queue.cpp
     Primitive.cpp
     RecycleAccess.cpp
-    Server.cpp
+    Send.cpp
     Stream.cpp
     String.cpp
     SortInputsAlgorithm.cpp
+    Receive.cpp
     Runtime.cpp
     Thread.cpp
     Trigger.cpp
