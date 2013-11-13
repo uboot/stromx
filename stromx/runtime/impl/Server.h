@@ -17,16 +17,37 @@
 #ifndef STROMX_RUNTIME_SERVER_H
 #define STROMX_RUNTIME_SERVER_H
 
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
+
 namespace stromx
 {
     namespace runtime
     {
+        class DataContainer;
+        
         namespace impl
         {
+            class Connection;
+
             class Server
             {
             public:
+                Server(const unsigned int port);
+                ~Server();
                 
+                void send(const DataContainer & data);
+                void stop();
+                void join();
+                
+            private:
+                void startAccept();
+                void handleAccept(Connection* connection, 
+                                  const boost::system::error_code & error);
+                
+                boost::asio::io_service m_ioService;
+                boost::asio::ip::tcp::acceptor m_acceptor;
+                boost::thread* m_thread;
             };
         }
     }

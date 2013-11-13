@@ -22,6 +22,8 @@
 
 #include <boost/asio.hpp>
 
+#include "stromx/runtime/impl/Server.h"
+
 namespace stromx
 {
     namespace runtime
@@ -34,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ServerTest() {}
+            ServerTest() : m_server(0) {}
             
             void setUp();
             void tearDown();
@@ -42,6 +44,7 @@ namespace stromx
         protected:
                 
         private:
+            impl::Server* m_server;
         };
     }
 }

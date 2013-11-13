@@ -18,6 +18,8 @@
 
 #include <cppunit/TestAssert.h>
 
+#include "stromx/runtime/impl/Server.h"
+
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
 
 namespace stromx
@@ -30,10 +32,12 @@ namespace stromx
     
         void ServerTest::setUp()
         {
+            m_server = new impl::Server(49152);
         }
 
         void ServerTest::tearDown()
         {
+            delete m_server;
         }
     }
 }

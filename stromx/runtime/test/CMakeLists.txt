@@ -80,6 +80,7 @@ set(SOURCES
     ../impl/OutputNode.cpp
     ../impl/ReadAccessImpl.cpp
     ../impl/RecycleAccessImpl.cpp
+    ../impl/Server.cpp
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp

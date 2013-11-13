@@ -16,12 +16,95 @@
 
 #include "Server.h"
 
+#include <boost/bind.hpp>
+#include <boost/enable_shared_from_this.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/graph/graph_concepts.hpp>
+
+using namespace boost::asio;
+
 namespace stromx
 {
     namespace runtime
     {
         namespace impl
         {
+            class Server;
+            
+            class Connection
+            {
+            public:
+                Connection(Server* server, io_service& ioService)
+                  : m_server(server),
+                    m_socket(ioService)
+                {
+                }
+
+                ip::tcp::socket& socket()
+                {
+                    return m_socket;
+                }
+
+                void start()
+                {
+                    std::string message = "test";
+
+                    boost::asio::async_write(m_socket, boost::asio::buffer(message),
+                        boost::bind(&Connection::handleWrite, this,
+                        placeholders::error,
+                        placeholders::bytes_transferred));
+                }
+
+            private:
+                void handleWrite(const boost::system::error_code& /*error*/,
+                    size_t /*bytes_transferred*/)
+                {
+                }
+
+                Server* m_server;
+                ip::tcp::socket m_socket;
+            };
+
+            Server::Server(unsigned int port)
+              : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
+                m_thread(0)
+            {
+                startAccept();
+                
+                m_thread = new boost::thread(boost::bind(&io_service::run, &m_ioService));
+            }
+            
+            void Server::stop()
+            {
+                m_ioService.stop();
+            }
+            
+            void Server::join()
+            {
+                m_thread->join();
+            }
+         
+            Server::~Server()
+            {
+                delete m_thread;
+            }
+            
+            void Server::startAccept()
+            {
+                Connection* connection = new Connection(this, m_ioService);
+                m_acceptor.async_accept(connection->socket(),
+                                        boost::bind(&Server::handleAccept, this, 
+                                                    connection, placeholders::error));
+            }
+            
+            void Server::handleAccept(Connection* connection, 
+                                      const boost::system::error_code& error)
+            {
+                if (! error)
+                    connection->start();
+                
+                startAccept();
+            }
         }
     }
 }
