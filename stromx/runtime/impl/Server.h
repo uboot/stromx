@@ -36,6 +36,7 @@ namespace stromx
                 Server(const unsigned int port);
                 ~Server();
                 
+                void start();
                 void send(const DataContainer & data);
                 void stop();
                 void join();

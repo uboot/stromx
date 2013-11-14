@@ -20,8 +20,6 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
-#include <boost/asio.hpp>
-
 #include "stromx/runtime/impl/Server.h"
 
 namespace stromx
@@ -33,6 +31,11 @@ namespace stromx
         class ServerTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ServerTest);
+            CPPUNIT_TEST (testConstructor);
+            CPPUNIT_TEST (testStart);   
+            CPPUNIT_TEST (testConnect);  
+            CPPUNIT_TEST (testConnectFails);
+            CPPUNIT_TEST (testReceive);  
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -42,6 +45,11 @@ namespace stromx
             void tearDown();
 
         protected:
+            void testConstructor();
+            void testStart();
+            void testConnect();
+            void testConnectFails();
+            void testReceive();
                 
         private:
             impl::Server* m_server;

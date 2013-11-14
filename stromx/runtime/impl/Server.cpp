@@ -59,6 +59,7 @@ namespace stromx
                 void handleWrite(const boost::system::error_code& /*error*/,
                     size_t /*bytes_transferred*/)
                 {
+                    delete this;
                 }
 
                 Server* m_server;
@@ -68,10 +69,16 @@ namespace stromx
             Server::Server(unsigned int port)
               : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
                 m_thread(0)
+            {}
+            
+            void Server::start()
             {
-                startAccept();
-                
-                m_thread = new boost::thread(boost::bind(&io_service::run, &m_ioService));
+                m_thread = new boost::thread(boost::bind(&Server::startAccept, this));
+            }
+            
+            void Server::send(const DataContainer& data)
+            {
+
             }
             
             void Server::stop()
@@ -81,7 +88,8 @@ namespace stromx
             
             void Server::join()
             {
-                m_thread->join();
+                if (m_thread)
+                    m_thread->join();
             }
          
             Server::~Server()
@@ -95,6 +103,8 @@ namespace stromx
                 m_acceptor.async_accept(connection->socket(),
                                         boost::bind(&Server::handleAccept, this, 
                                                     connection, placeholders::error));
+                
+                m_ioService.run();
             }
             
             void Server::handleAccept(Connection* connection, 
