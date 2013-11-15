@@ -23,6 +23,7 @@
 #include "stromx/runtime/impl/Server.h"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <boost/lexical_cast.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
 
@@ -42,7 +43,6 @@ namespace stromx
 
                 boost::asio::connect(socket, endpoint_iterator);
             }
-            
         }
     
         void ServerTest::setUp()
@@ -109,6 +109,26 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(resultString(2), received);
         }
         
+        void ServerTest::testReceiveMultipleData()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+            connectToServer(ioService, socket);
+            
+            DataContainer data2(new UInt32(2));
+            DataContainer data10(new UInt32(10));
+            
+            m_server->send(data2);
+            std::string received2 = receiveString(socket, resultString(2).length());
+            m_server->send(data10);
+            std::string received10 = receiveString(socket, resultString(10).length());
+            
+            CPPUNIT_ASSERT_EQUAL(resultString(2), received2);
+            CPPUNIT_ASSERT_EQUAL(resultString(10), received10);
+        }
+        
         const std::string ServerTest::receiveString(ip::tcp::socket& socket, const unsigned int length)
         {
             boost::array<char, 128> buf;
@@ -118,14 +138,16 @@ namespace stromx
         
         const std::string ServerTest::resultString(const unsigned int value)
         {
+            std::string valueStr = boost::lexical_cast<std::string>(value);
+            
             std::ostringstream out;
             out << "0.1.0\r\n";
             out << "Runtime\r\n";
             out << "UInt32\r\n";
             out << "0.1.0\r\n";
-            out << "1\r\n";
+            out << valueStr.length() << "\r\n";
             out << "0\r\n";
-            out << value;
+            out << valueStr;
             
             return out.str();
         }

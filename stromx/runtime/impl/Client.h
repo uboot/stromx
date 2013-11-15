@@ -17,16 +17,36 @@
 #ifndef STROMX_RUNTIME_CLIENT_H
 #define STROMX_RUNTIME_CLIENT_H
 
+#include <deque>
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
+#include "stromx/runtime/DataContainer.h"
+
 namespace stromx
 {
     namespace runtime
     {
+        class Factory;
+        
         namespace impl
         {
             class Client
             {
             public:
+                Client(const std::string & url, const std::string & port);
                 
+                const DataContainer receive(const Factory & factory);
+                void stop();
+                void join();
+                
+            private:
+                
+                
+                boost::asio::io_service m_ioService;
+                boost::thread m_thread;
+                boost::mutex m_mutex;
+                boost::condition_variable m_cond;
+                std::deque<DataContainer> m_queue;
             };
         }
     }

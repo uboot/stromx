@@ -81,41 +81,44 @@ namespace stromx
 
                 void start()
                 {
-                    DataContainer data;
-                    
-                    // wait for new data
-                    try
+                    while (true)
                     {
-                        data = m_server->waitForData();
-                    }
-                    catch(boost::thread_interrupted&)
-                    {
-                        // return if the server thread was signalled to stop
-                        return;
-                    }
-                    
-                    ReadAccess<> access(data);
-                    
-                    StreamOutput output;
-                    access().serialize(output);
-                    
-                    boost::asio::streambuf buffer;
-                    std::ostream dataStream(&buffer);
-                    dataStream << Server::VERSION << LINE_DELIMITER;
-                    dataStream << access().package() << LINE_DELIMITER;
-                    dataStream << access().type() << LINE_DELIMITER;
-                    dataStream << access().version() << LINE_DELIMITER;
-                    dataStream << output.textBuffer().size() << LINE_DELIMITER;
-                    dataStream << output.fileBuffer().size() << LINE_DELIMITER;
+                        DataContainer data;
+                        
+                        // wait for new data
+                        try
+                        {
+                            data = m_server->waitForData();
+                        }
+                        catch(boost::thread_interrupted&)
+                        {
+                            // return if the server thread was signalled to stop
+                            return;
+                        }
+                        
+                        ReadAccess<> access(data);
+                        
+                        StreamOutput output;
+                        access().serialize(output);
+                        
+                        boost::asio::streambuf buffer;
+                        std::ostream dataStream(&buffer);
+                        dataStream << Server::VERSION << LINE_DELIMITER;
+                        dataStream << access().package() << LINE_DELIMITER;
+                        dataStream << access().type() << LINE_DELIMITER;
+                        dataStream << access().version() << LINE_DELIMITER;
+                        dataStream << output.textBuffer().size() << LINE_DELIMITER;
+                        dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
-                    boost::asio::write(m_socket, buffer);
-                    boost::asio::write(m_socket, output.textBuffer());
-                    boost::asio::write(m_socket, output.fileBuffer());
+                        boost::asio::write(m_socket, buffer);
+                        boost::asio::write(m_socket, output.textBuffer());
+                        boost::asio::write(m_socket, output.fileBuffer());
 
-//                     boost::asio::async_write(m_socket, boost::asio::buffer(message),
-//                         boost::bind(&Connection::handleWrite, this,
-//                         placeholders::error,
-//                         placeholders::bytes_transferred));
+    //                     boost::asio::async_write(m_socket, boost::asio::buffer(message),
+    //                         boost::bind(&Connection::handleWrite, this,
+    //                         placeholders::error,
+    //                         placeholders::bytes_transferred));
+                    }
                     
                     delete this;
                 }
@@ -143,7 +146,10 @@ namespace stromx
             
             void Server::send(const DataContainer& data)
             {
-                boost::lock_guard<boost::mutex> l(m_mutex);
+                boost::unique_lock<boost::mutex> l(m_mutex);
+                
+                while (! m_queue.empty())
+                    m_cond.wait(l);
                 
                 m_queue.push_front(data);
                 m_cond.notify_all();

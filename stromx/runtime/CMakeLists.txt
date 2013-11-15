@@ -8,6 +8,7 @@ if(BUILD_TESTS)
 endif()
    
 set(SOURCES
+    impl/Client.cpp
     impl/DataContainerImpl.cpp
     impl/ReadAccessImpl.cpp
     impl/RecycleAccessImpl.cpp

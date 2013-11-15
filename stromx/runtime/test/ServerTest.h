@@ -35,6 +35,7 @@ namespace stromx
             CPPUNIT_TEST (testConnect); 
             CPPUNIT_TEST (testConnectFails);
             CPPUNIT_TEST (testReceive);  
+            CPPUNIT_TEST (testReceiveMultipleData);
             CPPUNIT_TEST (testConstructorFails);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -49,6 +50,7 @@ namespace stromx
             void testConnect();
             void testConnectFails();
             void testReceive();
+            void testReceiveMultipleData();
             void testConstructorFails();
                 
         private:

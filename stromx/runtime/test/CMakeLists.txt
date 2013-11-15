@@ -73,6 +73,7 @@ set(SOURCES
     ../TriggerData.cpp
     ../Try.cpp
     ../Version.cpp
+    ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
     ../impl/Id2DataMap.cpp
     ../impl/InputNode.cpp
