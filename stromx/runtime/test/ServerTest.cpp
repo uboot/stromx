@@ -18,6 +18,8 @@
 
 #include <cppunit/TestAssert.h>
 
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/impl/Server.h"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
@@ -94,12 +96,29 @@ namespace stromx
             io_service ioService;
             ip::tcp::socket socket(ioService);
             connectToServer(ioService, socket);
+            
+            DataContainer data(new UInt32(2));
+            m_server->send(data);
 
             boost::array<char, 128> buf;
             std::fill(buf.begin(), buf.end(), 0);
             socket.read_some(buffer(buf));
             
-            CPPUNIT_ASSERT_EQUAL(std::string("test"), std::string(buf.data()));
+            CPPUNIT_ASSERT_EQUAL(resultString(2), std::string(buf.data()));
+        }
+        
+        const std::string ServerTest::resultString(const unsigned int value)
+        {
+            std::ostringstream out;
+            out << "0.1.0\r\n";
+            out << "Runtime\r\n";
+            out << "UInt32\r\n";
+            out << "0.1.0\r\n";
+            out << "1\r\n";
+            out << "0\r\n";
+            out << value;
+            
+            return out.str();
         }
     }
 }

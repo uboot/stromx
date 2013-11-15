@@ -17,20 +17,54 @@
 #include "Server.h"
 
 #include <boost/bind.hpp>
-#include <boost/enable_shared_from_this.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/graph/graph_concepts.hpp>
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/ReadAccess.h"
 
 using namespace boost::asio;
+
+namespace
+{
+    class StreamOutput : public stromx::runtime::OutputProvider
+    {
+    public:
+        StreamOutput()
+          : m_textStream(&m_textBuffer),
+            m_fileStream(&m_fileBuffer)
+        {}
+        
+        std::ostream & text ()
+        {
+            return m_textStream;
+        }
+        
+        std::ostream & openFile (const std::string &/*ext*/, const OpenMode /*mode*/)
+        {
+            return m_fileStream;
+        }
+        
+        std::ostream & file ()
+        {
+            return m_fileStream;
+        }
+        
+        boost::asio::streambuf & textBuffer() { return m_textBuffer; }
+        boost::asio::streambuf & fileBuffer() { return m_fileBuffer; }
+        
+    private:
+        boost::asio::streambuf m_textBuffer;
+        boost::asio::streambuf m_fileBuffer;
+        
+        std::ostream m_textStream;
+        std::ostream m_fileStream;
+    };
+}
 
 namespace stromx
 {
     namespace runtime
     {
         namespace impl
-        {
-            class Server;
-            
+        {            
             class Connection
             {
             public:
@@ -47,15 +81,46 @@ namespace stromx
 
                 void start()
                 {
-                    std::string message = "test";
+                    DataContainer data;
+                    
+                    // wait for new data
+                    try
+                    {
+                        data = m_server->waitForData();
+                    }
+                    catch(boost::thread_interrupted&)
+                    {
+                        // return if the server thread was signalled to stop
+                        return;
+                    }
+                    
+                    ReadAccess<> access(data);
+                    
+                    StreamOutput output;
+                    access().serialize(output);
+                    
+                    boost::asio::streambuf buffer;
+                    std::ostream dataStream(&buffer);
+                    dataStream << Server::VERSION << LINE_DELIMITER;
+                    dataStream << access().package() << LINE_DELIMITER;
+                    dataStream << access().type() << LINE_DELIMITER;
+                    dataStream << access().version() << LINE_DELIMITER;
+                    dataStream << output.textBuffer().size() << LINE_DELIMITER;
+                    dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
-                    boost::asio::async_write(m_socket, boost::asio::buffer(message),
-                        boost::bind(&Connection::handleWrite, this,
-                        placeholders::error,
-                        placeholders::bytes_transferred));
+                    boost::asio::write(m_socket, buffer);
+                    boost::asio::write(m_socket, output.textBuffer());
+                    boost::asio::write(m_socket, output.fileBuffer());
+
+//                     boost::asio::async_write(m_socket, boost::asio::buffer(message),
+//                         boost::bind(&Connection::handleWrite, this,
+//                         placeholders::error,
+//                         placeholders::bytes_transferred));
                 }
 
             private:
+                const static std::string LINE_DELIMITER;
+                
                 void handleWrite(const boost::system::error_code& /*error*/,
                     size_t /*bytes_transferred*/)
                 {
@@ -65,6 +130,9 @@ namespace stromx
                 Server* m_server;
                 ip::tcp::socket m_socket;
             };
+            
+            const std::string Connection::LINE_DELIMITER("\r\n");
+            const Version Server::VERSION(0, 1, 0);
 
             Server::Server(unsigned int port)
               : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
@@ -73,12 +141,16 @@ namespace stromx
             
             void Server::send(const DataContainer& data)
             {
-
+                boost::lock_guard<boost::mutex> l(m_mutex);
+                
+                m_queue.push_front(data);
+                m_cond.notify_all();
             }
             
             void Server::stop()
             {
                 m_ioService.stop();
+                m_thread.interrupt();
             }
             
             void Server::join()
@@ -103,6 +175,19 @@ namespace stromx
                     connection->start();
                 
                 startAccept();
+            }
+            
+            const DataContainer Server::waitForData()
+            {
+                boost::unique_lock<boost::mutex> l(m_mutex);
+                
+                while (m_queue.empty())
+                    m_cond.wait(l);
+                
+                DataContainer data = m_queue.back();
+                m_queue.pop_back();
+                
+                return data;
             }
         }
     }

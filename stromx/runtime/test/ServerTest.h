@@ -50,6 +50,7 @@ namespace stromx
             void testReceive();
                 
         private:
+            static const std::string resultString(const unsigned int value);
             impl::Server* m_server;
         };
     }

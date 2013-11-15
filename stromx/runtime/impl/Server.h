@@ -17,22 +17,28 @@
 #ifndef STROMX_RUNTIME_SERVER_H
 #define STROMX_RUNTIME_SERVER_H
 
+#include <deque>
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
+
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        class DataContainer;
-        
         namespace impl
         {
             class Connection;
 
             class Server
             {
+                friend class Connection;
+                
             public:
+                static const Version VERSION;
+                
                 Server(const unsigned int port);
                 
                 void send(const DataContainer & data);
@@ -43,10 +49,14 @@ namespace stromx
                 void startAccept();
                 void handleAccept(Connection* connection, 
                                   const boost::system::error_code & error);
+                const DataContainer waitForData();
                 
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::acceptor m_acceptor;
                 boost::thread m_thread;
+                boost::mutex m_mutex;
+                boost::condition_variable m_cond;
+                std::deque<DataContainer> m_queue;
             };
         }
     }
