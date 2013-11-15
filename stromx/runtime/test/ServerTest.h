@@ -32,7 +32,6 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (ServerTest);
             CPPUNIT_TEST (testConstructor);
-            CPPUNIT_TEST (testStart);   
             CPPUNIT_TEST (testConnect);  
             CPPUNIT_TEST (testConnectFails);
             CPPUNIT_TEST (testReceive);  
@@ -46,7 +45,6 @@ namespace stromx
 
         protected:
             void testConstructor();
-            void testStart();
             void testConnect();
             void testConnectFails();
             void testReceive();

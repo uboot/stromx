@@ -68,13 +68,8 @@ namespace stromx
 
             Server::Server(unsigned int port)
               : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
-                m_thread(0)
+                m_thread(boost::bind(&Server::startAccept, this))
             {}
-            
-            void Server::start()
-            {
-                m_thread = new boost::thread(boost::bind(&Server::startAccept, this));
-            }
             
             void Server::send(const DataContainer& data)
             {
@@ -88,13 +83,7 @@ namespace stromx
             
             void Server::join()
             {
-                if (m_thread)
-                    m_thread->join();
-            }
-         
-            Server::~Server()
-            {
-                delete m_thread;
+                m_thread.join();
             }
             
             void Server::startAccept()

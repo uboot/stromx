@@ -34,9 +34,7 @@ namespace stromx
             {
             public:
                 Server(const unsigned int port);
-                ~Server();
                 
-                void start();
                 void send(const DataContainer & data);
                 void stop();
                 void join();
@@ -48,7 +46,7 @@ namespace stromx
                 
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::acceptor m_acceptor;
-                boost::thread* m_thread;
+                boost::thread m_thread;
             };
         }
     }

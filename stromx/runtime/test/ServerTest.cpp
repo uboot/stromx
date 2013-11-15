@@ -67,17 +67,16 @@ namespace stromx
             ip::tcp::socket socket(ioService);
 
             ip::tcp::resolver resolver(ioService);
-            ip::tcp::resolver::query query("localhost", "49152");
+            ip::tcp::resolver::query query("localhost", "50000");
             ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
-            CPPUNIT_ASSERT_THROW(boost::asio::connect(socket, endpoint_iterator), std::exception);
+            CPPUNIT_ASSERT_THROW(boost::asio::connect(socket, endpoint_iterator), boost::system::system_error);
         }
                 
         void ServerTest::testConnect()
         {
             using namespace boost::asio;
             
-            m_server->start();
             io_service ioService;
             ip::tcp::socket socket(ioService);
 
@@ -92,8 +91,6 @@ namespace stromx
         {
             using namespace boost::asio;
             
-            m_server->start();
-            
             io_service ioService;
             ip::tcp::socket socket(ioService);
             connectToServer(ioService, socket);
@@ -103,11 +100,6 @@ namespace stromx
             socket.read_some(buffer(buf));
             
             CPPUNIT_ASSERT_EQUAL(std::string("test"), std::string(buf.data()));
-        }
-        
-        void ServerTest::testStart()
-        {
-            m_server->start();
         }
     }
 }
