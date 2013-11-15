@@ -116,6 +116,8 @@ namespace stromx
 //                         boost::bind(&Connection::handleWrite, this,
 //                         placeholders::error,
 //                         placeholders::bytes_transferred));
+                    
+                    delete this;
                 }
 
             private:
@@ -124,7 +126,7 @@ namespace stromx
                 void handleWrite(const boost::system::error_code& /*error*/,
                     size_t /*bytes_transferred*/)
                 {
-                    delete this;
+//                     delete this;
                 }
 
                 Server* m_server;

@@ -32,9 +32,10 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (ServerTest);
             CPPUNIT_TEST (testConstructor);
-            CPPUNIT_TEST (testConnect);  
+            CPPUNIT_TEST (testConnect); 
             CPPUNIT_TEST (testConnectFails);
             CPPUNIT_TEST (testReceive);  
+            CPPUNIT_TEST (testConstructorFails);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -48,9 +49,13 @@ namespace stromx
             void testConnect();
             void testConnectFails();
             void testReceive();
+            void testConstructorFails();
                 
         private:
             static const std::string resultString(const unsigned int value);
+            static const std::string receiveString(boost::asio::ip::tcp::socket & socket,
+                                                   const unsigned int length);
+            
             impl::Server* m_server;
         };
     }

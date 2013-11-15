@@ -89,6 +89,11 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(boost::asio::connect(socket, endpoint_iterator));
         }
         
+        void ServerTest::testConstructorFails()
+        {
+            CPPUNIT_ASSERT_THROW(impl::Server(49152), boost::system::system_error);
+        }
+        
         void ServerTest::testReceive()
         {
             using namespace boost::asio;
@@ -99,12 +104,16 @@ namespace stromx
             
             DataContainer data(new UInt32(2));
             m_server->send(data);
-
-            boost::array<char, 128> buf;
-            std::fill(buf.begin(), buf.end(), 0);
-            socket.read_some(buffer(buf));
             
-            CPPUNIT_ASSERT_EQUAL(resultString(2), std::string(buf.data()));
+            std::string received = receiveString(socket, resultString(2).length());
+            CPPUNIT_ASSERT_EQUAL(resultString(2), received);
+        }
+        
+        const std::string ServerTest::receiveString(ip::tcp::socket& socket, const unsigned int length)
+        {
+            boost::array<char, 128> buf;
+            read(socket, buffer(buf), transfer_exactly(length));
+            return std::string(buf.data());
         }
         
         const std::string ServerTest::resultString(const unsigned int value)
