@@ -121,8 +121,8 @@ namespace stromx
             DataContainer data10(new UInt32(10));
             
             m_server->send(data2);
-            std::string received2 = receiveString(socket, resultString(2).length());
             m_server->send(data10);
+            std::string received2 = receiveString(socket, resultString(2).length());
             std::string received10 = receiveString(socket, resultString(10).length());
             
             CPPUNIT_ASSERT_EQUAL(resultString(2), received2);

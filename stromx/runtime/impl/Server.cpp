@@ -92,8 +92,8 @@ namespace stromx
                         }
                         catch(boost::thread_interrupted&)
                         {
-                            // return if the server thread was signalled to stop
-                            return;
+                            // exit if the server thread was signalled to stop
+                            break;
                         }
                         
                         ReadAccess<> access(data);
@@ -110,27 +110,28 @@ namespace stromx
                         dataStream << output.textBuffer().size() << LINE_DELIMITER;
                         dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
+                        // TODO: write data asynchronously to make sure the
+                        // the server thread is not blocked but executes the asio
+                        // event loop most of the time
                         boost::asio::write(m_socket, buffer);
                         boost::asio::write(m_socket, output.textBuffer());
                         boost::asio::write(m_socket, output.fileBuffer());
 
-    //                     boost::asio::async_write(m_socket, boost::asio::buffer(message),
-    //                         boost::bind(&Connection::handleWrite, this,
-    //                         placeholders::error,
-    //                         placeholders::bytes_transferred));
+//                         boost::asio::async_write(m_socket, buffer, &handleWrite);
+//                         boost::asio::async_write(m_socket, output.textBuffer(), &handleWrite);
+//                         boost::asio::async_write(m_socket, output.fileBuffer(), &handleWrite);
                     }
                     
+                    // delete the connection after the send loop stopped
                     delete this;
                 }
 
             private:
                 const static std::string LINE_DELIMITER;
                 
-                void handleWrite(const boost::system::error_code& /*error*/,
+                static void handleWrite(const boost::system::error_code& /*error*/,
                     size_t /*bytes_transferred*/)
-                {
-//                     delete this;
-                }
+                {}
 
                 Server* m_server;
                 ip::tcp::socket m_socket;
@@ -194,6 +195,7 @@ namespace stromx
                 
                 DataContainer data = m_queue.back();
                 m_queue.pop_back();
+                m_cond.notify_all();
                 
                 return data;
             }
