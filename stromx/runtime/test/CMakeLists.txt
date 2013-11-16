@@ -32,7 +32,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/fortran_order.npy DESTINATION ${CMAKE_CURR
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
-    ../Client.cpp
     ../Connector.cpp
     ../ConstDataRef.cpp
     ../Runtime.cpp
@@ -65,7 +64,6 @@ set(SOURCES
     ../Queue.cpp
     ../RecycleAccess.cpp
     ../Thread.cpp
-    ../Server.cpp
     ../Stream.cpp
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp
@@ -85,7 +83,6 @@ set(SOURCES
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
     BoolTest.cpp
-    ClientTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp
     DataRefTest.cpp
@@ -122,7 +119,6 @@ set(SOURCES
     TestData.cpp
     TriggerTest.cpp
     TryTest.cpp
-    ServerTest.cpp
     SortInputsAlgorithmTest.cpp
     StreamTest.cpp
     TestUtilities.cpp

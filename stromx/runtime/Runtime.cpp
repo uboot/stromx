@@ -14,7 +14,6 @@
 *  limitations under the License.
 */
 
-#include "stromx/runtime/Client.h"
 #include "stromx/runtime/Counter.h"
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Enum.h"
@@ -27,7 +26,6 @@
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Registry.h"
-#include "stromx/runtime/Server.h"
 #include "stromx/runtime/String.h"
 #include "stromx/runtime/Trigger.h"
 #include "stromx/runtime/TriggerData.h"
@@ -36,14 +34,12 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::runtime;
     
-    registry.registerOperator(new Client);
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
     registry.registerOperator(new Join);
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
-    registry.registerOperator(new Server);
     registry.registerOperator(new Trigger);
     
     registry.registerData(new Bool);
