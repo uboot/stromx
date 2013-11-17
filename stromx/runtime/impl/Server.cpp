@@ -65,101 +65,95 @@ namespace stromx
     {
         namespace impl
         {            
-            class Connection
-            {
-            public:
-                Connection(Server* server, io_service& ioService)
+            const std::string Connection::LINE_DELIMITER("\r\n");
+            const Version Server::VERSION(0, 1, 0);
+
+            Connection::Connection(Server* server, boost::asio::io_service& ioService)
                   : m_server(server),
-                    m_socket(ioService)
-                {
-                }
+                    m_socket(ioService),
+                    m_active(false)
+            {}
+            
+            void Connection::send(const DataContainer & data)
+            {
+                ReadAccess<> access(data);
+                
+                StreamOutput output;
+                access().serialize(output);
+                
+                boost::asio::streambuf buffer;
+                std::ostream dataStream(&buffer);
+                dataStream << Server::VERSION << LINE_DELIMITER;
+                dataStream << access().package() << LINE_DELIMITER;
+                dataStream << access().type() << LINE_DELIMITER;
+                dataStream << access().version() << LINE_DELIMITER;
+                dataStream << output.textBuffer().size() << LINE_DELIMITER;
+                dataStream << output.fileBuffer().size() << LINE_DELIMITER;
 
-                ip::tcp::socket& socket()
+                try
                 {
-                    return m_socket;
-                }
-
-                void start()
-                {
-                    while (true)
-                    {
-                        DataContainer data;
-                        
-                        // wait for new data
-                        try
-                        {
-                            data = m_server->waitForData();
-                        }
-                        catch(boost::thread_interrupted&)
-                        {
-                            // exit if the server thread was signalled to stop
-                            break;
-                        }
-                        
-                        ReadAccess<> access(data);
-                        
-                        StreamOutput output;
-                        access().serialize(output);
-                        
-                        boost::asio::streambuf buffer;
-                        std::ostream dataStream(&buffer);
-                        dataStream << Server::VERSION << LINE_DELIMITER;
-                        dataStream << access().package() << LINE_DELIMITER;
-                        dataStream << access().type() << LINE_DELIMITER;
-                        dataStream << access().version() << LINE_DELIMITER;
-                        dataStream << output.textBuffer().size() << LINE_DELIMITER;
-                        dataStream << output.fileBuffer().size() << LINE_DELIMITER;
-
-                        // TODO: write data asynchronously to make sure the
-                        // the server thread is not blocked but executes the asio
-                        // event loop most of the time
-                        boost::asio::write(m_socket, buffer);
-                        boost::asio::write(m_socket, output.textBuffer());
-                        boost::asio::write(m_socket, output.fileBuffer());
+                // TODO: write data asynchronously to make sure the
+                // the server thread is not blocked but executes the asio
+                // event loop most of the time
+                boost::asio::write(m_socket, buffer);
+                boost::asio::write(m_socket, output.textBuffer());
+                boost::asio::write(m_socket, output.fileBuffer());
 
 //                         boost::asio::async_write(m_socket, buffer, &handleWrite);
 //                         boost::asio::async_write(m_socket, output.textBuffer(), &handleWrite);
 //                         boost::asio::async_write(m_socket, output.fileBuffer(), &handleWrite);
-                    }
-                    
-                    // delete the connection after the send loop stopped
-                    delete this;
                 }
-
-            private:
-                const static std::string LINE_DELIMITER;
+                catch(boost::system::system_error& exc)
+                {
+                    // in case the client disconnected (safely) remove the connection 
+                    // from the server and close it
+                    m_server->removeConnection(this);
+                    delete this;
+                    return;
+                }
                 
-                static void handleWrite(const boost::system::error_code& /*error*/,
-                    size_t /*bytes_transferred*/)
-                {}
-
-                Server* m_server;
-                ip::tcp::socket m_socket;
-            };
-            
-            const std::string Connection::LINE_DELIMITER("\r\n");
-            const Version Server::VERSION(0, 1, 0);
+                m_server->setConnectionActive(this, false);
+            }     
 
             Server::Server(unsigned int port)
               : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
-                m_thread(boost::bind(&Server::startAccept, this))
+                m_thread(boost::bind(&Server::run, this))
             {}
+            
+            Server::~Server()
+            {
+                for (std::set<Connection*>::const_iterator iter = m_connections.begin();
+                    iter != m_connections.end(); ++iter)
+                {
+                    delete *iter;
+                }
+            }
             
             void Server::send(const DataContainer& data)
             {
                 boost::unique_lock<boost::mutex> l(m_mutex);
                 
-                while (! m_queue.empty())
+                while (true)
+                {
+                    for (std::set<Connection*>::const_iterator iter = m_connections.begin();
+                        iter != m_connections.end(); ++iter)
+                    {
+                        if ((*iter)->active() == false)
+                        {
+                            // in case an inactive connection was found return
+                            (*iter)->setActive(true);
+                            m_ioService.post(boost::bind(&Connection::send, *iter, data));
+                            return;
+                        }
+                    }
+                    
                     m_cond.wait(l);
-                
-                m_queue.push_front(data);
-                m_cond.notify_all();
+                }
             }
             
             void Server::stop()
             {
                 m_ioService.stop();
-                m_thread.interrupt();
             }
             
             void Server::join()
@@ -167,37 +161,58 @@ namespace stromx
                 m_thread.join();
             }
             
-            void Server::startAccept()
+            void Server::run()
             {
-                Connection* connection = new Connection(this, m_ioService);
-                m_acceptor.async_accept(connection->socket(),
-                                        boost::bind(&Server::handleAccept, this, 
-                                                    connection, placeholders::error));
-                
+                startAccept();
                 m_ioService.run();
             }
             
-            void Server::handleAccept(Connection* connection, 
-                                      const boost::system::error_code& error)
+            void Server::startAccept()
             {
-                if (! error)
-                    connection->start();
+                Connection* connection = new Connection(this, m_ioService);
+                
+                m_acceptor.async_accept(connection->socket(),
+                                        boost::bind(&Server::handleAccept, this,
+                                                    connection, boost::asio::placeholders::error));
+            }
+            
+            void Server::handleAccept(Connection* connection, const boost::system::error_code& /*error*/)
+            {
+                {
+                    boost::lock_guard<boost::mutex> l(m_mutex);
+                    m_connections.insert(connection);
+                    m_cond.notify_all();
+                }
                 
                 startAccept();
             }
             
-            const DataContainer Server::waitForData()
+            void Server::removeConnection(Connection* connection)
+            {
+                boost::lock_guard<boost::mutex> l(m_mutex);
+                m_connections.erase(connection);
+                m_cond.notify_all();
+            }
+            
+            unsigned int Server::numConnections()
+            {
+                boost::lock_guard<boost::mutex> l(m_mutex);
+                return m_connections.size();
+            }
+            
+            void Server::setConnectionActive(Connection* connection, const bool isActive)
+            {
+                boost::lock_guard<boost::mutex> l(m_mutex);
+                connection->setActive(isActive);
+                m_cond.notify_all();
+            }
+            
+            void Server::waitForNumConnections(const unsigned int numConnections)
             {
                 boost::unique_lock<boost::mutex> l(m_mutex);
                 
-                while (m_queue.empty())
+                while (m_connections.size() != numConnections)
                     m_cond.wait(l);
-                
-                DataContainer data = m_queue.back();
-                m_queue.pop_back();
-                m_cond.notify_all();
-                
-                return data;
             }
         }
     }

@@ -24,6 +24,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/thread.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
 
@@ -59,6 +60,7 @@ namespace stromx
         
         void ServerTest::testConstructor()
         {
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
         }
         
         void ServerTest::testConnectFails()
@@ -73,6 +75,7 @@ namespace stromx
             ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
             CPPUNIT_ASSERT_THROW(boost::asio::connect(socket, endpoint_iterator), boost::system::system_error);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
         }
                 
         void ServerTest::testConnect()
@@ -87,6 +90,9 @@ namespace stromx
             ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
             CPPUNIT_ASSERT_NO_THROW(boost::asio::connect(socket, endpoint_iterator));
+            
+            m_server->waitForNumConnections(1);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_server->numConnections());
         }
         
         void ServerTest::testConstructorFails()
@@ -107,6 +113,22 @@ namespace stromx
             
             std::string received = receiveString(socket, resultString(2).length());
             CPPUNIT_ASSERT_EQUAL(resultString(2), received);
+        }
+        
+        void ServerTest::testClientDisconnects()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+            connectToServer(ioService, socket);
+            
+            socket.close();
+            DataContainer data(new UInt32(2));
+            m_server->send(data);
+            
+            m_server->waitForNumConnections(0);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
         }
         
         void ServerTest::testReceiveMultipleData()
