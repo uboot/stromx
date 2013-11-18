@@ -69,7 +69,7 @@ namespace stromx
                 Server(const unsigned int port);
                 ~Server();
                 
-                unsigned int numConnections();
+                unsigned int numConnections() const;
                 
                 void send(const DataContainer & data);
                 void stop();
@@ -87,7 +87,7 @@ namespace stromx
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::acceptor m_acceptor;
                 boost::thread m_thread;
-                boost::mutex m_mutex;
+                mutable boost::mutex m_mutex;
                 boost::condition_variable m_cond;
             };
         }

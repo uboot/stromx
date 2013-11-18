@@ -26,14 +26,21 @@ namespace stromx
     {
         void ClientTest::setUp()
         {
+            m_client = new impl::Client("localhost", "49152");
         }
-
-        void ClientTest::testExecute()
-        {
-        }
+        
+        void ClientTest::testConstructor()
+        {}
 
         void ClientTest::tearDown()
         {
+            if (m_client)
+            {
+                m_client->stop();
+                m_client->join();
+            }
+            
+            delete m_client;
         }
     }
 }

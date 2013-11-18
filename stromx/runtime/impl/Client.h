@@ -33,6 +33,8 @@ namespace stromx
             class Client
             {
             public:
+                class NoConnection : public std::exception {};
+                
                 Client(const std::string & url, const std::string & port);
                 
                 const DataContainer receive(const Factory & factory);
@@ -40,13 +42,15 @@ namespace stromx
                 void join();
                 
             private:
+                const static std::string LINE_DELIMITER;
                 
+                void run();
                 
                 boost::asio::io_service m_ioService;
+                boost::asio::ip::tcp::socket m_socket;
                 boost::thread m_thread;
-                boost::mutex m_mutex;
-                boost::condition_variable m_cond;
-                std::deque<DataContainer> m_queue;
+                bool m_isConnected;
+                std::deque<DataContainer> m_deque;
             };
         }
     }

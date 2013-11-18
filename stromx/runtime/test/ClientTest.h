@@ -19,29 +19,35 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
+#include <boost/graph/graph_concepts.hpp>
+#include <stromx/runtime/impl/Client.h>
 
 namespace stromx
 {
     namespace runtime
     {
-        class OperatorKernel;
+        namespace impl
+        {
+            class Client;
+        }
         
         class ClientTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ClientTest);
-            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testConstructor);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ClientTest() {}
+            ClientTest() : m_client(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testExecute();
+            void testConstructor();
                 
         private:
+            impl::Client* m_client;
         };
     }
 }

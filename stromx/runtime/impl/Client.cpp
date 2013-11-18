@@ -16,12 +16,138 @@
 
 #include "Client.h"
 
+#include "stromx/runtime/Data.h"
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/Version.h"
+
+using namespace boost::asio;
+
+namespace
+{
+    class StreamInput : public stromx::runtime::InputProvider
+    {            
+    public:
+        StreamInput(boost::asio::streambuf & textBuffer,
+                    boost::asio::streambuf & fileBuffer)
+          : m_textStream(&textBuffer),
+            m_fileStream(&fileBuffer),
+            m_hasFile(fileBuffer.size() != 0)
+        {}
+        
+        std::istream & text()
+        {
+            return m_textStream;
+        }
+        
+        bool hasFile() const
+        {
+            return m_hasFile;
+        }
+        
+        std::istream & openFile(const OpenMode /*mode*/)
+        {
+            return m_fileStream;
+        }
+        
+        std::istream & file()
+        {
+            return m_fileStream;
+        }
+        
+    private:
+        std::istream m_textStream;
+        std::istream m_fileStream;
+        bool m_hasFile;
+    };
+}
+
 namespace stromx
 {
     namespace runtime
     {
         namespace impl
         {
+            const std::string Client::LINE_DELIMITER("\r\n");
+            
+            Client::Client(const std::string& url, const std::string& port)
+              : m_socket(m_ioService)
+            {
+                try
+                {
+                    ip::tcp::resolver resolver(m_ioService);
+                    ip::tcp::resolver::query query(url, port);
+                    ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+
+                    boost::asio::connect(m_socket, endpoint_iterator);
+                    
+                    m_thread = boost::thread(boost::bind(&Client::run, this));
+                }
+                catch (std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw NoConnection();
+                }
+            }
+            
+            const DataContainer Client::receive(const Factory& factory)
+            {
+                try
+                {
+                    boost::asio::streambuf buf;
+                    for (int i = 0; i < 5; ++i)
+                        boost::asio::read_until(m_socket, buf, LINE_DELIMITER);
+                    
+                    stromx::runtime::Version serverVersion;
+                    std::string package;
+                    std::string type;
+                    stromx::runtime::Version dataVersion;
+                    unsigned int textBufferSize = 0;
+                    unsigned int fileBufferSize = 0;
+                    std::istream stream(&buf);
+                    
+                    stream >> serverVersion;
+                    stream >> package;
+                    stream >> type;
+                    stream >> dataVersion;
+                    stream >> textBufferSize;
+                    stream >> fileBufferSize;
+                    
+                    boost::asio::streambuf textBuffer(textBufferSize);
+                    boost::asio::streambuf fileBuffer(fileBufferSize);
+                    
+                    boost::asio::read(m_socket, textBuffer);
+                    boost::asio::read(m_socket, fileBuffer);
+                    
+                    StreamInput input(textBuffer, fileBuffer);
+                    
+                    stromx::runtime::Data* outData = factory.newData(package, type);
+                    stromx::runtime::DataContainer outContainer(outData);
+                    outData->deserialize(input, dataVersion);
+                    
+                    return outContainer;
+                }
+                catch (std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw NoConnection();
+                }
+            }
+            
+            void Client::run()
+            {
+
+            }
+
+            void Client::stop()
+            {
+                m_thread.interrupt();
+            }
+
+            void Client::join()
+            {
+                m_thread.join();
+            }
         }
     }
 }

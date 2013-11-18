@@ -194,7 +194,7 @@ namespace stromx
                 m_cond.notify_all();
             }
             
-            unsigned int Server::numConnections()
+            unsigned int Server::numConnections() const
             {
                 boost::lock_guard<boost::mutex> l(m_mutex);
                 return m_connections.size();

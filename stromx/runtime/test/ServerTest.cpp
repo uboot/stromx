@@ -53,8 +53,11 @@ namespace stromx
 
         void ServerTest::tearDown()
         {
-            m_server->stop();
-            m_server->join();
+            if (m_server)
+            {
+                m_server->stop();
+                m_server->join();
+            }
             delete m_server;
         }
         
