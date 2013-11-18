@@ -19,8 +19,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <boost/graph/graph_concepts.hpp>
-#include <stromx/runtime/impl/Client.h>
+
+#include <boost/asio.hpp>
 
 namespace stromx
 {
@@ -34,7 +34,9 @@ namespace stromx
         class ClientTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ClientTest);
-            CPPUNIT_TEST(testConstructor);
+            CPPUNIT_TEST (testNoConnection);
+            CPPUNIT_TEST (testConnection);
+            CPPUNIT_TEST (testReceive);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -44,9 +46,11 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testConstructor();
+            void testNoConnection();
+            void testConnection();
+            void testReceive();
                 
-        private:
+        private:            
             impl::Client* m_client;
         };
     }

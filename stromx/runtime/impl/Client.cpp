@@ -85,7 +85,6 @@ namespace stromx
                 }
                 catch (std::exception& e)
                 {
-                    std::cerr << e.what() << std::endl;
                     throw NoConnection();
                 }
             }
@@ -116,8 +115,28 @@ namespace stromx
                     boost::asio::streambuf textBuffer(textBufferSize);
                     boost::asio::streambuf fileBuffer(fileBufferSize);
                     
-                    boost::asio::read(m_socket, textBuffer);
-                    boost::asio::read(m_socket, fileBuffer);
+                    size_t size = 0;
+                    if (textBufferSize)
+                    {
+                        try
+                        {
+                            size = boost::asio::read(m_socket, textBuffer);
+                        }
+                        catch(boost::system::system_error &)
+                        {
+                        }
+                    }
+                    
+                    if (fileBufferSize)
+                    {
+                        try
+                        {
+                            boost::asio::read(m_socket, fileBuffer);
+                        }
+                        catch(boost::system::system_error &)
+                        {
+                        }
+                    }
                     
                     StreamInput input(textBuffer, fileBuffer);
                     
