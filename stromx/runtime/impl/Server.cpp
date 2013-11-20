@@ -66,6 +66,8 @@ namespace stromx
         namespace impl
         {            
             const std::string Connection::LINE_DELIMITER("\r\n");
+            const unsigned int Connection::NUM_HEADER_DIGITS(5);
+            const unsigned int Connection::MAX_HEADER_SIZE(99999);
             const Version Server::VERSION(0, 1, 0);
 
             Connection::Connection(Server* server, boost::asio::io_service& ioService)
@@ -81,27 +83,35 @@ namespace stromx
                 StreamOutput output;
                 access().serialize(output);
                 
-                boost::asio::streambuf buffer;
-                std::ostream dataStream(&buffer);
-                dataStream << Server::VERSION << LINE_DELIMITER;
-                dataStream << access().package() << LINE_DELIMITER;
-                dataStream << access().type() << LINE_DELIMITER;
-                dataStream << access().version() << LINE_DELIMITER;
-                dataStream << output.textBuffer().size() << LINE_DELIMITER;
-                dataStream << output.fileBuffer().size() << LINE_DELIMITER;
+                boost::asio::streambuf headerBuffer;
+                std::ostream headerStream(&headerBuffer);
+                headerStream << Server::VERSION << LINE_DELIMITER;
+                headerStream << access().package() << LINE_DELIMITER;
+                headerStream << access().type() << LINE_DELIMITER;
+                headerStream << access().version() << LINE_DELIMITER;
+                headerStream << output.textBuffer().size() << LINE_DELIMITER;
+                headerStream << output.fileBuffer().size() << LINE_DELIMITER;
+                
+                size_t headerSize = headerBuffer.size() + NUM_HEADER_DIGITS;
+                if (headerSize > MAX_HEADER_SIZE)
+                    throw WrongArgument("Too large data header.");
+                
+                boost::asio::streambuf headerSizeBuffer;
+                std::ostream headerSizeStream(&headerSizeBuffer);
+                headerSizeStream.width(NUM_HEADER_DIGITS);
+                headerSizeStream.fill('0');
+                headerSizeStream << headerSize;
 
                 try
                 {
-                // TODO: write data asynchronously to make sure the
-                // the server thread is not blocked but executes the asio
-                // event loop most of the time
-                boost::asio::write(m_socket, buffer);
-                boost::asio::write(m_socket, output.textBuffer());
-                boost::asio::write(m_socket, output.fileBuffer());
-
-//                         boost::asio::async_write(m_socket, buffer, &handleWrite);
-//                         boost::asio::async_write(m_socket, output.textBuffer(), &handleWrite);
-//                         boost::asio::async_write(m_socket, output.fileBuffer(), &handleWrite);
+                    // TODO: write data asynchronously to make sure the
+                    // the server thread is not blocked but executes the asio
+                    // event loop most of the time (use a buffer sequence to write
+                    // all buffers in one call?)
+                    boost::asio::write(m_socket, headerSizeBuffer);
+                    boost::asio::write(m_socket, headerBuffer);
+                    boost::asio::write(m_socket, output.textBuffer());
+                    boost::asio::write(m_socket, output.fileBuffer());
                 }
                 catch(boost::system::system_error& exc)
                 {

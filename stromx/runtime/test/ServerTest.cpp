@@ -173,8 +173,14 @@ namespace stromx
             out << valueStr.length() << "\r\n";
             out << "0\r\n";
             out << valueStr;
+            std::string outString = out.str();
             
-            return out.str();
+            std::ostringstream headerSize;
+            headerSize.width(5);
+            headerSize.fill('0');
+            headerSize << outString.length() + 5;
+            
+            return headerSize.str() + outString;
         }
     }
 }

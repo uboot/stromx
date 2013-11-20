@@ -48,6 +48,8 @@ namespace stromx
 
             private:
                 const static std::string LINE_DELIMITER;
+                const static unsigned int NUM_HEADER_DIGITS;
+                const static unsigned int MAX_HEADER_SIZE;
                 
                 static void handleWrite(const boost::system::error_code& /*error*/,
                     size_t /*bytes_transferred*/) 

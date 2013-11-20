@@ -52,8 +52,7 @@ void sendData(const unsigned int value)
     out << "0.1.0\r\n";
     out << valueStr.length() << "\r\n";
     out << "0\r\n";
-    out << valueStr;
-    out << "\r\n";
+    out << value;
     
     write(socket, buf);
 }

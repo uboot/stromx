@@ -16,6 +16,8 @@
 
 #include "Client.h"
 
+#include <boost/array.hpp>
+#include <boost/iostreams/device/array.hpp>
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/InputProvider.h"
@@ -83,7 +85,7 @@ namespace stromx
                     
                     m_thread = boost::thread(boost::bind(&Client::run, this));
                 }
-                catch (std::exception& e)
+                catch (boost::system::system_error & e)
                 {
                     throw NoConnection();
                 }
@@ -91,66 +93,51 @@ namespace stromx
             
             const DataContainer Client::receive(const Factory& factory)
             {
-                try
+                size_t size = 0;
+                boost::asio::streambuf buf;
+                
+                while (true)
                 {
-                    boost::asio::streambuf buf;
-                    for (int i = 0; i < 5; ++i)
-                        boost::asio::read_until(m_socket, buf, LINE_DELIMITER);
+                    boost::array<char, 128> arr;
+                    boost::system::error_code error;
+                    size = m_socket.read_some(boost::asio::buffer(arr), error);
                     
-                    stromx::runtime::Version serverVersion;
-                    std::string package;
-                    std::string type;
-                    stromx::runtime::Version dataVersion;
-                    unsigned int textBufferSize = 0;
-                    unsigned int fileBufferSize = 0;
-                    std::istream stream(&buf);
+                    if (error == boost::asio::error::eof)
+                        break;
+                    else if (error)
+                        throw boost::system::system_error(error);
+        
+                    std::cout << arr.data() << std::endl;
+                    std::cout << size << std::endl;
                     
-                    stream >> serverVersion;
-                    stream >> package;
-                    stream >> type;
-                    stream >> dataVersion;
-                    stream >> textBufferSize;
-                    stream >> fileBufferSize;
-                    
-                    boost::asio::streambuf textBuffer(textBufferSize);
-                    boost::asio::streambuf fileBuffer(fileBufferSize);
-                    
-                    size_t size = 0;
-                    if (textBufferSize)
-                    {
-                        try
-                        {
-                            size = boost::asio::read(m_socket, textBuffer);
-                        }
-                        catch(boost::system::system_error &)
-                        {
-                        }
-                    }
-                    
-                    if (fileBufferSize)
-                    {
-                        try
-                        {
-                            boost::asio::read(m_socket, fileBuffer);
-                        }
-                        catch(boost::system::system_error &)
-                        {
-                        }
-                    }
-                    
-                    StreamInput input(textBuffer, fileBuffer);
-                    
-                    stromx::runtime::Data* outData = factory.newData(package, type);
-                    stromx::runtime::DataContainer outContainer(outData);
-                    outData->deserialize(input, dataVersion);
-                    
-                    return outContainer;
+                    boost::iostreams::basic_array_source<char> in(arr.data(), size);
                 }
-                catch (std::exception& e)
-                {
-                    std::cerr << e.what() << std::endl;
-                    throw NoConnection();
-                }
+                
+                stromx::runtime::Version serverVersion;
+                std::string package;
+                std::string type;
+                stromx::runtime::Version dataVersion;
+                unsigned int textBufferSize = 0;
+                unsigned int fileBufferSize = 0;
+                std::istream stream(&buf);
+                
+                stream >> serverVersion;
+                stream >> package;
+                stream >> type;
+                stream >> dataVersion;
+                stream >> textBufferSize;
+                stream >> fileBufferSize;
+                
+                boost::asio::streambuf textBuffer(textBufferSize);
+                boost::asio::streambuf fileBuffer(fileBufferSize);
+                
+                StreamInput input(textBuffer, fileBuffer);
+                
+                stromx::runtime::Data* outData = factory.newData(package, type);
+                stromx::runtime::DataContainer outContainer(outData);
+                outData->deserialize(input, dataVersion);
+                
+                return outContainer;
             }
             
             void Client::run()
