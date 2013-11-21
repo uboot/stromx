@@ -19,7 +19,7 @@
 #include <boost/archive/text_iarchive.hpp>
 
 #include "stromx/runtime/Data.h"
-#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/Version.h"
 
@@ -102,7 +102,7 @@ namespace stromx
                 stop();
             }
             
-            const DataContainer Client::receive(const Factory& factory)
+            const DataContainer Client::receive(const AbstractFactory& factory)
             {
                 boost::unique_lock<boost::mutex> l(m_mutex);
                     
@@ -204,7 +204,7 @@ namespace stromx
                     m_error = error;
             }
             
-            const DataContainer Client::deserializeData(const Factory& factory)
+            const DataContainer Client::deserializeData(const AbstractFactory& factory)
             {
                 SerializationHeader header;
                 std::istringstream headerStream(std::string(m_headerData.data(), m_headerData.size()));

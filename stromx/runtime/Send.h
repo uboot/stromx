@@ -23,6 +23,11 @@ namespace stromx
 {
     namespace runtime
     {
+        namespace impl
+        {
+            class Server;
+        }
+        
         /** \brief Distributes input data to TCP clients. */
         class STROMX_RUNTIME_API Send : public OperatorKernel
         {
@@ -38,11 +43,14 @@ namespace stromx
             };
             
             Send ();
+            virtual ~Send();
             
             virtual OperatorKernel* clone() const { return new Send; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();
+            virtual void activate();
+            virtual void deactivate();
             virtual void execute(DataProvider& provider);
             
         private:
@@ -60,6 +68,8 @@ namespace stromx
             static const unsigned int MAX_PORT;
             
             UInt16 m_port;
+            
+            impl::Server* m_server;
         };
     }
 }

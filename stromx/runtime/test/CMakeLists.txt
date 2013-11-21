@@ -120,6 +120,7 @@ set(SOURCES
     NetworkTest.cpp
     FactoryTest.cpp
     RuntimeTest.cpp
+    SendReceiveTest.cpp
     StringTest.cpp
     TestData.cpp
     TriggerTest.cpp

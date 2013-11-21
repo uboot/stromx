@@ -24,6 +24,11 @@ namespace stromx
 {
     namespace runtime
     {
+        namespace impl
+        {
+            class Client;
+        }
+        
         /** \brief Distributes input data to TCP clients. */
         class STROMX_RUNTIME_API Receive : public OperatorKernel
         {
@@ -40,11 +45,14 @@ namespace stromx
             };
             
             Receive();
+            virtual ~Receive();
             
             virtual OperatorKernel* clone() const { return new Receive; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();
+            virtual void activate();
+            virtual void deactivate();
             virtual void execute(DataProvider& provider);
             
         private:
@@ -63,6 +71,8 @@ namespace stromx
             
             String m_url;
             UInt16 m_port;
+            
+            impl::Client* m_client;
         };
     }
 }

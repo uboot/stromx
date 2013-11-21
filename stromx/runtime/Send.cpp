@@ -16,9 +16,7 @@
 
 #include "stromx/runtime/Send.h"
 
-#include <boost/asio.hpp>
-#include <boost/lexical_cast.hpp>
-
+#include "stromx/runtime/impl/Server.h"
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
@@ -26,44 +24,6 @@
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/ReadAccess.h"
-
-namespace
-{
-    class StreamOutput : public stromx::runtime::OutputProvider
-    {
-    public:
-        StreamOutput()
-          : m_textStream(&m_textBuffer),
-            m_fileStream(&m_fileBuffer)
-        {}
-        
-        std::ostream & text ()
-        {
-            return m_textStream;
-        }
-        
-        std::ostream & openFile (const std::string &/*ext*/, const OpenMode /*mode*/)
-        {
-            return m_fileStream;
-        }
-        
-        std::ostream & file ()
-        {
-            return m_fileStream;
-        }
-        
-        boost::asio::streambuf & textBuffer() { return m_textBuffer; }
-        boost::asio::streambuf & fileBuffer() { return m_fileBuffer; }
-        
-    private:
-        boost::asio::streambuf m_textBuffer;
-        boost::asio::streambuf m_fileBuffer;
-        
-        std::ostream m_textStream;
-        std::ostream m_fileStream;
-    };
-}
-
 
 namespace stromx
 {
@@ -79,8 +39,14 @@ namespace stromx
         
         Send::Send()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
-            m_port(MIN_PORT)
+            m_port(MIN_PORT),
+            m_server(0)
         {
+        }
+        
+        Send::~Send()
+        {
+            delete m_server;
         }
         
         void Send::setParameter(unsigned int id, const runtime::Data& value)
@@ -120,43 +86,34 @@ namespace stromx
                                        std::vector<const Parameter*>());
         }
         
-        void Send::execute(DataProvider& provider)
+        void Send::activate()
         {
-            using boost::asio::ip::tcp;
-            
-            Id2DataPair input(INPUT);
-            provider.receiveInputData(input);
-            ReadAccess<> access(input.data());
-            
             try
             {
-                boost::asio::io_service io_service;
-
-                tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), m_port));
-                tcp::socket socket(io_service);
-                acceptor.accept(socket);
-                
-                StreamOutput output;
-                access().serialize(output);
-                
-                boost::asio::streambuf data;
-                std::ostream dataStream(&data);
-                dataStream << VERSION << LINE_DELIMITER;
-                dataStream << access().package() << LINE_DELIMITER;
-                dataStream << access().type() << LINE_DELIMITER;
-                dataStream << access().version() << LINE_DELIMITER;
-                dataStream << output.textBuffer().size() << LINE_DELIMITER;
-                dataStream << output.fileBuffer().size() << LINE_DELIMITER;
-
-                boost::asio::write(socket, data);
-                boost::asio::write(socket, output.textBuffer());
-                boost::asio::write(socket, output.fileBuffer());
+                m_server = new impl::Server(m_port);
             }
-            catch (std::exception& e)
+            catch(std::exception& e)
             {
-                std::cerr << e.what() << std::endl;
-                throw;
+                throw OperatorError(*this, "Failed to start server.");
             }
+            
+        }
+
+        void Send::deactivate()
+        {
+            m_server->stop();
+            m_server->join();
+            
+            delete m_server;
+            m_server = 0;
+        }
+        
+        void Send::execute(DataProvider& provider)
+        {
+            Id2DataPair inputMapper(INPUT);
+            provider.receiveInputData(inputMapper);
+            
+            m_server->send(inputMapper.data());
         }
         
         const std::vector<const Description*> Send::setupInputs()
