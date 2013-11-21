@@ -125,6 +125,8 @@ namespace stromx
             
             Server::~Server()
             {
+                stop();
+                
                 for (std::set<Connection*>::const_iterator iter = m_connections.begin();
                     iter != m_connections.end(); ++iter)
                 {

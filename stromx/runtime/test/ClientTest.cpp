@@ -17,7 +17,6 @@
 #include "stromx/runtime/test/ClientTest.h"
 
 #include <cppunit/TestAssert.h>
-#include <boost/lexical_cast.hpp>
 
 #include <stromx/runtime/Factory.h>
 #include <stromx/runtime/Primitive.h>
@@ -35,32 +34,28 @@ namespace
 
 using namespace boost::asio;
 
+void startConnection()
+{
+    io_service ioService;
+    ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+    ip::tcp::socket socket(ioService);
+    acceptor.accept(socket);
+}
+
 void sendData(const unsigned int value)
 {
     io_service ioService;
     ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
     ip::tcp::socket socket(ioService);
     acceptor.accept(socket);
-    
-    std::string valueStr = boost::lexical_cast<std::string>(value);
-    streambuf buf;
-    std::ostream out(&buf);
-    
-    out << "0.1.0\r\n";
-    out << "Runtime\r\n";
-    out << "UInt32\r\n";
-    out << "0.1.0\r\n";
-    out << valueStr.length() << "\r\n";
-    out << "0\r\n";
-    out << value;
-    
-    write(socket, buf);
 }
 
 }
 
 void ClientTest::setUp()
-{}
+{
+    m_client = 0;
+}
 
 void ClientTest::testNoConnection()
 {
@@ -70,9 +65,9 @@ void ClientTest::testNoConnection()
 
 void ClientTest::testConnection()
 {
-    boost::thread t(sendData, 2);
+    boost::thread t(startConnection);
     
-    CPPUNIT_ASSERT_NO_THROW(impl::Client("localhost", "49152"));
+    CPPUNIT_ASSERT_NO_THROW(m_client = new impl::Client("localhost", "49152"));
     t.join();
 }
 
@@ -80,10 +75,10 @@ void ClientTest::testReceive()
 {
     boost::thread t(sendData, 2);
     
-    impl::Client client("localhost", "49152");
+    m_client = new impl::Client("localhost", "49152");
     Factory factory;
     factory.registerData(new UInt32);
-    DataContainer data = client.receive(factory);
+    DataContainer data = m_client->receive(factory);
     ReadAccess<UInt32> access(data);
     
     CPPUNIT_ASSERT_EQUAL(UInt32(2), access());

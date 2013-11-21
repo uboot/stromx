@@ -20,6 +20,8 @@
 #include <deque>
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
+
+#include "stromx/runtime/impl/SerializationHeader.h"
 #include "stromx/runtime/DataContainer.h"
 
 namespace stromx
@@ -36,21 +38,35 @@ namespace stromx
                 class NoConnection : public std::exception {};
                 
                 Client(const std::string & url, const std::string & port);
+                ~Client();
                 
                 const DataContainer receive(const Factory & factory);
                 void stop();
                 void join();
                 
             private:
-                const static std::string LINE_DELIMITER;
-                
                 void run();
+                void asyncReceive();
+                void handleHeaderRead(const boost::system::error_code& error, size_t bytes_transferred);
+                void handleDataRead(const boost::system::error_code& error, size_t bytes_transferred);
+                const DataContainer deserializeData();
                 
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::socket m_socket;
                 boost::thread m_thread;
-                bool m_isConnected;
-                std::deque<DataContainer> m_deque;
+                boost::mutex m_mutex;
+                boost::condition_variable m_cond;
+                bool m_isReceiving;
+                boost::system::error_code m_error;
+                
+                
+                boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_headerSizeBuffer;
+                boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_textSizeBuffer;
+                boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_fileSizeBuffer;
+                
+                std::vector<char> m_headerData;
+                std::vector<char> m_textData;
+                std::vector<char> m_fileData;
             };
         }
     }

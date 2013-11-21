@@ -16,8 +16,6 @@
 
 #include "Client.h"
 
-#include <boost/array.hpp>
-#include <boost/iostreams/device/array.hpp>
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/InputProvider.h"
@@ -30,11 +28,10 @@ namespace
     class StreamInput : public stromx::runtime::InputProvider
     {            
     public:
-        StreamInput(boost::asio::streambuf & textBuffer,
-                    boost::asio::streambuf & fileBuffer)
-          : m_textStream(&textBuffer),
-            m_fileStream(&fileBuffer),
-            m_hasFile(fileBuffer.size() != 0)
+        StreamInput(std::string & textData, std::string & fileData)
+          : m_textStream(textData),
+            m_fileStream(fileData),
+            m_hasFile(fileData.size() != 0)
         {}
         
         std::istream & text()
@@ -58,10 +55,18 @@ namespace
         }
         
     private:
-        std::istream m_textStream;
-        std::istream m_fileStream;
+        std::istringstream m_textStream;
+        std::istringstream m_fileStream;
         bool m_hasFile;
     };
+    
+    unsigned int sizeFromBuffer(const char* data)
+    {
+        std::istringstream is(std::string(data, stromx::runtime::impl::SerializationHeader::NUM_SIZE_DIGITS));
+        unsigned int size;
+        is >> std::hex >> size;
+        return size;
+    }
 }
 
 namespace stromx
@@ -69,11 +74,10 @@ namespace stromx
     namespace runtime
     {
         namespace impl
-        {
-            const std::string Client::LINE_DELIMITER("\r\n");
-            
+        {            
             Client::Client(const std::string& url, const std::string& port)
-              : m_socket(m_ioService)
+              : m_socket(m_ioService),
+                m_isReceiving(false)
             {
                 try
                 {
@@ -91,68 +95,117 @@ namespace stromx
                 }
             }
             
+            Client::~Client()
+            {
+                stop();
+            }
+            
             const DataContainer Client::receive(const Factory& factory)
             {
-                size_t size = 0;
-                boost::asio::streambuf buf;
-                
-                while (true)
-                {
-                    boost::array<char, 128> arr;
-                    boost::system::error_code error;
-                    size = m_socket.read_some(boost::asio::buffer(arr), error);
+                boost::unique_lock<boost::mutex> l(m_mutex);
                     
-                    if (error == boost::asio::error::eof)
-                        break;
-                    else if (error)
-                        throw boost::system::system_error(error);
-        
-                    std::cout << arr.data() << std::endl;
-                    std::cout << size << std::endl;
-                    
-                    boost::iostreams::basic_array_source<char> in(arr.data(), size);
-                }
+                // wait for the previous transmission to finish
+                while (m_isReceiving)
+                    m_cond.wait(l);
+                  
+                // start the transmission
+                m_error.clear();
+                m_isReceiving = true;
+                m_cond.notify_all();
                 
-                stromx::runtime::Version serverVersion;
-                std::string package;
-                std::string type;
-                stromx::runtime::Version dataVersion;
-                unsigned int textBufferSize = 0;
-                unsigned int fileBufferSize = 0;
-                std::istream stream(&buf);
+                // wait for it to finish
+                while (m_isReceiving)
+                    m_cond.wait(l);
                 
-                stream >> serverVersion;
-                stream >> package;
-                stream >> type;
-                stream >> dataVersion;
-                stream >> textBufferSize;
-                stream >> fileBufferSize;
-                
-                boost::asio::streambuf textBuffer(textBufferSize);
-                boost::asio::streambuf fileBuffer(fileBufferSize);
-                
-                StreamInput input(textBuffer, fileBuffer);
-                
-                stromx::runtime::Data* outData = factory.newData(package, type);
-                stromx::runtime::DataContainer outContainer(outData);
-                outData->deserialize(input, dataVersion);
-                
-                return outContainer;
+                return deserializeData();
             }
             
             void Client::run()
             {
-
+                while (true)
+                {
+                    // wait for receive command
+                    {
+                        boost::unique_lock<boost::mutex> l(m_mutex);
+                        
+                        while (! m_isReceiving)
+                            m_cond.wait(l);
+                    }
+                    
+                    asyncReceive();
+                    m_ioService.run();
+                    
+                    // notify the main thread about the finished transmission
+                    {
+                        boost::lock_guard<boost::mutex> l(m_mutex);
+                        m_isReceiving = false;
+                    }
+                    
+                    m_cond.notify_all();
+                }
             }
 
             void Client::stop()
             {
+                m_ioService.stop();
                 m_thread.interrupt();
             }
 
             void Client::join()
             {
                 m_thread.join();
+            }
+            
+            void Client::asyncReceive()
+            {
+                std::vector<mutable_buffer> sizeBuffers;
+                sizeBuffers.push_back(buffer(m_headerSizeBuffer));
+                sizeBuffers.push_back(buffer(m_textSizeBuffer));
+                sizeBuffers.push_back(buffer(m_fileSizeBuffer));
+                
+                async_read(m_socket, sizeBuffers, boost::bind(&Client::handleHeaderRead, this,
+                                                              placeholders::error, placeholders::bytes_transferred)); 
+            }
+            
+            void Client::handleHeaderRead(const boost::system::error_code& error, size_t /*bytes_transferred*/)
+            {
+                if (error)
+                {
+                    boost::lock_guard<boost::mutex> l(m_mutex);
+                    m_error = error;
+                    return;
+                }
+                
+                unsigned int headerSize = sizeFromBuffer(m_headerSizeBuffer.data());
+                unsigned int textSize = sizeFromBuffer(m_textSizeBuffer.data());
+                unsigned int fileSize = sizeFromBuffer(m_fileSizeBuffer.data());
+                
+                m_headerData.resize(headerSize);
+                m_textData.resize(textSize);
+                m_fileData.resize(fileSize);
+                
+                std::vector<mutable_buffer> dataBuffers;
+                dataBuffers.push_back(buffer(m_headerData));
+                dataBuffers.push_back(buffer(m_textData));
+                dataBuffers.push_back(buffer(m_fileData));
+                
+                async_read(m_socket, dataBuffers, boost::bind(&Client::handleDataRead, this,
+                                                              placeholders::error, placeholders::bytes_transferred)); 
+            }
+            
+            void Client::handleDataRead(const boost::system::error_code& error, size_t /*bytes_transferred*/)
+            {
+                if (error)
+                {
+                    boost::lock_guard<boost::mutex> l(m_mutex);
+                    m_error = error;
+                    return;
+                }
+            }
+            
+            const DataContainer Client::deserializeData()
+            {
+                return DataContainer();
             }
         }
     }
