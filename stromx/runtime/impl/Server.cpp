@@ -16,7 +16,9 @@
 
 #include "Server.h"
 
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/bind.hpp>
+#include "stromx/runtime/impl/SerializationHeader.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/ReadAccess.h"
 
@@ -28,8 +30,6 @@ namespace
     {
     public:
         StreamOutput()
-          : m_textStream(&m_textBuffer),
-            m_fileStream(&m_fileBuffer)
         {}
         
         std::ostream & text ()
@@ -47,15 +47,12 @@ namespace
             return m_fileStream;
         }
         
-        boost::asio::streambuf & textBuffer() { return m_textBuffer; }
-        boost::asio::streambuf & fileBuffer() { return m_fileBuffer; }
+        std::string textData() const { return m_textStream.str(); }
+        std::string fileData() const { return m_fileStream.str(); }
         
     private:
-        boost::asio::streambuf m_textBuffer;
-        boost::asio::streambuf m_fileBuffer;
-        
-        std::ostream m_textStream;
-        std::ostream m_fileStream;
+        std::ostringstream m_textStream;
+        std::ostringstream m_fileStream;
     };
 }
 
@@ -65,65 +62,61 @@ namespace stromx
     {
         namespace impl
         {            
-            const std::string Connection::LINE_DELIMITER("\r\n");
-            const unsigned int Connection::NUM_HEADER_DIGITS(5);
-            const unsigned int Connection::MAX_HEADER_SIZE(99999);
             const Version Server::VERSION(0, 1, 0);
 
             Connection::Connection(Server* server, boost::asio::io_service& ioService)
-                  : m_server(server),
-                    m_socket(ioService),
-                    m_active(false)
+              : m_server(server),
+                m_socket(ioService),
+                m_active(false)
             {}
             
             void Connection::send(const DataContainer & data)
             {
                 ReadAccess<> access(data);
                 
+                // serialize the header
+                SerializationHeader header;
+                header.serverVersion = Server::VERSION;
+                header.package = access().package();
+                header.type = access().type();
+                header.version = access().version();
+                std::ostringstream headerStream;
+                boost::archive::text_oarchive headerArchive(headerStream);
+                headerArchive << header;
+                
+                // serialize the data
                 StreamOutput output;
                 access().serialize(output);
                 
-                boost::asio::streambuf headerBuffer;
-                std::ostream headerStream(&headerBuffer);
-                headerStream << Server::VERSION << LINE_DELIMITER;
-                headerStream << access().package() << LINE_DELIMITER;
-                headerStream << access().type() << LINE_DELIMITER;
-                headerStream << access().version() << LINE_DELIMITER;
-                headerStream << output.textBuffer().size() << LINE_DELIMITER;
-                headerStream << output.fileBuffer().size() << LINE_DELIMITER;
+                std::string headerData = headerStream.str();
+                std::string textData = output.textData();
+                std::string fileData = output.fileData();
                 
-                size_t headerSize = headerBuffer.size() + NUM_HEADER_DIGITS;
-                if (headerSize > MAX_HEADER_SIZE)
-                    throw WrongArgument("Too large data header.");
+                // output the sizes of the buffers
+                std::ostringstream sizesStream;
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << headerData.size();
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << textData.size();
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << fileData.size();
                 
-                boost::asio::streambuf headerSizeBuffer;
-                std::ostream headerSizeStream(&headerSizeBuffer);
-                headerSizeStream.width(NUM_HEADER_DIGITS);
-                headerSizeStream.fill('0');
-                headerSizeStream << headerSize;
-
-                try
-                {
-                    // TODO: write data asynchronously to make sure the
-                    // the server thread is not blocked but executes the asio
-                    // event loop most of the time (use a buffer sequence to write
-                    // all buffers in one call?)
-                    boost::asio::write(m_socket, headerSizeBuffer);
-                    boost::asio::write(m_socket, headerBuffer);
-                    boost::asio::write(m_socket, output.textBuffer());
-                    boost::asio::write(m_socket, output.fileBuffer());
-                }
-                catch(boost::system::system_error& exc)
-                {
-                    // in case the client disconnected (safely) remove the connection 
-                    // from the server and close it
+                // construct a buffer sequence
+                std::vector<const_buffer> buffers;
+                buffers.push_back(buffer(sizesStream.str()));
+                buffers.push_back(buffer(headerData));
+                buffers.push_back(buffer(textData));
+                buffers.push_back(buffer(fileData));
+                
+                boost::asio::async_write(m_socket, buffers, boost::bind(&Connection::handleWrite, this, 
+                                                                        placeholders::error, placeholders::bytes_transferred));
+                
+            } 
+            
+            void Connection::handleWrite(const boost::system::error_code& error, size_t bytes_transferred)
+            {
+                if (error)
                     m_server->removeConnection(this);
-                    delete this;
-                    return;
-                }
-                
-                m_server->setConnectionActive(this, false);
-            }     
+                else
+                    m_server->setConnectionActive(this, false);
+            }
 
             Server::Server(unsigned int port)
               : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
@@ -141,24 +134,33 @@ namespace stromx
             
             void Server::send(const DataContainer& data)
             {
-                boost::unique_lock<boost::mutex> l(m_mutex);
+                Connection* connection = 0;
                 
-                while (true)
                 {
-                    for (std::set<Connection*>::const_iterator iter = m_connections.begin();
-                        iter != m_connections.end(); ++iter)
-                    {
-                        if ((*iter)->active() == false)
-                        {
-                            // in case an inactive connection was found return
-                            (*iter)->setActive(true);
-                            m_ioService.post(boost::bind(&Connection::send, *iter, data));
-                            return;
-                        }
-                    }
+                    boost::unique_lock<boost::mutex> l(m_mutex);
                     
-                    m_cond.wait(l);
+                    while (true)
+                    {
+                        for (std::set<Connection*>::const_iterator iter = m_connections.begin();
+                            iter != m_connections.end(); ++iter)
+                        {
+                            if ((*iter)->active() == false)
+                            {
+                                // in case an inactive connection was found return
+                                connection = *iter;
+                                connection->setActive(true);
+                                break;
+                            }
+                        }
+                        
+                        if (! connection)
+                            m_cond.wait(l);
+                        else
+                            break;
+                    }
                 }
+                
+                connection->send(data);
             }
             
             void Server::stop()
@@ -201,6 +203,8 @@ namespace stromx
             {
                 boost::lock_guard<boost::mutex> l(m_mutex);
                 m_connections.erase(connection);
+                delete connection;
+                
                 m_cond.notify_all();
             }
             

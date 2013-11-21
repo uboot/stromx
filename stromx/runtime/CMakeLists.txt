@@ -15,6 +15,7 @@ set(SOURCES
     impl/WriteAccessImpl.cpp
     impl/Id2DataMap.cpp
     impl/InputNode.cpp
+    impl/SerializationHeader.cpp
     impl/SynchronizedOperatorKernel.cpp
     impl/OutputNode.cpp
     impl/Server.cpp

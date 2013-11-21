@@ -82,6 +82,7 @@ set(SOURCES
     ../impl/ReadAccessImpl.cpp
     ../impl/RecycleAccessImpl.cpp
     ../impl/Server.cpp
+    ../impl/SerializationHeader.cpp
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp

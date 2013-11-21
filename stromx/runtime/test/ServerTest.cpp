@@ -18,13 +18,16 @@
 
 #include <cppunit/TestAssert.h>
 
-#include "stromx/runtime/DataContainer.h"
-#include "stromx/runtime/Primitive.h"
-#include "stromx/runtime/impl/Server.h"
+#include <boost/archive/text_iarchive.hpp>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
+
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Primitive.h"
+#include <stromx/runtime/impl/SerializationHeader.h>
+#include "stromx/runtime/impl/Server.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
 
@@ -43,6 +46,63 @@ namespace stromx
                 ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
                 boost::asio::connect(socket, endpoint_iterator);
+            }
+            
+            unsigned int sizeFromBuffer(const char* data)
+            {
+                std::istringstream is(std::string(data, impl::SerializationHeader::NUM_SIZE_DIGITS));
+                unsigned int size;
+                is >> std::hex >> size;
+                return size;
+            }
+            
+            const impl::SerializationHeader receive(ip::tcp::socket& socket, std::string & text, std::string & file)
+            {
+                boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> headerSizeBuffer, textSizeBuffer, fileSizeBuffer;
+                
+                std::vector<mutable_buffer> sizeBuffers;
+                sizeBuffers.push_back(buffer(headerSizeBuffer));
+                sizeBuffers.push_back(buffer(textSizeBuffer));
+                sizeBuffers.push_back(buffer(fileSizeBuffer));
+                
+                read(socket, sizeBuffers);
+                
+                unsigned int headerSize = sizeFromBuffer(headerSizeBuffer.data());
+                unsigned int textSize = sizeFromBuffer(textSizeBuffer.data());
+                unsigned int fileSize = sizeFromBuffer(fileSizeBuffer.data());
+                
+                std::vector<char> headerData(headerSize);
+                std::vector<char> textData(textSize);
+                std::vector<char> fileData(fileSize);
+                
+                std::vector<mutable_buffer> dataBuffers;
+                dataBuffers.push_back(buffer(headerData));
+                dataBuffers.push_back(buffer(textData));
+                dataBuffers.push_back(buffer(fileData));
+                
+                read(socket, dataBuffers);
+                
+                text = std::string(textData.data(), textData.size());
+                file = std::string(fileData.data(), fileData.size());
+                
+                impl::SerializationHeader header;
+                std::istringstream headerStream(std::string(headerData.data(), headerData.size()));
+                boost::archive::text_iarchive headerArchive(headerStream);
+                headerArchive >> header;
+                
+                return header;
+            }
+            
+            const impl::SerializationHeader uintHeader()
+            {
+                impl::SerializationHeader header;
+                
+                header.serverVersion = Version(0, 1, 0);
+                header.package = "Runtime";
+                header.type = "UInt32";
+                header.version = Version(0, 1, 0);
+                
+                return header;
             }
         }
     
@@ -114,24 +174,13 @@ namespace stromx
             DataContainer data(new UInt32(2));
             m_server->send(data);
             
-            std::string received = receiveString(socket, resultString(2).length());
-            CPPUNIT_ASSERT_EQUAL(resultString(2), received);
-        }
-        
-        void ServerTest::testClientDisconnects()
-        {
-            using namespace boost::asio;
+            std::string text;
+            std::string file;
+            impl::SerializationHeader header = receive(socket, text, file);
             
-            io_service ioService;
-            ip::tcp::socket socket(ioService);
-            connectToServer(ioService, socket);
-            
-            socket.close();
-            DataContainer data(new UInt32(2));
-            m_server->send(data);
-            
-            m_server->waitForNumConnections(0);
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("2"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
         }
         
         void ServerTest::testReceiveMultipleData()
@@ -147,40 +196,20 @@ namespace stromx
             
             m_server->send(data2);
             m_server->send(data10);
-            std::string received2 = receiveString(socket, resultString(2).length());
-            std::string received10 = receiveString(socket, resultString(10).length());
             
-            CPPUNIT_ASSERT_EQUAL(resultString(2), received2);
-            CPPUNIT_ASSERT_EQUAL(resultString(10), received10);
-        }
-        
-        const std::string ServerTest::receiveString(ip::tcp::socket& socket, const unsigned int length)
-        {
-            boost::array<char, 128> buf;
-            read(socket, buffer(buf), transfer_exactly(length));
-            return std::string(buf.data());
-        }
-        
-        const std::string ServerTest::resultString(const unsigned int value)
-        {
-            std::string valueStr = boost::lexical_cast<std::string>(value);
+            std::string text;
+            std::string file;
+            impl::SerializationHeader header;
             
-            std::ostringstream out;
-            out << "0.1.0\r\n";
-            out << "Runtime\r\n";
-            out << "UInt32\r\n";
-            out << "0.1.0\r\n";
-            out << valueStr.length() << "\r\n";
-            out << "0\r\n";
-            out << valueStr;
-            std::string outString = out.str();
+            header = receive(socket, text, file);
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("2"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
             
-            std::ostringstream headerSize;
-            headerSize.width(5);
-            headerSize.fill('0');
-            headerSize << outString.length() + 5;
-            
-            return headerSize.str() + outString;
+            header = receive(socket, text, file);
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("10"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
         }
     }
 }

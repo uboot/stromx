@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_SERVER_H
-#define STROMX_RUNTIME_SERVER_H
+#ifndef STROMX_RUNTIME_IMPL_SERVER_H
+#define STROMX_RUNTIME_IMPL_SERVER_H
 
 #include <deque>
 #include <set>
@@ -46,14 +46,8 @@ namespace stromx
                 boost::asio::ip::tcp::socket& socket() { return m_socket; }
                 void send(const DataContainer & data);
 
-            private:
-                const static std::string LINE_DELIMITER;
-                const static unsigned int NUM_HEADER_DIGITS;
-                const static unsigned int MAX_HEADER_SIZE;
-                
-                static void handleWrite(const boost::system::error_code& /*error*/,
-                    size_t /*bytes_transferred*/) 
-                {}
+            private:                
+                void handleWrite(const boost::system::error_code& error, size_t bytes_transferred);
 
                 Server* m_server;
                 boost::asio::ip::tcp::socket m_socket;
@@ -96,4 +90,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_SERVER_H
+#endif // STROMX_RUNTIME_IMPL_SERVER_H

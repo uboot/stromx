@@ -46,7 +46,7 @@ set(DOXYFILE_SOURCE_DIRS "stromx")
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem regex system thread)
+find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem regex serialization system thread)
 
 find_package(CppUnit)
 

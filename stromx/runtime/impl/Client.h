@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_CLIENT_H
-#define STROMX_RUNTIME_CLIENT_H
+#ifndef STROMX_RUNTIME_IMPL_SERVER_H
+#define STROMX_RUNTIME_IMPL_SERVER_H
 
 #include <deque>
 #include <boost/asio.hpp>
@@ -56,4 +56,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_CLIENT_H
+#endif // STROMX_RUNTIME_IMPL_SERVER_H

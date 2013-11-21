@@ -37,7 +37,6 @@ namespace stromx
             CPPUNIT_TEST (testReceive);  
             CPPUNIT_TEST (testReceiveMultipleData);
             CPPUNIT_TEST (testConstructorFails);
-            CPPUNIT_TEST (testClientDisconnects);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -53,13 +52,8 @@ namespace stromx
             void testReceive();
             void testReceiveMultipleData();
             void testConstructorFails();
-            void testClientDisconnects();
                 
-        private:
-            static const std::string resultString(const unsigned int value);
-            static const std::string receiveString(boost::asio::ip::tcp::socket & socket,
-                                                   const unsigned int length);
-            
+        private:            
             impl::Server* m_server;
         };
     }
