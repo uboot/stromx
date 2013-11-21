@@ -17,84 +17,162 @@
 #include "stromx/runtime/test/ClientTest.h"
 
 #include <cppunit/TestAssert.h>
+#include <boost/lexical_cast.hpp>
+#include <boost/archive/text_oarchive.hpp>
 
-#include <stromx/runtime/Factory.h>
-#include <stromx/runtime/Primitive.h>
-#include <stromx/runtime/ReadAccess.h>
+#include "stromx/runtime/Factory.h"
+#include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/impl/Client.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
 
 namespace stromx
 {
-namespace runtime
-{
-namespace
-{
-
-using namespace boost::asio;
-
-void startConnection()
-{
-    io_service ioService;
-    ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
-    ip::tcp::socket socket(ioService);
-    acceptor.accept(socket);
-}
-
-void sendData(const unsigned int value)
-{
-    io_service ioService;
-    ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
-    ip::tcp::socket socket(ioService);
-    acceptor.accept(socket);
-}
-
-}
-
-void ClientTest::setUp()
-{
-    m_client = 0;
-}
-
-void ClientTest::testNoConnection()
-{
-    CPPUNIT_ASSERT_THROW(impl::Client("localhost", "49152"), 
-                         impl::Client::NoConnection);
-}
-
-void ClientTest::testConnection()
-{
-    boost::thread t(startConnection);
-    
-    CPPUNIT_ASSERT_NO_THROW(m_client = new impl::Client("localhost", "49152"));
-    t.join();
-}
-
-void ClientTest::testReceive()
-{
-    boost::thread t(sendData, 2);
-    
-    m_client = new impl::Client("localhost", "49152");
-    Factory factory;
-    factory.registerData(new UInt32);
-    DataContainer data = m_client->receive(factory);
-    ReadAccess<UInt32> access(data);
-    
-    CPPUNIT_ASSERT_EQUAL(UInt32(2), access());
-    t.join();
-}
-
-void ClientTest::tearDown()
-{
-    if (m_client)
+    namespace runtime
     {
-        m_client->stop();
-        m_client->join();
-    }
-    
-    delete m_client;
-}
+        namespace
+        {
+            using namespace boost::asio;
 
-}
+            void startConnection()
+            {
+                io_service ioService;
+                ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+                ip::tcp::socket socket(ioService);
+                acceptor.accept(socket);
+            }
+
+            void acceptConnections(ip::tcp::acceptor* acceptor, ip::tcp::socket* socket)
+            {
+                acceptor->accept(*socket);
+            }
+
+            void receiveData(stromx::runtime::impl::Client* client )
+            {
+                stromx::runtime::Factory factory;
+                client->receive(factory);
+            }
+
+            void sendData(const unsigned int value)
+            {
+                io_service ioService;
+                ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+                ip::tcp::socket socket(ioService);
+                acceptor.accept(socket);
+                
+                // serialize the header
+                impl::SerializationHeader header;
+                header.serverVersion = Version(0, 1, 0);
+                header.package = "Runtime";
+                header.type = "UInt32";
+                header.version = Version(0, 1, 0);
+                std::ostringstream headerStream;
+                boost::archive::text_oarchive headerArchive(headerStream);
+                headerArchive << header;
+                
+                // serialize the data
+                
+                std::string headerData = headerStream.str();
+                std::string textData = boost::lexical_cast<std::string>(value);;
+                std::string fileData = "";
+                
+                // output the sizes of the buffers
+                std::ostringstream sizesStream;
+                sizesStream << std::setw(impl::SerializationHeader::NUM_SIZE_DIGITS) << std::hex << headerData.size();
+                sizesStream << std::setw(impl::SerializationHeader::NUM_SIZE_DIGITS) << std::hex << textData.size();
+                sizesStream << std::setw(impl::SerializationHeader::NUM_SIZE_DIGITS) << std::hex << fileData.size();
+                
+                // construct a buffer sequence
+                std::vector<const_buffer> buffers;
+                buffers.push_back(buffer(sizesStream.str()));
+                buffers.push_back(buffer(headerData));
+                buffers.push_back(buffer(textData));
+                buffers.push_back(buffer(fileData));
+                
+                boost::asio::write(socket, buffers);
+            }
+        }
+
+        void ClientTest::setUp()
+        {
+            m_client = 0;
+        }
+
+        void ClientTest::testNoConnection()
+        {
+            CPPUNIT_ASSERT_THROW(impl::Client("localhost", "49152"), 
+                                impl::Client::NoConnection);
+        }
+
+        void ClientTest::testConnection()
+        {
+            boost::thread t(startConnection);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_client = new impl::Client("localhost", "49152"));
+            t.join();
+        }
+
+        void ClientTest::testReceive()
+        {
+            boost::thread t(sendData, 2);
+            
+            m_client = new impl::Client("localhost", "49152");
+            Factory factory;
+            factory.registerData(new UInt32);
+            DataContainer data = m_client->receive(factory);
+            ReadAccess<UInt32> access(data);
+            
+            CPPUNIT_ASSERT_EQUAL(UInt32(2), access());
+            t.join();
+        }
+
+        void ClientTest::testReceiveClosedConnection()
+        {
+            boost::thread t(startConnection);
+            
+            m_client = new impl::Client("localhost", "49152");
+            Factory factory;
+            CPPUNIT_ASSERT_THROW(m_client->receive(factory), impl::Client::NoConnection);
+            
+            t.join();
+        }
+
+        void ClientTest::testStop()
+        {
+            io_service ioService;
+            ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+            ip::tcp::socket socket(ioService);
+            
+            // wait for incoming connections
+            boost::thread server(boost::bind(&acceptConnections, &acceptor, &socket));
+            
+            // connect to server
+            m_client = new impl::Client("localhost", "49152");
+            
+            // request data from server a separate thread
+            boost::thread client(boost::bind(&receiveData, m_client));
+            
+            // interrupt this thread: this leaves the client utility thread alive
+            client.interrupt();
+            client.join();
+            
+            // stop the client (i.e. its utility thread)
+            m_client->stop();
+            m_client->join();
+            
+            server.join();
+        }
+
+        void ClientTest::tearDown()
+        {
+            if (m_client)
+            {
+                m_client->stop();
+                m_client->join();
+            }
+            
+            delete m_client;
+        }
+    }
 }

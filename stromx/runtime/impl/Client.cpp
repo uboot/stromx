@@ -16,6 +16,8 @@
 
 #include "Client.h"
 
+#include <boost/archive/text_iarchive.hpp>
+
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/InputProvider.h"
@@ -117,7 +119,10 @@ namespace stromx
                 while (m_isReceiving)
                     m_cond.wait(l);
                 
-                return deserializeData();
+                if (m_error)
+                    throw NoConnection();
+                
+                return deserializeData(factory);
             }
             
             void Client::run()
@@ -196,16 +201,26 @@ namespace stromx
             void Client::handleDataRead(const boost::system::error_code& error, size_t /*bytes_transferred*/)
             {
                 if (error)
-                {
-                    boost::lock_guard<boost::mutex> l(m_mutex);
                     m_error = error;
-                    return;
-                }
             }
             
-            const DataContainer Client::deserializeData()
+            const DataContainer Client::deserializeData(const Factory& factory)
             {
-                return DataContainer();
+                SerializationHeader header;
+                std::istringstream headerStream(std::string(m_headerData.data(), m_headerData.size()));
+                boost::archive::text_iarchive headerArchive(headerStream);
+                headerArchive >> header;
+                
+                // create the data object and store in a container
+                Data* data = factory.newData(header.package, header.type);
+                DataContainer container(data);
+                
+                std::string textString(m_textData.data(), m_textData.size());
+                std::string dataString(m_fileData.data(), m_fileData.size());
+                StreamInput input(textString, dataString);
+                data->deserialize(input, header.version);
+                
+                return container;
             }
         }
     }

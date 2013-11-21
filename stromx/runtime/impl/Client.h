@@ -49,7 +49,7 @@ namespace stromx
                 void asyncReceive();
                 void handleHeaderRead(const boost::system::error_code& error, size_t bytes_transferred);
                 void handleDataRead(const boost::system::error_code& error, size_t bytes_transferred);
-                const DataContainer deserializeData();
+                const DataContainer deserializeData(const Factory& factory);
                 
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::socket m_socket;
