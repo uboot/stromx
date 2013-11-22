@@ -17,7 +17,6 @@
 #include "Client.h"
 
 #include <boost/archive/text_iarchive.hpp>
-
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/InputProvider.h"
@@ -137,6 +136,7 @@ namespace stromx
                             m_cond.wait(l);
                     }
                     
+                    m_ioService.reset();
                     asyncReceive();
                     m_ioService.run();
                     
@@ -216,8 +216,9 @@ namespace stromx
                 DataContainer container(data);
                 
                 std::string textString(m_textData.data(), m_textData.size());
-                std::string dataString(m_fileData.data(), m_fileData.size());
-                StreamInput input(textString, dataString);
+                std::string fileString(m_fileData.data(), m_fileData.size());
+                
+                StreamInput input(textString, fileString);
                 data->deserialize(input, header.version);
                 
                 return container;

@@ -156,13 +156,13 @@ namespace stromx
             
             unsigned int dataSize = 0;
             const unsigned int CHUNK_SIZE = 100000;
-            std::vector<char> data;
-            char* dataPtr;
+            std::vector<uchar> data;
+            uchar* dataPtr;
             while(! input.file().eof())
             {
                 data.resize(data.size() + CHUNK_SIZE);
                 dataPtr = &data[0] + dataSize;
-                input.file().read(dataPtr, CHUNK_SIZE);
+                input.file().read(reinterpret_cast<char*>(dataPtr), CHUNK_SIZE);
                 dataSize += (unsigned int)(input.file().gcount());
             }
             data.resize(dataSize);
@@ -274,6 +274,28 @@ namespace stromx
             return new Image(*this);
         }
         
+        void Image::initializeImage(const unsigned int width, const unsigned int height, 
+                                    const unsigned int stride, uint8_t* data, const PixelType pixelType)
+        {
+            ImageWrapper::initializeImage(width, height, stride, data, pixelType);
+            int type = cvTypeFromPixelType(pixelType);
+            m_image->rows = height;
+            m_image->cols = width;
+            m_image->data = data;
+            m_image->size.p[0] = height;
+            m_image->size.p[1] = width;
+            m_image->step.buf[0] = stride;
+            m_image->step.buf[1] = pixelSize();
+            m_image->step.p[0] = stride;
+            m_image->step.p[1] = pixelSize();
+            m_image->flags = (type & CV_MAT_TYPE_MASK) | cv::Mat::MAGIC_VAL;
+            
+            if (pixelSize() * width == stride || height == 1)
+                m_image->flags |= cv::Mat::CONTINUOUS_FLAG;
+            else
+                m_image->flags &= ~cv::Mat::CONTINUOUS_FLAG;
+        }
+
         void Image::allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
         {
             try

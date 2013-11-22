@@ -54,7 +54,7 @@ namespace stromx
                                           const unsigned int cols, 
                                           const unsigned int stride, 
                                           uint8_t* data, 
-                                          const ValueType valueType) ;
+                                          const ValueType valueType);
             
             // Implementation of stromx::runtime::Image
             virtual unsigned int width() const { return m_width; }

@@ -52,6 +52,10 @@ namespace stromx
                 Server* m_server;
                 boost::asio::ip::tcp::socket m_socket;
                 bool m_active;
+                std::string m_sizesData;
+                std::string m_headerData;
+                std::string m_textData;
+                std::string m_fileData;
             };
             
             class Server

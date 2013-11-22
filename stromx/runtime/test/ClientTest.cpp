@@ -52,15 +52,10 @@ namespace stromx
             {
                 stromx::runtime::Factory factory;
                 client->receive(factory);
-            }
-
-            void sendData(const unsigned int value)
+            } 
+            
+            void sendValue(ip::tcp::socket & socket, unsigned int value)
             {
-                io_service ioService;
-                ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
-                ip::tcp::socket socket(ioService);
-                acceptor.accept(socket);
-                
                 // serialize the header
                 impl::SerializationHeader header;
                 header.serverVersion = Version(0, 1, 0);
@@ -72,7 +67,6 @@ namespace stromx
                 headerArchive << header;
                 
                 // serialize the data
-                
                 std::string headerData = headerStream.str();
                 std::string textData = boost::lexical_cast<std::string>(value);;
                 std::string fileData = "";
@@ -92,17 +86,41 @@ namespace stromx
                 
                 boost::asio::write(socket, buffers);
             }
+
+            void sendData(const unsigned int value)
+            {
+                io_service ioService;
+                ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+                ip::tcp::socket socket(ioService);
+                acceptor.accept(socket);
+                
+                sendValue(socket, value);
+            }
+
+            void sendMultipleData()
+            {
+                io_service ioService;
+                ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+                ip::tcp::socket socket(ioService);
+                acceptor.accept(socket);
+                
+                sendValue(socket, 2);
+                sendValue(socket, 3);
+            } 
         }
 
         void ClientTest::setUp()
         {
             m_client = 0;
+            
+            // wait a bit to increase the chance that the requested socket is available
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
 
         void ClientTest::testNoConnection()
         {
             CPPUNIT_ASSERT_THROW(impl::Client("localhost", "49152"), 
-                                impl::Client::NoConnection);
+                                 impl::Client::NoConnection);
         }
 
         void ClientTest::testConnection()
@@ -124,6 +142,24 @@ namespace stromx
             ReadAccess<UInt32> access(data);
             
             CPPUNIT_ASSERT_EQUAL(UInt32(2), access());
+            t.join();
+        }
+
+        void ClientTest::testReceiveMultipleData()
+        {
+            boost::thread t(sendMultipleData);
+            m_client = new impl::Client("localhost", "49152");
+            Factory factory;
+            factory.registerData(new UInt32);
+            DataContainer data;
+            
+            data = m_client->receive(factory);
+            ReadAccess<UInt32> access1(data);
+            CPPUNIT_ASSERT_EQUAL(UInt32(2), access1());
+            
+            data = m_client->receive(factory);
+            ReadAccess<UInt32> access2(data);
+            CPPUNIT_ASSERT_EQUAL(UInt32(3), access2());
             t.join();
         }
 

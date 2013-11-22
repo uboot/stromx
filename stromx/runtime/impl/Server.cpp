@@ -88,29 +88,30 @@ namespace stromx
                 StreamOutput output;
                 access().serialize(output);
                 
-                std::string headerData = headerStream.str();
-                std::string textData = output.textData();
-                std::string fileData = output.fileData();
+                m_headerData = headerStream.str();
+                m_textData = output.textData();
+                m_fileData = output.fileData();
                 
                 // output the sizes of the buffers
                 std::ostringstream sizesStream;
-                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << headerData.size();
-                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << textData.size();
-                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << fileData.size();
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << m_headerData.size();
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << m_textData.size();
+                sizesStream << std::setw(SerializationHeader::NUM_SIZE_DIGITS) << std::hex << m_fileData.size();
+                m_sizesData = sizesStream.str();
                 
                 // construct a buffer sequence
                 std::vector<const_buffer> buffers;
-                buffers.push_back(buffer(sizesStream.str()));
-                buffers.push_back(buffer(headerData));
-                buffers.push_back(buffer(textData));
-                buffers.push_back(buffer(fileData));
+                buffers.push_back(buffer(m_sizesData));
+                buffers.push_back(buffer(m_headerData));
+                buffers.push_back(buffer(m_textData));
+                buffers.push_back(buffer(m_fileData));
                 
                 boost::asio::async_write(m_socket, buffers, boost::bind(&Connection::handleWrite, this, 
                                                                         placeholders::error, placeholders::bytes_transferred));
                 
             } 
             
-            void Connection::handleWrite(const boost::system::error_code& error, size_t bytes_transferred)
+            void Connection::handleWrite(const boost::system::error_code& error, size_t /*bytes_transferred*/)
             {
                 if (error)
                     m_server->removeConnection(this);

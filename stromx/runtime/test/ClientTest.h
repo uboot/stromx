@@ -37,6 +37,7 @@ namespace stromx
             CPPUNIT_TEST (testNoConnection);
             CPPUNIT_TEST (testConnection);
             CPPUNIT_TEST (testReceive);
+            CPPUNIT_TEST (testReceiveMultipleData);
             CPPUNIT_TEST (testReceiveClosedConnection);
             CPPUNIT_TEST (testStop);
             CPPUNIT_TEST_SUITE_END ();
@@ -51,6 +52,7 @@ namespace stromx
             void testNoConnection();
             void testConnection();
             void testReceive();
+            void testReceiveMultipleData();
             void testReceiveClosedConnection();
             void testStop();
                 
