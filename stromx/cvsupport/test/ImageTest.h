@@ -45,18 +45,20 @@ namespace stromx
             CPPUNIT_TEST (testImageCvImageConstructor);
             CPPUNIT_TEST (testImageRgb24);
             CPPUNIT_TEST (testImageMono8);
+            CPPUNIT_TEST (testSaveAfterInitialize);
             CPPUNIT_TEST (testSaveJpeg);
             CPPUNIT_TEST (testSave16Bit);
             CPPUNIT_TEST (testSaveUnknownDirectory);
             CPPUNIT_TEST (testImageDefault);
             CPPUNIT_TEST (testSerialize);
+            CPPUNIT_TEST (testSerializeAfterInitialize);
             CPPUNIT_TEST (testSerializeEmpty);
             CPPUNIT_TEST (testDeserialize);
             CPPUNIT_TEST (testDeserializeWithType);
             CPPUNIT_TEST (testDeserializeEmpty);
-            CPPUNIT_TEST(testIsVariant);
-            CPPUNIT_TEST(testPtrCast);
-            CPPUNIT_TEST(testRefCast);
+            CPPUNIT_TEST (testIsVariant);
+            CPPUNIT_TEST (testPtrCast);
+            CPPUNIT_TEST (testRefCast);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -82,16 +84,16 @@ namespace stromx
                 void testImageRgb24();
                 void testImageMono8();
                 void testImageDefault();
+                void testSaveAfterInitialize();
                 void testSaveJpeg();
                 void testSave16Bit();
                 void testSaveUnknownDirectory();
                 void testSerialize();
+                void testSerializeAfterInitialize();
                 void testSerializeEmpty();
                 void testDeserialize();
                 void testDeserializeWithType();
                 void testDeserializeEmpty();
-                void testResizeDimension();
-                void testResizeBuffer();
                 void testIsVariant();
                 void testPtrCast();
                 void testRefCast();
