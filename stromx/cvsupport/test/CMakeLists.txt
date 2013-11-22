@@ -42,6 +42,7 @@ add_executable(stromx_cvsupport_test
     CvsupportTest.cpp
     main.cpp
     MatrixTest.cpp
+    SendReceiveTest.cpp
     UtilitiesTest.cpp
     WebCameraTest.cpp
 )
