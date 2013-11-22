@@ -89,7 +89,7 @@ namespace stromx
             
             /**
              * Allocates or resizes the image to the given dimension. Must be defined
-             * in derived class which implement the memory management. Implementations
+             * in derived class which implements the memory management. Implementations
              * of this function should call setBuffer() and initializeImage().
              * 
              * \since 0.2
