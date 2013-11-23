@@ -26,10 +26,12 @@ namespace stromx
         OperatorKernel::OperatorKernel (const std::string & type,
                             const std::string & package,
                             const Version & version,
-                            const std::vector<const Parameter*>& parameters)
+                            const std::vector<const Parameter*>& parameters,
+                            const OperatorProperties & properties)
           : m_type(type),
             m_package(package),
-            m_version(version)
+            m_version(version),
+            m_properties(properties)
         {
             validateParameters(parameters);
             
@@ -44,10 +46,12 @@ namespace stromx
         
         OperatorKernel::OperatorKernel (const std::string & type,
                             const std::string & package,
-                            const Version & version)
+                            const Version & version,
+                            const OperatorProperties & properties)
           : m_type(type),
             m_package(package),
-            m_version(version)
+            m_version(version),
+            m_properties(properties)
         {
         }
         
@@ -56,10 +60,12 @@ namespace stromx
                         const runtime::Version& version,
                         const std::vector<const Description* >& inputs,
                         const std::vector<const Description* >& outputs,
-                        const std::vector<const Parameter* >& parameters)
+                        const std::vector<const Parameter* >& parameters,
+                        const OperatorProperties & properties)
           : m_type(type),
             m_package(package),
-            m_version(version)
+            m_version(version),
+            m_properties(properties)
         {
             validateInputs(inputs);
             validateOutputs(outputs);
@@ -96,10 +102,12 @@ namespace stromx
                         const std::string& package,
                         const runtime::Version& version,
                         const std::vector<const Description* >& inputs,
-                        const std::vector<const Description* >& outputs)
+                        const std::vector<const Description* >& outputs,
+                        const OperatorProperties & properties)
           : m_type(type),
             m_package(package),
-            m_version(version)
+            m_version(version),
+            m_properties(properties)
         {
             validateInputs(inputs);
             validateOutputs(outputs);
@@ -124,7 +132,8 @@ namespace stromx
         
         void OperatorKernel::initialize(const std::vector<const runtime::Description*>& inputs,
                                         const std::vector<const runtime::Description*>& outputs,
-                                        const std::vector<const runtime::Parameter*>& parameters)
+                                        const std::vector<const runtime::Parameter*>& parameters,
+                                        const OperatorProperties & properties)
         {
             validateInputs(inputs);
             validateOutputs(outputs);
@@ -158,6 +167,8 @@ namespace stromx
                 m_parameterMap[(*iter)->id()] = *iter;
                 m_activeParameters.insert((*iter)->id());
             }
+            
+            m_properties = properties;
         }
         
         void OperatorKernel::deinitialize()
@@ -226,6 +237,11 @@ namespace stromx
                 throw WrongId("No output with ID " + id);
             
             return *iter->second;
+        }
+        
+        const OperatorProperties& OperatorKernel::properties() const
+        {
+            return m_properties;
         }
         
         OperatorKernel::~OperatorKernel()

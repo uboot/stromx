@@ -18,6 +18,7 @@
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
+#include <boost/concept_check.hpp>
 
 namespace stromx
 {
@@ -28,7 +29,8 @@ namespace stromx
         const Version Dump::VERSION(0, 1, 0);
         
         Dump::Dump()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(),
+                           setupOutputs(), setupParameters(), setupProperties())
         {
         }
         void Dump::setParameter(unsigned int id, const runtime::Data&)
@@ -66,6 +68,13 @@ namespace stromx
         const std::vector<const Parameter*> Dump::setupParameters()
         {
             return std::vector<const Parameter*>();
+        }
+        
+        const OperatorProperties Dump::setupProperties()
+        {
+            OperatorProperties properties;
+            properties.isGreedy = true;
+            return properties;
         }
     }
 }

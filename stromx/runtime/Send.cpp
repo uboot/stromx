@@ -126,7 +126,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Send::setupOutputs() const
+        const std::vector<const Description*> Send::setupOutputs()
         {
             std::vector<const Description*> outputs;
             return outputs;
@@ -144,6 +144,13 @@ namespace stromx
             parameters.push_back(port);
             
             return parameters;
+        }
+        
+        const OperatorProperties Send::setupProperties()
+        {
+            OperatorProperties properties;
+            properties.isGreedy = true;
+            return properties;
         }
     }
 }

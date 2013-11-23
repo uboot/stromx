@@ -25,6 +25,20 @@ namespace stromx
 {
     namespace runtime
     {
+        struct OperatorProperties
+        {
+            OperatorProperties() : isGreedy(false) {}
+            
+            /** 
+             * A greedy operator wants its execute member to be called after
+             * one of its input connectors receives data. Operators which are not
+             * greedy are executed only if it is absolutely necessary, i.e. an input
+             * connectoro must be freed for new data or if a data at an output 
+             * connector is requested. Per default an operator is \em not greedy.
+             */
+            bool isGreedy;
+        };
+        
         /**
          * \brief Meta-information about an operator
          * 
@@ -85,6 +99,11 @@ namespace stromx
              * \throws WrongId If no parameter with \c id exists.
              */
             virtual const Parameter & parameter(const unsigned int id) const = 0;
+            
+            /** 
+             * Returns the properties of this operator.
+             */
+            virtual const OperatorProperties & properties() const = 0;
         };
     }
 }

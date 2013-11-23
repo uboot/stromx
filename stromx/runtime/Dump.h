@@ -40,6 +40,7 @@ namespace stromx
             static const std::vector<const Description*> setupInputs();
             static const std::vector<const Description*> setupOutputs();
             static const std::vector<const Parameter*> setupParameters();
+            static const OperatorProperties setupProperties();
             
             static const std::string TYPE;
             static const std::string PACKAGE;

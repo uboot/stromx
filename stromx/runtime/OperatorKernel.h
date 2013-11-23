@@ -76,6 +76,8 @@ namespace stromx
             
             virtual const Description & output(const unsigned int id) const;
             
+            const OperatorProperties & properties() const;
+            
             /** Sets a parameter \c id to \c value. */
             virtual void setParameter(const unsigned int, const Data&) { throw NotImplemented(); };
             
@@ -124,11 +126,14 @@ namespace stromx
              *                   can be edited before initialization. It can contain the 
              *                   description of parameters which can be edited only
              *                   after initialization.
+             * 
+             * \param properties Optionally, the properties of this operator.
              */
             OperatorKernel(const std::string & type,
                     const std::string & package,
                     const Version & version,
-                    const std::vector<const Parameter*>& parameters);
+                    const std::vector<const Parameter*>& parameters,
+                    const OperatorProperties & properties = OperatorProperties());
                 
             /**
              * Constructs an operator kernel.
@@ -148,13 +153,16 @@ namespace stromx
              *                   can be edited before initialization. It can contain the 
              *                   description of parameters which can be edited only
              *                   after initialization.
+             * 
+             * \param properties Optionally, the properties of this operator.
              */    
             OperatorKernel(const std::string & type,
                     const std::string & package,
                     const Version & version,
                     const std::vector<const Description*>& inputs,
                     const std::vector<const Description*>& outputs,
-                    const std::vector<const Parameter*>& parameters);
+                    const std::vector<const Parameter*>& parameters,
+                    const OperatorProperties & properties = OperatorProperties());
 
 	    /**
              * Constructs an operator kernel.
@@ -166,19 +174,25 @@ namespace stromx
              * \param outputs A list of operator input descriptions. The descriptions will
              *                be owned by the parent class, i.e. they must not be 
              *                manually deleted.
+             * 
+             * \param properties Optionally, the properties of this operator.
              */  
             OperatorKernel(const std::string& type,
                     const std::string& package,
                     const runtime::Version& version,
                     const std::vector<const Description* >& inputs,
-                    const std::vector<const Description* >& outputs);
+                    const std::vector<const Description* >& outputs,
+                    const OperatorProperties & properties = OperatorProperties());
              
             /**
              * Constructs an operator kernel.
+             * 
+             * \param properties Optionally, the properties of this operator.
              */       
             OperatorKernel(const std::string & type,
                     const std::string & package,
-                    const Version & version);
+                    const Version & version,
+                    const OperatorProperties & properties = OperatorProperties());
             /**
              * Initializes an operator kernel. Must only be called from
              * OperatorKernel::initialize() and overloads of this function
@@ -197,10 +211,13 @@ namespace stromx
              *                   manually deleted. Note that adding parameters which 
              *                   should be edited before initialization at this stage does
              *                   not make any sense but should be done in the constructor.
+             * 
+             * \param properties Optionally, the properties of this operator.
              */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
-                                    const std::vector<const Parameter*>& parameters);
+                                    const std::vector<const Parameter*>& parameters,
+                                    const OperatorProperties & properties = OperatorProperties());
             
             /**
              * Returns the parameter \c id.
@@ -230,6 +247,8 @@ namespace stromx
             std::set<unsigned int> m_activeInputs;
             std::set<unsigned int> m_activeOutputs;
             std::set<unsigned int> m_activeParameters;
+            
+            OperatorProperties m_properties;
         };
     }
 }
