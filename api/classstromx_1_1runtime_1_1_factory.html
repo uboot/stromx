@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -101,15 +102,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for stromx::runtime::Factory:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="classstromx_1_1runtime_1_1_factory.png" usemap="#stromx::runtime::Factory_map" alt=""/>
-  <map id="stromx::runtime::Factory_map" name="stromx::runtime::Factory_map">
-<area href="classstromx_1_1runtime_1_1_registry.html" title="Abstract registry of operator and data objects." alt="stromx::runtime::Registry" shape="rect" coords="0,0,147,24"/>
-</map>
- </div></div>
+<div class="center"><img src="classstromx_1_1runtime_1_1_factory__inherit__graph.png" border="0" usemap="#stromx_1_1runtime_1_1_factory_inherit__map" alt="Inheritance graph"/></div>
+<map name="stromx_1_1runtime_1_1_factory_inherit__map" id="stromx_1_1runtime_1_1_factory_inherit__map">
+<area shape="rect" id="node2" href="classstromx_1_1runtime_1_1_registry.html" title="Abstract registry of operator and data objects." alt="" coords="5,13,163,40"/><area shape="rect" id="node4" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects." alt="" coords="188,6,347,47"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for stromx::runtime::Factory:</div>
+<div class="dyncontent">
+<div class="center"><img src="classstromx_1_1runtime_1_1_factory__coll__graph.png" border="0" usemap="#stromx_1_1runtime_1_1_factory_coll__map" alt="Collaboration graph"/></div>
+<map name="stromx_1_1runtime_1_1_factory_coll__map" id="stromx_1_1runtime_1_1_factory_coll__map">
+<area shape="rect" id="node2" href="classstromx_1_1runtime_1_1_registry.html" title="Abstract registry of operator and data objects." alt="" coords="5,13,163,40"/><area shape="rect" id="node4" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects." alt="" coords="188,6,347,47"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a82ebabef90984ceb940a1ab521a78a6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_factory.html#a82ebabef90984ceb940a1ab521a78a6e">Factory</a> (const <a class="el" href="classstromx_1_1runtime_1_1_factory.html">Factory</a> &amp;factory)</td></tr>
+<tr class="separator:a82ebabef90984ceb940a1ab521a78a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51694ea2e572012c69b1dba57aac096d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_factory.html#a51694ea2e572012c69b1dba57aac096d">registerOperator</a> (const <a class="el" href="classstromx_1_1runtime_1_1_operator_kernel.html">OperatorKernel</a> *const op)</td></tr>
 <tr class="separator:a51694ea2e572012c69b1dba57aac096d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa377c5e96fd7c5ce953d4a535e7796ea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_factory.html#aa377c5e96fd7c5ce953d4a535e7796ea">registerData</a> (const <a class="el" href="classstromx_1_1runtime_1_1_data.html">Data</a> *data)</td></tr>
@@ -124,7 +132,25 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Factory of operator and data objects. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a82ebabef90984ceb940a1ab521a78a6e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stromx::runtime::Factory::Factory </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classstromx_1_1runtime_1_1_factory.html">Factory</a> &amp;&#160;</td>
+          <td class="paramname"><em>factory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The copy constructors creates a deep-copy of the input factor, i.e. it clones all operators and data objects in input factory and assigns them to the new factory </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a61e7e43981be6c94b2f58a942b969b0f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -146,6 +172,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns a list of the operators registered with the factory. </p>
+
+<p>Implements <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html#a17a0bc0caa8ab377c6144ec969d11650">stromx::runtime::AbstractFactory</a>.</p>
 
 </div>
 </div>
@@ -182,6 +210,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Allocates and returns a new data object. </p>
 
+<p>Implements <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html#a788fd8697d98b47395c01d6e69118d20">stromx::runtime::AbstractFactory</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a2b21d751f7d283b26a1eb106cad3058b"></a>
@@ -216,6 +246,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Allocates and returns a new operator. </p>
+
+<p>Implements <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html#a95d673751ac9e366f5f69da9f406432b">stromx::runtime::AbstractFactory</a>.</p>
 
 </div>
 </div>

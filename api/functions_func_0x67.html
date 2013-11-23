@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -144,29 +145,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classstromx_1_1runtime_1_1_dump.html#a56623de323cde69236fa63dffbd1cf4a">stromx::runtime::Dump</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_counter.html#a00c4cc503abb240403e1c53e610aff17">stromx::runtime::Counter</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_operator.html#ac40809ff98e90738f2e9913c8c6bb077">stromx::runtime::Operator</a>
-, <a class="el" href="classstromx_1_1imgproc_1_1_median_blur.html#a85af8a5754e007ddf573a845e6d18533">stromx::imgproc::MedianBlur</a>
-, <a class="el" href="classstromx_1_1example_1_1_web_camera.html#afda2a2f1b7950204afb81821ac5221a9">stromx::example::WebCamera</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_queue.html#aa47cb0337d1485ef9b1c3d178a6210fd">stromx::runtime::Queue</a>
-, <a class="el" href="classstromx_1_1example_1_1_clip.html#ae3c78c4c3f5d58f31033d3e202ef48fb">stromx::example::Clip</a>
+, <a class="el" href="classstromx_1_1example_1_1_morphological_filter.html#a8c7d2683c4c58926b0cccfcb4e385037">stromx::example::MorphologicalFilter</a>
+, <a class="el" href="classstromx_1_1example_1_1_image_filter.html#aeaa154d2fc9e2f4dcccbea6a9b59ae29">stromx::example::ImageFilter</a>
 , <a class="el" href="classstromx_1_1example_1_1_hough_lines_p.html#ae948b85dfcc01bf83d98d7b83858a750">stromx::example::HoughLinesP</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_periodic_delay.html#a98df340259fd54ffd01f73b9ff56d26e">stromx::runtime::PeriodicDelay</a>
-, <a class="el" href="classstromx_1_1example_1_1_const_image.html#a8aefe3ec842aae5b53e6f551828f484b">stromx::example::ConstImage</a>
 , <a class="el" href="classstromx_1_1example_1_1_convert_pixel_type.html#ad4c7ec662ca47404e8efaaf92496ce1c">stromx::example::ConvertPixelType</a>
+, <a class="el" href="classstromx_1_1example_1_1_const_image.html#a8aefe3ec842aae5b53e6f551828f484b">stromx::example::ConstImage</a>
+, <a class="el" href="classstromx_1_1example_1_1_clip.html#ae3c78c4c3f5d58f31033d3e202ef48fb">stromx::example::Clip</a>
 , <a class="el" href="classstromx_1_1example_1_1_canny.html#a6e74196591ed7e63ee1958fd42246713">stromx::example::Canny</a>
 , <a class="el" href="classstromx_1_1example_1_1_camera.html#aaf8660ab38eceb3ef87b2986d31e10d6">stromx::example::Camera</a>
 , <a class="el" href="classstromx_1_1example_1_1_buffer.html#aebb4785d2c4a0a4c5d9c674a5b24b3b3">stromx::example::Buffer</a>
-, <a class="el" href="classstromx_1_1imgproc_1_1_resize.html#acc8a7864a6f16a88299bfbe69a3b5fa8">stromx::imgproc::Resize</a>
+, <a class="el" href="classstromx_1_1example_1_1_blur.html#a5143e16518be367978b5467f858e9140">stromx::example::Blur</a>
 , <a class="el" href="classstromx_1_1example_1_1_adjust_rgb_channels.html#a53702d25b664113941282c393eca8311">stromx::example::AdjustRgbChannels</a>
-, <a class="el" href="classstromx_1_1example_1_1_image_filter.html#aeaa154d2fc9e2f4dcccbea6a9b59ae29">stromx::example::ImageFilter</a>
-, <a class="el" href="classstromx_1_1example_1_1_morphological_filter.html#a8c7d2683c4c58926b0cccfcb4e385037">stromx::example::MorphologicalFilter</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_web_camera.html#aa596def98b7587bdf81250c37a99764a">stromx::cvsupport::WebCamera</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_convert_pixel_type.html#aed578f5345a9a127ec03df6a67a81f80">stromx::cvsupport::ConvertPixelType</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_const_image.html#aa41c58755afac9e9adb5befd06c45f9c">stromx::cvsupport::ConstImage</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_clip.html#a76f3235d72255fdeed9ac20d61df6d8c">stromx::cvsupport::Clip</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_queue.html#aa47cb0337d1485ef9b1c3d178a6210fd">stromx::runtime::Queue</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_buffer.html#a1b5a941f0f22cc663751c326f6b9181b">stromx::cvsupport::Buffer</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_adjust_rgb_channels.html#a55ed818fb5ac5ac4b06c42fc5ba7e10c">stromx::cvsupport::AdjustRgbChannels</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_warp_perspective.html#a9e413f6fda0d2bdbf30f693530d4ed43">stromx::cvimgproc::WarpPerspective</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_warp_affine.html#a55bf16e476401316be081138e893c653">stromx::cvimgproc::WarpAffine</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_undistort_points.html#ac5bf0dd02405478e00c84358647f6110">stromx::cvimgproc::UndistortPoints</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_undistort.html#a089045e1b3f35ff2562186c84a301ec2">stromx::cvimgproc::Undistort</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_bitwise__or.html#a6bcb9e91a94e01881e3b72a56edf60b6">stromx::cvcore::Bitwise_or</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_integral.html#ab1f180557fda97e9608d4d89d5dcab3f">stromx::cvimgproc::Integral</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_scharr.html#a6459b6ae2ff365fa356d4b2004a6ad98">stromx::cvimgproc::Scharr</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_resize.html#a05ed25a2120508746cca660a9c92520c">stromx::cvimgproc::Resize</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_pyr_up.html#ae6b75ae451c60b5199ba44045abedc11">stromx::cvimgproc::PyrUp</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_periodic_delay.html#a98df340259fd54ffd01f73b9ff56d26e">stromx::runtime::PeriodicDelay</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_morphology_ex.html#aa58d39c2e64256e10c08f4561d6fa47d">stromx::cvimgproc::MorphologyEx</a>
+, <a class="el" href="classstromx_1_1example_1_1_web_camera.html#afda2a2f1b7950204afb81821ac5221a9">stromx::example::WebCamera</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_laplacian.html#ac587e0eefd49458ea0e0627776d50645">stromx::cvimgproc::Laplacian</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_bitwise__xor.html#a07078fe3c6b6f37a68a70307a7b4a754">stromx::cvcore::Bitwise_xor</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_gaussian_blur.html#a3d125831ae1a7ceb24b6dbc4554fb49e">stromx::cvimgproc::GaussianBlur</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_flood_fill.html#a2905f74d4e09b5e3cdd731ff76610cc4">stromx::cvimgproc::FloodFill</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_erode.html#a30898fa01555f761561414acb7e376b5">stromx::cvimgproc::Erode</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_distance_transform.html#a0f402e25d1dea9fab56d899b93a1f3a6">stromx::cvimgproc::DistanceTransform</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_dilate.html#a50f16e39a090bcb383315c784e4b4905">stromx::cvimgproc::Dilate</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_corner_min_eigen_val.html#aac897bac2232017e235fe61bd6b82bb7">stromx::cvimgproc::CornerMinEigenVal</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_corner_harris.html#a1ffdd69d83187e056b2e7df546c29f12">stromx::cvimgproc::CornerHarris</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_camera.html#a14eb93a807deea689bb4a47cca278772">stromx::cvsupport::Camera</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_canny.html#ae45b1bc343d1ae21eeadab41b1b1ee36">stromx::cvimgproc::Canny</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_calc_hist1_d.html#a91d97153c10e5a519fcc2ae2c8a0dd1e">stromx::cvimgproc::CalcHist1D</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_box_filter.html#a84003601e2c4eab6993e06ee47beda5d">stromx::cvimgproc::BoxFilter</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_threshold.html#a92cff448244b1ab63a6b4084835fe0f3">stromx::cvimgproc::Threshold</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_bilateral_filter.html#a30465aa92d4d1e6b7d6a594a6324498d">stromx::cvimgproc::BilateralFilter</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_median_blur.html#a05e22e27500ecce16261e988d2d09fec">stromx::cvimgproc::MedianBlur</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_adaptive_threshold.html#ab7bb29da22ad0184b513ad19d18e7596">stromx::cvimgproc::AdaptiveThreshold</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_pyr_down.html#ae297673cbd6e52e7c0d05406057b3ad5">stromx::cvimgproc::PyrDown</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_bitwise__not.html#af31e67117fcd4e3adedf5aa0c93c5a5b">stromx::cvcore::Bitwise_not</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_bitwise__and.html#a118d898df657104715d7ed1b48f2c1ee">stromx::cvcore::Bitwise_and</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_add_weighted.html#a10e6e059340bd6b6ef4d8871bbc5f27c">stromx::cvcore::AddWeighted</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_corner_eigen_vals_and_vecs.html#a5be6e1fb544580bce4ed1a32843bd8c9">stromx::cvimgproc::CornerEigenValsAndVecs</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_absdiff.html#a93fbc9dddeb9ca7b024c6611cb060fb2">stromx::cvcore::Absdiff</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_blur.html#aaf5f6ad3bb465fbaeec5edb2c9390888">stromx::cvimgproc::Blur</a>
+, <a class="el" href="classstromx_1_1cvimgproc_1_1_sobel.html#ad987d0c616b69ebbec5ddd7f240a2dcc">stromx::cvimgproc::Sobel</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_operator_kernel.html#aadf7c84bc54f5b1e639c11483e90e969">stromx::runtime::OperatorKernel</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_trigger.html#a932480e2438a865c8bd686eb3f57a635">stromx::runtime::Trigger</a>
-, <a class="el" href="classstromx_1_1example_1_1_blur.html#a5143e16518be367978b5467f858e9140">stromx::example::Blur</a>
+, <a class="el" href="classstromx_1_1cvcore_1_1_add.html#acbfd92904703be9607ab82f75e7f54ca">stromx::cvcore::Add</a>
 </li>
 <li>getText()
 : <a class="el" href="classstromx_1_1runtime_1_1_file_output.html#add59130ede813866839e12edb28ca43c">stromx::runtime::FileOutput</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_zip_file_output.html#ad470a040428ef7af728e56c108d7b13a">stromx::runtime::ZipFileOutput</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_directory_file_output.html#abff038d946a296ce8b3f655834a676bf">stromx::runtime::DirectoryFileOutput</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_zip_file_output.html#ad470a040428ef7af728e56c108d7b13a">stromx::runtime::ZipFileOutput</a>
 </li>
 <li>group()
 : <a class="el" href="classstromx_1_1runtime_1_1_parameter.html#a52b70fd871f85b018a6accf92c6bc280">stromx::runtime::Parameter</a>

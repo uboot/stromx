@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -114,39 +115,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 </div><!-- fragment --></p>
 <p>Again the programs starts by importing all required header files. In addition to headers which were also included in the last tutorial two more files from the runtime library are required. On the other hand, the inclusion of the operator headers in the <em>example</em> library is not required anymore. The file <a class="el" href="_example_8h_source.html">example/Example.h</a> is the only one which is needed from this library.</p>
-<p><div class="fragment"><div class="line"><span class="keyword">using namespace </span>stromx;</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">int</span>, <span class="keywordtype">char</span>**)</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">runtime::Factory</a> factory;</div>
-<div class="line">    </div>
-<div class="line">    stromxRegisterRuntime(factory);</div>
-</div><!-- fragment --></p>
+<p><div class="fragment"></div><!-- fragment --></p>
 <p>As a first step a <em>factory</em> is instantiated. The factory will be used to instantiate all operators and data types which appear in the XML file. After construction the factory is empty, i.e. it does not know any operator or data type. Only after registering a <em>runtime package</em> the factory can produce operators or data types from this package.</p>
 <dl class="section note"><dt>Note</dt><dd>If the above way of registering a package is used the package must be known at compile time. However, a package can be used even later if the library which contains its code is loaded dynamically during program execution. If the package <em>MyPackage</em> was loaded this way then the function <code>registerMyPackage()</code> would have to be called to allow the import of XML files which use <em>MyPackage</em>.</dd></dl>
-<p><div class="fragment"><div class="line">    runtime::Stream* stream = runtime::XmlReader().readStream(<span class="stringliteral">&quot;file.xml&quot;</span>, factory);</div>
-<div class="line">    </div>
-<div class="line">    stream-&gt;start();</div>
-</div><!-- fragment --></p>
+<p><div class="fragment"></div><!-- fragment --></p>
 <p>In the next step a stream is instantiated according the XML file using a runtime::XmlReader. Note that the previously configured factory is passed to the constructor of runtime::XmlReader. This way it knows which classes to instantiate if operators or data types are defined by combinations of package and type names. Because the complete configuration of the stream is given in the file the stream is ready to be started after it has been read. In other words, all operators have automatically been initialized, the connections between them have been established and each thread has been informed about its input connectors.</p>
-<p><div class="fragment"><div class="line">    runtime::Operator* timer = stream-&gt;operators()[1];</div>
-</div><!-- fragment --></p>
+<p><div class="fragment"></div><!-- fragment --></p>
 <p>So far a stream was build and started without knowing anything about its internal structure. To have a look at the processed data a specific operator must obviously be addressed. The above line obtains a pointer to the second operator in the stream. Note that <em>second</em> refers to the zero-exampled position of the operator in the XML file not its ID there.</p>
-<p><div class="fragment"><div class="line">    <span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; 5; ++i)</div>
-<div class="line">    {</div>
-<div class="line">        runtime::DataContainer data = timer-&gt;getOutputData(0);</div>
-<div class="line">        runtime::ReadAccess&lt;runtime::UInt32&gt; count(data);</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Received &quot;</span> &lt;&lt;  (<span class="keywordtype">unsigned</span> int)(count()) &lt;&lt; std::endl;</div>
-<div class="line">        </div>
-<div class="line">        timer-&gt;clearOutputData(0);</div>
-<div class="line">    }</div>
-<div class="line">    </div>
-<div class="line">    stream-&gt;stop();</div>
-<div class="line">    stream-&gt;join();</div>
-<div class="line">    </div>
-<div class="line">    <span class="keyword">delete</span> stream;</div>
-<div class="line">}</div>
-</div><!-- fragment --></p>
+<p><div class="fragment"></div><!-- fragment --></p>
 <p>The rest of the code is exactly the same as in the previous example.</p>
 <p>This program illustrates that it is possible to define and operate a stream without knowledge of the exact data types of its operators and their parameters. It is only necessary to either link to the library which contains these types or to dynamically load this library at runtime. In other words, the <em>runtime</em> runtime is designed work with any operator which are defined in external packages. The tutorial <a class="el" href="operator.html">Operator</a> shows how to implement such an operator in a custom package. </p>
 </div></div><!-- contents -->

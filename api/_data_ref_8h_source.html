@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -144,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            </div>
 <div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_data_ref.html#a5c4b15cbb54c52c398c1228c3dba837b">   79</a></span>&#160;            <span class="keyword">const</span> std::tr1::shared_ptr&lt;Data&gt; &amp; <a class="code" href="classstromx_1_1runtime_1_1_data_ref.html#a5c4b15cbb54c52c398c1228c3dba837b">ptr</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_data; }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_version.html" title="A version of an operator or data type.">Version</a> &amp; version() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_version.html" title="A version of an operator or data type.">Version</a> &amp; <a class="code" href="namespacestromx_1_1runtime.html#af927237a25276554229d0b80cc7af2e6" title="Returns the version of the stromx runtime library.">version</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> std::string &amp; type() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> std::string &amp; package() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a> &amp; variant() <span class="keyword">const</span>;</div>
@@ -153,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keyword">virtual</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>* clone() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> serialize(<a class="code" href="classstromx_1_1runtime_1_1_output_provider.html" title="Provides functions to serialize data to strings and files.">OutputProvider</a> &amp; out) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> deserialize(<a class="code" href="classstromx_1_1runtime_1_1_input_provider.html" title="Provides functions to deserialize data from strings and files.">InputProvider</a> &amp; in, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_version.html" title="A version of an operator or data type.">Version</a> &amp; version);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> deserialize(<a class="code" href="classstromx_1_1runtime_1_1_input_provider.html" title="Provides functions to deserialize data from strings and files.">InputProvider</a> &amp; in, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_version.html" title="A version of an operator or data type.">Version</a> &amp; <a class="code" href="namespacestromx_1_1runtime.html#af927237a25276554229d0b80cc7af2e6" title="Returns the version of the stromx runtime library.">version</a>);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            </div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            std::tr1::shared_ptr&lt;Data&gt; m_data;</div>

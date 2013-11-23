@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -115,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">namespace </span>runtime</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">class </span>Factory;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">class </span>AbstractFactory;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">class </span>FileInput;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">class </span>Operator;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">class </span>Stream;</div>
@@ -123,15 +124,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_xml_reader.html">   56</a></span>&#160;        <span class="keyword">class </span>STROMX_RUNTIME_API <a class="code" href="classstromx_1_1runtime_1_1_xml_reader.html" title="Reader for stromx files.">XmlReader</a></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        {</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_stream.html" title="The core data processing pipeline of stromx.">Stream</a>* readStream(<span class="keyword">const</span> std::string &amp; filepath, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">Factory</a>&amp; factory) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_stream.html" title="The core data processing pipeline of stromx.">Stream</a>* readStream(<span class="keyword">const</span> std::string &amp; filepath, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>&amp; factory) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_stream.html" title="The core data processing pipeline of stromx.">Stream</a>* readStream(<a class="code" href="classstromx_1_1runtime_1_1_file_input.html" title="Provides functions to initialize an input provider.">FileInput</a> &amp; input, <span class="keyword">const</span> std::string filename, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">Factory</a>&amp; factory) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_stream.html" title="The core data processing pipeline of stromx.">Stream</a>* readStream(<a class="code" href="classstromx_1_1runtime_1_1_file_input.html" title="Provides functions to initialize an input provider.">FileInput</a> &amp; input, <span class="keyword">const</span> std::string filename, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>&amp; factory) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordtype">void</span> readParameters(<span class="keyword">const</span> std::string &amp; filepath, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">Factory</a>&amp; factory,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordtype">void</span> readParameters(<span class="keyword">const</span> std::string &amp; filepath, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>&amp; factory,</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                                <span class="keyword">const</span> std::vector&lt;stromx::runtime::Operator*&gt; &amp; operators) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordtype">void</span> readParameters(<a class="code" href="classstromx_1_1runtime_1_1_file_input.html" title="Provides functions to initialize an input provider.">FileInput</a> &amp; input, <span class="keyword">const</span> std::string filename, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">Factory</a>&amp; factory,</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordtype">void</span> readParameters(<a class="code" href="classstromx_1_1runtime_1_1_file_input.html" title="Provides functions to initialize an input provider.">FileInput</a> &amp; input, <span class="keyword">const</span> std::string filename, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>&amp; factory,</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                                <span class="keyword">const</span> std::vector&lt;stromx::runtime::Operator*&gt; &amp; operators) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        };</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>

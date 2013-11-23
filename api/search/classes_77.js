@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['warpaffine',['WarpAffine',['../classstromx_1_1cvimgproc_1_1_warp_affine.html',1,'stromx::cvimgproc']]],
+  ['warpperspective',['WarpPerspective',['../classstromx_1_1cvimgproc_1_1_warp_perspective.html',1,'stromx::cvimgproc']]],
+  ['webcamera',['WebCamera',['../classstromx_1_1cvsupport_1_1_web_camera.html',1,'stromx::cvsupport']]],
   ['webcamera',['WebCamera',['../classstromx_1_1example_1_1_web_camera.html',1,'stromx::example']]],
   ['writeaccess',['WriteAccess',['../classstromx_1_1runtime_1_1_write_access.html',1,'stromx::runtime']]],
   ['wrongargument',['WrongArgument',['../classstromx_1_1runtime_1_1_wrong_argument.html',1,'stromx::runtime']]],

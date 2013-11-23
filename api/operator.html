@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -96,7 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1><a class="anchor" id="operator_declare"></a>
 Declaring the operator</h1>
 <p>A custom operator is implemented by defining an <em>operator kernel</em>. In contrast to operators, operator kernels do not have to be thread-safe. All concurrent accesses are handled by the runtime::Operator class which wraps the operator kernels. This simplifies the definition of custom operators.</p>
-<p>The new operator kernel is declared in the header file <em>Add.h</em>:</p>
+<p>The new operator kernel is declared in the header file <em><a class="el" href="_add_8h_source.html">Add.h</a></em>:</p>
  <div class="fragment"><div class="line"><span class="preprocessor">#ifndef MATH_ADD_H</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define MATH_ADD_H</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -315,7 +316,7 @@ Deploying the operator</h1>
 <div class="line">{</div>
 <div class="line">    <a class="code" href="classstromx_1_1runtime_1_1_factory.html" title="Factory of operator and data objects.">runtime::Factory</a> factory;</div>
 <div class="line">    </div>
-<div class="line">    stromxRegisterRuntime(factory);</div>
+<div class="line">    stromxRuntimeRegister(factory);</div>
 <div class="line">    </div>
 <div class="line">    <a class="code" href="classstromx_1_1runtime_1_1_operator_kernel.html" title="Abstract operator kernel.">runtime::OperatorKernel</a>* op = <span class="keyword">new</span> math::Add;</div>
 <div class="line">    factory.<a class="code" href="classstromx_1_1runtime_1_1_factory.html#a51694ea2e572012c69b1dba57aac096d">registerOperator</a>(op);</div>

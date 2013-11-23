@@ -4,5 +4,5 @@ var searchData=
   ['recycleaccess',['RecycleAccess',['../classstromx_1_1runtime_1_1_recycle_access.html',1,'stromx::runtime']]],
   ['recycler',['Recycler',['../classstromx_1_1runtime_1_1_recycler.html',1,'stromx::runtime']]],
   ['registry',['Registry',['../classstromx_1_1runtime_1_1_registry.html',1,'stromx::runtime']]],
-  ['resize',['Resize',['../classstromx_1_1imgproc_1_1_resize.html',1,'stromx::imgproc']]]
+  ['resize',['Resize',['../classstromx_1_1cvimgproc_1_1_resize.html',1,'stromx::cvimgproc']]]
 ];

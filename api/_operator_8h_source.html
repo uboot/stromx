@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -126,103 +127,108 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">namespace </span>runtime</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">class </span>Id2DataMapper;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">class </span>OperatorInfo;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">class </span>OperatorKernel;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">namespace </span>impl</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keyword">class </span>InputNode;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">class </span>Network;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">class </span>OutputNode;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">class </span>SynchronizedOperatorKernel;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html">   63</a></span>&#160;        <span class="keyword">class </span>STROMX_RUNTIME_API <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>FactoryTest;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>OperatorTest;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>InputNodeTest;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>NetworkTest;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_operator_tester.html" title="Operator with utility functions for unit testing.">OperatorTester</a>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>OutputNodeTest;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>ThreadImplTest;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_thread.html" title="A thread which visits input nodes.">Thread</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>impl::Network;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532f">   77</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532f">Status</a></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            {</div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa9cf91aaf23077108ff2299a33c2a7874">   80</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa9cf91aaf23077108ff2299a33c2a7874">NONE</a>,</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa06c172a7e33d5ab47aaed8e87086fd42">   82</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa06c172a7e33d5ab47aaed8e87086fd42">INITIALIZED</a>,</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532faf51bf2b0f516f30d16e804168355a501">   84</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532faf51bf2b0f516f30d16e804168355a501">ACTIVE</a>,</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa72ba009de820f7f5f96ce82d714d410e">   86</a></span>&#160;                EXECUTING</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            };</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>(<a class="code" href="classstromx_1_1runtime_1_1_operator_kernel.html" title="Abstract operator kernel.">OperatorKernel</a>* <span class="keyword">const</span> kernel);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>();</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a6c87ec144aa549568994f18c3759dd7b">   99</a></span>&#160;            <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a6c87ec144aa549568994f18c3759dd7b">name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_name; }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            </div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a9ea2c476b5e917a9e5a5fcdd4041251d">  106</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a9ea2c476b5e917a9e5a5fcdd4041251d">setName</a>(<span class="keyword">const</span> std::string &amp; name) { m_name = name; }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_operator_info.html" title="Meta-information about an operator.">OperatorInfo</a>&amp; info() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            Status status() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keywordtype">void</span> setParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; value);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordtype">void</span> setParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; value, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeout);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_ref.html" title="Reference to a data object.">DataRef</a> getParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_ref.html" title="Reference to a data object.">DataRef</a> getParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeout) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            </div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> getOutputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            <span class="keywordtype">void</span> setInputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="keywordtype">void</span> clearOutputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <span class="keywordtype">void</span> initialize();</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            </div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keywordtype">void</span> deinitialize();</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;            <span class="keywordtype">void</span> addObserver(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_connector_observer.html" title="Abstract base class of observers of operator connectors.">ConnectorObserver</a>* <span class="keyword">const</span> observer);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            </div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            <span class="keywordtype">void</span> removeObserver(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_connector_observer.html" title="Abstract base class of observers of operator connectors.">ConnectorObserver</a>* <span class="keyword">const</span> observer);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            </div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            <span class="keyword">class </span>MutexHandle;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <span class="keyword">class </span>InternalObserver;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            </div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>&amp; op);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            impl::InputNode* getInputNode(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            impl::OutputNode* getOutputNode(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="keywordtype">bool</span> isPartOfStream()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_isPartOfStream; }</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <span class="keywordtype">void</span> addToStream();</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            <span class="keywordtype">void</span> removeFromStream();</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordtype">void</span> activate();</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            <span class="keywordtype">void</span> deactivate();</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            <span class="keywordtype">void</span> observeInput(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            <span class="keywordtype">void</span> observeOutput(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            std::string m_name;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            InternalObserver* m_inputObserver;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            InternalObserver* m_outputObserver;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            impl::SynchronizedOperatorKernel* m_kernel;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            std::map&lt;unsigned int, impl::OutputNode*&gt; m_outputs;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            std::map&lt;unsigned int, impl::InputNode*&gt; m_inputs;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            std::set&lt;const ConnectorObserver*&gt; m_observers;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            MutexHandle*  m_observerMutex;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            <span class="keywordtype">bool</span> m_isPartOfStream;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        };</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_OPERATOR_H</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">class </span>AbstractFactory;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">class </span>Id2DataMapper;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">class </span>OperatorInfo;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">class </span>OperatorKernel;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">namespace </span>impl</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">class </span>InputNode;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">class </span>Network;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">class </span>OutputNode;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">class </span>SynchronizedOperatorKernel;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html">   64</a></span>&#160;        <span class="keyword">class </span>STROMX_RUNTIME_API <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>FactoryTest;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>OperatorTest;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>InputNodeTest;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>NetworkTest;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_operator_tester.html" title="Operator with utility functions for unit testing.">OperatorTester</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>OutputNodeTest;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>ThreadImplTest;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_thread.html" title="A thread which visits input nodes.">Thread</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">friend</span> <span class="keyword">class </span>impl::Network;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532f">   78</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532f">Status</a></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            {</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa9cf91aaf23077108ff2299a33c2a7874">   81</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa9cf91aaf23077108ff2299a33c2a7874">NONE</a>,</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa06c172a7e33d5ab47aaed8e87086fd42">   83</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa06c172a7e33d5ab47aaed8e87086fd42">INITIALIZED</a>,</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532faf51bf2b0f516f30d16e804168355a501">   85</a></span>&#160;                <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532faf51bf2b0f516f30d16e804168355a501">ACTIVE</a>,</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a497286cc66f9322ee8a1b518ff2d532fa72ba009de820f7f5f96ce82d714d410e">   87</a></span>&#160;                EXECUTING</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            };</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>(<a class="code" href="classstromx_1_1runtime_1_1_operator_kernel.html" title="Abstract operator kernel.">OperatorKernel</a>* <span class="keyword">const</span> kernel);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a6c87ec144aa549568994f18c3759dd7b">  100</a></span>&#160;            <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a6c87ec144aa549568994f18c3759dd7b">name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_name; }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_operator.html#a9ea2c476b5e917a9e5a5fcdd4041251d">  107</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html#a9ea2c476b5e917a9e5a5fcdd4041251d">setName</a>(<span class="keyword">const</span> std::string &amp; name) { m_name = name; }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_operator_info.html" title="Meta-information about an operator.">OperatorInfo</a>&amp; info() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            Status status() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <span class="keywordtype">void</span> setParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; value);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordtype">void</span> setParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; value, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeout);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_ref.html" title="Reference to a data object.">DataRef</a> getParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_ref.html" title="Reference to a data object.">DataRef</a> getParameter(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeout) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> getOutputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keywordtype">void</span> setInputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <span class="keywordtype">void</span> clearOutputData(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            <span class="keywordtype">void</span> initialize();</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            </div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordtype">void</span> deinitialize();</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            <span class="keywordtype">void</span> addObserver(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_connector_observer.html" title="Abstract base class of observers of operator connectors.">ConnectorObserver</a>* <span class="keyword">const</span> observer);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <span class="keywordtype">void</span> removeObserver(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_connector_observer.html" title="Abstract base class of observers of operator connectors.">ConnectorObserver</a>* <span class="keyword">const</span> observer);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>* factory() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            <span class="keywordtype">void</span> setFactory(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a>* <span class="keyword">const</span> factory);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            </div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keyword">class </span>MutexHandle;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            <span class="keyword">class </span>InternalObserver;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_operator.html" title="Abstract operator.">Operator</a>&amp; op);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            impl::InputNode* getInputNode(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            impl::OutputNode* getOutputNode(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            <span class="keywordtype">bool</span> isPartOfStream()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_isPartOfStream; }</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            <span class="keywordtype">void</span> addToStream();</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keywordtype">void</span> removeFromStream();</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            <span class="keywordtype">void</span> activate();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <span class="keywordtype">void</span> deactivate();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            <span class="keywordtype">void</span> observeInput(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            <span class="keywordtype">void</span> observeOutput(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_container.html" title="Container which manages the life-cycle of data objects.">DataContainer</a> &amp; data) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            std::string m_name;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            InternalObserver* m_inputObserver;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            InternalObserver* m_outputObserver;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            impl::SynchronizedOperatorKernel* m_kernel;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            std::map&lt;unsigned int, impl::OutputNode*&gt; m_outputs;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            std::map&lt;unsigned int, impl::InputNode*&gt; m_inputs;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            std::set&lt;const ConnectorObserver*&gt; m_observers;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;            MutexHandle*  m_observerMutex;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            <span class="keywordtype">bool</span> m_isPartOfStream;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        };</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    }</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;}</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_OPERATOR_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

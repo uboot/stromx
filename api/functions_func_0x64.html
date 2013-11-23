@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -144,13 +145,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classstromx_1_1runtime_1_1_matrix.html#a6bdd3b5aa12f4b1bda76a8ace2dc5192">stromx::runtime::Matrix</a>
 </li>
 <li>deactivate()
-: <a class="el" href="classstromx_1_1example_1_1_buffer.html#a338e78919dd5faf2be0ef158fa4b3e9a">stromx::example::Buffer</a>
+: <a class="el" href="classstromx_1_1cvsupport_1_1_buffer.html#a1e8e4863803af7e6b7f4daab9c72c7cd">stromx::cvsupport::Buffer</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_camera.html#a9c75edd5b7e56bd25daab7111a12c551">stromx::cvsupport::Camera</a>
+, <a class="el" href="classstromx_1_1example_1_1_buffer.html#a338e78919dd5faf2be0ef158fa4b3e9a">stromx::example::Buffer</a>
 , <a class="el" href="classstromx_1_1example_1_1_camera.html#a8c636b4d78487831a2165b6a0f544d35">stromx::example::Camera</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_operator_kernel.html#a517f1dc7463f9391d4af2cc9416b04ae">stromx::runtime::OperatorKernel</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_queue.html#a9fa6b19d8a7f6a687a3fd9a4b375115f">stromx::runtime::Queue</a>
 </li>
 <li>deinitialize()
 : <a class="el" href="classstromx_1_1runtime_1_1_operator_kernel.html#ae5bb5cdd1f4a78b76c638c4b48a36b66">stromx::runtime::OperatorKernel</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_camera.html#a9f052cc8f4c5c9a3b11ce9e23d196bef">stromx::cvsupport::Camera</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_web_camera.html#a86ae67bfa9ce8e609084d4980de64ad6">stromx::cvsupport::WebCamera</a>
 , <a class="el" href="classstromx_1_1example_1_1_camera.html#a1afedad2e2a338a9da7d11855ee29973">stromx::example::Camera</a>
 , <a class="el" href="classstromx_1_1example_1_1_web_camera.html#adb85f2864f226d0b8a284899ba2f1d6d">stromx::example::WebCamera</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_operator.html#a03655bbb85b0d5646d5d9b2f5aff0c0e">stromx::runtime::Operator</a>
@@ -159,24 +164,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classstromx_1_1runtime_1_1_stream.html#a23afbd57b1148539cbc10e7bb9a009cc">stromx::runtime::Stream</a>
 </li>
 <li>depth()
-: <a class="el" href="classstromx_1_1runtime_1_1_image.html#a4b2228334f2ef9cda522a6100cb66780">stromx::runtime::Image</a>
+: <a class="el" href="classstromx_1_1runtime_1_1_image.html#a2a454828c3c29c2e62c94da5446aaffe">stromx::runtime::Image</a>
 </li>
 <li>Description()
 : <a class="el" href="classstromx_1_1runtime_1_1_description.html#a9dcb6b9685d054a87e8cf95835643641">stromx::runtime::Description</a>
 </li>
 <li>descriptions()
-: <a class="el" href="classstromx_1_1runtime_1_1_enum_parameter.html#ae6a9fbe59624a1e91930e8f4cbae30c6">stromx::runtime::EnumParameter</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_parameter.html#ae64eff1cdaff57511e4487756b2d20f5">stromx::runtime::Parameter</a>
+: <a class="el" href="classstromx_1_1runtime_1_1_description.html#a7739357e2c17a82dbd871c7d6bc7e717">stromx::runtime::Description</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_enum_parameter.html#ae6a9fbe59624a1e91930e8f4cbae30c6">stromx::runtime::EnumParameter</a>
 </li>
 <li>deserialize()
-: <a class="el" href="classstromx_1_1runtime_1_1_string.html#a85067955f62ae4cc692bd577fc4f0285">stromx::runtime::String</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_data_ref.html#a76516e04a211480e97bcb2efd0290c6a">stromx::runtime::DataRef</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_trigger_data.html#a80da3db04e67411dbcc0e7bc0db13a99">stromx::runtime::TriggerData</a>
+: <a class="el" href="classstromx_1_1runtime_1_1_primitive.html#aa4713f7814d9d62b1f2b8d0960bbd289">stromx::runtime::Primitive&lt; repr_t, val_t &gt;</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_const_data_ref.html#a428fc876cefb452a84d14646385f04ff">stromx::runtime::ConstDataRef</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_trigger_data.html#a80da3db04e67411dbcc0e7bc0db13a99">stromx::runtime::TriggerData</a>
+, <a class="el" href="classstromx_1_1cvsupport_1_1_image.html#af2e035cb18bd806ee28d7dbd65ee4f12">stromx::cvsupport::Image</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_string.html#a85067955f62ae4cc692bd577fc4f0285">stromx::runtime::String</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_data_ref.html#a76516e04a211480e97bcb2efd0290c6a">stromx::runtime::DataRef</a>
 , <a class="el" href="classstromx_1_1example_1_1_matrix.html#a27f60ec9ea58d865c9d16f3da3e03a10">stromx::example::Matrix</a>
+, <a class="el" href="classstromx_1_1runtime_1_1_matrix_wrapper.html#aa7dc5e8dcf0e49c5006ffe79adabb124">stromx::runtime::MatrixWrapper</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_data_interface.html#a73dcc31e383a9187e00f0b51b5ec5b73">stromx::runtime::DataInterface</a>
 , <a class="el" href="classstromx_1_1example_1_1_image.html#ade1dbbb8daf8e001ab52baafe64a2242">stromx::example::Image</a>
-, <a class="el" href="classstromx_1_1runtime_1_1_primitive.html#ac85dd007b3d50b8da7b7d57230fcbdc6">stromx::runtime::Primitive&lt; repr_t, val_t &gt;</a>
 , <a class="el" href="classstromx_1_1runtime_1_1_data.html#a85dbb91fea8860eec32d6eb25bc2f88d">stromx::runtime::Data</a>
 </li>
 <li>DirectoryFileInput()

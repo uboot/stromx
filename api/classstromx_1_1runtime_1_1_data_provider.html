@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -113,11 +114,37 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aecc1d10e87ae31f26a33e616e4d4abc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab634210a0c0be6730887e647f8a3022d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_data_provider.html#ab634210a0c0be6730887e647f8a3022d">lockParameters</a> ()=0</td></tr>
 <tr class="separator:ab634210a0c0be6730887e647f8a3022d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39133ee0750568b89fc275bc644e8125"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_data_provider.html#a39133ee0750568b89fc275bc644e8125">factory</a> () const =0</td></tr>
+<tr class="separator:a39133ee0750568b89fc275bc644e8125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provider of functions to receive and send data. </p>
 <p><a class="el" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a> providers are passed as parameter to <a class="el" href="classstromx_1_1runtime_1_1_operator_kernel.html#a6a96a0c61c7af4ab4c6f8a2886c9372d">OperatorKernel::execute()</a> and provides ways for the executing kernel to send output data and receive input data. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a39133ee0750568b89fc275bc644e8125"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a>&amp; stromx::runtime::DataProvider::factory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the factor which is assigned to this operator. If no factory has been set the returned factory is a valid object but does not contain any data or operator instances. </p>
+
+</div>
+</div>
 <a class="anchor" id="ab634210a0c0be6730887e647f8a3022d"></a>
 <div class="memitem">
 <div class="memproto">

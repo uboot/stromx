@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -111,31 +112,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">namespace </span>runtime</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">class </span>Data;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">class </span>DataContainer;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">class </span>Id2DataMapper;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_data_provider.html">   34</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_data_provider.html" title="Provider of functions to receive and send data.">DataProvider</a></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_data_provider.html" title="Provider of functions to receive and send data.">DataProvider</a>() {}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ae5098e2aecfdf0d0bec28bba1102a5a8">testForInterrupt</a>() = 0;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#a47c8016bd4b329c5c51c46c91b3069b0">sleep</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> microseconds) = 0;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ac44264173f455f3638ceb7d3fc48b6b8">receiveInputData</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_id2_data_mapper.html" title="Abstract base class of ID-to-data mappers.">Id2DataMapper</a>&amp; mapper) = 0;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#aeb036e0e82f9033751491ea90765cab8">sendOutputData</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_id2_data_mapper.html" title="Abstract base class of ID-to-data mappers.">Id2DataMapper</a>&amp; mapper) = 0;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#aecc1d10e87ae31f26a33e616e4d4abc8">unlockParameters</a>() = 0;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ab634210a0c0be6730887e647f8a3022d">lockParameters</a>() = 0;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        };</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_DATAPROVIDER_H</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">class </span>AbstractFactory;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">class </span>Data;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">class </span>DataContainer;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">class </span>Id2DataMapper;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_data_provider.html">   35</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_data_provider.html" title="Provider of functions to receive and send data.">DataProvider</a></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_data_provider.html" title="Provider of functions to receive and send data.">DataProvider</a>() {}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ae5098e2aecfdf0d0bec28bba1102a5a8">testForInterrupt</a>() = 0;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#a47c8016bd4b329c5c51c46c91b3069b0">sleep</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> microseconds) = 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ac44264173f455f3638ceb7d3fc48b6b8">receiveInputData</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_id2_data_mapper.html" title="Abstract base class of ID-to-data mappers.">Id2DataMapper</a>&amp; mapper) = 0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#aeb036e0e82f9033751491ea90765cab8">sendOutputData</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_id2_data_mapper.html" title="Abstract base class of ID-to-data mappers.">Id2DataMapper</a>&amp; mapper) = 0;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#aecc1d10e87ae31f26a33e616e4d4abc8">unlockParameters</a>() = 0;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#ab634210a0c0be6730887e647f8a3022d">lockParameters</a>() = 0;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_abstract_factory.html" title="Factory of operator and data objects.">AbstractFactory</a> &amp; <a class="code" href="classstromx_1_1runtime_1_1_data_provider.html#a39133ee0750568b89fc275bc644e8125">factory</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        };</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_DATAPROVIDER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

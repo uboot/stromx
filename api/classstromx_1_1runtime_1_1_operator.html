@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -102,12 +103,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for stromx::runtime::Operator:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="classstromx_1_1runtime_1_1_operator.png" usemap="#stromx::runtime::Operator_map" alt=""/>
-  <map id="stromx::runtime::Operator_map" name="stromx::runtime::Operator_map">
-<area href="classstromx_1_1runtime_1_1_operator_tester.html" title="Operator with utility functions for unit testing." alt="stromx::runtime::OperatorTester" shape="rect" coords="0,56,187,80"/>
-</map>
- </div></div>
+<div class="center"><img src="classstromx_1_1runtime_1_1_operator__inherit__graph.png" border="0" usemap="#stromx_1_1runtime_1_1_operator_inherit__map" alt="Inheritance graph"/></div>
+<map name="stromx_1_1runtime_1_1_operator_inherit__map" id="stromx_1_1runtime_1_1_operator_inherit__map">
+<area shape="rect" id="node3" href="classstromx_1_1runtime_1_1_operator_tester.html" title="Operator with utility functions for unit testing." alt="" coords="5,81,168,122"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -152,11 +151,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a225ea553e6ab51fc9e4356f0821b7dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae255b64fc12ea300a9423880914dfb07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_operator.html#ae255b64fc12ea300a9423880914dfb07">removeObserver</a> (const <a class="el" href="classstromx_1_1runtime_1_1_connector_observer.html">ConnectorObserver</a> *const observer)</td></tr>
 <tr class="separator:ae255b64fc12ea300a9423880914dfb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a11b10a163396cf5fb4399350b0170a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_operator.html#a6a11b10a163396cf5fb4399350b0170a">factory</a> () const </td></tr>
+<tr class="separator:a6a11b10a163396cf5fb4399350b0170a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d7c6419912b1a5442f01b4dd7277ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstromx_1_1runtime_1_1_operator.html#ab7d7c6419912b1a5442f01b4dd7277ec">setFactory</a> (const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a> *const <a class="el" href="classstromx_1_1runtime_1_1_operator.html#a6a11b10a163396cf5fb4399350b0170a">factory</a>)</td></tr>
+<tr class="separator:ab7d7c6419912b1a5442f01b4dd7277ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract operator. </p>
 <p>Operators are the core elements of a stream. The have inputs and outputs which can be connected to other operators of the same stream. Moreover, it is possible to access these inputs and outputs from outside to pass data to the stream or obtain data from it.</p>
-<p>Moreover, each operator has a current status and a number of parameters. If the value of a specific parameter can be read or written dependes on the current status of the operators. </p>
+<p>Moreover, each operator has a current status and a number of parameters. If the value of a specific parameter can be read or written depends on the current status of the operators. </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a497286cc66f9322ee8a1b518ff2d532f"></a>
 <div class="memitem">
@@ -236,7 +239,7 @@ Public Member Functions</h2></td></tr>
 <p>Adds an observer which is called whenever the data at an input or output connector changes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observer</td><td>A pointer to the observer is stored but not onwned by the operator. </td></tr>
+    <tr><td class="paramname">observer</td><td>A pointer to the observer is stored but not owned by the operator. </td></tr>
   </table>
   </dd>
 </dl>
@@ -291,6 +294,22 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a6a11b10a163396cf5fb4399350b0170a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a> * stromx::runtime::Operator::factory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the current factory of the operator The factory is passed to the operator kernel during the execution and can be used by the operator kernel to instantiate new data objects or operators. Returns null if no current factory is set. If the operator was instantiated by a factory the operator factory is initially set to the instantiating factory. </p>
 
 </div>
 </div>
@@ -483,6 +502,29 @@ Public Member Functions</h2></td></tr>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classstromx_1_1runtime_1_1_wrong_argument.html" title="A wrong argument was passed to a function.">WrongArgument</a></td><td>If the observer has not been added to the operator before. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab7d7c6419912b1a5442f01b4dd7277ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stromx::runtime::Operator::setFactory </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classstromx_1_1runtime_1_1_abstract_factory.html">AbstractFactory</a> *const&#160;</td>
+          <td class="paramname"><em>factory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the factory of the operator. The factory is passed to the operator kernel during the execution and can be used by the operator kernel to instantiate new data objects or operators. If the operator was instantiated by a factory the operator factory is initially set to the instantiating factory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">factory</td><td>A pointer to the factory is stored but not owned by the operator. Pass null to reset the factory of this operator. </td></tr>
   </table>
   </dd>
 </dl>

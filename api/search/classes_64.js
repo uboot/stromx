@@ -10,8 +10,10 @@ var searchData=
   ['datavariant',['DataVariant',['../classstromx_1_1runtime_1_1_data_variant.html',1,'stromx::runtime']]],
   ['description',['Description',['../classstromx_1_1runtime_1_1_description.html',1,'stromx::runtime']]],
   ['deserializationerror',['DeserializationError',['../classstromx_1_1runtime_1_1_deserialization_error.html',1,'stromx::runtime']]],
+  ['dilate',['Dilate',['../classstromx_1_1cvimgproc_1_1_dilate.html',1,'stromx::cvimgproc']]],
   ['dilate',['Dilate',['../classstromx_1_1example_1_1_dilate.html',1,'stromx::example']]],
   ['directoryfileinput',['DirectoryFileInput',['../classstromx_1_1runtime_1_1_directory_file_input.html',1,'stromx::runtime']]],
   ['directoryfileoutput',['DirectoryFileOutput',['../classstromx_1_1runtime_1_1_directory_file_output.html',1,'stromx::runtime']]],
+  ['distancetransform',['DistanceTransform',['../classstromx_1_1cvimgproc_1_1_distance_transform.html',1,'stromx::cvimgproc']]],
   ['dump',['Dump',['../classstromx_1_1runtime_1_1_dump.html',1,'stromx::runtime']]]
 ];

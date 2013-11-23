@@ -23,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="stromx-logo-rgb-64x64.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">stromx
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
  </tr>
@@ -104,44 +105,84 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> *  limitations under the License.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#ifndef STROMX_RUNTIME_DESCRIPTOR_H</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define STROMX_RUNTIME_DESCRIPTOR_H</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#ifndef STROMX_RUNTIME_DESCRIPTION_H</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define STROMX_RUNTIME_DESCRIPTION_H</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/Config.h&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/DataVariant.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>stromx</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">namespace </span>runtime</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html">   38</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_description.html" title="Description of an ID to data variant map.">Description</a></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a9dcb6b9685d054a87e8cf95835643641">   42</a></span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_description.html#a9dcb6b9685d054a87e8cf95835643641">Description</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a>&amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a84f13c9b5602a28841f482a70d25de87">variant</a>)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            : m_id(id),</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;              m_variant(variant)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/Config.h&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/DataVariant.h&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/Enum.h&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;stromx/runtime/None.h&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span>stromx</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">namespace </span>runtime</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html">   33</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html" title="Description of an enumeration value.">EnumDescription</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a8d56119be2451303588abdd2f8b8d874">   37</a></span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a8d56119be2451303588abdd2f8b8d874">EnumDescription</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_enum.html" title="Value of an enumeration.">Enum</a> &amp; <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#ab971e82b50bd96a8c15ce2bef178d9ae">value</a>)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;              : m_value(value)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            {}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a03855dedf082f9929906baedd050dc88">   42</a></span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a8d56119be2451303588abdd2f8b8d874">EnumDescription</a>(<span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_enum.html" title="Value of an enumeration.">Enum</a> &amp; <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#ab971e82b50bd96a8c15ce2bef178d9ae">value</a>, <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a2d4c0e0c68af061b3570d50399dfc68c">title</a>)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;              : m_value(value),</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                m_title(title)</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            {}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_description.html" title="Description of an ID to data variant map.">Description</a>() {}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">   50</a></span>&#160;            <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">title</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_title; }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#af7b6517bb46092d9bd4801f991fba47e">   53</a></span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#af7b6517bb46092d9bd4801f991fba47e">id</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_id; }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a84f13c9b5602a28841f482a70d25de87">   56</a></span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a> &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a84f13c9b5602a28841f482a70d25de87">variant</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_variant; }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a8e740835486b40cce7c198b88e23001f">   59</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#a8e740835486b40cce7c198b88e23001f">setTitle</a>(<span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">title</a>) { m_title = <a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">title</a>; }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            std::string m_title;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_id;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a> m_variant;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        };</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_DESCRIPTOR_H</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#ab971e82b50bd96a8c15ce2bef178d9ae">   48</a></span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_enum.html" title="Value of an enumeration.">Enum</a> <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#ab971e82b50bd96a8c15ce2bef178d9ae">value</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_value; }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            </div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a2d4c0e0c68af061b3570d50399dfc68c">   51</a></span>&#160;            <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_enum_description.html#a2d4c0e0c68af061b3570d50399dfc68c">title</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_title; }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_enum.html" title="Value of an enumeration.">Enum</a> m_value;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            std::string m_title;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        };</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html">   68</a></span>&#160;        <span class="keyword">class </span>STROMX_RUNTIME_API <a class="code" href="classstromx_1_1runtime_1_1_description.html" title="Description of an ID to data variant map.">Description</a></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a9dcb6b9685d054a87e8cf95835643641">   72</a></span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_description.html" title="Description of an ID to data variant map.">Description</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a>&amp; variant)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            : m_id(id),</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;              m_variant(variant)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            {}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classstromx_1_1runtime_1_1_description.html" title="Description of an ID to data variant map.">Description</a>() {}</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            </div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">   80</a></span>&#160;            <span class="keyword">const</span> std::string &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a724c1639e30ce4122945997b13dd9dc3">title</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_title; }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#af7b6517bb46092d9bd4801f991fba47e">   83</a></span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#af7b6517bb46092d9bd4801f991fba47e">id</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_id; }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a84f13c9b5602a28841f482a70d25de87">   86</a></span>&#160;            <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a> &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a84f13c9b5602a28841f482a70d25de87">variant</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_variant; }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a8e740835486b40cce7c198b88e23001f">   89</a></span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#a8e740835486b40cce7c198b88e23001f">setTitle</a>(<span class="keyword">const</span> std::string &amp; title) { m_title = title; }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a080cfc6f94494380cb127c9c53c7a8d6">   92</a></span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a080cfc6f94494380cb127c9c53c7a8d6">max</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> NONE; }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#ada396b976991f75fe0b430c2ea540b4a">   95</a></span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#ada396b976991f75fe0b430c2ea540b4a">min</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> NONE; }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            </div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a6dca697069fb31a8c252bd09e8ebcf5f">  101</a></span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_data.html" title="Abstract data object.">Data</a>&amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a6dca697069fb31a8c252bd09e8ebcf5f">step</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> NONE; }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a7739357e2c17a82dbd871c7d6bc7e717">  104</a></span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> std::vector&lt;EnumDescription&gt; &amp; <a class="code" href="classstromx_1_1runtime_1_1_description.html#a7739357e2c17a82dbd871c7d6bc7e717">descriptions</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> NO_DESCRIPTIONS; }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            </div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a2c2a546bbc3969410256074b4659a0dc">  110</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#a2c2a546bbc3969410256074b4659a0dc">rows</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> 0; }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="classstromx_1_1runtime_1_1_description.html#a1b9cf0cd0d49a91b61b471e13b49ff9d">  116</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classstromx_1_1runtime_1_1_description.html#a1b9cf0cd0d49a91b61b471e13b49ff9d">cols</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> 0; }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;EnumDescription&gt; NO_DESCRIPTIONS;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classstromx_1_1runtime_1_1_none.html" title="Undefined and empty data object.">None</a> NONE;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            std::string m_title;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_id;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <a class="code" href="classstromx_1_1runtime_1_1_data_variant.html" title="Description of a data variant.">DataVariant</a> m_variant;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        };</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#endif // STROMX_RUNTIME_DESCRIPTION_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
