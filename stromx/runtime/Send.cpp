@@ -38,7 +38,7 @@ namespace stromx
         const unsigned int Send::MAX_PORT = 65535;
         
         Send::Send()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupParameters(), setupProperties()),
             m_port(MIN_PORT),
             m_server(0)
         {

@@ -193,6 +193,7 @@ namespace stromx
                     const std::string & package,
                     const Version & version,
                     const OperatorProperties & properties = OperatorProperties());
+            
             /**
              * Initializes an operator kernel. Must only be called from
              * OperatorKernel::initialize() and overloads of this function
@@ -211,13 +212,10 @@ namespace stromx
              *                   manually deleted. Note that adding parameters which 
              *                   should be edited before initialization at this stage does
              *                   not make any sense but should be done in the constructor.
-             * 
-             * \param properties Optionally, the properties of this operator.
              */
             virtual void initialize(const std::vector<const Description*>& inputs,
                                     const std::vector<const Description*>& outputs,
-                                    const std::vector<const Parameter*>& parameters,
-                                    const OperatorProperties & properties = OperatorProperties());
+                                    const std::vector<const Parameter*>& parameters);
             
             /**
              * Returns the parameter \c id.

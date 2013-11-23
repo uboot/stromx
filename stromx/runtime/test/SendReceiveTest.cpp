@@ -54,7 +54,6 @@ namespace stromx
         {
             DataContainer in(new UInt32(2));
             m_send->setInputData(Send::INPUT, in);
-            m_send->setInputData(Send::INPUT, in);
             
             m_factory->registerData(new UInt32);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);

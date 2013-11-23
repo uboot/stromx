@@ -56,7 +56,6 @@ namespace stromx
         {
             DataContainer in(new Image("lenna.jpg"));
             m_send->setInputData(Send::INPUT, in);
-            m_send->setInputData(Send::INPUT, in);
             
             m_factory->registerData(new Image);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);
@@ -71,7 +70,6 @@ namespace stromx
         {
             DataContainer in(new Image("lenna_bw.jpg"));
             m_send->setInputData(Send::INPUT, in);
-            m_send->setInputData(Send::INPUT, in);
             
             m_factory->registerData(new Image);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);
@@ -85,7 +83,6 @@ namespace stromx
         void cvsupport::SendReceiveTest::testSendDoubleMatrix()
         {
             DataContainer in(new Matrix("double_matrix.npy"));
-            m_send->setInputData(Send::INPUT, in);
             m_send->setInputData(Send::INPUT, in);
             
             m_factory->registerData(new Matrix);

@@ -358,6 +358,13 @@ namespace stromx
                 
                 m_dataCond.notify_all();
                 m_inputMap.set(id, data);
+                
+                // if this is a greedy operator try to execute it immediately
+                if (m_op->properties().isGreedy)
+                {
+                   lock.unlock();
+                   tryExecute();
+                }
             }
             
             void SynchronizedOperatorKernel::clearOutputData(unsigned int id)

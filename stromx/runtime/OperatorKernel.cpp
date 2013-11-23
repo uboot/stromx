@@ -132,8 +132,7 @@ namespace stromx
         
         void OperatorKernel::initialize(const std::vector<const runtime::Description*>& inputs,
                                         const std::vector<const runtime::Description*>& outputs,
-                                        const std::vector<const runtime::Parameter*>& parameters,
-                                        const OperatorProperties & properties)
+                                        const std::vector<const runtime::Parameter*>& parameters)
         {
             validateInputs(inputs);
             validateOutputs(outputs);
@@ -167,8 +166,6 @@ namespace stromx
                 m_parameterMap[(*iter)->id()] = *iter;
                 m_activeParameters.insert((*iter)->id());
             }
-            
-            m_properties = properties;
         }
         
         void OperatorKernel::deinitialize()
