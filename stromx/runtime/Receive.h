@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_CLIENT_H
-#define STROMX_RUNTIME_CLIENT_H
+#ifndef STROMX_RUNTIME_RECEIVE_H
+#define STROMX_RUNTIME_RECEIVE_H
 
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/String.h"
@@ -24,8 +24,13 @@ namespace stromx
 {
     namespace runtime
     {
+        namespace impl
+        {
+            class Client;
+        }
+        
         /** \brief Distributes input data to TCP clients. */
-        class STROMX_RUNTIME_API Client : public OperatorKernel
+        class STROMX_RUNTIME_API Receive : public OperatorKernel
         {
         public:
             enum OutputId
@@ -39,12 +44,15 @@ namespace stromx
                 PORT
             };
             
-            Client();
+            Receive();
+            virtual ~Receive();
             
-            virtual OperatorKernel* clone() const { return new Client; }
+            virtual OperatorKernel* clone() const { return new Receive; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();
+            virtual void activate();
+            virtual void deactivate();
             virtual void execute(DataProvider& provider);
             
         private:
@@ -63,8 +71,10 @@ namespace stromx
             
             String m_url;
             UInt16 m_port;
+            
+            impl::Client* m_client;
         };
     }
 }
 
-#endif // STROMX_RUNTIME_CLIENT_H
+#endif // STROMX_RUNTIME_RECEIVE_H

@@ -20,6 +20,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
+#include "stromx/runtime/impl/Server.h"
+
 namespace stromx
 {
     namespace runtime
@@ -29,20 +31,30 @@ namespace stromx
         class ServerTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ServerTest);
-            CPPUNIT_TEST(testTransmit);
+            CPPUNIT_TEST (testConstructor);
+            CPPUNIT_TEST (testConnect); 
+            CPPUNIT_TEST (testConnectFails);
+            CPPUNIT_TEST (testReceive);  
+            CPPUNIT_TEST (testReceiveMultipleData);
+            CPPUNIT_TEST (testConstructorFails);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ServerTest() : m_operator(0) {}
+            ServerTest() : m_server(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testTransmit();
+            void testConstructor();
+            void testConnect();
+            void testConnectFails();
+            void testReceive();
+            void testReceiveMultipleData();
+            void testConstructorFails();
                 
-        private:
-            OperatorTester* m_operator;
+        private:            
+            impl::Server* m_server;
         };
     }
 }

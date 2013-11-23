@@ -343,7 +343,7 @@ namespace stromx
                     {
                         lock.unlock();
                         
-                        // this section might throw an InterruptionException which will fall
+                        // this section might throw an Interrupt exception which will fall
                         // through to the calling function
                         success = tryExecute();
                         

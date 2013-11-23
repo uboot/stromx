@@ -25,12 +25,32 @@ namespace stromx
 {
     namespace runtime
     {
+       class Version;
+    }
+}
+
+namespace boost
+{
+    namespace serialization
+    {
+        template<class Archive>
+        void serialize(Archive & ar, stromx::runtime::Version & v, const unsigned int classVersion);
+    }
+}
+
+namespace stromx
+{
+    namespace runtime
+    {
         /** \brief A version of an operator or data type. */
         class Version
         {
             friend STROMX_RUNTIME_API bool operator== (const Version & lhs, const Version & rhs);
             friend STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Version & version);
             friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
+            
+            template<class Archive>
+            friend void boost::serialization::serialize(Archive & ar, stromx::runtime::Version & v, const unsigned int classVersion);
             
         public:
             /** Constructs a version object 0.0.0. */

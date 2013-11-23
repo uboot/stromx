@@ -20,29 +20,44 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
+#include <boost/asio.hpp>
+
 namespace stromx
 {
     namespace runtime
     {
-        class OperatorKernel;
+        namespace impl
+        {
+            class Client;
+        }
         
         class ClientTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ClientTest);
-            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST (testNoConnection);
+            CPPUNIT_TEST (testConnection);
+            CPPUNIT_TEST (testReceive);
+            CPPUNIT_TEST (testReceiveMultipleData);
+            CPPUNIT_TEST (testReceiveClosedConnection);
+            CPPUNIT_TEST (testStop);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
-            ClientTest() : m_operator(0) {}
+            ClientTest() : m_client(0) {}
             
             void setUp();
             void tearDown();
 
         protected:
-            void testExecute();
+            void testNoConnection();
+            void testConnection();
+            void testReceive();
+            void testReceiveMultipleData();
+            void testReceiveClosedConnection();
+            void testStop();
                 
-        private:
-            runtime::OperatorKernel* m_operator;
+        private:            
+            impl::Client* m_client;
         };
     }
 }

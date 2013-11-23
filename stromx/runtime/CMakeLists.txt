@@ -8,17 +8,19 @@ if(BUILD_TESTS)
 endif()
    
 set(SOURCES
+    impl/Client.cpp
     impl/DataContainerImpl.cpp
     impl/ReadAccessImpl.cpp
     impl/RecycleAccessImpl.cpp
     impl/WriteAccessImpl.cpp
     impl/Id2DataMap.cpp
     impl/InputNode.cpp
+    impl/SerializationHeader.cpp
     impl/SynchronizedOperatorKernel.cpp
     impl/OutputNode.cpp
+    impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
-    Client.cpp
     Connector.cpp
     ConstDataRef.cpp
     Counter.cpp
@@ -49,10 +51,11 @@ set(SOURCES
     Queue.cpp
     Primitive.cpp
     RecycleAccess.cpp
-    Server.cpp
+    Send.cpp
     Stream.cpp
     String.cpp
     SortInputsAlgorithm.cpp
+    Receive.cpp
     Runtime.cpp
     Thread.cpp
     Trigger.cpp

@@ -263,6 +263,22 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("5 500 512"), output.getText());
         }
         
+        void ImageTest::testSerializeAfterInitialize()
+        {
+            m_image = new Image(200, 1, runtime::Image::MONO_8);
+            m_image->initializeImage(5, 10, 15, m_image->data(), runtime::Image::RGB_24);
+            
+            {
+                runtime::DirectoryFileOutput output(".");
+                output.initialize("ImageTest_testSerializeAfterInitialize");
+                m_image->serialize(output);
+            }
+            
+            Image result("ImageTest_testSerializeAfterInitialize.png");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(5), result.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(10), result.height());
+        }
+        
         void ImageTest::testSerializeEmpty()
         {
             m_image = new Image(100, 0, runtime::Image::RGB_24);
@@ -273,7 +289,18 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_image->serialize(output));
             CPPUNIT_ASSERT_EQUAL(std::string("3 100 0"), output.getText());
         }
+        
+        void ImageTest::testSaveAfterInitialize()
+        {
+            m_image = new Image(100, 200, runtime::Image::RGB_24);
+            m_image->initializeImage(10, 20, 30, m_image->data(), runtime::Image::RGB_24);
+            m_image->save("ImageTest_testSaveAfterInitialize.png");
             
+            Image result("ImageTest_testSaveAfterInitialize.png");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(10), result.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(20), result.height());
+        }
+         
         void ImageTest::testDeserialize()
         {
             m_image = new Image();

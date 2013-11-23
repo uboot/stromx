@@ -18,17 +18,18 @@
 
 #include <cppunit/TestAssert.h>
 
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 
-#include "stromx/runtime/OperatorTester.h"
-#include "stromx/runtime/Server.h"
+#include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Primitive.h"
+#include <stromx/runtime/impl/SerializationHeader.h>
+#include "stromx/runtime/impl/Server.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
-
-namespace 
-{
-}
 
 namespace stromx
 {
@@ -36,48 +37,182 @@ namespace stromx
     {
         namespace 
         {
-            void startServer(Operator* op)
+            using namespace boost::asio;
+            
+            void connectToServer(io_service & ioService, ip::tcp::socket & socket)
             {
-                DataContainer data(new UInt32(2));
-                op->setInputData(Server::INPUT, data);
+                ip::tcp::resolver resolver(ioService);
+                ip::tcp::resolver::query query("localhost", "49152");
+                ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+
+                boost::asio::connect(socket, endpoint_iterator);
+            }
+            
+            unsigned int sizeFromBuffer(const char* data)
+            {
+                std::istringstream is(std::string(data, impl::SerializationHeader::NUM_SIZE_DIGITS));
+                unsigned int size;
+                is >> std::hex >> size;
+                return size;
+            }
+            
+            const impl::SerializationHeader receive(ip::tcp::socket& socket, std::string & text, std::string & file)
+            {
+                boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> headerSizeBuffer, textSizeBuffer, fileSizeBuffer;
+                
+                std::vector<mutable_buffer> sizeBuffers;
+                sizeBuffers.push_back(buffer(headerSizeBuffer));
+                sizeBuffers.push_back(buffer(textSizeBuffer));
+                sizeBuffers.push_back(buffer(fileSizeBuffer));
+                
+                read(socket, sizeBuffers);
+                
+                unsigned int headerSize = sizeFromBuffer(headerSizeBuffer.data());
+                unsigned int textSize = sizeFromBuffer(textSizeBuffer.data());
+                unsigned int fileSize = sizeFromBuffer(fileSizeBuffer.data());
+                
+                std::vector<char> headerData(headerSize);
+                std::vector<char> textData(textSize);
+                std::vector<char> fileData(fileSize);
+                
+                std::vector<mutable_buffer> dataBuffers;
+                dataBuffers.push_back(buffer(headerData));
+                dataBuffers.push_back(buffer(textData));
+                dataBuffers.push_back(buffer(fileData));
+                
+                read(socket, dataBuffers);
+                
+                text = std::string(textData.data(), textData.size());
+                file = std::string(fileData.data(), fileData.size());
+                
+                impl::SerializationHeader header;
+                std::istringstream headerStream(std::string(headerData.data(), headerData.size()));
+                boost::archive::text_iarchive headerArchive(headerStream);
+                headerArchive >> header;
+                
+                return header;
+            }
+            
+            const impl::SerializationHeader uintHeader()
+            {
+                impl::SerializationHeader header;
+                
+                header.serverVersion = Version(0, 1, 0);
+                header.package = "Runtime";
+                header.type = "UInt32";
+                header.version = Version(0, 1, 0);
+                
+                return header;
             }
         }
     
         void ServerTest::setUp()
         {
-            m_operator = new OperatorTester(new Server());
+            m_server = new impl::Server(49152);
             
-            DataContainer data(new UInt32(1));
-            m_operator->initialize();
-            m_operator->activate();
-            m_operator->setInputData(Server::INPUT, data);
-        }
-
-        void ServerTest::testTransmit()
-        {
-            boost::thread t(startServer, m_operator);
-            boost::this_thread::sleep(boost::posix_time::microsec(300));
-            
-            using namespace boost::asio;
-            
-            io_service io_service;
-            ip::tcp::resolver resolver(io_service);
-            ip::tcp::resolver::query query("localhost", "49152");
-            ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
-        
-            ip::tcp::socket socket(io_service);
-            connect(socket, endpoint_iterator);
-            
-            boost::array<char, 128> buf;
-            size_t len = socket.read_some(boost::asio::buffer(buf));
-            t.join();
-            
-//             CPPUNIT_ASSERT_EQUAL(size_t(38), len);
+            // wait a bit to increase the chance that the requested socket is available
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
 
         void ServerTest::tearDown()
         {
-            delete m_operator;
+            if (m_server)
+            {
+                m_server->stop();
+                m_server->join();
+            }
+            delete m_server;
+        }
+        
+        void ServerTest::testConstructor()
+        {
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
+        }
+        
+        void ServerTest::testConnectFails()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+
+            ip::tcp::resolver resolver(ioService);
+            ip::tcp::resolver::query query("localhost", "50000");
+            ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+
+            CPPUNIT_ASSERT_THROW(boost::asio::connect(socket, endpoint_iterator), boost::system::system_error);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_server->numConnections());
+        }
+                
+        void ServerTest::testConnect()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+
+            ip::tcp::resolver resolver(ioService);
+            ip::tcp::resolver::query query("localhost", "49152");
+            ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+
+            CPPUNIT_ASSERT_NO_THROW(boost::asio::connect(socket, endpoint_iterator));
+            
+            m_server->waitForNumConnections(1);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_server->numConnections());
+        }
+        
+        void ServerTest::testConstructorFails()
+        {
+            CPPUNIT_ASSERT_THROW(impl::Server(49152), boost::system::system_error);
+        }
+        
+        void ServerTest::testReceive()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+            connectToServer(ioService, socket);
+            
+            DataContainer data(new UInt32(2));
+            m_server->send(data);
+            
+            std::string text;
+            std::string file;
+            impl::SerializationHeader header = receive(socket, text, file);
+            
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("2"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
+        }
+        
+        void ServerTest::testReceiveMultipleData()
+        {
+            using namespace boost::asio;
+            
+            io_service ioService;
+            ip::tcp::socket socket(ioService);
+            connectToServer(ioService, socket);
+            
+            DataContainer data2(new UInt32(2));
+            DataContainer data10(new UInt32(10));
+            
+            m_server->send(data2);
+            m_server->send(data10);
+            
+            std::string text;
+            std::string file;
+            impl::SerializationHeader header;
+            
+            header = receive(socket, text, file);
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("2"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
+            
+            header = receive(socket, text, file);
+            CPPUNIT_ASSERT_EQUAL(uintHeader(), header);
+            CPPUNIT_ASSERT_EQUAL(std::string("10"), text);
+            CPPUNIT_ASSERT_EQUAL(std::string(), file);
         }
     }
 }

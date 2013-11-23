@@ -127,6 +127,12 @@ namespace stromx
             virtual void serialize(runtime::OutputProvider & output) const;
             virtual void deserialize(runtime::InputProvider & input, const stromx::runtime::Version & version);
             
+            virtual void initializeImage(const unsigned int width, 
+                                         const unsigned int height, 
+                                         const unsigned int stride, 
+                                         uint8_t* data, 
+                                         const PixelType pixelType);
+            
             /** 
              * Reads the image \c filename. The data of the current image is replaced 
              * by the data of the new image.
