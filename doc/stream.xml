@@ -2,9 +2,9 @@
 
 <!-- validate: xmllint \-\-schema stromx.xsd \-\-noout stream.xml -->
 
-<Stromx version="0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stromx.xsd">
+<Stromx version="0.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stromx.xsd">
     <Stream name="Sample stream">
-        <Operator id="0" package="Example" type="ConstImage" version="0.1.0" name="Source image">
+        <Operator id="0" package="Example" type="ConstImage" version="0.1.0" name="Source image" x="50.0" y="150.5">
             <Parameter id="0">
                 <Data type="Image" package="Example" version="0.1.0" file="lenna.png"/>
             </Parameter>
@@ -48,7 +48,8 @@
             </Parameter>
             <Input id="0" operator="2" output="0"/>
         </Operator>
-        <Thread name="First processing thread">
+        <Operator id="4" package="Runtime" type="Dump" version="0.1.0" isInitialized="false" x="100" y="200"/>
+        <Thread name="First processing thread" color="#be202e">
             <InputConnector operator="1" input="0"/>
             <InputConnector operator="2" input="0"/>
         </Thread> 

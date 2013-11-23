@@ -31,6 +31,13 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="InputConnector"/>
       </xs:sequence>
       <xs:attribute name="name"/>
+      <xs:attribute name="color">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+           <xs:pattern value="#([0-9a-f]{1,2}){3}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="Operator">
@@ -44,6 +51,9 @@
       <xs:attribute name="type" use="required"/>
       <xs:attribute name="name"/>
       <xs:attribute name="version" use="required"/>
+      <xs:attribute name="isInitialized" type="xs:boolean"/>
+      <xs:attribute name="x" type="xs:decimal"/>
+      <xs:attribute name="y" type="xs:decimal"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="Parameter">
