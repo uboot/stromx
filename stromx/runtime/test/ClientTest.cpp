@@ -25,7 +25,7 @@
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/impl/Client.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
+// CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
 
 namespace stromx
 {
