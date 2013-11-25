@@ -29,7 +29,7 @@ namespace stromx
             class Network;
         }
         class Thread;
-        class Operator;
+        class OperatorTester;
         
         class ThreadTest : public CPPUNIT_NS :: TestFixture
         {
@@ -58,8 +58,8 @@ namespace stromx
         private:
             impl::Network* m_network;
             Thread* m_thread;
-            Operator* m_op1;
-            Operator* m_op2;
+            OperatorTester* m_op1;
+            OperatorTester* m_op2;
         };
     }
 }

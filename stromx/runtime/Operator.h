@@ -70,6 +70,7 @@ namespace stromx
             friend class OperatorTester;
             friend class OutputNodeTest;
             friend class ThreadImplTest;
+            friend class Stream;
             friend class Thread;
             friend class impl::Network;
             
@@ -203,23 +204,6 @@ namespace stromx
              */
             void clearOutputData(const unsigned int id);
             
-            /** 
-             * Initializes the operator if its status is NONE.
-             * After a successful call the status is INITIALIZED and can
-             * never be set back to NONE.
-             * 
-             * \throws WrongState If the status is not NONE.
-             */
-            void initialize();
-            
-            /** 
-             * Deinitializes the operator if its status is INITIALIZED.
-             * After a successful call the status is NONE.
-             * 
-             * \throws WrongState If the status is not INITIALIZED.
-             */
-            void deinitialize();
-            
             /**
              * Adds an observer which is called whenever the data at an input 
              * or output connector changes.
@@ -263,11 +247,10 @@ namespace stromx
             
             Operator(const Operator& op);
             
+            void initialize();
+            void deinitialize();
             impl::InputNode* getInputNode(const unsigned int id) const;
             impl::OutputNode* getOutputNode(const unsigned int id) const;
-            bool isPartOfStream() const { return m_isPartOfStream; }
-            void addToStream();
-            void removeFromStream();
             void activate();
             void deactivate();
             void observeInput(const unsigned int id, const DataContainer & data) const;
@@ -281,7 +264,6 @@ namespace stromx
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
             MutexHandle*  m_observerMutex;
-            bool m_isPartOfStream;
         };
     }
 }

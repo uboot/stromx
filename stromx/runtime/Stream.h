@@ -127,6 +127,22 @@ namespace stromx
              */
             void removeOperator(Operator* const op);
             
+            /** 
+             * Initializes the operator \c op if its status is Operator::NONE.
+             * After a successful call the status is Operator::INITIALIZED.
+             * 
+             * \throws WrongState If the status of \c op is not Operator::NONE.
+             */
+            void initializeOperator(Operator* const op);
+            
+            /** 
+             * Deinitializes the operator \c op if its status is Operator::INITIALIZED.
+             * After a successful call the status is Operator::NONE.
+             * 
+             * \throws WrongState If the status of \c op is not Operator::INITIALIZED.
+             */
+            void deinitializeOperator(Operator* const op);
+            
             /**
              * Creates a thread, adds it to the stream and returns a pointer to it.
              * 
@@ -230,6 +246,9 @@ namespace stromx
             class InternalObserver;
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
+            bool isPartOfStream(const Operator* const op);
+            bool isPartOfInitializedStream(const Operator* const op);
+            bool isPartOfUninitializedStream(const Operator* const op);
             
             std::string m_name; 
             impl::Network* const m_network;
@@ -239,6 +258,8 @@ namespace stromx
             Status m_status;
             MutexHandle*  m_delayMutex;
             unsigned int m_delay;
+            std::set<Operator*> m_uninitializedOperators;
+            std::vector<Operator*> m_operators;
         };
     }
 }

@@ -109,8 +109,8 @@ namespace stromx
                 iter != ops.end();
                 ++iter)
             {
+                m_stream->deinitializeOperator(*iter);
                 m_stream->removeOperator(*iter);
-                (*iter)->deinitialize();
             }
             
             OperatorKernel::deinitialize();
@@ -123,16 +123,6 @@ namespace stromx
             m_pixelType->setParameter(ConvertPixelType::DATA_FLOW,
                                       runtime::Enum(ConvertPixelType::MANUAL));
             
-            m_input->initialize();
-            m_adjustRgbChannels->initialize();
-            m_clip->initialize();
-            m_buffer->initialize();
-            m_period->initialize();
-            m_trigger->initialize();
-            m_pixelType->initialize();
-            m_imageQueue->initialize();
-            m_indexQueue->initialize();
-            
             m_stream->addOperator(m_input);
             m_stream->addOperator(m_adjustRgbChannels);
             m_stream->addOperator(m_clip);
@@ -142,6 +132,16 @@ namespace stromx
             m_stream->addOperator(m_pixelType);
             m_stream->addOperator(m_imageQueue);
             m_stream->addOperator(m_indexQueue);
+            
+            m_stream->initializeOperator(m_input);
+            m_stream->initializeOperator(m_adjustRgbChannels);
+            m_stream->initializeOperator(m_clip);
+            m_stream->initializeOperator(m_buffer);
+            m_stream->initializeOperator(m_period);
+            m_stream->initializeOperator(m_trigger);
+            m_stream->initializeOperator(m_pixelType);
+            m_stream->initializeOperator(m_imageQueue);
+            m_stream->initializeOperator(m_indexQueue);
             
             m_stream->connect(m_input, ConstImage::OUTPUT, m_adjustRgbChannels, AdjustRgbChannels::INPUT);
             m_stream->connect(m_adjustRgbChannels, AdjustRgbChannels::OUTPUT, m_clip, Clip::INPUT);

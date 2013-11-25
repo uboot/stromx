@@ -34,7 +34,7 @@ namespace stromx
         
         TestOperator::TestOperator()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),
-            m_sleepTime(100),
+            m_sleepTime(300),
             m_bufferSize(1000),
             m_throwException(false),
             m_numExecutes(0)

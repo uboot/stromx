@@ -36,8 +36,6 @@ namespace stromx
             CPPUNIT_TEST (testSetInputData);
             CPPUNIT_TEST (testGetOutputData);
             CPPUNIT_TEST (testClearOutputData);
-            CPPUNIT_TEST (testAddToStream);
-            CPPUNIT_TEST (testRemoveFromStream);
             CPPUNIT_TEST (testInitialize);
             CPPUNIT_TEST (testDeinitialize);
             CPPUNIT_TEST (testActivate);
@@ -67,8 +65,6 @@ namespace stromx
             void testSetInputData();
             void testGetOutputData();
             void testClearOutputData();
-            void testAddToStream();
-            void testRemoveFromStream();
             void testInitialize();
             void testDeinitialize();
             void testActivate();

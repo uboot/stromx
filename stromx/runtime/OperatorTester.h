@@ -31,6 +31,8 @@ namespace stromx
             : Operator(kernel)
             {}
             
+            void initialize() { Operator::initialize(); }
+            void deinitialize()  { Operator::deinitialize(); }
             void activate() { Operator::activate(); }
             void deactivate()  { Operator::deactivate(); }
         };

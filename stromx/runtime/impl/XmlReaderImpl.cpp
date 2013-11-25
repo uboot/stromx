@@ -553,8 +553,9 @@ namespace stromx
                     m_id2DataMap.erase(idDataPair);
                 }
                 
-                // initialize
-                op->initialize();
+                // add to stream an initialize
+                m_stream->addOperator(op);
+                m_stream->initializeOperator(op);
             
                 // set parameters after initialization
                 for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
@@ -580,8 +581,6 @@ namespace stromx
                 
                 if(! m_id2DataMap.empty())
                     throw XmlError("Not all parameters of operator '" + op->name() + "' could be set.");
-                
-                m_stream->addOperator(op);
             }
             
             void XmlReaderImpl::readOperatorInputs(DOMElement*const opElement)

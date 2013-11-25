@@ -20,6 +20,7 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/ExceptionObserver.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Registry.h"
 #include "stromx/runtime/Stream.h"
@@ -75,6 +76,14 @@ namespace stromx
         
         Stream::~Stream()
         {
+            for (std::set<Operator*>::iterator iter = m_uninitializedOperators.begin();
+                iter != m_uninitializedOperators.end();
+                ++iter) 
+            {
+                delete (*iter);
+            }
+            m_uninitializedOperators.clear();
+            
             for (std::vector<Thread*>::iterator iter = m_threads.begin();
                 iter != m_threads.end();
                 ++iter) 
@@ -89,7 +98,7 @@ namespace stromx
         
         const std::vector<Operator*>& Stream::operators() const
         { 
-            return m_network->operators();
+            return m_operators;
         }
         
         void Stream::start()
@@ -286,20 +295,65 @@ namespace stromx
         
         void Stream::addOperator(Operator* const op)
         {
-            if (m_status != INACTIVE)
-            {
-                throw WrongState("Stream object active. Cannot add operator to a running system.");
-            }
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
             
-            m_network->addOperator(op); 
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot add operator while the stream is active.");
+            
+            if (isPartOfStream(op))
+                throw WrongArgument("Operator has already been added to the stream.");
+            
+            m_uninitializedOperators.insert(op);
+            m_operators.push_back(op);
         }
         
         void Stream::removeOperator(Operator* const op)
         {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+            
             if (m_status != INACTIVE)
-            {
-                throw WrongState("Stream object active. Cannot remove operator from a running system.");
-            }
+                throw WrongState("Cannot remove operator while the stream is active.");
+            
+            if (! isPartOfStream(op))
+                throw WrongArgument("Operator is not part of the stream.");
+            
+            deinitializeOperator(op);
+            m_uninitializedOperators.erase(op);
+            
+            std::vector<Operator*>::iterator iter = 
+                std::find(m_operators.begin(), m_operators.end(), op);
+            
+            m_operators.erase(iter);
+        }
+        
+        void Stream::initializeOperator(Operator*const op)
+        {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+            
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot initialize operator while the stream is active.");
+            
+            if (! isPartOfStream(op))
+                throw WrongArgument("Operator is not part of the stream.");
+            
+            op->initialize();
+            m_network->addOperator(op); 
+            m_uninitializedOperators.erase(op);
+        }
+
+        void Stream::deinitializeOperator(Operator*const op)
+        {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+            
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot deinitialize operator while the stream is active.");
+            
+            if (isPartOfUninitializedStream(op))
+                return;
             
             m_network->removeOperator(op);
             
@@ -310,6 +364,8 @@ namespace stromx
                 (*iter)->removeOperator(op);
             }
             
+            op->deinitialize();
+            m_uninitializedOperators.insert(op);
         }
         
         const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
@@ -322,7 +378,7 @@ namespace stromx
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(! observer)
-                throw WrongArgument("Passed 0 as observer.");
+                throw WrongArgument("Observer must not be null.");
             
             m_observers.insert(observer);
         }
@@ -332,7 +388,7 @@ namespace stromx
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
             if(m_observers.erase(observer) != 1)
-                throw WrongArgument("Observer has not been added to operator.");
+                throw WrongArgument("Observer has not been added to stream.");
         }
                 
         void Stream::observeException(const ExceptionObserver::Phase phase, const OperatorError& ex, const Thread* const thread) const
@@ -352,6 +408,27 @@ namespace stromx
                     // catch all exceptions which are thrown while observing exceptions...
                 }
             }
+        }
+        
+        bool Stream::isPartOfStream(const Operator*const op)
+        {
+            return isPartOfInitializedStream(op) || isPartOfUninitializedStream(op);
+        }
+        
+        bool Stream::isPartOfInitializedStream(const Operator*const op)
+        {
+            std::vector<Operator*>::const_iterator iter = 
+                std::find(m_network->operators().begin(), m_network->operators().end(), op);
+            
+            return iter != m_network->operators().end();
+        }
+        
+        bool Stream::isPartOfUninitializedStream(const Operator*const op)
+        {
+            std::set<Operator*>::const_iterator iter = 
+                std::find(m_uninitializedOperators.begin(), m_uninitializedOperators.end(), op);
+            
+            return iter != m_uninitializedOperators.end();
         }
     }
 }

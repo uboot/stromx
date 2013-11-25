@@ -16,7 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Exception.h"
-#include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/Thread.h"
 #include "stromx/runtime/impl/Network.h"
 #include "stromx/runtime/test/TestOperator.h"
@@ -32,8 +32,8 @@ namespace stromx
         {
             m_network = new impl::Network();
             
-            m_op1 = new Operator(new TestOperator);
-            m_op2 = new Operator(new TestOperator);
+            m_op1 = new OperatorTester(new TestOperator);
+            m_op2 = new OperatorTester(new TestOperator);
             
             m_op1->initialize();
             m_op2->initialize();
@@ -41,14 +41,14 @@ namespace stromx
             m_network->addOperator(m_op1);
             m_network->addOperator(m_op2);
             
-            m_thread =  new Thread(m_network);
+            m_thread = new Thread(m_network);
             m_thread->addInput(m_op1, TestOperator::INPUT_1);
             m_thread->addInput(m_op2, TestOperator::INPUT_1);
         }
         
         void ThreadTest::testAddInput()
         {
-            Operator* op = new Operator(new TestOperator);
+            OperatorTester* op = new OperatorTester(new TestOperator);
             op->initialize();
             
             CPPUNIT_ASSERT_THROW(m_thread->addInput(op, TestOperator::INPUT_1), WrongArgument);
@@ -61,7 +61,7 @@ namespace stromx
 
         void ThreadTest::testInsertInput()
         {
-            Operator* op = new Operator(new TestOperator);
+            OperatorTester* op = new OperatorTester(new TestOperator);
             op->initialize();
             
             CPPUNIT_ASSERT_THROW(m_thread->insertInput(1, op, TestOperator::INPUT_1), WrongArgument);

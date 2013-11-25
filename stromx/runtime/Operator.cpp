@@ -84,8 +84,7 @@ namespace stromx
           : m_inputObserver(0),
             m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel)),
-            m_observerMutex(new MutexHandle()),
-            m_isPartOfStream(false)
+            m_observerMutex(new MutexHandle())
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
             m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);
@@ -336,28 +335,6 @@ namespace stromx
                     // catch all exceptions which are thrown by the observer
                 }
             }
-        }
-        
-        void Operator::addToStream()
-        {
-            if(m_isPartOfStream)
-                throw WrongState("Operator has already been added to a stream.");
-            
-            if(status() != INITIALIZED)
-                throw WrongState("Operator must be initialized to be added to a stream.");
-            
-            m_isPartOfStream = true;
-        }
-
-        void Operator::removeFromStream()
-        {
-            if(! m_isPartOfStream)
-                throw WrongState("Operator has not been added to a stream.");
-            
-            if(status() != INITIALIZED)
-                throw WrongState("Operator must be initialized but not active to be removed from a stream.");
-            
-            m_isPartOfStream = false;
         }
         
         void Operator::setFactory(const AbstractFactory*const factory)

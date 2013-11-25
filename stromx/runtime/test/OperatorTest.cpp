@@ -269,7 +269,7 @@ namespace stromx
 
         void OperatorTest::testGetParameterNoTimeout()
         {
-            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter(TestOperator::SLEEP_TIME, 100));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->getParameter(TestOperator::SLEEP_TIME, 300));
         }
         
         void OperatorTest::testGetParameterTimeout()
@@ -413,30 +413,6 @@ namespace stromx
         {
             m_lastConnector = connector;
             m_lastData = data;
-        }
-        
-        void OperatorTest::testAddToStream()
-        {
-            Operator op(new TestOperator);
-            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
-            
-            op.initialize();
-            CPPUNIT_ASSERT_NO_THROW(op.addToStream());
-            CPPUNIT_ASSERT_THROW(op.addToStream(), WrongState);
-        }
-
-        void OperatorTest::testRemoveFromStream()
-        {
-            Operator op(new TestOperator);
-            
-            op.initialize();
-            op.addToStream();
-            op.activate();
-            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
-            
-            op.deactivate();
-            CPPUNIT_ASSERT_NO_THROW(op.removeFromStream());
-            CPPUNIT_ASSERT_THROW(op.removeFromStream(), WrongState);
         }
         
         void OperatorTest::testSetFactory()
