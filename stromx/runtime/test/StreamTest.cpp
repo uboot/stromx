@@ -160,9 +160,6 @@ namespace stromx
             m_stream->addOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
             
-            op = m_stream->operators()[0];
-            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
-            
             // delete removed operator
             delete op;
         }

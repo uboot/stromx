@@ -53,7 +53,13 @@ namespace stromx
         <xs:element minOccurs=\"0\" ref=\"Stream\"/> \
         <xs:element minOccurs=\"0\" ref=\"Parameters\"/> \
       </xs:sequence> \
-      <xs:attribute name=\"version\" use=\"required\"/> \
+      <xs:attribute name=\"version\" use=\"required\"> \
+        <xs:simpleType> \
+          <xs:restriction base=\"xs:string\"> \
+           <xs:pattern value=\"[0-9]+.[0-9]+.[0-9]+\"/> \
+          </xs:restriction> \
+        </xs:simpleType> \
+      </xs:attribute> \
     </xs:complexType> \
   </xs:element> \
   <xs:element name=\"Stream\"> \
@@ -78,6 +84,13 @@ namespace stromx
         <xs:element minOccurs=\"0\" maxOccurs=\"unbounded\" ref=\"InputConnector\"/> \
       </xs:sequence> \
       <xs:attribute name=\"name\"/> \
+      <xs:attribute name=\"color\"> \
+        <xs:simpleType> \
+          <xs:restriction base=\"xs:string\"> \
+           <xs:pattern value=\"#([0-9a-f]{1,2}){3}\"/> \
+          </xs:restriction> \
+        </xs:simpleType> \
+      </xs:attribute> \
     </xs:complexType> \
   </xs:element> \
   <xs:element name=\"Operator\"> \
@@ -90,7 +103,16 @@ namespace stromx
       <xs:attribute name=\"package\" use=\"required\"/> \
       <xs:attribute name=\"type\" use=\"required\"/> \
       <xs:attribute name=\"name\"/> \
-      <xs:attribute name=\"version\" use=\"required\"/> \
+      <xs:attribute name=\"version\" use=\"required\"> \
+        <xs:simpleType> \
+          <xs:restriction base=\"xs:string\"> \
+           <xs:pattern value=\"[0-9]+.[0-9]+.[0-9]+\"/> \
+          </xs:restriction> \
+        </xs:simpleType> \
+      </xs:attribute> \
+      <xs:attribute name=\"isInitialized\" type=\"xs:boolean\"/> \
+      <xs:attribute name=\"x\" type=\"xs:decimal\"/> \
+      <xs:attribute name=\"y\" type=\"xs:decimal\"/> \
     </xs:complexType> \
   </xs:element> \
   <xs:element name=\"Parameter\"> \
@@ -111,7 +133,13 @@ namespace stromx
     <xs:complexType mixed=\"true\"> \
       <xs:attribute name=\"type\" use=\"required\"/> \
       <xs:attribute name=\"package\" use=\"required\"/> \
-      <xs:attribute name=\"version\" use=\"required\"/> \
+      <xs:attribute name=\"version\" use=\"required\"> \
+        <xs:simpleType> \
+          <xs:restriction base=\"xs:string\"> \
+           <xs:pattern value=\"[0-9]+.[0-9]+.[0-9]+\"/> \
+          </xs:restriction> \
+        </xs:simpleType> \
+      </xs:attribute> \
       <xs:attribute name=\"file\"/> \
     </xs:complexType> \
   </xs:element> \
