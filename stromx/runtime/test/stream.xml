@@ -36,6 +36,11 @@
             <Input id="0" operator="1" output="2"/>
             <Input id="1" operator="1" output="3"/>
         </Operator>
+        <Operator id="3" package="TestPackage" type="TestOperator" version="0.1.0" isInitialized="false" name="Number 4">
+            <Parameter id="0">
+                <Data type="UInt32" package="Runtime" version="0.1.0">8000</Data>
+            </Parameter>
+        </Operator>
         <Thread name="Processing thread">
             <InputConnector operator="1" input="0"/>
             <InputConnector operator="1" input="1"/>

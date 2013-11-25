@@ -82,7 +82,7 @@ namespace stromx
         
         void ZipFileOutputTest::testNoAccess()
         {
-            ZipFileOutput output("/ZipFileOutputTest_testNoAccess.zip");
+            ZipFileOutput output("/root/test/ZipFileOutputTest_testNoAccess.zip");
             output.initialize("testFile");
             output.openFile("bin", OutputProvider::BINARY);
             output.file() << 5;

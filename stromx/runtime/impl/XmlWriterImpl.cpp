@@ -336,9 +336,14 @@ namespace stromx
                     verAttr->setValue(Str2Xml(str.c_str()));
                     opElement->setAttributeNode(verAttr);
                     
+                    //Create attribute version of current operator op (one for each operator possible)
+                    DOMAttr* initAttr = m_doc->createAttribute(Str2Xml("isInitialized"));
+                    initAttr->setValue(Str2Xml((*iter_op)->status() == Operator::NONE ? "false" : "true"));
+                    opElement->setAttributeNode(initAttr);
+                    
                     createParameters((*iter_op), opElement);
                     
-                    if (m_stream != 0)
+                    if (m_stream != 0 && (*iter_op)->status() != Operator::NONE)
                     {
                         createInputs((*iter_op), opElement);
                     }
@@ -356,7 +361,7 @@ namespace stromx
                 m_output = &output;
                 m_filename = basename;
                 
-                std::vector<const Operator*> operators(m_stream->initializedOperators().begin(), m_stream->initializedOperators().end());
+                std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
                 m_opList = operators;
                 
                 try

@@ -538,6 +538,7 @@ namespace stromx
                 Xml2Str idStr(opElement->getAttribute(Str2Xml("id")));
                 Xml2Str type(opElement->getAttribute(Str2Xml("type")));
                 Xml2Str package(opElement->getAttribute(Str2Xml("package")));
+                Xml2Str isInitialized(opElement->getAttribute(Str2Xml("isInitialized")));
                 
                 unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
                 
@@ -583,28 +584,33 @@ namespace stromx
                 
                 // add to stream an initialize
                 m_stream->addOperator(op);
-                m_stream->initializeOperator(op);
-            
-                // set parameters after initialization
-                for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
-                    iter != op->info().parameters().end();
-                    ++iter)
+                
+                // if necessary initialize the operator and set the remaining parameters
+                if (std::string(isInitialized) != "false" && std::string(isInitialized) != "0")
                 {
-                    if((*iter)->accessMode() != Parameter::INITIALIZED_WRITE
-                        &&  (*iter)->accessMode() != Parameter::ACTIVATED_WRITE)
+                    m_stream->initializeOperator(op);
+                
+                    // set parameters after initialization
+                    for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
+                        iter != op->info().parameters().end();
+                        ++iter)
                     {
-                        continue;
-                    }
+                        if((*iter)->accessMode() != Parameter::INITIALIZED_WRITE
+                            &&  (*iter)->accessMode() != Parameter::ACTIVATED_WRITE)
+                        {
+                            continue;
+                        }
+                            
+                        std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
                         
-                    std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
-                    
-                    if(idDataPair == m_id2DataMap.end())
-                        continue;
-                    
-                    op->setParameter(idDataPair->first, *idDataPair->second);
-                    
-                    delete idDataPair->second;
-                    m_id2DataMap.erase(idDataPair);
+                        if(idDataPair == m_id2DataMap.end())
+                            continue;
+                        
+                        op->setParameter(idDataPair->first, *idDataPair->second);
+                        
+                        delete idDataPair->second;
+                        m_id2DataMap.erase(idDataPair);
+                    }
                 }
                 
                 if(! m_id2DataMap.empty())
