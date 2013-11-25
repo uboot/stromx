@@ -62,7 +62,7 @@ namespace stromx
             if(! numNodes)
                 return;
             
-            const std::vector<Operator*> & operators = stream.operators();
+            const std::vector<Operator*> & operators = stream.initializedOperators();
             
             std::map<const Operator*, unsigned int> op2IdMap;
             std::map<unsigned int, const Operator*> id2OpMap;

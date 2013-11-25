@@ -69,16 +69,20 @@ namespace stromx
             /** Returns the current state of the stream. */
             Status status() const { return m_status; }
             
-            /** Returns a list of operators assigned to the stream */
-            const std::vector<Operator*>& operators() const;           
+            /** Returns a list of the operators of the stream */
+            const std::vector<Operator*>& operators() const;     
+            
+            /** Returns a list of the initialized operators of the stream */
+            const std::vector<Operator*>& initializedOperators() const;          
             
             /**
              * Connects the output \c outputId of the operator \c sourceOp to the input \c inputId of
-             * the operator \c targetOp. 
+             * the operator \c targetOp. The operators must be initialized.
              * 
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not belong to the stream.
              * \throws WrongArgument If the operators \c sourceOp or \c targetOp do not have 
              *                       inputs \c outputId or \c inputId, respectively.
+             * \throws WrongState If the operators \c sourceOp or \c targetOp are not initialized.
              * \throws WrongState If the stream is not INACTIVE.
              */
             void connect(Operator* const sourceOp, const unsigned int outputId, 
@@ -86,22 +90,24 @@ namespace stromx
                          
             /**
              * Disconnects the input \c inputId of the operator \c targetOp from any
-             * output.
+             * output. The operator must be initialized.
              * 
-             * \throws WrongState If the stream is not inactive.
              * \throws WrongArgument If the operator \c targetOp does not belong to the stream.
              * \throws WrongArgument If the operator \c targetOp does not have an input \c inputId.
+             * \throws WrongState If the stream is not inactive.
+             * \throws WrongState If the operator \c targetOp is not initialized.
              */
             void disconnect(Operator* const targetOp, const unsigned int inputId) const;
             
             /**
              * Returns the output which is connected to the input \c inputId of the 
-             * operator \c targetOp.
+             * operator \c targetOp. The operator must be initialized.
              * 
              * \return A valid output if the input is connected to another operator. The 
              *         returned output is invalid if no output is connected to the input. 
              * \throws WrongArgument If the operator \c targetOp does not belong to the stream.
              * \throws WrongArgument If the operator \c targetOp does not have an input \c inputId.
+             * \throws WrongState If the operator \c targetOp is not initialized.
              */
             const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
@@ -109,10 +115,9 @@ namespace stromx
              * Adds the operator \c op to the stream. The ownership of the operators is transfered
              * to the stream, i.e. it must not be deleted by the caller.
              * 
-             * \throws WrongState If the stream is not INACTIVE.
-             * \throws WrongArgument If the operator pointer \c op is not valid (equal to 0).
-             * \throws WrongArgument If the object referenced by the pointer \c op is not initialized.
+             * \throws WrongArgument If the operator pointer \c op is null.
              * \throws WrongArgument If the object referenced by the pointer \c op has already been added to the stream.
+             * \throws WrongState If the stream is not INACTIVE.
              */
             void addOperator(Operator* const op);
             
@@ -122,7 +127,7 @@ namespace stromx
              * The operator is \em not deleted, i.e. the ownership of the operator returns to the caller. 
              * 
              * \throws WrongState If the stream is not INACTIVE.
-             * \throws WrongArgument If the operator pointer \c op is not valid (equal to 0).
+             * \throws WrongArgument If the operator pointer \c op is null.
              * \throws WrongArgument If the operator referenced by the pointer \c op is not known by the stream.
              */
             void removeOperator(Operator* const op);
@@ -246,9 +251,9 @@ namespace stromx
             class InternalObserver;
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
-            bool isPartOfStream(const Operator* const op);
-            bool isPartOfInitializedStream(const Operator* const op);
-            bool isPartOfUninitializedStream(const Operator* const op);
+            bool isPartOfStream(const Operator* const op) const;
+            bool isPartOfInitializedStream(const Operator* const op) const;
+            bool isPartOfUninitializedStream(const Operator* const op) const;
             
             std::string m_name; 
             impl::Network* const m_network;

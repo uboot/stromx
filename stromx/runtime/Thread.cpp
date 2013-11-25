@@ -91,6 +91,9 @@ namespace stromx
         {
             typedef std::set< std::vector<Input>::iterator > IndexSet;
             
+            if (op == 0)
+                throw WrongArgument("Operator must not be null.");
+            
             IndexSet toBeErased;
             
             for(std::vector<Input>::iterator iter1 = m_inputSequence.begin();
@@ -118,6 +121,12 @@ namespace stromx
             
         void Thread::addInput(Operator* const op, const unsigned int inputId)
         {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null.");
+            
+            if (op->status() == Operator::NONE)
+                throw WrongState("Operator be initialized.");
+            
             InputNode* inputNode = m_network->getInputNode(op, inputId);
             m_thread->addInput(inputNode);
             m_inputSequence.push_back(Input(op, inputId));
@@ -125,6 +134,12 @@ namespace stromx
 
         void Thread::insertInput(const unsigned int position, Operator* const op, const unsigned int inputId)
         {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null.");
+            
+            if (op->status() == Operator::NONE)
+                throw WrongState("Operator be initialized.");
+            
             InputNode* inputNode = m_network->getInputNode(op, inputId);
             m_thread->insertInput(position, inputNode);
             m_inputSequence.insert(m_inputSequence.begin() + position, Input(op, inputId));
@@ -138,6 +153,9 @@ namespace stromx
         
         void Thread::removeInput(Operator*const op, const unsigned int inputId)
         {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null.  ");
+            
             unsigned int position = findInput(op, inputId);
             removeInput(position);
         }

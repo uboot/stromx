@@ -66,7 +66,7 @@ namespace stromx
         
         void StreamTest::testOperators()
         {
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(3),(unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(4),(unsigned int)(m_stream->operators().size()));
         }
         
         void StreamTest::testConnect()
@@ -97,6 +97,13 @@ namespace stromx
             
             //Valid input parameters and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1));
+            
+            // uninitialized operators
+            m_stream->deinitializeOperator(m_op1);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongState);
+            m_stream->initializeOperator(m_op1);
+            m_stream->deinitializeOperator(m_op2);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongState);
         }
 
         void StreamTest::testDisconnect()
@@ -116,6 +123,10 @@ namespace stromx
             
             //Valid input parameters and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->disconnect(ops[1], TestOperator::INPUT_1));
+            
+            // uninitialized operator
+            m_stream->deinitializeOperator(ops[1]);
+            CPPUNIT_ASSERT_THROW(m_stream->disconnect(ops[1], TestOperator::INPUT_1), WrongState);
         }
 
         void StreamTest::testAddOperator()
@@ -133,7 +144,7 @@ namespace stromx
                         
             //Valid input parameter and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->addOperator(m_op2));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(5), (unsigned int)(m_stream->operators().size()));
         }
         
         void StreamTest::testRemoveOperator()
@@ -153,7 +164,7 @@ namespace stromx
             
             //Valid input parameter and stream INACTIVE           
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->operators().size()));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
             
             // remove uninitialized operator

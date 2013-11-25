@@ -79,17 +79,19 @@ namespace stromx
             
             /** 
              * Adds the input \c inputId of the operator \c op to the list of currently
-             * visited inputs.
+             * visited inputs. The operator must be initialized.
              * \throws WrongState If the thread state is not INACTIVE.
-             * \throws WrongArgument If \c op is 0.
+             * \throws WrongState If the operator is not initialized.
+             * \throws WrongArgument If \c op is null.
              */
             void addInput(Operator* const op, const unsigned int inputId);
             
             /** 
              * Inserts the input \c inputId of the operator \c op into the list of currently
-             * visited inputs at \c position.
+             * visited inputs at \c position. The operator must be initialized.
              * \throws WrongState If the thread state is not INACTIVE.
-             * \throws WrongArgument If \c op is 0 or if there is no input at \c position.
+             * \throws WrongState If the operator is not initialized.
+             * \throws WrongArgument If \c op is null or if there is no input at \c position.
              */
             void insertInput(const unsigned int position, Operator* const op, const unsigned int inputId);
             
@@ -106,6 +108,7 @@ namespace stromx
              * visited inputs.
              * \throws WrongState If the thread state is not INACTIVE.
              * \throws WrongArgument If the specified input is not part of thread.
+             * \throws WrongArgument If \c op is null.
              */
             void removeInput(Operator* const op, const unsigned int inputId);
                 

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE Stromx SYSTEM "stromx.dtd">
 
-   <!-- validate: xmllint \-\-valid \-\-noout parameters.xml
-                  (remove backslashes)
-                  xmllint \-\-dtdvalid stromx.dtd \-\-noout parameters.xml
-   -->
+<!-- validate: xmllint \-\-schema stromx.xsd \-\-noout parameters.xml -->
 
 <Stromx version="0.1.0">
     <Parameters>

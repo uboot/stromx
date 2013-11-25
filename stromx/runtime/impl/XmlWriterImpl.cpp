@@ -356,7 +356,7 @@ namespace stromx
                 m_output = &output;
                 m_filename = basename;
                 
-                std::vector<const Operator*> operators(m_stream->operators().begin(), m_stream->operators().end());
+                std::vector<const Operator*> operators(m_stream->initializedOperators().begin(), m_stream->initializedOperators().end());
                 m_opList = operators;
                 
                 try

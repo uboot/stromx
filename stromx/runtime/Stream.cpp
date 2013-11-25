@@ -101,6 +101,11 @@ namespace stromx
             return m_operators;
         }
         
+        const std::vector<Operator*>& Stream::initializedOperators() const
+        { 
+            return m_network->operators();
+        }
+        
         void Stream::start()
         {
             if (m_status != INACTIVE)
@@ -254,20 +259,35 @@ namespace stromx
         void Stream::connect(Operator* const sourceOp, const unsigned int outputId, 
                              Operator* const targetOp, const unsigned int inputId) const
         {
+            if (targetOp == 0 || sourceOp == 0)
+                throw WrongArgument("Operator must not be null.");
+            
+            if (! isPartOfStream(targetOp) || ! isPartOfStream(sourceOp))
+                throw WrongArgument("Operator has not been added to stream.");
+            
             if (m_status != INACTIVE)
-            {
-                throw WrongState("Stream object active. Cannot connect operators within a running system.");
-            }
+                throw WrongState("Cannot connect operators while the stream is active.");
+            
+            if (targetOp->status() == Operator::NONE || sourceOp->status() == Operator::NONE)
+                throw WrongState("Operator must be initialized.");
             
             m_network->connect(sourceOp, outputId, targetOp, inputId);
         }
 
         void Stream::disconnect(Operator* const targetOp, const unsigned int inputId) const
         {
+            
+            if (targetOp == 0)
+                throw WrongArgument("Operator must not be null.");
+            
+            if (! isPartOfStream(targetOp))
+                throw WrongArgument("Operator has not been added to stream.");
+            
             if (m_status != INACTIVE)
-            {
-                throw WrongState("Stream object active. Cannot disconnect operators within a running system.");
-            }
+                throw WrongState("Cannot disconnect operators while the stream is active.");
+            
+            if (targetOp->status() == Operator::NONE)
+                throw WrongState("Operator must be initialized.");
             
             m_network->disconnect(targetOp, inputId);
         }
@@ -370,6 +390,15 @@ namespace stromx
         
         const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
         {
+            if (targetOp == 0)
+                throw WrongArgument("Operator must not be null.");
+            
+            if (! isPartOfStream(targetOp))
+                throw WrongArgument("Operator has not been added to stream.");
+            
+            if (targetOp->status() == Operator::NONE)
+                throw WrongState("Operator must be initialized.");
+            
             return m_network->connectionSource(targetOp, inputId);
         }
         
@@ -410,12 +439,12 @@ namespace stromx
             }
         }
         
-        bool Stream::isPartOfStream(const Operator*const op)
+        bool Stream::isPartOfStream(const Operator*const op) const
         {
             return isPartOfInitializedStream(op) || isPartOfUninitializedStream(op);
         }
         
-        bool Stream::isPartOfInitializedStream(const Operator*const op)
+        bool Stream::isPartOfInitializedStream(const Operator*const op) const
         {
             std::vector<Operator*>::const_iterator iter = 
                 std::find(m_network->operators().begin(), m_network->operators().end(), op);
@@ -423,7 +452,7 @@ namespace stromx
             return iter != m_network->operators().end();
         }
         
-        bool Stream::isPartOfUninitializedStream(const Operator*const op)
+        bool Stream::isPartOfUninitializedStream(const Operator*const op) const
         {
             std::set<Operator*>::const_iterator iter = 
                 std::find(m_uninitializedOperators.begin(), m_uninitializedOperators.end(), op);

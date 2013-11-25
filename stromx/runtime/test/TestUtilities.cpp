@@ -53,6 +53,11 @@ namespace stromx
             op2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
             op2->setParameter(TestOperator::TEST_DATA, TestData(3));
             
+            Operator* op3 = new Operator(new TestOperator);
+            op3->setName("Number 4");
+            stream->addOperator(op3);
+            op3->setParameter(TestOperator::BUFFER_SIZE, UInt32(9000));
+            
             stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
             stream->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
             
