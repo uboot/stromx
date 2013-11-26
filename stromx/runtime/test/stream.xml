@@ -2,7 +2,7 @@
 
 <Stromx version="0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stromx.xsd">
     <Stream name="TestStream">
-        <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 1">
+        <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 1" x="10.1" y="5.5">
             <Parameter id="0">
                 <Data type="UInt32" package="Runtime" version="0.1.0">5000</Data>
             </Parameter>
@@ -36,16 +36,17 @@
             <Input id="0" operator="1" output="2"/>
             <Input id="1" operator="1" output="3"/>
         </Operator>
-        <Operator id="3" package="TestPackage" type="TestOperator" version="0.1.0" isInitialized="false" name="Number 4">
+        <Operator id="3" package="TestPackage" type="TestOperator" version="0.1.0" isInitialized="false" name="Number 4" x="20" y="10">
             <Parameter id="0">
                 <Data type="UInt32" package="Runtime" version="0.1.0">8000</Data>
             </Parameter>
         </Operator>
-        <Thread name="Processing thread">
+        <Thread name="Processing thread" color="#ff00ee">
             <InputConnector operator="1" input="0"/>
             <InputConnector operator="1" input="1"/>
             <InputConnector operator="2" input="0"/>
             <InputConnector operator="2" input="1"/>
         </Thread> 
+	<Thread name="Empty thread"/>
     </Stream>
 </Stromx>

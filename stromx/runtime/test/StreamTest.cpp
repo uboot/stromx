@@ -223,8 +223,8 @@ namespace stromx
         {
             Thread* thr = 0;
             CPPUNIT_ASSERT_NO_THROW(thr = m_stream->addThread());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads().size()));
-            CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[1]);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->threads().size()));
+            CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[2]);
         }
         
         void StreamTest::testRemoveThread()
@@ -234,7 +234,7 @@ namespace stromx
             Thread* thr = m_stream->threads()[0];
            
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeThread(thr));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
             
             CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr), WrongArgument);
         }       

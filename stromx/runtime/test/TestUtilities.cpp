@@ -31,6 +31,7 @@ namespace stromx
             
             Operator* op0 = new Operator(new TestOperator);
             op0->setName("Number 1");
+            op0->setPosition(Position(10.1, 5.5));
             stream->addOperator(op0);
             op0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
             stream->initializeOperator(op0);
@@ -55,6 +56,7 @@ namespace stromx
             
             Operator* op3 = new Operator(new TestOperator);
             op3->setName("Number 4");
+            op0->setPosition(Position(20, 10));
             stream->addOperator(op3);
             op3->setParameter(TestOperator::BUFFER_SIZE, UInt32(9000));
             
@@ -64,13 +66,17 @@ namespace stromx
             stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
             stream->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
             
-            Thread* thread = stream->addThread();
-            thread->setName("Processing thread");
+            Thread* thread0 = stream->addThread();
+            thread0->setName("Processing thread");
+            thread0->setColor(Color(0xff, 0x00, 0xee));
             
-            thread->addInput(op1, TestOperator::INPUT_1);
-            thread->addInput(op1, TestOperator::INPUT_2);
-            thread->addInput(op2, TestOperator::INPUT_1);
-            thread->addInput(op2, TestOperator::INPUT_2);
+            thread0->addInput(op1, TestOperator::INPUT_1);
+            thread0->addInput(op1, TestOperator::INPUT_2);
+            thread0->addInput(op2, TestOperator::INPUT_1);
+            thread0->addInput(op2, TestOperator::INPUT_2);
+            
+            Thread* thread1 = stream->addThread();
+            thread1->setName("Empty thread");
             
             return stream;
         }
