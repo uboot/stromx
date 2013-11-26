@@ -38,7 +38,7 @@ namespace stromx
         {
             
             const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MAJOR = 0;
-            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MINOR = 1;
+            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MINOR = 2;
             const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_REVISION = 0;
                 
             XmlWriterImpl::XmlWriterImpl() 
