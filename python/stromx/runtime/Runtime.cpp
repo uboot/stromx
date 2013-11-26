@@ -28,6 +28,7 @@
 
 void exportAbstractFactory();
 void exportFactory();
+void exportColor();
 void exportData();
 void exportDataContainer();
 void exportDataVariant();
@@ -44,6 +45,7 @@ void exportOperatorException();
 void exportOperatorInfo();
 void exportOperatorKernel();
 void exportParameter();
+void exportPosition();
 void exportPrimitive();
 void exportReadAccess();
 void exportRegistry();
@@ -63,6 +65,7 @@ BOOST_PYTHON_MODULE(libruntime)
     def("register", stromxRuntimeRegister);
     
     exportAbstractFactory();
+    exportColor();
     exportData();
     exportDataContainer();
     exportDataVariant();
@@ -79,6 +82,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportOperatorInfo();
     exportOperatorKernel();
     exportParameter();
+    exportPosition();
     exportPrimitive();
     exportReadAccess();
     exportRegistry();

@@ -1,6 +1,7 @@
 set(SOURCES
     Runtime.cpp
     AbstractFactory.cpp
+    Color.cpp
     Data.cpp
     DataContainer.cpp
     DataVariant.cpp
@@ -17,6 +18,7 @@ set(SOURCES
     OperatorException.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp
+    Position.cpp
     Primitive.cpp
     Parameter.cpp
     ReadAccess.cpp
