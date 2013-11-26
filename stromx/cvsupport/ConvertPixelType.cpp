@@ -41,7 +41,7 @@ namespace stromx
         ConvertPixelType::ConvertPixelType()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_pixelType(runtime::Image::MONO_8),
-            m_dataFlow(ALLOCATE)
+            m_dataFlow(MANUAL)
         {
         }
 
