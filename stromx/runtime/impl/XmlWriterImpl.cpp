@@ -167,6 +167,12 @@ namespace stromx
                     nameAttr->setValue(Str2Xml((*iter_thr)->name().c_str()));
                     thrElement->setAttributeNode(nameAttr);
                     
+                    //Create attribute color of Thread (one for each Thread possible)
+                    DOMAttr* colorAttr = m_doc->createAttribute(Str2Xml("color"));
+                    std::string colorStr = boost::lexical_cast<std::string>((*iter_thr)->color());
+                    colorAttr->setValue(Str2Xml(colorStr.c_str()));
+                    thrElement->setAttributeNode(colorAttr);
+                    
                     //Create InputNodes of Thread (multiple entries for each Thread possible)
                     createInputConnectors((*iter_thr), thrElement);
                 }
@@ -306,46 +312,55 @@ namespace stromx
                     iter_op != operators.end();
                     ++iter_op)
                 {
+                    const Operator* op = *iter_op;
+                    
                     //Create current operator entry op being child of strom (one for each operator possible)
                     DOMElement* opElement = m_doc->createElement(Str2Xml("Operator"));
                     parentElement->appendChild(opElement);
                     
                     //Create attribute id of current operator op (one for each operator possible)
                     DOMAttr* idAttr = m_doc->createAttribute(Str2Xml("id"));
-                    idAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(translateOperatorPointerToID(*iter_op)).c_str()));
+                    idAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(translateOperatorPointerToID(op)).c_str()));
                     opElement->setAttributeNode(idAttr);
                     
                     //Create attribute package of current operator op (one for each operator possible)
                     DOMAttr* packAttr = m_doc->createAttribute(Str2Xml("package"));
-                    packAttr->setValue(Str2Xml((*iter_op)->info().package().c_str()));
+                    packAttr->setValue(Str2Xml(op->info().package().c_str()));
                     opElement->setAttributeNode(packAttr);
                     
                     //Create attribute type of current operator op (one for each operator possible)
                     DOMAttr* typeAttr = m_doc->createAttribute(Str2Xml("type"));
-                    typeAttr->setValue(Str2Xml((*iter_op)->info().type().c_str()));
+                    typeAttr->setValue(Str2Xml(op->info().type().c_str()));
                     opElement->setAttributeNode(typeAttr);
                     
                     //Create attribute name of current operator op (one for each operator possible)
                     DOMAttr* nameAttr = m_doc->createAttribute(Str2Xml("name"));
-                    nameAttr->setValue(Str2Xml((*iter_op)->name().c_str()));
+                    nameAttr->setValue(Str2Xml(op->name().c_str()));
                     opElement->setAttributeNode(nameAttr);
                     
                     //Create attribute version of current operator op (one for each operator possible)
                     DOMAttr* verAttr = m_doc->createAttribute(Str2Xml("version"));
-                    std::string str = boost::lexical_cast<std::string>((*iter_op)->info().version());
+                    std::string str = boost::lexical_cast<std::string>(op->info().version());
                     verAttr->setValue(Str2Xml(str.c_str()));
                     opElement->setAttributeNode(verAttr);
                     
-                    //Create attribute version of current operator op (one for each operator possible)
                     DOMAttr* initAttr = m_doc->createAttribute(Str2Xml("isInitialized"));
-                    initAttr->setValue(Str2Xml((*iter_op)->status() == Operator::NONE ? "false" : "true"));
+                    initAttr->setValue(Str2Xml(op->status() == Operator::NONE ? "false" : "true"));
                     opElement->setAttributeNode(initAttr);
                     
-                    createParameters((*iter_op), opElement);
+                    DOMAttr* xAttr = m_doc->createAttribute(Str2Xml("x"));
+                    xAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(op->position().x()).c_str()));
+                    opElement->setAttributeNode(xAttr);
                     
-                    if (m_stream != 0 && (*iter_op)->status() != Operator::NONE)
+                    DOMAttr* yAttr = m_doc->createAttribute(Str2Xml("y"));
+                    yAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(op->position().y()).c_str()));
+                    opElement->setAttributeNode(yAttr);
+                    
+                    createParameters(op, opElement);
+                    
+                    if (m_stream != 0 && op->status() != Operator::NONE)
                     {
-                        createInputs((*iter_op), opElement);
+                        createInputs(op, opElement);
                     }
                 }
             }

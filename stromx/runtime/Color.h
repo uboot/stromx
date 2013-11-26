@@ -23,6 +23,10 @@
     #include <cstdint>
 #endif
 
+#include <iostream>
+
+#include "stromx/runtime/Config.h"
+
 namespace stromx
 {
     namespace runtime
@@ -30,6 +34,9 @@ namespace stromx
         /** RGB color. */
         class Color
         {
+            friend STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Color & color);
+            friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Color & color);
+            
         public:
             /** Constructs an RGB with all color values set to 0 (i.e. black). */
             Color()
@@ -53,6 +60,9 @@ namespace stromx
             uint8_t m_g;
             uint8_t m_b;
         };
+        
+        STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Color & color);
+        STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Color & color);
     }
 }
 

@@ -21,6 +21,7 @@ set(SOURCES
     impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    Color.cpp
     Connector.cpp
     ConstDataRef.cpp
     Counter.cpp

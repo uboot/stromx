@@ -56,7 +56,7 @@ namespace stromx
             
             Operator* op3 = new Operator(new TestOperator);
             op3->setName("Number 4");
-            op0->setPosition(Position(20, 10));
+            op3->setPosition(Position(20, 10));
             stream->addOperator(op3);
             op3->setParameter(TestOperator::BUFFER_SIZE, UInt32(9000));
             
