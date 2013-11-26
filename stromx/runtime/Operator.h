@@ -25,6 +25,7 @@
 #include "stromx/runtime/DataRef.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorInfo.h"
+#include "stromx/runtime/Position.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace boost
@@ -106,6 +107,16 @@ namespace stromx
              * of the operator.
              */
             void setName(const std::string & name) { m_name = name; }
+            
+             /** Returns the position of the operator. */
+            const Position & position() const { return m_position; }
+            
+            /** 
+             * Sets the position of the operator. The position is used only for 
+             * visualizing the stream and does not have any effect on the functionality
+             * of the operator.
+             */
+            void setPosition(const Position & position) { m_position = position; }
             
             /** 
              * Returns information about the inputs, outputs and parameters
@@ -263,6 +274,7 @@ namespace stromx
             std::map<unsigned int, impl::OutputNode*> m_outputs;
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
+            Position m_position;
             MutexHandle*  m_observerMutex;
         };
     }

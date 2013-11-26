@@ -57,6 +57,16 @@ namespace stromx
             m_name = name; 
         }
         
+        const Color& Thread::color() const
+        {
+            return m_color;
+        }
+
+        void Thread::setColor(const Color& color)
+        {
+            m_color = color;
+        }
+        
         const std::vector<Input> & Thread::inputSequence() const
         { 
             return m_inputSequence;

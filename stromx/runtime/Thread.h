@@ -19,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include "stromx/runtime/Color.h"
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/Input.h"
 
@@ -73,6 +74,15 @@ namespace stromx
             
             /** Sets the name of the thread. */
             void setName(const std::string& name);
+            
+            /** Returns the color of the thread. */
+            const Color & color() const;
+            
+            /** 
+             * Sets the color of the thread. The color is used only for 
+             * visualizing the stream and does not have any effect on the functionality
+             * of the thread. */
+            void setColor(const Color & color);
             
             /** Returns a list of the operator inputs which are assigned to this thread. */
             const std::vector<Input> & inputSequence() const;
@@ -136,6 +146,7 @@ namespace stromx
             std::string m_name;
             const impl::Network* m_network;
             std::vector<Input> m_inputSequence;
+            Color m_color;
         };
     }
 }
