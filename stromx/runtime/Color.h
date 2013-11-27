@@ -33,10 +33,7 @@ namespace stromx
     {
         /** RGB color. */
         class Color
-        {
-            friend STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Color & color);
-            friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Color & color);
-            
+        {            
         public:
             /** Constructs an RGB with all color values set to 0 (i.e. black). */
             Color()

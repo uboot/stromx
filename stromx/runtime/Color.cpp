@@ -17,6 +17,21 @@
 #include "stromx/runtime/Color.h"
 
 #include <iomanip>
+#include <sstream>
+
+#include "stromx/runtime/Exception.h"
+
+namespace
+{
+    uint8_t hexToInt(const std::string & hex)
+    {
+        std::istringstream in(hex);
+        unsigned int value;
+        in >> std::hex >> value;
+        
+        return value;
+    }
+}
 
 namespace stromx
 {
@@ -33,6 +48,19 @@ namespace stromx
 
         std::istream& operator>>(std::istream& in, Color& color)
         {
+            std::string text;
+            in >> std::setw(1) >> text;
+            
+            if(text.length() != 1 || text[0] != '#')
+                throw WrongArgument("Input must be of the type '#rrggbb'.");
+            
+            std::string r, g, b;
+            in >> std::setw(2) >> r;
+            in >> std::setw(2) >> g;
+            in >> std::setw(2) >> b;
+            
+            color = Color(hexToInt(r), hexToInt(g), hexToInt(b));
+            
             return in;
         }
     }

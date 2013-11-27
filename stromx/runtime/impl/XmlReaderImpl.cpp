@@ -539,6 +539,8 @@ namespace stromx
                 Xml2Str type(opElement->getAttribute(Str2Xml("type")));
                 Xml2Str package(opElement->getAttribute(Str2Xml("package")));
                 Xml2Str isInitialized(opElement->getAttribute(Str2Xml("isInitialized")));
+                Xml2Str x(opElement->getAttribute(Str2Xml("x")));
+                Xml2Str y(opElement->getAttribute(Str2Xml("y")));
                 
                 unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
                 
@@ -547,6 +549,14 @@ namespace stromx
                 
                 Operator* op = m_factory.newOperator(std::string(package), std::string(type));
                 op->setName(std::string(name));
+                
+                std::string xStr(x);
+                std::string yStr(y);
+                xStr = xStr.empty() ? "0" : xStr;
+                yStr = yStr.empty() ? "0" : yStr;
+                Position position(boost::lexical_cast<float>(xStr),
+                                  boost::lexical_cast<float>(yStr));
+                op->setPosition(position);
                 
                 m_id2OperatorMap[id] = op;
                 
@@ -712,8 +722,15 @@ namespace stromx
             
             void XmlReaderImpl::readThread(DOMElement*const threadElement, Thread*const thread)
             {
-                Xml2Str type(threadElement->getAttribute(Str2Xml("name")));
-                thread->setName(std::string(type));
+                Xml2Str name(threadElement->getAttribute(Str2Xml("name")));
+                thread->setName(std::string(name));
+                
+                std::string colorStr(Xml2Str(threadElement->getAttribute(Str2Xml("color"))));
+                if (colorStr != "")
+                {
+                    Color color = boost::lexical_cast<Color>(colorStr);
+                    thread->setColor(color);
+                }
                 
                 DOMNodeList* inputs = threadElement->getElementsByTagName(Str2Xml("InputConnector"));
                 XMLSize_t numInputs = inputs->getLength();
