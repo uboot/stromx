@@ -34,7 +34,8 @@ namespace stromx
             // create the test stream
             m_stream = TestUtilities::buildTestStream();
             
-            // remove the thread
+            // remove the threads
+            m_stream->removeThread(*m_stream->threads().begin());
             m_stream->removeThread(*m_stream->threads().begin());
             
             m_op1 = m_stream->operators()[1];
