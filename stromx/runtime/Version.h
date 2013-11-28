@@ -46,6 +46,7 @@ namespace stromx
         class Version
         {
             friend STROMX_RUNTIME_API bool operator== (const Version & lhs, const Version & rhs);
+            friend STROMX_RUNTIME_API bool operator< (const Version & lhs, const Version & rhs);
             friend STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Version & version);
             friend STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
             
@@ -83,8 +84,13 @@ namespace stromx
         };
         
         STROMX_RUNTIME_API bool operator== (const Version & lhs, const Version & rhs);
+        STROMX_RUNTIME_API bool operator!= (const Version & lhs, const Version & rhs);
         STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Version & version);
         STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Version & version);
+        STROMX_RUNTIME_API bool operator< (const Version & lhs, const Version & rhs);
+        STROMX_RUNTIME_API bool operator> (const Version & lhs, const Version & rhs);
+        STROMX_RUNTIME_API bool operator>= (const Version & lhs, const Version & rhs);
+        STROMX_RUNTIME_API bool operator<= (const Version & lhs, const Version & rhs);
     }
 }
 

@@ -44,5 +44,23 @@ namespace stromx
 
             CPPUNIT_ASSERT_EQUAL(std::string("1.2.3"), out.str());
         }
+        
+        void VersionTest::testComparision()
+        {
+            Version v1(1, 2, 3);
+            Version v2(1, 2, 5);
+            Version v3(1, 3, 1);
+            Version v4(2, 0, 0);
+            
+            CPPUNIT_ASSERT(v1 == v1);
+            CPPUNIT_ASSERT(v1 != v2);
+            CPPUNIT_ASSERT(v3 != v4);
+            CPPUNIT_ASSERT(v1 < v2);
+            CPPUNIT_ASSERT(v1 <= v2);
+            CPPUNIT_ASSERT(v1 <= v1);
+            CPPUNIT_ASSERT(v3 >= v3);
+            CPPUNIT_ASSERT(v4 >= v3);
+            CPPUNIT_ASSERT(v4 > v3);
+        }
     }
 }

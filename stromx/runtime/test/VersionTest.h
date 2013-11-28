@@ -29,11 +29,13 @@ namespace stromx
             CPPUNIT_TEST_SUITE (VersionTest);
             CPPUNIT_TEST (testStreamIn);
             CPPUNIT_TEST (testStreamOut);
+            CPPUNIT_TEST (testComparision);
             CPPUNIT_TEST_SUITE_END ();
             
         protected:
             void testStreamIn();
             void testStreamOut();
+            void testComparision();
         };
     }
 }

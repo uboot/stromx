@@ -17,6 +17,7 @@
 #include "stromx/runtime/Version.h"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/graph/graph_concepts.hpp>
 
 #include "stromx/runtime/Exception.h"
 
@@ -70,6 +71,46 @@ namespace stromx
         bool operator==(const Version& lhs, const Version& rhs)
         {
             return lhs.m_major == rhs.m_major && lhs.m_minor == rhs.m_minor && lhs.m_revision == rhs.m_revision;
+        }
+        
+        bool operator!=(const Version& lhs, const Version& rhs)
+        {
+            return ! (lhs == rhs);
+        }
+        
+        bool operator<(const Version& lhs, const Version& rhs)
+        {
+            if (lhs.m_major == rhs.m_major)
+            {
+                if (lhs.m_minor == rhs.m_minor)
+                {
+                    return lhs.m_revision < rhs.m_revision;
+                }
+                else
+                {
+                    return lhs.m_minor < rhs.m_minor;
+                }
+            }
+            else
+            {
+                return lhs.m_major < rhs.m_major;
+            }
+        }
+        
+        bool operator<=(const Version& lhs, const Version& rhs)
+        {
+            return (lhs < rhs) || (lhs == rhs);
+        }
+        
+        bool operator>=(const Version& lhs, const Version& rhs)
+        {
+            return rhs <= lhs;
+        }
+        
+        
+        bool operator>(const Version& lhs, const Version& rhs)
+        {
+            return rhs < lhs;
         }
     }
 }
