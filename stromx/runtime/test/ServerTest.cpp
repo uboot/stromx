@@ -29,7 +29,7 @@
 #include <stromx/runtime/impl/SerializationHeader.h>
 #include "stromx/runtime/impl/Server.h"
 
-// CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ServerTest);
 
 namespace stromx
 {
