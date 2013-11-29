@@ -164,7 +164,7 @@ namespace stromx
         void Thread::removeInput(Operator*const op, const unsigned int inputId)
         {
             if (op == 0)
-                throw WrongArgument("Operator must not be null.  ");
+                throw WrongArgument("Operator must not be null.");
             
             unsigned int position = findInput(op, inputId);
             removeInput(position);

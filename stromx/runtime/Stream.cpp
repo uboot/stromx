@@ -376,6 +376,7 @@ namespace stromx
                 return;
             
             m_network->removeOperator(op);
+            m_uninitializedOperators.insert(op);
             
             for (std::vector<Thread*>::iterator iter = m_threads.begin();
                     iter != m_threads.end();
@@ -385,7 +386,6 @@ namespace stromx
             }
             
             op->deinitialize();
-            m_uninitializedOperators.insert(op);
         }
         
         const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const

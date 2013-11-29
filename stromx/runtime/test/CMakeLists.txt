@@ -87,52 +87,52 @@ set(SOURCES
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
-    BoolTest.cpp
-    ClientTest.cpp
-    CounterTest.cpp
-    DataContainerTest.cpp
-    DataRefTest.cpp
-    DataVariantTest.cpp
-    DataTest.cpp
-    DumpTest.cpp
-    EnumTest.cpp
-    ExceptionTest.cpp
-    Float64Test.cpp
-    ForkTest.cpp
-    Id2DataCompositeTest.cpp
-    Id2DataMapTest.cpp
-    Id2DataPairTest.cpp
-    ImageWrapperTest.cpp
-    InputNodeTest.cpp
-    Int32Test.cpp
-    JoinTest.cpp
-    MatrixWrapperTest.cpp
-    OperatorKernelTest.cpp
-    OperatorTest.cpp
-    OutputNodeTest.cpp
-    ParameterTest.cpp
-    PeriodicDelayTest.cpp
-    QueueTest.cpp
-    ReadAccessTest.cpp
-    RecycleAccessTest.cpp
+#     BoolTest.cpp
+#     ClientTest.cpp
+#     CounterTest.cpp
+#     DataContainerTest.cpp
+#     DataRefTest.cpp
+#     DataVariantTest.cpp
+#     DataTest.cpp
+#     DumpTest.cpp
+#     EnumTest.cpp
+#     ExceptionTest.cpp
+#     Float64Test.cpp
+#     ForkTest.cpp
+#     Id2DataCompositeTest.cpp
+#     Id2DataMapTest.cpp
+#     Id2DataPairTest.cpp
+#     ImageWrapperTest.cpp
+#     InputNodeTest.cpp
+#     Int32Test.cpp
+#     JoinTest.cpp
+#     MatrixWrapperTest.cpp
+#     OperatorKernelTest.cpp
+#     OperatorTest.cpp
+#     OutputNodeTest.cpp
+#     ParameterTest.cpp
+#     PeriodicDelayTest.cpp
+#     QueueTest.cpp
+#     ReadAccessTest.cpp
+#     RecycleAccessTest.cpp
     TestOperator.cpp
-    ThreadImplTest.cpp
-    ThreadTest.cpp
-    NetworkTest.cpp
-    FactoryTest.cpp
-    RuntimeTest.cpp
-    SendReceiveTest.cpp
-    StringTest.cpp
+#     ThreadImplTest.cpp
+#     ThreadTest.cpp
+#     NetworkTest.cpp
+#     FactoryTest.cpp
+#     RuntimeTest.cpp
+#     SendReceiveTest.cpp
+#     StringTest.cpp
     TestData.cpp
-    TriggerTest.cpp
-    TryTest.cpp
-    ServerTest.cpp
+#     TriggerTest.cpp
+#     TryTest.cpp
+#     ServerTest.cpp
     SortInputsAlgorithmTest.cpp
-    StreamTest.cpp
+#     StreamTest.cpp
     TestUtilities.cpp
-    UInt8Test.cpp
-    VersionTest.cpp
-    WriteAccessTest.cpp
+#     UInt8Test.cpp
+#     VersionTest.cpp
+#     WriteAccessTest.cpp
     main.cpp
 )
 
