@@ -57,12 +57,11 @@ namespace stromx
         
         void SortInputsAlgorithm::apply ( Stream& stream )
         {
-            unsigned int numNodes = stream.operators().size();
+            const std::vector<Operator*> & operators = stream.initializedOperators();
+            unsigned int numNodes = operators.size();
             
             if(! numNodes)
                 return;
-            
-            const std::vector<Operator*> & operators = stream.initializedOperators();
             
             std::map<const Operator*, unsigned int> op2IdMap;
             std::map<unsigned int, const Operator*> id2OpMap;
