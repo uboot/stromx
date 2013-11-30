@@ -44,7 +44,7 @@ namespace stromx
 
         void SortInputsAlgorithmTest::tearDown()
         {
-//             delete m_stream;
+            delete m_stream;
         }
         
         void SortInputsAlgorithmTest::testApplyTwoThreads()

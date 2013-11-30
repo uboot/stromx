@@ -30,7 +30,7 @@ namespace stromx
         class SortInputsAlgorithmTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (SortInputsAlgorithmTest);
-//             CPPUNIT_TEST (testApplyTwoThreads);
+            CPPUNIT_TEST (testApplyTwoThreads);
             CPPUNIT_TEST (testApplyOneThread);
             CPPUNIT_TEST_SUITE_END ();
 
