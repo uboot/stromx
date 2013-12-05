@@ -126,6 +126,36 @@ namespace stromx
                 return *(reinterpret_cast<const T*>(data() + byteOffset));
             }
             
+            /** 
+             * Returns a copy of type \c T of the value at the position
+             * (\c row, \c col). The value is casted to \c T by a static cast.
+             **/
+            template <class T>
+            const T value(const unsigned int row, const unsigned int col) const
+            {
+                switch(valueType())
+                {
+                case UINT_8:
+                    return static_cast<T>(at<uint8_t>(row, col));
+                case INT_8:
+                    return static_cast<T>(at<int8_t>(row, col));
+                case UINT_16:
+                    return static_cast<T>(at<uint16_t>(row, col));
+                case INT_16:
+                    return static_cast<T>(at<int16_t>(row, col));
+                case UINT_32:
+                    return static_cast<T>(at<uint32_t>(row, col));
+                case INT_32:
+                    return static_cast<T>(at<int32_t>(row, col));
+                case FLOAT_32:
+                    return static_cast<T>(at<float>(row, col));
+                case FLOAT_64:
+                    return static_cast<T>(at<double>(row, col));
+                default:
+                    throw InternalError("Unknown value type.");
+                };
+            }
+            
         protected:
             
             /** Returns the data variant defined by the input \c valueType. */

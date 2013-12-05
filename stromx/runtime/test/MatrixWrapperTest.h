@@ -42,6 +42,7 @@ namespace stromx
             CPPUNIT_TEST (testAt);
             CPPUNIT_TEST (testAtWrongPosition);
             CPPUNIT_TEST (testAtWrongType);
+            CPPUNIT_TEST (testValue);
             CPPUNIT_TEST (testEquality);
             CPPUNIT_TEST (testEqualityWrongEntry);
             CPPUNIT_TEST (testEqualityWrongValueType);
@@ -67,6 +68,7 @@ namespace stromx
                 void testAt();
                 void testAtWrongPosition();
                 void testAtWrongType();
+                void testValue();
                 void testEquality();
                 void testEqualityWrongEntry();
                 void testEqualityWrongValueType();
