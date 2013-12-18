@@ -18,6 +18,7 @@
 #define STROMX_RUNTIME_IMPL_SERVER_H
 
 #include <deque>
+#include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 

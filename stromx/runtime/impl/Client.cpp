@@ -90,7 +90,7 @@ namespace stromx
                     
                     m_thread = boost::thread(boost::bind(&Client::run, this));
                 }
-                catch (boost::system::system_error & e)
+                catch (boost::system::system_error &)
                 {
                     throw NoConnection();
                 }
