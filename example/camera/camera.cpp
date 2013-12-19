@@ -22,8 +22,8 @@
 #include <stromx/runtime/ReadAccess.h>
 #include <stromx/runtime/Image.h>
 
-#include <stromx/example/Example.h>
-#include <stromx/example/Camera.h>
+#include <stromx/cvimgproc/Cvimgproc.h>
+#include <stromx/cvsupport/Cvsupport.h>
 
 #include <iostream>
 
@@ -34,7 +34,8 @@ int main (int, char**)
     runtime::Factory factory;
     
     stromxRuntimeRegister(factory);
-    stromxExampleRegister(factory);
+    stromxCvimgprocRegister(factory);
+    stromxCvsupportRegister(factory);
     
     runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
     
@@ -45,11 +46,11 @@ int main (int, char**)
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        runtime::DataContainer data = canny->getOutputData(0);
+        runtime::DataContainer data = canny->getOutputData(1);
         runtime::ReadAccess<runtime::Image> image(data);
         std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
         
-        canny->clearOutputData(0);
+        canny->clearOutputData(1);
         camera->clearOutputData(1);
     }
     
