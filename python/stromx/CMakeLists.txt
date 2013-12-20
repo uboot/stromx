@@ -3,11 +3,6 @@ if(BUILD_RUNTIME)
     set (AVAILABLE_PACKAGES "\"runtime\"")
 endif()
 
-if(BUILD_EXAMPLE)
-    add_subdirectory(example)
-    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"example\"")
-endif()
-
 if(BUILD_OPENCV_WRAPPER)
     add_subdirectory(cvcore)
     add_subdirectory(cvimgproc)

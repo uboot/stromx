@@ -67,7 +67,6 @@ if(Boost_FOUND)
 endif()
 
 if(OpenCV_FOUND)
-    option(BUILD_EXAMPLE "Build example operators" ON)
     option(BUILD_OPENCV_WRAPPER "Build OpenCV wrappers" ON)
 endif()
 
@@ -77,10 +76,6 @@ endif()
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
-
-if(BUILD_EXAMPLE)
-   add_subdirectory(example)
-endif()
 
 find_package(Boost 1.47.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)
@@ -95,7 +90,7 @@ endif()
 
 # create the configure file only if all packages are built; otherwise the file 
 # must be adapted accordingly
-if(BUILD_EXAMPLE AND BUILD_OPENCV_WRAPPER)
+if(BUILD_OPENCV_WRAPPER)
     configure_file (
         "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
         "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
