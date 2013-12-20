@@ -311,9 +311,13 @@ namespace stromx
                 {
                     (*iter)->observe(Input(this, id), data);
                 }
+                catch(Interrupt &)
+                {
+                    throw; // rethrow interrupts
+                }
                 catch(...)
                 {
-                    // catch all exceptions which are thrown by the observer
+                    // ignore all other exceptions which are thrown by the observer
                 }
             }
         }
@@ -330,9 +334,13 @@ namespace stromx
                 {
                     (*iter)->observe(Output(this, id), data);
                 }
+                catch(Interrupt &)
+                {
+                    throw; // rethrow interrupts
+                }
                 catch(...)
                 {
-                    // catch all exceptions which are thrown by the observer
+                    // ignore all other exceptions which are thrown by the observer
                 }
             }
         }
