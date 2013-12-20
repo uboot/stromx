@@ -5,6 +5,8 @@ Created on Mon Apr  1 18:19:38 2013
 @author: matz
 """
 
+import math
+
 import cvcommon
 import cvtype
 import datatype
@@ -172,6 +174,9 @@ initInIntegral = document.Document((
     "{1}->data(), runtime::Matrix::INT_32);").format("srcCastedData",
                                                        "dstCastedData"
 ))
+lineSegmentsPostCall = document.Document(
+    "dstCvData = dstCvData.reshape(1, dstCvData.cols);"
+)
 
 # arguments
 srcImg = package.Argument(
@@ -412,42 +417,66 @@ maskSize = package.EnumParameter(
     default = 0
 )
 seedPointX = package.NumericParameter(
-        "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
+    "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
 )
 seedPointY = package.NumericParameter(
-        "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
+    "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
 )
 newVal =  package.NumericParameter(
-        "newVal", "New value", cvtype.Float64(), datatype.Float64()
+    "newVal", "New value", cvtype.Float64(), datatype.Float64()
 )
 histMin = package.NumericParameter(
-        "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
-        default = 0
+    "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
+    default = 0
 )
 histMax = package.NumericParameter(
-        "histMax", "Maximum", cvtype.Float32(), datatype.Float32(),
-        default = 256
+    "histMax", "Maximum", cvtype.Float32(), datatype.Float32(),
+    default = 256
 )
 histSize = package.NumericParameter(
-        "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
-        default = 16
+    "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
+    default = 16
 )
 threshold1 = package.NumericParameter(
-        "threshold1", "Threshold 1", cvtype.Float64(), datatype.Float64(),
-        default = 64
+    "threshold1", "Threshold 1", cvtype.Float64(), datatype.Float64(),
+    default = 64
 )
 threshold2 = package.NumericParameter(
-        "threshold2", "Threshold 2", cvtype.Float64(), datatype.Float64(),
-        default = 128
+    "threshold2", "Threshold 2", cvtype.Float64(), datatype.Float64(),
+    default = 128
 )
 harrisK = package.NumericParameter(
-        "k", "Harris parameter", cvtype.Float64(), datatype.Float64(),
-        default = 1
+    "k", "Harris parameter", cvtype.Float64(), datatype.Float64(),
+    default = 1
+)
+dstMatrixLineSegments = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix()
+)
+rho = package.NumericParameter(
+    "rho", "Distance resolution", cvtype.Float64(), datatype.Float64(),
+    default = 1.0
+)
+theta = package.NumericParameter(
+    "theta", "Angle resolution", cvtype.Float64(), datatype.Float64(),
+    default = math.pi / 180
+)
+accumulatorThreshold = package.NumericParameter(
+    "threshold", "Accumulator threshold", cvtype.Int(), datatype.UInt32(),
+    default = 100
+)
+minLineLength = package.NumericParameter(
+    "minLineLength", "Minimum line length", cvtype.Float64(), datatype.Float64(),
+    default = 50
+)
+maxLineGap = package.NumericParameter(
+    "maxLineGap", "Maximum allowed gap", cvtype.Float64(), datatype.Float64(),
+    default = 5
 )
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
+edges = test.ImageFile("edges.png", grayscale = True)
 affine_transformation = test.MatrixFile("affine.npy")
 perspective_transformation = test.MatrixFile("perspective.npy")
 camera_matrix = test.MatrixFile("camera_matrix.npy")
@@ -1084,6 +1113,19 @@ cornerMinEigenVal = package.Method(
     "cornerMinEigenVal", options = [manual, allocate]
 )
 
+# HoughLinesP
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(dstMatrix), rho, theta,
+     accumulatorThreshold, minLineLength, maxLineGap],
+    tests = [
+        [edges, dt, dt, dt, dt, dt, dt]
+    ], 
+    postCall = lineSegmentsPostCall
+)
+houghLinesP = package.Method(
+    "HoughLinesP", options = [allocate]
+)
 
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
@@ -1114,7 +1156,8 @@ imgproc = package.Package(
         calcHist,
         canny,
         cornerHarris,
-        cornerMinEigenVal
+        cornerMinEigenVal,
+        houghLinesP
     ],
     functions = [
         cvcommon.checkEnumValue,
@@ -1130,7 +1173,8 @@ imgproc = package.Package(
         "perspective.npy",
         "camera_matrix.npy",
         "dist_coeffs.npy",
-        "points_2d.npy"
+        "points_2d.npy",
+        "edges.png"
     ]
 )
 

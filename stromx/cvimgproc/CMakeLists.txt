@@ -42,6 +42,7 @@ set (SOURCES
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp
+    HoughLinesP.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

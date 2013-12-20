@@ -316,12 +316,14 @@ class Option(object):
     might be one option for an in-place variant of an operator and another one
     which accepts a separate data input which receives the result data.
     """
-    def __init__(self, ident, name, args = None, tests = None, inputCheck = None):
+    def __init__(self, ident, name, args = None, tests = None, 
+                 inputCheck = None, postCall = None):
         self.ident = Ident(ident)
         self.name = name
         self.args = [] if args == None else args
         self.tests = [] if tests == None else tests
         self.inputCheck = inputCheck
+        self.postCall = postCall
 
 class Constant(Argument):
     """

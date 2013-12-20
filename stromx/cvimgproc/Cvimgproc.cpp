@@ -27,6 +27,7 @@
 #include "Canny.h"
 #include "CornerHarris.h"
 #include "CornerMinEigenVal.h"
+#include "HoughLinesP.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
@@ -60,4 +61,5 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Canny);
     registry.registerOperator(new CornerHarris);
     registry.registerOperator(new CornerMinEigenVal);
+    registry.registerOperator(new HoughLinesP);
 }
