@@ -27,6 +27,7 @@ namespace stromx
 {
     namespace cvsupport
     {
+        cv::VideoCapture* WebCamera::m_webcam = 0;
         const std::string WebCamera::TYPE("WebCamera");
         const std::string WebCamera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
         const runtime::Version WebCamera::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR,STROMX_CVSUPPORT_VERSION_MINOR,STROMX_CVSUPPORT_VERSION_PATCH);
@@ -112,14 +113,14 @@ namespace stromx
         }
 
         WebCamera::WebCamera()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs()),
-            m_webcam(0)
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs())
         {
         }
         
         WebCamera::~WebCamera()
         {
             delete m_webcam;
+            m_webcam = 0;
         }
 
         void WebCamera::setParameter(unsigned int id, const runtime::Data& value)
@@ -239,28 +240,32 @@ namespace stromx
 
         void WebCamera::initialize()
         {
-            std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(0));
-            if(!webcam.get())
-                throw runtime::OperatorError(*this, "Failed to allocate WebCamera.");
-            if(!webcam->isOpened())
-                throw runtime::OperatorError(*this, "Failed to open WebCamera.");
-            
-            m_webcam = webcam.release();
-            
-            //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
-            //Since the new input and output is added to existing one, you cannot call
-            //setupInputs() and setupOutputs() again! Otherwise identical input-IDs and OutputIDs 
-            //occur twice resulting in an exception caused by validateOutputs called 
-            //in OperatorKernel::initialize. Note: setupInputs() could be called since for this operator
-            //no input is generated, i.e. inputs is automatically an empty vector!
-            std::vector<const runtime::Description*> inputs;
-            std::vector<const runtime::Description*> outputs;
-            
-            OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam));
+            if(!m_webcam)
+            {
+                std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(0));
+                if(!webcam.get())
+                    throw runtime::OperatorError(*this, "Failed to allocate WebCamera.");
+                if(!webcam->isOpened())
+                    throw runtime::OperatorError(*this, "Failed to open WebCamera.");
+                
+                m_webcam = webcam.release();
+                
+                //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
+                //Since the new input and output is added to existing one, you cannot call
+                //setupInputs() and setupOutputs() again! Otherwise identical input-IDs and OutputIDs 
+                //occur twice resulting in an exception caused by validateOutputs called 
+                //in OperatorKernel::initialize. Note: setupInputs() could be called since for this operator
+                //no input is generated, i.e. inputs is automatically an empty vector!
+                std::vector<const runtime::Description*> inputs;
+                std::vector<const runtime::Description*> outputs;
+                
+                OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam));
+            }
         }
 
         void WebCamera::deinitialize()
         {
+            OperatorKernel::deinitialize();
             delete m_webcam;
             m_webcam = 0;
         }

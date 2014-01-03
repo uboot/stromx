@@ -64,7 +64,7 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
 
-            cv::VideoCapture* m_webcam;
+            static cv::VideoCapture* m_webcam;
         };
     }
 }
