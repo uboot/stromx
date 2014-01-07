@@ -27,7 +27,7 @@ namespace stromx
 {
     namespace cvsupport
     {
-        cv::VideoCapture* WebCamera::m_webcam = 0;
+        bool WebCamera::m_AlreadyInitialized = false;
         const std::string WebCamera::TYPE("WebCamera");
         const std::string WebCamera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
         const runtime::Version WebCamera::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR,STROMX_CVSUPPORT_VERSION_MINOR,STROMX_CVSUPPORT_VERSION_PATCH);
@@ -240,7 +240,7 @@ namespace stromx
 
         void WebCamera::initialize()
         {
-            if(!m_webcam)
+            if(!m_AlreadyInitialized)
             {
                 std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(0));
                 if(!webcam.get())
@@ -260,7 +260,10 @@ namespace stromx
                 std::vector<const runtime::Description*> outputs;
                 
                 OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam));
+                WebCamera::m_AlreadyInitialized = true;
             }
+            else
+                throw runtime::OperatorError(*this, "Instance of WebCamera operator already initialized.");
         }
 
         void WebCamera::deinitialize()
@@ -268,6 +271,7 @@ namespace stromx
             OperatorKernel::deinitialize();
             delete m_webcam;
             m_webcam = 0;
+            WebCamera::m_AlreadyInitialized = false;
         }
     }
 }
