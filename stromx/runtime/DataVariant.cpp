@@ -94,6 +94,8 @@ namespace stromx
                 return isVariant(UINT_8) 
                     || isVariant(UINT_16) 
                     || isVariant(UINT_32);
+            case UINT_32_ID:
+                return isVariant(ENUM);
             case INT_ID:
                 return isVariant(UINT)
                     || isVariant(INT_8) 
