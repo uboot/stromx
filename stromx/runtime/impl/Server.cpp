@@ -120,9 +120,10 @@ namespace stromx
             }
 
             Server::Server(unsigned int port)
-              : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port)),
-                m_thread(boost::bind(&Server::run, this))
-            {}
+              : m_acceptor(m_ioService, ip::tcp::endpoint(ip::tcp::v4(), port))
+            {
+                m_thread = boost::thread(boost::bind(&Server::run, this));
+            }
             
             Server::~Server()
             {

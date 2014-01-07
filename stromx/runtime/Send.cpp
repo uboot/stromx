@@ -92,7 +92,7 @@ namespace stromx
             {
                 m_server = new impl::Server(m_port);
             }
-            catch(std::exception& e)
+            catch(std::exception&)
             {
                 throw OperatorError(*this, "Failed to start server.");
             }

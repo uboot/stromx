@@ -13,7 +13,8 @@ add_dependencies(camera stromx_example)
 
 target_link_libraries(camera
     stromx_runtime
-    stromx_example
+    stromx_cvimgproc
+    stromx_cvsupport
 )
 
 add_test(NAME example_camera COMMAND camera)

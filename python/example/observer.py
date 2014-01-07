@@ -35,7 +35,6 @@ class MyObserver(runtime.ConnectorObserver):
 factory = runtime.Factory()
 
 runtime.register(factory)
-example.register(factory)
 
 stream = runtime.XmlReader().readStream("file.xml", factory)
 

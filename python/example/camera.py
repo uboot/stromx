@@ -21,7 +21,8 @@ from stromx import *
 factory = runtime.Factory()
 
 runtime.register(factory)
-example.register(factory)
+cvimgproc.register(factory)
+cvsupport.register(factory)
 
 stream = runtime.XmlReader().readStream("camera.xml", factory)
 
@@ -31,11 +32,11 @@ camera = stream.operators()[0]
 canny = stream.operators()[2]
 
 for i in range(5):
-    with canny.getOutputData(0) as data, runtime.ReadAccess(data) as image:
+    with canny.getOutputData(1) as data, runtime.ReadAccess(data) as image:
         print "Received image {0}x{1}".format(image.get().width(),
                                               image.get().height())
     
-    canny.clearOutputData(0)
+    canny.clearOutputData(1)
     camera.clearOutputData(1)
 
 stream.stop()

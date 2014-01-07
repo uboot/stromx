@@ -1310,7 +1310,9 @@ class OpImplGenerator(MethodGenerator):
                 
             self.doc.line("{2}{0}({1});".format(self.m.ident, argStr,
                                                 namespace))
-            
+            if o.postCall != None:
+                self.doc.document(o.postCall)
+                
             self.doc.blank()
             
             v = OpImplGenerator.OutDataVisitor(self.doc)
