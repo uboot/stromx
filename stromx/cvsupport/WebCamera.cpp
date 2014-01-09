@@ -119,8 +119,8 @@ namespace stromx
         
         WebCamera::~WebCamera()
         {
-            delete m_webcam;
-            m_webcam = 0;
+            //delete m_webcam;
+            //m_webcam = 0;
         }
 
         void WebCamera::setParameter(unsigned int id, const runtime::Data& value)
@@ -206,7 +206,7 @@ namespace stromx
 
         void WebCamera::execute(runtime::DataProvider& provider)
         {            
-            BOOST_ASSERT(m_webcam);
+            BOOST_ASSERT(m_webcam.get());
         
             // grab and retrieve a frame
             // apparently the returned frame is a pointer to a fixed frame buffer
@@ -248,7 +248,7 @@ namespace stromx
                 if(!webcam->isOpened())
                     throw runtime::OperatorError(*this, "Failed to open WebCamera.");
                 
-                m_webcam = webcam.release();
+                m_webcam = webcam;//.release();
                 
                 //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
                 //Since the new input and output is added to existing one, you cannot call
@@ -259,7 +259,7 @@ namespace stromx
                 std::vector<const runtime::Description*> inputs;
                 std::vector<const runtime::Description*> outputs;
                 
-                OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam));
+                OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam.get()));
                 WebCamera::m_AlreadyInitialized = true;
             }
             else
@@ -269,8 +269,8 @@ namespace stromx
         void WebCamera::deinitialize()
         {
             OperatorKernel::deinitialize();
-            delete m_webcam;
-            m_webcam = 0;
+            //delete m_webcam;
+            //m_webcam = 0;
             WebCamera::m_AlreadyInitialized = false;
         }
     }
