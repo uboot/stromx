@@ -1,9 +1,5 @@
 project(stromx)
 
-set (STROMX_RUNTIME_VERSION_MAJOR 0)
-set (STROMX_RUNTIME_VERSION_MINOR 3)
-set (STROMX_RUNTIME_VERSION_PATCH 0)
-
 cmake_minimum_required(VERSION 2.8)
 enable_testing()
 

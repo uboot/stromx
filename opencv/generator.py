@@ -168,11 +168,11 @@ class CMakeGenerator(LibGenerator):
     Generator of the CMake file for the package.
     """
     def generate(self):
-        self.doc.line("set ({0}_VERSION_MAJOR {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_MAJOR {1})"\
             .format(self.p.ident.constant(), self.p.major))
-        self.doc.line("set ({0}_VERSION_MINOR {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_MINOR {1})"\
             .format(self.p.ident.constant(), self.p.major))
-        self.doc.line("set ({0}_VERSION_PATCH {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_PATCH {1})"\
             .format(self.p.ident.constant(), self.p.patch))
         self.doc.blank()
         
@@ -568,9 +568,9 @@ class ConfigGenerator(LibGenerator):
         self.doc.blank()
         
         version = "{0}_VERSION".format(p)
-        self.doc.line("#define STROMX_{0}_MAJOR @{0}_MAJOR@".format(version))
-        self.doc.line("#define STROMX_{0}_MINOR @{0}_MINOR@".format(version))
-        self.doc.line("#define STROMX_{0}_PATCH @{0}_PATCH@".format(version))
+        self.doc.line("#define STROMX_{0}_MAJOR @STROMX_{0}_MAJOR@".format(version))
+        self.doc.line("#define STROMX_{0}_MINOR @STROMX_{0}_MINOR@".format(version))
+        self.doc.line("#define STROMX_{0}_PATCH @STROMX_{0}_PATCH@".format(version))
         self.doc.blank()
         
         packageName = "cv::{0}".format(str(self.p.ident)[2:])
