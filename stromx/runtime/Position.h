@@ -22,7 +22,7 @@ namespace stromx
 {
     namespace runtime
     {
-        /** 2D position. */
+        /** \brief 2D position. */
         class Position
         {
         public:
