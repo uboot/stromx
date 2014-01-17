@@ -209,8 +209,8 @@ class CMakeGenerator(LibGenerator):
             .format(self.p.ident))
         self.doc.blank()
         
-        self.doc.line('set(VERSION_STRING "${{{0}_VERSION_MAJOR}}.'
-                  '${{{0}_VERSION_MINOR}}.${{{0}_VERSION_PATCH}}")'\
+        self.doc.line('set(VERSION_STRING "${{STROMX_{0}_VERSION_MAJOR}}.'
+                  '${{STROMX_{0}_VERSION_MINOR}}.${{STROMX_{0}_VERSION_PATCH}}")'\
                   .format(self.p.ident.constant()))
         self.doc.blank()
         
