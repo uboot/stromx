@@ -119,8 +119,6 @@ namespace stromx
         
         WebCamera::~WebCamera()
         {
-            //delete m_webcam;
-            //m_webcam = 0;
         }
 
         void WebCamera::setParameter(unsigned int id, const runtime::Data& value)
@@ -248,7 +246,7 @@ namespace stromx
                 if(!webcam->isOpened())
                     throw runtime::OperatorError(*this, "Failed to open WebCamera.");
                 
-                m_webcam = webcam;//.release();
+                m_webcam = webcam;
                 
                 //Construct empty inputs and outputs needed for function call OperatorKernel::initialize
                 //Since the new input and output is added to existing one, you cannot call
@@ -269,8 +267,7 @@ namespace stromx
         void WebCamera::deinitialize()
         {
             OperatorKernel::deinitialize();
-            //delete m_webcam;
-            //m_webcam = 0;
+            m_webcam.reset();
             WebCamera::m_AlreadyInitialized = false;
         }
     }
