@@ -18,6 +18,7 @@
 #define STROMX_CVSUPPORT_WEBCAMERA_H
 
 #include <opencv2/highgui/highgui.hpp>
+#include <stromx/runtime/Enum.h>
 #include <stromx/runtime/OperatorKernel.h>
 
 namespace stromx
@@ -32,8 +33,15 @@ namespace stromx
                 OUTPUT
             };
             
+            enum CameraPortId
+            {
+                PORT_0,
+                PORT_1
+            };
+            
             enum ParameterId
             {
+                CAMERA_PORT,
                 FRAMERATE,
                 BRIGHTNESS,
                 CONTRAST,
@@ -58,6 +66,7 @@ namespace stromx
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
             static const std::vector<const runtime::Parameter*> setupParameters(cv::VideoCapture* const webcam);
 
             static const std::string TYPE;
@@ -65,6 +74,7 @@ namespace stromx
             static const runtime::Version VERSION;
 
             std::auto_ptr<cv::VideoCapture> m_webcam;
+            runtime::Enum m_portId;
             static bool m_AlreadyInitialized;
         };
     }

@@ -19,6 +19,7 @@
 #include "stromx/cvsupport/WebCamera.h"
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/DataVariant.h>
+#include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/Image.h>
 #include <stromx/runtime/OperatorException.h>
@@ -47,6 +48,20 @@ namespace stromx
             outputs.push_back(output);
 
             return outputs;
+        }
+        
+        const std::vector<const runtime::Parameter*> WebCamera::setupInitParameters()
+        {
+            std::vector<const runtime::Parameter*> parameters;
+            
+            runtime::EnumParameter* cameraId = new runtime::EnumParameter(CAMERA_PORT);
+            cameraId->setAccessMode(runtime::Parameter::NONE_WRITE);
+            cameraId->setTitle("Camera port");
+            cameraId->add(runtime::EnumDescription(runtime::Enum(PORT_0), "Port 0"));
+            cameraId->add(runtime::EnumDescription(runtime::Enum(PORT_1), "Port 1"));
+            parameters.push_back(cameraId);
+            
+            return parameters;
         }
 
         const std::vector<const runtime::Parameter*> WebCamera::setupParameters(cv::VideoCapture* const webcam)
@@ -113,7 +128,8 @@ namespace stromx
         }
 
         WebCamera::WebCamera()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs())
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters()),
+            m_portId(PORT_0)
         {
         }
         
@@ -127,6 +143,12 @@ namespace stromx
             {
                 switch(id)
                 {
+                    case CAMERA_PORT:
+                    {
+                        m_portId = stromx::runtime::data_cast<runtime::Enum>(value);
+                        break;
+                    }
+                    
                     case FRAMERATE:
                     {
                         runtime::Float64 frameRate = runtime::data_cast<runtime::Float64>(value);
@@ -183,6 +205,8 @@ namespace stromx
         {
             switch(id)
             {
+                case CAMERA_PORT:
+                    return m_portId;
                 case FRAMERATE:
                     return runtime::Float64(m_webcam->get(CV_CAP_PROP_FPS));
                 case BRIGHTNESS:
@@ -240,7 +264,7 @@ namespace stromx
         {
             if(!m_AlreadyInitialized)
             {
-                std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(0));
+                std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(m_portId));
                 if(!webcam.get())
                     throw runtime::OperatorError(*this, "Failed to allocate WebCamera.");
                 if(!webcam->isOpened())
