@@ -34,6 +34,7 @@ namespace stromx
             CPPUNIT_TEST(testReadStreamEmpty);
             CPPUNIT_TEST(testReadStreamWrongFile);
             CPPUNIT_TEST(testReadStreamInvalidFile);
+            CPPUNIT_TEST(testReadStreamNonsenseFile);
             CPPUNIT_TEST(testReadStreamZip);
             CPPUNIT_TEST(testReadStreamStromx);
             CPPUNIT_TEST(testReadStreamDtd);
@@ -57,6 +58,7 @@ namespace stromx
             void testReadStreamEmpty();
             void testReadStreamWrongFile();
             void testReadStreamInvalidFile();
+            void testReadStreamNonsenseFile();
             void testReadStreamZip();
             void testReadStreamStromx();
             void testReadStreamDtd();
