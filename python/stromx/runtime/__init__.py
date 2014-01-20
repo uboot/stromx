@@ -29,7 +29,7 @@ def _dataToPyBuffer(self):
 Image.data = _dataToPyBuffer
 
 def _printOperatorKernel(self):
-    return "{0}/{1}".format(self.package(), self.type())
+    return "{0}::{1}".format(self.package(), self.type())
 
 OperatorInfo.__repr__ = _printOperatorKernel
 
