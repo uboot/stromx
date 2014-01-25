@@ -28,7 +28,9 @@ namespace stromx
 {
     namespace cvsupport
     {
-        bool WebCamera::m_AlreadyInitialized = false;
+        const int WebCamera::m_maxCameraPortScan = 10;
+        std::vector<int> WebCamera::m_availableCameraPorts;
+        std::vector<bool> WebCamera::m_alreadyInitializedCameraPorts = std::vector<bool>(m_maxCameraPortScan,false);
         const std::string WebCamera::TYPE("WebCamera");
         const std::string WebCamera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
         const runtime::Version WebCamera::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR,STROMX_CVSUPPORT_VERSION_MINOR,STROMX_CVSUPPORT_VERSION_PATCH);
@@ -54,12 +56,18 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            runtime::EnumParameter* cameraId = new runtime::EnumParameter(CAMERA_PORT);
-            cameraId->setAccessMode(runtime::Parameter::NONE_WRITE);
-            cameraId->setTitle("Camera port");
-            cameraId->add(runtime::EnumDescription(runtime::Enum(PORT_0), "Port 0"));
-            cameraId->add(runtime::EnumDescription(runtime::Enum(PORT_1), "Port 1"));
-            parameters.push_back(cameraId);
+            runtime::EnumParameter* cameraPort = new runtime::EnumParameter(CAMERA_PORT);
+            cameraPort->setAccessMode(runtime::Parameter::NONE_WRITE);
+            cameraPort->setTitle("Camera port");
+            for(std::vector<int>::iterator iterCameraPorts = m_availableCameraPorts.begin();
+                iterCameraPorts != m_availableCameraPorts.end();
+                ++iterCameraPorts)
+                {
+                    std::stringstream port;
+                    port << *iterCameraPorts;
+                    cameraPort->add(runtime::EnumDescription(static_cast<runtime::Enum>(*iterCameraPorts), "Port_" + port.str()));
+                }
+            parameters.push_back(cameraPort);
             
             return parameters;
         }
@@ -129,8 +137,20 @@ namespace stromx
 
         WebCamera::WebCamera()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters()),
-            m_portId(PORT_0)
-        {
+            m_portId(0)
+        {   
+            m_availableCameraPorts.clear();
+            
+            
+            for(int iCameraPort = 0; iCameraPort < m_maxCameraPortScan; ++iCameraPort)
+            {
+                std::auto_ptr<cv::VideoCapture> camera(new cv::VideoCapture(iCameraPort));
+                if(camera.get() && camera->isOpened())
+                {
+                    m_availableCameraPorts.push_back(iCameraPort);
+                }
+            }
+                
         }
         
         WebCamera::~WebCamera()
@@ -262,7 +282,7 @@ namespace stromx
 
         void WebCamera::initialize()
         {
-            if(!m_AlreadyInitialized)
+            if(!m_alreadyInitializedCameraPorts[m_portId])
             {
                 std::auto_ptr<cv::VideoCapture> webcam(new cv::VideoCapture(m_portId));
                 if(!webcam.get())
@@ -282,7 +302,7 @@ namespace stromx
                 std::vector<const runtime::Description*> outputs;
                 
                 OperatorKernel::initialize(inputs,outputs,setupParameters(m_webcam.get()));
-                WebCamera::m_AlreadyInitialized = true;
+                WebCamera::m_alreadyInitializedCameraPorts[m_portId] = true;
             }
             else
                 throw runtime::OperatorError(*this, "Instance of WebCamera operator already initialized.");
@@ -292,7 +312,7 @@ namespace stromx
         {
             OperatorKernel::deinitialize();
             m_webcam.reset();
-            WebCamera::m_AlreadyInitialized = false;
+            WebCamera::m_alreadyInitializedCameraPorts[m_portId] = false;
         }
     }
 }

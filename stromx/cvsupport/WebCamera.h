@@ -33,11 +33,11 @@ namespace stromx
                 OUTPUT
             };
             
-            enum CameraPortId
-            {
-                PORT_0,
-                PORT_1
-            };
+//             enum CameraPortId
+//             {
+//                 PORT_0,
+//                 PORT_1
+//             };
             
             enum ParameterId
             {
@@ -75,7 +75,9 @@ namespace stromx
 
             std::auto_ptr<cv::VideoCapture> m_webcam;
             runtime::Enum m_portId;
-            static bool m_AlreadyInitialized;
+            static std::vector<bool> m_alreadyInitializedCameraPorts;
+            static std::vector<int> m_availableCameraPorts;
+            static const int m_maxCameraPortScan;
         };
     }
 }
