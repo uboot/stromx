@@ -15,66 +15,98 @@
 */
 
 #include <stromx/runtime/Exception.h>
+#include <stromx/runtime/OperatorException.h>
 
 #include <boost/python.hpp>
 
-using namespace boost::python;
-using namespace stromx::runtime;
+namespace
+{
+    using namespace boost::python;
+    
+    // cf. http://stackoverflow.com/questions/9620268/boost-python-custom-exception-class
+    PyObject* createExceptionClass(const char* name, PyObject* baseTypeObj)
+    {
+        using std::string;
+
+        string scopeName = extract<string>(scope().attr("__name__"));
+        string qualifiedName0 = scopeName + "." + name;
+        char* qualifiedName1 = const_cast<char*>(qualifiedName0.c_str());
+
+        PyObject* typeObj = PyErr_NewException(qualifiedName1, baseTypeObj, 0);
+        if (!typeObj) 
+            throw_error_already_set();
+        scope().attr(name) = handle<>(borrowed(typeObj));
+        return typeObj;
+    }
+    
+    template <class T>
+    class Translator
+    {
+    public:
+        Translator(const std::string & name, PyObject* const baseClass)
+          : m_pyException(createExceptionClass(name.c_str(), baseClass))
+        {}
+        
+        void operator()(const T &e) const
+        {
+            PyErr_SetString(m_pyException, e.what());
+        }
+        
+        PyObject* classObject() { return m_pyException; }
+        
+    private:
+        PyObject* m_pyException;
+    };
+    
+    template <class T>
+    PyObject* proxy(const std::string & name,
+                                PyObject* const baseClass = PyExc_Exception)
+    {
+        Translator<T> translator(name, baseClass);
+        register_exception_translator<T>(translator);
+        return translator.classObject();
+    }
+    
+}
 
 void exportException()
-{                 
-    class_<Exception>("Exception", no_init)
-        .def("what", &Exception::what)
-    ;    
+{      
+    using namespace stromx::runtime;
+
+    PyObject* exception = proxy<Exception>("Exception");
+    proxy<AccessEmpty>("AccessEmpty", exception);
+    proxy<BadCast>("BadCast", exception);
     
-    class_<AccessEmpty, bases<Exception> >("AccessEmpty", no_init);
+    PyObject* dataException = proxy<DataException>("DataException", exception);
+    proxy<DeserializationError>("DeserializationError", dataException);
+    proxy<SerializationError>("SerializationError", dataException);
     
-    class_<BadCast, bases<Exception> >("BadCast", no_init);
+    PyObject* factoryException = proxy<FactoryException>("FactoryException", exception);
+    proxy<DataAllocationFailed>("DataAllocationFailed", factoryException);
+    proxy<OperatorAllocationFailed>("OperatorAllocationFailed", factoryException);
     
-    class_<DataException, bases<Exception> >("DataException", no_init)
-        .def("package", &DataException::package, return_internal_reference<>())
-        .def("type", &DataException::type, return_internal_reference<>())
-    ;
     
-    class_<DeserializationError, bases<DataException> >("DeserializationError", no_init);
+    PyObject* fileException = proxy<FileException>("FileException", exception);
+    proxy<FileAccessFailed>("FileAccessFailed", fileException);
+    proxy<InconsistentFileContent>("InconsistentFileContent", fileException);
+    proxy<InvalidFileFormat>("InvalidFileFormat", fileException);
     
-    class_<SerializationError, bases<DataException> >("SerializationError", no_init);
-    
-    class_<FactoryException, bases<Exception> >("FactoryException", no_init)
-        .def("package", &FactoryException::package, return_internal_reference<>())
-        .def("type", &FactoryException::type, return_internal_reference<>())
-    ;
-    
-    class_<DataAllocationFailed, bases<FactoryException> >("DataAllocationFailed", no_init);
-    
-    class_<OperatorAllocationFailed, bases<FactoryException> >("OperatorAllocationFailed", no_init);
-    
-    class_<FileException, bases<Exception> >("FileException", no_init)
-        .def("filename", &FileException::filename, return_internal_reference<>())
-        .def("container", &FileException::container, return_internal_reference<>())
-    ;
-    
-    class_<FileAccessFailed, bases<FileException> >("FileAccessFailed", no_init);
-    
-    class_<InconsistentFileContent, bases<FileException> >("InconsistentFileContent", no_init);
-    
-    class_<InvalidFileFormat, bases<FileException> >("InvalidFileFormat", no_init);
-    
-    class_<InternalError, bases<Exception> >("InternalError", no_init);
-    
-    class_<Interrupt, bases<Exception> >("Interrupt", no_init);
-    
-    class_<NoInputFile, bases<Exception> >("NoInputFile", no_init);
-    
-    class_<NotImplemented, bases<Exception> >("NotImplemented", no_init);
-    
-    class_<OutOfMemory, bases<Exception> >("OutOfMemory", no_init);
-    
-    class_<Timeout, bases<Exception> >("Timeout", no_init);
-    
-    class_<WrongArgument, bases<Exception> >("WrongArgument", no_init);
-    
-    class_<WrongState, bases<Exception> >("WrongState", no_init);
-    
-    class_<WrongId, bases<Exception> >("WrongId", no_init);
+    proxy<Interrupt>("Interrupt", exception);
+    proxy<NoInputFile>("NoInputFile", exception);
+    proxy<NotImplemented>("NotImplemented", exception);
+    proxy<OutOfMemory>("OutOfMemory", exception);
+    proxy<Timeout>("Timeout", exception);
+    proxy<WrongState>("WrongState", exception);
+    proxy<WrongId>("WrongId", exception);
+                    
+    PyObject* operatorError = proxy<OperatorError>("OperatorError", exception);
+    proxy<InputError>("InputError", operatorError);
+    proxy<OutputError>("OutputError", operatorError);
+    proxy<ParameterError>("ParameterError", operatorError);
+                    
+    PyObject* parameterError = proxy<ParameterError>("ParameterError", exception);
+    proxy<ParameterAccessViolation>("ParameterAccessViolation", parameterError);
+    proxy<WrongParameterType>("WrongParameterType", parameterError);
+    proxy<WrongParameterValue>("WrongParameterValue", parameterError);
+    proxy<WrongParameterId>("WrongParameterId", operatorError);
 }

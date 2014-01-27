@@ -15,7 +15,6 @@ set(SOURCES
     Matrix.cpp
     None.cpp
     Operator.cpp
-    OperatorException.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp
     Position.cpp
