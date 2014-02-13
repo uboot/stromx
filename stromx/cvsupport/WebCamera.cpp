@@ -143,14 +143,20 @@ namespace stromx
             {           
                 for(int iCameraPort = 0; iCameraPort < m_maxCameraPortScan; ++iCameraPort)
                 {
-                    std::auto_ptr<cv::VideoCapture> camera(new cv::VideoCapture(iCameraPort));
-                    if(camera.get() && camera->isOpened())
+                    try
                     {
-                        m_availableCameraPorts.push_back(iCameraPort);
+                        std::auto_ptr<cv::VideoCapture> camera(new cv::VideoCapture(iCameraPort));
+                        
+                        if(camera.get() && camera->isOpened())
+                        {
+                            m_availableCameraPorts.push_back(iCameraPort);
+                        }
+                    }
+                    catch(cv::Exception&)
+                    {
                     }
                 }
             }
-                
         }
         
         WebCamera::~WebCamera()
