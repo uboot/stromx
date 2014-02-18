@@ -54,7 +54,7 @@ namespace stromx
             //constructor
             WebCamera();
             //destructor
-            virtual ~WebCamera();
+            ~WebCamera();
             virtual OperatorKernel* clone() const {return new WebCamera;}
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();

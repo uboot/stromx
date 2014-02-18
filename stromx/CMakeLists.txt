@@ -7,3 +7,5 @@ if(BUILD_OPENCV_WRAPPER)
    add_subdirectory(cvsupport)
    add_subdirectory(cvimgproc)
 endif()
+
+add_subdirectory(raspi)
