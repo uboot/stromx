@@ -24,11 +24,20 @@ using namespace stromx::runtime;
 
 void exportDataVariant()
 {         
+    scope in_DataVariant =
     class_<DataVariant>("DataVariant", no_init)
-        .def_readonly("NONE", DataVariant::NONE)
-        .def("title", &DataVariant::title, return_internal_reference<>())
+        .def("title", &DataVariant::title, return_value_policy<copy_const_reference>())
         .def("isVariant", &DataVariant::isVariant)
         .def("id", &DataVariant::id)
         .def("package", &DataVariant::package, return_internal_reference<>())
     ;
+    
+    in_DataVariant.attr("NONE") = DataVariant::NONE; 
+    in_DataVariant.attr("DATA") = DataVariant::DATA; 
+    in_DataVariant.attr("BOOL") = DataVariant::BOOL; 
+    in_DataVariant.attr("INT") = DataVariant::INT; 
+    in_DataVariant.attr("UINT") = DataVariant::UINT; 
+    in_DataVariant.attr("FLOAT") = DataVariant::FLOAT; 
+    in_DataVariant.attr("STRING") = DataVariant::STRING;
+    in_DataVariant.attr("IMAGE") = DataVariant::IMAGE;
 }

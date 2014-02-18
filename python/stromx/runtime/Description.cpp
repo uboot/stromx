@@ -24,7 +24,7 @@ using namespace stromx::runtime;
 void exportDescription()
 {         
     class_<Description>("Description", no_init)
-        .def("title", &Description::title, return_internal_reference<>())
+        .def("title", &Description::title, return_value_policy<copy_const_reference>())
         .def("id", &Description::id)
         .def("variant", &Description::variant, return_internal_reference<>())
         .def("min", &Description::min, return_internal_reference<>())
