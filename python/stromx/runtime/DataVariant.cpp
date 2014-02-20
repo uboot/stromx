@@ -36,8 +36,26 @@ void exportDataVariant()
     in_DataVariant.attr("DATA") = DataVariant::DATA; 
     in_DataVariant.attr("BOOL") = DataVariant::BOOL; 
     in_DataVariant.attr("INT") = DataVariant::INT; 
-    in_DataVariant.attr("UINT") = DataVariant::UINT; 
+    in_DataVariant.attr("INT_8") = DataVariant::INT_8;
+    in_DataVariant.attr("INT_16") = DataVariant::INT_16; 
+    in_DataVariant.attr("INT_32") = DataVariant::INT_32; 
+    in_DataVariant.attr("UINT") = DataVariant::UINT;
+    in_DataVariant.attr("UINT_8") = DataVariant::UINT_8;
+    in_DataVariant.attr("UINT_16") = DataVariant::UINT_16;
+    in_DataVariant.attr("UINT_32") = DataVariant::UINT_32;
     in_DataVariant.attr("FLOAT") = DataVariant::FLOAT; 
+    in_DataVariant.attr("FLOAT_32") = DataVariant::FLOAT_32; 
+    in_DataVariant.attr("FLOAT_64") = DataVariant::FLOAT_64; 
     in_DataVariant.attr("STRING") = DataVariant::STRING;
     in_DataVariant.attr("IMAGE") = DataVariant::IMAGE;
+    in_DataVariant.attr("RGB_24_IMAGE") = DataVariant::RGB_24_IMAGE;
+    in_DataVariant.attr("BGR_24_IMAGE") = DataVariant::BGR_24_IMAGE;
+    in_DataVariant.attr("RGB_48_IMAGE") = DataVariant::RGB_48_IMAGE;
+    in_DataVariant.attr("BGR_48_IMAGE") = DataVariant::BGR_48_IMAGE;
+    in_DataVariant.attr("MONO_8_IMAGE") = DataVariant::MONO_8_IMAGE;
+    in_DataVariant.attr("MONO_16_IMAGE") = DataVariant::MONO_16_IMAGE;
+    in_DataVariant.attr("BAYERBG_8_IMAGE") = DataVariant::BAYERBG_8_IMAGE;
+    in_DataVariant.attr("BAYERGB_8_IMAGE") = DataVariant::BAYERGB_8_IMAGE;
+    in_DataVariant.attr("BAYERBG_16_IMAGE") = DataVariant::BAYERBG_16_IMAGE;
+    in_DataVariant.attr("BAYERGB_16_IMAGE") = DataVariant::BAYERGB_16_IMAGE;
 }
