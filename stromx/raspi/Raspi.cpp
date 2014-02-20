@@ -14,8 +14,9 @@
 *  limitations under the License.
 */
 
-#include <stromx/raspi/RaspiCam.h>
-#include <stromx/runtime/Registry.h>
+#include "stromx/raspi/Raspi.h"
+#include "stromx/raspi/RaspiCam.h"
+#include "stromx/runtime/Registry.h"
 
 void stromxRaspiRegister(stromx::runtime::Registry& registry)
 {

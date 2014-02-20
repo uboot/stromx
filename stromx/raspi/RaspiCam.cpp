@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#include <stromx/raspi/Config.h>
-#include <stromx/raspi/RaspiCam.h>
+#include "stromx/raspi/Config.h"
+#include "stromx/raspi/RaspiCam.h"
 
 namespace stromx
 {
