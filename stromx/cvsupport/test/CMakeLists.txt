@@ -22,10 +22,10 @@ add_executable(stromx_cvsupport_test
     ../AdjustRgbChannels.cpp
     ../Cvsupport.cpp
     ../Buffer.cpp
-    ../Camera.cpp
     ../Clip.cpp
     ../ConstImage.cpp
     ../ConvertPixelType.cpp
+    ../DummyCamera.cpp
     ../Image.cpp
     ../Matrix.cpp
     ../Utilities.cpp
@@ -33,10 +33,10 @@ add_executable(stromx_cvsupport_test
     AdjustRgbChannelsTest.cpp
     BufferTest.cpp
     CameraBufferTest.cpp
-    CameraTest.cpp
     ClipTest.cpp
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
+    DummyCameraTest.cpp
     ImageTest.cpp
     CvsupportTest.cpp
     main.cpp

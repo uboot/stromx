@@ -23,7 +23,7 @@
 #include <stromx/cvsupport/Buffer.h>
 #include <stromx/cvsupport/ConstImage.h>
 #include <stromx/cvsupport/AdjustRgbChannels.h>
-#include <stromx/cvsupport/Camera.h>
+#include <stromx/cvsupport/DummyCamera.h>
 #include <stromx/cvsupport/ConvertPixelType.h>
 #include <stromx/cvsupport/Clip.h>
 
@@ -42,7 +42,7 @@ BOOST_PYTHON_MODULE(libcvsupport)
     
     stromx::python::exportOperatorKernel<AdjustRgbChannels>("AdjustRgbChannels");
     stromx::python::exportOperatorKernel<Buffer>("Buffer");
-    stromx::python::exportOperatorKernel<Camera>("Camera");
+    stromx::python::exportOperatorKernel<DummyCamera>("DummyCamera");
     stromx::python::exportOperatorKernel<Clip>("Clip");
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");

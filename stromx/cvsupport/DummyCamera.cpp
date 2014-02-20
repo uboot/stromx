@@ -15,7 +15,7 @@
 */
 
 #include "stromx/cvsupport/AdjustRgbChannels.h"
-#include "stromx/cvsupport/Camera.h"
+#include "stromx/cvsupport/DummyCamera.h"
 #include "stromx/cvsupport/Clip.h"
 #include "stromx/cvsupport/ConstImage.h"
 #include "stromx/cvsupport/ConvertPixelType.h"
@@ -42,12 +42,12 @@ namespace stromx
 
     namespace cvsupport
     {
-        const std::string Camera::TYPE("Camera");
+        const std::string DummyCamera::TYPE("DummyCamera");
         
-        const std::string Camera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version Camera::VERSION(0, 1, 0);
+        const std::string DummyCamera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
+        const Version DummyCamera::VERSION(0, 1, 0);
         
-        Camera::Camera()
+        DummyCamera::DummyCamera()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_stream(0),
             m_input(0),
@@ -86,7 +86,7 @@ namespace stromx
             m_stream = new Stream();
         }
         
-        Camera::~Camera()
+        DummyCamera::~DummyCamera()
         {
             delete m_stream;
             
@@ -101,7 +101,7 @@ namespace stromx
             delete m_input;
         }
         
-        void Camera::deinitialize()
+        void DummyCamera::deinitialize()
         {
             // remove all operators from the stream and deinitialize them
             std::vector<Operator*> ops = m_stream->operators();
@@ -116,7 +116,7 @@ namespace stromx
             OperatorKernel::deinitialize();
         }
         
-        void Camera::initialize()
+        void DummyCamera::initialize()
         {
             OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
             
@@ -179,7 +179,7 @@ namespace stromx
             }
         }
 
-        void Camera::setParameter(unsigned int id, const Data& value)
+        void DummyCamera::setParameter(unsigned int id, const Data& value)
         {
             try
             {
@@ -387,7 +387,7 @@ namespace stromx
             }
         }
 
-        const DataRef Camera::getParameter(unsigned int id) const
+        const DataRef DummyCamera::getParameter(unsigned int id) const
         {
             switch(id)
             {
@@ -443,7 +443,7 @@ namespace stromx
             }
         }  
         
-        void Camera::execute(DataProvider& provider)
+        void DummyCamera::execute(DataProvider& provider)
         {
             // allow parameter access while waiting for data
             provider.unlockParameters();
@@ -462,25 +462,25 @@ namespace stromx
                 provider.sendOutputData(imageMapper);
         }
         
-        void Camera::activate()
+        void DummyCamera::activate()
         {
             m_stream->start();
         }
 
-        void Camera::deactivate()
+        void DummyCamera::deactivate()
         {
             m_stream->stop();
             m_stream->join();
         }
         
-        const std::vector<const runtime::Description*> Camera::setupInputs()
+        const std::vector<const runtime::Description*> DummyCamera::setupInputs()
         {
             std::vector<const Description*> inputs;
             
             return inputs;
         }
         
-        const std::vector<const Description*> Camera::setupOutputs()
+        const std::vector<const Description*> DummyCamera::setupOutputs()
         {
             std::vector<const Description*> outputs;
             
@@ -498,7 +498,7 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Parameter*> Camera::setupInitParameters()
+        const std::vector<const Parameter*> DummyCamera::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -510,7 +510,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const Parameter*> Camera::setupParameters()
+        const std::vector<const Parameter*> DummyCamera::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -615,7 +615,7 @@ namespace stromx
             return parameters;
         }
         
-        void Camera::setRgbParameters()
+        void DummyCamera::setRgbParameters()
         {
             double exposureCoeff = double(m_exposure) / double(BASE_EXPOSURE);
             
@@ -624,7 +624,7 @@ namespace stromx
             m_adjustRgbChannels->setParameter(AdjustRgbChannels::BLUE, Float64(exposureCoeff * m_wbBlue));
         }
   
-        bool Camera::validateBufferSize(unsigned int bufferSize, unsigned int width, unsigned int height,
+        bool DummyCamera::validateBufferSize(unsigned int bufferSize, unsigned int width, unsigned int height,
                                         unsigned int depth, const stromx::runtime::Enum outputType)
         {
             Image::PixelType outputPixelType = Image::PixelType(int(outputType));

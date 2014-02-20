@@ -20,10 +20,10 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Buffer.cpp
-    Camera.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
+    DummyCamera.cpp
     Image.cpp
     Cvsupport.cpp
     Matrix.cpp

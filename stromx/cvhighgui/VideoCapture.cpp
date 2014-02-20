@@ -29,12 +29,12 @@ namespace stromx
 {
     namespace cvhighgui
     {
-        const int VideoCapture     ::m_maxCameraPortScan = 10;
+        const int VideoCapture::m_maxCameraPortScan = 10;
         std::vector<int> VideoCapture::m_availableCameraPorts;
         std::vector<bool> VideoCapture::m_alreadyInitializedCameraPorts = std::vector<bool>(m_maxCameraPortScan,false);
         const std::string VideoCapture::TYPE("VideoCapture");
-        const std::string VideoCapture::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const runtime::Version VideoCapture::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR,STROMX_CVSUPPORT_VERSION_MINOR,STROMX_CVSUPPORT_VERSION_PATCH);
+        const std::string VideoCapture::PACKAGE(STROMX_CVHIGHGUI_PACKAGE_NAME);
+        const runtime::Version VideoCapture::VERSION(STROMX_CVHIGHGUI_VERSION_MAJOR,STROMX_CVHIGHGUI_VERSION_MINOR,STROMX_CVHIGHGUI_VERSION_PATCH);
         
         const std::vector<const runtime::Description*> VideoCapture::setupInputs()
         {

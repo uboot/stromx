@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_CAMERATEST_H
-#define STROMX_CVSUPPORT_CAMERATEST_H
+#ifndef STROMX_CVSUPPORT_DUMMYCAMERATEST_H
+#define STROMX_CVSUPPORT_DUMMYCAMERATEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -30,9 +30,9 @@ namespace stromx
 
     namespace cvsupport
     {
-        class CameraTest : public CPPUNIT_NS :: TestFixture
+        class DummyCameraTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (CameraTest);
+            CPPUNIT_TEST_SUITE (DummyCameraTest);
             CPPUNIT_TEST (testExecuteSoftwareTrigger);
             CPPUNIT_TEST (testExecuteInternalTrigger);
             CPPUNIT_TEST (testAdjustRoi);
@@ -43,7 +43,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                CameraTest() : m_operator(0) {}
+                DummyCameraTest() : m_operator(0) {}
                 
                 void setUp();
                 void tearDown();
@@ -63,4 +63,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CVSUPPORT_CAMERATEST_H
+#endif // STROMX_CVSUPPORT_DUMMYCAMERATEST_H
