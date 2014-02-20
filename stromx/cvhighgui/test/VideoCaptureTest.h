@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_WEBCAMERATEST_H
-#define STROMX_CVSUPPORT_WEBCAMERATEST_H
+#ifndef STROMX_CVHIGHGUI_VIDEOCAPTURETEST_H
+#define STROMX_CVHIGHGUI_VIDEOCAPTURETEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -27,13 +27,13 @@ namespace stromx
         class OperatorTester;
     }
     
-    namespace cvsupport
+    namespace cvhighgui
     {
-        class WebCameraTest : public CPPUNIT_NS :: TestFixture
+        class VideoCaptureTest : public CPPUNIT_NS :: TestFixture
         {
             
             
-            CPPUNIT_TEST_SUITE (WebCameraTest);
+            CPPUNIT_TEST_SUITE (VideoCaptureTest);
             CPPUNIT_TEST (testParameterFrameRate);
             CPPUNIT_TEST (testParameterBrightness);
             CPPUNIT_TEST (testParameterContrast);
@@ -45,7 +45,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE_END ();
             
             public:
-                WebCameraTest():m_operator(0),m_hasCamera(true),m_deltaAcceptance(0.01){}
+                VideoCaptureTest():m_operator(0),m_hasCamera(true),m_deltaAcceptance(0.01){}
                 
                 void setUp();
                 void tearDown();
@@ -71,4 +71,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_CVSUPPORT_WEBCAMERATEST_H
+#endif // STROMX_CVHIGHGUI_VIDEOCAPTURETEST_H

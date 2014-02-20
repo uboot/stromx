@@ -14,18 +14,20 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_WEBCAMERA_H
-#define STROMX_CVSUPPORT_WEBCAMERA_H
+#ifndef STROMX_CVHIGHGUI_VIDEOCAPTURE_H
+#define STROMX_CVHIGHGUI_VIDEOCAPTURE_H
 
 #include <opencv2/highgui/highgui.hpp>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/OperatorKernel.h>
 
+#include "stromx/cvhighgui/Config.h"
+
 namespace stromx
 {
-    namespace cvsupport
+    namespace cvhighgui
     {
-        class STROMX_CVSUPPORT_API WebCamera : public runtime::OperatorKernel
+        class STROMX_CVHIGHGUI_API VideoCapture : public runtime::OperatorKernel
         {
         public:  
             enum OutputId
@@ -52,10 +54,10 @@ namespace stromx
             };
                 
             //constructor
-            WebCamera();
+            VideoCapture();
             //destructor
-            virtual ~WebCamera();
-            virtual OperatorKernel* clone() const {return new WebCamera;}
+            virtual ~VideoCapture();
+            virtual OperatorKernel* clone() const {return new VideoCapture;}
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             virtual void deinitialize();
@@ -82,4 +84,4 @@ namespace stromx
     }
 }
 
-#endif //STROMX_CVSUPPORT_WEBCAMERA_H
+#endif //STROMX_CVHIGHGUI_VIDEOCAPTURE_H

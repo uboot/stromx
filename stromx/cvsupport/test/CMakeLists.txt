@@ -29,7 +29,6 @@ add_executable(stromx_cvsupport_test
     ../Image.cpp
     ../Matrix.cpp
     ../Utilities.cpp
-    ../WebCamera.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
     BufferTest.cpp
@@ -44,7 +43,6 @@ add_executable(stromx_cvsupport_test
     MatrixTest.cpp
     SendReceiveTest.cpp
     UtilitiesTest.cpp
-    WebCameraTest.cpp
 )
 
 set_target_properties(stromx_cvsupport_test PROPERTIES

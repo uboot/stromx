@@ -23,7 +23,6 @@
 #include "stromx/cvsupport/Image.h"
 #include "stromx/cvsupport/Matrix.h"
 #include "stromx/cvsupport/Cvsupport.h"
-#include "stromx/cvsupport/WebCamera.h"
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 
@@ -40,5 +39,4 @@ void stromxCvsupportRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Clip);
     registry.registerOperator(new ConstImage);
     registry.registerOperator(new ConvertPixelType);
-    registry.registerOperator(new WebCamera);
 }

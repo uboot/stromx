@@ -1,12 +1,12 @@
-#include "Cvcore.h"
+#include "stromx/cvcore/Cvcore.h"
 
-#include "Absdiff.h"
-#include "Add.h"
-#include "AddWeighted.h"
-#include "Bitwise_and.h"
-#include "Bitwise_not.h"
-#include "Bitwise_or.h"
-#include "Bitwise_xor.h"
+#include "stromx/cvcore/Absdiff.h"
+#include "stromx/cvcore/Add.h"
+#include "stromx/cvcore/AddWeighted.h"
+#include "stromx/cvcore/Bitwise_and.h"
+#include "stromx/cvcore/Bitwise_not.h"
+#include "stromx/cvcore/Bitwise_or.h"
+#include "stromx/cvcore/Bitwise_xor.h"
 #include <stromx/runtime/Registry.h>
 
 void stromxCvcoreRegister(stromx::runtime::Registry& registry)

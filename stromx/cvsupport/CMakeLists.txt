@@ -28,7 +28,6 @@ set(SOURCES
     Cvsupport.cpp
     Matrix.cpp
     Utilities.cpp
-    WebCamera.cpp
     impl/CameraBuffer.cpp
 )
 

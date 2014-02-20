@@ -76,10 +76,14 @@ class LibImplGenerator(LibGenerator):
     Generator of package implementation files.
     """
     def generate(self):
-        self.doc.line('#include "{0}.h"'.format(self.p.ident.className()))
+        self.doc.line('#include "stromx/{0}/{1}.h"'.format(
+            self.p.ident, self.p.ident.className()
+        ))
         self.doc.blank()
         for m in self.p.methods:
-            self.doc.line('#include "{0}.h"'.format(m.ident.className()))
+            self.doc.line('#include "stromx/{0}/{1}.h"'.format(
+            self.p.ident, m.ident.className()
+        ))
         self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.blank()
         
@@ -205,7 +209,7 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
             .format(self.p.ident))
         self.doc.blank()
-        self.doc.line("add_dependencies(stromx_{0} stromx_runtime)"\
+        self.doc.line("add_dependencies(stromx_{0} stromx_cvsupport)"\
             .format(self.p.ident))
         self.doc.blank()
         
