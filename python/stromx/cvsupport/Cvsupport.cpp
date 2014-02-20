@@ -26,6 +26,7 @@
 #include <stromx/cvsupport/Camera.h>
 #include <stromx/cvsupport/ConvertPixelType.h>
 #include <stromx/cvsupport/Clip.h>
+#include <stromx/cvsupport/WebCamera.h>
 
 void exportImage();
 void exportMatrix();
@@ -46,4 +47,5 @@ BOOST_PYTHON_MODULE(libcvsupport)
     stromx::python::exportOperatorKernel<Clip>("Clip");
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
+    stromx::python::exportOperatorKernel<WebCamera>("WebCamera");
 }

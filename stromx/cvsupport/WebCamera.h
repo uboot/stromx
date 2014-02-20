@@ -25,7 +25,7 @@ namespace stromx
 {
     namespace cvsupport
     {
-        class WebCamera : public runtime::OperatorKernel
+        class STROMX_CVSUPPORT_API WebCamera : public runtime::OperatorKernel
         {
         public:  
             enum OutputId
