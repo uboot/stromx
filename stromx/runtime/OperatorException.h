@@ -19,11 +19,13 @@
 
 #include "stromx/runtime/Exception.h"
 
+#include "stromx/runtime/OperatorInfo.h"
+#include "stromx/runtime/Parameter.h"
+
 namespace stromx
 {
     namespace runtime
     {
-        class OperatorInfo;
         class Parameter;
         
         /** \brief Error in connection with a specified operator. */
@@ -33,20 +35,25 @@ namespace stromx
             /** Constructs an operator exception, i.e. an exception related to an operator. */
             OperatorError(const OperatorInfo& op, const std::string & message)
               : Exception(message),
-                m_operator(op)
+                m_type(op.type()),
+                m_package(op.package())
             {}
             
             /** Constructs an operator exception, i.e. an exception related to an operator. */
             OperatorError(const OperatorInfo& op, const std::string & message, const std::string & name)
               : Exception(message),
-                m_operator(op),
-                m_name(name)
+                m_name(name),
+                m_type(op.type()),
+                m_package(op.package())
             {}
             
             virtual ~OperatorError() throw() {}
             
-            /** Returns the operator this exception relates to. */
-            const OperatorInfo& op() const { return m_operator; }
+            /** Returns the type of the operator this exception relates to. */
+            const std::string & type() const { return m_type; }
+            
+            /** Returns the package of the operator this exception relates to. */
+            const std::string & package() const { return m_package; }
             
             /** Returns the name of the operator this exception relates to. */
             const std::string & name() const { return m_name; }
@@ -55,8 +62,9 @@ namespace stromx
             void setName(const std::string & name) { m_name = name; }
             
         private:
-            const OperatorInfo& m_operator;
             std::string m_name;
+            const std::string m_type;
+            const std::string m_package;
         };
         
         /** \brief The current state of the operator does not allow a specific operation. */
@@ -87,13 +95,26 @@ namespace stromx
         public:
             ParameterError(const Parameter& param, const OperatorInfo& op, const std::string & message = "ParameterError")
               : OperatorError(op, message),
-                m_parameter(param)
+                m_id(param.id()),
+                m_title(param.title()),
+                m_variant(param.variant())
             {}
             
-            const Parameter & parameter() const { return m_parameter; }
+            virtual ~ParameterError() throw() {}
+            
+            /** Returns the ID of the parameter this exception relates to. */
+            unsigned int id() const { return m_id; }
+            
+            /** Returns the title of the parameter this exception relates to. */
+            const std::string & title() const { return m_title; }
+            
+            /** Returns the data variant of the parameter this exception relates to. */
+            const DataVariant & variant() const { return m_variant; }
             
         private:
-            const Parameter& m_parameter;
+            const unsigned int m_id;
+            const std::string m_title;
+            const DataVariant & m_variant;
         };
         
         /** \brief Tried to set a parameter to data of the wrong type. */
