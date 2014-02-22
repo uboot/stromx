@@ -56,13 +56,8 @@ namespace stromx
             //constructor
             VideoCapture();
             //destructor
-<<<<<<< HEAD:stromx/cvsupport/WebCamera.h
-            ~WebCamera();
-            virtual OperatorKernel* clone() const {return new WebCamera;}
-=======
             virtual ~VideoCapture();
             virtual OperatorKernel* clone() const {return new VideoCapture;}
->>>>>>> uboot/master:stromx/cvhighgui/VideoCapture.h
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             virtual void deinitialize();
