@@ -1,5 +1,5 @@
 set (STROMX_CVSUPPORT_VERSION_MAJOR 0)
-set (STROMX_CVSUPPORT_VERSION_MINOR 2)
+set (STROMX_CVSUPPORT_VERSION_MINOR 3)
 set (STROMX_CVSUPPORT_VERSION_PATCH 0)
 
 configure_file (
@@ -20,15 +20,14 @@ include_directories(
 set(SOURCES
     AdjustRgbChannels.cpp
     Buffer.cpp
-    Camera.cpp
     Clip.cpp
     ConvertPixelType.cpp
     ConstImage.cpp
+    DummyCamera.cpp
     Image.cpp
     Cvsupport.cpp
     Matrix.cpp
     Utilities.cpp
-    WebCamera.cpp
     impl/CameraBuffer.cpp
 )
 

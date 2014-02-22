@@ -78,6 +78,7 @@
                       (<xsl:apply-templates select="DataVariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
+                    <xsl:apply-templates select="EnumValue"/>
                   </xsl:for-each>
 
                   <h2>Inputs</h2>
@@ -87,6 +88,7 @@
                       (<xsl:apply-templates select="DataVariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
+                    <xsl:apply-templates select="EnumValue"/>
                   </xsl:for-each>
 
                   <h2>Outputs</h2>
@@ -96,6 +98,7 @@
                       (<xsl:apply-templates select="DataVariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
+                    <xsl:apply-templates select="EnumValue"/>
                   </xsl:for-each>
                 </body>
               </html>
@@ -110,6 +113,12 @@
     <p><xsl:value-of select="."/></p>
   </xsl:template>
 
+  <xsl:template match="EnumValue">
+    <h4>
+        <xsl:value-of select="@title"/>
+    </h4>
+    <xsl:apply-templates select="Description"/>
+  </xsl:template>
 
   <xsl:template match="DataVariantReference">
     <xsl:variable name="parentVariantId" select="@id"/>

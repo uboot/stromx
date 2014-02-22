@@ -89,6 +89,10 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
+
+
+%check
+cd build
 PYTHONPATH=`pwd`/python make test ARGS="-V"
 
 

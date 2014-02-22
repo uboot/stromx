@@ -17,12 +17,21 @@
             This operators convolutes the input image with a Gaussian kernel of a given
             width. The operator can operate in-place.
         </Description>
-        <Parameter id="0" title="In place">
-            <DataVariantReference id="4" package="runtime"/>
+        <Parameter id="0" title="Data flow">
+            <DataVariantReference id="5" package="runtime"/>
+            <EnumValue id="0" title="Manual">
+                <Description>
+                    The operator is initialized with an input and a destination input.
+                </Description>
+            </EnumValue>
+            <EnumValue id="2" title="In place">
+                <Description>
+                    The operator is initialized with only one input and the image at
+                    this input is blurred in-place
+                </Description>
+            </EnumValue>
             <Description>
-                If true the operator is initialized with only one input and the image at
-                this input is blurred in-place. Otherwise, the operator is initialized with
-                an input and a destination input.
+                Determines the memory management of the operator.
             </Description>
         </Parameter>
         <Parameter id="0" title="Kernel size">

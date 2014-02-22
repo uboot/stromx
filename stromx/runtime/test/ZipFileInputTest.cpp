@@ -48,6 +48,11 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("Test2"), result);
         }
         
+        void ZipFileInputTest::testInvalidZipFile()
+        {
+            CPPUNIT_ASSERT_THROW(new ZipFileInput("invalid.zip"), FileAccessFailed);
+        }
+        
         void ZipFileInputTest::testFile()
         {
             std::string result;

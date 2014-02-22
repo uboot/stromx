@@ -1,6 +1,6 @@
-set (CVIMGPROC_VERSION_MAJOR 0)
-set (CVIMGPROC_VERSION_MINOR 0)
-set (CVIMGPROC_VERSION_PATCH 1)
+set (STROMX_CVIMGPROC_VERSION_MAJOR 0)
+set (STROMX_CVIMGPROC_VERSION_MINOR 0)
+set (STROMX_CVIMGPROC_VERSION_PATCH 1)
 
 configure_file (
     ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
@@ -47,9 +47,9 @@ set (SOURCES
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})
 
-add_dependencies(stromx_cvimgproc stromx_runtime)
+add_dependencies(stromx_cvimgproc stromx_cvsupport)
 
-set(VERSION_STRING "${CVIMGPROC_VERSION_MAJOR}.${CVIMGPROC_VERSION_MINOR}.${CVIMGPROC_VERSION_PATCH}")
+set(VERSION_STRING "${STROMX_CVIMGPROC_VERSION_MAJOR}.${STROMX_CVIMGPROC_VERSION_MINOR}.${STROMX_CVIMGPROC_VERSION_PATCH}")
 
 set_target_properties (stromx_cvimgproc PROPERTIES
     VERSION ${VERSION_STRING}

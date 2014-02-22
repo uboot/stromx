@@ -22,29 +22,27 @@ add_executable(stromx_cvsupport_test
     ../AdjustRgbChannels.cpp
     ../Cvsupport.cpp
     ../Buffer.cpp
-    ../Camera.cpp
     ../Clip.cpp
     ../ConstImage.cpp
     ../ConvertPixelType.cpp
+    ../DummyCamera.cpp
     ../Image.cpp
     ../Matrix.cpp
     ../Utilities.cpp
-    ../WebCamera.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
     BufferTest.cpp
     CameraBufferTest.cpp
-    CameraTest.cpp
     ClipTest.cpp
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
+    DummyCameraTest.cpp
     ImageTest.cpp
     CvsupportTest.cpp
     main.cpp
     MatrixTest.cpp
     SendReceiveTest.cpp
     UtilitiesTest.cpp
-    WebCameraTest.cpp
 )
 
 set_target_properties(stromx_cvsupport_test PROPERTIES

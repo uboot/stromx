@@ -76,10 +76,14 @@ class LibImplGenerator(LibGenerator):
     Generator of package implementation files.
     """
     def generate(self):
-        self.doc.line('#include "{0}.h"'.format(self.p.ident.className()))
+        self.doc.line('#include "stromx/{0}/{1}.h"'.format(
+            self.p.ident, self.p.ident.className()
+        ))
         self.doc.blank()
         for m in self.p.methods:
-            self.doc.line('#include "{0}.h"'.format(m.ident.className()))
+            self.doc.line('#include "stromx/{0}/{1}.h"'.format(
+            self.p.ident, m.ident.className()
+        ))
         self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.blank()
         
@@ -168,11 +172,11 @@ class CMakeGenerator(LibGenerator):
     Generator of the CMake file for the package.
     """
     def generate(self):
-        self.doc.line("set ({0}_VERSION_MAJOR {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_MAJOR {1})"\
             .format(self.p.ident.constant(), self.p.major))
-        self.doc.line("set ({0}_VERSION_MINOR {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_MINOR {1})"\
             .format(self.p.ident.constant(), self.p.major))
-        self.doc.line("set ({0}_VERSION_PATCH {1})"\
+        self.doc.line("set (STROMX_{0}_VERSION_PATCH {1})"\
             .format(self.p.ident.constant(), self.p.patch))
         self.doc.blank()
         
@@ -205,12 +209,12 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
             .format(self.p.ident))
         self.doc.blank()
-        self.doc.line("add_dependencies(stromx_{0} stromx_runtime)"\
+        self.doc.line("add_dependencies(stromx_{0} stromx_cvsupport)"\
             .format(self.p.ident))
         self.doc.blank()
         
-        self.doc.line('set(VERSION_STRING "${{{0}_VERSION_MAJOR}}.'
-                  '${{{0}_VERSION_MINOR}}.${{{0}_VERSION_PATCH}}")'\
+        self.doc.line('set(VERSION_STRING "${{STROMX_{0}_VERSION_MAJOR}}.'
+                  '${{STROMX_{0}_VERSION_MINOR}}.${{STROMX_{0}_VERSION_PATCH}}")'\
                   .format(self.p.ident.constant()))
         self.doc.blank()
         
@@ -568,9 +572,9 @@ class ConfigGenerator(LibGenerator):
         self.doc.blank()
         
         version = "{0}_VERSION".format(p)
-        self.doc.line("#define STROMX_{0}_MAJOR @{0}_MAJOR@".format(version))
-        self.doc.line("#define STROMX_{0}_MINOR @{0}_MINOR@".format(version))
-        self.doc.line("#define STROMX_{0}_PATCH @{0}_PATCH@".format(version))
+        self.doc.line("#define STROMX_{0}_MAJOR @STROMX_{0}_MAJOR@".format(version))
+        self.doc.line("#define STROMX_{0}_MINOR @STROMX_{0}_MINOR@".format(version))
+        self.doc.line("#define STROMX_{0}_PATCH @STROMX_{0}_PATCH@".format(version))
         self.doc.blank()
         
         packageName = "cv::{0}".format(str(self.p.ident)[2:])

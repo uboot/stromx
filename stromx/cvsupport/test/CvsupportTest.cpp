@@ -37,7 +37,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(stromxCvsupportRegister(*m_factory));
             
             runtime::Operator* kernel = 0;
-            CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cv::support", "Camera"));
+            CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cv::support", "DummyCamera"));
             CPPUNIT_ASSERT(kernel);
             delete kernel;
             

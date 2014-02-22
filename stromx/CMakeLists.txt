@@ -6,6 +6,8 @@ if(BUILD_OPENCV_WRAPPER)
    add_subdirectory(cvcore)
    add_subdirectory(cvsupport)
    add_subdirectory(cvimgproc)
+   add_subdirectory(cvhighgui)
 endif()
 
 add_subdirectory(raspi)
+

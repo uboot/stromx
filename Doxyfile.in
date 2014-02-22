@@ -31,7 +31,7 @@ PROJECT_NAME           = "@PROJECT_NAME@"
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = "@STROMX_RUNTIME_VERSION_MAJOR@.@STROMX_RUNTIME_VERSION_MINOR@.@STROMX_RUNTIME_VERSION_PATCH@"
+PROJECT_NUMBER         = "@STROMX_VERSION_MAJOR@.@STROMX_VERSION_MINOR@.@STROMX_VERSION_PATCH@"
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 

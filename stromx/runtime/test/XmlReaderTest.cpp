@@ -85,6 +85,11 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", *m_factory), InvalidFileFormat);
         }
         
+        void XmlReaderTest::testReadStreamNonsenseFile()
+        {
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("nonsense.stromx", *m_factory), FileAccessFailed);
+        }
+        
         void XmlReaderTest::testReadStreamEmpty()
         {
             CPPUNIT_ASSERT_THROW(XmlReader().readStream("empty.xml", *m_factory), FileAccessFailed);

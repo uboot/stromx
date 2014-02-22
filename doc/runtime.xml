@@ -12,14 +12,38 @@
         <DataVariantReference id="1" package = "runtime"/>
         A Boolean value.
     </DataVariant>
+    <DataVariant id="6" title="Int">
+        <DataVariantReference id="1" package = "runtime"/>
+        <Description>
+            An integer value.
+        </Description>
+    </DataVariant>
+    <DataVariant id="7" title="UInt">
+        <DataVariantReference id="6" package = "runtime"/>
+        <Description>
+            An unsigned integer value.
+        </Description>
+    </DataVariant>
     <DataVariant id="15" title="Float32">
         <DataVariantReference id="14" package = "runtime"/>
-        A float value.
+        A 32-bit float value.
     </DataVariant>
     <DataVariant id="12" title="32-bit integer">
         <DataVariantReference id="6" package = "runtime"/>
         <Description>
-            An 32-bit integer value.
+            A 32-bit integer value.
+        </Description>
+    </DataVariant>
+    <DataVariant id="13" title="Unsigned 32-bit integer">
+        <DataVariantReference id="7" package = "runtime"/>
+        <Description>
+            An unsigned 32-bit integer value.
+        </Description>
+    </DataVariant>
+    <DataVariant id="5" title="Enum value">
+        <DataVariantReference id="13" package = "runtime"/>
+        <Description>
+            An enumeration value.
         </Description>
     </DataVariant>
     <DataVariant id="30" title="Image">

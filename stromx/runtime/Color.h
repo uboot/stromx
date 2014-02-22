@@ -31,7 +31,7 @@ namespace stromx
 {
     namespace runtime
     {
-        /** RGB color. */
+        /** \brief RGB color. */
         class Color
         {            
         public:

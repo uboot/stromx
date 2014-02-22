@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_CAMERA_H
-#define STROMX_CVSUPPORT_CAMERA_H
+#ifndef STROMX_CVSUPPORT_DUMMYCAMERA_H
+#define STROMX_CVSUPPORT_DUMMYCAMERA_H
 
 #include "stromx/cvsupport/Config.h"
 #include <stromx/runtime/DataRef.h>
@@ -40,7 +40,7 @@ namespace stromx
     namespace cvsupport
     {
         /** \brief Simulates a camera input. */
-        class STROMX_CVSUPPORT_API Camera : public runtime::OperatorKernel
+        class STROMX_CVSUPPORT_API DummyCamera : public runtime::OperatorKernel
         {
         public:
             enum OutputId
@@ -78,10 +78,10 @@ namespace stromx
                 EXTERNAL
             };
             
-            Camera();
-            virtual ~Camera();
+            DummyCamera();
+            virtual ~DummyCamera();
             
-            virtual OperatorKernel* clone() const { return new Camera; }
+            virtual OperatorKernel* clone() const { return new DummyCamera; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
@@ -142,4 +142,4 @@ namespace stromx
     }
 }
     
-#endif // STROMX_CVSUPPORT_CAMERA_H
+#endif // STROMX_CVSUPPORT_DUMMYCAMERA_H

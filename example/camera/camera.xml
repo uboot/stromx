@@ -2,7 +2,7 @@
 
 <Stromx version="0.1.0">
     <Stream>
-        <Operator id="0" package="cv::support" type="Camera" version="0.1.0">
+        <Operator id="0" package="cv::support" type="DummyCamera" version="0.1.0">
             <!-- output image index -->
             <Parameter id="0">
                 <Data package="Runtime" type="Bool" version="0.1.0">1</Data>

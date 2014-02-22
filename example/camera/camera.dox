@@ -27,7 +27,7 @@ Next the stream is read from the XML file and started.
 \until clearOutputData
 \until }
 
-Before starting the iteration explicit references to the \em Camera and \em Canny operators are acquired. In each step the output image of the edge detector is obtained and its dimension are written to the command line. After that the output of the edge detector and the index output of the camera are cleared. It is important to clear \em all outputs which are not connected to other operators. Not doing so would eventually stop stream because no further data can be send to the outputs.
+Before starting the iteration explicit references to the \em DummyCamera and \em Canny operators are acquired. In each step the output image of the edge detector is obtained and its dimension are written to the command line. After that the output of the edge detector and the index output of the camera are cleared. It is important to clear \em all outputs which are not connected to other operators. Not doing so would eventually stop stream because no further data can be send to the outputs.
 
 \skip stop
 \until }
