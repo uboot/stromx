@@ -1,0 +1,45 @@
+set (RASPI_VERSION_MAJOR 0)
+set (RASPI_VERSION_MINOR 0)
+set (RASPI_VERSION_PATCH 1)
+
+configure_file (
+    ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/Config.h
+)
+
+include_directories (
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+)
+
+set (SOURCES
+    Raspi.cpp
+    RaspiCam.cpp
+    )
+    
+add_library (stromx_raspi SHARED ${SOURCES})
+
+add_dependencies(stromx_raspi stromx_runtime)
+
+set(VERSION_STRING "${RASPI_VERSION_MAJOR}.${RASPI_VERSION_MINOR}.${RASPI_VERSION_PATCH}")
+
+set_target_properties (stromx_raspi PROPERTIES
+    VERSION ${VERSION_STRING}
+    SOVERSION ${VERSION_STRING}
+    FOLDER "library"
+)
+
+target_link_libraries (stromx_raspi
+    stromx_runtime
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/raspi
+    DESTINATION include/stromx
+    FILES_MATCHING PATTERN "*.h"
+    PATTERN "test*" EXCLUDE
+)
+
+install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/raspi
+    DESTINATION include/stromx
+    FILES_MATCHING PATTERN "*.h"
+)
