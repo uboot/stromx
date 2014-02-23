@@ -93,7 +93,7 @@ make %{?_smp_mflags} doc
 
 %check
 cd build
-PYTHONPATH=`pwd`/python make test ARGS="-V"
+make test ARGS="-V"
 
 
 %install
