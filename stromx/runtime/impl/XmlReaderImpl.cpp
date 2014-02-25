@@ -548,7 +548,11 @@ namespace stromx
                 if(m_id2OperatorMap.count(id))
                     throw XmlError("Multiple operators with the same ID.");
                 
-                Operator* op = m_factory.newOperator(std::string(package), std::string(type));
+                OperatorKernel* opKernel = m_factory.newOperator(std::string(package), std::string(type));
+                
+                // add the kernel to the stream
+                Operator* op = m_stream->addOperator(opKernel);
+                
                 op->setName(std::string(name));
                 
                 std::string xStr(x);
@@ -592,9 +596,6 @@ namespace stromx
                     delete idDataPair->second;
                     m_id2DataMap.erase(idDataPair);
                 }
-                
-                // add to stream an initialize
-                m_stream->addOperator(op);
                 
                 // if necessary initialize the operator and set the remaining parameters
                 if (std::string(isInitialized) != "false" && std::string(isInitialized) != "0")

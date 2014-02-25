@@ -28,7 +28,7 @@ namespace stromx
     {
         class Stream;
         class Network;
-        class Operator;
+        class OperatorKernel;
         
         class StreamTest : public CPPUNIT_NS :: TestFixture
         {
@@ -101,8 +101,8 @@ namespace stromx
             
             Stream* m_stream;
             Network* m_network;
-            Operator* m_op1;
-            Operator* m_op2;
+            OperatorKernel* m_op1;
+            OperatorKernel* m_op2;
         };
     }
 }

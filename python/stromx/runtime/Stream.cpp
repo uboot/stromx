@@ -43,12 +43,12 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
-    Operator* addOperatorWrap(Stream& stream, std::auto_ptr<Operator> op)
+    Operator* addOperatorWrap(Stream& stream, std::auto_ptr<OperatorKernel> op)
     {
-        Operator* opPtr = op.get();
-        stream.addOperator(opPtr);
+        OperatorKernel* opPtr = op.get();
+        Operator* newOp = stream.addOperator(opPtr);
         op.release();
-        return opPtr;
+        return newOp;
     }
 }
 

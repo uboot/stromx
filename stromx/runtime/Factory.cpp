@@ -98,7 +98,7 @@ namespace stromx
             m_dataTypes.push_back(data);
         }
 
-        Operator* Factory::newOperator(const std::string& package, const std::string& type) const
+        OperatorKernel* Factory::newOperator(const std::string& package, const std::string& type) const
         {
             for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
                 iter != m_operators.end();
@@ -113,9 +113,7 @@ namespace stromx
                         throw InternalError("Invalid argument received: Null pointer. Cloning failed");
                     }
 
-                    Operator * newOp = new Operator(newOpKernel);
-                    newOp->setFactory(this);
-                    return newOp;
+                    return newOpKernel;
                 }
             }
             

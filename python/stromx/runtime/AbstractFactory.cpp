@@ -16,7 +16,7 @@
 
 #include <stromx/runtime/AbstractFactory.h>
 #include <stromx/runtime/Data.h>
-#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/OperatorKernel.h>
 
 #include <boost/python.hpp>
 
@@ -27,7 +27,7 @@ namespace
 {
     struct AbstractFactoryWrap : AbstractFactory, wrapper<AbstractFactory>
     {
-        Operator* newOperator(const std::string & package, const std::string & type) const
+        OperatorKernel* newOperator(const std::string & package, const std::string & type) const
         {
             return this->get_override("newOperator")(package,type);
         }

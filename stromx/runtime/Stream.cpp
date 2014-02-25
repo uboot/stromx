@@ -21,6 +21,7 @@
 #include "stromx/runtime/ExceptionObserver.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Registry.h"
 #include "stromx/runtime/Stream.h"
@@ -326,19 +327,23 @@ namespace stromx
             }
         }
         
-        void Stream::addOperator(Operator* const op)
+        Operator* Stream::addOperator(OperatorKernel* const op)
         {
             if (op == 0)
                 throw WrongArgument("Operator must not be null");
-            
+             
             if (m_status != INACTIVE)
                 throw WrongState("Cannot add operator while the stream is active.");
             
             if (isPartOfStream(op))
                 throw WrongArgument("Operator has already been added to the stream.");
             
-            m_uninitializedOperators.insert(op);
-            m_operators.push_back(op);
+            Operator* newOp = new Operator(op);
+            
+            m_uninitializedOperators.insert(newOp);
+            m_operators.push_back(newOp);
+            
+            return newOp;
         }
         
         void Stream::removeOperator(Operator* const op)
@@ -450,6 +455,19 @@ namespace stromx
                     // catch all exceptions which are thrown while observing exceptions...
                 }
             }
+        }
+        
+        bool Stream::isPartOfStream(const OperatorInfo*const op) const
+        {
+            for (std::vector<Operator*>::const_iterator iter = operators().begin();
+                 iter != operators().end();
+                 ++iter)
+            {
+                if (&(*iter)->info() == op)
+                    return true;
+            }
+            
+            return false;
         }
         
         bool Stream::isPartOfStream(const Operator*const op) const

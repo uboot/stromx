@@ -32,6 +32,7 @@ namespace stromx
         class AbstractFactory;
         class Operator;
         class OperatorError;
+        class OperatorKernel;
         class Registry;
         class Thread;
         
@@ -135,14 +136,15 @@ namespace stromx
             const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             /** 
-             * Adds the operator \c op to the stream. The ownership of the operators is transfered
-             * to the stream, i.e. it must not be deleted by the caller.
+             * Converts the operator kernel \c op to an operator and adds it to the stream.
+             * The ownership of the operator is transfered to the stream, i.e. it must not
+             * be deleted by the caller. Returns a pointer to the new operator.
              * 
              * \throws WrongArgument If the operator pointer \c op is null.
              * \throws WrongArgument If the object referenced by the pointer \c op has already been added to the stream.
              * \throws WrongState If the stream is not INACTIVE.
              */
-            void addOperator(Operator* const op);
+            Operator* addOperator(OperatorKernel* const op);
             
             /** 
              * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
@@ -275,6 +277,7 @@ namespace stromx
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
             bool isPartOfStream(const Operator* const op) const;
+            bool isPartOfStream(const OperatorInfo* const op) const;
             bool isPartOfInitializedStream(const Operator* const op) const;
             bool isPartOfUninitializedStream(const Operator* const op) const;
             

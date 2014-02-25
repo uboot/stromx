@@ -36,7 +36,7 @@ namespace stromx
              * Allocates and returns a new operator. The factory of the operator
              * will be set to this factory.
              */
-            virtual Operator* newOperator(const std::string & package, const std::string & type) const = 0;      
+            virtual OperatorKernel* newOperator(const std::string & package, const std::string & type) const = 0;      
             
             /** Allocates and returns a new data object. */
             virtual Data* newData(const std::string & package, const std::string & type) const = 0;

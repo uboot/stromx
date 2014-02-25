@@ -45,13 +45,11 @@ namespace stromx
             m_stream = TestUtilities::buildTestStream();
             
             // Build two new operators (not connected, not known by the stream)
-            m_op1 = new Operator(new TestOperator);
+            m_op1 = new TestOperator;
             m_op1->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
-            m_op1->setName("Number 1_additional");
             
-            m_op2 = new Operator(new TestOperator);
+            m_op2 = new TestOperator;
             m_op2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
-            m_op2->setName("Number 2_additional");
         }
 
         void StreamTest::tearDown()
@@ -107,46 +105,49 @@ namespace stromx
         void StreamTest::testConnect()
         {
             // Register first operator to the stream
-            m_stream->addOperator(m_op1);
-            m_stream->initializeOperator(m_op1);
+            Operator* op1 = m_stream->addOperator(m_op1);
+            m_stream->initializeOperator(op1);
+            
+            Operator* op3 = new Operator(new TestOperator);
                       
-            //Invalid source operator (operator m_op2 not known by the stream)
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op2, TestOperator::OUTPUT_1, m_op1, TestOperator::INPUT_1), WrongArgument);
+            //Invalid source operator (operator op3 not known by the stream)
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op3, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1), WrongArgument);
             //Invalid target operator (operator localOp3 not known by the stream)
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op3, TestOperator::INPUT_1), WrongArgument);
             
             // Register first operator to the stream
-            m_stream->addOperator(m_op2);
-            m_stream->initializeOperator(m_op2);
+            Operator* op2 = m_stream->addOperator(m_op2);
+            m_stream->initializeOperator(op2);
             
             //Invalid output of source operator
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, 100, m_op2, TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, 100, op2, TestOperator::INPUT_1), WrongArgument);
             //Invalid input of target operator
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, 100), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op2, 100), WrongArgument);
             
             //Invalid state of the stream (not INACTIVE)
             m_stream->start();
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongState);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1), WrongState);
             m_stream->stop();
             m_stream->join();
             
             //Valid input parameters and stream INACTIVE
-            CPPUNIT_ASSERT_NO_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_NO_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1));
             
             // uninitialized operators
-            m_stream->deinitializeOperator(m_op1);
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongState);
-            m_stream->initializeOperator(m_op1);
-            m_stream->deinitializeOperator(m_op2);
-            CPPUNIT_ASSERT_THROW(m_stream->connect(m_op1, TestOperator::OUTPUT_1, m_op2, TestOperator::INPUT_1), WrongState);
+            m_stream->deinitializeOperator(op1);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1), WrongState);
+            m_stream->initializeOperator(op1);
+            m_stream->deinitializeOperator(op2);
+            CPPUNIT_ASSERT_THROW(m_stream->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1), WrongState);
         }
 
         void StreamTest::testDisconnect()
         {
-            std::vector<Operator*> ops = m_stream->operators();           
+            std::vector<Operator*> ops = m_stream->operators();   
+            Operator* op3 = new Operator(new TestOperator);        
             
-            //Invalid target operator (operator m_op1 not known by the stream)
-            CPPUNIT_ASSERT_THROW(m_stream->disconnect(m_op1, TestOperator::INPUT_1), WrongArgument);
+            //Invalid target operator (operator op3 not known by the stream)
+            CPPUNIT_ASSERT_THROW(m_stream->disconnect(op3, TestOperator::INPUT_1), WrongArgument);
             //Invalid input of target operator
             CPPUNIT_ASSERT_THROW(m_stream->disconnect(ops[1], 100), WrongArgument);
             
@@ -165,21 +166,23 @@ namespace stromx
         }
 
         void StreamTest::testAddOperator()
-        {
+        {       
             //Invalid input parameter (Null pointer)
             CPPUNIT_ASSERT_THROW(m_stream->addOperator(0), WrongArgument);
+            
             //Invalid input parameter (operator already added to the stream)
-            CPPUNIT_ASSERT_THROW(m_stream->addOperator(m_stream->operators()[1]), WrongArgument);
+            m_stream->addOperator(m_op1);
+            CPPUNIT_ASSERT_THROW(m_stream->addOperator(m_op1), WrongArgument);
             
             //Invalid state of the stream (not INACTIVE)
             m_stream->start();
-            CPPUNIT_ASSERT_THROW(m_stream->addOperator(m_op1), WrongState);
+            CPPUNIT_ASSERT_THROW(m_stream->addOperator(m_op2), WrongState);
             m_stream->stop();
             m_stream->join();
                         
             //Valid input parameter and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->addOperator(m_op2));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(5), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(6), (unsigned int)(m_stream->operators().size()));
         }
         
         void StreamTest::testRemoveOperator()
@@ -188,8 +191,10 @@ namespace stromx
             
             //Invalid input parameter (Null pointer)
             CPPUNIT_ASSERT_THROW(m_stream->removeOperator(0), WrongArgument);
-            //Invalid input parameter (operator m_op1 not known by the stream)
-            CPPUNIT_ASSERT_THROW(m_stream->removeOperator(m_op1), WrongArgument);
+            
+            //Invalid input parameter (operator op not known by the stream)
+            Operator* op1 = new Operator(m_op1);
+            CPPUNIT_ASSERT_THROW(m_stream->removeOperator(op1), WrongArgument);
              
             //Invalid state of the stream (not INACTIVE)
             m_stream->start();
@@ -203,32 +208,33 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
             
             // remove uninitialized operator
-            m_stream->addOperator(op);
-            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
+            Operator* op2 = m_stream->addOperator(m_op2);
+            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op2));
             
             // delete removed operator
-            delete op;
+            delete op2;
         }
         
         void StreamTest::testInitializeOperator()
         {
             Operator* op = m_stream->operators()[1];
             
-            // can not initialize operator which is not part of the stream
-            CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(m_op1), WrongArgument);
+            // can not initialize operator which is not part of the stream 
+            Operator* op3 = new Operator(new TestOperator);
+            CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(op3), WrongArgument);
             
             // can not initialize initialized operator
             CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(op), WrongOperatorState);
              
             // can not initialize while stream is active
-            m_stream->addOperator(m_op1);
+            Operator* op1 = m_stream->addOperator(m_op1);
             m_stream->start();
-            CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(m_op1), WrongState);
+            CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(op1), WrongState);
             m_stream->stop();
             m_stream->join();
             
-            CPPUNIT_ASSERT_NO_THROW(m_stream->initializeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL(Operator::INITIALIZED, m_op1->status());
+            CPPUNIT_ASSERT_NO_THROW(m_stream->initializeOperator(op1));
+            CPPUNIT_ASSERT_EQUAL(Operator::INITIALIZED, op1->status());
         }
         
         void StreamTest::testDeinitializeOperator()
@@ -236,22 +242,23 @@ namespace stromx
             Operator* op = m_stream->operators()[1];
             
             // deinitialize operator which is not part of the stream
-            CPPUNIT_ASSERT_THROW(m_stream->deinitializeOperator(m_op1), WrongArgument);
+            Operator* op3 = new Operator(new TestOperator);
+            CPPUNIT_ASSERT_THROW(m_stream->deinitializeOperator(op3), WrongArgument);
             
             // deinitialize uninitialized operator
             m_stream->deinitializeOperator(op);
             CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(op));
              
             // can not deinitialize while stream is active
-            m_stream->addOperator(m_op1);
-            m_stream->initializeOperator(m_op1);
+            Operator* op1 = m_stream->addOperator(m_op1);
+            m_stream->initializeOperator(op1);
             m_stream->start();
-            CPPUNIT_ASSERT_THROW(m_stream->deinitializeOperator(m_op1), WrongState);
+            CPPUNIT_ASSERT_THROW(m_stream->deinitializeOperator(op1), WrongState);
             m_stream->stop();
             m_stream->join();
             
-            CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL(Operator::NONE, m_op1->status());
+            CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(op1));
+            CPPUNIT_ASSERT_EQUAL(Operator::NONE, op1->status());
         }
        
         void StreamTest::testAddThread()

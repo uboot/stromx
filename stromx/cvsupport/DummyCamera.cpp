@@ -72,18 +72,18 @@ namespace stromx
             m_wbGreen(1.0),
             m_wbBlue(1.0),
             m_isFirstInitialization(true)
-        {
-            m_input = new Operator(new ConstImage);
-            m_adjustRgbChannels = new Operator(new AdjustRgbChannels);
-            m_clip = new Operator(new Clip);
-            m_buffer = new Operator(new impl::CameraBuffer);
-            m_period = new Operator(new PeriodicDelay);
-            m_trigger = new Operator(new Trigger);
-            m_pixelType = new Operator(new ConvertPixelType);
-            m_imageQueue = new Operator(new Queue);
-            m_indexQueue = new Operator(new Queue);
-            
+        {            
             m_stream = new Stream();
+            
+            m_input = m_stream->addOperator(new ConstImage);
+            m_adjustRgbChannels = m_stream->addOperator(new AdjustRgbChannels);
+            m_clip = m_stream->addOperator(new Clip);
+            m_buffer = m_stream->addOperator(new impl::CameraBuffer);
+            m_period = m_stream->addOperator(new PeriodicDelay);
+            m_trigger = m_stream->addOperator(new Trigger);
+            m_pixelType = m_stream->addOperator(new ConvertPixelType);
+            m_imageQueue = m_stream->addOperator(new Queue);
+            m_indexQueue = m_stream->addOperator(new Queue);
         }
         
         DummyCamera::~DummyCamera()
@@ -110,7 +110,6 @@ namespace stromx
                 ++iter)
             {
                 m_stream->deinitializeOperator(*iter);
-                m_stream->removeOperator(*iter);
             }
             
             OperatorKernel::deinitialize();
@@ -122,16 +121,6 @@ namespace stromx
             
             m_pixelType->setParameter(ConvertPixelType::DATA_FLOW,
                                       runtime::Enum(ConvertPixelType::MANUAL));
-            
-            m_stream->addOperator(m_input);
-            m_stream->addOperator(m_adjustRgbChannels);
-            m_stream->addOperator(m_clip);
-            m_stream->addOperator(m_buffer);
-            m_stream->addOperator(m_period);
-            m_stream->addOperator(m_trigger);
-            m_stream->addOperator(m_pixelType);
-            m_stream->addOperator(m_imageQueue);
-            m_stream->addOperator(m_indexQueue);
             
             m_stream->initializeOperator(m_input);
             m_stream->initializeOperator(m_adjustRgbChannels);

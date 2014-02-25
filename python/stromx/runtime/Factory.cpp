@@ -16,7 +16,6 @@
 
 #include "ExportVector.h"
 
-#include <stromx/runtime/Operator.h>
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Factory.h>
 #include <stromx/runtime/Data.h>
@@ -29,9 +28,9 @@ using namespace stromx::runtime;
 
 namespace
 {
-    std::auto_ptr<Operator> newOperatorWrap(const Factory & factory, const std::string & package, const std::string & name)
+    std::auto_ptr<OperatorKernel> newOperatorWrap(const Factory & factory, const std::string & package, const std::string & name)
     {
-        return std::auto_ptr<Operator>(factory.newOperator(package, name));
+        return std::auto_ptr<OperatorKernel>(factory.newOperator(package, name));
     }
         
     std::auto_ptr<Data> newDataWrap(const Factory & factory, const std::string & package, const std::string & name)

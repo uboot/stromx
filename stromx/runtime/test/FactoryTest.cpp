@@ -17,7 +17,6 @@
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Factory.h"
-#include "stromx/runtime/Operator.h"
 #include "stromx/runtime/test/FactoryTest.h"
 #include "stromx/runtime/test/TestData.h"
 #include "stromx/runtime/test/TestOperator.h"
@@ -54,7 +53,7 @@ namespace stromx
             Factory factory(*m_factory);
             
             // get the operator
-            Operator* newOp = 0;
+            OperatorKernel* newOp = 0;
             CPPUNIT_ASSERT_NO_THROW(newOp = factory.newOperator("TestPackage", "TestOperator"));
             CPPUNIT_ASSERT(newOp);
             
@@ -74,7 +73,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_factory->newOperator("FunnyPackage", "RareOperator"), OperatorAllocationFailed);
             
             // get the existing operator
-            Operator* newOp = 0;
+            OperatorKernel* newOp = 0;
             CPPUNIT_ASSERT_NO_THROW(newOp = m_factory->newOperator("TestPackage", "TestOperator"));
             CPPUNIT_ASSERT(newOp);
             

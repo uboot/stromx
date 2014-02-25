@@ -17,7 +17,7 @@
 #include <cppunit/TestAssert.h>
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/Factory.h>
-#include <stromx/runtime/Operator.h>
+#include <stromx/runtime/OperatorKernel.h>
 #include "stromx/cvsupport/Cvsupport.h"
 #include "stromx/cvsupport/test/CvsupportTest.h"
 
@@ -36,7 +36,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(stromxCvsupportRegister(*m_factory));
             
-            runtime::Operator* kernel = 0;
+            runtime::OperatorKernel* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cv::support", "DummyCamera"));
             CPPUNIT_ASSERT(kernel);
             delete kernel;

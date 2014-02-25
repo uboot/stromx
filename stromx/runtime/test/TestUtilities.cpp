@@ -29,35 +29,31 @@ namespace stromx
             Stream* stream = new Stream;
             stream->setName("TestStream");
             
-            Operator* op0 = new Operator(new TestOperator);
+            Operator* op0 = stream->addOperator(new TestOperator);
             op0->setName("Number 1");
             op0->setPosition(Position(10.1, 5.5));
-            stream->addOperator(op0);
             op0->setParameter(TestOperator::BUFFER_SIZE, UInt32(5000));
             stream->initializeOperator(op0);
             op0->setParameter(TestOperator::SLEEP_TIME, UInt32(200));
             op0->setParameter(TestOperator::TEST_DATA, TestData(1));
             
-            Operator* op1 = new Operator(new TestOperator);
+            Operator* op1 = stream->addOperator(new TestOperator);
             op1->setName("Number 2");
-            stream->addOperator(op1);
             op1->setParameter(TestOperator::BUFFER_SIZE, UInt32(6000));
             stream->initializeOperator(op1);
             op1->setParameter(TestOperator::SLEEP_TIME, UInt32(250));
             op1->setParameter(TestOperator::TEST_DATA, TestData(2));
             
-            Operator* op2 = new Operator(new TestOperator);
+            Operator* op2 = stream->addOperator(new TestOperator);
             op2->setName("Number 3");
-            stream->addOperator(op2);
             op2->setParameter(TestOperator::BUFFER_SIZE, UInt32(7000));
             stream->initializeOperator(op2);
             op2->setParameter(TestOperator::SLEEP_TIME, UInt32(300));
             op2->setParameter(TestOperator::TEST_DATA, TestData(3));
             
-            Operator* op3 = new Operator(new TestOperator);
+            Operator* op3 = stream->addOperator(new TestOperator);
             op3->setName("Number 4");
             op3->setPosition(Position(20, 10));
-            stream->addOperator(op3);
             op3->setParameter(TestOperator::BUFFER_SIZE, UInt32(9000));
             
             stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
