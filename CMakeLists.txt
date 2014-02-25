@@ -75,6 +75,7 @@ endif()
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
+add_subdirectory(example)
 
 find_package(Boost 1.47.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)

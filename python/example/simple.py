@@ -19,12 +19,10 @@ from stromx import *
 
 stream = runtime.Stream()
 
-source = runtime.Operator(runtime.Counter())
-source = stream.addOperator(source)
+source = stream.addOperator(runtime.Counter())
 stream.initializeOperator(source)
 
-timer = runtime.Operator(runtime.PeriodicDelay())
-timer = stream.addOperator(timer)
+timer = stream.addOperator(runtime.PeriodicDelay())
 stream.initializeOperator(timer)
 
 timer.setParameter(0, runtime.UInt32(1000))

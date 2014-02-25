@@ -29,12 +29,10 @@ int main (int, char**)
 {
     runtime::Stream stream;
     
-    runtime::Operator* source = new runtime::Operator(new runtime::Counter);
-    stream.addOperator(source);
+    runtime::Operator* source = stream.addOperator(new runtime::Counter);
     stream.initializeOperator(source);
     
-    runtime::Operator* timer = new runtime::Operator(new runtime::PeriodicDelay);
-    stream.addOperator(timer);
+    runtime::Operator* timer = stream.addOperator(new runtime::PeriodicDelay);
     stream.initializeOperator(timer);
     
     timer->setParameter(runtime::PeriodicDelay::PERIOD, runtime::UInt32(1000));

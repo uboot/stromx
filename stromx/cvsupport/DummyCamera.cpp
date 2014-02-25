@@ -89,16 +89,6 @@ namespace stromx
         DummyCamera::~DummyCamera()
         {
             delete m_stream;
-            
-            delete m_indexQueue;
-            delete m_imageQueue;
-            delete m_pixelType;
-            delete m_trigger;
-            delete m_period;
-            delete m_buffer;
-            delete m_clip;
-            delete m_adjustRgbChannels;
-            delete m_input;
         }
         
         void DummyCamera::deinitialize()

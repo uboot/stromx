@@ -34,9 +34,9 @@ The first four headers are part of the runtime library. This library provides al
 The program starts by creating an empty stream object which will populated with operators and threads in the following.
 
 \skip runtime::Operator*
-\until addOperator(timer)
+\until stream.initializeOperator(timer)
 
-First, the source is operator is allocated and initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. This is the reason why only initialized operators can be added to a stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator before adding it to the stream and do not delete it because the stream will take care of that.
+First, the source is operator kernel is allocated and added to the stream. When an operator is added to a stream the stream assumes ownership of it. I.e. its not advisable to add an operator kernel which is allocated on the stack to a stream. This would result in a crash when the stream is destroyed or when the operator goes out of scope. In other words, always use \em new to allocate an operator kernel before adding it to the stream and do not delete it because the stream will take care of that. Next, the operator is initialized. Initializing can possibly change important properties of an operator such as the number and type of its output and input connectors. For this reason, only initialized operators can be connected to each other.
 
 \skipline setParameter
 
