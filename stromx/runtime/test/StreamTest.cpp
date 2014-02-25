@@ -17,6 +17,7 @@
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h> 
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
@@ -67,6 +68,40 @@ namespace stromx
         void StreamTest::testOperators()
         {
             CPPUNIT_ASSERT_EQUAL((unsigned int)(4),(unsigned int)(m_stream->operators().size()));
+        }
+        
+        void StreamTest::testFactory()
+        {
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0),
+                                 m_stream->factory());
+            
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0),
+                                 m_stream->operators()[0]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0),
+                                 m_stream->operators()[1]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0),
+                                 m_stream->operators()[2]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0),
+                                 m_stream->operators()[3]->factory());
+        }
+        
+        void StreamTest::testSetFactory()
+        {
+            Factory factory;
+            
+            m_stream->setFactory(&factory);
+            
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory),
+                                 m_stream->factory());
+            
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory),
+                                 m_stream->operators()[0]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory),
+                                 m_stream->operators()[1]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory),
+                                 m_stream->operators()[2]->factory());
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory),
+                                 m_stream->operators()[3]->factory());
         }
         
         void StreamTest::testConnect()

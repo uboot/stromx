@@ -65,6 +65,7 @@ namespace stromx
             m_threads(0),
             m_observerMutex(new MutexHandle),
             m_status(INACTIVE),
+            m_factory(0),
             m_delayMutex(new MutexHandle),
             m_delay(0)
         {
@@ -99,6 +100,18 @@ namespace stromx
         const std::vector<Operator*>& Stream::operators() const
         { 
             return m_operators;
+        }
+        
+        void Stream::setFactory(const AbstractFactory*const factory)
+        {
+            m_factory = factory;
+            
+            for (std::vector<Operator*>::iterator iter = m_operators.begin();
+                 iter != m_operators.end();
+                 ++iter)
+            {
+                (*iter)->setFactory(factory);
+            }
         }
         
         const std::vector<Operator*>& Stream::initializedOperators() const

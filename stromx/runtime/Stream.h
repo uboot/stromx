@@ -29,6 +29,7 @@ namespace stromx
 {
     namespace runtime
     {
+        class AbstractFactory;
         class Operator;
         class OperatorError;
         class Registry;
@@ -73,7 +74,29 @@ namespace stromx
             const std::vector<Operator*>& operators() const;     
             
             /** Returns a list of the initialized operators of the stream */
-            const std::vector<Operator*>& initializedOperators() const;          
+            const std::vector<Operator*>& initializedOperators() const;    
+            
+            /**
+             * Returns the current factory of the stream. The factory is passed 
+             * to each operator kernel during the execution and can be used by the
+             * operator kernel to instantiate new data objects or operators. Returns null if no
+             * current factory is set. If the stream was instantiated by a factory
+             * the operator factory is initially set to the instantiating factory.
+             */
+            const AbstractFactory* factory() const { return m_factory; }
+            
+            /**
+             * Sets the factory of the stream. This overwrites the factory property
+             * of all operators of the stream.  The factory is passed 
+             * to each operator kernel during the execution and can be used by the
+             * operator kernel to instantiate new data objects or operators. Returns null if no
+             * current factory is set. If the stream was instantiated by a factory
+             * the operator factory is initially set to the instantiating factory.
+             * 
+             * \param factory A pointer to the factory is stored but not owned by the operator.
+             *                Pass null to reset the factory of this operator.
+             */
+            void setFactory(const AbstractFactory* const factory);      
             
             /**
              * Connects the output \c outputId of the operator \c sourceOp to the input \c inputId of
@@ -261,6 +284,7 @@ namespace stromx
             std::set<const ExceptionObserver*> m_observers;
             MutexHandle*  m_observerMutex;
             Status m_status;
+            const AbstractFactory* m_factory;
             MutexHandle*  m_delayMutex;
             unsigned int m_delay;
             std::set<Operator*> m_uninitializedOperators;

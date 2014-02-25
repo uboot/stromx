@@ -285,6 +285,7 @@ namespace stromx
                 try
                 {
                     m_stream = new Stream();
+                    m_stream->setFactory(&m_factory);
                     
                     DOMDocument* doc = parser->getDocument();
                     

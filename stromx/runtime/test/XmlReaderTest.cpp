@@ -46,6 +46,7 @@ namespace stromx
         {
             Stream* stream = 0;
             CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.xml", *m_factory));
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
             writer.writeStream("XmlReaderTest_testReadStream.xml", *stream);
@@ -57,6 +58,7 @@ namespace stromx
         {
             Stream* stream = 0;
             CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.zip", *m_factory));
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
             writer.writeStream("XmlReaderTest_testReadStreamZip.xml", *stream);
@@ -68,6 +70,7 @@ namespace stromx
         {
             Stream* stream = 0;
             CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.stromx", *m_factory));
+            CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
             writer.writeStream("XmlReaderTest_testReadStreamStromx.xml", *stream);

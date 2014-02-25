@@ -20,7 +20,6 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include <vector>
-#include <boost/graph/graph_concepts.hpp>
 #include "stromx/runtime/ExceptionObserver.h"
 
 namespace stromx
@@ -35,6 +34,8 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (StreamTest);
             CPPUNIT_TEST(testOperators);
+            CPPUNIT_TEST(testFactory);
+            CPPUNIT_TEST(testSetFactory);
             CPPUNIT_TEST(testConnect);
             CPPUNIT_TEST(testDisconnect);
             CPPUNIT_TEST(testAddOperator);
@@ -61,6 +62,8 @@ namespace stromx
 
         protected:
             void testOperators();
+            void testFactory();
+            void testSetFactory();
             void testConnect();
             void testDisconnect();
             void testAddOperator();
