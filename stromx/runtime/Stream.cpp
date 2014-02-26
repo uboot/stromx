@@ -105,6 +105,9 @@ namespace stromx
         
         void Stream::setFactory(const AbstractFactory*const factory)
         {
+            if (m_status != INACTIVE)
+                throw WrongState("Factory can not be set if the stream is not inactive.");
+                
             m_factory = factory;
             
             for (std::vector<Operator*>::iterator iter = m_operators.begin();
@@ -346,7 +349,7 @@ namespace stromx
             return newOp;
         }
         
-        void Stream::removeOperator(Operator* const op)
+        OperatorKernel* Stream::removeOperator(Operator* const op)
         {
             if (op == 0)
                 throw WrongArgument("Operator must not be null");
@@ -364,6 +367,10 @@ namespace stromx
                 std::find(m_operators.begin(), m_operators.end(), op);
             
             m_operators.erase(iter);
+            
+            OperatorKernel* kernel = op->preserveKernel();
+            delete op;
+            return kernel;
         }
         
         void Stream::initializeOperator(Operator*const op)

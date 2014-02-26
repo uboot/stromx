@@ -159,7 +159,8 @@ namespace stromx
                 
                 try
                 {
-                    m_op->deactivate();
+                    if (m_op)
+                        m_op->deactivate();
                 }
                 catch(OperatorError &)
                 {
@@ -183,7 +184,8 @@ namespace stromx
                 
                 try
                 {
-                    m_op->deinitialize();
+                    if (m_op)
+                        m_op->deinitialize();
                 }
                 catch(OperatorError &)
                 {
@@ -396,8 +398,13 @@ namespace stromx
                     return EMPTY_FACTORY;                
             }
 
-            void SynchronizedOperatorKernel::setFactoryPtr(const AbstractFactory*const factory)
+            void SynchronizedOperatorKernel::setFactory(const AbstractFactory*const factory)
             {
+                lock_t lock(m_mutex);
+                
+                if (m_status == EXECUTING || m_status == ACTIVE)
+                    throw WrongState("Factory can not be set if the operator is active or executing.");
+                
                 m_factory = factory;
             }
             
@@ -620,6 +627,13 @@ namespace stromx
                 const Parameter& param = info()->parameter(id);
                 if(! type.isVariant(param.variant()))
                     throw WrongParameterType(param, *this->info());
+            }
+            
+            OperatorKernel* SynchronizedOperatorKernel::preserveKernel()
+            {
+                OperatorKernel* kernel = m_op;
+                m_op = 0;
+                return kernel;
             }
         }
     }

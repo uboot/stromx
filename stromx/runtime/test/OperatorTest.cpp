@@ -394,6 +394,12 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer2.lastData());
 
         }
+        
+        void OperatorTest::testPreserveKernel()
+        {
+            OperatorKernel* kernel = m_operator->preserveKernel();
+            delete kernel;
+        }
 
         void OperatorTest::tearDown ( void )
         {
@@ -420,9 +426,16 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(0), m_operator->factory());
             
             Factory factory;
+            m_operator->deactivate();
             m_operator->setFactory(&factory);
             
             CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(&factory), m_operator->factory());
+        }
+        
+        void OperatorTest::testSetFactoryWrongState()
+        {
+            Factory factory;
+            CPPUNIT_ASSERT_THROW(m_operator->setFactory(&factory), WrongState);
         }
     }
 }

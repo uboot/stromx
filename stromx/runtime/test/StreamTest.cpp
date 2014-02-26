@@ -102,6 +102,13 @@ namespace stromx
                                  m_stream->operators()[3]->factory());
         }
         
+        void StreamTest::testSetFactoryWrongState()
+        {
+            Factory factory;
+            m_stream->start();
+            CPPUNIT_ASSERT_THROW(m_stream->setFactory(&factory), WrongState);
+        }
+            
         void StreamTest::testConnect()
         {
             // Register first operator to the stream
@@ -209,10 +216,11 @@ namespace stromx
             
             // remove uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
-            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op2));
+            OperatorKernel* kernel = 0;
+            CPPUNIT_ASSERT_NO_THROW(kernel = m_stream->removeOperator(op2));
             
-            // delete removed operator
-            delete op2;
+            // delete removed operator kernel
+            delete kernel;
         }
         
         void StreamTest::testInitializeOperator()

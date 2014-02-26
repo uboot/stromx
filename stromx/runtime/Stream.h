@@ -96,6 +96,7 @@ namespace stromx
              * 
              * \param factory A pointer to the factory is stored but not owned by the operator.
              *                Pass null to reset the factory of this operator.
+             * \throws WrongState If the stream is not inactive.
              */
             void setFactory(const AbstractFactory* const factory);      
             
@@ -155,7 +156,7 @@ namespace stromx
              * \throws WrongArgument If the operator pointer \c op is null.
              * \throws WrongArgument If the operator referenced by the pointer \c op is not known by the stream.
              */
-            void removeOperator(Operator* const op);
+            OperatorKernel* removeOperator(Operator* const op);
             
             /** 
              * Initializes the operator \c op if its status is Operator::NONE.

@@ -247,6 +247,7 @@ namespace stromx
              * 
              * \param factory A pointer to the factory is stored but not owned by the operator.
              *                Pass null to reset the factory of this operator.
+             * \throws WrongState If the operator is active or executing.
              */
             void setFactory(const AbstractFactory* const factory);
             
@@ -264,6 +265,7 @@ namespace stromx
             void deactivate();
             void observeInput(const unsigned int id, const DataContainer & data) const;
             void observeOutput(const unsigned int id, const DataContainer & data) const;
+            OperatorKernel* preserveKernel();
             
             std::string m_name;
             InternalObserver* m_inputObserver;

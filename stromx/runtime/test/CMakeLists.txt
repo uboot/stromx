@@ -152,10 +152,10 @@ if(BUILD_FILE_PERSISTENCE)
         ../impl/XmlWriterImpl.cpp
         DirectoryFileInputTest.cpp
         DirectoryFileOutputTest.cpp
-        XmlReaderTest.cpp
+#         XmlReaderTest.cpp
         XmlUtilitiesTest.cpp
         XmlWriterTest.cpp
-        ZipFileInputTest.cpp
+#         ZipFileInputTest.cpp
         ZipFileOutputTest.cpp
     )
 endif(BUILD_FILE_PERSISTENCE)

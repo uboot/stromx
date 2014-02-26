@@ -36,6 +36,7 @@ namespace stromx
             CPPUNIT_TEST(testOperators);
             CPPUNIT_TEST(testFactory);
             CPPUNIT_TEST(testSetFactory);
+            CPPUNIT_TEST(testSetFactoryWrongState);
             CPPUNIT_TEST(testConnect);
             CPPUNIT_TEST(testDisconnect);
             CPPUNIT_TEST(testAddOperator);
@@ -64,6 +65,7 @@ namespace stromx
             void testOperators();
             void testFactory();
             void testSetFactory();
+            void testSetFactoryWrongState();
             void testConnect();
             void testDisconnect();
             void testAddOperator();
