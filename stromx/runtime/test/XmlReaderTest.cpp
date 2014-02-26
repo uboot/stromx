@@ -45,7 +45,7 @@ namespace stromx
         void XmlReaderTest::testReadStream()
         {
             Stream* stream = 0;
-            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.xml", *m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.xml", m_factory));
             CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
@@ -57,7 +57,7 @@ namespace stromx
         void XmlReaderTest::testReadStreamZip()
         {
             Stream* stream = 0;
-            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.zip", *m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.zip", m_factory));
             CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
@@ -69,7 +69,7 @@ namespace stromx
         void XmlReaderTest::testReadStreamStromx()
         {
             Stream* stream = 0;
-            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.stromx", *m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stream = XmlReader().readStream("stream.stromx", m_factory));
             CPPUNIT_ASSERT_EQUAL((const AbstractFactory*)(m_factory), stream->factory());
             
             XmlWriter writer;
@@ -80,32 +80,32 @@ namespace stromx
         
         void XmlReaderTest::testReadStreamWrongFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("wrongfile.xml", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("wrongfile.xml", m_factory), FileAccessFailed);
         }
         
         void XmlReaderTest::testReadStreamInvalidFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", *m_factory), InvalidFileFormat);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("invalid.xml", m_factory), InvalidFileFormat);
         }
         
         void XmlReaderTest::testReadStreamNonsenseFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("nonsense.stromx", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("nonsense.stromx", m_factory), FileAccessFailed);
         }
         
         void XmlReaderTest::testReadStreamEmpty()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("empty.xml", *m_factory), FileAccessFailed);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("empty.xml", m_factory), FileAccessFailed);
         }
         
         void XmlReaderTest::testReadStreamDtd()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readStream("dtd.xml", *m_factory), InvalidFileFormat);
+            CPPUNIT_ASSERT_THROW(XmlReader().readStream("dtd.xml", m_factory), InvalidFileFormat);
         }
         
         void XmlReaderTest::testReadParameters()
         {
-            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.xml", *m_factory, m_stream->operators()));
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.xml", m_factory, m_stream->operators()));
             
             CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
             CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
@@ -115,7 +115,7 @@ namespace stromx
         
         void XmlReaderTest::testReadParametersZip()
         {
-            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.zip", *m_factory, m_stream->operators()));
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.zip", m_factory, m_stream->operators()));
             
             CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
             CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
@@ -125,7 +125,7 @@ namespace stromx
         
         void XmlReaderTest::testReadParametersStromx()
         {
-            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.stromx", *m_factory, m_stream->operators()));
+            CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.stromx", m_factory, m_stream->operators()));
             
             CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
             CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
@@ -135,26 +135,26 @@ namespace stromx
         
         void XmlReaderTest::testReadParametersEmpty()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("empty.xml", *m_factory, m_stream->operators()),
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("empty.xml", m_factory, m_stream->operators()),
                                  FileAccessFailed);
         }
 
         void XmlReaderTest::testReadParametersInvalidFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("invalid.xml", *m_factory, m_stream->operators()),
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("invalid.xml", m_factory, m_stream->operators()),
                                  InvalidFileFormat);
 
         }
 
         void XmlReaderTest::testReadParametersWrongFile()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("wrongfile.xml", *m_factory, m_stream->operators()),
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("wrongfile.xml", m_factory, m_stream->operators()),
                                  FileAccessFailed);
         }
 
         void XmlReaderTest::testReadParametersDtd()
         {
-            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("dtd.xml", *m_factory, m_stream->operators()),
+            CPPUNIT_ASSERT_THROW(XmlReader().readParameters("dtd.xml", m_factory, m_stream->operators()),
                                  InvalidFileFormat);
         }
 
