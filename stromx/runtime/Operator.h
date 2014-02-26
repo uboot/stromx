@@ -28,11 +28,6 @@
 #include "stromx/runtime/Position.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 
-namespace boost
-{
-    class mutex;
-}
-
 namespace stromx
 {
     namespace runtime

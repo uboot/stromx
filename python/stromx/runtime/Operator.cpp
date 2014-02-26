@@ -16,6 +16,7 @@
 
 #include <boost/python.hpp>
 
+#include <stromx/runtime/AbstractFactory.h>
 #include <stromx/runtime/Operator.h>
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/OperatorKernel.h>
@@ -197,6 +198,8 @@ void exportOperator()
         .def("clearOutputData", &clearOutputDataWrap)
         .def("addObserver", &Operator::addObserver)
         .def("removeObserver", &Operator::removeObserver)
+        .def("setFactory", &Operator::setFactory)
+        .def("factory", &Operator::factory, return_internal_reference<>())
     ;
     
     enum_<Operator::Status>("Status")

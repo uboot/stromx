@@ -16,6 +16,7 @@
 
 #include "ExportVector.h"
 
+#include <stromx/runtime/AbstractFactory.h>
 #include <stromx/runtime/ExceptionObserver.h>
 #include <stromx/runtime/Operator.h>
 #include <stromx/runtime/OperatorKernel.h>
@@ -87,6 +88,8 @@ void exportStream()
             .def("join", &joinWrap)
             .def("pause", &Stream::pause)
             .def("resume", &Stream::resume)
+            .def("setFactory", &Stream::setFactory)
+            .def("factory", &Stream::factory, return_internal_reference<>())
         ;
         
         enum_<Stream::Status>("Status")

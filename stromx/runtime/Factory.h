@@ -20,6 +20,11 @@
 #include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/Registry.h"
 
+namespace boost
+{
+    class mutex;
+}
+
 namespace stromx
 {
     namespace runtime
@@ -28,7 +33,7 @@ namespace stromx
         class STROMX_RUNTIME_API Factory : public Registry, public AbstractFactory
         {
         public:
-            Factory() {}
+            Factory();
             
             /** 
              * The copy constructors creates a deep-copy of the input factor, i.e.
@@ -53,10 +58,13 @@ namespace stromx
             virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
             
         private:
+            class MutexHandle;
+            
             Factory & operator=(const Factory&);
             
             std::vector<const OperatorKernel*> m_operators;
             std::vector<const Data*> m_dataTypes;
+            MutexHandle*  m_mutex;
         };
     }
 }

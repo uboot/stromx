@@ -14,6 +14,7 @@
  *  limitations under the License.
  */
 
+#include <boost/thread.hpp>
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Factory.h"
@@ -24,7 +25,22 @@ namespace stromx
 {
     namespace runtime
     {
+        /** \cond */
+        class Factory::MutexHandle
+        {
+        public:
+            boost::mutex & mutex() { return m_mutex; }
+        private:
+            boost::mutex m_mutex;
+        };
+        /** \endcond */
+        
+        Factory::Factory()
+          :  m_mutex(new MutexHandle())
+        {}
+        
         Factory::Factory(const Factory& factory)
+          :  m_mutex(new MutexHandle())
         {
             for(std::vector<const OperatorKernel*>::const_iterator iter = factory.m_operators.begin();
                 iter != factory.m_operators.end();
@@ -56,10 +72,14 @@ namespace stromx
             {
                 delete (*iter);
             }
+            
+            delete m_mutex;
         }
 
         void Factory::registerOperator(const OperatorKernel*const op)
         {
+            boost::lock_guard<boost::mutex> lock(m_mutex->mutex());
+            
             if(op == 0)
             {
                 throw WrongArgument("Invalid argument: Null pointer.");
@@ -80,6 +100,8 @@ namespace stromx
 
         void Factory::registerData(const Data* data)
         {
+            boost::lock_guard<boost::mutex> lock(m_mutex->mutex());
+            
             if(data == 0)
             {
                 throw WrongArgument("Invalid argument: Null pointer.");
@@ -100,6 +122,8 @@ namespace stromx
 
         OperatorKernel* Factory::newOperator(const std::string& package, const std::string& type) const
         {
+            boost::lock_guard<boost::mutex> lock(m_mutex->mutex());
+            
             for(std::vector<const OperatorKernel*>::const_iterator iter = m_operators.begin();
                 iter != m_operators.end();
                 ++iter)
@@ -123,6 +147,8 @@ namespace stromx
 
         Data* Factory::newData(const std::string& package, const std::string& type) const
         {
+            boost::lock_guard<boost::mutex> lock(m_mutex->mutex());
+            
             for(std::vector<const Data*>::const_iterator iter = m_dataTypes.begin();
                 iter != m_dataTypes.end();
                 ++iter)
@@ -140,7 +166,7 @@ namespace stromx
                 }
             }
             
-        throw DataAllocationFailed(package, type, 
+            throw DataAllocationFailed(package, type, 
                                    "Invalid argument: Data (" + package + ", " + type + ") unknown. Register first unknown data.");        
         }
     } 
