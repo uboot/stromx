@@ -12,7 +12,7 @@ include_directories (
 
 set (SOURCES 
     ../VideoCapture.cpp
-    VideoCaptureTest.cpp
+#     VideoCaptureTest.cpp
     main.cpp
 )
 
