@@ -37,7 +37,7 @@ int main (int, char**)
     runtime::OperatorKernel* op = new math::Add;
     factory.registerOperator(op);
     
-    runtime::Stream* stream = runtime::XmlReader().readStream("operator.xml", factory);
+    runtime::Stream* stream = runtime::XmlReader().readStream("operator.xml", &factory);
     
     stream->start();
     

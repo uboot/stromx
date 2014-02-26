@@ -69,7 +69,7 @@ namespace stromx
              * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
              *                                 to a change of the file format.
              */
-            Stream* readStream(const std::string & filepath, const AbstractFactory& factory) const;
+            Stream* readStream(const std::string & filepath, const AbstractFactory* factory) const;
             
             /** 
              * Reads a stream file from an file input.
@@ -85,7 +85,7 @@ namespace stromx
              * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
              *                                 to a change of the file format.
              */
-            Stream* readStream(FileInput & input, const std::string filename, const AbstractFactory& factory) const;
+            Stream* readStream(FileInput & input, const std::string filename, const AbstractFactory* factory) const;
             
             /** 
              * Reads a parameter file. The file can be either an XML or a zip file.
@@ -103,7 +103,7 @@ namespace stromx
              * \throws InconsistentFileContent The content of the file is inconsistent. This is probably due
              *                                 to a change of the file format.
              */
-            void readParameters(const std::string & filepath, const AbstractFactory& factory,
+            void readParameters(const std::string & filepath, const AbstractFactory* factory,
                                 const std::vector<stromx::runtime::Operator*> & operators) const;
             
             
@@ -122,7 +122,7 @@ namespace stromx
              * \throws FactoryException Failed to allocate an operator or a data object.
              * \throws DeserializationError Failed to deserialize data referenced in the XML file.
              */
-            void readParameters(FileInput & input, const std::string filename, const AbstractFactory& factory,
+            void readParameters(FileInput & input, const std::string filename, const AbstractFactory* factory,
                                 const std::vector<stromx::runtime::Operator*> & operators) const;
         };
     }

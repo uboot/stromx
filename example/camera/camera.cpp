@@ -37,7 +37,7 @@ int main (int, char**)
     stromxCvimgprocRegister(factory);
     stromxCvsupportRegister(factory);
     
-    runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", factory);
+    runtime::Stream* stream = runtime::XmlReader().readStream("camera.xml", &factory);
     
     stream->start();
     

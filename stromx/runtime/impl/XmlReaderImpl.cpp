@@ -185,7 +185,7 @@ namespace stromx
                 };
             }
             
-            XmlReaderImpl::XmlReaderImpl(const AbstractFactory& factory)
+            XmlReaderImpl::XmlReaderImpl(const AbstractFactory* factory)
               : m_factory(factory),
                 m_stream(0),
                 m_input(0)
@@ -285,7 +285,7 @@ namespace stromx
                 try
                 {
                     m_stream = new Stream();
-                    m_stream->setFactory(&m_factory);
+                    m_stream->setFactory(m_factory);
                     
                     DOMDocument* doc = parser->getDocument();
                     
@@ -548,7 +548,7 @@ namespace stromx
                 if(m_id2OperatorMap.count(id))
                     throw XmlError("Multiple operators with the same ID.");
                 
-                OperatorKernel* opKernel = m_factory.newOperator(std::string(package), std::string(type));
+                OperatorKernel* opKernel = m_factory->newOperator(std::string(package), std::string(type));
                 
                 // add the kernel to the stream
                 Operator* op = m_stream->addOperator(opKernel);
@@ -702,7 +702,7 @@ namespace stromx
                     textData = std::string(Xml2Str(node->getNodeValue()));
                 }
                 
-                Data* data = m_factory.newData(std::string(package), std::string(type));
+                Data* data = m_factory->newData(std::string(package), std::string(type));
                 
                 try
                 {
