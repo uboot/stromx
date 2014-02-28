@@ -48,7 +48,7 @@ namespace stromx
             CPPUNIT_TEST(testDeinitializeOperator);           
             CPPUNIT_TEST(testAddThread);
             CPPUNIT_TEST(testHideThread);
-            CPPUNIT_TEST(testShowOperator);
+            CPPUNIT_TEST(testShowThread);
             CPPUNIT_TEST(testRemoveThread);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);

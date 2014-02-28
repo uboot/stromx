@@ -263,6 +263,7 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(op1));
             CPPUNIT_ASSERT_EQUAL(Operator::NONE, op1->status());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
         }
        
         void StreamTest::testAddThread()
@@ -397,8 +398,7 @@ namespace stromx
         
         void StreamTest::testHideOperator()
         {
-            Operator* op = m_stream->operators()[0];
-            m_stream->hideOperator(op);
+            Operator* op = m_stream->operators()[1];
             
             //Invalid input parameter (Null pointer)
             CPPUNIT_ASSERT_THROW(m_stream->hideOperator(0), WrongArgument);

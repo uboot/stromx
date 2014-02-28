@@ -336,6 +336,8 @@ namespace stromx
             bool isPartOfStream(const OperatorInfo* const op) const;
             bool isPartOfInitializedStream(const Operator* const op) const;
             bool isPartOfUninitializedStream(const Operator* const op) const;
+            void attachOperator(Operator* const op);
+            void attachThread(Thread* const thread);
             void detachOperator(Operator* const op);
             void detachThread(Thread* const thread);
             

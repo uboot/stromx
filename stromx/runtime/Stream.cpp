@@ -230,35 +230,14 @@ namespace stromx
         Thread* Stream::addThread()
         {
             Thread* thread = new Thread(m_network);
-            impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
-            thread->setObserver(observer);
-            thread->setDelay(m_delay);
-            
-            m_threads.push_back(thread);
-            
+            attachThread(thread);
             return thread;
         }
         
         void Stream::removeThread(Thread* const thread)
         {
-            if (thread == 0)
-            {
-                throw WrongArgument("Invalid argument: Null pointer");
-            }
-            
-            for (std::vector<Thread*>::iterator iter = m_threads.begin();
-                iter != m_threads.end();
-                ++iter)
-            {
-                if ((*iter) == thread)
-                {
-                    m_threads.erase(iter);
-                    delete thread;
-                    return;
-                }
-            }
-            
-            throw WrongArgument("Thread does not exists");
+            detachThread(thread);
+            delete thread;
         }
         
         const std::vector<Thread*> & Stream::threads() const
@@ -335,32 +314,13 @@ namespace stromx
                 throw WrongArgument("Operator has already been added to the stream.");
             
             Operator* newOp = new Operator(op);
-            
-            m_uninitializedOperators.insert(newOp);
-            m_operators.push_back(newOp);
-            
+            attachOperator(newOp);
             return newOp;
         }
         
         void Stream::removeOperator(Operator* const op)
         {
-            if (op == 0)
-                throw WrongArgument("Operator must not be null");
-            
-            if (m_status != INACTIVE)
-                throw WrongState("Cannot remove operator while the stream is active.");
-            
-            if (! isPartOfStream(op))
-                throw WrongArgument("Operator is not part of the stream.");
-            
-            deinitializeOperator(op);
-            m_uninitializedOperators.erase(op);
-            
-            std::vector<Operator*>::iterator iter = 
-                std::find(m_operators.begin(), m_operators.end(), op);
-            
-            m_operators.erase(iter);
-            
+            detachOperator(op);
             delete op;
         }
         
@@ -491,22 +451,106 @@ namespace stromx
         
         void Stream::hideOperator(Operator*const op)
         {
-
+            detachOperator(op);
+            m_hiddenOperators.push_back(op);
         }
 
         void Stream::showOperator(Operator*const op)
         {
-
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+             
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot add operator while the stream is active.");
+            
+            if (isPartOfStream(op))
+                throw WrongArgument("Operator has already been added to the stream.");
+            
+            std::vector<Operator*>::iterator iter = 
+                std::find(m_hiddenOperators.begin(), m_hiddenOperators.end(), op);
+                
+            if (iter == m_hiddenOperators.end())
+                throw WrongArgument("Operator has not been hidden.");
+            
+            m_hiddenOperators.erase(iter);
+            attachOperator(op);
         }
 
         void Stream::hideThread(Thread*const thread)
         {
-
+            detachThread(thread);
+            m_hiddenThreads.push_back(thread);
         }
 
         void Stream::showThread(Thread*const thread)
         {
+            std::vector<Thread*>::iterator iter = 
+                std::find(m_hiddenThreads.begin(), m_hiddenThreads.end(), thread);
+                
+            if (iter == m_hiddenThreads.end())
+                throw WrongArgument("Thread has not been hidden.");
 
+            m_hiddenThreads.erase(iter);
+            attachThread(thread);
+        }
+        
+        void Stream::attachOperator(Operator*const op)
+        {
+            m_uninitializedOperators.insert(op);
+            m_operators.push_back(op);
+        }
+
+        void Stream::attachThread(Thread*const thread)
+        {
+            impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
+            thread->setObserver(observer);
+            thread->setDelay(m_delay);
+            
+            m_threads.push_back(thread);
+        }
+        
+        void Stream::detachOperator(Operator*const op)
+        {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+            
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot remove operator while the stream is active.");
+            
+            if (! isPartOfStream(op))
+                throw WrongArgument("Operator is not part of the stream.");
+            
+            deinitializeOperator(op);
+            m_uninitializedOperators.erase(op);
+            
+            std::vector<Operator*>::iterator iter = 
+                std::find(m_operators.begin(), m_operators.end(), op);
+            
+            m_operators.erase(iter);
+        }
+
+        void Stream::detachThread(Thread*const thread)
+        {
+            if (thread == 0)
+            {
+                throw WrongArgument("Invalid argument: Null pointer");
+            }
+            
+            bool foundThread = false;
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter)
+            {
+                if ((*iter) == thread)
+                {
+                    m_threads.erase(iter);
+                    foundThread = true;
+                    break;
+                }
+            }
+            
+            if (! foundThread)
+                throw WrongArgument("Thread does not exists");
         }
     }
 }
