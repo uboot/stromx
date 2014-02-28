@@ -216,11 +216,7 @@ namespace stromx
             
             // remove uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
-            OperatorKernel* kernel = 0;
-            CPPUNIT_ASSERT_NO_THROW(kernel = m_stream->removeOperator(op2));
-            
-            // delete removed operator kernel
-            delete kernel;
+            CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op2));
         }
         
         void StreamTest::testInitializeOperator()

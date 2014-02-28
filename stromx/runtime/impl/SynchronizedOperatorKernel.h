@@ -66,7 +66,6 @@ namespace stromx
                 void clearOutputData(unsigned int id);
                 const AbstractFactory* factoryPtr() const { return m_factory; }
                 void setFactory(const AbstractFactory* const factory);
-                OperatorKernel* preserveKernel();
                 
                 // DataProvider implementation
                 void receiveInputData(const Id2DataMapper& mapper);

@@ -394,12 +394,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(m_container, m_observer2.lastData());
 
         }
-        
-        void OperatorTest::testPreserveKernel()
-        {
-            OperatorKernel* kernel = m_operator->preserveKernel();
-            delete kernel;
-        }
 
         void OperatorTest::tearDown ( void )
         {

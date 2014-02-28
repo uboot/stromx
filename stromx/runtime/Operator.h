@@ -260,7 +260,6 @@ namespace stromx
             void deactivate();
             void observeInput(const unsigned int id, const DataContainer & data) const;
             void observeOutput(const unsigned int id, const DataContainer & data) const;
-            OperatorKernel* preserveKernel();
             
             std::string m_name;
             InternalObserver* m_inputObserver;

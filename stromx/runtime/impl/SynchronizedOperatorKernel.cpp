@@ -628,13 +628,6 @@ namespace stromx
                 if(! type.isVariant(param.variant()))
                     throw WrongParameterType(param, *this->info());
             }
-            
-            OperatorKernel* SynchronizedOperatorKernel::preserveKernel()
-            {
-                OperatorKernel* kernel = m_op;
-                m_op = 0;
-                return kernel;
-            }
         }
     }
 }

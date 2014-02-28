@@ -354,10 +354,5 @@ namespace stromx
         {
             return m_kernel->factoryPtr();
         }
-        
-        OperatorKernel* Operator::preserveKernel()
-        {
-            return m_kernel->preserveKernel();
-        }
     }
 }

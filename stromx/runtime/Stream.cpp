@@ -349,7 +349,7 @@ namespace stromx
             return newOp;
         }
         
-        OperatorKernel* Stream::removeOperator(Operator* const op)
+        void Stream::removeOperator(Operator* const op)
         {
             if (op == 0)
                 throw WrongArgument("Operator must not be null");
@@ -368,9 +368,7 @@ namespace stromx
             
             m_operators.erase(iter);
             
-            OperatorKernel* kernel = op->preserveKernel();
             delete op;
-            return kernel;
         }
         
         void Stream::initializeOperator(Operator*const op)

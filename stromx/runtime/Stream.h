@@ -150,13 +150,13 @@ namespace stromx
             /** 
              * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
              * In addition, if the operator \c op is used by any thread it is automatically removed from this thread.
-             * The operator is \em not deleted, i.e. the ownership of the operator returns to the caller. 
+             * Finally, the operator is \em not deleted. 
              * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is null.
              * \throws WrongArgument If the operator referenced by the pointer \c op is not known by the stream.
              */
-            OperatorKernel* removeOperator(Operator* const op);
+            void removeOperator(Operator* const op);
             
             /** 
              * Initializes the operator \c op if its status is Operator::NONE.

@@ -52,11 +52,6 @@ namespace
         op.release();
         return newOp;
     }
-    
-    std::auto_ptr<OperatorKernel> removeOperatorWrap(Stream& stream, Operator* op)
-    {
-        return std::auto_ptr<OperatorKernel>(stream.removeOperator(op));
-    }
 }
 
 void exportStream()
@@ -72,7 +67,7 @@ void exportStream()
             .def("status", &Stream::status)
             .def("operators", &Stream::operators, return_internal_reference<>())
             .def("addOperator", &addOperatorWrap, return_internal_reference<>())
-            .def("removeOperator", &removeOperatorWrap)
+            .def("removeOperator", &Stream::removeOperator)
             .def("initializeOperator", &Stream::initializeOperator)
             .def("deinitializeOperator", &Stream::deinitializeOperator)
             .def("connect", &Stream::connect)
