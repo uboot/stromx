@@ -20,6 +20,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include <vector>
+#include <boost/concept_check.hpp>
 #include "stromx/runtime/ExceptionObserver.h"
 
 namespace stromx
@@ -40,10 +41,14 @@ namespace stromx
             CPPUNIT_TEST(testConnect);
             CPPUNIT_TEST(testDisconnect);
             CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testHideOperator);
+            CPPUNIT_TEST(testShowOperator);
             CPPUNIT_TEST(testRemoveOperator);  
             CPPUNIT_TEST(testInitializeOperator);    
             CPPUNIT_TEST(testDeinitializeOperator);           
             CPPUNIT_TEST(testAddThread);
+            CPPUNIT_TEST(testHideThread);
+            CPPUNIT_TEST(testShowOperator);
             CPPUNIT_TEST(testRemoveThread);
             CPPUNIT_TEST(testPause);
             CPPUNIT_TEST(testResume);
@@ -69,10 +74,14 @@ namespace stromx
             void testConnect();
             void testDisconnect();
             void testAddOperator();
+            void testHideOperator();
+            void testShowOperator();
             void testRemoveOperator();
             void testInitializeOperator();
             void testDeinitializeOperator();
             void testAddThread();
+            void testHideThread();
+            void testShowThread();
             void testRemoveThread();
             void testPause();
             void testResume();

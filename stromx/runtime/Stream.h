@@ -150,7 +150,39 @@ namespace stromx
             /** 
              * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
              * In addition, if the operator \c op is used by any thread it is automatically removed from this thread.
+             * However, a reference to the operator is still been held by the stream and
+             * operator can be shown again later on. A hidden operator is not considered part of the stream and is not written to 
+             * the file if the stream is persisted.
+             * 
+             * \sa Stream::showOperator
+             * 
+             * \throws WrongState If the stream is not INACTIVE.
+             * \throws WrongArgument If the operator pointer \c op is null.
+             * \throws WrongArgument If the operator referenced by the pointer \c op is not part of the stream.
+             */
+            void hideOperator(Operator* const op);
+            
+            /** 
+             * Adds the hidden operator \c op back to the stream. Note that the original connections
+             * to and from the operator are \not recreated. Also, the operator is not added
+             * to any threads.
+             * 
+             * \sa Stream::hideOperator
+             * 
+             * \throws WrongState If the stream is not INACTIVE.
+             * \throws WrongArgument If the operator pointer \c op is null.
+             * \throws WrongArgument If the operator referenced by the pointer \c op is not part of the stream.
+             * \throws WrongArgument If the operator referenced by the pointer \c op was not hidden before.
+             */
+            void showOperator(Operator* const op);
+            
+            /** 
+             * Removes the operator \c op from the stream and disconnects it from all other connected sources and targets.
+             * In addition, if the operator \c op is used by any thread it is automatically removed from this thread.
              * Finally, the operator is \em not deleted. 
+             * 
+             * \param op The operator which is deleted. This pointer is invalid after the function
+             *           has been called.
              * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is null.
@@ -183,9 +215,32 @@ namespace stromx
             Thread* addThread();
             
             /**
+             * Removes the thread \c thr from the stream and but keeps a reference to it.
+             * A hidden thread is not considered part of the stream and is not written to 
+             * the file if the stream is persisted.
+             * 
+             * \sa Stream::showThread
+             * 
+             * \throws WrongArgument If the thread \c thr is a null pointer.
+             * \throws WrongArgument If the thread is not part of the stream.
+             */
+            void hideThread(Thread* const thread);
+            
+            /**
+             * Adds the hidden thread \c thr to the stream. Note that the operators which
+             * originally belonged to the thread are not added again.
+             * 
+             * \sa Stream::showThread
+             * 
+             * \throws WrongArgument If the thread \c thr is a null pointer.
+             * \throws WrongArgument If the thread \c thrhas not been hidden before.
+             */
+            void showThread(Thread* const thread);
+            
+            /**
              * Removes the thread \c thr from the stream and deletes it.
              * 
-             * \param thread The thread which is deleted. The pointer is invalid after 
+             * \param thread The thread which is deleted. This pointer is invalid after 
              *               this function has been called. 
              * 
              * \throws WrongArgument If the thread \c thr is a null pointer or does not belong to the stream.
@@ -281,6 +336,8 @@ namespace stromx
             bool isPartOfStream(const OperatorInfo* const op) const;
             bool isPartOfInitializedStream(const Operator* const op) const;
             bool isPartOfUninitializedStream(const Operator* const op) const;
+            void detachOperator(Operator* const op);
+            void detachThread(Thread* const thread);
             
             std::string m_name; 
             impl::Network* const m_network;
@@ -293,6 +350,8 @@ namespace stromx
             unsigned int m_delay;
             std::set<Operator*> m_uninitializedOperators;
             std::vector<Operator*> m_operators;
+            std::vector<Operator*> m_hiddenOperators;
+            std::vector<Thread*> m_hiddenThreads;
         };
     }
 }

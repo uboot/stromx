@@ -495,6 +495,26 @@ namespace stromx
             
             return iter != m_uninitializedOperators.end();
         }
+        
+        void Stream::hideOperator(Operator*const op)
+        {
+
+        }
+
+        void Stream::showOperator(Operator*const op)
+        {
+
+        }
+
+        void Stream::hideThread(Thread*const thread)
+        {
+
+        }
+
+        void Stream::showThread(Thread*const thread)
+        {
+
+        }
     }
 }
 

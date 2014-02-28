@@ -394,5 +394,25 @@ namespace stromx
             m_stream->stop();
             m_stream->join();
         }
+        
+        void StreamTest::testHideOperator()
+        {
+
+        }
+
+        void StreamTest::testShowOperator()
+        {
+
+        }
+
+        void StreamTest::testHideThread()
+        {
+
+        }
+
+        void StreamTest::testShowThread()
+        {
+
+        }
     }
 }
