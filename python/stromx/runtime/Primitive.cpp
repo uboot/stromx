@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <stromx/runtime/Enum.h>
 #include <stromx/runtime/Primitive.h>
 
 #include <boost/python.hpp>
@@ -51,6 +52,7 @@ namespace
 void exportPrimitive()
 {
     primitive<bool, Bool>("Bool");
+    primitive<unsigned int, Enum>("Enum");
     primitive<int, Int8>("Int8");
     primitive<unsigned int, UInt8>("UInt8");
     primitive<int, Int16>("Int16");
