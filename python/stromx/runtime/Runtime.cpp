@@ -18,6 +18,8 @@
 #include <stromx/runtime/Runtime.h>
 #include <stromx/runtime/Counter.h>
 #include <stromx/runtime/Dump.h>
+#include <stromx/runtime/Fork.h>
+#include <stromx/runtime/Join.h>
 #include <stromx/runtime/PeriodicDelay.h>
 #include <stromx/runtime/Queue.h>
 #include <stromx/runtime/Trigger.h>
@@ -97,6 +99,8 @@ BOOST_PYTHON_MODULE(libruntime)
     stromx::python::exportOperatorKernel<Dump>("Dump");
     stromx::python::exportOperatorKernel<Queue>("Queue");
     stromx::python::exportOperatorKernel<Counter>("Counter");
+    stromx::python::exportOperatorKernel<Fork>("Fork");
+    stromx::python::exportOperatorKernel<Join>("Join");
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
     stromx::python::exportOperatorKernel<Receive>("Receive");
     stromx::python::exportOperatorKernel<Send>("Send");
