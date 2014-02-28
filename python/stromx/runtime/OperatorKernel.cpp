@@ -42,7 +42,7 @@ namespace
       
 void exportOperatorKernel()
 {      
-    class_<OperatorKernelWrap, bases<OperatorInfo>, boost::noncopyable>("OperatorKernel", no_init)
+    class_<OperatorKernelWrap, std::auto_ptr<OperatorKernel>, bases<OperatorInfo>, boost::noncopyable>("OperatorKernel", no_init)
     ;
 }
 

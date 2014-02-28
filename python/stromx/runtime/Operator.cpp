@@ -48,9 +48,9 @@ namespace
 
     }
 
-    std::auto_ptr<Operator> allocate(std::auto_ptr<OperatorKernel> kernel)
+    Operator* allocate(std::auto_ptr<OperatorKernel> kernel)
     {
-        std::auto_ptr<Operator> op(new Operator(kernel.get()));
+        Operator* op = new Operator(kernel.get());
         kernel.release();
         return op;
     }
@@ -181,7 +181,7 @@ stromx::runtime::Data* get_pointer(const stromx::runtime::DataRef & p)
 void exportOperator()
 {       
     scope in_Operator =
-    class_<Operator, std::auto_ptr<Operator>, boost::noncopyable>("Operator", no_init)
+    class_<Operator, boost::noncopyable>("Operator", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("status", &Operator::status)
         .def("info", &Operator::info, return_internal_reference<>())
