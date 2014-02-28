@@ -214,7 +214,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->operators().size()));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
             
-            // remove uninitialized operator
+            //Remove uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op2));
         }
@@ -397,21 +397,86 @@ namespace stromx
         
         void StreamTest::testHideOperator()
         {
-
+            Operator* op = m_stream->operators()[0];
+            m_stream->hideOperator(op);
+            
+            //Invalid input parameter (Null pointer)
+            CPPUNIT_ASSERT_THROW(m_stream->hideOperator(0), WrongArgument);
+            
+            //Invalid input parameter (operator op not known by the stream)
+            Operator* op1 = new Operator(m_op1);
+            CPPUNIT_ASSERT_THROW(m_stream->hideOperator(op1), WrongArgument);
+             
+            //Invalid state of the stream (not INACTIVE)
+            m_stream->start();
+            CPPUNIT_ASSERT_THROW(m_stream->hideOperator(op), WrongState);
+            m_stream->stop();
+            m_stream->join();
+            
+            //Valid input parameter and stream INACTIVE           
+            CPPUNIT_ASSERT_NO_THROW(m_stream->hideOperator(op));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+            
+            //Cannot hide again
+            CPPUNIT_ASSERT_THROW(m_stream->hideOperator(op), WrongArgument);
+            
+            //Hide uninitialized operator
+            Operator* op2 = m_stream->addOperator(m_op2);
+            CPPUNIT_ASSERT_NO_THROW(m_stream->hideOperator(op2));
         }
 
         void StreamTest::testShowOperator()
         {
-
+            Operator* op = m_stream->operators()[0];
+            m_stream->hideOperator(op);
+            
+            //Invalid input parameter (Null pointer)
+            CPPUNIT_ASSERT_THROW(m_stream->showOperator(0), WrongArgument);
+            
+            //Invalid input parameter (operator op not hidden by the stream)
+            Operator* op1 = m_stream->operators()[0];
+            CPPUNIT_ASSERT_THROW(m_stream->showOperator(op1), WrongArgument);
+             
+            //Invalid state of the stream (not INACTIVE)
+            m_stream->start();
+            CPPUNIT_ASSERT_THROW(m_stream->showOperator(op), WrongState);
+            m_stream->stop();
+            m_stream->join();
+            
+            //Show operator
+            CPPUNIT_ASSERT_NO_THROW(m_stream->showOperator(op));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(4), (unsigned int)(m_stream->operators().size()));
+            CPPUNIT_ASSERT_EQUAL(op, m_stream->operators()[3]);
+            
+            //Cannot show again
+            CPPUNIT_ASSERT_THROW(m_stream->showOperator(op), WrongArgument);
         }
 
         void StreamTest::testHideThread()
         {
-
+            CPPUNIT_ASSERT_THROW(m_stream->hideThread(0), WrongArgument);
+            
+            Thread* thr = m_stream->threads()[0];
+           
+            CPPUNIT_ASSERT_NO_THROW(m_stream->hideThread(thr));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
+            
+            CPPUNIT_ASSERT_THROW(m_stream->hideThread(thr), WrongArgument);
         }
 
         void StreamTest::testShowThread()
         {
+            CPPUNIT_ASSERT_THROW(m_stream->showThread(0), WrongArgument);
+            
+            Thread* thr = m_stream->threads()[0];
+            m_stream->hideThread(thr);
+           
+            CPPUNIT_ASSERT_NO_THROW(m_stream->showThread(thr));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads().size()));
+            CPPUNIT_ASSERT_EQUAL(thr, m_stream->threads()[1]);
+            
+            CPPUNIT_ASSERT_THROW(m_stream->showThread(thr), WrongArgument);
 
         }
     }
