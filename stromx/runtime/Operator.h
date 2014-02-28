@@ -41,6 +41,7 @@ namespace stromx
         {
             class InputNode;
             class Network;
+            class MutexHandle;
             class OutputNode;
             class SynchronizedOperatorKernel;
         }
@@ -247,7 +248,6 @@ namespace stromx
             void setFactory(const AbstractFactory* const factory);
             
         private:
-            class MutexHandle;
             class InternalObserver;
             
             Operator(const Operator& op);
@@ -269,7 +269,7 @@ namespace stromx
             std::map<unsigned int, impl::InputNode*> m_inputs;
             std::set<const ConnectorObserver*> m_observers;
             Position m_position;
-            MutexHandle*  m_observerMutex;
+            impl::MutexHandle*  m_observerMutex;
         };
     }
 }

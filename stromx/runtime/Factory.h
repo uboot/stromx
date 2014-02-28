@@ -29,6 +29,11 @@ namespace stromx
 {
     namespace runtime
     {
+        namespace impl
+        {
+            class MutexHandle;
+        }
+            
         /** \brief %Factory of operator and data objects. */
         class STROMX_RUNTIME_API Factory : public Registry, public AbstractFactory
         {
@@ -58,13 +63,11 @@ namespace stromx
             virtual const std::vector<const OperatorKernel*> & availableOperators() const { return m_operators; }
             
         private:
-            class MutexHandle;
-            
             Factory & operator=(const Factory&);
             
             std::vector<const OperatorKernel*> m_operators;
             std::vector<const Data*> m_dataTypes;
-            MutexHandle*  m_mutex;
+            impl::MutexHandle*  m_mutex;
         };
     }
 }

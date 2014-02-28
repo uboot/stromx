@@ -38,6 +38,7 @@ namespace stromx
         
         namespace impl
         {
+            class MutexHandle;
             class Network;
         }
         
@@ -328,7 +329,6 @@ namespace stromx
             void resume();
             
         private:
-            class MutexHandle;
             class InternalObserver;
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
@@ -343,10 +343,10 @@ namespace stromx
             impl::Network* const m_network;
             std::vector<Thread*> m_threads;
             std::set<const ExceptionObserver*> m_observers;
-            MutexHandle*  m_observerMutex;
+            impl::MutexHandle*  m_observerMutex;
             Status m_status;
             const AbstractFactory* m_factory;
-            MutexHandle*  m_delayMutex;
+            impl::MutexHandle*  m_delayMutex;
             unsigned int m_delay;
             std::set<Operator*> m_uninitializedOperators;
             std::vector<Operator*> m_operators;

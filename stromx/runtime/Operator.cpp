@@ -24,6 +24,7 @@
 #include "stromx/runtime/Output.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 #include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/MutexHandle.h"
 #include "stromx/runtime/impl/OutputNode.h"
 #include "stromx/runtime/impl/SynchronizedOperatorKernel.h"
 
@@ -32,15 +33,7 @@ namespace stromx
 {
     namespace runtime
     {
-        /** \cond */
-        class Operator::MutexHandle
-        {
-        public:
-            boost::mutex & mutex() { return m_mutex; }
-        private:
-            boost::mutex m_mutex;
-        };
-        
+        /** \cond */        
         class Operator::InternalObserver : public impl::Id2DataMapObserver
         {
         public:
@@ -84,7 +77,7 @@ namespace stromx
           : m_inputObserver(0),
             m_outputObserver(0),
             m_kernel(new SynchronizedOperatorKernel(kernel)),
-            m_observerMutex(new MutexHandle())
+            m_observerMutex(new impl::MutexHandle())
         {
             m_inputObserver = new InternalObserver(this, InternalObserver::INPUT);
             m_outputObserver = new InternalObserver(this, InternalObserver::OUTPUT);

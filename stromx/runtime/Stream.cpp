@@ -27,6 +27,7 @@
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 #include "stromx/runtime/impl/InputNode.h"
+#include "stromx/runtime/impl/MutexHandle.h"
 #include "stromx/runtime/impl/Network.h"
 
 namespace stromx
@@ -34,14 +35,6 @@ namespace stromx
     namespace runtime
     {
         /** \cond */
-        class Stream::MutexHandle
-        {
-        public:
-            boost::mutex & mutex() { return m_mutex; }
-        private:
-            boost::mutex m_mutex;
-        };
-        
         class Stream::InternalObserver : public impl::ThreadImplObserver
         {
         public:
@@ -64,10 +57,10 @@ namespace stromx
         Stream::Stream()
           : m_network(new impl::Network()),
             m_threads(0),
-            m_observerMutex(new MutexHandle),
+            m_observerMutex(new impl::MutexHandle),
             m_status(INACTIVE),
             m_factory(0),
-            m_delayMutex(new MutexHandle),
+            m_delayMutex(new impl::MutexHandle),
             m_delay(0)
         {
             if (m_network == 0)

@@ -20,27 +20,18 @@
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/impl/MutexHandle.h"
 
 namespace stromx
 {
     namespace runtime
-    {
-        /** \cond */
-        class Factory::MutexHandle
-        {
-        public:
-            boost::mutex & mutex() { return m_mutex; }
-        private:
-            boost::mutex m_mutex;
-        };
-        /** \endcond */
-        
+    {        
         Factory::Factory()
-          :  m_mutex(new MutexHandle())
+          :  m_mutex(new impl::MutexHandle())
         {}
         
         Factory::Factory(const Factory& factory)
-          :  m_mutex(new MutexHandle())
+          :  m_mutex(new impl::MutexHandle())
         {
             for(std::vector<const OperatorKernel*>::const_iterator iter = factory.m_operators.begin();
                 iter != factory.m_operators.end();
