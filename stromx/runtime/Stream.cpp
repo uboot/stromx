@@ -86,6 +86,22 @@ namespace stromx
                 delete (*iter);
             }
             
+            for (std::set<Operator*>::iterator iter = m_hiddenOperators.begin();
+                iter != m_hiddenOperators.end();
+                ++iter) 
+            {
+                delete (*iter);
+            }
+            m_hiddenOperators.clear();
+            
+            for (std::set<Thread*>::iterator iter = m_hiddenThreads.begin();
+                iter != m_hiddenThreads.end();
+                ++iter) 
+            {
+                delete (*iter);
+            }
+            m_hiddenThreads.clear();
+            
             delete m_network;
             delete m_observerMutex;
             delete m_delayMutex;
@@ -452,7 +468,7 @@ namespace stromx
         void Stream::hideOperator(Operator*const op)
         {
             detachOperator(op);
-            m_hiddenOperators.push_back(op);
+            m_hiddenOperators.insert(op);
         }
 
         void Stream::showOperator(Operator*const op)
@@ -466,7 +482,7 @@ namespace stromx
             if (isPartOfStream(op))
                 throw WrongArgument("Operator has already been added to the stream.");
             
-            std::vector<Operator*>::iterator iter = 
+            std::set<Operator*>::iterator iter = 
                 std::find(m_hiddenOperators.begin(), m_hiddenOperators.end(), op);
                 
             if (iter == m_hiddenOperators.end())
@@ -479,12 +495,12 @@ namespace stromx
         void Stream::hideThread(Thread*const thread)
         {
             detachThread(thread);
-            m_hiddenThreads.push_back(thread);
+            m_hiddenThreads.insert(thread);
         }
 
         void Stream::showThread(Thread*const thread)
         {
-            std::vector<Thread*>::iterator iter = 
+            std::set<Thread*>::iterator iter = 
                 std::find(m_hiddenThreads.begin(), m_hiddenThreads.end(), thread);
                 
             if (iter == m_hiddenThreads.end())

@@ -352,8 +352,8 @@ namespace stromx
             unsigned int m_delay;
             std::set<Operator*> m_uninitializedOperators;
             std::vector<Operator*> m_operators;
-            std::vector<Operator*> m_hiddenOperators;
-            std::vector<Thread*> m_hiddenThreads;
+            std::set<Operator*> m_hiddenOperators;
+            std::set<Thread*> m_hiddenThreads;
         };
     }
 }
