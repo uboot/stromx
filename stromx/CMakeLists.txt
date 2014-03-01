@@ -9,5 +9,7 @@ if(BUILD_OPENCV_WRAPPER)
    add_subdirectory(cvhighgui)
 endif()
 
-add_subdirectory(raspi)
+if(BUILD_RASPI)
+    add_subdirectory(raspi)
+endif()
 

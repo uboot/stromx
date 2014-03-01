@@ -66,7 +66,7 @@ if(Boost_FOUND)
 endif()
 
 if(OpenCV_FOUND)
-    option(BUILD_OPENCV_WRAPPER "Build OpenCV wrappers" ON)
+    option(BUILD_OPENCV_WRAPPER "Build OpenCV packages" ON)
 endif()
 
 if(XERCES_FOUND AND LIBZIP_FOUND)
@@ -76,6 +76,8 @@ endif()
 add_subdirectory(stromx)
 add_subdirectory(doc)
 add_subdirectory(example)
+
+option(BUILD_RASPI "Build raspi package" OFF)
 
 find_package(Boost 1.47.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)
