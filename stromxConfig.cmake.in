@@ -17,11 +17,11 @@
 #    target_link_libraries(MY_TARGET_NAME ${stromx_EXAMPLE_LIB})
 #
 #    This file will define the following variables:
-#      - stromx_RUNTIME_LIB          : The stromx runtime lib
-#      - stromx_EXAMPLE_LIB          : The stromx example operators package
+#      - stromx_RUNTIME_LIB          : The stromx runtime library
 #      - stromx_CVSUPPORT_LIB        : Image utilities package based on OpenCV
 #      - stromx_CVCORE_LIB           : The wrappers for the OpenCV 'core' module
 #      - stromx_CVIMGPROC_LIB        : The wrappers for the OpenCV 'imgproc' module
+#      - stromx_TEST_LIB             : The stromx test package
 #      - stromx_LIB_DIR              : The directory where lib files are. Calling LINK_DIRECTORIES
 #                                      with this path is NOT needed.
 #      - stromx_INCLUDE_DIRS         : The stromx include directories.
@@ -54,24 +54,24 @@ link_directories(${stromx_LIB_DIR})
 set(stromx_LIBS "")
 if(WIN32)
     set(stromx_RUNTIME_LIB debug stromx_runtime.lib optimized stromx_runtime.lib)
-    set(stromx_EXAMPLE_LIB debug stromx_example.lib optimized stromx_example.lib)
     set(stromx_CVCORE_LIB debug stromx_cvcore.lib optimized stromx_cvcore.lib)
     set(stromx_CVHIGHGUI_LIB debug stromx_cvhighgui.lib optimized stromx_cvhighgui.lib)
     set(stromx_CVIMGPROC_LIB debug stromx_cvimgproc.lib optimized stromx_cvimgproc.lib)
     set(stromx_CVSUPPORT_LIB debug stromx_cvsupport.lib optimized stromx_cvsupport.lib)
+    set(stromx_TEST_LIB debug stromx_cvsupport.lib optimized stromx_test.lib)
 else()
     set(stromx_RUNTIME_LIB stromx_runtime)
-    set(stromx_EXAMPLE_LIB stromx_example)
     set(stromx_CVCORE_LIB stromx_cvcore)
     set(stromx_CVHIGHGUI_LIB stromx_cvhighgui)
     set(stromx_CVIMGPROC_LIB stromx_cvimgproc)
     set(stromx_CVSUPPORT_LIB stromx_cvsupport)
+    set(stromx_TEST_LIB stromx_test)
 endif()
 
 # ======================================================
 #  Version variables:
 # ======================================================
-set(stromx_VERSION @STROMX_RUNTIME_VERSION_MAJOR@.@STROMX_RUNTIME_VERSION_MINOR@.@STROMX_RUNTIME_VERSION_PATCH@)
-set(stromx_VERSION_MAJOR @STROMX_RUNTIME_VERSION_MAJOR@)
-set(stromx_VERSION_MINOR @STROMX_RUNTIME_VERSION_MINOR@)
-set(stromx_VERSION_PATCH @STROMX_RUNTIME_VERSION_PATCH@)
+set(stromx_VERSION @STROMX_VERSION_MAJOR@.@STROMX_VERSION_MINOR@.@STROMX_VERSION_PATCH@)
+set(stromx_VERSION_MAJOR @STROMX_VERSION_MAJOR@)
+set(stromx_VERSION_MINOR @STROMX_VERSION_MINOR@)
+set(stromx_VERSION_PATCH @STROMX_VERSION_PATCH@)

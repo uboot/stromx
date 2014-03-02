@@ -38,10 +38,23 @@ target_link_libraries (stromx_test
     stromx_cvsupport
 )
 
+if(WIN32)
+    install (TARGETS stromx_test 
+        RUNTIME DESTINATION .
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+else(WIN32)
+    install (TARGETS stromx_test 
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+endif(WIN32)
+
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/test
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
-    PATTERN "test*" EXCLUDE
 )
 
 install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/test
