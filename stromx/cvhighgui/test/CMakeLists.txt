@@ -1,7 +1,7 @@
 add_test(NAME stromx_cvhighgui_test COMMAND stromx_cvhighgui_test)
 
 if(MSVC)
-    add_definitions(/DSTROMX_CVIMGPROC_STATIC)
+    add_definitions(/DSTROMX_CVHIGHGUI_STATIC)
 endif(MSVC)
 
 include_directories (
