@@ -5,7 +5,7 @@
         <Operator id="0" package="cv::support" type="DummyCamera" version="0.1.0">
             <!-- output image index -->
             <Parameter id="0">
-                <Data package="Runtime" type="Bool" version="0.1.0">1</Data>
+                <Data package="runtime" type="Bool" version="0.1.0">1</Data>
             </Parameter>
             <!-- image for camera simulator -->
             <Parameter id="1">
@@ -13,43 +13,43 @@
             </Parameter>
             <!-- software trigger mode -->
             <Parameter id="2">
-                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
+                <Data type="Enum" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
             <Parameter id="6">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">1000000</Data>
             </Parameter>
             <!-- one buffer -->
             <Parameter id="7">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- 8-bit grayscale output -->
             <Parameter id="15">
-                <Data type="Enum" package="Runtime" version="0.1.0">1</Data>
+                <Data type="Enum" package="runtime" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
         <Operator id="1" package="cv::support" type="Buffer" version="0.1.0">
             <!-- one buffer -->
             <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
             <Parameter id="1">
-                <Data type="UInt32" package="Runtime" version="0.1.0">1000000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">1000000</Data>
             </Parameter>
         </Operator>
         <Operator id="2" package="cv::imgproc" type="Canny" version="0.1.0">
             <!-- process in place -->
             <Parameter id="0">
-                <Data type="Enum" package="Runtime" version="0.1.0">0</Data>
+                <Data type="Enum" package="runtime" version="0.1.0">0</Data>
             </Parameter>
             <!-- threshold 1 -->
             <Parameter id="1">
-                <Data type="Float64" package="Runtime" version="0.1.0">50</Data>
+                <Data type="Float64" package="runtime" version="0.1.0">50</Data>
             </Parameter>
             <!-- threshold 2 -->
             <Parameter id="2">
-                <Data type="Float64" package="Runtime" version="0.1.0">150</Data>
+                <Data type="Float64" package="runtime" version="0.1.0">150</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>
             <Input id="1" operator="1" output="0"/>

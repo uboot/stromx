@@ -19,11 +19,15 @@ for root, dirs, files in os.walk(args.directory[0]):
         for f in files:
             if re.match(r".+\.(zip|stromx)", f):
                 path = os.path.join(root, f)
-                with zipfile.ZipFile(path, 'r') as archive:
-                    dirname = "{0}.extracted".format(f)
-                    dirpath = os.path.join(root, dirname)
-                    os.mkdir(dirpath)
-                    archive.extractall(dirpath)
+                try:
+                    with zipfile.ZipFile(path, 'r') as archive:
+                        dirname = "{0}.extracted".format(f)
+                        dirpath = os.path.join(root, dirname)
+                        os.mkdir(dirpath)
+                        archive.extractall(dirpath)
+                        print "Created {0}".format(dirpath)
+                except zipfile.BadZipfile:
+                    print "Failed to open {0}".format(path)
     else:
         for d in dirs:
             if re.match(r".+\.(zip|stromx).extracted", d):
@@ -35,3 +39,4 @@ for root, dirs, files in os.walk(args.directory[0]):
                         memberPath = os.path.join(root, d, member)
                         archive.write(memberPath, member)
                 shutil.rmtree(dirPath)
+                print "Created {0}".format(filePath)

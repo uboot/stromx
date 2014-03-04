@@ -59,7 +59,7 @@ namespace stromx
                 // serialize the header
                 impl::SerializationHeader header;
                 header.serverVersion = Version(0, 1, 0);
-                header.package = "Runtime";
+                header.package = "runtime";
                 header.type = "UInt32";
                 header.version = Version(0, 1, 0);
                 std::ostringstream headerStream;

@@ -4,13 +4,13 @@
     <Stream name="TestStream">
         <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 1" x="10.1" y="5.5">
             <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">5000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">5000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Runtime" version="0.1.0">200</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">200</Data>
             </Parameter>
             <Parameter id="2">
-                <Data package="Runtime" type="Bool" version="0.1.0">0</Data>
+                <Data package="runtime" type="Bool" version="0.1.0">0</Data>
             </Parameter>
             <Parameter id="3">
                 <Data package="TestPackage" type="TestData" version="0.1.0" file="data.txt"/>
@@ -18,27 +18,27 @@
         </Operator>
         <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 2">
             <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">6000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">6000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Runtime" version="0.1.0">250</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">250</Data>
             </Parameter>
             <Input id="0" operator="0" output="2"/>
             <Input id="1" operator="0" output="3"/>
         </Operator>
         <Operator id="2" package="TestPackage" type="TestOperator" version="0.1.0" name="Number 3">
             <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">7000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">7000</Data>
             </Parameter>
             <Parameter id="1">
-                <Data type="UInt32" package="Runtime" version="0.1.0">300</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">300</Data>
             </Parameter>
             <Input id="0" operator="1" output="2"/>
             <Input id="1" operator="1" output="3"/>
         </Operator>
         <Operator id="3" package="TestPackage" type="TestOperator" version="0.1.0" isInitialized="false" name="Number 4" x="20" y="10">
             <Parameter id="0">
-                <Data type="UInt32" package="Runtime" version="0.1.0">8000</Data>
+                <Data type="UInt32" package="runtime" version="0.1.0">8000</Data>
             </Parameter>
         </Operator>
         <Thread name="Processing thread" color="#ff00ee">

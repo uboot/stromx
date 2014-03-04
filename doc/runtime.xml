@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Package id="runtime" title="Runtime">
+<Package id="runtime" title="runtime">
     <Description>
         This package contains infrastructure operators and general data types
         for primitive data, images and matrices.
