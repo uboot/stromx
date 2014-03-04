@@ -24,7 +24,9 @@
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
 
-class TestDataOperator : public stromx::runtime::OperatorKernel
+#include "stromx/test/Config.h"
+
+class STROMX_TEST_API TestDataOperator : public stromx::runtime::OperatorKernel
 {
     enum Outputs 
     { 

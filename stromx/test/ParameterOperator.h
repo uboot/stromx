@@ -22,10 +22,11 @@
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
-
 #include <stromx/cvsupport/Matrix.h>
 
-class ParameterOperator : public stromx::runtime::OperatorKernel
+#include "stromx/test/Config.h"
+
+class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
 {
 public:
     enum Inputs 

@@ -29,7 +29,6 @@
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
-#include "stromx/test/Config.h"
 
 using namespace stromx::runtime;
 

@@ -24,7 +24,9 @@
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/WriteAccess.h>
 
-class DeadlockOperator : public stromx::runtime::OperatorKernel
+#include "stromx/test/Config.h"
+
+class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
 {
     enum Inputs 
     { 

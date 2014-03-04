@@ -23,7 +23,6 @@
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/Primitive.h>
-#include "stromx/test/Config.h"
 
 using namespace stromx::runtime;
 

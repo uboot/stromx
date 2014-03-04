@@ -7,7 +7,6 @@
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
 #include <cstdlib>
-#include "stromx/test/Config.h"
 
 using namespace stromx::runtime;
 

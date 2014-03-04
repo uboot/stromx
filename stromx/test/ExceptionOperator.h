@@ -23,7 +23,9 @@
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
 
-class ExceptionOperator : public stromx::runtime::OperatorKernel
+#include "stromx/test/Config.h"
+
+class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
 {
     enum Inputs 
     { 

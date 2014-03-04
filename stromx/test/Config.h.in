@@ -27,11 +27,11 @@
     #ifdef STROMX_TEST_STATIC
         #define STROMX_TEST_API
     #else
-        #ifdef stromx_cvsupport_EXPORTS
+        #ifdef stromx_test_EXPORTS
             #define STROMX_TEST_API __declspec(dllexport)
         #else
             #define STROMX_TEST_API __declspec(dllimport)
-        #endif // stromx_cvsupport_EXPORTS
+        #endif // stromx_test_EXPORTS
     #endif // STROMX_TEST_STATIC
 #else
     #define STROMX_TEST_API
