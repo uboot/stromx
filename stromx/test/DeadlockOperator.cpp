@@ -35,6 +35,9 @@
 
 using namespace stromx::runtime;
 
+namespace stromx {
+namespace test {
+
 const std::string DeadlockOperator::TYPE("DeadlockOperator");
 const std::string DeadlockOperator::PACKAGE(STROMX_TEST_PACKAGE_NAME);
 const Version DeadlockOperator::VERSION(1, 2, 3);
@@ -168,4 +171,8 @@ const std::vector<const Parameter*> DeadlockOperator::setupParameters()
     
     return parameters;
 }
+
+}
+}
+
 

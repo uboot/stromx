@@ -26,6 +26,9 @@
 
 #include "stromx/test/Config.h"
 
+namespace stromx {
+namespace test {
+
 class STROMX_TEST_API TestDataOperator : public stromx::runtime::OperatorKernel
 {
     enum Outputs 
@@ -99,5 +102,8 @@ private:
     
     unsigned int m_index;
 };
+
+}
+}
 
 #endif // TESTDATAOPERATOR_H

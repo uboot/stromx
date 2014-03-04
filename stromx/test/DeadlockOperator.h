@@ -26,6 +26,9 @@
 
 #include "stromx/test/Config.h"
 
+namespace stromx {
+namespace test {
+
 class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
 {
     enum Inputs 
@@ -65,5 +68,8 @@ private:
     stromx::runtime::WriteAccess<stromx::runtime::UInt32> m_writeAccess;
     stromx::runtime::UInt8 m_dummy;
 };
+
+}
+}
 
 #endif // DEADLOCKOPERATOR_H

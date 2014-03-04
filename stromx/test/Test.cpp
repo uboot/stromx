@@ -31,7 +31,7 @@ extern "C"
 {
     void STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry& registry)
     {
-        using namespace stromx::runtime;
+        using namespace stromx::test;
         
         registry.registerOperator(new DeadlockOperator);
         registry.registerOperator(new ExceptionOperator);

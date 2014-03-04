@@ -25,6 +25,9 @@
 
 #include "stromx/test/Config.h"
 
+namespace stromx {
+namespace test {
+
 class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
 {
     enum Inputs 
@@ -68,5 +71,8 @@ private:
     stromx::runtime::Bool m_throwDeactivate;
     stromx::runtime::Bool m_throwDeinitialize;
 };
+
+}
+}
 
 #endif // PARAMETEROPERATOR_H

@@ -25,6 +25,9 @@
 
 #include "stromx/test/Config.h"
 
+namespace stromx {
+namespace test {
+    
 class STROMX_TEST_API RandomDataOperator : public stromx::runtime::OperatorKernel
 {
     enum Outputs 
@@ -65,5 +68,8 @@ private:
     
     stromx::runtime::Enum m_dataType;
 };
+
+}
+}
 
 #endif // RANDOMDATAOPERATOR_H

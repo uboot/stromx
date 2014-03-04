@@ -10,6 +10,9 @@
 
 using namespace stromx::runtime;
 
+namespace stromx {
+namespace test {
+
 const std::string RandomDataOperator::TYPE("RandomDataOperator");
 const std::string RandomDataOperator::PACKAGE(STROMX_TEST_PACKAGE_NAME);
 const Version RandomDataOperator::VERSION(1, 2, 3);
@@ -122,4 +125,6 @@ double RandomDataOperator::uniform(double limit)
     return (double(rand()) / RAND_MAX - 0.5) * 2.0 * limit;
 }
 
+}
+}
 

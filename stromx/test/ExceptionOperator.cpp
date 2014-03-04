@@ -26,6 +26,9 @@
 
 using namespace stromx::runtime;
 
+namespace stromx {
+namespace test {
+
 const std::string ExceptionOperator::TYPE("ExceptionOperator");
 const std::string ExceptionOperator::PACKAGE(STROMX_TEST_PACKAGE_NAME);
 const Version ExceptionOperator::VERSION(1, 2, 3);
@@ -173,4 +176,8 @@ const std::vector<const Parameter*> ExceptionOperator::setupParameters()
     
     return parameters;
 }
+
+}
+}
+
 

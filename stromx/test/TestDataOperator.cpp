@@ -32,6 +32,9 @@
 
 using namespace stromx::runtime;
 
+namespace stromx {
+namespace test {
+
 const std::string TestDataOperator::TYPE("TestDataOperator");
 const std::string TestDataOperator::PACKAGE(STROMX_TEST_PACKAGE_NAME);
 const Version TestDataOperator::VERSION(1, 2, 3);
@@ -412,4 +415,6 @@ void TestDataOperator::setMatrixEntry(Matrix* matrix, unsigned int row,
     }
 }
 
+}
+}
 

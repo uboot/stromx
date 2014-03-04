@@ -26,6 +26,9 @@
 
 #include "stromx/test/Config.h"
 
+namespace stromx {
+namespace test {
+
 class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
 {
 public:
@@ -78,5 +81,8 @@ private:
     stromx::cvsupport::Matrix m_matrixParam;
     stromx::cvsupport::Matrix m_intMatrixParam;
 };
+
+}
+}
 
 #endif // PARAMETEROPERATOR_H

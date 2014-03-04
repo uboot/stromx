@@ -9,6 +9,7 @@
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
+using namespace stromx::test;
 
 BOOST_PYTHON_MODULE(libtest)
 {

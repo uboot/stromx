@@ -31,6 +31,9 @@
 
 using namespace stromx::runtime;
 
+namespace stromx {
+namespace test {
+
 const std::string ParameterOperator::TYPE("ParameterOperator");
 const std::string ParameterOperator::PACKAGE(STROMX_TEST_PACKAGE_NAME);
 const Version ParameterOperator::VERSION(1, 2, 3);
@@ -214,3 +217,7 @@ const std::vector<const Parameter*> ParameterOperator::setupInitParameters()
     
     return parameters;
 }
+
+}
+}
+
