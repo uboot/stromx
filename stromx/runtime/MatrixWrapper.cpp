@@ -203,31 +203,31 @@ namespace stromx
             // read data
             if (isFortran)
             {
-            	// in case the input stream is Fortran-style read each element
-            	// and write it to the transposed position in the matrix
-				uint8_t* dataPtr = matrix.data();
-            	for (unsigned int j = 0; j < matrix.cols(); ++j)
-            	{
-            		for (unsigned int i = 0; i < matrix.rows(); ++i)
-            		{
-            			unsigned int offsetInBytes = i * matrix.stride() +
-            										 j * matrix.valueSize();
-            			char* elementPtr = (char*)(dataPtr + offsetInBytes);
-            			in.read(elementPtr, matrix.valueSize());
-            		}
-            	}
+                // in case the input stream is Fortran-style read each element
+                // and write it to the transposed position in the matrix
+                uint8_t* dataPtr = matrix.data();
+                for (unsigned int j = 0; j < matrix.cols(); ++j)
+                {
+                    for (unsigned int i = 0; i < matrix.rows(); ++i)
+                    {
+                        unsigned int offsetInBytes = i * matrix.stride() +
+                                                     j * matrix.valueSize();
+                        char* elementPtr = (char*)(dataPtr + offsetInBytes);
+                        in.read(elementPtr, matrix.valueSize());
+                    }
+                }
             }
             else
             {
-            	// in case the input stream is C-style read each row to the
-            	// matrix
-				uint8_t* rowPtr = matrix.data();
-				unsigned int rowSize = matrix.cols() * matrix.valueSize();
-				for(unsigned int i = 0; i < matrix.rows(); ++i)
-				{
-					in.read((char*)(rowPtr), rowSize);
-					rowPtr += matrix.stride();
-				}
+                // in case the input stream is C-style read each row to the
+                // matrix
+                uint8_t* rowPtr = matrix.data();
+                unsigned int rowSize = matrix.cols() * matrix.valueSize();
+                for(unsigned int i = 0; i < matrix.rows(); ++i)
+                {
+                    in.read((char*)(rowPtr), rowSize);
+                    rowPtr += matrix.stride();
+                }
             }
             
 
