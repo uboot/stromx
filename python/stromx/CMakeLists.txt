@@ -8,7 +8,8 @@ if(BUILD_OPENCV_WRAPPER)
     add_subdirectory(cvimgproc)
     add_subdirectory(cvsupport)
     add_subdirectory(cvhighgui)
-    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"cvcore\", \"cvsupport\", \"cvimgproc\", \"cvhighgui\"")
+    add_subdirectory(test)
+    set (AVAILABLE_PACKAGES "${AVAILABLE_PACKAGES}, \"cvcore\", \"cvsupport\", \"cvimgproc\", \"cvhighgui\", \"test\"")
 endif()
 
 configure_file (
