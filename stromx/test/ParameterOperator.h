@@ -26,63 +26,63 @@
 
 #include "stromx/test/Config.h"
 
-namespace stromx {
-namespace test {
-
-class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
+namespace stromx
 {
-public:
-    enum Inputs 
-    { 
-        INPUT_1, 
-        INPUT_2
-    };
-    
-    enum Outputs 
-    { 
-        OUTPUT_1, 
-        OUTPUT_2
-    };
-    
-    enum Parameters
-    { 
-        INITIALIZE_PARAM,
-        PARAM_GROUP_1,
-        PARAM_GROUP_2,
-        INT_PARAM,
-        ENUM_PARAM,
-        BOOL_PARAM,
-        MATRIX_PARAM,
-        INT_MATRIX_PARAM
-    };
-    
-    ParameterOperator();
-    
-    virtual OperatorKernel* clone() const { return new ParameterOperator; }
-    virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
-    const stromx::runtime::DataRef getParameter(const unsigned int id) const;
-    virtual void execute(stromx::runtime::DataProvider& provider);
-    virtual void initialize();
-    
-private:
-    static const std::vector<const stromx::runtime::Description*> setupInputs();
-    static const std::vector<const stromx::runtime::Description*> setupOutputs();
-    static const std::vector<const stromx::runtime::Parameter*> setupInitParameters();
-    static const std::vector<const stromx::runtime::Parameter*> setupParameters();
-    
-    static const std::string TYPE;
-    static const std::string PACKAGE;
-    static const stromx::runtime::Version VERSION;
-    
-    stromx::runtime::UInt32 m_initializeParam;
-    stromx::runtime::Int32 m_intParam;
-    stromx::runtime::Enum m_enumParam;
-    stromx::runtime::Bool m_boolParam;
-    stromx::cvsupport::Matrix m_matrixParam;
-    stromx::cvsupport::Matrix m_intMatrixParam;
-};
-
-}
+    namespace test
+    {
+        class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
+        {
+        public:
+            enum Inputs 
+            { 
+                INPUT_1, 
+                INPUT_2
+            };
+            
+            enum Outputs 
+            { 
+                OUTPUT_1, 
+                OUTPUT_2
+            };
+            
+            enum Parameters
+            { 
+                INITIALIZE_PARAM,
+                PARAM_GROUP_1,
+                PARAM_GROUP_2,
+                INT_PARAM,
+                ENUM_PARAM,
+                BOOL_PARAM,
+                MATRIX_PARAM,
+                INT_MATRIX_PARAM
+            };
+            
+            ParameterOperator();
+            
+            virtual OperatorKernel* clone() const { return new ParameterOperator; }
+            virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
+            const stromx::runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(stromx::runtime::DataProvider& provider);
+            virtual void initialize();
+            
+        private:
+            static const std::vector<const stromx::runtime::Description*> setupInputs();
+            static const std::vector<const stromx::runtime::Description*> setupOutputs();
+            static const std::vector<const stromx::runtime::Parameter*> setupInitParameters();
+            static const std::vector<const stromx::runtime::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const stromx::runtime::Version VERSION;
+            
+            stromx::runtime::UInt32 m_initializeParam;
+            stromx::runtime::Int32 m_intParam;
+            stromx::runtime::Enum m_enumParam;
+            stromx::runtime::Bool m_boolParam;
+            stromx::cvsupport::Matrix m_matrixParam;
+            stromx::cvsupport::Matrix m_intMatrixParam;
+        };
+    }
 }
 
 #endif // PARAMETEROPERATOR_H

@@ -25,54 +25,54 @@
 
 #include "stromx/test/Config.h"
 
-namespace stromx {
-namespace test {
-
-class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
+namespace stromx
 {
-    enum Inputs 
-    { 
-        INPUT
-    };
-    
-    enum Parameters
-    { 
-        THROW_INITIALIZE,
-        THROW_ACTIVATE,
-        THROW_EXECUTE,
-        THROW_DEACTIVATE,
-        THROW_DEINITIALIZE
-    };
-    
-public:
-    ExceptionOperator();
-    
-    virtual OperatorKernel* clone() const { return new ExceptionOperator; }
-    virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
-    const stromx::runtime::DataRef getParameter(const unsigned int id) const;
-    virtual void execute(stromx::runtime::DataProvider& provider);
-    virtual void activate();
-    virtual void initialize();
-    virtual void deactivate();
-    virtual void deinitialize();
-    
-private:
-    static const std::vector<const stromx::runtime::Description*> setupInputs();
-    static const std::vector<const stromx::runtime::Description*> setupOutputs();
-    static const std::vector<const stromx::runtime::Parameter*> setupParameters();
-    
-    static const std::string TYPE;
-    static const std::string PACKAGE;
-    static const stromx::runtime::Version VERSION;
-    
-    stromx::runtime::Bool m_throwInitialize;
-    stromx::runtime::Bool m_throwActivate;
-    stromx::runtime::Bool m_throwExecute;
-    stromx::runtime::Bool m_throwDeactivate;
-    stromx::runtime::Bool m_throwDeinitialize;
-};
-
-}
+    namespace test
+    {
+        class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
+        {
+            enum Inputs 
+            { 
+                INPUT
+            };
+            
+            enum Parameters
+            { 
+                THROW_INITIALIZE,
+                THROW_ACTIVATE,
+                THROW_EXECUTE,
+                THROW_DEACTIVATE,
+                THROW_DEINITIALIZE
+            };
+            
+        public:
+            ExceptionOperator();
+            
+            virtual OperatorKernel* clone() const { return new ExceptionOperator; }
+            virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
+            const stromx::runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void execute(stromx::runtime::DataProvider& provider);
+            virtual void activate();
+            virtual void initialize();
+            virtual void deactivate();
+            virtual void deinitialize();
+            
+        private:
+            static const std::vector<const stromx::runtime::Description*> setupInputs();
+            static const std::vector<const stromx::runtime::Description*> setupOutputs();
+            static const std::vector<const stromx::runtime::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const stromx::runtime::Version VERSION;
+            
+            stromx::runtime::Bool m_throwInitialize;
+            stromx::runtime::Bool m_throwActivate;
+            stromx::runtime::Bool m_throwExecute;
+            stromx::runtime::Bool m_throwDeactivate;
+            stromx::runtime::Bool m_throwDeinitialize;
+        };
+    }
 }
 
 #endif // PARAMETEROPERATOR_H

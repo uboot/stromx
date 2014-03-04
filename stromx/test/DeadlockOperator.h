@@ -26,50 +26,50 @@
 
 #include "stromx/test/Config.h"
 
-namespace stromx {
-namespace test {
-
-class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
+namespace stromx 
 {
-    enum Inputs 
-    { 
-        INPUT,
-        OUTPUT
-    };
-    
-    enum Parameters
-    { 
-        LOCK_PARAMETERS,
-        LOCK_DATA,
-        DUMMY
-    };
-    
-public:
-    DeadlockOperator();
-    
-    virtual OperatorKernel* clone() const { return new DeadlockOperator; }
-    virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
-    const stromx::runtime::DataRef getParameter(const unsigned int id) const;
-    virtual void activate();
-    virtual void execute(stromx::runtime::DataProvider& provider);
-    
-private:
-    static const std::vector<const stromx::runtime::Description*> setupInputs();
-    static const std::vector<const stromx::runtime::Description*> setupOutputs();
-    static const std::vector<const stromx::runtime::Parameter*> setupParameters();
-    
-    static const std::string TYPE;
-    static const std::string PACKAGE;
-    static const stromx::runtime::Version VERSION;
-    
-    stromx::runtime::Bool m_lockParameters;
-    stromx::runtime::Bool m_lockData;
-    bool m_dataHasBeenLocked;
-    stromx::runtime::WriteAccess<stromx::runtime::UInt32> m_writeAccess;
-    stromx::runtime::UInt8 m_dummy;
-};
-
-}
+    namespace test
+    {
+        class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
+        {
+            enum Inputs 
+            { 
+                INPUT,
+                OUTPUT
+            };
+            
+            enum Parameters
+            { 
+                LOCK_PARAMETERS,
+                LOCK_DATA,
+                DUMMY
+            };
+            
+        public:
+            DeadlockOperator();
+            
+            virtual OperatorKernel* clone() const { return new DeadlockOperator; }
+            virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
+            const stromx::runtime::DataRef getParameter(const unsigned int id) const;
+            virtual void activate();
+            virtual void execute(stromx::runtime::DataProvider& provider);
+            
+        private:
+            static const std::vector<const stromx::runtime::Description*> setupInputs();
+            static const std::vector<const stromx::runtime::Description*> setupOutputs();
+            static const std::vector<const stromx::runtime::Parameter*> setupParameters();
+            
+            static const std::string TYPE;
+            static const std::string PACKAGE;
+            static const stromx::runtime::Version VERSION;
+            
+            stromx::runtime::Bool m_lockParameters;
+            stromx::runtime::Bool m_lockData;
+            bool m_dataHasBeenLocked;
+            stromx::runtime::WriteAccess<stromx::runtime::UInt32> m_writeAccess;
+            stromx::runtime::UInt8 m_dummy;
+        };
+    }
 }
 
 #endif // DEADLOCKOPERATOR_H
