@@ -56,4 +56,4 @@ target_link_libraries(stromx_cvsupport_test
     stromx_runtime
 )
 
-add_dependencies(stromx_cvsupport_test stromx_cvsupport)
+add_dependencies(stromx_cvsupport_test stromx_runtime)

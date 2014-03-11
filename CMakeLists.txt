@@ -51,7 +51,7 @@ find_package(CppUnit)
 
 find_package(Threads)
 
-find_package(OpenCV REQUIRED core imgproc highgui)
+find_package(OpenCV COMPONENTS core imgproc highgui)
 
 find_package(XercesC)
 
@@ -59,10 +59,6 @@ find_package(LibZip)
 
 if(CPPUNIT_FOUND)
     option(BUILD_TESTS "Build unit tests" ON)
-endif()
-
-if(Boost_FOUND)
-    set(BUILD_RUNTIME true)
 endif()
 
 if(OpenCV_FOUND)
@@ -90,15 +86,11 @@ if(BUILD_PYTHON)
     add_subdirectory(python)
 endif()
 
-# create the configure file only if all packages are built; otherwise the file 
-# must be adapted accordingly
-if(BUILD_OPENCV_WRAPPER)
-    configure_file (
-        "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
-        "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
-        @ONLY
-    )
-endif()
+configure_file (
+    "${PROJECT_SOURCE_DIR}/stromxConfig.cmake.in"
+    "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
+    @ONLY
+)
 
 if(WIN32)
     install(FILES "${PROJECT_BINARY_DIR}/stromxConfig.cmake"
