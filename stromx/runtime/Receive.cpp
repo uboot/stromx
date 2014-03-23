@@ -119,7 +119,15 @@ namespace stromx
         
         void Receive::execute(DataProvider& provider)
         {
-            DataContainer data = m_client->receive(provider.factory());
+            DataContainer data;
+            try
+            {
+                data = m_client->receive(provider.factory());
+            }
+            catch(impl::Client::NoConnection&)
+            {
+                throw OperatorError(*this, "Lost the connection to send operator.");
+            }
             
             Id2DataPair outputMapper(OUTPUT, data);
             provider.sendOutputData(outputMapper);
