@@ -192,6 +192,39 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(6), (unsigned int)(m_stream->operators().size()));
         }
         
+        void StreamTest::testAddOperatorWithFactory()
+        {
+            Factory factory;
+            m_stream->setFactory(&factory);
+            
+            Operator* op = m_stream->addOperator(m_op2);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const AbstractFactory*>(&factory),
+                                 op->factory());  
+        }
+        
+        void StreamTest::testHideOperatorWithFactory()
+        {
+            Factory factory;
+            m_stream->setFactory(&factory);
+            Operator* op = m_stream->addOperator(m_op2);
+            
+            m_stream->hideOperator(op);
+            CPPUNIT_ASSERT_EQUAL(reinterpret_cast<const AbstractFactory*>(0),
+                                 op->factory());  
+        }
+        
+        void StreamTest::testShowOperatorWithFactory()
+        {
+            Factory factory;
+            m_stream->setFactory(&factory);
+            Operator* op = m_stream->addOperator(m_op2);
+            m_stream->hideOperator(op);
+            
+            m_stream->showOperator(op);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const AbstractFactory*>(&factory),
+                                 op->factory()); 
+        }
+        
         void StreamTest::testRemoveOperator()
         { 
             Operator* op = m_stream->operators()[1];

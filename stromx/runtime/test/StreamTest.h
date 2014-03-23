@@ -41,8 +41,11 @@ namespace stromx
             CPPUNIT_TEST(testConnect);
             CPPUNIT_TEST(testDisconnect);
             CPPUNIT_TEST(testAddOperator);
+            CPPUNIT_TEST(testAddOperatorWithFactory);
             CPPUNIT_TEST(testHideOperator);
+            CPPUNIT_TEST(testHideOperatorWithFactory);
             CPPUNIT_TEST(testShowOperator);
+            CPPUNIT_TEST(testShowOperatorWithFactory);
             CPPUNIT_TEST(testRemoveOperator);  
             CPPUNIT_TEST(testInitializeOperator);    
             CPPUNIT_TEST(testDeinitializeOperator);           
@@ -74,8 +77,11 @@ namespace stromx
             void testConnect();
             void testDisconnect();
             void testAddOperator();
+            void testAddOperatorWithFactory();
             void testHideOperator();
+            void testHideOperatorWithFactory();
             void testShowOperator();
+            void testShowOperatorWithFactory();
             void testRemoveOperator();
             void testInitializeOperator();
             void testDeinitializeOperator();

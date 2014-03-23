@@ -513,6 +513,7 @@ namespace stromx
         void Stream::attachOperator(Operator*const op)
         {
             m_uninitializedOperators.insert(op);
+            op->setFactory(m_factory);
             m_operators.push_back(op);
         }
 
@@ -542,6 +543,7 @@ namespace stromx
             std::vector<Operator*>::iterator iter = 
                 std::find(m_operators.begin(), m_operators.end(), op);
             
+            (*iter)->setFactory(0);
             m_operators.erase(iter);
         }
 
