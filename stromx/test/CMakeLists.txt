@@ -1,6 +1,6 @@
 set (TEST_VERSION_MAJOR 0)
 set (TEST_VERSION_MINOR 0)
-set (TEST_VERSION_PATCH 1)
+set (TEST_VERSION_PATCH 2)
 
 configure_file (
     ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
