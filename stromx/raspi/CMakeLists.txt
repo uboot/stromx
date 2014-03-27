@@ -33,6 +33,21 @@ target_link_libraries (stromx_raspi
     stromx_runtime
 )
 
+if(WIN32)    
+    install (TARGETS stromx_raspi
+        RUNTIME DESTINATION .
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+
+else(WIN32)
+    install (TARGETS stromx_raspi
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${LIB_DIR}
+        ARCHIVE DESTINATION ${LIB_DIR}
+    )
+endif(WIN32)
+
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/raspi
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
