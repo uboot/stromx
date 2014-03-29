@@ -17,6 +17,7 @@
 #include "stromx/runtime/Receive.h"
 
 #include <boost/array.hpp>
+#include <boost/assert.hpp>
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -65,12 +66,15 @@ namespace stromx
                 throw OperatorError(*this, "Failed to connect to send operator.");
             }
         }
+        
+        void Receive::interrupt()
+        {
+            BOOST_ASSERT(m_client);
+            m_client->stop();
+        }
 
         void Receive::deactivate()
         {
-            m_client->stop();
-            m_client->join();
-            
             delete m_client;
             m_client = 0;
         }

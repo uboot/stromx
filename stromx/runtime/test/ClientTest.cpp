@@ -17,8 +17,9 @@
 #include "stromx/runtime/test/ClientTest.h"
 
 #include <cppunit/TestAssert.h>
-#include <boost/lexical_cast.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/thread.hpp>
 
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Primitive.h"
@@ -189,25 +190,18 @@ namespace stromx
             // request data from server a separate thread
             boost::thread client(boost::bind(&receiveData, m_client));
             
-            // interrupt this thread: this leaves the client utility thread alive
-            client.interrupt();
+            // stop the client
+            m_client->stop();
+            
+            // wait for its thread to finish
             client.join();
             
-            // stop the client (i.e. its utility thread)
-            m_client->stop();
-            m_client->join();
-            
+            // wait for the server
             server.join();
         }
 
         void ClientTest::tearDown()
-        {
-            if (m_client)
-            {
-                m_client->stop();
-                m_client->join();
-            }
-            
+        {            
             delete m_client;
         }
     }

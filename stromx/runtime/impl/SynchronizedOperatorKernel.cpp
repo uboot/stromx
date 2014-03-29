@@ -631,6 +631,11 @@ namespace stromx
             
             void SynchronizedOperatorKernel::interrupt()
             {
+                lock_t lock(m_mutex);
+                    
+                if(m_status != EXECUTING)
+                    return;
+                
                 try
                 {
                     m_op->interrupt();

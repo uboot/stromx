@@ -20,7 +20,6 @@
 #include <deque>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
-#include <boost/thread.hpp>
 
 #include "stromx/runtime/impl/SerializationHeader.h"
 #include "stromx/runtime/DataContainer.h"
@@ -43,7 +42,6 @@ namespace stromx
                 
                 const DataContainer receive(const AbstractFactory & factory);
                 void stop();
-                void join();
                 
             private:
                 void run();
@@ -54,12 +52,7 @@ namespace stromx
                 
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::socket m_socket;
-                boost::thread m_thread;
-                boost::mutex m_mutex;
-                boost::condition_variable m_cond;
-                bool m_isReceiving;
                 boost::system::error_code m_error;
-                
                 
                 boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_headerSizeBuffer;
                 boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_textSizeBuffer;
