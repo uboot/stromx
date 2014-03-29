@@ -113,6 +113,14 @@ namespace stromx
              * activation.
              */
             virtual void deactivate() {}
+
+            /** 
+             * Interrupts an executing operator, i.e. the operator stops its 
+             * execution as soon as possible. The function has no effect if the
+             * operator is not currently executing. Note that this function can be called
+             * from a thread different than the executing thread at any time.
+             */
+            virtual void interrupt() {}
             
             
         protected:

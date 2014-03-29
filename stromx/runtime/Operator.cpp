@@ -274,6 +274,19 @@ namespace stromx
             }
         }
         
+        void Operator::interrupt()
+        {
+            try
+            {
+                m_kernel->interrupt();
+            }
+            catch(OperatorError& e)
+            {
+                e.setName(name());
+                throw;
+            }
+        }
+        
         void Operator::addObserver(const ConnectorObserver*const observer)
         {
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());

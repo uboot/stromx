@@ -56,6 +56,7 @@ namespace stromx
                 void deinitialize();
                 void activate();
                 void deactivate();
+                void interrupt();
                 
                 // used by Operator
                 Status status() { return m_status; }

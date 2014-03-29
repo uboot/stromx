@@ -628,6 +628,22 @@ namespace stromx
                 if(! type.isVariant(param.variant()))
                     throw WrongParameterType(param, *this->info());
             }
+            
+            void SynchronizedOperatorKernel::interrupt()
+            {
+                try
+                {
+                    m_op->interrupt();
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
+            }
         }
     }
 }

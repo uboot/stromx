@@ -258,6 +258,7 @@ namespace stromx
             impl::OutputNode* getOutputNode(const unsigned int id) const;
             void activate();
             void deactivate();
+            void interrupt();
             void observeInput(const unsigned int id, const DataContainer & data) const;
             void observeOutput(const unsigned int id, const DataContainer & data) const;
             
