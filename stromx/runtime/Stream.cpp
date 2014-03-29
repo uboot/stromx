@@ -240,6 +240,8 @@ namespace stromx
                 (*iter)->stop();
             }
             
+            m_network->interrupt();
+            
             m_status = DEACTIVATING;
         }
         

@@ -57,6 +57,7 @@ namespace stromx
 
                 void activate();
                 void deactivate();
+                void interrupt();
                 
                 InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
                 OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;

@@ -75,9 +75,18 @@ namespace stromx
                 {
                     (*iter)->deactivate();
                 }
-
             }
             
+            void Network::interrupt()
+            {
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
+                {
+                    (*iter)->interrupt();
+                }
+            }
+                
             void Network::addOperator(Operator* const op)
             {
                 if (op == 0)
