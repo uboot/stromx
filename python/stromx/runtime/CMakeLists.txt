@@ -26,6 +26,7 @@ set(SOURCES
     String.cpp
     SortInputsAlgorithm.cpp
     Thread.cpp
+    TriggerData.cpp
     Version.cpp
     WriteAccess.cpp
 )

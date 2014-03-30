@@ -54,6 +54,7 @@ void exportSortInputsAlgorithm();
 void exportStream();
 void exportString();
 void exportThread();
+void exportTriggerData();
 void exportVersion();
 void exportWriteAccess();
 void exportXmlReader();
@@ -92,6 +93,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportStream();
     exportString();
     exportThread();
+    exportTriggerData();
     exportVersion();    
     exportWriteAccess();
     exportXmlReader();
