@@ -35,6 +35,7 @@ void exportDataVariant()
     in_DataVariant.attr("NONE") = DataVariant::NONE; 
     in_DataVariant.attr("DATA") = DataVariant::DATA; 
     in_DataVariant.attr("BOOL") = DataVariant::BOOL; 
+    in_DataVariant.attr("TRIGGER") = DataVariant::TRIGGER; 
     in_DataVariant.attr("ENUM") = DataVariant::ENUM; 
     in_DataVariant.attr("INT") = DataVariant::INT; 
     in_DataVariant.attr("INT_8") = DataVariant::INT_8;
