@@ -54,7 +54,9 @@ namespace stromx
                 ENUM_PARAM,
                 BOOL_PARAM,
                 MATRIX_PARAM,
-                INT_MATRIX_PARAM
+                INT_MATRIX_PARAM,
+                TRIGGER_VALUE_PARAM,
+                TRIGGER_PARAM
             };
             
             ParameterOperator();
@@ -81,6 +83,7 @@ namespace stromx
             stromx::runtime::Bool m_boolParam;
             stromx::cvsupport::Matrix m_matrixParam;
             stromx::cvsupport::Matrix m_intMatrixParam;
+            stromx::runtime::Bool m_triggerValue;
         };
     }
 }

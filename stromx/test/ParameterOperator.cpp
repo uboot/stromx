@@ -28,6 +28,7 @@
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ParameterGroup.h>
 #include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/Trigger.h>
 
 using namespace stromx::runtime;
 
@@ -83,6 +84,13 @@ namespace stromx
                 case INT_MATRIX_PARAM:
                     m_intMatrixParam = data_cast<stromx::runtime::Matrix>(value);
                     break;
+                case TRIGGER_VALUE_PARAM:
+                    m_triggerValue = data_cast<stromx::runtime::Bool>(value);
+                    break;
+                case TRIGGER_PARAM:
+                    data_cast<stromx::runtime::Trigger>(value);
+                    m_triggerValue = true;
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -109,6 +117,8 @@ namespace stromx
                 return m_matrixParam;
             case INT_MATRIX_PARAM:
                 return m_intMatrixParam;
+            case TRIGGER_VALUE_PARAM:
+                return m_triggerValue;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -203,6 +213,16 @@ namespace stromx
             intMatrixParam->setRows(1);
             intMatrixParam->setCols(2);
             parameters.push_back(intMatrixParam);
+            
+            Parameter* triggerValueParam = new Parameter(TRIGGER_VALUE_PARAM, DataVariant::BOOL);
+            triggerValueParam->setTitle("Trigger value");
+            triggerValueParam->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(triggerValueParam);
+            
+            Parameter* triggerParam = new Parameter(TRIGGER_PARAM, DataVariant::TRIGGER);
+            triggerParam->setTitle("Trigger value");
+            triggerParam->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(triggerParam);
             
             return parameters;
         }
