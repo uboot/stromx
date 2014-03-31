@@ -10,6 +10,11 @@ configure_file (
 include_directories (
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
+    /opt/vc/include
+    /opt/vc/include/interface/mmal
+    /opt/vc/include/interface/vcos
+    /opt/vc/include/interface/vcos/pthreads
+    /opt/vc/include/interface/vmcs_host/linux
 )
 
 set (SOURCES
