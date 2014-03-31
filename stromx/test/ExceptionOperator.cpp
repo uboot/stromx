@@ -62,6 +62,14 @@ namespace stromx
                 case THROW_DEINITIALIZE:
                     m_throwDeinitialize = data_cast<Bool>(value);
                     break;
+                case THROW_PARAMETER:
+                    m_throwParameter = data_cast<Bool>(value);
+                    break;
+                case PARAMETER:
+                    if (m_throwParameter)
+                        throw WrongParameterId(id, *this);
+                    else
+                        m_parameter = data_cast<Int32>(value);
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -86,6 +94,13 @@ namespace stromx
                 return m_throwDeactivate;
             case THROW_DEINITIALIZE:
                 return m_throwDeinitialize;
+            case THROW_PARAMETER:
+                return m_throwParameter;
+            case PARAMETER:
+                if (m_throwParameter)
+                    throw WrongParameterId(id, *this);
+                else
+                    return m_parameter;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -172,6 +187,16 @@ namespace stromx
             
             param = new Parameter(THROW_DEINITIALIZE, DataVariant::BOOL);
             param->setTitle("Exception on deinitialize");
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(THROW_PARAMETER, DataVariant::BOOL);
+            param->setTitle("Exception on parameter access");
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(PARAMETER, DataVariant::INT_32);
+            param->setTitle("Integer parameter");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             

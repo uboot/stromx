@@ -59,4 +59,16 @@ void exportDataVariant()
     in_DataVariant.attr("BAYERGB_8_IMAGE") = DataVariant::BAYERGB_8_IMAGE;
     in_DataVariant.attr("BAYERBG_16_IMAGE") = DataVariant::BAYERBG_16_IMAGE;
     in_DataVariant.attr("BAYERGB_16_IMAGE") = DataVariant::BAYERGB_16_IMAGE;
+    in_DataVariant.attr("MATRIX") = DataVariant::MATRIX;
+    in_DataVariant.attr("INT_MATRIX") = DataVariant::INT_MATRIX;
+    in_DataVariant.attr("UINT_MATRIX") = DataVariant::UINT_MATRIX;
+    in_DataVariant.attr("INT_8_MATRIX") = DataVariant::INT_8_MATRIX;
+    in_DataVariant.attr("UINT_8_MATRIX") = DataVariant::UINT_8_MATRIX;
+    in_DataVariant.attr("INT_16_MATRIX") = DataVariant::INT_16_MATRIX;
+    in_DataVariant.attr("UINT_16_MATRIX") = DataVariant::UINT_16_MATRIX;
+    in_DataVariant.attr("INT_32_MATRIX") = DataVariant::INT_32_MATRIX;
+    in_DataVariant.attr("UINT_32_MATRIX") = DataVariant::UINT_32_MATRIX;
+    in_DataVariant.attr("FLOAT_MATRIX") = DataVariant::FLOAT_MATRIX;
+    in_DataVariant.attr("FLOAT_32") = DataVariant::FLOAT_32;
+    in_DataVariant.attr("FLOAT_64") = DataVariant::FLOAT_64;
 }

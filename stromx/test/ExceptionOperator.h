@@ -42,7 +42,9 @@ namespace stromx
                 THROW_ACTIVATE,
                 THROW_EXECUTE,
                 THROW_DEACTIVATE,
-                THROW_DEINITIALIZE
+                THROW_DEINITIALIZE,
+                THROW_PARAMETER,
+                PARAMETER
             };
             
         public:
@@ -71,6 +73,8 @@ namespace stromx
             stromx::runtime::Bool m_throwExecute;
             stromx::runtime::Bool m_throwDeactivate;
             stromx::runtime::Bool m_throwDeinitialize;
+            stromx::runtime::Bool m_throwParameter;
+            stromx::runtime::Int32 m_parameter;
         };
     }
 }

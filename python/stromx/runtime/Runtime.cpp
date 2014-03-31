@@ -64,6 +64,7 @@ BOOST_PYTHON_MODULE(libruntime)
     using namespace boost::python;
     
     def("register", stromxRuntimeRegister);
+    def("version", version);
     
     exportAbstractFactory();
     exportColor();
