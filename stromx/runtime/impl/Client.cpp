@@ -78,7 +78,8 @@ namespace stromx
         namespace impl
         {            
             Client::Client(const std::string& url, const std::string& port)
-              : m_socket(m_ioService)
+              : m_socket(m_ioService),
+                m_stopped(false)
             {
                 try
                 {
@@ -101,19 +102,44 @@ namespace stromx
             
             const DataContainer Client::receive(const AbstractFactory& factory)
             {
-                m_ioService.reset();
+                {
+                    lock_t l(m_mutex);
+                    
+                    if (m_stopped)
+                    {
+                        m_stopped = false;
+                        throw Stopped();
+                    }
+                    
+                    m_ioService.reset();
+                    m_stopped = false;
+                }
+                
                 m_error.clear();
                 asyncReceive();
                 m_ioService.run();
                 
+                {
+                    lock_t l(m_mutex);
+                    
+                    if (m_stopped)
+                    {
+                        m_stopped = false;
+                        throw Stopped();
+                    }
+                }
+                
                 if (m_error)
                     throw NoConnection();
+                
                 
                 return deserializeData(factory);
             }
 
             void Client::stop()
             {
+                lock_t l(m_mutex);
+                m_stopped = true;
                 m_ioService.stop();
             }
             

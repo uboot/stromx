@@ -67,6 +67,7 @@ namespace stromx
             friend class OperatorTester;
             friend class OutputNodeTest;
             friend class ThreadImplTest;
+            friend class SendReceiveTest;
             friend class Stream;
             friend class Thread;
             friend class impl::Network;

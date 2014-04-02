@@ -20,6 +20,7 @@
 #include <deque>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 #include "stromx/runtime/impl/SerializationHeader.h"
 #include "stromx/runtime/DataContainer.h"
@@ -36,6 +37,7 @@ namespace stromx
             {
             public:
                 class NoConnection : public std::exception {};
+                class Stopped : public std::exception {};
                 
                 Client(const std::string & url, const std::string & port);
                 ~Client();
@@ -44,6 +46,8 @@ namespace stromx
                 void stop();
                 
             private:
+                typedef boost::lock_guard<boost::mutex> lock_t;
+                
                 void run();
                 void asyncReceive();
                 void handleHeaderRead(const boost::system::error_code& error, size_t bytes_transferred);
@@ -53,6 +57,8 @@ namespace stromx
                 boost::asio::io_service m_ioService;
                 boost::asio::ip::tcp::socket m_socket;
                 boost::system::error_code m_error;
+                boost::mutex m_mutex;
+                bool m_stopped;
                 
                 boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_headerSizeBuffer;
                 boost::array<char, impl::SerializationHeader::NUM_SIZE_DIGITS> m_textSizeBuffer;

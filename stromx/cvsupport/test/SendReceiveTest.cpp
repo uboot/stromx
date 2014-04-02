@@ -92,7 +92,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(50), access().rows());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), access().cols());
             CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT_64, access().valueType());
-        }       
+        }  
         
         void SendReceiveTest::tearDown ( void )
         {

@@ -132,6 +132,10 @@ namespace stromx
             {
                 throw OperatorError(*this, "Lost the connection to send operator.");
             }
+            catch(impl::Client::Stopped&)
+            {
+                return;
+            }
             
             Id2DataPair outputMapper(OUTPUT, data);
             provider.sendOutputData(outputMapper);

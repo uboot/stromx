@@ -419,6 +419,15 @@ namespace stromx
                     }
                     else
                     {
+                        try
+                        {
+                            boost::this_thread::interruption_point();
+                        }
+                        catch(boost::thread_interrupted&)
+                        {
+                            m_parameterCond.notify_all();
+                            throw Interrupt();
+                        }
                         m_status = EXECUTING;
                         m_parametersAreLocked = true;
                     }

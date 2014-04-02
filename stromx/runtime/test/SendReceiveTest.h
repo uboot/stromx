@@ -31,6 +31,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (SendReceiveTest);
             CPPUNIT_TEST (testSendUInt32);
+            CPPUNIT_TEST (testInterrupt);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -41,6 +42,7 @@ namespace stromx
 
             protected:
                 void testSendUInt32();
+                void testInterrupt();
                 
             private:
                 runtime::OperatorTester* m_send;

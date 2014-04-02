@@ -26,7 +26,7 @@
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/impl/Client.h"
 
-// CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ClientTest);
 
 namespace stromx
 {
@@ -52,7 +52,7 @@ namespace stromx
             void receiveData(stromx::runtime::impl::Client* client )
             {
                 stromx::runtime::Factory factory;
-                client->receive(factory);
+                CPPUNIT_ASSERT_THROW(client->receive(factory), impl::Client::Stopped);
             } 
             
             void sendValue(ip::tcp::socket & socket, unsigned int value)
@@ -189,6 +189,32 @@ namespace stromx
             
             // request data from server a separate thread
             boost::thread client(boost::bind(&receiveData, m_client));
+            
+            // stop the client
+            m_client->stop();
+            
+            // wait for its thread to finish
+            client.join();
+            
+            // wait for the server
+            server.join();
+        }
+
+        void ClientTest::testStopWithWait()
+        {
+            io_service ioService;
+            ip::tcp::acceptor acceptor(ioService, ip::tcp::endpoint(ip::tcp::v4(), 49152));
+            ip::tcp::socket socket(ioService);
+            
+            // wait for incoming connections
+            boost::thread server(boost::bind(&acceptConnections, &acceptor, &socket));
+            
+            // connect to server
+            m_client = new impl::Client("localhost", "49152");
+            
+            // request data from server a separate thread
+            boost::thread client(boost::bind(&receiveData, m_client));
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
             
             // stop the client
             m_client->stop();
