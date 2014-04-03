@@ -30,8 +30,7 @@ namespace
     /*
     * TODO
     * 
-    * This code is based on 
-    * http://stackoverflow.com/questions/6326757/conversion-from-boostshared-ptr-to-stdshared-ptr
+    * This code is based on http://stackoverflow.com/q/6326757
     */
     template<typename T>
     void do_release(typename std::tr1::shared_ptr<T> const&, T*)

@@ -18,8 +18,8 @@
 #define STROMX_RASPI_WRITEGPIO_H
 
 #include "stromx/raspi/Config.h"
-#include "stromx/runtime/OperatorKernel.h"
-#include "stromx/runtime/Primitive.h"
+#include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Primitive.h>
 
 namespace stromx
 {
@@ -28,17 +28,23 @@ namespace stromx
         class STROMX_RASPI_API WriteGpio : public runtime::OperatorKernel
         {
         public:
-            enum OutputId
+            enum InputId
             {
-                OUTPUT
+                INPUT
             };
             
+            enum ParameterId
+            {
+                GPIO
+            };
             WriteGpio();
             
             virtual runtime::OperatorKernel* clone() const { return new WriteGpio; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
+            virtual void activate();
+            virtual void deactivate();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
@@ -48,6 +54,8 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
+            
+            runtime::Enum m_gpio;
         };
     }
 }
