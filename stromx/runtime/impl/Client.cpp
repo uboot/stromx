@@ -106,13 +106,9 @@ namespace stromx
                     lock_t l(m_mutex);
                     
                     if (m_stopped)
-                    {
-                        m_stopped = false;
                         throw Stopped();
-                    }
                     
                     m_ioService.reset();
-                    m_stopped = false;
                 }
                 
                 m_error.clear();
@@ -123,10 +119,7 @@ namespace stromx
                     lock_t l(m_mutex);
                     
                     if (m_stopped)
-                    {
-                        m_stopped = false;
                         throw Stopped();
-                    }
                 }
                 
                 if (m_error)
