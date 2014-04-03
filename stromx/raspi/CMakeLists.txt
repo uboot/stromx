@@ -15,6 +15,7 @@ include_directories (
 set (SOURCES
     Raspi.cpp
     RaspiCam.cpp
+    ReadGpio.cpp
     WriteGpio.cpp
     )
     

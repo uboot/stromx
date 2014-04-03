@@ -8,8 +8,10 @@ include_directories(
 )
 
 add_executable(stromx_raspi_test
+    ../ReadGpio.cpp
     ../WriteGpio.cpp
     main.cpp
+    ReadGpioTest.cpp
     WriteGpioTest.cpp
 )
 
