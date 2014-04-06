@@ -37,6 +37,9 @@ namespace stromx
 
         void WriteGpioTest::testExecute()
         {
+            runtime::DataContainer data(new runtime::Bool(true));
+            
+            m_operator->setInputData(WriteGpio::INPUT, data);
         }
 
         void WriteGpioTest::tearDown()

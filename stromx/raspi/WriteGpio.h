@@ -45,6 +45,7 @@ namespace stromx
             virtual void execute(runtime::DataProvider& provider);
             virtual void activate();
             virtual void deactivate();
+            virtual const runtime::OperatorProperties setupProperties();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();

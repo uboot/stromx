@@ -16,8 +16,11 @@
 
 #include "stromx/raspi/WriteGpio.h"
 
+#include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
 #include "stromx/raspi/impl/Gpio.h"
 
 namespace stromx
@@ -53,16 +56,27 @@ namespace stromx
         
         void WriteGpio::deactivate()
         {
+            impl::GPIOUnexport(static_cast<int>(m_gpio));
         }
         
         void WriteGpio::execute(DataProvider& provider)
         {
-            impl::GPIOUnexport(static_cast<int>(m_gpio));
+            runtime::Id2DataPair input(INPUT);
+            provider.receiveInputData(input);
+            
+            runtime::ReadAccess<runtime::Bool> access(input.data());
+            int value = access();
+            
+            impl::GPIOWrite(static_cast<int>(m_gpio), value);
         }
         
         const std::vector<const Description*> WriteGpio::setupInputs()
         {
             std::vector<const Description*> inputs;
+            
+            Description* input = new Description(INPUT, DataVariant::BOOL);
+            input->setTitle("Input");
+            inputs.push_back(input);
 
             return inputs;
         }
@@ -103,6 +117,13 @@ namespace stromx
             parameters.push_back(gpio);
             
             return parameters;
+        }
+        
+        const OperatorProperties WriteGpio::setupProperties()
+        {
+            OperatorProperties properties;
+            properties.isGreedy = true;
+            return properties;
         }
     } 
 }
