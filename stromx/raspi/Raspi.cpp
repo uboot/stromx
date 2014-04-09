@@ -16,14 +16,15 @@
 
 #include "stromx/raspi/Raspi.h"
 #include "stromx/raspi/RaspiCam.h"
-#include "stromx/runtime/Registry.h"
+#include "stromx/raspi/ReadGpio.h"
+#include "stromx/raspi/WriteGpio.h"
+#include <stromx/runtime/Registry.h>
 
 void stromxRaspiRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::raspi;
     
-//     registry.registerData(new Image);
-//     registry.registerData(new Matrix);
-    
     registry.registerOperator(new RaspiCam);
+    registry.registerOperator(new ReadGpio);
+    registry.registerOperator(new WriteGpio);
 }
