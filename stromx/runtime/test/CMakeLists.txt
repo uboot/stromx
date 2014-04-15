@@ -93,6 +93,7 @@ set(SOURCES
     BlockTest.cpp
     BoolTest.cpp
 #     ClientTest.cpp
+    ConstDataTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp
     DataRefTest.cpp
