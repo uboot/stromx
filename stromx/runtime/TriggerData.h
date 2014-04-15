@@ -45,6 +45,15 @@ namespace stromx
             static const std::string PACKAGE;
             static const Version VERSION;
         };
+        
+        /** \cond */
+        template <>
+        class data_traits<TriggerData>
+        {
+        public:
+            static const DataVariant & variant() { return DataVariant::TRIGGER; }
+        };  
+        /** \endcond */
     }
 }
 
