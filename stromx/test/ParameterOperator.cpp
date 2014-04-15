@@ -28,7 +28,7 @@
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ParameterGroup.h>
 #include <stromx/runtime/Primitive.h>
-#include <stromx/runtime/Trigger.h>
+#include <stromx/runtime/TriggerData.h>
 
 using namespace stromx::runtime;
 
@@ -88,7 +88,7 @@ namespace stromx
                     m_triggerValue = data_cast<stromx::runtime::Bool>(value);
                     break;
                 case TRIGGER_PARAM:
-                    data_cast<stromx::runtime::Trigger>(value);
+                    data_cast<stromx::runtime::TriggerData>(value);
                     m_triggerValue = true;
                     break;
                 default:

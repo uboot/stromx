@@ -29,7 +29,7 @@
 #include "stromx/runtime/Registry.h"
 #include "stromx/runtime/Send.h"
 #include "stromx/runtime/String.h"
-#include "stromx/runtime/Trigger.h"
+#include "stromx/runtime/Block.h"
 #include "stromx/runtime/TriggerData.h"
 
 void stromxRuntimeRegister(stromx::runtime::Registry& registry)
@@ -44,7 +44,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
     registry.registerOperator(new Send);
-    registry.registerOperator(new Trigger);
+    registry.registerOperator(new Block);
     
     registry.registerData(new Bool);
     registry.registerData(new Int8);

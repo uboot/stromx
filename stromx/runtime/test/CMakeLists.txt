@@ -34,6 +34,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/fortran_order.npy DESTINATION ${CMAKE_CURR
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES
+    ../Block.cpp
     ../Color.cpp
     ../Connector.cpp
     ../ConstDataRef.cpp
@@ -72,7 +73,6 @@ set(SOURCES
     ../SortInputsAlgorithm.cpp
     ../Stream.cpp
     ../String.cpp
-    ../Trigger.cpp
     ../TriggerData.cpp
     ../Try.cpp
     ../Version.cpp
@@ -89,6 +89,7 @@ set(SOURCES
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
+    BlockTest.cpp
     BoolTest.cpp
 #     ClientTest.cpp
     CounterTest.cpp
@@ -126,7 +127,6 @@ set(SOURCES
 #     SendReceiveTest.cpp
     StringTest.cpp
     TestData.cpp
-    TriggerTest.cpp
     TryTest.cpp
 #     ServerTest.cpp
     SortInputsAlgorithmTest.cpp

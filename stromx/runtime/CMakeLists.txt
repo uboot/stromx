@@ -25,6 +25,7 @@ set(SOURCES
     impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    Block.cpp
     Color.cpp
     Connector.cpp
     ConstDataRef.cpp
@@ -63,7 +64,6 @@ set(SOURCES
     Receive.cpp
     Runtime.cpp
     Thread.cpp
-    Trigger.cpp
     TriggerData.cpp
     Try.cpp
     Version.cpp

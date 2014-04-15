@@ -20,11 +20,11 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
-#include "stromx/runtime/Trigger.h"
+#include "stromx/runtime/Block.h"
 #include "stromx/runtime/TriggerData.h"
-#include "stromx/runtime/test/TriggerTest.h"
+#include "stromx/runtime/test/BlockTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::TriggerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::BlockTest);
 
 namespace stromx
 {
@@ -32,81 +32,81 @@ namespace stromx
 
     namespace runtime
     {
-        void TriggerTest::setUp ( void )
+        void BlockTest::setUp ( void )
         {
-            m_operator = new runtime::OperatorTester(new Trigger());
+            m_operator = new runtime::OperatorTester(new Block());
             m_operator->initialize();
             m_operator->activate();
             m_data = DataContainer(new UInt32(4));
-            m_operator->setInputData(Trigger::INPUT, m_data);
+            m_operator->setInputData(Block::INPUT, m_data);
         }
         
-        void TriggerTest::testExecuteActive()
+        void BlockTest::testExecuteActive()
         {
             /*** Test 1 ***/
-            boost::thread t1(boost::bind(&TriggerTest::triggerDelayed, this));
-            DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
+            boost::thread t1(boost::bind(&BlockTest::triggerDelayed, this));
+            DataContainer result = m_operator->getOutputData(Block::OUTPUT);
             
             ReadAccess<UInt32> access(result);
             access();
             
-            m_operator->clearOutputData(Trigger::OUTPUT);
-            m_operator->setInputData(Trigger::INPUT, m_data);
+            m_operator->clearOutputData(Block::OUTPUT);
+            m_operator->setInputData(Block::INPUT, m_data);
             t1.join();
             
             /*** Test 2 ***/
-            boost::thread t2(boost::bind(&TriggerTest::triggerDelayed, this));
-            result = m_operator->getOutputData(Trigger::OUTPUT);
+            boost::thread t2(boost::bind(&BlockTest::triggerDelayed, this));
+            result = m_operator->getOutputData(Block::OUTPUT);
             
-            m_operator->clearOutputData(Trigger::OUTPUT);
-            m_operator->setInputData(Trigger::INPUT, m_data);
+            m_operator->clearOutputData(Block::OUTPUT);
+            m_operator->setInputData(Block::INPUT, m_data);
             t2.join();
             
             /*** Test 2 ***/
-            boost::thread t3(boost::bind(&TriggerTest::getOutputDataInterrupted, this));
+            boost::thread t3(boost::bind(&BlockTest::getOutputDataInterrupted, this));
             t3.interrupt();
             t3.join();
         }
         
-        void TriggerTest::testExecuteSwitchToInactive()
+        void BlockTest::testExecuteSwitchToInactive()
         {
             // wait for the output data in a separate thread
-            boost::thread t(boost::bind(&TriggerTest::getOutputData, this));
+            boost::thread t(boost::bind(&BlockTest::getOutputData, this));
             boost::this_thread::sleep(boost::posix_time::seconds(1));
             
             // trigger will always operatore immediately
-            m_operator->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
+            m_operator->setParameter(Block::STATE, Enum(Block::PASS_ALWAYS));
             
             // wait for the thread to finish
             t.join();
         }
         
-        void TriggerTest::testExecuteInactive()
+        void BlockTest::testExecuteInactive()
         {
-            m_operator->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
+            m_operator->setParameter(Block::STATE, Enum(Block::PASS_ALWAYS));
             
-            DataContainer result = m_operator->getOutputData(Trigger::OUTPUT);
+            DataContainer result = m_operator->getOutputData(Block::OUTPUT);
             ReadAccess<UInt32> access(result);
             access();
         }
         
-        void TriggerTest::getOutputDataInterrupted()
+        void BlockTest::getOutputDataInterrupted()
         {
-            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Trigger::OUTPUT), Interrupt);
+            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Block::OUTPUT), Interrupt);
         }
         
-        void TriggerTest::getOutputData()
+        void BlockTest::getOutputData()
         {
-            m_operator->getOutputData(Trigger::OUTPUT);
+            m_operator->getOutputData(Block::OUTPUT);
         }
             
-        void TriggerTest::triggerDelayed()
+        void BlockTest::triggerDelayed()
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
-            m_operator->setParameter(Trigger::TRIGGER, runtime::TriggerData());
+            m_operator->setParameter(Block::TRIGGER, runtime::TriggerData());
         }
 
-        void TriggerTest::tearDown ( void )
+        void BlockTest::tearDown ( void )
         {
             delete m_operator;
         }

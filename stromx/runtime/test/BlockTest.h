@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_EXAMPLE_TRIGGERTEST_H
-#define STROMX_EXAMPLE_TRIGGERTEST_H
+#ifndef STROMX_RUNTIME_BLOCKTEST_H
+#define STROMX_RUNTIME_BLOCKTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -30,16 +30,16 @@ namespace stromx
 
     namespace runtime
     {
-        class TriggerTest : public CPPUNIT_NS :: TestFixture
+        class BlockTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (TriggerTest);
+            CPPUNIT_TEST_SUITE (BlockTest);
             CPPUNIT_TEST (testExecuteActive);
             CPPUNIT_TEST (testExecuteSwitchToInactive);
             CPPUNIT_TEST (testExecuteInactive);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                TriggerTest() : m_operator(0) {}
+                BlockTest() : m_operator(0) {}
                 
                 void setUp();
                 void tearDown();
@@ -60,4 +60,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_EXAMPLE_TRIGGERTEST_H
+#endif // STROMX_RUNTIME_BLOCKTEST_H

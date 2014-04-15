@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_EXAMPLE_TRIGGER_H
-#define STROMX_EXAMPLE_TRIGGER_H
+#ifndef STROMX_RUNTIME_BLOCK_H
+#define STROMX_RUNTIME_BLOCK_H
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
@@ -35,8 +35,8 @@ namespace stromx
             struct BoostConditionVariable;
         }
         
-        /** \brief Delays the execution until a trigger signal is received. */
-        class STROMX_RUNTIME_API Trigger : public OperatorKernel
+        /** \brief Blocks the execution until a trigger signal is received. */
+        class STROMX_RUNTIME_API Block : public OperatorKernel
         {
         public:
             enum InputId
@@ -55,23 +55,23 @@ namespace stromx
                 STATE
             };
             
-            enum TriggerState
+            enum BlockState
             {
-                ALWAYS_PASS,
-                ALWAYS_STOP,
+                PASS_ALWAYS,
+                BLOCK_ALWAYS,
                 TRIGGER_ACTIVE
             };
             
-            Trigger();
-            virtual ~Trigger();
+            Block();
+            virtual ~Block();
             
-            virtual OperatorKernel* clone() const { return new Trigger; }
+            virtual OperatorKernel* clone() const { return new Block; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
             
         private:
-            explicit Trigger(const Trigger &);
+            explicit Block(const Block &);
             
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
@@ -87,7 +87,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Trigger>
+        class data_traits<Block>
         {
         public:
             static const DataVariant & variant() { return DataVariant::TRIGGER; }
@@ -96,4 +96,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_EXAMPLE_TRIGGER_H
+#endif // STROMX_RUNTIME_BLOCK_H

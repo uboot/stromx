@@ -34,7 +34,7 @@
 #include <stromx/runtime/Queue.h>
 #include <stromx/runtime/Stream.h>
 #include <stromx/runtime/Thread.h>
-#include <stromx/runtime/Trigger.h>
+#include <stromx/runtime/Block.h>
 
 namespace stromx
 {
@@ -80,7 +80,7 @@ namespace stromx
             m_clip = m_stream->addOperator(new Clip);
             m_buffer = m_stream->addOperator(new impl::CameraBuffer);
             m_period = m_stream->addOperator(new PeriodicDelay);
-            m_trigger = m_stream->addOperator(new Trigger);
+            m_trigger = m_stream->addOperator(new Block);
             m_pixelType = m_stream->addOperator(new ConvertPixelType);
             m_imageQueue = m_stream->addOperator(new Queue);
             m_indexQueue = m_stream->addOperator(new Queue);
@@ -124,8 +124,8 @@ namespace stromx
             
             m_stream->connect(m_input, ConstImage::OUTPUT, m_adjustRgbChannels, AdjustRgbChannels::INPUT);
             m_stream->connect(m_adjustRgbChannels, AdjustRgbChannels::OUTPUT, m_clip, Clip::INPUT);
-            m_stream->connect(m_clip, Clip::OUTPUT, m_trigger, Trigger::INPUT);
-            m_stream->connect(m_trigger, Trigger::OUTPUT, m_period, PeriodicDelay::INPUT);
+            m_stream->connect(m_clip, Clip::OUTPUT, m_trigger, Block::INPUT);
+            m_stream->connect(m_trigger, Block::OUTPUT, m_period, PeriodicDelay::INPUT);
             m_stream->connect(m_period, PeriodicDelay::OUTPUT, m_buffer, impl::CameraBuffer::INPUT);
             m_stream->connect(m_buffer, impl::CameraBuffer::OUTPUT, m_pixelType, ConvertPixelType::SOURCE);
             m_stream->connect(m_buffer, impl::CameraBuffer::BUFFER, m_pixelType, ConvertPixelType::DESTINATION);
@@ -135,7 +135,7 @@ namespace stromx
             Thread* frameThread = m_stream->addThread();
             frameThread->addInput(m_adjustRgbChannels, AdjustRgbChannels::INPUT);
             frameThread->addInput(m_clip, Clip::INPUT);
-            frameThread->addInput(m_trigger, Trigger::INPUT);
+            frameThread->addInput(m_trigger, Block::INPUT);
             frameThread->addInput(m_period, PeriodicDelay::INPUT);
             frameThread->addInput(m_buffer, impl::CameraBuffer::INPUT);
             
@@ -168,7 +168,7 @@ namespace stromx
                     m_outputIndex = data_cast<stromx::Bool>(value);
                     break;
                 case TRIGGER:
-                    m_trigger->setParameter(Trigger::TRIGGER, runtime::TriggerData());
+                    m_trigger->setParameter(Block::TRIGGER, runtime::TriggerData());
                     break;
                 case IMAGE:
                 {
@@ -221,13 +221,13 @@ namespace stromx
                     switch(triggerMode)
                     {
                     case SOFTWARE:
-                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::TRIGGER_ACTIVE));
+                        m_trigger->setParameter(Block::STATE, Enum(Block::TRIGGER_ACTIVE));
                         break;
                     case INTERNAL:
-                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_PASS));
+                        m_trigger->setParameter(Block::STATE, Enum(Block::PASS_ALWAYS));
                         break;
                     case EXTERNAL:
-                        m_trigger->setParameter(Trigger::STATE, Enum(Trigger::ALWAYS_STOP));
+                        m_trigger->setParameter(Block::STATE, Enum(Block::BLOCK_ALWAYS));
                         break;
                     default:
                         throw WrongParameterValue(parameter(TRIGGER_MODE), *this);
@@ -376,16 +376,16 @@ namespace stromx
                 return TriggerData();
             case TRIGGER_MODE:
             {
-                DataRef value = m_trigger->getParameter(Trigger::STATE);
+                DataRef value = m_trigger->getParameter(Block::STATE);
                 const Enum& triggerState = data_cast<Enum>(value);
                 
                 switch(triggerState)
                 {
-                case Trigger::ALWAYS_PASS:
+                case Block::PASS_ALWAYS:
                     return Enum(INTERNAL);
-                case Trigger::ALWAYS_STOP:
+                case Block::BLOCK_ALWAYS:
                     return Enum(EXTERNAL);
-                case Trigger::TRIGGER_ACTIVE:
+                case Block::TRIGGER_ACTIVE:
                     return Enum(SOFTWARE);
                 default:
                     throw WrongParameterValue(parameter(id), *this);

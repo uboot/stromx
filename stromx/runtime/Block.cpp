@@ -21,7 +21,7 @@
 #include "stromx/runtime/EnumParameter.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
-#include "stromx/runtime/Trigger.h"
+#include "stromx/runtime/Block.h"
 
 namespace stromx
 {
@@ -42,24 +42,24 @@ namespace stromx
         }
         /** \endcond */
         
-        const std::string Trigger::TYPE("Trigger");
+        const std::string Block::TYPE("Block");
         
-        const std::string Trigger::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Trigger::VERSION(0, 1, 0);
+        const std::string Block::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
+        const Version Block::VERSION(0, 1, 0);
         
-        Trigger::Trigger()
+        Block::Block()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
             m_cond(new impl::BoostConditionVariable),
             m_state(TRIGGER_ACTIVE)
         {
         }
         
-        Trigger::~Trigger()
+        Block::~Block()
         {
             delete m_cond;
         }
 
-        void Trigger::setParameter(unsigned int id, const Data& value)
+        void Block::setParameter(unsigned int id, const Data& value)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace stromx
                 case TRIGGER:
                 {
                     // trigger
-                    if(TriggerState(int(m_state)) != ALWAYS_STOP)
+                    if(BlockState(int(m_state)) != BLOCK_ALWAYS)
                         m_cond->m_cond.notify_all();
                     break;
                 }
@@ -78,8 +78,8 @@ namespace stromx
                     
                     switch(int(enumValue))
                     {
-                        case ALWAYS_PASS:
-                        case ALWAYS_STOP:
+                        case PASS_ALWAYS:
+                        case BLOCK_ALWAYS:
                         case TRIGGER_ACTIVE:
                             break;
                         default:
@@ -90,7 +90,7 @@ namespace stromx
                     
                     // make sure the thread does not stop at the condition variable
                     // if the trigger is deactivated
-                    if(m_state == ALWAYS_PASS)
+                    if(m_state == PASS_ALWAYS)
                         m_cond->m_cond.notify_all();
                     break;
                 }
@@ -104,7 +104,7 @@ namespace stromx
             }
         }
 
-        const DataRef Trigger::getParameter(const unsigned int id) const
+        const DataRef Block::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -117,13 +117,13 @@ namespace stromx
             }
         }  
         
-        void Trigger::execute(DataProvider& provider)
+        void Block::execute(DataProvider& provider)
         {
             Id2DataPair inputDataMapper(INPUT);
             provider.receiveInputData(inputDataMapper);
             
-            TriggerState state = TriggerState(int(m_state));
-            if(state == TRIGGER_ACTIVE || state == ALWAYS_STOP)
+            BlockState state = BlockState(int(m_state));
+            if(state == TRIGGER_ACTIVE || state == BLOCK_ALWAYS)
             {
                 try
                 {
@@ -144,7 +144,7 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> Trigger::setupInputs()
+        const std::vector<const runtime::Description*> Block::setupInputs()
         {
             std::vector<const Description*> inputs;
             
@@ -155,7 +155,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Trigger::setupOutputs()
+        const std::vector<const Description*> Block::setupOutputs()
         {
             std::vector<const Description*> outputs;
             
@@ -166,7 +166,7 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Parameter*> Trigger::setupParameters()
+        const std::vector<const Parameter*> Block::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -178,8 +178,8 @@ namespace stromx
             EnumParameter* state = new EnumParameter(STATE);
             state->setTitle("State");
             state->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            state->add(EnumDescription(Enum(ALWAYS_PASS), "Always off"));
-            state->add(EnumDescription(Enum(ALWAYS_STOP), "Always on"));
+            state->add(EnumDescription(Enum(PASS_ALWAYS), "Always off"));
+            state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Always on"));
             state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Trigger active"));
             parameters.push_back(state);
                                         

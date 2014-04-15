@@ -22,7 +22,7 @@
 #include <stromx/runtime/Join.h>
 #include <stromx/runtime/PeriodicDelay.h>
 #include <stromx/runtime/Queue.h>
-#include <stromx/runtime/Trigger.h>
+#include <stromx/runtime/Block.h>
 #include <stromx/runtime/Receive.h>
 #include <stromx/runtime/Registry.h>
 #include <stromx/runtime/Send.h>
@@ -107,5 +107,5 @@ BOOST_PYTHON_MODULE(libruntime)
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
     stromx::python::exportOperatorKernel<Receive>("Receive");
     stromx::python::exportOperatorKernel<Send>("Send");
-    stromx::python::exportOperatorKernel<Trigger>("Trigger");
+    stromx::python::exportOperatorKernel<Block>("Block");
 }
