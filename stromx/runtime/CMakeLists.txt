@@ -28,6 +28,7 @@ set(SOURCES
     Block.cpp
     Color.cpp
     Connector.cpp
+    ConstData.cpp
     ConstDataRef.cpp
     Counter.cpp
     DataContainer.cpp

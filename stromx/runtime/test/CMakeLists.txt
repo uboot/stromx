@@ -39,6 +39,7 @@ set(SOURCES
     ../Connector.cpp
     ../ConstDataRef.cpp
     ../Runtime.cpp
+    ../ConstData.cpp
     ../Counter.cpp
     ../Data.cpp
     ../DataRef.cpp

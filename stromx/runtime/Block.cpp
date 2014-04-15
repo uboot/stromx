@@ -14,6 +14,8 @@
 *  limitations under the License.
 */
 
+#include "stromx/runtime/Block.h"
+
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include "stromx/runtime/DataContainer.h"
@@ -21,7 +23,7 @@
 #include "stromx/runtime/EnumParameter.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
-#include "stromx/runtime/Block.h"
+#include "stromx/runtime/TriggerData.h"
 
 namespace stromx
 {
@@ -109,7 +111,7 @@ namespace stromx
             switch(id)
             {
             case TRIGGER:
-                throw ParameterAccessViolation(parameter(id), *this);
+                return TriggerData();
             case STATE:
                 return m_state;
             default:

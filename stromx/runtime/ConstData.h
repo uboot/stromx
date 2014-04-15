@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2011 Matthias Fuchs
+*  Copyright 2014 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_BLOCK_H
-#define STROMX_RUNTIME_BLOCK_H
+#ifndef STROMX_RUNTIME_CONSTDATA_H
+#define STROMX_RUNTIME_CONSTDATA_H
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
@@ -30,20 +30,10 @@ namespace stromx
 
     namespace runtime
     {
-        namespace impl
-        {
-            struct BoostConditionVariable;
-        }
-        
-        /** \brief Blocks the execution until a trigger signal is received. */
-        class STROMX_RUNTIME_API Block : public OperatorKernel
+        /** \brief Outputs a constant value. */
+        class STROMX_RUNTIME_API ConstData : public OperatorKernel
         {
         public:
-            enum InputId
-            {
-                INPUT
-            };
-            
             enum OutputId
             {
                 OUTPUT
@@ -51,38 +41,33 @@ namespace stromx
             
             enum ParameterId
             {
-                TRIGGER,
-                STATE
+                DATA_TYPE,
+                VALUE
             };
             
-            enum BlockState
-            {
-                PASS_ALWAYS,
-                BLOCK_ALWAYS,
-                TRIGGER_ACTIVE
-            };
+            ConstData();
+            virtual ~ConstData();
             
-            Block();
-            virtual ~Block();
-            
-            virtual OperatorKernel* clone() const { return new Block; }
+            virtual OperatorKernel* clone() const { return new ConstData; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
+            virtual void initialize();
             virtual void execute(runtime::DataProvider& provider);
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
+            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION; 
             
-            impl::BoostConditionVariable* m_cond;
-            runtime::Enum m_state;
+            Enum m_type;
+            Data* m_value;
         };       
     }
 }
 
-#endif // STROMX_RUNTIME_BLOCK_H
+#endif // STROMX_RUNTIME_CONSTDATA_H
