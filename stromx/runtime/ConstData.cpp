@@ -21,6 +21,8 @@
 #include "stromx/runtime/EnumParameter.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/String.h"
+#include "stromx/runtime/TriggerData.h"
 
 namespace stromx
 {
@@ -35,6 +37,9 @@ namespace stromx
                 if (type == DataVariant::BOOL.id())
                     return DataVariant::BOOL;
                 
+                if (type == DataVariant::TRIGGER.id())
+                    return DataVariant::TRIGGER;
+                
                 if (type == DataVariant::INT_32.id())
                     return DataVariant::INT_32;
                 
@@ -46,6 +51,29 @@ namespace stromx
                 
                 if (type == DataVariant::FLOAT_32.id())
                     return DataVariant::FLOAT_32;
+                    
+                throw InternalError("Unhandled data type");
+            }
+            
+            Data* typeToData(const unsigned int type)
+            {
+                if (type == DataVariant::BOOL.id())
+                    return new Bool;
+                
+                if (type == DataVariant::TRIGGER.id())
+                    return new TriggerData;
+                
+                if (type == DataVariant::INT_32.id())
+                    return new Int32;
+                
+                if (type == DataVariant::UINT_32.id())
+                    return new UInt32;
+                
+                if (type == DataVariant::STRING.id())
+                    return new String;
+                
+                if (type == DataVariant::FLOAT_32.id())
+                    return new Float32;
                     
                 throw InternalError("Unhandled data type");
             }
@@ -74,7 +102,7 @@ namespace stromx
                 switch(id)
                 {
                 case DATA_TYPE:
-                    m_type = data_cast<Enum>(value);
+                    setDataType(data_cast<Enum>(value));
                     break;
                 case VALUE:
                     delete m_value;
@@ -97,6 +125,8 @@ namespace stromx
             case DATA_TYPE:
                 return m_type;
             case VALUE:
+                if (! m_value)
+                    throw InternalError("Value has not been set");
                 return *m_value;
             default:
                 throw WrongParameterId(id, *this);
@@ -105,6 +135,8 @@ namespace stromx
         
         void ConstData::execute(DataProvider& provider)
         {
+            if (! m_value)
+                throw InternalError("Value has not been set");
             
             DataContainer data(m_value->clone());
             
@@ -141,6 +173,7 @@ namespace stromx
             type->setTitle("Data type");
             type->setAccessMode(runtime::Parameter::NONE_WRITE);
             type->add(EnumDescription(Enum(DataVariant::BOOL.id()), "Bool"));
+            type->add(EnumDescription(Enum(DataVariant::TRIGGER.id()), "Trigger"));
             type->add(EnumDescription(Enum(DataVariant::INT_32.id()), "Int32"));
             type->add(EnumDescription(Enum(DataVariant::UINT_32.id()), "UInt32"));
             type->add(EnumDescription(Enum(DataVariant::STRING.id()), "String"));
@@ -164,5 +197,18 @@ namespace stromx
             return parameters;
         }
         
+        void ConstData::setDataType(const Enum& value)
+        {
+            if (m_type == value)
+                return;
+            
+            // update the type
+            m_type = value;
+            
+            // set the value to a new object of the above type
+            delete m_value;
+            m_value = 0;
+            m_value = typeToData(value);
+        }      
     } 
 }

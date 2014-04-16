@@ -50,6 +50,11 @@ namespace stromx
         {
             return lhs.m_value != rhs.m_value;
         }
+        
+        std::ostream& operator<<(std::ostream& out, const String& string)
+        {
+            return out << string.m_value;
+        }
     }
 }
 

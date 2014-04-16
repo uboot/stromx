@@ -29,7 +29,12 @@ namespace stromx
         class ConstDataTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ConstDataTest);
-            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testExecuteBool);
+            CPPUNIT_TEST(testExecuteInt32);
+            CPPUNIT_TEST(testExecuteUInt32);
+            CPPUNIT_TEST(testExecuteFloat32);
+            CPPUNIT_TEST(testExecuteString);
+            CPPUNIT_TEST(testExecuteTrigger);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,7 +44,12 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testExecute();
+            void testExecuteBool();
+            void testExecuteInt32();
+            void testExecuteUInt32();
+            void testExecuteFloat32();
+            void testExecuteString();
+            void testExecuteTrigger();
                 
         private:
             runtime::OperatorTester* m_operator;

@@ -20,24 +20,80 @@
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
+#include <stromx/runtime/String.h>
+#include <stromx/runtime/TriggerData.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ConstDataTest);
+
+std::ostream& operator<<(std::ostream& out, const stromx::runtime::TriggerData&)
+{
+    return out;
+}
+
+bool operator==(const stromx::runtime::TriggerData&, const stromx::runtime::TriggerData&)
+{
+    return true;
+}
 
 namespace stromx
 {
     using namespace runtime;
 
     namespace runtime
-    {
+    {   
+        namespace
+        {
+            template <class data_t>
+            void runTest(OperatorTester* op, const data_t value)
+            {
+                Enum dataType(value.variant().id());
+                op->setParameter(ConstData::DATA_TYPE, dataType);
+                op->initialize();
+                
+                DataRef paramValue = op->getParameter(ConstData::VALUE);
+                CPPUNIT_ASSERT_NO_THROW(data_cast<data_t>(paramValue));
+                
+                op->setParameter(ConstData::VALUE, value);
+                op->activate();
+                
+                DataContainer data = op->getOutputData(ConstData::OUTPUT);
+                CPPUNIT_ASSERT_EQUAL(value, ReadAccess<data_t>(data)());
+            }
+            
+        }
         void ConstDataTest::setUp()
         {
             m_operator = new OperatorTester(new ConstData());
-            m_operator->initialize();
-            m_operator->activate();
         }
 
-        void ConstDataTest::testExecute()
+        void ConstDataTest::testExecuteBool()
         {
+            runTest(m_operator, Bool(true));
+        }
+
+        void ConstDataTest::testExecuteInt32()
+        {
+            runTest(m_operator, Int32(-17));
+        }
+
+        void ConstDataTest::testExecuteUInt32()
+        {
+            runTest(m_operator, Int32(17));
+        }
+
+        void ConstDataTest::testExecuteFloat32()
+        {
+            runTest(m_operator, Float32(1.4));
+        }
+
+        void ConstDataTest::testExecuteString()
+        {
+            runTest(m_operator, String("Hello"));
+        }
+
+        void ConstDataTest::testExecuteTrigger()
+        {
+            runTest(m_operator, TriggerData());
         }
 
         void ConstDataTest::tearDown()

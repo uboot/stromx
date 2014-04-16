@@ -59,6 +59,7 @@ namespace stromx
             static const std::vector<const runtime::Description*> setupOutputs();
             static const std::vector<const runtime::Parameter*> setupInitParameters();
             const std::vector<const runtime::Parameter*> setupParameters();
+            void setDataType(const runtime::Enum & value);
             
             static const std::string TYPE;
             static const std::string PACKAGE;

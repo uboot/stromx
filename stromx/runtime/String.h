@@ -29,6 +29,7 @@ namespace stromx
         {
             friend STROMX_RUNTIME_API bool operator==(const String & lhs, const String & rhs);
             friend STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);
+            friend STROMX_RUNTIME_API std::ostream& operator<<(std::ostream& out, const String& string);
             
         public:
             /** Constructs an empty string. */
@@ -70,7 +71,9 @@ namespace stromx
         STROMX_RUNTIME_API bool operator==(const String & lhs, const String & rhs);
         
         /** Returns true if the contents of \c lhs and \c rhs are different. */
-        STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);       
+        STROMX_RUNTIME_API bool operator!=(const String & lhs, const String & rhs);   
+        
+        STROMX_RUNTIME_API std::ostream& operator<<(std::ostream& out, const String& string);    
         
         /** \cond */
         template <>
@@ -82,5 +85,7 @@ namespace stromx
         /** \endcond */
     }
 }
+
+
     
 #endif // STROMX_RUNTIME_STRING_H
