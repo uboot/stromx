@@ -180,9 +180,9 @@ namespace stromx
             EnumParameter* state = new EnumParameter(STATE);
             state->setTitle("State");
             state->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            state->add(EnumDescription(Enum(PASS_ALWAYS), "Always off"));
-            state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Always on"));
-            state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Trigger active"));
+            state->add(EnumDescription(Enum(PASS_ALWAYS), "Block never"));
+            state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Block always"));
+            state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Wait for trigger"));
             parameters.push_back(state);
                                         
             return parameters;
