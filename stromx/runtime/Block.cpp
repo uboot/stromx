@@ -50,9 +50,10 @@ namespace stromx
         const Version Block::VERSION(0, 1, 0);
         
         Block::Block()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_cond(new impl::BoostConditionVariable),
-            m_state(TRIGGER_ACTIVE)
+            m_state(TRIGGER_ACTIVE),
+            m_triggerInput(false)
         {
         }
         
@@ -74,6 +75,9 @@ namespace stromx
                         m_cond->m_cond.notify_all();
                     break;
                 }
+                case TRIGGER_INPUT:
+                    m_triggerInput = data_cast<Bool>(value);
+                    break;
                 case STATE:
                 {
                     Enum enumValue = data_cast<Enum>(value);
@@ -114,10 +118,19 @@ namespace stromx
                 return TriggerData();
             case STATE:
                 return m_state;
+            case TRIGGER_INPUT:
+                return m_triggerInput;
             default:
                 throw WrongParameterId(id, *this);
             }
         }  
+        
+        void Block::initialize()
+        {
+            stromx::runtime::OperatorKernel::initialize(setupInputs(),
+                                                        setupOutputs(),
+                                                        setupParameters());
+        }
         
         void Block::execute(DataProvider& provider)
         {
@@ -154,6 +167,13 @@ namespace stromx
             input->setTitle("Input");
             inputs.push_back(input);
             
+            if (m_triggerInput)
+            {
+                Description* triggerData = new Description(TRIGGER_DATA, DataVariant::TRIGGER);
+                triggerData->setTitle("Trigger");
+                inputs.push_back(triggerData);
+            }
+            
             return inputs;
         }
         
@@ -168,14 +188,29 @@ namespace stromx
             return outputs;
         }
         
+        const std::vector<const Parameter*> Block::setupInitParameters()
+        {
+            std::vector<const runtime::Parameter*> parameters;
+            
+            Parameter* triggerInput = new Parameter(TRIGGER_INPUT, DataVariant::BOOL);
+            triggerInput->setTitle("Trigger input");
+            triggerInput->setAccessMode(runtime::Parameter::NONE_WRITE);
+            parameters.push_back(triggerInput);
+                                        
+            return parameters;
+        }        
+        
         const std::vector<const Parameter*> Block::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
-            trigger->setTitle("Trigger");
-            trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            parameters.push_back(trigger);
+            if (! m_triggerInput)
+            {  
+                Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
+                trigger->setTitle("Trigger");
+                trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                parameters.push_back(trigger);
+            }
             
             EnumParameter* state = new EnumParameter(STATE);
             state->setTitle("State");

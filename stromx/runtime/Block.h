@@ -41,7 +41,8 @@ namespace stromx
         public:
             enum InputId
             {
-                INPUT
+                INPUT,
+                TRIGGER_DATA
             };
             
             enum OutputId
@@ -52,7 +53,8 @@ namespace stromx
             enum ParameterId
             {
                 TRIGGER,
-                STATE
+                STATE,
+                TRIGGER_INPUT
             };
             
             enum BlockState
@@ -69,11 +71,13 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
+            virtual void initialize();
             
         private:
-            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
             static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
@@ -81,6 +85,7 @@ namespace stromx
             
             impl::BoostConditionVariable* m_cond;
             runtime::Enum m_state;
+            runtime::Bool m_triggerInput;
         };       
     }
 }
