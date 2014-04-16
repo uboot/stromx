@@ -39,8 +39,10 @@
                     </a>)
                   </h1>
                   <p>
-                    <h2>Parents</h2>
-                    <xsl:apply-templates select="DataVariantReference"/>
+                    Parent:
+                    <xsl:for-each select="Parent">
+                      <xsl:apply-templates select="DataVariantReference"/>
+                    </xsl:for-each>
                   </p>
                   <xsl:apply-templates select="Description"/>
                 </body>
@@ -49,7 +51,7 @@
           </xsl:for-each>
           <h2>Operators</h2>
           <xsl:for-each select="Operator">
-            <xsl:variable name="filename" select="concat('operator_',@id,'.html')"/>
+            <xsl:variable name="filename" select="concat('operator_',@type,'.html')"/>
             <p>
             <a>
               <xsl:attribute name="href">
@@ -121,13 +123,13 @@
   </xsl:template>
 
   <xsl:template match="DataVariantReference">
-    <xsl:variable name="parentVariantId" select="@id"/>
-    <xsl:variable name="parentPackageId" select="@package"/>
+    <xsl:variable name="variantId" select="@id"/>
+    <xsl:variable name="packageId" select="@package"/>
     <xsl:variable name="packageFile" select="concat(@package,'.xml')"/>
     <xsl:for-each select="key('variantId', @id, document($packageFile))">
     <a>
         <xsl:attribute name="href">
-        <xsl:value-of select="concat('../',$parentPackageId,'/variant_',$parentVariantId,'.html')"/>
+        <xsl:value-of select="concat('../',$packageId,'/variant_',$variantId,'.html')"/>
         </xsl:attribute> 
         <xsl:value-of select="@title"/>
     </a>
