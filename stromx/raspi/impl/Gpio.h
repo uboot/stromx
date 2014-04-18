@@ -16,6 +16,7 @@
 
 #ifndef STROMX_RASPI_IMPL_GPIO_H
 #define STROMX_RASPI_IMPL_GPIO_H
+#include <boost/concept_check.hpp>
 
 namespace stromx
 {
@@ -26,17 +27,26 @@ namespace stromx
             /*
             * TODO
             * 
-            * This code is taken from http://elinux.org/RPi_Low-level_peripherals#C_.2B_sysfs
+            * This code is taken from http://elinux.org/RPi_Low-level_peripherals#C_.2B_sysfs 
+            * and from https://developer.ridgerun.com/wiki/index.php/Gpio-int-test.c
             */
             
             const static int IN = 0;
             const static int OUT = 1;
+            const static int RISING = 0;
+            const static int FALLING = 1;
             
             int GPIOExport(int pin);
             int GPIOUnexport(int pin);
             int GPIODirection(int pin, int dir);
+            int GPIOEdge(int pin, int edge);
             int GPIORead(int pin);
             int GPIOWrite(int pin, int value);
+            int GPIOOpen(int pin, int& socket);
+            int GPIOCreatePipe(int& readEnd, int& writeEnd);
+            int GPIOPoll(int gpio, int readEnd);
+            int GPIOSendInterrupt(int writeEnd);
+            int GPIOClosePipe(int writeEnd);
         }
     }
 }

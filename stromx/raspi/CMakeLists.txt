@@ -13,6 +13,7 @@ include_directories (
 )
 
 set (SOURCES
+    GpioTrigger.cpp
     Raspi.cpp
     RaspiCam.cpp
     ReadGpio.cpp

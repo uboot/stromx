@@ -16,11 +16,14 @@
 
 #include "stromx/raspi/impl/Gpio.h"
 
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <fcntl.h>
+#include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #define LOW  0
@@ -98,6 +101,33 @@ int GPIODirection(int pin, int dir)
     return(0);
 }
 
+int GPIOEdge(int pin, int edge)
+{
+    static const char s_edge_str[]  = "rising\0falling";
+
+#define EDGE_MAX 30
+    char path[EDGE_MAX];
+    int fd;
+
+    snprintf(path, EDGE_MAX, "/sys/class/gpio/gpio%d/edge", pin);
+    fd = open(path, O_WRONLY);
+    if (-1 == fd)
+    {
+        fprintf(stderr, "Failed to open gpio edge for writing!\n");
+        return(-1);
+    }
+
+    if (-1 == write(fd, &s_edge_str[RISING == edge ? 0 : 7], RISING == edge ? 6 : 7))
+    {
+        fprintf(stderr, "Failed to set edge!\n");
+        return(-1);
+    }
+
+    close(fd);
+    return(0);    
+}
+
+
 int GPIORead(int pin)
 {
 #define VALUE_MAX 30
@@ -148,6 +178,95 @@ int GPIOWrite(int pin, int value)
     close(fd);
     return(0);
 }
+
+int GPIOOpen(int pin, int& socket)
+{
+    char path[VALUE_MAX];
+    int fd;
+
+    snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
+    fd = open(path, O_RDONLY| O_NONBLOCK);
+    if (-1 == fd)
+    {
+        fprintf(stderr, "Failed to open gpio value for reading!\n");
+        return(-1);
+    }
+    
+    socket = fd;
+    return(0);
+}
+
+int GPIOCreatePipe(int& readEnd, int& writeEnd)
+{
+    int pipefd[2] = {0, 0};
+    int rc;
+    rc = pipe(pipefd);
+    
+    if (-1 == rc) 
+    {
+        fprintf(stderr, "Failed to create pipe!\n");
+        return(-1);
+    }
+    
+    readEnd = pipefd[0];
+    writeEnd = pipefd[1];
+    return(0);
+}
+
+int GPIOPoll(int gpio, int readEnd)
+{
+    struct pollfd fdset[2];
+    int nfds = 2;
+    int rc;
+    
+    memset((void*)fdset, 0, sizeof(fdset));
+    
+    fdset[0].fd = readEnd;
+    fdset[0].events = POLLIN;
+
+    fdset[1].fd = gpio;
+    fdset[1].events = POLLPRI;
+
+    rc = poll(fdset, nfds, -1);      
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "Failed to poll!\n");
+        return(-1);
+    }
+
+    if (fdset[1].revents & POLLPRI)
+    {
+        fprintf(stdout, "GPIO interrupt!\n");
+    }
+
+    if (fdset[0].revents & POLLIN)
+    {
+        fprintf(stdout, "Pipe interrupt!\n");
+    }
+    
+    close(gpio);
+    close(readEnd);
+    return(0);
+}
+
+int GPIOClosePipe(int writeEnd)
+{
+    close(writeEnd);
+    return(0);
+}
+
+int GPIOSendInterrupt(int writeEnd)
+{
+    if (write(writeEnd, "\n", 1) != 1)
+    {
+        fprintf(stderr, "Failed to send interrupt!\n");
+    }
+    
+    return(0);
+}
+
+
 
 }
 }
