@@ -90,6 +90,29 @@ namespace stromx
             access();
         }
         
+        void BlockTest::testExecuteTriggerInput()
+        {
+            // initialize the operator with trigger input
+            m_operator->deinitialize();
+            m_operator->setParameter(Block::TRIGGER_INPUT, Bool(true));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            // wait for the output data in a separate thread
+            boost::thread t(boost::bind(&BlockTest::getOutputData, this));
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            // set the input data
+            m_operator->setInputData(Block::INPUT, m_data);
+            
+            // send the trigger
+            DataContainer trigger(new TriggerData);
+            m_operator->setInputData(Block::TRIGGER_DATA, trigger);
+            
+            // wait for the thread to finish
+            t.join();
+        }
+        
         void BlockTest::getOutputDataInterrupted()
         {
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Block::OUTPUT), Interrupt);

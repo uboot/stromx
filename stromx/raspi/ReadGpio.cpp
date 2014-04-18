@@ -16,7 +16,13 @@
 
 #include "stromx/raspi/ReadGpio.h"
 
-#include "stromx/runtime/OperatorException.h"
+#include <boost/format.hpp>
+#include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/EnumParameter.h>
+#include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/OperatorException.h>
+#include "stromx/raspi/impl/Gpio.h"
+#include "stromx/raspi/impl/Utilities.h"
 
 namespace stromx
 {
@@ -43,8 +49,44 @@ namespace stromx
             throw WrongParameterId(id, *this);
         } 
         
+        void ReadGpio::activate()
+        {
+            if (impl::GPIOExport(static_cast<int>(m_gpio)))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to export GPIO %1%") % m_gpio).str());
+            }
+                                    
+            if (impl::GPIODirection(static_cast<int>(m_gpio), impl::OUT))
+            {
+                impl::GPIOUnexport(static_cast<int>(m_gpio));
+                throw OperatorError(*this, 
+                    (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
+            }
+        }
+        
+        void ReadGpio::deactivate()
+        {
+            if (impl::GPIOUnexport(static_cast<int>(m_gpio)))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to unexport GPIO %1%") % m_gpio).str());
+            }
+        }
+        
         void ReadGpio::execute(DataProvider& provider)
         {
+            int value = impl::GPIORead(static_cast<int>(m_gpio));
+            
+            if (-1 == value)
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to read from GPIO %1%") % m_gpio).str());
+            }
+            
+            DataContainer data(new Bool(value));
+            Id2DataPair output(OUTPUT, data);
+            provider.sendOutputData(output);
         }
         
         const std::vector<const Description*> ReadGpio::setupInputs()
@@ -56,7 +98,11 @@ namespace stromx
         
         const std::vector<const Description*> ReadGpio::setupOutputs()
         {
-            std::vector<const Description*> outputs;;
+            std::vector<const Description*> outputs;
+            
+            Description* output = new Description(OUTPUT, DataVariant::BOOL);
+            output->setTitle("Output");
+            outputs.push_back(output);
             
             return outputs;
         }
@@ -64,6 +110,9 @@ namespace stromx
         const std::vector<const Parameter*> ReadGpio::setupParameters()
         {
             std::vector<const Parameter*> parameters;
+            
+            EnumParameter* gpio = impl::createGpioParameter(GPIO);
+            parameters.push_back(gpio);
             
             return parameters;
         }

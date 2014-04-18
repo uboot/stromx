@@ -16,12 +16,14 @@
 
 #include "stromx/raspi/WriteGpio.h"
 
+#include <boost/format.hpp>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/raspi/impl/Gpio.h"
+#include "stromx/raspi/impl/Utilities.h"
 
 namespace stromx
 {
@@ -72,13 +74,27 @@ namespace stromx
         
         void WriteGpio::activate()
         {
-            impl::GPIOExport(static_cast<int>(m_gpio));
-            impl::GPIODirection(static_cast<int>(m_gpio), impl::OUT);
+            if (impl::GPIOExport(static_cast<int>(m_gpio)))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to export GPIO %1%") % m_gpio).str());
+            }
+                                    
+            if (impl::GPIODirection(static_cast<int>(m_gpio), impl::OUT))
+            {
+                impl::GPIOUnexport(static_cast<int>(m_gpio));
+                throw OperatorError(*this, 
+                    (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
+            }
         }
         
         void WriteGpio::deactivate()
         {
-            impl::GPIOUnexport(static_cast<int>(m_gpio));
+            if (impl::GPIOUnexport(static_cast<int>(m_gpio)))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to unexport GPIO %1%") % m_gpio).str());
+            }
         }
         
         void WriteGpio::execute(DataProvider& provider)
@@ -89,7 +105,11 @@ namespace stromx
             runtime::ReadAccess<runtime::Bool> access(input.data());
             int value = access();
             
-            impl::GPIOWrite(static_cast<int>(m_gpio), value);
+            if (impl::GPIOWrite(static_cast<int>(m_gpio), value))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to write to GPIO %1%") % m_gpio).str());
+            }
         }
         
         const std::vector<const Description*> WriteGpio::setupInputs()
@@ -114,28 +134,7 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
             
-            EnumParameter* gpio = new EnumParameter(GPIO);
-            gpio->setTitle("GPIO");
-            gpio->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
-            gpio->add(EnumDescription(Enum(0), "0"));
-            gpio->add(EnumDescription(Enum(1), "1"));
-            gpio->add(EnumDescription(Enum(2), "2"));
-            gpio->add(EnumDescription(Enum(3), "3"));
-            gpio->add(EnumDescription(Enum(4), "4"));
-            gpio->add(EnumDescription(Enum(7), "7"));
-            gpio->add(EnumDescription(Enum(8), "8"));
-            gpio->add(EnumDescription(Enum(9), "9"));
-            gpio->add(EnumDescription(Enum(10), "10"));
-            gpio->add(EnumDescription(Enum(14), "14"));
-            gpio->add(EnumDescription(Enum(15), "15"));
-            gpio->add(EnumDescription(Enum(17), "17"));
-            gpio->add(EnumDescription(Enum(18), "18"));
-            gpio->add(EnumDescription(Enum(21), "21"));
-            gpio->add(EnumDescription(Enum(22), "22"));
-            gpio->add(EnumDescription(Enum(23), "23"));
-            gpio->add(EnumDescription(Enum(24), "24"));
-            gpio->add(EnumDescription(Enum(25), "25"));
-            gpio->add(EnumDescription(Enum(27), "27"));
+            EnumParameter* gpio = impl::createGpioParameter(GPIO);
             parameters.push_back(gpio);
             
             return parameters;

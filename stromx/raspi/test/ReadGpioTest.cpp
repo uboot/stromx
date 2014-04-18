@@ -37,6 +37,7 @@ namespace stromx
 
         void ReadGpioTest::testExecute()
         {
+            DataContainer data = m_operator->getOutputData(ReadGpio::OUTPUT);
         }
 
         void ReadGpioTest::tearDown()

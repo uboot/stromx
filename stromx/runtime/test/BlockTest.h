@@ -36,6 +36,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteActive);
             CPPUNIT_TEST (testExecuteSwitchToInactive);
             CPPUNIT_TEST (testExecuteInactive);
+            CPPUNIT_TEST (testExecuteTriggerInput);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -48,6 +49,7 @@ namespace stromx
                 void testExecuteActive();
                 void testExecuteSwitchToInactive();
                 void testExecuteInactive();
+                void testExecuteTriggerInput();
                 
             private:
                 void triggerDelayed ();

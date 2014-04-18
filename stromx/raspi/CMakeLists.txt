@@ -18,6 +18,7 @@ set (SOURCES
     ReadGpio.cpp
     WriteGpio.cpp
     impl/Gpio.cpp
+    impl/Utilities.cpp
     )
     
 add_library (stromx_raspi SHARED ${SOURCES})

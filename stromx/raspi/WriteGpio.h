@@ -37,6 +37,7 @@ namespace stromx
             {
                 GPIO
             };
+            
             WriteGpio();
             
             virtual runtime::OperatorKernel* clone() const { return new WriteGpio; }

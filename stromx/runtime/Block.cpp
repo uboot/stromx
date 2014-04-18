@@ -22,6 +22,7 @@
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/EnumParameter.h"
 #include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/TriggerData.h"
 
@@ -135,24 +136,32 @@ namespace stromx
         void Block::execute(DataProvider& provider)
         {
             Id2DataPair inputDataMapper(INPUT);
-            provider.receiveInputData(inputDataMapper);
             
-            BlockState state = BlockState(int(m_state));
-            if(state == TRIGGER_ACTIVE || state == BLOCK_ALWAYS)
+            if (! m_triggerInput) // triggered by setting the trigger parameter
             {
-                try
+                provider.receiveInputData(inputDataMapper);
+                BlockState state = BlockState(int(m_state));
+                if(state == TRIGGER_ACTIVE || state == BLOCK_ALWAYS)
                 {
-                    // wait for trigger
-                    unique_lock_t lock(m_cond->m_mutex);
-                    
-                    // allow to trigger while waiting
-                    provider.unlockParameters();
-                    m_cond->m_cond.wait(lock);
+                    try
+                    {
+                        // wait for trigger
+                        unique_lock_t lock(m_cond->m_mutex);
+                        
+                        // allow to trigger while waiting
+                        provider.unlockParameters();
+                        m_cond->m_cond.wait(lock);
+                    }
+                    catch(boost::thread_interrupted&)
+                    {
+                        throw Interrupt();
+                    }
                 }
-                catch(boost::thread_interrupted&)
-                {
-                    throw Interrupt();
-                }
+            }
+            else // triggered by receiving a trigger input
+            {
+                Id2DataPair triggerDataMapper(TRIGGER_DATA);
+                provider.receiveInputData(inputDataMapper && triggerDataMapper);
             }
             
             Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
@@ -210,15 +219,15 @@ namespace stromx
                 trigger->setTitle("Trigger");
                 trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(trigger);
-            }
             
-            EnumParameter* state = new EnumParameter(STATE);
-            state->setTitle("State");
-            state->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-            state->add(EnumDescription(Enum(PASS_ALWAYS), "Block never"));
-            state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Block always"));
-            state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Wait for trigger"));
-            parameters.push_back(state);
+                EnumParameter* state = new EnumParameter(STATE);
+                state->setTitle("State");
+                state->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                state->add(EnumDescription(Enum(PASS_ALWAYS), "Block never"));
+                state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Block always"));
+                state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Wait for trigger"));
+                parameters.push_back(state);
+            }
                                         
             return parameters;
         }

@@ -33,12 +33,19 @@ namespace stromx
                 OUTPUT
             };
             
+            enum ParameterId
+            {
+                GPIO
+            };
+            
             ReadGpio();
             
             virtual runtime::OperatorKernel* clone() const { return new ReadGpio; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
+            virtual void activate();
+            virtual void deactivate();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
@@ -48,6 +55,8 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
+            
+            runtime::Enum m_gpio;
         };
     }
 }
