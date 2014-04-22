@@ -19,6 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
+#include <boost/graph/graph_concepts.hpp>
 
 #include "stromx/runtime/OperatorTester.h"
 
@@ -29,7 +30,7 @@ namespace stromx
         class GpioTriggerTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (GpioTriggerTest);
-            CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testInterrupt);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -39,9 +40,11 @@ namespace stromx
             void tearDown();
 
         protected:
-            void testExecute();
+            void testInterrupt();
                 
         private:
+            void interruptExecution();
+            
             runtime::OperatorTester* m_operator;
         };
     }

@@ -46,6 +46,7 @@ namespace stromx
             virtual void execute(runtime::DataProvider& provider);
             virtual void activate();
             virtual void deactivate();
+            virtual void interrupt();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
@@ -57,6 +58,9 @@ namespace stromx
             static const runtime::Version VERSION;
             
             runtime::Enum m_gpio;
+            int m_interruptReadSocket;
+            int m_interruptWriteSocket;
+            int m_gpioSocket;
         };
     }
 }

@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include "stromx/raspi/GpioTrigger.h"
 #include "stromx/raspi/Raspi.h"
 #include "stromx/raspi/RaspiCam.h"
 #include "stromx/raspi/ReadGpio.h"
@@ -24,6 +25,7 @@ void stromxRaspiRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::raspi;
     
+    registry.registerOperator(new GpioTrigger);
     registry.registerOperator(new RaspiCam);
     registry.registerOperator(new ReadGpio);
     registry.registerOperator(new WriteGpio);

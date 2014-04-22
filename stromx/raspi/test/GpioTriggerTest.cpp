@@ -15,6 +15,9 @@
 */
 
 #include "stromx/raspi/test/GpioTriggerTest.h"
+
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestAssert.h>
 #include "stromx/raspi/ReadGpio.h"
@@ -35,14 +38,25 @@ namespace stromx
             m_operator->activate();
         }
 
-        void GpioTriggerTest::testExecute()
+        void GpioTriggerTest::testInterrupt()
         {
-            DataContainer data = m_operator->getOutputData(ReadGpio::OUTPUT);
+            // interrupt the execution in a separate thread
+            boost::thread t(boost::bind(&GpioTriggerTest::interruptExecution, this));
+            
+            // wait for the interrupt
+            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(ReadGpio::OUTPUT), Interrupt);
+            t.join();
         }
 
         void GpioTriggerTest::tearDown()
         {
             delete m_operator;
+        }
+            
+        void GpioTriggerTest::interruptExecution()
+        {
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            m_operator->interrupt();
         }
     }
 }

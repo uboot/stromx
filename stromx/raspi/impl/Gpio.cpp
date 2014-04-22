@@ -213,11 +213,12 @@ int GPIOCreatePipe(int& readEnd, int& writeEnd)
     return(0);
 }
 
-int GPIOPoll(int gpio, int readEnd)
+int GPIOPoll(int gpio, int readEnd, bool & interrupt)
 {
     struct pollfd fdset[2];
     int nfds = 2;
     int rc;
+    interrupt = false;
     
     memset((void*)fdset, 0, sizeof(fdset));
     
@@ -237,6 +238,7 @@ int GPIOPoll(int gpio, int readEnd)
 
     if (fdset[1].revents & POLLPRI)
     {
+        interrupt = true;
         fprintf(stdout, "GPIO interrupt!\n");
     }
 
@@ -250,10 +252,9 @@ int GPIOPoll(int gpio, int readEnd)
     return(0);
 }
 
-int GPIOClosePipe(int writeEnd)
+int GPIOCloseSocket(int socket)
 {
-    close(writeEnd);
-    return(0);
+    return close(socket);
 }
 
 int GPIOSendInterrupt(int writeEnd)

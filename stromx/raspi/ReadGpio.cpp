@@ -39,14 +39,36 @@ namespace stromx
         {
         }
 
-        void ReadGpio::setParameter(unsigned int id, const Data&)
-        {
-            throw WrongParameterId(id, *this);
+        void ReadGpio::setParameter(unsigned int id, const Data& data)
+        {            
+            try
+            {
+                switch(id)
+                {
+                case GPIO:
+                {
+                    m_gpio = data_cast<runtime::Enum>(data);
+                    break;
+                }
+                default:
+                    throw WrongParameterId(id, *this);
+                }
+            }
+            catch(std::bad_cast&)
+            {
+                throw WrongParameterType(parameter(id), *this);
+            }
         }
 
         const DataRef ReadGpio::getParameter(const unsigned int id) const
         {
-            throw WrongParameterId(id, *this);
+            switch(id)
+            {
+            case GPIO:
+                return m_gpio;
+            default:
+                throw WrongParameterId(id, *this);
+            }
         } 
         
         void ReadGpio::activate()

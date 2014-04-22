@@ -21,6 +21,7 @@
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/TriggerData.h>
 #include "stromx/raspi/impl/Gpio.h"
 #include "stromx/raspi/impl/Utilities.h"
 
@@ -35,22 +36,48 @@ namespace stromx
         const Version GpioTrigger::VERSION(0, 1, 0);
         
         GpioTrigger::GpioTrigger()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          m_interruptReadSocket(0),
+          m_interruptWriteSocket(0),
+          m_gpioSocket(0)
         {
         }
 
-        void GpioTrigger::setParameter(unsigned int id, const Data&)
-        {
-            throw WrongParameterId(id, *this);
+        void GpioTrigger::setParameter(unsigned int id, const Data& data)
+        {    
+            try
+            {
+                switch(id)
+                {
+                case GPIO:
+                {
+                    m_gpio = data_cast<runtime::Enum>(data);
+                    break;
+                }
+                default:
+                    throw WrongParameterId(id, *this);
+                }
+            }
+            catch(std::bad_cast&)
+            {
+                throw WrongParameterType(parameter(id), *this);
+            }
         }
 
         const DataRef GpioTrigger::getParameter(const unsigned int id) const
         {
-            throw WrongParameterId(id, *this);
+            switch(id)
+            {
+            case GPIO:
+                return m_gpio;
+            default:
+                throw WrongParameterId(id, *this);
+            };
         } 
         
         void GpioTrigger::activate()
         {
+            
             if (impl::GPIOExport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
@@ -63,10 +90,50 @@ namespace stromx
                 throw OperatorError(*this, 
                     (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
             }
+                                    
+            if (impl::GPIOEdge(static_cast<int>(m_gpio), impl::RISING))
+            {
+                impl::GPIOUnexport(static_cast<int>(m_gpio));
+                throw OperatorError(*this, 
+                    (boost::format("Failed to set edge of GPIO %1%") % m_gpio).str());
+            }
+                                    
+            if (impl::GPIOOpen(static_cast<int>(m_gpio), m_gpioSocket))
+            {
+                impl::GPIOUnexport(static_cast<int>(m_gpio));
+                throw OperatorError(*this, 
+                    (boost::format("Failed to open GPIO %1%") % m_gpio).str());
+            }
+                                    
+            if (impl::GPIOCreatePipe(m_interruptReadSocket, m_interruptWriteSocket))
+            {
+                impl::GPIOCloseSocket(m_gpioSocket);
+                impl::GPIOUnexport(static_cast<int>(m_gpio));
+                throw OperatorError(*this, 
+                    (boost::format("Failed to open GPIO %1%") % m_gpio).str());
+            }
         }
         
         void GpioTrigger::deactivate()
         {
+            if (impl::GPIOCloseSocket(m_gpioSocket))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to close GPIO %1%") % m_gpio).str());
+            }
+            
+            if (impl::GPIOCloseSocket(m_interruptReadSocket))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to close read end of interrupt pipe for GPIO %1%") % m_gpio).str());
+            }
+            
+            if (impl::GPIOCloseSocket(m_interruptWriteSocket))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed to close write end of interrupt pipe for GPIO %1%") % m_gpio).str());
+            }
+            
             if (impl::GPIOUnexport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
@@ -76,17 +143,28 @@ namespace stromx
         
         void GpioTrigger::execute(DataProvider& provider)
         {
-            int value = impl::GPIORead(static_cast<int>(m_gpio));
-            
-            if (-1 == value)
+            bool interrupt = false;
+            if (impl::GPIOPoll(m_gpioSocket, m_interruptReadSocket, interrupt))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to read from GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed poll GPIO %1%") % m_gpio).str());
             }
             
-            DataContainer data(new Bool(value));
+            if (interrupt)
+                throw Interrupt();
+            
+            DataContainer data(new TriggerData());
             Id2DataPair output(OUTPUT, data);
             provider.sendOutputData(output);
+        }
+        
+        void GpioTrigger::interrupt()
+        {
+            if (impl::GPIOSendInterrupt(m_interruptWriteSocket))
+            {
+                throw OperatorError(*this, 
+                    (boost::format("Failed interrupt polling for GPIO %1%") % m_gpio).str());
+            }            
         }
         
         const std::vector<const Description*> GpioTrigger::setupInputs()
