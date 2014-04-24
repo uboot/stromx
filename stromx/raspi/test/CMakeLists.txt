@@ -28,5 +28,3 @@ target_link_libraries(stromx_raspi_test
     ${CMAKE_DL_LIBS}
     stromx_runtime
 )
-
-add_dependencies(stromx_raspi_test stromx_runtime)

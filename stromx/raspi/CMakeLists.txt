@@ -24,8 +24,6 @@ set (SOURCES
     
 add_library (stromx_raspi SHARED ${SOURCES})
 
-add_dependencies(stromx_raspi stromx_runtime)
-
 set(VERSION_STRING "${RASPI_VERSION_MAJOR}.${RASPI_VERSION_MINOR}.${RASPI_VERSION_PATCH}")
 
 set_target_properties (stromx_raspi PROPERTIES

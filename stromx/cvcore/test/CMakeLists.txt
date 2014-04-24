@@ -36,8 +36,6 @@ add_executable(stromx_cvcore_test ${SOURCES})
 
 set_target_properties(stromx_cvcore_test PROPERTIES FOLDER "test")
 
-add_dependencies(stromx_cvcore_test stromx_cvcore)
-
 target_link_libraries (stromx_cvcore_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}

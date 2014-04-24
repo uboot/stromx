@@ -168,8 +168,6 @@ set_target_properties(stromx_runtime_test PROPERTIES
     FOLDER "test"
 )
 
-add_dependencies(stromx_runtime_test stromx_runtime)
-
 target_link_libraries(stromx_runtime_test
     ${Boost_LIBRARIES}
     ${CPPUNIT_LIBRARY}

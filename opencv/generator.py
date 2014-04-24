@@ -209,9 +209,6 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("add_library (stromx_{0} SHARED ${{SOURCES}})"\
             .format(self.p.ident))
         self.doc.blank()
-        self.doc.line("add_dependencies(stromx_{0} stromx_cvsupport)"\
-            .format(self.p.ident))
-        self.doc.blank()
         
         self.doc.line('set(VERSION_STRING "${{STROMX_{0}_VERSION_MAJOR}}.'
                   '${{STROMX_{0}_VERSION_MINOR}}.${{STROMX_{0}_VERSION_PATCH}}")'\
@@ -302,9 +299,6 @@ class PythonCMakeGenerator(LibGenerator):
         self.doc.blank()
         
         self.doc.line("add_library ({0} SHARED ${{SOURCES}})"\
-            .format(self.p.ident))
-        self.doc.blank()
-        self.doc.line("add_dependencies({0} stromx_{0})"\
             .format(self.p.ident))
         self.doc.blank()
         self.doc.line('set_target_properties ({0} PROPERTIES FOLDER "python")'\
@@ -462,9 +456,6 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line((
             'set_target_properties(stromx_{0}_test PROPERTIES FOLDER '
             '"test")').format(self.p.ident))
-        self.doc.blank()
-        self.doc.line("add_dependencies(stromx_{0}_test stromx_{0})"\
-            .format(self.p.ident))
         self.doc.blank()
         
         self.doc.line("target_link_libraries (stromx_{0}_test"\

@@ -20,8 +20,6 @@ add_executable(stromx_cvhighgui_test ${SOURCES})
 
 set_target_properties(stromx_cvhighgui_test PROPERTIES FOLDER "test")
 
-add_dependencies(stromx_cvhighgui_test stromx_cvhighgui)
-
 target_link_libraries (stromx_cvhighgui_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}

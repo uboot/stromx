@@ -4,8 +4,6 @@ set(SOURCES
 
 add_library(cvhighgui SHARED ${SOURCES})
 
-add_dependencies(cvhighgui stromx_cvsupport)
-
 set_target_properties(cvhighgui PROPERTIES FOLDER "python")
 
 include_directories(

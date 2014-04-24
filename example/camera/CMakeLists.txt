@@ -9,8 +9,6 @@ add_executable(camera
 
 set_target_properties(camera PROPERTIES FOLDER "example")
 
-add_dependencies(camera stromx_example)
-
 target_link_libraries(camera
     stromx_runtime
     stromx_cvimgproc

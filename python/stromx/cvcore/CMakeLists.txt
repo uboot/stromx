@@ -4,8 +4,6 @@ set (SOURCES
 
 add_library (cvcore SHARED ${SOURCES})
 
-add_dependencies(cvcore stromx_cvcore)
-
 set_target_properties (cvcore PROPERTIES FOLDER "python")
 
 include_directories (
