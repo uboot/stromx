@@ -72,6 +72,7 @@ namespace stromx
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
+            virtual void activate();
             
         private:
             static const std::vector<const runtime::Parameter*> setupInitParameters();
@@ -84,6 +85,7 @@ namespace stromx
             static const runtime::Version VERSION; 
             
             impl::BoostConditionVariable* m_cond;
+            bool m_wasTriggered;
             runtime::Enum m_state;
             runtime::Bool m_triggerInput;
         };       

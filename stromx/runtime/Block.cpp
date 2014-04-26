@@ -32,6 +32,7 @@ namespace stromx
 
     namespace runtime
     {
+        typedef boost::lock_guard<boost::mutex> lock_t;
         typedef boost::unique_lock<boost::mutex> unique_lock_t;
         
         /** \cond */
@@ -53,6 +54,7 @@ namespace stromx
         Block::Block()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_cond(new impl::BoostConditionVariable),
+            m_wasTriggered(false),
             m_state(TRIGGER_ACTIVE),
             m_triggerInput(false)
         {
@@ -73,7 +75,11 @@ namespace stromx
                 {
                     // trigger
                     if(BlockState(int(m_state)) != BLOCK_ALWAYS)
+                    {
+                        lock_t l(m_cond->m_mutex);
+                        m_wasTriggered = true;
                         m_cond->m_cond.notify_all();
+                    }
                     break;
                 }
                 case TRIGGER_INPUT:
@@ -98,7 +104,10 @@ namespace stromx
                     // make sure the thread does not stop at the condition variable
                     // if the trigger is deactivated
                     if(m_state == PASS_ALWAYS)
+                    {
+                        m_wasTriggered = true;
                         m_cond->m_cond.notify_all();
+                    }
                     break;
                 }
                 default:
@@ -133,6 +142,12 @@ namespace stromx
                                                         setupParameters());
         }
         
+        void Block::activate()
+        {
+            lock_t l(m_cond->m_mutex);
+            m_wasTriggered = false;
+        }
+        
         void Block::execute(DataProvider& provider)
         {
             Id2DataPair inputDataMapper(INPUT);
@@ -145,12 +160,16 @@ namespace stromx
                 {
                     try
                     {
-                        // wait for trigger
                         unique_lock_t lock(m_cond->m_mutex);
                         
                         // allow to trigger while waiting
                         provider.unlockParameters();
-                        m_cond->m_cond.wait(lock);
+                        
+                        // wait for trigger
+                        while (! m_wasTriggered)
+                            m_cond->m_cond.wait(lock);
+                        
+                        m_wasTriggered = false;
                     }
                     catch(boost::thread_interrupted&)
                     {
