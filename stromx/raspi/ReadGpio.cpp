@@ -79,7 +79,7 @@ namespace stromx
                     (boost::format("Failed to export GPIO %1%") % m_gpio).str());
             }
                                     
-            if (impl::GPIODirection(static_cast<int>(m_gpio), impl::OUT))
+            if (impl::GPIODirection(static_cast<int>(m_gpio), impl::IN))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
