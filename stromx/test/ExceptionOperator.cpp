@@ -70,6 +70,7 @@ namespace stromx
                         throw WrongParameterId(id, *this);
                     else
                         m_parameter = data_cast<Int32>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
