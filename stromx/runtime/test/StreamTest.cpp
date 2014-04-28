@@ -512,5 +512,10 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_stream->showThread(thr), WrongArgument);
 
         }
+        
+        void StreamTest::testDestructorBlockingOperator()
+        {
+            CPPUNIT_ASSERT(false);
+        }
     }
 }

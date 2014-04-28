@@ -101,6 +101,7 @@ set(SOURCES
     DataTest.cpp
     DumpTest.cpp
     EnumTest.cpp
+    ExceptionOperator.cpp
     ExceptionTest.cpp
     Float64Test.cpp
     ForkTest.cpp

@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EXCEPTIONOPERATOR_H
-#define EXCEPTIONOPERATOR_H
+#ifndef STROMX_TEST_EXCEPTIONOPERATOR_H
+#define STROMX_TEST_EXCEPTIONOPERATOR_H
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
@@ -79,4 +79,4 @@ namespace stromx
     }
 }
 
-#endif // PARAMETEROPERATOR_H
+#endif // STROMX_TEST_EXCEPTIONOPERATOR_H

@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TESTDATAOPERATOR_H
-#define TESTDATAOPERATOR_H
+#ifndef STROMX_TEST_TESTDATAOPERATOR_H
+#define STROMX_TEST_TESTDATAOPERATOR_H
 
 #include <stromx/runtime/Matrix.h>
 #include <stromx/runtime/OperatorKernel.h>
@@ -106,4 +106,4 @@ namespace stromx
     }
 }
 
-#endif // TESTDATAOPERATOR_H
+#endif // STROMX_TEST_TESTDATAOPERATOR_H

@@ -17,57 +17,54 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef STROMX_TEST_RANDOMDATAOPERATOR_H
-#define STROMX_TEST_RANDOMDATAOPERATOR_H
+#ifndef STROMX_RUNTIME_EXCEPTIONOPERATOR_H
+#define STROMX_RUNTIME_EXCEPTIONOPERATOR_H
 
-#include <stromx/runtime/OperatorKernel.h>
-#include <stromx/runtime/Primitive.h>
+#include <boost/atomic.hpp>
 
-#include "stromx/test/Config.h"
+#include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/Primitive.h"
 
-namespace stromx {
-    namespace test {      
-        class STROMX_TEST_API RandomDataOperator : public stromx::runtime::OperatorKernel
-        {
-            enum Outputs 
+namespace stromx
+{
+    namespace runtime
+    {
+        class ExceptionOperator : public stromx::runtime::OperatorKernel
+        {    
+        public:        
+            enum Parameters
+            { 
+                THROW_DEACTIVATE,
+                BLOCK_EXECUTE
+            };   
+            
+            enum Outputs
             { 
                 OUTPUT
             };
             
-            enum Parameters
-            { 
-                DATA_TYPE
-            };
+            ExceptionOperator();
             
-            enum DataType
-            {
-                LINE_SEGMENTS,
-                STRING
-            };
-            
-        public:
-            RandomDataOperator();
-            
-            virtual OperatorKernel* clone() const { return new RandomDataOperator; }
+            virtual OperatorKernel* clone() const { return new ExceptionOperator; }
             virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
             const stromx::runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(stromx::runtime::DataProvider& provider);
+            virtual void deactivate();
+            virtual void interrupt();
             
         private:
             static const std::vector<const stromx::runtime::Description*> setupInputs();
             static const std::vector<const stromx::runtime::Description*> setupOutputs();
             static const std::vector<const stromx::runtime::Parameter*> setupParameters();
             
-            /** Returns a random sample from a uniform distribution on the interval [-\c limit, \c limit]. */
-            static double uniform(double limit);
-            
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const stromx::runtime::Version VERSION;
             
-            stromx::runtime::Enum m_dataType;
+            boost::atomic<bool> m_blockExecute;
+            stromx::runtime::Bool m_throwDeactivate;
         };
     }
 }
 
-#endif // STROMX_TEST_RANDOMDATAOPERATOR_H
+#endif // STROMX_RUNTIME_EXCEPTIONOPERATOR_H

@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PARAMETEROPERATOR_H
-#define PARAMETEROPERATOR_H
+#ifndef STROMX_TEST_PARAMETEROPERATOR_H
+#define STROMX_TEST_PARAMETEROPERATOR_H
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
@@ -88,4 +88,4 @@ namespace stromx
     }
 }
 
-#endif // PARAMETEROPERATOR_H
+#endif // STROMX_TEST_PARAMETEROPERATOR_H

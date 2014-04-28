@@ -182,6 +182,8 @@ namespace stromx
                 if(m_status == EXECUTING)
                     throw WrongOperatorState(*info(), "Operator must be inactive to be deinitialized.");
                 
+                m_status = NONE;
+                
                 try
                 {
                     if (m_op)
@@ -195,8 +197,6 @@ namespace stromx
                 {
                     throw OperatorError(*info(), e.what());
                 }
-                
-                m_status = NONE;
             }
             
             DataRef SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)

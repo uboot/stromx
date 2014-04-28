@@ -61,6 +61,7 @@ namespace stromx
             CPPUNIT_TEST(testTwoObserver);
             CPPUNIT_TEST(testDelay);
             CPPUNIT_TEST(testStopDelay);
+            CPPUNIT_TEST(testDestructorBlockingOperator);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -97,6 +98,7 @@ namespace stromx
             void testTwoObserver();
             void testDelay();
             void testStopDelay();
+            void testDestructorBlockingOperator();
                 
         private:
             class TestObserver : public ExceptionObserver
