@@ -16,12 +16,14 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h> 
+#include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 #include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/test/ExceptionOperator.h"
 #include "stromx/runtime/test/StreamTest.h"
 #include "stromx/runtime/test/TestOperator.h"
 #include "stromx/runtime/test/TestUtilities.h"
@@ -515,7 +517,22 @@ namespace stromx
         
         void StreamTest::testDestructorBlockingOperator()
         {
-            CPPUNIT_ASSERT(false);
+            // build the stream
+            Stream* stream = new Stream;
+            Operator* op1 = stream->addOperator(new ExceptionOperator);
+            Operator* op2 = stream->addOperator(new Dump);
+            op1->setParameter(ExceptionOperator::BLOCK_EXECUTE, Bool(true));
+            stream->initializeOperator(op1);
+            stream->initializeOperator(op2);
+            stream->connect(op1, ExceptionOperator::OUTPUT, op2, Dump::INPUT);
+            Thread* t = stream->addThread();
+            t->addInput(op2, Dump::INPUT);
+            
+            // start the stream and wait for the exception operator to block
+            stream->start();
+            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            
+            delete stream;
         }
     }
 }
