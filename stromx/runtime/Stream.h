@@ -329,7 +329,8 @@ namespace stromx
             void resume();
             
         private:
-            class InternalObserver;
+            class InternalThreadObserver;
+            class InternalNetworkObserver;
             
             void observeException(const ExceptionObserver::Phase phase, const OperatorError & ex, const Thread * const thread) const;
             bool isPartOfStream(const Operator* const op) const;

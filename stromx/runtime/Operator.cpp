@@ -193,8 +193,15 @@ namespace stromx
         
         void Operator::deinitialize()
         {
-            if(status() == ACTIVE)
+            if(status() == ACTIVE) 
+            try
+            {
                 deactivate();
+            }
+            catch(OperatorError& e)
+            {
+                // ignore all exceptions before deinitializing
+            }
                 
             try
             {

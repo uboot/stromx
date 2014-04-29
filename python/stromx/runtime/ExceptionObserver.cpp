@@ -55,5 +55,9 @@ void exportExceptionObserver()
         .value("EXECUTION", ExceptionObserver::EXECUTION)
         .value("ACTIVATION", ExceptionObserver::ACTIVATION)
         .value("DEACTIVATION", ExceptionObserver::DEACTIVATION)
+        .value("INTERRUPT", ExceptionObserver::INTERRUPT)
+        .value("INITIALIZATION", ExceptionObserver::INITIALIZATION)
+        .value("DEINITIALIZATION", ExceptionObserver::DEINITIALIZATION)
+        .value("PARAMETER_ACCESS", ExceptionObserver::PARAMETER_ACCESS)
         ;  
 }

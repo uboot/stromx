@@ -42,6 +42,8 @@ namespace stromx
                 /** Execution of the operator. */
                 EXECUTION,
                 /** Deactivation of the operator. */
+                INTERRUPT,
+                /** Interrupt of the operator. */
                 DEACTIVATION,
                 /** Deinitialization of the operator. */
                 DEINITIALIZATION,

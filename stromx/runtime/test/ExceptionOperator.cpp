@@ -97,6 +97,7 @@ namespace stromx
         
         void ExceptionOperator::interrupt()
         {
+            m_blockExecute.store(false);
         }
                 
         const std::vector<const Description*> ExceptionOperator::setupInputs()

@@ -35,10 +35,10 @@ namespace stromx
     namespace runtime
     {
         /** \cond */
-        class Stream::InternalObserver : public impl::ThreadImplObserver
+        class Stream::InternalThreadObserver : public impl::ThreadImplObserver
         {
         public:
-            InternalObserver(const Stream* const stream, const Thread* const thread) 
+            InternalThreadObserver(const Stream* const stream, const Thread* const thread) 
               : m_stream(stream),
                 m_thread(thread)
             {}
@@ -52,6 +52,22 @@ namespace stromx
             const Stream* m_stream;
             const Thread* m_thread;
         };
+        
+        class Stream::InternalNetworkObserver : public impl::NetworkObserver
+        {
+        public:
+            InternalNetworkObserver(const Stream* const stream) 
+              : m_stream(stream)
+            {}
+            
+            virtual void observe(const OperatorError & ex, const ExceptionObserver::Phase phase) const
+            {
+                m_stream->observeException(phase, ex, 0);
+            }
+            
+        private:
+            const Stream* m_stream;
+        };
         /** \endcond */
 
         Stream::Stream()
@@ -63,14 +79,24 @@ namespace stromx
             m_delayMutex(new impl::MutexHandle),
             m_delay(0)
         {
-            if (m_network == 0)
-            {
-                throw WrongArgument("Invalid argument: Null pointer");
-            }
+            InternalNetworkObserver* observer = new InternalNetworkObserver(this);
+            m_network->setObserver(observer);
         }
         
         Stream::~Stream()
         {
+            // stop all visible threads
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter) 
+            {
+                (*iter)->stop();
+            }
+            
+            // interrupt the network
+            m_network->interrupt();
+            
+            // in the meantime delete all uninitialized operators       
             for (std::set<Operator*>::iterator iter = m_uninitializedOperators.begin();
                 iter != m_uninitializedOperators.end();
                 ++iter) 
@@ -79,13 +105,7 @@ namespace stromx
             }
             m_uninitializedOperators.clear();
             
-            for (std::vector<Thread*>::iterator iter = m_threads.begin();
-                iter != m_threads.end();
-                ++iter) 
-            {
-                delete (*iter);
-            }
-            
+            // ...the same for the hidden operators...
             for (std::set<Operator*>::iterator iter = m_hiddenOperators.begin();
                 iter != m_hiddenOperators.end();
                 ++iter) 
@@ -94,6 +114,7 @@ namespace stromx
             }
             m_hiddenOperators.clear();
             
+            // ...and the hidden threads
             for (std::set<Thread*>::iterator iter = m_hiddenThreads.begin();
                 iter != m_hiddenThreads.end();
                 ++iter) 
@@ -102,6 +123,15 @@ namespace stromx
             }
             m_hiddenThreads.clear();
             
+            // now join and delete the threads
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                iter != m_threads.end();
+                ++iter) 
+            {
+                delete (*iter);
+            }
+            
+            // delete the rest
             delete m_network;
             delete m_observerMutex;
             delete m_delayMutex;
@@ -521,7 +551,7 @@ namespace stromx
 
         void Stream::attachThread(Thread*const thread)
         {
-            impl::ThreadImplObserver* observer = new InternalObserver(this, thread);
+            impl::ThreadImplObserver* observer = new InternalThreadObserver(this, thread);
             thread->setObserver(observer);
             thread->setDelay(m_delay);
             
