@@ -51,7 +51,7 @@ namespace stromx
                     m_throwDeactivate = data_cast<Bool>(value);
                     break;
                 case BLOCK_EXECUTE:
-                    m_blockExecute.store(data_cast<Bool>(value));
+                    m_blockExecute = data_cast<Bool>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -70,7 +70,7 @@ namespace stromx
             case THROW_DEACTIVATE:
                 return m_throwDeactivate;
             case BLOCK_EXECUTE:
-                return Bool(m_blockExecute.load());
+                return m_blockExecute;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -84,7 +84,7 @@ namespace stromx
 
         void ExceptionOperator::execute(DataProvider& provider)
         {
-            while(m_blockExecute.load())
+            while(isBlocked())
             {
                 boost::this_thread::disable_interruption disable;
                 boost::this_thread::sleep(boost::posix_time::seconds(1));
@@ -97,7 +97,14 @@ namespace stromx
         
         void ExceptionOperator::interrupt()
         {
-            m_blockExecute.store(false);
+            lock_t l(m_mutex);
+            m_blockExecute = false;
+        }
+        
+        bool ExceptionOperator::isBlocked() const
+        {
+            lock_t l(m_mutex);
+            return m_blockExecute;
         }
                 
         const std::vector<const Description*> ExceptionOperator::setupInputs()

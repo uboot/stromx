@@ -20,7 +20,7 @@
 #ifndef STROMX_RUNTIME_EXCEPTIONOPERATOR_H
 #define STROMX_RUNTIME_EXCEPTIONOPERATOR_H
 
-#include <boost/atomic.hpp>
+#include <boost/thread.hpp>
 
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
@@ -53,6 +53,8 @@ namespace stromx
             virtual void interrupt();
             
         private:
+            typedef boost::lock_guard<boost::mutex> lock_t;
+            
             static const std::vector<const stromx::runtime::Description*> setupInputs();
             static const std::vector<const stromx::runtime::Description*> setupOutputs();
             static const std::vector<const stromx::runtime::Parameter*> setupParameters();
@@ -61,7 +63,10 @@ namespace stromx
             static const std::string PACKAGE;
             static const stromx::runtime::Version VERSION;
             
-            boost::atomic<bool> m_blockExecute;
+            bool isBlocked() const;
+            
+            mutable boost::mutex m_mutex;
+            stromx::runtime::Bool m_blockExecute;
             stromx::runtime::Bool m_throwDeactivate;
         };
     }
