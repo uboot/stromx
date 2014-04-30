@@ -215,9 +215,11 @@ int GPIOCreatePipe(int& readEnd, int& writeEnd)
 
 int GPIOPoll(int gpio, int readEnd, bool & interrupt)
 {
+#define MAX_BUF 64
     struct pollfd fdset[2];
     int nfds = 2;
     int rc;
+    char *buf[MAX_BUF];
     interrupt = false;
     
     memset((void*)fdset, 0, sizeof(fdset));
@@ -239,12 +241,14 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     if (fdset[1].revents & POLLPRI)
     {
         fprintf(stdout, "GPIO interrupt!\n");
+        read(fdset[1].fd, buf, MAX_BUF);
     }
 
     if (fdset[0].revents & POLLIN)
     {
         interrupt = true;
         fprintf(stdout, "Pipe interrupt!\n");
+        read(fdset[0].fd, buf, 1);
     }
     
     return(0);
