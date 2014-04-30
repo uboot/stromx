@@ -247,15 +247,6 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
         fprintf(stdout, "Pipe interrupt!\n");
     }
     
-    if (close(gpio))
-    {
-        fprintf(stderr, "Failed to close gpio socket!\n");
-    }
-    
-    if (close(readEnd))
-    {
-        fprintf(stderr, "Failed to close read end socket!\n");
-    }
     return(0);
 }
 
