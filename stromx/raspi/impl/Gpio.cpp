@@ -238,12 +238,12 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
 
     if (fdset[1].revents & POLLPRI)
     {
-        interrupt = true;
         fprintf(stdout, "GPIO interrupt!\n");
     }
 
     if (fdset[0].revents & POLLIN)
     {
+        interrupt = true;
         fprintf(stdout, "Pipe interrupt!\n");
     }
     
