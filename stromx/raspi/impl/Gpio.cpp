@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <boost/graph/graph_concepts.hpp>
 
 #define LOW  0
 #define HIGH 1
@@ -103,7 +104,7 @@ int GPIODirection(int pin, int dir)
 
 int GPIOEdge(int pin, int edge)
 {
-    static const char s_edge_str[]  = "rising\0falling";
+    static const char s_edges_str[]  = "rising\0falling\0both";
 
 #define EDGE_MAX 30
     char path[EDGE_MAX];
@@ -116,8 +117,26 @@ int GPIOEdge(int pin, int edge)
         fprintf(stderr, "Failed to open gpio edge for writing!\n");
         return(-1);
     }
+    
+    const char* edge_str = 0;
+    int str_length = 0;
+    switch(edge)
+    {
+        case RISING:
+            edge_str = &s_edges_str[0];
+            str_length = 6;
+        case FALLING:
+            edge_str = &s_edges_str[7];
+            str_length = 7;
+        case BOTH:
+            edge_str = &s_edges_str[14];
+            str_length = 4;
+        default:
+            fprintf(stderr, "Unknown edge flag\n");
+            return(-1);
+    }
 
-    if (-1 == write(fd, &s_edge_str[RISING == edge ? 0 : 7], RISING == edge ? 6 : 7))
+    if (-1 == write(fd, edge_str, str_length))
     {
         fprintf(stderr, "Failed to set edge!\n");
         return(-1);
@@ -183,12 +202,21 @@ int GPIOOpen(int pin, int& socket)
 {
     char path[VALUE_MAX];
     int fd;
+    char value_str[3];
 
     snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_RDONLY| O_NONBLOCK);
     if (-1 == fd)
     {
         fprintf(stderr, "Failed to open gpio value for reading!\n");
+        return(-1);
+    }
+
+    // read the current value to make sure the first call to poll() does not
+    // return immediately
+    if (-1 == read(fd, value_str, 3)) 
+    {
+        fprintf(stderr, "Failed to read value!\n");
         return(-1);
     }
     
@@ -219,7 +247,7 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     struct pollfd fdset[2];
     int nfds = 2;
     int rc;
-    char *buf[MAX_BUF];
+    char buf[MAX_BUF];
     interrupt = false;
     
     memset((void*)fdset, 0, sizeof(fdset));
@@ -241,17 +269,25 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     if (fdset[1].revents & POLLPRI)
     {
         fprintf(stdout, "GPIO interrupt!\n");
-        read(fdset[1].fd, buf, MAX_BUF);
+        if (read(fdset[1].fd, buf, MAX_BUF)) 
+        {
+            fprintf(stderr, "Failed to read GPIO value!\n"); 
+            return(-1);
+        }
     }
 
     if (fdset[0].revents & POLLIN)
     {
         interrupt = true;
         fprintf(stdout, "Pipe interrupt!\n");
-        read(fdset[0].fd, buf, 1);
+        if (read(fdset[0].fd, buf, 1))
+        {
+            fprintf(stderr, "Failed to read pipe value!\n"); 
+            return(-1);
+        }
     }
     
-    return(0);
+    return(atoi(buf));
 }
 
 int GPIOCloseSocket(int socket)

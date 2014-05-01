@@ -234,7 +234,7 @@ namespace stromx
             
             if (! m_triggerInput)
             {  
-                Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
+                Parameter* trigger = new Parameter(TRIGGER, DataVariant::DATA);
                 trigger->setTitle("Trigger");
                 trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(trigger);

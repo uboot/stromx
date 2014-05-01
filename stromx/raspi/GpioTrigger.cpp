@@ -37,6 +37,7 @@ namespace stromx
         
         GpioTrigger::GpioTrigger()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          m_edge(impl::RISING),
           m_interruptReadSocket(0),
           m_interruptWriteSocket(0),
           m_gpioSocket(0)
@@ -50,10 +51,11 @@ namespace stromx
                 switch(id)
                 {
                 case GPIO:
-                {
                     m_gpio = data_cast<runtime::Enum>(data);
                     break;
-                }
+                case EDGE:
+                    m_edge = data_cast<runtime::Enum>(data);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -70,6 +72,8 @@ namespace stromx
             {
             case GPIO:
                 return m_gpio;
+            case EDGE:
+                return m_edge;
             default:
                 throw WrongParameterId(id, *this);
             };
@@ -91,7 +95,7 @@ namespace stromx
                     (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
             }
                                     
-            if (impl::GPIOEdge(static_cast<int>(m_gpio), impl::RISING))
+            if (impl::GPIOEdge(static_cast<int>(m_gpio), m_edge))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
@@ -144,7 +148,8 @@ namespace stromx
         void GpioTrigger::execute(DataProvider& provider)
         {
             bool interrupt = false;
-            if (impl::GPIOPoll(m_gpioSocket, m_interruptReadSocket, interrupt))
+            int value = impl::GPIOPoll(m_gpioSocket, m_interruptReadSocket, interrupt);
+            if (value < 0)
             {
                 throw OperatorError(*this, 
                     (boost::format("Failed poll GPIO %1%") % m_gpio).str());
@@ -153,7 +158,7 @@ namespace stromx
             if (interrupt)
                 throw Interrupt();
             
-            DataContainer data(new TriggerData());
+            DataContainer data(new Bool(value));
             Id2DataPair output(OUTPUT, data);
             provider.sendOutputData(output);
         }
@@ -190,7 +195,15 @@ namespace stromx
             std::vector<const Parameter*> parameters;
             
             EnumParameter* gpio = impl::createGpioParameter(GPIO);
-            parameters.push_back(gpio);
+            parameters.push_back(gpio);  
+            
+            EnumParameter* edge = new EnumParameter(EDGE);
+            edge->setTitle("Edge");
+            edge->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
+            edge->add(EnumDescription(Enum(impl::RISING), "Rising"));
+            edge->add(EnumDescription(Enum(impl::FALLING), "Falling"));
+            edge->add(EnumDescription(Enum(impl::BOTH), "Both"));
+            parameters.push_back(edge);
             
             return parameters;
         }

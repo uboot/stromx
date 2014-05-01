@@ -20,6 +20,7 @@
 #include "stromx/raspi/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
+#include <boost/graph/graph_concepts.hpp>
 
 namespace stromx
 {
@@ -35,7 +36,8 @@ namespace stromx
             
             enum ParameterId
             {
-                GPIO
+                GPIO,
+                EDGE
             };
             
             GpioTrigger();
@@ -58,6 +60,7 @@ namespace stromx
             static const runtime::Version VERSION;
             
             runtime::Enum m_gpio;
+            runtime::Enum m_edge;
             int m_interruptReadSocket;
             int m_interruptWriteSocket;
             int m_gpioSocket;

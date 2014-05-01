@@ -35,6 +35,7 @@ namespace stromx
             const static int OUT = 1;
             const static int RISING = 0;
             const static int FALLING = 1;
+            const static int BOTH = 2;
             
             int GPIOExport(int pin);
             int GPIOUnexport(int pin);
