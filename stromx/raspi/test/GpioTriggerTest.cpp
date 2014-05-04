@@ -20,8 +20,7 @@
 #include <boost/thread.hpp>
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestAssert.h>
-#include "stromx/raspi/ReadGpio.h"
-#include "stromx/raspi/ReadGpio.h"
+#include "stromx/raspi/GpioTrigger.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::GpioTriggerTest);
 
@@ -33,8 +32,9 @@ namespace stromx
     {
         void GpioTriggerTest::setUp()
         {
-            m_operator = new OperatorTester(new ReadGpio());
+            m_operator = new OperatorTester(new GpioTrigger());
             m_operator->initialize();
+            m_operator->setParameter(GpioTrigger::GPIO, Enum(4));
             m_operator->activate();
         }
 
@@ -44,7 +44,7 @@ namespace stromx
             boost::thread t(boost::bind(&GpioTriggerTest::interruptExecution, this));
             
             // wait for the interrupt
-            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(ReadGpio::OUTPUT), Interrupt);
+            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(GpioTrigger::OUTPUT), Interrupt);
             t.join();
         }
 

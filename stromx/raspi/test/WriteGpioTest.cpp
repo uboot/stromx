@@ -18,7 +18,6 @@
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestAssert.h>
 #include "stromx/raspi/WriteGpio.h"
-#include "stromx/raspi/WriteGpio.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::WriteGpioTest);
 
@@ -32,6 +31,7 @@ namespace stromx
         {
             m_operator = new OperatorTester(new WriteGpio());
             m_operator->initialize();
+            m_operator->setParameter(WriteGpio::GPIO, Enum(4));
             m_operator->activate();
         }
 

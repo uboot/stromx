@@ -18,7 +18,6 @@
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestAssert.h>
 #include "stromx/raspi/ReadGpio.h"
-#include "stromx/raspi/ReadGpio.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::ReadGpioTest);
 
@@ -32,6 +31,7 @@ namespace stromx
         {
             m_operator = new OperatorTester(new ReadGpio());
             m_operator->initialize();
+            m_operator->setParameter(ReadGpio::GPIO, Enum(4));
             m_operator->activate();
         }
 
