@@ -36,7 +36,8 @@ namespace stromx
         const Version WriteGpio::VERSION(0, 1, 0);
         
         WriteGpio::WriteGpio()
-        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+        : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(),
+                         setupParameters(), setupProperties())
         {
         }
 
