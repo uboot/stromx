@@ -197,7 +197,7 @@ namespace stromx
             
             if (m_triggerInput)
             {
-                Description* triggerData = new Description(TRIGGER_DATA, DataVariant::TRIGGER);
+                Description* triggerData = new Description(TRIGGER_DATA, DataVariant::DATA);
                 triggerData->setTitle("Trigger");
                 inputs.push_back(triggerData);
             }
@@ -234,7 +234,7 @@ namespace stromx
             
             if (! m_triggerInput)
             {  
-                Parameter* trigger = new Parameter(TRIGGER, DataVariant::DATA);
+                Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
                 trigger->setTitle("Trigger");
                 trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(trigger);
