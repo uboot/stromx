@@ -131,7 +131,7 @@ int GPIOEdge(int pin, int edge)
             str_length = 7;
             break;
         case BOTH:
-            edge_str = &s_edges_str[14];
+            edge_str = &s_edges_str[15];
             str_length = 4;
             break;
         default:
@@ -272,7 +272,7 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     if (fdset[1].revents & POLLPRI)
     {
         fprintf(stdout, "GPIO interrupt!\n");
-        if (read(fdset[1].fd, buf, MAX_BUF)) 
+        if (-1 == read(fdset[1].fd, buf, MAX_BUF)) 
         {
             fprintf(stderr, "Failed to read GPIO value!\n"); 
             return(-1);
@@ -283,7 +283,7 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     {
         interrupt = true;
         fprintf(stdout, "Pipe interrupt!\n");
-        if (read(fdset[0].fd, buf, 1))
+        if (-1 == read(fdset[0].fd, buf, 1))
         {
             fprintf(stderr, "Failed to read pipe value!\n"); 
             return(-1);
