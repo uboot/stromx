@@ -125,12 +125,15 @@ int GPIOEdge(int pin, int edge)
         case RISING:
             edge_str = &s_edges_str[0];
             str_length = 6;
+            break;
         case FALLING:
             edge_str = &s_edges_str[7];
             str_length = 7;
+            break;
         case BOTH:
             edge_str = &s_edges_str[14];
             str_length = 4;
+            break;
         default:
             fprintf(stderr, "Unknown edge flag\n");
             return(-1);
