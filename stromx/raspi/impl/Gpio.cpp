@@ -154,7 +154,7 @@ int GPIORead(int pin)
 {
 #define VALUE_MAX 30
     char path[VALUE_MAX];
-    char value_str[3];
+    char value_str[3] = "";
     int fd;
 
     snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
@@ -205,7 +205,7 @@ int GPIOOpen(int pin, int& socket)
 {
     char path[VALUE_MAX];
     int fd;
-    char value_str[3];
+    char value_str[3] = "";
 
     snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_RDONLY| O_NONBLOCK);
@@ -250,7 +250,7 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     struct pollfd fdset[2];
     int nfds = 2;
     int rc;
-    char buf[MAX_BUF];
+    char buf[MAX_BUF] = "";
     interrupt = false;
     
     memset((void*)fdset, 0, sizeof(fdset));
