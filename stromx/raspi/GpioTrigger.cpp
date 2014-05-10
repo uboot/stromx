@@ -85,28 +85,28 @@ namespace stromx
             if (impl::GPIOExport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to export GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to export GPIO %1%. Consider running this process as root.") % m_gpio).str());
             }
                                     
             if (impl::GPIODirection(static_cast<int>(m_gpio), impl::IN))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
-                    (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to set direction of GPIO %1%.") % m_gpio).str());
             }
                                     
             if (impl::GPIOEdge(static_cast<int>(m_gpio), m_edge))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
-                    (boost::format("Failed to set edge of GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to set edge of GPIO %1%.") % m_gpio).str());
             }
                                     
             if (impl::GPIOOpen(static_cast<int>(m_gpio), m_gpioSocket))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
-                    (boost::format("Failed to open GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to open GPIO %1%.") % m_gpio).str());
             }
                                     
             if (impl::GPIOCreatePipe(m_interruptReadSocket, m_interruptWriteSocket))
@@ -114,7 +114,7 @@ namespace stromx
                 impl::GPIOCloseSocket(m_gpioSocket);
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
-                    (boost::format("Failed to open GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to open GPIO %1%.") % m_gpio).str());
             }
         }
         
@@ -123,25 +123,25 @@ namespace stromx
             if (impl::GPIOCloseSocket(m_gpioSocket))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to close GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to close GPIO %1%.") % m_gpio).str());
             }
             
             if (impl::GPIOCloseSocket(m_interruptReadSocket))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to close read end of interrupt pipe for GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to close read end of interrupt pipe for GPIO %1%.") % m_gpio).str());
             }
             
             if (impl::GPIOCloseSocket(m_interruptWriteSocket))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to close write end of interrupt pipe for GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to close write end of interrupt pipe for GPIO %1%.") % m_gpio).str());
             }
             
             if (impl::GPIOUnexport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to unexport GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to unexport GPIO %1%.") % m_gpio).str());
             }
         }
         
@@ -152,7 +152,7 @@ namespace stromx
             if (value < 0)
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed poll GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed poll GPIO %1%.") % m_gpio).str());
             }
             
             if (interrupt)
@@ -168,7 +168,7 @@ namespace stromx
             if (impl::GPIOSendInterrupt(m_interruptWriteSocket))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed interrupt polling for GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed interrupt polling for GPIO %1%.") % m_gpio).str());
             }            
         }
         

@@ -110,7 +110,7 @@ namespace stromx
             {
                 if (op == 0)
                 {
-                    throw WrongArgument("Invalid argument: Null pointer");
+                    throw WrongArgument("Operator is null.");
                 }
                 
                 if (op->status() != Operator::INITIALIZED)
@@ -124,7 +124,7 @@ namespace stromx
                 {
                     if (&(*iter)->info() == &op->info())
                     {
-                        throw WrongArgument("Operator already exists");
+                        throw WrongArgument("Operator already exists.");
                     }
                 }
 

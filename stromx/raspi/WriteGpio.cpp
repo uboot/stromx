@@ -78,14 +78,14 @@ namespace stromx
             if (impl::GPIOExport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to export GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to export GPIO %1%. Consider running this process as root.") % m_gpio).str());
             }
                                     
             if (impl::GPIODirection(static_cast<int>(m_gpio), impl::OUT))
             {
                 impl::GPIOUnexport(static_cast<int>(m_gpio));
                 throw OperatorError(*this, 
-                    (boost::format("Failed to set direction of GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to set direction of GPIO %1%.") % m_gpio).str());
             }
         }
         
@@ -94,7 +94,7 @@ namespace stromx
             if (impl::GPIOUnexport(static_cast<int>(m_gpio)))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to unexport GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to unexport GPIO %1%.") % m_gpio).str());
             }
         }
         
@@ -109,7 +109,7 @@ namespace stromx
             if (impl::GPIOWrite(static_cast<int>(m_gpio), value))
             {
                 throw OperatorError(*this, 
-                    (boost::format("Failed to write to GPIO %1%") % m_gpio).str());
+                    (boost::format("Failed to write to GPIO %1%.") % m_gpio).str());
             }
         }
         
