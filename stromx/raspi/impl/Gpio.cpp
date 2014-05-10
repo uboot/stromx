@@ -271,7 +271,6 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
 
     if (fdset[1].revents & POLLPRI)
     {
-        fprintf(stdout, "GPIO interrupt!\n");
         if (-1 == lseek(fdset[1].fd, 0, SEEK_SET)) 
         {
             fprintf(stderr, "Failed to seek GPIO value!\n"); 
@@ -288,7 +287,6 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
     if (fdset[0].revents & POLLIN)
     {
         interrupt = true;
-        fprintf(stdout, "Pipe interrupt!\n");
         if (-1 == read(fdset[0].fd, buf, 1))
         {
             fprintf(stderr, "Failed to read pipe value!\n"); 
