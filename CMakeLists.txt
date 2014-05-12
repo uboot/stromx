@@ -71,7 +71,10 @@ endif()
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
-add_subdirectory(example)
+
+if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
+    add_subdirectory(example)
+endif()
 
 option(BUILD_RASPI "Build raspi package" OFF)
 
