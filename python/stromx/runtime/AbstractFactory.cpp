@@ -41,6 +41,11 @@ namespace
         {
             return this->get_override("availableOperators")();
         }
+        
+        const std::vector<const Data*> & availableData() const
+        {
+            return this->get_override("availableData")();
+        }
     };
 }
 

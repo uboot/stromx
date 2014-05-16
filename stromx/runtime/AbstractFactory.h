@@ -43,6 +43,9 @@ namespace stromx
             
             /** Returns a list of the operators registered with the factory. */
             virtual const std::vector<const OperatorKernel*> & availableOperators() const = 0;
+            
+            /** Returns a list of the data types registered with the factory. */
+            virtual const std::vector<const Data*> & availableData() const = 0;
         };
     }
 }
