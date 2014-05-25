@@ -22,16 +22,16 @@ namespace stromx
 {
     namespace runtime
     {
-
-        class DataContainer;
         class Connector;
+        class DataContainer;
+        class Thread;
 
         /** \brief Abstract base class of observers of operator connectors. */
         class ConnectorObserver
         {
         public:
             /** Informs the observer that \c connector was set to \c data. */
-            virtual void observe(const Connector & connector, const DataContainer & data) const = 0;
+            virtual void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const = 0;
         };
     }
 }

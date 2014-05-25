@@ -15,6 +15,7 @@
  */
 
 #include <boost/thread.hpp>
+#include <boost/thread/tss.hpp>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Input.h"
@@ -33,7 +34,9 @@ namespace stromx
 {
     namespace runtime
     {
-        /** \cond */        
+        /** \cond */   
+        extern boost::thread_specific_ptr<Thread> gThread;
+        
         class Operator::InternalObserver : public impl::Id2DataMapObserver
         {
         public:
@@ -322,7 +325,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Input(this, id), data);
+                    (*iter)->observe(Input(this, id), data, gThread.get());
                 }
                 catch(Interrupt &)
                 {
@@ -345,7 +348,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Output(this, id), data);
+                    (*iter)->observe(Output(this, id), data, gThread.get());
                 }
                 catch(Interrupt &)
                 {

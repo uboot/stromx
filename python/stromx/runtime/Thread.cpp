@@ -48,5 +48,7 @@ void exportThread()
             .value("ACTIVE", Thread::ACTIVE)
             .value("DEACTIVATING", Thread::DEACTIVATING)
             ;
+            
+        register_ptr_to_python< boost::shared_ptr<Thread> >();
     }
 }

@@ -15,7 +15,9 @@
  */
 
 #include <boost/bind.hpp>
+#include <boost/thread/tss.hpp>
 #include <set>
+
 #include "ThreadImplObserver.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorInfo.h"
@@ -28,13 +30,16 @@ namespace stromx
 {
     namespace runtime
     {
+        extern boost::thread_specific_ptr<Thread> gThread;
+        
         namespace impl
         {
-            ThreadImpl::ThreadImpl()
+            ThreadImpl::ThreadImpl(Thread* thread)
               : m_status(INACTIVE),
                 m_thread(0),
                 m_observer(0),
-                m_delay(0)
+                m_delay(0),
+                m_parentThread(thread)
             {
             }
             
@@ -190,6 +195,8 @@ namespace stromx
                 // return immediately if there are no inputs to process
                 if(m_inputSequence.empty())
                     return;
+                
+                gThread.reset(m_parentThread);
                 
                 try
                 {

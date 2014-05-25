@@ -24,9 +24,19 @@ using namespace stromx::runtime;
 
 namespace
 {
+    template<typename T>
+    void do_release(T*)
+    {
+    }
+    
     struct ExceptionObserverWrap : ExceptionObserver, wrapper<ExceptionObserver>
     {
         void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
+        {
+            observeWrap(phase, ex, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
+        }
+        
+        void observeWrap(const Phase phase, const OperatorError & ex, boost::shared_ptr<Thread> thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
             
@@ -48,7 +58,7 @@ void exportExceptionObserver()
 {         
     scope in_ExceptionObserver = 
     class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
-        .def("observe", pure_virtual(&ExceptionObserver::observe))
+        .def("observe", pure_virtual(&ExceptionObserverWrap::observeWrap))
     ; 
     
     enum_<ExceptionObserver::Phase>("Phase")

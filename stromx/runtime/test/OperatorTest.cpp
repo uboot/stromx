@@ -409,10 +409,13 @@ namespace stromx
             m_operator->setInputData(TestOperator::INPUT_2, m_container);
         }
         
-        void OperatorTest::TestObserver::observe(const Connector& connector, const DataContainer& data) const
+        void OperatorTest::TestObserver::observe(const Connector& connector, 
+                                                 const DataContainer& data,
+                                                 const Thread* const thread) const
         {
             m_lastConnector = connector;
             m_lastData = data;
+            m_thread = thread;
         }
         
         void OperatorTest::testSetFactory()
