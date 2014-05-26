@@ -45,6 +45,21 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
+    void stopWrap(Stream & stream)
+    {
+        Py_BEGIN_ALLOW_THREADS
+        try
+        {
+            stream.stop();
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
+        Py_END_ALLOW_THREADS
+    }
+    
     Operator* addOperatorWrap(Stream& stream, std::auto_ptr<OperatorKernel> op)
     {
         OperatorKernel* opPtr = op.get();
@@ -83,7 +98,7 @@ void exportStream()
             .def("addObserver", &Stream::addObserver)
             .def("removeObserver", &Stream::removeObserver)
             .def("start", &Stream::start)
-            .def("stop", &Stream::stop)
+            .def("stop", &stopWrap)
             .def("join", &joinWrap)
             .def("pause", &Stream::pause)
             .def("resume", &Stream::resume)
