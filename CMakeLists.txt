@@ -45,7 +45,7 @@ include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem regex serialization system thread)
+find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem locale regex serialization system thread)
 
 find_package(CppUnit)
 
@@ -68,6 +68,12 @@ endif()
 if(XERCES_FOUND AND LIBZIP_FOUND)
     option(BUILD_FILE_PERSISTENCE "Build file persistence" ON)
 endif()
+
+if(WIN32)
+    set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/locale")
+else(WIN32)
+    set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
+endif(WIN32)
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
@@ -104,3 +110,4 @@ else(WIN32)
         DESTINATION share/stromx
     )
 endif(WIN32)
+

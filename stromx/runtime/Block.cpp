@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Block.h"
 
+#include <boost/locale.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include "stromx/runtime/DataContainer.h"
@@ -198,7 +199,7 @@ namespace stromx
             if (m_triggerInput)
             {
                 Description* triggerData = new Description(TRIGGER_DATA, DataVariant::DATA);
-                triggerData->setTitle("Trigger");
+                triggerData->setTitle(boost::locale::gettext("Trigger", locale));
                 inputs.push_back(triggerData);
             }
             
@@ -221,7 +222,7 @@ namespace stromx
             std::vector<const runtime::Parameter*> parameters;
             
             Parameter* triggerInput = new Parameter(TRIGGER_INPUT, DataVariant::BOOL);
-            triggerInput->setTitle("Trigger input");
+            triggerInput->setTitle(boost::locale::gettext("Trigger input", locale));
             triggerInput->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(triggerInput);
                                         

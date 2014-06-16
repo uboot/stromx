@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_BLOCK_H
 #define STROMX_RUNTIME_BLOCK_H
 
-#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
 

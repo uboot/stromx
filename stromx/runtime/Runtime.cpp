@@ -14,6 +14,8 @@
 *  limitations under the License.
 */
 
+#include <boost/locale.hpp>
+
 #include "stromx/runtime/Block.h"
 #include "stromx/runtime/ConstData.h"
 #include "stromx/runtime/Counter.h"
@@ -35,7 +37,12 @@
 
 void stromxRuntimeRegister(stromx::runtime::Registry& registry)
 {
-    using namespace stromx::runtime;
+    using namespace stromx::runtime;    
+    
+    boost::locale::generator gen;
+    gen.add_messages_path(STROMX_RUNTIME_LOCALE_DIR);
+    gen.add_messages_domain(STROMX_RUNTIME_LOCALE_DOMAIN);
+    stromx::runtime::locale = gen.generate("");
     
     registry.registerOperator(new Block);
     registry.registerOperator(new ConstData);
@@ -67,6 +74,8 @@ namespace stromx
 {
     namespace runtime
     {
+        std::locale locale;
+        
         Version version()
         {
             return Version(STROMX_RUNTIME_VERSION_MAJOR,
