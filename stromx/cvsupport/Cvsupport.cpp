@@ -14,6 +14,8 @@
 *  limitations under the License.
 */
 
+#include <boost/locale.hpp>
+
 #include "stromx/cvsupport/AdjustRgbChannels.h"
 #include "stromx/cvsupport/Buffer.h"
 #include "stromx/cvsupport/DummyCamera.h"
@@ -26,9 +28,22 @@
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/Registry.h>
 
+namespace stromx
+{
+    namespace cvsupport
+    {
+        std::locale locale;
+    }
+}
+
 void stromxCvsupportRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvsupport;
+    
+    boost::locale::generator gen;
+    gen.add_messages_path(STROMX_CVSUPPORT_LOCALE_DIR);
+    gen.add_messages_domain(STROMX_CVSUPPORT_LOCALE_DOMAIN);
+    locale = gen.generate("");
     
     registry.registerData(new Image);
     registry.registerData(new Matrix);

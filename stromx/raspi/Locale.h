@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2013 Thomas Fidler
+*  Copyright 2014 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,23 +14,17 @@
 *  limitations under the License.
 */
 
-#include <boost/locale.hpp>
+#ifndef STROMX_RASPI_LOCALE_H
+#define STROMX_RASPI_LOCALE_H
 
-#include "stromx/cvhighgui/Cvhighgui.h"
-#include "stromx/cvhighgui/VideoCapture.h"
-#include <stromx/runtime/Registry.h>
+#include <stromx/runtime/Locale.h>
 
 namespace stromx
 {
-    namespace cvhighgui
+    namespace raspi
     {
-        std::locale locale;
+        extern std::locale locale;
     }
 }
 
-void stromxCvhighguiRegister(stromx::runtime::Registry& registry)
-{
-    using namespace stromx::cvhighgui;
-    
-    registry.registerOperator(new VideoCapture);
-}
+#endif // STROMX_RASPI_LOCALE_H

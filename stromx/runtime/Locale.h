@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2013 Thomas Fidler
+*  Copyright 2014 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,23 +14,18 @@
 *  limitations under the License.
 */
 
-#include <boost/locale.hpp>
+#ifndef STROMX_RUNTIME_LOCALE_H
+#define STROMX_RUNTIME_LOCALE_H
 
-#include "stromx/cvhighgui/Cvhighgui.h"
-#include "stromx/cvhighgui/VideoCapture.h"
-#include <stromx/runtime/Registry.h>
+#include <boost/locale.hpp>
+#define L_(text) boost::locale::gettext(text, locale)
 
 namespace stromx
 {
-    namespace cvhighgui
+    namespace runtime
     {
-        std::locale locale;
+        extern std::locale locale;
     }
 }
 
-void stromxCvhighguiRegister(stromx::runtime::Registry& registry)
-{
-    using namespace stromx::cvhighgui;
-    
-    registry.registerOperator(new VideoCapture);
-}
+#endif // STROMX_RUNTIME_LOCALE_H

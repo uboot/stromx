@@ -17,8 +17,6 @@
 #ifndef STROMX_RUNTIME_RUNTIME_H
 #define STROMX_RUNTIME_RUNTIME_H
 
-#include <locale>
-
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/Version.h"
 
@@ -27,7 +25,6 @@ namespace stromx
     namespace runtime
     {
         class Registry;
-        extern std::locale locale;
         
         /** 
          * \brief Returns the version of the stromx runtime library.

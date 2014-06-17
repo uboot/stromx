@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/BilateralFilter.h"
 
+#include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
 #include <stromx/cvsupport/Image.h>
 #include <stromx/cvsupport/Matrix.h>
@@ -113,8 +114,8 @@ namespace stromx
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -178,11 +179,11 @@ namespace stromx
             case(MANUAL):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                     m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    m_dstDescription->setTitle("Destination");
+                    m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
                 }
@@ -190,7 +191,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                 }
@@ -209,7 +210,7 @@ namespace stromx
             case(MANUAL):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }
@@ -217,7 +218,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }

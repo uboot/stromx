@@ -49,6 +49,7 @@ set (SOURCES
     ../CornerMinEigenVal.cpp
     ../HoughLinesP.cpp
     ../Utility.cpp
+    ../Cvimgproc.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
     BoxFilterTest.cpp

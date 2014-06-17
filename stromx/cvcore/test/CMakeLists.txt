@@ -22,6 +22,7 @@ set (SOURCES
     ../Bitwise_or.cpp
     ../Bitwise_xor.cpp
     ../Utility.cpp
+    ../Cvcore.cpp
     AbsdiffTest.cpp
     AddTest.cpp
     AddWeightedTest.cpp

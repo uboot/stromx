@@ -16,7 +16,6 @@
 
 #include "stromx/runtime/Block.h"
 
-#include <boost/locale.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include "stromx/runtime/DataContainer.h"
@@ -24,6 +23,7 @@
 #include "stromx/runtime/EnumParameter.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/Id2DataComposite.h"
+#include "stromx/runtime/Locale.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/TriggerData.h"
 
@@ -199,7 +199,7 @@ namespace stromx
             if (m_triggerInput)
             {
                 Description* triggerData = new Description(TRIGGER_DATA, DataVariant::DATA);
-                triggerData->setTitle(boost::locale::gettext("Trigger", locale));
+                triggerData->setTitle(L_("Trigger"));
                 inputs.push_back(triggerData);
             }
             
@@ -222,7 +222,7 @@ namespace stromx
             std::vector<const runtime::Parameter*> parameters;
             
             Parameter* triggerInput = new Parameter(TRIGGER_INPUT, DataVariant::BOOL);
-            triggerInput->setTitle(boost::locale::gettext("Trigger input", locale));
+            triggerInput->setTitle(L_("Trigger input"));
             triggerInput->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(triggerInput);
                                         
@@ -236,16 +236,16 @@ namespace stromx
             if (! m_triggerInput)
             {  
                 Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
-                trigger->setTitle("Trigger");
+                trigger->setTitle(L_("Trigger"));
                 trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(trigger);
             
                 EnumParameter* state = new EnumParameter(STATE);
-                state->setTitle("State");
+                state->setTitle(L_("State"));
                 state->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                state->add(EnumDescription(Enum(PASS_ALWAYS), "Block never"));
-                state->add(EnumDescription(Enum(BLOCK_ALWAYS), "Block always"));
-                state->add(EnumDescription(Enum(TRIGGER_ACTIVE), "Wait for trigger"));
+                state->add(EnumDescription(Enum(PASS_ALWAYS), L_("Block never")));
+                state->add(EnumDescription(Enum(BLOCK_ALWAYS), L_("Block always")));
+                state->add(EnumDescription(Enum(TRIGGER_ACTIVE), L_("Wait for trigger")));
                 parameters.push_back(state);
             }
                                         

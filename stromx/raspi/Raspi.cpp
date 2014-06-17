@@ -14,6 +14,8 @@
 *  limitations under the License.
 */
 
+#include <boost/locale.hpp>
+
 #include "stromx/raspi/GpioTrigger.h"
 #include "stromx/raspi/Raspi.h"
 #include "stromx/raspi/RaspiCam.h"
@@ -21,9 +23,22 @@
 #include "stromx/raspi/WriteGpio.h"
 #include <stromx/runtime/Registry.h>
 
+namespace stromx
+{
+    namespace raspi
+    {
+        std::locale locale;
+    }
+}
+
 void stromxRaspiRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::raspi;
+    
+    boost::locale::generator gen;
+    gen.add_messages_path(STROMX_RASPI_LOCALE_DIR);
+    gen.add_messages_domain(STROMX_RASPI_LOCALE_DOMAIN);
+    locale = gen.generate("");
     
     registry.registerOperator(new GpioTrigger);
     registry.registerOperator(new RaspiCam);

@@ -76,6 +76,8 @@ class LibImplGenerator(LibGenerator):
     Generator of package implementation files.
     """
     def generate(self):
+        self.doc.line("#include <boost/locale.hpp>")
+        self.doc.blank()
         self.doc.line('#include "stromx/{0}/{1}.h"'.format(
             self.p.ident, self.p.ident.className()
         ))
@@ -87,12 +89,29 @@ class LibImplGenerator(LibGenerator):
         self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.blank()
         
+        self.doc.line("namespace stromx")
+        self.doc.scopeEnter()
+        self.doc.line("namespace {0}".format(self.p.ident))
+        self.doc.scopeEnter()
+        self.doc.line("std::locale locale;")
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        self.doc.blank()
+        self.doc.blank()
+        
         self.doc.line("void stromx{0}Register(stromx::runtime::Registry& registry)"\
             .format(self.p.ident.className()))
         self.doc.scopeEnter()
         self.doc.line("using namespace stromx::{0};".format(self.p.ident))
         self.doc.blank()
         
+        p = self.p.ident.constant()
+        self.doc.line("boost::locale::generator gen;")
+        self.doc.line("gen.add_messages_path(STROMX_{0}_LOCALE_DIR);".format(p))
+        self.doc.line("gen.add_messages_domain(STROMX_{0}_LOCALE_DOMAIN);".format(p))
+        self.doc.line('locale = gen.generate("");')
+        self.doc.blank()
+    
         for m in self.p.methods:
             self.doc.line("registry.registerOperator(new {0});"\
                 .format(m.ident.className()))
@@ -443,6 +462,7 @@ class TestCMakeGenerator(LibGenerator):
         for m in self.p.methods:
             self.doc.line("../{0}.cpp".format(m.ident.className()))
         self.doc.line("../Utility.cpp")
+        self.doc.line("../{0}.cpp".format(self.p.ident.className()))
         for m in self.p.methods:
             self.doc.line("{0}Test.cpp".format(m.ident.className()))
         self.doc.line("main.cpp")
@@ -571,6 +591,9 @@ class ConfigGenerator(LibGenerator):
         packageName = "cv::{0}".format(str(self.p.ident)[2:])
         self.doc.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
             .format(p, packageName))
+        self.doc.line('#define STROMX_{0}_LOCALE_DOMAIN "{1}"'\
+            .format(p, self.p.ident))
+        self.doc.line('#define STROMX_{0}_LOCALE_DIR "@LOCALE_DIR@"'.format(p))
         self.doc.blank()
         
         self.doc.line("#ifdef WIN32")
@@ -606,6 +629,35 @@ class ConfigGenerator(LibGenerator):
         with file(filename, "w") as f:
             f.write(self.doc.string())
             
+class LocaleGenerator(LibGenerator):
+    """
+    Generator of the locale header.
+    """
+    def generate(self):
+        p = self.p.ident.constant()
+        
+        self.doc.line("#ifndef STROMX_{0}_LOCALE_H".format(p))
+        self.doc.line("#define STROMX_{0}_LOCALE_H".format(p))
+        self.doc.blank()
+        
+        self.doc.line('#include <stromx/runtime/Locale.h>')
+        self.doc.blank()
+        
+        self.doc.line("namespace stromx")
+        self.doc.scopeEnter()
+        self.doc.line("namespace {0}".format(self.p.ident))
+        self.doc.scopeEnter()
+        self.doc.line("extern std::locale locale;")
+        self.doc.scopeExit()
+        self.doc.scopeExit()
+        self.doc.blank()
+        
+        self.doc.line("#endif // STROMX_{0}_LOCALE_H".format(p))
+        
+        filename = "stromx/{0}/Locale.h".format(self.p.ident)
+        with file(filename, "w") as f:
+            f.write(self.doc.string())
+            
 def generatePackageFiles(package):
     """
     Generates all files for the given package (including all operator files).
@@ -617,6 +669,9 @@ def generatePackageFiles(package):
     g.save(package)
     
     g = ConfigGenerator()
+    g.save(package)
+    
+    g = LocaleGenerator()
     g.save(package)
     
     g = UtilityHeaderGenerator()

@@ -17,7 +17,10 @@
 #ifndef STROMX_RASPI_RASPI_H
 #define STROMX_RASPI_RASPI_H
 
+#include <locale>
+
 #include "stromx/raspi/Config.h"
+#include "GpioTrigger.h"
 
 namespace stromx
 {

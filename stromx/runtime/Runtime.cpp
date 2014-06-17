@@ -35,6 +35,21 @@
 #include "stromx/runtime/String.h"
 #include "stromx/runtime/TriggerData.h"
 
+namespace stromx
+{
+    namespace runtime
+    {
+        std::locale locale;
+        
+        Version version()
+        {
+            return Version(STROMX_RUNTIME_VERSION_MAJOR,
+                           STROMX_RUNTIME_VERSION_MINOR,
+                           STROMX_RUNTIME_VERSION_PATCH);
+        }
+    }
+}
+
 void stromxRuntimeRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::runtime;    
@@ -42,7 +57,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     boost::locale::generator gen;
     gen.add_messages_path(STROMX_RUNTIME_LOCALE_DIR);
     gen.add_messages_domain(STROMX_RUNTIME_LOCALE_DOMAIN);
-    stromx::runtime::locale = gen.generate("");
+    locale = gen.generate("");
     
     registry.registerOperator(new Block);
     registry.registerOperator(new ConstData);
@@ -68,19 +83,4 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new None);
     registry.registerData(new String);
     registry.registerData(new TriggerData);
-}
-
-namespace stromx
-{
-    namespace runtime
-    {
-        std::locale locale;
-        
-        Version version()
-        {
-            return Version(STROMX_RUNTIME_VERSION_MAJOR,
-                           STROMX_RUNTIME_VERSION_MINOR,
-                           STROMX_RUNTIME_VERSION_PATCH);
-        }
-    }
 }

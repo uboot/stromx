@@ -17,6 +17,8 @@
 #ifndef STROMX_CVSUPPORT_EXAMPLE_H
 #define STROMX_CVSUPPORT_EXAMPLE_H
 
+#include <locale>
+
 #include "stromx/cvsupport/Config.h"
 
 namespace stromx
@@ -24,6 +26,11 @@ namespace stromx
     namespace runtime
     {
         class Registry;
+    }
+    
+    namespace cvsupport
+    {
+        extern std::locale locale;
     }
 }
 
