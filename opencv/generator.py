@@ -591,7 +591,7 @@ class ConfigGenerator(LibGenerator):
         packageName = "cv::{0}".format(str(self.p.ident)[2:])
         self.doc.line('#define STROMX_{0}_PACKAGE_NAME "{1}"'\
             .format(p, packageName))
-        self.doc.line('#define STROMX_{0}_LOCALE_DOMAIN "{1}"'\
+        self.doc.line('#define STROMX_{0}_LOCALE_DOMAIN "lib{1}"'\
             .format(p, self.p.ident))
         self.doc.line('#define STROMX_{0}_LOCALE_DIR "@LOCALE_DIR@"'.format(p))
         self.doc.blank()
