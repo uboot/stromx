@@ -14,25 +14,26 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_LOCALE_H
-#define STROMX_RUNTIME_LOCALE_H
+#include "stromx/runtime/Locale.h"
 
-#include <locale>
-#define L_(id) stromx::runtime::Locale::gettext(id, locale)
+#include <boost/locale.hpp>
 
 namespace stromx
 {
     namespace runtime
     {
-        extern std::locale locale;
-        
-        class Locale
+        std::string Locale::gettext(const char* const id, const std::locale & locale)
         {
-        public:
-            static std::string gettext(const char* const id, const std::locale & locale);
-            static std::locale generate(const char* const path, const char* const domain);
-        };
+            return boost::locale::gettext(id, locale);
+        }
+        
+        std::locale Locale::generate(const char* const path, const char* const domain)
+        {
+            boost::locale::generator gen;
+            gen.add_messages_path(path);
+            gen.add_messages_domain(domain);
+            return gen.generate("");
+        }
     }
 }
 
-#endif // STROMX_RUNTIME_LOCALE_H

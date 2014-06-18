@@ -57,6 +57,7 @@ set(SOURCES
     ../Id2DataPair.cpp
     ../Image.cpp
     ../ImageWrapper.cpp
+    ../Locale.cpp
     ../Matrix.cpp
     ../MatrixWrapper.cpp
     ../None.cpp

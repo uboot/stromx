@@ -76,8 +76,6 @@ class LibImplGenerator(LibGenerator):
     Generator of package implementation files.
     """
     def generate(self):
-        self.doc.line("#include <boost/locale.hpp>")
-        self.doc.blank()
         self.doc.line('#include "stromx/{0}/{1}.h"'.format(
             self.p.ident, self.p.ident.className()
         ))
@@ -86,6 +84,7 @@ class LibImplGenerator(LibGenerator):
             self.doc.line('#include "stromx/{0}/{1}.h"'.format(
             self.p.ident, m.ident.className()
         ))
+        self.doc.line("#include <stromx/runtime/Locale.h>")
         self.doc.line("#include <stromx/runtime/Registry.h>")
         self.doc.blank()
         
@@ -106,10 +105,9 @@ class LibImplGenerator(LibGenerator):
         self.doc.blank()
         
         p = self.p.ident.constant()
-        self.doc.line("boost::locale::generator gen;")
-        self.doc.line("gen.add_messages_path(STROMX_{0}_LOCALE_DIR);".format(p))
-        self.doc.line("gen.add_messages_domain(STROMX_{0}_LOCALE_DOMAIN);".format(p))
-        self.doc.line('locale = gen.generate("");')
+        self.doc.line(("locale = stromx::runtime::Locale::generate("
+                       "STROMX_{0}_LOCALE_DIR, STROMX_{0}_LOCALE_DOMAIN);"
+                      ).format(p))
         self.doc.blank()
     
         for m in self.p.methods:

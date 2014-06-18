@@ -47,6 +47,7 @@ set(SOURCES
     Image.cpp
     ImageWrapper.cpp
     Join.cpp
+    Locale.cpp
     Matrix.cpp
     MatrixWrapper.cpp
     None.cpp

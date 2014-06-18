@@ -14,10 +14,9 @@
 *  limitations under the License.
 */
 
-#include <boost/locale.hpp>
-
 #include "stromx/cvhighgui/Cvhighgui.h"
 #include "stromx/cvhighgui/VideoCapture.h"
+#include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
 
 namespace stromx
@@ -31,6 +30,9 @@ namespace stromx
 void stromxCvhighguiRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvhighgui;
+    
+    locale = stromx::runtime::Locale::generate(STROMX_CVHIGHGUI_LOCALE_DIR,
+                                               STROMX_CVHIGHGUI_LOCALE_DOMAIN);
     
     registry.registerOperator(new VideoCapture);
 }

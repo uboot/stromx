@@ -1,5 +1,3 @@
-#include <boost/locale.hpp>
-
 #include "stromx/cvcore/Cvcore.h"
 
 #include "stromx/cvcore/Absdiff.h"
@@ -9,6 +7,7 @@
 #include "stromx/cvcore/Bitwise_not.h"
 #include "stromx/cvcore/Bitwise_or.h"
 #include "stromx/cvcore/Bitwise_xor.h"
+#include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
 
 namespace stromx
@@ -23,10 +22,7 @@ void stromxCvcoreRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvcore;
     
-    boost::locale::generator gen;
-    gen.add_messages_path(STROMX_CVCORE_LOCALE_DIR);
-    gen.add_messages_domain(STROMX_CVCORE_LOCALE_DOMAIN);
-    locale = gen.generate("");
+    locale = stromx::runtime::Locale::generate(STROMX_CVCORE_LOCALE_DIR, STROMX_CVCORE_LOCALE_DOMAIN);
     
     registry.registerOperator(new Absdiff);
     registry.registerOperator(new Add);
