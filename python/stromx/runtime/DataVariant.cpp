@@ -26,7 +26,7 @@ void exportDataVariant()
 {         
     scope in_DataVariant =
     class_<DataVariant>("DataVariant", no_init)
-        .def("title", &DataVariant::title, return_value_policy<copy_const_reference>())
+        .def("title", &DataVariant::title)
         .def("isVariant", &DataVariant::isVariant)
         .def("id", &DataVariant::id)
         .def("package", &DataVariant::package, return_internal_reference<>())
