@@ -201,7 +201,7 @@ namespace stromx
             {
                 deactivate();
             }
-            catch(OperatorError& e)
+            catch(OperatorError&)
             {
                 // ignore all exceptions before deinitializing
             }
