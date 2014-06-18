@@ -18,6 +18,8 @@
 #define STROMX_RUNTIME_LOCALE_H
 
 #include <locale>
+#include "stromx/runtime/Config.h"
+
 #define L_(id) stromx::runtime::Locale::gettext(id, locale)
 
 namespace stromx
@@ -26,7 +28,7 @@ namespace stromx
     {
         extern std::locale locale;
         
-        class Locale
+        class STROMX_RUNTIME_API Locale
         {
         public:
             static std::string gettext(const char* const id, const std::locale & locale);
