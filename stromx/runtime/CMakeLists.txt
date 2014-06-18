@@ -116,6 +116,11 @@ if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_runtime ${LIBZIP_LIBRARY})
 endif()
 
+# Compiles the the *.po file and creates an install target for the *.mo file: 
+# if(GETTEXT_FOUND)
+#     gettext_process_po_files(de ALL INSTALL_DESTINATION ${LOCALE_SUFFIX} PO_FILES po/de/libruntime.po)
+# endif()
+
 if(WIN32)
     install (TARGETS stromx_runtime 
         RUNTIME DESTINATION .

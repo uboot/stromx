@@ -41,6 +41,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
+include(FindGettext)
 include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
@@ -70,10 +71,12 @@ if(XERCES_FOUND AND LIBZIP_FOUND)
 endif()
 
 if(WIN32)
-    set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/locale")
+    set(LOCALE_SUFFIX "locale")
 else(WIN32)
-    set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
+    set(LOCALE_SUFFIX "share/locale")
 endif(WIN32)
+
+set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/${LOCALE_SUFFIX}")
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
