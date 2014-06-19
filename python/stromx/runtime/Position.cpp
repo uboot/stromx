@@ -26,5 +26,7 @@ void exportPosition()
     class_<Position>("Position", init<float, float>())
         .def("x", &Position::x)
         .def("y", &Position::y)
+        .def("setX", &Position::setX)
+        .def("setY", &Position::setY)
     ;
 }

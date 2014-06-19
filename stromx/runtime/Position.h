@@ -38,6 +38,12 @@ namespace stromx
             /** Returns the y-coordinate. */
             float y() const { return m_y; }
             
+            /** Sets the x-coordinate. */
+            void setX(const float x) { m_x = x; }
+            
+            /** Sets the y-coordinate. */
+            void setY(const float y) { m_y = y; }
+            
         private:
             float m_x;
             float m_y;
