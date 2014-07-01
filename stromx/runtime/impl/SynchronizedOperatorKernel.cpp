@@ -505,9 +505,7 @@ namespace stromx
                 {
                     if(waitWithTimeout)
                     {
-                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
-                
-                        if(! condition.timed_wait(lock, finish))
+                        if(! condition.wait_for(lock, boost::chrono::milliseconds(timeout)))
                             throw Timeout();
                     }
                     else
