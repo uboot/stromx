@@ -88,8 +88,11 @@ namespace stromx
                     {
                         while(m_data.empty())
                         {
-                            if(! m_cond.wait_for(lock, boost::chrono::milliseconds(timeout)))
+                            if(m_cond.wait_for(lock, boost::chrono::milliseconds(timeout))
+                                == boost::cv_status::timeout)
+                            {
                                 throw Timeout();
+                            }
                         }
                     }
                     else

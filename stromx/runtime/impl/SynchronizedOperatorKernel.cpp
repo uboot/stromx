@@ -505,8 +505,11 @@ namespace stromx
                 {
                     if(waitWithTimeout)
                     {
-                        if(! condition.wait_for(lock, boost::chrono::milliseconds(timeout)))
+                        if(condition.wait_for(lock, boost::chrono::milliseconds(timeout))
+                            == boost::cv_status::timeout)
+                        {
                             throw Timeout();
+                        }
                     }
                     else
                     {

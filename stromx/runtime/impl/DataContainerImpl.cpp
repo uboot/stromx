@@ -46,8 +46,11 @@ namespace stromx
                     {
                         while(m_writeAccess)
                         {
-                            if(! m_cond.wait_for(lock, boost::chrono::milliseconds(timeout)))
+                            if(m_cond.wait_for(lock, boost::chrono::milliseconds(timeout))
+                                == boost::cv_status::timeout)
+                            {
                                 throw Timeout();
+                            }
                         }
                     }
                     else
@@ -91,8 +94,11 @@ namespace stromx
                     {
                         while(m_readAccessCounter || m_writeAccess)
                         {
-                            if(! m_cond.wait_for(lock, boost::chrono::milliseconds(timeout)))
+                            if(m_cond.wait_for(lock, boost::chrono::milliseconds(timeout))
+                                == boost::cv_status::timeout)
+                            {
                                 throw Timeout();
+                            }
                         }
                     }
                     else
