@@ -219,7 +219,7 @@ namespace stromx
                                 }
                                 
                                 if(delay)
-                                    boost::this_thread::sleep(boost::posix_time::millisec(delay));
+                                    boost::this_thread::sleep_for(boost::chrono::milliseconds(delay));
                             }
                             catch(Interrupt &)
                             {

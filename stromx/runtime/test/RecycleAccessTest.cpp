@@ -148,7 +148,7 @@ namespace stromx
         
         void RecycleAccessTest::destroyDelayed(DataContainer& /*container*/)
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
         }
         
         void RecycleAccessTest::recycleInterrupt(RecycleAccess& access)
@@ -164,7 +164,7 @@ namespace stromx
                 boost::thread t(boost::bind(&RecycleAccessTest::recycleInterrupt, this, _1), access);
                 
                 t.interrupt();
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
                 t.join();
             }
             
@@ -178,7 +178,7 @@ namespace stromx
         
         void RecycleAccessTest::releaseAccessDelayed(RecycleAccess& /*access*/)
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
         }
         
         void RecycleAccessTest::testGetRecycleAccessDelayed()

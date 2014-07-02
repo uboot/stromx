@@ -87,7 +87,7 @@ namespace stromx
             while(isBlocked())
             {
                 boost::this_thread::disable_interruption disable;
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
             } 
             
             DataContainer data(new None);

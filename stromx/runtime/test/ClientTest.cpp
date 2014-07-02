@@ -115,7 +115,7 @@ namespace stromx
             m_client = 0;
             
             // wait a bit to increase the chance that the requested socket is available
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
         }
 
         void ClientTest::testNoConnection()
@@ -214,7 +214,7 @@ namespace stromx
             
             // request data from server a separate thread
             boost::thread client(boost::bind(&receiveData, m_client));
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             // stop the client
             m_client->stop();

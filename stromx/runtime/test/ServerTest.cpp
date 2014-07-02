@@ -111,7 +111,7 @@ namespace stromx
             m_server = new impl::Server(49152);
             
             // wait a bit to increase the chance that the requested socket is available
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
         }
 
         void ServerTest::tearDown()

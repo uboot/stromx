@@ -55,7 +55,7 @@ namespace stromx
             
         void GpioTriggerTest::interruptExecution()
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_operator->interrupt();
         }
     }

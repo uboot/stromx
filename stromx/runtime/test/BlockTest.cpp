@@ -72,7 +72,7 @@ namespace stromx
         {
             // wait for the output data in a separate thread
             boost::thread t(boost::bind(&BlockTest::getOutputData, this));
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             // trigger will always operatore immediately
             m_operator->setParameter(Block::STATE, Enum(Block::PASS_ALWAYS));
@@ -100,7 +100,7 @@ namespace stromx
             
             // wait for the output data in a separate thread
             boost::thread t(boost::bind(&BlockTest::getOutputData, this));
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             // set the input data
             m_operator->setInputData(Block::INPUT, m_data);
@@ -125,7 +125,7 @@ namespace stromx
             
         void BlockTest::triggerDelayed()
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_operator->setParameter(Block::TRIGGER, runtime::TriggerData());
         }
 

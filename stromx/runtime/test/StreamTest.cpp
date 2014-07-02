@@ -374,7 +374,7 @@ namespace stromx
             m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
             
             m_stream->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_stream->stop();
             m_stream->join();
             
@@ -392,7 +392,7 @@ namespace stromx
             m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
             
             m_stream->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_stream->stop();
             m_stream->join();
             
@@ -424,7 +424,7 @@ namespace stromx
             op->setInputData(TestOperator::INPUT_2, DataContainer(new None));
             
             // wait a bit (the thread should be delayed)
-            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
             
             // this should happen immediately
             m_stream->stop();
@@ -530,7 +530,7 @@ namespace stromx
             
             // start the stream and wait for the exception operator to block
             stream->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             delete stream;
         }

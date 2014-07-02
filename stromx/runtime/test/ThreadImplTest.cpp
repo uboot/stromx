@@ -129,7 +129,7 @@ namespace stromx
             m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
             m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
             
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             DataContainer data = m_operators[2]->getOutputData(TestOperator::OUTPUT_1);
             CPPUNIT_ASSERT_EQUAL(m_container, data);
@@ -185,7 +185,7 @@ namespace stromx
             
             m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
             m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             CPPUNIT_ASSERT_EQUAL(ThreadImpl::PAUSED, m_thread->status());
         }
@@ -201,7 +201,7 @@ namespace stromx
             m_thread->pause();
             m_operators[0]->setInputData(TestOperator::INPUT_1, m_container);
             m_operators[0]->setInputData(TestOperator::INPUT_2, m_container);
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             CPPUNIT_ASSERT_NO_THROW(m_thread->resume());
             CPPUNIT_ASSERT_EQUAL(ThreadImpl::ACTIVE, m_thread->status());
@@ -236,7 +236,7 @@ namespace stromx
             
             // start the thread and run it for 1 second
             m_thread->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_thread->stop();
             m_thread->join();
             

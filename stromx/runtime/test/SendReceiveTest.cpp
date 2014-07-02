@@ -74,7 +74,7 @@ namespace stromx
         void SendReceiveTest::testInterrupt()
         {
             boost::thread receive(boost::bind(&getOutputData, m_receive));
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             receive.interrupt();
             m_receive->interrupt();

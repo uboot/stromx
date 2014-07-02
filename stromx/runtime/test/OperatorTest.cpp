@@ -83,7 +83,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_operator->setInputData(TestOperator::INPUT_2, m_container));
             boost::thread t3(boost::bind(&OperatorTest::setInputDataWithInterrupt, this, _1), TestOperator::INPUT_1);
             
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             t3.interrupt();
             t3.join();
@@ -200,13 +200,13 @@ namespace stromx
 
         void OperatorTest::setInputDataDelayed ( const unsigned int id )
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_operator->setInputData(id, m_container);
         }
         
         void OperatorTest::clearOutputDataDelayed ( const unsigned int id )
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_operator->clearOutputData(id);
         }
         
@@ -245,7 +245,7 @@ namespace stromx
             m_operator->setInputData(TestOperator::INPUT_1, m_container);
             
             boost::thread t1(boost::bind(&OperatorTest::getOutputDataWithInterrupt, this, _1), TestOperator::OUTPUT_1);
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             
             t1.interrupt();
             t1.join();
@@ -277,7 +277,7 @@ namespace stromx
             setWaitingTime(1000);
             boost::thread t(boost::bind(&Operator::getOutputData, m_operator, TestOperator::OUTPUT_1));
             
-            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
             CPPUNIT_ASSERT_THROW(m_operator->getParameter(TestOperator::TEST_DATA, 100), Timeout);
             
             t.join();
@@ -310,7 +310,7 @@ namespace stromx
             setWaitingTime(1000);
             boost::thread t(boost::bind(&Operator::getOutputData, m_operator, TestOperator::OUTPUT_1));
             
-            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
             CPPUNIT_ASSERT_THROW(m_operator->setParameter(TestOperator::TEST_DATA, TestData(), 100), Timeout);
             
             t.join();
