@@ -19,6 +19,12 @@
 
 #include <stromx/runtime/OperatorKernel.h>
 
+class MMAL_COMPONENT_T;
+class MMAL_PORT_T;
+class MMAL_POOL_T;
+class MMAL_BUFFER_HEADER_T;
+class MMAL_QUEUE_T;
+
 namespace stromx
 {
     namespace raspi
@@ -32,9 +38,10 @@ namespace stromx
             
         public:
             RaspiCam();
-            ~RaspiCam();
+            virtual ~RaspiCam();
             virtual OperatorKernel* clone() const {return new RaspiCam;}
             virtual void execute(runtime::DataProvider& provider);
+	    virtual void initialize();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
@@ -44,6 +51,12 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
+
+	    static void callbackOutVideoPort(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer);
+
+	    MMAL_COMPONENT_T* m_raspicam;
+	    MMAL_POOL_T* m_outBufferPool;
+	    MMAL_QUEUE_T* m_outQueue;
         };
     }
 }

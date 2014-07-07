@@ -24,7 +24,7 @@ set (SOURCES
     
 add_library (stromx_raspi SHARED ${SOURCES})
 
-add_dependencies(stromx_raspi stromx_runtime)
+add_dependencies(stromx_raspi stromx_runtime stromx_cvsupport)
 
 set(VERSION_STRING "${RASPI_VERSION_MAJOR}.${RASPI_VERSION_MINOR}.${RASPI_VERSION_PATCH}")
 
@@ -36,6 +36,8 @@ set_target_properties (stromx_raspi PROPERTIES
 
 target_link_libraries (stromx_raspi
     stromx_runtime
+    stromx_cvsupport
+    ${OpenCV_LIBS}
 )
 
 if(WIN32)    
