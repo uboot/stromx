@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/Threshold.h"
 
+#include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
 #include <stromx/cvsupport/Image.h>
 #include <stromx/cvsupport/Matrix.h>
@@ -113,9 +114,9 @@ namespace stromx
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), "In place"));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -142,11 +143,11 @@ namespace stromx
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle("Threshold type");
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), "Binary"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), "Binary inverted"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), "Truncate"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), "Truncate to zero"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), "Truncate to zero inverted"));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                 }
@@ -166,11 +167,11 @@ namespace stromx
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle("Threshold type");
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), "Binary"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), "Binary inverted"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), "Truncate"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), "Truncate to zero"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), "Truncate to zero inverted"));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                 }
@@ -190,11 +191,11 @@ namespace stromx
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_thresholdTypeParameter->setTitle("Threshold type");
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), "Binary"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), "Binary inverted"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), "Truncate"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), "Truncate to zero"));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), "Truncate to zero inverted"));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
+                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                 }
@@ -213,11 +214,11 @@ namespace stromx
             case(MANUAL):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                     m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    m_dstDescription->setTitle("Destination");
+                    m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
                 }
@@ -225,7 +226,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                 }
@@ -233,7 +234,7 @@ namespace stromx
             case(IN_PLACE):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                 }
@@ -252,7 +253,7 @@ namespace stromx
             case(MANUAL):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }
@@ -260,7 +261,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }
@@ -268,7 +269,7 @@ namespace stromx
             case(IN_PLACE):
                 {
                     runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    src->setTitle("Source");
+                    src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     
                 }

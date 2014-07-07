@@ -35,6 +35,7 @@ namespace stromx
             void deinitialize()  { Operator::deinitialize(); }
             void activate() { Operator::activate(); }
             void deactivate()  { Operator::deactivate(); }
+            void interrupt()  { Operator::interrupt(); }
         };
     }
 }

@@ -40,6 +40,7 @@ namespace stromx
             CPPUNIT_TEST (testReceiveMultipleData);
             CPPUNIT_TEST (testReceiveClosedConnection);
             CPPUNIT_TEST (testStop);
+            CPPUNIT_TEST (testStopWithWait);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -55,6 +56,7 @@ namespace stromx
             void testReceiveMultipleData();
             void testReceiveClosedConnection();
             void testStop();
+            void testStopWithWait();
                 
         private:            
             impl::Client* m_client;

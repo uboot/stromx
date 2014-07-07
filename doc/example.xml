@@ -6,7 +6,9 @@
         of the OpenCV library.
     </Description>
     <DataVariant id="0" title="OpenCV image 8-bit">
-        <DataVariantReference id="31" package = "runtime"/>
+        <Parent>
+            <DataVariantReference id="31" package = "runtime"/>
+        </Parent>
         <Description>
             Image based on the OpenCV matrix implementation.
         </Description>

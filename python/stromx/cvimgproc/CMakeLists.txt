@@ -4,8 +4,6 @@ set (SOURCES
 
 add_library (cvimgproc SHARED ${SOURCES})
 
-add_dependencies(cvimgproc stromx_cvimgproc)
-
 set_target_properties (cvimgproc PROPERTIES FOLDER "python")
 
 include_directories (

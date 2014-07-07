@@ -20,6 +20,7 @@
 
 #include <string>
 #include <vector>
+#include "stromx/runtime/ExceptionObserver.h"
 #include "stromx/runtime/Output.h"
 
 namespace stromx
@@ -27,11 +28,20 @@ namespace stromx
     namespace runtime
     {
         class Operator;
+        class OperatorError;
         
         namespace impl
         {
             class InputNode;
             class OutputNode;
+            
+            class NetworkObserver
+            {    
+            public:
+                virtual void observe(const OperatorError & ex, const ExceptionObserver::Phase phase) const = 0;
+                
+                virtual ~NetworkObserver() {}
+            };
         
             class Network
             {
@@ -57,12 +67,16 @@ namespace stromx
 
                 void activate();
                 void deactivate();
+                void interrupt();
                 
                 InputNode* getInputNode(Operator* const op, const unsigned int inputId) const;
                 OutputNode* getOutputNode(Operator* const op, const unsigned int outputId) const;
+                
+                void setObserver(const NetworkObserver* const observer);
                     
             private:
                 std::vector<Operator*> m_operators;
+                const NetworkObserver* m_observer;
             };
         }
     }

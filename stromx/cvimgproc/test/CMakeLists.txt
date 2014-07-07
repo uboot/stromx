@@ -49,6 +49,7 @@ set (SOURCES
     ../CornerMinEigenVal.cpp
     ../HoughLinesP.cpp
     ../Utility.cpp
+    ../Cvimgproc.cpp
     BilateralFilterTest.cpp
     BlurTest.cpp
     BoxFilterTest.cpp
@@ -83,8 +84,6 @@ set (SOURCES
 add_executable(stromx_cvimgproc_test ${SOURCES})
 
 set_target_properties(stromx_cvimgproc_test PROPERTIES FOLDER "test")
-
-add_dependencies(stromx_cvimgproc_test stromx_cvimgproc)
 
 target_link_libraries (stromx_cvimgproc_test
     ${CPPUNIT_LIBRARY}

@@ -116,7 +116,7 @@ namespace stromx
         
         void ReadAccessTest::releaseDelayed(WriteAccess<>& access)
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             CPPUNIT_ASSERT_EQUAL(m_data, &access());
         }
             
@@ -147,7 +147,7 @@ namespace stromx
                 boost::thread t(boost::bind(&ReadAccessTest::readAccessInterrupt, this, _1), container);
                 
                 t.interrupt();
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
                 t.join();
             }
             

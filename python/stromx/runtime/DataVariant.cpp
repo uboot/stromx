@@ -26,7 +26,7 @@ void exportDataVariant()
 {         
     scope in_DataVariant =
     class_<DataVariant>("DataVariant", no_init)
-        .def("title", &DataVariant::title, return_value_policy<copy_const_reference>())
+        .def("title", &DataVariant::title)
         .def("isVariant", &DataVariant::isVariant)
         .def("id", &DataVariant::id)
         .def("package", &DataVariant::package, return_internal_reference<>())
@@ -35,6 +35,7 @@ void exportDataVariant()
     in_DataVariant.attr("NONE") = DataVariant::NONE; 
     in_DataVariant.attr("DATA") = DataVariant::DATA; 
     in_DataVariant.attr("BOOL") = DataVariant::BOOL; 
+    in_DataVariant.attr("TRIGGER") = DataVariant::TRIGGER; 
     in_DataVariant.attr("ENUM") = DataVariant::ENUM; 
     in_DataVariant.attr("INT") = DataVariant::INT; 
     in_DataVariant.attr("INT_8") = DataVariant::INT_8;

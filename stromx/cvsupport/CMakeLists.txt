@@ -33,8 +33,6 @@ set(SOURCES
 
 add_library(stromx_cvsupport SHARED ${SOURCES})
 
-add_dependencies(stromx_cvsupport stromx_runtime)
-
 set(VERSION_STRING "${STROMX_CVSUPPORT_VERSION_MAJOR}.${STROMX_CVSUPPORT_VERSION_MINOR}.${STROMX_CVSUPPORT_VERSION_PATCH}")
 
 set_target_properties(stromx_cvsupport PROPERTIES

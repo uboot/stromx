@@ -18,8 +18,13 @@ include_directories (
 )
 
 set (SOURCES
+    GpioTrigger.cpp
     Raspi.cpp
     RaspiCam.cpp
+    ReadGpio.cpp
+    WriteGpio.cpp
+    impl/Gpio.cpp
+    impl/Utilities.cpp
     )
     
 add_library (stromx_raspi SHARED ${SOURCES})
@@ -65,3 +70,7 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/raspi
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif(BUILD_TESTS)

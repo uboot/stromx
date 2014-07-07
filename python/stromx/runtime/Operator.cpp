@@ -21,6 +21,8 @@
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/OperatorKernel.h>
 
+#include "Equality.h"
+
 using namespace boost::python;
 using namespace stromx::runtime;
 
@@ -30,8 +32,7 @@ namespace
     /*
     * TODO
     * 
-    * This code is based on 
-    * http://stackoverflow.com/questions/6326757/conversion-from-boostshared-ptr-to-stdshared-ptr
+    * This code is based on http://stackoverflow.com/q/6326757
     */
     template<typename T>
     void do_release(typename std::tr1::shared_ptr<T> const&, T*)
@@ -171,6 +172,11 @@ namespace
         }
         Py_END_ALLOW_THREADS
     }
+    
+    bool equalWrap(Operator* lhs, Operator* rhs)
+    {
+        return lhs == rhs;
+    }
 }
 
 stromx::runtime::Data* get_pointer(const stromx::runtime::DataRef & p)
@@ -200,6 +206,8 @@ void exportOperator()
         .def("removeObserver", &Operator::removeObserver)
         .def("setFactory", &Operator::setFactory)
         .def("factory", &Operator::factory, return_internal_reference<>())
+        .def("__eq__", &stromx::python::eq<Operator>)
+        .def("__ne__", &stromx::python::ne<Operator>)
     ;
     
     enum_<Operator::Status>("Status")

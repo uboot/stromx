@@ -6,8 +6,6 @@ set(SOURCES
 
 add_library(cvsupport SHARED ${SOURCES})
 
-add_dependencies(cvsupport stromx_cvsupport)
-
 set_target_properties(cvsupport PROPERTIES FOLDER "python")
 
 include_directories(

@@ -26,8 +26,6 @@ set (SOURCES
 
 add_library (stromx_cvcore SHARED ${SOURCES})
 
-add_dependencies(stromx_cvcore stromx_cvsupport)
-
 set(VERSION_STRING "${STROMX_CVCORE_VERSION_MAJOR}.${STROMX_CVCORE_VERSION_MINOR}.${STROMX_CVCORE_VERSION_PATCH}")
 
 set_target_properties (stromx_cvcore PROPERTIES

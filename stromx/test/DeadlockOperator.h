@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DEADLOCKOPERATOR_H
-#define DEADLOCKOPERATOR_H
+#ifndef STROMX_TEST_DEADLOCKOPERATOR_H
+#define STROMX_TEST_DEADLOCKOPERATOR_H
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
@@ -72,4 +72,4 @@ namespace stromx
     }
 }
 
-#endif // DEADLOCKOPERATOR_H
+#endif // STROMX_TEST_DEADLOCKOPERATOR_H

@@ -28,8 +28,9 @@ namespace stromx
 {
     namespace runtime
     {
-        class Operator;
         class Exception;
+        class Operator;
+        class Thread;
         
         namespace impl
         {
@@ -47,7 +48,7 @@ namespace stromx
                     PAUSED
                 };
                 
-                ThreadImpl();
+                ThreadImpl(Thread* thread = 0);
                 ~ThreadImpl();
                 
                 Status status() const { return m_status; }
@@ -81,6 +82,7 @@ namespace stromx
                 std::vector<InputNode*> m_inputSequence;
                 const ThreadImplObserver* m_observer;
                 unsigned int m_delay;
+                Thread* m_parentThread;
             };
         }
     }

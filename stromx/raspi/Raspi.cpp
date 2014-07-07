@@ -14,16 +14,31 @@
 *  limitations under the License.
 */
 
+#include "stromx/raspi/GpioTrigger.h"
 #include "stromx/raspi/Raspi.h"
 #include "stromx/raspi/RaspiCam.h"
-#include "stromx/runtime/Registry.h"
+#include "stromx/raspi/ReadGpio.h"
+#include "stromx/raspi/WriteGpio.h"
+#include <stromx/runtime/Registry.h>
+#include <stromx/runtime/Locale.h>
+
+namespace stromx
+{
+    namespace raspi
+    {
+        std::locale locale;
+    }
+}
 
 void stromxRaspiRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::raspi;
     
-//     registry.registerData(new Image);
-//     registry.registerData(new Matrix);
+    locale = stromx::runtime::Locale::generate(STROMX_RASPI_LOCALE_DIR,
+                                               STROMX_RASPI_LOCALE_DOMAIN);
     
+    registry.registerOperator(new GpioTrigger);
     registry.registerOperator(new RaspiCam);
+    registry.registerOperator(new ReadGpio);
+    registry.registerOperator(new WriteGpio);
 }

@@ -16,10 +16,12 @@
 
 #include "ExportVector.h"
 
+#include <boost/python.hpp>
+
 #include <stromx/runtime/Thread.h>
 #include <stromx/runtime/Operator.h>
 
-#include <boost/python.hpp>
+#include "Equality.h"
 
 using namespace boost::python;
 using namespace stromx::runtime;
@@ -41,6 +43,8 @@ void exportThread()
             .def("insertInput", &Thread::insertInput)
             .def<void (Thread::*)(unsigned int const)>("removeInput", &Thread::removeInput)
             .def<void (Thread::*)(Operator* const, unsigned int)>("removeInput", &Thread::removeInput)
+            .def("__eq__", &stromx::python::eq<Thread>)
+            .def("__ne__", &stromx::python::ne<Thread>)
         ;        
             
         enum_<Thread::Status>("Status")
@@ -48,5 +52,7 @@ void exportThread()
             .value("ACTIVE", Thread::ACTIVE)
             .value("DEACTIVATING", Thread::DEACTIVATING)
             ;
+            
+        register_ptr_to_python< boost::shared_ptr<Thread> >();
     }
 }

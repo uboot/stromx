@@ -179,20 +179,10 @@ namespace stromx
                 m_package(package)
             {}
             
-            /** 
-             * Constructs a data variant with a documentation title. The pair (\c package, \c id) 
-             * uniquely identifies the data variant.
-             */
-            DataVariant(const unsigned int id, const std::string & package, const std::string & title)
-              : m_id(id),
-                m_package(package),
-                m_title(title)
-            {}
-            
             ~DataVariant() {}
             
             /** Returns the title of the data variant. */
-            const std::string & title() const { return m_title; }
+            virtual const std::string title() const;
             
             /**
              * Returns true if \c type is a subtype of \c this. E.g.
@@ -256,7 +246,6 @@ namespace stromx
             
             unsigned int m_id;
             std::string m_package;
-            std::string m_title;
         };
         
         STROMX_RUNTIME_API bool operator==(const DataVariant & lhs, const DataVariant & rhs);

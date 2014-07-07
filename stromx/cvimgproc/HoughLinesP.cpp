@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/HoughLinesP.h"
 
+#include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
 #include <stromx/cvsupport/Image.h>
 #include <stromx/cvsupport/Matrix.h>
@@ -141,7 +142,7 @@ namespace stromx
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -196,7 +197,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                 }
@@ -215,7 +216,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::MATRIX);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }

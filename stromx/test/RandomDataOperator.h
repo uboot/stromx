@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef RANDOMDATAOPERATOR_H
-#define RANDOMDATAOPERATOR_H
+#ifndef STROMX_TEST_RANDOMDATAOPERATOR_H
+#define STROMX_TEST_RANDOMDATAOPERATOR_H
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
@@ -70,4 +70,4 @@ namespace stromx {
     }
 }
 
-#endif // RANDOMDATAOPERATOR_H
+#endif // STROMX_TEST_RANDOMDATAOPERATOR_H

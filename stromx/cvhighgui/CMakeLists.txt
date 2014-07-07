@@ -20,8 +20,6 @@ set (SOURCES
 
 add_library (stromx_cvhighgui SHARED ${SOURCES})
 
-add_dependencies(stromx_cvhighgui stromx_cvsupport)
-
 set(VERSION_STRING "${STROMX_CVHIGHGUI_VERSION_MAJOR}.${STROMX_CVHIGHGUI_VERSION_MAJOR}.${STROMX_CVHIGHGUI_VERSION_MAJOR}")
 
 set_target_properties (stromx_cvhighgui PROPERTIES

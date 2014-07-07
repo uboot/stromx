@@ -55,5 +55,3 @@ target_link_libraries(stromx_cvsupport_test
     ${OpenCV_LIBS}
     stromx_runtime
 )
-
-add_dependencies(stromx_cvsupport_test stromx_runtime)

@@ -26,6 +26,7 @@ set(SOURCES
     String.cpp
     SortInputsAlgorithm.cpp
     Thread.cpp
+    TriggerData.cpp
     Version.cpp
     WriteAccess.cpp
 )
@@ -39,8 +40,6 @@ if(BUILD_FILE_PERSISTENCE)
 endif(BUILD_FILE_PERSISTENCE)
 
 add_library(runtime SHARED ${SOURCES})
-
-add_dependencies(runtime stromx_runtime)
 
 set_target_properties(runtime PROPERTIES FOLDER "python")
 

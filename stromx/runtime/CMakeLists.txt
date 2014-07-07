@@ -25,8 +25,10 @@ set(SOURCES
     impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    Block.cpp
     Color.cpp
     Connector.cpp
+    ConstData.cpp
     ConstDataRef.cpp
     Counter.cpp
     DataContainer.cpp
@@ -45,6 +47,7 @@ set(SOURCES
     Image.cpp
     ImageWrapper.cpp
     Join.cpp
+    Locale.cpp
     Matrix.cpp
     MatrixWrapper.cpp
     None.cpp
@@ -63,7 +66,6 @@ set(SOURCES
     Receive.cpp
     Runtime.cpp
     Thread.cpp
-    Trigger.cpp
     TriggerData.cpp
     Try.cpp
     Version.cpp
@@ -114,6 +116,11 @@ if(BUILD_FILE_PERSISTENCE)
     target_link_libraries(stromx_runtime ${XERCES_LIBRARIES})
     target_link_libraries(stromx_runtime ${LIBZIP_LIBRARY})
 endif()
+
+# Compiles the the *.po file and creates an install target for the *.mo file: 
+# if(GETTEXT_FOUND)
+#     gettext_process_po_files(de ALL INSTALL_DESTINATION ${LOCALE_SUFFIX} PO_FILES po/de/libruntime.po)
+# endif()
 
 if(WIN32)
     install (TARGETS stromx_runtime 

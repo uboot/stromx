@@ -489,7 +489,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.variant())
             self.doc.line(l)
             self.__accessMode(ident)
-            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
+            l = '{0}->setTitle(L_("{1}"));'.format(ident, parameter.name)
             self.doc.line(l)
             l = "parameters.push_back({0});".format(ident)
             self.doc.line(l)
@@ -506,7 +506,7 @@ class OpImplGenerator(MethodGenerator):
 
             for desc in parameter.descriptions:
                 d = 'runtime::Enum({0})'.format(desc.ident)
-                l = '{0}->add(runtime::EnumDescription({1}, "{2}"));'\
+                l = '{0}->add(runtime::EnumDescription({1}, L_("{2}")));'\
                     .format(ident, d, desc.name)
                 self.doc.line(l)
             l = "parameters.push_back({0});".format(ident)
@@ -577,7 +577,7 @@ class OpImplGenerator(MethodGenerator):
                 .format(output.ident, output.ident.constant(),
                         output.dataType.variant())
             self.doc.line(l)
-            l = '{0}->setTitle("{1}");'\
+            l = '{0}->setTitle(L_("{1}"));'\
                 .format(output.ident, output.name)
             self.doc.line(l)
             l = "outputs.push_back({0});".format(output.ident)
@@ -616,7 +616,7 @@ class OpImplGenerator(MethodGenerator):
                 .format(description, arg.ident.constant(),
                         self.__getVariant(arg, isOutput))
             self.doc.line(l)
-            l = '{0}->setTitle("{1}");'\
+            l = '{0}->setTitle(L_("{1}"));'\
                 .format(description, arg.name)
             self.doc.line(l)
             l = "inputs.push_back({0});".format(description)
@@ -1049,6 +1049,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include "stromx/{0}/{1}.h"'\
             .format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
+        self.doc.line('#include "stromx/{0}/Locale.h"'.format(self.p.ident))
         self.doc.line('#include "stromx/{0}/Utility.h"'.format(self.p.ident))
         self.doc.line('#include <stromx/cvsupport/Image.h>')
         self.doc.line('#include <stromx/cvsupport/Matrix.h>')

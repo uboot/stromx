@@ -16,12 +16,14 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h> 
+#include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 #include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/test/ExceptionOperator.h"
 #include "stromx/runtime/test/StreamTest.h"
 #include "stromx/runtime/test/TestOperator.h"
 #include "stromx/runtime/test/TestUtilities.h"
@@ -372,7 +374,7 @@ namespace stromx
             m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
             
             m_stream->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_stream->stop();
             m_stream->join();
             
@@ -390,7 +392,7 @@ namespace stromx
             m_stream->operators()[0]->setParameter(TestOperator::THROW_EXCEPTION, Bool(true));
             
             m_stream->start();
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_stream->stop();
             m_stream->join();
             
@@ -422,7 +424,7 @@ namespace stromx
             op->setInputData(TestOperator::INPUT_2, DataContainer(new None));
             
             // wait a bit (the thread should be delayed)
-            boost::this_thread::sleep(boost::posix_time::millisec(500));
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
             
             // this should happen immediately
             m_stream->stop();
@@ -511,6 +513,26 @@ namespace stromx
             
             CPPUNIT_ASSERT_THROW(m_stream->showThread(thr), WrongArgument);
 
+        }
+        
+        void StreamTest::testDestructorBlockingOperator()
+        {
+            // build the stream
+            Stream* stream = new Stream;
+            Operator* op1 = stream->addOperator(new ExceptionOperator);
+            Operator* op2 = stream->addOperator(new Dump);
+            op1->setParameter(ExceptionOperator::BLOCK_EXECUTE, Bool(true));
+            stream->initializeOperator(op1);
+            stream->initializeOperator(op2);
+            stream->connect(op1, ExceptionOperator::OUTPUT, op2, Dump::INPUT);
+            Thread* t = stream->addThread();
+            t->addInput(op2, Dump::INPUT);
+            
+            // start the stream and wait for the exception operator to block
+            stream->start();
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            
+            delete stream;
         }
     }
 }

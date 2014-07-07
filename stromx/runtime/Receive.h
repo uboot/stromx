@@ -53,6 +53,7 @@ namespace stromx
             virtual void initialize();
             virtual void activate();
             virtual void deactivate();
+            virtual void interrupt();
             virtual void execute(DataProvider& provider);
             
         private:

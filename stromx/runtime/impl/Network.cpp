@@ -17,6 +17,7 @@
 
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Operator.h"
+#include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/impl/InputNode.h"
 #include "stromx/runtime/impl/Network.h"
 #include "stromx/runtime/impl/OutputNode.h"
@@ -30,7 +31,8 @@ namespace stromx
         namespace impl
         {
             Network::Network()
-                :m_operators(0)
+              : m_operators(0),
+                m_observer(0)
             {
             }
             
@@ -44,6 +46,7 @@ namespace stromx
                 }
 
                 m_operators.clear();
+                delete m_observer;
             }
             
             void Network::connect(Operator* const sourceOp, const unsigned int outputId, 
@@ -73,16 +76,41 @@ namespace stromx
                     iter != m_operators.end();
                     ++iter)
                 {
-                    (*iter)->deactivate();
+                    try
+                    {
+                        (*iter)->deactivate();
+                    }
+                    catch(OperatorError & e)
+                    {
+                        if (m_observer)
+                            m_observer->observe(e, ExceptionObserver::DEACTIVATION);
+                    }
                 }
-
             }
             
+            void Network::interrupt()
+            {
+                for(std::vector<Operator*>::iterator iter = m_operators.begin();
+                    iter != m_operators.end();
+                    ++iter)
+                {
+                    try
+                    {
+                        (*iter)->interrupt();
+                    }
+                    catch(OperatorError & e)
+                    {
+                        if (m_observer)
+                            m_observer->observe(e, ExceptionObserver::INTERRUPT);
+                    }
+                }
+            }
+                
             void Network::addOperator(Operator* const op)
             {
                 if (op == 0)
                 {
-                    throw WrongArgument("Invalid argument: Null pointer");
+                    throw WrongArgument("Operator is null.");
                 }
                 
                 if (op->status() != Operator::INITIALIZED)
@@ -96,7 +124,7 @@ namespace stromx
                 {
                     if (&(*iter)->info() == &op->info())
                     {
-                        throw WrongArgument("Operator already exists");
+                        throw WrongArgument("Operator already exists.");
                     }
                 }
 
@@ -191,6 +219,11 @@ namespace stromx
                     throw WrongArgument("Operator is not part of the stream.");
                 
                 return (*iter)->getOutputNode(outputId);
+            }
+            
+            void Network::setObserver(const NetworkObserver*const observer)
+            {
+                m_observer = observer;
             }
         }
     }

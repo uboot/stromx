@@ -17,8 +17,8 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PARAMETEROPERATOR_H
-#define PARAMETEROPERATOR_H
+#ifndef STROMX_TEST_PARAMETEROPERATOR_H
+#define STROMX_TEST_PARAMETEROPERATOR_H
 
 #include <stromx/runtime/OperatorKernel.h>
 #include <stromx/runtime/Primitive.h>
@@ -54,7 +54,9 @@ namespace stromx
                 ENUM_PARAM,
                 BOOL_PARAM,
                 MATRIX_PARAM,
-                INT_MATRIX_PARAM
+                INT_MATRIX_PARAM,
+                TRIGGER_VALUE_PARAM,
+                TRIGGER_PARAM
             };
             
             ParameterOperator();
@@ -81,8 +83,9 @@ namespace stromx
             stromx::runtime::Bool m_boolParam;
             stromx::cvsupport::Matrix m_matrixParam;
             stromx::cvsupport::Matrix m_intMatrixParam;
+            stromx::runtime::Bool m_triggerValue;
         };
     }
 }
 
-#endif // PARAMETEROPERATOR_H
+#endif // STROMX_TEST_PARAMETEROPERATOR_H

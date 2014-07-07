@@ -15,6 +15,7 @@
 */
 
 #include <cppunit/TestAssert.h>
+#include <boost/thread.hpp>
 
 #include "stromx/runtime/Factory.h"
 #include "stromx/runtime/OperatorTester.h"
@@ -32,6 +33,14 @@ namespace stromx
 
     namespace runtime
     {
+        namespace
+        {
+            void getOutputData(Operator* op)
+            {
+                CPPUNIT_ASSERT_THROW(op->getOutputData(Receive::OUTPUT), Interrupt);
+            }
+        }
+        
         void SendReceiveTest::setUp ( void )
         {
             m_factory = new Factory();
@@ -60,7 +69,17 @@ namespace stromx
             ReadAccess<UInt32> access(out);
             
             CPPUNIT_ASSERT_EQUAL(UInt32(2), access());
-        }      
+        }   
+        
+        void SendReceiveTest::testInterrupt()
+        {
+            boost::thread receive(boost::bind(&getOutputData, m_receive));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            
+            receive.interrupt();
+            m_receive->interrupt();
+            receive.join();
+        }
         
         void SendReceiveTest::tearDown ( void )
         {

@@ -7,11 +7,22 @@
 #include "stromx/cvcore/Bitwise_not.h"
 #include "stromx/cvcore/Bitwise_or.h"
 #include "stromx/cvcore/Bitwise_xor.h"
+#include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
+
+namespace stromx
+{
+    namespace cvcore
+    {
+        std::locale locale;
+    }
+}
 
 void stromxCvcoreRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvcore;
+    
+    locale = stromx::runtime::Locale::generate(STROMX_CVCORE_LOCALE_DIR, STROMX_CVCORE_LOCALE_DOMAIN);
     
     registry.registerOperator(new Absdiff);
     registry.registerOperator(new Add);

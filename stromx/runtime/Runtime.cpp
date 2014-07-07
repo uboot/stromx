@@ -14,37 +14,59 @@
 *  limitations under the License.
 */
 
-#include "stromx/runtime/Receive.h"
+
+#include "stromx/runtime/Block.h"
+#include "stromx/runtime/ConstData.h"
 #include "stromx/runtime/Counter.h"
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Join.h"
+#include "stromx/runtime/Locale.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/PeriodicDelay.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Runtime.h"
+#include "stromx/runtime/Receive.h"
 #include "stromx/runtime/Registry.h"
 #include "stromx/runtime/Send.h"
 #include "stromx/runtime/String.h"
-#include "stromx/runtime/Trigger.h"
 #include "stromx/runtime/TriggerData.h"
+
+namespace stromx
+{
+    namespace runtime
+    {
+        std::locale locale;
+        
+        Version version()
+        {
+            return Version(STROMX_RUNTIME_VERSION_MAJOR,
+                           STROMX_RUNTIME_VERSION_MINOR,
+                           STROMX_RUNTIME_VERSION_PATCH);
+        }
+    }
+}
 
 void stromxRuntimeRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::runtime;
     
-    registry.registerOperator(new Receive);
+    locale = Locale::generate(STROMX_RUNTIME_LOCALE_DIR,
+                              STROMX_RUNTIME_LOCALE_DOMAIN);
+    
+    registry.registerOperator(new Block);
+    registry.registerOperator(new ConstData);
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
     registry.registerOperator(new Join);
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
+    registry.registerOperator(new Receive);
     registry.registerOperator(new Send);
-    registry.registerOperator(new Trigger);
     
     registry.registerData(new Bool);
     registry.registerData(new Int8);
@@ -59,17 +81,4 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new None);
     registry.registerData(new String);
     registry.registerData(new TriggerData);
-}
-
-namespace stromx
-{
-    namespace runtime
-    {
-        Version version()
-        {
-            return Version(STROMX_RUNTIME_VERSION_MAJOR,
-                           STROMX_RUNTIME_VERSION_MINOR,
-                           STROMX_RUNTIME_VERSION_PATCH);
-        }
-    }
 }

@@ -17,6 +17,7 @@
 #include "Client.h"
 
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/bind.hpp>
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/AbstractFactory.h"
 #include "stromx/runtime/InputProvider.h"
@@ -78,7 +79,7 @@ namespace stromx
         {            
             Client::Client(const std::string& url, const std::string& port)
               : m_socket(m_ioService),
-                m_isReceiving(false)
+                m_stopped(false)
             {
                 try
                 {
@@ -87,8 +88,6 @@ namespace stromx
                     ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
                     boost::asio::connect(m_socket, endpoint_iterator);
-                    
-                    m_thread = boost::thread(boost::bind(&Client::run, this));
                 }
                 catch (boost::system::system_error &)
                 {
@@ -103,62 +102,38 @@ namespace stromx
             
             const DataContainer Client::receive(const AbstractFactory& factory)
             {
-                boost::unique_lock<boost::mutex> l(m_mutex);
+                {
+                    lock_t l(m_mutex);
                     
-                // wait for the previous transmission to finish
-                while (m_isReceiving)
-                    m_cond.wait(l);
-                  
-                // start the transmission
-                m_error.clear();
-                m_isReceiving = true;
-                m_cond.notify_all();
+                    if (m_stopped)
+                        throw Stopped();
+                    
+                    m_ioService.reset();
+                }
                 
-                // wait for it to finish
-                while (m_isReceiving)
-                    m_cond.wait(l);
+                m_error.clear();
+                asyncReceive();
+                m_ioService.run();
+                
+                {
+                    lock_t l(m_mutex);
+                    
+                    if (m_stopped)
+                        throw Stopped();
+                }
                 
                 if (m_error)
                     throw NoConnection();
                 
+                
                 return deserializeData(factory);
-            }
-            
-            void Client::run()
-            {
-                while (true)
-                {
-                    // wait for receive command
-                    {
-                        boost::unique_lock<boost::mutex> l(m_mutex);
-                        
-                        while (! m_isReceiving)
-                            m_cond.wait(l);
-                    }
-                    
-                    m_ioService.reset();
-                    asyncReceive();
-                    m_ioService.run();
-                    
-                    // notify the main thread about the finished transmission
-                    {
-                        boost::lock_guard<boost::mutex> l(m_mutex);
-                        m_isReceiving = false;
-                    }
-                    
-                    m_cond.notify_all();
-                }
             }
 
             void Client::stop()
             {
+                lock_t l(m_mutex);
+                m_stopped = true;
                 m_ioService.stop();
-                m_thread.interrupt();
-            }
-
-            void Client::join()
-            {
-                m_thread.join();
             }
             
             void Client::asyncReceive()
@@ -176,7 +151,6 @@ namespace stromx
             {
                 if (error)
                 {
-                    boost::lock_guard<boost::mutex> l(m_mutex);
                     m_error = error;
                     return;
                 }

@@ -41,11 +41,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
+include(FindGettext)
 include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.47.0 REQUIRED COMPONENTS date_time filesystem regex serialization system thread)
+find_package(Boost 1.48.0 REQUIRED COMPONENTS date_time chrono filesystem locale regex serialization system thread)
 
 find_package(CppUnit)
 
@@ -69,9 +70,20 @@ if(XERCES_FOUND AND LIBZIP_FOUND)
     option(BUILD_FILE_PERSISTENCE "Build file persistence" ON)
 endif()
 
+if(WIN32)
+    set(LOCALE_SUFFIX "locale")
+else(WIN32)
+    set(LOCALE_SUFFIX "share/locale")
+endif(WIN32)
+
+set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/${LOCALE_SUFFIX}")
+
 add_subdirectory(stromx)
 add_subdirectory(doc)
-add_subdirectory(example)
+
+if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
+    add_subdirectory(example)
+endif()
 
 option(BUILD_RASPI "Build raspi package" OFF)
 
@@ -101,3 +113,4 @@ else(WIN32)
         DESTINATION share/stromx
     )
 endif(WIN32)
+

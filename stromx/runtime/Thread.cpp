@@ -14,6 +14,8 @@
  *  limitations under the License.
  */
 
+#include <boost/thread/tss.hpp>
+
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Thread.h"
@@ -27,6 +29,16 @@ namespace stromx
     {
         using namespace impl;
         
+        namespace 
+        {
+            template<typename T>
+            void do_release(T*)
+            {
+            }
+        }
+        
+        boost::thread_specific_ptr<Thread> gThread(do_release);
+        
         Thread::Thread(const Network*const network)
           : m_thread(0),
             m_network(network)
@@ -34,7 +46,7 @@ namespace stromx
             if(! network)
                 throw WrongArgument("Passed null pointer as network.");
             
-            m_thread = new impl::ThreadImpl;
+            m_thread = new impl::ThreadImpl(this);
         }
         
         Thread::~Thread()

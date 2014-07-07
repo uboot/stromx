@@ -17,6 +17,7 @@
 #include <stromx/runtime/ConnectorObserver.h>
 #include <stromx/runtime/Connector.h>
 #include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/Thread.h>
 
 #include <boost/python.hpp>
 
@@ -25,15 +26,25 @@ using namespace stromx::runtime;
 
 namespace
 {
+    template<typename T>
+    void do_release(T*)
+    {
+    }
+    
     struct ConnectorObserverWrap : ConnectorObserver, wrapper<ConnectorObserver>
     {
-        void observe(const Connector & connector, const DataContainer & data) const
+        void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const
+        {
+            observeWrap(connector, data, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
+        }
+        
+        void observeWrap(const Connector & connector, const DataContainer & data, boost::shared_ptr<Thread> thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
             
             try
             {
-                this->get_override("observe")(connector, data);
+                this->get_override("observe")(connector, data, thread);
             }
             catch(...)
             {
@@ -48,6 +59,6 @@ namespace
 void exportConnectorObserver()
 {                 
     class_<ConnectorObserverWrap, boost::noncopyable>("ConnectorObserver")
-        .def("observe", pure_virtual(&ConnectorObserver::observe))
+        .def("observe", pure_virtual(&ConnectorObserverWrap::observeWrap))
     ;
 }

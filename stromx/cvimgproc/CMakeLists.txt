@@ -47,8 +47,6 @@ set (SOURCES
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})
 
-add_dependencies(stromx_cvimgproc stromx_cvsupport)
-
 set(VERSION_STRING "${STROMX_CVIMGPROC_VERSION_MAJOR}.${STROMX_CVIMGPROC_VERSION_MINOR}.${STROMX_CVIMGPROC_VERSION_PATCH}")
 
 set_target_properties (stromx_cvimgproc PROPERTIES

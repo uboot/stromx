@@ -18,14 +18,19 @@
 from stromx import *
 
 class MyObserver(runtime.ConnectorObserver):
-    def observe(self, connector, data):
+    def observe(self, connector, data, thread):
         dataStr = ""
         if data.empty():
             dataStr = "empty"
         else:
             dataStr = str(runtime.ReadAccess(data).get().get())
+           
+        threadName = "main"
+        if thread:
+            threadName = thread.name()
             
-        print "{0} {1} of Operator '{2}/{3}' was set to: {4}".format(
+        print "{0}: {1} {2} of Operator '{3}/{4}' was set to: {5}".format(
+            threadName,
             connector.type(),
             connector.id(),
             connector.op().info().package(),

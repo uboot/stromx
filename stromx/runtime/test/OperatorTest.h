@@ -89,14 +89,16 @@ namespace stromx
             class TestObserver : public ConnectorObserver
             {
             public:
-                void observe(const Connector & connector, const DataContainer & data) const;
+                void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const;
                 
                 const Connector& lastConnector() const { return m_lastConnector; }
                 const DataContainer & lastData() const { return m_lastData; }
+                const Thread* thread() const { return m_thread; }
                 
             private:
                 mutable Connector m_lastConnector;
                 mutable DataContainer m_lastData;
+                mutable const Thread* m_thread;
             };
             
             void setInputDataDelayed(const unsigned int id); 

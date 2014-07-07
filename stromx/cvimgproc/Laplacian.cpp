@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/Laplacian.h"
 
+#include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
 #include <stromx/cvsupport/Image.h>
 #include <stromx/cvsupport/Matrix.h>
@@ -129,8 +130,8 @@ namespace stromx
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
             m_dataFlowParameter->setTitle("Data flow");
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), "Manual"));
-            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), "Allocate"));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -147,9 +148,9 @@ namespace stromx
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ddepthParameter->setTitle("Destination depth");
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), "Same as input"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), "8-bit"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), "16-bit"));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as input")));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));
                     parameters.push_back(m_ddepthParameter);
                     
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
@@ -176,9 +177,9 @@ namespace stromx
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ddepthParameter->setTitle("Destination depth");
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), "Same as input"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), "8-bit"));
-                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), "16-bit"));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as input")));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
+                    m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));
                     parameters.push_back(m_ddepthParameter);
                     
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
@@ -214,11 +215,11 @@ namespace stromx
             case(MANUAL):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                     m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    m_dstDescription->setTitle("Destination");
+                    m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
                 }
@@ -226,7 +227,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
-                    m_srcDescription->setTitle("Source");
+                    m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
                 }
@@ -245,7 +246,7 @@ namespace stromx
             case(MANUAL):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }
@@ -253,7 +254,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
-                    dst->setTitle("Destination");
+                    dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
                 }

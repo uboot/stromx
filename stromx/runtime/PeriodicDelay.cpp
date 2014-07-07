@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <boost/chrono.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include "stromx/runtime/DataContainer.h"
@@ -33,7 +34,7 @@ namespace stromx
         {
             struct BoostSystemTime
             {
-                boost::system_time m_time;
+                boost::chrono::steady_clock::time_point m_time;
             };
         }
         /** \endcond */
@@ -57,7 +58,8 @@ namespace stromx
         
         void PeriodicDelay::activate()
         {
-            m_nextTrigger->m_time = boost::get_system_time() + boost::posix_time::millisec(m_period);
+            m_nextTrigger->m_time = boost::chrono::steady_clock::now() + 
+                                    boost::chrono::milliseconds(m_period);
         }
 
 
@@ -93,6 +95,8 @@ namespace stromx
         
         void PeriodicDelay::execute(DataProvider& provider)
         {
+            using namespace boost::chrono;
+            
             Id2DataPair inputDataMapper(INPUT);
             provider.receiveInputData(inputDataMapper);
             
@@ -101,7 +105,7 @@ namespace stromx
                 try
                 {
                     provider.unlockParameters();
-                    boost::this_thread::sleep(m_nextTrigger->m_time);
+                    boost::this_thread::sleep_until(m_nextTrigger->m_time);
                     provider.lockParameters();
                 }
                 catch(boost::thread_interrupted&)
@@ -113,9 +117,10 @@ namespace stromx
             // check m_period again because it might have changed while sleeping
             if(m_period)
             {
-                unsigned int passedMs = (unsigned int)((boost::get_system_time() - m_nextTrigger->m_time).total_milliseconds());
-                unsigned int numPeriods = passedMs / m_period + 1;
-                m_nextTrigger->m_time += boost::posix_time::millisec(m_period * numPeriods);
+                milliseconds passedMs = duration_cast<milliseconds>(
+                    steady_clock::now() - m_nextTrigger->m_time);
+                unsigned int numPeriods = passedMs.count() / m_period + 1;
+                m_nextTrigger->m_time += boost::chrono::milliseconds(m_period * numPeriods);
             }
             
             Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());

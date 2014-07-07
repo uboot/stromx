@@ -56,7 +56,7 @@ namespace stromx
             m_operator->activate();
             
             {
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
                 m_operator->setParameter(DummyCamera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
@@ -71,7 +71,7 @@ namespace stromx
             m_operator->clearOutputData(DummyCamera::INDEX);
             
             {
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
                 m_operator->setParameter(DummyCamera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
@@ -173,7 +173,7 @@ namespace stromx
 
         void DummyCameraTest::tearDown ( void )
         {
-            boost::this_thread::sleep(boost::posix_time::seconds(1));
+            boost::this_thread::sleep_for(boost::chrono::seconds(1));
             m_operator->deactivate();
             delete m_operator;
         }

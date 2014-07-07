@@ -9,8 +9,6 @@ add_executable(simple
 
 set_target_properties(simple PROPERTIES FOLDER "example")
 
-add_dependencies(simple stromx_runtime)
-
 target_link_libraries(simple
     stromx_runtime
 )

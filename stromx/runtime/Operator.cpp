@@ -15,6 +15,7 @@
  */
 
 #include <boost/thread.hpp>
+#include <boost/thread/tss.hpp>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Input.h"
@@ -33,7 +34,9 @@ namespace stromx
 {
     namespace runtime
     {
-        /** \cond */        
+        /** \cond */   
+        extern boost::thread_specific_ptr<Thread> gThread;
+        
         class Operator::InternalObserver : public impl::Id2DataMapObserver
         {
         public:
@@ -193,8 +196,15 @@ namespace stromx
         
         void Operator::deinitialize()
         {
-            if(status() == ACTIVE)
+            if(status() == ACTIVE) 
+            try
+            {
                 deactivate();
+            }
+            catch(OperatorError&)
+            {
+                // ignore all exceptions before deinitializing
+            }
                 
             try
             {
@@ -274,6 +284,19 @@ namespace stromx
             }
         }
         
+        void Operator::interrupt()
+        {
+            try
+            {
+                m_kernel->interrupt();
+            }
+            catch(OperatorError& e)
+            {
+                e.setName(name());
+                throw;
+            }
+        }
+        
         void Operator::addObserver(const ConnectorObserver*const observer)
         {
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
@@ -302,7 +325,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Input(this, id), data);
+                    (*iter)->observe(Input(this, id), data, gThread.get());
                 }
                 catch(Interrupt &)
                 {
@@ -325,7 +348,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Output(this, id), data);
+                    (*iter)->observe(Output(this, id), data, gThread.get());
                 }
                 catch(Interrupt &)
                 {

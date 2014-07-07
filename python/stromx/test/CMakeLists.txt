@@ -4,8 +4,6 @@ set (SOURCES
 
 add_library (test_package SHARED ${SOURCES})
 
-add_dependencies(test_package stromx_test)
-
 set_target_properties (test_package PROPERTIES FOLDER "python")
 set_target_properties (test_package PROPERTIES OUTPUT_NAME "test")
 

@@ -72,7 +72,7 @@ namespace stromx
                 
                 try
                 {
-                    boost::this_thread::sleep(boost::posix_time::microseconds(microseconds));
+                    boost::this_thread::sleep_for(boost::chrono::microseconds(microseconds));
                 }
                 catch(boost::thread_interrupted&)
                 {
@@ -182,6 +182,8 @@ namespace stromx
                 if(m_status == EXECUTING)
                     throw WrongOperatorState(*info(), "Operator must be inactive to be deinitialized.");
                 
+                m_status = NONE;
+                
                 try
                 {
                     if (m_op)
@@ -195,8 +197,6 @@ namespace stromx
                 {
                     throw OperatorError(*info(), e.what());
                 }
-                
-                m_status = NONE;
             }
             
             DataRef SynchronizedOperatorKernel::getParameter(unsigned int id, const bool waitWithTimeout, const unsigned int timeout)
@@ -419,6 +419,15 @@ namespace stromx
                     }
                     else
                     {
+                        try
+                        {
+                            boost::this_thread::interruption_point();
+                        }
+                        catch(boost::thread_interrupted&)
+                        {
+                            m_parameterCond.notify_all();
+                            throw Interrupt();
+                        }
                         m_status = EXECUTING;
                         m_parametersAreLocked = true;
                     }
@@ -496,10 +505,11 @@ namespace stromx
                 {
                     if(waitWithTimeout)
                     {
-                        boost::system_time const finish = boost::get_system_time() + boost::posix_time::millisec(timeout);
-                
-                        if(! condition.timed_wait(lock, finish))
+                        if(condition.wait_for(lock, boost::chrono::milliseconds(timeout))
+                            == boost::cv_status::timeout)
+                        {
                             throw Timeout();
+                        }
                     }
                     else
                     {
@@ -627,6 +637,27 @@ namespace stromx
                 const Parameter& param = info()->parameter(id);
                 if(! type.isVariant(param.variant()))
                     throw WrongParameterType(param, *this->info());
+            }
+            
+            void SynchronizedOperatorKernel::interrupt()
+            {
+                lock_t lock(m_mutex);
+                    
+                if(m_status != EXECUTING)
+                    return;
+                
+                try
+                {
+                    m_op->interrupt();
+                }
+                catch(OperatorError &)
+                {
+                    throw;
+                }
+                catch(std::exception & e)
+                {
+                    throw OperatorError(*info(), e.what());
+                }
             }
         }
     }

@@ -23,8 +23,6 @@ set (SOURCES
     
 add_library (stromx_test SHARED ${SOURCES})
 
-add_dependencies(stromx_test stromx_runtime)
-
 set(VERSION_STRING "${TEST_VERSION_MAJOR}.${TEST_VERSION_MINOR}.${TEST_VERSION_PATCH}")
 
 set_target_properties (stromx_test PROPERTIES

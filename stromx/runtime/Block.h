@@ -14,10 +14,10 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_EXAMPLE_TRIGGER_H
-#define STROMX_EXAMPLE_TRIGGER_H
+#ifndef STROMX_RUNTIME_BLOCK_H
+#define STROMX_RUNTIME_BLOCK_H
 
-#include "stromx/runtime/Config.h"
+#include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
 
@@ -35,13 +35,14 @@ namespace stromx
             struct BoostConditionVariable;
         }
         
-        /** \brief Delays the execution until a trigger signal is received. */
-        class STROMX_RUNTIME_API Trigger : public OperatorKernel
+        /** \brief Blocks the execution until a trigger signal is received. */
+        class STROMX_RUNTIME_API Block : public OperatorKernel
         {
         public:
             enum InputId
             {
-                INPUT
+                INPUT,
+                TRIGGER_DATA
             };
             
             enum OutputId
@@ -52,48 +53,43 @@ namespace stromx
             enum ParameterId
             {
                 TRIGGER,
-                STATE
+                STATE,
+                TRIGGER_INPUT
             };
             
-            enum TriggerState
+            enum BlockState
             {
-                ALWAYS_PASS,
-                ALWAYS_STOP,
+                PASS_ALWAYS,
+                BLOCK_ALWAYS,
                 TRIGGER_ACTIVE
             };
             
-            Trigger();
-            virtual ~Trigger();
+            Block();
+            virtual ~Block();
             
-            virtual OperatorKernel* clone() const { return new Trigger; }
+            virtual OperatorKernel* clone() const { return new Block; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
+            virtual void initialize();
+            virtual void activate();
             
         private:
-            explicit Trigger(const Trigger &);
-            
-            static const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
             static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION; 
             
             impl::BoostConditionVariable* m_cond;
+            bool m_wasTriggered;
             runtime::Enum m_state;
+            runtime::Bool m_triggerInput;
         };       
-        
-        /** \cond */
-        template <>
-        class data_traits<Trigger>
-        {
-        public:
-            static const DataVariant & variant() { return DataVariant::TRIGGER; }
-        };  
-        /** \endcond */
     }
 }
 
-#endif // STROMX_EXAMPLE_TRIGGER_H
+#endif // STROMX_RUNTIME_BLOCK_H

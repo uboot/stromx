@@ -24,11 +24,23 @@
 #include "stromx/cvsupport/Matrix.h"
 #include "stromx/cvsupport/Cvsupport.h"
 #include <stromx/runtime/Exception.h>
+#include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
+
+namespace stromx
+{
+    namespace cvsupport
+    {
+        std::locale locale;
+    }
+}
 
 void stromxCvsupportRegister(stromx::runtime::Registry& registry)
 {
     using namespace stromx::cvsupport;
+    
+    locale = stromx::runtime::Locale::generate(STROMX_CVSUPPORT_LOCALE_DIR,
+                                               STROMX_CVSUPPORT_LOCALE_DOMAIN);
     
     registry.registerData(new Image);
     registry.registerData(new Matrix);

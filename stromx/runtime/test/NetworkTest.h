@@ -39,6 +39,7 @@ namespace stromx
             CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST(testActivate);
             CPPUNIT_TEST(testDeactivate);
+            CPPUNIT_TEST(testDeactivateFails);
             CPPUNIT_TEST(testRemoveConnectedOperator);
             CPPUNIT_TEST(testConnectionSource);
             CPPUNIT_TEST_SUITE_END ();
@@ -55,6 +56,7 @@ namespace stromx
             void testRemoveConnectedOperator();
             void testActivate();
             void testDeactivate();
+            void testDeactivateFails();
             void testConnectionSource();
                 
         private: 

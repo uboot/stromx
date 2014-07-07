@@ -16,12 +16,14 @@
 
 #include <boost/thread/thread.hpp>
 #include <cppunit/TestAssert.h>
+#include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/impl/Network.h"
 #include "stromx/runtime/test/NetworkTest.h"
 #include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/test/ExceptionOperator.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::NetworkTest);
 
@@ -150,6 +152,21 @@ namespace stromx
             m_network->addOperator(op1);
             m_network->addOperator(op2);
             m_network->activate();
+            CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
+        }
+        
+        void NetworkTest::testDeactivateFails()
+        {
+            Operator* op1 = new Operator(new ExceptionOperator);
+            Operator* op2 = new Operator(new Dump);
+            op1->setParameter(ExceptionOperator::THROW_DEACTIVATE, Bool(true));
+            
+            op1->initialize();
+            op2->initialize();
+            m_network->addOperator(op1);
+            m_network->addOperator(op2);
+            m_network->activate();
+            
             CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
         }
 

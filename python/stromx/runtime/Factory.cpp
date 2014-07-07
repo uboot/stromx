@@ -43,6 +43,7 @@ namespace
 void exportFactory()
 {          
     stromx::python::exportVector<const OperatorKernel*>("OperatorKernelVector");
+    stromx::python::exportVector<const Data*>("DataVector");
     
     class_<Factory, bases<AbstractFactory, Registry> >("Factory")
         .def("registerOperator", &Factory::registerOperator)
@@ -50,5 +51,6 @@ void exportFactory()
         .def("newOperator", &newOperatorWrap)
         .def("newData", &newDataWrap)
         .def("availableOperators", &Factory::availableOperators, return_internal_reference<>())
+        .def("availableData", &Factory::availableData, return_internal_reference<>())
     ;
 }
