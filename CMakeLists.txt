@@ -46,7 +46,7 @@ include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.48.0 REQUIRED COMPONENTS date_time chrono filesystem locale regex serialization system thread)
+find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time chrono filesystem locale regex serialization system thread)
 
 find_package(CppUnit)
 
@@ -87,7 +87,7 @@ endif()
 
 option(BUILD_RASPI "Build raspi package" OFF)
 
-find_package(Boost 1.47.0 COMPONENTS filesystem python thread)
+find_package(Boost 1.50.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)
 
 if(Boost_FOUND AND PYTHON_INCLUDE_PATH)
