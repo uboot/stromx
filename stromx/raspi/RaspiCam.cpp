@@ -240,14 +240,14 @@ namespace stromx
 		}
 	      else
 		{
-	      cv::Mat bufferCopy(1280,720,CV_32FC3);
+	      cv::Mat bufferCopy(1280,720,CV_8UC3);
 	      mmal_buffer_header_mem_lock(buffer);
 std::cout << "Debug: before memcpy" << std::endl;
-	      memcpy(&bufferCopy, buffer->data, 1280*720*3);
+	      memcpy(bufferCopy.data, buffer->data, 1280*720*3);
 std::cout << "Debug: after memcpy" << std::endl;
 	      mmal_buffer_header_mem_unlock(buffer);
 std::cout << "Debug: buffer unlocked" << std::endl;
-//mmal_buffer_header_release(buffer);
+	mmal_buffer_header_release(buffer);
 std::cout << "Debug: try to create outImage" << std::endl;
 	      cvsupport::Image* outImage = new cvsupport::Image(bufferCopy);
  std::cout << "Debug: outImage created" << std::endl;
