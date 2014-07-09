@@ -25,15 +25,15 @@
 
 #include <opencv2/core/core.hpp>
 
-#include </opt/vc/include/bcm_host.h>
+#include <bcm_host.h>
 
-#include </opt/vc/include/interface/mmal/mmal_component.h>
-#include <mmal_default_components.h>
-#include </opt/vc/include/interface/mmal/mmal_pool.h>
-#include </opt/vc/include/interface/mmal/mmal_port.h>
-#include </opt/vc/include/interface/mmal/mmal_parameters_camera.h>
-#include </opt/vc/include/interface/mmal/util/mmal_util.h>
-#include </opt/vc/include/interface/mmal/util/mmal_util_params.h>
+#include <interface/mmal/mmal_component.h>
+#include <interface/mmal/util/mmal_default_components.h>
+#include <interface/mmal/mmal_pool.h>
+#include <interface/mmal/mmal_port.h>
+#include <interface/mmal/mmal_parameters_camera.h>
+#include <interface/mmal/util/mmal_util.h>
+#include <interface/mmal/util/mmal_util_params.h>
 
 #define MMAL_CAMERA_VIDEO_PORT 1
 #define MMAL_CAMERA_PREVIEW_PORT 0
