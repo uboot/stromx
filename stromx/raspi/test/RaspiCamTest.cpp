@@ -36,7 +36,7 @@ namespace stromx
 
         void RaspiCamTest::testExecute()
         {
-            DataContainer data = m_operator->getOutputData(ReadGpio::OUTPUT);
+            DataContainer data = m_operator->getOutputData(RaspiCam::OUTPUT);
         }
 
         void RaspiCamTest::tearDown()
