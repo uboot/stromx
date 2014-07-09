@@ -37,6 +37,8 @@ set_target_properties (stromx_raspi PROPERTIES
     FOLDER "library"
 )
 
+link_directories(/opt/vc/lib)
+
 target_link_libraries (stromx_raspi
     stromx_runtime
     stromx_cvsupport

@@ -10,6 +10,7 @@ include_directories(
 add_executable(stromx_raspi_test
     ../GpioTrigger.cpp
     ../ReadGpio.cpp
+    ../RaspiCam.cpp
     ../WriteGpio.cpp
     ../impl/Gpio.cpp
     ../impl/Utilities.cpp
@@ -28,4 +29,11 @@ target_link_libraries(stromx_raspi_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
     stromx_runtime
+    stromx_cvsupport
+    ${OpenCV_LIBS}
+    vcos
+    mmal_core
+    mmal_util
+    mmal_vc_client
+    bcm_host
 )

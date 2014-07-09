@@ -31,12 +31,12 @@ namespace stromx
     {
         class RaspiCam : public runtime::OperatorKernel
         {
+        public:
             enum OutputId
             {
                 OUTPUT
             };
             
-        public:
             RaspiCam();
             virtual ~RaspiCam();
             virtual OperatorKernel* clone() const {return new RaspiCam;}

@@ -81,7 +81,7 @@ namespace stromx
 	    {
 	  MMAL_STATUS_T status;
 
-	  //bcm_host_init();
+	  bcm_host_init();
 	  status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &m_raspicam);
 	  if(status != MMAL_SUCCESS)
 	    {
