@@ -17,7 +17,7 @@
 #include "stromx/raspi/test/RaspiCamTest.h"
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestAssert.h>
-#include "stromx/raspi/ReadGpio.h"
+#include "stromx/raspi/RaspiCam.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::RaspiCamTest);
 
@@ -29,7 +29,7 @@ namespace stromx
     {
         void RaspiCamTest::setUp()
         {
-            m_operator = new OperatorTester(new ReadGpio());
+            m_operator = new OperatorTester(new RaspiCam());
             m_operator->initialize();
             m_operator->activate();
         }
