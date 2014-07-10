@@ -28,12 +28,18 @@ namespace stromx
         {
         public:
             /**
-             * Initializes the input provider to text and file data.
+             * Initializes the file input to text and file data.
              * \param text The text data.
              * \param filename The name of the file which contains the file data. Pass an empty
              *                 string if no file should be provided.
              */
             virtual void initialize(const std::string & text, const std::string & filename = "") = 0;
+            
+            /**
+             * Closes the file input. If this functions is not called the input is closed 
+             * by the destructor.
+             */
+            virtual void close() = 0;
             
             virtual ~FileInput() {}
         };

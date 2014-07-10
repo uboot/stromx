@@ -10,6 +10,7 @@ set(SOURCES
     ExceptionObserver.cpp
     Factory.cpp
     Image.cpp
+    InputProvider.cpp
     Connector.cpp
     ConnectorObserver.cpp
     Matrix.cpp
@@ -17,6 +18,7 @@ set(SOURCES
     Operator.cpp
     OperatorInfo.cpp
     OperatorKernel.cpp
+    OutputProvider.cpp
     Position.cpp
     Primitive.cpp
     Parameter.cpp

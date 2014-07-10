@@ -46,6 +46,7 @@ namespace stromx
             virtual bool hasFile() const;
             virtual std::istream & openFile(const OpenMode mode);
             virtual std::istream & file();
+            virtual void close();
             
         private:
             zip* m_archiveHandle;

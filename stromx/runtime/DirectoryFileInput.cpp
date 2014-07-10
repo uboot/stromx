@@ -40,6 +40,12 @@ namespace stromx
             
             m_currentFilename = filename;
             m_initialized = true;
+        } 
+        
+        void DirectoryFileInput::close()
+        {
+            if(m_currentFile.is_open())
+                m_currentFile.close();
         }
 
         std::istream& DirectoryFileInput::text()

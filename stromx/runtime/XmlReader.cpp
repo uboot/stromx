@@ -67,7 +67,7 @@ namespace stromx
             return stream;
         }
         
-        Stream* XmlReader::readStream(FileInput& input, const std::string filename, const AbstractFactory* factory) const
+        Stream* XmlReader::readStream(FileInput& input, const std::string & filename, const AbstractFactory* factory) const
         {
             impl::XmlReaderImpl impl(factory);
             return impl.readStream(input, filename);
@@ -114,7 +114,7 @@ namespace stromx
             }
         }
 
-        void XmlReader::readParameters(FileInput& input, const std::string filename, const AbstractFactory* factory,
+        void XmlReader::readParameters(FileInput& input, const std::string & filename, const AbstractFactory* factory,
                                        const std::vector< Operator* > & operators) const
         {
             impl::XmlReaderImpl impl(factory);

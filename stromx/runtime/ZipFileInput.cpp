@@ -44,6 +44,12 @@ namespace stromx
                 zip_close(m_archiveHandle);
         }
 
+        void ZipFileInput::close()
+        {
+            if(m_archiveHandle)
+                zip_close(m_archiveHandle);
+        }
+
         void ZipFileInput::initialize(const std::string& text, const std::string& filename)
         {
             m_currentText.clear();

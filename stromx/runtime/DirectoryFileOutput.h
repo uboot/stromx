@@ -45,6 +45,7 @@ namespace stromx
             virtual std::ostream & text();
             virtual std::ostream & openFile(const std::string & ext, const OpenMode mode);
             virtual std::ostream & file();
+            virtual void close();
             
         private:
             static const std::string PATH_SEPARATOR;

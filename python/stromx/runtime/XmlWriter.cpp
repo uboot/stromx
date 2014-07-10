@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <stromx/runtime/FileOutput.h>
 #include <stromx/runtime/XmlWriter.h>
 #include <stromx/runtime/Stream.h>
 
@@ -26,6 +27,9 @@ namespace
 {
     void (XmlWriter::*writeStreamToFileWrap)(const std::string &, const Stream&) const = &XmlWriter::writeStream;
     void (XmlWriter::*writeParametersToFileWrap)(const std::string&, const std::vector<stromx::runtime::Operator*>&) const = &XmlWriter::writeParameters;
+    
+    void (XmlWriter::*writeStreamToOutputWrap)(FileOutput &, const std::string &, const Stream&) const = &XmlWriter::writeStream;
+    void (XmlWriter::*writeParametersToOutputWrap)(FileOutput &, const std::string &, const std::vector<stromx::runtime::Operator*>&) const = &XmlWriter::writeParameters;
 }
 
 void exportXmlWriter()
@@ -33,5 +37,7 @@ void exportXmlWriter()
     class_<XmlWriter>("XmlWriter", init<>())
         .def("writeStream", writeStreamToFileWrap)
         .def("writeParameters", writeParametersToFileWrap)
+        .def("writeStream", writeStreamToOutputWrap)
+        .def("writeParameters", writeParametersToOutputWrap)
     ;
 }

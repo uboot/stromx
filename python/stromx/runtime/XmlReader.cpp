@@ -16,6 +16,7 @@
 
 #include <stromx/runtime/XmlReader.h>
 #include <stromx/runtime/AbstractFactory.h>
+#include <stromx/runtime/FileInput.h>
 #include <stromx/runtime/Stream.h>
 
 #include <boost/python.hpp>
@@ -25,15 +26,20 @@ using namespace stromx::runtime;
 
 namespace
 {
-    typedef Stream* (XmlReader::*read_stream_t)(const std::string &, const AbstractFactory *);
     Stream* (XmlReader::*readStreamFromFileWrap)(const std::string &, const AbstractFactory *) const = &XmlReader::readStream;
     void (XmlReader::*readParametersFromFileWrap)(const std::string &, const AbstractFactory*, const std::vector<stromx::runtime::Operator*> &) const = &XmlReader::readParameters;
+
+    Stream* (XmlReader::*readStreamFromInputWrap)(FileInput&, const std::string &, const AbstractFactory *) const = &XmlReader::readStream;
+    void (XmlReader::*readParametersFromInputWrap)(FileInput&, const std::string &, const AbstractFactory*, const std::vector<stromx::runtime::Operator*> &) const = &XmlReader::readParameters;
+
 }
 
 void exportXmlReader()
 {       
     class_<XmlReader>("XmlReader")
-        .def("readStream", reinterpret_cast<read_stream_t>(readStreamFromFileWrap), return_value_policy<manage_new_object>())
+        .def("readStream", readStreamFromFileWrap, return_value_policy<manage_new_object>())
         .def("readParameters", readParametersFromFileWrap)
+        .def("readStream", readStreamFromInputWrap, return_value_policy<manage_new_object>())
+        .def("readParameters", readParametersFromInputWrap)
     ;
 }

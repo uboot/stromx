@@ -47,6 +47,16 @@ namespace stromx
              */
             virtual const std::string getText() const = 0;
             
+            
+            /**
+             * Closes the file output. If this functions is not called the output is closed 
+             * by the destructor.
+             * 
+             * \throws FileAccessFailed If data could not be saved (e.g. due to
+             *                          missing write permission).
+             */
+            virtual void close() = 0;
+            
             virtual ~FileOutput() {}
         };
     }

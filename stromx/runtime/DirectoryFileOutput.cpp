@@ -41,7 +41,13 @@ namespace stromx
             m_initialized = true;
             m_currentFilename = "";
         }
-
+        
+        void DirectoryFileOutput::close()
+        {
+            if(m_currentFile.is_open())
+                m_currentFile.close();
+        }
+       
         const std::string DirectoryFileOutput::getText() const
         {
             return m_currentText.str();
