@@ -82,7 +82,7 @@ namespace stromx
                 
                 // allocate all buffers and add them to the recycler
                 for(unsigned int i = 0; i < m_numBuffers; ++i)
-                    m_buffers.add(DataContainer(new Image(m_bufferSize)));
+                    m_buffers.add(DataContainer(new cvsupport::Image(m_bufferSize)));
                 
                 m_id = 0;
             }

@@ -300,7 +300,7 @@ namespace stromx
         {
             try
             {
-                *m_image = cv::Mat(height, width, cvTypeFromPixelType(pixelType));
+                m_image->create(height, width, cvTypeFromPixelType(pixelType));
                 getDataFromCvImage(pixelType);
             }
             catch(cv::Exception&)
