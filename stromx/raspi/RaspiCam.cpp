@@ -17,13 +17,14 @@
 #include "stromx/raspi/Config.h"
 #include "stromx/raspi/RaspiCam.h"
 
+#include <boost/thread/condition_variable.hpp>
+#include <boost/thread/mutex.hpp>
 #include <stromx/cvsupport/Image.h>
-#include <stromx/runtime/Image.h>
+#include <stromx/runtime/Data.h>
+#include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
-
-#include <opencv2/core/core.hpp>
 
 #include <bcm_host.h>
 
@@ -39,10 +40,30 @@
 #define MMAL_CAMERA_PREVIEW_PORT 0
 #define MMAL_CAMERA_CAPTURE_PORT 2
 
+namespace
+{
+  static boost::mutex mutex;
+  static boost::condition_variable_any cond;
+}
+
 namespace stromx
 {
     namespace raspi
     {
+        typedef boost::lock_guard<boost::mutex> lock_t;
+        typedef boost::unique_lock<boost::mutex> unique_lock_t;
+
+        // /** \cond */
+        // namespace impl
+	// {
+	//   struct BoostThreadHandle
+	//   {
+	//     boost::condition_variable_any m_cond;
+	//     boost::mutex m_mutex;
+	//   };
+	// }
+        // /** \endcond */
+
         const std::string RaspiCam::TYPE("RaspiCam");
         const std::string RaspiCam::PACKAGE(STROMX_RASPI_PACKAGE_NAME);
         const runtime::Version RaspiCam::VERSION(STROMX_RASPI_VERSION_MAJOR,STROMX_RASPI_VERSION_MINOR,STROMX_RASPI_VERSION_PATCH);
@@ -65,19 +86,92 @@ namespace stromx
 
         const std::vector< const runtime::Parameter* > RaspiCam::setupInitParameters()
         {
-            return std::vector<const runtime::Parameter*>();
+	  std::vector<const runtime::Parameter*> parameters;
+	  m_cameraModeParameter = new runtime::EnumParameter(CAMERA_MODE);
+	  m_cameraModeParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
+	  m_cameraModeParameter->setTitle(("Camera mode"));
+	  m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(STILL), ("Still")));
+	  m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(VIDEO), ("Video")));
+	  parameters.push_back(m_cameraModeParameter);
+
+	  return parameters;
         }
+
+      void RaspiCam::setParameter(unsigned int id, const runtime::Data& value)
+      {
+	MMAL_STATUS_T status;
+
+	try
+	  {
+	    switch(id)
+	      {
+	      case CAMERA_MODE:
+		{
+		  const runtime::Enum& castedValue = runtime::data_cast<runtime::Enum>(value);
+		  m_cameraMode = castedValue;
+		}
+		break;
+	      case FRAME_RATE:
+		{
+		  runtime::Float32 castedValue = runtime::data_cast<runtime::Float32>(value);
+		  MMAL_RATIONAL_T frameRateRational = {int(castedValue),1};
+		  status = mmal_port_parameter_set_rational(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_FRAME_RATE, frameRateRational);
+		  if(status != MMAL_SUCCESS)
+		    {
+		      throw runtime::ParameterError(parameter(id), *this);
+		    }
+		}
+		break;
+	      default:
+		throw runtime::WrongParameterId(id,*this);
+	      }
+	  }
+	catch(runtime::BadCast&)
+	  {
+	    throw runtime::WrongParameterType(parameter(id), *this);
+	  }
+      }
+
+      const runtime::DataRef RaspiCam::getParameter(const unsigned int id) const
+      {
+	MMAL_STATUS_T status;
+
+	switch(id)
+	  {
+	  case CAMERA_MODE:
+	    return m_cameraMode;
+	  case FRAME_RATE:
+	    MMAL_RATIONAL_T frameRateValue;
+	    status = mmal_port_parameter_get_rational(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_FRAME_RATE, &frameRateValue);
+	    if(status == MMAL_SUCCESS)
+	      {
+		return runtime::Float32(frameRateValue.num/frameRateValue.den);
+	      }
+	    else
+	      {
+		throw runtime::ParameterError(parameter(id), *this);
+	      }
+	  default:
+	    throw runtime::WrongParameterId(id,*this);
+	  }
+      }
      
 
         RaspiCam::RaspiCam()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters()),
-	    m_raspicam(NULL)
+	    m_raspicam(NULL),
+	    m_outBufferPool(NULL),
+	    m_outQueue(NULL),
+	    m_cameraModeParameter(NULL),
+	    m_cameraMode(RaspiCam::VIDEO),
+	    m_frameIndex(0)
         {
 	}
 
         void RaspiCam::initialize()
         {
-	  try
+	  //Basic setup/initialization of mmal component camera
+	  	  try
 	    {
 	  MMAL_STATUS_T status;
 
@@ -86,13 +180,13 @@ namespace stromx
 	  if(status != MMAL_SUCCESS)
 	    {
 	      std::cout << "MMAL: Could not create default camera." << std::endl;
-	      this->~RaspiCam();
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
 	  if(!m_raspicam->output_num)
 	    {
 	      std::cout << "MMAL: Default camera doesn't have output ports." << std::endl;
-	      this->~RaspiCam();
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
 
@@ -129,7 +223,7 @@ namespace stromx
 	  raspicamVideoFormat->es->video.crop.y = 0;
 	  raspicamVideoFormat->es->video.crop.width = 1280;
 	  raspicamVideoFormat->es->video.crop.height = 720;
-	  raspicamVideoFormat->es->video.frame_rate.num = 30;
+	  raspicamVideoFormat->es->video.frame_rate.num = 1;
 	  raspicamVideoFormat->es->video.frame_rate.den = 1;
 	  //raspicamVideoPort->buffer_size = 1280*720*12/8;
 	  raspicamVideoPort->buffer_num = 10;
@@ -152,7 +246,7 @@ namespace stromx
 	  if(mmal_port_format_commit(raspicamVideoPort) != MMAL_SUCCESS)
 	    {
 	      std::cout << "MMAL: could not commit camera video port format." << std::endl;
-	      this->~RaspiCam();
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
 	  // if(mmal_port_format_commit(raspicamPreviewPort) != MMAL_SUCCESS)
@@ -166,15 +260,25 @@ namespace stromx
 	  if(m_outBufferPool == NULL)
 	    {
 	      std::cout << "MMAL: could not create buffer pool for video port." << std::endl;
-	      this->~RaspiCam();
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
+
+	  //Create buffer pool in stromx (recycling)
+	  runtime::Data* recycleBuffer = NULL;
+
+	  // delete all remaining buffers in the recycling access
+	  while((recycleBuffer = m_recycleBuffers()))
+	    delete recycleBuffer;
+
+	  // allocate one buffers and add them to the recycler
+	  m_recycleBuffers.add(runtime::DataContainer(new cvsupport::Image(0)));
 
 	  m_outQueue = mmal_queue_create();
 	  if(m_outQueue == NULL)
 	    {
 	      std::cout << "MMAL: could not create queue for video port." << std::endl;
-	      this->~RaspiCam();
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
 	  raspicamVideoPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
@@ -183,6 +287,7 @@ namespace stromx
 	  if(status != MMAL_SUCCESS)
 	    {
 	      std::cout << "MMAL: could not enable video port." << std::endl;
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
 	  
@@ -190,34 +295,13 @@ namespace stromx
 	  if(status != MMAL_SUCCESS)
 	    {
 	      std::cout << "MMAL: could not enable camera." << std::endl;
+	      cleanUp();
 	      throw runtime::OperatorAllocationFailed("Raspi","RaspiCam");
 	    }
-
-
-	    }
-	  catch(runtime::OperatorAllocationFailed &)
-	    {}
-        }
-        
-
-      RaspiCam::~RaspiCam()
-        {
-	  if(m_raspicam)
-	    mmal_component_destroy(m_raspicam);
-	  if(m_outBufferPool)
-	    mmal_pool_destroy(m_outBufferPool);
-	  if(m_outQueue)
-	    mmal_queue_destroy(m_outQueue);
-        }
-        
-        void RaspiCam::execute(runtime::DataProvider& provider)
-        {
-	  MMAL_BUFFER_HEADER_T*  buffer;
-	  MMAL_BUFFER_HEADER_T*  bufferNew;
-
 	  if(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]->is_enabled)
 	  {
 	    unsigned int bufferCounter = 0;
+	    MMAL_BUFFER_HEADER_T*  bufferNew;
 	    while((bufferNew = mmal_queue_get(m_outBufferPool->queue)) != NULL)
 	     {
 		mmal_port_send_buffer(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT], bufferNew);
@@ -228,11 +312,90 @@ namespace stromx
 	      {
 		std::cout << "MMAL: Cannot return a new buffer to video port." << std::endl;
 	      }
-	  
-	    mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 1);
+	  }
+	    }
+	  catch(runtime::OperatorAllocationFailed &)
+	    {}
+	  std::vector<const runtime::Description*> inputs;
+	  std::vector<const runtime::Description*> outputs;
+	  OperatorKernel::initialize(inputs,outputs,setupParameters());
+        }
 
-	  if((buffer = mmal_queue_get(m_outQueue)) != NULL)
+      const std::vector<const runtime::Parameter*> RaspiCam::setupParameters()
+      {
+	std::vector<const runtime::Parameter*> parameters;
+
+	if(m_cameraMode == RaspiCam::VIDEO)
+	  {
+	    runtime::Parameter* frameRate = new runtime::Parameter(FRAME_RATE,runtime::DataVariant::FLOAT_32);
+	    frameRate->setTitle("Frame rate");
+	    frameRate->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+	    parameters.push_back(frameRate);
+	  }
+
+	return parameters;
+      }
+        
+
+      RaspiCam::~RaspiCam()
+        {
+        }
+
+      void RaspiCam::cleanUp()
+      {
+	if(m_raspicam)
+	    mmal_component_destroy(m_raspicam);
+	if(m_outBufferPool)
+	    mmal_pool_destroy(m_outBufferPool);
+	if(m_outQueue)
+	    mmal_queue_destroy(m_outQueue);
+      }
+
+      void RaspiCam::activate()
+      {		
+	// Activate capture function of port
+	  switch (m_cameraMode)
 	    {
+		    case VIDEO:
+		      mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 1);
+		      break;
+		    case STILL:
+		      // ToDo
+		      break;
+		    default:
+		      throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
+		     }
+      }
+
+      void RaspiCam::deactivate()
+      {
+	mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 0);
+      }
+
+        
+        void RaspiCam::execute(runtime::DataProvider& provider)
+        {
+	  MMAL_STATUS_T status;
+	  MMAL_BUFFER_HEADER_T*  buffer;
+	  MMAL_BUFFER_HEADER_T*  bufferNew;
+
+	  ++m_frameIndex;
+
+	  try
+	    {
+	      provider.unlockParameters();
+	      unique_lock_t lock(mutex);
+	      
+	      while((buffer = mmal_queue_get(m_outQueue)) == NULL)
+		cond.wait(lock);
+	      provider.lockParameters();
+	    }
+	  catch(boost::thread_interrupted&)
+	    {
+	      provider.lockParameters();
+	      throw runtime::Interrupt();
+	    }
+
 	      std::cout << "DEBUG: Entering buffer processing" << std::endl;
 	      if(buffer->cmd)
 		{
@@ -240,39 +403,68 @@ namespace stromx
 		}
 	      else
 		{
-	      cv::Mat bufferCopy(1280,720,CV_8UC3);
-	      mmal_buffer_header_mem_lock(buffer);
-std::cout << "Debug: before memcpy" << std::endl;
-	      memcpy(bufferCopy.data, buffer->data, 1280*720*3);
-std::cout << "Debug: after memcpy" << std::endl;
-	      mmal_buffer_header_mem_unlock(buffer);
-std::cout << "Debug: buffer unlocked" << std::endl;
-	mmal_buffer_header_release(buffer);
-std::cout << "Debug: try to create outImage" << std::endl;
-	      cvsupport::Image* outImage = new cvsupport::Image(bufferCopy);
- std::cout << "Debug: outImage created" << std::endl;
-	      try
+		  //Wait to get a free buffer from recycle access
+		  cvsupport::Image* recycleBuffer = dynamic_cast<cvsupport::Image*>(m_recycleBuffers());
+		  if(recycleBuffer)
+		    {
+		      // Resize the recycling buffer to fit current image size constraints
+		      // NOTE: recycleBuffer owns a cvsupport::Image
+		      recycleBuffer->resize(1280,720,runtime::Image::BGR_24);
+		      //cv::Mat bufferCopy(720,1280,CV_8UC3);
+		      mmal_buffer_header_mem_lock(buffer);
+		      std::cout << "Debug: before memcpy" << std::endl;
+		      //memcpy(bufferCopy.data, buffer->data, 1280*720*3);
+		      memcpy(recycleBuffer->data(), buffer->data, 1280*720*3);
+		      std::cout << "Debug: after memcpy" << std::endl;
+		      mmal_buffer_header_mem_unlock(buffer);
+		      std::cout << "Debug: buffer unlocked" << std::endl;
+		      mmal_buffer_header_release(buffer);
+		      std::cout << "Debug: try to create outImage" << std::endl;
+		      //cvsupport::Image* outImage = new cvsupport::Image(bufferCopy);
+		      // cvsupport::Image* outImage = new cvsupport::Image(recycleBuffer);
+		      // std::cout << "Debug: outImage created" << std::endl;
+		      // try
+		      // 	{
+		      // 	  std::cout << "Debug: before outImage initialization" << std::endl;
+		      // 	  outImage->initializeImage(outImage->width(),outImage->height(), outImage->stride(), outImage->data(), cvsupport::Image::BGR_24);
+		      // 	  std::cout << "Debug: after outImage initialization" << std::endl;
+		      // 	}
+		      // catch(runtime::WrongArgument&)
+		      // 	{
+		      // 	}
+		      //runtime::DataContainer outContainer = runtime::DataContainer(outImage);
+		      runtime::DataContainer outContainerIndex = runtime::DataContainer(new runtime::UInt32(m_frameIndex));
+		      runtime::DataContainer outContainer = runtime::DataContainer(recycleBuffer);
+		      
+		      //remember it in the recycling access
+		      m_recycleBuffers.add(outContainer);
+		      runtime::Id2DataPair outputDataMapper(OUTPUT, outContainerIndex);
+		      provider.sendOutputData(outputDataMapper);
+		    }
+		}
+	      if(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]->is_enabled)
 		{
- std::cout << "Debug: before outImage initialization" << std::endl;
-		  outImage->initializeImage(1280, 720, outImage->stride(), outImage->data(), cvsupport::Image::BGR_24);
- std::cout << "Debug: after outImage initialization" << std::endl;
+		  bufferNew = mmal_queue_get(m_outBufferPool->queue);
+		  if(bufferNew)
+		    {
+		      status = mmal_port_send_buffer(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT], bufferNew);
+		    }
+
+		  if(!bufferNew || status != MMAL_SUCCESS)
+		    {
+		      std::cout << "Unable to send buffer to video port." << std::endl;
+		    }
 		}
-	      catch(runtime::WrongArgument&)
-		{
-		}
-	      runtime::DataContainer outContainer = runtime::DataContainer(outImage);
-	      runtime::Id2DataPair outputDataMapper(OUTPUT, outContainer);
-	      provider.sendOutputData(outputDataMapper);
-		}
-	    }
-	  }
-        }
+	}
+        
 
       void RaspiCam::callbackOutVideoPort(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
       {
 	std::cout << "DEBUG: Entering callbackOutVideoPort" << std::endl;
 	MMAL_QUEUE_T* queue = (MMAL_QUEUE_T*)port->userdata;
+	lock_t l(mutex);
 	mmal_queue_put(queue,buffer);
+	cond.notify_all();
       }
 
     }

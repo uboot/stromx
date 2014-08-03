@@ -29,15 +29,27 @@ namespace stromx
     {
         void RaspiCamTest::setUp()
         {
-            m_operator = new OperatorTester(new RaspiCam());
-            m_operator->initialize();
-            m_operator->activate();
+            m_operator = new OperatorTester(new RaspiCam());           
         }
 
         void RaspiCamTest::testExecute()
         {
+	    m_operator->initialize(); 
+	    m_operator->activate();
             DataContainer data = m_operator->getOutputData(RaspiCam::OUTPUT);
         }
+
+        void RaspiCamTest::testSetParameterCameraModeVideo()
+        {
+	    m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+        }
+	
+	void RaspiCamTest::testSetParameterFramerate()
+	{
+	    m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+	    m_operator->initialize(); 
+	    m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5));
+	}
 
         void RaspiCamTest::tearDown()
         {
