@@ -27,6 +27,11 @@
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/TriggerData.h"
 
+namespace
+{
+    static boost::mutex m;
+}
+
 namespace stromx
 {
     using namespace runtime;
@@ -59,6 +64,7 @@ namespace stromx
             m_state(TRIGGER_ACTIVE),
             m_triggerInput(false)
         {
+	  m.lock();
         }
         
         Block::~Block()
