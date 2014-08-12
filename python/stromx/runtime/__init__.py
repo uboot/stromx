@@ -26,7 +26,7 @@ def _dataToPyBuffer(self):
     f.restype = py_object
     return pythonapi.PyBuffer_FromMemory(self._data(), self.bufferSize())
    
-Image.data = _dataToPyBuffer
+Matrix.data = _dataToPyBuffer
 
 def _printVector(self):
     string = "["
