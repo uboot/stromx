@@ -36,7 +36,6 @@ namespace stromx
         {
             return lhs != rhs;
         }
-        
     }
 }
 
