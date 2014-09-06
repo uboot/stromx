@@ -1,3 +1,4 @@
+
 /* 
  *  Copyright 2014 Thomas Fidler
  *
@@ -25,15 +26,15 @@
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
-#include "RaspiCam.h"
+//#include "RaspiCam.h"
 
 #include <bcm_host.h>
 
-#include <interface/mmal/mmal_component.h>
+//#include <interface/mmal/mmal_component.h>
+//#include <interface/mmal/mmal_pool.h>
+//#include <interface/mmal/mmal_port.h>
+//#include <interface/mmal/mmal_parameters_camera.h>
 #include <interface/mmal/util/mmal_default_components.h>
-#include <interface/mmal/mmal_pool.h>
-#include <interface/mmal/mmal_port.h>
-#include <interface/mmal/mmal_parameters_camera.h>
 #include <interface/mmal/util/mmal_util.h>
 #include <interface/mmal/util/mmal_util_params.h>
 
@@ -67,9 +68,13 @@ namespace stromx
         {
             std::vector<const runtime::Description*> outputs;
 
-            runtime::Description* output = new runtime::Description(OUTPUT, runtime::DataVariant::RGB_IMAGE);
-            output->setTitle("Output");
-            outputs.push_back(output);
+            runtime::Description* outputFrames = new runtime::Description(OUTPUT_FRAMES, runtime::DataVariant::RGB_IMAGE);
+            outputFrames->setTitle("Output frames");
+            outputs.push_back(outputFrames);
+
+            runtime::Description* outputFrameIndex = new runtime::Description(OUTPUT_FRAME_INDEX, runtime::DataVariant::UINT_32);
+            outputFrameIndex->setTitle("Output image counter");
+            outputs.push_back(outputFrameIndex);
 
             return outputs;
         }
@@ -112,6 +117,17 @@ namespace stromx
                         }
                     }
                     break;
+                    case AWB_MODE:
+                    {
+                        runtime::Enum castedValue = runtime::data_cast<runtime::Enum>(value);
+                        MMAL_PARAMETER_AWBMODE_T awbMode ={{MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)}, MMAL_PARAM_AWBMODE_T(int(castedValue))};
+                        status = mmal_port_parameter_set(m_raspicam->control, &awbMode.hdr);
+                        if(status != MMAL_SUCCESS)
+                        {
+                            throw runtime::ParameterError(parameter(id), *this);
+                        }
+                    }
+                    break;
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -137,6 +153,19 @@ namespace stromx
                         if(status == MMAL_SUCCESS)
                         {
                             return runtime::Float32(frameRateValue.num/frameRateValue.den);
+                        }
+                        else
+                        {
+                            throw runtime::ParameterError(parameter(id), *this);
+                        }
+                    }
+                    case AWB_MODE:
+                    {
+                        MMAL_PARAMETER_AWBMODE_T awbMode = {{MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},MMAL_PARAM_AWBMODE_AUTO};
+                        status = mmal_port_parameter_get(m_raspicam->control,&awbMode.hdr);
+                        if(status == MMAL_SUCCESS)
+                        {
+                            return runtime::Enum(awbMode.value);
                         }
                         else
                         {
@@ -179,9 +208,9 @@ namespace stromx
                 throw runtime::OperatorAllocationFailed("Raspi","Default camera has no outputs.");
             }
 
-            MMAL_PORT_T *raspicamVideoPort = m_raspicam->output[MMAL_CAMERA_VIDEO_PORT];
+            m_raspicamVideoPort = m_raspicam->output[MMAL_CAMERA_VIDEO_PORT];
             //MMAL_PORT_T *raspicamPreviewPort = m_raspicam->output[MMAL_CAMERA_PREVIEW_PORT];
-            MMAL_PORT_T *raspicamCapturePort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
+            m_raspicamCapturePort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
 
             // Default settings at initialization
             MMAL_PARAMETER_CAMERA_CONFIG_T raspicamConfig;
@@ -206,7 +235,7 @@ namespace stromx
                 case VIDEO:
                 {
                     //Get the pointer
-                    MMAL_ES_FORMAT_T* raspicamVideoFormat = raspicamVideoPort->format;
+                    MMAL_ES_FORMAT_T* raspicamVideoFormat = m_raspicamVideoPort->format;
                     
                     //Set up the format
                     raspicamVideoFormat->encoding_variant = MMAL_ENCODING_BGR24;//MMAL_ENCODING_I420;
@@ -219,11 +248,11 @@ namespace stromx
                     raspicamVideoFormat->es->video.crop.height = 720;
                     raspicamVideoFormat->es->video.frame_rate.num = 1;
                     raspicamVideoFormat->es->video.frame_rate.den = 1;
-                    //raspicamVideoPort->buffer_size = 1280*720*12/8;
-                    raspicamVideoPort->buffer_num = 10;
+                    //m_raspicamVideoPort->buffer_size = 1280*720*12/8;
+                    m_raspicamVideoPort->buffer_num = 10;
                     
                     //Commit port format
-                    if(mmal_port_format_commit(raspicamVideoPort) != MMAL_SUCCESS)
+                    if(mmal_port_format_commit(m_raspicamVideoPort) != MMAL_SUCCESS)
                     {
                         cleanUp();
                         throw runtime::OperatorAllocationFailed("Raspi","Could not commit video port format.");
@@ -233,7 +262,7 @@ namespace stromx
                 case STILL:
                 {
                     //Get the pointer
-                    MMAL_ES_FORMAT_T* raspicamCaptureFormat = raspicamCapturePort->format;
+                    MMAL_ES_FORMAT_T* raspicamCaptureFormat = m_raspicamCapturePort->format;
                     
                     //Set up the format
                     // raspicamCaptureFormat->encoding_variant = MMAL_ENCODING_I420;
@@ -246,11 +275,11 @@ namespace stromx
                     // raspicamCaptureFormat->es->video.crop.height = 720;
                     // raspicamCaptureFormat->es->video.frame_rate.num = 30;
                     // raspicamCaptureFormat->es->video.frame_rate.den = 1;
-                    // raspicamCapturePort->buffer_size = 1280*720*12/8;
-                    // raspicamCapturePort->buffer_num = 3;
+                    // m_raspicamCapturePort->buffer_size = 1280*720*12/8;
+                    // m_raspicamCapturePort->buffer_num = 3;
                     
                     // Commit port format
-                    // if(mmal_port_format_commit(raspicamCapturePort) != MMAL_SUCCESS)
+                    // if(mmal_port_format_commit(m_raspicamCapturePort) != MMAL_SUCCESS)
                     //   {
                     //     cleanUp();
                     //     throw runtime::OperatorAllocationFailed("Raspi","Could not commit capture port format.");
@@ -267,10 +296,21 @@ namespace stromx
             OperatorKernel::initialize(inputs,outputs,setupParameters());
         }
 
+        void RaspiCam::deinitialize()
+        {
+            if(m_raspicam)
+            {
+                mmal_component_destroy(m_raspicam);
+            }
+            bcm_host_deinit();
+            OperatorKernel::deinitialize();
+        }
+
         const std::vector<const runtime::Parameter*> RaspiCam::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
-
+            
+            // Specific parameters
             if(m_cameraMode == RaspiCam::VIDEO)
             {
                 runtime::Parameter* frameRate = new runtime::Parameter(FRAME_RATE,runtime::DataVariant::FLOAT_32);
@@ -278,6 +318,17 @@ namespace stromx
                 frameRate->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(frameRate);
             }
+
+            // Common parameters
+            runtime::EnumParameter* autoWhiteBalance = new runtime::EnumParameter(AWB_MODE);
+            autoWhiteBalance->setTitle("AWB mode");
+            autoWhiteBalance->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_OFF), ("Off")));
+            autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_AUTO), ("Auto")));
+            autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_SUNLIGHT), ("Sunlight")));
+            autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_CLOUDY), ("Cloudy")));
+            autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_SHADE), ("Shade")));
+            parameters.push_back(autoWhiteBalance);
 
             return parameters;
         }
@@ -299,6 +350,8 @@ namespace stromx
 
         void RaspiCam::activate()
         {
+                MMAL_STATUS_T status;
+
                 //Create buffer pool in stromx (recycling)
                 runtime::Data* recycleBuffer = NULL;
 
@@ -310,7 +363,7 @@ namespace stromx
                 m_recycleBuffers.add(runtime::DataContainer(new cvsupport::Image(0)));
             
                 // Create output buffer pool
-                m_outBufferPool = mmal_port_pool_create(raspicamVideoPort, raspicamVideoPort->buffer_num, raspicamVideoPort->buffer_size_recommended);
+                m_outBufferPool = mmal_port_pool_create(m_raspicamVideoPort, m_raspicamVideoPort->buffer_num, m_raspicamVideoPort->buffer_size_recommended);
                 
                 if(m_outBufferPool == NULL)
                 {
@@ -325,9 +378,9 @@ namespace stromx
                     cleanUp();
                     throw runtime::OperatorAllocationFailed("Raspi","Could not create output buffer queue.");
                 }
-                raspicamVideoPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
+                m_raspicamVideoPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
 
-                status = mmal_port_enable(raspicamVideoPort, callbackOutVideoPort);               
+                status = mmal_port_enable(m_raspicamVideoPort, callbackOutVideoPort);               
                 if(status != MMAL_SUCCESS)
                 {
                     cleanUp();
@@ -364,7 +417,41 @@ namespace stromx
 
         void RaspiCam::deactivate()
         {
-            mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 0);
+
+            MMAL_STATUS_T status;
+            // Stop capture function of port and disable processing on port
+            switch (m_cameraMode)
+            {
+                case VIDEO:
+                    mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 0);
+                    status = mmal_port_disable(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]);
+                    break;
+                case STILL:
+                    // mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT],MMAL_PARAMETER_CAPTURE,0);
+                    // status = mmal_port_disable(m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT]);
+                    break;
+                default:
+                    throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
+            }
+
+            // Deactivate component
+            status = mmal_component_disable(m_raspicam);
+
+            // Destroy queue
+            mmal_queue_destroy(m_outQueue);
+            m_outQueue = NULL;
+
+            // Destroy buffers
+            // MMAL buffers
+            mmal_port_pool_destroy(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT], m_outBufferPool);
+            m_outBufferPool = NULL;
+
+            // Stromx buffers (recycling)
+            runtime::Data* recycleBuffer = NULL;
+
+            // delete all remaining buffers in the recycling access
+            while((recycleBuffer = m_recycleBuffers()))
+                delete recycleBuffer;
         }
 
         
@@ -415,8 +502,11 @@ namespace stromx
                     
                     //remember it in the recycling access
                     m_recycleBuffers.add(outContainer);
-                    runtime::Id2DataPair outputDataMapper(OUTPUT, outContainerIndex);
-                    provider.sendOutputData(outputDataMapper);
+
+                    runtime::Id2DataPair outputDataMapperIndex(OUTPUT_FRAME_INDEX, outContainerIndex);
+                    runtime::Id2DataPair outputDataMapperFrames(OUTPUT_FRAMES, outContainer);
+                    provider.sendOutputData(outputDataMapperIndex);
+                    provider.sendOutputData(outputDataMapperFrames);
                 }
             }
             if(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]->is_enabled)
