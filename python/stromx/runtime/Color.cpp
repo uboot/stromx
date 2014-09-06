@@ -18,6 +18,8 @@
 
 #include <boost/python.hpp>
 
+#include "Equality.h"
+
 using namespace boost::python;
 using namespace stromx::runtime;
 
@@ -27,5 +29,6 @@ void exportColor()
         .def("r", &Color::r)
         .def("g", &Color::g)
         .def("b", &Color::b)
+        .def(self == self)
     ;
 }

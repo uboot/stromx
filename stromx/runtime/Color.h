@@ -60,6 +60,7 @@ namespace stromx
         
         STROMX_RUNTIME_API std::ostream& operator<< (std::ostream& out, const Color & color);
         STROMX_RUNTIME_API std::istream& operator>> (std::istream& in, Color & color);
+        STROMX_RUNTIME_API bool operator==(const Color & lhs, const Color & rhs);
     }
 }
 
