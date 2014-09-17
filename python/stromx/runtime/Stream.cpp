@@ -104,6 +104,8 @@ void exportStream()
             .def("resume", &Stream::resume)
             .def("setFactory", &Stream::setFactory)
             .def("factory", &Stream::factory, return_internal_reference<>())
+            .def("delay", &Stream::delay)
+            .def("setDelay", &Stream::setDelay)
         ;
         
         enum_<Stream::Status>("Status")
