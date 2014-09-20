@@ -26,10 +26,18 @@ namespace
 {   
     std::auto_ptr< WriteAccess<> > allocate(const DataContainer & data)
     {
-        WriteAccess<>* access = 0;
+        WriteAccess<>* access = 0;  
         
         Py_BEGIN_ALLOW_THREADS
-        access = new WriteAccess<>(data);
+        try
+        {
+            access = new WriteAccess<>(data);
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
         return std::auto_ptr< WriteAccess<> >(access);
@@ -40,7 +48,15 @@ namespace
         WriteAccess<>* access = 0;
         
         Py_BEGIN_ALLOW_THREADS
-        access = new WriteAccess<>(data, timeout);
+        try
+        {
+            access = new WriteAccess<>(data, timeout);
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
         return std::auto_ptr< WriteAccess<> >(access);
