@@ -18,7 +18,7 @@
 # norootforbuild
 
 Name:           libstromx
-Version:        0.3.1
+Version:        
 Release:
 Summary:        Library for near real-time, parallel processing of data
 Group:          Development/Libraries/C and C++
