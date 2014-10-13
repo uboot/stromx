@@ -21,13 +21,6 @@ from libruntime import *
 from ctypes import pythonapi
 from ctypes import py_object
 
-def _dataToPyBuffer(self):
-    f = pythonapi.PyBuffer_FromMemory
-    f.restype = py_object
-    return pythonapi.PyBuffer_FromMemory(self._data(), self.bufferSize())
-   
-Matrix.data = _dataToPyBuffer
-
 def _printVector(self):
     string = "["
     for i in range(len(self)):
