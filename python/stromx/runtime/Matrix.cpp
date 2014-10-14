@@ -96,58 +96,9 @@ namespace
         }
     };
     
-    object data(Matrix & m)
-    {               
-        m.m_shape[0] = m.rows();
-        m.m_shape[1] = m.cols();
-        Py_ssize_t size = m.rows() * m.stride();
-
-        m.m_strides[0] = m.stride();
-        m.m_strides[1] = 1;
-        
-        switch(m.valueType())
-        {
-            case Matrix::UINT_8:
-                m.m_format = "B";
-                break;
-            case Matrix::INT_8:
-                m.m_format = "b";
-                break;
-            case Matrix::UINT_16:
-                m.m_format = "H";
-                break;
-            case Matrix::INT_16:
-                m.m_format = "h";
-                break;
-            case Matrix::FLOAT_32:
-                m.m_format = "f";
-                break;
-            case Matrix::FLOAT_64:
-                m.m_format = "d";
-                break;
-            default:
-                BOOST_ASSERT(false);
-        }
-            
-        char* format = const_cast<char*>(m.m_format.c_str());
-
-        Py_buffer view =
-        {
-            m.data(),       // buf
-            0,              // obj
-            size,           // len
-            m.valueSize(),  // itemsize
-            1,              // readonly
-            2,              // ndim
-            format,         // format
-            m.m_shape,      // shape
-            m.m_strides,    // strides
-            0,              // suboffsets
-            {0, 0},         // smalltable
-            0
-        };
-        PyObject* o = PyMemoryView_FromBuffer(&view);
-        return object(handle<>(o));
+    intptr_t _data(Matrix & m)
+    {
+        return reinterpret_cast<intptr_t>(m.data());
     }
 }
 
@@ -161,7 +112,7 @@ void exportMatrix()
         .def("stride", pure_virtual(&Matrix::stride))
         .def("valueType", pure_virtual(&Matrix::valueType))
         .def<unsigned int (stromx::runtime::Matrix::*)() const>("valueSize", &Matrix::valueSize)
-        .def("data", &data)
+        .def("_data", &_data)
     ;
     
     enum_<Matrix::ValueType>("ValueType")

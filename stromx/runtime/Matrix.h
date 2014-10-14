@@ -160,14 +160,6 @@ namespace stromx
             
             /** Returns the data variant defined by the input \c valueType. */
             static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);
-            
-        /* \cond */
-        public:
-            /* Private utility variables for python wrapper. */
-            intptr_t m_shape[2];
-            intptr_t m_strides[2];
-            std::string m_format;
-        /* \endcond */
         };
         
         /** 

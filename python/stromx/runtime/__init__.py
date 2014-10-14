@@ -19,7 +19,69 @@
 from libruntime import *
 
 from ctypes import pythonapi
-from ctypes import py_object
+import ctypes
+
+class _PY_BUFFER(ctypes.Structure):
+    _fields_ = [
+        ("buf", ctypes.c_void_p),
+        ("obj", ctypes.py_object),
+        ("len", ctypes.c_ssize_t),
+        ("itemsize", ctypes.c_ssize_t),
+        ("readonly", ctypes.c_int),
+        ("ndim", ctypes.c_int),
+        ("format", ctypes.c_char_p),
+        ("shape", ctypes.POINTER(ctypes.c_ssize_t)),
+        ("strides", ctypes.POINTER(ctypes.c_ssize_t)),
+        ("suboffsets", ctypes.POINTER(ctypes.c_ssize_t)),
+        ("smalltable", ctypes.c_ssize_t * 2),
+        ("internal", ctypes.c_void_p)
+    ]
+
+def _memoryViewForMatrix(self):
+    matrix = self
+    
+    SHAPE = ctypes.c_ssize_t * 2
+    matrix.shape = SHAPE(matrix.rows(), matrix.cols())
+    
+    STRIDES = ctypes.c_ssize_t * 2
+    matrix.strides = STRIDES(matrix.cols(), 1)
+    
+    if matrix.valueType() == Matrix.ValueType.INT_8:
+        f = 'b'
+    elif matrix.valueType() == Matrix.ValueType.UINT_8:
+        f = 'B'
+    elif matrix.valueType() == Matrix.ValueType.INT_16:
+        f = 'h'
+    elif matrix.valueType() == Matrix.ValueType.UINT_16:
+        f = 'H'
+    elif matrix.valueType() == Matrix.ValueType.FLOAT_32:
+        f = 'f'
+    elif matrix.valueType() == Matrix.ValueType.FLOAT_64:
+        f = 'd'
+    else:
+        assert(False)
+    
+    pybuffer = _PY_BUFFER()
+    pybuffer.buf = matrix._data()
+    pybuffer.obj = ctypes.py_object()
+    pybuffer.len = matrix.rows() * matrix.cols()
+    pybuffer.itemsize = matrix.valueSize()
+    pybuffer.readonly = 1
+    pybuffer.ndim = 2
+    pybuffer.format = f
+    pybuffer.shape = matrix.shape
+    pybuffer.strides = matrix.strides
+    pybuffer.suboffsets = ctypes.POINTER(ctypes.c_ssize_t)()
+    pybuffer.smalltable[0] = 0
+    pybuffer.smalltable[1] = 0
+    pybuffer.internal = ctypes.c_void_p()
+    
+    pythonapi.PyMemoryView_FromBuffer.argtypes = [ctypes.POINTER(_PY_BUFFER)]
+    pythonapi.PyMemoryView_FromBuffer.restype = ctypes.py_object
+    
+    return pythonapi.PyMemoryView_FromBuffer(ctypes.byref(pybuffer))
+    
+Matrix.data = _memoryViewForMatrix
 
 def _printVector(self):
     string = "["
