@@ -81,8 +81,9 @@ namespace stromx
 	        MMAL_COMPONENT_T* m_raspicam;
 	        MMAL_POOL_T* m_outBufferPool;
 	        MMAL_QUEUE_T* m_outQueue;
-            MMAL_PORT_T* m_raspicamCapturePort;
-            MMAL_PORT_T* m_raspicamVideoPort;
+            MMAL_PORT_T* m_currentPort;
+            //MMAL_PORT_T* m_raspicamCapturePort;
+            //MMAL_PORT_T* m_raspicamVideoPort;
 
 	        runtime::RecycleAccess m_recycleBuffers;
 	        runtime::EnumParameter* m_cameraModeParameter;
