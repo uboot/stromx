@@ -30,21 +30,25 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (RaspiCamTest);
             CPPUNIT_TEST(testExecute);
-	        CPPUNIT_TEST(testSetParameterCameraModeVideo);
-	        CPPUNIT_TEST(testSetParameterFramerate);
+            CPPUNIT_TEST(testSetParameterCameraModeVideo);
+            CPPUNIT_TEST(testSetParameterFramerateVideo);
+            CPPUNIT_TEST(testSetParameterAutoWhiteBalanceVideo);
+            CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
             RaspiCamTest() : m_operator(0) {}
-            
+
             void setUp();
             void tearDown();
 
         protected:
             void testExecute();
-	        void testSetParameterCameraModeVideo();
-	        void testSetParameterFramerate();
-                
+            void testSetParameterCameraModeVideo();
+            void testSetParameterFramerateVideo();
+            void testSetParameterAutoWhiteBalanceVideo();
+            void testSetParameterAutoWhiteBalanceCapture();
+
         private:
             runtime::OperatorTester* m_operator;
         };
