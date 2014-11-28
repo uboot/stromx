@@ -99,7 +99,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -118,12 +118,12 @@ namespace stromx
                 {
                     m_threshold1Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_1);
                     m_threshold1Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold1Parameter->setTitle("Threshold 1");
+                    m_threshold1Parameter->setTitle(L_("Threshold 1"));
                     parameters.push_back(m_threshold1Parameter);
                     
                     m_threshold2Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_2);
                     m_threshold2Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold2Parameter->setTitle("Threshold 2");
+                    m_threshold2Parameter->setTitle(L_("Threshold 2"));
                     parameters.push_back(m_threshold2Parameter);
                     
                 }
@@ -132,12 +132,12 @@ namespace stromx
                 {
                     m_threshold1Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_1);
                     m_threshold1Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold1Parameter->setTitle("Threshold 1");
+                    m_threshold1Parameter->setTitle(L_("Threshold 1"));
                     parameters.push_back(m_threshold1Parameter);
                     
                     m_threshold2Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_2);
                     m_threshold2Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold2Parameter->setTitle("Threshold 2");
+                    m_threshold2Parameter->setTitle(L_("Threshold 2"));
                     parameters.push_back(m_threshold2Parameter);
                     
                 }
@@ -146,12 +146,12 @@ namespace stromx
                 {
                     m_threshold1Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_1);
                     m_threshold1Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold1Parameter->setTitle("Threshold 1");
+                    m_threshold1Parameter->setTitle(L_("Threshold 1"));
                     parameters.push_back(m_threshold1Parameter);
                     
                     m_threshold2Parameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD_2);
                     m_threshold2Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_threshold2Parameter->setTitle("Threshold 2");
+                    m_threshold2Parameter->setTitle(L_("Threshold 2"));
                     parameters.push_back(m_threshold2Parameter);
                     
                 }

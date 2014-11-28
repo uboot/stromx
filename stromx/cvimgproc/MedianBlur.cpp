@@ -87,7 +87,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -106,7 +106,7 @@ namespace stromx
                 {
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeParameter->setTitle("Kernel size");
+                    m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
                     m_ksizeParameter->setStep(runtime::UInt32(2));
                     parameters.push_back(m_ksizeParameter);
@@ -117,7 +117,7 @@ namespace stromx
                 {
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeParameter->setTitle("Kernel size");
+                    m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
                     m_ksizeParameter->setStep(runtime::UInt32(2));
                     parameters.push_back(m_ksizeParameter);
@@ -128,7 +128,7 @@ namespace stromx
                 {
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeParameter->setTitle("Kernel size");
+                    m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
                     m_ksizeParameter->setStep(runtime::UInt32(2));
                     parameters.push_back(m_ksizeParameter);

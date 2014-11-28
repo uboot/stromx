@@ -501,7 +501,7 @@ class OpImplGenerator(MethodGenerator):
                 ).format(ident, parameter.ident.constant())
             self.doc.line(l)
             self.__accessMode(ident)
-            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
+            l = '{0}->setTitle(L_("{1}"));'.format(ident, parameter.name)
             self.doc.line(l)
 
             for desc in parameter.descriptions:
@@ -520,7 +520,7 @@ class OpImplGenerator(MethodGenerator):
                         parameter.dataType.variant())
             self.doc.line(l)
             self.__accessMode(ident)
-            l = '{0}->setTitle("{1}");'.format(ident, parameter.name)
+            l = '{0}->setTitle(L_("{1}"));'.format(ident, parameter.name)
             self.doc.line(l)
             self.doc.line("{0}->setRows({1});".format(ident, parameter.rows))
             self.doc.line("{0}->setCols({1});".format(ident, parameter.cols))
@@ -535,7 +535,7 @@ class OpImplGenerator(MethodGenerator):
                          parameter.dataType.typeId())
             self.doc.line(l)
             self.__accessMode(ident)
-            l = '{0}->setTitle("{1}");'\
+            l = '{0}->setTitle(L_("{1}"));'\
                 .format(ident, parameter.name)
             self.doc.line(l)
             if parameter.maxValue != None:

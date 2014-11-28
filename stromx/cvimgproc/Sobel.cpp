@@ -157,7 +157,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -175,7 +175,7 @@ namespace stromx
                 {
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
+                    m_ddepthParameter->setTitle(L_("Destination depth"));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as input")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));
@@ -183,17 +183,17 @@ namespace stromx
                     
                     m_dxParameter = new runtime::NumericParameter<runtime::UInt32>(DX);
                     m_dxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dxParameter->setTitle("Order X derivative");
+                    m_dxParameter->setTitle(L_("Order X derivative"));
                     parameters.push_back(m_dxParameter);
                     
                     m_dyParameter = new runtime::NumericParameter<runtime::UInt32>(DY);
                     m_dyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dyParameter->setTitle("Order Y derivative");
+                    m_dyParameter->setTitle(L_("Order Y derivative"));
                     parameters.push_back(m_dyParameter);
                     
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeParameter->setTitle("Kernel size");
+                    m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMax(runtime::UInt32(7));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
                     m_ksizeParameter->setStep(runtime::UInt32(2));
@@ -201,12 +201,12 @@ namespace stromx
                     
                     m_scaleParameter = new runtime::NumericParameter<runtime::Float64>(SCALE);
                     m_scaleParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_scaleParameter->setTitle("Scale");
+                    m_scaleParameter->setTitle(L_("Scale"));
                     parameters.push_back(m_scaleParameter);
                     
                     m_deltaParameter = new runtime::NumericParameter<runtime::Float64>(DELTA);
                     m_deltaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_deltaParameter->setTitle("Delta");
+                    m_deltaParameter->setTitle(L_("Delta"));
                     parameters.push_back(m_deltaParameter);
                     
                 }
@@ -215,7 +215,7 @@ namespace stromx
                 {
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
+                    m_ddepthParameter->setTitle(L_("Destination depth"));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as input")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));
@@ -223,17 +223,17 @@ namespace stromx
                     
                     m_dxParameter = new runtime::NumericParameter<runtime::UInt32>(DX);
                     m_dxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dxParameter->setTitle("Order X derivative");
+                    m_dxParameter->setTitle(L_("Order X derivative"));
                     parameters.push_back(m_dxParameter);
                     
                     m_dyParameter = new runtime::NumericParameter<runtime::UInt32>(DY);
                     m_dyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dyParameter->setTitle("Order Y derivative");
+                    m_dyParameter->setTitle(L_("Order Y derivative"));
                     parameters.push_back(m_dyParameter);
                     
                     m_ksizeParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZE);
                     m_ksizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeParameter->setTitle("Kernel size");
+                    m_ksizeParameter->setTitle(L_("Kernel size"));
                     m_ksizeParameter->setMax(runtime::UInt32(7));
                     m_ksizeParameter->setMin(runtime::UInt32(1));
                     m_ksizeParameter->setStep(runtime::UInt32(2));
@@ -241,12 +241,12 @@ namespace stromx
                     
                     m_scaleParameter = new runtime::NumericParameter<runtime::Float64>(SCALE);
                     m_scaleParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_scaleParameter->setTitle("Scale");
+                    m_scaleParameter->setTitle(L_("Scale"));
                     parameters.push_back(m_scaleParameter);
                     
                     m_deltaParameter = new runtime::NumericParameter<runtime::Float64>(DELTA);
                     m_deltaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_deltaParameter->setTitle("Delta");
+                    m_deltaParameter->setTitle(L_("Delta"));
                     parameters.push_back(m_deltaParameter);
                     
                 }

@@ -99,7 +99,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
@@ -116,14 +116,14 @@ namespace stromx
                 {
                     m_cameraMatrixParameter = new runtime::MatrixParameter(CAMERA_MATRIX, runtime::DataVariant::FLOAT_MATRIX);
                     m_cameraMatrixParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_cameraMatrixParameter->setTitle("Camera matrix");
+                    m_cameraMatrixParameter->setTitle(L_("Camera matrix"));
                     m_cameraMatrixParameter->setRows(3);
                     m_cameraMatrixParameter->setCols(3);
                     parameters.push_back(m_cameraMatrixParameter);
                     
                     m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::DataVariant::FLOAT_MATRIX);
                     m_distCoeffsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_distCoeffsParameter->setTitle("Distortion coefficients");
+                    m_distCoeffsParameter->setTitle(L_("Distortion coefficients"));
                     m_distCoeffsParameter->setRows(4);
                     m_distCoeffsParameter->setCols(1);
                     parameters.push_back(m_distCoeffsParameter);

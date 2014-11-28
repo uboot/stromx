@@ -113,7 +113,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -131,17 +131,17 @@ namespace stromx
                 {
                     m_dParameter = new runtime::NumericParameter<runtime::UInt32>(D);
                     m_dParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dParameter->setTitle("Pixel neigbourhood diameter");
+                    m_dParameter->setTitle(L_("Pixel neigbourhood diameter"));
                     parameters.push_back(m_dParameter);
                     
                     m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaColorParameter->setTitle("Sigma color");
+                    m_sigmaColorParameter->setTitle(L_("Sigma color"));
                     parameters.push_back(m_sigmaColorParameter);
                     
                     m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaSpaceParameter->setTitle("Sigma space");
+                    m_sigmaSpaceParameter->setTitle(L_("Sigma space"));
                     parameters.push_back(m_sigmaSpaceParameter);
                     
                 }
@@ -150,17 +150,17 @@ namespace stromx
                 {
                     m_dParameter = new runtime::NumericParameter<runtime::UInt32>(D);
                     m_dParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dParameter->setTitle("Pixel neigbourhood diameter");
+                    m_dParameter->setTitle(L_("Pixel neigbourhood diameter"));
                     parameters.push_back(m_dParameter);
                     
                     m_sigmaColorParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_COLOR);
                     m_sigmaColorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaColorParameter->setTitle("Sigma color");
+                    m_sigmaColorParameter->setTitle(L_("Sigma color"));
                     parameters.push_back(m_sigmaColorParameter);
                     
                     m_sigmaSpaceParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_SPACE);
                     m_sigmaSpaceParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaSpaceParameter->setTitle("Sigma space");
+                    m_sigmaSpaceParameter->setTitle(L_("Sigma space"));
                     parameters.push_back(m_sigmaSpaceParameter);
                     
                 }

@@ -113,7 +113,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
@@ -130,17 +130,17 @@ namespace stromx
                 {
                     m_histMinParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MIN);
                     m_histMinParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histMinParameter->setTitle("Minimum");
+                    m_histMinParameter->setTitle(L_("Minimum"));
                     parameters.push_back(m_histMinParameter);
                     
                     m_histMaxParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MAX);
                     m_histMaxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histMaxParameter->setTitle("Maximum");
+                    m_histMaxParameter->setTitle(L_("Maximum"));
                     parameters.push_back(m_histMaxParameter);
                     
                     m_histSizeParameter = new runtime::NumericParameter<runtime::UInt32>(HIST_SIZE);
                     m_histSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histSizeParameter->setTitle("Number of bins");
+                    m_histSizeParameter->setTitle(L_("Number of bins"));
                     parameters.push_back(m_histSizeParameter);
                     
                 }

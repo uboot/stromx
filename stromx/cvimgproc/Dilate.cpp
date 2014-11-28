@@ -127,7 +127,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -146,19 +146,19 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_shapeParameter = new runtime::EnumParameter(SHAPE);
                     m_shapeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_shapeParameter->setTitle("Kernel shape");
+                    m_shapeParameter->setTitle(L_("Kernel shape"));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_RECT), L_("Rectangle")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_ELLIPSE), L_("Ellipse")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_CROSS), L_("Cross")));
@@ -166,7 +166,7 @@ namespace stromx
                     
                     m_iterationsParameter = new runtime::NumericParameter<runtime::UInt32>(ITERATIONS);
                     m_iterationsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_iterationsParameter->setTitle("Number of iterations");
+                    m_iterationsParameter->setTitle(L_("Number of iterations"));
                     m_iterationsParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_iterationsParameter);
                     
@@ -176,19 +176,19 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_shapeParameter = new runtime::EnumParameter(SHAPE);
                     m_shapeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_shapeParameter->setTitle("Kernel shape");
+                    m_shapeParameter->setTitle(L_("Kernel shape"));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_RECT), L_("Rectangle")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_ELLIPSE), L_("Ellipse")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_CROSS), L_("Cross")));
@@ -196,7 +196,7 @@ namespace stromx
                     
                     m_iterationsParameter = new runtime::NumericParameter<runtime::UInt32>(ITERATIONS);
                     m_iterationsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_iterationsParameter->setTitle("Number of iterations");
+                    m_iterationsParameter->setTitle(L_("Number of iterations"));
                     m_iterationsParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_iterationsParameter);
                     
@@ -206,19 +206,19 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_shapeParameter = new runtime::EnumParameter(SHAPE);
                     m_shapeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_shapeParameter->setTitle("Kernel shape");
+                    m_shapeParameter->setTitle(L_("Kernel shape"));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_RECT), L_("Rectangle")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_ELLIPSE), L_("Ellipse")));
                     m_shapeParameter->add(runtime::EnumDescription(runtime::Enum(MORPH_CROSS), L_("Cross")));
@@ -226,7 +226,7 @@ namespace stromx
                     
                     m_iterationsParameter = new runtime::NumericParameter<runtime::UInt32>(ITERATIONS);
                     m_iterationsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_iterationsParameter->setTitle("Number of iterations");
+                    m_iterationsParameter->setTitle(L_("Number of iterations"));
                     m_iterationsParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_iterationsParameter);
                     

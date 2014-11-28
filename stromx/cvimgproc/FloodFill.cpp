@@ -113,7 +113,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
             parameters.push_back(m_dataFlowParameter);
             
@@ -130,17 +130,17 @@ namespace stromx
                 {
                     m_seedPointXParameter = new runtime::NumericParameter<runtime::UInt32>(SEED_POINT_X);
                     m_seedPointXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_seedPointXParameter->setTitle("Seed point X");
+                    m_seedPointXParameter->setTitle(L_("Seed point X"));
                     parameters.push_back(m_seedPointXParameter);
                     
                     m_seedPointYParameter = new runtime::NumericParameter<runtime::UInt32>(SEED_POINT_Y);
                     m_seedPointYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_seedPointYParameter->setTitle("Seed point Y");
+                    m_seedPointYParameter->setTitle(L_("Seed point Y"));
                     parameters.push_back(m_seedPointYParameter);
                     
                     m_newValParameter = new runtime::NumericParameter<runtime::Float64>(NEW_VAL);
                     m_newValParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_newValParameter->setTitle("New value");
+                    m_newValParameter->setTitle(L_("New value"));
                     parameters.push_back(m_newValParameter);
                     
                 }
