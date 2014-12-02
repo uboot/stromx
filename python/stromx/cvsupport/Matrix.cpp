@@ -50,7 +50,11 @@ void exportMatrix()
         .def<void (stromx::cvsupport::Matrix::*)(const std::string &) const>("save", &stromx::cvsupport::Matrix::save)
         .def<void (stromx::cvsupport::Matrix::*)(const std::string &)>("open", &stromx::cvsupport::Matrix::open)
         .def<void (stromx::cvsupport::Matrix::*)(const unsigned int, const unsigned int, const Matrix::ValueType)>("resize", &stromx::cvsupport::Matrix::resize)
-     ;
+        .def("eye", &stromx::cvsupport::Matrix::eye)
+        .staticmethod("eye") 
+        .def("zeros", &stromx::cvsupport::Matrix::zeros)
+        .staticmethod("zeros") 
+    ;
      
     implicitly_convertible< std::auto_ptr<stromx::cvsupport::Matrix>, std::auto_ptr<Data> >();
 }
