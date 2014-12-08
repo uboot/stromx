@@ -44,7 +44,7 @@ def _memoryViewForMatrix(self):
     matrix.shape = SHAPE(matrix.rows(), matrix.cols())
     
     STRIDES = ctypes.c_ssize_t * 2
-    matrix.strides = STRIDES(matrix.cols(), 1)
+    matrix.strides = STRIDES(matrix.stride(), matrix.valueSize())
     
     if matrix.valueType() == Matrix.ValueType.INT_8:
         f = 'b'
