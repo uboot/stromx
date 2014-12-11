@@ -16,8 +16,9 @@
 
 #include "stromx/raspi/test/RaspiCamTest.h"
 #include <cppunit/TestAssert.h>
-#include <cppunit/TestAssert.h>
 #include "stromx/raspi/RaspiCam.h"
+#include "stromx/runtime/OperatorException.h"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::RaspiCamTest);
 
@@ -27,6 +28,23 @@ namespace stromx
 
     namespace raspi
     {
+        namespace
+        {
+            // Unsupported auto white balance mode
+            const int UNSUPPORTED_AWB_MODE = 100000;
+        }
+
+        void RaspiCamTest::setAndGetParameterAutoWhiteBalance(const MMAL_PARAM_AWBMODE_T& mode)
+        {
+            runtime::DataRef paramValue;
+            runtime::Enum paramValueCasted;
+            CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(mode)));
+            CPPUNIT_ASSERT_NO_THROW(paramValue = m_operator->getParameter(RaspiCam::AWB_MODE));
+            CPPUNIT_ASSERT_NO_THROW(paramValueCasted = runtime::data_cast<runtime::Enum>(paramValue));
+            CPPUNIT_ASSERT_EQUAL(MMAL_PARAM_AWBMODE_T(int(paramValueCasted)),mode);
+        }
+
+
         void RaspiCamTest::setUp()
         {
             m_operator = new OperatorTester(new RaspiCam());
@@ -52,62 +70,62 @@ namespace stromx
             m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5));
         }
 
-        void stromx::raspi::RaspiCamTest::testSetParameterAutoWhiteBalanceVideo()
-        {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
-            m_operator->initialize();
+        void RaspiCamTest::testSetAndGetParameterAutoWhiteBalanceVideo()
+        {   
+            CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO)));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->initialize());
 
-            // Test all supported modes in deactivated stage of stream
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_OFF));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SUNLIGHT));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_CLOUDY));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SHADE));
+            // Test all supported modes in deactivated stage of stream          
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_OFF);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_AUTO);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SUNLIGHT);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_CLOUDY);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SHADE);
 
             // Test unsupported mode in deactivated stage of stream
-            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(1000000)), runtime::ParameterError);
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(UNSUPPORTED_AWB_MODE)), runtime::ParameterError);
 
             // Test all supported modes in activated stage of stream
-            m_operator->activate();
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_OFF));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SUNLIGHT));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_CLOUDY));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SHADE));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_OFF);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_AUTO);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SUNLIGHT);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_CLOUDY);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SHADE);
 
             // Test unsupported mode in activated stage of stream
-            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(1000000)), runtime::ParameterError);
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(UNSUPPORTED_AWB_MODE)), runtime::ParameterError);
 
-            m_operator->deactivate();
+            CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
         }
 
-        void stromx::raspi::RaspiCamTest::testSetParameterAutoWhiteBalanceCapture()
+        void RaspiCamTest::testSetParameterAutoWhiteBalanceCapture()
         {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::STILL));
-            m_operator->initialize();
+            CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::STILL)));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->initialize());
 
             // Test all supported modes in deactivated stage of stream
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_OFF));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SUNLIGHT));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_CLOUDY));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SHADE));
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_OFF);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_AUTO);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SUNLIGHT);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_CLOUDY);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SHADE);
 
             // Test unsupported mode in deactivated stage of stream
-            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(1000000)), runtime::ParameterError);
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(UNSUPPORTED_AWB_MODE)), runtime::ParameterError);
 
             // Test all supported modes in activated stage of stream
-            m_operator->activate();
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_OFF));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SUNLIGHT));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_CLOUDY));
-            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_SHADE));
+            CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_OFF);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_AUTO);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SUNLIGHT);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_CLOUDY);
+            setAndGetParameterAutoWhiteBalance(MMAL_PARAM_AWBMODE_SHADE);
 
             // Test unsupported mode in activated stage of stream
-            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(1000000)), runtime::ParameterError);
+            CPPUNIT_ASSERT_THROW(m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(UNSUPPORTED_AWB_MODE)), runtime::ParameterError);
 
-            m_operator->deactivate();
+            CPPUNIT_ASSERT_NO_THROW(m_operator->deactivate());
         }
 
 

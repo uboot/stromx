@@ -21,6 +21,7 @@
 #include <cppunit/TestFixture.h>
 
 #include "stromx/runtime/OperatorTester.h"
+#include <interface/mmal/util/mmal_util_params.h>
 
 namespace stromx
 {
@@ -32,7 +33,7 @@ namespace stromx
             CPPUNIT_TEST(testExecute);
             CPPUNIT_TEST(testSetParameterCameraModeVideo);
             CPPUNIT_TEST(testSetParameterFramerateVideo);
-            CPPUNIT_TEST(testSetParameterAutoWhiteBalanceVideo);
+            CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideo);
             CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -46,10 +47,11 @@ namespace stromx
             void testExecute();
             void testSetParameterCameraModeVideo();
             void testSetParameterFramerateVideo();
-            void testSetParameterAutoWhiteBalanceVideo();
+            void testSetAndGetParameterAutoWhiteBalanceVideo();
             void testSetParameterAutoWhiteBalanceCapture();
 
         private:
+            void setAndGetParameterAutoWhiteBalance(const MMAL_PARAM_AWBMODE_T& mode);
             runtime::OperatorTester* m_operator;
         };
     }

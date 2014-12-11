@@ -128,6 +128,56 @@ namespace stromx
                         }
                     }
                     break;
+                    case RESOLUTION:
+                    {
+                        const runtime::Enum& castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(castedValue == RaspiCam::VGA)
+                        {
+                            m_currentPort->format->es->video.width = 640;
+                            m_currentPort->format->es->video.height = 480;
+                            if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
+                            {
+                                cleanUp();
+                                throw runtime::OperatorAllocationFailed("Raspi","Could not commit port format.");
+                            }
+
+                            m_resolutionWidth = 640;
+                            m_resolutionHeight = 480;
+                            break;
+                        }
+                        if(castedValue == RaspiCam::HD720)
+                        {
+                            m_currentPort->format->es->video.width = 1280;
+                            m_currentPort->format->es->video.height = 720;
+
+                            m_resolutionWidth = 1280;
+                            m_resolutionHeight = 720;
+                            break;
+                        }
+                        if(castedValue == RaspiCam::HD1080)
+                        {
+                            m_resolutionWidth = 1920;
+                            m_resolutionHeight = 1088;
+                            m_currentPort->format->es->video.width = m_resolutionWidth;
+                            m_currentPort->format->es->video.height = m_resolutionHeight;
+
+                            m_raspicamConfig->max_stills_w = m_resolutionWidth;
+                            m_raspicamConfig->max_stills_h = m_resolutionHeight;
+                            m_raspicamConfig->max_preview_video_w = m_resolutionWidth;
+                            m_raspicamConfig->max_preview_video_h = m_resolutionHeight;
+
+                            std::cout << "Debug start line" << std::endl;
+                            status = mmal_port_format_commit(m_currentPort);
+                            std::cout << "Debug end line" << std::endl;
+                            if(status != MMAL_SUCCESS)
+                            {
+                                cleanUp();
+                                std::cout << "Scheiße port format commit" << std::endl;
+                                throw runtime::OperatorAllocationFailed("Raspi","Sch.");
+                            }
+                            break;
+                        }
+                    }
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -172,6 +222,20 @@ namespace stromx
                             throw runtime::ParameterError(parameter(id), *this);
                         }
                     }
+                    case RESOLUTION:
+                    {
+                        unsigned int width = m_currentPort->format->es->video.width;
+                        unsigned int height = m_currentPort->format->es->video.height;
+                        if(width == 640 && height == 480)
+                            return runtime::Enum(RaspiCam::VGA);
+                        if(width == 1280 && height == 720)
+                            return runtime::Enum(RaspiCam::HD720);
+                        if(width == 1920 && height == 1088)
+                            return runtime::Enum(RaspiCam::HD1080);
+                        
+                        // Not registered resolution
+                        throw runtime::ParameterError(parameter(id), *this);                       
+                    }
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -184,8 +248,9 @@ namespace stromx
             m_outBufferPool(NULL),
             m_outQueue(NULL),
             m_currentPort(NULL),
-            //m_raspicamCapturePort(NULL),
-            //m_raspicamVideoPort(NULL),
+            m_raspicamConfig(NULL),
+            m_resolutionWidth(1280),
+            m_resolutionHeight(720),
             m_cameraModeParameter(NULL),
             m_cameraMode(RaspiCam::VIDEO),
             m_frameIndex(0)
@@ -194,6 +259,7 @@ namespace stromx
 
         void RaspiCam::initialize()
         {
+
             //Basic setup/initialization of mmal component camera
             MMAL_STATUS_T status;
 
@@ -218,20 +284,37 @@ namespace stromx
             // Default settings at initialization
             MMAL_PARAMETER_CAMERA_CONFIG_T raspicamConfig;
             raspicamConfig.hdr.id = MMAL_PARAMETER_CAMERA_CONFIG;
-            raspicamConfig.hdr.size = sizeof(raspicamConfig);
-            raspicamConfig.max_stills_w = 1280;
-            raspicamConfig.max_stills_h = 720;
+            raspicamConfig.hdr.size = sizeof(MMAL_PARAMETER_CAMERA_CONFIG_T);
+            raspicamConfig.max_stills_w = 1;
+            raspicamConfig.max_stills_h = m_resolutionHeight;
             raspicamConfig.stills_yuv422 = 0;
             raspicamConfig.one_shot_stills = 0;
-            raspicamConfig.max_preview_video_w = 1280;
-            raspicamConfig.max_preview_video_h = 720;
+            raspicamConfig.max_preview_video_w = m_resolutionWidth;
+            raspicamConfig.max_preview_video_h = m_resolutionHeight;
             raspicamConfig.num_preview_video_frames = 3;
             raspicamConfig.stills_capture_circular_buffer_height = 3;
             raspicamConfig.fast_preview_resume = 0;
             raspicamConfig.use_stc_timestamp = MMAL_PARAM_TIMESTAMP_MODE_RESET_STC;
 
+status = mmal_port_parameter_set(m_raspicam->control, &raspicamConfig.hdr);
+            /*m_raspicamConfig = new MMAL_PARAMETER_CAMERA_CONFIG_T;
+            m_raspicamConfig->hdr.id = MMAL_PARAMETER_CAMERA_CONFIG;
+            m_raspicamConfig->hdr.size = sizeof(MMAL_PARAMETER_CAMERA_CONFIG_T);
+            m_raspicamConfig->max_stills_w = m_resolutionWidth;
+            m_raspicamConfig->max_stills_h = m_resolutionHeight;
+            m_raspicamConfig->stills_yuv422 = 0;
+            m_raspicamConfig->one_shot_stills = 0;
+            m_raspicamConfig->max_preview_video_w = m_resolutionWidth;
+            m_raspicamConfig->max_preview_video_h = m_resolutionHeight;
+            m_raspicamConfig->num_preview_video_frames = 3;
+            m_raspicamConfig->stills_capture_circular_buffer_height = 3;
+            m_raspicamConfig->fast_preview_resume = 0;
+            m_raspicamConfig->use_stc_timestamp = MMAL_PARAM_TIMESTAMP_MODE_RESET_STC; 
+
             // Set basic parameters
-            mmal_port_parameter_set(m_raspicam->control, &raspicamConfig.hdr);
+            status = mmal_port_parameter_set(m_raspicam->control, &m_raspicamConfig->hdr);*/
+if(status != MMAL_SUCCESS)
+    std::cout << "leider nein1" << std::endl;
 
             switch(m_cameraMode)
             {
@@ -245,12 +328,12 @@ namespace stromx
                     //Set up the format
                     raspicamVideoFormat->encoding_variant = MMAL_ENCODING_BGR24;//MMAL_ENCODING_I420;
                     raspicamVideoFormat->encoding = MMAL_ENCODING_BGR24;//MMAL_ENCODING_OPAQUE;
-                    raspicamVideoFormat->es->video.width = 1280;
-                    raspicamVideoFormat->es->video.height = 720;
+                    raspicamVideoFormat->es->video.width = m_resolutionWidth;
+                    raspicamVideoFormat->es->video.height = m_resolutionHeight;
                     raspicamVideoFormat->es->video.crop.x = 0;
                     raspicamVideoFormat->es->video.crop.y = 0;
-                    raspicamVideoFormat->es->video.crop.width = 1280;
-                    raspicamVideoFormat->es->video.crop.height = 720;
+                    raspicamVideoFormat->es->video.crop.width = m_resolutionWidth;
+                    raspicamVideoFormat->es->video.crop.height = m_resolutionHeight;
                     raspicamVideoFormat->es->video.frame_rate.num = 1;
                     raspicamVideoFormat->es->video.frame_rate.den = 1;
                     //m_raspicamVideoPort->buffer_size = 1280*720*12/8;
@@ -268,6 +351,7 @@ namespace stromx
                 break;
                 case STILL:
                 {
+
                     //Get the pointer
                     m_currentPort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
                     MMAL_ES_FORMAT_T* raspicamCaptureFormat = m_currentPort->format;
@@ -276,12 +360,12 @@ namespace stromx
                     //Set up the format
                     raspicamCaptureFormat->encoding_variant = MMAL_ENCODING_BGR24;
                     raspicamCaptureFormat->encoding = MMAL_ENCODING_BGR24;
-                    raspicamCaptureFormat->es->video.width = 1280;
-                    raspicamCaptureFormat->es->video.height = 720;
+                    raspicamCaptureFormat->es->video.width = m_resolutionWidth;
+                    raspicamCaptureFormat->es->video.height = m_resolutionHeight;
                     raspicamCaptureFormat->es->video.crop.x = 0;
                     raspicamCaptureFormat->es->video.crop.y = 0;
-                    raspicamCaptureFormat->es->video.crop.width = 1280;
-                    raspicamCaptureFormat->es->video.crop.height = 720;
+                    raspicamCaptureFormat->es->video.crop.width = m_resolutionWidth;
+                    raspicamCaptureFormat->es->video.crop.height = m_resolutionHeight;
                     raspicamCaptureFormat->es->video.frame_rate.num = 1;
                     raspicamCaptureFormat->es->video.frame_rate.den = 1;
                     // m_raspicamCapturePort->buffer_size = 1280*720*12/8;
@@ -341,12 +425,22 @@ namespace stromx
             autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_SHADE), ("Shade")));
             parameters.push_back(autoWhiteBalance);
 
+            runtime::EnumParameter* resolutionParameter = new runtime::EnumParameter(RESOLUTION);
+            resolutionParameter->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
+            resolutionParameter->setTitle(("Resolution"));
+            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(VGA), ("VGA (640x480)")));
+            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(HD720), ("HD (1280x720)")));
+            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(HD1080), ("HD (1920x1080)")));
+            parameters.push_back(resolutionParameter);
+
             return parameters;
         }
 
 
         RaspiCam::~RaspiCam()
         {
+            if(m_raspicamConfig)
+                delete m_raspicamConfig;
         }
 
         void RaspiCam::cleanUp()
@@ -357,6 +451,8 @@ namespace stromx
                 mmal_pool_destroy(m_outBufferPool);
             if(m_outQueue)
                 mmal_queue_destroy(m_outQueue);
+            if(m_raspicamConfig)
+                delete m_raspicamConfig;
         }
 
         void RaspiCam::activate()
@@ -387,7 +483,8 @@ namespace stromx
                 //}
 
                 // Create output buffer pool
-                m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_currentPort->buffer_size_recommended);
+                m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_resolutionWidth*m_resolutionHeight*3);      
+                //m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_currentPort->buffer_size_recommended);
                 //m_outBufferPool = mmal_port_pool_create(currentPort, currentPort->buffer_num, currentPort->buffer_size_recommended);
 
                 if(m_outBufferPool == NULL)
@@ -508,7 +605,7 @@ namespace stromx
             MMAL_BUFFER_HEADER_T*  bufferNew;
 
             ++m_frameIndex;
-
+            std::cout << "Width = " << m_resolutionWidth << ", Height = " << m_resolutionHeight << std::endl;
             try
             {
                 provider.unlockParameters();
@@ -537,9 +634,9 @@ namespace stromx
                 if(recycleBuffer)
                 {
                     // Resize the recycling buffer to fit current image size constraints
-                    recycleBuffer->resize(1280,720,runtime::Image::BGR_24);
+                    recycleBuffer->resize(m_resolutionWidth,m_resolutionHeight,runtime::Image::BGR_24);
                     mmal_buffer_header_mem_lock(buffer);
-                    memcpy(recycleBuffer->data(), buffer->data, 1280*720*3);
+                    memcpy(recycleBuffer->data(), buffer->data, m_resolutionWidth*m_resolutionHeight*3);
                     mmal_buffer_header_mem_unlock(buffer);
                     mmal_buffer_header_release(buffer);
 
