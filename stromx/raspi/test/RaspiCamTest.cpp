@@ -129,6 +129,12 @@ namespace stromx
         }
 
 
+        void RaspiCamTest::testSetResolution()
+        {
+            m_operator->initialize();
+            m_operator->setParameter(RaspiCam::RESOLUTION,Enum(RaspiCam::VGA));
+        }
+        
         void RaspiCamTest::tearDown()
         {
             delete m_operator;

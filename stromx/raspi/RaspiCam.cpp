@@ -268,12 +268,12 @@ namespace stromx
             status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &m_raspicam);
             if(status != MMAL_SUCCESS)
             {
-                cleanUp();
+                deinitialize();
                 throw runtime::OperatorAllocationFailed("Raspi","Could not create mmal default camera.");
             }
             if(!m_raspicam->output_num)
             {
-                cleanUp();
+                deinitialize();
                 throw runtime::OperatorAllocationFailed("Raspi","Default camera has no outputs.");
             }
 
@@ -285,7 +285,7 @@ namespace stromx
             MMAL_PARAMETER_CAMERA_CONFIG_T raspicamConfig;
             raspicamConfig.hdr.id = MMAL_PARAMETER_CAMERA_CONFIG;
             raspicamConfig.hdr.size = sizeof(MMAL_PARAMETER_CAMERA_CONFIG_T);
-            raspicamConfig.max_stills_w = 1;
+            raspicamConfig.max_stills_w = m_resolutionWidth;
             raspicamConfig.max_stills_h = m_resolutionHeight;
             raspicamConfig.stills_yuv422 = 0;
             raspicamConfig.one_shot_stills = 0;
@@ -344,8 +344,8 @@ if(status != MMAL_SUCCESS)
                     if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
                     //if(mmal_port_format_commit(m_raspicamVideoPort) != MMAL_SUCCESS)
                     {
-                        cleanUp();
-                        throw runtime::OperatorAllocationFailed("Raspi","Could not commit video port format.");
+                        deinitialize();
+                        throw runtime::OperatorError(*this,"Could not commit video port format.");
                     }
                 }
                 break;
@@ -376,8 +376,8 @@ if(status != MMAL_SUCCESS)
                     if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
                     //if(mmal_port_format_commit(m_raspicamCapturePort) != MMAL_SUCCESS)
                     {
-                        cleanUp();
-                        throw runtime::OperatorAllocationFailed("Raspi","Could not commit capture port format.");
+                        deinitialize();
+                        throw runtime::OperatorError(*this,"Could not commit capture port format.");
                     }
                 }
                 break;
@@ -393,9 +393,11 @@ if(status != MMAL_SUCCESS)
 
         void RaspiCam::deinitialize()
         {
+            m_currentPort = NULL;
             if(m_raspicam)
             {
                 mmal_component_destroy(m_raspicam);
+                m_raspicam = NULL;
             }
             bcm_host_deinit();
             OperatorKernel::deinitialize();
@@ -489,7 +491,7 @@ if(status != MMAL_SUCCESS)
 
                 if(m_outBufferPool == NULL)
                 {
-                    cleanUp();
+                    deactivate();
                     throw runtime::OperatorAllocationFailed("Raspi","Could not create ouput buffer pool.");
                 }
 
@@ -497,7 +499,7 @@ if(status != MMAL_SUCCESS)
                 m_outQueue = mmal_queue_create();
                 if(m_outQueue == NULL)
                 {
-                    cleanUp();
+                    deactivate();
                     throw runtime::OperatorAllocationFailed("Raspi","Could not create output buffer queue.");
                 }
                 m_currentPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
@@ -507,7 +509,7 @@ if(status != MMAL_SUCCESS)
                 status = mmal_port_enable(m_currentPort, callbackOutVideoPort);
                 if(status != MMAL_SUCCESS)
                 {
-                    cleanUp();
+                    deactivate();
                     throw runtime::OperatorAllocationFailed("Raspi","Could not enable port of camera");
                 }
 
@@ -536,7 +538,7 @@ if(status != MMAL_SUCCESS)
                 status = mmal_component_enable(m_raspicam);
                 if(status != MMAL_SUCCESS)
                 {
-                    cleanUp();
+                    deactivate();
                     throw runtime::OperatorAllocationFailed("Raspi","Could not enable camera.");
                 }
                 if(m_currentPort->is_enabled)
