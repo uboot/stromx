@@ -27,7 +27,6 @@ class MMAL_PORT_T;
 class MMAL_POOL_T;
 class MMAL_BUFFER_HEADER_T;
 class MMAL_QUEUE_T;
-class MMAL_PARAMETER_CAMERA_CONFIG_T;
 
 namespace stromx
 {
@@ -52,15 +51,7 @@ namespace stromx
             {
                 CAMERA_MODE,
                 FRAME_RATE,
-                AWB_MODE,
-                RESOLUTION
-            };
-
-            enum ResolutionId
-            {
-                VGA,
-                HD720,
-                HD1080
+                AWB_MODE
             };
 
             RaspiCam();
@@ -91,9 +82,6 @@ namespace stromx
             MMAL_POOL_T* m_outBufferPool;
             MMAL_QUEUE_T* m_outQueue;
             MMAL_PORT_T* m_currentPort;
-            MMAL_PARAMETER_CAMERA_CONFIG_T* m_raspicamConfig;
-            unsigned int m_resolutionWidth;
-            unsigned int m_resolutionHeight;
 
             runtime::RecycleAccess m_recycleBuffers;
             runtime::EnumParameter* m_cameraModeParameter;

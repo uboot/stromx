@@ -128,56 +128,6 @@ namespace stromx
                         }
                     }
                     break;
-                    case RESOLUTION:
-                    {
-                        const runtime::Enum& castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(castedValue == RaspiCam::VGA)
-                        {
-                            m_currentPort->format->es->video.width = 640;
-                            m_currentPort->format->es->video.height = 480;
-                            if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
-                            {
-                                cleanUp();
-                                throw runtime::OperatorAllocationFailed("Raspi","Could not commit port format.");
-                            }
-
-                            m_resolutionWidth = 640;
-                            m_resolutionHeight = 480;
-                            break;
-                        }
-                        if(castedValue == RaspiCam::HD720)
-                        {
-                            m_currentPort->format->es->video.width = 1280;
-                            m_currentPort->format->es->video.height = 720;
-
-                            m_resolutionWidth = 1280;
-                            m_resolutionHeight = 720;
-                            break;
-                        }
-                        if(castedValue == RaspiCam::HD1080)
-                        {
-                            m_resolutionWidth = 1920;
-                            m_resolutionHeight = 1088;
-                            m_currentPort->format->es->video.width = m_resolutionWidth;
-                            m_currentPort->format->es->video.height = m_resolutionHeight;
-
-                            m_raspicamConfig->max_stills_w = m_resolutionWidth;
-                            m_raspicamConfig->max_stills_h = m_resolutionHeight;
-                            m_raspicamConfig->max_preview_video_w = m_resolutionWidth;
-                            m_raspicamConfig->max_preview_video_h = m_resolutionHeight;
-
-                            std::cout << "Debug start line" << std::endl;
-                            status = mmal_port_format_commit(m_currentPort);
-                            std::cout << "Debug end line" << std::endl;
-                            if(status != MMAL_SUCCESS)
-                            {
-                                cleanUp();
-                                std::cout << "Scheiße port format commit" << std::endl;
-                                throw runtime::OperatorAllocationFailed("Raspi","Sch.");
-                            }
-                            break;
-                        }
-                    }
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -222,20 +172,6 @@ namespace stromx
                             throw runtime::ParameterError(parameter(id), *this);
                         }
                     }
-                    case RESOLUTION:
-                    {
-                        unsigned int width = m_currentPort->format->es->video.width;
-                        unsigned int height = m_currentPort->format->es->video.height;
-                        if(width == 640 && height == 480)
-                            return runtime::Enum(RaspiCam::VGA);
-                        if(width == 1280 && height == 720)
-                            return runtime::Enum(RaspiCam::HD720);
-                        if(width == 1920 && height == 1088)
-                            return runtime::Enum(RaspiCam::HD1080);
-                        
-                        // Not registered resolution
-                        throw runtime::ParameterError(parameter(id), *this);                       
-                    }
                     default:
                         throw runtime::WrongParameterId(id,*this);
                 }
@@ -248,9 +184,6 @@ namespace stromx
             m_outBufferPool(NULL),
             m_outQueue(NULL),
             m_currentPort(NULL),
-            m_raspicamConfig(NULL),
-            m_resolutionWidth(1280),
-            m_resolutionHeight(720),
             m_cameraModeParameter(NULL),
             m_cameraMode(RaspiCam::VIDEO),
             m_frameIndex(0)
@@ -268,53 +201,14 @@ namespace stromx
             status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &m_raspicam);
             if(status != MMAL_SUCCESS)
             {
-                cleanUp();
-                throw runtime::OperatorAllocationFailed("Raspi","Could not create mmal default camera.");
+                deinitialize();
+                throw runtime::OperatorError(*this,"Could not create mmal default camera.");
             }
             if(!m_raspicam->output_num)
             {
-                cleanUp();
-                throw runtime::OperatorAllocationFailed("Raspi","Default camera has no outputs.");
+                deinitialize();
+                throw runtime::OperatorError(*this,"Default mmal camera has no outputs.");
             }
-
-            //m_raspicamVideoPort = m_raspicam->output[MMAL_CAMERA_VIDEO_PORT];
-            //MMAL_PORT_T *raspicamPreviewPort = m_raspicam->output[MMAL_CAMERA_PREVIEW_PORT];
-            //m_raspicamCapturePort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
-
-            // Default settings at initialization
-            MMAL_PARAMETER_CAMERA_CONFIG_T raspicamConfig;
-            raspicamConfig.hdr.id = MMAL_PARAMETER_CAMERA_CONFIG;
-            raspicamConfig.hdr.size = sizeof(MMAL_PARAMETER_CAMERA_CONFIG_T);
-            raspicamConfig.max_stills_w = 1;
-            raspicamConfig.max_stills_h = m_resolutionHeight;
-            raspicamConfig.stills_yuv422 = 0;
-            raspicamConfig.one_shot_stills = 0;
-            raspicamConfig.max_preview_video_w = m_resolutionWidth;
-            raspicamConfig.max_preview_video_h = m_resolutionHeight;
-            raspicamConfig.num_preview_video_frames = 3;
-            raspicamConfig.stills_capture_circular_buffer_height = 3;
-            raspicamConfig.fast_preview_resume = 0;
-            raspicamConfig.use_stc_timestamp = MMAL_PARAM_TIMESTAMP_MODE_RESET_STC;
-
-status = mmal_port_parameter_set(m_raspicam->control, &raspicamConfig.hdr);
-            /*m_raspicamConfig = new MMAL_PARAMETER_CAMERA_CONFIG_T;
-            m_raspicamConfig->hdr.id = MMAL_PARAMETER_CAMERA_CONFIG;
-            m_raspicamConfig->hdr.size = sizeof(MMAL_PARAMETER_CAMERA_CONFIG_T);
-            m_raspicamConfig->max_stills_w = m_resolutionWidth;
-            m_raspicamConfig->max_stills_h = m_resolutionHeight;
-            m_raspicamConfig->stills_yuv422 = 0;
-            m_raspicamConfig->one_shot_stills = 0;
-            m_raspicamConfig->max_preview_video_w = m_resolutionWidth;
-            m_raspicamConfig->max_preview_video_h = m_resolutionHeight;
-            m_raspicamConfig->num_preview_video_frames = 3;
-            m_raspicamConfig->stills_capture_circular_buffer_height = 3;
-            m_raspicamConfig->fast_preview_resume = 0;
-            m_raspicamConfig->use_stc_timestamp = MMAL_PARAM_TIMESTAMP_MODE_RESET_STC; 
-
-            // Set basic parameters
-            status = mmal_port_parameter_set(m_raspicam->control, &m_raspicamConfig->hdr);*/
-if(status != MMAL_SUCCESS)
-    std::cout << "leider nein1" << std::endl;
 
             switch(m_cameraMode)
             {
@@ -323,29 +217,25 @@ if(status != MMAL_SUCCESS)
                     //Get the pointer
                     m_currentPort = m_raspicam->output[MMAL_CAMERA_VIDEO_PORT];
                     MMAL_ES_FORMAT_T* raspicamVideoFormat = m_currentPort->format;
-                    //MMAL_ES_FORMAT_T* raspicamVideoFormat = m_raspicamVideoPort->format;
 
                     //Set up the format
                     raspicamVideoFormat->encoding_variant = MMAL_ENCODING_BGR24;//MMAL_ENCODING_I420;
                     raspicamVideoFormat->encoding = MMAL_ENCODING_BGR24;//MMAL_ENCODING_OPAQUE;
-                    raspicamVideoFormat->es->video.width = m_resolutionWidth;
-                    raspicamVideoFormat->es->video.height = m_resolutionHeight;
+                    raspicamVideoFormat->es->video.width = 1280;
+                    raspicamVideoFormat->es->video.height = 720;
                     raspicamVideoFormat->es->video.crop.x = 0;
                     raspicamVideoFormat->es->video.crop.y = 0;
-                    raspicamVideoFormat->es->video.crop.width = m_resolutionWidth;
-                    raspicamVideoFormat->es->video.crop.height = m_resolutionHeight;
+                    raspicamVideoFormat->es->video.crop.width = 1280;
+                    raspicamVideoFormat->es->video.crop.height = 720;
                     raspicamVideoFormat->es->video.frame_rate.num = 1;
                     raspicamVideoFormat->es->video.frame_rate.den = 1;
-                    //m_raspicamVideoPort->buffer_size = 1280*720*12/8;
                     m_currentPort->buffer_num = 10;
-                    //m_raspicamVideoPort->buffer_num = 10;
 
                     //Commit port format
                     if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
-                    //if(mmal_port_format_commit(m_raspicamVideoPort) != MMAL_SUCCESS)
                     {
-                        cleanUp();
-                        throw runtime::OperatorAllocationFailed("Raspi","Could not commit video port format.");
+                        deinitialize();
+                        throw runtime::OperatorError(*this,"Could not commit video port format.");
                     }
                 }
                 break;
@@ -355,34 +245,30 @@ if(status != MMAL_SUCCESS)
                     //Get the pointer
                     m_currentPort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
                     MMAL_ES_FORMAT_T* raspicamCaptureFormat = m_currentPort->format;
-                    //MMAL_ES_FORMAT_T* raspicamCaptureFormat = m_raspicamCapturePort->format;
 
                     //Set up the format
                     raspicamCaptureFormat->encoding_variant = MMAL_ENCODING_BGR24;
                     raspicamCaptureFormat->encoding = MMAL_ENCODING_BGR24;
-                    raspicamCaptureFormat->es->video.width = m_resolutionWidth;
-                    raspicamCaptureFormat->es->video.height = m_resolutionHeight;
+                    raspicamCaptureFormat->es->video.width = 1280;
+                    raspicamCaptureFormat->es->video.height = 720;
                     raspicamCaptureFormat->es->video.crop.x = 0;
                     raspicamCaptureFormat->es->video.crop.y = 0;
-                    raspicamCaptureFormat->es->video.crop.width = m_resolutionWidth;
-                    raspicamCaptureFormat->es->video.crop.height = m_resolutionHeight;
+                    raspicamCaptureFormat->es->video.crop.width = 1280;
+                    raspicamCaptureFormat->es->video.crop.height = 720;
                     raspicamCaptureFormat->es->video.frame_rate.num = 1;
                     raspicamCaptureFormat->es->video.frame_rate.den = 1;
-                    // m_raspicamCapturePort->buffer_size = 1280*720*12/8;
                     m_currentPort->buffer_num = 3;
-                    //m_raspicamCapturePort->buffer_num = 3;
 
                     // Commit port format
                     if(mmal_port_format_commit(m_currentPort) != MMAL_SUCCESS)
-                    //if(mmal_port_format_commit(m_raspicamCapturePort) != MMAL_SUCCESS)
                     {
-                        cleanUp();
-                        throw runtime::OperatorAllocationFailed("Raspi","Could not commit capture port format.");
+                        deinitialize();
+                        throw runtime::OperatorError(*this,"Could not commit capture port format.");
                     }
                 }
                 break;
                 default:
-                    throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
+                    throw runtime::WrongParameterValue(parameter(m_cameraMode), *this);
 
             }
 
@@ -393,9 +279,11 @@ if(status != MMAL_SUCCESS)
 
         void RaspiCam::deinitialize()
         {
+            m_currentPort = NULL;
             if(m_raspicam)
             {
                 mmal_component_destroy(m_raspicam);
+                m_raspicam = NULL;
             }
             bcm_host_deinit();
             OperatorKernel::deinitialize();
@@ -425,22 +313,12 @@ if(status != MMAL_SUCCESS)
             autoWhiteBalance->add(runtime::EnumDescription(runtime::Enum(MMAL_PARAM_AWBMODE_SHADE), ("Shade")));
             parameters.push_back(autoWhiteBalance);
 
-            runtime::EnumParameter* resolutionParameter = new runtime::EnumParameter(RESOLUTION);
-            resolutionParameter->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
-            resolutionParameter->setTitle(("Resolution"));
-            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(VGA), ("VGA (640x480)")));
-            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(HD720), ("HD (1280x720)")));
-            resolutionParameter->add(runtime::EnumDescription(runtime::Enum(HD1080), ("HD (1920x1080)")));
-            parameters.push_back(resolutionParameter);
-
             return parameters;
         }
 
 
         RaspiCam::~RaspiCam()
         {
-            if(m_raspicamConfig)
-                delete m_raspicamConfig;
         }
 
         void RaspiCam::cleanUp()
@@ -451,8 +329,6 @@ if(status != MMAL_SUCCESS)
                 mmal_pool_destroy(m_outBufferPool);
             if(m_outQueue)
                 mmal_queue_destroy(m_outQueue);
-            if(m_raspicamConfig)
-                delete m_raspicamConfig;
         }
 
         void RaspiCam::activate()
@@ -469,89 +345,51 @@ if(status != MMAL_SUCCESS)
                 // allocate one buffer and add it to the recycler
                 m_recycleBuffers.add(runtime::DataContainer(new cvsupport::Image(0)));
 
-                //MMAL_PORT_T* currentPort = NULL;
-                //switch (m_cameraMode)
-                //{
-                //    case VIDEO:
-                //        currentPort = m_raspicamVideoPort;
-                //        break;
-                //    case STILL:
-                //        currentPort = m_raspicamCapturePort;
-                //        break;
-                //    default:
-                //        throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
-                //}
-
                 // Create output buffer pool
-                m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_resolutionWidth*m_resolutionHeight*3);      
-                //m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_currentPort->buffer_size_recommended);
-                //m_outBufferPool = mmal_port_pool_create(currentPort, currentPort->buffer_num, currentPort->buffer_size_recommended);
-
+                m_outBufferPool = mmal_port_pool_create(m_currentPort, m_currentPort->buffer_num, m_currentPort->buffer_size_recommended);
                 if(m_outBufferPool == NULL)
                 {
-                    cleanUp();
-                    throw runtime::OperatorAllocationFailed("Raspi","Could not create ouput buffer pool.");
+                    deactivate();
+                    throw runtime::OperatorError(*this,"Could not create ouput buffer pool.");
                 }
 
                 // Create output buffer queue
                 m_outQueue = mmal_queue_create();
                 if(m_outQueue == NULL)
                 {
-                    cleanUp();
-                    throw runtime::OperatorAllocationFailed("Raspi","Could not create output buffer queue.");
+                    deactivate();
+                    throw runtime::OperatorError(*this,"Could not create output buffer queue.");
                 }
                 m_currentPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
-                //currentPort->userdata = (MMAL_PORT_USERDATA_T*)m_outQueue;
 
                 // Enable port
                 status = mmal_port_enable(m_currentPort, callbackOutVideoPort);
                 if(status != MMAL_SUCCESS)
                 {
-                    cleanUp();
-                    throw runtime::OperatorAllocationFailed("Raspi","Could not enable port of camera");
+                    deactivate();
+                    throw runtime::OperatorError(*this,"Could not enable port of camera");
                 }
 
-                //switch (m_cameraMode)
-                //{
-                //    case VIDEO:
-                //        status = mmal_port_enable(m_raspicamVideoPort, callbackOutVideoPort);               
-                //        if(status != MMAL_SUCCESS)
-                //        {
-                //            cleanUp();
-                //            throw runtime::OperatorAllocationFailed("Raspi","Could not enable video port of camera");
-                //        }
-                //        break;
-                //    case STILL:
-                //        status = mmal_port_enable(m_raspicamCapturePort, callbackOutVideoPort);               
-                //        if(status != MMAL_SUCCESS)
-                //        {
-                //            cleanUp();
-                //            throw runtime::OperatorAllocationFailed("Raspi","Could not enable capture port of camera");
-                //        }
-                //        break;
-                //    default:
-                //        throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
-                //}
-
+                // Enable camera component
                 status = mmal_component_enable(m_raspicam);
                 if(status != MMAL_SUCCESS)
                 {
-                    cleanUp();
-                    throw runtime::OperatorAllocationFailed("Raspi","Could not enable camera.");
+                    deactivate();
+                    throw runtime::OperatorError(*this,"Could not enable camera.");
                 }
+
+                // Send buffer to enabled port
                 if(m_currentPort->is_enabled)
-                //if(currentPort->is_enabled)
                 {
                     MMAL_BUFFER_HEADER_T*  bufferNew;
                     while((bufferNew = mmal_queue_get(m_outBufferPool->queue)) != NULL)
                     {
                         mmal_port_send_buffer(m_currentPort, bufferNew);
-                        //mmal_port_send_buffer(currentPort, bufferNew);
                     }
                 }
+
                 // Activate capture function of port
                 mmal_port_parameter_set_boolean(m_currentPort,MMAL_PARAMETER_CAPTURE, 1);
-                //mmal_port_parameter_set_boolean(currentPort,MMAL_PARAMETER_CAPTURE, 1);
         }
 
         void RaspiCam::deactivate()
@@ -562,20 +400,6 @@ if(status != MMAL_SUCCESS)
             mmal_port_parameter_set_boolean(m_currentPort,MMAL_PARAMETER_CAPTURE, 0);
             status = mmal_port_disable(m_currentPort);
 
-            //switch (m_cameraMode)
-            //{
-            //    case VIDEO:
-            //        mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT],MMAL_PARAMETER_CAPTURE, 0);
-            //        status = mmal_port_disable(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]);
-            //        break;
-            //    case STILL:
-            //        mmal_port_parameter_set_boolean(m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT],MMAL_PARAMETER_CAPTURE,0);
-            //        status = mmal_port_disable(m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT]);
-            //        break;
-            //    default:
-            //        throw runtime::WrongParameterValue(parameter(CAMERA_MODE), *this);
-            //}
-
             // Deactivate component
             status = mmal_component_disable(m_raspicam);
 
@@ -584,9 +408,7 @@ if(status != MMAL_SUCCESS)
             m_outQueue = NULL;
 
             // Destroy buffers
-            // MMAL buffers
             mmal_port_pool_destroy(m_currentPort, m_outBufferPool);
-            //mmal_port_pool_destroy(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT], m_outBufferPool);
             m_outBufferPool = NULL;
 
             // Stromx buffers (recycling)
@@ -605,7 +427,6 @@ if(status != MMAL_SUCCESS)
             MMAL_BUFFER_HEADER_T*  bufferNew;
 
             ++m_frameIndex;
-            std::cout << "Width = " << m_resolutionWidth << ", Height = " << m_resolutionHeight << std::endl;
             try
             {
                 provider.unlockParameters();
@@ -634,9 +455,10 @@ if(status != MMAL_SUCCESS)
                 if(recycleBuffer)
                 {
                     // Resize the recycling buffer to fit current image size constraints
-                    recycleBuffer->resize(m_resolutionWidth,m_resolutionHeight,runtime::Image::BGR_24);
+                    // TODO: potential segmentation fault caused by fixed resolution
+                    recycleBuffer->resize(1280,720,runtime::Image::BGR_24);
                     mmal_buffer_header_mem_lock(buffer);
-                    memcpy(recycleBuffer->data(), buffer->data, m_resolutionWidth*m_resolutionHeight*3);
+                    memcpy(recycleBuffer->data(), buffer->data, 1280*720*3);
                     mmal_buffer_header_mem_unlock(buffer);
                     mmal_buffer_header_release(buffer);
 
@@ -653,13 +475,11 @@ if(status != MMAL_SUCCESS)
                 }
             }
             if(m_currentPort->is_enabled)
-            //if(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT]->is_enabled)
             {
                 bufferNew = mmal_queue_get(m_outBufferPool->queue);
                 if(bufferNew)
                 {
                     status = mmal_port_send_buffer(m_currentPort, bufferNew);
-                    //status = mmal_port_send_buffer(m_raspicam->output[MMAL_CAMERA_VIDEO_PORT], bufferNew);
                 }
 
                 if(!bufferNew || status != MMAL_SUCCESS)

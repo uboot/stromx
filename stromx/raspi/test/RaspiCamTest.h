@@ -30,10 +30,19 @@ namespace stromx
         class RaspiCamTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (RaspiCamTest);
+            CPPUNIT_TEST(testInitialize);
+            CPPUNIT_TEST(testDeinitialize);
+            CPPUNIT_TEST(testReInitialize);
+            CPPUNIT_TEST(testActivate);
+            CPPUNIT_TEST(testDeactivate);
+            CPPUNIT_TEST(testReactivate);
             CPPUNIT_TEST(testExecute);
             CPPUNIT_TEST(testSetParameterCameraModeVideo);
+            CPPUNIT_TEST(testGetParameterCameraModeVideo);
             CPPUNIT_TEST(testSetParameterFramerateVideo);
-            CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideo);
+            CPPUNIT_TEST(testGetParameterFramerateVideo);
+            CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoInitialized);
+            CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoActivated);
             CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -44,10 +53,19 @@ namespace stromx
             void tearDown();
 
         protected:
+            void testInitialize();
+            void testDeinitialize();
+            void testReInitialize();
+            void testActivate();
+            void testDeactivate();
+            void testReactivate();
             void testExecute();
             void testSetParameterCameraModeVideo();
+            void testGetParameterCameraModeVideo();
             void testSetParameterFramerateVideo();
-            void testSetAndGetParameterAutoWhiteBalanceVideo();
+            void testGetParameterFramerateVideo();
+            void testSetAndGetParameterAutoWhiteBalanceVideoInitialized();
+            void testSetAndGetParameterAutoWhiteBalanceVideoActivated();
             void testSetParameterAutoWhiteBalanceCapture();
 
         private:
