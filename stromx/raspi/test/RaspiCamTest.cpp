@@ -14,10 +14,12 @@
 *  limitations under the License.
 */
 
+#include "stromx/raspi/RaspiCam.h"
 #include "stromx/raspi/test/RaspiCamTest.h"
 #include <cppunit/TestAssert.h>
-#include "stromx/raspi/RaspiCam.h"
-#include "stromx/runtime/OperatorException.h"
+#include <stromx/cvsupport/Image.h>
+#include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/ReadAccess.h>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::raspi::RaspiCamTest);
@@ -92,10 +94,22 @@ namespace stromx
 
         void RaspiCamTest::testExecute()
         {
-            m_operator->initialize(); 
+            m_operator->initialize();
+            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
+            m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5));
             m_operator->activate();
-            DataContainer dataFrames = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
+
+            for(unsigned int i = 0; i < 10; ++i)
+            {
+                DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
+                DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+                m_operator->clearOutputData(RaspiCam::OUTPUT_FRAMES);
+                m_operator->clearOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+            }
+            DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
             DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+            runtime::ReadAccess<runtime::Image> access(dataFrame);
+            cvsupport::Image::save("RaspiCamTestExecuteOutput.png", access());
         }
 
         void RaspiCamTest::testSetParameterCameraModeVideo()

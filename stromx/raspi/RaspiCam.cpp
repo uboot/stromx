@@ -18,28 +18,20 @@
 #include "stromx/raspi/Config.h"
 #include "stromx/raspi/RaspiCam.h"
 
+#include <bcm_host.h>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
+#include <interface/mmal/util/mmal_default_components.h>
+#include <interface/mmal/util/mmal_util.h>
+#include <interface/mmal/util/mmal_util_params.h>
 #include <stromx/cvsupport/Image.h>
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
-//#include "RaspiCam.h"
-
-#include <bcm_host.h>
-
-//#include <interface/mmal/mmal_component.h>
-//#include <interface/mmal/mmal_pool.h>
-//#include <interface/mmal/mmal_port.h>
-//#include <interface/mmal/mmal_parameters_camera.h>
-#include <interface/mmal/util/mmal_default_components.h>
-#include <interface/mmal/util/mmal_util.h>
-#include <interface/mmal/util/mmal_util_params.h>
 
 #define MMAL_CAMERA_VIDEO_PORT 1
-#define MMAL_CAMERA_PREVIEW_PORT 0
 #define MMAL_CAMERA_CAPTURE_PORT 2
 
 namespace
@@ -241,7 +233,6 @@ namespace stromx
                 break;
                 case STILL:
                 {
-
                     //Get the pointer
                     m_currentPort = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
                     MMAL_ES_FORMAT_T* raspicamCaptureFormat = m_currentPort->format;
@@ -321,16 +312,6 @@ namespace stromx
         {
         }
 
-        void RaspiCam::cleanUp()
-        {
-            if(m_raspicam)
-                mmal_component_destroy(m_raspicam);
-            if(m_outBufferPool)
-                mmal_pool_destroy(m_outBufferPool);
-            if(m_outQueue)
-                mmal_queue_destroy(m_outQueue);
-        }
-
         void RaspiCam::activate()
         {
                 MMAL_STATUS_T status;
@@ -350,7 +331,7 @@ namespace stromx
                 if(m_outBufferPool == NULL)
                 {
                     deactivate();
-                    throw runtime::OperatorError(*this,"Could not create ouput buffer pool.");
+                    throw runtime::OperatorError(*this,"Could not create output buffer pool.");
                 }
 
                 // Create output buffer queue
