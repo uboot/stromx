@@ -76,6 +76,7 @@ void exportException()
     PyObject* exception = proxy<Exception>("Exception");
     proxy<AccessEmpty>("AccessEmpty", exception);
     proxy<BadCast>("BadCast", exception);
+    proxy<WrongArgument>("WrongArgument", exception);
     
     PyObject* dataException = proxy<DataException>("DataException", exception);
     proxy<DeserializationError>("DeserializationError", dataException);
@@ -84,7 +85,6 @@ void exportException()
     PyObject* factoryException = proxy<FactoryException>("FactoryException", exception);
     proxy<DataAllocationFailed>("DataAllocationFailed", factoryException);
     proxy<OperatorAllocationFailed>("OperatorAllocationFailed", factoryException);
-    
     
     PyObject* fileException = proxy<FileException>("FileException", exception);
     proxy<FileAccessFailed>("FileAccessFailed", fileException);

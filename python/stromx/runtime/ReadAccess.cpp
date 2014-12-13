@@ -29,7 +29,15 @@ namespace
         ReadAccess<>* access = 0;
         
         Py_BEGIN_ALLOW_THREADS
-        access = new ReadAccess<>(data);
+        try
+        {
+            access = new ReadAccess<>(data);
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
         return std::auto_ptr< ReadAccess<> >(access);
@@ -40,7 +48,15 @@ namespace
         ReadAccess<>* access = 0;
         
         Py_BEGIN_ALLOW_THREADS
-        access = new ReadAccess<>(data, timeout);
+        try
+        {
+            access = new ReadAccess<>(data, timeout);
+        }
+        catch(stromx::runtime::Exception&)
+        {
+            Py_BLOCK_THREADS
+            throw;
+        }
         Py_END_ALLOW_THREADS
         
         return std::auto_ptr< ReadAccess<> >(access);
@@ -53,6 +69,7 @@ void exportReadAccess()
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateWithTimeout))
         .def("get", &ReadAccess<>::get, return_internal_reference<>())
+        .def("empty", &ReadAccess<>::empty)
         .def("release", &ReadAccess<>::release)
     ;
 }

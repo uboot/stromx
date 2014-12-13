@@ -26,7 +26,12 @@ using namespace stromx::runtime;
 
 namespace
 {
-    DataContainer* allocate(std::auto_ptr<Data> data)
+    DataContainer* allocate()
+    {
+        return new DataContainer();
+    }
+    
+    DataContainer* allocateFromData(std::auto_ptr<Data> data)
     {
         Data* dataPtr = data.get();
         data.release();
@@ -40,6 +45,7 @@ void exportDataContainer()
 {       
     class_<DataContainer>("DataContainer", no_init)
         .def("__init__", make_constructor(&allocate))
+        .def("__init__", make_constructor(&allocateFromData))
         .def("empty", &DataContainer::empty)
         .def("release", &DataContainer::release)
     ;
