@@ -44,7 +44,6 @@ namespace stromx
             CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoInitialized);
             CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoActivated);
             CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
-            CPPUNIT_TEST(testSetResolution);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -68,8 +67,6 @@ namespace stromx
             void testSetAndGetParameterAutoWhiteBalanceVideoInitialized();
             void testSetAndGetParameterAutoWhiteBalanceVideoActivated();
             void testSetParameterAutoWhiteBalanceCapture();
-            
-            void testSetResolution();
 
         private:
             void setAndGetParameterAutoWhiteBalance(const MMAL_PARAM_AWBMODE_T& mode);
