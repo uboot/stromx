@@ -76,7 +76,6 @@ namespace stromx
             static const runtime::Version VERSION;
 
             static void callbackOutVideoPort(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer);
-            void cleanUp();
 
             MMAL_COMPONENT_T* m_raspicam;
             MMAL_POOL_T* m_outBufferPool;
