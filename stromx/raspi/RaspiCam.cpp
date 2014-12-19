@@ -74,12 +74,12 @@ namespace stromx
         const std::vector< const runtime::Parameter* > RaspiCam::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
-            m_cameraModeParameter = new runtime::EnumParameter(CAMERA_MODE);
-            m_cameraModeParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_cameraModeParameter->setTitle(("Camera mode"));
-            m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(STILL), ("Still")));
-            m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(VIDEO), ("Video")));
-            parameters.push_back(m_cameraModeParameter);
+            //m_cameraModeParameter = new runtime::EnumParameter(CAMERA_MODE);
+            //m_cameraModeParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
+            //m_cameraModeParameter->setTitle(("Camera mode"));
+            //m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(STILL), ("Still")));
+            //m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(VIDEO), ("Video")));
+            //parameters.push_back(m_cameraModeParameter);
 
             return parameters;
         }
