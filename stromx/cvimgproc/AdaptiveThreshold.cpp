@@ -129,7 +129,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -148,19 +148,19 @@ namespace stromx
                 {
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_adaptiveMethodParameter = new runtime::EnumParameter(ADAPTIVE_METHOD);
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_adaptiveMethodParameter->setTitle("Adaptive method");
+                    m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
@@ -170,7 +170,7 @@ namespace stromx
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
                     m_blockSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_blockSizeParameter->setTitle("Block size");
+                    m_blockSizeParameter->setTitle(L_("Block size"));
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     
@@ -180,19 +180,19 @@ namespace stromx
                 {
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_adaptiveMethodParameter = new runtime::EnumParameter(ADAPTIVE_METHOD);
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_adaptiveMethodParameter->setTitle("Adaptive method");
+                    m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
@@ -202,7 +202,7 @@ namespace stromx
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
                     m_blockSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_blockSizeParameter->setTitle("Block size");
+                    m_blockSizeParameter->setTitle(L_("Block size"));
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     
@@ -212,19 +212,19 @@ namespace stromx
                 {
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_adaptiveMethodParameter = new runtime::EnumParameter(ADAPTIVE_METHOD);
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_adaptiveMethodParameter->setTitle("Adaptive method");
+                    m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
@@ -234,7 +234,7 @@ namespace stromx
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
                     m_blockSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_blockSizeParameter->setTitle("Block size");
+                    m_blockSizeParameter->setTitle(L_("Block size"));
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     

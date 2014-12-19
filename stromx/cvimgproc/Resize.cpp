@@ -141,7 +141,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -159,27 +159,27 @@ namespace stromx
                 {
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
                     m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizexParameter->setTitle("Size X");
+                    m_dsizexParameter->setTitle(L_("Size X"));
                     parameters.push_back(m_dsizexParameter);
                     
                     m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
                     m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizeyParameter->setTitle("Size Y");
+                    m_dsizeyParameter->setTitle(L_("Size Y"));
                     parameters.push_back(m_dsizeyParameter);
                     
                     m_fxParameter = new runtime::NumericParameter<runtime::Float64>(FX);
                     m_fxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_fxParameter->setTitle("Scale X");
+                    m_fxParameter->setTitle(L_("Scale X"));
                     parameters.push_back(m_fxParameter);
                     
                     m_fyParameter = new runtime::NumericParameter<runtime::Float64>(FY);
                     m_fyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_fyParameter->setTitle("Scale Y");
+                    m_fyParameter->setTitle(L_("Scale Y"));
                     parameters.push_back(m_fyParameter);
                     
                     m_interpolationParameter = new runtime::EnumParameter(INTERPOLATION);
                     m_interpolationParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_interpolationParameter->setTitle("Interpolation");
+                    m_interpolationParameter->setTitle(L_("Interpolation"));
                     m_interpolationParameter->add(runtime::EnumDescription(runtime::Enum(INTER_NEAREST), L_("Nearest neighbour")));
                     m_interpolationParameter->add(runtime::EnumDescription(runtime::Enum(INTER_LINEAR), L_("Bilinear")));
                     parameters.push_back(m_interpolationParameter);
@@ -190,27 +190,27 @@ namespace stromx
                 {
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
                     m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizexParameter->setTitle("Size X");
+                    m_dsizexParameter->setTitle(L_("Size X"));
                     parameters.push_back(m_dsizexParameter);
                     
                     m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
                     m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizeyParameter->setTitle("Size Y");
+                    m_dsizeyParameter->setTitle(L_("Size Y"));
                     parameters.push_back(m_dsizeyParameter);
                     
                     m_fxParameter = new runtime::NumericParameter<runtime::Float64>(FX);
                     m_fxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_fxParameter->setTitle("Scale X");
+                    m_fxParameter->setTitle(L_("Scale X"));
                     parameters.push_back(m_fxParameter);
                     
                     m_fyParameter = new runtime::NumericParameter<runtime::Float64>(FY);
                     m_fyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_fyParameter->setTitle("Scale Y");
+                    m_fyParameter->setTitle(L_("Scale Y"));
                     parameters.push_back(m_fyParameter);
                     
                     m_interpolationParameter = new runtime::EnumParameter(INTERPOLATION);
                     m_interpolationParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_interpolationParameter->setTitle("Interpolation");
+                    m_interpolationParameter->setTitle(L_("Interpolation"));
                     m_interpolationParameter->add(runtime::EnumDescription(runtime::Enum(INTER_NEAREST), L_("Nearest neighbour")));
                     m_interpolationParameter->add(runtime::EnumDescription(runtime::Enum(INTER_LINEAR), L_("Bilinear")));
                     parameters.push_back(m_interpolationParameter);

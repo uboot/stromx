@@ -141,7 +141,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
             
@@ -158,27 +158,27 @@ namespace stromx
                 {
                     m_rhoParameter = new runtime::NumericParameter<runtime::Float64>(RHO);
                     m_rhoParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_rhoParameter->setTitle("Distance resolution");
+                    m_rhoParameter->setTitle(L_("Distance resolution"));
                     parameters.push_back(m_rhoParameter);
                     
                     m_thetaParameter = new runtime::NumericParameter<runtime::Float64>(THETA);
                     m_thetaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thetaParameter->setTitle("Angle resolution");
+                    m_thetaParameter->setTitle(L_("Angle resolution"));
                     parameters.push_back(m_thetaParameter);
                     
                     m_thresholdParameter = new runtime::NumericParameter<runtime::UInt32>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdParameter->setTitle("Accumulator threshold");
+                    m_thresholdParameter->setTitle(L_("Accumulator threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
                     m_minLineLengthParameter = new runtime::NumericParameter<runtime::Float64>(MIN_LINE_LENGTH);
                     m_minLineLengthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_minLineLengthParameter->setTitle("Minimum line length");
+                    m_minLineLengthParameter->setTitle(L_("Minimum line length"));
                     parameters.push_back(m_minLineLengthParameter);
                     
                     m_maxLineGapParameter = new runtime::NumericParameter<runtime::Float64>(MAX_LINE_GAP);
                     m_maxLineGapParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxLineGapParameter->setTitle("Maximum allowed gap");
+                    m_maxLineGapParameter->setTitle(L_("Maximum allowed gap"));
                     parameters.push_back(m_maxLineGapParameter);
                     
                 }

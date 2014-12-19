@@ -33,16 +33,16 @@ namespace
     {
         void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
         {
-            observeWrap(phase, ex, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
+            observeWrap(phase, ex.message().c_str(), boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
         }
         
-        void observeWrap(const Phase phase, const OperatorError & ex, boost::shared_ptr<Thread> thread) const
+        void observeWrap(const Phase phase, const char* message, boost::shared_ptr<Thread> thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
             
             try
             {
-                this->get_override("observe")(phase, thread, ex);
+                this->get_override("observe")(phase, message, thread);
             }
             catch(...)
             {

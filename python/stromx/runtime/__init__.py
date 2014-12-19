@@ -44,7 +44,7 @@ def _memoryViewForMatrix(self):
     matrix.shape = SHAPE(matrix.rows(), matrix.cols())
     
     STRIDES = ctypes.c_ssize_t * 2
-    matrix.strides = STRIDES(matrix.cols(), 1)
+    matrix.strides = STRIDES(matrix.stride(), matrix.valueSize())
     
     if matrix.valueType() == Matrix.ValueType.INT_8:
         f = 'b'
@@ -54,6 +54,10 @@ def _memoryViewForMatrix(self):
         f = 'h'
     elif matrix.valueType() == Matrix.ValueType.UINT_16:
         f = 'H'
+    elif matrix.valueType() == Matrix.ValueType.INT_32:
+        f = 'i'
+    elif matrix.valueType() == Matrix.ValueType.UINT_32:
+        f = 'I'
     elif matrix.valueType() == Matrix.ValueType.FLOAT_32:
         f = 'f'
     elif matrix.valueType() == Matrix.ValueType.FLOAT_64:

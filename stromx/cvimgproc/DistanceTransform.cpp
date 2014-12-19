@@ -99,7 +99,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -117,7 +117,7 @@ namespace stromx
                 {
                     m_distanceTypeParameter = new runtime::EnumParameter(DISTANCE_TYPE);
                     m_distanceTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_distanceTypeParameter->setTitle("Distance type");
+                    m_distanceTypeParameter->setTitle(L_("Distance type"));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_L1), L_("L1 distance")));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_L2), L_("L2 distance")));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_C), L_("C")));
@@ -125,7 +125,7 @@ namespace stromx
                     
                     m_maskSizeParameter = new runtime::EnumParameter(MASK_SIZE);
                     m_maskSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maskSizeParameter->setTitle("Mask size");
+                    m_maskSizeParameter->setTitle(L_("Mask size"));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_3), L_("3")));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_5), L_("5")));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_PRECISE), L_("Precise")));
@@ -137,7 +137,7 @@ namespace stromx
                 {
                     m_distanceTypeParameter = new runtime::EnumParameter(DISTANCE_TYPE);
                     m_distanceTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_distanceTypeParameter->setTitle("Distance type");
+                    m_distanceTypeParameter->setTitle(L_("Distance type"));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_L1), L_("L1 distance")));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_L2), L_("L2 distance")));
                     m_distanceTypeParameter->add(runtime::EnumDescription(runtime::Enum(DIST_C), L_("C")));
@@ -145,7 +145,7 @@ namespace stromx
                     
                     m_maskSizeParameter = new runtime::EnumParameter(MASK_SIZE);
                     m_maskSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maskSizeParameter->setTitle("Mask size");
+                    m_maskSizeParameter->setTitle(L_("Mask size"));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_3), L_("3")));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_5), L_("5")));
                     m_maskSizeParameter->add(runtime::EnumDescription(runtime::Enum(SIZE_PRECISE), L_("Precise")));

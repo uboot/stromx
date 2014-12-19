@@ -113,7 +113,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -132,17 +132,17 @@ namespace stromx
                 {
                     m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdParameter->setTitle("Threshold");
+                    m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
@@ -156,17 +156,17 @@ namespace stromx
                 {
                     m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdParameter->setTitle("Threshold");
+                    m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
@@ -180,17 +180,17 @@ namespace stromx
                 {
                     m_thresholdParameter = new runtime::NumericParameter<runtime::Float64>(THRESHOLD);
                     m_thresholdParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdParameter->setTitle("Threshold");
+                    m_thresholdParameter->setTitle(L_("Threshold"));
                     parameters.push_back(m_thresholdParameter);
                     
                     m_maxvalParameter = new runtime::NumericParameter<runtime::Float64>(MAXVAL);
                     m_maxvalParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_maxvalParameter->setTitle("Maximal value");
+                    m_maxvalParameter->setTitle(L_("Maximal value"));
                     parameters.push_back(m_maxvalParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
                     m_thresholdTypeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_thresholdTypeParameter->setTitle("Threshold type");
+                    m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));

@@ -127,7 +127,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -145,22 +145,22 @@ namespace stromx
                 {
                     m_alphaParameter = new runtime::NumericParameter<runtime::Float64>(ALPHA);
                     m_alphaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_alphaParameter->setTitle("Alpha");
+                    m_alphaParameter->setTitle(L_("Alpha"));
                     parameters.push_back(m_alphaParameter);
                     
                     m_betaParameter = new runtime::NumericParameter<runtime::Float64>(BETA);
                     m_betaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_betaParameter->setTitle("Beta");
+                    m_betaParameter->setTitle(L_("Beta"));
                     parameters.push_back(m_betaParameter);
                     
                     m_gammaParameter = new runtime::NumericParameter<runtime::Float64>(GAMMA);
                     m_gammaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_gammaParameter->setTitle("Gamma");
+                    m_gammaParameter->setTitle(L_("Gamma"));
                     parameters.push_back(m_gammaParameter);
                     
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
+                    m_ddepthParameter->setTitle(L_("Destination depth"));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as inputs")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));
@@ -172,22 +172,22 @@ namespace stromx
                 {
                     m_alphaParameter = new runtime::NumericParameter<runtime::Float64>(ALPHA);
                     m_alphaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_alphaParameter->setTitle("Alpha");
+                    m_alphaParameter->setTitle(L_("Alpha"));
                     parameters.push_back(m_alphaParameter);
                     
                     m_betaParameter = new runtime::NumericParameter<runtime::Float64>(BETA);
                     m_betaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_betaParameter->setTitle("Beta");
+                    m_betaParameter->setTitle(L_("Beta"));
                     parameters.push_back(m_betaParameter);
                     
                     m_gammaParameter = new runtime::NumericParameter<runtime::Float64>(GAMMA);
                     m_gammaParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_gammaParameter->setTitle("Gamma");
+                    m_gammaParameter->setTitle(L_("Gamma"));
                     parameters.push_back(m_gammaParameter);
                     
                     m_ddepthParameter = new runtime::EnumParameter(DDEPTH);
                     m_ddepthParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ddepthParameter->setTitle("Destination depth");
+                    m_ddepthParameter->setTitle(L_("Destination depth"));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(SAME), L_("Same as inputs")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_8_BIT), L_("8-bit")));
                     m_ddepthParameter->add(runtime::EnumDescription(runtime::Enum(DEPTH_16_BIT), L_("16-bit")));

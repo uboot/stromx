@@ -131,7 +131,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
@@ -150,24 +150,24 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaXParameter->setTitle("Sigma X");
+                    m_sigmaXParameter->setTitle(L_("Sigma X"));
                     parameters.push_back(m_sigmaXParameter);
                     
                     m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaYParameter->setTitle("Sigma Y");
+                    m_sigmaYParameter->setTitle(L_("Sigma Y"));
                     parameters.push_back(m_sigmaYParameter);
                     
                 }
@@ -176,24 +176,24 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaXParameter->setTitle("Sigma X");
+                    m_sigmaXParameter->setTitle(L_("Sigma X"));
                     parameters.push_back(m_sigmaXParameter);
                     
                     m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaYParameter->setTitle("Sigma Y");
+                    m_sigmaYParameter->setTitle(L_("Sigma Y"));
                     parameters.push_back(m_sigmaYParameter);
                     
                 }
@@ -202,24 +202,24 @@ namespace stromx
                 {
                     m_ksizexParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEX);
                     m_ksizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizexParameter->setTitle("Kernel size X");
+                    m_ksizexParameter->setTitle(L_("Kernel size X"));
                     m_ksizexParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizexParameter);
                     
                     m_ksizeyParameter = new runtime::NumericParameter<runtime::UInt32>(KSIZEY);
                     m_ksizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_ksizeyParameter->setTitle("Kernel size Y");
+                    m_ksizeyParameter->setTitle(L_("Kernel size Y"));
                     m_ksizeyParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_ksizeyParameter);
                     
                     m_sigmaXParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_X);
                     m_sigmaXParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaXParameter->setTitle("Sigma X");
+                    m_sigmaXParameter->setTitle(L_("Sigma X"));
                     parameters.push_back(m_sigmaXParameter);
                     
                     m_sigmaYParameter = new runtime::NumericParameter<runtime::Float64>(SIGMA_Y);
                     m_sigmaYParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_sigmaYParameter->setTitle("Sigma Y");
+                    m_sigmaYParameter->setTitle(L_("Sigma Y"));
                     parameters.push_back(m_sigmaYParameter);
                     
                 }

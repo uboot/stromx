@@ -113,7 +113,7 @@ namespace stromx
             
             m_dataFlowParameter = new runtime::EnumParameter(DATA_FLOW);
             m_dataFlowParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            m_dataFlowParameter->setTitle("Data flow");
+            m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
             parameters.push_back(m_dataFlowParameter);
@@ -131,19 +131,19 @@ namespace stromx
                 {
                     m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_affineMParameter->setTitle("Affine transformation");
+                    m_affineMParameter->setTitle(L_("Affine transformation"));
                     m_affineMParameter->setRows(2);
                     m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);
                     
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
                     m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizexParameter->setTitle("Size X");
+                    m_dsizexParameter->setTitle(L_("Size X"));
                     parameters.push_back(m_dsizexParameter);
                     
                     m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
                     m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizeyParameter->setTitle("Size Y");
+                    m_dsizeyParameter->setTitle(L_("Size Y"));
                     parameters.push_back(m_dsizeyParameter);
                     
                 }
@@ -152,19 +152,19 @@ namespace stromx
                 {
                     m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_affineMParameter->setTitle("Affine transformation");
+                    m_affineMParameter->setTitle(L_("Affine transformation"));
                     m_affineMParameter->setRows(2);
                     m_affineMParameter->setCols(3);
                     parameters.push_back(m_affineMParameter);
                     
                     m_dsizexParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEX);
                     m_dsizexParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizexParameter->setTitle("Size X");
+                    m_dsizexParameter->setTitle(L_("Size X"));
                     parameters.push_back(m_dsizexParameter);
                     
                     m_dsizeyParameter = new runtime::NumericParameter<runtime::UInt32>(DSIZEY);
                     m_dsizeyParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_dsizeyParameter->setTitle("Size Y");
+                    m_dsizeyParameter->setTitle(L_("Size Y"));
                     parameters.push_back(m_dsizeyParameter);
                     
                 }
