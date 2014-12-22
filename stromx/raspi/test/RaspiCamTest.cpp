@@ -92,8 +92,9 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
         }
 
-        void RaspiCamTest::testExecute()
+        void RaspiCamTest::testExecuteVideo()
         {
+            //m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
             m_operator->initialize();
             m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
             m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5));
@@ -109,7 +110,26 @@ namespace stromx
             DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
             DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
             runtime::ReadAccess<runtime::Image> access(dataFrame);
-            cvsupport::Image::save("RaspiCamTestExecuteOutput.png", access());
+            cvsupport::Image::save("RaspiCamTestExecuteVideoOutput.png", access());
+        }
+
+        void RaspiCamTest::testExecuteCapture()
+        {
+            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::STILL));
+            m_operator->initialize();
+            m_operator->setParameter(RaspiCam::AWB_MODE, runtime::Enum(MMAL_PARAM_AWBMODE_AUTO));
+            m_operator->activate();
+            for(unsigned int i = 0; i < 10; ++i)
+            {
+                DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
+                DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+                m_operator->clearOutputData(RaspiCam::OUTPUT_FRAMES);
+                m_operator->clearOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+            }
+            DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
+            DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
+            runtime::ReadAccess<runtime::Image> access(dataFrame);
+            cvsupport::Image::save("RaspiCamTestExecuteCaptureOutput.png", access());
         }
 
         void RaspiCamTest::testSetParameterCameraModeVideo()
@@ -127,14 +147,14 @@ namespace stromx
 
         void RaspiCamTest::testSetParameterFramerateVideo()
         {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+            //m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
             m_operator->initialize(); 
             CPPUNIT_ASSERT_NO_THROW(m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5)));
         }
 
         void RaspiCamTest::testGetParameterFramerateVideo()
         {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+            //m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
             m_operator->initialize(); 
             m_operator->setParameter(RaspiCam::FRAME_RATE, runtime::Float32(5));
             runtime::DataRef returnValue;
@@ -144,7 +164,7 @@ namespace stromx
 
         void RaspiCamTest::testSetAndGetParameterAutoWhiteBalanceVideoInitialized()
         {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+            //m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
             m_operator->initialize();
 
             // Test all supported modes for initialized operator
@@ -160,7 +180,7 @@ namespace stromx
 
         void RaspiCamTest::testSetAndGetParameterAutoWhiteBalanceVideoActivated()
         {
-            m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
+            //m_operator->setParameter(RaspiCam::CAMERA_MODE, runtime::Enum(RaspiCam::VIDEO));
             m_operator->initialize();
             m_operator->activate();
 

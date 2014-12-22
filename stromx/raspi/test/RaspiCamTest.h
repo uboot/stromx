@@ -36,14 +36,15 @@ namespace stromx
             CPPUNIT_TEST(testActivate);
             CPPUNIT_TEST(testDeactivate);
             CPPUNIT_TEST(testReactivate);
-            CPPUNIT_TEST(testExecute);
-            CPPUNIT_TEST(testSetParameterCameraModeVideo);
-            CPPUNIT_TEST(testGetParameterCameraModeVideo);
+            CPPUNIT_TEST(testExecuteVideo);
+            //CPPUNIT_TEST(testExecuteCapture);
+            //CPPUNIT_TEST(testSetParameterCameraModeVideo);
+            //CPPUNIT_TEST(testGetParameterCameraModeVideo);
             CPPUNIT_TEST(testSetParameterFramerateVideo);
             CPPUNIT_TEST(testGetParameterFramerateVideo);
             CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoInitialized);
             CPPUNIT_TEST(testSetAndGetParameterAutoWhiteBalanceVideoActivated);
-            CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
+            //CPPUNIT_TEST(testSetParameterAutoWhiteBalanceCapture);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -59,7 +60,8 @@ namespace stromx
             void testActivate();
             void testDeactivate();
             void testReactivate();
-            void testExecute();
+            void testExecuteVideo();
+            void testExecuteCapture();
             void testSetParameterCameraModeVideo();
             void testGetParameterCameraModeVideo();
             void testSetParameterFramerateVideo();
