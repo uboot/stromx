@@ -116,6 +116,8 @@ namespace stromx
             if (op == 0)
                 throw WrongArgument("Operator must not be null.");
             
+            m_thread->removeOperator(op);
+            
             IndexSet toBeErased;
             
             for(std::vector<Input>::iterator iter1 = m_inputSequence.begin();
@@ -132,8 +134,6 @@ namespace stromx
             {
                 m_inputSequence.erase(*iter2);
             }
-            
-            m_thread->removeOperator(op);
         }
 
         void Thread::setDelay(const unsigned int delay)
@@ -147,7 +147,7 @@ namespace stromx
                 throw WrongArgument("Operator must not be null.");
             
             if (op->status() == Operator::NONE)
-                throw WrongState("Operator be initialized.");
+                throw WrongState("Operator must be initialized.");
             
             InputNode* inputNode = m_network->getInputNode(op, inputId);
             m_thread->addInput(inputNode);

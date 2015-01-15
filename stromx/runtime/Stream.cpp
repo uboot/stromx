@@ -277,6 +277,9 @@ namespace stromx
         
         Thread* Stream::addThread()
         {
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot add thread while the stream is active.");
+                
             Thread* thread = new Thread(m_network);
             attachThread(thread);
             return thread;
@@ -532,6 +535,9 @@ namespace stromx
 
         void Stream::showThread(Thread*const thread)
         {
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot show thread while the stream is active.");
+                
             std::set<Thread*>::iterator iter = 
                 std::find(m_hiddenThreads.begin(), m_hiddenThreads.end(), thread);
                 
@@ -582,9 +588,10 @@ namespace stromx
         void Stream::detachThread(Thread*const thread)
         {
             if (thread == 0)
-            {
-                throw WrongArgument("Invalid argument: Null pointer");
-            }
+                throw WrongArgument("Thread must not be null");
+            
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot remove thread while the stream is active.");
             
             bool foundThread = false;
             for (std::vector<Thread*>::iterator iter = m_threads.begin();
