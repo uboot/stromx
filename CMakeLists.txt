@@ -85,7 +85,10 @@ if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
     add_subdirectory(example)
 endif()
 
-option(BUILD_RASPI "Build raspi package" OFF)
+find_path(mmal_DIR "interface/mmal/mmal.h" HINTS /opt/vc/include)
+if (mmal_FOUND)
+    option(BUILD_RASPI "Build raspi package" ON)
+endif()
 
 find_package(Boost 1.50.0 COMPONENTS filesystem python thread)
 find_package(PythonLibs)
