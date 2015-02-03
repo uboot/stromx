@@ -8,7 +8,7 @@ class TestData(object):
         self.arg = None
         
     def accept(self, visitor):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 class Value(TestData):
     """

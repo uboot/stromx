@@ -100,7 +100,7 @@ class Acceptor(object):
     Abstract base class of all visitor acceptors.
     """
     def accept(self, visitor):
-        raise NotImplementedError
+        raise NotImplementedError()
         
 class Compound(Acceptor):
     """

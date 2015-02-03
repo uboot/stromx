@@ -70,7 +70,7 @@ def _memoryViewForMatrix(self):
     pybuffer.obj = ctypes.py_object()
     pybuffer.len = matrix.rows() * matrix.cols()
     pybuffer.itemsize = matrix.valueSize()
-    pybuffer.readonly = 1
+    pybuffer.readonly = 0
     pybuffer.ndim = 2
     pybuffer.format = f
     pybuffer.shape = matrix.shape
