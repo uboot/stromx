@@ -105,6 +105,7 @@ _extendVectorClass(DescriptionVector)
 _extendVectorClass(ParameterVector)
 _extendVectorClass(ThreadVector)
 _extendVectorClass(InputVector)
+_extendVectorClass(DataVector)
 
 def _returnObject(self):
     return self

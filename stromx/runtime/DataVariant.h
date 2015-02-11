@@ -92,6 +92,9 @@ namespace stromx
             /** A String object. */
             const static DataVariant STRING;
             
+            /** An List object. */
+            const static DataVariant LIST;
+            
             /** Any Matrix object. */
             const static DataVariant MATRIX;
             
@@ -217,6 +220,7 @@ namespace stromx
                 FLOAT_32_ID,
                 FLOAT_64_ID,
                 STRING_ID,
+                LIST_ID,
                 MATRIX_ID,
                 INT_MATRIX_ID,
                 UINT_MATRIX_ID,

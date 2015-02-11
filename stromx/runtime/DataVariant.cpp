@@ -42,6 +42,7 @@ namespace stromx
         const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, STROMX_RUNTIME_PACKAGE_NAME);
         const DataVariant DataVariant::FLOAT_32 = DataVariant(FLOAT_32_ID, STROMX_RUNTIME_PACKAGE_NAME);
         const DataVariant DataVariant::FLOAT_64 = DataVariant(FLOAT_64_ID, STROMX_RUNTIME_PACKAGE_NAME);
+        const DataVariant DataVariant::LIST = DataVariant(LIST_ID, STROMX_RUNTIME_PACKAGE_NAME);
         const DataVariant DataVariant::MATRIX = DataVariant(MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
         const DataVariant DataVariant::INT_MATRIX = DataVariant(INT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
         const DataVariant DataVariant::UINT_MATRIX = DataVariant(UINT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
@@ -110,6 +111,8 @@ namespace stromx
                 return  L_("Float32");
             case FLOAT_64_ID:
                 return  L_("Float64");
+            case LIST_ID:
+                return  L_("List");
             case MATRIX_ID:
                 return  L_("Matrix");
             case INT_MATRIX_ID:

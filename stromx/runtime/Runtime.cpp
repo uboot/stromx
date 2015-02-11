@@ -23,6 +23,7 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Join.h"
+#include "stromx/runtime/List.h"
 #include "stromx/runtime/Locale.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/PeriodicDelay.h"
@@ -78,6 +79,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new Float32);
     registry.registerData(new Float64);
     registry.registerData(new Enum);
+    registry.registerData(new List);
     registry.registerData(new None);
     registry.registerData(new String);
     registry.registerData(new TriggerData);

@@ -13,6 +13,7 @@ set(SOURCES
     InputProvider.cpp
     Connector.cpp
     ConnectorObserver.cpp
+    List.cpp
     Matrix.cpp
     None.cpp
     Operator.cpp

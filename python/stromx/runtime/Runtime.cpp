@@ -42,6 +42,7 @@ void exportImage();
 void exportInputProvider();
 void exportConnector();
 void exportConnectorObserver();
+void exportList();
 void exportMatrix();
 void exportNone();
 void exportOperator();
@@ -83,6 +84,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportInputProvider();
     exportConnector();
     exportConnectorObserver();
+    exportList();
     exportNone();
     exportOperator();
     exportOperatorInfo();

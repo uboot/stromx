@@ -57,6 +57,7 @@ set(SOURCES
     ../Id2DataPair.cpp
     ../Image.cpp
     ../ImageWrapper.cpp
+    ../List.cpp
     ../Locale.cpp
     ../Matrix.cpp
     ../MatrixWrapper.cpp
@@ -113,6 +114,7 @@ set(SOURCES
     InputNodeTest.cpp
     Int32Test.cpp
     JoinTest.cpp
+    ListTest.cpp
     MatrixWrapperTest.cpp
     OperatorKernelTest.cpp
     OperatorTest.cpp
