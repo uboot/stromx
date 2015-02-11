@@ -6,6 +6,7 @@ Created on Mon Apr  1 18:19:38 2013
 """
 
 import math
+import sys
 
 import cvcommon
 import cvtype
@@ -16,7 +17,7 @@ import package
 import test
 
 # abbreviations
-dt = test.Default()
+DT = test.Default()
 
 # checkMatrixData
 dcl = document.Document()
@@ -212,6 +213,10 @@ dstImgFloat32 = package.Argument(
 dstImgIntegral = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
     initIn = initInIntegral
+)
+dstListOfMatrices = package.Argument(
+    "dst", "Destination", cvtype.VectorOfMat(),
+    datatype.List(datatype.Float32Matrix())
 )
 ddepthDefault = package.Constant(
     "-1"
@@ -472,6 +477,24 @@ maxLineGap = package.NumericParameter(
     "maxLineGap", "Maximum allowed gap", cvtype.Float64(), datatype.Float64(),
     default = 5
 )
+descriptions = [
+    package.EnumDescription("RETR_EXTERNAL", "Extreme outer contours", "CV_RETR_EXTERNAL"),
+    package.EnumDescription("RETR_LIST", "All contours", "CV_RETR_LIST")
+]
+findContoursMode = package.EnumParameter(
+    "mode", "Mode", descriptions = descriptions,
+    default = 0
+)
+descriptions = [
+    package.EnumDescription("CHAIN_APPROX_NONE", "Store all points", "CV_CHAIN_APPROX_NONE"),
+    package.EnumDescription("CHAIN_APPROX_SIMPLE", "Compress straight segments", "CV_CHAIN_APPROX_SIMPLE"),
+    package.EnumDescription("CHAIN_APPROX_TC89_L1", "Teh-Chin L1", "CV_CHAIN_APPROX_TC89_L1"),
+    package.EnumDescription("CHAIN_APPROX_TC89_KCOS", "Teh-Chin Kcos", "CV_CHAIN_APPROX_TC89_KCOS")
+]
+findContoursMethod = package.EnumParameter(
+    "method", "Mode", descriptions = descriptions,
+    default = 0
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -485,6 +508,7 @@ points_2d = test.MatrixFile("points_2d.npy")
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000) 
 circle = test.ImageFile("circle.png", grayscale = True)
+contours = test.ImageFile("contours.png", grayscale = True)
 
 # bilateralFilter
 manual = package.Option(
@@ -500,8 +524,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), d, sigmaColor,
      sigmaSpace],
     tests = [
-        [lenna, dt, dt, dt, dt],
-        [lenna_bw, dt, 9, 100, 75]
+        [lenna, DT, DT, DT, DT],
+        [lenna_bw, DT, 9, 100, 75]
     ]
 )
 bilateralFilter = package.Method(
@@ -515,7 +539,7 @@ manual = package.Option(
      package.Size(ksizex, ksizey)],
     tests = [
         [lenna, memory, (3, 4)],
-        [lenna_bw, test.RefData(lenna), dt]
+        [lenna_bw, test.RefData(lenna), DT]
     ]
 )
 allocate = package.Option(
@@ -523,8 +547,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg),
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, dt, dt],
-        [lenna_bw, dt, dt]
+        [lenna, DT, DT],
+        [lenna_bw, DT, DT]
     ]
 )
 inPlace = package.Option(
@@ -532,7 +556,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, dt, dt]
+        [lenna, DT, DT]
     ]
 )
 blur = package.Method(
@@ -545,8 +569,8 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, memory, dt, (5, 4)],
-        [lenna, test.RefData(lenna), dt, dt]
+        [lenna, memory, DT, (5, 4)],
+        [lenna, test.RefData(lenna), DT, DT]
     ]
 )
 allocate = package.Option(
@@ -554,7 +578,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna_bw, dt, dt, (4, 5)],
+        [lenna_bw, DT, DT, (4, 5)],
     ]
 )
 inPlace = package.Option(
@@ -562,7 +586,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), ddepthDefault,
      package.Size(ksizex, ksizey)],
     tests = [
-        [lenna, dt, dt, dt],
+        [lenna, DT, DT, DT],
     ]
 )
 boxFilter = package.Method(
@@ -575,8 +599,8 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), kernel, anchor,
      iterations],
     tests = [
-        [lenna, memory, (3, 4, 1), dt, 2],
-        [lenna_bw, memory, dt, dt, dt]
+        [lenna, memory, (3, 4, 1), DT, 2],
+        [lenna_bw, memory, DT, DT, DT]
     ]
 )
 allocate = package.Option(
@@ -584,7 +608,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), kernel, anchor,
      iterations],
     tests = [
-        [lenna, dt, dt, dt, dt]
+        [lenna, DT, DT, DT, DT]
     ]
 )
 inPlace = package.Option(
@@ -592,7 +616,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), kernel,
      anchor, iterations],
     tests = [
-        [lenna_bw, dt, (dt, dt, 2), dt, dt]
+        [lenna_bw, DT, (DT, DT, 2), DT, DT]
     ]
 )
 dilate = package.Method(
@@ -609,7 +633,7 @@ manual = package.Option(
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
         [lenna, memory, (3, 5), 1.5, 2.5],
-        [lenna, test.RefData(lenna), dt, dt, dt]
+        [lenna, test.RefData(lenna), DT, DT, DT]
     ]
 )
 allocate = package.Option(
@@ -617,7 +641,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
-        [lenna, dt, (3, 5), -1, -1]
+        [lenna, DT, (3, 5), -1, -1]
     ]
 )
 inPlace = package.Option(
@@ -625,7 +649,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg),
      package.Size(ksizexOdd, ksizeyOdd), sigmaX, sigmaY],
     tests = [
-        [lenna, dt, dt, 0, 0]
+        [lenna, DT, DT, 0, 0]
     ]
 )
 GaussianBlur = package.Method(
@@ -645,14 +669,14 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImg), ksize],
     tests = [
-        [lenna_bw, dt, dt]
+        [lenna_bw, DT, DT]
     ]
 )
 inPlace = package.Option(
     "inPlace", "In place",
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), ksize],
     tests = [
-        [lenna, dt, dt]
+        [lenna, DT, DT]
     ]
 )
 medianBlur = package.Method(
@@ -665,8 +689,8 @@ manual = package.Option(
     [package.Input(srcImg, True), package.Output(dstImg), op, kernel,
      anchor, iterations],
     tests = [
-        [lenna, memory, 0, (3, 4, 0), dt, dt],
-        [lenna, test.RefData(lenna), 2, (dt, dt, 1), dt, 3]
+        [lenna, memory, 0, (3, 4, 0), DT, DT],
+        [lenna, test.RefData(lenna), 2, (DT, DT, 1), DT, 3]
     ]
 )
 allocate = package.Option(
@@ -674,8 +698,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), op, kernel,
      anchor, iterations],
     tests = [
-        [lenna_bw, dt, 0, dt, dt, dt],
-        [lenna, dt, 3, (dt, dt, 2), dt, dt]
+        [lenna_bw, DT, 0, DT, DT, DT],
+        [lenna, DT, 3, (DT, DT, 2), DT, DT]
     ]
 )
 inPlace = package.Option(
@@ -683,8 +707,8 @@ inPlace = package.Option(
     [package.InputOutput(srcImg), package.RefInput(dstImg, srcImg), op, kernel,
      anchor, iterations],
     tests = [
-        [lenna_bw, dt, 1, (dt, dt, 1), dt, dt],
-        [lenna, dt, 3, dt, dt, dt]
+        [lenna_bw, DT, 1, (DT, DT, 1), DT, DT],
+        [lenna, DT, 3, DT, DT, DT]
     ]
 )
 morphologyEx = package.Method(
@@ -697,7 +721,7 @@ manual = package.Option(
     [package.Input(srcImg), package.Output(dstImgDdepth), ddepth,
      ksize, scale, delta],
     tests = [
-        [lenna, memory, 0, 3, dt, dt],
+        [lenna, memory, 0, 3, DT, DT],
         [lenna_bw, memory, 1, 3, 1, 0]
     ]
 )
@@ -706,8 +730,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
      ksize, scale, delta],
     tests = [
-        [lenna_bw, dt, 2, 5, 100, 1000],
-        [lenna, dt, 2, 7, 50, 500]
+        [lenna_bw, DT, 2, 5, 100, 1000],
+        [lenna, DT, 2, 7, 50, 500]
     ]
 )
 laplacian = package.Method(
@@ -733,8 +757,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
      dx, dy, sobelKsize, scale, delta],
     tests = [
-        [lenna, dt, 0, dt, 2, 5, 2, dt],
-        [lenna_bw, dt, 2, dt, dt, dt, 100, dt]
+        [lenna, DT, 0, DT, 2, 5, 2, DT],
+        [lenna_bw, DT, 2, DT, DT, DT, 100, DT]
     ]
 )
 sobel = package.Method(
@@ -756,8 +780,8 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgDdepth), ddepth,
      dx, dy, scale, delta],
     tests = [
-        [lenna, dt, 0, dt, dt, 2, dt],
-        [lenna_bw, dt, 2, 0, 1, 100, dt]
+        [lenna, DT, 0, DT, DT, 2, DT],
+        [lenna_bw, DT, 2, 0, 1, 100, DT]
     ]
 )
 scharr = package.Method(
@@ -780,7 +804,7 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImgPyr)],
     tests = [
-        [lenna_bw, dt]
+        [lenna_bw, DT]
     ]
 )
 pyrDown = package.Method(
@@ -803,7 +827,7 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImg), package.Allocation(dstImgPyr)],
     tests = [
-        [lenna_bw, dt]
+        [lenna_bw, DT]
     ]
 )
 pyrUp = package.Method(
@@ -816,9 +840,9 @@ manual = package.Option(
     [package.Input(srcImg), package.Output(dstImgResize),
      package.Size(dsizex, dsizey), fx, fy, interpolation],
     tests = [
-        [lenna, memory, dt, dt, dt],
+        [lenna, memory, DT, DT, DT],
         [lenna, memory, (100, 200), 0],
-        [lenna_bw, memory, (100, 200), 0.5, 0.3, dt]
+        [lenna_bw, memory, (100, 200), 0.5, 0.3, DT]
     ]
 )
 allocate = package.Option(
@@ -826,7 +850,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgResize),
      package.Size(dsizex, dsizey), fx, fy, interpolation],
     tests = [
-        [lenna_bw, dt, dt, 0.5, 0.3, dt]
+        [lenna_bw, DT, DT, 0.5, 0.3, DT]
     ]
 )
 resize = package.Method(
@@ -840,7 +864,7 @@ manual = package.Option(
      package.Size(dsizex, dsizey)],
     tests = [
         [lenna_bw, memory, affine_transformation, (400, 500)],
-        [lenna, memory, dt, (400, 500)]
+        [lenna, memory, DT, (400, 500)]
     ]
 )
 allocate = package.Option(
@@ -848,7 +872,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgDsize), affineM, 
      package.Size(dsizex, dsizey)],
     tests = [
-        [lenna, dt, affine_transformation, (400, 500)]
+        [lenna, DT, affine_transformation, (400, 500)]
     ]
 )
 warpAffine = package.Method(
@@ -862,7 +886,7 @@ manual = package.Option(
      package.Size(dsizex, dsizey)],
     tests = [
         [lenna_bw, memory, perspective_transformation, (400, 500)],
-        [lenna, memory, dt, (400, 500)]
+        [lenna, memory, DT, (400, 500)]
     ]
 )
 allocate = package.Option(
@@ -870,7 +894,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImgDsize), perspectiveM, 
      package.Size(dsizex, dsizey)],
     tests = [
-        [lenna, dt, perspective_transformation, (400, 500)]
+        [lenna, DT, perspective_transformation, (400, 500)]
     ]
 )
 warpPerspective = package.Method(
@@ -884,7 +908,7 @@ manual = package.Option(
      distCoeffs],
     tests = [
         [lenna_bw, memory, camera_matrix, dist_coeffs],
-        [lenna, memory, dt, dt]
+        [lenna, memory, DT, DT]
     ]
 )
 allocate = package.Option(
@@ -892,7 +916,7 @@ allocate = package.Option(
     [package.Input(srcImg), package.Allocation(dstImg), cameraMatrix,
      distCoeffs],
     tests = [
-        [lenna, dt, camera_matrix, dist_coeffs]
+        [lenna, DT, camera_matrix, dist_coeffs]
     ]
 )
 undistort = package.Method(
@@ -905,8 +929,8 @@ allocate = package.Option(
     [package.Input(srcPts), package.Allocation(dstPts), cameraMatrix,
      distCoeffs],
     tests = [
-        [points_2d, dt, camera_matrix, dist_coeffs],
-        [points_2d, dt, dt, dt]
+        [points_2d, DT, camera_matrix, dist_coeffs],
+        [points_2d, DT, DT, DT]
     ]
 )
 undistortPoints = package.Method(
@@ -919,8 +943,8 @@ manual = package.Option(
     [package.Input(srcImgMono8bit, True), package.Output(dstImg), maxval,
      adaptiveMethod, thresholdType, blockSize, subtractedC],
     tests = [
-        [lenna_bw, memory, dt, dt, dt, dt, dt],
-        [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, dt]
+        [lenna_bw, memory, DT, DT, DT, DT, DT],
+        [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, DT]
     ]
 )
 allocate = package.Option(
@@ -928,7 +952,7 @@ allocate = package.Option(
     [package.Input(srcImgMono8bit, True), package.Allocation(dstImg), maxval,
      adaptiveMethod, thresholdType, blockSize, subtractedC],
     tests = [
-        [lenna_bw, dt, 200, 1, 0, 9, dt]
+        [lenna_bw, DT, 200, 1, 0, 9, DT]
     ]
 )
 inPlace = package.Option(
@@ -936,7 +960,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
      maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
     tests = [
-        [lenna_bw, dt, 80, 0, 1, 7, dt]
+        [lenna_bw, DT, 80, 0, 1, 7, DT]
     ]
 )
 adaptiveThreshold = package.Method(
@@ -949,8 +973,8 @@ manual = package.Option(
     [package.Input(srcImgMono, True), package.Output(dstImg), thresh, maxval,
      thresholdType],
     tests = [
-        [lenna_bw, memory, dt, dt, dt],
-        [lenna_bw, test.RefData(lenna_bw), 128, dt, 2]
+        [lenna_bw, memory, DT, DT, DT],
+        [lenna_bw, test.RefData(lenna_bw), 128, DT, 2]
     ]
 )
 allocate = package.Option(
@@ -958,7 +982,7 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImg), thresh, maxval,
      thresholdType],
     tests = [
-        [lenna_bw, dt, dt, dt, 3]
+        [lenna_bw, DT, DT, DT, 3]
     ]
 )
 inPlace = package.Option(
@@ -966,7 +990,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
      thresholdType],
     tests = [
-        [lenna_bw, dt, dt, dt, 4]
+        [lenna_bw, DT, DT, DT, 4]
     ]
 )
 threshold = package.Method(
@@ -979,7 +1003,7 @@ manual = package.Option(
     [package.Input(srcImgMono), package.Output(dstImgFloat32), distanceType, 
      maskSize],
     tests = [
-        [circle, memory, dt, dt]
+        [circle, memory, DT, DT]
     ]
 )
 allocate = package.Option(
@@ -987,9 +1011,9 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImgFloat32), distanceType, 
      maskSize],
     tests = [
-        [circle, dt, 2, 0],
-        [circle, dt, 1, 1],
-        [circle, dt, 0, 2]
+        [circle, DT, 2, 0],
+        [circle, DT, 1, 1],
+        [circle, DT, 0, 2]
     ]
 )
 distanceTransform = package.Method(
@@ -1021,7 +1045,7 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImgMono), package.Allocation(dstImgIntegral)],
     tests = [
-        [circle, dt]
+        [circle, DT]
     ]
 )
 integral = package.Method(
@@ -1033,8 +1057,8 @@ allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImgMono), package.Allocation(dstMatrix), histMin, histMax, histSize],
     tests = [
-        [circle, dt, 0, 256, 5],
-        [lenna_bw, dt, 0, 256, 20]
+        [circle, DT, 0, 256, 5],
+        [lenna_bw, DT, 0, 256, 20]
     ]
 )
 calcHist = package.Method(
@@ -1047,7 +1071,7 @@ manual = package.Option(
     [package.Input(srcImgMono, True), package.Output(dstImg), threshold1,
      threshold2],
     tests = [
-        [lenna_bw, memory, dt, dt],
+        [lenna_bw, memory, DT, DT],
         [lenna_bw, test.RefData(lenna_bw), 64, 128]
     ]
 )
@@ -1056,7 +1080,7 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImg), threshold1,
      threshold2],
     tests = [
-        [lenna_bw, dt, dt, dt]
+        [lenna_bw, DT, DT, DT]
     ]
 )
 inPlace = package.Option(
@@ -1064,7 +1088,7 @@ inPlace = package.Option(
     [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono),  threshold1,
      threshold2],
     tests = [
-        [lenna_bw, dt, dt, dt]
+        [lenna_bw, DT, DT, DT]
     ]
 )
 canny = package.Method(
@@ -1077,7 +1101,7 @@ manual = package.Option(
     [package.Input(srcImgMono, False), package.Output(dstImgFloat32), blockSize,
      ksize, harrisK],
     tests = [
-        [lenna_bw, bigMemory, dt, dt, dt],
+        [lenna_bw, bigMemory, DT, DT, DT],
     ]
 )
 allocate = package.Option(
@@ -1085,7 +1109,7 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImgFloat32), blockSize,
      ksize, harrisK],
     tests = [
-        [lenna_bw, dt, dt, dt, dt]
+        [lenna_bw, DT, DT, DT, DT]
     ]
 )
 cornerHarris = package.Method(
@@ -1098,7 +1122,7 @@ manual = package.Option(
     [package.Input(srcImgMono, False), package.Output(dstImgFloat32), blockSize,
      ksize],
     tests = [
-        [lenna_bw, bigMemory, dt, dt, dt],
+        [lenna_bw, bigMemory, DT, DT, DT],
     ]
 )
 allocate = package.Option(
@@ -1106,7 +1130,7 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstImgFloat32), blockSize,
      ksize],
     tests = [
-        [lenna_bw, dt, dt, dt, dt]
+        [lenna_bw, DT, DT, DT, DT]
     ]
 )
 cornerMinEigenVal = package.Method(
@@ -1119,12 +1143,26 @@ allocate = package.Option(
     [package.Input(srcImgMono), package.Allocation(dstMatrix), rho, theta,
      accumulatorThreshold, minLineLength, maxLineGap],
     tests = [
-        [edges, dt, dt, dt, dt, dt, dt]
+        [edges, DT, DT, DT, DT, DT, DT]
     ], 
     postCall = lineSegmentsPostCall
 )
 houghLinesP = package.Method(
     "HoughLinesP", options = [allocate]
+)
+
+# findContours
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono8bit), package.Allocation(dstListOfMatrices),
+     findContoursMode, findContoursMethod],
+    tests = [
+        [contours, DT, DT, DT],
+        [contours, DT, DT, 1]
+    ]
+)
+findContours = package.Method(
+    "findContours", options = [allocate]
 )
 
 imgproc = package.Package(
@@ -1157,7 +1195,8 @@ imgproc = package.Package(
         canny,
         cornerHarris,
         cornerMinEigenVal,
-        houghLinesP
+        houghLinesP,
+        findContours
     ],
     functions = [
         cvcommon.checkEnumValue,
@@ -1174,9 +1213,16 @@ imgproc = package.Package(
         "camera_matrix.npy",
         "dist_coeffs.npy",
         "points_2d.npy",
-        "edges.png"
+        "edges.png",
+        "contours.png"
     ]
 )
 
-generator.generateMethodFiles(imgproc, cornerHarris)
-generator.generatePackageFiles(imgproc) 
+package = imgproc
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            generator.generateMethodFiles(package, globals()[arg])
+    else:
+        generator.generatePackageFiles(package) 

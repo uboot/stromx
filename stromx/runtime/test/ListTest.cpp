@@ -16,6 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Config.h"
+#include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/test/ListTest.h"
 
@@ -79,6 +80,17 @@ namespace stromx
             m_list = 0;
             
             CPPUNIT_ASSERT(TestData::wasDestructed);
+        }
+        
+        void ListTest::testTypedList()
+        {   
+            std::vector<int> content;
+            content.push_back(5);
+            
+            std::auto_ptr<List> list(new TypedList<Int32>(content));
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), list->content().size());
+            CPPUNIT_ASSERT_EQUAL(Int32(5), data_cast<Int32>(*(list->content()[0])));
         }
     }
 }

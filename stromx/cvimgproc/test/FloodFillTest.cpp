@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/test/FloodFillTest.h"
 
+#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
@@ -23,7 +24,6 @@ namespace stromx
         
         void FloodFillTest::testInPlace0()
         {
-            m_operator->setParameter(FloodFill::DATA_FLOW, runtime::Enum(FloodFill::IN_PLACE));
             m_operator->initialize();
             m_operator->activate();
             

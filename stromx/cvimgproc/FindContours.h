@@ -1,5 +1,5 @@
-#ifndef STROMX_CVIMGPROC_SOBEL_H
-#define STROMX_CVIMGPROC_SOBEL_H
+#ifndef STROMX_CVIMGPROC_FINDCONTOURS_H
+#define STROMX_CVIMGPROC_FINDCONTOURS_H
 
 #include "stromx/cvimgproc/Config.h"
 #include <stromx/cvsupport/Matrix.h>
@@ -17,18 +17,23 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        class STROMX_CVIMGPROC_API Sobel : public runtime::OperatorKernel
+        class STROMX_CVIMGPROC_API FindContours : public runtime::OperatorKernel
         {
         public:
-            enum DdepthId
+            enum MethodId
             {
-                SAME,
-                DEPTH_8_BIT,
-                DEPTH_16_BIT
+                CHAIN_APPROX_NONE,
+                CHAIN_APPROX_SIMPLE,
+                CHAIN_APPROX_TC89_L1,
+                CHAIN_APPROX_TC89_KCOS
+            };
+            enum ModeId
+            {
+                RETR_EXTERNAL,
+                RETR_LIST
             };
             enum DataFlowId
             {
-                MANUAL,
                 ALLOCATE
             };
             enum ConnectorId
@@ -38,16 +43,12 @@ namespace stromx
             };
             enum ParameterId
             {
-                SCALE,
-                DELTA,
-                DDEPTH,
-                KSIZE,
-                DX,
-                DY,
-                DATA_FLOW
+                METHOD,
+                DATA_FLOW,
+                MODE
             };
-            Sobel();
-            virtual OperatorKernel* clone() const { return new Sobel; }
+            FindContours();
+            virtual OperatorKernel* clone() const { return new FindContours; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             void initialize();
@@ -63,26 +64,19 @@ namespace stromx
             const std::vector<const runtime::Description*> setupInputs();
             const std::vector<const runtime::Description*> setupOutputs();
             
-            int convertDdepth(const runtime::Enum & value);
+            int convertMethod(const runtime::Enum & value);
+            int convertMode(const runtime::Enum & value);
             
-            runtime::Enum m_ddepth;
-            runtime::Float64 m_delta;
-            runtime::UInt32 m_dx;
-            runtime::UInt32 m_dy;
-            runtime::UInt32 m_ksize;
-            runtime::Float64 m_scale;
+            runtime::Enum m_method;
+            runtime::Enum m_mode;
             runtime::Enum m_dataFlow;
-            runtime::EnumParameter* m_ddepthParameter;
-            runtime::NumericParameter<runtime::Float64>* m_deltaParameter;
             runtime::Description* m_dstDescription;
-            runtime::NumericParameter<runtime::UInt32>* m_dxParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_dyParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_ksizeParameter;
-            runtime::NumericParameter<runtime::Float64>* m_scaleParameter;
+            runtime::EnumParameter* m_methodParameter;
+            runtime::EnumParameter* m_modeParameter;
             runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }
 }
 
-#endif // STROMX_CVIMGPROC_SOBEL_H
+#endif // STROMX_CVIMGPROC_FINDCONTOURS_H

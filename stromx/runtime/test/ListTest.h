@@ -32,6 +32,7 @@ namespace stromx
             CPPUNIT_TEST(testContent);
             CPPUNIT_TEST(testConstContent);
             CPPUNIT_TEST(testDestructor);
+            CPPUNIT_TEST(testTypedList);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -45,6 +46,7 @@ namespace stromx
             void testContent();
             void testConstContent();
             void testDestructor();
+            void testTypedList();
             
         private:
             List* m_list;

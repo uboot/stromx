@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/test/HoughLinesPTest.h"
 
+#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
@@ -23,7 +24,6 @@ namespace stromx
         
         void HoughLinesPTest::testAllocate0()
         {
-            m_operator->setParameter(HoughLinesP::DATA_FLOW, runtime::Enum(HoughLinesP::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             

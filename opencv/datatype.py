@@ -142,7 +142,27 @@ class Float32Matrix(Matrix):
 class Float64Matrix(Matrix):
     def __init__(self):
         super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_64_MATRIX")
-            
+        
+class List(DataType):
+    """
+    Stromx runtime::List type.
+    """
+    def __init__(self, elementType):
+        self.elementType = elementType
+        
+    def typeId(self):
+        return "runtime::List"
+        
+    def parentVariant(self):
+        return "runtime::DataVariant::Data"
+        
+    def variant(self):
+        return "runtime::DataVariant::LIST"
+        
+    def cast(self, src):
+        return "runtime::TypedList<{1}>({0})".format(src,
+            self.elementType.concreteTypeId())
+        
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

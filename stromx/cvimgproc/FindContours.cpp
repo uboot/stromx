@@ -1,4 +1,4 @@
-#include "stromx/cvimgproc/CalcHist1D.h"
+#include "stromx/cvimgproc/FindContours.h"
 
 #include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
@@ -17,29 +17,26 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        const std::string CalcHist1D::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
-        const runtime::Version CalcHist1D::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
-        const std::string CalcHist1D::TYPE("CalcHist1D");
+        const std::string FindContours::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
+        const runtime::Version FindContours::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
+        const std::string FindContours::TYPE("FindContours");
         
-        CalcHist1D::CalcHist1D()
+        FindContours::FindContours()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_histMax(256),
-            m_histMin(0),
-            m_histSize(16),
+            m_method(0),
+            m_mode(0),
             m_dataFlow()
         {
         }
         
-        const runtime::DataRef CalcHist1D::getParameter(unsigned int id) const
+        const runtime::DataRef FindContours::getParameter(unsigned int id) const
         {
             switch(id)
             {
-            case HIST_MAX:
-                return m_histMax;
-            case HIST_MIN:
-                return m_histMin;
-            case HIST_SIZE:
-                return m_histSize;
+            case METHOD:
+                return m_method;
+            case MODE:
+                return m_mode;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -47,43 +44,32 @@ namespace stromx
             }
         }
         
-        void CalcHist1D::setParameter(unsigned int id, const runtime::Data& value)
+        void FindContours::setParameter(unsigned int id, const runtime::Data& value)
         {
             try
             {
                 switch(id)
                 {
-                case HIST_MAX:
+                case METHOD:
                     {
-                        const runtime::Float32 & castedValue = runtime::data_cast<runtime::Float32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_32))
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_histMaxParameter, *this);
-                        m_histMax = castedValue;
+                        checkEnumValue(castedValue, m_methodParameter, *this);
+                        m_method = castedValue;
                     }
                     break;
-                case HIST_MIN:
+                case MODE:
                     {
-                        const runtime::Float32 & castedValue = runtime::data_cast<runtime::Float32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_32))
+                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_histMinParameter, *this);
-                        m_histMin = castedValue;
-                    }
-                    break;
-                case HIST_SIZE:
-                    {
-                        const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
-                        {
-                            throw runtime::WrongParameterType(parameter(id), *this);
-                        }
-                        checkNumericValue(castedValue, m_histSizeParameter, *this);
-                        m_histSize = castedValue;
+                        checkEnumValue(castedValue, m_modeParameter, *this);
+                        m_mode = castedValue;
                     }
                     break;
                 case DATA_FLOW:
@@ -107,14 +93,14 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Parameter*> CalcHist1D::setupInitParameters()
+        const std::vector<const runtime::Parameter*> FindContours::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
             return parameters;
         }
         
-        const std::vector<const runtime::Parameter*> CalcHist1D::setupParameters()
+        const std::vector<const runtime::Parameter*> FindContours::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -122,20 +108,21 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_histMinParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MIN);
-                    m_histMinParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histMinParameter->setTitle(L_("Minimum"));
-                    parameters.push_back(m_histMinParameter);
+                    m_modeParameter = new runtime::EnumParameter(MODE);
+                    m_modeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_modeParameter->setTitle(L_("Mode"));
+                    m_modeParameter->add(runtime::EnumDescription(runtime::Enum(RETR_EXTERNAL), L_("Extreme outer contours")));
+                    m_modeParameter->add(runtime::EnumDescription(runtime::Enum(RETR_LIST), L_("All contours")));
+                    parameters.push_back(m_modeParameter);
                     
-                    m_histMaxParameter = new runtime::NumericParameter<runtime::Float32>(HIST_MAX);
-                    m_histMaxParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histMaxParameter->setTitle(L_("Maximum"));
-                    parameters.push_back(m_histMaxParameter);
-                    
-                    m_histSizeParameter = new runtime::NumericParameter<runtime::UInt32>(HIST_SIZE);
-                    m_histSizeParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
-                    m_histSizeParameter->setTitle(L_("Number of bins"));
-                    parameters.push_back(m_histSizeParameter);
+                    m_methodParameter = new runtime::EnumParameter(METHOD);
+                    m_methodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_methodParameter->setTitle(L_("Mode"));
+                    m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_NONE), L_("Store all points")));
+                    m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_SIMPLE), L_("Compress straight segments")));
+                    m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_TC89_L1), L_("Teh-Chin L1")));
+                    m_methodParameter->add(runtime::EnumDescription(runtime::Enum(CHAIN_APPROX_TC89_KCOS), L_("Teh-Chin Kcos")));
+                    parameters.push_back(m_methodParameter);
                     
                 }
                 break;
@@ -144,7 +131,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> CalcHist1D::setupInputs()
+        const std::vector<const runtime::Description*> FindContours::setupInputs()
         {
             std::vector<const runtime::Description*> inputs;
             
@@ -152,7 +139,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -163,7 +150,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> CalcHist1D::setupOutputs()
+        const std::vector<const runtime::Description*> FindContours::setupOutputs()
         {
             std::vector<const runtime::Description*> outputs;
             
@@ -171,7 +158,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::MATRIX);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::LIST);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -182,12 +169,12 @@ namespace stromx
             return outputs;
         }
         
-        void CalcHist1D::initialize()
+        void FindContours::initialize()
         {
             runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
-        void CalcHist1D::execute(runtime::DataProvider & provider)
+        void FindContours::execute(runtime::DataProvider & provider)
         {
             switch(int(m_dataFlow))
             {
@@ -212,20 +199,49 @@ namespace stromx
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
-                    cv::Mat dstCvData;
-                    float histMinCvData = float(m_histMin);
-                    float histMaxCvData = float(m_histMax);
-                    int histSizeCvData = int(m_histSize);
+                    std::vector<cv::Mat> dstCvData;
+                    int modeCvData = convertMode(m_mode);
+                    int methodCvData = convertMethod(m_method);
                     
-                    calcHist1D(srcCvData, dstCvData, histMinCvData, histMaxCvData, histSizeCvData);
+                    cv::findContours(srcCvData, dstCvData, modeCvData, methodCvData);
                     
-                    runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
+                    runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
                     runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
                     runtime::Id2DataPair outputMapper(DST, outContainer);
                     
                     provider.sendOutputData(outputMapper);
                 }
                 break;
+            }
+        }
+        
+        int FindContours::convertMethod(const runtime::Enum & value)
+        {
+            switch(int(value))
+            {
+            case CHAIN_APPROX_NONE:
+                return CV_CHAIN_APPROX_NONE;
+            case CHAIN_APPROX_SIMPLE:
+                return CV_CHAIN_APPROX_SIMPLE;
+            case CHAIN_APPROX_TC89_L1:
+                return CV_CHAIN_APPROX_TC89_L1;
+            case CHAIN_APPROX_TC89_KCOS:
+                return CV_CHAIN_APPROX_TC89_KCOS;
+            default:
+                throw runtime::WrongParameterValue(parameter(METHOD), *this);
+            }
+        }
+        
+        int FindContours::convertMode(const runtime::Enum & value)
+        {
+            switch(int(value))
+            {
+            case RETR_EXTERNAL:
+                return CV_RETR_EXTERNAL;
+            case RETR_LIST:
+                return CV_RETR_LIST;
+            default:
+                throw runtime::WrongParameterValue(parameter(MODE), *this);
             }
         }
         

@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/test/CalcHist1DTest.h"
 
+#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
@@ -23,7 +24,6 @@ namespace stromx
         
         void CalcHist1DTest::testAllocate0()
         {
-            m_operator->setParameter(CalcHist1D::DATA_FLOW, runtime::Enum(CalcHist1D::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -45,7 +45,6 @@ namespace stromx
         
         void CalcHist1DTest::testAllocate1()
         {
-            m_operator->setParameter(CalcHist1D::DATA_FLOW, runtime::Enum(CalcHist1D::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             

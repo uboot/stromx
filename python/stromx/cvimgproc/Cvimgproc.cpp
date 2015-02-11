@@ -29,6 +29,7 @@
 #include <stromx/cvimgproc/CornerHarris.h>
 #include <stromx/cvimgproc/CornerMinEigenVal.h>
 #include <stromx/cvimgproc/HoughLinesP.h>
+#include <stromx/cvimgproc/FindContours.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -66,4 +67,5 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<CornerHarris>("CornerHarris");
     stromx::python::exportOperatorKernel<CornerMinEigenVal>("CornerMinEigenVal");
     stromx::python::exportOperatorKernel<HoughLinesP>("HoughLinesP");
+    stromx::python::exportOperatorKernel<FindContours>("FindContours");
 }

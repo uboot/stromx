@@ -1,5 +1,6 @@
 #include "stromx/cvimgproc/test/UndistortPointsTest.h"
 
+#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
@@ -23,7 +24,6 @@ namespace stromx
         
         void UndistortPointsTest::testAllocate0()
         {
-            m_operator->setParameter(UndistortPoints::DATA_FLOW, runtime::Enum(UndistortPoints::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             
@@ -43,7 +43,6 @@ namespace stromx
         
         void UndistortPointsTest::testAllocate1()
         {
-            m_operator->setParameter(UndistortPoints::DATA_FLOW, runtime::Enum(UndistortPoints::ALLOCATE));
             m_operator->initialize();
             m_operator->activate();
             

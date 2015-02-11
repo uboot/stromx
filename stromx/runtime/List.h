@@ -30,7 +30,7 @@ namespace stromx
         public:
             /** Constructs an empty list. */
             List() {}
-            explicit List(const std::vector<Data*> content) : m_content(content) {}
+            explicit List(const std::vector<Data*> & content) : m_content(content) {}
             ~List();
             
             virtual const std::string & type() const { return TYPE; }
@@ -66,6 +66,23 @@ namespace stromx
             static const DataVariant & variant() { return DataVariant::LIST; }
         };  
         /** \endcond */
+        
+        template <class T>
+        class TypedList : public List
+        {
+        public:
+            template <class src_t>
+            TypedList(const std::vector<src_t> & srcContent) : List()
+            {
+                content().reserve(srcContent.size());
+                for (typename std::vector<src_t>::const_iterator iter = srcContent.begin();
+                     iter != srcContent.end(); ++iter)
+                {
+                    src_t & src = const_cast<src_t&>(*iter);
+                    content().push_back(new T(src));
+                }
+            }
+        };
     }
 }
 

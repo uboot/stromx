@@ -5,6 +5,8 @@ Created on Mon Apr  1 18:19:38 2013
 @author: matz
 """
 
+import sys
+
 import cvcommon
 import cvtype
 import datatype
@@ -14,7 +16,7 @@ import package
 import test
 
 # abbreviations
-dt = test.Default()
+DT = test.Default()
 
 # initializations
 initInCopy = document.Document((
@@ -124,7 +126,7 @@ allocate = package.Option(
     [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
     inputCheck = pixelTypeCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, dt]
+        [lenna_16bit, barbara_16bit, DT]
     ]
 )
 absdiff = package.Method(
@@ -138,9 +140,9 @@ manual = package.Option(
      noArray, ddepth],
     inputCheck = pixelTypeDdepthCheck,
     tests = [
-        [lenna, barbara, memory, dt, dt],
-        [lenna_bw, barbara_bw, memory, dt, dt],
-        [lenna_16bit, barbara, memory, dt, 1]
+        [lenna, barbara, memory, DT, DT],
+        [lenna_bw, barbara_bw, memory, DT, DT],
+        [lenna_16bit, barbara, memory, DT, 1]
     ]
 )
 allocate = package.Option(
@@ -149,8 +151,8 @@ allocate = package.Option(
      package.Allocation(dstImgDdepth), noArray, ddepth],
     inputCheck = pixelTypeDdepthCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, dt, dt, dt],
-        [lenna_16bit, barbara, dt, dt, 2]
+        [lenna_16bit, barbara_16bit, DT, DT, DT],
+        [lenna_16bit, barbara, DT, DT, 2]
     ]
 )
 add = package.Method(
@@ -164,8 +166,8 @@ manual = package.Option(
      beta, gamma, package.Output(dstImgDdepth), ddepth],
     inputCheck = pixelTypeDdepthCheck,
     tests = [
-        [lenna, dt, barbara, dt, dt, memory, dt],
-        [lenna_bw, 2.0, barbara_bw, 0.5, 3.0, memory, dt],
+        [lenna, DT, barbara, DT, DT, memory, DT],
+        [lenna_bw, 2.0, barbara_bw, 0.5, 3.0, memory, DT],
         [lenna_16bit, 1.0, barbara, 0.5, -10, memory, 1]
     ]
 )
@@ -175,8 +177,8 @@ allocate = package.Option(
      beta, gamma, package.Allocation(dstImgDdepth), ddepth],
     inputCheck = pixelTypeDdepthCheck,
     tests = [
-        [lenna_16bit, -1.0, barbara_16bit, 10.0, 2.0, dt, dt],
-        [lenna_16bit, -10.0, barbara, 2.0, 0.0, dt, 2]
+        [lenna_16bit, -1.0, barbara_16bit, 10.0, 2.0, DT, DT],
+        [lenna_16bit, -10.0, barbara, 2.0, 0.0, DT, 2]
     ]
 )
 addWeighted = package.Method(
@@ -198,7 +200,7 @@ allocate = package.Option(
     [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
     inputCheck = pixelTypeCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, dt]
+        [lenna_16bit, barbara_16bit, DT]
     ]
 )
 bitwise_and = package.Method(
@@ -218,7 +220,7 @@ allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImg1), package.Allocation(dstImg)],
     tests = [
-        [lenna_16bit, dt]
+        [lenna_16bit, DT]
     ]
 )
 bitwise_not = package.Method(
@@ -240,7 +242,7 @@ allocate = package.Option(
     [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
     inputCheck = pixelTypeCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, dt]
+        [lenna_16bit, barbara_16bit, DT]
     ]
 )
 bitwise_or = package.Method(
@@ -262,7 +264,7 @@ allocate = package.Option(
     [package.Input(srcImg1), package.Input(srcImg2), package.Allocation(dstImg)],
     inputCheck = pixelTypeCheck,
     tests = [
-        [lenna_16bit, barbara_16bit, dt]
+        [lenna_16bit, barbara_16bit, DT]
     ]
 )
 bitwise_xor = package.Method(
@@ -290,6 +292,11 @@ core = package.Package(
     ]
 )
 
+package = core
 
-generator.generateMethodFiles(core, bitwise_xor)
-generator.generatePackageFiles(core) 
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            generator.generateMethodFiles(package, globals()[arg])
+    else:
+        generator.generatePackageFiles(package) 

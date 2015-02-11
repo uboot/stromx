@@ -315,6 +315,7 @@ class OpHeaderGenerator(MethodGenerator):
         self.doc.line('#include <stromx/cvsupport/Matrix.h>')
         self.doc.line('#include <stromx/runtime/Enum.h>')
         self.doc.line('#include <stromx/runtime/EnumParameter.h>')
+        self.doc.line('#include <stromx/runtime/List.h>')
         self.doc.line('#include <stromx/runtime/MatrixDescription.h>')
         self.doc.line('#include <stromx/runtime/MatrixParameter.h>')
         self.doc.line('#include <stromx/runtime/NumericParameter.h>')
@@ -1138,8 +1139,9 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line("std::vector<const runtime::Parameter*> parameters;")
         self.doc.blank()
         
-        v = OpImplGenerator.SetupParametersVisitor(self.doc, True)
-        self.optionParam.accept(v)
+        if len(self.m.options) > 1:
+            v = OpImplGenerator.SetupParametersVisitor(self.doc, isInit = True)
+            self.optionParam.accept(v)
         
         self.doc.line("return parameters;")
         self.doc.scopeExit()
@@ -1439,6 +1441,7 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
             ).format(self.p.ident, self.m.ident.className()))
         self.doc.blank()
         
+        self.doc.line('#include <boost/lexical_cast.hpp>')
         self.doc.line('#include <stromx/runtime/OperatorException.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
         self.doc.line('#include "stromx/cvsupport/Image.h"')
@@ -1482,12 +1485,13 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
                 )
                 self.doc.scopeEnter()
                 
-                index = "{0}::DATA_FLOW".format(self.m.ident.className())
-                value = (
-                    "runtime::Enum({0}::{1})"
-                    ).format(self.m.ident.className(), o.ident.constant())
-                l = "m_operator->setParameter({0}, {1});".format(index, value)
-                self.doc.line(l)
+                if len(self.m.options) > 1:
+                    index = "{0}::DATA_FLOW".format(self.m.ident.className())
+                    value = (
+                        "runtime::Enum({0}::{1})"
+                        ).format(self.m.ident.className(), o.ident.constant())
+                    l = "m_operator->setParameter({0}, {1});".format(index, value)
+                    self.doc.line(l)
                 self.doc.line("m_operator->initialize();")
                 self.doc.line("m_operator->activate();")
                 self.doc.blank();

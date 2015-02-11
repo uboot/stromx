@@ -169,6 +169,24 @@ class SaveResultVisitor(interface.ArgumentVisitor):
             self.doc.line((
                 'cvsupport::Matrix::save("{0}", access());'
             ).format(fileName))
+        elif (isinstance(output.dataType, datatype.List) and
+              isinstance(output.dataType.elementType, datatype.Matrix)):
+            self.doc.line("std::size_t index = 0;")
+            self.doc.line("runtime::ReadAccess<runtime::List> access(result);")
+            self.doc.line("const std::vector<const runtime::Data*> & content = access().content();")
+            self.doc.line("for (std::vector<const runtime::Data*>::const_iterator "
+                          "iter = content.begin(); "
+                          "iter != content.end(); "
+                          "++iter)")
+            self.doc.scopeEnter()
+            self.doc.line("const runtime::Matrix* matrix = "
+                          "runtime::data_cast<runtime::Matrix>(*iter);")
+            self.doc.line(('std::string fileName = "{0}_" + '
+                           'boost::lexical_cast<std::string>(index) + ".npy";'
+                           ).format(self.testFileName))
+            self.doc.line('cvsupport::Matrix::save(fileName, *matrix);')
+            self.doc.line("++index;")
+            self.doc.scopeExit()
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   

@@ -18,6 +18,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy DESTINATION ${CMAKE_CURR
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/edges.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/contours.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -48,6 +49,7 @@ set (SOURCES
     ../CornerHarris.cpp
     ../CornerMinEigenVal.cpp
     ../HoughLinesP.cpp
+    ../FindContours.cpp
     ../Utility.cpp
     ../Cvimgproc.cpp
     BilateralFilterTest.cpp
@@ -78,6 +80,7 @@ set (SOURCES
     CornerHarrisTest.cpp
     CornerMinEigenValTest.cpp
     HoughLinesPTest.cpp
+    FindContoursTest.cpp
     main.cpp
 )
 

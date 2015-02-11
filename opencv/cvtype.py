@@ -67,6 +67,13 @@ class Mat(CvType):
             return "cvsupport::getOpenCvMat({0}, {1})".format(src,
                                                               self.__channels)
         
+class VectorOfMat(CvType):
+    """
+    OpenCV std::vector<cv::Mat> type.
+    """
+    def typeId(self):
+        return "std::vector<cv::Mat>"
+        
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
