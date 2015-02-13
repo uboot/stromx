@@ -55,6 +55,11 @@ namespace stromx
             delete m_list;
         }
         
+        void ListTest::testVariant()
+        {
+            CPPUNIT_ASSERT(m_list->isVariant(DataVariant::LIST));
+        }
+        
         void ListTest::testConstructor()
         {
             CPPUNIT_ASSERT_EQUAL(std::size_t(2), m_list->content().size());

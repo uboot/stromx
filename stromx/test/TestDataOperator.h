@@ -64,7 +64,8 @@ namespace stromx
                 IMAGE_RAMP,
                 HISTOGRAM,
                 LINE_SEGMENTS,
-                POINTS
+                POINTS,
+                POLYGONS
             };
             
         public:
@@ -85,6 +86,7 @@ namespace stromx
             stromx::runtime::Data* lineSegments();
             stromx::runtime::Data* histogram();
             stromx::runtime::Data* points();
+            stromx::runtime::Data* polygons();
             
             void setMatrixEntry(stromx::runtime::Matrix* matrix, unsigned int row,
                                 unsigned int col, double value);

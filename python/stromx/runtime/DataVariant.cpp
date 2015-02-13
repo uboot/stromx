@@ -49,6 +49,7 @@ void exportDataVariant()
     in_DataVariant.attr("FLOAT_32") = DataVariant::FLOAT_32; 
     in_DataVariant.attr("FLOAT_64") = DataVariant::FLOAT_64; 
     in_DataVariant.attr("STRING") = DataVariant::STRING;
+    in_DataVariant.attr("LIST") = DataVariant::LIST;
     in_DataVariant.attr("IMAGE") = DataVariant::IMAGE;
     in_DataVariant.attr("MONO_IMAGE") = DataVariant::MONO_IMAGE;
     in_DataVariant.attr("BGR_24_IMAGE") = DataVariant::BGR_24_IMAGE;

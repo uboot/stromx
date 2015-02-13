@@ -28,6 +28,7 @@ namespace stromx
         class ListTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ListTest);
+            CPPUNIT_TEST(testVariant);
             CPPUNIT_TEST(testConstructor);
             CPPUNIT_TEST(testContent);
             CPPUNIT_TEST(testConstContent);
@@ -42,6 +43,7 @@ namespace stromx
             void tearDown();
             
         protected:
+            void testVariant();
             void testConstructor();
             void testContent();
             void testConstContent();
