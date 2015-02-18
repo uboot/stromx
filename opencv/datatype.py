@@ -51,6 +51,16 @@ class Bool(DataType):
     def variant(self):
         return "runtime::DataVariant::BOOL"
         
+class UInt8(DataType):
+    """
+    Stromx runtime::UInt8 type.
+    """
+    def typeId(self):
+        return "runtime::UInt8"
+        
+    def variant(self):
+        return "runtime::DataVariant::UINT_8"
+        
 class UInt32(DataType):
     """
     Stromx runtime::UInt32 type.

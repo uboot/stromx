@@ -159,9 +159,9 @@ class Scalar(Compound):
         self.args = [arg0, arg1, arg2, arg3]
         
     def create(self):
-        cvData = ["{0}".format(self.arg.ident) for arg in self.args 
-                  if self.args != None]
-        argString = ",".join(cvData)
+        cvData = ["{0}CvData".format(arg.ident) for arg in self.args 
+                  if arg != None]
+        argString = ", ".join(cvData)
         
         return "cv::Scalar({0})".format(argString)
         

@@ -140,6 +140,9 @@ class GetDataVisitor(interface.TestArgumentVisitor):
     
     def visitRefData(self, testData):
         self.__visitData(testData.arg)
+    
+    def visitMatrixFile(self, testData):
+        self.__visitData(testData.arg)
         
 class SaveResultVisitor(interface.ArgumentVisitor):
     """

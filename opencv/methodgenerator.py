@@ -16,7 +16,8 @@ class SingleArgumentVisitor(interface.ArgumentVisitor):
     """
     def visitCompound(self, compound):
         for arg in compound.args:
-            arg.accept(self)
+            if not arg is None:
+                arg.accept(self)
             
     
 class CollectVisitor(SingleArgumentVisitor):
@@ -398,6 +399,8 @@ class OpImplGenerator(MethodGenerator):
         def export(self, doc):
             for i, p in enumerate(self.params):
                 defaultValue = p.default if p.default != None else ""
+                defaultValue = "true" if defaultValue is True else defaultValue
+                defaultValue = "false" if defaultValue is False else defaultValue
                 init = "{0}({1})".format(p.ident.attribute(), defaultValue)
                 if i != len(self.params) - 1:
                     doc.line("{0},".format(init))
@@ -937,7 +940,10 @@ class OpImplGenerator(MethodGenerator):
             self.visit(parameter)
             
         def visitConstant(self, constant):
-            self.args.append(constant.value)
+            value = constant.value
+            value = "false" if value is False else value
+            value = "true" if value is True else value
+            self.args.append(str(value))
             
         def visitRefInput(self, refInput):
             self.visit(refInput)

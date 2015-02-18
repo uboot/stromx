@@ -10,15 +10,17 @@ include_directories (
     ${CPPUNIT_INCLUDE_DIR}
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/circle.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/affine.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/perspective.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/edges.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/contours.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/circle.png ${CMAKE_CURRENT_BINARY_DIR}/circle.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/affine.npy ${CMAKE_CURRENT_BINARY_DIR}/affine.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/perspective.npy ${CMAKE_CURRENT_BINARY_DIR}/perspective.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/camera_matrix.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy ${CMAKE_CURRENT_BINARY_DIR}/dist_coeffs.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy ${CMAKE_CURRENT_BINARY_DIR}/points_2d.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/edges.png ${CMAKE_CURRENT_BINARY_DIR}/edges.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contours.png ${CMAKE_CURRENT_BINARY_DIR}/contours.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/corners.png ${CMAKE_CURRENT_BINARY_DIR}/corners.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/corners.npy ${CMAKE_CURRENT_BINARY_DIR}/corners.npy COPYONLY)
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -45,11 +47,14 @@ set (SOURCES
     ../FloodFill.cpp
     ../Integral.cpp
     ../CalcHist1D.cpp
+    ../FindContours.cpp
     ../Canny.cpp
     ../CornerHarris.cpp
     ../CornerMinEigenVal.cpp
+    ../CornerSubPix.cpp
+    ../GoodFeaturesToTrack.cpp
     ../HoughLinesP.cpp
-    ../FindContours.cpp
+    ../PreCornerDetect.cpp
     ../Utility.cpp
     ../Cvimgproc.cpp
     BilateralFilterTest.cpp
@@ -76,11 +81,14 @@ set (SOURCES
     FloodFillTest.cpp
     IntegralTest.cpp
     CalcHist1DTest.cpp
+    FindContoursTest.cpp
     CannyTest.cpp
     CornerHarrisTest.cpp
     CornerMinEigenValTest.cpp
+    CornerSubPixTest.cpp
+    GoodFeaturesToTrackTest.cpp
     HoughLinesPTest.cpp
-    FindContoursTest.cpp
+    PreCornerDetectTest.cpp
     main.cpp
 )
 

@@ -404,7 +404,7 @@ namespace stromx
             {
                 for (int j = 0; j < NUM_Y_POLYGONS; ++j)
                 {
-                    const int NUM_POINTS = 16;
+                    const int NUM_POINTS = 32;
                     const int SIZE = 50;
                     
                     Matrix* matrix = 0;
@@ -421,15 +421,16 @@ namespace stromx
                         throw WrongArgument("Unsupported data type.");
                     }
                     
-                    float offsetX = i * SIZE;
-                    float offsetY = j * SIZE;
+                    float offsetX = (2*i + 1) * SIZE;
+                    float offsetY = (2*j + 1) * SIZE;
                     
                     for (int k = 0; k < NUM_POINTS; ++k)
                     {
-                        const int NUM_PERIODS = 10;
+                        const int NUM_PERIODS = 6;
                         const int AMPLITUDE = 10;
-                        float radius = SIZE / 2 + AMPLITUDE * 
-                                       cos(2 * M_PI * k / NUM_POINTS * NUM_PERIODS);
+                        const float SPEED = 0.1;
+                        float radius = SIZE / 2 + AMPLITUDE * cos(m_index * SPEED)
+                                       * cos(2 * M_PI * k / NUM_POINTS * NUM_PERIODS);
                         
                         float angle = k * 2 * M_PI / NUM_POINTS;
                         float x = radius * cos(angle);

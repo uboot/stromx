@@ -253,6 +253,12 @@ kernel = package.Call(
 anchor = package.Constant(
     "cv::Point(-1, -1)"
 )
+defaultSize = package.Constant(
+    "cv::Size(-1, -1)"
+)
+defaultTermCriteria = package.Constant(
+    "cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, -1, -1)"
+)
 iterations = package.NumericParameter(
     "iterations", "Number of iterations", cvtype.Int(), datatype.UInt32(),
     minValue = 1, default = 1
@@ -495,6 +501,62 @@ findContoursMethod = package.EnumParameter(
     "method", "Mode", descriptions = descriptions,
     default = 0
 )
+pointMatrix = package.Argument(
+    "pointMatrix", "Point coordinates", cvtype.Mat(), datatype.Float32Matrix()
+)
+seedPointX = package.NumericParameter(
+    "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
+)
+seedPointY = package.NumericParameter(
+    "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
+)
+winSizeX = package.NumericParameter(
+    "winSizeX", "Width of search window", cvtype.Int(), datatype.UInt32(),
+    default = 5
+)
+winSizeY = package.NumericParameter(
+    "winSizeY", "Height of search window", cvtype.Int(), datatype.UInt32(),
+    default = 5
+)
+useHarrisDetector = package.Parameter(
+    "useHarrisDetector", "Use Harris detector", cvtype.Bool(), datatype.Bool(),
+    default = False
+)
+maxCorners = package.NumericParameter(
+    "maxCorners", "Maximum number of corners", cvtype.Int(), datatype.UInt32(),
+    default = 10
+)
+qualityLevel = package.NumericParameter(
+    "qualityLevel", "Minimal accepted quality", 
+    cvtype.Float64(), datatype.Float64(), default = 0.01
+)
+minDistance = package.NumericParameter(
+    "minDistance", "Minimal distance between corners", 
+    cvtype.Float64(), datatype.Float64(), default = 1.0
+)
+noArray = package.Constant(
+    "cv::noArray()"
+)
+descriptions = [
+    package.EnumDescription("BORDER_DEFAULT", "Default"),
+    package.EnumDescription("BORDER_CONSTANT", "Constant"),
+    package.EnumDescription("BORDER_REFLECT", "Reflect"),
+    package.EnumDescription("BORDER_REPLICATE", "Replicate"),
+]
+borderType = package.EnumParameter(
+    "borderType", "Border type", descriptions = descriptions,
+    default = "BORDER_DEFAULT"
+)
+red = package.NumericParameter(
+    "red", "Red", cvtype.Int(), datatype.UInt8(), default = 0
+)
+green = package.NumericParameter(
+    "green", "Green", cvtype.Int(), datatype.UInt8(), default = 0
+)
+blue = package.NumericParameter(
+    "blue", "Blue", cvtype.Int(), datatype.UInt8(), default = 0
+)
+
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -509,6 +571,8 @@ memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000) 
 circle = test.ImageFile("circle.png", grayscale = True)
 contours = test.ImageFile("contours.png", grayscale = True)
+cornerImage = test.ImageFile("corners.png", grayscale = True)
+cornerCoordinates = test.MatrixFile("corners.npy")
 
 # bilateralFilter
 manual = package.Option(
@@ -1032,7 +1096,6 @@ floodFill = package.Method(
     "floodFill", options = [inPlace]
 )
 
-
 # integral
 manual = package.Option(
     "manual", "Manual", 
@@ -1065,10 +1128,42 @@ calcHist = package.Method(
     "calcHist1D", namespace = "", options = [allocate]
 )
 
+# findContours
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono8bit), package.Allocation(dstListOfMatrices),
+     findContoursMode, findContoursMethod],
+    tests = [
+        [contours, DT, DT, DT],
+        [contours, DT, DT, 1]
+    ]
+)
+findContours = package.Method(
+    "findContours", options = [allocate]
+)
+
+# drawContours
+listOfContours = package.Argument(
+    "contours", "Contours", cvtype.VectorOfMat(),
+    datatype.List(datatype.Float32Matrix())
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.InputOutput(dstImg), package.Input(listOfContours),
+     package.Constant(-1), package.Scalar(red, green, blue)],
+    tests = [
+        [lenna_bw, cornerCoordinates, DT],
+        [lenna, cornerCoordinates, DT]
+    ]
+)
+drawContours = package.Method(
+    "drawContours", options = [inPlace]
+)
+
 # Canny
 manual = package.Option(
     "manual", "Manual", 
-    [package.Input(srcImgMono, True), package.Output(dstImg), threshold1,
+    [package.Input(srcImgMono, True), package.InputOutput(dstImg), threshold1,
      threshold2],
     tests = [
         [lenna_bw, memory, DT, DT],
@@ -1137,6 +1232,32 @@ cornerMinEigenVal = package.Method(
     "cornerMinEigenVal", options = [manual, allocate]
 )
 
+# cornerSubPix
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.Input(srcImgMono), package.InputOutput(pointMatrix),
+     package.Size(winSizeX, winSizeY), defaultSize, defaultTermCriteria],
+    tests = [
+        [cornerImage, cornerCoordinates, (DT, DT)]
+    ]
+)
+cornerSubPix = package.Method(
+    "cornerSubPix", options = [inPlace]
+)
+
+# goodFeaturesToTrack
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImgMono), package.Allocation(pointMatrix), maxCorners,
+     qualityLevel, minDistance, noArray, blockSize, useHarrisDetector, harrisK],
+    tests = [
+        [cornerImage, DT, DT, DT, DT, DT, DT]
+    ]
+)
+goodFeaturesToTrack = package.Method(
+    "goodFeaturesToTrack", options = [allocate]
+)
+
 # HoughLinesP
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1151,18 +1272,25 @@ houghLinesP = package.Method(
     "HoughLinesP", options = [allocate]
 )
 
-# findContours
-allocate = package.Option(
-    "allocate", "Allocate",
-    [package.Input(srcImgMono8bit), package.Allocation(dstListOfMatrices),
-     findContoursMode, findContoursMethod],
+# preCornerDetect
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono8bit), package.Output(dstImgFloat32), sobelKsize,
+    borderType],
     tests = [
-        [contours, DT, DT, DT],
-        [contours, DT, DT, 1]
+        [lenna_bw, bigMemory, DT, DT]
     ]
 )
-findContours = package.Method(
-    "findContours", options = [allocate]
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImgMono8bit), package.Allocation(dstImgFloat32),
+     sobelKsize, borderType],
+    tests = [
+        [lenna_bw, DT, 5, 2]
+    ]
+)
+preCornerDetect = package.Method(
+    "preCornerDetect", options = [manual, allocate]
 )
 
 imgproc = package.Package(
@@ -1192,11 +1320,15 @@ imgproc = package.Package(
         floodFill,
         integral,
         calcHist,
+        findContours,
+        #drawContours,
         canny,
         cornerHarris,
         cornerMinEigenVal,
+        cornerSubPix,
+        goodFeaturesToTrack,
         houghLinesP,
-        findContours
+        preCornerDetect
     ],
     functions = [
         cvcommon.checkEnumValue,
@@ -1214,7 +1346,9 @@ imgproc = package.Package(
         "dist_coeffs.npy",
         "points_2d.npy",
         "edges.png",
-        "contours.png"
+        "contours.png",
+        "corners.png",
+        "corners.npy"
     ]
 )
 

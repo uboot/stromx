@@ -22,7 +22,7 @@ target_link_libraries (cvimgproc
     stromx_cvimgproc
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py ${CMAKE_CURRENT_BINARY_DIR}/__init__.py COPYONLY)
 
 if(PYTHON_INSTALL_DIR)
     install(DIRECTORY . 

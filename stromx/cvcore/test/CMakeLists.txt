@@ -10,8 +10,8 @@ include_directories (
     ${CPPUNIT_INCLUDE_DIR}
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/barbara.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/barbara.jpg ${CMAKE_CURRENT_BINARY_DIR}/barbara.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)
 
 set (SOURCES 
     ../Absdiff.cpp

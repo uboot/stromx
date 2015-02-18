@@ -39,11 +39,14 @@ set (SOURCES
     FloodFill.cpp
     Integral.cpp
     CalcHist1D.cpp
+    FindContours.cpp
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp
+    CornerSubPix.cpp
+    GoodFeaturesToTrack.cpp
     HoughLinesP.cpp
-    FindContours.cpp
+    PreCornerDetect.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

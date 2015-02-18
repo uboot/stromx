@@ -1,5 +1,6 @@
 #include "stromx/cvcore/test/Bitwise_xorTest.h"
 
+#include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"

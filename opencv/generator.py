@@ -345,8 +345,8 @@ class PythonCMakeGenerator(LibGenerator):
         self.doc.line(")")
         self.doc.blank()
         
-        self.doc.line("file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py "
-                      "DESTINATION ${CMAKE_CURRENT_BINARY_DIR})")
+        self.doc.line("configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py "
+                      "${CMAKE_CURRENT_BINARY_DIR}/__init__.py COPYONLY)")
         self.doc.blank()
         
         self.doc.line("if(PYTHON_INSTALL_DIR)")
@@ -451,8 +451,8 @@ class TestCMakeGenerator(LibGenerator):
         
         
         for f in self.p.testFiles:
-            self.doc.line(("file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{0} "
-                "DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}})").format(f))
+            self.doc.line(("configure_file(${{CMAKE_CURRENT_SOURCE_DIR}}/{0} "
+                "${{CMAKE_CURRENT_BINARY_DIR}}/{0} COPYONLY)").format(f))
         self.doc.blank()
         
         self.doc.line("set (SOURCES ")
