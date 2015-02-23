@@ -40,6 +40,7 @@ set (SOURCES
     Integral.cpp
     CalcHist1D.cpp
     FindContours.cpp
+    DrawContours.cpp
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp

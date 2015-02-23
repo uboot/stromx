@@ -547,14 +547,14 @@ borderType = package.EnumParameter(
     "borderType", "Border type", descriptions = descriptions,
     default = "BORDER_DEFAULT"
 )
-red = package.NumericParameter(
-    "red", "Red", cvtype.Int(), datatype.UInt8(), default = 0
+ch1 = package.NumericParameter(
+    "ch1", "Channel 1", cvtype.Int(), datatype.UInt8(), default = 0
 )
-green = package.NumericParameter(
-    "green", "Green", cvtype.Int(), datatype.UInt8(), default = 0
+ch2 = package.NumericParameter(
+    "ch2", "Channel 2", cvtype.Int(), datatype.UInt8(), default = 0
 )
-blue = package.NumericParameter(
-    "blue", "Blue", cvtype.Int(), datatype.UInt8(), default = 0
+ch3 = package.NumericParameter(
+    "ch3", "Channel 3", cvtype.Int(), datatype.UInt8(), default = 0
 )
 
 
@@ -573,6 +573,9 @@ circle = test.ImageFile("circle.png", grayscale = True)
 contours = test.ImageFile("contours.png", grayscale = True)
 cornerImage = test.ImageFile("corners.png", grayscale = True)
 cornerCoordinates = test.MatrixFile("corners.npy")
+contour_1 = test.MatrixFile("contour_1.npy")
+contour_2 = test.MatrixFile("contour_2.npy")
+contourList = test.List(contour_1, contour_2)
 
 # bilateralFilter
 manual = package.Option(
@@ -1051,8 +1054,8 @@ allocate = package.Option(
 )
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono), thresh, maxval,
-     thresholdType],
+    [package.InputOutput(srcImgMono), package.RefInput(dstImg, srcImgMono),
+     thresh, maxval, thresholdType],
     tests = [
         [lenna_bw, DT, DT, DT, 4]
     ]
@@ -1147,13 +1150,16 @@ listOfContours = package.Argument(
     "contours", "Contours", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix())
 )
+drawContoursImage = package.Argument(
+    "img", "Image", cvtype.Mat(), datatype.Image()
+)
 inPlace = package.Option(
     "inPlace", "In place",
-    [package.InputOutput(dstImg), package.Input(listOfContours),
-     package.Constant(-1), package.Scalar(red, green, blue)],
+    [package.InputOutput(drawContoursImage), package.Input(listOfContours),
+     package.Constant(-1), package.Scalar(ch1, ch2, ch3)],
     tests = [
-        [lenna_bw, cornerCoordinates, DT],
-        [lenna, cornerCoordinates, DT]
+        [lenna_bw, contourList, DT, (255, 0, 0)],
+        [lenna, contourList, DT, (255, 0, 0)]
     ]
 )
 drawContours = package.Method(
@@ -1321,7 +1327,7 @@ imgproc = package.Package(
         integral,
         calcHist,
         findContours,
-        #drawContours,
+        drawContours,
         canny,
         cornerHarris,
         cornerMinEigenVal,
@@ -1348,7 +1354,8 @@ imgproc = package.Package(
         "edges.png",
         "contours.png",
         "corners.png",
-        "corners.npy"
+        "contour_1.npy",
+        "contour_2.npy"
     ]
 )
 

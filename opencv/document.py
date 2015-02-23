@@ -144,3 +144,16 @@ class Document(object):
         self.decreaseIndent()
         self.line("};")
         self.lastCmdWasBlank = False
+        
+def pythonToCpp(value):
+    if value is False:
+        value = "false"
+    elif value is True:
+        value = "true"
+    elif isinstance(value, tuple):
+        value = tuple([pythonToCpp(v) for v in value])
+        value = myList = ', '.join(map(str, value)) 
+    else:
+        pass
+        
+    return value

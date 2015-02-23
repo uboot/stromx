@@ -399,8 +399,7 @@ class OpImplGenerator(MethodGenerator):
         def export(self, doc):
             for i, p in enumerate(self.params):
                 defaultValue = p.default if p.default != None else ""
-                defaultValue = "true" if defaultValue is True else defaultValue
-                defaultValue = "false" if defaultValue is False else defaultValue
+                defaultValue = document.pythonToCpp(defaultValue)
                 init = "{0}({1})".format(p.ident.attribute(), defaultValue)
                 if i != len(self.params) - 1:
                     doc.line("{0},".format(init))
@@ -941,8 +940,7 @@ class OpImplGenerator(MethodGenerator):
             
         def visitConstant(self, constant):
             value = constant.value
-            value = "false" if value is False else value
-            value = "true" if value is True else value
+            value = document.pythonToCpp(value)
             self.args.append(str(value))
             
         def visitRefInput(self, refInput):
@@ -1520,7 +1518,7 @@ class OpTestImplGenerator(MethodGenerator, OpTestGenerator):
                                                         self.m.ident.className())
         with file(filename, "w") as f:
             f.write(self.doc.string())
-        
+            
 def generateMethodFiles(package, method):
     """
     Generates the operator and the operator tests for the given method.

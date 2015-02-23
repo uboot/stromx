@@ -26,6 +26,7 @@
 #include <stromx/cvimgproc/Integral.h>
 #include <stromx/cvimgproc/CalcHist1D.h>
 #include <stromx/cvimgproc/FindContours.h>
+#include <stromx/cvimgproc/DrawContours.h>
 #include <stromx/cvimgproc/Canny.h>
 #include <stromx/cvimgproc/CornerHarris.h>
 #include <stromx/cvimgproc/CornerMinEigenVal.h>
@@ -67,6 +68,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<Integral>("Integral");
     stromx::python::exportOperatorKernel<CalcHist1D>("CalcHist1D");
     stromx::python::exportOperatorKernel<FindContours>("FindContours");
+    stromx::python::exportOperatorKernel<DrawContours>("DrawContours");
     stromx::python::exportOperatorKernel<Canny>("Canny");
     stromx::python::exportOperatorKernel<CornerHarris>("CornerHarris");
     stromx::python::exportOperatorKernel<CornerMinEigenVal>("CornerMinEigenVal");

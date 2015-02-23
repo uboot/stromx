@@ -15,12 +15,22 @@ class Value(TestData):
     Base class of test data classes. Stores a value which represents the 
     construction of the test data.
     """
-    def __init__(self, value):
+    def __init__(self, *args):
         super(Value, self).__init__()
-        self.value = value
+        self.value = args[0] if len(args) == 1 else args
         
     def accept(self, visitor):
         visitor.visitValue(self)
+    
+class List(TestData):
+    """
+    Image test data which is read from a given file.
+    """
+    def __init__(self, *args):
+        self.values = args
+        
+    def accept(self, visitor):
+        visitor.visitList(self)
     
 class ImageFile(Value):
     """

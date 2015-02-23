@@ -47,6 +47,19 @@ namespace stromx
             return cv::Mat(matrix.rows(), matrix.cols() / numChannels, cvType, data, matrix.stride());
         }
         
+        std::vector<cv::Mat> getOpenCvMatVector(const runtime::List& list)
+        {
+            std::vector<cv::Mat> vector;
+            std::vector<const Data*> content = list.content();
+            for(std::vector<const Data*>::const_iterator iter = content.begin();
+                iter != content.end(); ++iter)
+            {
+                const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
+                vector.push_back(getOpenCvMat(*matrix));
+            }
+            return vector;
+        }
+        
         runtime::Image::PixelType computeOutPixelType(const int outDdepth,
                                     const runtime::Image::PixelType inPixelType)
         {

@@ -1,28 +1,36 @@
 # -*- coding: utf-8 -*-
 
 import datatype
+import document
 import interface
 import package
 import test
 
 def _isParameter(arg):
     return isinstance(arg, package.Parameter)
-    
-def _createTestData(arg, dataType, constructorArgs):
-    if _isParameter(arg):
-        return "{0} {1}({2});".format(dataType, arg.ident, constructorArgs)
-    else:
-        return ("runtime::DataContainer "
-            "{0}(new {1}({2}));".format(arg.ident, dataType, constructorArgs)
-        )
-
-class CreateDataVisitor(interface.TestArgumentVisitor):
+        
+class CreateDataContructorVisitor(interface.TestArgumentVisitor):
     """
-    Exports the construction of test data for each visited test data object.
+    Abstract base class which creates the constructor elements for each visited
+    test data object and forwards them to the abstract member create().
     """
     def __init__(self, doc):
         self.doc = doc
         
+    def visitList(self, testData):
+        argIdent = testData.arg.ident
+        l = "runtime::Data* dataObject = 0;"
+        self.doc.line(l)
+        l = "std::vector<runtime::Data*> {0}Vector;".format(argIdent)
+        self.doc.line(l)        
+        visitor = CreateHeapObjectVisitor(self.doc)
+        for value in testData.values:
+            value.accept(visitor)
+            self.doc.line("{0}Vector.push_back(dataObject);".format(argIdent))
+        dataType = "runtime::List"
+        args = "{0}Vector".format(argIdent)
+        self.create(testData.arg, dataType, args)
+    
     def visitImageFile(self, testData):
         flags = []
         if testData.grayscale:
@@ -39,34 +47,91 @@ class CreateDataVisitor(interface.TestArgumentVisitor):
                 word += flag + " & "
         
         if word != "":
-            l = _createTestData(testData.arg, "cvsupport::Image", 
-                                '"{0}", {1}'.format(testData.value, word))
+            args = '"{0}", {1}'.format(testData.value, word)
         else:
-            l = _createTestData(testData.arg, "cvsupport::Image", 
-                                '"{0}"'.format(testData.value))
-            
-                    
-        self.doc.line(l)
+            args = '"{0}"'.format(testData.value)
+        
+        dataType = "cvsupport::Image"
+        self.create(testData.arg, dataType, args)
         
     def visitMatrixFile(self, testData):
-        l = _createTestData(testData.arg, "cvsupport::Matrix", 
-                            '"{0}"'.format(testData.value))
-                    
-        self.doc.line(l)
+        dataType = "cvsupport::Matrix"
+        args = '"{0}"'.format(testData.value)
+        self.create(testData.arg, dataType, args)
         
     def visitImageBuffer(self, testData):
-        l = _createTestData(testData.arg, "cvsupport::Image", 
-                            '{0}'.format(testData.value))
-        self.doc.line(l)
-    
+        dataType = "cvsupport::Image"
+        args = testData.value
+        self.create(testData.arg, dataType, args)
+        
     def visitValue(self, testData):
-        l = _createTestData(testData.arg, testData.arg.dataType.typeId(), 
-                            '{0}'.format(testData.value))
+        dataType = testData.arg.dataType.typeId()
+        args = document.pythonToCpp(testData.value)
+        self.create(testData.arg, dataType, args)
+        
+    def create(self, arg, dataType, args):
+        raise NotImplementedError()
+        
+class CreateHeapObjectVisitor(CreateDataContructorVisitor):
+    """
+    Exports the creation of a data object on the heap for each visited test data
+    object.
+    """        
+    def create(self, arg, dataType, args):
+        l = "dataObject = new {0}({1});".format(dataType, args)
         self.doc.line(l)
+        
+class CreateDataContainerVisitor(CreateDataContructorVisitor):
+    """
+    Exports the creation of a DataContainer for each visited test data object.
+    """        
+    def create(self, arg, dataType, args):
+        l = "runtime::DataContainer {0}(new {1}({2}));".format(arg.ident,
+                                                               dataType, args)
+        self.doc.line(l)
+        
+class CreateStackObjectVisitor(CreateDataContructorVisitor):
+    """
+    Exports the creation of a data object on the stack for each visited test 
+    data object.
+    """
+    def create(self, arg, dataType, args):
+        l = "{0} {1}({2});".format(dataType, arg.ident, args)
+        self.doc.line(l)
+        
+class CreateDataVisitor(interface.TestArgumentVisitor):
+    """
+    Exports the creation of either a DataContainer or a Data object for each 
+    visited test data object.
+    """
+    def __init__(self, doc):
+        self.__stackObjectVisitor = CreateStackObjectVisitor(doc)
+        self.__dataContainerVisitor = CreateDataContainerVisitor(doc)
+        
+    def visitList(self, testData):
+        self.__visitData(testData)
+        
+    def visitImageFile(self, testData):
+        self.__visitData(testData)
+        
+    def visitMatrixFile(self, testData):
+        self.__visitData(testData)
+        
+    def visitImageBuffer(self, testData):
+        self.__visitData(testData)
+        
+    def visitValue(self, testData):
+        self.__visitData(testData)
+        
+    def __visitData(self, testData):
+        if _isParameter(testData.arg):
+            testData.accept(self.__stackObjectVisitor)
+        else:
+            testData.accept(self.__dataContainerVisitor)
     
 class SetDataVisitor(interface.TestArgumentVisitor):
     """
-    Sets of either a parameter or an input for each visited test data depending
+    Sets either a parameter or an input for each visited test data depending
     on the type of the corresponding method argument (parameter or input).
     """
     def __init__(self, doc, method):
@@ -95,6 +160,9 @@ class SetDataVisitor(interface.TestArgumentVisitor):
         self.__visitData(testData.arg)
     
     def visitValue(self, testData):
+        self.__visitData(testData.arg)
+    
+    def visitList(self, testData):
         self.__visitData(testData.arg)
     
     def visitRefData(self, testData):

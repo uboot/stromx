@@ -40,6 +40,8 @@ void exportString()
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateFromString))
         .def("get", &String::get, return_value_policy<copy_const_reference>())
+        .def(self == self)
+        .def(self != self)
     ;
     
     implicitly_convertible< std::auto_ptr<String>, std::auto_ptr<Data> >();

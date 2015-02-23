@@ -19,6 +19,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <stromx/runtime/Image.h>
+#include <stromx/runtime/List.h>
 
 #include "stromx/cvsupport/Config.h"
 
@@ -40,6 +41,12 @@ namespace stromx
         /** Returns an OpenCV matrix header for \c matrix. */
         STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix,
                                                   const unsigned int numChannels = 1);
+        
+        /** 
+         * Converts a stromx list of matrices to a vector of OpenCV matrices.
+         * \throws BadCast If one of the values in \c list can not be casted to a matrix.
+         */
+        STROMX_CVSUPPORT_API std::vector<cv::Mat> getOpenCvMatVector(const runtime::List& list);
         
         /** 
          * Computes the stromx pixel type of the input type \c inPixelType 
