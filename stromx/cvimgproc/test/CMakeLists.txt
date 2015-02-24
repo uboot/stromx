@@ -20,6 +20,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy ${CMAKE_CURRENT_BINARY_
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/edges.png ${CMAKE_CURRENT_BINARY_DIR}/edges.png COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contours.png ${CMAKE_CURRENT_BINARY_DIR}/contours.png COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/corners.png ${CMAKE_CURRENT_BINARY_DIR}/corners.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/corners.npy ${CMAKE_CURRENT_BINARY_DIR}/corners.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contour_1.npy ${CMAKE_CURRENT_BINARY_DIR}/contour_1.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contour_2.npy ${CMAKE_CURRENT_BINARY_DIR}/contour_2.npy COPYONLY)
 

@@ -1354,6 +1354,7 @@ imgproc = package.Package(
         "edges.png",
         "contours.png",
         "corners.png",
+        "corners.npy",
         "contour_1.npy",
         "contour_2.npy"
     ]
