@@ -576,19 +576,41 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(arg)
             
         def visitOutput(self, output):
-            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
-                .format(output.ident, output.ident.constant(),
-                        output.dataType.variant())
-            self.doc.line(l)
-            l = '{0}->setTitle(L_("{1}"));'\
-                .format(output.ident, output.name)
-            self.doc.line(l)
-            l = "outputs.push_back({0});".format(output.ident)
-            self.doc.line(l)
-            self.doc.blank()
+            if output.argType == package.ArgType.PLAIN:
+                self.__setupDescription(output)
+            elif output.argType == package.ArgType.MATRIX:
+                self.__setupMatrixDescription(output)
+            else:
+                assert(False)
         
         def visitAllocation(self, allocation):
             self.visitOutput(allocation)
+            
+        def __setupDescription(self, arg):
+            l = "runtime::Description* {0} = new runtime::Description({1}, {2});"\
+                .format(arg.ident, arg.ident.constant(),
+                        arg.dataType.variant())
+            self.doc.line(l)
+            l = '{0}->setTitle(L_("{1}"));'.format(arg.ident, arg.name)
+            self.doc.line(l)
+            l = "outputs.push_back({0});".format(arg.ident)
+            self.doc.line(l)
+            self.doc.blank()
+            
+        def __setupMatrixDescription(self, arg):
+            l = "runtime::MatrixDescription* {0} = new runtime::MatrixDescription({1}, {2});"\
+                .format(arg.ident, arg.ident.constant(),
+                        arg.dataType.variant())
+            self.doc.line(l)
+            l = '{0}->setTitle(L_("{1}"));'.format(arg.ident, arg.name)
+            self.doc.line(l)
+            l = '{0}->setRows({1});'.format(arg.ident, arg.rows)
+            self.doc.line(l)
+            l = '{0}->setCols({1});'.format(arg.ident, arg.cols)
+            self.doc.line(l)
+            l = "outputs.push_back({0});".format(arg.ident)
+            self.doc.line(l)
+            self.doc.blank()
             
     class SetupInputsVisitor(MethodGenerator.DocVisitor):
         """
@@ -646,7 +668,7 @@ class OpImplGenerator(MethodGenerator):
             
         def __getVariant(self, arg, isOutput):
             if isOutput:
-                return arg.dataType.parentVariant()
+                return arg.dataType.canBeCreatedFromVariant()
             else:
                 return arg.dataType.variant()
             

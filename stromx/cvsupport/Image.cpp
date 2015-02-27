@@ -295,6 +295,29 @@ namespace stromx
             else
                 m_image->flags &= ~cv::Mat::CONTINUOUS_FLAG;
         }
+        
+        void Image::initializeMatrix(const unsigned int rows, const unsigned int cols, 
+          const unsigned int stride, uint8_t*const data, 
+          const stromx::runtime::Matrix::ValueType valueType)
+        {
+            ImageWrapper::initializeMatrix(rows, cols, stride, data, valueType);
+            int type = cvTypeFromValueType(valueType);
+            m_image->rows = rows;
+            m_image->cols = cols;
+            m_image->data = data;
+            m_image->size.p[0] = rows;
+            m_image->size.p[1] = cols;
+            m_image->step.buf[0] = stride;
+            m_image->step.buf[1] = valueSize();
+            m_image->step.p[0] = stride;
+            m_image->step.p[1] = valueSize();
+            m_image->flags = (type & CV_MAT_TYPE_MASK) | cv::Mat::MAGIC_VAL;
+            
+            if (valueSize() * cols == stride || rows == 1)
+                m_image->flags |= cv::Mat::CONTINUOUS_FLAG;
+            else
+                m_image->flags &= ~cv::Mat::CONTINUOUS_FLAG;
+        }
 
         void Image::allocate(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
         {
@@ -330,6 +353,31 @@ namespace stromx
                 return CV_16UC3;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
+            }
+        }
+        
+        int Image::cvTypeFromValueType(const runtime::Matrix::ValueType valueType)
+        {
+            switch(valueType)
+            {
+            case runtime::Matrix::INT_8:
+                return CV_8SC1;
+            case runtime::Matrix::UINT_8:
+                return CV_8UC1;
+            case runtime::Matrix::INT_16:
+                return CV_16SC1;
+            case runtime::Matrix::UINT_16:
+                return CV_16UC1;
+            case runtime::Matrix::INT_32:
+                return CV_32FC1;
+            case runtime::Matrix::UINT_32:
+                return CV_32FC1;
+            case runtime::Matrix::FLOAT_32:
+                return CV_32FC1;
+            case runtime::Matrix::FLOAT_64:
+                return CV_64FC1;
+            default:
+                throw runtime::WrongArgument("Unknown value type.");  
             }
         }
         

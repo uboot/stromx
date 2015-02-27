@@ -214,7 +214,7 @@ class Argument(Acceptor):
         
 class MatrixArgument(Argument):
     """
-    Input argument which is represented by a matrix parameter.
+    Input argument which is represented by a matrix argument.
     """
     def __init__(self, ident, name, cvType, dataType, rows = 0,
                  cols = 0, rules = None):

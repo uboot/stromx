@@ -137,8 +137,10 @@ namespace stromx
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_pointMatrixDescription = new runtime::Description(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
-                    m_pointMatrixDescription->setTitle(L_("Point coordinates"));
+                    m_pointMatrixDescription = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    m_pointMatrixDescription->setTitle("Point coordinates");
+                    m_pointMatrixDescription->setRows(0);
+                    m_pointMatrixDescription->setCols(2);
                     inputs.push_back(m_pointMatrixDescription);
                     
                 }
@@ -156,8 +158,10 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* pointMatrix = new runtime::Description(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
+                    pointMatrix->setRows(0);
+                    pointMatrix->setCols(2);
                     outputs.push_back(pointMatrix);
                     
                 }
@@ -212,6 +216,7 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Matrix * pointMatrixCastedData = runtime::data_cast<runtime::Matrix>(pointMatrixData);
+                    checkMatrixData(*pointMatrixCastedData, m_pointMatrixDescription, *this);
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat pointMatrixCvData = cvsupport::getOpenCvMat(*pointMatrixCastedData);

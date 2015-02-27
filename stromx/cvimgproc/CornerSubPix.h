@@ -55,7 +55,7 @@ namespace stromx
             runtime::UInt32 m_winSizeX;
             runtime::UInt32 m_winSizeY;
             runtime::Enum m_dataFlow;
-            runtime::Description* m_pointMatrixDescription;
+            runtime::MatrixDescription* m_pointMatrixDescription;
             runtime::Description* m_srcDescription;
             runtime::NumericParameter<runtime::UInt32>* m_winSizeXParameter;
             runtime::NumericParameter<runtime::UInt32>* m_winSizeYParameter;

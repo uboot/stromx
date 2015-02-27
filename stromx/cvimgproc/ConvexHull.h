@@ -1,5 +1,5 @@
-#ifndef STROMX_CVIMGPROC_HOUGHLINESP_H
-#define STROMX_CVIMGPROC_HOUGHLINESP_H
+#ifndef STROMX_CVIMGPROC_CONVEXHULL_H
+#define STROMX_CVIMGPROC_CONVEXHULL_H
 
 #include "stromx/cvimgproc/Config.h"
 #include <stromx/cvsupport/Matrix.h>
@@ -17,7 +17,7 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        class STROMX_CVIMGPROC_API HoughLinesP : public runtime::OperatorKernel
+        class STROMX_CVIMGPROC_API ConvexHull : public runtime::OperatorKernel
         {
         public:
             enum DataFlowId
@@ -26,20 +26,16 @@ namespace stromx
             };
             enum ConnectorId
             {
-                SRC,
-                DST
+                OUT_CURVE,
+                CURVE
             };
             enum ParameterId
             {
-                MAX_LINE_GAP,
-                MIN_LINE_LENGTH,
-                RHO,
-                THRESHOLD,
-                THETA,
+                CLOCKWISE,
                 DATA_FLOW
             };
-            HoughLinesP();
-            virtual OperatorKernel* clone() const { return new HoughLinesP; }
+            ConvexHull();
+            virtual OperatorKernel* clone() const { return new ConvexHull; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             void initialize();
@@ -55,22 +51,14 @@ namespace stromx
             const std::vector<const runtime::Description*> setupInputs();
             const std::vector<const runtime::Description*> setupOutputs();
             
-            runtime::Float64 m_maxLineGap;
-            runtime::Float64 m_minLineLength;
-            runtime::Float64 m_rho;
-            runtime::Float64 m_theta;
-            runtime::UInt32 m_threshold;
+            runtime::Bool m_clockwise;
             runtime::Enum m_dataFlow;
-            runtime::MatrixDescription* m_dstDescription;
-            runtime::NumericParameter<runtime::Float64>* m_maxLineGapParameter;
-            runtime::NumericParameter<runtime::Float64>* m_minLineLengthParameter;
-            runtime::NumericParameter<runtime::Float64>* m_rhoParameter;
-            runtime::Description* m_srcDescription;
-            runtime::NumericParameter<runtime::Float64>* m_thetaParameter;
-            runtime::NumericParameter<runtime::UInt32>* m_thresholdParameter;
+            runtime::Parameter* m_clockwiseParameter;
+            runtime::MatrixDescription* m_curveDescription;
+            runtime::MatrixDescription* m_outCurveDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
     }
 }
 
-#endif // STROMX_CVIMGPROC_HOUGHLINESP_H
+#endif // STROMX_CVIMGPROC_CONVEXHULL_H

@@ -155,7 +155,7 @@ namespace stromx
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
-                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
+                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
@@ -163,9 +163,6 @@ namespace stromx
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
@@ -187,7 +184,7 @@ namespace stromx
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
-                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
+                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
@@ -195,9 +192,6 @@ namespace stromx
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
@@ -219,7 +213,7 @@ namespace stromx
                     m_adaptiveMethodParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_adaptiveMethodParameter->setTitle(L_("Adaptive method"));
                     m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_MEAN_C), L_("Mean of block")));
-                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum( ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
+                    m_adaptiveMethodParameter->add(runtime::EnumDescription(runtime::Enum(ADAPTIVE_THRESH_GAUSSIAN_C), L_("Weighted sum of block")));
                     parameters.push_back(m_adaptiveMethodParameter);
                     
                     m_thresholdTypeParameter = new runtime::EnumParameter(THRESHOLD_TYPE);
@@ -227,9 +221,6 @@ namespace stromx
                     m_thresholdTypeParameter->setTitle(L_("Threshold type"));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY), L_("Binary")));
                     m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_BINARY_INV), L_("Binary inverted")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TRUNC), L_("Truncate")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO), L_("Truncate to zero")));
-                    m_thresholdTypeParameter->add(runtime::EnumDescription(runtime::Enum(THRESH_TOZERO_INV), L_("Truncate to zero inverted")));
                     parameters.push_back(m_thresholdTypeParameter);
                     
                     m_blockSizeParameter = new runtime::NumericParameter<runtime::UInt32>(BLOCK_SIZE);
@@ -462,8 +453,8 @@ namespace stromx
             {
             case ADAPTIVE_THRESH_MEAN_C:
                 return cv::ADAPTIVE_THRESH_MEAN_C;
-            case  ADAPTIVE_THRESH_GAUSSIAN_C:
-                return cv:: ADAPTIVE_THRESH_GAUSSIAN_C;
+            case ADAPTIVE_THRESH_GAUSSIAN_C:
+                return cv::ADAPTIVE_THRESH_GAUSSIAN_C;
             default:
                 throw runtime::WrongParameterValue(parameter(ADAPTIVE_METHOD), *this);
             }
@@ -477,12 +468,6 @@ namespace stromx
                 return cv::THRESH_BINARY;
             case THRESH_BINARY_INV:
                 return cv::THRESH_BINARY_INV;
-            case THRESH_TRUNC:
-                return cv::THRESH_TRUNC;
-            case THRESH_TOZERO:
-                return cv::THRESH_TOZERO;
-            case THRESH_TOZERO_INV:
-                return cv::THRESH_TOZERO_INV;
             default:
                 throw runtime::WrongParameterValue(parameter(THRESHOLD_TYPE), *this);
             }

@@ -230,8 +230,10 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* pointMatrix = new runtime::Description(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
+                    pointMatrix->setRows(0);
+                    pointMatrix->setCols(2);
                     outputs.push_back(pointMatrix);
                     
                 }

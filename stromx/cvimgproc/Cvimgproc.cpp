@@ -26,6 +26,8 @@
 #include "stromx/cvimgproc/CalcHist1D.h"
 #include "stromx/cvimgproc/FindContours.h"
 #include "stromx/cvimgproc/DrawContours.h"
+#include "stromx/cvimgproc/ApproxPolyDP.h"
+#include "stromx/cvimgproc/ConvexHull.h"
 #include "stromx/cvimgproc/Canny.h"
 #include "stromx/cvimgproc/CornerHarris.h"
 #include "stromx/cvimgproc/CornerMinEigenVal.h"
@@ -76,6 +78,8 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new CalcHist1D);
     registry.registerOperator(new FindContours);
     registry.registerOperator(new DrawContours);
+    registry.registerOperator(new ApproxPolyDP);
+    registry.registerOperator(new ConvexHull);
     registry.registerOperator(new Canny);
     registry.registerOperator(new CornerHarris);
     registry.registerOperator(new CornerMinEigenVal);

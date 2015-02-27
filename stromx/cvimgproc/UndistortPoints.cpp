@@ -158,8 +158,10 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::FLOAT_MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::DataVariant::FLOAT_MATRIX);
                     dst->setTitle(L_("Destination"));
+                    dst->setRows(0);
+                    dst->setCols(2);
                     outputs.push_back(dst);
                     
                 }

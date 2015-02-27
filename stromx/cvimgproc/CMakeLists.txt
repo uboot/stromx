@@ -41,6 +41,8 @@ set (SOURCES
     CalcHist1D.cpp
     FindContours.cpp
     DrawContours.cpp
+    ApproxPolyDP.cpp
+    ConvexHull.cpp
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp

@@ -23,15 +23,12 @@ namespace stromx
             enum AdaptiveMethodId
             {
                 ADAPTIVE_THRESH_MEAN_C,
-                 ADAPTIVE_THRESH_GAUSSIAN_C
+                ADAPTIVE_THRESH_GAUSSIAN_C
             };
             enum ThresholdTypeId
             {
                 THRESH_BINARY,
-                THRESH_BINARY_INV,
-                THRESH_TRUNC,
-                THRESH_TOZERO,
-                THRESH_TOZERO_INV
+                THRESH_BINARY_INV
             };
             enum DataFlowId
             {

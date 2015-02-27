@@ -67,7 +67,7 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_kParameter;
             runtime::NumericParameter<runtime::UInt32>* m_maxCornersParameter;
             runtime::NumericParameter<runtime::Float64>* m_minDistanceParameter;
-            runtime::Description* m_pointMatrixDescription;
+            runtime::MatrixDescription* m_pointMatrixDescription;
             runtime::NumericParameter<runtime::Float64>* m_qualityLevelParameter;
             runtime::Description* m_srcDescription;
             runtime::Parameter* m_useHarrisDetectorParameter;

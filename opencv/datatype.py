@@ -21,10 +21,12 @@ class DataType(object):
         """
         return self.typeId()
         
-    def parentVariant(self):
+    def canBeCreatedFromVariant(self):
         """
-        Returns the most general variant corresponding to this data type, e.g.
-        "runtime::DataVariant::MATRIX" for the data type Float32Matrix.
+        Returns the most general variant of objects which can be converted to
+        objects of this type. E.g. any MATRIX can be initialized to a
+        FLOAT_32_MATRIX (without preserving its data) provided that its memory
+        is large enough to hold the new object.
         """
         return self.variant()
         
@@ -115,9 +117,6 @@ class Image(DataType):
     def concreteTypeId(self):
         return "cvsupport::Image"
         
-    def parentVariant(self):
-        return "runtime::DataVariant::IMAGE"
-        
     def variant(self):
         return self.__variant
         
@@ -135,7 +134,7 @@ class Matrix(DataType):
     def concreteTypeId(self):
         return "cvsupport::Matrix"
         
-    def parentVariant(self):
+    def canBeCreatedFromVariant(self):
         return "runtime::DataVariant::MATRIX"
         
     def variant(self):
@@ -163,7 +162,7 @@ class List(DataType):
     def typeId(self):
         return "runtime::List"
         
-    def parentVariant(self):
+    def canBeCreatedFromVariant(self):
         return "runtime::DataVariant::Data"
         
     def variant(self):

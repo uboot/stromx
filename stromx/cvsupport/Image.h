@@ -132,6 +132,12 @@ namespace stromx
                                          const unsigned int stride, 
                                          uint8_t* data, 
                                          const PixelType pixelType);
+                                         
+            virtual void initializeMatrix(const unsigned int rows, 
+                                          const unsigned int cols, 
+                                          const unsigned int stride, 
+                                          uint8_t* data, 
+                                          const ValueType valueType);
             
             /** 
              * Reads the image \c filename. The data of the current image is replaced 
@@ -159,6 +165,7 @@ namespace stromx
             static PixelType pixelTypeFromParameters(const int depth, const int numChannels);
             static int getCvAccessType(const Conversion access);
             static int cvTypeFromPixelType(const runtime::Image::PixelType pixelType);
+            static int cvTypeFromValueType(const runtime::Matrix::ValueType valueType);
             static runtime::Image::PixelType pixelTypeFromCvType(const int cvType);
             
             void getDataFromCvImage(const PixelType pixelType);

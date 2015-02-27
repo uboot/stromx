@@ -135,18 +135,6 @@ initInDsize = document.Document((
     "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
     "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
 )
-initInPyrDown = document.Document((
-    "int width = int((srcCastedData->width() + 1) / 2 );\n"
-    "int height = int((srcCastedData->height() + 1) / 2 );\n"
-    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
-    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
-)
-initInPyrUp = document.Document((
-    "int width = 2  * srcCastedData->width();\n"
-    "int height = 2 * srcCastedData->height();\n"
-    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
-    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
-)
 initInDdepth = document.Document((
     "runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType("
     "convertDdepth(m_ddepth), srcCastedData->pixelType());\n"
@@ -169,15 +157,6 @@ initInFloat32 = document.Document((
     "{1}->data(), runtime::Matrix::FLOAT_32);").format("srcCastedData",
                                                        "dstCastedData"
 ))
-initInIntegral = document.Document((
-    "unsigned int stride = ({0}->cols() + 1) * runtime::Matrix::valueSize(runtime::Matrix::INT_32);\n"
-    "{1}->initializeMatrix({0}->rows() + 1, {0}->cols() + 1, stride, "
-    "{1}->data(), runtime::Matrix::INT_32);").format("srcCastedData",
-                                                       "dstCastedData"
-))
-lineSegmentsPostCall = document.Document(
-    "dstCvData = dstCvData.reshape(1, dstCvData.cols);"
-)
 
 # arguments
 srcImg = package.Argument(
@@ -209,14 +188,6 @@ dstMatrix = package.Argument(
 dstImgFloat32 = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Float32Matrix(),
     initIn = initInFloat32
-)
-dstImgIntegral = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
-    initIn = initInIntegral
-)
-dstListOfMatrices = package.Argument(
-    "dst", "Destination", cvtype.VectorOfMat(),
-    datatype.List(datatype.Float32Matrix())
 )
 ddepthDefault = package.Constant(
     "-1"
@@ -256,9 +227,6 @@ anchor = package.Constant(
 defaultSize = package.Constant(
     "cv::Size(-1, -1)"
 )
-defaultTermCriteria = package.Constant(
-    "cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, -1, -1)"
-)
 iterations = package.NumericParameter(
     "iterations", "Number of iterations", cvtype.Int(), datatype.UInt32(),
     minValue = 1, default = 1
@@ -266,17 +234,6 @@ iterations = package.NumericParameter(
 ksize = package.NumericParameter(
     "ksize", "Kernel size", cvtype.Int(), datatype.UInt32(), minValue = 1,
     step = 2, default = 3, rules = [package.OddRule()]
-)
-descriptions = [
-    package.EnumDescription("MORPH_OPEN", "Open"),
-    package.EnumDescription("MORPH_CLOSE", "Close"),
-    package.EnumDescription("MORPH_GRADIENT", "Gradient"),
-    package.EnumDescription("MORPH_TOPHAT", "Tophat"),
-    package.EnumDescription("MORPH_BLACKHAT", "Blackhat")
-]
-op = package.EnumParameter(
-    "op", "Operation", descriptions = descriptions,
-    default = 1
 )
 d = package.NumericParameter(
     "d", "Pixel neigbourhood diameter", cvtype.Int(), datatype.UInt32(),
@@ -294,12 +251,6 @@ dx = package.NumericParameter(
 dy = package.NumericParameter(
     "dy", "Order Y derivative", cvtype.Int(), datatype.UInt32(), default = 0
 )
-fx = package.NumericParameter(
-    "fx", "Scale X", cvtype.Float64(), datatype.Float64(), default = 1.0
-)
-fy = package.NumericParameter(
-    "fy", "Scale Y", cvtype.Float64(), datatype.Float64(), default = 1.0
-)
 sigmaColor = package.NumericParameter(
     "sigmaColor", "Sigma color", cvtype.Float64(), datatype.Float64(),
     default = 50.0
@@ -313,14 +264,6 @@ sigmaX = package.NumericParameter(
 )
 sigmaY = package.NumericParameter(
     "sigmaY", "Sigma Y", cvtype.Float64(), datatype.Float64(), default = 0.0
-)
-descriptions = [
-    package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
-    package.EnumDescription("INTER_LINEAR", "Bilinear")
-]
-interpolation = package.EnumParameter(
-    "interpolation", "Interpolation", descriptions = descriptions,
-    default = 1
 )
 descriptions = [
     package.EnumDescription("SAME", "Same as input", -1),
@@ -349,74 +292,9 @@ maxval = package.NumericParameter(
     "maxval", "Maximal value", cvtype.Float64(), datatype.Float64(),
     default = 255.0
 )
-descriptions = [
-    package.EnumDescription("THRESH_BINARY", "Binary"),
-    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted"),
-    package.EnumDescription("THRESH_TRUNC", "Truncate"),
-    package.EnumDescription("THRESH_TOZERO", "Truncate to zero"),
-    package.EnumDescription("THRESH_TOZERO_INV", "Truncate to zero inverted")
-]
-thresholdType = package.EnumParameter(
-    "thresholdType", "Threshold type", descriptions = descriptions,
-    default = 0
-)
-descriptions = [
-    package.EnumDescription("THRESH_BINARY", "Binary"),
-    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted")
-]
-adaptiveThresholdType = package.EnumParameter(
-    "thresholdType", "Threshold type", descriptions = descriptions,
-    default = 0
-)
-descriptions = [
-    package.EnumDescription("ADAPTIVE_THRESH_MEAN_C", "Mean of block"),
-    package.EnumDescription(" ADAPTIVE_THRESH_GAUSSIAN_C",
-                            "Weighted sum of block")
-]
-adaptiveMethod = package.EnumParameter(
-    "adaptiveMethod", "Adaptive method", descriptions = descriptions,
-    default = 0
-)
 blockSize = package.NumericParameter(
     "blockSize", "Block size", cvtype.Int(), datatype.UInt32(),
     default = 3, minValue = 1, rules = [package.OddRule()]
-)
-subtractedC = package.Constant("0")
-affineM = package.MatrixParameter(
-    "affineM", "Affine transformation", datatype.FloatMatrix(),
-    default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT_32)", rows = 2,
-    cols = 3
-)
-perspectiveM = package.MatrixParameter(
-    "affineM", "Perspective transformation", datatype.FloatMatrix(),
-    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
-    cols = 3
-)
-cameraMatrix = package.MatrixParameter(
-    "cameraMatrix", "Camera matrix", datatype.FloatMatrix(),
-    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
-    cols = 3
-)
-distCoeffs = package.MatrixParameter(
-    "distCoeffs", "Distortion coefficients", datatype.FloatMatrix(),
-    default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
-    rows = 4, cols = 1
-)
-srcPts = package.MatrixArgument(
-    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
-    cols = 2
-)
-dstPts = package.MatrixArgument(
-    "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix()
-)
-descriptions = [
-    package.EnumDescription("DIST_L1", "L1 distance","CV_DIST_L1"),
-    package.EnumDescription("DIST_L2", "L2 distance", "CV_DIST_L2"),
-    package.EnumDescription("DIST_C", "C", "CV_DIST_C")
-]
-distanceType = package.EnumParameter(
-    "distanceType", "Distance type", descriptions = descriptions,
-    default = 0
 )
 descriptions = [
     package.EnumDescription("SIZE_3", "3","3"),
@@ -436,40 +314,9 @@ seedPointY = package.NumericParameter(
 newVal =  package.NumericParameter(
     "newVal", "New value", cvtype.Float64(), datatype.Float64()
 )
-histMin = package.NumericParameter(
-    "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
-    default = 0
-)
-histMax = package.NumericParameter(
-    "histMax", "Maximum", cvtype.Float32(), datatype.Float32(),
-    default = 256
-)
-histSize = package.NumericParameter(
-    "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
-    default = 16
-)
-threshold1 = package.NumericParameter(
-    "threshold1", "Threshold 1", cvtype.Float64(), datatype.Float64(),
-    default = 64
-)
-threshold2 = package.NumericParameter(
-    "threshold2", "Threshold 2", cvtype.Float64(), datatype.Float64(),
-    default = 128
-)
 harrisK = package.NumericParameter(
     "k", "Harris parameter", cvtype.Float64(), datatype.Float64(),
     default = 1
-)
-dstMatrixLineSegments = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix()
-)
-rho = package.NumericParameter(
-    "rho", "Distance resolution", cvtype.Float64(), datatype.Float64(),
-    default = 1.0
-)
-theta = package.NumericParameter(
-    "theta", "Angle resolution", cvtype.Float64(), datatype.Float64(),
-    default = math.pi / 180
 )
 accumulatorThreshold = package.NumericParameter(
     "threshold", "Accumulator threshold", cvtype.Int(), datatype.UInt32(),
@@ -483,32 +330,9 @@ maxLineGap = package.NumericParameter(
     "maxLineGap", "Maximum allowed gap", cvtype.Float64(), datatype.Float64(),
     default = 5
 )
-descriptions = [
-    package.EnumDescription("RETR_EXTERNAL", "Extreme outer contours", "CV_RETR_EXTERNAL"),
-    package.EnumDescription("RETR_LIST", "All contours", "CV_RETR_LIST")
-]
-findContoursMode = package.EnumParameter(
-    "mode", "Mode", descriptions = descriptions,
-    default = 0
-)
-descriptions = [
-    package.EnumDescription("CHAIN_APPROX_NONE", "Store all points", "CV_CHAIN_APPROX_NONE"),
-    package.EnumDescription("CHAIN_APPROX_SIMPLE", "Compress straight segments", "CV_CHAIN_APPROX_SIMPLE"),
-    package.EnumDescription("CHAIN_APPROX_TC89_L1", "Teh-Chin L1", "CV_CHAIN_APPROX_TC89_L1"),
-    package.EnumDescription("CHAIN_APPROX_TC89_KCOS", "Teh-Chin Kcos", "CV_CHAIN_APPROX_TC89_KCOS")
-]
-findContoursMethod = package.EnumParameter(
-    "method", "Mode", descriptions = descriptions,
-    default = 0
-)
-pointMatrix = package.Argument(
-    "pointMatrix", "Point coordinates", cvtype.Mat(), datatype.Float32Matrix()
-)
-seedPointX = package.NumericParameter(
-    "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
-)
-seedPointY = package.NumericParameter(
-    "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
+pointMatrix = package.MatrixArgument(
+    "pointMatrix", "Point coordinates", cvtype.Mat(), datatype.Float32Matrix(),
+    cols = 2
 )
 winSizeX = package.NumericParameter(
     "winSizeX", "Width of search window", cvtype.Int(), datatype.UInt32(),
@@ -518,45 +342,9 @@ winSizeY = package.NumericParameter(
     "winSizeY", "Height of search window", cvtype.Int(), datatype.UInt32(),
     default = 5
 )
-useHarrisDetector = package.Parameter(
-    "useHarrisDetector", "Use Harris detector", cvtype.Bool(), datatype.Bool(),
-    default = False
-)
-maxCorners = package.NumericParameter(
-    "maxCorners", "Maximum number of corners", cvtype.Int(), datatype.UInt32(),
-    default = 10
-)
-qualityLevel = package.NumericParameter(
-    "qualityLevel", "Minimal accepted quality", 
-    cvtype.Float64(), datatype.Float64(), default = 0.01
-)
-minDistance = package.NumericParameter(
-    "minDistance", "Minimal distance between corners", 
-    cvtype.Float64(), datatype.Float64(), default = 1.0
-)
 noArray = package.Constant(
     "cv::noArray()"
 )
-descriptions = [
-    package.EnumDescription("BORDER_DEFAULT", "Default"),
-    package.EnumDescription("BORDER_CONSTANT", "Constant"),
-    package.EnumDescription("BORDER_REFLECT", "Reflect"),
-    package.EnumDescription("BORDER_REPLICATE", "Replicate"),
-]
-borderType = package.EnumParameter(
-    "borderType", "Border type", descriptions = descriptions,
-    default = "BORDER_DEFAULT"
-)
-ch1 = package.NumericParameter(
-    "ch1", "Channel 1", cvtype.Int(), datatype.UInt8(), default = 0
-)
-ch2 = package.NumericParameter(
-    "ch2", "Channel 2", cvtype.Int(), datatype.UInt8(), default = 0
-)
-ch3 = package.NumericParameter(
-    "ch3", "Channel 3", cvtype.Int(), datatype.UInt8(), default = 0
-)
-
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -573,8 +361,11 @@ circle = test.ImageFile("circle.png", grayscale = True)
 contours = test.ImageFile("contours.png", grayscale = True)
 cornerImage = test.ImageFile("corners.png", grayscale = True)
 cornerCoordinates = test.MatrixFile("corners.npy")
-contour_1 = test.MatrixFile("contour_1.npy")
-contour_2 = test.MatrixFile("contour_2.npy")
+contour_1 = test.MatrixFile("contour_1.npy") # 32-bit integer coordinates
+contour_2 = test.MatrixFile("contour_2.npy") # 32-bit integer coordinates
+contour_f32 = test.MatrixFile("contour_f32.npy") # 32-bit float coordinates
+contour_f64 = test.MatrixFile("contour_f64.npy") # 64-bit float coordinates
+non_convex_f32 = test.MatrixFile("non_convex_f32.npy")
 contourList = test.List(contour_1, contour_2)
 
 # bilateralFilter
@@ -751,6 +542,17 @@ medianBlur = package.Method(
 )
 
 # morphologyEx
+descriptions = [
+    package.EnumDescription("MORPH_OPEN", "Open"),
+    package.EnumDescription("MORPH_CLOSE", "Close"),
+    package.EnumDescription("MORPH_GRADIENT", "Gradient"),
+    package.EnumDescription("MORPH_TOPHAT", "Tophat"),
+    package.EnumDescription("MORPH_BLACKHAT", "Blackhat")
+]
+op = package.EnumParameter(
+    "op", "Operation", descriptions = descriptions,
+    default = 1
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg, True), package.Output(dstImg), op, kernel,
@@ -856,6 +658,12 @@ scharr = package.Method(
 )
 
 # pyrDown
+initInPyrDown = document.Document((
+    "int width = int((srcCastedData->width() + 1) / 2 );\n"
+    "int height = int((srcCastedData->height() + 1) / 2 );\n"
+    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
+)
 dstImgPyr = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInPyrDown, initOut = initOutCopy
@@ -879,6 +687,12 @@ pyrDown = package.Method(
 )
 
 # pyrUp
+initInPyrUp = document.Document((
+    "int width = 2  * srcCastedData->width();\n"
+    "int height = 2 * srcCastedData->height();\n"
+    "{1}->initializeImage(width, height, width * {0}->pixelSize(), "
+    "{1}->data(), {0}->pixelType());").format("srcCastedData", "dstCastedData")
+)
 dstImgPyr = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInPyrUp, initOut = initOutCopy
@@ -902,6 +716,20 @@ pyrUp = package.Method(
 )
 
 # resize
+fx = package.NumericParameter(
+    "fx", "Scale X", cvtype.Float64(), datatype.Float64(), default = 1.0
+)
+fy = package.NumericParameter(
+    "fy", "Scale Y", cvtype.Float64(), datatype.Float64(), default = 1.0
+)
+descriptions = [
+    package.EnumDescription("INTER_NEAREST", "Nearest neighbour"),
+    package.EnumDescription("INTER_LINEAR", "Bilinear")
+]
+interpolation = package.EnumParameter(
+    "interpolation", "Interpolation", descriptions = descriptions,
+    default = 1
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgResize),
@@ -925,6 +753,11 @@ resize = package.Method(
 )
 
 # warpAffine
+affineM = package.MatrixParameter(
+    "affineM", "Affine transformation", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::eye(2, 3, runtime::Matrix::FLOAT_32)", rows = 2,
+    cols = 3
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgDsize), affineM, 
@@ -947,6 +780,11 @@ warpAffine = package.Method(
 )
 
 # warpPerspective
+perspectiveM = package.MatrixParameter(
+    "affineM", "Perspective transformation", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
+    cols = 3
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImgDsize), perspectiveM, 
@@ -969,6 +807,16 @@ warpPerspective = package.Method(
 )
 
 # undistort
+cameraMatrix = package.MatrixParameter(
+    "cameraMatrix", "Camera matrix", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)", rows = 3,
+    cols = 3
+)
+distCoeffs = package.MatrixParameter(
+    "distCoeffs", "Distortion coefficients", datatype.FloatMatrix(),
+    default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
+    rows = 4, cols = 1
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImg), package.Output(dstImg), cameraMatrix,
@@ -991,6 +839,14 @@ undistort = package.Method(
 )
 
 # undistortPoints
+srcPts = package.MatrixArgument(
+    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
+    cols = 2
+)
+dstPts = package.MatrixArgument(
+    "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
+    cols = 2
+)
 allocate = package.Option(
     "allocate", "Allocate",  
     [package.Input(srcPts), package.Allocation(dstPts), cameraMatrix,
@@ -1005,10 +861,28 @@ undistortPoints = package.Method(
 )
 
 # adaptiveThreshold
+descriptions = [
+    package.EnumDescription("THRESH_BINARY", "Binary"),
+    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted")
+]
+adaptiveThresholdType = package.EnumParameter(
+    "thresholdType", "Threshold type", descriptions = descriptions,
+    default = 0
+)
+descriptions = [
+    package.EnumDescription("ADAPTIVE_THRESH_MEAN_C", "Mean of block"),
+    package.EnumDescription("ADAPTIVE_THRESH_GAUSSIAN_C",
+                            "Weighted sum of block")
+]
+adaptiveMethod = package.EnumParameter(
+    "adaptiveMethod", "Adaptive method", descriptions = descriptions,
+    default = 0
+)
+subtractedC = package.Constant("0")
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono8bit, True), package.Output(dstImg), maxval,
-     adaptiveMethod, thresholdType, blockSize, subtractedC],
+     adaptiveMethod, adaptiveThresholdType, blockSize, subtractedC],
     tests = [
         [lenna_bw, memory, DT, DT, DT, DT, DT],
         [lenna_bw, test.RefData(lenna_bw), 128, 1, 1, 5, DT]
@@ -1017,7 +891,7 @@ manual = package.Option(
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImgMono8bit, True), package.Allocation(dstImg), maxval,
-     adaptiveMethod, thresholdType, blockSize, subtractedC],
+     adaptiveMethod, adaptiveThresholdType, blockSize, subtractedC],
     tests = [
         [lenna_bw, DT, 200, 1, 0, 9, DT]
     ]
@@ -1025,7 +899,7 @@ allocate = package.Option(
 inPlace = package.Option(
     "inPlace", "In place",
     [package.InputOutput(srcImgMono8bit), package.RefInput(dstImg, srcImgMono8bit),
-     maxval, adaptiveMethod, thresholdType, blockSize, subtractedC],
+     maxval, adaptiveMethod, adaptiveThresholdType, blockSize, subtractedC],
     tests = [
         [lenna_bw, DT, 80, 0, 1, 7, DT]
     ]
@@ -1035,6 +909,17 @@ adaptiveThreshold = package.Method(
 )
 
 # threshold
+descriptions = [
+    package.EnumDescription("THRESH_BINARY", "Binary"),
+    package.EnumDescription("THRESH_BINARY_INV", "Binary inverted"),
+    package.EnumDescription("THRESH_TRUNC", "Truncate"),
+    package.EnumDescription("THRESH_TOZERO", "Truncate to zero"),
+    package.EnumDescription("THRESH_TOZERO_INV", "Truncate to zero inverted")
+]
+thresholdType = package.EnumParameter(
+    "thresholdType", "Threshold type", descriptions = descriptions,
+    default = 0
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono, True), package.Output(dstImg), thresh, maxval,
@@ -1065,6 +950,15 @@ threshold = package.Method(
 )
 
 # distanceTransform
+descriptions = [
+    package.EnumDescription("DIST_L1", "L1 distance","CV_DIST_L1"),
+    package.EnumDescription("DIST_L2", "L2 distance", "CV_DIST_L2"),
+    package.EnumDescription("DIST_C", "C", "CV_DIST_C")
+]
+distanceType = package.EnumParameter(
+    "distanceType", "Distance type", descriptions = descriptions,
+    default = 0
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono), package.Output(dstImgFloat32), distanceType, 
@@ -1088,6 +982,12 @@ distanceTransform = package.Method(
 )
 
 # floodFill
+seedPointX = package.NumericParameter(
+    "seedPointX", "Seed point X", cvtype.Int(), datatype.UInt32()
+)
+seedPointY = package.NumericParameter(
+    "seedPointY", "Seed point Y", cvtype.Int(), datatype.UInt32()
+)
 inPlace = package.Option(
     "inPlace", "In place", 
     [package.InputOutput(srcImgMono), package.Point(seedPointX, seedPointY), newVal],
@@ -1100,6 +1000,16 @@ floodFill = package.Method(
 )
 
 # integral
+initInIntegral = document.Document((
+    "unsigned int stride = ({0}->cols() + 1) * runtime::Matrix::valueSize(runtime::Matrix::INT_32);\n"
+    "{1}->initializeMatrix({0}->rows() + 1, {0}->cols() + 1, stride, "
+    "{1}->data(), runtime::Matrix::INT_32);").format("srcCastedData",
+                                                       "dstCastedData"
+))
+dstImgIntegral = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    initIn = initInIntegral
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono), package.Output(dstImgIntegral)],
@@ -1119,6 +1029,18 @@ integral = package.Method(
 )
 
 # hist
+histMin = package.NumericParameter(
+    "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
+    default = 0
+)
+histMax = package.NumericParameter(
+    "histMax", "Maximum", cvtype.Float32(), datatype.Float32(),
+    default = 256
+)
+histSize = package.NumericParameter(
+    "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
+    default = 16
+)
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImgMono), package.Allocation(dstMatrix), histMin, histMax, histSize],
@@ -1132,6 +1054,28 @@ calcHist = package.Method(
 )
 
 # findContours
+descriptions = [
+    package.EnumDescription("RETR_EXTERNAL", "Extreme outer contours", "CV_RETR_EXTERNAL"),
+    package.EnumDescription("RETR_LIST", "All contours", "CV_RETR_LIST")
+]
+findContoursMode = package.EnumParameter(
+    "mode", "Mode", descriptions = descriptions,
+    default = 0
+)
+descriptions = [
+    package.EnumDescription("CHAIN_APPROX_NONE", "Store all points", "CV_CHAIN_APPROX_NONE"),
+    package.EnumDescription("CHAIN_APPROX_SIMPLE", "Compress straight segments", "CV_CHAIN_APPROX_SIMPLE"),
+    package.EnumDescription("CHAIN_APPROX_TC89_L1", "Teh-Chin L1", "CV_CHAIN_APPROX_TC89_L1"),
+    package.EnumDescription("CHAIN_APPROX_TC89_KCOS", "Teh-Chin Kcos", "CV_CHAIN_APPROX_TC89_KCOS")
+]
+findContoursMethod = package.EnumParameter(
+    "method", "Mode", descriptions = descriptions,
+    default = 0
+)
+dstListOfMatrices = package.Argument(
+    "dst", "Destination", cvtype.VectorOfMat(),
+    datatype.List(datatype.Float32Matrix())
+)
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImgMono8bit), package.Allocation(dstListOfMatrices),
@@ -1146,6 +1090,15 @@ findContours = package.Method(
 )
 
 # drawContours
+ch1 = package.NumericParameter(
+    "ch1", "Channel 1", cvtype.Int(), datatype.UInt8(), default = 0
+)
+ch2 = package.NumericParameter(
+    "ch2", "Channel 2", cvtype.Int(), datatype.UInt8(), default = 0
+)
+ch3 = package.NumericParameter(
+    "ch3", "Channel 3", cvtype.Int(), datatype.UInt8(), default = 0
+)
 listOfContours = package.Argument(
     "contours", "Contours", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix())
@@ -1166,7 +1119,70 @@ drawContours = package.Method(
     "drawContours", options = [inPlace]
 )
 
+# approxPolyDP
+curve = package.MatrixArgument(
+    "curve", "Input curve", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+outCurve = package.MatrixArgument(
+    "outCurve", "Output curve", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+epsilon = package.NumericParameter(
+    "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
+    default = 10.0, minValue = 0.0
+)
+closed = package.Parameter(
+    "closed", "Curve is closed", cvtype.Bool(), datatype.Bool(), default = False
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(curve), package.Allocation(outCurve), epsilon, closed],
+    tests = [
+        [contour_1, DT, DT, DT],
+        [contour_f32, DT, 5.0, DT]
+    ]
+)
+approxPolyDP = package.Method(
+    "approxPolyDP", options = [allocate]
+)
+
+# convexHull
+points = package.MatrixArgument(
+    "curve", "Input points", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+hull = package.MatrixArgument(
+    "outCurve", "Convex hull", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+epsilon = package.NumericParameter(
+    "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
+    default = 10.0, minValue = 0.0
+)
+clockwise = package.Parameter(
+    "clockwise", "Output orientation", cvtype.Bool(), datatype.Bool(), default = False
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.Allocation(hull), clockwise],
+    tests = [
+        [non_convex_f32, DT, DT]
+    ]
+)
+convexHull = package.Method(
+    "convexHull", options = [allocate]
+)
+
 # Canny
+threshold1 = package.NumericParameter(
+    "threshold1", "Threshold 1", cvtype.Float64(), datatype.Float64(),
+    default = 64
+)
+threshold2 = package.NumericParameter(
+    "threshold2", "Threshold 2", cvtype.Float64(), datatype.Float64(),
+    default = 128
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono, True), package.InputOutput(dstImg), threshold1,
@@ -1239,6 +1255,9 @@ cornerMinEigenVal = package.Method(
 )
 
 # cornerSubPix
+defaultTermCriteria = package.Constant(
+    "cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, -1, -1)"
+)
 inPlace = package.Option(
     "inPlace", "In place",
     [package.Input(srcImgMono), package.InputOutput(pointMatrix),
@@ -1252,6 +1271,22 @@ cornerSubPix = package.Method(
 )
 
 # goodFeaturesToTrack
+useHarrisDetector = package.Parameter(
+    "useHarrisDetector", "Use Harris detector", cvtype.Bool(), datatype.Bool(),
+    default = False
+)
+maxCorners = package.NumericParameter(
+    "maxCorners", "Maximum number of corners", cvtype.Int(), datatype.UInt32(),
+    default = 10
+)
+qualityLevel = package.NumericParameter(
+    "qualityLevel", "Minimal accepted quality", 
+    cvtype.Float64(), datatype.Float64(), default = 0.01
+)
+minDistance = package.NumericParameter(
+    "minDistance", "Minimal distance between corners", 
+    cvtype.Float64(), datatype.Float64(), default = 1.0
+)
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(srcImgMono), package.Allocation(pointMatrix), maxCorners,
@@ -1265,9 +1300,23 @@ goodFeaturesToTrack = package.Method(
 )
 
 # HoughLinesP
+dstMatrixLineSegments = package.MatrixArgument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(), cols = 4
+)
+rho = package.NumericParameter(
+    "rho", "Distance resolution", cvtype.Float64(), datatype.Float64(),
+    default = 1.0
+)
+theta = package.NumericParameter(
+    "theta", "Angle resolution", cvtype.Float64(), datatype.Float64(),
+    default = math.pi / 180
+)
+lineSegmentsPostCall = document.Document(
+    "dstCvData = dstCvData.reshape(1, dstCvData.cols);"
+)
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(srcImgMono), package.Allocation(dstMatrix), rho, theta,
+    [package.Input(srcImgMono), package.Allocation(dstMatrixLineSegments), rho, theta,
      accumulatorThreshold, minLineLength, maxLineGap],
     tests = [
         [edges, DT, DT, DT, DT, DT, DT]
@@ -1279,6 +1328,16 @@ houghLinesP = package.Method(
 )
 
 # preCornerDetect
+descriptions = [
+    package.EnumDescription("BORDER_DEFAULT", "Default"),
+    package.EnumDescription("BORDER_CONSTANT", "Constant"),
+    package.EnumDescription("BORDER_REFLECT", "Reflect"),
+    package.EnumDescription("BORDER_REPLICATE", "Replicate"),
+]
+borderType = package.EnumParameter(
+    "borderType", "Border type", descriptions = descriptions,
+    default = "BORDER_DEFAULT"
+)
 manual = package.Option(
     "manual", "Manual", 
     [package.Input(srcImgMono8bit), package.Output(dstImgFloat32), sobelKsize,
@@ -1328,6 +1387,8 @@ imgproc = package.Package(
         calcHist,
         findContours,
         drawContours,
+        approxPolyDP,
+        convexHull,
         canny,
         cornerHarris,
         cornerMinEigenVal,
@@ -1356,7 +1417,10 @@ imgproc = package.Package(
         "corners.png",
         "corners.npy",
         "contour_1.npy",
-        "contour_2.npy"
+        "contour_2.npy",
+        "contour_f64.npy",
+        "contour_f32.npy",
+        "non_convex_f32.npy"
     ]
 )
 

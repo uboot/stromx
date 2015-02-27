@@ -263,20 +263,36 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("5 500 512"), output.getText());
         }
         
-        void ImageTest::testSerializeAfterInitialize()
+        void ImageTest::testSerializeAfterInitializeImage()
         {
             m_image = new Image(200, 1, runtime::Image::MONO_8);
             m_image->initializeImage(5, 10, 15, m_image->data(), runtime::Image::RGB_24);
             
             {
                 runtime::DirectoryFileOutput output(".");
-                output.initialize("ImageTest_testSerializeAfterInitialize");
+                output.initialize("ImageTest_testSerializeAfterInitializeImage");
                 m_image->serialize(output);
             }
             
-            Image result("ImageTest_testSerializeAfterInitialize.png");
+            Image result("ImageTest_testSerializeAfterInitializeImage.png");
             CPPUNIT_ASSERT_EQUAL((unsigned int)(5), result.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(10), result.height());
+        }
+        
+        void ImageTest::testSerializeAfterInitializeMatrix()
+        {
+            m_image = new Image(10, 10, runtime::Image::RGB_24);
+            m_image->initializeMatrix(10, 8, 30, m_image->data(), runtime::Matrix::INT_16);
+            
+            {
+                runtime::DirectoryFileOutput output(".");
+                output.initialize("ImageTest_testSerializeAfterInitializeMatrix");
+                m_image->serialize(output);
+            }
+            
+            Image result("ImageTest_testSerializeAfterInitializeMatrix.png");
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(10), result.rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(8), result.cols());
         }
         
         void ImageTest::testSerializeEmpty()
@@ -290,13 +306,13 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("3 100 0"), output.getText());
         }
         
-        void ImageTest::testSaveAfterInitialize()
+        void ImageTest::testSaveAfterInitializeImage()
         {
             m_image = new Image(100, 200, runtime::Image::RGB_24);
             m_image->initializeImage(10, 20, 30, m_image->data(), runtime::Image::RGB_24);
-            m_image->save("ImageTest_testSaveAfterInitialize.png");
+            m_image->save("ImageTest_testSaveAfterInitializeImage.png");
             
-            Image result("ImageTest_testSaveAfterInitialize.png");
+            Image result("ImageTest_testSaveAfterInitializeImage.png");
             CPPUNIT_ASSERT_EQUAL((unsigned int)(10), result.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(20), result.height());
         }
