@@ -16,5 +16,4 @@
 #  limitations under the License.
 #
 
-__all__ = [@AVAILABLE_PACKAGES@]
 

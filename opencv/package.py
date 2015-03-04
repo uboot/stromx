@@ -317,13 +317,14 @@ class Option(object):
     which accepts a separate data input which receives the result data.
     """
     def __init__(self, ident, name, args = None, tests = None, 
-                 inputCheck = None, postCall = None):
+                 inputCheck = None, postCall = None, ret = None):
         self.ident = Ident(ident)
         self.name = name
         self.args = [] if args == None else args
         self.tests = [] if tests == None else tests
         self.inputCheck = inputCheck
         self.postCall = postCall
+        self.ret = ret
 
 class Constant(Argument):
     """
