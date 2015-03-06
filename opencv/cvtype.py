@@ -84,6 +84,13 @@ class Rect(CvType):
     def typeId(self):
         return "cv::Rect"
         
+class RotatedRect(CvType):
+    """
+    OpenCV cv::RotatedRect type.
+    """        
+    def typeId(self):
+        return "cv::RotatedRect"
+        
 class VectorOfMat(CvType):
     """
     OpenCV std::vector<cv::Mat> type.

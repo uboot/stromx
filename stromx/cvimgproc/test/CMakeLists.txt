@@ -26,6 +26,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contour_2.npy ${CMAKE_CURRENT_BINARY_
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contour_f64.npy ${CMAKE_CURRENT_BINARY_DIR}/contour_f64.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contour_f32.npy ${CMAKE_CURRENT_BINARY_DIR}/contour_f32.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/non_convex_f32.npy ${CMAKE_CURRENT_BINARY_DIR}/non_convex_f32.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_i32.npy ${CMAKE_CURRENT_BINARY_DIR}/points_i32.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_f32.npy ${CMAKE_CURRENT_BINARY_DIR}/points_f32.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_f64.npy ${CMAKE_CURRENT_BINARY_DIR}/points_f64.npy COPYONLY)
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -57,6 +60,8 @@ set (SOURCES
     ../ApproxPolyDP.cpp
     ../BoundingRect.cpp
     ../ConvexHull.cpp
+    ../FitEllipse.cpp
+    ../MinAreaRect.cpp
     ../Canny.cpp
     ../CornerHarris.cpp
     ../CornerMinEigenVal.cpp
@@ -95,6 +100,8 @@ set (SOURCES
     ApproxPolyDPTest.cpp
     BoundingRectTest.cpp
     ConvexHullTest.cpp
+    FitEllipseTest.cpp
+    MinAreaRectTest.cpp
     CannyTest.cpp
     CornerHarrisTest.cpp
     CornerMinEigenValTest.cpp

@@ -64,17 +64,30 @@ namespace stromx
             copy(matrix);
         }
 
-        Matrix::Matrix(const cv::Rect& rect)
+        Matrix::Matrix(const cv::Rect& cvRect)
           : m_matrix(new cv::Mat())
         {
-            // TODO: consider return void* from data() to get rid of the 
-            // reinterpret cast below
             allocate(1, 4, Matrix::INT_32);
             int32_t* data = reinterpret_cast<int32_t*>(this->data());
-            data[0] = rect.x;
-            data[1] = rect.y;
-            data[2] = rect.width;
-            data[3] = rect.height;
+            data[0] = cvRect.x;
+            data[1] = cvRect.y;
+            data[2] = cvRect.width;
+            data[3] = cvRect.height;
+        }
+
+        Matrix::Matrix(const cv::RotatedRect& cvRotatedRect)
+          : m_matrix(new cv::Mat())
+        {
+            cv::Point2f vertices[4];
+            cvRotatedRect.points(vertices);
+            
+            allocate(4, 2, Matrix::FLOAT_32);
+            float* data = reinterpret_cast<float*>(this->data());
+            for (size_t i = 0; i < 4; ++i)
+            {
+                data[2*i] = vertices[i].x;
+                data[2*i + 1] = vertices[i].y;
+            }
         }
             
         Matrix::Matrix(const stromx::cvsupport::Matrix& matrix)

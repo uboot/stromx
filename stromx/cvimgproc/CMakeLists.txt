@@ -44,6 +44,8 @@ set (SOURCES
     ApproxPolyDP.cpp
     BoundingRect.cpp
     ConvexHull.cpp
+    FitEllipse.cpp
+    MinAreaRect.cpp
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp

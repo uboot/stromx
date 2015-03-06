@@ -1,55 +1,55 @@
-#include "stromx/cvimgproc/test/BoundingRectTest.h"
+#include "stromx/cvimgproc/test/MinAreaRectTest.h"
 
 #include <boost/lexical_cast.hpp>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
 #include "stromx/cvsupport/Image.h"
-#include "stromx/cvimgproc/BoundingRect.h"
+#include "stromx/cvimgproc/MinAreaRect.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgproc::BoundingRectTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvimgproc::MinAreaRectTest);
 
 namespace stromx
 {
     namespace cvimgproc
     {
-        void BoundingRectTest::setUp()
+        void MinAreaRectTest::setUp()
         {
-            m_operator = new stromx::runtime::OperatorTester(new BoundingRect);
+            m_operator = new stromx::runtime::OperatorTester(new MinAreaRect);
         }
         
-        void BoundingRectTest::tearDown()
+        void MinAreaRectTest::tearDown()
         {
             delete m_operator;
         }
         
-        void BoundingRectTest::testAllocate0()
+        void MinAreaRectTest::testAllocate0()
         {
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(MinAreaRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer result = m_operator->getOutputData(MinAreaRect::RECT);
             
             runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("BoundingRectTest_testAllocate0.npy", access());
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate0.npy", access());
         }
         
-        void BoundingRectTest::testAllocate1()
+        void MinAreaRectTest::testAllocate1()
         {
             m_operator->initialize();
             m_operator->activate();
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(MinAreaRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer result = m_operator->getOutputData(MinAreaRect::RECT);
             
             runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("BoundingRectTest_testAllocate1.npy", access());
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate1.npy", access());
         }
         
     }

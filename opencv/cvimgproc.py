@@ -363,8 +363,11 @@ cornerImage = test.ImageFile("corners.png", grayscale = True)
 cornerCoordinates = test.MatrixFile("corners.npy")
 contour_1 = test.MatrixFile("contour_1.npy") # 32-bit integer coordinates
 contour_2 = test.MatrixFile("contour_2.npy") # 32-bit integer coordinates
-contour_f32 = test.MatrixFile("contour_f32.npy") # 32-bit float coordinates
-contour_f64 = test.MatrixFile("contour_f64.npy") # 64-bit float coordinates
+contour_f32 = test.MatrixFile("contour_f32.npy")
+contour_f64 = test.MatrixFile("contour_f64.npy")
+points_i32 = test.MatrixFile("points_i32.npy")
+points_f32 = test.MatrixFile("points_f32.npy")
+points_f64 = test.MatrixFile("points_f64.npy")
 non_convex_f32 = test.MatrixFile("non_convex_f32.npy")
 contourList = test.List(contour_1, contour_2)
 
@@ -1160,12 +1163,54 @@ allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(points), package.ReturnValue(rect)],
     tests = [
-        [contour_1, DT],
-        [contour_f32, DT]
+        [points_i32, DT],
+        [points_f32, DT]
     ]
 )
 boundingRect = package.Method(
     "boundingRect", options = [allocate]
+)
+
+# fitEllipse
+ellipse = package.MatrixArgument(
+    "ellipse", "Bounding box", cvtype.RotatedRect(), datatype.Float32Matrix(),
+    cols = 2, rows = 4
+)
+points = package.MatrixArgument(
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.ReturnValue(ellipse)],
+    tests = [
+        [contour_1, DT],
+        [contour_f32, DT]
+    ]
+)
+fitEllipse = package.Method(
+    "fitEllipse", options = [allocate]
+)
+
+# minAreaRect
+rect = package.MatrixArgument(
+    "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
+    cols = 2, rows = 4
+)
+points = package.MatrixArgument(
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.ReturnValue(rect)],
+    tests = [
+        [points_i32, DT],
+        [points_f32, DT]
+    ]
+)
+minAreaRect = package.Method(
+    "minAreaRect", options = [allocate]
 )
 
 # convexHull
@@ -1411,6 +1456,8 @@ imgproc = package.Package(
         approxPolyDP,
         boundingRect,
         convexHull,
+        fitEllipse,
+        minAreaRect,
         canny,
         cornerHarris,
         cornerMinEigenVal,
@@ -1442,7 +1489,10 @@ imgproc = package.Package(
         "contour_2.npy",
         "contour_f64.npy",
         "contour_f32.npy",
-        "non_convex_f32.npy"
+        "non_convex_f32.npy",
+        "points_i32.npy",
+        "points_f32.npy",
+        "points_f64.npy"
     ]
 )
 

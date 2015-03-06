@@ -43,6 +43,13 @@ class DataType(object):
         """
         return "{0}({1})".format(self.concreteTypeId(), src)
         
+    def allocate(self, src):
+        """
+        Returns an allocation on the stack of type which is initialized by the 
+        input variable.
+        """
+        return "new {0}".format(self.cast(src))
+        
 class Bool(DataType):
     """
     Stromx runtime::Bool type.

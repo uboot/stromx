@@ -1021,8 +1021,8 @@ class OpImplGenerator(MethodGenerator):
             dataType = allocation.dataType.typeId()
             ident = allocation.ident
             cvData = "{0}CvData".format(ident)
-            cast = allocation.dataType.cast(cvData)
-            l = "{0}* {1}CastedData = new {2};".format(dataType, ident, cast)
+            newObject = allocation.dataType.allocate(cvData)
+            l = "{0}* {1}CastedData = {2};".format(dataType, ident, newObject)
             self.doc.line(l)
             l = ("runtime::DataContainer outContainer = "
                  "runtime::DataContainer({0}CastedData);").format(ident)
