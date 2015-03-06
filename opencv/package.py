@@ -317,14 +317,13 @@ class Option(object):
     which accepts a separate data input which receives the result data.
     """
     def __init__(self, ident, name, args = None, tests = None, 
-                 inputCheck = None, postCall = None, ret = None):
+                 inputCheck = None, postCall = None):
         self.ident = Ident(ident)
         self.name = name
         self.args = [] if args == None else args
         self.tests = [] if tests == None else tests
         self.inputCheck = inputCheck
         self.postCall = postCall
-        self.ret = ret
 
 class Constant(Argument):
     """
@@ -356,9 +355,10 @@ class Output(OutputArgument):
     forwarded to the output. It represents the only input data among all other
     inputs of the operation which is changed by the method.
     """
-    def __init__(self, arg):
+    def __init__(self, arg, isReturnValue = False):
         if arg:
             self.copyFrom(arg)
+        self.isReturnValue = isReturnValue
     
     def accept(self, visitor):
         visitor.visitOutput(self)
@@ -399,6 +399,18 @@ class Allocation(OutputArgument):
     
     def accept(self, visitor):
         visitor.visitAllocation(self)
+        
+class ReturnValue(Allocation):
+    """
+    Virtual operator output which corresponds to the return value of the OpenCV
+    function. It is not visible as input but its data is allocated during
+    execution. The data then is passed to the output.
+    """
+    def __init__(self, arg):
+        self.copyFrom(arg)
+    
+    def accept(self, visitor):
+        visitor.visitReturnValue(self)
 
 class EnumDescription(object):
     """

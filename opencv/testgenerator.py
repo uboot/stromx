@@ -227,6 +227,9 @@ class SaveResultVisitor(interface.ArgumentVisitor):
     def visitInputOutput(self, arg):
         self.visitOutput(arg)
         
+    def visitReturnValue(self, retValue):
+        self.visitOutput(retValue)
+        
     def visitOutput(self, output):
         if isinstance(output.dataType, datatype.Image):
             self.doc.line("runtime::ReadAccess<runtime::Image> access(result);")

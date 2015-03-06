@@ -77,6 +77,13 @@ class Mat(CvType):
             return "cvsupport::getOpenCvMat({0}, {1})".format(src,
                                                               self.__channels)
         
+class Rect(CvType):
+    """
+    OpenCV cv::Rect type.
+    """        
+    def typeId(self):
+        return "cv::Rect"
+        
 class VectorOfMat(CvType):
     """
     OpenCV std::vector<cv::Mat> type.

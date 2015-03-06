@@ -1149,8 +1149,8 @@ approxPolyDP = package.Method(
 
 # boundingRect
 rect = package.MatrixArgument(
-    "rect", "Rectangle", cvtype.Mat(channels = 2), datatype.Matrix(),
-    cols = 2, rows = 1
+    "rect", "Rectangle", cvtype.Rect(), datatype.Int32Matrix(),
+    cols = 4, rows = 1
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
@@ -1158,12 +1158,11 @@ points = package.MatrixArgument(
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(points)],
+    [package.Input(points), package.ReturnValue(rect)],
     tests = [
-        [contour_1],
-        [contour_f32]
-    ],
-    ret = rect
+        [contour_1, DT],
+        [contour_f32, DT]
+    ]
 )
 boundingRect = package.Method(
     "boundingRect", options = [allocate]
@@ -1410,6 +1409,7 @@ imgproc = package.Package(
         findContours,
         drawContours,
         approxPolyDP,
+        boundingRect,
         convexHull,
         canny,
         cornerHarris,

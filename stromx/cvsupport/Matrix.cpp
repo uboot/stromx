@@ -64,6 +64,19 @@ namespace stromx
             copy(matrix);
         }
 
+        Matrix::Matrix(const cv::Rect& rect)
+          : m_matrix(new cv::Mat())
+        {
+            // TODO: consider return void* from data() to get rid of the 
+            // reinterpret cast below
+            allocate(1, 4, Matrix::INT_32);
+            int32_t* data = reinterpret_cast<int32_t*>(this->data());
+            data[0] = rect.x;
+            data[1] = rect.y;
+            data[2] = rect.width;
+            data[3] = rect.height;
+        }
+            
         Matrix::Matrix(const stromx::cvsupport::Matrix& matrix)
           : MatrixWrapper(), // fixes GCC warning
             m_matrix(new cv::Mat())

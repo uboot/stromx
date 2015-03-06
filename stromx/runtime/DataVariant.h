@@ -56,7 +56,7 @@ namespace stromx
             /** An Enum object. */
             const static DataVariant ENUM;
             
-            /** Any of Int8, Int16 or Int32. */
+            /** Any of UInt8, UInt16, UInt32, Int8, Int16 or Int32. */
             const static DataVariant INT;
             
             /** Any of UInt8, UInt16 or UInt32. */
@@ -98,7 +98,11 @@ namespace stromx
             /** Any Matrix object. */
             const static DataVariant MATRIX;
             
-            /** A Matrix object with value type Matrix::INT_8, Matrix::INT_16 or Matrix::INT_32. */
+            /** 
+             * A Matrix object with value type Matrix::INT_8, Matrix::INT_16,
+             * Matrix::INT_32, Matrix::UINT_8, Matrix::UINT_16 or
+             * Matrix::UINT_32.
+             */
             const static DataVariant INT_MATRIX;
             
             /** A Matrix object with value type Matrix::UINT_8, Matrix::UINT_16 or Matrix::UINT_32. */

@@ -134,7 +134,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::DataVariant::MATRIX);
-                    m_curveDescription->setTitle("Input curve");
+                    m_curveDescription->setTitle("Polygon");
                     m_curveDescription->setRows(0);
                     m_curveDescription->setCols(2);
                     inputs.push_back(m_curveDescription);
@@ -155,7 +155,7 @@ namespace stromx
             case(ALLOCATE):
                 {
                     runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::DataVariant::MATRIX);
-                    outCurve->setTitle(L_("Output curve"));
+                    outCurve->setTitle(L_("Polygon"));
                     outCurve->setRows(0);
                     outCurve->setCols(2);
                     outputs.push_back(outCurve);

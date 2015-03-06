@@ -42,6 +42,7 @@ set (SOURCES
     FindContours.cpp
     DrawContours.cpp
     ApproxPolyDP.cpp
+    BoundingRect.cpp
     ConvexHull.cpp
     Canny.cpp
     CornerHarris.cpp

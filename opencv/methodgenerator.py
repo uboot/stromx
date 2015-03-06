@@ -6,8 +6,12 @@ import package
 
 import rulegenerator
 import testgenerator
+
+class ArgumentVisitorBase(interface.ArgumentVisitor):
+    def visitReturnValue(self, retValue):
+        self.visitAllocation(retValue)
     
-class SingleArgumentVisitor(interface.ArgumentVisitor):
+class SingleArgumentVisitor(ArgumentVisitorBase):
     """
     Visitor which handles compound arguments and calls the accept methods
     of each component of the compound arguments. I.e. derived visitors do not
@@ -938,7 +942,7 @@ class OpImplGenerator(MethodGenerator):
             rhs = "{0}CvData".format(refInput.refArg.ident)
             self.doc.line("{0} = {1};".format(cvData, rhs))
             
-    class MethodArgumentVisitor(interface.ArgumentVisitor):
+    class MethodArgumentVisitor(ArgumentVisitorBase):
         """
         Exports the argument of the OpenCV function for each visited argument.
         """
@@ -968,6 +972,9 @@ class OpImplGenerator(MethodGenerator):
         def visitRefInput(self, refInput):
             self.visit(refInput)
             
+        def visitReturnValue(self, retValue):
+            pass
+            
         def visit(self, arg):
             self.args.append("{0}CvData".format(arg.ident))
             
@@ -981,6 +988,19 @@ class OpImplGenerator(MethodGenerator):
                 if i < len(self.args) - 1:
                     argStr += ", "
             return argStr
+            
+    class MethodReturnValueVisitor(ArgumentVisitorBase):
+        """
+        Exports the return value of the OpenCV function out of each visited argument.
+        """
+        def __init__(self):
+            self.returnValue = ""
+            
+        def visitReturnValue(self, retVal):
+            self.returnValue = "{0}CvData = ".format(retVal.ident)
+            
+        def export(self):
+            return self.returnValue
             
     class OutDataVisitor(MethodGenerator.DocVisitor):
         """
@@ -1329,16 +1349,20 @@ class OpImplGenerator(MethodGenerator):
             
             self.doc.blank()
             
+            v = OpImplGenerator.MethodReturnValueVisitor()   
+            self.visitOption(o, v)
+            retVal = v.export()
+            
             v = OpImplGenerator.MethodArgumentVisitor()   
             self.visitOption(o, v)
-            
             argStr = v.export()
+            
             namespace = ""
             if self.m.namespace != "":
                 namespace = "{0}::".format(self.m.namespace)
                 
-            self.doc.line("{2}{0}({1});".format(self.m.ident, argStr,
-                                                namespace))
+            self.doc.line("{3}{2}{0}({1});".format(self.m.ident, argStr,
+                                                   namespace, retVal))
             if o.postCall != None:
                 self.doc.document(o.postCall)
                 

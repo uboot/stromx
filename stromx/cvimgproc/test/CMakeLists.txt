@@ -55,6 +55,7 @@ set (SOURCES
     ../FindContours.cpp
     ../DrawContours.cpp
     ../ApproxPolyDP.cpp
+    ../BoundingRect.cpp
     ../ConvexHull.cpp
     ../Canny.cpp
     ../CornerHarris.cpp
@@ -92,6 +93,7 @@ set (SOURCES
     FindContoursTest.cpp
     DrawContoursTest.cpp
     ApproxPolyDPTest.cpp
+    BoundingRectTest.cpp
     ConvexHullTest.cpp
     CannyTest.cpp
     CornerHarrisTest.cpp

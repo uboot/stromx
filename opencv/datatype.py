@@ -140,6 +140,14 @@ class Matrix(DataType):
     def variant(self):
         return self.__variant
     
+class IntMatrix(Matrix):
+    def __init__(self):
+        super(IntMatrix, self).__init__("runtime::DataVariant::INT_MATRIX")
+    
+class Int32Matrix(Matrix):
+    def __init__(self):
+        super(Int32Matrix, self).__init__("runtime::DataVariant::INT_32_MATRIX")
+    
 class FloatMatrix(Matrix):
     def __init__(self):
         super(FloatMatrix, self).__init__("runtime::DataVariant::FLOAT_MATRIX")
@@ -151,7 +159,7 @@ class Float32Matrix(Matrix):
 class Float64Matrix(Matrix):
     def __init__(self):
         super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_64_MATRIX")
-        
+    
 class List(DataType):
     """
     Stromx runtime::List type.

@@ -38,6 +38,9 @@ class ArgumentVisitor(object):
     def visitInputOutput(self, inputOutput):
         pass
     
+    def visitReturnValue(self, retValue):
+        pass
+    
 class TestArgumentVisitor(object):
     """
     Visitor for different test data types.
