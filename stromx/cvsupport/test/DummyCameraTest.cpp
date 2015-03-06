@@ -47,7 +47,7 @@ namespace stromx
             
             // default to immediate, automatic trigger
             m_operator->setParameter(DummyCamera::TRIGGER_MODE, Enum(DummyCamera::INTERNAL));
-            m_operator->setParameter(DummyCamera::FRAME_PERIOD, UInt32(0));
+            m_operator->setParameter(DummyCamera::FRAME_PERIOD, UInt32(100));
         }
         
         void DummyCameraTest::testExecuteSoftwareTrigger()
@@ -153,6 +153,17 @@ namespace stromx
             const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
             
             cvsupport::Image::save("DummyCameraTest_testAdjustWhiteBalance.png", image);
+        }
+
+        void DummyCameraTest::testFlicker()
+        {
+            m_operator->setParameter(DummyCamera::FLICKER_AMOUNT, Float64(0.5));
+            m_operator->setParameter(DummyCamera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
+            m_operator->activate();
+            DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
+            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            
+            cvsupport::Image::save("DummyCameraTest_testFlicker.png", image);
         }
         
         void DummyCameraTest::testValidateBufferSize()

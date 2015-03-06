@@ -68,7 +68,8 @@ namespace stromx
                 HEIGHT,
                 PIXEL_TYPE,
                 WHITE_BALANCE_GROUP,
-                ROI_GROUP
+                ROI_GROUP,
+                FLICKER_AMOUNT
             };
             
             enum TriggerMode
@@ -115,6 +116,7 @@ namespace stromx
             runtime::Operator* m_input;
             runtime::Operator* m_clip;
             runtime::Operator* m_adjustRgbChannels;
+            runtime::Operator* m_flicker;
             runtime::Operator* m_period;
             runtime::Operator* m_trigger;
             runtime::Operator* m_buffer;

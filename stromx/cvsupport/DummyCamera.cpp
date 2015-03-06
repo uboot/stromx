@@ -15,6 +15,7 @@
 */
 
 #include "stromx/cvsupport/AdjustRgbChannels.h"
+#include "stromx/cvsupport/Flicker.h"
 #include "stromx/cvsupport/DummyCamera.h"
 #include "stromx/cvsupport/Clip.h"
 #include "stromx/cvsupport/ConstImage.h"
@@ -53,6 +54,7 @@ namespace stromx
             m_input(0),
             m_clip(0),
             m_adjustRgbChannels(0),
+            m_flicker(0),
             m_period(0),
             m_trigger(0),
             m_buffer(0),
@@ -77,6 +79,7 @@ namespace stromx
             
             m_input = m_stream->addOperator(new ConstImage);
             m_adjustRgbChannels = m_stream->addOperator(new AdjustRgbChannels);
+            m_flicker = m_stream->addOperator(new Flicker);
             m_clip = m_stream->addOperator(new Clip);
             m_buffer = m_stream->addOperator(new impl::CameraBuffer);
             m_period = m_stream->addOperator(new PeriodicDelay);
@@ -114,6 +117,7 @@ namespace stromx
             
             m_stream->initializeOperator(m_input);
             m_stream->initializeOperator(m_adjustRgbChannels);
+            m_stream->initializeOperator(m_flicker);
             m_stream->initializeOperator(m_clip);
             m_stream->initializeOperator(m_buffer);
             m_stream->initializeOperator(m_period);
@@ -122,7 +126,8 @@ namespace stromx
             m_stream->initializeOperator(m_imageQueue);
             m_stream->initializeOperator(m_indexQueue);
             
-            m_stream->connect(m_input, ConstImage::OUTPUT, m_adjustRgbChannels, AdjustRgbChannels::INPUT);
+            m_stream->connect(m_input, ConstImage::OUTPUT, m_flicker, Flicker::INPUT);
+            m_stream->connect(m_flicker, Flicker::OUTPUT, m_adjustRgbChannels, AdjustRgbChannels::INPUT);
             m_stream->connect(m_adjustRgbChannels, AdjustRgbChannels::OUTPUT, m_clip, Clip::INPUT);
             m_stream->connect(m_clip, Clip::OUTPUT, m_trigger, Block::INPUT);
             m_stream->connect(m_trigger, Block::OUTPUT, m_period, PeriodicDelay::INPUT);
@@ -133,6 +138,7 @@ namespace stromx
             m_stream->connect(m_buffer, impl::CameraBuffer::INDEX, m_indexQueue, Queue::INPUT);
             
             Thread* frameThread = m_stream->addThread();
+            frameThread->addInput(m_flicker, Flicker::INPUT);
             frameThread->addInput(m_adjustRgbChannels, AdjustRgbChannels::INPUT);
             frameThread->addInput(m_clip, Clip::INPUT);
             frameThread->addInput(m_trigger, Block::INPUT);
@@ -356,6 +362,9 @@ namespace stromx
                         throw WrongParameterType(parameter(WHITE_BALANCE_BLUE), *this);
                     }
                     break;
+                case FLICKER_AMOUNT:
+                    m_flicker->setParameter(Flicker::AMOUNT, value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -416,7 +425,9 @@ namespace stromx
             case WHITE_BALANCE_BLUE:
                 return m_wbBlue;
             case PIXEL_TYPE:
-                 return m_pixelType->getParameter(ConvertPixelType::PIXEL_TYPE);
+                return m_pixelType->getParameter(ConvertPixelType::PIXEL_TYPE);
+            case FLICKER_AMOUNT:
+                return m_flicker->getParameter(Flicker::AMOUNT);
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -590,6 +601,13 @@ namespace stromx
             pixelType->add(EnumDescription(Enum(runtime::Image::BAYERBG_8), "Bayer BG pattern 8-bit"));
             pixelType->add(EnumDescription(Enum(runtime::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
             parameters.push_back(pixelType);
+            
+            NumericParameter<Float64>* flicker = new NumericParameter<Float64>(FLICKER_AMOUNT, wbGroup);
+            flicker->setTitle("Flicker amount");
+            flicker->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            flicker->setMin(Float64(0));
+            flicker->setMax(Float64(1.0));
+            parameters.push_back(flicker);
                                         
             return parameters;
         }

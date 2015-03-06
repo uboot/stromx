@@ -46,11 +46,13 @@ set(SOURCES
     Id2DataPair.cpp
     Image.cpp
     ImageWrapper.cpp
+    Iterate.cpp
     Join.cpp
     List.cpp
     Locale.cpp
     Matrix.cpp
     MatrixWrapper.cpp
+    Merge.cpp
     None.cpp
     Operator.cpp
     OperatorKernel.cpp

@@ -22,10 +22,12 @@
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Fork.h"
+#include "stromx/runtime/Iterate.h"
 #include "stromx/runtime/Join.h"
 #include "stromx/runtime/List.h"
 #include "stromx/runtime/Locale.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Merge.h"
 #include "stromx/runtime/PeriodicDelay.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Queue.h"
@@ -63,7 +65,9 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
+    registry.registerOperator(new Iterate);
     registry.registerOperator(new Join);
+    registry.registerOperator(new Merge);
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
     registry.registerOperator(new Receive);

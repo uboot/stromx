@@ -26,6 +26,7 @@ add_executable(stromx_cvsupport_test
     ../ConstImage.cpp
     ../ConvertPixelType.cpp
     ../DummyCamera.cpp
+    ../Flicker.cpp
     ../Image.cpp
     ../Matrix.cpp
     ../Utilities.cpp
@@ -37,6 +38,7 @@ add_executable(stromx_cvsupport_test
     ConvertPixelTypeTest.cpp
     ConstImageTest.cpp
     DummyCameraTest.cpp
+    FlickerTest.cpp
     ImageTest.cpp
     CvsupportTest.cpp
     main.cpp
