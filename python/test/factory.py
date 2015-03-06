@@ -16,16 +16,20 @@
 #  limitations under the License.
 #
 
-from stromx import *
+from stromx import runtime
 
 factory = runtime.Factory()
 
 runtime.register(factory)
 
 stream = runtime.Stream()
-kernel = factory.newOperator("Runtime", "Counter")
-op1 = runtime.Operator(kernel)
+kernel = factory.newOperator("runtime", "Counter")
+op1 = stream.addOperator(kernel)
+stream.hideOperator(op1)
 
 op2 = runtime.Operator(runtime.Receive())
-stream.hideOperator(op1)
+try:
+  stream.hideOperator(op2)
+except runtime.WrongArgument as e:
+  print e
 

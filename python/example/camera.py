@@ -16,7 +16,7 @@
 #  limitations under the License.
 #
 
-from stromx import *
+from stromx import runtime, cvimgproc, cvsupport
 
 factory = runtime.Factory()
 

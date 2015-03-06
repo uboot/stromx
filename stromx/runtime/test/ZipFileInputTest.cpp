@@ -77,5 +77,10 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(false, m_input->hasFile());
             CPPUNIT_ASSERT_THROW(m_input->openFile(InputProvider::TEXT), NoInputFile);
         }
+        
+        void ZipFileInputTest::testClose()
+        {
+            m_input->close();
+        }
     }
 }

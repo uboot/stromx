@@ -113,10 +113,22 @@ def _returnObject(self):
 def _releaseObject(self, exc_type, exc_value, traceback):
     self.release()
     
-def _extendObject(objectClass):
+def _closeObject(self, exc_type, exc_value, traceback):
+    self.close()
+    
+def _extendHandleObject(objectClass):
     objectClass.__enter__ = _returnObject
     objectClass.__exit__ = _releaseObject
     
-_extendObject(DataContainer)
-_extendObject(ReadAccess)
-_extendObject(WriteAccess)
+def _extendFileObject(objectClass):
+    objectClass.__enter__ = _returnObject
+    objectClass.__exit__ = _closeObject
+    
+_extendHandleObject(DataContainer)
+_extendHandleObject(ReadAccess)
+_extendHandleObject(WriteAccess)
+
+_extendFileObject(ZipFileInput)
+_extendFileObject(DirectoryFileInput)
+_extendFileObject(ZipFileOutput)
+_extendFileObject(DirectoryFileOutput)

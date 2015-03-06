@@ -4,3 +4,4 @@ endif(MSVC)
 
 add_subdirectory(stromx)
 add_subdirectory(example)
+add_subdirectory(test)

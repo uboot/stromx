@@ -16,7 +16,7 @@
 #  limitations under the License.
 #
 
-from stromx import *
+from stromx import runtime
 
 factory = runtime.Factory()
 

@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-from stromx import *
+from stromx import runtime
 
 class MyObserver(runtime.ConnectorObserver):
     def observe(self, connector, data, thread):
