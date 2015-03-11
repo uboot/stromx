@@ -114,7 +114,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::MATRIX);
+                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Input points");
                     m_curveDescription->setRows(0);
                     m_curveDescription->setCols(2);
@@ -135,7 +135,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::MATRIX);
+                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Convex hull"));
                     outCurve->setRows(0);
                     outCurve->setCols(2);

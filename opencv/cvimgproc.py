@@ -1103,11 +1103,11 @@ drawContours = package.Method(
 
 # approxPolyDP
 curve = package.MatrixArgument(
-    "curve", "Polygon", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "curve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 outCurve = package.MatrixArgument(
-    "outCurve", "Polygon", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "outCurve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 epsilon = package.NumericParameter(
@@ -1152,11 +1152,11 @@ boundingRect = package.Method(
 
 # convexHull
 points = package.MatrixArgument(
-    "curve", "Input points", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "curve", "Input points", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 hull = package.MatrixArgument(
-    "outCurve", "Convex hull", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "outCurve", "Convex hull", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 epsilon = package.NumericParameter(
@@ -1170,7 +1170,8 @@ allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(points), package.Allocation(hull), clockwise],
     tests = [
-        [non_convex_f32, DT, DT]
+        [non_convex_f32, DT, DT],
+        [points_i32, DT, DT]
     ]
 )
 convexHull = package.Method(

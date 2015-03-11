@@ -37,6 +37,21 @@ namespace stromx
             cvsupport::Matrix::save("ConvexHullTest_testAllocate0.npy", access());
         }
         
+        void ConvexHullTest::testAllocate1()
+        {
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer curve(new cvsupport::Matrix("points_i32.npy"));
+            
+            m_operator->setInputData(ConvexHull::CURVE, curve);
+            
+            runtime::DataContainer result = m_operator->getOutputData(ConvexHull::OUT_CURVE);
+            
+            runtime::ReadAccess<runtime::Matrix> access(result);
+            cvsupport::Matrix::save("ConvexHullTest_testAllocate1.npy", access());
+        }
+        
     } // cvimgproc
 } // stromx
 
