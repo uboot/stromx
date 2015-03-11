@@ -109,6 +109,6 @@ namespace stromx
             cvsupport::Image::save("BlurTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

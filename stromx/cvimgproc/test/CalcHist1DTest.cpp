@@ -64,6 +64,6 @@ namespace stromx
             cvsupport::Matrix::save("CalcHist1DTest_testAllocate1.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

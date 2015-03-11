@@ -93,6 +93,6 @@ namespace stromx
             cvsupport::Image::save("CannyTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

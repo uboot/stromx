@@ -84,6 +84,6 @@ namespace stromx
             cvsupport::Image::save("BilateralFilterTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

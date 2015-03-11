@@ -100,6 +100,6 @@ namespace stromx
             cvsupport::Image::save("DilateTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

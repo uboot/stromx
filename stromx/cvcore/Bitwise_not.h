@@ -56,7 +56,7 @@ namespace stromx
             runtime::Description* m_src1Description;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvcore
+} // stromx
 
 #endif // STROMX_CVCORE_BITWISE_NOT_H

@@ -110,6 +110,6 @@ namespace stromx
             cvsupport::Image::save("ResizeTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

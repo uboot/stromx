@@ -60,7 +60,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_histMaxParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_histMaxParameter, *this);
                         m_histMax = castedValue;
                     }
                     break;
@@ -71,7 +71,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_histMinParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_histMinParameter, *this);
                         m_histMin = castedValue;
                     }
                     break;
@@ -82,7 +82,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_histSizeParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_histSizeParameter, *this);
                         m_histSize = castedValue;
                     }
                     break;
@@ -93,7 +93,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -229,6 +229,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

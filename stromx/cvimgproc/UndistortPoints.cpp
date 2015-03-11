@@ -57,7 +57,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkMatrixValue(castedValue, m_cameraMatrixParameter, *this);
+                        cvsupport::checkMatrixValue(castedValue, m_cameraMatrixParameter, *this);
                         m_cameraMatrix = castedValue;
                     }
                     break;
@@ -68,7 +68,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkMatrixValue(castedValue, m_distCoeffsParameter, *this);
+                        cvsupport::checkMatrixValue(castedValue, m_distCoeffsParameter, *this);
                         m_distCoeffs = castedValue;
                     }
                     break;
@@ -79,7 +79,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -137,7 +137,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::DataVariant::FLOAT_MATRIX);
+                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::DataVariant::FLOAT_32_MATRIX);
                     m_srcDescription->setTitle("Source");
                     m_srcDescription->setRows(0);
                     m_srcDescription->setCols(2);
@@ -158,7 +158,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::DataVariant::FLOAT_MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::DataVariant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setRows(0);
                     dst->setCols(2);
@@ -199,7 +199,7 @@ namespace stromx
                     }
                     
                     const runtime::Matrix* srcCastedData = runtime::data_cast<runtime::Matrix>(srcData);
-                    checkMatrixData(*srcCastedData, m_srcDescription, *this);
+                    cvsupport::checkMatrixValue(*srcCastedData, m_srcDescription, *this);
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData, 2);
                     cv::Mat dstCvData;
@@ -218,6 +218,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

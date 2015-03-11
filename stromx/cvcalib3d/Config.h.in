@@ -1,0 +1,26 @@
+#ifndef STROMX_CVCALIB3D_CONFIG_H
+#define STROMX_CVCALIB3D_CONFIG_H
+
+#define STROMX_CVCALIB3D_VERSION_MAJOR @STROMX_CVCALIB3D_VERSION_MAJOR@
+#define STROMX_CVCALIB3D_VERSION_MINOR @STROMX_CVCALIB3D_VERSION_MINOR@
+#define STROMX_CVCALIB3D_VERSION_PATCH @STROMX_CVCALIB3D_VERSION_PATCH@
+
+#define STROMX_CVCALIB3D_PACKAGE_NAME "cv::calib3d"
+#define STROMX_CVCALIB3D_LOCALE_DOMAIN "libcvcalib3d"
+#define STROMX_CVCALIB3D_LOCALE_DIR "@LOCALE_DIR@"
+
+#ifdef WIN32
+    #ifdef STROMX_CVCALIB3D_STATIC
+        #define STROMX_CVCALIB3D_API
+    #else // STROMX_CVCALIB3D_STATIC
+        #ifdef stromx_cvcalib3d_EXPORTS
+            #define STROMX_CVCALIB3D_API __declspec(dllexport)
+        #else // stromx_cvcalib3d_EXPORTS
+            #define STROMX_CVCALIB3D_API __declspec(dllimport)
+        #endif // stromx_cvcalib3d_EXPORTS
+    #endif // STROMX_CVCALIB3D_STATIC
+#else // WIN32
+    #define STROMX_CVCALIB3D_API
+#endif // WIN32
+
+#endif // STROMX_CVCALIB3D_CONFIG_H

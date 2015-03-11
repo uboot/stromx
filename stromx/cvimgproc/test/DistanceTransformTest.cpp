@@ -100,6 +100,6 @@ namespace stromx
             cvsupport::Matrix::save("DistanceTransformTest_testAllocate2.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

@@ -51,7 +51,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -157,7 +157,7 @@ namespace stromx
                     }
                     
                     const runtime::Matrix* pointsCastedData = runtime::data_cast<runtime::Matrix>(pointsData);
-                    checkMatrixData(*pointsCastedData, m_pointsDescription, *this);
+                    cvsupport::checkMatrixValue(*pointsCastedData, m_pointsDescription, *this);
                     
                     cv::Mat pointsCvData = cvsupport::getOpenCvMat(*pointsCastedData, 2);
                     cv::Rect rectCvData;
@@ -174,6 +174,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

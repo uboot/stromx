@@ -73,7 +73,7 @@ namespace stromx
             runtime::Parameter* m_useHarrisDetectorParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_GOODFEATURESTOTRACK_H

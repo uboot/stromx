@@ -82,7 +82,7 @@ namespace stromx
             runtime::EnumParameter* m_thresholdTypeParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_ADAPTIVETHRESHOLD_H

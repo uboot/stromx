@@ -56,6 +56,6 @@ namespace stromx
             cvsupport::Matrix::save("IntegralTest_testAllocate0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

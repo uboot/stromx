@@ -37,7 +37,7 @@ namespace stromx
         private:
             runtime::OperatorTester* m_operator;
         };
-    }
-}
+    } // cvcore
+} // stromx
 
 #endif // STROMX_CVCORE_ADDWEIGHTEDTEST_H

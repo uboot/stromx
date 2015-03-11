@@ -56,6 +56,6 @@ namespace stromx
             cvsupport::Image::save("PyrDownTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

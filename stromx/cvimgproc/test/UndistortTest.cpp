@@ -82,6 +82,6 @@ namespace stromx
             cvsupport::Image::save("UndistortTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

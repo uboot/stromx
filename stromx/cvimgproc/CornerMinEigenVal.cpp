@@ -57,7 +57,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_blockSizeParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_blockSizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_blockSizeParameter, *this, "Only odd values are allowed");
                         m_blockSize = castedValue;
@@ -70,7 +70,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_ksizeParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_ksizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
                         m_ksize = castedValue;
@@ -83,7 +83,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -313,6 +313,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

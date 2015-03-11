@@ -113,6 +113,6 @@ namespace stromx
             cvsupport::Image::save("AdaptiveThresholdTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

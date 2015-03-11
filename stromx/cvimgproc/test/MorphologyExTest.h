@@ -39,7 +39,7 @@ namespace stromx
         private:
             runtime::OperatorTester* m_operator;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_MORPHOLOGYEXTEST_H

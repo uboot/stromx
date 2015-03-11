@@ -8,7 +8,6 @@ Created on Mon Apr  1 18:19:38 2013
 import math
 import sys
 
-import cvcommon
 import cvtype
 import datatype
 import document
@@ -19,79 +18,7 @@ import test
 # abbreviations
 DT = test.Default()
 
-# checkMatrixData
-dcl = document.Document()
-dclIncludes = ["<stromx/runtime/Matrix.h>",
-               "<stromx/runtime/MatrixDescription.h>",
-               "<stromx/runtime/OperatorKernel.h>"]
-dcl.text(
-"""
-void checkMatrixData(const stromx::runtime::Matrix & value,
-                     const stromx::runtime::MatrixDescription* desc,
-                     const stromx::runtime::OperatorKernel& op);
-""")
-dtnIncludes = ["<sstream>"]
-dtn = document.Document()              
-dtn.text(
-"""
-void checkMatrixData(const stromx::runtime::Matrix & value,
-                     const stromx::runtime::MatrixDescription* desc,
-                     const stromx::runtime::OperatorKernel& op)
-{
-    if(desc->rows() && value.rows() != desc->rows())
-    {
-        std::ostringstream str;
-        str << desc->rows();
-        throw runtime::InputError(desc->id(), op, "Number of matrix rows must be " + str.str() + " .");
-    }
-    
-    if(desc->cols() && value.cols() != desc->cols())
-    {
-        std::ostringstream str;
-        str << desc->cols();
-        throw runtime::InputError(desc->id(), op, "Number of matrix columns must be " + str.str() + " .");
-    }
-}
-""")
-checkMatrixData = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
-
-# checkMatrixValue
-dcl = document.Document()
-dclIncludes = ["<stromx/runtime/Matrix.h>",
-               "<stromx/runtime/MatrixParameter.h>",
-               "<stromx/runtime/OperatorKernel.h>"]
-dcl.text(
-"""
-void checkMatrixValue(const stromx::runtime::Matrix & value,
-                      const stromx::runtime::MatrixParameter* param,
-                      const stromx::runtime::OperatorKernel& op);
-""")
-dtnIncludes = ["<sstream>"]
-dtn = document.Document()              
-dtn.text(
-"""
-void checkMatrixValue(const stromx::runtime::Matrix & value,
-                      const stromx::runtime::MatrixParameter* param,
-                      const stromx::runtime::OperatorKernel& op)
-{
-    if(param->rows() && value.rows() != param->rows())
-    {
-        std::ostringstream str;
-        str << param->rows();
-        throw runtime::WrongParameterValue(*param, op, "Number of matrix rows must be " + str.str() + " .");
-    }
-    
-    if(param->cols() && value.cols() != param->cols())
-    {
-        std::ostringstream str;
-        str << param->cols();
-        throw runtime::WrongParameterValue(*param, op, "Number of matrix columns must be " + str.str() + " .");
-    }
-}
-""")
-checkMatrixValue = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
-
-# compute histogram
+# calcHistWrapper
 dcl = document.Document()
 dclIncludes = ["<opencv2/core/core.hpp>"]
 dcl.text(
@@ -112,7 +39,32 @@ void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const 
 }
 
 """)
-calcHist1D = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+calcHistWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
+# minEnclosingCircleWrapper
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void minEnclosingCircle(const cv::Mat & points, cv::Mat & result);
+""")
+dtnIncludes = ["<opencv2/imgproc/imgproc.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void minEnclosingCircle(const cv::Mat & points, cv::Mat & result)
+{
+    cv::Point2f center;
+    float radius;
+    cv::minEnclosingCircle(points, center, radius);
+    
+    result = cv::Mat(1, 3, CV_32F);
+    result.at<float>(0, 0) = center.x;
+    result.at<float>(0, 1) = center.y;
+    result.at<float>(0, 2) = radius;
+}
+""")
+minEnclosingCircleWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
 # initializations
 initInCopy = document.Document((
@@ -354,7 +306,6 @@ affine_transformation = test.MatrixFile("affine.npy")
 perspective_transformation = test.MatrixFile("perspective.npy")
 camera_matrix = test.MatrixFile("camera_matrix.npy")
 dist_coeffs = test.MatrixFile("dist_coeffs.npy")
-points_2d = test.MatrixFile("points_2d.npy")
 memory = test.ImageBuffer(1000000)
 bigMemory = test.ImageBuffer(10000000) 
 circle = test.ImageFile("circle.png", grayscale = True)
@@ -843,11 +794,11 @@ undistort = package.Method(
 
 # undistortPoints
 srcPts = package.MatrixArgument(
-    "src", "Source", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
+    "src", "Source", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
     cols = 2
 )
 dstPts = package.MatrixArgument(
-    "dst", "Destination", cvtype.Mat(channels = 2), datatype.FloatMatrix(),
+    "dst", "Destination", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
     cols = 2
 )
 allocate = package.Option(
@@ -855,8 +806,8 @@ allocate = package.Option(
     [package.Input(srcPts), package.Allocation(dstPts), cameraMatrix,
      distCoeffs],
     tests = [
-        [points_2d, DT, camera_matrix, dist_coeffs],
-        [points_2d, DT, DT, DT]
+        [points_f32, DT, camera_matrix, dist_coeffs],
+        [points_f32, DT, DT, DT]
     ]
 )
 undistortPoints = package.Method(
@@ -1077,7 +1028,7 @@ findContoursMethod = package.EnumParameter(
 )
 dstListOfMatrices = package.Argument(
     "dst", "Destination", cvtype.VectorOfMat(),
-    datatype.List(datatype.Float32Matrix())
+    datatype.List(datatype.Int32Matrix())
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1102,6 +1053,9 @@ ch2 = package.NumericParameter(
 ch3 = package.NumericParameter(
     "ch3", "Channel 3", cvtype.Int(), datatype.UInt8(), default = 0
 )
+thickness = package.NumericParameter(
+    "thickness", "Thickness", cvtype.Int(), datatype.Int32(), default = 1
+)
 listOfContours = package.Argument(
     "contours", "Contours", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix())
@@ -1112,10 +1066,10 @@ drawContoursImage = package.Argument(
 inPlace = package.Option(
     "inPlace", "In place",
     [package.InputOutput(drawContoursImage), package.Input(listOfContours),
-     package.Constant(-1), package.Scalar(ch1, ch2, ch3)],
+     package.Constant(-1), package.Scalar(ch1, ch2, ch3), thickness],
     tests = [
-        [lenna_bw, contourList, DT, (255, 0, 0)],
-        [lenna, contourList, DT, (255, 0, 0)]
+        [lenna_bw, contourList, DT, (255, 0, 0), DT],
+        [lenna, contourList, DT, (255, 0, 0), -1]
     ]
 )
 drawContours = package.Method(
@@ -1171,6 +1125,33 @@ boundingRect = package.Method(
     "boundingRect", options = [allocate]
 )
 
+# convexHull
+points = package.MatrixArgument(
+    "curve", "Input points", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+hull = package.MatrixArgument(
+    "outCurve", "Convex hull", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+epsilon = package.NumericParameter(
+    "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
+    default = 10.0, minValue = 0.0
+)
+clockwise = package.Parameter(
+    "clockwise", "Output orientation", cvtype.Bool(), datatype.Bool(), default = False
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.Allocation(hull), clockwise],
+    tests = [
+        [non_convex_f32, DT, DT]
+    ]
+)
+convexHull = package.Method(
+    "convexHull", options = [allocate]
+)
+
 # fitEllipse
 ellipse = package.MatrixArgument(
     "ellipse", "Bounding box", cvtype.RotatedRect(), datatype.Float32Matrix(),
@@ -1184,8 +1165,8 @@ allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(points), package.ReturnValue(ellipse)],
     tests = [
-        [contour_1, DT],
-        [contour_f32, DT]
+        [points_i32, DT],
+        [points_f32, DT]
     ]
 )
 fitEllipse = package.Method(
@@ -1213,31 +1194,25 @@ minAreaRect = package.Method(
     "minAreaRect", options = [allocate]
 )
 
-# convexHull
+# minEnclosingCircle
+circle = package.MatrixArgument(
+    "circle", "Circle", cvtype.Mat(), datatype.Float32Matrix(),
+    cols = 3, rows = 1
+)
 points = package.MatrixArgument(
-    "curve", "Input points", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
     cols = 2
-)
-hull = package.MatrixArgument(
-    "outCurve", "Convex hull", cvtype.Mat(channels = 2), datatype.Matrix(),
-    cols = 2
-)
-epsilon = package.NumericParameter(
-    "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
-    default = 10.0, minValue = 0.0
-)
-clockwise = package.Parameter(
-    "clockwise", "Output orientation", cvtype.Bool(), datatype.Bool(), default = False
 )
 allocate = package.Option(
     "allocate", "Allocate",
-    [package.Input(points), package.Allocation(hull), clockwise],
+    [package.Input(points), package.Allocation(circle)],
     tests = [
-        [non_convex_f32, DT, DT]
+        [points_i32, DT],
+        [points_f32, DT]
     ]
 )
-convexHull = package.Method(
-    "convexHull", options = [allocate]
+minEnclosingCircle = package.Method(
+    "minEnclosingCircle", namespace = "", options = [allocate]
 )
 
 # Canny
@@ -1458,6 +1433,7 @@ imgproc = package.Package(
         convexHull,
         fitEllipse,
         minAreaRect,
+        minEnclosingCircle,
         canny,
         cornerHarris,
         cornerMinEigenVal,
@@ -1467,11 +1443,8 @@ imgproc = package.Package(
         preCornerDetect
     ],
     functions = [
-        cvcommon.checkEnumValue,
-        cvcommon.checkNumericValue,
-        checkMatrixData,
-        checkMatrixValue,
-        calcHist1D
+        calcHistWrapper,
+        minEnclosingCircleWrapper
     ],
     testFiles = [
         "lenna.jpg",
@@ -1480,7 +1453,6 @@ imgproc = package.Package(
         "perspective.npy",
         "camera_matrix.npy",
         "dist_coeffs.npy",
-        "points_2d.npy",
         "edges.png",
         "contours.png",
         "corners.png",

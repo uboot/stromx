@@ -90,6 +90,6 @@ namespace stromx
             cvsupport::Image::save("WarpPerspectiveTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

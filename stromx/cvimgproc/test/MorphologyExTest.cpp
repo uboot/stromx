@@ -147,6 +147,6 @@ namespace stromx
             cvsupport::Image::save("MorphologyExTest_testInPlace1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

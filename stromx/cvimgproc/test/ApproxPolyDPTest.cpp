@@ -54,6 +54,6 @@ namespace stromx
             cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate1.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

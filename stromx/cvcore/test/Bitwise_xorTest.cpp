@@ -80,6 +80,6 @@ namespace stromx
             cvsupport::Image::save("Bitwise_xorTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

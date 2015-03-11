@@ -98,11 +98,11 @@ class Document(object):
         self.line("namespace {0}".format(name))
         self.scopeEnter()
     
-    def namespaceExit(self):
+    def namespaceExit(self, name = ""):
         """
         Closes the current namespace scope.
         """
-        self.scopeExit()
+        self.scopeExit(name)
         
     def scopeEnter(self):
         """
@@ -112,12 +112,15 @@ class Document(object):
         self.increaseIndent()
         self.lastCmdWasBlank = False
         
-    def scopeExit(self):
+    def scopeExit(self, comment = ""):
         """
         Inserts a "}" in a new line and increases the intendation.
         """
         self.decreaseIndent()
-        self.line("}")
+        if comment == "":
+          self.line("}")
+        else:
+          self.line("} // " + str(comment))
         self.lastCmdWasBlank = False
         
     def label(self, key):

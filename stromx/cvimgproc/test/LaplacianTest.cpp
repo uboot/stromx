@@ -118,6 +118,6 @@ namespace stromx
             cvsupport::Image::save("LaplacianTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

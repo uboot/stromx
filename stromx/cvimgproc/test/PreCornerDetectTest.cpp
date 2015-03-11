@@ -60,6 +60,6 @@ namespace stromx
             cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

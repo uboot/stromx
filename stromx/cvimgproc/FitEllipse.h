@@ -55,7 +55,7 @@ namespace stromx
             runtime::MatrixDescription* m_pointsDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_FITELLIPSE_H

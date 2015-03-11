@@ -16,7 +16,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/affine.npy ${CMAKE_CURRENT_BINARY_DIR
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/perspective.npy ${CMAKE_CURRENT_BINARY_DIR}/perspective.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/camera_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/camera_matrix.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dist_coeffs.npy ${CMAKE_CURRENT_BINARY_DIR}/dist_coeffs.npy COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_2d.npy ${CMAKE_CURRENT_BINARY_DIR}/points_2d.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/edges.png ${CMAKE_CURRENT_BINARY_DIR}/edges.png COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contours.png ${CMAKE_CURRENT_BINARY_DIR}/contours.png COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/corners.png ${CMAKE_CURRENT_BINARY_DIR}/corners.png COPYONLY)
@@ -62,6 +61,7 @@ set (SOURCES
     ../ConvexHull.cpp
     ../FitEllipse.cpp
     ../MinAreaRect.cpp
+    ../MinEnclosingCircle.cpp
     ../Canny.cpp
     ../CornerHarris.cpp
     ../CornerMinEigenVal.cpp
@@ -102,6 +102,7 @@ set (SOURCES
     ConvexHullTest.cpp
     FitEllipseTest.cpp
     MinAreaRectTest.cpp
+    MinEnclosingCircleTest.cpp
     CannyTest.cpp
     CornerHarrisTest.cpp
     CornerMinEigenValTest.cpp

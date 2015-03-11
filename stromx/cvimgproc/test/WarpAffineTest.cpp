@@ -90,6 +90,6 @@ namespace stromx
             cvsupport::Image::save("WarpAffineTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

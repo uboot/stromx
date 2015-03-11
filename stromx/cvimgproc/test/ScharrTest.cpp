@@ -122,6 +122,6 @@ namespace stromx
             cvsupport::Image::save("ScharrTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

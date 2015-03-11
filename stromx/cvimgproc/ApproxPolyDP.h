@@ -61,7 +61,7 @@ namespace stromx
             runtime::MatrixDescription* m_outCurveDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_APPROXPOLYDP_H

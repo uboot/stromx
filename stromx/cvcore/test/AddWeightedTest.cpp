@@ -146,6 +146,6 @@ namespace stromx
             cvsupport::Image::save("AddWeightedTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

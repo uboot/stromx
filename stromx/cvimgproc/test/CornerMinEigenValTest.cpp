@@ -56,6 +56,6 @@ namespace stromx
             cvsupport::Matrix::save("CornerMinEigenValTest_testAllocate0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

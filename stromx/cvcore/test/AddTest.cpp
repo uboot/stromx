@@ -122,6 +122,6 @@ namespace stromx
             cvsupport::Image::save("AddTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

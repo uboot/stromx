@@ -56,6 +56,6 @@ namespace stromx
             cvsupport::Matrix::save("CornerHarrisTest_testAllocate0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

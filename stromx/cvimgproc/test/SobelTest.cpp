@@ -126,6 +126,6 @@ namespace stromx
             cvsupport::Image::save("SobelTest_testAllocate1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

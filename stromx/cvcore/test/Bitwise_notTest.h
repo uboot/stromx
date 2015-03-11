@@ -33,7 +33,7 @@ namespace stromx
         private:
             runtime::OperatorTester* m_operator;
         };
-    }
-}
+    } // cvcore
+} // stromx
 
 #endif // STROMX_CVCORE_BITWISE_NOTTEST_H

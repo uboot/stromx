@@ -27,7 +27,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer points(new cvsupport::Matrix("contour_1.npy"));
+            runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
             m_operator->setInputData(FitEllipse::POINTS, points);
             
@@ -42,7 +42,7 @@ namespace stromx
             m_operator->initialize();
             m_operator->activate();
             
-            runtime::DataContainer points(new cvsupport::Matrix("contour_f32.npy"));
+            runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
             m_operator->setInputData(FitEllipse::POINTS, points);
             
@@ -52,6 +52,6 @@ namespace stromx
             cvsupport::Matrix::save("FitEllipseTest_testAllocate1.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

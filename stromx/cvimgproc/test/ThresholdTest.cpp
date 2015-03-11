@@ -97,6 +97,6 @@ namespace stromx
             cvsupport::Image::save("ThresholdTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

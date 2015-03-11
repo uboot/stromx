@@ -39,6 +39,6 @@ namespace stromx
             cvsupport::Matrix::save("CornerSubPixTest_testInPlace0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

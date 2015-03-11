@@ -69,7 +69,7 @@ namespace stromx
             runtime::Description* m_src2Description;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvcore
+} // stromx
 
 #endif // STROMX_CVCORE_ADD_H

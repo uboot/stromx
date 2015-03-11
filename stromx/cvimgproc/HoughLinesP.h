@@ -70,7 +70,7 @@ namespace stromx
             runtime::NumericParameter<runtime::UInt32>* m_thresholdParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_HOUGHLINESP_H

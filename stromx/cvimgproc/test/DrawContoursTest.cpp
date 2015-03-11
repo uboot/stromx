@@ -67,12 +67,14 @@ namespace stromx
             runtime::UInt8 ch1(255);
             runtime::UInt8 ch2(0);
             runtime::UInt8 ch3(0);
+            runtime::Int32 thickness(-1);
             
             m_operator->setInputData(DrawContours::IMG, img);
             m_operator->setInputData(DrawContours::CONTOURS, contours);
             m_operator->setParameter(DrawContours::CH_1, ch1);
             m_operator->setParameter(DrawContours::CH_2, ch2);
             m_operator->setParameter(DrawContours::CH_3, ch3);
+            m_operator->setParameter(DrawContours::THICKNESS, thickness);
             
             runtime::DataContainer result = m_operator->getOutputData(DrawContours::IMG);
             
@@ -80,6 +82,6 @@ namespace stromx
             cvsupport::Image::save("DrawContoursTest_testInPlace1.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

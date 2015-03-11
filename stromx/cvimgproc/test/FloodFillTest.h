@@ -29,7 +29,7 @@ namespace stromx
         private:
             runtime::OperatorTester* m_operator;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_FLOODFILLTEST_H

@@ -56,6 +56,6 @@ namespace stromx
             cvsupport::Image::save("PyrUpTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

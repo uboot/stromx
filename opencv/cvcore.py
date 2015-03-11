@@ -7,7 +7,6 @@ Created on Mon Apr  1 18:19:38 2013
 
 import sys
 
-import cvcommon
 import cvtype
 import datatype
 import document
@@ -281,10 +280,6 @@ core = package.Package(
         bitwise_not,
         bitwise_or,
         bitwise_xor
-    ],
-    functions = [
-        cvcommon.checkEnumValue,
-        cvcommon.checkNumericValue
     ],
     testFiles = [
         "barbara.jpg",

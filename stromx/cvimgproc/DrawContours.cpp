@@ -26,6 +26,7 @@ namespace stromx
             m_ch1(0),
             m_ch2(0),
             m_ch3(0),
+            m_thickness(1),
             m_dataFlow()
         {
         }
@@ -40,6 +41,8 @@ namespace stromx
                 return m_ch2;
             case CH_3:
                 return m_ch3;
+            case THICKNESS:
+                return m_thickness;
             case DATA_FLOW:
                 return m_dataFlow;
             default:
@@ -60,7 +63,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_ch1Parameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_ch1Parameter, *this);
                         m_ch1 = castedValue;
                     }
                     break;
@@ -71,7 +74,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_ch2Parameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_ch2Parameter, *this);
                         m_ch2 = castedValue;
                     }
                     break;
@@ -82,8 +85,19 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_ch3Parameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_ch3Parameter, *this);
                         m_ch3 = castedValue;
+                    }
+                    break;
+                case THICKNESS:
+                    {
+                        const runtime::Int32 & castedValue = runtime::data_cast<runtime::Int32>(value);
+                        if(! castedValue.variant().isVariant(runtime::DataVariant::INT_32))
+                        {
+                            throw runtime::WrongParameterType(parameter(id), *this);
+                        }
+                        cvsupport::checkNumericValue(castedValue, m_thicknessParameter, *this);
+                        m_thickness = castedValue;
                     }
                     break;
                 case DATA_FLOW:
@@ -93,7 +107,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -136,6 +150,11 @@ namespace stromx
                     m_ch3Parameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_ch3Parameter->setTitle(L_("Channel 3"));
                     parameters.push_back(m_ch3Parameter);
+                    
+                    m_thicknessParameter = new runtime::NumericParameter<runtime::Int32>(THICKNESS);
+                    m_thicknessParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+                    m_thicknessParameter->setTitle(L_("Thickness"));
+                    parameters.push_back(m_thicknessParameter);
                     
                 }
                 break;
@@ -237,8 +256,9 @@ namespace stromx
                     int ch1CvData = int(m_ch1);
                     int ch2CvData = int(m_ch2);
                     int ch3CvData = int(m_ch3);
+                    int thicknessCvData = int(m_thickness);
                     
-                    cv::drawContours(imgCvData, contoursCvData, -1, cv::Scalar(ch1CvData, ch2CvData, ch3CvData));
+                    cv::drawContours(imgCvData, contoursCvData, -1, cv::Scalar(ch1CvData, ch2CvData, ch3CvData), thicknessCvData);
                     
                     runtime::DataContainer outContainer = inContainer;
                     runtime::Id2DataPair outputMapper(IMG, outContainer);
@@ -249,6 +269,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

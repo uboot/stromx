@@ -63,7 +63,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_alphaParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_alphaParameter, *this);
                         m_alpha = castedValue;
                     }
                     break;
@@ -74,7 +74,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_betaParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_betaParameter, *this);
                         m_beta = castedValue;
                     }
                     break;
@@ -85,7 +85,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_ddepthParameter, *this);
                         m_ddepth = castedValue;
                     }
                     break;
@@ -96,7 +96,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_gammaParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_gammaParameter, *this);
                         m_gamma = castedValue;
                     }
                     break;
@@ -107,7 +107,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -436,6 +436,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

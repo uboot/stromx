@@ -109,6 +109,6 @@ namespace stromx
             cvsupport::Image::save("GaussianBlurTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

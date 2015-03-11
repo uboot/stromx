@@ -78,7 +78,7 @@ namespace stromx
             runtime::Description* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_RESIZE_H

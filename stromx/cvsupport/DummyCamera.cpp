@@ -602,7 +602,7 @@ namespace stromx
             pixelType->add(EnumDescription(Enum(runtime::Image::BAYERGB_8), "Bayer GB pattern 8-bit"));
             parameters.push_back(pixelType);
             
-            NumericParameter<Float64>* flicker = new NumericParameter<Float64>(FLICKER_AMOUNT, wbGroup);
+            NumericParameter<Float64>* flicker = new NumericParameter<Float64>(FLICKER_AMOUNT);
             flicker->setTitle("Flicker amount");
             flicker->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             flicker->setMin(Float64(0));

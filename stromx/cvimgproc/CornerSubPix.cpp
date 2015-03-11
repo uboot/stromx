@@ -57,7 +57,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_winSizeXParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_winSizeXParameter, *this);
                         m_winSizeX = castedValue;
                     }
                     break;
@@ -68,7 +68,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_winSizeYParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_winSizeYParameter, *this);
                         m_winSizeY = castedValue;
                     }
                     break;
@@ -79,7 +79,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -216,7 +216,7 @@ namespace stromx
                     
                     const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
                     runtime::Matrix * pointMatrixCastedData = runtime::data_cast<runtime::Matrix>(pointMatrixData);
-                    checkMatrixData(*pointMatrixCastedData, m_pointMatrixDescription, *this);
+                    cvsupport::checkMatrixValue(*pointMatrixCastedData, m_pointMatrixDescription, *this);
                     
                     cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
                     cv::Mat pointMatrixCvData = cvsupport::getOpenCvMat(*pointMatrixCastedData);
@@ -234,6 +234,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

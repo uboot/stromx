@@ -97,6 +97,6 @@ namespace stromx
             cvsupport::Image::save("BoxFilterTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

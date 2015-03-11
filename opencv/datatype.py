@@ -70,6 +70,16 @@ class UInt8(DataType):
     def variant(self):
         return "runtime::DataVariant::UINT_8"
         
+class Int32(DataType):
+    """
+    Stromx runtime::Int32 type.
+    """
+    def typeId(self):
+        return "runtime::Int32"
+        
+    def variant(self):
+        return "runtime::DataVariant::INT_32"
+        
 class UInt32(DataType):
     """
     Stromx runtime::UInt32 type.

@@ -148,8 +148,8 @@ class MethodGenerator(object):
         """
         Exits the package namespace.
         """
-        self.doc.namespaceExit()
-        self.doc.namespaceExit()
+        self.doc.namespaceExit(self.p.ident)
+        self.doc.namespaceExit("stromx")
         self.doc.blank()
             
 class OpHeaderGenerator(MethodGenerator):
@@ -428,13 +428,13 @@ class OpImplGenerator(MethodGenerator):
             if parameter.argType == package.ArgType.PLAIN:
                 pass
             elif parameter.argType == package.ArgType.ENUM:
-                l = ("checkEnumValue(castedValue, {0}Parameter, *this);"
+                l = ("cvsupport::checkEnumValue(castedValue, {0}Parameter, *this);"
                     ).format(parameter.ident.attribute())
             elif parameter.argType == package.ArgType.NUMERIC:
-                l = ("checkNumericValue(castedValue, {0}Parameter, *this);"
+                l = ("cvsupport::checkNumericValue(castedValue, {0}Parameter, *this);"
                     ).format(parameter.ident.attribute())
             elif parameter.argType == package.ArgType.MATRIX:
-                l = ("checkMatrixValue(castedValue, {0}Parameter, *this);"
+                l = ("cvsupport::checkMatrixValue(castedValue, {0}Parameter, *this);"
                     ).format(parameter.ident.attribute())
             else:
                 assert(False)
@@ -873,7 +873,7 @@ class OpImplGenerator(MethodGenerator):
         def __visit(self, arg):
             if arg.argType == package.ArgType.MATRIX:
                 l = (
-                    "checkMatrixData(*{0}CastedData, {1}Description, *this);"
+                    "cvsupport::checkMatrixValue(*{0}CastedData, {1}Description, *this);"
                 ).format(arg.ident, arg.ident.attribute())
                 self.doc.line(l)
             else:
@@ -1112,7 +1112,7 @@ class OpImplGenerator(MethodGenerator):
         
     def __statics(self):
         method = self.m.ident.className()
-        package = self.p.ident.constant()
+        package = self.p.ident.upper()
         self.doc.line(("const std::string {0}::PACKAGE(STROMX_{1}_PACKAGE_"
                        "NAME);").format(method, package))
         self.doc.line(("const runtime::Version {0}::VERSION("

@@ -52,6 +52,6 @@ namespace stromx
             cvsupport::Matrix::save("MinAreaRectTest_testAllocate1.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

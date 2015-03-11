@@ -34,7 +34,8 @@ namespace stromx
                 CH_1,
                 CH_2,
                 CH_3,
-                DATA_FLOW
+                DATA_FLOW,
+                THICKNESS
             };
             DrawContours();
             virtual OperatorKernel* clone() const { return new DrawContours; }
@@ -56,15 +57,17 @@ namespace stromx
             runtime::UInt8 m_ch1;
             runtime::UInt8 m_ch2;
             runtime::UInt8 m_ch3;
+            runtime::Int32 m_thickness;
             runtime::Enum m_dataFlow;
             runtime::NumericParameter<runtime::UInt8>* m_ch1Parameter;
             runtime::NumericParameter<runtime::UInt8>* m_ch2Parameter;
             runtime::NumericParameter<runtime::UInt8>* m_ch3Parameter;
             runtime::Description* m_contoursDescription;
             runtime::Description* m_imgDescription;
+            runtime::NumericParameter<runtime::Int32>* m_thicknessParameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_DRAWCONTOURS_H

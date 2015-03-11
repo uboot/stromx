@@ -69,7 +69,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_ddepthParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_ddepthParameter, *this);
                         m_ddepth = castedValue;
                     }
                     break;
@@ -80,7 +80,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_deltaParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_deltaParameter, *this);
                         m_delta = castedValue;
                     }
                     break;
@@ -91,7 +91,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_dxParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_dxParameter, *this);
                         m_dx = castedValue;
                     }
                     break;
@@ -102,7 +102,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_dyParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_dyParameter, *this);
                         m_dy = castedValue;
                     }
                     break;
@@ -113,7 +113,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_ksizeParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_ksizeParameter, *this);
                         if(int(castedValue) % 2 == 0)
                             throw runtime::WrongParameterValue(*m_ksizeParameter, *this, "Only odd values are allowed");
                         m_ksize = castedValue;
@@ -126,7 +126,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkNumericValue(castedValue, m_scaleParameter, *this);
+                        cvsupport::checkNumericValue(castedValue, m_scaleParameter, *this);
                         m_scale = castedValue;
                     }
                     break;
@@ -137,7 +137,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -440,6 +440,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

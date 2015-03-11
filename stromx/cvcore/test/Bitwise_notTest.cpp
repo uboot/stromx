@@ -74,6 +74,6 @@ namespace stromx
             cvsupport::Image::save("Bitwise_notTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

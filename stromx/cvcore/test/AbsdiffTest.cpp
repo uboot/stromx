@@ -80,6 +80,6 @@ namespace stromx
             cvsupport::Image::save("AbsdiffTest_testAllocate0.png", access());
         }
         
-    }
-}
+    } // cvcore
+} // stromx
 

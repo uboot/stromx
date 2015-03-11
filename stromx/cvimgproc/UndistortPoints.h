@@ -61,7 +61,7 @@ namespace stromx
             runtime::MatrixDescription* m_srcDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_UNDISTORTPOINTS_H

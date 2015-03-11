@@ -57,7 +57,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkMatrixValue(castedValue, m_cameraMatrixParameter, *this);
+                        cvsupport::checkMatrixValue(castedValue, m_cameraMatrixParameter, *this);
                         m_cameraMatrix = castedValue;
                     }
                     break;
@@ -68,7 +68,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkMatrixValue(castedValue, m_distCoeffsParameter, *this);
+                        cvsupport::checkMatrixValue(castedValue, m_distCoeffsParameter, *this);
                         m_distCoeffs = castedValue;
                     }
                     break;
@@ -79,7 +79,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -311,6 +311,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

@@ -43,6 +43,6 @@ namespace stromx
             cvsupport::Image::save("FloodFillTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

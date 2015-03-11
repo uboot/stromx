@@ -63,7 +63,7 @@ namespace stromx
             runtime::NumericParameter<runtime::Float64>* m_threshold2Parameter;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    }
-}
+    } // cvimgproc
+} // stromx
 
 #endif // STROMX_CVIMGPROC_CANNY_H

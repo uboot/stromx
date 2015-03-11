@@ -37,6 +37,6 @@ namespace stromx
             cvsupport::Matrix::save("HoughLinesPTest_testAllocate0.npy", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

@@ -46,6 +46,7 @@ set (SOURCES
     ConvexHull.cpp
     FitEllipse.cpp
     MinAreaRect.cpp
+    MinEnclosingCircle.cpp
     Canny.cpp
     CornerHarris.cpp
     CornerMinEigenVal.cpp

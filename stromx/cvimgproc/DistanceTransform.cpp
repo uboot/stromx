@@ -57,7 +57,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_distanceTypeParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_distanceTypeParameter, *this);
                         m_distanceType = castedValue;
                     }
                     break;
@@ -68,7 +68,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_maskSizeParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_maskSizeParameter, *this);
                         m_maskSize = castedValue;
                     }
                     break;
@@ -79,7 +79,7 @@ namespace stromx
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
-                        checkEnumValue(castedValue, m_dataFlowParameter, *this);
+                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
                         m_dataFlow = castedValue;
                     }
                     break;
@@ -345,6 +345,6 @@ namespace stromx
             }
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 

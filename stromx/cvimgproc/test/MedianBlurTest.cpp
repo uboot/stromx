@@ -93,6 +93,6 @@ namespace stromx
             cvsupport::Image::save("MedianBlurTest_testInPlace0.png", access());
         }
         
-    }
-}
+    } // cvimgproc
+} // stromx
 
