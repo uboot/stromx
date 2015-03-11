@@ -246,7 +246,7 @@ namespace stromx
         
         bool operator==(const stromx::runtime::DataVariant& lhs, const stromx::runtime::DataVariant& rhs)
         {
-            return lhs.m_id == rhs.m_id && lhs.m_package == rhs.m_package;
+            return lhs.id() == rhs.id() && lhs.package() == rhs.package();
         }
         
         std::ostream& operator<<(std::ostream& out, const DataVariant& variant)

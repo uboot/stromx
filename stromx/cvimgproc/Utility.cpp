@@ -1,6 +1,7 @@
 #include "Utility.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <cmath>
 
 namespace stromx
 {
@@ -25,6 +26,17 @@ namespace stromx
             result.at<float>(0, 0) = center.x;
             result.at<float>(0, 1) = center.y;
             result.at<float>(0, 2) = radius;
+        }
+        
+        void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
+                     const double param, const double reps, const double aeps)
+        {
+            cv::Vec4f line;
+            cv::fitLine(points, line, distType, param, reps, aeps);
+            
+            result = cv::Mat(1, 2, CV_32F);
+            result.at<float>(0, 0) = (line[1]*line[2] - line[0]*line[3]);
+            result.at<float>(0, 1) = std::atan2(line[0], line[1]) * 180 / M_PI;
         }
         
     }

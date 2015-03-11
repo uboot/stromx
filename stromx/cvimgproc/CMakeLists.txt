@@ -45,6 +45,7 @@ set (SOURCES
     BoundingRect.cpp
     ConvexHull.cpp
     FitEllipse.cpp
+    FitLine.cpp
     MinAreaRect.cpp
     MinEnclosingCircle.cpp
     Canny.cpp

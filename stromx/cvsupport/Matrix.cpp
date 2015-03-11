@@ -65,9 +65,10 @@ namespace stromx
         }
 
         Matrix::Matrix(const cv::Rect& cvRect)
-          : m_matrix(new cv::Mat())
+          : m_matrix(new cv::Mat(1, 4, CV_32S))
         {
-            allocate(1, 4, Matrix::INT_32);
+            getDataFromCvMatrix(valueTypeFromCvType(m_matrix->type()));
+            
             int32_t* data = reinterpret_cast<int32_t*>(this->data());
             data[0] = cvRect.x;
             data[1] = cvRect.y;
@@ -76,18 +77,16 @@ namespace stromx
         }
 
         Matrix::Matrix(const cv::RotatedRect& cvRotatedRect)
-          : m_matrix(new cv::Mat())
+          : m_matrix(new cv::Mat(1, 5, CV_32F))
         {
-            cv::Point2f vertices[4];
-            cvRotatedRect.points(vertices);
+            getDataFromCvMatrix(valueTypeFromCvType(m_matrix->type()));
             
-            allocate(4, 2, Matrix::FLOAT_32);
             float* data = reinterpret_cast<float*>(this->data());
-            for (size_t i = 0; i < 4; ++i)
-            {
-                data[2*i] = vertices[i].x;
-                data[2*i + 1] = vertices[i].y;
-            }
+            data[0] = cvRotatedRect.center.x;
+            data[1] = cvRotatedRect.center.y;
+            data[2] = cvRotatedRect.size.width;
+            data[3] = cvRotatedRect.size.height;
+            data[4] = cvRotatedRect.angle;
         }
             
         Matrix::Matrix(const stromx::cvsupport::Matrix& matrix)

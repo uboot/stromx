@@ -33,10 +33,7 @@ namespace stromx
          * but by a class member).
          */
         class STROMX_RUNTIME_API DataVariant
-        {
-            STROMX_RUNTIME_API friend bool operator==(const DataVariant & lhs, const DataVariant & rhs);
-            STROMX_RUNTIME_API friend std::ostream& operator<< (std::ostream& out, const DataVariant & container);
-            
+        {            
         public:
             /** A subclass of Data which contains no data. */
             const static DataVariant NONE;
@@ -192,8 +189,8 @@ namespace stromx
             virtual const std::string title() const;
             
             /**
-             * Returns true if \c type is a subtype of \c this. E.g.
-             * <tt>INT.isVariant(INT_16) == true</tt>
+             * Returns true if \c this is a subtype of \c type. E.g.
+             * <tt>INT_16.isVariant(INT) == true</tt>.
              */
             virtual bool isVariant(const DataVariant& type) const;
             

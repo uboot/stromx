@@ -185,7 +185,6 @@ namespace stromx
         void DummyCameraTest::tearDown ( void )
         {
             boost::this_thread::sleep_for(boost::chrono::seconds(1));
-            m_operator->deactivate();
             delete m_operator;
         }
     }

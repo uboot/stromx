@@ -11,6 +11,9 @@ namespace stromx
         
         void minEnclosingCircle(const cv::Mat & points, cv::Mat & result);
         
+        void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
+                     const double param, const double reps, const double aeps);
+        
     }
 }
 #endif // STROMX_CVIMGPROC_UTILITY_H

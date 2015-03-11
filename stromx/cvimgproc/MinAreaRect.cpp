@@ -118,8 +118,8 @@ namespace stromx
                 {
                     runtime::MatrixDescription* rect = new runtime::MatrixDescription(RECT, runtime::DataVariant::FLOAT_32_MATRIX);
                     rect->setTitle(L_("Rectangle"));
-                    rect->setRows(4);
-                    rect->setCols(2);
+                    rect->setRows(1);
+                    rect->setCols(5);
                     outputs.push_back(rect);
                     
                 }

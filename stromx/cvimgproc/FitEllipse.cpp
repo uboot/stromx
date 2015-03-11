@@ -118,8 +118,8 @@ namespace stromx
                 {
                     runtime::MatrixDescription* ellipse = new runtime::MatrixDescription(ELLIPSE, runtime::DataVariant::FLOAT_32_MATRIX);
                     ellipse->setTitle(L_("Bounding box"));
-                    ellipse->setRows(4);
-                    ellipse->setCols(2);
+                    ellipse->setRows(1);
+                    ellipse->setCols(5);
                     outputs.push_back(ellipse);
                     
                 }

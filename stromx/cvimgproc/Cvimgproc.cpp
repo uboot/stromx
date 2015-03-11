@@ -30,6 +30,7 @@
 #include "stromx/cvimgproc/BoundingRect.h"
 #include "stromx/cvimgproc/ConvexHull.h"
 #include "stromx/cvimgproc/FitEllipse.h"
+#include "stromx/cvimgproc/FitLine.h"
 #include "stromx/cvimgproc/MinAreaRect.h"
 #include "stromx/cvimgproc/MinEnclosingCircle.h"
 #include "stromx/cvimgproc/Canny.h"
@@ -86,6 +87,7 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new BoundingRect);
     registry.registerOperator(new ConvexHull);
     registry.registerOperator(new FitEllipse);
+    registry.registerOperator(new FitLine);
     registry.registerOperator(new MinAreaRect);
     registry.registerOperator(new MinEnclosingCircle);
     registry.registerOperator(new Canny);

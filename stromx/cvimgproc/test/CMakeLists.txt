@@ -60,6 +60,7 @@ set (SOURCES
     ../BoundingRect.cpp
     ../ConvexHull.cpp
     ../FitEllipse.cpp
+    ../FitLine.cpp
     ../MinAreaRect.cpp
     ../MinEnclosingCircle.cpp
     ../Canny.cpp
@@ -101,6 +102,7 @@ set (SOURCES
     BoundingRectTest.cpp
     ConvexHullTest.cpp
     FitEllipseTest.cpp
+    FitLineTest.cpp
     MinAreaRectTest.cpp
     MinEnclosingCircleTest.cpp
     CannyTest.cpp

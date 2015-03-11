@@ -31,6 +31,7 @@
 #include <stromx/cvimgproc/BoundingRect.h>
 #include <stromx/cvimgproc/ConvexHull.h>
 #include <stromx/cvimgproc/FitEllipse.h>
+#include <stromx/cvimgproc/FitLine.h>
 #include <stromx/cvimgproc/MinAreaRect.h>
 #include <stromx/cvimgproc/MinEnclosingCircle.h>
 #include <stromx/cvimgproc/Canny.h>
@@ -79,6 +80,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<BoundingRect>("BoundingRect");
     stromx::python::exportOperatorKernel<ConvexHull>("ConvexHull");
     stromx::python::exportOperatorKernel<FitEllipse>("FitEllipse");
+    stromx::python::exportOperatorKernel<FitLine>("FitLine");
     stromx::python::exportOperatorKernel<MinAreaRect>("MinAreaRect");
     stromx::python::exportOperatorKernel<MinEnclosingCircle>("MinEnclosingCircle");
     stromx::python::exportOperatorKernel<Canny>("Canny");

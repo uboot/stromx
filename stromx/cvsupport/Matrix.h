@@ -80,8 +80,9 @@ namespace stromx
             explicit Matrix(const cv::Rect& cvRect);
             
             /** 
-             * Allocates a 4 x 2 matrix with 32-bit float values which contain
-             * the coordinates of the corners of \c cvRotatedRect.
+             * Allocates a 1 x 5 matrix with 32-bit float values and copies the
+             * (centerX, centerY, width, height, angle) of \c cvRotatedRect to
+             * it.
              */
             explicit Matrix(const cv::RotatedRect& cvRotatedRect);
             

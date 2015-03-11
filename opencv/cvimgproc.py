@@ -66,6 +66,31 @@ void minEnclosingCircle(const cv::Mat & points, cv::Mat & result)
 """)
 minEnclosingCircleWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
+# fitLineWrapper
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
+             const double param, const double reps, const double aeps);
+""")
+dtnIncludes = ["<cmath>", "<opencv2/imgproc/imgproc.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
+             const double param, const double reps, const double aeps)
+{
+    cv::Vec4f line;
+    cv::fitLine(points, line, distType, param, reps, aeps);
+    
+    result = cv::Mat(1, 2, CV_32F);
+    result.at<float>(0, 0) = (line[1]*line[2] - line[0]*line[3]);
+    result.at<float>(0, 1) = std::atan2(line[0], line[1]) * 180 / M_PI;
+}
+""")
+fitLineWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # initializations
 initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
@@ -1155,7 +1180,7 @@ convexHull = package.Method(
 # fitEllipse
 ellipse = package.MatrixArgument(
     "ellipse", "Bounding box", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 2, rows = 4
+    cols = 5, rows = 1
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
@@ -1173,10 +1198,53 @@ fitEllipse = package.Method(
     "fitEllipse", options = [allocate]
 )
 
+# fitLine
+line = package.MatrixArgument(
+    "line", "Line (\\u03C1, \\u03B8)", cvtype.Mat(), datatype.Float32Matrix(),
+    cols = 3, rows = 1
+)
+points = package.MatrixArgument(
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    cols = 2
+)
+descriptions = [
+    package.EnumDescription("DIST_L2", "L2", "CV_DIST_L2"),
+    package.EnumDescription("DIST_L1", "L1", "CV_DIST_L1"),
+    package.EnumDescription("DIST_L12", "L12", "CV_DIST_L12"),
+    package.EnumDescription("DIST_FAIR", "Fair", "CV_DIST_FAIR"),
+    package.EnumDescription("DIST_WELSCH", "Welsch", "CV_DIST_WELSCH"),
+    package.EnumDescription("DIST_HUBER", "Huber", "CV_DIST_HUBER")
+]
+distType = package.EnumParameter(
+    "distType", "Distance type", descriptions = descriptions,
+    default = 0
+)
+param  = package.Constant("0")
+reps  = package.NumericParameter(
+    "reps", "Accuracy of \\u03C1", cvtype.Float64(), datatype.Float64(),
+    default = 0.01, minValue = 0.0
+)
+aeps  = package.NumericParameter(
+    "aeps", "Accuracy of \\u03B8", cvtype.Float64(), datatype.Float64(),
+    default = 0.01, minValue = 0.0
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.Allocation(line), distType, param, reps,
+     aeps],
+    tests = [
+        [points_i32, DT, DT, DT, DT],
+        [points_f32, DT, DT, DT, DT]
+    ]
+)
+fitLine = package.Method(
+    "fitLine", namespace = "", options = [allocate]
+)
+
 # minAreaRect
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 2, rows = 4
+    cols = 5, rows = 1
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
@@ -1432,6 +1500,7 @@ imgproc = package.Package(
         boundingRect,
         convexHull,
         fitEllipse,
+        fitLine,
         minAreaRect,
         minEnclosingCircle,
         canny,
@@ -1444,7 +1513,8 @@ imgproc = package.Package(
     ],
     functions = [
         calcHistWrapper,
-        minEnclosingCircleWrapper
+        minEnclosingCircleWrapper,
+        fitLineWrapper
     ],
     testFiles = [
         "lenna.jpg",
