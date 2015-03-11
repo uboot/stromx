@@ -10,6 +10,7 @@
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/VariantComposite.h>
 #include <stromx/runtime/WriteAccess.h>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -95,7 +96,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);

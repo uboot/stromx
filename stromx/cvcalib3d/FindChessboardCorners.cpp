@@ -10,6 +10,7 @@
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/VariantComposite.h>
 #include <stromx/runtime/WriteAccess.h>
 #include <opencv2/calib3d/calib3d.hpp>
 

@@ -177,6 +177,13 @@ class Float64Matrix(Matrix):
     def __init__(self):
         super(Float32Matrix, self).__init__("runtime::Variant::FLOAT_64_MATRIX")
     
+class Any32BitMatrix(Matrix):
+    def __init__(self):
+        super(Any32BitMatrix, self).__init__(
+            "runtime::Variant::INT_32_MATRIX || "
+            "runtime::Variant::FLOAT_32_MATRIX"
+        )
+    
 class List(DataType):
     """
     Stromx runtime::List type.

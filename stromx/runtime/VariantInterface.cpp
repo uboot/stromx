@@ -15,12 +15,22 @@
  */
 
 #include "stromx/runtime/VariantInterface.h"
+#include "stromx/runtime/VariantHandle.h"
 
 namespace stromx
 {
     namespace runtime
     {
+        const VariantHandle VariantInterface::lhs() const
+        {
+            return VariantHandle();
+        }
         
+        const VariantHandle VariantInterface::rhs() const
+        {
+            return VariantHandle();
+        }
+            
         bool operator==(const VariantInterface & lhs, const VariantInterface & rhs)
         {
             return lhs.id() == rhs.id() && lhs.package() == rhs.package();

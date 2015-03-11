@@ -1106,6 +1106,7 @@ class OpImplGenerator(MethodGenerator):
         self.doc.line('#include <stromx/runtime/Id2DataComposite.h>')
         self.doc.line('#include <stromx/runtime/Id2DataPair.h>')
         self.doc.line('#include <stromx/runtime/ReadAccess.h>')
+        self.doc.line('#include <stromx/runtime/VariantComposite.h>')
         self.doc.line('#include <stromx/runtime/WriteAccess.h>')
         self.doc.line('#include <opencv2/{0}/{0}.hpp>'.format(cvModule))
         self.doc.blank()    

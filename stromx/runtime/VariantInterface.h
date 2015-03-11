@@ -25,6 +25,8 @@ namespace stromx
 {
     namespace runtime
     {
+        class VariantHandle;
+        
         /** \brief Abstract description of a data variant.
          *
          * A variant describes type of a Data object, i.e. which subclass of Data the object
@@ -38,6 +40,13 @@ namespace stromx
         class VariantInterface
         {            
         public:
+            enum CompositeType
+            {
+                NONE,
+                AND,
+                OR
+            };
+            
             /** Returns the integer ID of this data variant. */
             virtual unsigned int id() const = 0;
             
@@ -52,6 +61,18 @@ namespace stromx
              * <tt>INT_16.isVariant(INT) == true</tt>.
              */
             virtual bool isVariant(const VariantInterface& variant) const = 0;
+            
+            /** 
+             * The composite type if this variant is a logical composition of two 
+             * other variants.
+             */
+            virtual CompositeType compositeType() const { return NONE; }
+            
+            /** The left hand side of the composition. */
+            virtual const VariantHandle lhs() const;
+            
+            /** The right hand side of the composition. */
+            virtual const VariantHandle rhs() const;
         };
         
         STROMX_RUNTIME_API bool operator==(const VariantInterface & lhs, const VariantInterface & rhs);

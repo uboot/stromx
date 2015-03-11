@@ -71,6 +71,7 @@ set(SOURCES
     TriggerData.cpp
     Try.cpp
     Variant.cpp
+    VariantComposite.cpp
     VariantInterface.cpp
     Version.cpp
 )

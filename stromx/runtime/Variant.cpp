@@ -168,13 +168,23 @@ namespace stromx
         
         bool Variant::isVariant(const VariantInterface& variant) const
         {
-            if(variant.package() != package())
+            if (variant.compositeType() == VariantInterface::AND)
+            {
+                return isVariant(variant.lhs()) && isVariant(variant.rhs());
+            }
+            
+            if (variant.compositeType() == VariantInterface::OR)
+            {
+                return isVariant(variant.lhs()) || isVariant(variant.rhs());
+            }
+            
+            if (variant.package() != package())
                 return false;
             
-            if(variant.id() == DATA_ID)
+            if (variant.id() == DATA_ID)
                 return true;
             
-            if(variant.id() == id())
+            if (variant.id() == id())
                 return true;
             
             switch(variant.id())

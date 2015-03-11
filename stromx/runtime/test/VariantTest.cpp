@@ -16,6 +16,7 @@
 
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Variant.h"
+#include "stromx/runtime/VariantComposite.h"
 #include "stromx/runtime/test/VariantTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::VariantTest);
@@ -55,6 +56,36 @@ namespace stromx
         void VariantTest::testImageIsMatrix()
         {
             CPPUNIT_ASSERT(Variant::IMAGE.isVariant(Variant::MATRIX));
+        }
+        
+        void VariantTest::testUInt8IsIntAndUInt()
+        {
+            CPPUNIT_ASSERT(Variant::UINT_8.isVariant(Variant::INT && Variant::UINT));
+        }
+        
+        void VariantTest::testUInt8IsIntOrImage()
+        {
+            CPPUNIT_ASSERT(Variant::UINT_8.isVariant(Variant::INT || Variant::IMAGE));
+        }
+        
+        void VariantTest::testImageIsImageAndMatrix()
+        {
+            CPPUNIT_ASSERT(Variant::IMAGE.isVariant(Variant::IMAGE && Variant::MATRIX));
+        }
+        
+        void VariantTest::testInt32MatrixIsInt32MatrixOrFloat32Matrix()
+        {
+            CPPUNIT_ASSERT(Variant::INT_32_MATRIX.isVariant(Variant::INT_32_MATRIX || Variant::FLOAT_32_MATRIX));
+        }
+        
+        void VariantTest::testFloat32MatrixIsInt32MatrixOrFloat32Matrix()
+        {
+            CPPUNIT_ASSERT(Variant::FLOAT_32_MATRIX.isVariant(Variant::INT_32_MATRIX || Variant::FLOAT_32_MATRIX));
+        }
+        
+        void VariantTest::testFloat64MatrixIsNotInt32MatrixOrFloat32Matrix()
+        {
+            CPPUNIT_ASSERT(! Variant::FLOAT_64_MATRIX.isVariant(Variant::INT_32_MATRIX || Variant::FLOAT_32_MATRIX));
         }
     }
 }

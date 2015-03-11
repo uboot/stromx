@@ -33,11 +33,13 @@ namespace stromx
         /** Handle for VariantInterface objects which can be passed by value. */
         class VariantHandle : public VariantInterface
         {            
+            friend class VariantInterface;
+            
         public:
             /** 
              * Creates a variant handle for \c variant. The handle gains ownership
              * of \c variant.
-             * 
+             *
              * \throws WrongArgument If \c variant is null.
              */
             VariantHandle(VariantInterface* const variant)
@@ -45,22 +47,24 @@ namespace stromx
             {
                 if (variant == 0)
                 {
-                    throw WrongArgument("VariantInterface must not be null");
+                    throw WrongArgument("Variant must not be 0.");
                 }
             }
             
             unsigned int id() const { return m_variant->id(); }
-            
             const std::string & package() const { return m_variant->package(); }
-            
             virtual const std::string title() const { return m_variant->title(); }
+            virtual bool isVariant(const VariantInterface& variant) const { return m_variant->isVariant(variant); }
+            virtual CompositeType compositeType() const { return m_variant->compositeType(); }
+            virtual const VariantHandle lhs() const { return m_variant->lhs(); }
+            virtual const VariantHandle rhs() const { return m_variant->rhs(); }
             
-            virtual bool isVariant(const VariantInterface& variant) const
-            {
-                return m_variant->isVariant(variant);
-            }
+            /** Returns whether the handle holds a reference to an actual variant. */
+            bool isValid() const { return m_variant.get() != 0; }
             
         private:
+            VariantHandle() {}
+            
             std::tr1::shared_ptr<VariantInterface> m_variant;
         };
     }

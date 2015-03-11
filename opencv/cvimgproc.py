@@ -1135,7 +1135,7 @@ rect = package.MatrixArgument(
     cols = 4, rows = 1
 )
 points = package.MatrixArgument(
-    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 allocate = package.Option(
@@ -1183,7 +1183,7 @@ ellipse = package.MatrixArgument(
     cols = 5, rows = 1
 )
 points = package.MatrixArgument(
-    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 allocate = package.Option(
@@ -1204,7 +1204,7 @@ line = package.MatrixArgument(
     cols = 3, rows = 1
 )
 points = package.MatrixArgument(
-    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 descriptions = [
@@ -1247,7 +1247,7 @@ rect = package.MatrixArgument(
     cols = 5, rows = 1
 )
 points = package.MatrixArgument(
-    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 allocate = package.Option(
@@ -1268,7 +1268,7 @@ circle = package.MatrixArgument(
     cols = 3, rows = 1
 )
 points = package.MatrixArgument(
-    "points", "Point set", cvtype.Mat(channels = 2), datatype.Matrix(),
+    "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
     cols = 2
 )
 allocate = package.Option(
