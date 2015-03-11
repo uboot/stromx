@@ -31,7 +31,7 @@ namespace stromx
                 
         void OperatorKernelTest::testValidateInputsExistingId()
         {
-            Description input(TestOperator::INPUT_1, DataVariant::NONE);
+            Description input(TestOperator::INPUT_1, Variant::NONE);
             std::vector<const Description*> descriptors;
             descriptors.push_back(&input);
             
@@ -40,7 +40,7 @@ namespace stromx
 
         void OperatorKernelTest::testValidateInputsDuplicateId()
         {
-            Description input(TestOperator::INPUT_2 + 1, DataVariant::NONE);
+            Description input(TestOperator::INPUT_2 + 1, Variant::NONE);
             std::vector<const Description*> descriptors;
             descriptors.push_back(&input);
             descriptors.push_back(&input);
@@ -50,7 +50,7 @@ namespace stromx
 
         void OperatorKernelTest::testValidateOutputsExistingId()
         {
-            Description output(TestOperator::OUTPUT_1, DataVariant::NONE);
+            Description output(TestOperator::OUTPUT_1, Variant::NONE);
             std::vector<const Description*> descriptors;
             descriptors.push_back(&output);
             
@@ -59,7 +59,7 @@ namespace stromx
 
         void OperatorKernelTest::testValidateOutputsDuplicateId()
         {
-            Description output(TestOperator::OUTPUT_2 + 1, DataVariant::NONE);
+            Description output(TestOperator::OUTPUT_2 + 1, Variant::NONE);
             std::vector<const Description*> descriptors;
             descriptors.push_back(&output);
             descriptors.push_back(&output);
@@ -69,7 +69,7 @@ namespace stromx
 
         void OperatorKernelTest::testValidateParametersExistingId()
         {
-            Parameter param(TestOperator::SLEEP_TIME, DataVariant::UINT_32);
+            Parameter param(TestOperator::SLEEP_TIME, Variant::UINT_32);
             std::vector<const Parameter*> params;
             params.push_back(&param);
             
@@ -78,7 +78,7 @@ namespace stromx
 
         void OperatorKernelTest::testValidateParametersDuplicateId()
         {
-            Parameter param(TestOperator::NUM_PARAMETERS, DataVariant::UINT_32);
+            Parameter param(TestOperator::NUM_PARAMETERS, Variant::UINT_32);
             std::vector<const Parameter*> params;
             params.push_back(&param);
             params.push_back(&param);
@@ -89,7 +89,7 @@ namespace stromx
         void OperatorKernelTest::testValidateParametersMissingGroup()
         {
             ParameterGroup group(TestOperator::NUM_PARAMETERS);
-            Parameter param(TestOperator::NUM_PARAMETERS + 1, DataVariant::UINT_32, &group);
+            Parameter param(TestOperator::NUM_PARAMETERS + 1, Variant::UINT_32, &group);
             std::vector<const Parameter*> params;
             params.push_back(&param);
             

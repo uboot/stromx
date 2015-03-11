@@ -24,7 +24,7 @@ namespace stromx
     {
         void Float64Test::testIsFloatVariant()
         {
-            CPPUNIT_ASSERT(variant().isVariant(DataVariant::FLOAT));
+            CPPUNIT_ASSERT(variant().isVariant(Variant::FLOAT));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace stromx
         protected:
             virtual int value() const { return -235; }
             virtual std::string str() const { return "-235"; }
-            virtual DataVariant variant() const { return DataVariant::INT_32; }
+            virtual const VariantInterface & variant() const { return Variant::INT_32; }
         };
     }
 }

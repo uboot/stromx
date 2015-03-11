@@ -44,7 +44,6 @@ set(SOURCES
     ../Data.cpp
     ../DataRef.cpp
     ../DataContainer.cpp
-    ../DataVariant.cpp
     ../Description.cpp
     ../Dump.cpp
     ../Enum.cpp
@@ -80,6 +79,8 @@ set(SOURCES
     ../String.cpp
     ../TriggerData.cpp
     ../Try.cpp
+    ../Variant.cpp
+    ../VariantInterface.cpp
     ../Version.cpp
     ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
@@ -101,7 +102,6 @@ set(SOURCES
     CounterTest.cpp
     DataContainerTest.cpp
     DataRefTest.cpp
-    DataVariantTest.cpp
     DataTest.cpp
     DumpTest.cpp
     EnumTest.cpp
@@ -143,6 +143,7 @@ set(SOURCES
     StreamTest.cpp
     TestUtilities.cpp
     UInt8Test.cpp
+    VariantTest.cpp
     VersionTest.cpp
     WriteAccessTest.cpp
     main.cpp

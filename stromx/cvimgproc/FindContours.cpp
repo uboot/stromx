@@ -53,7 +53,7 @@ namespace stromx
                 case METHOD:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -64,7 +64,7 @@ namespace stromx
                 case MODE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -75,7 +75,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -139,7 +139,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -158,7 +158,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::LIST);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     

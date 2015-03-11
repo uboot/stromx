@@ -88,7 +88,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(300), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_image->height());
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BGR_24, m_image->pixelType());
-            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::BGR_24_IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Variant::BGR_24_IMAGE, m_image->variant());
         }
 
         void ImageWrapperTest::testResizeDimension()
@@ -99,7 +99,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1024), m_image->width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_image->height());
             CPPUNIT_ASSERT_EQUAL(runtime::Image::NONE, m_image->pixelType());
-            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::IMAGE, m_image->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Variant::IMAGE, m_image->variant());
         }       
         
         void ImageWrapperTest::tearDown ( void )

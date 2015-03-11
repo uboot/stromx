@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_DATAINTERFACE_H
 #define STROMX_RUNTIME_DATAINTERFACE_H
 
-#include "stromx/runtime/DataVariant.h"
+#include "stromx/runtime/VariantHandle.h"
 
 namespace stromx
 {
@@ -44,7 +44,7 @@ namespace stromx
             virtual const std::string & package() const = 0;
             
             /** Returns the data variant of this data object. */
-            virtual const DataVariant & variant() const = 0;
+            virtual const VariantHandle & variant() const = 0;
             
             /**
              * Returns a copy of the data object, i.e. a object of the same type is
@@ -69,7 +69,7 @@ namespace stromx
             virtual void deserialize(InputProvider & in, const Version & version) = 0;
             
             /** Returns \c true if the variant of this data object is a subtype of \c v. */
-            bool isVariant(const DataVariant & v) const { return variant().isVariant(v); }
+            bool isVariant(const VariantInterface & v) const { return variant().isVariant(v); }
         };
     }
 }

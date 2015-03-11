@@ -159,7 +159,7 @@ namespace stromx
         protected:
             
             /** Returns the data variant defined by the input \c valueType. */
-            static const runtime::DataVariant dataVariantFromValueType(const ValueType valueType);
+            static const runtime::VariantHandle dataVariantFromValueType(const ValueType valueType);
         };
         
         /** 
@@ -176,7 +176,7 @@ namespace stromx
         class data_traits<Matrix>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::MATRIX; }
+            static const VariantHandle & variant() { return Variant::MATRIX; }
         };
         /** \endcond */
     }

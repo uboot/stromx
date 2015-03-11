@@ -41,7 +41,7 @@ namespace stromx
         protected:
             virtual unsigned int value() const { return 3; }
             virtual std::string str() const { return "3"; }
-            virtual DataVariant variant() const { return DataVariant::ENUM; }
+            virtual const VariantInterface & variant() const { return Variant::ENUM; }
         };
     }
 }

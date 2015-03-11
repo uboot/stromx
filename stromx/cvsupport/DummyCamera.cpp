@@ -474,13 +474,13 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::IMAGE);
+            Description* output = new Description(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             
             if(m_outputIndex)
             {
-                Description* index = new Description(INDEX, DataVariant::UINT_32);
+                Description* index = new Description(INDEX, Variant::UINT_32);
                 index->setTitle("Index");
                 outputs.push_back(index);
             }
@@ -492,7 +492,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* outputIndex = new Parameter(OUTPUT_INDEX, DataVariant::BOOL);
+            Parameter* outputIndex = new Parameter(OUTPUT_INDEX, Variant::BOOL);
             outputIndex->setTitle("Output index");
             outputIndex->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(outputIndex);
@@ -512,7 +512,7 @@ namespace stromx
             triggerMode->add(EnumDescription(Enum(EXTERNAL), "External"));
             parameters.push_back(triggerMode);
             
-            Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
+            Parameter* trigger = new Parameter(TRIGGER, Variant::TRIGGER);
             trigger->setTitle("Trigger");
             trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trigger);
@@ -563,7 +563,7 @@ namespace stromx
             bufferSize->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(bufferSize);
             
-            Parameter* image = new Parameter(IMAGE, DataVariant::RGB_IMAGE);
+            Parameter* image = new Parameter(IMAGE, Variant::RGB_IMAGE);
             image->setTitle("Image");
             image->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(image);

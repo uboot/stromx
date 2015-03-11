@@ -5,80 +5,80 @@
         This package contains infrastructure operators and general data types
         for primitive data, images and matrices.
     </Description>
-    <DataVariant id="1" title="Data">
+    <Variant id="1" title="Data">
         <Description>
             The parent of all data.
         </Description>
-    </DataVariant>
-    <DataVariant id="4" title="Bool">
+    </Variant>
+    <Variant id="4" title="Bool">
         <Parent>
-            <DataVariantReference id="1" package = "runtime"/>
+            <VariantReference id="1" package = "runtime"/>
         </Parent>
         <Description>
             A Boolean value.
         </Description>
-    </DataVariant>
-    <DataVariant id="6" title="Int">
+    </Variant>
+    <Variant id="6" title="Int">
         <Parent>
-            <DataVariantReference id="1" package = "runtime"/>
+            <VariantReference id="1" package = "runtime"/>
         </Parent>
         <Description>
             An integer value.
         </Description>
-    </DataVariant>
-    <DataVariant id="7" title="UInt">
+    </Variant>
+    <Variant id="7" title="UInt">
         <Parent>
-            <DataVariantReference id="6" package = "runtime"/>
+            <VariantReference id="6" package = "runtime"/>
         </Parent>
         <Description>
             An unsigned integer value.
         </Description>
-    </DataVariant>
-    <DataVariant id="15" title="Float32">
+    </Variant>
+    <Variant id="15" title="Float32">
         <Parent>
-            <DataVariantReference id="14" package = "runtime"/>
+            <VariantReference id="14" package = "runtime"/>
         </Parent>
         A 32-bit float value.
-    </DataVariant>
-    <DataVariant id="12" title="32-bit integer">
+    </Variant>
+    <Variant id="12" title="32-bit integer">
         <Parent>
-            <DataVariantReference id="6" package = "runtime"/>
+            <VariantReference id="6" package = "runtime"/>
         </Parent>
         <Description>
             A 32-bit integer value.
         </Description>
-    </DataVariant>
-    <DataVariant id="13" title="Unsigned 32-bit integer">
+    </Variant>
+    <Variant id="13" title="Unsigned 32-bit integer">
         <Parent>
-            <DataVariantReference id="7" package = "runtime"/>
+            <VariantReference id="7" package = "runtime"/>
         </Parent>
         <Description>
             An unsigned 32-bit integer value.
         </Description>
-    </DataVariant>
-    <DataVariant id="5" title="Enum value">
+    </Variant>
+    <Variant id="5" title="Enum value">
         <Parent>
-            <DataVariantReference id="13" package = "runtime"/>
+            <VariantReference id="13" package = "runtime"/>
         </Parent>
         <Description>
             An enumeration value.
         </Description>
-    </DataVariant>
-    <DataVariant id="30" title="Image">
+    </Variant>
+    <Variant id="30" title="Image">
         <Parent>
-            <DataVariantReference id="18" package = "runtime"/>
+            <VariantReference id="18" package = "runtime"/>
         </Parent>
         <Description>
             All data objects of the variant <em>Image</em> implement the interface stromx::Image.
             Images are two-dimensional arrays with 1-3 channels and 8-bit or 16-bit pixels.
         </Description>
-    </DataVariant>
-    <DataVariant id="31" title="Mono image 8-bit">
+    </Variant>
+    <Variant id="31" title="Mono image 8-bit">
         <Parent>
-            <DataVariantReference id="30" package = "runtime"/>
+            <VariantReference id="30" package = "runtime"/>
         </Parent>
         <Description>
             Image with one channel and 8-bit pixels.
         </Description>
-    </DataVariant>
+    </Variant>
 </Package>

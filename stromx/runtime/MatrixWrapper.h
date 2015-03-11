@@ -45,7 +45,7 @@ namespace stromx
             MatrixWrapper();
             
             // Implementation of stromx::runtime::Matrix
-            virtual const DataVariant & variant() const { return m_variant; }
+            virtual const VariantHandle & variant() const { return m_variant; }
             virtual uint8_t* buffer() { return m_buffer; }
             virtual unsigned int bufferSize() const { return m_bufferSize; }
             virtual unsigned int rows() const { return m_rows; }
@@ -127,7 +127,7 @@ namespace stromx
             ValueType m_valueType;
             uint8_t* m_data;
             uint8_t* m_buffer;
-            DataVariant m_variant;
+            VariantHandle m_variant;
         };
     }
 }

@@ -23,7 +23,7 @@ namespace stromx
     {
         const std::vector<const Parameter*> Parameter::NO_MEMBERS = std::vector<const Parameter*>();
         
-        Parameter::Parameter(const unsigned int id, const stromx::runtime::DataVariant& variant,
+        Parameter::Parameter(const unsigned int id, const stromx::runtime::VariantHandle& variant,
                              ParameterGroup* const group)
           : Description(id, variant),
             m_access(NO_ACCESS),

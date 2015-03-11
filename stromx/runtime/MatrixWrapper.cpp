@@ -34,7 +34,7 @@ namespace stromx
             m_valueType(NONE),
             m_data(0),
             m_buffer(buffer),
-            m_variant(DataVariant::IMAGE)
+            m_variant(Variant::IMAGE)
         {
         }
         
@@ -46,7 +46,7 @@ namespace stromx
             m_valueType(NONE),
             m_data(0),
             m_buffer(0),
-            m_variant(DataVariant::IMAGE)
+            m_variant(Variant::IMAGE)
         {
         }
 

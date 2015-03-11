@@ -141,11 +141,11 @@ srcImg = package.Argument(
 )
 srcImgMono = package.Argument(
     "src", "Source", cvtype.Mat(),
-    datatype.Image("runtime::DataVariant::MONO_IMAGE")
+    datatype.Image("runtime::Variant::MONO_IMAGE")
 )
 srcImgMono8bit = package.Argument(
     "src", "Source", cvtype.Mat(),
-    datatype.Image("runtime::DataVariant::MONO_8_IMAGE")
+    datatype.Image("runtime::Variant::MONO_8_IMAGE")
 )
 dstImg = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(), initIn = initInCopy,

@@ -131,7 +131,7 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             
-            Description* input = new Description(OUTPUT, DataVariant::DATA);
+            Description* input = new Description(OUTPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
@@ -142,7 +142,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::DATA);
+            Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             outputs.push_back(output);
             
@@ -153,7 +153,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* period = new Parameter(PERIOD, DataVariant::UINT_32);
+            Parameter* period = new Parameter(PERIOD, Variant::UINT_32);
             period->setTitle("Period (milliseconds)");
             period->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(period);

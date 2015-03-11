@@ -201,7 +201,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(200), m_matrix->cols());
             CPPUNIT_ASSERT(m_matrix->data());
             CPPUNIT_ASSERT_EQUAL(runtime::Matrix::FLOAT_32, m_matrix->valueType());
-            CPPUNIT_ASSERT_EQUAL(runtime::DataVariant::FLOAT_32_MATRIX, m_matrix->variant());
+            CPPUNIT_ASSERT_EQUAL(runtime::Variant::FLOAT_32_MATRIX, m_matrix->variant());
         }
 
         void MatrixWrapperTest::testResizeDimension()

@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2015 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_DATAVARIANTTEST_H
-#define STROMX_RUNTIME_DATAVARIANTTEST_H
+#ifndef STROMX_RUNTIME_VARIANTTEST_H
+#define STROMX_RUNTIME_VARIANTTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -24,9 +24,9 @@ namespace stromx
 {
     namespace runtime
     {
-        class DataVariantTest : public CPPUNIT_NS :: TestFixture
+        class VariantTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (DataVariantTest);
+            CPPUNIT_TEST_SUITE (VariantTest);
             CPPUNIT_TEST (testIntTypes);
             CPPUNIT_TEST (testImageTypes);
             CPPUNIT_TEST (testImageIsMatrix);
@@ -44,4 +44,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_DATAVARIANTTEST_H
+#endif // STROMX_RUNTIME_VARIANTTEST_H

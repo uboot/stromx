@@ -48,7 +48,7 @@ namespace stromx
             virtual const Version & version() const { return VERSION; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual const DataVariant & variant() const;
+            virtual const VariantHandle & variant() const;
             
             virtual Data* clone() const { return new Primitive<repr_t, val_t>(m_value); }
             
@@ -86,7 +86,7 @@ namespace stromx
         /** \brief Boolean value */
         typedef Primitive<bool, bool> Bool;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Bool::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Bool::variant() const;
         template <>
         STROMX_RUNTIME_API void Bool::serialize(OutputProvider & out) const;
         template <>
@@ -97,14 +97,14 @@ namespace stromx
         class data_traits<Bool>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::BOOL; }
+            static const VariantHandle & variant() { return Variant::BOOL; }
         };
         /** \endcond */
         
         /** \brief Signed 8-bit integer */
         typedef Primitive<int, int8_t> Int8;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Int8::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Int8::variant() const;
         template <>
         STROMX_RUNTIME_API void Int8::serialize(OutputProvider & out) const;
         template <>
@@ -115,14 +115,14 @@ namespace stromx
         class data_traits<Int8>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::INT_8; }
+            static const VariantHandle & variant() { return Variant::INT_8; }
         };  
         /** \endcond */
         
         /** \brief Unsigned 8-bit integer */
         typedef Primitive<unsigned int, uint8_t> UInt8;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt8::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & UInt8::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt8::serialize(OutputProvider & out) const;
         template <>
@@ -133,14 +133,14 @@ namespace stromx
         class data_traits<UInt8>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::UINT_8; }
+            static const VariantHandle & variant() { return Variant::UINT_8; }
         };  
         /** \endcond */
         
         /** \brief Signed 16-bit integer */
         typedef Primitive<int, int16_t> Int16;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Int16::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Int16::variant() const;
         template <>
         STROMX_RUNTIME_API void Int16::serialize(OutputProvider & out) const;
         template <>
@@ -151,14 +151,14 @@ namespace stromx
         class data_traits<Int16>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::INT_16; }
+            static const VariantHandle & variant() { return Variant::INT_16; }
         };  
         /** \endcond */
 
         /** \brief Unsigned 16-bit integer */
         typedef Primitive<unsigned int, uint16_t> UInt16;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt16::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & UInt16::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt16::serialize(OutputProvider & out) const;
         template <>
@@ -169,14 +169,14 @@ namespace stromx
         class data_traits<UInt16>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::UINT_16; }
+            static const VariantHandle & variant() { return Variant::UINT_16; }
         };  
         /** \endcond */
         
         /** \brief Signed 32-bit integer */
         typedef Primitive<int, int32_t> Int32;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Int32::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Int32::variant() const;
         template <>
         STROMX_RUNTIME_API void Int32::serialize(OutputProvider & out) const;
         template <>
@@ -187,14 +187,14 @@ namespace stromx
         class data_traits<Int32>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::INT_32; }
+            static const VariantHandle & variant() { return Variant::INT_32; }
         };  
         /** \endcond */
         
         /** \brief Unsigned 32-bit integer */
         typedef Primitive<unsigned int, uint32_t> UInt32;
         template<>
-        STROMX_RUNTIME_API const DataVariant & UInt32::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & UInt32::variant() const;
         template <>
         STROMX_RUNTIME_API void UInt32::serialize(OutputProvider & out) const;
         template <>
@@ -205,14 +205,14 @@ namespace stromx
         class data_traits<UInt32>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::UINT_32; }
+            static const VariantHandle & variant() { return Variant::UINT_32; }
         };  
         /** \endcond */
         
         /** \brief Single precision floating point number */
         typedef Primitive<double, float> Float32;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Float32::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Float32::variant() const;
         template <>
         STROMX_RUNTIME_API void Float32::serialize(OutputProvider & out) const;
         template <>
@@ -223,14 +223,14 @@ namespace stromx
         class data_traits<Float32>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::FLOAT_32; }
+            static const VariantHandle & variant() { return Variant::FLOAT_32; }
         };  
         /** \endcond */
 
         /** \brief Float64 precision floating point number */
         typedef Primitive<double, double> Float64;
         template<>
-        STROMX_RUNTIME_API const DataVariant & Float64::variant() const;
+        STROMX_RUNTIME_API const VariantHandle & Float64::variant() const;
         template <>
         STROMX_RUNTIME_API void Float64::serialize(OutputProvider & out) const;
         template <>
@@ -241,7 +241,7 @@ namespace stromx
         class data_traits<Float64>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::FLOAT_64; }
+            static const VariantHandle & variant() { return Variant::FLOAT_64; }
         };  
         /** \endcond */
 

@@ -632,7 +632,7 @@ namespace stromx
                 }
             }
             
-            void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const runtime::DataVariant& type)
+            void SynchronizedOperatorKernel::validateParameterType(const unsigned int id, const runtime::VariantInterface& type)
             {
                 const Parameter& param = info()->parameter(id);
                 if(! type.isVariant(param.variant()))

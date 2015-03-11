@@ -117,7 +117,7 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             
-            Description* input = new Description(INPUT, DataVariant::BOOL);
+            Description* input = new Description(INPUT, Variant::BOOL);
             input->setTitle("Input");
             inputs.push_back(input);
 

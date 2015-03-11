@@ -59,7 +59,7 @@ namespace stromx
                 case ADAPTIVE_METHOD:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -70,7 +70,7 @@ namespace stromx
                 case BLOCK_SIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -83,7 +83,7 @@ namespace stromx
                 case MAXVAL:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -94,7 +94,7 @@ namespace stromx
                 case THRESHOLD_TYPE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -105,7 +105,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -244,11 +244,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    m_dstDescription = new runtime::Description(DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -256,7 +256,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -264,7 +264,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -283,7 +283,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -291,7 +291,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -299,7 +299,7 @@ namespace stromx
                 break;
             case(IN_PLACE):
                 {
-                    runtime::Description* src = new runtime::Description(SRC, runtime::DataVariant::MONO_8_IMAGE);
+                    runtime::Description* src = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
                     src->setTitle(L_("Source"));
                     outputs.push_back(src);
                     

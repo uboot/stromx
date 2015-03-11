@@ -14,10 +14,11 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/InputProvider.h"
-#include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/List.h"
 
+#include "stromx/runtime/InputProvider.h"
+#include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {
@@ -36,9 +37,9 @@ namespace stromx
             }
         }
         
-        const DataVariant & List::variant() const 
+        const  VariantHandle & List::variant() const 
         {
-            return DataVariant::LIST;
+            return Variant::LIST;
         }
         
         Data* List::clone() const

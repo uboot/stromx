@@ -17,6 +17,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/String.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {
@@ -26,9 +27,9 @@ namespace stromx
         const std::string String::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version String::VERSION = Version(0, 1, 0);
         
-        const DataVariant & String::variant() const 
+        const VariantHandle & String::variant() const 
         {
-            return DataVariant::STRING;
+            return Variant::STRING;
         }
         
         void String::serialize(OutputProvider & out) const

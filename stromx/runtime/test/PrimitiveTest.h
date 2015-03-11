@@ -81,7 +81,7 @@ namespace stromx
             void testIsVariant()
             {
                 CPPUNIT_ASSERT(m_value.variant().isVariant(variant()));
-                CPPUNIT_ASSERT(! m_value.variant().isVariant(DataVariant::NONE));
+                CPPUNIT_ASSERT(! m_value.variant().isVariant(Variant::NONE));
             }
             
             void testPtrCast()
@@ -100,7 +100,7 @@ namespace stromx
             
             virtual repr_t value() const = 0;
             virtual std::string str() const = 0;
-            virtual DataVariant variant() const = 0;
+            virtual const VariantInterface & variant() const = 0;
                 
         private: 
             class DummyInput : public InputProvider

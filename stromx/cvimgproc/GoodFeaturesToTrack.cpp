@@ -65,7 +65,7 @@ namespace stromx
                 case BLOCK_SIZE:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -78,7 +78,7 @@ namespace stromx
                 case K:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -89,7 +89,7 @@ namespace stromx
                 case MAX_CORNERS:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -100,7 +100,7 @@ namespace stromx
                 case MIN_DISTANCE:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -111,7 +111,7 @@ namespace stromx
                 case QUALITY_LEVEL:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -122,7 +122,7 @@ namespace stromx
                 case USE_HARRIS_DETECTOR:
                     {
                         const runtime::Bool & castedValue = runtime::data_cast<runtime::Bool>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::BOOL))
+                        if(! castedValue.variant().isVariant(runtime::Variant::BOOL))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -132,7 +132,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -186,7 +186,7 @@ namespace stromx
                     m_blockSizeParameter->setMin(runtime::UInt32(1));
                     parameters.push_back(m_blockSizeParameter);
                     
-                    m_useHarrisDetectorParameter = new runtime::Parameter(USE_HARRIS_DETECTOR, runtime::DataVariant::BOOL);
+                    m_useHarrisDetectorParameter = new runtime::Parameter(USE_HARRIS_DETECTOR, runtime::Variant::BOOL);
                     m_useHarrisDetectorParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_useHarrisDetectorParameter->setTitle(L_("Use Harris detector"));
                     parameters.push_back(m_useHarrisDetectorParameter);
@@ -211,7 +211,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -230,7 +230,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
                     pointMatrix->setRows(0);
                     pointMatrix->setCols(2);

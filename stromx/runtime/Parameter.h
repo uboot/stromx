@@ -122,7 +122,7 @@ namespace stromx
             };
             
             /** Constructs a parameter description. */
-            Parameter(const unsigned int id, const DataVariant& variant, ParameterGroup* const group = 0);
+            Parameter(const unsigned int id, const VariantHandle& variant, ParameterGroup* const group = 0);
             
             /** Returns the access mode. */
             AccessMode accessMode() const { return m_access; }

@@ -45,7 +45,7 @@ namespace stromx
             virtual const Version & version() const { return VERSION; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual const DataVariant & variant() const;
+            virtual const VariantHandle & variant() const;
             
             virtual Data* clone() const { return new String(m_value); }
             
@@ -80,7 +80,7 @@ namespace stromx
         class data_traits<String>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::STRING; }
+            static const VariantHandle & variant() { return Variant::STRING; }
         };  
         /** \endcond */
     }

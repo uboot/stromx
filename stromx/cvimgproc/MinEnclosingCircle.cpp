@@ -47,7 +47,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -95,7 +95,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::DataVariant::MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);
@@ -116,7 +116,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* circle = new runtime::MatrixDescription(CIRCLE, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* circle = new runtime::MatrixDescription(CIRCLE, runtime::Variant::FLOAT_32_MATRIX);
                     circle->setTitle(L_("Circle"));
                     circle->setRows(1);
                     circle->setCols(3);

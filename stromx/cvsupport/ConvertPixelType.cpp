@@ -162,13 +162,13 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             
-            Description* source = new Description(SOURCE, DataVariant::IMAGE);
+            Description* source = new Description(SOURCE, Variant::IMAGE);
             source->setTitle("Source");
             inputs.push_back(source);
             
             if (m_dataFlow == MANUAL)
             {
-                Description* destination = new Description(DESTINATION, DataVariant::IMAGE);
+                Description* destination = new Description(DESTINATION, Variant::IMAGE);
                 destination->setTitle("Destination");
                 inputs.push_back(destination);
             }
@@ -180,7 +180,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::IMAGE);
+            Description* output = new Description(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

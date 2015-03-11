@@ -62,7 +62,7 @@ namespace stromx
                 case MAX_LINE_GAP:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -73,7 +73,7 @@ namespace stromx
                 case MIN_LINE_LENGTH:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -84,7 +84,7 @@ namespace stromx
                 case RHO:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -95,7 +95,7 @@ namespace stromx
                 case THETA:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -106,7 +106,7 @@ namespace stromx
                 case THRESHOLD:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -117,7 +117,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -190,7 +190,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -209,7 +209,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::DataVariant::MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setRows(0);
                     dst->setCols(4);

@@ -21,7 +21,7 @@
 
 #include <string>
 #include "stromx/runtime/Config.h"
-#include "stromx/runtime/DataVariant.h"
+#include "stromx/runtime/VariantHandle.h"
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/None.h"
 
@@ -69,7 +69,7 @@ namespace stromx
         {
         public:
             /** Constructs a description. */
-            Description(const unsigned int id, const DataVariant& variant)
+            Description(const unsigned int id, const VariantHandle& variant)
             : m_id(id),
               m_variant(variant)
             {}
@@ -83,7 +83,7 @@ namespace stromx
             unsigned int id() const { return m_id; }
             
             /** Returns the data variant. */
-            const DataVariant & variant() const { return m_variant; }
+            const VariantHandle & variant() const { return m_variant; }
             
             /** Sets the title of the description. */
             void setTitle(const std::string & title) { m_title = title; }
@@ -121,7 +121,7 @@ namespace stromx
             
             std::string m_title;
             unsigned int m_id;
-            DataVariant m_variant;
+            VariantHandle m_variant;
         };
     }
 }

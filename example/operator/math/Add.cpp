@@ -19,7 +19,7 @@ namespace math
     {
         std::vector<const runtime::Description*> inputs;
         
-        runtime::Description* input = new runtime::Description(INPUT, runtime::DataVariant::UINT_32);
+        runtime::Description* input = new runtime::Description(INPUT, runtime::Variant::UINT_32);
         input->setTitle("Input");
         inputs.push_back(input);
         
@@ -30,7 +30,7 @@ namespace math
     {
         std::vector<const runtime::Description*> outputs;
         
-        runtime::Description* output = new runtime::Description(OUTPUT, runtime::DataVariant::UINT_32);
+        runtime::Description* output = new runtime::Description(OUTPUT, runtime::Variant::UINT_32);
         output->setTitle("Output");
         outputs.push_back(output);
         
@@ -41,7 +41,7 @@ namespace math
     {
         std::vector<const runtime::Parameter*> parameters;
         
-        runtime::Parameter* offset = new runtime::Parameter(OFFSET, runtime::DataVariant::UINT_32);
+        runtime::Parameter* offset = new runtime::Parameter(OFFSET, runtime::Variant::UINT_32);
         offset->setTitle("Offset");
         offset->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
         parameters.push_back(offset);

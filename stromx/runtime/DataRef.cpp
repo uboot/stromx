@@ -46,12 +46,12 @@ namespace stromx
             return m_data->package();  
         }
         
-        const DataVariant & DataRef::variant() const 
+        const VariantHandle & DataRef::variant() const 
         { 
             return m_data->variant();
         }
         
-        bool DataRef::isVariant(const DataVariant & v) const
+        bool DataRef::isVariant(const VariantInterface & v) const
         {
             return m_data->isVariant(v);
         }

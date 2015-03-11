@@ -56,7 +56,7 @@ namespace stromx
                 case AFFINE_M:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -67,7 +67,7 @@ namespace stromx
                 case DSIZEX:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -78,7 +78,7 @@ namespace stromx
                 case DSIZEY:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -89,7 +89,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -129,7 +129,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::Variant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle(L_("Affine transformation"));
                     m_affineMParameter->setRows(2);
@@ -150,7 +150,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::DataVariant::FLOAT_MATRIX);
+                    m_affineMParameter = new runtime::MatrixParameter(AFFINE_M, runtime::Variant::FLOAT_MATRIX);
                     m_affineMParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_affineMParameter->setTitle(L_("Affine transformation"));
                     m_affineMParameter->setRows(2);
@@ -182,11 +182,11 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    m_dstDescription = new runtime::Description(DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -194,7 +194,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
@@ -213,7 +213,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -221,7 +221,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     

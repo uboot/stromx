@@ -118,7 +118,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            outputs.push_back(new Description(OUTPUT, DataVariant::NONE));
+            outputs.push_back(new Description(OUTPUT, Variant::NONE));
             
             return outputs;
         }
@@ -127,11 +127,11 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
             
-            Parameter* param = new Parameter(THROW_DEACTIVATE, DataVariant::BOOL);
+            Parameter* param = new Parameter(THROW_DEACTIVATE, Variant::BOOL);
             param->setAccessMode(Parameter::NONE_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(BLOCK_EXECUTE, DataVariant::BOOL);
+            param = new Parameter(BLOCK_EXECUTE, Variant::BOOL);
             param->setAccessMode(Parameter::NONE_WRITE);
             parameters.push_back(param);
             

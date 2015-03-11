@@ -159,7 +159,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* description = new Description(OUTPUT, DataVariant::NONE);
+            Description* description = new Description(OUTPUT, Variant::NONE);
             description->setTitle("Output");
             outputs.push_back(description);
             

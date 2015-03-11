@@ -88,7 +88,7 @@ namespace stromx
             
         protected:
             /** Returns the data variant defined by the input \c pixelType. */
-            static const runtime::DataVariant dataVariantFromPixelType(const PixelType pixelType);
+            static const runtime::VariantHandle dataVariantFromPixelType(const PixelType pixelType);
             
             /** Returns the value type which corresponds to the input \c pixelType. */
             static Matrix::ValueType valueTypeFromPixelType(const PixelType pixelType);
@@ -99,7 +99,7 @@ namespace stromx
         class data_traits<Image>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::IMAGE; }
+            static const VariantHandle & variant() { return Variant::IMAGE; }
         };
         /** \endcond */
     }

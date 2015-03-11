@@ -109,12 +109,12 @@ namespace stromx
             const std::string & title() const { return m_title; }
             
             /** Returns the data variant of the parameter this exception relates to. */
-            const DataVariant & variant() const { return m_variant; }
+            const VariantInterface & variant() const { return m_variant; }
             
         private:
             const unsigned int m_id;
             const std::string m_title;
-            const DataVariant & m_variant;
+            const VariantHandle & m_variant;
         };
         
         /** \brief Tried to set a parameter to data of the wrong type. */

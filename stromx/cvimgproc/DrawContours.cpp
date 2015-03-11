@@ -59,7 +59,7 @@ namespace stromx
                 case CH_1:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_8))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -70,7 +70,7 @@ namespace stromx
                 case CH_2:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_8))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -81,7 +81,7 @@ namespace stromx
                 case CH_3:
                     {
                         const runtime::UInt8 & castedValue = runtime::data_cast<runtime::UInt8>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_8))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_8))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -92,7 +92,7 @@ namespace stromx
                 case THICKNESS:
                     {
                         const runtime::Int32 & castedValue = runtime::data_cast<runtime::Int32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::INT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::INT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -103,7 +103,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -171,11 +171,11 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_imgDescription = new runtime::Description(IMG, runtime::DataVariant::IMAGE);
+                    m_imgDescription = new runtime::Description(IMG, runtime::Variant::IMAGE);
                     m_imgDescription->setTitle(L_("Image"));
                     inputs.push_back(m_imgDescription);
                     
-                    m_contoursDescription = new runtime::Description(CONTOURS, runtime::DataVariant::LIST);
+                    m_contoursDescription = new runtime::Description(CONTOURS, runtime::Variant::LIST);
                     m_contoursDescription->setTitle(L_("Contours"));
                     inputs.push_back(m_contoursDescription);
                     
@@ -194,7 +194,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::Description* img = new runtime::Description(IMG, runtime::DataVariant::IMAGE);
+                    runtime::Description* img = new runtime::Description(IMG, runtime::Variant::IMAGE);
                     img->setTitle(L_("Image"));
                     outputs.push_back(img);
                     

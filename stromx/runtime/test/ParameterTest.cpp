@@ -30,7 +30,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((const Parameter*)(0), group.group());
             CPPUNIT_ASSERT_EQUAL(0, int(group.members().size()));
             
-            Parameter param(1, DataVariant::BOOL, &group);
+            Parameter param(1, Variant::BOOL, &group);
             
             CPPUNIT_ASSERT_EQUAL((const Parameter*)(&group), param.group());
             CPPUNIT_ASSERT_EQUAL(1, int(group.members().size()));

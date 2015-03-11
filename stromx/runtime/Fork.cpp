@@ -142,7 +142,7 @@ namespace stromx
         const std::vector<const Description*> Fork::setupInputs()
         {
             std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, DataVariant::DATA);
+            Description* input = new Description(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
@@ -155,7 +155,7 @@ namespace stromx
             
             for(unsigned int i = 0; i < (unsigned int)(m_numOutputs); ++i)
             {
-                Description* output = new Description(i, DataVariant::DATA);
+                Description* output = new Description(i, Variant::DATA);
                 output->setTitle("Output " + boost::lexical_cast<std::string>(i));
                 outputs.push_back(output);
             }

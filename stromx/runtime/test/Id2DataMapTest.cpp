@@ -29,8 +29,8 @@ namespace stromx
         void Id2DataMapTest::setUp()
         {
             std::vector<const Description*> descriptions;
-            descriptions.push_back(new Description(0, DataVariant::NONE));
-            descriptions.push_back(new Description(1, DataVariant::NONE));
+            descriptions.push_back(new Description(0, Variant::NONE));
+            descriptions.push_back(new Description(1, Variant::NONE));
             
             m_id2DataMap = new impl::Id2DataMap(descriptions);
             m_id2DataMap->setObserver(m_observer);

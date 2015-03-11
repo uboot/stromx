@@ -34,7 +34,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Bool::variant() const { return DataVariant::BOOL; }
+        const VariantHandle & Bool::variant() const { return Variant::BOOL; }
         template<>
         const std::string Bool::TYPE = "Bool";
         template<>
@@ -55,7 +55,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Int8::variant() const { return DataVariant::INT_8; }
+        const VariantHandle & Int8::variant() const { return Variant::INT_8; }
         template<>
         const std::string Int8::TYPE = "Int8";
         template<>
@@ -82,7 +82,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & UInt8::variant() const { return DataVariant::UINT_8; }
+        const VariantHandle & UInt8::variant() const { return Variant::UINT_8; }
         template<>
         const std::string UInt8::TYPE = "UInt8";
         template<>
@@ -109,7 +109,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Int16::variant() const { return DataVariant::INT_16; }
+        const VariantHandle & Int16::variant() const { return Variant::INT_16; }
         template<>
         const std::string Int16::TYPE = "Int16";
         template<>
@@ -134,7 +134,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & UInt16::variant() const { return DataVariant::UINT_16; }
+        const VariantHandle & UInt16::variant() const { return Variant::UINT_16; }
         template<>
         const std::string UInt16::TYPE = "UInt16";
         template<>
@@ -159,7 +159,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Int32::variant() const { return DataVariant::INT_32; }
+        const VariantHandle & Int32::variant() const { return Variant::INT_32; }
         template<>
         const std::string Int32::TYPE = "Int32";
         template<>
@@ -184,7 +184,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & UInt32::variant() const { return DataVariant::UINT_32; }
+        const VariantHandle & UInt32::variant() const { return Variant::UINT_32; }
         template<>
         const std::string UInt32::TYPE = "UInt32";
         template<>
@@ -209,7 +209,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Float32::variant() const { return DataVariant::FLOAT_32; }
+        const VariantHandle & Float32::variant() const { return Variant::FLOAT_32; }
         template<>
         const std::string Float32::TYPE = "Float32";
         template<>
@@ -234,7 +234,7 @@ namespace stromx
         }
         
         template<>
-        const DataVariant & Float64::variant() const { return DataVariant::FLOAT_64; }
+        const VariantHandle & Float64::variant() const { return Variant::FLOAT_64; }
         template<>
         const std::string Float64::TYPE = "Float64";
         template<>

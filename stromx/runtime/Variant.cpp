@@ -1,76 +1,72 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2015 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use thisVariant file except in compliance with the License.
+ *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
- *  disVarianttributed under the License isVariant disVarianttributed on an "AS IS" BASIS,
+ *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permisVariantsions and
  *  limitations under the License.
  */
 
-#include <ostream>
-
-#include "stromx/runtime/Config.h"
-#include "stromx/runtime/Data.h"
-#include "stromx/runtime/DataVariant.h"
 #include "stromx/runtime/Locale.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        const DataVariant DataVariant::NONE = DataVariant(NONE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::DATA = DataVariant(DATA_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::TRIGGER = DataVariant(TRIGGER_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::PRIMITIVE = DataVariant(PRIMITIVE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BOOL = DataVariant(BOOL_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::ENUM = DataVariant(ENUM_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT = DataVariant(INT_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT = DataVariant(UINT_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_8 = DataVariant(INT_8_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_8 = DataVariant(UINT_8_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_16 = DataVariant(INT_16_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_16 = DataVariant(UINT_16_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_32 = DataVariant(INT_32_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_32 = DataVariant(UINT_32_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT = DataVariant(FLOAT_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT_32 = DataVariant(FLOAT_32_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT_64 = DataVariant(FLOAT_64_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::LIST = DataVariant(LIST_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::MATRIX = DataVariant(MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_MATRIX = DataVariant(INT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_MATRIX = DataVariant(UINT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_8_MATRIX = DataVariant(INT_8_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_8_MATRIX = DataVariant(UINT_8_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_16_MATRIX = DataVariant(INT_16_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_16_MATRIX = DataVariant(UINT_16_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::INT_32_MATRIX = DataVariant(INT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::UINT_32_MATRIX = DataVariant(UINT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT_MATRIX = DataVariant(FLOAT_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT_32_MATRIX = DataVariant(FLOAT_32_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::FLOAT_64_MATRIX = DataVariant(FLOAT_64_MATRIX_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::STRING = DataVariant(STRING_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::IMAGE = DataVariant(IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::MONO_IMAGE = DataVariant(MONO_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::RGB_IMAGE = DataVariant(RGB_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::MONO_8_IMAGE = DataVariant(MONO_8_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::RGB_24_IMAGE = DataVariant(RGB_24_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BGR_24_IMAGE = DataVariant(BGR_24_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BAYERBG_8_IMAGE = DataVariant(BAYERBG_8_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BAYERGB_8_IMAGE = DataVariant(BAYERGB_8_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BAYERBG_16_IMAGE = DataVariant(BAYERBG_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BAYERGB_16_IMAGE = DataVariant(BAYERGB_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::MONO_16_IMAGE = DataVariant(MONO_16_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::RGB_48_IMAGE = DataVariant(RGB_48_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-        const DataVariant DataVariant::BGR_48_IMAGE = DataVariant(BGR_48_IMAGE_ID, STROMX_RUNTIME_PACKAGE_NAME);
-         
-        const std::string DataVariant::title() const
+        const VariantHandle Variant::NONE = VariantHandle(new Variant(NONE_ID));
+        const VariantHandle Variant::DATA = VariantHandle(new Variant(DATA_ID));
+        const VariantHandle Variant::TRIGGER = VariantHandle(new Variant(TRIGGER_ID));
+        const VariantHandle Variant::PRIMITIVE = VariantHandle(new Variant(PRIMITIVE_ID));
+        const VariantHandle Variant::BOOL = VariantHandle(new Variant(BOOL_ID));
+        const VariantHandle Variant::ENUM = VariantHandle(new Variant(ENUM_ID));
+        const VariantHandle Variant::INT = VariantHandle(new Variant(INT_ID));
+        const VariantHandle Variant::UINT = VariantHandle(new Variant(UINT_ID));
+        const VariantHandle Variant::INT_8 = VariantHandle(new Variant(INT_8_ID));
+        const VariantHandle Variant::UINT_8 = VariantHandle(new Variant(UINT_8_ID));
+        const VariantHandle Variant::INT_16 = VariantHandle(new Variant(INT_16_ID));
+        const VariantHandle Variant::UINT_16 = VariantHandle(new Variant(UINT_16_ID));
+        const VariantHandle Variant::INT_32 = VariantHandle(new Variant(INT_32_ID));
+        const VariantHandle Variant::UINT_32 = VariantHandle(new Variant(UINT_32_ID));
+        const VariantHandle Variant::FLOAT = VariantHandle(new Variant(FLOAT_ID));
+        const VariantHandle Variant::FLOAT_32 = VariantHandle(new Variant(FLOAT_32_ID));
+        const VariantHandle Variant::FLOAT_64 = VariantHandle(new Variant(FLOAT_64_ID));
+        const VariantHandle Variant::LIST = VariantHandle(new Variant(LIST_ID));
+        const VariantHandle Variant::MATRIX = VariantHandle(new Variant(MATRIX_ID));
+        const VariantHandle Variant::INT_MATRIX = VariantHandle(new Variant(INT_MATRIX_ID));
+        const VariantHandle Variant::UINT_MATRIX = VariantHandle(new Variant(UINT_MATRIX_ID));
+        const VariantHandle Variant::INT_8_MATRIX = VariantHandle(new Variant(INT_8_MATRIX_ID));
+        const VariantHandle Variant::UINT_8_MATRIX = VariantHandle(new Variant(UINT_8_MATRIX_ID));
+        const VariantHandle Variant::INT_16_MATRIX = VariantHandle(new Variant(INT_16_MATRIX_ID));
+        const VariantHandle Variant::UINT_16_MATRIX = VariantHandle(new Variant(UINT_16_MATRIX_ID));
+        const VariantHandle Variant::INT_32_MATRIX = VariantHandle(new Variant(INT_32_MATRIX_ID));
+        const VariantHandle Variant::UINT_32_MATRIX = VariantHandle(new Variant(UINT_32_MATRIX_ID));
+        const VariantHandle Variant::FLOAT_MATRIX = VariantHandle(new Variant(FLOAT_MATRIX_ID));
+        const VariantHandle Variant::FLOAT_32_MATRIX = VariantHandle(new Variant(FLOAT_32_MATRIX_ID));
+        const VariantHandle Variant::FLOAT_64_MATRIX = VariantHandle(new Variant(FLOAT_64_MATRIX_ID));
+        const VariantHandle Variant::STRING = VariantHandle(new Variant(STRING_ID));
+        const VariantHandle Variant::IMAGE = VariantHandle(new Variant(IMAGE_ID));
+        const VariantHandle Variant::MONO_IMAGE = VariantHandle(new Variant(MONO_IMAGE_ID));
+        const VariantHandle Variant::RGB_IMAGE = VariantHandle(new Variant(RGB_IMAGE_ID));
+        const VariantHandle Variant::MONO_8_IMAGE = VariantHandle(new Variant(MONO_8_IMAGE_ID));
+        const VariantHandle Variant::RGB_24_IMAGE = VariantHandle(new Variant(RGB_24_IMAGE_ID));
+        const VariantHandle Variant::BGR_24_IMAGE = VariantHandle(new Variant(BGR_24_IMAGE_ID));
+        const VariantHandle Variant::BAYERBG_8_IMAGE = VariantHandle(new Variant(BAYERBG_8_IMAGE_ID));
+        const VariantHandle Variant::BAYERGB_8_IMAGE = VariantHandle(new Variant(BAYERGB_8_IMAGE_ID));
+        const VariantHandle Variant::BAYERBG_16_IMAGE = VariantHandle(new Variant(BAYERBG_16_IMAGE_ID));
+        const VariantHandle Variant::BAYERGB_16_IMAGE = VariantHandle(new Variant(BAYERGB_16_IMAGE_ID));
+        const VariantHandle Variant::MONO_16_IMAGE = VariantHandle(new Variant(MONO_16_IMAGE_ID));
+        const VariantHandle Variant::RGB_48_IMAGE = VariantHandle(new Variant(RGB_48_IMAGE_ID));
+        const VariantHandle Variant::BGR_48_IMAGE = VariantHandle(new Variant(BGR_48_IMAGE_ID));
+        
+        const std::string Variant::title() const
         {
             if (package() != STROMX_RUNTIME_PACKAGE_NAME)
                 return "";
@@ -169,13 +165,9 @@ namespace stromx
                 return "";
             }
         }
-
-        bool DataVariant::isVariant(const runtime::DataVariant& variant) const
+        
+        bool Variant::isVariant(const VariantInterface& variant) const
         {
-            // per default each data type is derived from Data
-            if(variant == DataVariant::DATA)
-                return true;
-            
             if(variant.package() != package())
                 return false;
             
@@ -242,17 +234,6 @@ namespace stromx
             default:
                 return false;
             }
-        }
-        
-        bool operator==(const stromx::runtime::DataVariant& lhs, const stromx::runtime::DataVariant& rhs)
-        {
-            return lhs.id() == rhs.id() && lhs.package() == rhs.package();
-        }
-        
-        std::ostream& operator<<(std::ostream& out, const DataVariant& variant)
-        {
-            out << variant.package() << ", " << variant.id();
-            return out;
         }
     }
 }

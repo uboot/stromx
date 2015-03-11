@@ -63,7 +63,7 @@ namespace stromx
         const std::vector<const Description*> Iterate::setupInputs()
         {
             std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, DataVariant::LIST);
+            Description* input = new Description(INPUT, Variant::LIST);
             input->setTitle(L_("Input"));
             inputs.push_back(input);
             
@@ -74,7 +74,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::DATA);
+            Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle(L_("List elements"));
             outputs.push_back(output);
             

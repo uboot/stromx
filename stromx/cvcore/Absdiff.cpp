@@ -47,7 +47,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -106,15 +106,15 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    m_src1Description = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
+                    m_src1Description = new runtime::Description(SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
-                    m_src2Description = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
+                    m_src2Description = new runtime::Description(SRC_2, runtime::Variant::IMAGE);
                     m_src2Description->setTitle(L_("Source 2"));
                     inputs.push_back(m_src2Description);
                     
-                    m_dstDescription = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    m_dstDescription = new runtime::Description(DST, runtime::Variant::IMAGE);
                     m_dstDescription->setTitle(L_("Destination"));
                     inputs.push_back(m_dstDescription);
                     
@@ -122,11 +122,11 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    m_src1Description = new runtime::Description(SRC_1, runtime::DataVariant::IMAGE);
+                    m_src1Description = new runtime::Description(SRC_1, runtime::Variant::IMAGE);
                     m_src1Description->setTitle(L_("Source 1"));
                     inputs.push_back(m_src1Description);
                     
-                    m_src2Description = new runtime::Description(SRC_2, runtime::DataVariant::IMAGE);
+                    m_src2Description = new runtime::Description(SRC_2, runtime::Variant::IMAGE);
                     m_src2Description->setTitle(L_("Source 2"));
                     inputs.push_back(m_src2Description);
                     
@@ -145,7 +145,7 @@ namespace stromx
             {
             case(MANUAL):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     
@@ -153,7 +153,7 @@ namespace stromx
                 break;
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::DataVariant::IMAGE);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     

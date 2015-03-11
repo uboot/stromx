@@ -49,28 +49,28 @@ namespace stromx
             }
         }
         
-        const runtime::DataVariant Matrix::dataVariantFromValueType(const ValueType valueType)
+        const runtime::VariantHandle Matrix::dataVariantFromValueType(const ValueType valueType)
         {
             switch(valueType)
             {
             case runtime::Matrix::NONE:
-                return runtime::DataVariant::MATRIX;
+                return runtime::Variant::MATRIX;
             case runtime::Matrix::INT_8:
-                return runtime::DataVariant::INT_8_MATRIX;
+                return runtime::Variant::INT_8_MATRIX;
             case runtime::Matrix::INT_16:
-                return runtime::DataVariant::INT_16_MATRIX;
+                return runtime::Variant::INT_16_MATRIX;
             case runtime::Matrix::INT_32:
-                return runtime::DataVariant::INT_32_MATRIX;
+                return runtime::Variant::INT_32_MATRIX;
             case runtime::Matrix::UINT_8:
-                return runtime::DataVariant::INT_8_MATRIX;
+                return runtime::Variant::INT_8_MATRIX;
             case runtime::Matrix::UINT_16:
-                return runtime::DataVariant::UINT_16_MATRIX;
+                return runtime::Variant::UINT_16_MATRIX;
             case runtime::Matrix::UINT_32:
-                return runtime::DataVariant::UINT_32_MATRIX;
+                return runtime::Variant::UINT_32_MATRIX;
             case runtime::Matrix::FLOAT_32:
-                return runtime::DataVariant::FLOAT_32_MATRIX;
+                return runtime::Variant::FLOAT_32_MATRIX;
             case runtime::Matrix::FLOAT_64:
-                return runtime::DataVariant::FLOAT_64_MATRIX;
+                return runtime::Variant::FLOAT_64_MATRIX;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }

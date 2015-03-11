@@ -32,47 +32,47 @@ namespace stromx
     {
         namespace
         {
-            DataVariant typeToVariant(const unsigned int type)
+            VariantHandle typeToVariant(const unsigned int type)
             {
-                if (type == DataVariant::BOOL.id())
-                    return DataVariant::BOOL;
+                if (type == Variant::BOOL.id())
+                    return Variant::BOOL;
                 
-                if (type == DataVariant::TRIGGER.id())
-                    return DataVariant::TRIGGER;
+                if (type == Variant::TRIGGER.id())
+                    return Variant::TRIGGER;
                 
-                if (type == DataVariant::INT_32.id())
-                    return DataVariant::INT_32;
+                if (type == Variant::INT_32.id())
+                    return Variant::INT_32;
                 
-                if (type == DataVariant::UINT_32.id())
-                    return DataVariant::UINT_32;
+                if (type == Variant::UINT_32.id())
+                    return Variant::UINT_32;
                 
-                if (type == DataVariant::STRING.id())
-                    return DataVariant::STRING;
+                if (type == Variant::STRING.id())
+                    return Variant::STRING;
                 
-                if (type == DataVariant::FLOAT_32.id())
-                    return DataVariant::FLOAT_32;
+                if (type == Variant::FLOAT_32.id())
+                    return Variant::FLOAT_32;
                     
                 throw InternalError("Unhandled data type");
             }
             
             Data* typeToData(const unsigned int type)
             {
-                if (type == DataVariant::BOOL.id())
+                if (type == Variant::BOOL.id())
                     return new Bool;
                 
-                if (type == DataVariant::TRIGGER.id())
+                if (type == Variant::TRIGGER.id())
                     return new TriggerData;
                 
-                if (type == DataVariant::INT_32.id())
+                if (type == Variant::INT_32.id())
                     return new Int32;
                 
-                if (type == DataVariant::UINT_32.id())
+                if (type == Variant::UINT_32.id())
                     return new UInt32;
                 
-                if (type == DataVariant::STRING.id())
+                if (type == Variant::STRING.id())
                     return new String;
                 
-                if (type == DataVariant::FLOAT_32.id())
+                if (type == Variant::FLOAT_32.id())
                     return new Float32;
                     
                 throw InternalError("Unhandled data type");
@@ -85,7 +85,7 @@ namespace stromx
         
         ConstData::ConstData()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_type(DataVariant::BOOL.id()),
+            m_type(Variant::BOOL.id()),
             m_value(new Bool)
         {
         }
@@ -158,7 +158,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::DATA);
+            Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             outputs.push_back(output);
             
@@ -172,12 +172,12 @@ namespace stromx
             EnumParameter* type = new EnumParameter(DATA_TYPE);
             type->setTitle("Data type");
             type->setAccessMode(runtime::Parameter::NONE_WRITE);
-            type->add(EnumDescription(Enum(DataVariant::BOOL.id()), "Bool"));
-            type->add(EnumDescription(Enum(DataVariant::TRIGGER.id()), "Trigger"));
-            type->add(EnumDescription(Enum(DataVariant::INT_32.id()), "Int32"));
-            type->add(EnumDescription(Enum(DataVariant::UINT_32.id()), "UInt32"));
-            type->add(EnumDescription(Enum(DataVariant::STRING.id()), "String"));
-            type->add(EnumDescription(Enum(DataVariant::FLOAT_32.id()), "Float32"));
+            type->add(EnumDescription(Enum(Variant::BOOL.id()), "Bool"));
+            type->add(EnumDescription(Enum(Variant::TRIGGER.id()), "Trigger"));
+            type->add(EnumDescription(Enum(Variant::INT_32.id()), "Int32"));
+            type->add(EnumDescription(Enum(Variant::UINT_32.id()), "UInt32"));
+            type->add(EnumDescription(Enum(Variant::STRING.id()), "String"));
+            type->add(EnumDescription(Enum(Variant::FLOAT_32.id()), "Float32"));
             parameters.push_back(type);
                                         
             return parameters;
@@ -187,7 +187,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            DataVariant variant = typeToVariant(m_type);
+            VariantHandle variant = typeToVariant(m_type);
             
             Parameter* value = new Parameter(VALUE, variant);
             value->setTitle("Value");

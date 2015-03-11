@@ -38,12 +38,12 @@ namespace stromx
              * Constructs a numeric parameter. 
              * \throws WrongArgument If \c variant is not a matrix variant.
              */
-            MatrixParameter(const unsigned int id, const DataVariant& variant, ParameterGroup* const group = 0)
+            MatrixParameter(const unsigned int id, const VariantHandle& variant, ParameterGroup* const group = 0)
               : Parameter(id, variant, group),
                 m_rows(0),
                 m_cols(0)
             {
-                if(! variant.isVariant(DataVariant::MATRIX))
+                if(! variant.isVariant(Variant::MATRIX))
                     throw WrongArgument("The variant of a matrix parameter must be a matrix variant.");
             }
             

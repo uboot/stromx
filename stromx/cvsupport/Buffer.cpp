@@ -138,7 +138,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
         
-            Description* output = new Description(OUTPUT, DataVariant::IMAGE);
+            Description* output = new Description(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

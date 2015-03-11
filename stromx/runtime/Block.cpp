@@ -192,13 +192,13 @@ namespace stromx
         {
             std::vector<const Description*> inputs;
             
-            Description* input = new Description(OUTPUT, DataVariant::DATA);
+            Description* input = new Description(OUTPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
             if (m_triggerInput)
             {
-                Description* triggerData = new Description(TRIGGER_DATA, DataVariant::DATA);
+                Description* triggerData = new Description(TRIGGER_DATA, Variant::DATA);
                 triggerData->setTitle(L_("Trigger"));
                 inputs.push_back(triggerData);
             }
@@ -210,7 +210,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, DataVariant::DATA);
+            Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             outputs.push_back(output);
             
@@ -221,7 +221,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* triggerInput = new Parameter(TRIGGER_INPUT, DataVariant::BOOL);
+            Parameter* triggerInput = new Parameter(TRIGGER_INPUT, Variant::BOOL);
             triggerInput->setTitle(L_("Trigger input"));
             triggerInput->setAccessMode(runtime::Parameter::NONE_WRITE);
             parameters.push_back(triggerInput);
@@ -235,7 +235,7 @@ namespace stromx
             
             if (! m_triggerInput)
             {  
-                Parameter* trigger = new Parameter(TRIGGER, DataVariant::TRIGGER);
+                Parameter* trigger = new Parameter(TRIGGER, Variant::TRIGGER);
                 trigger->setTitle(L_("Trigger"));
                 trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(trigger);

@@ -53,7 +53,7 @@ namespace stromx
                 case PATTERN_SIZE_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -64,7 +64,7 @@ namespace stromx
                 case PATTERN_SIZE_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -75,7 +75,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -135,7 +135,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_imageDescription = new runtime::Description(IMAGE, runtime::DataVariant::IMAGE);
+                    m_imageDescription = new runtime::Description(IMAGE, runtime::Variant::IMAGE);
                     m_imageDescription->setTitle(L_("Image"));
                     inputs.push_back(m_imageDescription);
                     
@@ -154,7 +154,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* corners = new runtime::MatrixDescription(CORNERS, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* corners = new runtime::MatrixDescription(CORNERS, runtime::Variant::FLOAT_32_MATRIX);
                     corners->setTitle(L_("Corners"));
                     corners->setRows(0);
                     corners->setCols(2);

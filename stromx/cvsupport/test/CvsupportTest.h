@@ -19,7 +19,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include <stromx/runtime/DataVariant.h>
+#include <stromx/runtime/Variant.h>
 
 namespace stromx
 {

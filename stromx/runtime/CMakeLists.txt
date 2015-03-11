@@ -34,7 +34,6 @@ set(SOURCES
     DataContainer.cpp
     Data.cpp
     DataRef.cpp
-    DataVariant.cpp
     Description.cpp
     Dump.cpp
     Enum.cpp
@@ -71,6 +70,8 @@ set(SOURCES
     Thread.cpp
     TriggerData.cpp
     Try.cpp
+    Variant.cpp
+    VariantInterface.cpp
     Version.cpp
 )
 

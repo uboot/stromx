@@ -88,7 +88,7 @@ namespace stromx
                 void validateParameterId(const unsigned int id);
                 void validateWriteAccess(const unsigned int id);
                 void validateReadAccess(const unsigned int id);
-                void validateParameterType(const unsigned int id, const DataVariant& type);
+                void validateParameterType(const unsigned int id, const VariantInterface& type);
                 void validateDataAccess();
                 
                 OperatorKernel* m_op;

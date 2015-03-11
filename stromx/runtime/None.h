@@ -33,7 +33,7 @@ namespace stromx
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual const DataVariant & variant() const { return DataVariant::NONE; }
+            virtual const VariantHandle & variant() const { return Variant::NONE; }
             
             virtual Data* clone() const { return new None; }
             
@@ -48,7 +48,7 @@ namespace stromx
         class data_traits<None>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::NONE; }
+            static const VariantHandle & variant() { return Variant::NONE; }
         };
         /** \endcond */
     }

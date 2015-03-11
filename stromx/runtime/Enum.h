@@ -40,7 +40,7 @@ namespace stromx
                 return *this;
             }
             
-            virtual const DataVariant & variant() const { return DataVariant::ENUM; }
+            virtual const VariantHandle & variant() const { return Variant::ENUM; }
             virtual const std::string & type() const { return TYPE; }
             virtual Data* clone() const { return new Enum(*this); }
             
@@ -53,7 +53,7 @@ namespace stromx
         class data_traits<Enum>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::ENUM; }
+            static const VariantHandle & variant() { return Variant::ENUM; }
         };
         /** \endcond */
     }

@@ -20,7 +20,7 @@
 #include <typeinfo>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/DataInterface.h"
-#include "stromx/runtime/DataVariant.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/Exception.h"
 
 namespace stromx
@@ -38,14 +38,14 @@ namespace stromx
         class data_traits
         {
         public:
-            static const DataVariant & variant();
+            static const VariantHandle & variant();
         };  
         
         template<>
         class data_traits<Data>
         {
         public:
-            static const DataVariant & variant() { return DataVariant::DATA; }
+            static const VariantHandle & variant() { return Variant::DATA; }
         };  
         /** \endcond */
         

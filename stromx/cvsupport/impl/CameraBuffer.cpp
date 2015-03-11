@@ -144,7 +144,7 @@ namespace stromx
             {
                 std::vector<const Description*> inputs;
             
-                Description* input = new Description(INPUT, DataVariant::IMAGE);
+                Description* input = new Description(INPUT, Variant::IMAGE);
                 input->setTitle("Input");
                 inputs.push_back(input);
                 
@@ -155,15 +155,15 @@ namespace stromx
             {
                 std::vector<const Description*> outputs;
             
-                Description* output = new Description(OUTPUT, DataVariant::IMAGE);
+                Description* output = new Description(OUTPUT, Variant::IMAGE);
                 output->setTitle("Output");
                 outputs.push_back(output);
             
-                Description* buffer = new Description(BUFFER, DataVariant::IMAGE);
+                Description* buffer = new Description(BUFFER, Variant::IMAGE);
                 buffer->setTitle("Buffer");
                 outputs.push_back(buffer);
             
-                Description* index = new Description(INDEX, DataVariant::UINT_32);
+                Description* index = new Description(INDEX, Variant::UINT_32);
                 index->setTitle("Index");
                 outputs.push_back(index);
                 

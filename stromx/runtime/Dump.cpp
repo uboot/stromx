@@ -53,7 +53,7 @@ namespace stromx
         const std::vector<const Description*> Dump::setupInputs()
         {
             std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, DataVariant::DATA);
+            Description* input = new Description(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             

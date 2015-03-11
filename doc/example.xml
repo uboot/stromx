@@ -5,14 +5,14 @@
         This package contains some image processing operators based on functions
         of the OpenCV library.
     </Description>
-    <DataVariant id="0" title="OpenCV image 8-bit">
+    <Variant id="0" title="OpenCV image 8-bit">
         <Parent>
-            <DataVariantReference id="31" package = "runtime"/>
+            <VariantReference id="31" package = "runtime"/>
         </Parent>
         <Description>
             Image based on the OpenCV matrix implementation.
         </Description>
-    </DataVariant>
+    </Variant>
     
     <Operator type="Blur" title="Image blur">
         <Description>
@@ -20,7 +20,7 @@
             width. The operator can operate in-place.
         </Description>
         <Parameter id="0" title="Data flow">
-            <DataVariantReference id="5" package="runtime"/>
+            <VariantReference id="5" package="runtime"/>
             <EnumValue id="0" title="Manual">
                 <Description>
                     The operator is initialized with an input and a destination input.
@@ -37,26 +37,26 @@
             </Description>
         </Parameter>
         <Parameter id="0" title="Kernel size">
-            <DataVariantReference id="12" package="runtime"/>
+            <VariantReference id="12" package="runtime"/>
             <Description>
                 The size of the Gaussian kernel.
             </Description>
         </Parameter>
         <Input id="0" title="Source">
-            <DataVariantReference id="30" package = "runtime"/>
+            <VariantReference id="30" package = "runtime"/>
             <Description>
                 The input image. If the operator is initialized as an in-place operation
                 this image will be blurred.
             </Description>
         </Input>
         <Input id="0" title="Destination">
-            <DataVariantReference id="30" package = "runtime"/>
+            <VariantReference id="30" package = "runtime"/>
             <Description>
                 The image which will contain the blurred version of the image <em>Source</em>.
             </Description>
         </Input>
         <Output id="0" title="Result">
-            <DataVariantReference id="30" package = "runtime"/>
+            <VariantReference id="30" package = "runtime"/>
             <Description>
                 The the blurred image. This is either the destination image (no in-place operation) or
                 the input image (in-place operation).

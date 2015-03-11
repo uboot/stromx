@@ -15,7 +15,6 @@
 */
 
 #include <stromx/runtime/DataContainer.h>
-#include <stromx/runtime/DataVariant.h>
 #include <stromx/runtime/Data.h>
 
 #include <memory>

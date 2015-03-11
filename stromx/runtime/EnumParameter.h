@@ -30,7 +30,7 @@ namespace stromx
         public:
             /** Constructs an enumeration parameter. */
             EnumParameter(const unsigned int id, ParameterGroup* const group = 0)
-              : Parameter(id, DataVariant::ENUM, group)
+              : Parameter(id, Variant::ENUM, group)
             {}
             
             virtual const std::vector<EnumDescription> & descriptions() const { return m_descriptions; }

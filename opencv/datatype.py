@@ -32,7 +32,7 @@ class DataType(object):
         
     def variant(self):
         """
-        Returns the variant of the type, e.g. "runtime::DataVariant::BOOL".
+        Returns the variant of the type, e.g. "runtime::Variant::BOOL".
         """
         raise NotImplementedError()
         
@@ -58,7 +58,7 @@ class Bool(DataType):
         return "runtime::Bool"
         
     def variant(self):
-        return "runtime::DataVariant::BOOL"
+        return "runtime::Variant::BOOL"
         
 class UInt8(DataType):
     """
@@ -68,7 +68,7 @@ class UInt8(DataType):
         return "runtime::UInt8"
         
     def variant(self):
-        return "runtime::DataVariant::UINT_8"
+        return "runtime::Variant::UINT_8"
         
 class Int32(DataType):
     """
@@ -78,7 +78,7 @@ class Int32(DataType):
         return "runtime::Int32"
         
     def variant(self):
-        return "runtime::DataVariant::INT_32"
+        return "runtime::Variant::INT_32"
         
 class UInt32(DataType):
     """
@@ -88,7 +88,7 @@ class UInt32(DataType):
         return "runtime::UInt32"
         
     def variant(self):
-        return "runtime::DataVariant::UINT_32"
+        return "runtime::Variant::UINT_32"
         
 class Float32(DataType):
     """
@@ -98,7 +98,7 @@ class Float32(DataType):
         return "runtime::Float32"
         
     def variant(self):
-        return "runtime::DataVariant::FLOAT_32"
+        return "runtime::Variant::FLOAT_32"
         
 class Float64(DataType):
     """
@@ -108,7 +108,7 @@ class Float64(DataType):
         return "runtime::Float64"
         
     def variant(self):
-        return "runtime::DataVariant::FLOAT_64"
+        return "runtime::Variant::FLOAT_64"
         
 class Enum(DataType):
     """
@@ -118,14 +118,14 @@ class Enum(DataType):
         return "runtime::Enum"
         
     def variant(self):
-        return "runtime::DataVariant::ENUM"
+        return "runtime::Variant::ENUM"
         
 class Image(DataType):
     """
     Stromx runtime::Image type. Uses the implementation cvsupport::Image to cast
     input data to an runtime::Image object.
     """
-    def __init__(self, variant = "runtime::DataVariant::IMAGE"):
+    def __init__(self, variant = "runtime::Variant::IMAGE"):
         self.__variant = variant
         
     def typeId(self):
@@ -142,7 +142,7 @@ class Matrix(DataType):
     Stromx runtime::Image type. Uses the implementation cvsupport::Matrix to cast
     input data to an runtime::Matrix object.
     """
-    def __init__(self, variant = "runtime::DataVariant::MATRIX"):
+    def __init__(self, variant = "runtime::Variant::MATRIX"):
         self.__variant = variant
         
     def typeId(self):
@@ -152,30 +152,30 @@ class Matrix(DataType):
         return "cvsupport::Matrix"
         
     def canBeCreatedFromVariant(self):
-        return "runtime::DataVariant::MATRIX"
+        return "runtime::Variant::MATRIX"
         
     def variant(self):
         return self.__variant
     
 class IntMatrix(Matrix):
     def __init__(self):
-        super(IntMatrix, self).__init__("runtime::DataVariant::INT_MATRIX")
+        super(IntMatrix, self).__init__("runtime::Variant::INT_MATRIX")
     
 class Int32Matrix(Matrix):
     def __init__(self):
-        super(Int32Matrix, self).__init__("runtime::DataVariant::INT_32_MATRIX")
+        super(Int32Matrix, self).__init__("runtime::Variant::INT_32_MATRIX")
     
 class FloatMatrix(Matrix):
     def __init__(self):
-        super(FloatMatrix, self).__init__("runtime::DataVariant::FLOAT_MATRIX")
+        super(FloatMatrix, self).__init__("runtime::Variant::FLOAT_MATRIX")
     
 class Float32Matrix(Matrix):
     def __init__(self):
-        super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_32_MATRIX")
+        super(Float32Matrix, self).__init__("runtime::Variant::FLOAT_32_MATRIX")
     
 class Float64Matrix(Matrix):
     def __init__(self):
-        super(Float32Matrix, self).__init__("runtime::DataVariant::FLOAT_64_MATRIX")
+        super(Float32Matrix, self).__init__("runtime::Variant::FLOAT_64_MATRIX")
     
 class List(DataType):
     """
@@ -188,10 +188,10 @@ class List(DataType):
         return "runtime::List"
         
     def canBeCreatedFromVariant(self):
-        return "runtime::DataVariant::Data"
+        return "runtime::Variant::Data"
         
     def variant(self):
-        return "runtime::DataVariant::LIST"
+        return "runtime::Variant::LIST"
         
     def cast(self, src):
         return "runtime::TypedList<{1}>({0})".format(src,

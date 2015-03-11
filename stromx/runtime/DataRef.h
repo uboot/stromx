@@ -81,9 +81,9 @@ namespace stromx
             virtual const Version & version() const;
             virtual const std::string & type() const;
             virtual const std::string & package() const;
-            virtual const DataVariant & variant() const;
+            virtual const VariantHandle & variant() const;
             
-            bool isVariant(const DataVariant & v) const;
+            bool isVariant(const VariantInterface & v) const;
             virtual Data* clone() const;
             
             virtual void serialize(OutputProvider & out) const;

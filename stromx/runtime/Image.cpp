@@ -107,32 +107,32 @@ namespace stromx
             return depth(pixelType) * numChannels(pixelType);
         }
         
-        const runtime::DataVariant Image::dataVariantFromPixelType(const runtime::Image::PixelType pixelType)
+        const runtime::VariantHandle Image::dataVariantFromPixelType(const runtime::Image::PixelType pixelType)
         {
             switch(pixelType)
             {
             case runtime::Image::NONE:
-                return runtime::DataVariant::IMAGE;
+                return runtime::Variant::IMAGE;
             case runtime::Image::MONO_8:
-                return runtime::DataVariant::MONO_8_IMAGE;
+                return runtime::Variant::MONO_8_IMAGE;
             case runtime::Image::MONO_16:
-                return runtime::DataVariant::MONO_16_IMAGE;
+                return runtime::Variant::MONO_16_IMAGE;
             case runtime::Image::BAYERBG_8:
-                return runtime::DataVariant::BAYERBG_8_IMAGE;
+                return runtime::Variant::BAYERBG_8_IMAGE;
             case runtime::Image::BAYERBG_16:
-                return runtime::DataVariant::BAYERBG_16_IMAGE;
+                return runtime::Variant::BAYERBG_16_IMAGE;
             case runtime::Image::BAYERGB_8:
-                return runtime::DataVariant::BAYERGB_8_IMAGE;
+                return runtime::Variant::BAYERGB_8_IMAGE;
             case runtime::Image::BAYERGB_16:
-                return runtime::DataVariant::BAYERGB_16_IMAGE;
+                return runtime::Variant::BAYERGB_16_IMAGE;
             case runtime::Image::RGB_24:
-                return runtime::DataVariant::RGB_24_IMAGE;
+                return runtime::Variant::RGB_24_IMAGE;
             case runtime::Image::RGB_48:
-                return runtime::DataVariant::RGB_48_IMAGE;
+                return runtime::Variant::RGB_48_IMAGE;
             case runtime::Image::BGR_24:
-                return runtime::DataVariant::BGR_24_IMAGE;
+                return runtime::Variant::BGR_24_IMAGE;
             case runtime::Image::BGR_48:
-                return runtime::DataVariant::BGR_48_IMAGE;
+                return runtime::Variant::BGR_48_IMAGE;
             default:
                 throw runtime::WrongArgument("Unknown pixel type.");  
             }

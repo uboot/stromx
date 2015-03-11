@@ -148,7 +148,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             Description* description = 0;
             
-            description = new Description(INPUT, DataVariant::NONE);
+            description = new Description(INPUT, Variant::NONE);
             description->setTitle("Input");
             inputs.push_back(description);
             
@@ -166,37 +166,37 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
             
-            Parameter* param = new Parameter(THROW_INITIALIZE, DataVariant::BOOL);
+            Parameter* param = new Parameter(THROW_INITIALIZE, Variant::BOOL);
             param->setTitle("Exception on initialize");
             param->setAccessMode(Parameter::NONE_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(THROW_ACTIVATE, DataVariant::BOOL);
+            param = new Parameter(THROW_ACTIVATE, Variant::BOOL);
             param->setTitle("Exception on activate");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(THROW_EXECUTE, DataVariant::BOOL);
+            param = new Parameter(THROW_EXECUTE, Variant::BOOL);
             param->setTitle("Exception on execute");
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(THROW_DEACTIVATE, DataVariant::BOOL);
+            param = new Parameter(THROW_DEACTIVATE, Variant::BOOL);
             param->setTitle("Exception on deactivate");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(THROW_DEINITIALIZE, DataVariant::BOOL);
+            param = new Parameter(THROW_DEINITIALIZE, Variant::BOOL);
             param->setTitle("Exception on deinitialize");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(THROW_PARAMETER, DataVariant::BOOL);
+            param = new Parameter(THROW_PARAMETER, Variant::BOOL);
             param->setTitle("Exception on parameter access");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(PARAMETER, DataVariant::INT_32);
+            param = new Parameter(PARAMETER, Variant::INT_32);
             param->setTitle("Integer parameter");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);

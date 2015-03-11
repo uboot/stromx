@@ -134,7 +134,7 @@ If the package \em Math contained more operators and was built as separate share
 
 Using the presented technique allows to implement single steps of a data processing pipeline in a \em stromx operator. These operators can then be combined arbitrarily to form new processing networks.
 
-It is possible to define custom data types in a similar fashion by subclassing runtime::Data and runtime::DataVariant.
+It is possible to define custom data types in a similar fashion by subclassing runtime::Data and runtime::VariantInterface.
 
 The tutorial \ref camera how to process images orginating from a simulated camera.
 

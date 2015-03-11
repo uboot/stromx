@@ -53,7 +53,7 @@ namespace stromx
                 case WIN_SIZE_X:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -64,7 +64,7 @@ namespace stromx
                 case WIN_SIZE_Y:
                     {
                         const runtime::UInt32 & castedValue = runtime::data_cast<runtime::UInt32>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::UINT_32))
+                        if(! castedValue.variant().isVariant(runtime::Variant::UINT_32))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -75,7 +75,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -133,11 +133,11 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    m_srcDescription = new runtime::Description(SRC, runtime::DataVariant::MONO_IMAGE);
+                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_IMAGE);
                     m_srcDescription->setTitle(L_("Source"));
                     inputs.push_back(m_srcDescription);
                     
-                    m_pointMatrixDescription = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    m_pointMatrixDescription = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     m_pointMatrixDescription->setTitle("Point coordinates");
                     m_pointMatrixDescription->setRows(0);
                     m_pointMatrixDescription->setCols(2);
@@ -158,7 +158,7 @@ namespace stromx
             {
             case(IN_PLACE):
                 {
-                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* pointMatrix = new runtime::MatrixDescription(POINT_MATRIX, runtime::Variant::FLOAT_32_MATRIX);
                     pointMatrix->setTitle(L_("Point coordinates"));
                     pointMatrix->setRows(0);
                     pointMatrix->setCols(2);

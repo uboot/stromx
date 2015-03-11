@@ -60,11 +60,11 @@ namespace stromx
         {
             std::vector<const runtime::Description*> outputs;
 
-            runtime::Description* outputFrames = new runtime::Description(OUTPUT_FRAMES, runtime::DataVariant::RGB_IMAGE);
+            runtime::Description* outputFrames = new runtime::Description(OUTPUT_FRAMES, runtime::Variant::RGB_IMAGE);
             outputFrames->setTitle("Output frames");
             outputs.push_back(outputFrames);
 
-            runtime::Description* outputFrameIndex = new runtime::Description(OUTPUT_FRAME_INDEX, runtime::DataVariant::UINT_32);
+            runtime::Description* outputFrameIndex = new runtime::Description(OUTPUT_FRAME_INDEX, runtime::Variant::UINT_32);
             outputFrameIndex->setTitle("Output image counter");
             outputs.push_back(outputFrameIndex);
 
@@ -287,7 +287,7 @@ namespace stromx
             // Specific parameters
             if(m_cameraMode == RaspiCam::VIDEO)
             {
-                runtime::Parameter* frameRate = new runtime::Parameter(FRAME_RATE,runtime::DataVariant::FLOAT_32);
+                runtime::Parameter* frameRate = new runtime::Parameter(FRAME_RATE,runtime::Variant::FLOAT_32);
                 frameRate->setTitle("Frame rate");
                 frameRate->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                 parameters.push_back(frameRate);

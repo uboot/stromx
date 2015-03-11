@@ -151,7 +151,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* ouput = new Description(OUTPUT, DataVariant::DATA);
+            Description* ouput = new Description(OUTPUT, Variant::DATA);
             ouput->setTitle("Output");
             outputs.push_back(ouput);
             
@@ -162,7 +162,7 @@ namespace stromx
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            Parameter* url = new Parameter(URL, DataVariant::STRING);
+            Parameter* url = new Parameter(URL, Variant::STRING);
             url->setTitle("URL");
             url->setAccessMode(runtime::Parameter::INITIALIZED_WRITE);
             parameters.push_back(url);

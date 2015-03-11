@@ -50,7 +50,7 @@ namespace stromx
                 case CLOCKWISE:
                     {
                         const runtime::Bool & castedValue = runtime::data_cast<runtime::Bool>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::BOOL))
+                        if(! castedValue.variant().isVariant(runtime::Variant::BOOL))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -60,7 +60,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -93,7 +93,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_clockwiseParameter = new runtime::Parameter(CLOCKWISE, runtime::DataVariant::BOOL);
+                    m_clockwiseParameter = new runtime::Parameter(CLOCKWISE, runtime::Variant::BOOL);
                     m_clockwiseParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_clockwiseParameter->setTitle(L_("Output orientation"));
                     parameters.push_back(m_clockwiseParameter);
@@ -113,7 +113,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::DataVariant::MATRIX);
+                    m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::MATRIX);
                     m_curveDescription->setTitle("Input points");
                     m_curveDescription->setRows(0);
                     m_curveDescription->setCols(2);
@@ -134,7 +134,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::DataVariant::MATRIX);
+                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::MATRIX);
                     outCurve->setTitle(L_("Convex hull"));
                     outCurve->setRows(0);
                     outCurve->setCols(2);

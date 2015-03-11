@@ -40,7 +40,7 @@ namespace stromx
         protected:
             virtual bool value() const { return true; }
             virtual std::string str() const { return "1"; }
-            virtual DataVariant variant() const { return DataVariant::BOOL; }
+            virtual const VariantInterface & variant() const { return Variant::BOOL; }
         };
     }
 }

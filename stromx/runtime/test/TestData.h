@@ -26,7 +26,7 @@ namespace stromx
         class TestData : public Data
         {
         public:
-            static const DataVariant TEST_DATA;
+            static const VariantHandle TEST_DATA;
             
             TestData() : m_value(0) { wasDestructed = false; }
             explicit TestData(const int value) : m_value(value) { wasDestructed = false; }
@@ -36,7 +36,7 @@ namespace stromx
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual const DataVariant & variant() const { return TEST_DATA; }
+            virtual const VariantHandle & variant() const { return TEST_DATA; }
             
             virtual Data* clone() const { return new TestData; }
             
@@ -61,7 +61,7 @@ namespace stromx
         class data_traits<TestData>
         {
         public:
-            static const DataVariant & variant() { return TestData::TEST_DATA; }
+            static const VariantHandle & variant() { return TestData::TEST_DATA; }
         };
     }
 }

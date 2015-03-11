@@ -15,6 +15,7 @@
 */
 
 #include <stromx/runtime/Image.h>
+#include <stromx/runtime/Version.h>
 
 #include <boost/python.hpp>
 
@@ -40,7 +41,7 @@ namespace
             return this->get_override("package")();
         }
         
-        const DataVariant & variant() const
+        const VariantHandle & variant() const
         {
             return this->get_override("variant")();
         }

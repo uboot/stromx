@@ -15,6 +15,7 @@
 #    This file will define the following variables:
 #      - stromx_RUNTIME_LIB          : The stromx runtime library
 #      - stromx_CVSUPPORT_LIB        : Image utilities package based on OpenCV
+#      - stromx_CVCALIB3D_LIB        : The stromx package for the OpenCV 'calib3d' module
 #      - stromx_CVCORE_LIB           : The stromx package for the OpenCV 'core' module
 #      - stromx_CVHIGHGUI_LIB        : The stromx package for the OpenCV 'highgui' module
 #      - stromx_CVIMGPROC_LIB        : The stromx package for the OpenCV 'imgproc' module
@@ -50,6 +51,7 @@ link_directories(${stromx_LIB_DIR})
 set(stromx_LIBS "")
 if(WIN32)
     set(stromx_RUNTIME_LIB debug stromx_runtime.lib optimized stromx_runtime.lib)
+    set(stromx_CVCALIB3D_LIB debug stromx_cvcore.lib optimized stromx_cvcalib3d.lib)
     set(stromx_CVCORE_LIB debug stromx_cvcore.lib optimized stromx_cvcore.lib)
     set(stromx_CVHIGHGUI_LIB debug stromx_cvhighgui.lib optimized stromx_cvhighgui.lib)
     set(stromx_CVIMGPROC_LIB debug stromx_cvimgproc.lib optimized stromx_cvimgproc.lib)
@@ -57,6 +59,7 @@ if(WIN32)
     set(stromx_TEST_LIB debug stromx_cvsupport.lib optimized stromx_test.lib)
 else()
     set(stromx_RUNTIME_LIB stromx_runtime)
+    set(stromx_CVCORE_LIB stromx_cvcalib3d)
     set(stromx_CVCORE_LIB stromx_cvcore)
     set(stromx_CVHIGHGUI_LIB stromx_cvhighgui)
     set(stromx_CVIMGPROC_LIB stromx_cvimgproc)

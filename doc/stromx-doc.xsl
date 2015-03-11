@@ -5,7 +5,7 @@
 
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:key name="variantId" match="DataVariant" use="@id"/>
+  <xsl:key name="variantId" match="Variant" use="@id"/>
 
   <xsl:template match="/">
     <html>
@@ -16,8 +16,8 @@
           <h1>
             <xsl:value-of select="@title"/></h1>
           <xsl:apply-templates select="Description"/>
-          <h2>Data variants</h2>
-          <xsl:for-each select="DataVariant">
+          <h2>Variants</h2>
+          <xsl:for-each select="Variant">
             <xsl:variable name="filename" select="concat('variant_',@id,'.html')" />
             <p>
             <a>
@@ -41,7 +41,7 @@
                   <p>
                     Parent:
                     <xsl:for-each select="Parent">
-                      <xsl:apply-templates select="DataVariantReference"/>
+                      <xsl:apply-templates select="VariantReference"/>
                     </xsl:for-each>
                   </p>
                   <xsl:apply-templates select="Description"/>
@@ -77,7 +77,7 @@
                   <xsl:for-each select="Parameter">
                     <h3>
                       <xsl:value-of select="@title"/>
-                      (<xsl:apply-templates select="DataVariantReference"/>)
+                      (<xsl:apply-templates select="VariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
                     <xsl:apply-templates select="EnumValue"/>
@@ -87,7 +87,7 @@
                   <xsl:for-each select="Input">
                     <h3>
                       <xsl:value-of select="@title"/>
-                      (<xsl:apply-templates select="DataVariantReference"/>)
+                      (<xsl:apply-templates select="VariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
                     <xsl:apply-templates select="EnumValue"/>
@@ -97,7 +97,7 @@
                   <xsl:for-each select="Output">
                     <h3>
                       <xsl:value-of select="@title"/>
-                      (<xsl:apply-templates select="DataVariantReference"/>)
+                      (<xsl:apply-templates select="VariantReference"/>)
                     </h3>
                     <xsl:apply-templates select="Description"/>
                     <xsl:apply-templates select="EnumValue"/>
@@ -122,7 +122,7 @@
     <xsl:apply-templates select="Description"/>
   </xsl:template>
 
-  <xsl:template match="DataVariantReference">
+  <xsl:template match="VariantReference">
     <xsl:variable name="variantId" select="@id"/>
     <xsl:variable name="packageId" select="@package"/>
     <xsl:variable name="packageFile" select="concat(@package,'.xml')"/>

@@ -53,7 +53,7 @@ namespace stromx
                 case CAMERA_MATRIX:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -64,7 +64,7 @@ namespace stromx
                 case DIST_COEFFS:
                     {
                         const runtime::Matrix & castedValue = runtime::data_cast<runtime::Matrix>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_MATRIX))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_MATRIX))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -75,7 +75,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -108,14 +108,14 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_cameraMatrixParameter = new runtime::MatrixParameter(CAMERA_MATRIX, runtime::DataVariant::FLOAT_MATRIX);
+                    m_cameraMatrixParameter = new runtime::MatrixParameter(CAMERA_MATRIX, runtime::Variant::FLOAT_MATRIX);
                     m_cameraMatrixParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_cameraMatrixParameter->setTitle(L_("Camera matrix"));
                     m_cameraMatrixParameter->setRows(3);
                     m_cameraMatrixParameter->setCols(3);
                     parameters.push_back(m_cameraMatrixParameter);
                     
-                    m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::DataVariant::FLOAT_MATRIX);
+                    m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
                     m_distCoeffsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_distCoeffsParameter->setTitle(L_("Distortion coefficients"));
                     m_distCoeffsParameter->setRows(4);
@@ -137,7 +137,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::DataVariant::FLOAT_32_MATRIX);
+                    m_srcDescription = new runtime::MatrixDescription(SRC, runtime::Variant::FLOAT_32_MATRIX);
                     m_srcDescription->setTitle("Source");
                     m_srcDescription->setRows(0);
                     m_srcDescription->setCols(2);
@@ -158,7 +158,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
                     dst->setRows(0);
                     dst->setCols(2);

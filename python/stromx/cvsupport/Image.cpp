@@ -14,8 +14,6 @@
 *  limitations under the License.
 */
 
-#include <stromx/runtime/DataContainer.h>
-#include <stromx/runtime/DataVariant.h>
 #include <stromx/runtime/Data.h>
 #include <stromx/runtime/Image.h>
 

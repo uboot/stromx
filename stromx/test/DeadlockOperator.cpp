@@ -132,7 +132,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             Description* description = 0;
             
-            description = new Description(INPUT, DataVariant::UINT_32);
+            description = new Description(INPUT, Variant::UINT_32);
             description->setTitle("Input");
             inputs.push_back(description);
             
@@ -144,7 +144,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             Description* description = 0;
             
-            description = new Description(OUTPUT, DataVariant::UINT_32);
+            description = new Description(OUTPUT, Variant::UINT_32);
             description->setTitle("Output");
             outputs.push_back(description);
             
@@ -155,17 +155,17 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
             
-            Parameter* param = new Parameter(LOCK_PARAMETERS, DataVariant::BOOL);
+            Parameter* param = new Parameter(LOCK_PARAMETERS, Variant::BOOL);
             param->setTitle("Deadlock parameter access");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(LOCK_DATA, DataVariant::BOOL);
+            param = new Parameter(LOCK_DATA, Variant::BOOL);
             param->setTitle("Deadlock data access");
             param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
-            param = new Parameter(DUMMY, DataVariant::UINT_8);
+            param = new Parameter(DUMMY, Variant::UINT_8);
             param->setTitle("Dummy parameter");
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);

@@ -56,7 +56,7 @@ namespace stromx
                 case AEPS:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -67,7 +67,7 @@ namespace stromx
                 case DIST_TYPE:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -78,7 +78,7 @@ namespace stromx
                 case REPS:
                     {
                         const runtime::Float64 & castedValue = runtime::data_cast<runtime::Float64>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::FLOAT_64))
+                        if(! castedValue.variant().isVariant(runtime::Variant::FLOAT_64))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -89,7 +89,7 @@ namespace stromx
                 case DATA_FLOW:
                     {
                         const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::DataVariant::ENUM))
+                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
                         {
                             throw runtime::WrongParameterType(parameter(id), *this);
                         }
@@ -160,7 +160,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::DataVariant::MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::MATRIX);
                     m_pointsDescription->setTitle("Point set");
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);
@@ -181,7 +181,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* line = new runtime::MatrixDescription(LINE, runtime::DataVariant::FLOAT_32_MATRIX);
+                    runtime::MatrixDescription* line = new runtime::MatrixDescription(LINE, runtime::Variant::FLOAT_32_MATRIX);
                     line->setTitle(L_("Line (\u03C1, \u03B8)"));
                     line->setRows(1);
                     line->setCols(3);

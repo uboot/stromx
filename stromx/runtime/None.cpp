@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Version.h"
 
 namespace stromx
 {

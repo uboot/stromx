@@ -24,7 +24,7 @@ namespace stromx
     namespace runtime
     {   
         ParameterGroup::ParameterGroup(const unsigned int id, ParameterGroup*const group)
-          : Parameter(id, DataVariant::NONE, group)
+          : Parameter(id, Variant::NONE, group)
         {
             setAccessMode(NO_ACCESS);
         }

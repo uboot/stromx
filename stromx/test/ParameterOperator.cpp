@@ -143,11 +143,11 @@ namespace stromx
             std::vector<const Description*> inputs;
             Description* description = 0;
             
-            description = new Description(INPUT_1, DataVariant::NONE);
+            description = new Description(INPUT_1, Variant::NONE);
             description->setTitle("Input 1");
             inputs.push_back(description);
             
-            description = new Description(INPUT_2, DataVariant::NONE);
+            description = new Description(INPUT_2, Variant::NONE);
             description->setTitle("Input 2");
             inputs.push_back(description);
             
@@ -159,11 +159,11 @@ namespace stromx
             std::vector<const Description*> outputs;
             Description* description = 0;
             
-            description = new Description(OUTPUT_1, DataVariant::NONE);
+            description = new Description(OUTPUT_1, Variant::NONE);
             description->setTitle("Output 1");
             outputs.push_back(description);
             
-            description = new Description(OUTPUT_2, DataVariant::NONE);
+            description = new Description(OUTPUT_2, Variant::NONE);
             description->setTitle("Output 2");
             outputs.push_back(description);
             
@@ -197,29 +197,29 @@ namespace stromx
             enumParam->add(EnumDescription(Enum(2), "Choice 2"));
             parameters.push_back(enumParam);
             
-            Parameter* boolParam = new Parameter(BOOL_PARAM, DataVariant::BOOL);
+            Parameter* boolParam = new Parameter(BOOL_PARAM, Variant::BOOL);
             boolParam->setTitle("Boolean parameter");
             boolParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(boolParam);
             
-            Parameter* matrixParam = new MatrixParameter(MATRIX_PARAM, DataVariant::FLOAT_32_MATRIX);
+            Parameter* matrixParam = new MatrixParameter(MATRIX_PARAM, Variant::FLOAT_32_MATRIX);
             matrixParam->setTitle("Matrix parameter");
             matrixParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(matrixParam);
             
-            MatrixParameter* intMatrixParam = new MatrixParameter(INT_MATRIX_PARAM, DataVariant::UINT_32_MATRIX);
+            MatrixParameter* intMatrixParam = new MatrixParameter(INT_MATRIX_PARAM, Variant::UINT_32_MATRIX);
             intMatrixParam->setTitle("Integer matrix parameter");
             intMatrixParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             intMatrixParam->setRows(1);
             intMatrixParam->setCols(2);
             parameters.push_back(intMatrixParam);
             
-            Parameter* triggerValueParam = new Parameter(TRIGGER_VALUE_PARAM, DataVariant::BOOL);
+            Parameter* triggerValueParam = new Parameter(TRIGGER_VALUE_PARAM, Variant::BOOL);
             triggerValueParam->setTitle("Trigger value");
             triggerValueParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(triggerValueParam);
             
-            Parameter* triggerParam = new Parameter(TRIGGER_PARAM, DataVariant::TRIGGER);
+            Parameter* triggerParam = new Parameter(TRIGGER_PARAM, Variant::TRIGGER);
             triggerParam->setTitle("Trigger value");
             triggerParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(triggerParam);
@@ -231,7 +231,7 @@ namespace stromx
         {
             std::vector<const Parameter*> parameters;
             
-            Parameter* initializeParam = new Parameter(INITIALIZE_PARAM, DataVariant::UINT_32);
+            Parameter* initializeParam = new Parameter(INITIALIZE_PARAM, Variant::UINT_32);
             initializeParam->setTitle("Initialize parameter");
             initializeParam->setAccessMode(Parameter::NONE_WRITE);
             parameters.push_back(initializeParam);

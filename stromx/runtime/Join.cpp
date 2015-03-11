@@ -151,7 +151,7 @@ namespace stromx
         const std::vector<const Description*> Join::setupOutputs()
         {
             std::vector<const Description*> outputs;
-            Description* output = new Description(OUTPUT, DataVariant::DATA);
+            Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             outputs.push_back(output);
             
@@ -164,7 +164,7 @@ namespace stromx
             
             for(unsigned int i = 0; i < (unsigned int)(m_numInputs); ++i)
             {
-                Description* input = new Description(i, DataVariant::DATA);
+                Description* input = new Description(i, Variant::DATA);
                 input->setTitle("Input " + boost::lexical_cast<std::string>(i));
                 inputs.push_back(input);
             }
