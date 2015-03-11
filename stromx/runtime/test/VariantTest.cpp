@@ -58,19 +58,9 @@ namespace stromx
             CPPUNIT_ASSERT(Variant::IMAGE.isVariant(Variant::MATRIX));
         }
         
-        void VariantTest::testUInt8IsIntAndUInt()
-        {
-            CPPUNIT_ASSERT(Variant::UINT_8.isVariant(Variant::INT && Variant::UINT));
-        }
-        
         void VariantTest::testUInt8IsIntOrImage()
         {
             CPPUNIT_ASSERT(Variant::UINT_8.isVariant(Variant::INT || Variant::IMAGE));
-        }
-        
-        void VariantTest::testImageIsImageAndMatrix()
-        {
-            CPPUNIT_ASSERT(Variant::IMAGE.isVariant(Variant::IMAGE && Variant::MATRIX));
         }
         
         void VariantTest::testInt32MatrixIsInt32MatrixOrFloat32Matrix()
