@@ -19,6 +19,7 @@ set (SOURCES
     GpioTrigger.cpp
     Raspi.cpp
     RaspiCam.cpp
+    RaspiStillCam.cpp
     ReadGpio.cpp
     WriteGpio.cpp
     impl/Gpio.cpp
