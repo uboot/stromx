@@ -21,6 +21,7 @@
 #include <stromx/runtime/Registry.h>
 #include <stromx/raspi/Raspi.h>
 #include <stromx/raspi/RaspiCam.h>
+#include <stromx/raspi/RaspiStillCam.h>
 #include <stromx/raspi/GpioTrigger.h>
 #include <stromx/raspi/ReadGpio.h>
 #include <stromx/raspi/WriteGpio.h>
@@ -33,6 +34,7 @@ BOOST_PYTHON_MODULE(libraspi)
     def("register", stromxRaspiRegister);
     
     stromx::python::exportOperatorKernel<RaspiCam>("RaspCam");
+    stromx::python::exportOperatorKernel<RaspiCam>("RaspStillCam");
     stromx::python::exportOperatorKernel<GpioTrigger>("GpioTrigger");
     stromx::python::exportOperatorKernel<ReadGpio>("ReadGpio");
     stromx::python::exportOperatorKernel<WriteGpio>("WriteGpio");
