@@ -19,6 +19,8 @@
 
 #include "stromx/runtime/OperatorKernel.h"
 
+#include <deque>
+
 namespace stromx
 {
     namespace runtime
@@ -32,9 +34,10 @@ namespace stromx
                 INPUT
             };
             
-            enum ParameterId
+            enum OutputId
             {
-                OUTPUT
+                OUTPUT_DATA,
+                OUTPUT_NUM_ITEMS
             };
             
             Iterate();
@@ -43,6 +46,8 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);
+            virtual void activate();
+            virtual void deactivate();
             
         private:
             static const std::vector<const Description*> setupInputs();
@@ -51,6 +56,8 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const Version VERSION;
+            
+            std::deque<DataContainer> m_storedItems;
         };
     }
 }

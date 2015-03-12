@@ -209,6 +209,42 @@ namespace stromx
         };  
         /** \endcond */
         
+        /** \brief Signed 64-bit integer */
+        typedef Primitive<int64_t, int64_t> Int64;
+        template<>
+        STROMX_RUNTIME_API const VariantHandle & Int64::variant() const;
+        template <>
+        STROMX_RUNTIME_API void Int64::serialize(OutputProvider & out) const;
+        template <>
+        STROMX_RUNTIME_API void Int64::deserialize(InputProvider & in, const Version & version);
+        
+        /** \cond */
+        template <>
+        class data_traits<Int64>
+        {
+        public:
+            static const VariantHandle & variant() { return Variant::INT_64; }
+        };  
+        /** \endcond */
+        
+        /** \brief Unsigned 64-bit integer */
+        typedef Primitive<uint64_t, uint64_t> UInt64;
+        template<>
+        STROMX_RUNTIME_API const VariantHandle & UInt64::variant() const;
+        template <>
+        STROMX_RUNTIME_API void UInt64::serialize(OutputProvider & out) const;
+        template <>
+        STROMX_RUNTIME_API void UInt64::deserialize(InputProvider & in, const Version & version);
+        
+        /** \cond */
+        template <>
+        class data_traits<UInt64>
+        {
+        public:
+            static const VariantHandle & variant() { return Variant::UINT_64; }
+        };  
+        /** \endcond */
+        
         /** \brief Single precision floating point number */
         typedef Primitive<double, float> Float32;
         template<>

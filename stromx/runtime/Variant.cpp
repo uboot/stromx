@@ -35,6 +35,8 @@ namespace stromx
         const VariantHandle Variant::UINT_16 = VariantHandle(new Variant(UINT_16_ID));
         const VariantHandle Variant::INT_32 = VariantHandle(new Variant(INT_32_ID));
         const VariantHandle Variant::UINT_32 = VariantHandle(new Variant(UINT_32_ID));
+        const VariantHandle Variant::INT_64 = VariantHandle(new Variant(INT_64_ID));
+        const VariantHandle Variant::UINT_64 = VariantHandle(new Variant(UINT_64_ID));
         const VariantHandle Variant::FLOAT = VariantHandle(new Variant(FLOAT_ID));
         const VariantHandle Variant::FLOAT_32 = VariantHandle(new Variant(FLOAT_32_ID));
         const VariantHandle Variant::FLOAT_64 = VariantHandle(new Variant(FLOAT_64_ID));

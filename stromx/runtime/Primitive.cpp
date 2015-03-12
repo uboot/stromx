@@ -209,6 +209,56 @@ namespace stromx
         }
         
         template<>
+        const VariantHandle & Int64::variant() const { return Variant::INT_64; }
+        template<>
+        const std::string Int64::TYPE = "Int64";
+        template<>
+        const Int64 Int64::MIN = Int64(INT64_MIN);
+        template<>
+        const Int64 Int64::MAX = Int64(INT64_MAX);
+        template<>
+        const std::string Int64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
+        template<>
+        const Version Int64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        
+        template <>
+        void Int64::serialize(OutputProvider & out) const
+        {
+            out.text() << m_value;
+        }
+        
+        template <>
+        void Int64::deserialize(InputProvider & in, const Version &)
+        {
+            in.text() >> m_value;
+        }
+        
+        template<>
+        const VariantHandle & UInt64::variant() const { return Variant::UINT_64; }
+        template<>
+        const std::string UInt64::TYPE = "UInt64";
+        template<>
+        const UInt64 UInt64::MIN = UInt64(0);
+        template<>
+        const UInt64 UInt64::MAX = UInt64(UINT64_MAX);
+        template<>
+        const std::string UInt64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
+        template<>
+        const Version UInt64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        
+        template <>
+        void UInt64::serialize(OutputProvider & out) const
+        {
+            out.text() << m_value;
+        }
+        
+        template <>
+        void UInt64::deserialize(InputProvider & in, const Version &)
+        {
+            in.text() >> m_value;
+        }
+        
+        template<>
         const VariantHandle & Float32::variant() const { return Variant::FLOAT_32; }
         template<>
         const std::string Float32::TYPE = "Float32";

@@ -59,6 +59,8 @@ void exportPrimitive()
     primitive<unsigned int, UInt16>("UInt16");
     primitive<int, Int32>("Int32");
     primitive<unsigned int, UInt32>("UInt32");
+    primitive<int, Int64>("Int64");
+    primitive<unsigned int, UInt64>("UInt64");
     primitive<double, Float32>("Float32");
     primitive<float, Float64>("Float64");
 }

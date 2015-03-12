@@ -69,6 +69,12 @@ namespace stromx
             /** An UInt32 object. */
             const static VariantHandle UINT_32;
             
+            /** An Int64 object. */
+            const static VariantHandle INT_64;
+            
+            /** An UInt64 object. */
+            const static VariantHandle UINT_64;
+            
             /** Any of Float32 or Float64. */
             const static VariantHandle FLOAT;
             
@@ -191,6 +197,8 @@ namespace stromx
                 UINT_16_ID,
                 INT_32_ID,
                 UINT_32_ID,
+                INT_64_ID,
+                UINT_64_ID,
                 FLOAT_ID,
                 FLOAT_32_ID,
                 FLOAT_64_ID,

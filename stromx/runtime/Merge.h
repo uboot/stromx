@@ -19,17 +19,22 @@
 
 #include "stromx/runtime/OperatorKernel.h"
 
+#include <boost/assert.hpp>
+
 namespace stromx
 {
     namespace runtime
     {
+        class List;
+        
         /** \brief Merges over the entries of an input list. */
         class STROMX_RUNTIME_API Merge : public OperatorKernel
         {
         public:
             enum InputId
             {
-                INPUT
+                INPUT_DATA,
+                INPUT_NUM_ITEMS
             };
             
             enum ParameterId
@@ -43,6 +48,8 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);
+            virtual void activate();
+            virtual void deactivate();
             
         private:
             static const std::vector<const Description*> setupInputs();
@@ -51,6 +58,9 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const Version VERSION;
+            
+            uint64_t m_numItems;
+            List* m_list;
         };
     }
 }

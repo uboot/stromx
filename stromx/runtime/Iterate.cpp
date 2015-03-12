@@ -19,9 +19,13 @@
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/List.h"
 #include "stromx/runtime/Locale.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/RecycleAccess.h"
+
+#include <boost/assert.hpp>
 
 namespace stromx
 {
@@ -31,7 +35,8 @@ namespace stromx
         const std::string Iterate::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
         const Version Iterate::VERSION(0, 1, 0);
         
-        Iterate::Iterate() : OperatorKernel(TYPE, PACKAGE, VERSION)
+        Iterate::Iterate()
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs())
         {
         }
         
@@ -53,18 +58,63 @@ namespace stromx
             }
         }
         
+        void Iterate::activate()
+        {
+            BOOST_ASSERT(m_storedItems.size() == 0);
+        }
+        
+        void Iterate::deactivate()
+        {
+            m_storedItems.clear();
+        }
+        
         void Iterate::execute(DataProvider& provider)
         {
-            Id2DataPair input(INPUT);
+            if (m_storedItems.size() == 0)
+            {
+                RecycleAccess recycle;
+                {
+                    Id2DataPair input(INPUT);
+                    provider.receiveInputData(input);
+                    recycle.add(input.data());
+                }
+                Data* data = recycle.get();
+                List* list = data_cast<List>(data);
+                
+                if (list == 0)
+                    throw InputError(INPUT, *this, "Input data must be a 'List' object.");
+                
+                for (std::vector<Data*>::iterator iter = list->content().begin();
+                     iter != list->content().end(); ++iter)
+                {
+                    m_storedItems.push_back(DataContainer(*iter));
+                }
+                
+                uint64_t size = list->content().size();
+                list->content().clear();
+                delete list;
+                
+                DataContainer outNumItems(new UInt64(size));
+                Id2DataPair dataMapper(OUTPUT_NUM_ITEMS, outNumItems);
+                
+                provider.sendOutputData(dataMapper);
+            }
             
-            provider.receiveInputData(input);
+            if (m_storedItems.size() != 0)
+            {
+                DataContainer outData = m_storedItems.front();
+                Id2DataPair dataMapper(OUTPUT_DATA, outData);
+                m_storedItems.pop_front();
+                
+                provider.sendOutputData(dataMapper);
+            }
         }
         
         const std::vector<const Description*> Iterate::setupInputs()
         {
             std::vector<const Description*> inputs;
             Description* input = new Description(INPUT, Variant::LIST);
-            input->setTitle(L_("Input"));
+            input->setTitle(L_("List"));
             inputs.push_back(input);
             
             return inputs;
@@ -74,9 +124,13 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
-            output->setTitle(L_("List elements"));
-            outputs.push_back(output);
+            Description* data = new Description(OUTPUT_DATA, Variant::DATA);
+            data->setTitle(L_("List items"));
+            outputs.push_back(data);
+            
+            Description* index = new Description(OUTPUT_NUM_ITEMS, Variant::UINT_64);
+            index->setTitle(L_("Number of list items"));
+            outputs.push_back(index);
             
             return outputs;
         }

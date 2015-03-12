@@ -34,11 +34,13 @@ void exportVariant()
     in_Variant.attr("INT") = Variant::INT; 
     in_Variant.attr("INT_8") = Variant::INT_8;
     in_Variant.attr("INT_16") = Variant::INT_16; 
-    in_Variant.attr("INT_32") = Variant::INT_32; 
+    in_Variant.attr("INT_32") = Variant::INT_32;  
+    in_Variant.attr("INT_64") = Variant::INT_64;
     in_Variant.attr("UINT") = Variant::UINT;
     in_Variant.attr("UINT_8") = Variant::UINT_8;
     in_Variant.attr("UINT_16") = Variant::UINT_16;
     in_Variant.attr("UINT_32") = Variant::UINT_32;
+    in_Variant.attr("UINT_64") = Variant::UINT_64;
     in_Variant.attr("FLOAT") = Variant::FLOAT; 
     in_Variant.attr("FLOAT_32") = Variant::FLOAT_32; 
     in_Variant.attr("FLOAT_64") = Variant::FLOAT_64; 

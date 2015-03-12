@@ -20,6 +20,7 @@
 
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/List.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/test/TestData.h"
@@ -35,12 +36,72 @@ namespace stromx
         void IterateTest::setUp ( void )
         {
             m_operator = new runtime::OperatorTester(new Iterate());
+            
+            m_operator->initialize();
+            m_operator->activate();
         }
         
         void IterateTest::testExecute()
         {
-            m_operator->initialize();
-            m_operator->activate();
+            for (std::size_t i = 0; i < 2; ++i)
+            {
+                Data* data1 = new None();
+                Data* data2 = new None();
+                {
+                    List* list = new List();
+                    list->content().push_back(data1);
+                    list->content().push_back(data2);
+                    DataContainer in(list);
+                    
+                    m_operator->setInputData(Iterate::INPUT, in);
+                }
+                
+                DataContainer outData, outNumItems;
+                outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
+                outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
+                m_operator->clearOutputData(Iterate::OUTPUT_DATA);
+                m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+                
+                CPPUNIT_ASSERT_EQUAL((const Data*)(data1), &ReadAccess<>(outData)());
+                CPPUNIT_ASSERT_EQUAL(UInt64(2), ReadAccess<UInt64>(outNumItems)());
+                
+                outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
+                m_operator->clearOutputData(Iterate::OUTPUT_DATA);
+                
+                CPPUNIT_ASSERT_EQUAL((const Data*)(data2), &ReadAccess<>(outData)());
+            }
+        }
+        
+        void IterateTest::testExecuteEmptyList()
+        {
+            {
+                List* list = new List();
+                DataContainer in(list);
+                
+                m_operator->setInputData(Iterate::INPUT, in);
+            }
+            
+            DataContainer outNumItems;
+            outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            
+            CPPUNIT_ASSERT_EQUAL(UInt64(0), ReadAccess<UInt64>(outNumItems)());
+            
+            {
+                List* list = new List();
+                list->content().push_back(new None());
+                DataContainer in(list);
+                
+                m_operator->setInputData(Iterate::INPUT, in);
+            }
+            
+            DataContainer outData;
+            outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
+            outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            m_operator->clearOutputData(Iterate::OUTPUT_DATA);
+            m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            
+            CPPUNIT_ASSERT_EQUAL(UInt64(1), ReadAccess<UInt64>(outNumItems)());
         }
         
         void IterateTest::tearDown ( void )

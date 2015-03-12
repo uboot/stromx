@@ -30,6 +30,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (MergeTest);
             CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testExecuteEmptyList);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -40,6 +41,7 @@ namespace stromx
 
             protected:
                 void testExecute();
+                void testExecuteEmptyList();
                 
             private:
                 runtime::OperatorTester* m_operator;
