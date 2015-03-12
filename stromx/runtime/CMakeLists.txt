@@ -72,6 +72,7 @@ set(SOURCES
     Try.cpp
     Variant.cpp
     VariantComposite.cpp
+    VariantHandle.cpp
     VariantInterface.cpp
     Version.cpp
 )

@@ -15,6 +15,7 @@
 */
 
 #include <stromx/runtime/VariantInterface.h>
+#include <stromx/runtime/VariantHandle.h>
 
 #include <boost/python.hpp>
 
@@ -49,10 +50,21 @@ namespace
 
 void exportVariantInterface()
 {         
+    scope in_VariantInterface =
     class_<VariantInterfaceWrap, boost::noncopyable>("VariantInterface", no_init)
         .def("title", pure_virtual(&VariantInterface::title))
         .def("isVariant", pure_virtual(&VariantInterface::isVariant))
         .def("id", pure_virtual(&VariantInterface::id))
         .def("package", pure_virtual(&VariantInterface::package), return_value_policy<copy_const_reference>())
+        .def("compositeType", &VariantInterface::compositeType)
+        .def("lhs", &VariantInterface::lhs)
+        .def("rhs", &VariantInterface::rhs)
+    ;
+    
+    
+    enum_<VariantInterface::CompositeType>("CompositeType")
+        .value("NO_COMPOSITE", VariantInterface::NO_COMPOSITE)
+        .value("AND_COMPOSITE", VariantInterface::AND_COMPOSITE)
+        .value("OR_COMPOSITE", VariantInterface::OR_COMPOSITE)
     ;
 }

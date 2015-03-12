@@ -42,9 +42,9 @@ namespace stromx
         public:
             enum CompositeType
             {
-                NONE,
-                AND,
-                OR
+                NO_COMPOSITE,
+                AND_COMPOSITE,
+                OR_COMPOSITE
             };
             
             /** Returns the integer ID of this data variant. */
@@ -66,7 +66,7 @@ namespace stromx
              * The composite type if this variant is a logical composition of two 
              * other variants.
              */
-            virtual CompositeType compositeType() const { return NONE; }
+            virtual CompositeType compositeType() const { return NO_COMPOSITE; }
             
             /** The left hand side of the composition. */
             virtual const VariantHandle lhs() const;

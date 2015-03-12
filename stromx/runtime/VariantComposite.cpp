@@ -41,9 +41,9 @@ namespace stromx
         { 
             switch (compositeType())
             {
-            case VariantInterface::AND:
+            case VariantInterface::AND_COMPOSITE:
                 return lhs().isVariant(variant) || rhs().isVariant(variant);
-            case VariantInterface::OR:
+            case VariantInterface::OR_COMPOSITE:
                 return lhs().isVariant(variant) && rhs().isVariant(variant);
             default:
                 BOOST_ASSERT(false);
@@ -59,9 +59,9 @@ namespace stromx
         {
             switch (compositeType())
             {
-            case VariantInterface::AND:
+            case VariantInterface::AND_COMPOSITE:
                 return lhs().title() + L_(" and ") + rhs().title();
-            case VariantInterface::OR:
+            case VariantInterface::OR_COMPOSITE:
                 return lhs().title() + L_(" or ") + rhs().title();
             default:
                 BOOST_ASSERT(false);
@@ -70,12 +70,12 @@ namespace stromx
             
         const VariantHandle operator&&(const VariantHandle & lhs, const VariantHandle & rhs)
         {
-            return VariantHandle(new VariantComposite(VariantInterface::AND, lhs, rhs));
+            return VariantHandle(new VariantComposite(VariantInterface::AND_COMPOSITE, lhs, rhs));
         }
         
         const VariantHandle operator||(const VariantHandle & lhs, const VariantHandle & rhs)
         {
-            return VariantHandle(new VariantComposite(VariantInterface::OR, lhs, rhs));
+            return VariantHandle(new VariantComposite(VariantInterface::OR_COMPOSITE, lhs, rhs));
         }
     }
 }

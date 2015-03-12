@@ -170,12 +170,12 @@ namespace stromx
         
         bool Variant::isVariant(const VariantInterface& variant) const
         {
-            if (variant.compositeType() == VariantInterface::AND)
+            if (variant.compositeType() == VariantInterface::AND_COMPOSITE)
             {
                 return isVariant(variant.lhs()) && isVariant(variant.rhs());
             }
             
-            if (variant.compositeType() == VariantInterface::OR)
+            if (variant.compositeType() == VariantInterface::OR_COMPOSITE)
             {
                 return isVariant(variant.lhs()) || isVariant(variant.rhs());
             }

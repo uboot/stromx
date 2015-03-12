@@ -82,6 +82,7 @@ set(SOURCES
     ../Variant.cpp
     ../VariantComposite.cpp
     ../VariantInterface.cpp
+    ../VariantHandle.cpp
     ../Version.cpp
     ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
