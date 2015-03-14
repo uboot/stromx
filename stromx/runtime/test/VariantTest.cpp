@@ -53,6 +53,22 @@ namespace stromx
             CPPUNIT_ASSERT(! Variant::UINT.isVariant(Variant::UINT_32));
         }
         
+        void VariantTest::testInt64Types()
+        {
+            CPPUNIT_ASSERT(Variant::UINT_64.isVariant(Variant::UINT_64));
+            CPPUNIT_ASSERT(Variant::INT_64.isVariant(Variant::INT_64));
+            
+            CPPUNIT_ASSERT(Variant::UINT_64.isVariant(Variant::UINT));
+            CPPUNIT_ASSERT(Variant::UINT_64.isVariant(Variant::INT));
+            
+            CPPUNIT_ASSERT(! Variant::INT_64.isVariant(Variant::UINT));
+            CPPUNIT_ASSERT(Variant::INT_64.isVariant(Variant::INT));
+            
+            CPPUNIT_ASSERT(! Variant::INT_64.isVariant(Variant::INT_32));
+            CPPUNIT_ASSERT(! Variant::UINT_64.isVariant(Variant::INT_64));
+            CPPUNIT_ASSERT(! Variant::INT_64.isVariant(Variant::UINT_64));
+        }
+        
         void VariantTest::testImageIsMatrix()
         {
             CPPUNIT_ASSERT(Variant::IMAGE.isVariant(Variant::MATRIX));

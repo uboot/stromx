@@ -61,7 +61,6 @@ void exportVariantInterface()
         .def("rhs", &VariantInterface::rhs)
     ;
     
-    
     enum_<VariantInterface::CompositeType>("CompositeType")
         .value("NO_COMPOSITE", VariantInterface::NO_COMPOSITE)
         .value("AND_COMPOSITE", VariantInterface::AND_COMPOSITE)
