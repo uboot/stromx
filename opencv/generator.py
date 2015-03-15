@@ -441,6 +441,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line(r"${CMAKE_SOURCE_DIR}")
         self.doc.line(r"${CMAKE_BINARY_DIR}")
         self.doc.line(r"${CPPUNIT_INCLUDE_DIR}")
+        self.doc.line(r"${Boost_INCLUDE_DIRS}")
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
