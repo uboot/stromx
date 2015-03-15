@@ -17,6 +17,7 @@
 #ifndef STROMX_RUNTIME_ITERATE_H
 #define STROMX_RUNTIME_ITERATE_H
 
+#include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/OperatorKernel.h"
 
 #include <deque>

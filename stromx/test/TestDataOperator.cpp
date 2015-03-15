@@ -17,9 +17,10 @@
 *  along with stromx-studio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "stromx/test/TestDataOperator.h"
-
+#define _USE_MATH_DEFINES
 #include <cmath>
+
+#include "stromx/test/TestDataOperator.h"
 
 #include <stromx/cvsupport/Image.h>
 #include <stromx/cvsupport/Matrix.h>

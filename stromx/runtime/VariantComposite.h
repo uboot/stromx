@@ -27,8 +27,8 @@ namespace stromx
         class STROMX_RUNTIME_API VariantComposite : public VariantInterface
         {
         public:
-            friend const VariantHandle operator&&(const VariantHandle & lhs, const VariantHandle & rhs);
-            friend const VariantHandle operator||(const VariantHandle & lhs, const VariantHandle & rhs);
+            STROMX_RUNTIME_API friend const VariantHandle operator&&(const VariantHandle & lhs, const VariantHandle & rhs);
+            STROMX_RUNTIME_API friend const VariantHandle operator||(const VariantHandle & lhs, const VariantHandle & rhs);
             
             virtual unsigned int id() const { return 0; }
             virtual const std::string & package() const;
