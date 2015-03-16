@@ -431,7 +431,7 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.increaseIndent()
         self.doc.line((
             "add_definitions(/DSTROMX_{0}_STATIC)"
-            ).format(self.p.ident.constant()))
+            ).format(self.p.ident.upper()))
         self.doc.decreaseIndent()
         self.doc.line("endif(MSVC)")
         self.doc.blank()

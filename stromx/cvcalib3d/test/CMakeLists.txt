@@ -1,7 +1,7 @@
 add_test(NAME stromx_cvcalib3d_test COMMAND stromx_cvcalib3d_test)
 
 if(MSVC)
-    add_definitions(/DSTROMX_CVCALIB_3D_STATIC)
+    add_definitions(/DSTROMX_CVCALIB3D_STATIC)
 endif(MSVC)
 
 include_directories (
