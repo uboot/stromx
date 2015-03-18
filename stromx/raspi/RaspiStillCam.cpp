@@ -514,11 +514,11 @@ namespace stromx
             provider.sendOutputData(outImageMapper);
         }
 
-        void RaspiCam::callbackOutVideoPort(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
+        void RaspiStillCam::callbackOutVideoPort(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             lock_t l(mutex);
             
-            RaspiCam* cam = reinterpret_cast<RaspiCam*>(port->userdata);
+            RaspiStillCam* cam = reinterpret_cast<RaspiStillCam*>(port->userdata);
             BOOST_ASSERT(! cam->m_buffer);
             cam->m_buffer = buffer;
             cond.notify_all();
