@@ -28,19 +28,15 @@
 #include <stromx/runtime/WriteAccess.h>
 
 #include <boost/filesystem.hpp>
-#include <boost/lexical_cast.hpp>
 
-namespace
-{
-    const std::string BASE_DIRECTORY = "/usr/share/stromx-web/data";
-}
-     
 namespace stromx
 {
     using namespace runtime;
 
     namespace cvsupport
     {
+        const std::string ReadDirectory::BASE_DIRECTORY = "/usr/share/stromx-web/data";
+        
         const std::string ReadDirectory::TYPE("ReadDirectory");
         const std::string ReadDirectory::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
         const Version ReadDirectory::VERSION(0, 1, 0);
@@ -64,7 +60,7 @@ namespace stromx
             std::string directory = m_directoryMap[std::size_t(m_directory)];
             
             boost::filesystem::path path(BASE_DIRECTORY);
-            path += boost::filesystem::path(directory);
+            path /= boost::filesystem::path(directory);
             
             m_currentIndex = 0;
             m_files.clear();
@@ -79,7 +75,7 @@ namespace stromx
                         if (! boost::filesystem::is_regular_file(iter->path()))
                             continue;
                             
-                        std::string file = boost::lexical_cast<std::string>(iter->path());
+                        std::string file = iter->path().string();
                         m_files.push_back(file);
                     }
                 }
@@ -126,19 +122,25 @@ namespace stromx
         
         void ReadDirectory::execute(DataProvider& provider)
         {
-            std::string file = m_files[m_currentIndex];
-            
+            if (m_files.size() == 0)
+                throw OperatorError(*this, "Directory is empty.");
+                
             Data* data = 0;
             std::size_t index = m_currentIndex;
             do
             {
-                std::size_t index = (index + 1) % m_files.size();
-                if (boost::filesystem::path(file).extension() == ".png")
+                boost::filesystem::path file(m_files[index]);
+                index = (index + 1) % m_files.size();
+                std::string ext = file.extension().string();
+                std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+                if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                 {
-                    data = new cvsupport::Image(file);
+                    data = new cvsupport::Image(file.string());
                 }
             }
             while (data == 0 && index != m_currentIndex);
+            
+            m_currentIndex = index;
             
             if (data == 0)
                 throw OperatorError(*this, "Found no usable file in selected directory.");
@@ -185,7 +187,10 @@ namespace stromx
                         iter != boost::filesystem::directory_iterator();
                         ++iter)
                     {
-                        std::string dirName = boost::lexical_cast<std::string>(iter->path().filename());
+                        if (! boost::filesystem::is_directory(iter->path()))
+                            continue;
+                        
+                        std::string dirName = iter->path().filename().string();
                         directory->add(EnumDescription(Enum(i), dirName));
                         m_directoryMap[i] = dirName;
                         i++;

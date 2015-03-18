@@ -33,6 +33,8 @@ namespace stromx
         /** \brief Applies a random coefficent to the brightness of the image. */
         class STROMX_CVSUPPORT_API ReadDirectory : public runtime::OperatorKernel
         {
+            friend class ReadDirectoryTest;
+            
         public:
             enum OutputId
             {
@@ -59,6 +61,8 @@ namespace stromx
             virtual void activate();
             
         private:
+            static const std::string BASE_DIRECTORY;
+            
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
             const std::vector<const runtime::Parameter*> setupParameters();

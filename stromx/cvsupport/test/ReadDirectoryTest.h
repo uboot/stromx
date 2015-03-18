@@ -33,7 +33,11 @@ namespace stromx
         class ReadDirectoryTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (ReadDirectoryTest);
+            CPPUNIT_TEST (testInitialize);
+            CPPUNIT_TEST (testActivateNoDirectory);
+            CPPUNIT_TEST (testActivateValidDirectory);
             CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testExecuteEmptyDirectory);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -43,7 +47,11 @@ namespace stromx
                 void tearDown();
 
             protected:
+                void testInitialize();
+                void testActivateNoDirectory();
+                void testActivateValidDirectory();
                 void testExecute();
+                void testExecuteEmptyDirectory();
                 
             private:
                 runtime::OperatorTester* m_operator;

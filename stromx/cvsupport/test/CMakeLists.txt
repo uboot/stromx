@@ -11,12 +11,15 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/double_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/edges.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/empty_float_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lenna_bw.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/double_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/double_matrix.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/edges.png ${CMAKE_CURRENT_BINARY_DIR}/edges.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/empty_float_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/empty_float_matrix.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna_bw.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna_bw.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/uint16_matrix.npy COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/edges.png ${CMAKE_CURRENT_BINARY_DIR}/ReadDirectoryTest/directory/edges.png COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/ReadDirectoryTest/directory/lenna.jpg COPYONLY)
 
 add_executable(stromx_cvsupport_test
     ../AdjustRgbChannels.cpp

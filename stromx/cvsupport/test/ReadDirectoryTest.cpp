@@ -24,7 +24,15 @@
 #include "stromx/cvsupport/Image.h"
 #include "stromx/cvsupport/test/ReadDirectoryTest.h"
 
+#include <boost/filesystem.hpp>
+
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvsupport::ReadDirectoryTest);
+
+namespace
+{
+    const static boost::filesystem::path TEST_DIR = "./ReadDirectoryTest";
+    const static boost::filesystem::path EMPTY_DIR = TEST_DIR / boost::filesystem::path("empty_dir");
+}
 
 namespace stromx
 {
@@ -34,19 +42,72 @@ namespace stromx
     {
         void ReadDirectoryTest::setUp ( void )
         {
+            const_cast<std::string &>(ReadDirectory::BASE_DIRECTORY) = TEST_DIR.string();
             m_operator = new runtime::OperatorTester(new ReadDirectory());
+        }
+        
+        void ReadDirectoryTest::testInitialize()
+        {
             m_operator->initialize();
-            m_operator->activate();
+            
+            // expect one test directory plus ReadDirectory::NO_DIRECTORY
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2),
+                m_operator->info().parameter(ReadDirectory::DIRECTORY).descriptions().size());
+            CPPUNIT_ASSERT_EQUAL(std::string("directory"),
+                m_operator->info().parameter(ReadDirectory::DIRECTORY).descriptions()[1].title());
+        }
+        
+        void ReadDirectoryTest::testActivateNoDirectory()
+        {
+            m_operator->initialize();
+            
+            CPPUNIT_ASSERT_THROW(m_operator->activate(), OperatorError);
+        }
+        
+        void ReadDirectoryTest::testActivateValidDirectory()
+        {
+            m_operator->initialize();
+            m_operator->setParameter(ReadDirectory::DIRECTORY, Enum(1));
+            
+            CPPUNIT_ASSERT_NO_THROW(m_operator->activate());
         }
         
         void ReadDirectoryTest::testExecute()
         {
+            m_operator->initialize();
+            m_operator->setParameter(ReadDirectory::DIRECTORY, Enum(1));
+            m_operator->activate();
+            
+            DataContainer data;
+            data = m_operator->getOutputData(ReadDirectory::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(868),
+                                 ReadAccess<runtime::Image>(data).get().width());
+            
+            m_operator->clearOutputData(ReadDirectory::OUTPUT);
+            data = m_operator->getOutputData(ReadDirectory::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(500),
+                                 ReadAccess<runtime::Image>(data).get().width());
+            
+            m_operator->clearOutputData(ReadDirectory::OUTPUT);
+            data = m_operator->getOutputData(ReadDirectory::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(868),
+                                 ReadAccess<runtime::Image>(data).get().width());
+        }
+        
+        void ReadDirectoryTest::testExecuteEmptyDirectory()
+        {
+            boost::filesystem::create_directory(EMPTY_DIR);
+            m_operator->initialize();
+            m_operator->setParameter(ReadDirectory::DIRECTORY, Enum(1));
+            m_operator->activate();
+            
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(ReadDirectory::OUTPUT), OperatorError);
         }
         
         void ReadDirectoryTest::tearDown ( void )
         {
             delete m_operator;
+            boost::filesystem::remove(EMPTY_DIR);
         }
     }
 }
