@@ -180,11 +180,11 @@ namespace stromx
             directory->add(EnumDescription(Enum(NO_DIRECTORY), L_("None")));
             boost::filesystem::path path (BASE_DIRECTORY);
             m_directoryMap.clear();
+            std::vector<std::string> dirNames;
             if (boost::filesystem::exists(path))
             {
                 if (boost::filesystem::is_directory(path))
                 {
-                    std::size_t i = NO_DIRECTORY + 1;
                     for(boost::filesystem::directory_iterator iter(path);
                         iter != boost::filesystem::directory_iterator();
                         ++iter)
@@ -192,12 +192,19 @@ namespace stromx
                         if (! boost::filesystem::is_directory(iter->path()))
                             continue;
                         
-                        std::string dirName = iter->path().filename().string();
-                        directory->add(EnumDescription(Enum(i), dirName));
-                        m_directoryMap[i] = dirName;
-                        i++;
+                        dirNames.push_back(iter->path().filename().string());
                     }
                 }
+            }
+            
+            std::sort(dirNames.begin(), dirNames.end());
+            std::size_t i = NO_DIRECTORY + 1;
+            for (std::vector<std::string>::const_iterator iter = dirNames.begin();
+                 iter != dirNames.end(); ++iter)
+            {
+                directory->add(EnumDescription(Enum(i), *iter));
+                m_directoryMap[i] = *iter;
+                i++;
             }
                                         
             return parameters;

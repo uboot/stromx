@@ -98,7 +98,7 @@ namespace stromx
         {
             boost::filesystem::create_directory(EMPTY_DIR);
             m_operator->initialize();
-            m_operator->setParameter(ReadDirectory::DIRECTORY, Enum(1));
+            m_operator->setParameter(ReadDirectory::DIRECTORY, Enum(2));
             m_operator->activate();
             
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(ReadDirectory::OUTPUT), OperatorError);
