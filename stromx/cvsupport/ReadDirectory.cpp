@@ -78,6 +78,8 @@ namespace stromx
                         std::string file = iter->path().string();
                         m_files.push_back(file);
                     }
+                    
+                    std::sort(m_files.begin(), m_files.end());
                 }
             }
         }
