@@ -3,6 +3,7 @@
 #include <stromx/cvcalib3d/Cvcalib3d.h>
 #include <stromx/cvcalib3d/CalibrateCamera.h>
 #include <stromx/cvcalib3d/FindChessboardCorners.h>
+#include <stromx/cvcalib3d/GeneratePattern.h>
 #include <stromx/cvcalib3d/SolvePnP.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
@@ -15,5 +16,6 @@ BOOST_PYTHON_MODULE(libcvcalib3d)
     
     stromx::python::exportOperatorKernel<CalibrateCamera>("CalibrateCamera");
     stromx::python::exportOperatorKernel<FindChessboardCorners>("FindChessboardCorners");
+    stromx::python::exportOperatorKernel<GeneratePattern>("GeneratePattern");
     stromx::python::exportOperatorKernel<SolvePnP>("SolvePnP");
 }

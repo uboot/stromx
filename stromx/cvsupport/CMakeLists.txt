@@ -29,6 +29,7 @@ set(SOURCES
     Cvsupport.cpp
     Matrix.cpp
     Utilities.cpp
+    ReadDirectory.cpp
     impl/CameraBuffer.cpp
 )
 
