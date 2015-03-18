@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(Threshold::SRC, src);
             m_operator->setInputData(Threshold::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ThresholdTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testManual0_dst.png", dstAccess());
         }
         
         void ThresholdTest::testManual1()
@@ -55,10 +55,10 @@ namespace stromx
             m_operator->setParameter(Threshold::THRESHOLD, threshold);
             m_operator->setParameter(Threshold::THRESHOLD_TYPE, thresholdType);
             
-            runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ThresholdTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testManual1_dst.png", dstAccess());
         }
         
         void ThresholdTest::testAllocate0()
@@ -73,10 +73,10 @@ namespace stromx
             m_operator->setInputData(Threshold::SRC, src);
             m_operator->setParameter(Threshold::THRESHOLD_TYPE, thresholdType);
             
-            runtime::DataContainer result = m_operator->getOutputData(Threshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ThresholdTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testAllocate0_dst.png", dstAccess());
         }
         
         void ThresholdTest::testInPlace0()
@@ -91,10 +91,10 @@ namespace stromx
             m_operator->setInputData(Threshold::SRC, src);
             m_operator->setParameter(Threshold::THRESHOLD_TYPE, thresholdType);
             
-            runtime::DataContainer result = m_operator->getOutputData(Threshold::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Threshold::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ThresholdTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("ThresholdTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

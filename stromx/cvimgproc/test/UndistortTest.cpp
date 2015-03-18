@@ -38,10 +38,10 @@ namespace stromx
             m_operator->setParameter(Undistort::CAMERA_MATRIX, cameraMatrix);
             m_operator->setParameter(Undistort::DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer result = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("UndistortTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testManual0_dst.png", dstAccess());
         }
         
         void UndistortTest::testManual1()
@@ -56,10 +56,10 @@ namespace stromx
             m_operator->setInputData(Undistort::SRC, src);
             m_operator->setInputData(Undistort::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("UndistortTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testManual1_dst.png", dstAccess());
         }
         
         void UndistortTest::testAllocate0()
@@ -76,10 +76,10 @@ namespace stromx
             m_operator->setParameter(Undistort::CAMERA_MATRIX, cameraMatrix);
             m_operator->setParameter(Undistort::DIST_COEFFS, distCoeffs);
             
-            runtime::DataContainer result = m_operator->getOutputData(Undistort::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("UndistortTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testAllocate0_dst.png", dstAccess());
         }
         
     } // cvimgproc

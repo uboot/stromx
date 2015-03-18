@@ -42,10 +42,10 @@ namespace stromx
             m_operator->setParameter(Dilate::SHAPE, shape);
             m_operator->setParameter(Dilate::ITERATIONS, iterations);
             
-            runtime::DataContainer result = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DilateTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testManual0_dst.png", dstAccess());
         }
         
         void DilateTest::testManual1()
@@ -60,10 +60,10 @@ namespace stromx
             m_operator->setInputData(Dilate::SRC, src);
             m_operator->setInputData(Dilate::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DilateTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testManual1_dst.png", dstAccess());
         }
         
         void DilateTest::testAllocate0()
@@ -76,10 +76,10 @@ namespace stromx
             
             m_operator->setInputData(Dilate::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Dilate::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DilateTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testAllocate0_dst.png", dstAccess());
         }
         
         void DilateTest::testInPlace0()
@@ -94,10 +94,10 @@ namespace stromx
             m_operator->setInputData(Dilate::SRC, src);
             m_operator->setParameter(Dilate::SHAPE, shape);
             
-            runtime::DataContainer result = m_operator->getOutputData(Dilate::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Dilate::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DilateTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("DilateTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

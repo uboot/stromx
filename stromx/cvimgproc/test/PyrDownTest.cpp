@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(PyrDown::SRC, src);
             m_operator->setInputData(PyrDown::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(PyrDown::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PyrDown::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("PyrDownTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("PyrDownTest_testManual0_dst.png", dstAccess());
         }
         
         void PyrDownTest::testAllocate0()
@@ -50,10 +50,10 @@ namespace stromx
             
             m_operator->setInputData(PyrDown::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(PyrDown::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PyrDown::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("PyrDownTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("PyrDownTest_testAllocate0_dst.png", dstAccess());
         }
         
     } // cvimgproc

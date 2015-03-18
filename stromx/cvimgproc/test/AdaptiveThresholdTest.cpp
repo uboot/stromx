@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(AdaptiveThreshold::SRC, src);
             m_operator->setInputData(AdaptiveThreshold::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AdaptiveThresholdTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AdaptiveThresholdTest_testManual0_dst.png", dstAccess());
         }
         
         void AdaptiveThresholdTest::testManual1()
@@ -59,10 +59,10 @@ namespace stromx
             m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
             m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AdaptiveThresholdTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AdaptiveThresholdTest_testManual1_dst.png", dstAccess());
         }
         
         void AdaptiveThresholdTest::testAllocate0()
@@ -83,10 +83,10 @@ namespace stromx
             m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
             m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(AdaptiveThreshold::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AdaptiveThresholdTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AdaptiveThresholdTest_testAllocate0_dst.png", dstAccess());
         }
         
         void AdaptiveThresholdTest::testInPlace0()
@@ -107,10 +107,10 @@ namespace stromx
             m_operator->setParameter(AdaptiveThreshold::THRESHOLD_TYPE, thresholdType);
             m_operator->setParameter(AdaptiveThreshold::BLOCK_SIZE, blockSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(AdaptiveThreshold::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(AdaptiveThreshold::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AdaptiveThresholdTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("AdaptiveThresholdTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

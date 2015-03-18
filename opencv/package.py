@@ -217,10 +217,11 @@ class MatrixArgument(Argument):
     Input argument which is represented by a matrix argument.
     """
     def __init__(self, ident, name, cvType, dataType, rows = 0,
-                 cols = 0, rules = None):
+                 cols = 0, rules = None, initIn = None, initOut = None):
         super(MatrixArgument, self).__init__(
             ident, name, cvType, dataType, rules = rules, 
-            argType = ArgType.MATRIX, rows = rows, cols = cols
+            argType = ArgType.MATRIX, rows = rows, cols = cols, 
+            initIn = initIn, initOut = initOut
         )
     
 class InputArgument(Argument):
@@ -330,7 +331,8 @@ class Constant(Argument):
     Constant method argument which can not be set as input or parameter. The
     value must be fixed at compile time.
     """
-    def __init__(self, value):
+    def __init__(self, value, initIn = None):
+        self.initIn = initIn
         self.ident = Ident()
         self.value = value
     

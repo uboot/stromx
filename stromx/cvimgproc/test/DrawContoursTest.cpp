@@ -28,13 +28,14 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer img(new cvsupport::Image("lenna.jpg", cvsupport::Image::GRAYSCALE));
-            runtime::Data* dataObject = 0;
+            runtime::Data* contoursItem = 0;
             std::vector<runtime::Data*> contoursVector;
-            dataObject = new cvsupport::Matrix("contour_1.npy");
-            contoursVector.push_back(dataObject);
-            dataObject = new cvsupport::Matrix("contour_2.npy");
-            contoursVector.push_back(dataObject);
+            contoursItem = new cvsupport::Matrix("contour_1.npy");
+            contoursVector.push_back(contoursItem);
+            contoursItem = new cvsupport::Matrix("contour_2.npy");
+            contoursVector.push_back(contoursItem);
             runtime::DataContainer contours(new runtime::List(contoursVector));
+            
             runtime::UInt8 ch1(255);
             runtime::UInt8 ch2(0);
             runtime::UInt8 ch3(0);
@@ -45,10 +46,10 @@ namespace stromx
             m_operator->setParameter(DrawContours::CH_2, ch2);
             m_operator->setParameter(DrawContours::CH_3, ch3);
             
-            runtime::DataContainer result = m_operator->getOutputData(DrawContours::IMG);
+            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DrawContoursTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> imgAccess(imgResult);
+            cvsupport::Image::save("DrawContoursTest_testInPlace0_img.png", imgAccess());
         }
         
         void DrawContoursTest::testInPlace1()
@@ -57,13 +58,14 @@ namespace stromx
             m_operator->activate();
             
             runtime::DataContainer img(new cvsupport::Image("lenna.jpg"));
-            runtime::Data* dataObject = 0;
+            runtime::Data* contoursItem = 0;
             std::vector<runtime::Data*> contoursVector;
-            dataObject = new cvsupport::Matrix("contour_1.npy");
-            contoursVector.push_back(dataObject);
-            dataObject = new cvsupport::Matrix("contour_2.npy");
-            contoursVector.push_back(dataObject);
+            contoursItem = new cvsupport::Matrix("contour_1.npy");
+            contoursVector.push_back(contoursItem);
+            contoursItem = new cvsupport::Matrix("contour_2.npy");
+            contoursVector.push_back(contoursItem);
             runtime::DataContainer contours(new runtime::List(contoursVector));
+            
             runtime::UInt8 ch1(255);
             runtime::UInt8 ch2(0);
             runtime::UInt8 ch3(0);
@@ -76,10 +78,10 @@ namespace stromx
             m_operator->setParameter(DrawContours::CH_3, ch3);
             m_operator->setParameter(DrawContours::THICKNESS, thickness);
             
-            runtime::DataContainer result = m_operator->getOutputData(DrawContours::IMG);
+            runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("DrawContoursTest_testInPlace1.png", access());
+            runtime::ReadAccess<runtime::Image> imgAccess(imgResult);
+            cvsupport::Image::save("DrawContoursTest_testInPlace1_img.png", imgAccess());
         }
         
     } // cvimgproc

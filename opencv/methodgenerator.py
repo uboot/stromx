@@ -881,14 +881,21 @@ class OpImplGenerator(MethodGenerator):
     
     class InitInVisitor(MethodGenerator.DocVisitor):
         """
-        Exports the initialization of the output argument before the OpenCV
+        Exports the initialization of the argument before the OpenCV
         function is called.
         """
+        def visitConstant(self, arg):
+            self.__visit(arg)
+            
         def visitInputOutput(self, arg):
-            self.visitOutput(arg)
+            self.__visit(arg)
             
         def visitOutput(self, output):
-            self.doc.document(output.initIn)
+            self.__visit(output)
+            
+        def __visit(self, arg):
+            self.doc.document(arg.initIn)
+        
             
     class CvDataVisitor(MethodGenerator.DocVisitor):
         """
@@ -1011,10 +1018,10 @@ class OpImplGenerator(MethodGenerator):
             self.visitOutput(arg)
             
         def visitOutput(self, output):
-            l = "runtime::DataContainer outContainer = inContainer;";
+            l = "runtime::DataContainer {0}OutContainer = inContainer;".format(output.ident)
             self.doc.line(l)
-            l = ("runtime::Id2DataPair outputMapper({0}, "
-                 "outContainer);").format(output.ident.constant());
+            l = ("runtime::Id2DataPair {0}OutMapper({1}, "
+                 "{0}OutContainer);").format(output.ident, output.ident.constant());
             self.doc.line(l)
             
         def visitAllocation(self, allocation):
@@ -1024,11 +1031,11 @@ class OpImplGenerator(MethodGenerator):
             newObject = allocation.dataType.allocate(cvData)
             l = "{0}* {1}CastedData = {2};".format(dataType, ident, newObject)
             self.doc.line(l)
-            l = ("runtime::DataContainer outContainer = "
+            l = ("runtime::DataContainer {0}OutContainer = "
                  "runtime::DataContainer({0}CastedData);").format(ident)
             self.doc.line(l)
-            l = ("runtime::Id2DataPair outputMapper({0}, "
-                 "outContainer);").format(allocation.ident.constant());
+            l = ("runtime::Id2DataPair {0}OutMapper({1}, "
+                 "{0}OutContainer);").format(ident, allocation.ident.constant())
             self.doc.line(l)
         
     class InitOutVisitor(MethodGenerator.DocVisitor):
@@ -1038,6 +1045,32 @@ class OpImplGenerator(MethodGenerator):
         """
         def visitAllocation(self, allocation):
             self.doc.document(allocation.initOut)
+            
+    class SendOutputDataVisitor(SingleArgumentVisitor):
+        """
+        Exports the send output command for all visited outputs.
+        """
+        def __init__(self):
+            self.line = ""
+            
+        def visitAllocation(self, output):
+            self.__visit(output)
+            
+        def visitOutput(self, output):
+            self.__visit(output)
+            
+        def visitInputOutput(self, arg):
+            self.__visit(arg)
+            
+        def export(self, doc):
+            if self.line != "":
+                doc.line("provider.sendOutputData({0});".format(self.line))
+            
+        def __visit(self, arg):
+            if self.line == "":
+                self.line = "{0}OutMapper".format(arg.ident)
+            else:
+                self.line += " && {0}OutMapper".format(arg.ident)
                 
     class EnumConversionDefVisitor(MethodGenerator.DocVisitor):
         """
@@ -1377,8 +1410,9 @@ class OpImplGenerator(MethodGenerator):
             v = OpImplGenerator.InitOutVisitor(self.doc)
             self.visitOption(o, v)
             
-            l = "provider.sendOutputData(outputMapper);";
-            self.doc.line(l)
+            v = OpImplGenerator.SendOutputDataVisitor()
+            self.visitOption(o, v)
+            v.export(self.doc)
                 
             self.doc.scopeExit()
             self.doc.line("break;")

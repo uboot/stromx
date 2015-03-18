@@ -31,15 +31,15 @@ namespace stromx
             
             m_operator->setInputData(FindContours::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(FindContours::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
             
             std::size_t index = 0;
-            runtime::ReadAccess<runtime::List> access(result);
-            const std::vector<const runtime::Data*> & content = access().content();
+            runtime::ReadAccess<runtime::List> dstAccess(dstResult);
+            const std::vector<const runtime::Data*> & content = dstAccess().content();
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
-                std::string fileName = "FindContoursTest_testAllocate0_" + boost::lexical_cast<std::string>(index) + ".npy";
+                std::string fileName = "FindContoursTest_testAllocate0_dst_" + boost::lexical_cast<std::string>(index) + ".npy";
                 cvsupport::Matrix::save(fileName, *matrix);
                 ++index;
             }
@@ -56,15 +56,15 @@ namespace stromx
             m_operator->setInputData(FindContours::SRC, src);
             m_operator->setParameter(FindContours::METHOD, method);
             
-            runtime::DataContainer result = m_operator->getOutputData(FindContours::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
             
             std::size_t index = 0;
-            runtime::ReadAccess<runtime::List> access(result);
-            const std::vector<const runtime::Data*> & content = access().content();
+            runtime::ReadAccess<runtime::List> dstAccess(dstResult);
+            const std::vector<const runtime::Data*> & content = dstAccess().content();
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
-                std::string fileName = "FindContoursTest_testAllocate1_" + boost::lexical_cast<std::string>(index) + ".npy";
+                std::string fileName = "FindContoursTest_testAllocate1_dst_" + boost::lexical_cast<std::string>(index) + ".npy";
                 cvsupport::Matrix::save(fileName, *matrix);
                 ++index;
             }

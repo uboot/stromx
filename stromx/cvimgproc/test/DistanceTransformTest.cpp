@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(DistanceTransform::SRC, src);
             m_operator->setInputData(DistanceTransform::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(DistanceTransform::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("DistanceTransformTest_testManual0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testManual0_dst.npy", dstAccess());
         }
         
         void DistanceTransformTest::testAllocate0()
@@ -54,10 +54,10 @@ namespace stromx
             m_operator->setParameter(DistanceTransform::DISTANCE_TYPE, distanceType);
             m_operator->setParameter(DistanceTransform::MASK_SIZE, maskSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(DistanceTransform::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate0_dst.npy", dstAccess());
         }
         
         void DistanceTransformTest::testAllocate1()
@@ -74,10 +74,10 @@ namespace stromx
             m_operator->setParameter(DistanceTransform::DISTANCE_TYPE, distanceType);
             m_operator->setParameter(DistanceTransform::MASK_SIZE, maskSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(DistanceTransform::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate1_dst.npy", dstAccess());
         }
         
         void DistanceTransformTest::testAllocate2()
@@ -94,10 +94,10 @@ namespace stromx
             m_operator->setParameter(DistanceTransform::DISTANCE_TYPE, distanceType);
             m_operator->setParameter(DistanceTransform::MASK_SIZE, maskSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(DistanceTransform::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate2.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate2_dst.npy", dstAccess());
         }
         
     } // cvimgproc

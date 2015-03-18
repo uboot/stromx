@@ -226,10 +226,10 @@ namespace stromx
                     
                     cv::cornerSubPix(srcCvData, pointMatrixCvData, cv::Size(winSizeXCvData, winSizeYCvData), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, -1, -1));
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(POINT_MATRIX, outContainer);
+                    runtime::DataContainer pointMatrixOutContainer = inContainer;
+                    runtime::Id2DataPair pointMatrixOutMapper(POINT_MATRIX, pointMatrixOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(pointMatrixOutMapper);
                 }
                 break;
             }

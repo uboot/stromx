@@ -175,7 +175,7 @@ class Float32Matrix(Matrix):
     
 class Float64Matrix(Matrix):
     def __init__(self):
-        super(Float32Matrix, self).__init__("runtime::Variant::FLOAT_64_MATRIX")
+        super(Float64Matrix, self).__init__("runtime::Variant::FLOAT_64_MATRIX")
     
 class Any32BitMatrix(Matrix):
     def __init__(self):

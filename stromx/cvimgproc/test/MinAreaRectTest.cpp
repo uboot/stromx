@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(MinAreaRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(MinAreaRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("MinAreaRectTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate0_rect.npy", rectAccess());
         }
         
         void MinAreaRectTest::testAllocate1()
@@ -46,10 +46,10 @@ namespace stromx
             
             m_operator->setInputData(MinAreaRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(MinAreaRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("MinAreaRectTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate1_rect.npy", rectAccess());
         }
         
     } // cvimgproc

@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(Integral::SRC, src);
             m_operator->setInputData(Integral::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Integral::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Integral::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("IntegralTest_testManual0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("IntegralTest_testManual0_dst.npy", dstAccess());
         }
         
         void IntegralTest::testAllocate0()
@@ -50,10 +50,10 @@ namespace stromx
             
             m_operator->setInputData(Integral::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Integral::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Integral::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("IntegralTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("IntegralTest_testAllocate0_dst.npy", dstAccess());
         }
         
     } // cvimgproc

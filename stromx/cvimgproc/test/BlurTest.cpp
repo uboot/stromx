@@ -38,10 +38,10 @@ namespace stromx
             m_operator->setParameter(Blur::KSIZEX, ksizex);
             m_operator->setParameter(Blur::KSIZEY, ksizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(Blur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Blur::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BlurTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BlurTest_testManual0_dst.png", dstAccess());
         }
         
         void BlurTest::testManual1()
@@ -55,10 +55,10 @@ namespace stromx
             m_operator->setInputData(Blur::SRC, src);
             m_operator->setInputData(Blur::DST, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Blur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Blur::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BlurTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BlurTest_testManual1_dst.png", dstAccess());
         }
         
         void BlurTest::testAllocate0()
@@ -71,10 +71,10 @@ namespace stromx
             
             m_operator->setInputData(Blur::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Blur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Blur::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BlurTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BlurTest_testAllocate0_dst.png", dstAccess());
         }
         
         void BlurTest::testAllocate1()
@@ -87,10 +87,10 @@ namespace stromx
             
             m_operator->setInputData(Blur::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Blur::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Blur::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BlurTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BlurTest_testAllocate1_dst.png", dstAccess());
         }
         
         void BlurTest::testInPlace0()
@@ -103,10 +103,10 @@ namespace stromx
             
             m_operator->setInputData(Blur::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Blur::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Blur::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BlurTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("BlurTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

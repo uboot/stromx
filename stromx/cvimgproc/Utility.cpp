@@ -1,9 +1,7 @@
-#define _USE_MATH_DEFINES
-#include <cmath>
-
 #include "Utility.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <cmath>
 
 namespace stromx
 {

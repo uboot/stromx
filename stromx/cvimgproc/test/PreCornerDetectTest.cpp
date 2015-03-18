@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(PreCornerDetect::SRC, src);
             m_operator->setInputData(PreCornerDetect::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(PreCornerDetect::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("PreCornerDetectTest_testManual0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("PreCornerDetectTest_testManual0_dst.npy", dstAccess());
         }
         
         void PreCornerDetectTest::testAllocate0()
@@ -54,10 +54,10 @@ namespace stromx
             m_operator->setParameter(PreCornerDetect::KSIZE, ksize);
             m_operator->setParameter(PreCornerDetect::BORDER_TYPE, borderType);
             
-            runtime::DataContainer result = m_operator->getOutputData(PreCornerDetect::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0_dst.npy", dstAccess());
         }
         
     } // cvimgproc

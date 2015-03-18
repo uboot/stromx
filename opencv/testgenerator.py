@@ -19,17 +19,18 @@ class CreateDataContructorVisitor(interface.TestArgumentVisitor):
         
     def visitList(self, testData):
         argIdent = testData.arg.ident
-        l = "runtime::Data* dataObject = 0;"
+        l = "runtime::Data* {0}Item = 0;".format(argIdent)
         self.doc.line(l)
         l = "std::vector<runtime::Data*> {0}Vector;".format(argIdent)
         self.doc.line(l)        
-        visitor = CreateHeapObjectVisitor(self.doc)
+        visitor = CreateHeapObjectVisitor(testData.arg, self.doc)
         for value in testData.values:
             value.accept(visitor)
-            self.doc.line("{0}Vector.push_back(dataObject);".format(argIdent))
+            self.doc.line("{0}Vector.push_back({0}Item);".format(argIdent))
         dataType = "runtime::List"
         args = "{0}Vector".format(argIdent)
         self.create(testData.arg, dataType, args)
+        self.doc.blank()
     
     def visitImageFile(self, testData):
         flags = []
@@ -77,8 +78,12 @@ class CreateHeapObjectVisitor(CreateDataContructorVisitor):
     Exports the creation of a data object on the heap for each visited test data
     object.
     """        
+    def __init__(self, arg, doc):
+        super(CreateHeapObjectVisitor, self).__init__(doc)
+        self.arg = arg
+        
     def create(self, arg, dataType, args):
-        l = "dataObject = new {0}({1});".format(dataType, args)
+        l = "{2}Item = new {0}({1});".format(dataType, args, self.arg.ident)
         self.doc.line(l)
         
 class CreateDataContainerVisitor(CreateDataContructorVisitor):
@@ -190,8 +195,8 @@ class GetDataVisitor(interface.TestArgumentVisitor):
                                   arg.ident.constant())
                                   
         l = (
-            "runtime::DataContainer result = m_operator->getOutputData({0});"
-        ).format(index)
+            "runtime::DataContainer {0}Result = m_operator->getOutputData({1});"
+        ).format(arg.ident, index)
         self.doc.line(l)
             
     def visitImageFile(self, testData):
@@ -231,23 +236,28 @@ class SaveResultVisitor(interface.ArgumentVisitor):
         self.visitOutput(retValue)
         
     def visitOutput(self, output):
+        ident = output.ident
         if isinstance(output.dataType, datatype.Image):
-            self.doc.line("runtime::ReadAccess<runtime::Image> access(result);")
-            fileName = "{0}.png".format(self.testFileName)
+            self.doc.line(("runtime::ReadAccess<runtime::Image> {0}Access"
+                           "({0}Result);").format(ident))
+            fileName = "{0}_{1}.png".format(self.testFileName, ident)
             self.doc.line((
-                'cvsupport::Image::save("{0}", access());'
-            ).format(fileName))
+                'cvsupport::Image::save("{0}", {1}Access());'
+            ).format(fileName, ident))
         elif isinstance(output.dataType, datatype.Matrix):
-            self.doc.line("runtime::ReadAccess<runtime::Matrix> access(result);")
-            fileName = "{0}.npy".format(self.testFileName)
+            self.doc.line(("runtime::ReadAccess<runtime::Matrix> {0}Access"
+                           "({0}Result);").format(ident))
+            fileName = "{0}_{1}.npy".format(self.testFileName, ident)
             self.doc.line((
-                'cvsupport::Matrix::save("{0}", access());'
-            ).format(fileName))
+                'cvsupport::Matrix::save("{0}", {1}Access());'
+            ).format(fileName, ident))
         elif (isinstance(output.dataType, datatype.List) and
               isinstance(output.dataType.elementType, datatype.Matrix)):
             self.doc.line("std::size_t index = 0;")
-            self.doc.line("runtime::ReadAccess<runtime::List> access(result);")
-            self.doc.line("const std::vector<const runtime::Data*> & content = access().content();")
+            self.doc.line(("runtime::ReadAccess<runtime::List> {0}Access"
+                           "({0}Result);").format(ident))
+            self.doc.line(("const std::vector<const runtime::Data*> & content ="
+                           " {0}Access().content();").format(ident))
             self.doc.line("for (std::vector<const runtime::Data*>::const_iterator "
                           "iter = content.begin(); "
                           "iter != content.end(); "
@@ -255,9 +265,9 @@ class SaveResultVisitor(interface.ArgumentVisitor):
             self.doc.scopeEnter()
             self.doc.line("const runtime::Matrix* matrix = "
                           "runtime::data_cast<runtime::Matrix>(*iter);")
-            self.doc.line(('std::string fileName = "{0}_" + '
+            self.doc.line(('std::string fileName = "{0}_{1}_" + '
                            'boost::lexical_cast<std::string>(index) + ".npy";'
-                           ).format(self.testFileName))
+                           ).format(self.testFileName, ident))
             self.doc.line('cvsupport::Matrix::save(fileName, *matrix);')
             self.doc.line("++index;")
             self.doc.scopeExit()

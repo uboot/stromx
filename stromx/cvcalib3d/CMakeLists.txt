@@ -15,7 +15,9 @@ include_directories (
 set (SOURCES 
     Cvcalib3d.cpp
     Utility.cpp
+    CalibrateCamera.cpp
     FindChessboardCorners.cpp
+    SolvePnP.cpp
 )
 
 add_library (stromx_cvcalib3d SHARED ${SOURCES})

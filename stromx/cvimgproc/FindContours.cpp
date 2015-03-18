@@ -207,10 +207,10 @@ namespace stromx
                     cv::findContours(srcCvData, dstCvData, modeCvData, methodCvData);
                     
                     runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             }

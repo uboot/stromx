@@ -20,6 +20,7 @@
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/RecycleAccess.h"
 
 namespace stromx
 {
@@ -42,7 +43,8 @@ namespace stromx
             enum ParameterId
             {
                 DATA_TYPE,
-                VALUE
+                VALUE,
+                ALLOCATE_DATA
             };
             
             ConstData();
@@ -52,12 +54,13 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
             virtual void initialize();
+            virtual void deactivate();
             virtual void execute(runtime::DataProvider& provider);
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
-            static const std::vector<const runtime::Description*> setupOutputs();
             static const std::vector<const runtime::Parameter*> setupInitParameters();
+            const std::vector<const runtime::Description*> setupOutputs();
             const std::vector<const runtime::Parameter*> setupParameters();
             void setDataType(const runtime::Enum & value);
             
@@ -67,6 +70,8 @@ namespace stromx
             
             Enum m_type;
             Data* m_value;
+            Bool m_allocateData;
+            RecycleAccess m_recycleAccess;
         };       
     }
 }

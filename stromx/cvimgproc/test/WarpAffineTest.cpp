@@ -40,10 +40,10 @@ namespace stromx
             m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
             m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpAffineTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testManual0_dst.png", dstAccess());
         }
         
         void WarpAffineTest::testManual1()
@@ -62,10 +62,10 @@ namespace stromx
             m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
             m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpAffineTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testManual1_dst.png", dstAccess());
         }
         
         void WarpAffineTest::testAllocate0()
@@ -84,10 +84,10 @@ namespace stromx
             m_operator->setParameter(WarpAffine::DSIZEX, dsizex);
             m_operator->setParameter(WarpAffine::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpAffine::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpAffineTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testAllocate0_dst.png", dstAccess());
         }
         
     } // cvimgproc

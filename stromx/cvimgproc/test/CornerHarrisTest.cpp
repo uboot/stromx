@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(CornerHarris::SRC, src);
             m_operator->setInputData(CornerHarris::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(CornerHarris::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerHarris::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CornerHarrisTest_testManual0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CornerHarrisTest_testManual0_dst.npy", dstAccess());
         }
         
         void CornerHarrisTest::testAllocate0()
@@ -50,10 +50,10 @@ namespace stromx
             
             m_operator->setInputData(CornerHarris::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(CornerHarris::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerHarris::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CornerHarrisTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CornerHarrisTest_testAllocate0_dst.npy", dstAccess());
         }
         
     } // cvimgproc

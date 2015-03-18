@@ -24,6 +24,8 @@
 #include "stromx/runtime/String.h"
 #include "stromx/runtime/TriggerData.h"
 
+#include <boost/assert.hpp>
+
 namespace stromx
 {
     using namespace runtime;
@@ -86,13 +88,24 @@ namespace stromx
         ConstData::ConstData()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_type(Variant::BOOL.id()),
-            m_value(new Bool)
+            m_value(new Bool),
+            m_allocateData(true)
         {
         }
         
         ConstData::~ConstData()
         {
+            BOOST_ASSERT(m_recycleAccess.empty());
             delete m_value;
+        }
+        
+        void ConstData::deactivate()
+        {
+            Data* dataPtr = 0;
+            
+            // delete all remaining buffers in the recycling access
+            while((dataPtr = m_recycleAccess()))
+                delete dataPtr;
         }
 
         void ConstData::setParameter(unsigned int id, const Data& value)
@@ -107,6 +120,9 @@ namespace stromx
                 case VALUE:
                     delete m_value;
                     m_value = value.clone();
+                    break;
+                case ALLOCATE_DATA:
+                    m_allocateData = data_cast<Bool>(value);
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -128,6 +144,8 @@ namespace stromx
                 if (! m_value)
                     throw InternalError("Value has not been set");
                 return *m_value;
+            case ALLOCATE_DATA:
+                return m_allocateData;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -138,7 +156,39 @@ namespace stromx
             if (! m_value)
                 throw InternalError("Value has not been set");
             
-            DataContainer data(m_value->clone());
+            DataContainer data;
+            if (m_allocateData)
+            {
+                data = DataContainer(m_value->clone());
+            }
+            else
+            {
+                Data* dataPtr = 0;
+                
+                if (m_recycleAccess.empty())
+                {
+                    // if this is the first time the operator executes the value must
+                    // be cloned
+                    dataPtr = m_value->clone();
+                }
+                else 
+                {         
+                    // otherwise the value in the recycler can be reused              
+                    dataPtr = m_recycleAccess.get();
+                }
+                    
+                if (dataPtr != m_value)
+                {
+                    // if the value was changed by the user since the last execution
+                    // update it
+                    delete dataPtr;
+                    dataPtr = m_value->clone();
+                }
+                
+                // send and remember for the next execution
+                data = DataContainer(dataPtr);
+                m_recycleAccess.add(data);
+            }
             
             Id2DataPair outputDataMapper(OUTPUT, data);
             provider.sendOutputData( outputDataMapper);
@@ -158,7 +208,9 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            VariantHandle variant = typeToVariant(m_type);
+            
+            Description* output = new Description(OUTPUT, variant);
             output->setTitle("Output");
             outputs.push_back(output);
             
@@ -179,6 +231,11 @@ namespace stromx
             type->add(EnumDescription(Enum(Variant::STRING.id()), "String"));
             type->add(EnumDescription(Enum(Variant::FLOAT_32.id()), "Float32"));
             parameters.push_back(type);
+            
+            Parameter* allocate = new Parameter(ALLOCATE_DATA, Variant::BOOL);
+            allocate->setTitle("Allocate data");
+            allocate->setAccessMode(runtime::Parameter::NONE_WRITE);
+            parameters.push_back(allocate);
                                         
             return parameters;
         }

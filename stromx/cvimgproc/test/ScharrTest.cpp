@@ -44,10 +44,10 @@ namespace stromx
             m_operator->setParameter(Scharr::SCALE, scale);
             m_operator->setParameter(Scharr::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Scharr::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ScharrTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testManual0_dst.png", dstAccess());
         }
         
         void ScharrTest::testManual1()
@@ -72,10 +72,10 @@ namespace stromx
             m_operator->setParameter(Scharr::SCALE, scale);
             m_operator->setParameter(Scharr::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Scharr::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ScharrTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testManual1_dst.png", dstAccess());
         }
         
         void ScharrTest::testAllocate0()
@@ -92,10 +92,10 @@ namespace stromx
             m_operator->setParameter(Scharr::DDEPTH, ddepth);
             m_operator->setParameter(Scharr::SCALE, scale);
             
-            runtime::DataContainer result = m_operator->getOutputData(Scharr::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ScharrTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testAllocate0_dst.png", dstAccess());
         }
         
         void ScharrTest::testAllocate1()
@@ -116,10 +116,10 @@ namespace stromx
             m_operator->setParameter(Scharr::DY, dy);
             m_operator->setParameter(Scharr::SCALE, scale);
             
-            runtime::DataContainer result = m_operator->getOutputData(Scharr::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ScharrTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testAllocate1_dst.png", dstAccess());
         }
         
     } // cvimgproc

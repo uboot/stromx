@@ -234,10 +234,10 @@ namespace stromx
                     fitLine(pointsCvData, lineCvData, distTypeCvData, 0, repsCvData, aepsCvData);
                     
                     runtime::Matrix* lineCastedData = new cvsupport::Matrix(lineCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(lineCastedData);
-                    runtime::Id2DataPair outputMapper(LINE, outContainer);
+                    runtime::DataContainer lineOutContainer = runtime::DataContainer(lineCastedData);
+                    runtime::Id2DataPair lineOutMapper(LINE, lineOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(lineOutMapper);
                 }
                 break;
             }

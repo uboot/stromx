@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(ConvexHull::CURVE, curve);
             
-            runtime::DataContainer result = m_operator->getOutputData(ConvexHull::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUT_CURVE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("ConvexHullTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> outCurveAccess(outCurveResult);
+            cvsupport::Matrix::save("ConvexHullTest_testAllocate0_outCurve.npy", outCurveAccess());
         }
         
         void ConvexHullTest::testAllocate1()
@@ -46,10 +46,10 @@ namespace stromx
             
             m_operator->setInputData(ConvexHull::CURVE, curve);
             
-            runtime::DataContainer result = m_operator->getOutputData(ConvexHull::OUT_CURVE);
+            runtime::DataContainer outCurveResult = m_operator->getOutputData(ConvexHull::OUT_CURVE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("ConvexHullTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> outCurveAccess(outCurveResult);
+            cvsupport::Matrix::save("ConvexHullTest_testAllocate1_outCurve.npy", outCurveAccess());
         }
         
     } // cvimgproc

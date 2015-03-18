@@ -42,10 +42,10 @@ namespace stromx
             m_operator->setParameter(Erode::SHAPE, shape);
             m_operator->setParameter(Erode::ITERATIONS, iterations);
             
-            runtime::DataContainer result = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ErodeTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ErodeTest_testManual0_dst.png", dstAccess());
         }
         
         void ErodeTest::testManual1()
@@ -60,10 +60,10 @@ namespace stromx
             m_operator->setInputData(Erode::SRC, src);
             m_operator->setInputData(Erode::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ErodeTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ErodeTest_testManual1_dst.png", dstAccess());
         }
         
         void ErodeTest::testAllocate0()
@@ -76,10 +76,10 @@ namespace stromx
             
             m_operator->setInputData(Erode::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Erode::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Erode::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ErodeTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ErodeTest_testAllocate0_dst.png", dstAccess());
         }
         
         void ErodeTest::testInPlace0()
@@ -94,10 +94,10 @@ namespace stromx
             m_operator->setInputData(Erode::SRC, src);
             m_operator->setParameter(Erode::SHAPE, shape);
             
-            runtime::DataContainer result = m_operator->getOutputData(Erode::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Erode::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ErodeTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("ErodeTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

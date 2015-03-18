@@ -205,10 +205,10 @@ namespace stromx
                     cv::findChessboardCorners(imageCvData, cv::Size(patternSizeXCvData, patternSizeYCvData), cornersCvData);
                     
                     runtime::Matrix* cornersCastedData = new cvsupport::Matrix(cornersCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(cornersCastedData);
-                    runtime::Id2DataPair outputMapper(CORNERS, outContainer);
+                    runtime::DataContainer cornersOutContainer = runtime::DataContainer(cornersCastedData);
+                    runtime::Id2DataPair cornersOutMapper(CORNERS, cornersOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(cornersOutMapper);
                 }
                 break;
             }

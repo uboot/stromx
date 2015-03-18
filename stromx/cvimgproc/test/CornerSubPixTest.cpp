@@ -33,10 +33,10 @@ namespace stromx
             m_operator->setInputData(CornerSubPix::SRC, src);
             m_operator->setInputData(CornerSubPix::POINT_MATRIX, pointMatrix);
             
-            runtime::DataContainer result = m_operator->getOutputData(CornerSubPix::POINT_MATRIX);
+            runtime::DataContainer pointMatrixResult = m_operator->getOutputData(CornerSubPix::POINT_MATRIX);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CornerSubPixTest_testInPlace0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> pointMatrixAccess(pointMatrixResult);
+            cvsupport::Matrix::save("CornerSubPixTest_testInPlace0_pointMatrix.npy", pointMatrixAccess());
         }
         
     } // cvimgproc

@@ -38,10 +38,10 @@ namespace stromx
             m_operator->setParameter(Laplacian::DDEPTH, ddepth);
             m_operator->setParameter(Laplacian::KSIZE, ksize);
             
-            runtime::DataContainer result = m_operator->getOutputData(Laplacian::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("LaplacianTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testManual0_dst.png", dstAccess());
         }
         
         void LaplacianTest::testManual1()
@@ -64,10 +64,10 @@ namespace stromx
             m_operator->setParameter(Laplacian::SCALE, scale);
             m_operator->setParameter(Laplacian::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Laplacian::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("LaplacianTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testManual1_dst.png", dstAccess());
         }
         
         void LaplacianTest::testAllocate0()
@@ -88,10 +88,10 @@ namespace stromx
             m_operator->setParameter(Laplacian::SCALE, scale);
             m_operator->setParameter(Laplacian::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Laplacian::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("LaplacianTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testAllocate0_dst.png", dstAccess());
         }
         
         void LaplacianTest::testAllocate1()
@@ -112,10 +112,10 @@ namespace stromx
             m_operator->setParameter(Laplacian::SCALE, scale);
             m_operator->setParameter(Laplacian::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Laplacian::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("LaplacianTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testAllocate1_dst.png", dstAccess());
         }
         
     } // cvimgproc
