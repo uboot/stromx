@@ -17,6 +17,34 @@ import test
 # default test data
 DT = test.Default()
 
+# generatePattern
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void generatePattern(const cv::Size & size, const float squareSize, cv::Mat & output);
+""")
+dtnIncludes = []
+dtn = document.Document()              
+dtn.text(
+"""
+void generatePattern(const cv::Size & size, const float squareSize, cv::Mat & output)
+{
+    output = cv::Mat(size.width * size.height, 1, CV_32FC3);
+    
+    for (int j = 0; j < size.height; ++j)
+    {
+        for (int i = 0; i < size.width; ++i)
+        {
+            output.at<cv::Point3f>(i + j * size.width) = 
+                cv::Point3f((size.width - i) * squareSize,
+                            j * squareSize, 0);
+        }
+    }
+}
+""")
+generatePatternWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # calibrateCamera
 objectPoints = package.Argument(
     "objectPoints", "Object points", cvtype.VectorOfMat(),
@@ -125,6 +153,35 @@ findChessboardCorners = package.Method(
     "findChessboardCorners", options = [allocate]
 )
 
+# generatePattern
+sizex = package.NumericParameter(
+    "patternSizeX", "Pattern size X", cvtype.Int(), datatype.UInt32(), default = 7,
+    minValue = 1
+)
+sizey = package.NumericParameter(
+    "patternSizeY", "Pattern size Y", cvtype.Int(), datatype.UInt32(), default = 5,
+    minValue = 1
+)
+size = package.Size(sizex, sizey)
+squareSize = package.NumericParameter(
+    "squareSize", "Square size", cvtype.Float32(), datatype.Float32(), default = 10,
+    minValue = 0
+)
+corners = package.MatrixArgument(
+    "corners", "Corners", cvtype.Mat(channels = 3), datatype.Float32Matrix(),
+    cols = 3
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [size, squareSize, package.Allocation(corners)],
+    tests = [
+        [DT, DT, DT, DT]
+    ]
+)
+generatePattern = package.Method(
+    "generatePattern", namespace = "", options = [allocate]
+)
+
 # solvePnP
 objectPoints = package.MatrixArgument(
     "objectPoints", "Object points", cvtype.Mat(channels = 3),
@@ -185,7 +242,11 @@ calib3d = package.Package(
     methods = [
         calibrateCamera,
         findChessboardCorners,
+        generatePattern,
         solvePnP
+    ],
+    functions = [
+        generatePatternWrapper,
     ],
     testFiles = [
         "chess.png", # 24-bit color

@@ -14,12 +14,12 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_FLICKER_H
-#define STROMX_CVSUPPORT_FLICKER_H
+#ifndef STROMX_CVSUPPORT_READDIRECTORY_H
+#define STROMX_CVSUPPORT_READDIRECTORY_H
 
 #include "stromx/cvsupport/Config.h"
 #include <stromx/runtime/OperatorKernel.h>
-#include <stromx/runtime/Primitive.h>
+#include <stromx/runtime/Enum.h>
 
 namespace stromx
 {
@@ -31,14 +31,9 @@ namespace stromx
     namespace cvsupport
     {
         /** \brief Applies a random coefficent to the brightness of the image. */
-        class STROMX_CVSUPPORT_API Flicker : public runtime::OperatorKernel
+        class STROMX_CVSUPPORT_API ReadDirectory : public runtime::OperatorKernel
         {
         public:
-            enum InputId
-            {
-                INPUT
-            };
-            
             enum OutputId
             {
                 OUTPUT
@@ -46,28 +41,38 @@ namespace stromx
             
             enum ParameterId
             {
-                AMOUNT
+                DIRECTORY
             };
             
-            Flicker();
+            enum Directory
+            {
+                NO_DIRECTORY
+            };
             
-            virtual OperatorKernel* clone() const { return new Flicker; }
+            ReadDirectory();
+            
+            virtual OperatorKernel* clone() const { return new ReadDirectory; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(runtime::DataProvider& provider);
+            virtual void initialize();
+            virtual void activate();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
-            static const std::vector<const runtime::Parameter*> setupParameters();
+            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;                         
             
-            runtime::Float64 m_amount;
+            runtime::Enum m_directory;
+            std::map<std::size_t, std::string> m_directoryMap;
+            std::vector<std::string> m_files;
+            std::size_t m_currentIndex;
         };
     }
 }
 
-#endif // STROMX_CVSUPPORT_FLICKER_H
+#endif // STROMX_CVSUPPORT_READDIRECTORY_H

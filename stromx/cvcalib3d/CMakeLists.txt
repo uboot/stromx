@@ -17,6 +17,7 @@ set (SOURCES
     Utility.cpp
     CalibrateCamera.cpp
     FindChessboardCorners.cpp
+    GeneratePattern.cpp
     SolvePnP.cpp
 )
 

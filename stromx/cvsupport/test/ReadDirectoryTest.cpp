@@ -16,14 +16,15 @@
 
 #include <cppunit/TestAssert.h>
 #include <stromx/runtime/DataContainer.h>
+#include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/OperatorTester.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/ReadAccess.h>
-#include "stromx/cvsupport/Flicker.h"
+#include "stromx/cvsupport/ReadDirectory.h"
 #include "stromx/cvsupport/Image.h"
-#include "stromx/cvsupport/test/FlickerTest.h"
+#include "stromx/cvsupport/test/ReadDirectoryTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvsupport::FlickerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvsupport::ReadDirectoryTest);
 
 namespace stromx
 {
@@ -31,25 +32,19 @@ namespace stromx
 
     namespace cvsupport
     {
-        void FlickerTest::setUp ( void )
+        void ReadDirectoryTest::setUp ( void )
         {
-            m_operator = new runtime::OperatorTester(new Flicker());
+            m_operator = new runtime::OperatorTester(new ReadDirectory());
             m_operator->initialize();
             m_operator->activate();
-            DataContainer image(new Image("lenna.jpg"));
-            m_operator->setInputData(Flicker::INPUT, image);
         }
         
-        void FlickerTest::testExecute()
+        void ReadDirectoryTest::testExecute()
         {
-            runtime::DataContainer result = m_operator->getOutputData(Flicker::OUTPUT);
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
-            
-            cvsupport::Image::save("FlickerTest_testExecute.png", image);
+            CPPUNIT_ASSERT_THROW(m_operator->getOutputData(ReadDirectory::OUTPUT), OperatorError);
         }
         
-        void FlickerTest::tearDown ( void )
+        void ReadDirectoryTest::tearDown ( void )
         {
             delete m_operator;
         }
