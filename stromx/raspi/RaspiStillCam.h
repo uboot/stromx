@@ -62,7 +62,7 @@ namespace stromx
             };
 
             RaspiStillCam();
-            virtual OperatorKernel* clone() const {return new RaspiCam;}
+            virtual OperatorKernel* clone() const {return new RaspiStillCam;}
             virtual void execute(runtime::DataProvider& provider);
             virtual void initialize();
             virtual void deinitialize();

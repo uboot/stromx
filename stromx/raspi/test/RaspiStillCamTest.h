@@ -28,7 +28,7 @@ namespace stromx
     {
         class RaspiStillCamTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (RaspiCamTest);
+            CPPUNIT_TEST_SUITE (RaspiStillCamTest);
             CPPUNIT_TEST(testInitialize);
             CPPUNIT_TEST(testDeinitialize);
             CPPUNIT_TEST(testActivate);

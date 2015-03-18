@@ -46,7 +46,7 @@ include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.50.0 REQUIRED COMPONENTS chrono filesystem locale regex serialization system thread)
+find_package(Boost 1.50.0 REQUIRED COMPONENTS chrono filesystem locale regex serialization system thread timer)
 
 find_package(CppUnit)
 
@@ -86,7 +86,7 @@ if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
 endif()
 
 find_path(mmal_DIR "interface/mmal/mmal.h" HINTS /opt/vc/include)
-if (mmal_FOUND)
+if (mmal_DIR)
     option(BUILD_RASPI "Build raspi package" ON)
 endif()
 
