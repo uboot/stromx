@@ -166,10 +166,10 @@ namespace stromx
                     minEnclosingCircle(pointsCvData, circleCvData);
                     
                     runtime::Matrix* circleCastedData = new cvsupport::Matrix(circleCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(circleCastedData);
-                    runtime::Id2DataPair outputMapper(CIRCLE, outContainer);
+                    runtime::DataContainer circleOutContainer = runtime::DataContainer(circleCastedData);
+                    runtime::Id2DataPair circleOutMapper(CIRCLE, circleOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(circleOutMapper);
                 }
                 break;
             }

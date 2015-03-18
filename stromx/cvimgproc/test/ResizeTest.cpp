@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(Resize::SRC, src);
             m_operator->setInputData(Resize::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Resize::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Resize::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ResizeTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ResizeTest_testManual0_dst.png", dstAccess());
         }
         
         void ResizeTest::testManual1()
@@ -58,10 +58,10 @@ namespace stromx
             m_operator->setParameter(Resize::DSIZEY, dsizey);
             m_operator->setParameter(Resize::FX, fx);
             
-            runtime::DataContainer result = m_operator->getOutputData(Resize::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Resize::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ResizeTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ResizeTest_testManual1_dst.png", dstAccess());
         }
         
         void ResizeTest::testManual2()
@@ -84,10 +84,10 @@ namespace stromx
             m_operator->setParameter(Resize::FX, fx);
             m_operator->setParameter(Resize::FY, fy);
             
-            runtime::DataContainer result = m_operator->getOutputData(Resize::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Resize::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ResizeTest_testManual2.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ResizeTest_testManual2_dst.png", dstAccess());
         }
         
         void ResizeTest::testAllocate0()
@@ -104,10 +104,10 @@ namespace stromx
             m_operator->setParameter(Resize::FX, fx);
             m_operator->setParameter(Resize::FY, fy);
             
-            runtime::DataContainer result = m_operator->getOutputData(Resize::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Resize::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("ResizeTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("ResizeTest_testAllocate0_dst.png", dstAccess());
         }
         
     } // cvimgproc

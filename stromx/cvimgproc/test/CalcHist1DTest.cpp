@@ -37,10 +37,10 @@ namespace stromx
             m_operator->setParameter(CalcHist1D::HIST_MAX, histMax);
             m_operator->setParameter(CalcHist1D::HIST_SIZE, histSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(CalcHist1D::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist1D::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CalcHist1DTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CalcHist1DTest_testAllocate0_dst.npy", dstAccess());
         }
         
         void CalcHist1DTest::testAllocate1()
@@ -58,10 +58,10 @@ namespace stromx
             m_operator->setParameter(CalcHist1D::HIST_MAX, histMax);
             m_operator->setParameter(CalcHist1D::HIST_SIZE, histSize);
             
-            runtime::DataContainer result = m_operator->getOutputData(CalcHist1D::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist1D::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CalcHist1DTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CalcHist1DTest_testAllocate1_dst.npy", dstAccess());
         }
         
     } // cvimgproc

@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(Canny::SRC, src);
             m_operator->setInputData(Canny::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Canny::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("CannyTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testManual0_dst.png", dstAccess());
         }
         
         void CannyTest::testManual1()
@@ -55,10 +55,10 @@ namespace stromx
             m_operator->setParameter(Canny::THRESHOLD_1, threshold1);
             m_operator->setParameter(Canny::THRESHOLD_2, threshold2);
             
-            runtime::DataContainer result = m_operator->getOutputData(Canny::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("CannyTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testManual1_dst.png", dstAccess());
         }
         
         void CannyTest::testAllocate0()
@@ -71,10 +71,10 @@ namespace stromx
             
             m_operator->setInputData(Canny::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Canny::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("CannyTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testAllocate0_dst.png", dstAccess());
         }
         
         void CannyTest::testInPlace0()
@@ -87,10 +87,10 @@ namespace stromx
             
             m_operator->setInputData(Canny::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(Canny::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(Canny::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("CannyTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("CannyTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

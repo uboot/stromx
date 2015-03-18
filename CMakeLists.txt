@@ -11,7 +11,7 @@ include(CheckTypeSize)
 check_type_size("float" FLOAT_SIZE)
 check_type_size("double" DOUBLE_SIZE)
 if(NOT FLOAT_SIZE EQUAL 4)
-    message(FATAL_ERROR "Float32 must be 4 bytes.")
+    message(FATAL_ERROR "Float must be 4 bytes.")
 endif()
 if(NOT DOUBLE_SIZE EQUAL 8)
     message(FATAL_ERROR "Double must be 8 bytes.")
@@ -46,7 +46,8 @@ include(UseDoxygen OPTIONAL)
 
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.50.0 REQUIRED COMPONENTS chrono filesystem locale regex serialization system thread timer)
+
+find_package(Boost 1.50.0 REQUIRED COMPONENTS chrono date_time filesystem locale regex serialization system thread timer)
 
 find_package(CppUnit)
 

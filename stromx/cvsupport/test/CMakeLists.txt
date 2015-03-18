@@ -29,6 +29,7 @@ add_executable(stromx_cvsupport_test
     ../Flicker.cpp
     ../Image.cpp
     ../Matrix.cpp
+    ../ReadDirectory.cpp
     ../Utilities.cpp
     ../impl/CameraBuffer.cpp
     AdjustRgbChannelsTest.cpp
@@ -43,6 +44,7 @@ add_executable(stromx_cvsupport_test
     CvsupportTest.cpp
     main.cpp
     MatrixTest.cpp
+    ReadDirectoryTest.cpp
 #     SendReceiveTest.cpp
     UtilitiesTest.cpp
 )

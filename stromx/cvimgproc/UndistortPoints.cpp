@@ -25,7 +25,7 @@ namespace stromx
         UndistortPoints::UndistortPoints()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_cameraMatrix(cvsupport::Matrix::eye(3, 3, runtime::Matrix::FLOAT_32)),
-            m_distCoeffs(cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)),
+            m_distCoeffs(cvsupport::Matrix::zeros(1, 5, runtime::Matrix::FLOAT_32)),
             m_dataFlow()
         {
         }
@@ -119,8 +119,8 @@ namespace stromx
                     m_distCoeffsParameter = new runtime::MatrixParameter(DIST_COEFFS, runtime::Variant::FLOAT_MATRIX);
                     m_distCoeffsParameter->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
                     m_distCoeffsParameter->setTitle(L_("Distortion coefficients"));
-                    m_distCoeffsParameter->setRows(4);
-                    m_distCoeffsParameter->setCols(1);
+                    m_distCoeffsParameter->setRows(1);
+                    m_distCoeffsParameter->setCols(5);
                     parameters.push_back(m_distCoeffsParameter);
                     
                 }
@@ -210,10 +210,10 @@ namespace stromx
                     cv::undistortPoints(srcCvData, dstCvData, cameraMatrixCvData, distCoeffsCvData);
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             }

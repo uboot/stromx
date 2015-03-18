@@ -103,6 +103,10 @@ namespace stromx
                 return  L_("Int32");
             case UINT_32_ID:
                 return  L_("UInt32");
+            case INT_64_ID:
+                return  L_("Int64");
+            case UINT_64_ID:
+                return  L_("UInt64");
             case FLOAT_ID:
                 return  L_("Float");
             case FLOAT_32_ID:
@@ -200,14 +204,16 @@ namespace stromx
             case UINT_ID:
                 return isVariant(UINT_8) 
                     || isVariant(UINT_16) 
-                    || isVariant(UINT_32);
+                    || isVariant(UINT_32)
+                    || isVariant(UINT_64);
             case UINT_32_ID:
                 return isVariant(ENUM);
             case INT_ID:
                 return isVariant(UINT)
                     || isVariant(INT_8) 
                     || isVariant(INT_16) 
-                    || isVariant(INT_32);
+                    || isVariant(INT_32)
+                    || isVariant(INT_64);
             case FLOAT_ID:
                 return isVariant(FLOAT_32)
                     || isVariant(FLOAT_64);

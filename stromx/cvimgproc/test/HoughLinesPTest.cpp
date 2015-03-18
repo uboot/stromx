@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(HoughLinesP::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(HoughLinesP::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(HoughLinesP::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("HoughLinesPTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("HoughLinesPTest_testAllocate0_dst.npy", dstAccess());
         }
         
     } // cvimgproc

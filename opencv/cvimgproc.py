@@ -793,8 +793,8 @@ cameraMatrix = package.MatrixParameter(
 )
 distCoeffs = package.MatrixParameter(
     "distCoeffs", "Distortion coefficients", datatype.FloatMatrix(),
-    default = "cvsupport::Matrix::zeros(4, 1, runtime::Matrix::FLOAT_32)", 
-    rows = 4, cols = 1
+    default = "cvsupport::Matrix::zeros(1, 5, runtime::Matrix::FLOAT_32)", 
+    rows = 1, cols = 5
 )
 manual = package.Option(
     "manual", "Manual", 

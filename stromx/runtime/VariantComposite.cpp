@@ -48,6 +48,8 @@ namespace stromx
             default:
                 BOOST_ASSERT(false);
             }
+            
+            return false;
         }
         
         const std::string & VariantComposite::package() const
@@ -66,6 +68,8 @@ namespace stromx
             default:
                 BOOST_ASSERT(false);
             }
+            
+            return "";
         }
             
         const VariantHandle operator&&(const VariantHandle & lhs, const VariantHandle & rhs)

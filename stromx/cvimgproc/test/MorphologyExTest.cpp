@@ -42,10 +42,10 @@ namespace stromx
             m_operator->setParameter(MorphologyEx::KSIZEY, ksizey);
             m_operator->setParameter(MorphologyEx::SHAPE, shape);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(MorphologyEx::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("MorphologyExTest_testManual0_dst.png", dstAccess());
         }
         
         void MorphologyExTest::testManual1()
@@ -65,10 +65,10 @@ namespace stromx
             m_operator->setParameter(MorphologyEx::SHAPE, shape);
             m_operator->setParameter(MorphologyEx::ITERATIONS, iterations);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(MorphologyEx::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("MorphologyExTest_testManual1_dst.png", dstAccess());
         }
         
         void MorphologyExTest::testAllocate0()
@@ -83,10 +83,10 @@ namespace stromx
             m_operator->setInputData(MorphologyEx::SRC, src);
             m_operator->setParameter(MorphologyEx::OP, op);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(MorphologyEx::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("MorphologyExTest_testAllocate0_dst.png", dstAccess());
         }
         
         void MorphologyExTest::testAllocate1()
@@ -103,10 +103,10 @@ namespace stromx
             m_operator->setParameter(MorphologyEx::OP, op);
             m_operator->setParameter(MorphologyEx::SHAPE, shape);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(MorphologyEx::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("MorphologyExTest_testAllocate1_dst.png", dstAccess());
         }
         
         void MorphologyExTest::testInPlace0()
@@ -123,10 +123,10 @@ namespace stromx
             m_operator->setParameter(MorphologyEx::OP, op);
             m_operator->setParameter(MorphologyEx::SHAPE, shape);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(MorphologyEx::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("MorphologyExTest_testInPlace0_src.png", srcAccess());
         }
         
         void MorphologyExTest::testInPlace1()
@@ -141,10 +141,10 @@ namespace stromx
             m_operator->setInputData(MorphologyEx::SRC, src);
             m_operator->setParameter(MorphologyEx::OP, op);
             
-            runtime::DataContainer result = m_operator->getOutputData(MorphologyEx::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(MorphologyEx::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("MorphologyExTest_testInPlace1.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("MorphologyExTest_testInPlace1_src.png", srcAccess());
         }
         
     } // cvimgproc

@@ -414,10 +414,10 @@ namespace stromx
                     
                     cv::morphologyEx(srcCvData, dstCvData, opCvData, getStructuringElement(shapeCvData, cv::Size(ksizexCvData, ksizeyCvData)), cv::Point(-1, -1), iterationsCvData);
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = inContainer;
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(ALLOCATE):
@@ -451,11 +451,11 @@ namespace stromx
                     cv::morphologyEx(srcCvData, dstCvData, opCvData, getStructuringElement(shapeCvData, cv::Size(ksizexCvData, ksizeyCvData)), cv::Point(-1, -1), iterationsCvData);
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), srcCastedData->pixelType());
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(IN_PLACE):
@@ -487,10 +487,10 @@ namespace stromx
                     
                     cv::morphologyEx(srcCvData, dstCvData, opCvData, getStructuringElement(shapeCvData, cv::Size(ksizexCvData, ksizeyCvData)), cv::Point(-1, -1), iterationsCvData);
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(SRC, outContainer);
+                    runtime::DataContainer srcOutContainer = inContainer;
+                    runtime::Id2DataPair srcOutMapper(SRC, srcOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(srcOutMapper);
                 }
                 break;
             }

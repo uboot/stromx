@@ -36,10 +36,10 @@ namespace stromx
             m_operator->setInputData(Add::SRC_2, src2);
             m_operator->setInputData(Add::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AddTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual0_dst.png", dstAccess());
         }
         
         void AddTest::testManual1()
@@ -56,10 +56,10 @@ namespace stromx
             m_operator->setInputData(Add::SRC_2, src2);
             m_operator->setInputData(Add::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AddTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual1_dst.png", dstAccess());
         }
         
         void AddTest::testManual2()
@@ -78,10 +78,10 @@ namespace stromx
             m_operator->setInputData(Add::DST, dst);
             m_operator->setParameter(Add::DDEPTH, ddepth);
             
-            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AddTest_testManual2.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual2_dst.png", dstAccess());
         }
         
         void AddTest::testAllocate0()
@@ -96,10 +96,10 @@ namespace stromx
             m_operator->setInputData(Add::SRC_1, src1);
             m_operator->setInputData(Add::SRC_2, src2);
             
-            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AddTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testAllocate0_dst.png", dstAccess());
         }
         
         void AddTest::testAllocate1()
@@ -116,10 +116,10 @@ namespace stromx
             m_operator->setInputData(Add::SRC_2, src2);
             m_operator->setParameter(Add::DDEPTH, ddepth);
             
-            runtime::DataContainer result = m_operator->getOutputData(Add::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("AddTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testAllocate1_dst.png", dstAccess());
         }
         
     } // cvcore

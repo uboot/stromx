@@ -38,10 +38,10 @@ namespace stromx
             m_operator->setParameter(BoxFilter::KSIZEX, ksizex);
             m_operator->setParameter(BoxFilter::KSIZEY, ksizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoxFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BoxFilterTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testManual0_dst.png", dstAccess());
         }
         
         void BoxFilterTest::testManual1()
@@ -55,10 +55,10 @@ namespace stromx
             m_operator->setInputData(BoxFilter::SRC, src);
             m_operator->setInputData(BoxFilter::DST, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoxFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BoxFilterTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testManual1_dst.png", dstAccess());
         }
         
         void BoxFilterTest::testAllocate0()
@@ -75,10 +75,10 @@ namespace stromx
             m_operator->setParameter(BoxFilter::KSIZEX, ksizex);
             m_operator->setParameter(BoxFilter::KSIZEY, ksizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoxFilter::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BoxFilterTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testAllocate0_dst.png", dstAccess());
         }
         
         void BoxFilterTest::testInPlace0()
@@ -91,10 +91,10 @@ namespace stromx
             
             m_operator->setInputData(BoxFilter::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoxFilter::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(BoxFilter::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("BoxFilterTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("BoxFilterTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

@@ -96,6 +96,28 @@ namespace stromx
             runTest(m_operator, TriggerData());
         }
 
+        void ConstDataTest::testNoAllocation()
+        {
+            m_operator->setParameter(ConstData::DATA_TYPE, Enum(Variant::INT_32.id()));
+            m_operator->setParameter(ConstData::ALLOCATE_DATA, Bool(false));
+            m_operator->initialize();
+            
+            m_operator->setParameter(ConstData::VALUE, Int32(15));
+            m_operator->activate();
+            
+            const Data* dataPtr = 0;
+            {
+                DataContainer data;
+                data = m_operator->getOutputData(ConstData::OUTPUT);
+                dataPtr = &ReadAccess<>(data)();
+            }
+            
+            DataContainer data;
+            m_operator->clearOutputData(ConstData::OUTPUT);
+            data = m_operator->getOutputData(ConstData::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL(dataPtr, &ReadAccess<>(data)());
+        }
+
         void ConstDataTest::tearDown()
         {
             delete m_operator;

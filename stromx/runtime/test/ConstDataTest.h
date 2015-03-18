@@ -35,6 +35,7 @@ namespace stromx
             CPPUNIT_TEST(testExecuteFloat32);
             CPPUNIT_TEST(testExecuteString);
             CPPUNIT_TEST(testExecuteTrigger);
+            CPPUNIT_TEST(testNoAllocation);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -50,6 +51,7 @@ namespace stromx
             void testExecuteFloat32();
             void testExecuteString();
             void testExecuteTrigger();
+            void testNoAllocation();
                 
         private:
             runtime::OperatorTester* m_operator;

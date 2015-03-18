@@ -166,10 +166,10 @@ namespace stromx
                     ellipseCvData = cv::fitEllipse(pointsCvData);
                     
                     runtime::Matrix* ellipseCastedData = new cvsupport::Matrix(ellipseCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(ellipseCastedData);
-                    runtime::Id2DataPair outputMapper(ELLIPSE, outContainer);
+                    runtime::DataContainer ellipseOutContainer = runtime::DataContainer(ellipseCastedData);
+                    runtime::Id2DataPair ellipseOutMapper(ELLIPSE, ellipseOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(ellipseOutMapper);
                 }
                 break;
             }

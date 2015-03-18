@@ -40,10 +40,10 @@ namespace stromx
             m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
             m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpPerspectiveTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testManual0_dst.png", dstAccess());
         }
         
         void WarpPerspectiveTest::testManual1()
@@ -62,10 +62,10 @@ namespace stromx
             m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
             m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpPerspectiveTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testManual1_dst.png", dstAccess());
         }
         
         void WarpPerspectiveTest::testAllocate0()
@@ -84,10 +84,10 @@ namespace stromx
             m_operator->setParameter(WarpPerspective::DSIZEX, dsizex);
             m_operator->setParameter(WarpPerspective::DSIZEY, dsizey);
             
-            runtime::DataContainer result = m_operator->getOutputData(WarpPerspective::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("WarpPerspectiveTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testAllocate0_dst.png", dstAccess());
         }
         
     } // cvimgproc

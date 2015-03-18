@@ -221,10 +221,10 @@ namespace stromx
                     calcHist1D(srcCvData, dstCvData, histMinCvData, histMaxCvData, histSizeCvData);
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             }

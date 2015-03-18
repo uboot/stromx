@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(BoundingRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("BoundingRectTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
+            cvsupport::Matrix::save("BoundingRectTest_testAllocate0_rect.npy", rectAccess());
         }
         
         void BoundingRectTest::testAllocate1()
@@ -46,10 +46,10 @@ namespace stromx
             
             m_operator->setInputData(BoundingRect::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(BoundingRect::RECT);
+            runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("BoundingRectTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
+            cvsupport::Matrix::save("BoundingRectTest_testAllocate1_rect.npy", rectAccess());
         }
         
     } // cvimgproc

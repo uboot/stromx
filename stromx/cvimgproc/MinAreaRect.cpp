@@ -166,10 +166,10 @@ namespace stromx
                     rectCvData = cv::minAreaRect(pointsCvData);
                     
                     runtime::Matrix* rectCastedData = new cvsupport::Matrix(rectCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(rectCastedData);
-                    runtime::Id2DataPair outputMapper(RECT, outContainer);
+                    runtime::DataContainer rectOutContainer = runtime::DataContainer(rectCastedData);
+                    runtime::Id2DataPair rectOutMapper(RECT, rectOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(rectOutMapper);
                 }
                 break;
             }

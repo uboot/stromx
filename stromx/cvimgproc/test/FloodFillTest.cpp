@@ -37,10 +37,10 @@ namespace stromx
             m_operator->setParameter(FloodFill::SEED_POINT_Y, seedPointY);
             m_operator->setParameter(FloodFill::NEW_VAL, newVal);
             
-            runtime::DataContainer result = m_operator->getOutputData(FloodFill::SRC);
+            runtime::DataContainer srcResult = m_operator->getOutputData(FloodFill::SRC);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("FloodFillTest_testInPlace0.png", access());
+            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
+            cvsupport::Image::save("FloodFillTest_testInPlace0_src.png", srcAccess());
         }
         
     } // cvimgproc

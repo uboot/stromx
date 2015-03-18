@@ -27,6 +27,7 @@
 #include <stromx/cvsupport/ConvertPixelType.h>
 #include <stromx/cvsupport/Clip.h>
 #include <stromx/cvsupport/Flicker.h>
+#include <stromx/cvsupport/ReadDirectory.h>
 
 void exportImage();
 void exportMatrix();
@@ -48,4 +49,5 @@ BOOST_PYTHON_MODULE(libcvsupport)
     stromx::python::exportOperatorKernel<ConstImage>("ConstImage");
     stromx::python::exportOperatorKernel<ConvertPixelType>("ConvertPixelType");
     stromx::python::exportOperatorKernel<Flicker>("Flicker");
+    stromx::python::exportOperatorKernel<ReadDirectory>("ReadDirectory");
 }

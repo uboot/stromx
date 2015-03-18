@@ -29,6 +29,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (VariantTest);
             CPPUNIT_TEST (testIntTypes);
             CPPUNIT_TEST (testImageTypes);
+            CPPUNIT_TEST (testInt64Types);
             CPPUNIT_TEST (testImageIsMatrix);
             CPPUNIT_TEST (testUInt8IsIntOrImage);
             CPPUNIT_TEST (testInt32MatrixIsInt32MatrixOrFloat32Matrix);
@@ -43,6 +44,7 @@ namespace stromx
             protected:
                 void testIntTypes();
                 void testImageTypes();
+                void testInt64Types();
                 void testImageIsMatrix();
                 void testUInt8IsIntOrImage();
                 void testInt32MatrixIsInt32MatrixOrFloat32Matrix();

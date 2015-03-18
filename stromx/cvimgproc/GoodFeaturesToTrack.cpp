@@ -285,10 +285,10 @@ namespace stromx
                     cv::goodFeaturesToTrack(srcCvData, pointMatrixCvData, maxCornersCvData, qualityLevelCvData, minDistanceCvData, cv::noArray(), blockSizeCvData, useHarrisDetectorCvData, kCvData);
                     
                     runtime::Matrix* pointMatrixCastedData = new cvsupport::Matrix(pointMatrixCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(pointMatrixCastedData);
-                    runtime::Id2DataPair outputMapper(POINT_MATRIX, outContainer);
+                    runtime::DataContainer pointMatrixOutContainer = runtime::DataContainer(pointMatrixCastedData);
+                    runtime::Id2DataPair pointMatrixOutMapper(POINT_MATRIX, pointMatrixOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(pointMatrixOutMapper);
                 }
                 break;
             }

@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(FitLine::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(FitLine::LINE);
+            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("FitLineTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> lineAccess(lineResult);
+            cvsupport::Matrix::save("FitLineTest_testAllocate0_line.npy", lineAccess());
         }
         
         void FitLineTest::testAllocate1()
@@ -46,10 +46,10 @@ namespace stromx
             
             m_operator->setInputData(FitLine::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(FitLine::LINE);
+            runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("FitLineTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> lineAccess(lineResult);
+            cvsupport::Matrix::save("FitLineTest_testAllocate1_line.npy", lineAccess());
         }
         
     } // cvimgproc

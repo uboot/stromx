@@ -43,20 +43,12 @@ namespace stromx
         
         void Merge::setParameter(unsigned int id, const runtime::Data& /*value*/)
         {
-            switch(id)
-            {
-            default:
-                throw WrongParameterId(id, *this);
-            }
+            throw WrongParameterId(id, *this);
         }
 
         const DataRef Merge::getParameter(const unsigned int id) const
         {
-            switch(id)
-            {
-            default:
-                throw WrongParameterId(id, *this);
-            }
+            throw WrongParameterId(id, *this);
         }
         
         void Merge::activate()

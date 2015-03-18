@@ -8,6 +8,7 @@ include_directories (
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
     ${CPPUNIT_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIRS}
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)

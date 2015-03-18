@@ -46,10 +46,10 @@ namespace stromx
             m_operator->setParameter(Sobel::SCALE, scale);
             m_operator->setParameter(Sobel::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Sobel::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("SobelTest_testManual0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("SobelTest_testManual0_dst.png", dstAccess());
         }
         
         void SobelTest::testManual1()
@@ -76,10 +76,10 @@ namespace stromx
             m_operator->setParameter(Sobel::SCALE, scale);
             m_operator->setParameter(Sobel::DELTA, delta);
             
-            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Sobel::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("SobelTest_testManual1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("SobelTest_testManual1_dst.png", dstAccess());
         }
         
         void SobelTest::testAllocate0()
@@ -100,10 +100,10 @@ namespace stromx
             m_operator->setParameter(Sobel::KSIZE, ksize);
             m_operator->setParameter(Sobel::SCALE, scale);
             
-            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Sobel::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("SobelTest_testAllocate0.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("SobelTest_testAllocate0_dst.png", dstAccess());
         }
         
         void SobelTest::testAllocate1()
@@ -120,10 +120,10 @@ namespace stromx
             m_operator->setParameter(Sobel::DDEPTH, ddepth);
             m_operator->setParameter(Sobel::SCALE, scale);
             
-            runtime::DataContainer result = m_operator->getOutputData(Sobel::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(Sobel::DST);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("SobelTest_testAllocate1.png", access());
+            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
+            cvsupport::Image::save("SobelTest_testAllocate1_dst.png", dstAccess());
         }
         
     } // cvimgproc

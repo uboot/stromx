@@ -31,10 +31,10 @@ namespace stromx
             
             m_operator->setInputData(FitEllipse::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(FitEllipse::ELLIPSE);
+            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("FitEllipseTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> ellipseAccess(ellipseResult);
+            cvsupport::Matrix::save("FitEllipseTest_testAllocate0_ellipse.npy", ellipseAccess());
         }
         
         void FitEllipseTest::testAllocate1()
@@ -46,10 +46,10 @@ namespace stromx
             
             m_operator->setInputData(FitEllipse::POINTS, points);
             
-            runtime::DataContainer result = m_operator->getOutputData(FitEllipse::ELLIPSE);
+            runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("FitEllipseTest_testAllocate1.npy", access());
+            runtime::ReadAccess<runtime::Matrix> ellipseAccess(ellipseResult);
+            cvsupport::Matrix::save("FitEllipseTest_testAllocate1_ellipse.npy", ellipseAccess());
         }
         
     } // cvimgproc

@@ -261,10 +261,10 @@ namespace stromx
                     
                     cv::drawContours(imgCvData, contoursCvData, -1, cv::Scalar(ch1CvData, ch2CvData, ch3CvData), thicknessCvData);
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(IMG, outContainer);
+                    runtime::DataContainer imgOutContainer = inContainer;
+                    runtime::Id2DataPair imgOutMapper(IMG, imgOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(imgOutMapper);
                 }
                 break;
             }

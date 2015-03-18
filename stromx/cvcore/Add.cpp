@@ -279,10 +279,10 @@ namespace stromx
                     
                     cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = inContainer;
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             case(ALLOCATE):
@@ -332,13 +332,13 @@ namespace stromx
                     cv::add(src1CvData, src2CvData, dstCvData, cv::noArray(), ddepthCvData);
                     
                     runtime::Image* dstCastedData = new cvsupport::Image(dstCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair outputMapper(DST, outContainer);
+                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
                     
                     runtime::Image::PixelType pixelType = cvsupport::computeOutPixelType(convertDdepth(m_ddepth), src1CastedData->pixelType());
                     unsigned int stride = runtime::Image::pixelSize(pixelType) * src1CastedData->width();
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), stride, dstCastedData->data(), pixelType);
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(dstOutMapper);
                 }
                 break;
             }

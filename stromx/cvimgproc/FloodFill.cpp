@@ -218,10 +218,10 @@ namespace stromx
                     
                     cv::floodFill(srcCvData, cv::Point(seedPointXCvData, seedPointYCvData), newValCvData);
                     
-                    runtime::DataContainer outContainer = inContainer;
-                    runtime::Id2DataPair outputMapper(SRC, outContainer);
+                    runtime::DataContainer srcOutContainer = inContainer;
+                    runtime::Id2DataPair srcOutMapper(SRC, srcOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(srcOutMapper);
                 }
                 break;
             }

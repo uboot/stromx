@@ -42,20 +42,12 @@ namespace stromx
         
         void Iterate::setParameter(unsigned int id, const runtime::Data& /*value*/)
         {
-            switch(id)
-            {
-            default:
-                throw WrongParameterId(id, *this);
-            }
+            throw WrongParameterId(id, *this);
         }
 
         const DataRef Iterate::getParameter(const unsigned int id) const
         {
-            switch(id)
-            {
-            default:
-                throw WrongParameterId(id, *this);
-            }
+            throw WrongParameterId(id, *this);
         }
         
         void Iterate::activate()

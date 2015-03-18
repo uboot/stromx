@@ -34,10 +34,10 @@ namespace stromx
             m_operator->setInputData(CornerMinEigenVal::SRC, src);
             m_operator->setInputData(CornerMinEigenVal::DST, dst);
             
-            runtime::DataContainer result = m_operator->getOutputData(CornerMinEigenVal::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CornerMinEigenValTest_testManual0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CornerMinEigenValTest_testManual0_dst.npy", dstAccess());
         }
         
         void CornerMinEigenValTest::testAllocate0()
@@ -50,10 +50,10 @@ namespace stromx
             
             m_operator->setInputData(CornerMinEigenVal::SRC, src);
             
-            runtime::DataContainer result = m_operator->getOutputData(CornerMinEigenVal::DST);
+            runtime::DataContainer dstResult = m_operator->getOutputData(CornerMinEigenVal::DST);
             
-            runtime::ReadAccess<runtime::Matrix> access(result);
-            cvsupport::Matrix::save("CornerMinEigenValTest_testAllocate0.npy", access());
+            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
+            cvsupport::Matrix::save("CornerMinEigenValTest_testAllocate0_dst.npy", dstAccess());
         }
         
     } // cvimgproc

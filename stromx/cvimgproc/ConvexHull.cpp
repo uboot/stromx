@@ -185,10 +185,10 @@ namespace stromx
                     cv::convexHull(curveCvData, outCurveCvData, clockwiseCvData);
                     
                     runtime::Matrix* outCurveCastedData = new cvsupport::Matrix(outCurveCvData);
-                    runtime::DataContainer outContainer = runtime::DataContainer(outCurveCastedData);
-                    runtime::Id2DataPair outputMapper(OUT_CURVE, outContainer);
+                    runtime::DataContainer outCurveOutContainer = runtime::DataContainer(outCurveCastedData);
+                    runtime::Id2DataPair outCurveOutMapper(OUT_CURVE, outCurveOutContainer);
                     
-                    provider.sendOutputData(outputMapper);
+                    provider.sendOutputData(outCurveOutMapper);
                 }
                 break;
             }
