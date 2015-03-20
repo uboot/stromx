@@ -53,6 +53,9 @@ namespace stromx
                 case BLOCK_EXECUTE:
                     m_blockExecute = data_cast<Bool>(value);
                     break;
+                case THROW_ACTIVATE:
+                    m_throwActivate = data_cast<Bool>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -71,9 +74,17 @@ namespace stromx
                 return m_throwDeactivate;
             case BLOCK_EXECUTE:
                 return m_blockExecute;
+            case THROW_ACTIVATE:
+                return m_throwActivate;
             default:
                 throw WrongParameterId(id, *this);
             }
+        }
+
+        void ExceptionOperator::activate()
+        {
+            if(m_throwActivate)
+                throw OperatorError(*this, "Failed to activate operator.");
         }
 
         void ExceptionOperator::deactivate()
@@ -128,11 +139,15 @@ namespace stromx
             std::vector<const Parameter*> parameters;
             
             Parameter* param = new Parameter(THROW_DEACTIVATE, Variant::BOOL);
-            param->setAccessMode(Parameter::NONE_WRITE);
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
             param = new Parameter(BLOCK_EXECUTE, Variant::BOOL);
-            param->setAccessMode(Parameter::NONE_WRITE);
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(THROW_ACTIVATE, Variant::BOOL);
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
             return parameters;

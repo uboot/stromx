@@ -159,10 +159,10 @@ namespace stromx
         {
             Operator* op1 = new Operator(new ExceptionOperator);
             Operator* op2 = new Operator(new Dump);
-            op1->setParameter(ExceptionOperator::THROW_DEACTIVATE, Bool(true));
             
             op1->initialize();
             op2->initialize();
+            op1->setParameter(ExceptionOperator::THROW_DEACTIVATE, Bool(true));
             m_network->addOperator(op1);
             m_network->addOperator(op2);
             m_network->activate();

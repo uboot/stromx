@@ -35,7 +35,8 @@ namespace stromx
             enum Parameters
             { 
                 THROW_DEACTIVATE,
-                BLOCK_EXECUTE
+                BLOCK_EXECUTE,
+                THROW_ACTIVATE
             };   
             
             enum Outputs
@@ -49,6 +50,7 @@ namespace stromx
             virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
             const stromx::runtime::DataRef getParameter(const unsigned int id) const;
             virtual void execute(stromx::runtime::DataProvider& provider);
+            virtual void activate();
             virtual void deactivate();
             virtual void interrupt();
             
@@ -68,6 +70,7 @@ namespace stromx
             mutable boost::mutex m_mutex;
             stromx::runtime::Bool m_blockExecute;
             stromx::runtime::Bool m_throwDeactivate;
+            stromx::runtime::Bool m_throwActivate;
         };
     }
 }

@@ -63,6 +63,8 @@ namespace stromx
             }
             
             delete m_stream;
+            delete m_op1;
+            delete m_op2;
         }
         
         void StreamTest::testOperators()
@@ -115,6 +117,7 @@ namespace stromx
         {
             // Register first operator to the stream
             Operator* op1 = m_stream->addOperator(m_op1);
+            m_op1 = 0;
             m_stream->initializeOperator(op1);
             
             Operator* op3 = new Operator(new TestOperator);
@@ -126,6 +129,7 @@ namespace stromx
             
             // Register first operator to the stream
             Operator* op2 = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             m_stream->initializeOperator(op2);
             
             //Invalid output of source operator
@@ -182,6 +186,7 @@ namespace stromx
             //Invalid input parameter (operator already added to the stream)
             m_stream->addOperator(m_op1);
             CPPUNIT_ASSERT_THROW(m_stream->addOperator(m_op1), WrongArgument);
+            m_op1 = 0;
             
             //Invalid state of the stream (not INACTIVE)
             m_stream->start();
@@ -191,6 +196,7 @@ namespace stromx
                         
             //Valid input parameter and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->addOperator(m_op2));
+            m_op2 = 0;
             CPPUNIT_ASSERT_EQUAL((unsigned int)(6), (unsigned int)(m_stream->operators().size()));
         }
         
@@ -200,6 +206,7 @@ namespace stromx
             m_stream->setFactory(&factory);
             
             Operator* op = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             CPPUNIT_ASSERT_EQUAL(static_cast<const AbstractFactory*>(&factory),
                                  op->factory());  
         }
@@ -209,6 +216,7 @@ namespace stromx
             Factory factory;
             m_stream->setFactory(&factory);
             Operator* op = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             
             m_stream->hideOperator(op);
             CPPUNIT_ASSERT_EQUAL(reinterpret_cast<const AbstractFactory*>(0),
@@ -220,6 +228,7 @@ namespace stromx
             Factory factory;
             m_stream->setFactory(&factory);
             Operator* op = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             m_stream->hideOperator(op);
             
             m_stream->showOperator(op);
@@ -251,6 +260,7 @@ namespace stromx
             
             //Remove uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op2));
         }
         
@@ -267,6 +277,7 @@ namespace stromx
              
             // can not initialize while stream is active
             Operator* op1 = m_stream->addOperator(m_op1);
+            m_op1 = 0;
             m_stream->start();
             CPPUNIT_ASSERT_THROW(m_stream->initializeOperator(op1), WrongState);
             m_stream->stop();
@@ -290,6 +301,7 @@ namespace stromx
              
             // can not deinitialize while stream is active
             Operator* op1 = m_stream->addOperator(m_op1);
+            m_op1 = 0;
             m_stream->initializeOperator(op1);
             m_stream->start();
             CPPUNIT_ASSERT_THROW(m_stream->deinitializeOperator(op1), WrongState);
@@ -319,7 +331,27 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_stream->threads().size()));
             
             CPPUNIT_ASSERT_THROW(m_stream->removeThread(thr), WrongArgument);
+        }        
+
+        void StreamTest::testStart()
+        {
+            CPPUNIT_ASSERT_NO_THROW(m_stream->start());
+            CPPUNIT_ASSERT_EQUAL(Stream::ACTIVE, m_stream->status());
         }       
+
+        void StreamTest::testStartOperatorError()
+        {
+            OperatorKernel* opKernel = new ExceptionOperator;
+            Operator* op = m_stream->addOperator(opKernel);
+            m_stream->initializeOperator(op);
+            op->setParameter(ExceptionOperator::THROW_ACTIVATE, Bool(true));
+            
+            CPPUNIT_ASSERT_THROW(m_stream->start(), OperatorError);
+            CPPUNIT_ASSERT_EQUAL(Stream::INACTIVE, m_stream->status());
+            
+            op->setParameter(ExceptionOperator::THROW_ACTIVATE, Bool(false));
+            CPPUNIT_ASSERT_NO_THROW(m_stream->start());
+        }     
 
         void StreamTest::testPause()
         {
@@ -440,6 +472,7 @@ namespace stromx
             
             //Invalid input parameter (operator op not known by the stream)
             Operator* op1 = new Operator(m_op1);
+            m_op1 = 0;
             CPPUNIT_ASSERT_THROW(m_stream->hideOperator(op1), WrongArgument);
              
             //Invalid state of the stream (not INACTIVE)
@@ -458,6 +491,7 @@ namespace stromx
             
             //Hide uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
+            m_op2 = 0;
             CPPUNIT_ASSERT_NO_THROW(m_stream->hideOperator(op2));
         }
 
@@ -521,9 +555,9 @@ namespace stromx
             Stream* stream = new Stream;
             Operator* op1 = stream->addOperator(new ExceptionOperator);
             Operator* op2 = stream->addOperator(new Dump);
-            op1->setParameter(ExceptionOperator::BLOCK_EXECUTE, Bool(true));
             stream->initializeOperator(op1);
             stream->initializeOperator(op2);
+            op1->setParameter(ExceptionOperator::BLOCK_EXECUTE, Bool(true));
             stream->connect(op1, ExceptionOperator::OUTPUT, op2, Dump::INPUT);
             Thread* t = stream->addThread();
             t->addInput(op2, Dump::INPUT);

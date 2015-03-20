@@ -183,8 +183,9 @@ namespace stromx
             }
             catch(OperatorError &)
             {
-                stop();
-                join();
+                // an error occurred while activating the network
+                // make sure all operators are deactivated
+                m_network->deactivate();
                 throw;
             }
         }
