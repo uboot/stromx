@@ -500,7 +500,7 @@ namespace stromx
                 image = new Image(m_buffer);
                 image->initializeImage(width(m_resolution), height(m_resolution),
                                        width(m_resolution) * 3,
-                                       m_buffer->data, runtime::Image::RGB_24);
+                                       m_buffer->data, runtime::Image::BGR_24);
                 m_buffer = 0;
             }
             catch(boost::thread_interrupted&)
