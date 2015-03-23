@@ -1,107 +1,103 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>stromx</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>stromx</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-    </head>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.css">
+  </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img alt="stromx-logo" src="assets/logo.png">
+            </a>
+          </div>
 
-        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="story.html">Story</a></li>
+              <li><a href="screenshots.html">Screenshots</a></li>
+              <li><a href="download.html">Download</a></li>
+              <li class="active"><a href="#">Develop</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="index.html">stromx</a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="story.html">Story</a></li>
-                            <li><a href="screenshots.html">Screenshots</a></li>
-                            <li><a href="download.html">Download</a></li>
-                            <li class="active"><a href="#">Develop</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-
-	    <h1>Develop</h1>
-
-	    <p>To play around with stromx and implement first vision streams an installation of stromx-studio is 
-the only thing you need. It can be downloaded for the most popular Linux distributions and for Windows on the <a href="download.html"> downloads page</a>.</p>
-
-<p>It is also possible to use the functionality of stromx from a different application via the stromx API. E.g. a vision application with a custom GUI can use stromx to implement its imaging capabilities. In this case the stromx header files and the shared library objects are necessary. The same files &#x2013; headers and shared objects &#x2013; are necessary if you want to implement your own operators. For those Linux distributions stromx is packaged for these files are provided in the devel packages. For other distributions stromx has to be compiled from the sources to be linked against.</p>
-
-<p>On Windows the developer files of the stromx library have to be build for each version of Visual Studio. For this reason we currently do not provide pre-compiled Windows versions.
-Finally, if you want to participate in the development of stromx or to adapt the library to your needs it is obviously necessary to compile and build it yourself. The necessary information on how to build stromx is given below.</p>
+      <h1 class="page-header">Develop</h1>
+	    <h2>stromx-web</h2>
+      The stromx-web frontend is a single-page web application to create, edit and
+      deplay stromx streams. Note that we use the term <em>frontend</em> for the complete client-server architecture which sits on top of the stromx library. In fact stromx-web itself consists of a client-side frontend (the JavaScript application running the users's web browser) and the server-side backend (a Python web server running on top of the stromx library).
             
-	    <h3>Sources</h3>
+	    <h4>Sources</h4>
+	    <p>
+	      The sources of stromx-web are hosted at <a href="http://github.com/uboot/stromx-web">github</a>. While he project is still in a early stage of development refer to the
+        readme files in the repository and to the <a href="http://github.com/uboot/stromx-web">Dockerfile</a> on how to build and deploy stromx-web.
+	    <p>
+
+	    <h2>stromx</h2>
+
+      <p>
+        The functionality of stromx can be used in any C++ via the stromx API. E.g. a vision application with a custom GUI can use stromx to implement its imaging capabilities. In this case the stromx header files and the shared library objects are necessary. The same files &#x2013; headers and shared objects &#x2013; are necessary if you want to implement your own operators. 
+        You can also use stromx in Python via the provided Python bindings. Note however that it is not possible to implement custom operators in Python.
+        For those Linux distributions stromx is packaged for these files are provided in the developer packages. For other distributions stromx has to be compiled from the sources to be linked against.
+      </p>
+
+      <p>
+        On Windows the developer files of the stromx library have to be build for each version of Visual Studio. For this reason we currently do not provide pre-compiled Windows versions.
+        Finally, if you want to participate in the development of stromx or to adapt the library to your needs it is obviously necessary to compile and build it yourself. The necessary information on how to build stromx is given below.
+      </p>
+            
+	    <h4>Sources</h4>
 	    <p>
 	      The sources of stromx are hosted at <a href="http://github.com/uboot/stromx">github</a>.
-	      For stromx-studio a separate repository exists <a href="http://github.com/uboot/stromx-studio">here</a>. You can either clone the repository with git or download the repository as a compressed archive.
 	    <p>
 	  
-	    <h3>Build instructions</h3>
+	    <h4>Build instructions</h4>
 	    <p>
-	      The common <a href="http://github.com/uboot/stromx/wiki">wiki</a> of both projects provides useful information about the necessary 
-	      prequisites for building stromx and stromx-studio on Linux and Windows. It also contains build instruction for both platforms.
+	      The <a href="http://github.com/uboot/stromx/wiki">wiki</a> of the projects provides useful information about the necessary 
+	      prequisites for building stromx on Linux and Windows. It also contains build instruction for both platforms.
 	    </p>
 	  
-	    <h3>Documentation and tutorials</h3>
+	    <h4>Documentation and tutorials</h4>
 	    <p>
 	      The documentation of the stromx API is generated during the build process as explained in the wiki. Alternatively, it is contained in the documentation packages of the prebuilt packages for the Linux distributions. It includes tutorials which explain how to use stromx in an application and how to implement custom operator.
 	    </p>
+    </div>
 
-            <hr>
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; stromx 2015</p>
+      </div>
+    </footer>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
 
-            <footer>
-                <img src="img/logo.png" class="logo">
-                <p>&copy; stromx 2015</p>
-            </footer>
-
-        </div> <!-- /container -->
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-
-        <script src="js/vendor/bootstrap.min.js"></script>
-
-        <script src="js/main.js"></script>
-
-        <script>
-            var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-    </body>
+    <!-- <script>
+        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>-->
+  </body>
 </html>

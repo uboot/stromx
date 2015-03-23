@@ -1,113 +1,85 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>stromx</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>stromx</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-    </head>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.css">
+  </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img alt="stromx-logo" src="assets/logo.png">
+            </a>
+          </div>
 
-        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="story.html">Story</a></li>
+              <li><a href="screenshots.html">Screenshots</a></li>
+              <li class="active"><a href="#">Download</a></li>
+              <li><a href="develop.html">Develop</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="index.html">stromx</a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="story.html">Story</a></li>
-                            <li><a href="screenshots.html">Screenshots</a></li>
-                            <li class="active"><a href="#">Download</a></li>
-                            <li><a href="develop.html">Develop</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-
-            <h1>Version 0.3</h1>
-
-            <p>
-              The most recent release of stromx is 0.3. Prebuilt packages of the current release of the 0.3.x series are hosted at
-              <a href="http://build.opensuse.org/project/monitor/home:matzfuchs:stromx-stable">openSUSE Build Service</a> (openSUSE and Fedora) and <a href="http://launchpad.net/~stromx-developers/+archive/stromx-stable">launchpad</a> (Ubuntu).
-            </p>
-            <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs:/stromx-stable/Fedora_20">Fedora 20</a></p>
-            <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs:/stromx-stable/Fedora_19">Fedora 19</a></p>
-            <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs:/stromx-stable/openSUSE_13.1">openSUSE 13.1</a></p>
-            <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs:/stromx-stable/openSUSE_12.3">openSUSE 12.3</a></p>
-            <p><a href="https://launchpad.net/~stromx-developers/+archive/stromx-stable">Ubuntu 13.10</a></p>
+      <h1 class="page-header">Download</h1>
+      <h2>stromx-web</h2>
             
-            <p>
-              Experimental packages for <a href="http://www.raspbian.org/">raspbian</a> and Windows are available at the respective 
-              Github release sites:
-            </p>
-            <p><a href="http://github.com/uboot/stromx/releases/tag/0.3.0">stromx 0.3</a> (raspbian)</p>
-            <p><a href="http://github.com/uboot/stromx-studio/releases/tag/0.3.0">stromx-studio 0.3</a> (raspbian and Windows)</p>
-            
-
-            
-            <h1>Unstable</h1>
-
+	    <h4>Docker container</h4>
 	    <p>
-	      Prebuilt packages of a current development version of stromx and stromx-studio for Linux exist. The Linux packages are hosted at <a href="http://build.opensuse.org/project/monitor/home:matzfuchs">openSUSE Build Service</a> and <a href="http://launchpad.net/~stromx-developers/+archive/packages">launchpad</a>. Note that while the packages are updated regularly they are not always based on the most recent sources. Moreover, the packages for different distributions are not synchronized. The current Ubuntu packages might e.g. have been built from newer sources than the Fedora packages.
-	    </p>
-	    <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/Fedora_20/">Fedora 20</a></p>
-	    <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/Fedora_19/">Fedora 19</a></p>
-	    <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/openSUSE_Factory/">openSUSE Factory</a></p>
-	    <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/openSUSE_13.1/">openSUSE 13.1</a></p>
-	    <p><a href="http://download.opensuse.org/repositories/home:/matzfuchs/openSUSE_12.3/">openSUSE 12.3</a></p>
-	    <p><a href="http://launchpad.net/~stromx-developers/+archive/packages/">Ubuntu 12.10-13.10</a></p>
+        A Docker container with the latest version of stromx-web is automatically 
+        built and pushed to <a href="https://registry.hub.docker.com/u/uboot/stromx-web/">Docker Hub</a>.
+	    <p>
+      
+      <h2>stromx</h2>
+      <h4>Stable packages</h4>
+      
+      <p>Stable versions of stromx are realeased on <a href="https://github.com/uboot/stromx/releases">Github</a>. For most releases prebuilt packages for Raspbian can also be found here.</p>
 
-            <hr>
+      <p> Prebuilt packages of the latest stable relase are built and hosted at <a href="https://build.opensuse.org/project/monitor/home:matzfuchs:stromx-stable">openSUSE Build Service</a> (openSUSE and Fedora) and <a href="https://launchpad.net/~stromx-developers/+archive/stromx-stable">launchpad</a> (Ubuntu).</p>
+            
+      <h4>Unstable packages</h4>
+      
+      <p>The current master branch can be accessed on <a href="https://github.com/uboot/stromx">Github</a>.
+      
+      <p> Prebuilt packages of the current master branch are built and hosted at <a href="https://build.opensuse.org/project/monitor/home:matzfuchs">openSUSE Build Service</a> (openSUSE and Fedora) and <a href="https://launchpad.net/~stromx-developers/+archive/packages">launchpad</a> (Ubuntu).</p>
+    </div>
 
-            <footer>
-                <img src="img/logo.png" class="logo">
-                <p>&copy; stromx 2015</p>
-            </footer>
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; stromx 2015</p>
+      </div>
+    </footer>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
 
-        </div> <!-- /container -->
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-
-        <script src="js/vendor/bootstrap.min.js"></script>
-
-        <script src="js/main.js"></script>
-
-        <script>
-            var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-    </body>
+    <!-- <script>
+        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>-->
+  </body>
 </html>

@@ -1,123 +1,107 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>stromx</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>stromx</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-    </head>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.css">
+  </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+              <img alt="stromx-logo" src="assets/logo.png">
+            </a>
+          </div>
 
-        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="active"><a href="#">Story</a></li>
+              <li><a href="screenshots.html">Screenshots</a></li>
+              <li><a href="download.html">Download</a></li>
+              <li><a href="develop.html">Develop</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="index.html">stromx</a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li class="active"><a href="#">Story</a></li>
-                            <li><a href="screenshots.html">Screenshots</a></li>
-                            <li><a href="download.html">Download</a></li>
-                            <li><a href="develop.html">Develop</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
+      <h1 class="page-header">The stromx story</h1>
+      
+      The following is a very biased story about your imaginary and successful deployment of stromx for a project in industrial vision. It should illustrate the idea behind stromx and what it can be used for. Keep in mind that stromx is still under development and enjoy!
 
-        <div class="container">
+      <h3>A vision system is needed</h3>
 
-            <h1>The stromx story</h1>
+      <p>Imagine a well established manufacturer of Totis. A Toti consists of many Toti parts which are assembled automatically by very sophisticated robots. When one of the Toti parts shows a special defect these robots become seriously confused and long production delays are the result. So the company decides to install a vision system which inspects this Toti part and rejects it if it shows the critical defect. The Toti manufacturer approaches your company with this problem. Because there are many other producers of Totis who most probably have the same problem you sense a good opportunity to sell a lot of vision systems. You ensure the manufacturer that you will develop a solution for his problem if he provides you with all the necessary information about the production of Totis and images of the assembly situation in question.</p>
 
-	    The following is a very biased story about your imaginary and successful deployment of stromx for a project in industrial vision. It should illustrate the idea behind stromx and what it can be used for. Keep in mind that stromx is still under development and enjoy!
+      <h3>The problem is solved</h3>
 
-	    <h3>A vision system is needed</h3>
+      <p>You send some experienced developers to the production plant and they return with a batch of images of Toti parts with and without defects. Full of curiosity you start throwing algorithms at the images to find out whether your dream of selling thousands of Toti inspection machines will come to a sudden stop after a couple of experiments. Luckily, after a few days work you invent an algorithm which perfectly solves the problem. The images must undergo some pre-processing before they can passed to your algorithm but the code for these steps can easily found in well-known image processing libraries. Relieved that you are ready to earn a fortune in the Toti business after just a couple of days work you start the construction of the inspection device.</p>
 
-	    <p>Imagine a well established manufacturer of Totis. A Toti consists of many Toti parts which are assembled automatically by very sophisticated robots. When one of the Toti parts shows a special defect these robots become seriously confused and long production delays are the result. So the company decides to install a vision system which inspects this Toti part and rejects it if it shows the critical defect. The Toti manufacturer approaches your company with this problem. Because there are many other producers of Totis who most probably have the same problem you sense a good opportunity to sell a lot of vision systems. You ensure the manufacturer that you will develop a solution for his problem if he provides you with all the necessary information about the production of Totis and images of the assembly situation in question.</p>
+      <h3>Stromx is discovered</h3>
 
-	    <h3>The problem is solved</h3>
+      <p>Since the hardware components such as camera and illumination devices have already been selected during the acquisition of the test images the main focus is on the software which controls the camera, analyzes the images and communicates the inspection result. At this stage you remember that some time ago you read this article about a software package called stromx which promised to provide an efficient infrastructure for such a solution. After downloading stromx you soon realize that the framework provides all the image processing operations for the pre-processing steps which are necessary before your algorithm can be executed. Obviously, the state-of-the-art Toti inspection algorithm you engineered only a couple of days ago is not a part of stromx (in fact you hope that nobody will ever implement one and open source the basis of your future fortune).
+      However, you can still import your algorithm into the stromx framework by implementing a stromx operator which wraps your algorithm. The result is a shared object which can be imported into the stromx-studio. You use the same technique to implement a stromx operator which drives the very special and sophisticated camera which will be part of the inspection device.</p>
 
-	    <p>You send some experienced developers to the production plant and they return with a batch of images of Toti parts with and without defects. Full of curiosity you start throwing algorithms at the images to find out whether your dream of selling thousands of Toti inspection machines will come to a sudden stop after a couple of experiments. Luckily, after a few days work you invent an algorithm which perfectly solves the problem. The images must undergo some pre-processing before they can passed to your algorithm but the code for these steps can easily found in well-known image processing libraries. Relieved that you are ready to earn a fortune in the Toti business after just a couple of days work you start the construction of the inspection device.</p>
+      <h3>Tweak the parameters in stromx-studio</h3>
 
-	    <h3>Stromx is discovered</h3>
+      <p>Now you are ready to start stromx-studio and import your custom operators. You drag instances of the camera operator, the Toti inspection operator and all necessary pre-processing operators to the main area. After connecting their inputs and outputs you press the play button. Your first <em>stromx stream</em> starts to work! While the stream processes all images it obtains from the camera in an endless loop the parameters of its operators can be changed on the fly. In addition you select <em>observers</em> at various locations of the stream to display the flow at these points. In particular, the result of the whole processing pipeline can be visualized. After playing around a while you think that it might be good switch the sequence of the pre-processing steps. You save a backup copy of your current project and apply the changes. After tweaking some more parameters the results are indeed better than before.</p>
 
-	    <p>Since the hardware components such as camera and illumination devices have already been selected during the acquisition of the test images the main focus is on the software which controls the camera, analyzes the images and communicates the inspection result. At this stage you remember that some time ago you read this article about a software package called stromx which promised to provide an efficient infrastructure for such a solution. After downloading stromx you soon realize that the framework provides all the image processing operations for the pre-processing steps which are necessary before your algorithm can be executed. Obviously, the state-of-the-art Toti inspection algorithm you engineered only a couple of days ago is not a part of stromx (in fact you hope that nobody will ever implement one and open source the basis of your future fortune).
-	    However, you can still import your algorithm into the stromx framework by implementing a stromx operator which wraps your algorithm. The result is a shared object which can be imported into the stromx-studio. You use the same technique to implement a stromx operator which drives the very special and sophisticated camera which will be part of the inspection device.</p>
+      <h3>Port to the embedded target system</h3>
 
-	    <h3>Tweak the parameters in stromx-studio</h3>
+      <p> Until now you did all implementations and experiments on your local Windows PC. Satisfied with the results you choose to test your stromx-stream on the final Toti inspection machine for the first time. The machine is equipped with an embedded PC which runs a special Linux version. Because the source code of stromx (and of course of your custom operators) is available, it turns out to be easy to compile and install it on the target system. Then you simply copy your project file to the PC on the machine and open it in stromx-studio.</p>
 
-	    <p>Now you are ready to start stromx-studio and import your custom operators. You drag instances of the camera operator, the Toti inspection operator and all necessary pre-processing operators to the main area. After connecting their inputs and outputs you press the play button. Your first <em>stromx stream</em> starts to work! While the stream processes all images it obtains from the camera in an endless loop the parameters of its operators can be changed on the fly. In addition you select <em>observers</em> at various locations of the stream to display the flow at these points. In particular, the result of the whole processing pipeline can be visualized. After playing around a while you think that it might be good switch the sequence of the pre-processing steps. You save a backup copy of your current project and apply the changes. After tweaking some more parameters the results are indeed better than before.</p>
+      <h3>Parallelization for increased performance</h3>
 
-	    <h3>Port to the embedded target system</h3>
+      <p>However, you are soon disappointed. While the inspection results seem to be okay the processing takes far too much time. Considering the possibilities of optimizing the wonderful Toti inspection algorithm it comes to your mind that although the CPU of the target system is not very powerful it does have a second core. Obviously, your implementation uses only one core. So one possibility to almost double the throughput of the inspection device is to start a second inspection on the second core while the first inspection is still active on the first one. At first this seems to require the implementation quite some synchronization and threading code but it turns out that stromx provides out-of-the-box support for such demands. You drag and drop a second processing pipeline in your stream and a assign a new thread to it. The two pipelines are fed by a fork operator and end at a join operator. Pushing the play button again immediately verfies the speed-up.</p>
 
-	    <p> Until now you did all implementations and experiments on your local Windows PC. Satisfied with the results you choose to test your stromx-stream on the final Toti inspection machine for the first time. The machine is equipped with an embedded PC which runs a special Linux version. Because the source code of stromx (and of course of your custom operators) is available, it turns out to be easy to compile and install it on the target system. Then you simply copy your project file to the PC on the machine and open it in stromx-studio.</p>
+      <h3>More infrastructure</h3>
 
-	    <h3>Parallelization for increased performance</h3>
+      <p>During a meeting in which you present the current result to the client new requirements turn up. First, the client wants you to turn on a right light on the machine whenever your algorithm detects a faulty Toti. Moreover, the result of the inspection should be written to an SQL database in such a case. To fullfill these demands you implement two more operators. One interfaces the PLC of your machine and switches the right depending on the value of its single input. The second one forwards the data at its input to an SQL server. Since the details of the SQL connections can be specified as parameters of the operator you can immediately integrate the operator in your stromx stream and test the results with a dummy server. A few tests in stromx-studio show that both, the PLC operator and the SQL operator, can be integrated into the existing stream as expected.
+      Being aware of the fact that these operators can be reused in any other inspection product you happily integrate them into your company's custom operator library.</p> 
 
-	    <p>However, you are soon disappointed. While the inspection results seem to be okay the processing takes far too much time. Considering the possibilities of optimizing the wonderful Toti inspection algorithm it comes to your mind that although the CPU of the target system is not very powerful it does have a second core. Obviously, your implementation uses only one core. So one possibility to almost double the throughput of the inspection device is to start a second inspection on the second core while the first inspection is still active on the first one. At first this seems to require the implementation quite some synchronization and threading code but it turns out that stromx provides out-of-the-box support for such demands. You drag and drop a second processing pipeline in your stream and a assign a new thread to it. The two pipelines are fed by a fork operator and end at a join operator. Pushing the play button again immediately verfies the speed-up.</p>
+      <h3>A GUI is easily developed</h3>
 
-	    <h3>More infrastructure</h3>
+      <p>In terms of functionality everything seems to be fine but you still have to run stromx-studio on the target system which then executes the inspection stream. This procedure does not meet the expectations of your marketing team which wants one slick, integrated GUI application reflecting your corporate identity. This is the point at which stromx starts to shine brightly. Instead of opening the stromx stream file in stromx-studio you can read it using the stromx API. Executing the stream then requires a simple <em>stream->start()</em>. The stream is automatically executed in a separate thread and stromx safely forwards all calls from the GUI thread to the execution thread. In other words, your GUI team can change the parameters of the operators while the inspection is running without caring about any concurrency issues. Moreover, because the operator interface is generic the GUI programmers are able to access parameters, inputs and outputs in a standard way regardless of the domain-specific details of 
+the operator.
+      Finally, since the final product depends only on the Apache 2.0 licensed library part of stromx your legal department does not see any danger for your intellectual property.</p>
 
-	    <p>During a meeting in which you present the current result to the client new requirements turn up. First, the client wants you to turn on a right light on the machine whenever your algorithm detects a faulty Toti. Moreover, the result of the inspection should be written to an SQL database in such a case. To fullfill these demands you implement two more operators. One interfaces the PLC of your machine and switches the right depending on the value of its single input. The second one forwards the data at its input to an SQL server. Since the details of the SQL connections can be specified as parameters of the operator you can immediately integrate the operator in your stromx stream and test the results with a dummy server. A few tests in stromx-studio show that both, the PLC operator and the SQL operator, can be integrated into the existing stream as expected.
-	    Being aware of the fact that these operators can be reused in any other inspection product you happily integrate them into your company's custom operator library.</p> 
+      <h3>Happy end</h3>
 
-	    <h3>A GUI is easily developed</h3>
+      <p>Under these circumstances the complete development is finished in record time and after passing all tests the inspection device is ready to ship. Because of its superior performance your customers are eager to equip whole factories with it and pay high prices. By the end of the year you receive an award for your achievements for the Toti industry.</p>
+    </div>
 
-	    <p>In terms of functionality everything seems to be fine but you still have to run stromx-studio on the target system which then executes the inspection stream. This procedure does not meet the expectations of your marketing team which wants one slick, integrated GUI application reflecting your corporate identity. This is the point at which stromx starts to shine brightly. Instead of opening the stromx stream file in stromx-studio you can read it using the stromx API. Executing the stream then requires a simple <em>stream->start()</em>. The stream is automatically executed in a separate thread and stromx safely forwards all calls from the GUI thread to the execution thread. In other words, your GUI team can change the parameters of the operators while the inspection is running without caring about any concurrency issues. Moreover, because the operator interface is generic the GUI programmers are able to access parameters, inputs and outputs in a standard way regardless 
-of the domain-specific details of the operator.
-	    Finally, since the final product depends only on the Apache 2.0 licensed library part of stromx your legal department does not see any danger for your intellectual property.</p>
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; stromx 2015</p>
+      </div>
+    </footer>
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
 
-	    <h3>Happy end</h3>
-
-	    <p>Under these circumstances the complete development is finished in record time and after passing all tests the inspection device is ready to ship. Because of its superior performance your customers are eager to equip whole factories with it and pay high prices. By the end of the year you receive an award for your achievements for the Toti industry.</p>
-
-            <hr>
-
-            <footer>
-                <p>&copy; stromx 2015</p>
-            </footer>
-
-        </div> <!-- /container -->
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-
-        <script src="js/vendor/bootstrap.min.js"></script>
-
-        <script src="js/main.js"></script>
-
-        <script>
-            var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-    </body>
+    <!-- <script>
+        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>-->
+  </body>
 </html>
