@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
   </head>
     <body>
     <div class="container">
@@ -37,7 +38,7 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
-              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+              <a class="btn btn-default" href="https://github.com/uboot/stromx"><span class="fa fa-code-fork"></span> Fork!</a>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -60,13 +61,13 @@
       <p>Since the hardware components such as camera and illumination devices have already been selected during the acquisition of the test images the main focus is on the software which controls the camera, analyzes the images and communicates the inspection result. At this stage you remember that some time ago you read this article about a software package called stromx which promised to provide an efficient infrastructure for such a solution. After downloading stromx you soon realize that the framework provides all the image processing operations for the pre-processing steps which are necessary before your algorithm can be executed. Obviously, the state-of-the-art Toti inspection algorithm you engineered only a couple of days ago is not a part of stromx (in fact you hope that nobody will ever implement one and open source the basis of your future fortune).
       However, you can still import your algorithm into the stromx framework by implementing a stromx operator which wraps your algorithm. The result is a shared object which can be imported into the stromx-studio. You use the same technique to implement a stromx operator which drives the very special and sophisticated camera which will be part of the inspection device.</p>
 
-      <h3>Tweak the parameters in stromx-studio</h3>
+      <h3>Tweak the parameters in stromx-web</h3>
 
-      <p>Now you are ready to start stromx-studio and import your custom operators. You drag instances of the camera operator, the Toti inspection operator and all necessary pre-processing operators to the main area. After connecting their inputs and outputs you press the play button. Your first <em>stromx stream</em> starts to work! While the stream processes all images it obtains from the camera in an endless loop the parameters of its operators can be changed on the fly. In addition you select <em>observers</em> at various locations of the stream to display the flow at these points. In particular, the result of the whole processing pipeline can be visualized. After playing around a while you think that it might be good switch the sequence of the pre-processing steps. You save a backup copy of your current project and apply the changes. After tweaking some more parameters the results are indeed better than before.</p>
+      <p>Now you are ready to start stromx-web in your web browser. You drag instances of the camera operator, the Toti inspection operator and all necessary pre-processing operators to the main area. After connecting their inputs and outputs you press the play button. Your first <em>stromx stream</em> starts to work! While the stream processes all images it obtains from the camera in an endless loop the parameters of its operators can be changed on the fly. In addition you select <em>observers</em> at various locations of the stream to display the flow at these points. In particular, the result of the whole processing pipeline can be visualized. After playing around a while you think that it might be good switch the sequence of the pre-processing steps. You save a backup copy of your current project and apply the changes. After tweaking some more parameters the results are indeed better than before.</p>
 
       <h3>Port to the embedded target system</h3>
 
-      <p> Until now you did all implementations and experiments on your local Windows PC. Satisfied with the results you choose to test your stromx-stream on the final Toti inspection machine for the first time. The machine is equipped with an embedded PC which runs a special Linux version. Because the source code of stromx (and of course of your custom operators) is available, it turns out to be easy to compile and install it on the target system. Then you simply copy your project file to the PC on the machine and open it in stromx-studio.</p>
+      <p> Until now you did all implementations and experiments on your local PC. Satisfied with the results you choose to test your stromx stream on the final Toti inspection machine for the first time. The machine is equipped with an embedded PC which runs a special Linux version. Because the source code of stromx (and of course of your custom operators) is available, it turns out to be easy to compile and install it on the target system. Next you copy the project file to the embedded system and run it there. Because this can be done using the web browser on your local PC you do not have to leave your desk to deploy several versions of the stream on the target machine.</p>
 
       <h3>Parallelization for increased performance</h3>
 
@@ -74,7 +75,7 @@
 
       <h3>More infrastructure</h3>
 
-      <p>During a meeting in which you present the current result to the client new requirements turn up. First, the client wants you to turn on a right light on the machine whenever your algorithm detects a faulty Toti. Moreover, the result of the inspection should be written to an SQL database in such a case. To fullfill these demands you implement two more operators. One interfaces the PLC of your machine and switches the right depending on the value of its single input. The second one forwards the data at its input to an SQL server. Since the details of the SQL connections can be specified as parameters of the operator you can immediately integrate the operator in your stromx stream and test the results with a dummy server. A few tests in stromx-studio show that both, the PLC operator and the SQL operator, can be integrated into the existing stream as expected.
+      <p>During a meeting in which you present the current result to the client new requirements turn up. First, the client wants you to turn on a right light on the machine whenever your algorithm detects a faulty Toti. Moreover, the result of the inspection should be written to an SQL database in such a case. To fullfill these demands you implement two more operators. One interfaces the PLC of your machine and switches the right depending on the value of its single input. The second one forwards the data at its input to an SQL server. Since the details of the SQL connections can be specified as parameters of the operator you can immediately integrate the operator in your stromx stream and test the results with a dummy server. A few tests in stromx-web show that both, the PLC operator and the SQL operator, can be integrated into the existing stream as expected.
       Being aware of the fact that these operators can be reused in any other inspection product you happily integrate them into your company's custom operator library.</p> 
 
       <h3>A GUI is easily developed</h3>
@@ -97,11 +98,11 @@ the operator.
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 
-    <!-- <script>
-        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>-->
+    <script>
+      var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
   </body>
 </html>

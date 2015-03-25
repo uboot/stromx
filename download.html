@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
   </head>
     <body>
     <div class="container">
@@ -37,33 +38,66 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
-              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+              <a class="btn btn-default" href="https://github.com/uboot/stromx"><span class="fa fa-code-fork"></span> Fork!</a>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
 
       <h1 class="page-header">Download</h1>
-      <h2>stromx-web</h2>
-            
-	    <h4>Docker container</h4>
-	    <p>
-        A Docker container with the latest version of stromx-web is automatically 
-        built and pushed to <a href="https://registry.hub.docker.com/u/uboot/stromx-web/">Docker Hub</a>.
-	    <p>
-      
-      <h2>stromx</h2>
-      <h4>Stable packages</h4>
-      
-      <p>Stable versions of stromx are realeased on <a href="https://github.com/uboot/stromx/releases">Github</a>. For most releases prebuilt packages for Raspbian can also be found here.</p>
-
-      <p> Prebuilt packages of the latest stable relase are built and hosted at <a href="https://build.opensuse.org/project/monitor/home:matzfuchs:stromx-stable">openSUSE Build Service</a> (openSUSE and Fedora) and <a href="https://launchpad.net/~stromx-developers/+archive/stromx-stable">launchpad</a> (Ubuntu).</p>
-            
-      <h4>Unstable packages</h4>
-      
-      <p>The current master branch can be accessed on <a href="https://github.com/uboot/stromx">Github</a>.
-      
-      <p> Prebuilt packages of the current master branch are built and hosted at <a href="https://build.opensuse.org/project/monitor/home:matzfuchs">openSUSE Build Service</a> (openSUSE and Fedora) and <a href="https://launchpad.net/~stromx-developers/+archive/packages">launchpad</a> (Ubuntu).</p>
+      <p>
+      Packages for the latest stable release and the current developer version of
+      stromx-web and stromx are provided. We try to make sure that stromx builds
+      on Windows but do not provide an installable download.
+      </p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>stromx-web<br><small>unstable</small></th>
+            <th>stromx<br><small>stable</small></th>
+            <th>stromx<br><small>unstable</small></th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td><strong>Source</strong></td>
+            <td><a href="https://github.com/uboot/stromx-web/">Github</a></td>
+            <td><a href="https://github.com/uboot/stromx">Github</a></td>
+            <td><a href="https://github.com/uboot/stromx">Github</a></td>
+          </tr>
+          <tr>
+            <td><strong>Docker</strong></td>
+            <td><a href="https://registry.hub.docker.com/u/uboot/stromx-web/">Docker Hub</a></td>
+            <td>&#x2013;</td>
+            <td>&#x2013;</td>
+          </tr>
+          <tr>
+            <td><strong>Ubuntu</strong></td>
+            <td>&#x2013;</td>
+            <td><a href="https://launchpad.net/~stromx-developers/+archive/stromx-stable">Launchpad</a></td>
+            <td><a href="https://launchpad.net/~stromx-developers/+archive/packages">Launchpad</a></td>
+          </tr>
+          <tr>
+            <td><strong>openSUSE</strong></td>
+            <td>&#x2013;</td>
+            <td><a href="https://build.opensuse.org/project/monitor/home:matzfuchs:stromx-stable">Build Service</a></td>
+            <td><a href="https://build.opensuse.org/project/monitor/home:matzfuchs">Build Service</a></td>
+          </tr>
+          <tr>
+            <td><strong>Fedora</strong></td>
+            <td>&#x2013;</td>
+            <td><a href="https://build.opensuse.org/project/monitor/home:matzfuchs:stromx-stable">Build Service</a></td>
+            <td><a href="https://build.opensuse.org/project/monitor/home:matzfuchs">Build Service</a></td>
+          </tr>
+          <tr>
+            <td><strong>Windows</strong></td>
+            <td>&#x2013;</td>
+            <td>cf. <a href="develop.html">Develop</a></td>
+            <td>cf. <a href="develop.html">Develop</a></td>
+          </tr>
+        <tbody>
+      </table>
     </div>
 
     <footer class="footer">
@@ -75,11 +109,11 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 
-    <!-- <script>
-        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>-->
+    <script>
+      var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
   </body>
 </html>

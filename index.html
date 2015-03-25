@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
   </head>
     <body>
     <div class="container">
@@ -37,7 +38,7 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
-              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+              <a class="btn btn-default" href="https://github.com/uboot/stromx"><span class="fa fa-code-fork"></span> Fork!</a>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -46,26 +47,25 @@
       <div class="jumbotron">
         <div class="row">
           <img class="pull-right" src="assets/title.png" alt="Title"/>
-          <h1>stromx</h1>
+          <h1>stromx<br><small>Vision in the cloud</small></h1>
           
-          <p>An open source solution for industrial vision. Graphically solve vision problems and deploy the solution in a robust runtime.</p>
+          <p>An open source solution for industrial vision in the cloud. Graphically solve vision problems on a HTML5 frontend and deploy the solution in a robust runtime system.</p>
           <p><a class="btn btn-primary btn-large" href="https://web.stromx.org">Try online &raquo;</a></p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-4">
-          <h2>Studio</h2>
-          <p>Stromx-studio is a visual editor to design and edit solutions for problems in industrial vision. It allows to construct complex data processing networks &#x2013; called <em>streams</em> &#x2013; by drag and drop. The effect of parameter changes can be observed in real-time while the stream is executing in the studio.</p>
-          
+          <h2>Cloud frontend</h2>
+          <p>Stromx-web is a visual frontend to design and edit solutions for problems in industrial vision in your web browser. It allows to construct complex data processing networks &#x2013; called <em>streams</em> &#x2013; by drag and drop. The effect of parameter changes can be observed in real-time while the stream is executing on the target system.</p>
         </div>
         <div class="col-sm-4">
-          <h2>Runtime</h2>
-          <p>Stromx streams can be executed outside stromx-studio in a runtime provided by the stromx library. It provides an API to safely start and stop the execution  of streams and to change the parameters of a running stream. The library is licensed under the permissive Apache 2.0 license which essentially allows to use it in closed source products without restrictions.</p>
+          <h2>Runtime library</h2>
+          <p>Stromx streams are executed by the stromx library. It provides an API to safely start and stop the execution  of streams and to change the parameters of a running stream. The library is licensed under the permissive Apache 2.0 license which essentially allows to use it in closed source products without restrictions.</p>
        </div>
         <div class="col-sm-4">
           <h2>Operators</h2>
-          <p>Implement operators and data types using the stromx API. Your own operators can then be assembled and configured in stromx-studio and deployed in any stromx stream. Custom operators can be used to easily integrate vision algorithms, to access special hardware (industrial cameras, PLC,...) or to communicate with database systems.</p>
+          <p>Implement operators and data types using the stromx API. Your own operators can then be assembled and configured using stromx-web. Custom operators can be used to easily integrate vision algorithms, to access special hardware (industrial cameras, PLC,...) or to communicate with database systems.</p>
         </div>
       </div>
     </div>
@@ -79,11 +79,11 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 
-    <!-- <script>
-        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>-->
+    <script>
+      var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
   </body>
 </html>

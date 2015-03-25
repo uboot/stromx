@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
   </head>
     <body>
     <div class="container">
@@ -37,7 +38,7 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
-              <a class="btn btn-default" href="https://github.com/uboot/stromx">Fork on Github</a>
+              <a class="btn btn-default" href="https://github.com/uboot/stromx"><span class="fa fa-code-fork"></span> Fork!</a>
             </form>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -45,13 +46,14 @@
 
       <h1 class="page-header">Develop</h1>
 	    <h2>stromx-web</h2>
-      The stromx-web frontend is a single-page web application to create, edit and
-      deplay stromx streams. Note that we use the term <em>frontend</em> for the complete client-server architecture which sits on top of the stromx library. In fact stromx-web itself consists of a client-side frontend (the JavaScript application running the users's web browser) and the server-side backend (a Python web server running on top of the stromx library).
+      <p>
+        The stromx-web frontend is a single-page web application to create, edit and
+        deplay stromx streams. Note that we use the term <em>frontend</em> for the complete client-server architecture which sits on top of the stromx library. In fact stromx-web itself consists of a client-side frontend (the JavaScript application running the users's web browser) and the server-side backend (a Python web server running on top of the stromx library).
+      </p>
             
-	    <h4>Sources</h4>
 	    <p>
-	      The sources of stromx-web are hosted at <a href="http://github.com/uboot/stromx-web">github</a>. While he project is still in a early stage of development refer to the
-        readme files in the repository and to the <a href="http://github.com/uboot/stromx-web">Dockerfile</a> on how to build and deploy stromx-web.
+	      While he project is still in a early stage of development refer to the
+        readme files in the <a href="https://github.com/uboot/stromx-web">repository</a> and to the <a href="https://github.com/uboot/stromx-web/blob/master/docker/Dockerfile">Dockerfile</a> on how to build and deploy stromx-web.
 	    <p>
 
 	    <h2>stromx</h2>
@@ -67,18 +69,11 @@
         Finally, if you want to participate in the development of stromx or to adapt the library to your needs it is obviously necessary to compile and build it yourself. The necessary information on how to build stromx is given below.
       </p>
             
-	    <h4>Sources</h4>
 	    <p>
-	      The sources of stromx are hosted at <a href="http://github.com/uboot/stromx">github</a>.
-	    <p>
-	  
-	    <h4>Build instructions</h4>
-	    <p>
-	      The <a href="http://github.com/uboot/stromx/wiki">wiki</a> of the projects provides useful information about the necessary 
+	      The <a href="http://github.com/uboot/stromx/wiki">wiki</a> of the project provides useful information about the necessary 
 	      prequisites for building stromx on Linux and Windows. It also contains build instruction for both platforms.
 	    </p>
 	  
-	    <h4>Documentation and tutorials</h4>
 	    <p>
 	      The documentation of the stromx API is generated during the build process as explained in the wiki. Alternatively, it is contained in the documentation packages of the prebuilt packages for the Linux distributions. It includes tutorials which explain how to use stromx in an application and how to implement custom operator.
 	    </p>
@@ -93,11 +88,11 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 
-    <!-- <script>
-        var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>-->
+    <script>
+      var _gaq=[['_setAccount','UA-30108963-1'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
   </body>
 </html>
