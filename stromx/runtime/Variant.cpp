@@ -67,6 +67,9 @@ namespace stromx
         const VariantHandle Variant::MONO_16_IMAGE = VariantHandle(new Variant(MONO_16_IMAGE_ID));
         const VariantHandle Variant::RGB_48_IMAGE = VariantHandle(new Variant(RGB_48_IMAGE_ID));
         const VariantHandle Variant::BGR_48_IMAGE = VariantHandle(new Variant(BGR_48_IMAGE_ID));
+        const VariantHandle Variant::FILE = VariantHandle(new Variant(FILE_ID));
+        const VariantHandle Variant::BINARY_FILE = VariantHandle(new Variant(BINARY_FILE_ID));
+        const VariantHandle Variant::TEXT_FILE = VariantHandle(new Variant(TEXT_FILE_ID));
         
         const std::string Variant::title() const
         {
@@ -167,6 +170,12 @@ namespace stromx
                 return  L_("RGB image 48-bit");
             case BGR_48_IMAGE_ID:
                 return  L_("BGR image 48-bit");
+            case FILE_ID:
+                return  L_("File");
+            case BINARY_FILE_ID:
+                return  L_("Binary file");
+            case TEXT_FILE_ID:
+                return  L_("Text file");
             default:
                 return "";
             }
@@ -249,6 +258,9 @@ namespace stromx
                     || isVariant(BGR_24_IMAGE)
                     || isVariant(RGB_48_IMAGE)
                     || isVariant(BGR_48_IMAGE);
+            case FILE_ID:
+                return isVariant(BINARY_FILE)
+                    || isVariant(TEXT_FILE);
             default:
                 return false;
             }

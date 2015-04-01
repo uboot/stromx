@@ -93,5 +93,19 @@ namespace stromx
         {
             CPPUNIT_ASSERT(! Variant::FLOAT_64_MATRIX.isVariant(Variant::INT_32_MATRIX || Variant::FLOAT_32_MATRIX));
         }
+        
+        void VariantTest::testBinaryFileIsFile()
+        {
+            CPPUNIT_ASSERT(Variant::BINARY_FILE.isVariant(Variant::BINARY_FILE));
+            CPPUNIT_ASSERT(Variant::BINARY_FILE.isVariant(Variant::FILE));
+            CPPUNIT_ASSERT(! Variant::FILE.isVariant(Variant::BINARY_FILE));
+        }
+        
+        void VariantTest::testTextFileIsFile()
+        {
+            CPPUNIT_ASSERT(Variant::TEXT_FILE.isVariant(Variant::TEXT_FILE));
+            CPPUNIT_ASSERT(Variant::TEXT_FILE.isVariant(Variant::FILE));
+            CPPUNIT_ASSERT(! Variant::FILE.isVariant(Variant::TEXT_FILE));
+        }
     }
 }

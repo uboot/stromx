@@ -8,6 +8,7 @@ set(SOURCES
     Exception.cpp
     ExceptionObserver.cpp
     Factory.cpp
+    File.cpp
     Image.cpp
     InputProvider.cpp
     Connector.cpp

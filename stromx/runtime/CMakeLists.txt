@@ -40,6 +40,7 @@ set(SOURCES
     EnumParameter.cpp
     Exception.cpp
     Factory.cpp
+    File.cpp
     Fork.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp

@@ -172,11 +172,6 @@ namespace
         }
         Py_END_ALLOW_THREADS
     }
-    
-    bool equalWrap(Operator* lhs, Operator* rhs)
-    {
-        return lhs == rhs;
-    }
 }
 
 stromx::runtime::Data* get_pointer(const stromx::runtime::DataRef & p)

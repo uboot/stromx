@@ -39,6 +39,7 @@ void exportDataContainer();
 void exportDescription();
 void exportException();
 void exportExceptionObserver();
+void exportFile();
 void exportImage();
 void exportInputProvider();
 void exportConnector();
@@ -82,6 +83,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportDescription();
     exportException();
     exportExceptionObserver();
+    exportFile();
     exportMatrix();
     exportImage();
     exportInputProvider();

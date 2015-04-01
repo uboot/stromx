@@ -59,8 +59,8 @@ namespace stromx
                                           const unsigned int stride, 
                                           uint8_t* data, 
                                           const ValueType valueType);
-            virtual void serialize(runtime::OutputProvider & output) const;
-            virtual void deserialize(runtime::InputProvider & input, const stromx::runtime::Version & version);
+            virtual void serialize(OutputProvider & output) const;
+            virtual void deserialize(InputProvider & input, const Version & version);
             
             /** Resizes the matrix and changes the value type of the matrix. */
             void resize(const unsigned int rows, const unsigned int cols, const ValueType valueType);

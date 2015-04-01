@@ -71,4 +71,7 @@ void exportVariant()
     in_Variant.attr("FLOAT_MATRIX") = Variant::FLOAT_MATRIX;
     in_Variant.attr("FLOAT_32") = Variant::FLOAT_32;
     in_Variant.attr("FLOAT_64") = Variant::FLOAT_64;
+    in_Variant.attr("FILE") = Variant::FILE;
+    in_Variant.attr("TEXT_FILE") = Variant::TEXT_FILE;
+    in_Variant.attr("BINARY_FILE") = Variant::BINARY_FILE;
 }

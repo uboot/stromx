@@ -172,6 +172,15 @@ namespace stromx
             /** An Image object with Image::BGR_48 pixel type. */
             const static VariantHandle BGR_48_IMAGE;
             
+            /** A file object. */
+            const static VariantHandle FILE;
+            
+            /** A file object containing binary data. */
+            const static VariantHandle BINARY_FILE;
+            
+            /** A file object containing text data. */
+            const static VariantHandle TEXT_FILE;
+            
             unsigned int id() const { return m_id; }
             
             const std::string & package() const { return m_package; }
@@ -228,7 +237,10 @@ namespace stromx
                 BAYERGB_16_IMAGE_ID,
                 MONO_16_IMAGE_ID,
                 RGB_48_IMAGE_ID,
-                BGR_48_IMAGE_ID
+                BGR_48_IMAGE_ID,
+                FILE_ID,
+                BINARY_FILE_ID,
+                TEXT_FILE_ID             
             };
             
             Variant(const unsigned int id)
