@@ -111,7 +111,7 @@ namespace stromx
             case BINARY:
                 return Variant::BINARY_FILE;
             default:
-                BOOST_ASSERT(false);
+                throw InternalError();
             }
         }
     }
