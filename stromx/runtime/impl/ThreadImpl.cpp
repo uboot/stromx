@@ -201,7 +201,7 @@ namespace stromx
                 try
                 {
                     while(true)
-                    {
+                    {                             
                         for(std::vector<InputNode*>::iterator node = m_inputSequence.begin();
                                 node != m_inputSequence.end();
                                 ++node)
@@ -209,17 +209,6 @@ namespace stromx
                             try
                             {
                                 (*node)->setInputData();
-                                
-                                // obtain the delay state in a thread-safe way
-                                unsigned int delay = 0;
-                                {
-                                    lock_t lock(m_mutex);
-                                    
-                                    delay = m_delay;
-                                }
-                                
-                                if(delay)
-                                    boost::this_thread::sleep_for(boost::chrono::milliseconds(delay));
                             }
                             catch(Interrupt &)
                             {
@@ -247,6 +236,25 @@ namespace stromx
                             {
                                 throw Interrupt();
                             } 
+                        }
+                        
+                        try
+                        {                         
+                            // obtain the delay state in a thread-safe way
+                            unsigned int delay = 0;
+                            {
+                                lock_t lock(m_mutex);
+                                
+                                delay = m_delay;
+                            }
+                            
+                            if(delay)
+                                boost::this_thread::sleep_for(boost::chrono::milliseconds(delay));
+                        }
+                        catch(boost::thread_interrupted &)
+                        {
+                            // translate any boost interrupts
+                            throw Interrupt();
                         }
                     }
                 }
