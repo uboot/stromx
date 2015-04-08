@@ -41,6 +41,17 @@ namespace stromx
             m_operator->activate();
         }
         
+        void MergeTest::testExecuteNumItemsInt32()
+        {
+            m_operator->setInputData(Merge::INPUT_DATA,
+                                     DataContainer(new None()));
+            m_operator->setInputData(Merge::INPUT_NUM_ITEMS,
+                                     DataContainer(new Int32(1)));
+            
+            DataContainer out;
+            CPPUNIT_ASSERT_NO_THROW(m_operator->getOutputData(Merge::OUTPUT));
+        }
+        
         void MergeTest::testExecute()
         {
             for (std::size_t i = 0; i < 2; ++i)

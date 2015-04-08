@@ -69,14 +69,15 @@ namespace stromx
             {
                 Id2DataPair dataMapper(INPUT_NUM_ITEMS);
                 provider.receiveInputData(dataMapper);
+                ReadAccess<> access(dataMapper.data());
                 
                 try
                 {
-                    m_numItems = ReadAccess<UInt64>(dataMapper.data()).get();
+                    m_numItems = toInt(access());
                 }
                 catch (BadCast&)
                 {
-                    throw InputError(INPUT_NUM_ITEMS, *this, "Number of items must be a 'UInt64' object.");
+                    throw InputError(INPUT_NUM_ITEMS, *this, "Number of items must be an integer.");
                 }
                 
                 m_list = new List();
@@ -114,7 +115,7 @@ namespace stromx
             data->setTitle(L_("List items"));
             inputs.push_back(data);
             
-            Description* input = new Description(INPUT_NUM_ITEMS, Variant::UINT_64);
+            Description* input = new Description(INPUT_NUM_ITEMS, Variant::INT);
             input->setTitle(L_("Number of list items"));
             inputs.push_back(input);
             

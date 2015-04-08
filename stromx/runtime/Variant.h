@@ -19,13 +19,22 @@
 
 #include "stromx/runtime/VariantHandle.h"
 
+#ifdef __GNUG__
+    #include <tr1/cstdint>
+#else
+    #include <cstdint>
+#endif
+
 namespace stromx
 {
     namespace runtime
     {
         /** \brief %VariantInterface implementation of the runtime package. */
         class STROMX_RUNTIME_API Variant : public VariantInterface
-        {            
+        {       
+            template <class T>
+            friend T toNativeType(const Data & data);
+            
         public:
             /** A subclass of Data which contains no data. */
             const static VariantHandle NONE;

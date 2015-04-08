@@ -60,7 +60,7 @@ namespace
     
     template <class T>
     PyObject* proxy(const std::string & name,
-                                PyObject* const baseClass = PyExc_Exception)
+                    PyObject* const baseClass = PyExc_Exception)
     {
         Translator<T> translator(name, baseClass);
         register_exception_translator<T>(translator);

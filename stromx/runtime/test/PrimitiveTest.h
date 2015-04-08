@@ -98,6 +98,19 @@ namespace stromx
                 CPPUNIT_ASSERT_THROW(data_cast<None>(m_value), BadCast);
             }
             
+            void testToInt()
+            {
+                m_value = primitive_t(value());
+                CPPUNIT_ASSERT_EQUAL(int64_t(value()), toInt(m_value));
+            }
+            
+            void testToDouble()
+            {
+                m_value = primitive_t(value());
+                CPPUNIT_ASSERT_DOUBLES_EQUAL(double(value()), toDouble(m_value),
+                                             1e-6);
+            }
+            
             virtual repr_t value() const = 0;
             virtual std::string str() const = 0;
             virtual const VariantInterface & variant() const = 0;

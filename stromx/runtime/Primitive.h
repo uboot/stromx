@@ -280,6 +280,22 @@ namespace stromx
             static const VariantHandle & variant() { return Variant::FLOAT_64; }
         };  
         /** \endcond */
+        
+        /** 
+         * Attempts to cast \c data to a Primitive object and returns its value 
+         * as an integer.
+         * 
+         * \throws WrongArgument The input \c data is not a primitive.
+         */
+        STROMX_RUNTIME_API int64_t toInt(const Data & data);
+        
+        /** 
+         * Attempts to cast \c data to a Primitive object and returns its value
+         * as a double.
+         * 
+         * \throws WrongArgument The input \c data is not a primitive.
+         */
+        STROMX_RUNTIME_API double toDouble(const Data & data);
 
 #ifdef WIN32
         /** \cond */

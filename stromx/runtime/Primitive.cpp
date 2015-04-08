@@ -307,6 +307,51 @@ namespace stromx
         {
             in.text() >> m_value;
         }
+               
+        template <class T>
+        T toNativeType(const Data & data)
+        {
+            if (! data.variant().isVariant(Variant::PRIMITIVE))
+                throw WrongArgument("Data is not a primitive object.");
+            
+            switch (data.variant().id())
+            {
+                case Variant::BOOL_ID:
+                    return data_cast<Bool>(data).get();
+                case Variant::UINT_8_ID:
+                    return data_cast<UInt8>(data).get();
+                case Variant::INT_8_ID:
+                    return data_cast<Int8>(data).get();
+                case Variant::UINT_16_ID:
+                    return data_cast<UInt16>(data).get();
+                case Variant::INT_16_ID:
+                    return data_cast<Int16>(data).get();
+                case Variant::UINT_32_ID:
+                    return data_cast<UInt32>(data).get();
+                case Variant::INT_32_ID:
+                    return data_cast<Int32>(data).get();
+                case Variant::UINT_64_ID:
+                    return data_cast<UInt64>(data).get();
+                case Variant::INT_64_ID:
+                    return data_cast<Int64>(data).get();
+                case Variant::FLOAT_32_ID:
+                    return data_cast<Float32>(data).get();
+                case Variant::FLOAT_64_ID:
+                    return data_cast<Float64>(data).get();
+                default: 
+                    throw InternalError("Unknown variant ID of primitive object.");
+            }
+        }
+            
+        int64_t toInt(const Data & data)
+        {
+            return toNativeType<int64_t>(data);
+        }
+        
+        double toDouble(const Data & data)
+        {
+            return toNativeType<double>(data);
+        }
     }
 }
 

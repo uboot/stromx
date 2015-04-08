@@ -35,6 +35,8 @@ namespace stromx
             CPPUNIT_TEST (testIsVariant);
             CPPUNIT_TEST (testPtrCast);
             CPPUNIT_TEST (testRefCast);
+            CPPUNIT_TEST (testToInt);
+            CPPUNIT_TEST (testToDouble);
             CPPUNIT_TEST_SUITE_END ();
             
         protected:
