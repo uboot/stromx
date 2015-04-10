@@ -37,6 +37,7 @@ void exportColor();
 void exportData();
 void exportDataContainer();
 void exportDescription();
+void exportDescriptionBase();
 void exportException();
 void exportExceptionObserver();
 void exportFile();
@@ -80,6 +81,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportColor();
     exportData();
     exportDataContainer();
+    exportDescriptionBase();
     exportDescription();
     exportException();
     exportExceptionObserver();

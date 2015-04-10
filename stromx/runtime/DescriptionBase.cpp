@@ -1,5 +1,5 @@
 /* 
- *  Copyright 2011 Matthias Fuchs
+ *  Copyright 2015 Matthias Fuchs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/DescriptionBase.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        const std::vector<EnumDescription> Description::NO_DESCRIPTIONS = std::vector<EnumDescription>();
-        const None Description::NONE = None();
+        const std::vector<EnumDescription> DescriptionBase::NO_DESCRIPTIONS = std::vector<EnumDescription>();
+        const None DescriptionBase::NONE = None();
     }
 }

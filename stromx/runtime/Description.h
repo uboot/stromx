@@ -17,111 +17,63 @@
 #ifndef STROMX_RUNTIME_DESCRIPTION_H
 #define STROMX_RUNTIME_DESCRIPTION_H
 
-#include <vector>
-
-#include <string>
-#include "stromx/runtime/Config.h"
-#include "stromx/runtime/VariantHandle.h"
-#include "stromx/runtime/Enum.h"
-#include "stromx/runtime/None.h"
+#include "stromx/runtime/DescriptionBase.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        /** \brief %Description of an enumeration value. */
-        class EnumDescription
-        {
-        public:
-            /** Constructs an enumeration description. */
-            explicit EnumDescription(const Enum & value)
-              : m_value(value)
-            {}
-            
-            /** Constructs an enumeration description with a documentation title . */
-            EnumDescription(const Enum & value, const std::string & title)
-              : m_value(value),
-                m_title(title)
-            {}
-            
-            /** Returns the value. */
-            const Enum value() const { return m_value; }
-            
-            /** Returns the description title. */
-            const std::string & title() const { return m_title; }
-            
-        private:
-            Enum m_value;
-            std::string m_title;
-        };
         
-        /** \brief %Description of an ID to data variant map.
-         * 
-         * Instances of this class associate an ID with a data variant.
-         * Input nodes, output nodes and parameters of operators are characterized
-         * by such a description. In case of input and output nodes the data variant defines
-         * which data type can be passed to an input node or is to be expected from
-         * an output node. In case of parameter it characterizes the data type of the 
-         * respective paramter. In addition, a Description can have a name which is 
-         * purely informal and does not have any influence on its behavior.
+        /** \brief %Description of a connector.
+         *
+         * In addition to the information stored in the parent class
+         * descriptions store threading properties of connectors.
          */
-        class STROMX_RUNTIME_API Description
+        class STROMX_RUNTIME_API Description : public DescriptionBase
         {
         public:
             /** Constructs a description. */
             Description(const unsigned int id, const VariantHandle& variant)
-            : m_id(id),
-              m_variant(variant)
+              : DescriptionBase(id, variant),
+                m_operatorThread(0)
             {}
             
-            virtual ~Description() {}
-            
-            /** Returns the title. */
-            const std::string & title() const { return m_title; }
-            
-            /** Returns the ID. */
-            unsigned int id() const { return m_id; }
-            
-            /** Returns the data variant. */
-            const VariantHandle & variant() const { return m_variant; }
-            
-            /** Sets the title of the description. */
-            void setTitle(const std::string & title) { m_title = title; }
-            
-                        /** Returns the maximal value of this parameter or an instance of None. */
-            virtual const Data& max() const { return NONE; }
-            
-            /** Returns the minimal value of this parameter or an instance of None. */
-            virtual const Data& min() const { return NONE; }
+            /** Returns the operator thread of this connector. 
+             * 
+             * \sa setOperatorThread()
+             */
+            unsigned int operatorThread() const
+            {
+                return m_operatorThread;
+            }
             
             /** 
-             * Returns a useful step size to decrease or increase the value of this
-             * parameter. Returns NONE if no step size is defined for this parameter.
+             * Sets the operator thread of this connector.
+             * 
+             * The operator thread of a connector specifies which thread can
+             * be assigned to the connector in the context of the operator the
+             * connector belongs to. If e.g. an operator has one input and one 
+             * output and produces one data object at the output if and only if
+             * one data object is given to the input than it is safe to assign
+             * the same operator thread to the input and the output. I.e. the 
+             * the operator threads of both the input and the output can have
+             * their default values 0.
+             * 
+             * If the operator produces one data object at the output only after
+             * it has received a couple of input objects at the input then
+             * a thread handling the input and the output would dead-lock
+             * waiting for the output after the input has been set.
+             * Setting the operator thread values of the input and the output
+             * tells an algorithm which automatically assigns threads to the
+             * stream that this situation must be avoided.
              */
-            virtual const Data& step() const { return NONE; }
-            
-            /** Returns the possible values of an enumeration value or an empty vector. */
-            virtual const std::vector<EnumDescription> & descriptions() const { return NO_DESCRIPTIONS; }
-            
-            /** 
-             * Returns the required number of rows of a matrix parameters. Returns
-             * 0 if any number of rows is possible.
-             */
-            virtual unsigned int rows() const { return 0; }
-            
-            /** 
-             * Returns the required number of columns of a matrix parameters. Returns
-             * 0 if any number of rows is possible.
-             */
-            virtual unsigned int cols() const { return 0; }
+            void setOperatorThread(const unsigned int operatorThread)
+            { 
+                m_operatorThread = operatorThread;
+            }
             
         private:
-            static const std::vector<EnumDescription> NO_DESCRIPTIONS;
-            static const None NONE;
-            
-            std::string m_title;
-            unsigned int m_id;
-            VariantHandle m_variant;
+            unsigned int m_operatorThread;
         };
     }
 }

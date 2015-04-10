@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_MATRIXDESCRIPTION_H
 #define STROMX_RUNTIME_MATRIXDESCRIPTION_H
 
-#include "stromx/runtime/Parameter.h"
+#include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
 
 namespace stromx

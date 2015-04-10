@@ -14,23 +14,15 @@
 *  limitations under the License.
 */
 
-#include <stromx/runtime/Description.h>
-
 #include <boost/python.hpp>
+#include <stromx/runtime/Description.h>
 
 using namespace boost::python;
 using namespace stromx::runtime;
 
 void exportDescription()
-{         
-    class_<Description>("Description", no_init)
-        .def("title", &Description::title, return_value_policy<copy_const_reference>())
-        .def("id", &Description::id)
-        .def("variant", &Description::variant, return_internal_reference<>())
-        .def("min", &Description::min, return_internal_reference<>())
-        .def("max", &Description::max, return_internal_reference<>())
-        .def("descriptions", &Description::descriptions, return_internal_reference<>())
-        .def("rows", &Description::rows)
-        .def("cols", &Description::cols)
+{       
+    class_<Description, bases<DescriptionBase> >("Description", no_init)
+        .def("operatorThread", &Description::operatorThread)
     ;
 }

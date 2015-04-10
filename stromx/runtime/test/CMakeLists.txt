@@ -35,6 +35,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy ${CMAKE_CURRENT_BIN
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data.txt ${CMAKE_CURRENT_BINARY_DIR}/directory/data.txt COPYONLY)
 
 set(SOURCES
+    ../AssignThreadsAlgorithm.cpp
     ../Block.cpp
     ../Color.cpp
     ../Connector.cpp
@@ -45,7 +46,7 @@ set(SOURCES
     ../Data.cpp
     ../DataRef.cpp
     ../DataContainer.cpp
-    ../Description.cpp
+    ../DescriptionBase.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../EnumParameter.cpp
@@ -99,6 +100,7 @@ set(SOURCES
     ../impl/SynchronizedOperatorKernel.cpp
     ../impl/ThreadImpl.cpp
     ../impl/WriteAccessImpl.cpp
+    AssignThreadsAlgorithmTest.cpp
     BlockTest.cpp
     BoolTest.cpp
 #     ClientTest.cpp

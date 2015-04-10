@@ -26,6 +26,12 @@
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/RecycleAccess.h"
 
+namespace 
+{
+    const static unsigned int ITEM_THREAD = 0;
+    const static unsigned int LIST_THREAD = 1;
+}
+
 namespace stromx
 {
     namespace runtime
@@ -112,12 +118,14 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* data = new Description(INPUT_DATA, Variant::DATA);
-            data->setTitle(L_("List items"));
+            data->setTitle(L_("List item"));
+            data->setOperatorThread(ITEM_THREAD);
             inputs.push_back(data);
             
-            Description* input = new Description(INPUT_NUM_ITEMS, Variant::INT);
-            input->setTitle(L_("Number of list items"));
-            inputs.push_back(input);
+            Description* index = new Description(INPUT_NUM_ITEMS, Variant::INT);
+            index->setTitle(L_("Number of list items"));
+            index->setOperatorThread(LIST_THREAD);
+            inputs.push_back(index);
             
             return inputs;
         }
@@ -128,6 +136,7 @@ namespace stromx
             
             Description* output = new Description(OUTPUT, Variant::LIST);
             output->setTitle(L_("List"));
+            output->setOperatorThread(LIST_THREAD);
             outputs.push_back(output);
             
             return outputs;

@@ -16,23 +16,15 @@
 
 #include <boost/python.hpp>
 #include <stromx/runtime/Parameter.h>
-#include "ExportVector.h"
 
 using namespace boost::python;
 using namespace stromx::runtime;
 
 void exportParameter()
-{       
-    class_<EnumDescription>("EnumDescription", no_init)
-        .def("value", &EnumDescription::value)
-        .def("title", &EnumDescription::title, return_value_policy<copy_const_reference>())
-    ;
-    
-    stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");
-       
+{              
     {
         scope in_Parameter =
-        class_<Parameter, bases<Description> >("Parameter", no_init)
+        class_<Parameter, bases<DescriptionBase> >("Parameter", no_init)
             .def("accessMode", &Parameter::accessMode)
             .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
             .def("members", &Parameter::members, return_internal_reference<>())

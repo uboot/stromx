@@ -18,6 +18,7 @@
 #define STROMX_RUNTIME_OPERATORINFO_H
 
 #include <vector>
+#include "stromx/runtime/Description.h"
 #include "stromx/runtime/Parameter.h"
 #include "stromx/runtime/Version.h"
 

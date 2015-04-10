@@ -27,6 +27,12 @@
 
 #include <boost/assert.hpp>
 
+namespace 
+{
+    const static unsigned int ITEM_THREAD = 0;
+    const static unsigned int LIST_THREAD = 1;
+}
+
 namespace stromx
 {
     namespace runtime
@@ -107,6 +113,7 @@ namespace stromx
             std::vector<const Description*> inputs;
             Description* input = new Description(INPUT, Variant::LIST);
             input->setTitle(L_("List"));
+            input->setOperatorThread(LIST_THREAD);
             inputs.push_back(input);
             
             return inputs;
@@ -117,11 +124,13 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* data = new Description(OUTPUT_DATA, Variant::DATA);
-            data->setTitle(L_("List items"));
+            data->setTitle(L_("List item"));
+            data->setOperatorThread(ITEM_THREAD);
             outputs.push_back(data);
             
             Description* index = new Description(OUTPUT_NUM_ITEMS, Variant::UINT_64);
             index->setTitle(L_("Number of list items"));
+            index->setOperatorThread(LIST_THREAD);
             outputs.push_back(index);
             
             return outputs;

@@ -25,6 +25,7 @@ set(SOURCES
     impl/Server.cpp
     impl/ThreadImpl.cpp
     impl/Network.cpp
+    AssignThreadsAlgorithm.cpp
     Block.cpp
     Color.cpp
     Connector.cpp
@@ -34,7 +35,7 @@ set(SOURCES
     DataContainer.cpp
     Data.cpp
     DataRef.cpp
-    Description.cpp
+    DescriptionBase.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp

@@ -5,6 +5,7 @@ set(SOURCES
     Data.cpp
     DataContainer.cpp
     Description.cpp
+    DescriptionBase.cpp
     Exception.cpp
     ExceptionObserver.cpp
     Factory.cpp

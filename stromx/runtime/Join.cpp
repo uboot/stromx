@@ -23,6 +23,12 @@
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
 
+namespace 
+{
+    const static unsigned int INPUT_THREADS = 1;
+    const static unsigned int OUTPUT_THREAD = 0;
+}
+
 namespace stromx
 {
     namespace runtime
@@ -153,6 +159,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
+            output->setOperatorThread(OUTPUT_THREAD);
             outputs.push_back(output);
             
             return outputs;
@@ -166,6 +173,7 @@ namespace stromx
             {
                 Description* input = new Description(i, Variant::DATA);
                 input->setTitle("Input " + boost::lexical_cast<std::string>(i));
+                input->setOperatorThread(INPUT_THREADS + i);
                 inputs.push_back(input);
             }
             

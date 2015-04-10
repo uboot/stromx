@@ -155,7 +155,7 @@ namespace stromx
              * operator can be shown again later on. A hidden operator is not considered part of the stream and is not written to 
              * the file if the stream is persisted.
              * 
-             * \sa Stream::showOperator
+             * \sa showOperator()
              * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is null.
@@ -168,7 +168,7 @@ namespace stromx
              * to and from the operator are \not recreated. Also, the operator is not added
              * to any threads.
              * 
-             * \sa Stream::hideOperator
+             * \sa hideOperator()
              * 
              * \throws WrongState If the stream is not INACTIVE.
              * \throws WrongArgument If the operator pointer \c op is null.
@@ -220,7 +220,7 @@ namespace stromx
              * A hidden thread is not considered part of the stream and is not written to 
              * the file if the stream is persisted.
              * 
-             * \sa Stream::showThread
+             * \sa showThread()
              * 
              * \throws WrongArgument If the thread \c thr is a null pointer.
              * \throws WrongArgument If the thread is not part of the stream.
@@ -231,7 +231,7 @@ namespace stromx
              * Adds the hidden thread \c thr to the stream. Note that the operators which
              * originally belonged to the thread are not added again.
              * 
-             * \sa Stream::showThread
+             * \sa showThread()
              * 
              * \throws WrongArgument If the thread \c thr is a null pointer.
              * \throws WrongArgument If the thread \c thrhas not been hidden before.
