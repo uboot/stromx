@@ -14,99 +14,113 @@
 *  limitations under the License.
 */
 
-#include <boost/graph/adjacency_matrix.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/topological_sort.hpp>
+#include "stromx/runtime/AssignThreadsAlgorithm.h"
+
 #include <boost/assert.hpp>
+#include <boost/graph/directed_graph.hpp>
+#include <boost/graph/breadth_first_search.hpp>
 #include <iostream>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Input.h"
 #include "stromx/runtime/Operator.h"
-#include "stromx/runtime/AssignThreadsAlgorithm.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
+
+namespace
+{
+    static const int NO_THREAD = -1;
+    
+    struct source_thread_t {
+        typedef boost::edge_property_tag kind;
+    };
+    
+    struct target_thread_t {
+        typedef boost::edge_property_tag kind;
+    };
+    
+    struct thread_t {
+        typedef boost::edge_property_tag kind;
+    };
+    
+    typedef boost::property<source_thread_t, int,
+                            boost::property<target_thread_t, int,
+                                            boost::property<thread_t, int> > > EdgeProperty;
+    typedef boost::directed_graph<stromx::runtime::Operator*, EdgeProperty> Graph;
+    
+    using namespace boost;
+    
+    class Visitor : public boost::default_bfs_visitor
+    {
+    public:        
+        void discover_vertex(Graph::vertex_descriptor u, const Graph & g) const
+        {
+            typedef graph_traits<Graph>::out_edge_iterator out_edge_iter;
+            std::pair<out_edge_iter, out_edge_iter> ep;
+            for (ep = boost::out_edges(u, g); ep.first != ep.second; ++ep.first)
+            {
+                Graph::edge_descriptor e = *(ep.first);
+                std::cout << boost::get(source_thread_t(), g, e) << std::endl;
+                std::cout << boost::get(target_thread_t(), g, e) << std::endl;
+                std::cout << boost::get(thread_t(), g, e) << std::endl;
+            }
+            
+            std::cout << u << std::endl;
+        }
+    };
+}
 
 namespace stromx
 {
     namespace runtime
     {
-        namespace
-        {
-            class InputComparator
-            {
-            public:
-                InputComparator(const std::map<const Operator*, unsigned int> & op2RankMap)
-                  : m_op2RankMap(op2RankMap)
-                {}
-                
-                bool operator()(const Input & input1, const Input & input2)
-                {
-                    
-                    std::map<const Operator*, unsigned int>::const_iterator rank1 = m_op2RankMap.find(input1.op());
-                    BOOST_ASSERT(rank1 != m_op2RankMap.end());
-                    
-                    std::map<const Operator*, unsigned int>::const_iterator rank2 = m_op2RankMap.find(input2.op());
-                    BOOST_ASSERT(rank2 != m_op2RankMap.end());
-                    
-                    return rank1->second > rank2->second ? true : false;
-                }
-                
-            private:
-                const std::map<const Operator*, unsigned int> & m_op2RankMap;
-            };
-        }
         
         void AssignThreadsAlgorithm::apply ( Stream& stream )
-        {
+        {            
             const std::vector<Operator*> & operators = stream.initializedOperators();
-            unsigned int numNodes = operators.size();
             
-            if(! numNodes)
-                return;
+            // create the graph
+            Graph graph;
             
-            std::map<const Operator*, unsigned int> op2IdMap;
-            std::map<unsigned int, const Operator*> id2OpMap;
+            std::map<const Operator*, Graph::vertex_descriptor> op2VertexMap;
             
             // fill the maps
-            unsigned int i = 0;
-            for(std::vector<Operator*>::const_iterator opIter = operators.begin();
-                opIter != operators.end();
-                ++opIter, ++i)
+            for(std::vector<Operator*>::const_iterator op = operators.begin();
+                op != operators.end();
+                ++op)
             {
-                op2IdMap[*opIter] = i;
-                id2OpMap[i] = *opIter;
+                Graph::vertex_descriptor v = graph.add_vertex(*op);
+                op2VertexMap[*op] = v;
             }
                 
-            // create the graph
-            typedef 
-            boost::adjacency_list <boost::vecS,
-                                   boost::vecS, 
-                                   boost::directedS,
-                                   boost::no_property,
-                                   unsigned int> 
-                                  OperatorThreadGraph;
-            OperatorThreadGraph graph(numNodes);
             
             // iterate over each operator
-            for(std::vector<Operator*>::const_iterator opIter = operators.begin();
-                opIter != operators.end();
-                ++opIter)
+            for(std::vector<Operator*>::const_iterator op = operators.begin();
+                op != operators.end();
+                ++op)
             {
-                const std::vector<const Description*> & inputs = (*opIter)->info().inputs();
-                for(std::vector<const Description*>::const_iterator inputIter = inputs.begin();
-                    inputIter != inputs.end();
-                    ++inputIter)
+                const std::vector<const Description*> & inputs = (*op)->info().inputs();
+                for(std::vector<const Description*>::const_iterator input = inputs.begin();
+                    input != inputs.end();
+                    ++input)
                 {
-                    Output output = stream.connectionSource(*opIter, (*inputIter)->id());
-                    if(output.valid())
+                    Output connector = stream.connectionSource(*op, (*input)->id());
+                    if(connector.valid())
                     {
-                        const Operator* source = output.op();
-                        const Operator* target = *opIter;
+                        const Operator* source = connector.op();
+                        const Operator* target = *op;
+                        const Description* output = source->info().outputs()[connector.id()];
                         
-                        boost::add_edge(op2IdMap[source], op2IdMap[target], 0, graph);
+                        Graph::edge_descriptor e = graph.add_edge(op2VertexMap[source], op2VertexMap[target]).first;
+                        boost::put(source_thread_t(), graph, e, output->operatorThread());
+                        boost::put(target_thread_t(), graph, e, (*input)->operatorThread());
+                        boost::put(thread_t(), graph, e, NO_THREAD);
                     }
                 }
             }
+            
+            
+            Visitor v;
+            boost::breadth_first_search(graph, *(boost::vertices(graph).first), boost::visitor(v));
         }
     }
 }

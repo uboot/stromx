@@ -31,6 +31,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (AssignThreadsAlgorithmTest);
             //CPPUNIT_TEST (testApplyIterateMerge);
+            //CPPUNIT_TEST (testApplyCounterDump);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -41,6 +42,7 @@ namespace stromx
 
             protected:
                 void testApplyIterateMerge();
+                void testApplyCounterDump();
                 
             private:
                 Stream* m_stream;

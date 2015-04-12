@@ -91,5 +91,31 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL((unsigned int)(Merge::INPUT_DATA),
                                  thread1->inputSequence()[0].id());
         }
+        
+        void AssignThreadsAlgorithmTest::testApplyCounterDump()
+        {
+            m_stream = new Stream;
+            
+            Operator* counter = m_stream->addOperator(new Counter);
+            Operator* dump = m_stream->addOperator(new Dump);
+            
+            m_stream->initializeOperator(counter);
+            m_stream->initializeOperator(dump);
+            
+            m_stream->connect(counter, Counter::OUTPUT,
+                              dump, Dump::INPUT);
+            
+            AssignThreadsAlgorithm algorithm;
+            algorithm.apply(*m_stream);
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), m_stream->threads().size());
+            
+            Thread* thread = m_stream->threads()[0];
+            
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(dump),
+                                 thread->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(Dump::INPUT),
+                                 thread->inputSequence()[0].id());
+        }
     }
 }

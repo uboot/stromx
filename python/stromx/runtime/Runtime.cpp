@@ -31,6 +31,7 @@
 #include <stromx/runtime/Send.h>
 #include "ExportOperatorKernel.h"
 
+void exportAssignThreadsAlgorithm();
 void exportAbstractFactory();
 void exportFactory();
 void exportColor();
@@ -77,6 +78,7 @@ BOOST_PYTHON_MODULE(libruntime)
     def("register", stromxRuntimeRegister);
     def("version", version);
     
+    exportAssignThreadsAlgorithm();
     exportAbstractFactory();
     exportColor();
     exportData();

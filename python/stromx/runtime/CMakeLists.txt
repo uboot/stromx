@@ -1,6 +1,7 @@
 set(SOURCES
     Runtime.cpp
     AbstractFactory.cpp
+    AssignThreadsAlgorithm.cpp
     Color.cpp
     Data.cpp
     DataContainer.cpp
