@@ -30,8 +30,11 @@ namespace stromx
         class AssignThreadsAlgorithmTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (AssignThreadsAlgorithmTest);
-            //CPPUNIT_TEST (testApplyIterateMerge);
-            //CPPUNIT_TEST (testApplyCounterDump);
+            CPPUNIT_TEST (testApplyCounterDump);
+            CPPUNIT_TEST (testApplyIterateMerge);
+            CPPUNIT_TEST (testApplyForkJoin);
+            CPPUNIT_TEST (testApplyInverseOrder);
+            CPPUNIT_TEST (testApplyTwoComponents);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -43,6 +46,9 @@ namespace stromx
             protected:
                 void testApplyIterateMerge();
                 void testApplyCounterDump();
+                void testApplyForkJoin();
+                void testApplyInverseOrder();
+                void testApplyTwoComponents();
                 
             private:
                 Stream* m_stream;

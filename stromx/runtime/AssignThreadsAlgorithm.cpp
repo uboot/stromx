@@ -18,11 +18,12 @@
 
 #include <boost/assert.hpp>
 #include <boost/graph/directed_graph.hpp>
-#include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/depth_first_search.hpp>
 #include <iostream>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Input.h"
 #include "stromx/runtime/Operator.h"
+#include "stromx/runtime/SortInputsAlgorithm.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 
@@ -42,30 +43,100 @@ namespace
         typedef boost::edge_property_tag kind;
     };
     
+    struct connector_id_t {
+        typedef boost::edge_property_tag kind;
+    };
+    
+    struct operator_t {
+        typedef boost::vertex_property_tag kind;
+    };
+    
     typedef boost::property<source_thread_t, int,
-                            boost::property<target_thread_t, int,
-                                            boost::property<thread_t, int> > > EdgeProperty;
-    typedef boost::directed_graph<stromx::runtime::Operator*, EdgeProperty> Graph;
+            boost::property<target_thread_t, int,
+            boost::property<thread_t, int,
+            boost::property<connector_id_t, int> > > > EdgeProperty;
+    typedef boost::property<operator_t, stromx::runtime::Operator*> VertexProperty;
+                                            
+    typedef boost::directed_graph<VertexProperty, EdgeProperty, int> Graph;
     
     using namespace boost;
     
-    class Visitor : public boost::default_bfs_visitor
+    class Visitor : public boost::default_dfs_visitor
     {
-    public:        
+    public:    
+        Visitor(int & numThreads) : m_numThreads(numThreads) { m_numThreads = 0; }
+        
         void discover_vertex(Graph::vertex_descriptor u, const Graph & g) const
         {
-            typedef graph_traits<Graph>::out_edge_iterator out_edge_iter;
-            std::pair<out_edge_iter, out_edge_iter> ep;
-            for (ep = boost::out_edges(u, g); ep.first != ep.second; ++ep.first)
+            std::map<Graph::edge_descriptor, int> globalThreadMap;
+            std::map<int, Graph::edge_descriptor> operatorThreadMap;
+            std::map<Graph::edge_descriptor, int> noThreadEdges;
+            
+            // iterate over all out edges
             {
-                Graph::edge_descriptor e = *(ep.first);
-                std::cout << boost::get(source_thread_t(), g, e) << std::endl;
-                std::cout << boost::get(target_thread_t(), g, e) << std::endl;
-                std::cout << boost::get(thread_t(), g, e) << std::endl;
+                typedef graph_traits<Graph>::out_edge_iterator out_edge_iter;
+                std::pair<out_edge_iter, out_edge_iter> ep;
+                for (ep = boost::out_edges(u, g); ep.first != ep.second; ++ep.first)
+                {
+                    Graph::edge_descriptor e = *(ep.first);
+                    int globalThread = boost::get(thread_t(), g, e);
+                    int operatorThread = boost::get(source_thread_t(), g, e);
+                    if (globalThread == NO_THREAD)
+                    {
+                        noThreadEdges[e] = operatorThread;
+                    }
+                    else
+                    {
+                        globalThreadMap[e] = globalThread;
+                        operatorThreadMap[operatorThread] = e;
+                    }
+                        
+                }
             }
             
-            std::cout << u << std::endl;
+            // iterate over all in edges
+            {
+                typedef graph_traits<Graph>::in_edge_iterator in_edge_iter;
+                std::pair<in_edge_iter, in_edge_iter> ep;
+                for (ep = boost::in_edges(u, g); ep.first != ep.second; ++ep.first)
+                {
+                    Graph::edge_descriptor e = *(ep.first);
+                    int globalThread = boost::get(thread_t(), g, e);
+                    int operatorThread = boost::get(target_thread_t(), g, e);
+                    if (globalThread == NO_THREAD)
+                    {
+                        noThreadEdges[e] = operatorThread;
+                    }
+                    else
+                    {
+                        globalThreadMap[e] = globalThread;
+                        operatorThreadMap[operatorThread] = e;
+                    }
+                }
+            }
+            
+            // iterate over all edges without thread
+            typedef std::map<Graph::edge_descriptor, int>::iterator edge_iter;
+            for (edge_iter i = noThreadEdges.begin(); i != noThreadEdges.end(); ++i)
+            {
+                if (operatorThreadMap.count(i->second))
+                {
+                    // an assigned edge for this operator thread exists
+                    Graph::edge_descriptor e = operatorThreadMap[i->second];
+                    int thread = globalThreadMap[e];
+                    boost::put(thread_t(), const_cast<Graph&>(g), i->first, thread);
+                }
+                else
+                {
+                    // assign a new thread to this edge
+                    boost::put(thread_t(), const_cast<Graph&>(g), i->first, m_numThreads);
+                    m_numThreads++;
+                }
+            }
         }
+        
+    private:
+        int & m_numThreads;
     };
 }
 
@@ -74,7 +145,7 @@ namespace stromx
     namespace runtime
     {
         
-        void AssignThreadsAlgorithm::apply ( Stream& stream )
+        void AssignThreadsAlgorithm::apply (Stream& stream)
         {            
             const std::vector<Operator*> & operators = stream.initializedOperators();
             
@@ -88,10 +159,10 @@ namespace stromx
                 op != operators.end();
                 ++op)
             {
-                Graph::vertex_descriptor v = graph.add_vertex(*op);
+                Graph::vertex_descriptor v = graph.add_vertex();
+                boost::put(operator_t(), graph, v, *op);
                 op2VertexMap[*op] = v;
             }
-                
             
             // iterate over each operator
             for(std::vector<Operator*>::const_iterator op = operators.begin();
@@ -114,13 +185,37 @@ namespace stromx
                         boost::put(source_thread_t(), graph, e, output->operatorThread());
                         boost::put(target_thread_t(), graph, e, (*input)->operatorThread());
                         boost::put(thread_t(), graph, e, NO_THREAD);
+                        boost::put(connector_id_t(), graph, e, (*input)->id());
                     }
                 }
             }
             
+            int numThreads = 0;
+            Visitor v(numThreads);
+            boost::depth_first_search<>(graph, boost::visitor(v));
             
-            Visitor v;
-            boost::breadth_first_search(graph, *(boost::vertices(graph).first), boost::visitor(v));
+            // delete all threads
+            while(stream.threads().size())
+                stream.removeThread(stream.threads().front());
+            
+            // create threads
+            for (int i = 0; i < numThreads; ++i)
+                stream.addThread();
+                
+            // add the inputs to the threads
+            graph_traits<Graph>::edge_iterator ei, ei_end;
+            for (boost::tie(ei, ei_end) = edges(graph); ei != ei_end; ++ei)
+            {
+                int thread = boost::get(thread_t(), graph, *ei);
+                unsigned int id = boost::get(connector_id_t(), graph, *ei);
+                Graph::vertex_descriptor v = boost::target(*ei, graph);
+                Operator* op = boost::get(operator_t(), graph, v);
+                stream.threads()[thread]->addInput(op, id);
+            }
+            
+            // sort the inputs
+            SortInputsAlgorithm sortInputs;
+            sortInputs.apply(stream);
         }
     }
 }

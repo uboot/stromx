@@ -20,8 +20,11 @@
 #include "stromx/runtime/AssignThreadsAlgorithm.h"
 #include "stromx/runtime/Counter.h"
 #include "stromx/runtime/Dump.h"
+#include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/Join.h"
 #include "stromx/runtime/Merge.h"
+#include "stromx/runtime/PeriodicDelay.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 
@@ -39,6 +42,41 @@ namespace stromx
         void AssignThreadsAlgorithmTest::tearDown()
         {
             delete m_stream;
+        }
+        
+        void AssignThreadsAlgorithmTest::testApplyForkJoin()
+        {
+            m_stream = new Stream;
+            
+            Operator* counter = m_stream->addOperator(new Counter);
+            Operator* fork = m_stream->addOperator(new Fork);
+            Operator* join = m_stream->addOperator(new Join);
+            Operator* dump = m_stream->addOperator(new Dump);
+            
+            m_stream->initializeOperator(counter);
+            m_stream->initializeOperator(fork);
+            m_stream->initializeOperator(join);
+            m_stream->initializeOperator(dump);
+            
+            m_stream->connect(counter, Counter::OUTPUT, fork, Fork::INPUT);
+            m_stream->connect(fork, 0, join, 0);
+            m_stream->connect(fork, 1, join, 1);
+            m_stream->connect(join, Join::OUTPUT, dump, Dump::INPUT);
+            
+            AssignThreadsAlgorithm algorithm;
+            algorithm.apply(*m_stream);
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(4), m_stream->threads().size());
+            
+            Thread* thread0 = m_stream->threads()[0];
+            Thread* thread1 = m_stream->threads()[1];
+            Thread* thread2 = m_stream->threads()[2];
+            Thread* thread3 = m_stream->threads()[3];
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread0->inputSequence().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread1->inputSequence().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread2->inputSequence().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread3->inputSequence().size());
         }
         
         void AssignThreadsAlgorithmTest::testApplyIterateMerge()
@@ -70,6 +108,9 @@ namespace stromx
             
             Thread* thread0 = m_stream->threads()[0];
             Thread* thread1 = m_stream->threads()[1];
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(3), thread0->inputSequence().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread1->inputSequence().size());
             
             CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(iterate),
                                  thread0->inputSequence()[0].op());
@@ -112,10 +153,90 @@ namespace stromx
             
             Thread* thread = m_stream->threads()[0];
             
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread->inputSequence().size());
+            
             CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(dump),
                                  thread->inputSequence()[0].op());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(Dump::INPUT),
                                  thread->inputSequence()[0].id());
+        }
+        
+        void AssignThreadsAlgorithmTest::testApplyInverseOrder()
+        {
+            m_stream = new Stream;
+            
+            Operator* counter = m_stream->addOperator(new Counter);
+            Operator* delay = m_stream->addOperator(new PeriodicDelay);
+            Operator* dump = m_stream->addOperator(new Dump);
+            
+            m_stream->initializeOperator(dump);
+            m_stream->initializeOperator(delay);
+            m_stream->initializeOperator(counter);
+            
+            m_stream->connect(counter, Counter::OUTPUT, delay, PeriodicDelay::INPUT);
+            m_stream->connect(delay, PeriodicDelay::OUTPUT, dump, Dump::INPUT);
+            
+            AssignThreadsAlgorithm algorithm;
+            algorithm.apply(*m_stream);
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), m_stream->threads().size());
+            
+            Thread* thread = m_stream->threads()[0];
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), thread->inputSequence().size());
+            
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(delay),
+                                 thread->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(PeriodicDelay::INPUT),
+                                 thread->inputSequence()[0].id());
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(dump),
+                                 thread->inputSequence()[1].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(Dump::INPUT),
+                                 thread->inputSequence()[1].id());
+        }
+        
+        void AssignThreadsAlgorithmTest::testApplyTwoComponents()
+        {
+            m_stream = new Stream;
+            
+            Operator* counter0 = m_stream->addOperator(new Counter);
+            Operator* dump0 = m_stream->addOperator(new Dump);
+            
+            m_stream->initializeOperator(counter0);
+            m_stream->initializeOperator(dump0);
+            
+            m_stream->connect(counter0, Counter::OUTPUT,
+                              dump0, Dump::INPUT);
+            
+            Operator* counter1 = m_stream->addOperator(new Counter);
+            Operator* dump1 = m_stream->addOperator(new Dump);
+            
+            m_stream->initializeOperator(counter1);
+            m_stream->initializeOperator(dump1);
+            
+            m_stream->connect(counter1, Counter::OUTPUT,
+                              dump1, Dump::INPUT);
+            
+            AssignThreadsAlgorithm algorithm;
+            algorithm.apply(*m_stream);
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), m_stream->threads().size());
+            
+            Thread* thread0 = m_stream->threads()[0];
+            Thread* thread1 = m_stream->threads()[1];
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread0->inputSequence().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread1->inputSequence().size());
+            
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(dump0),
+                                 thread0->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(Dump::INPUT),
+                                 thread0->inputSequence()[0].id());
+            
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(dump1),
+                                 thread1->inputSequence()[0].op());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(Dump::INPUT),
+                                 thread1->inputSequence()[0].id());
         }
     }
 }
