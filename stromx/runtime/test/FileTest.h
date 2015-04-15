@@ -39,6 +39,8 @@ namespace stromx
             CPPUNIT_TEST(testDeserializeText);
             CPPUNIT_TEST(testSerializeBinary);
             CPPUNIT_TEST(testDeserializeBinary);
+            CPPUNIT_TEST(testSetExtension);
+            CPPUNIT_TEST(testSetExtensionFails);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -57,6 +59,8 @@ namespace stromx
             void testDeserializeText();
             void testSerializeBinary();
             void testDeserializeBinary();
+            void testSetExtension();
+            void testSetExtensionFails();
                 
         private: 
             class DummyInput : public InputProvider

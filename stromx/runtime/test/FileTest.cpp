@@ -69,6 +69,22 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(File("directory", File::TEXT), FileAccessFailed);
         }
 
+        void FileTest::testSetExtension()
+        {
+            File file;
+            
+            file.setExtension("xml");
+            
+            CPPUNIT_ASSERT_EQUAL(std::string("xml"), file.extension());
+        }
+
+        void FileTest::testSetExtensionFails()
+        {
+            File file("stream.xml", File::TEXT);
+            
+            CPPUNIT_ASSERT_THROW(file.setExtension("xml"), WrongState);
+        }
+
         void FileTest::testSerializeText()
         {
             DummyOutput out;

@@ -46,17 +46,11 @@ namespace stromx
             /** Creates an empty file, i.e. a file object with no path. */
             File() : m_mode(TEXT) {}
             
-            /**
-             * Creates an empty file but sets the file extension. Use this e.g. to
-             * indicate the file type of a parameter.
-             */
-            File(const std::string & extension) : m_mode(TEXT), m_extension(extension) {}
-            
             /** 
              * Create a file object which represents the file at \c path.
              * 
              * \throw FileAccessFailed If \c path does not exist or if \c path is not 
-             *                         is not a directory.
+             *                         a file.
              */
             File(const std::string & path, const OpenMode mode = TEXT);
             
@@ -74,6 +68,15 @@ namespace stromx
             
             /** Returns the extension of this file. */
             const std::string & extension() const { return m_extension; }
+            
+            /**
+             * Sets the extension of a file with no path. Use this e.g. to
+             * indicate the file type of a parameter.
+             * 
+             * \throw WrongState If the path of this file object is set, i.e.
+             *                   the extension is determined by the file path.
+             */
+            void setExtension(const std::string & extension);
             
             virtual const Version & version() const { return VERSION; }
             virtual const std::string & type() const { return TYPE; }

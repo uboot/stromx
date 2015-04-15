@@ -102,6 +102,13 @@ namespace stromx
             m_path = tempPath.native();
         }
         
+        void File::setExtension(const std::string & extension)
+        {
+            if (! m_path.empty())
+                throw WrongState("The extension of files with non-empty path can not be set");
+            m_extension = extension;
+        }
+        
         const VariantHandle & File::variant() const
         {
             switch (m_mode)
