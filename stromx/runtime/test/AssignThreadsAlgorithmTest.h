@@ -34,7 +34,10 @@ namespace stromx
             CPPUNIT_TEST (testApplyIterateMerge);
             CPPUNIT_TEST (testApplyForkJoin);
             CPPUNIT_TEST (testApplyInverseOrder);
+            CPPUNIT_TEST (testApplyWrongOrder);
             CPPUNIT_TEST (testApplyTwoComponents);
+            CPPUNIT_TEST (testApplyParallel);
+            CPPUNIT_TEST (testTwoOutputsAtOneInput);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -48,7 +51,10 @@ namespace stromx
                 void testApplyCounterDump();
                 void testApplyForkJoin();
                 void testApplyInverseOrder();
+                void testApplyWrongOrder();
                 void testApplyTwoComponents();
+                void testApplyParallel();
+                void testTwoOutputsAtOneInput();
                 
             private:
                 Stream* m_stream;

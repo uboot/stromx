@@ -84,6 +84,9 @@ add_subdirectory(doc)
 
 if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
     add_subdirectory(example)
+    if (BUILD_TESTS)
+        add_subdirectory(integration)
+    endif()
 endif()
 
 find_path(mmal_DIR "interface/mmal/mmal.h" HINTS /opt/vc/include)
