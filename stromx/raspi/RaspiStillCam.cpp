@@ -121,7 +121,7 @@ namespace stromx
             double h;
         };
 
-        const std::string RaspiStillCam::TYPE("RaspiCam");
+        const std::string RaspiStillCam::TYPE("RaspiStillCam");
         const std::string RaspiStillCam::PACKAGE(STROMX_RASPI_PACKAGE_NAME);
         const runtime::Version RaspiStillCam::VERSION(STROMX_RASPI_VERSION_MAJOR,STROMX_RASPI_VERSION_MINOR,STROMX_RASPI_VERSION_PATCH);
 
