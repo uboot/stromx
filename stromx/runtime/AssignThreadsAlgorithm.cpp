@@ -77,9 +77,9 @@ namespace
         
         void discover_vertex(Graph::vertex_descriptor u, const Graph & g) const
         {
-            std::map<Graph::edge_descriptor, int> globalThreadMap;
-            std::map<int, Graph::edge_descriptor> operatorThreadMap;
-            std::map<Graph::edge_descriptor, int> noThreadEdges;
+            std::map<Graph::edge_descriptor, int> globalThreadMap; // edge to global thread
+            std::map<int, Graph::edge_descriptor> operatorThreadMap; // local thread at operator to edge
+            std::map<Graph::edge_descriptor, int> noThreadEdges; // edge to operator thread at operator
             
             // iterate over all edges
             typedef graph_traits<Graph>::out_edge_iterator out_edge_iter;
@@ -117,6 +117,7 @@ namespace
                     // assign a new thread to this edge
                     boost::put(thread_t(), const_cast<Graph&>(g), i->first, m_numThreads);
                     operatorThreadMap[i->second] = i->first;
+                    globalThreadMap[i->first] = m_numThreads;
                     m_numThreads++;
                 }
             }
@@ -176,6 +177,7 @@ namespace stromx
                         std::map<Graph::vertex_descriptor, int> operatorThreads;
                         operatorThreads[op2VertexMap[source]] = output.operatorThread();
                         operatorThreads[op2VertexMap[target]] = (*input)->operatorThread();
+                        
                         boost::put(operator_thread_t(), graph, e, operatorThreads);
                         boost::put(thread_t(), graph, e, NO_THREAD);
                         boost::put(connector_id_t(), graph, e, (*input)->id());
