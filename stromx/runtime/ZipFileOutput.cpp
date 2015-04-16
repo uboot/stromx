@@ -108,10 +108,7 @@ namespace stromx
             if(m_currentFile)
                 throw WrongState("File has already been opened.");
             
-            if(! ext.empty())
-                m_currentFilename = m_currentBasename + "." + ext;
-            else
-                m_currentFilename = m_currentBasename;
+            m_currentFilename = m_currentBasename + ext;
             
             std::ios_base::openmode iosmode = std::ios_base::out;
             if(mode == BINARY)

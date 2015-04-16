@@ -120,7 +120,7 @@ namespace stromx
         void MatrixWrapper::serialize(runtime::OutputProvider& output) const
         {
             // open the output file
-            std::ostream & outStream = output.openFile("npy", runtime::OutputProvider::BINARY);
+            std::ostream & outStream = output.openFile(".npy", runtime::OutputProvider::BINARY);
             
             // call the actual serialization function
             doSerialize(outStream, *this);

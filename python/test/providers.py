@@ -10,7 +10,7 @@ factory = sr.Factory()
 with sr.ZipFileOutput("provider_test.zip") as out:
     #out = sr.DirectoryFileOutput(".")
     out.initialize("filename")
-    out.openFile("txt", sr.OutputProvider.OpenMode.TEXT)
+    out.openFile(".txt", sr.OutputProvider.OpenMode.TEXT)
     out.file().write(data)
     sr.XmlWriter().writeStream(out, "stream", stream)
 

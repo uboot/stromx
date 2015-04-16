@@ -44,8 +44,6 @@ namespace stromx
                 throw FileAccessFailed(path, "Path points to a directory.");
             
             m_extension = boostPath.extension().string();
-            if (! m_extension.empty())
-                m_extension.erase(0, 1);
         }
         
         File::File(const File & file)

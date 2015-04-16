@@ -54,7 +54,7 @@ namespace stromx
         
         void TestData::serialize(OutputProvider & output) const
         {
-            output.openFile("txt", OutputProvider::TEXT) << m_value;
+            output.openFile(".txt", OutputProvider::TEXT) << m_value;
         }
 
         void TestData::deserialize(InputProvider & input, const Version &)

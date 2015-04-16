@@ -50,12 +50,12 @@ namespace stromx
             // first file
             m_output->initialize("DirectoryFileOutputText_testFile1");
             CPPUNIT_ASSERT_THROW(m_output->file(), WrongState);
-            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->openFile(".bin", OutputProvider::BINARY);
             m_output->file() << 5;
             
             // try a second file
             m_output->initialize("DirectoryFileOutputText_testFile2");
-            m_output->openFile("txt", OutputProvider::TEXT);
+            m_output->openFile(".txt", OutputProvider::TEXT);
             m_output->file() << 6;
         }
         
@@ -63,12 +63,12 @@ namespace stromx
         {
             // first file
             m_output->initialize("DirectoryFileOutputText_testFileDuplicate");
-            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->openFile(".bin", OutputProvider::BINARY);
             m_output->file() << 5;
             
             // try a second file with the same name
             m_output->initialize("DirectoryFileOutputText_testFileDuplicate");
-            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->openFile(".bin", OutputProvider::BINARY);
             m_output->file() << 6;
         }
         
@@ -78,7 +78,7 @@ namespace stromx
             
             m_output->initialize("DirectoryFileOutputText_testGetFilename");
             CPPUNIT_ASSERT_EQUAL(std::string(""), m_output->getFilename());
-            m_output->openFile("bin", OutputProvider::BINARY);
+            m_output->openFile(".bin", OutputProvider::BINARY);
             CPPUNIT_ASSERT_EQUAL(std::string("DirectoryFileOutputText_testGetFilename.bin"), m_output->getFilename());
         }
     }

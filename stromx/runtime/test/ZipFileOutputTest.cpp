@@ -45,12 +45,12 @@ namespace stromx
             // first file
             output.initialize("testFile1");
             CPPUNIT_ASSERT_THROW(output.file(), WrongState);
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile(".bin", OutputProvider::BINARY);
             output.file() << 5;
             
             // try a second file
             output.initialize("testFile2");
-            output.openFile("txt", OutputProvider::TEXT);
+            output.openFile(".txt", OutputProvider::TEXT);
             output.file() << 6;
         }
         
@@ -60,12 +60,12 @@ namespace stromx
             
             // first file
             output.initialize("testFile");
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile(".bin", OutputProvider::BINARY);
             output.file() << 5;
             
             // try a second file with the same name
             output.initialize("testFile");
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile(".bin", OutputProvider::BINARY);
             output.file() << 6;
         }
         
@@ -77,7 +77,7 @@ namespace stromx
             
             output.initialize("testGetFilename");
             CPPUNIT_ASSERT_EQUAL(std::string(""), output.getFilename());
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile(".bin", OutputProvider::BINARY);
             CPPUNIT_ASSERT_EQUAL(std::string("testGetFilename.bin"), output.getFilename());
         }
         
@@ -85,7 +85,7 @@ namespace stromx
         {
             ZipFileOutput output("/root/test/ZipFileOutputTest_testNoAccess.zip");
             output.initialize("testFile");
-            output.openFile("bin", OutputProvider::BINARY);
+            output.openFile(".bin", OutputProvider::BINARY);
             output.file() << 5;
             
             CPPUNIT_ASSERT_THROW(output.close(), FileAccessFailed);

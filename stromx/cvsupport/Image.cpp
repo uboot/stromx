@@ -127,7 +127,7 @@ namespace stromx
                 throw stromx::runtime::Exception("Failed to encode image.");
             }
             
-            std::ostream & outStream = output.openFile("png", runtime::OutputProvider::BINARY);
+            std::ostream & outStream = output.openFile(".png", runtime::OutputProvider::BINARY);
             for(std::vector<uchar>::const_iterator iter = data.begin(); 
                 iter != data.end();
                 ++iter)

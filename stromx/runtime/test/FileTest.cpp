@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("stream.xml"), copy.path());
             CPPUNIT_ASSERT_EQUAL(File::TEXT, copy.mode());
             CPPUNIT_ASSERT_EQUAL(Variant::TEXT_FILE, copy.variant());
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), copy.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".xml"), copy.extension());
         }
 
         void FileTest::testConstructorText()
@@ -46,7 +46,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("stream.xml"), file.path());
             CPPUNIT_ASSERT_EQUAL(File::TEXT, file.mode());
             CPPUNIT_ASSERT_EQUAL(Variant::TEXT_FILE, file.variant());
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), file.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".xml"), file.extension());
         }
 
         void FileTest::testConstructorBinary()
@@ -56,7 +56,7 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("double_matrix.npy"), file.path());
             CPPUNIT_ASSERT_EQUAL(File::BINARY, file.mode());
             CPPUNIT_ASSERT_EQUAL(Variant::BINARY_FILE, file.variant());
-            CPPUNIT_ASSERT_EQUAL(std::string("npy"), file.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".npy"), file.extension());
         }
 
         void FileTest::testConstructorNoFile()
@@ -73,16 +73,16 @@ namespace stromx
         {
             File file;
             
-            file.setExtension("xml");
+            file.setExtension(".xml");
             
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), file.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".xml"), file.extension());
         }
 
         void FileTest::testSetExtensionFails()
         {
             File file("stream.xml", File::TEXT);
             
-            CPPUNIT_ASSERT_THROW(file.setExtension("xml"), WrongState);
+            CPPUNIT_ASSERT_THROW(file.setExtension(".xml"), WrongState);
         }
 
         void FileTest::testSerializeText()
@@ -95,7 +95,7 @@ namespace stromx
             std::string refContent((std::istreambuf_iterator<char>(refFile)),
                                     std::istreambuf_iterator<char>());
             
-            CPPUNIT_ASSERT_EQUAL(std::string("text xml"), out.value());
+            CPPUNIT_ASSERT_EQUAL(std::string("text .xml"), out.value());
             CPPUNIT_ASSERT_EQUAL(refContent, out.fileValue());
         }
 
@@ -109,7 +109,7 @@ namespace stromx
             std::string refContent((std::istreambuf_iterator<char>(refFile)),
                                     std::istreambuf_iterator<char>());
             
-            CPPUNIT_ASSERT_EQUAL(std::string("binary npy"), out.value());
+            CPPUNIT_ASSERT_EQUAL(std::string("binary .npy"), out.value());
             CPPUNIT_ASSERT_EQUAL(refContent, out.fileValue());
         }
 
@@ -137,7 +137,7 @@ namespace stromx
             std::ifstream refFile("double_matrix.npy", std::ifstream::binary);
             std::string refContent((std::istreambuf_iterator<char>(refFile)),
                                     std::istreambuf_iterator<char>());
-            DummyInput in("binary npy", refContent);
+            DummyInput in("binary .npy", refContent);
             
             File file;
             file.deserialize(in, VERSION);
@@ -146,7 +146,7 @@ namespace stromx
             std::string content((std::istreambuf_iterator<char>(stream)),
                                  std::istreambuf_iterator<char>());
                                  
-            CPPUNIT_ASSERT_EQUAL(std::string("npy"), file.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".npy"), file.extension());
             CPPUNIT_ASSERT_EQUAL(File::BINARY, file.mode());
             CPPUNIT_ASSERT_EQUAL(refContent, content);
         }
