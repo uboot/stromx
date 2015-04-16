@@ -32,7 +32,6 @@ target_link_libraries(stromx_raspi_test
     ${CMAKE_DL_LIBS}
     stromx_runtime
     stromx_cvsupport
-    ${OpenCV_LIBS}
     vcos
     mmal_core
     mmal_util

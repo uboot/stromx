@@ -26,6 +26,8 @@ set (SOURCES
     impl/Utilities.cpp
 )
     
+link_directories(/opt/vc/lib)
+
 add_library (stromx_raspi SHARED ${SOURCES})
 
 set(VERSION_STRING "${RASPI_VERSION_MAJOR}.${RASPI_VERSION_MINOR}.${RASPI_VERSION_PATCH}")
@@ -36,11 +38,14 @@ set_target_properties (stromx_raspi PROPERTIES
     FOLDER "library"
 )
 
-link_directories(/opt/vc/lib)
-
 target_link_libraries (stromx_raspi
     stromx_runtime
     stromx_cvsupport
+    vcos
+    mmal_core
+    mmal_util
+    mmal_vc_client
+    bcm_host
 )
 
 if(WIN32)    

@@ -2,6 +2,8 @@ set(SOURCES
     Raspi.cpp
 )
 
+link_directories(/opt/vc/lib)
+
 add_library(raspi SHARED ${SOURCES})
 
 set_target_properties(raspi PROPERTIES FOLDER "python")
