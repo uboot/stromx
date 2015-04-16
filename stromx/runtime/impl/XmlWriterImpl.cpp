@@ -409,7 +409,7 @@ namespace stromx
                     try
                     {
                         m_output->initialize(basename);
-                        m_output->openFile("xml");
+                        m_output->openFile(".xml");
                         m_output->file().write((const char*)(formatTarget.getRawBuffer()),
                                                formatTarget.getLen());
                     }
@@ -481,7 +481,7 @@ namespace stromx
                     try
                     {
                         m_output->initialize(basename);
-                        m_output->openFile("xml");
+                        m_output->openFile(".xml");
                         m_output->file().write((const char*)(formatTarget.getRawBuffer()),
                                                formatTarget.getLen());
                     }
