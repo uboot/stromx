@@ -19,6 +19,8 @@
 
 #include <boost/python.hpp>
 
+#include "DataCast.h"
+
 using namespace boost::python;
 using namespace stromx::runtime;
 
@@ -124,6 +126,8 @@ void exportImage()
         .def<unsigned int (stromx::runtime::Image::*)() const>("pixelSize", &Image::pixelSize)
         .def<unsigned int (stromx::runtime::Image::*)() const>("depth", &Image::depth)
         .def<unsigned int (stromx::runtime::Image::*)() const>("numChannels", &Image::numChannels)
+        .def("data_cast", &stromx::python::data_cast<Image>, return_internal_reference<1>())
+        .staticmethod("data_cast")
     ;
     
     enum_<Image::PixelType>("PixelType")

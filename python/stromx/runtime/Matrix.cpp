@@ -19,6 +19,8 @@
 
 #include <boost/python.hpp>
 
+#include "DataCast.h"
+
 using namespace boost::python;
 using namespace stromx::runtime;
 
@@ -114,6 +116,8 @@ void exportMatrix()
         .def("valueType", pure_virtual(&Matrix::valueType))
         .def<unsigned int (stromx::runtime::Matrix::*)() const>("valueSize", &Matrix::valueSize)
         .def("_data", &_data)
+        .def("data_cast", &stromx::python::data_cast<Matrix>, return_internal_reference<1>())
+        .staticmethod("data_cast")
     ;
     
     enum_<Matrix::ValueType>("ValueType")

@@ -21,8 +21,6 @@
 
 #include <stromx/runtime/OperatorKernel.h>
 
-void exportImage();
-
 using namespace stromx::runtime;
 using namespace boost::python;
 
