@@ -23,7 +23,7 @@ Release:
 Summary:        Library for near real-time, parallel processing of data
 Group:          Development/Libraries/C and C++
 
-License:        Apache 2.0
+License:        Apache License 2.0
 URL:            http://www.stromx.org
 Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
