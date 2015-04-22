@@ -220,7 +220,7 @@ namespace stromx
             parameters.push_back(triggerValueParam);
             
             Parameter* triggerParam = new Parameter(TRIGGER_PARAM, Variant::TRIGGER);
-            triggerParam->setTitle("Trigger value");
+            triggerParam->setTitle("Trigger");
             triggerParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(triggerParam);
             

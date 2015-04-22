@@ -69,6 +69,8 @@ void exportVariant()
     in_Variant.attr("INT_32_MATRIX") = Variant::INT_32_MATRIX;
     in_Variant.attr("UINT_32_MATRIX") = Variant::UINT_32_MATRIX;
     in_Variant.attr("FLOAT_MATRIX") = Variant::FLOAT_MATRIX;
+    in_Variant.attr("FLOAT_32_MATRIX") = Variant::FLOAT_32_MATRIX;
+    in_Variant.attr("FLOAT_64_MATRIX") = Variant::FLOAT_64_MATRIX;
     in_Variant.attr("FLOAT_32") = Variant::FLOAT_32;
     in_Variant.attr("FLOAT_64") = Variant::FLOAT_64;
     in_Variant.attr("FILE") = Variant::FILE;

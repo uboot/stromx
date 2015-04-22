@@ -156,6 +156,7 @@ namespace stromx
             
             EnumParameter* resolution = new EnumParameter(RESOLUTION);
             resolution->setAccessMode(Parameter::INITIALIZED_WRITE);
+            roiGroup->setTitle("Resolution");
             resolution->add(EnumDescription(Enum(RESOLUTION_2560_BY_1920), "2560 x 1920"));
             resolution->add(EnumDescription(Enum(RESOLUTION_1280_BY_960), "1280 x 960"));
             resolution->add(EnumDescription(Enum(RESOLUTION_640_BY_480), "640 x 480"));

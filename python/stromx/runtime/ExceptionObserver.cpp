@@ -24,6 +24,29 @@ using namespace stromx::runtime;
 
 namespace
 {
+    class OperatorExceptionInfo
+    {
+    public: 
+        OperatorExceptionInfo(const std::string & message, const std::string & name,
+                              const std::string & type, const std::string & package) 
+          : m_message(message),
+            m_name(name),
+            m_type(type),
+            m_package(package)
+        { }
+        
+        const std::string & message() const { return m_message; }
+        const std::string & name() const { return m_name; }
+        const std::string & type() const { return m_type; }
+        const std::string & package() const { return m_package; }
+        
+    private:
+        const std::string m_message;
+        const std::string m_name;
+        const std::string m_type;
+        const std::string m_package;
+    };
+    
     template<typename T>
     void do_release(T*)
     {
@@ -33,16 +56,18 @@ namespace
     {
         void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const
         {
-            observeWrap(phase, ex.message().c_str(), boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
+            OperatorExceptionInfo info(ex.message(), ex.name(), ex.type(), ex.package());
+            observeWrap(phase, info, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
         }
         
-        void observeWrap(const Phase phase, const char* message, boost::shared_ptr<Thread> thread) const
+        void observeWrap(const Phase phase, const OperatorExceptionInfo & info,
+                         boost::shared_ptr<Thread> thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
             
             try
             {
-                this->get_override("observe")(phase, message, thread);
+                this->get_override("observe")(phase, info, thread);
             }
             catch(...)
             {
@@ -56,6 +81,13 @@ namespace
 
 void exportExceptionObserver()
 {         
+    class_<OperatorExceptionInfo>("OperatorExceptionInfo", no_init)
+        .def("message", &OperatorExceptionInfo::message, return_value_policy<copy_const_reference>())
+        .def("name", &OperatorExceptionInfo::name, return_value_policy<copy_const_reference>())
+        .def("type", &OperatorExceptionInfo::type, return_value_policy<copy_const_reference>())
+        .def("package", &OperatorExceptionInfo::package, return_value_policy<copy_const_reference>())
+    ;
+    
     scope in_ExceptionObserver = 
     class_<ExceptionObserverWrap, boost::noncopyable>("ExceptionObserver")
         .def("observe", pure_virtual(&ExceptionObserverWrap::observeWrap))
