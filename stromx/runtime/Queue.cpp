@@ -23,6 +23,12 @@
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Try.h"
 
+namespace 
+{
+    const static unsigned int INPUT_THREAD = 0;
+    const static unsigned int OUTPUT_THREAD = 1;
+}
+
 namespace stromx
 {
     namespace runtime
@@ -129,6 +135,7 @@ namespace stromx
             
             Description* input = new Description(INPUT, Variant::DATA);
             input->setTitle("Input");
+            input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
             
             return inputs;
@@ -140,6 +147,7 @@ namespace stromx
             
             Description* output = new Description(OUTPUT, Variant::DATA);
             output->setTitle("Output");
+            output->setOperatorThread(OUTPUT_THREAD);
             outputs.push_back(output);
             
             return outputs;
