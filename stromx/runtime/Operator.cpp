@@ -53,15 +53,15 @@ namespace stromx
             
             virtual ~InternalObserver() {}
             
-            virtual void observe(const unsigned int id, const DataContainer & data) const
+            virtual void observe(const unsigned int id, const DataContainer & oldData, const DataContainer & newData) const
             {
                 switch(m_type)
                 {
                 case INPUT:
-                    m_op->observeInput(id, data);
+                    m_op->observeInput(id, oldData, newData);
                     break;
                 case OUTPUT:
-                    m_op->observeOutput(id, data);
+                    m_op->observeOutput(id, oldData, newData);
                     break;
                 default:
                     BOOST_ASSERT(false);
@@ -315,7 +315,9 @@ namespace stromx
                 throw WrongArgument("Observer has not been added to operator.");
         }
         
-        void Operator::observeInput(const unsigned int id, const stromx::runtime::DataContainer& data) const
+        void Operator::observeInput(const unsigned int id,
+            const stromx::runtime::DataContainer& oldData,
+            const stromx::runtime::DataContainer& newData) const
         {
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
@@ -325,7 +327,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Input(this, id), data, gThread.get());
+                    (*iter)->observe(Input(this, id), oldData, newData, gThread.get());
                 }
                 catch(Interrupt &)
                 {
@@ -338,7 +340,9 @@ namespace stromx
             }
         }
 
-        void Operator::observeOutput(const unsigned int id, const stromx::runtime::DataContainer& data) const
+        void Operator::observeOutput(const unsigned int id,
+            const stromx::runtime::DataContainer& oldData,
+            const stromx::runtime::DataContainer& newData) const
         {
             boost::lock_guard<boost::mutex> lock(m_observerMutex->mutex());
             
@@ -348,7 +352,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Output(this, id), data, gThread.get());
+                    (*iter)->observe(Output(this, id), oldData, newData, gThread.get());
                 }
                 catch(Interrupt &)
                 {

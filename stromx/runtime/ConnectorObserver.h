@@ -31,7 +31,7 @@ namespace stromx
         {
         public:
             /** Informs the observer that \c connector was set to \c data. */
-            virtual void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const = 0;
+            virtual void observe(const Connector & connector, const DataContainer & oldData, const DataContainer & newData, const Thread* const thread) const = 0;
         };
     }
 }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#  Copyright 2011 Matthias Fuchs
+#  Copyright 2015 Matthias Fuchs
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,43 +17,97 @@
 
 from stromx import runtime, test
 import time
+import unittest
 
-class MyObserver(runtime.ConnectorObserver):
-    def observe(self, connector, data, thread):
-        if data.empty() or connector.type() == runtime.Connector.INPUT:
+class DeadlockObserver(runtime.ConnectorObserver):
+    interrupt = False
+    
+    def observe(self, connector, oldData, newData, thread):
+        # consider outputs only
+        if connector.type() == runtime.Connector.INPUT:
             return
         
-        with runtime.ReadAccess(data) as access:
+        # consider only 'sendOutputData()' calls -> leads to a deadlock when
+        # acquiring the write access below
+        if newData.empty():
+            return
+        
+        try:
+            with runtime.ReadAccess(newData) as access:
+                print access.get().get()
+        except runtime.Exception as e:
+            print e
+            self.interrupt = True
+            
+class OutputObserver(runtime.ConnectorObserver):
+    data = None
+    
+    def observe(self, connector, oldData, newData, thread):
+        # consider outputs only
+        if connector.type() == runtime.Connector.INPUT:
+            return
+        
+        # consider only 'clearOutputData()' calls
+        if oldData.empty():
+            return
+        
+        with runtime.ReadAccess(oldData) as access:
             print access.get().get()
+            self.data = access.get().get()
 
-stream = runtime.Stream()
-counter = stream.addOperator(runtime.Counter())
-test = stream.addOperator(test.DeadlockOperator())
-dump = stream.addOperator(runtime.Dump())
+class ObserversTest(unittest.TestCase):
+    def setUp(self):
+      stream = runtime.Stream()
+      counter = stream.addOperator(runtime.Counter())
+      deadlock = stream.addOperator(test.DeadlockOperator())
+      dump = stream.addOperator(runtime.Dump())
 
-stream.initializeOperator(counter)
-stream.initializeOperator(test)
-stream.initializeOperator(dump)
+      stream.initializeOperator(counter)
+      stream.initializeOperator(deadlock)
+      stream.initializeOperator(dump)
 
-# obtain write access in deadlock operator
-test.setParameter(3, runtime.Bool(True))
+      # obtain write access in deadlock operator
+      deadlock.setParameter(3, runtime.Bool(True))
 
-stream.connect(counter, 0, test, 0)
-stream.connect(test, 1, dump, 0)
+      stream.connect(counter, 0, deadlock, 0)
+      stream.connect(deadlock, 1, dump, 0)
 
-thread = stream.addThread()
-thread.addInput(test, 0)
-thread.addInput(dump, 0)
+      thread = stream.addThread()
+      thread.addInput(deadlock, 0)
+      thread.addInput(dump, 0)
 
-stream.setDelay(1000)
+      stream.setDelay(100)
 
-observer = MyObserver()
-test.addObserver(observer)
+      self.stream = stream
+      self.deadlock = deadlock
+        
+    def tearDown(self):
+        self.stream = None
 
-stream.start()
+    def testInterrupt(self):
+        observer = DeadlockObserver()
+        self.deadlock.addObserver(observer)
+        self.stream.start()
 
-time.sleep(2)
+        time.sleep(0.3)
 
-stream.stop()
-stream.join()
+        self.stream.stop()
+        self.stream.join()
+        
+        self.assertTrue(observer.interrupt)
 
+    def testObserverOutput(self):
+        observer = OutputObserver()
+        self.deadlock.addObserver(observer)
+        self.stream.start()
+
+        time.sleep(0.3)
+
+        self.stream.stop()
+        self.stream.join()
+        
+        self.assertNotEqual(None, observer.data)
+
+if __name__ == '__main__':
+    unittest.main()
+    

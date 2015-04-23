@@ -52,15 +52,18 @@ namespace stromx
             public:
                 explicit Observer(const Id2DataMapTest* const test);
                 virtual ~Observer() {}
-                virtual void observe(const unsigned int id, const DataContainer & data) const;
+                virtual void observe(const unsigned int id, const DataContainer & oldData,
+                                     const DataContainer & newData) const;
                 
                 unsigned int lastId() const { return m_lastId; }
-                const DataContainer & lastData() const { return m_lastData; }
+                const DataContainer & lastOldData() const { return m_lastOldData; }
+                const DataContainer & lastNewData() const { return m_lastNewData; }
                 
             private:
                 const Id2DataMapTest* m_test;
                 mutable unsigned int m_lastId;
-                mutable DataContainer m_lastData;
+                mutable DataContainer m_lastOldData;
+                mutable DataContainer m_lastNewData;
             };
             
             Observer* m_observer;

@@ -75,13 +75,22 @@ namespace stromx
             m_id2DataMap->set(1, data1);
             
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), m_observer->lastId());
-            CPPUNIT_ASSERT_EQUAL(data1, m_observer->lastData());
+            CPPUNIT_ASSERT_EQUAL(DataContainer(), m_observer->lastOldData());
+            CPPUNIT_ASSERT_EQUAL(data1, m_observer->lastNewData());
             
             DataContainer data2(new UInt8());
             m_id2DataMap->set(0, data2);
             
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_observer->lastId());
-            CPPUNIT_ASSERT_EQUAL(data2, m_observer->lastData());
+            CPPUNIT_ASSERT_EQUAL(DataContainer(), m_observer->lastOldData());
+            CPPUNIT_ASSERT_EQUAL(data2, m_observer->lastNewData());
+            
+            DataContainer data3(new UInt8());
+            m_id2DataMap->set(0, data3);
+            
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), m_observer->lastId());
+            CPPUNIT_ASSERT_EQUAL(data2, m_observer->lastOldData());
+            CPPUNIT_ASSERT_EQUAL(data3, m_observer->lastNewData());
         }
 
         Id2DataMapTest::Id2DataMapTest()
@@ -101,10 +110,12 @@ namespace stromx
             m_lastId(0)
         {}
     
-        void Id2DataMapTest::Observer::observe(const unsigned int id, const stromx::runtime::DataContainer& data) const
+        void Id2DataMapTest::Observer::observe(const unsigned int id,const DataContainer & oldData,
+                                               const DataContainer & newData) const
         {
             m_lastId = id;
-            m_lastData = data;
+            m_lastNewData = newData;
+            m_lastOldData = oldData;
         }
     }
 }

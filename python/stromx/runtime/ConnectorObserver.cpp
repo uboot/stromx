@@ -46,18 +46,20 @@ namespace
     
     struct ConnectorObserverWrap : ConnectorObserver, wrapper<ConnectorObserver>
     {
-        void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const
+        void observe(const Connector & connector, const DataContainer & oldData,
+                     const DataContainer & newData, const Thread* const thread) const
         {
-            observeWrap(connector, data, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
+            observeWrap(connector, oldData, newData, boost::shared_ptr<Thread>(const_cast<Thread*>(thread), &do_release<Thread>));
         }
         
-        void observeWrap(const Connector & connector, const DataContainer & data, boost::shared_ptr<Thread> thread) const
+        void observeWrap(const Connector & connector, const DataContainer & oldData,
+                         const DataContainer & newData, boost::shared_ptr<Thread> thread) const
         {
             PyGILState_STATE state = PyGILState_Ensure();
             
             try
             {
-                this->get_override("observe")(connector, data, thread);
+                this->get_override("observe")(connector, oldData, newData, thread);
             }
             catch(...)
             {

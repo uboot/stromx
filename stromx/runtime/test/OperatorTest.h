@@ -89,15 +89,18 @@ namespace stromx
             class TestObserver : public ConnectorObserver
             {
             public:
-                void observe(const Connector & connector, const DataContainer & data, const Thread* const thread) const;
+                void observe(const Connector & connector, const DataContainer & oldData,
+                             const DataContainer & newData, const Thread* const thread) const;
                 
                 const Connector& lastConnector() const { return m_lastConnector; }
-                const DataContainer & lastData() const { return m_lastData; }
+                const DataContainer & lastOldData() const { return m_lastOldData; }
+                const DataContainer & lastNewData() const { return m_lastNewData; }
                 const Thread* thread() const { return m_thread; }
                 
             private:
                 mutable Connector m_lastConnector;
-                mutable DataContainer m_lastData;
+                mutable DataContainer m_lastOldData;
+                mutable DataContainer m_lastNewData;
                 mutable const Thread* m_thread;
             };
             

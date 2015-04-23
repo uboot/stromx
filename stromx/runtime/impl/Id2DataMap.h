@@ -32,7 +32,7 @@ namespace stromx
             class Id2DataMapObserver
             {
             public:
-                virtual void observe(const unsigned int id, const DataContainer & data) const = 0;
+                virtual void observe(const unsigned int id, const DataContainer & oldData, const DataContainer & newData) const = 0;
             };
            
             class Id2DataMap

@@ -18,12 +18,12 @@
 from stromx import runtime
 
 class MyObserver(runtime.ConnectorObserver):
-    def observe(self, connector, data, thread):
+    def observe(self, connector, oldData, newData, thread):
         dataStr = ""
-        if data.empty():
+        if newData.empty():
             dataStr = "empty"
         else:
-            dataStr = str(runtime.ReadAccess(data).get().get())
+            dataStr = str(runtime.ReadAccess(newData).get().get())
            
         threadName = "main"
         if thread:

@@ -64,10 +64,11 @@ namespace stromx
                 if(iter == m_map.end())
                     throw WrongId("No data with ID " + id);
                 
+                DataContainer oldData = iter->second;
                 iter->second = data;
                 
                 if(m_observer)
-                    m_observer->observe(id, data);
+                    m_observer->observe(id, oldData, data);
             }
             
             void Id2DataMap::clear()

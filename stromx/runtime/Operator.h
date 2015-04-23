@@ -260,8 +260,10 @@ namespace stromx
             void activate();
             void deactivate();
             void interrupt();
-            void observeInput(const unsigned int id, const DataContainer & data) const;
-            void observeOutput(const unsigned int id, const DataContainer & data) const;
+            void observeInput(const unsigned int id, const DataContainer & oldData,
+                              const DataContainer & newData) const;
+            void observeOutput(const unsigned int id, const DataContainer & oldData,
+                               const DataContainer & newData) const;
             
             std::string m_name;
             InternalObserver* m_inputObserver;
