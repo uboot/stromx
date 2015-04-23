@@ -32,7 +32,7 @@ namespace stromx
     {
         class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
         {
-            enum Inputs 
+            enum Connectors 
             { 
                 INPUT,
                 OUTPUT
@@ -42,7 +42,8 @@ namespace stromx
             { 
                 LOCK_PARAMETERS,
                 LOCK_DATA,
-                DUMMY
+                DUMMY,
+                OBTAIN_WRITE_ACCESS
             };
             
         public:
@@ -65,6 +66,7 @@ namespace stromx
             
             stromx::runtime::Bool m_lockParameters;
             stromx::runtime::Bool m_lockData;
+            stromx::runtime::Bool m_obtainWriteAccess;
             bool m_dataHasBeenLocked;
             stromx::runtime::WriteAccess<stromx::runtime::UInt32> m_writeAccess;
             stromx::runtime::UInt8 m_dummy;

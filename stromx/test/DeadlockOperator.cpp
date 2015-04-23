@@ -56,7 +56,7 @@ namespace stromx
         {
             try
             {
-                switch(id)
+                switch (id)
                 {
                 case LOCK_PARAMETERS:
                     m_lockParameters = data_cast<Bool>(value);
@@ -67,11 +67,14 @@ namespace stromx
                 case DUMMY:
                     m_dummy = data_cast<UInt8>(value);
                     break;
+                case OBTAIN_WRITE_ACCESS:
+                    m_obtainWriteAccess = data_cast<Bool>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
             }
-            catch(std::bad_cast&)
+            catch (std::bad_cast&)
             {
                 throw WrongParameterType(*parameters()[id], *this);
             }
@@ -79,7 +82,7 @@ namespace stromx
 
         const DataRef DeadlockOperator::getParameter(const unsigned int id) const
         {
-            switch(id)
+            switch (id)
             {
             case LOCK_PARAMETERS:
                 return m_lockParameters;
@@ -87,6 +90,8 @@ namespace stromx
                 return m_lockData;
             case DUMMY:
                 return m_dummy;
+            case OBTAIN_WRITE_ACCESS:
+                return m_obtainWriteAccess;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -102,7 +107,7 @@ namespace stromx
             Id2DataPair input(INPUT);
             provider.receiveInputData(input);
             
-            if(m_lockParameters)
+            if (m_lockParameters)
             {
         #ifdef WIN32
                 Sleep(1000); // sleep 1 second
@@ -112,16 +117,20 @@ namespace stromx
         #endif // UNIX  
             }
             
-            if(! m_dataHasBeenLocked && m_lockData)
+            if (! m_dataHasBeenLocked && m_lockData)
             {
                 m_writeAccess = WriteAccess<UInt32>(input.data());
                 m_dataHasBeenLocked = true;
             }
-            else if(m_dataHasBeenLocked && ! m_lockData)
+            else if (m_dataHasBeenLocked && ! m_lockData)
             {
                 m_writeAccess = WriteAccess<UInt32>(DataContainer(new UInt32()));
                 m_dataHasBeenLocked = false;
             }
+            
+            WriteAccess<> writeAccess;
+            if (m_obtainWriteAccess)
+                writeAccess = WriteAccess<>(input.data());
             
             Id2DataPair output(OUTPUT, input.data());
             provider.sendOutputData(output);
@@ -168,6 +177,11 @@ namespace stromx
             param = new Parameter(DUMMY, Variant::UINT_8);
             param->setTitle("Dummy parameter");
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(OBTAIN_WRITE_ACCESS, Variant::BOOL);
+            param->setTitle("Obtain write access to data");
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
             
             return parameters;

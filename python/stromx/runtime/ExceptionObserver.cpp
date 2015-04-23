@@ -14,13 +14,25 @@
 *  limitations under the License.
 */
 
+#include "ThreadUtilities.h"
+
 #include <stromx/runtime/ExceptionObserver.h>
 #include <stromx/runtime/Thread.h>
 
 #include <boost/python.hpp>
+#include <boost/thread.hpp>
 
 using namespace boost::python;
+using namespace stromx::python;
 using namespace stromx::runtime;
+
+namespace stromx
+{
+    namespace runtime
+    {
+        extern boost::thread_specific_ptr<Thread> gThread;
+    }
+}
 
 namespace
 {
@@ -75,6 +87,10 @@ namespace
             }
             
             PyGILState_Release(state);
+            
+            Thread* threadPtr = gThread.get();
+            if (threadPtr && ThreadUtilities::interruptedFlag(threadPtr))
+                throw Interrupt();
         }
     };
 }

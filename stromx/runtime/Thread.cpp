@@ -41,7 +41,8 @@ namespace stromx
         
         Thread::Thread(const Network*const network)
           : m_thread(0),
-            m_network(network)
+            m_network(network),
+            m_interruptedFlag(false)
         {
             if(! network)
                 throw WrongArgument("Passed null pointer as network.");

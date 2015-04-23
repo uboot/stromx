@@ -14,15 +14,28 @@
 *  limitations under the License.
 */
 
+#include "ThreadUtilities.h"
+
 #include <stromx/runtime/ConnectorObserver.h>
 #include <stromx/runtime/Connector.h>
+#include <stromx/runtime/Exception.h>
 #include <stromx/runtime/DataContainer.h>
 #include <stromx/runtime/Thread.h>
 
 #include <boost/python.hpp>
+#include <boost/thread.hpp>
 
 using namespace boost::python;
+using namespace stromx::python;
 using namespace stromx::runtime;
+
+namespace stromx
+{
+    namespace runtime
+    {
+        extern boost::thread_specific_ptr<Thread> gThread;
+    }
+}
 
 namespace
 {
@@ -52,6 +65,10 @@ namespace
             }
             
             PyGILState_Release(state);
+            
+            Thread* threadPtr = gThread.get();
+            if (threadPtr && ThreadUtilities::interruptedFlag(threadPtr))
+                throw Interrupt();
         }
     };
 }

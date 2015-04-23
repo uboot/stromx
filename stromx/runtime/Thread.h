@@ -25,6 +25,11 @@
 
 namespace stromx
 {
+    namespace python
+    {
+        class ThreadUtilities;
+    }
+    
     namespace runtime
     {
         class Operator;
@@ -49,6 +54,7 @@ namespace stromx
         {    
             friend class Stream;
             friend class ThreadTest;
+            friend class stromx::python::ThreadUtilities;
             
         public:
             /** The possible states of a thread. */
@@ -142,11 +148,24 @@ namespace stromx
             
             void setObserver(const impl::ThreadImplObserver* const observer);
             
+            /**
+             * Utility flag for Python wrappers
+             *
+             * If an interrupt exception is thrown in a virtual function call which is
+             * implemented in Python the exception is caught on the Python side an not
+             * passed on to C++. As a workaround a flag is set when an interrupt exception passes
+             * the boundary from C++ to Python. This flag is checked again at the boundary 
+             * Python to C++.
+             */
+            void setInterruptedFlag(const bool value) { m_interruptedFlag = value; }
+            bool interruptedFlag() const { return m_interruptedFlag; }
+            
             impl::ThreadImpl* m_thread;
             std::string m_name;
             const impl::Network* m_network;
             std::vector<Input> m_inputSequence;
             Color m_color;
+            bool m_interruptedFlag;
         };
     }
 }

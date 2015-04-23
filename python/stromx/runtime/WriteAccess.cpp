@@ -14,13 +14,25 @@
 *  limitations under the License.
 */
 
+#include "ThreadUtilities.h"
+
 #include <stromx/runtime/WriteAccess.h>
 #include <stromx/runtime/Data.h>
 
 #include <boost/python.hpp>
+#include <boost/thread.hpp>
 
 using namespace boost::python;
+using namespace stromx::python;
 using namespace stromx::runtime;
+
+namespace stromx
+{
+    namespace runtime
+    {
+        extern boost::thread_specific_ptr<Thread> gThread;
+    }
+}
 
 namespace
 {   
@@ -28,10 +40,21 @@ namespace
     {
         WriteAccess<>* access = 0;  
         
+        Thread* threadPtr = gThread.get();
+        if (threadPtr)
+            ThreadUtilities::setInterruptedFlag(threadPtr, false);
+        
         Py_BEGIN_ALLOW_THREADS
         try
         {
             access = new WriteAccess<>(data);
+        }
+        catch(stromx::runtime::Interrupt&)
+        {
+            Py_BLOCK_THREADS
+            if (threadPtr)
+                ThreadUtilities::setInterruptedFlag(threadPtr, true);
+            throw;
         }
         catch(stromx::runtime::Exception&)
         {
@@ -47,10 +70,21 @@ namespace
     {
         WriteAccess<>* access = 0;
         
+        Thread* threadPtr = gThread.get();
+        if (threadPtr)
+            ThreadUtilities::setInterruptedFlag(threadPtr, false);
+        
         Py_BEGIN_ALLOW_THREADS
         try
         {
             access = new WriteAccess<>(data, timeout);
+        }
+        catch(stromx::runtime::Interrupt&)
+        {
+            Py_BLOCK_THREADS
+            if (threadPtr)
+                ThreadUtilities::setInterruptedFlag(threadPtr, true);
+            throw;
         }
         catch(stromx::runtime::Exception&)
         {
