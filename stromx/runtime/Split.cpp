@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/Split.h"
 
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
@@ -37,36 +37,36 @@ namespace stromx
 {
     namespace runtime
     {
-        const std::string Iterate::TYPE("Iterate");
-        const std::string Iterate::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Iterate::VERSION(0, 1, 0);
+        const std::string Split::TYPE("Split");
+        const std::string Split::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
+        const Version Split::VERSION(0, 1, 0);
         
-        Iterate::Iterate()
+        Split::Split()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs())
         {
         }
         
-        void Iterate::setParameter(unsigned int id, const runtime::Data& /*value*/)
+        void Split::setParameter(unsigned int id, const runtime::Data& /*value*/)
         {
             throw WrongParameterId(id, *this);
         }
 
-        const DataRef Iterate::getParameter(const unsigned int id) const
+        const DataRef Split::getParameter(const unsigned int id) const
         {
             throw WrongParameterId(id, *this);
         }
         
-        void Iterate::activate()
+        void Split::activate()
         {
             BOOST_ASSERT(m_storedItems.size() == 0);
         }
         
-        void Iterate::deactivate()
+        void Split::deactivate()
         {
             m_storedItems.clear();
         }
         
-        void Iterate::execute(DataProvider& provider)
+        void Split::execute(DataProvider& provider)
         {
             if (m_storedItems.size() == 0)
             {
@@ -108,7 +108,7 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Iterate::setupInputs()
+        const std::vector<const Description*> Split::setupInputs()
         {
             std::vector<const Description*> inputs;
             Description* input = new Description(INPUT, Variant::LIST);
@@ -119,7 +119,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Iterate::setupOutputs() const
+        const std::vector<const Description*> Split::setupOutputs() const
         {
             std::vector<const Description*> outputs;
             

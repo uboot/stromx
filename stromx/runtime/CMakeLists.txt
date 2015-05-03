@@ -47,7 +47,7 @@ set(SOURCES
     Id2DataPair.cpp
     Image.cpp
     ImageWrapper.cpp
-    Iterate.cpp
+    Split.cpp
     Join.cpp
     List.cpp
     Locale.cpp

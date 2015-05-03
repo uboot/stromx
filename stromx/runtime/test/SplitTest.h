@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_ITERATETEST_H
-#define STROMX_RUNTIME_ITERATETEST_H
+#ifndef STROMX_RUNTIME_SPLITTEST_H
+#define STROMX_RUNTIME_SPLITTEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
@@ -26,15 +26,15 @@ namespace stromx
     {
         class OperatorTester;
         
-        class IterateTest : public CPPUNIT_NS :: TestFixture
+        class SplitTest : public CPPUNIT_NS :: TestFixture
         {
-            CPPUNIT_TEST_SUITE (IterateTest);
+            CPPUNIT_TEST_SUITE (SplitTest);
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST (testExecuteEmptyList);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
-                IterateTest() : m_operator(0) {}
+                SplitTest() : m_operator(0) {}
                 
                 void setUp();
                 void tearDown();
@@ -49,4 +49,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_ITERATETEST_H
+#endif // STROMX_RUNTIME_SPLITTEST_H

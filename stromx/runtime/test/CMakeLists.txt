@@ -59,7 +59,6 @@ set(SOURCES
     ../Id2DataPair.cpp
     ../Image.cpp
     ../ImageWrapper.cpp
-    ../Iterate.cpp
     ../List.cpp
     ../Locale.cpp
     ../Matrix.cpp
@@ -78,6 +77,7 @@ set(SOURCES
     ../Thread.cpp
     ../Send.cpp
     ../SortInputsAlgorithm.cpp
+    ../Split.cpp
     ../Stream.cpp
     ../String.cpp
     ../TriggerData.cpp
@@ -122,7 +122,6 @@ set(SOURCES
     ImageWrapperTest.cpp
     InputNodeTest.cpp
     Int32Test.cpp
-    IterateTest.cpp
     JoinTest.cpp
     ListTest.cpp
     MatrixWrapperTest.cpp
@@ -146,6 +145,7 @@ set(SOURCES
     TestData.cpp
     TryTest.cpp
 #     ServerTest.cpp
+    SplitTest.cpp
     SortInputsAlgorithmTest.cpp
     StreamTest.cpp
     TestUtilities.cpp

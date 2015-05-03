@@ -22,7 +22,7 @@
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Fork.h"
-#include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/Split.h"
 #include "stromx/runtime/Join.h"
 #include "stromx/runtime/List.h"
 #include "stromx/runtime/Locale.h"
@@ -65,7 +65,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
     registry.registerOperator(new Fork);
-    registry.registerOperator(new Iterate);
+    registry.registerOperator(new Split);
     registry.registerOperator(new Join);
     registry.registerOperator(new Merge);
     registry.registerOperator(new PeriodicDelay);

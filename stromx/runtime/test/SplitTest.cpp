@@ -14,18 +14,18 @@
 *  limitations under the License.
 */
 
-#include "stromx/runtime/test/IterateTest.h"
+#include "stromx/runtime/test/SplitTest.h"
 
 #include <cppunit/TestAssert.h>
 
 #include "stromx/runtime/DataContainer.h"
-#include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/Split.h"
 #include "stromx/runtime/List.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/test/TestData.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::IterateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::SplitTest);
 
 namespace stromx
 {
@@ -33,15 +33,15 @@ namespace stromx
 
     namespace runtime
     {
-        void IterateTest::setUp ( void )
+        void SplitTest::setUp ( void )
         {
-            m_operator = new runtime::OperatorTester(new Iterate());
+            m_operator = new runtime::OperatorTester(new Split());
             
             m_operator->initialize();
             m_operator->activate();
         }
         
-        void IterateTest::testExecute()
+        void SplitTest::testExecute()
         {
             for (std::size_t i = 0; i < 2; ++i)
             {
@@ -53,37 +53,37 @@ namespace stromx
                     list->content().push_back(data2);
                     DataContainer in(list);
                     
-                    m_operator->setInputData(Iterate::INPUT, in);
+                    m_operator->setInputData(Split::INPUT, in);
                 }
                 
                 DataContainer outData, outNumItems;
-                outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
-                outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
-                m_operator->clearOutputData(Iterate::OUTPUT_DATA);
-                m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+                outData = m_operator->getOutputData(Split::OUTPUT_DATA);
+                outNumItems = m_operator->getOutputData(Split::OUTPUT_NUM_ITEMS);
+                m_operator->clearOutputData(Split::OUTPUT_DATA);
+                m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
                 
                 CPPUNIT_ASSERT_EQUAL((const Data*)(data1), &ReadAccess<>(outData)());
                 CPPUNIT_ASSERT_EQUAL(UInt64(2), ReadAccess<UInt64>(outNumItems)());
                 
-                outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
-                m_operator->clearOutputData(Iterate::OUTPUT_DATA);
+                outData = m_operator->getOutputData(Split::OUTPUT_DATA);
+                m_operator->clearOutputData(Split::OUTPUT_DATA);
                 
                 CPPUNIT_ASSERT_EQUAL((const Data*)(data2), &ReadAccess<>(outData)());
             }
         }
         
-        void IterateTest::testExecuteEmptyList()
+        void SplitTest::testExecuteEmptyList()
         {
             {
                 List* list = new List();
                 DataContainer in(list);
                 
-                m_operator->setInputData(Iterate::INPUT, in);
+                m_operator->setInputData(Split::INPUT, in);
             }
             
             DataContainer outNumItems;
-            outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
-            m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            outNumItems = m_operator->getOutputData(Split::OUTPUT_NUM_ITEMS);
+            m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
             
             CPPUNIT_ASSERT_EQUAL(UInt64(0), ReadAccess<UInt64>(outNumItems)());
             
@@ -92,19 +92,19 @@ namespace stromx
                 list->content().push_back(new None());
                 DataContainer in(list);
                 
-                m_operator->setInputData(Iterate::INPUT, in);
+                m_operator->setInputData(Split::INPUT, in);
             }
             
             DataContainer outData;
-            outData = m_operator->getOutputData(Iterate::OUTPUT_DATA);
-            outNumItems = m_operator->getOutputData(Iterate::OUTPUT_NUM_ITEMS);
-            m_operator->clearOutputData(Iterate::OUTPUT_DATA);
-            m_operator->clearOutputData(Iterate::OUTPUT_NUM_ITEMS);
+            outData = m_operator->getOutputData(Split::OUTPUT_DATA);
+            outNumItems = m_operator->getOutputData(Split::OUTPUT_NUM_ITEMS);
+            m_operator->clearOutputData(Split::OUTPUT_DATA);
+            m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
             
             CPPUNIT_ASSERT_EQUAL(UInt64(1), ReadAccess<UInt64>(outNumItems)());
         }
         
-        void IterateTest::tearDown ( void )
+        void SplitTest::tearDown ( void )
         {
             delete m_operator;
         }

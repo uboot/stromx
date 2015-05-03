@@ -21,7 +21,7 @@
 #include "stromx/runtime/Counter.h"
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Fork.h"
-#include "stromx/runtime/Iterate.h"
+#include "stromx/runtime/Split.h"
 #include "stromx/runtime/Join.h"
 #include "stromx/runtime/Merge.h"
 #include "stromx/runtime/PeriodicDelay.h"
@@ -79,12 +79,12 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), thread3->inputSequence().size());
         }
         
-        void AssignThreadsAlgorithmTest::testApplyIterateMerge()
+        void AssignThreadsAlgorithmTest::testApplySplitMerge()
         {
             m_stream = new Stream;
             
             Operator* counter = m_stream->addOperator(new Counter);
-            Operator* iterate = m_stream->addOperator(new Iterate);
+            Operator* iterate = m_stream->addOperator(new Split);
             Operator* merge = m_stream->addOperator(new Merge);
             Operator* dump = m_stream->addOperator(new Dump);
             
@@ -94,10 +94,10 @@ namespace stromx
             m_stream->initializeOperator(dump);
             
             m_stream->connect(counter, Counter::OUTPUT,
-                              iterate, Iterate::INPUT);
-            m_stream->connect(iterate, Iterate::OUTPUT_DATA,
+                              iterate, Split::INPUT);
+            m_stream->connect(iterate, Split::OUTPUT_DATA,
                               merge, Merge::INPUT_DATA);
-            m_stream->connect(iterate, Iterate::OUTPUT_NUM_ITEMS,
+            m_stream->connect(iterate, Split::OUTPUT_NUM_ITEMS,
                               merge, Merge::INPUT_NUM_ITEMS);
             m_stream->connect(merge, Merge::OUTPUT, dump, Dump::INPUT);
             
@@ -114,7 +114,7 @@ namespace stromx
             
             CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(iterate),
                                  thread0->inputSequence()[0].op());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(Iterate::INPUT),
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(Split::INPUT),
                                  thread0->inputSequence()[0].id());
             
             CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(merge),

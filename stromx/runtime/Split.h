@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_ITERATE_H
-#define STROMX_RUNTIME_ITERATE_H
+#ifndef STROMX_RUNTIME_SPLIT_H
+#define STROMX_RUNTIME_SPLIT_H
 
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/OperatorKernel.h"
@@ -26,8 +26,8 @@ namespace stromx
 {
     namespace runtime
     {
-        /** \brief Iterates over the entries of an input list. */
-        class STROMX_RUNTIME_API Iterate : public OperatorKernel
+        /** \brief Splits over the entries of an input list. */
+        class STROMX_RUNTIME_API Split : public OperatorKernel
         {
         public:
             enum InputId
@@ -41,9 +41,9 @@ namespace stromx
                 OUTPUT_NUM_ITEMS
             };
             
-            Iterate();
+            Split();
             
-            virtual OperatorKernel* clone() const { return new Iterate; }
+            virtual OperatorKernel* clone() const { return new Split; }
             virtual void setParameter(const unsigned int id, const Data& value);
             const DataRef getParameter(const unsigned int id) const;
             virtual void execute(DataProvider& provider);
@@ -63,4 +63,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_ITERATE_H
+#endif // STROMX_RUNTIME_SPLIT_H

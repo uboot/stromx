@@ -21,7 +21,6 @@
 #include <stromx/runtime/Counter.h>
 #include <stromx/runtime/Dump.h>
 #include <stromx/runtime/Fork.h>
-#include <stromx/runtime/Iterate.h>
 #include <stromx/runtime/Join.h>
 #include <stromx/runtime/Merge.h>
 #include <stromx/runtime/PeriodicDelay.h>
@@ -29,6 +28,7 @@
 #include <stromx/runtime/Receive.h>
 #include <stromx/runtime/Registry.h>
 #include <stromx/runtime/Send.h>
+#include <stromx/runtime/Split.h>
 #include "ExportOperatorKernel.h"
 
 void exportAssignThreadsAlgorithm();
@@ -118,16 +118,16 @@ BOOST_PYTHON_MODULE(libruntime)
     exportXmlReader();
     exportXmlWriter();
     
+    stromx::python::exportOperatorKernel<Block>("Block");
     stromx::python::exportOperatorKernel<ConstData>("ConstData");
     stromx::python::exportOperatorKernel<Dump>("Dump");
     stromx::python::exportOperatorKernel<Queue>("Queue");
     stromx::python::exportOperatorKernel<Counter>("Counter");
     stromx::python::exportOperatorKernel<Fork>("Fork");
-    stromx::python::exportOperatorKernel<Iterate>("Iterate");
     stromx::python::exportOperatorKernel<Join>("Join");
     stromx::python::exportOperatorKernel<Merge>("Merge");
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
     stromx::python::exportOperatorKernel<Receive>("Receive");
     stromx::python::exportOperatorKernel<Send>("Send");
-    stromx::python::exportOperatorKernel<Block>("Block");
+    stromx::python::exportOperatorKernel<Split>("Split");
 }

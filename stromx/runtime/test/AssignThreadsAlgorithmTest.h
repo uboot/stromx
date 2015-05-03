@@ -31,7 +31,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (AssignThreadsAlgorithmTest);
             CPPUNIT_TEST (testApplyCounterDump);
-            CPPUNIT_TEST (testApplyIterateMerge);
+            CPPUNIT_TEST (testApplySplitMerge);
             CPPUNIT_TEST (testApplyForkJoin);
             CPPUNIT_TEST (testApplyInverseOrder);
             CPPUNIT_TEST (testApplyWrongOrder);
@@ -47,7 +47,7 @@ namespace stromx
                 void tearDown();
 
             protected:
-                void testApplyIterateMerge();
+                void testApplySplitMerge();
                 void testApplyCounterDump();
                 void testApplyForkJoin();
                 void testApplyInverseOrder();
