@@ -1,7 +1,7 @@
-#ifndef STROMX_CVCORE_BITWISE_NOT_H
-#define STROMX_CVCORE_BITWISE_NOT_H
+#ifndef STROMX_CVIMGPROC_CONTOURAREA_H
+#define STROMX_CVIMGPROC_CONTOURAREA_H
 
-#include "stromx/cvcore/Config.h"
+#include "stromx/cvimgproc/Config.h"
 #include <stromx/cvsupport/Matrix.h>
 #include <stromx/runtime/Enum.h>
 #include <stromx/runtime/EnumParameter.h>
@@ -15,28 +15,26 @@
 
 namespace stromx
 {
-    namespace cvcore
+    namespace cvimgproc
     {
-        class STROMX_CVCORE_API Bitwise_not : public runtime::OperatorKernel
+        class STROMX_CVIMGPROC_API ContourArea : public runtime::OperatorKernel
         {
         public:
             enum DataFlowId
             {
-                MANUAL,
-                ALLOCATE,
-                IN_PLACE
+                ALLOCATE
             };
             enum ConnectorId
             {
-                DST,
-                SRC_1
+                CONTOUR,
+                AREA
             };
             enum ParameterId
             {
                 DATA_FLOW
             };
-            Bitwise_not();
-            virtual OperatorKernel* clone() const { return new Bitwise_not; }
+            ContourArea();
+            virtual OperatorKernel* clone() const { return new ContourArea; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             void initialize();
@@ -53,11 +51,11 @@ namespace stromx
             const std::vector<const runtime::Description*> setupOutputs();
             
             runtime::Enum m_dataFlow;
-            runtime::Description* m_dstDescription;
-            runtime::Description* m_src1Description;
+            runtime::Description* m_areaDescription;
+            runtime::MatrixDescription* m_contourDescription;
             runtime::EnumParameter* m_dataFlowParameter;
         };
-    } // cvcore
+    } // cvimgproc
 } // stromx
 
-#endif // STROMX_CVCORE_BITWISE_NOT_H
+#endif // STROMX_CVIMGPROC_CONTOURAREA_H

@@ -62,7 +62,6 @@ namespace stromx
                                     boost::chrono::milliseconds(m_period);
         }
 
-
         void PeriodicDelay::setParameter(unsigned int id, const Data& value)
         {
             try

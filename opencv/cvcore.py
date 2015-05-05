@@ -222,8 +222,15 @@ allocate = package.Option(
         [lenna_16bit, DT]
     ]
 )
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.InputOutput(srcImg1), package.RefInput(dstImg, srcImg1)],
+    tests = [
+        [lenna_16bit, DT]
+    ]
+)
 bitwise_not = package.Method(
-    "bitwise_not", options = [manual, allocate]
+    "bitwise_not", options = [manual, allocate, inPlace]
 )
 
 # bitwise_or

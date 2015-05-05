@@ -75,6 +75,7 @@ namespace stromx
             m_dataFlowParameter->setTitle(L_("Data flow"));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(MANUAL), L_("Manual")));
             m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(ALLOCATE), L_("Allocate")));
+            m_dataFlowParameter->add(runtime::EnumDescription(runtime::Enum(IN_PLACE), L_("In place")));
             parameters.push_back(m_dataFlowParameter);
             
             return parameters;
@@ -91,6 +92,10 @@ namespace stromx
                 }
                 break;
             case(ALLOCATE):
+                {
+                }
+                break;
+            case(IN_PLACE):
                 {
                 }
                 break;
@@ -125,6 +130,14 @@ namespace stromx
                     
                 }
                 break;
+            case(IN_PLACE):
+                {
+                    m_src1Description = new runtime::Description(SRC_1, runtime::Variant::IMAGE);
+                    m_src1Description->setTitle(L_("Source 1"));
+                    inputs.push_back(m_src1Description);
+                    
+                }
+                break;
             }
             
             return inputs;
@@ -149,6 +162,14 @@ namespace stromx
                     runtime::Description* dst = new runtime::Description(DST, runtime::Variant::IMAGE);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
+                    
+                }
+                break;
+            case(IN_PLACE):
+                {
+                    runtime::Description* src1 = new runtime::Description(SRC_1, runtime::Variant::IMAGE);
+                    src1->setTitle(L_("Source 1"));
+                    outputs.push_back(src1);
                     
                 }
                 break;
@@ -247,6 +268,36 @@ namespace stromx
                     
                     dstCastedData->initializeImage(dstCastedData->width(), dstCastedData->height(), dstCastedData->stride(), dstCastedData->data(), src1CastedData->pixelType());
                     provider.sendOutputData(dstOutMapper);
+                }
+                break;
+            case(IN_PLACE):
+                {
+                    runtime::Id2DataPair src1InMapper(SRC_1);
+                    
+                    provider.receiveInputData(src1InMapper);
+                    
+                    runtime::Data* src1Data = 0;
+                    
+                    runtime::DataContainer inContainer = src1InMapper.data();
+                    runtime::WriteAccess<> writeAccess(inContainer);
+                    src1Data = &writeAccess();
+                    
+                    if(! src1Data->variant().isVariant(m_src1Description->variant()))
+                    {
+                        throw runtime::InputError(SRC_1, *this, "Wrong input data variant.");
+                    }
+                    
+                    runtime::Image * src1CastedData = runtime::data_cast<runtime::Image>(src1Data);
+                    
+                    cv::Mat src1CvData = cvsupport::getOpenCvMat(*src1CastedData);
+                    cv::Mat dstCvData = src1CvData;
+                    
+                    cv::bitwise_not(src1CvData, dstCvData);
+                    
+                    runtime::DataContainer src1OutContainer = inContainer;
+                    runtime::Id2DataPair src1OutMapper(SRC_1, src1OutContainer);
+                    
+                    provider.sendOutputData(src1OutMapper);
                 }
                 break;
             }

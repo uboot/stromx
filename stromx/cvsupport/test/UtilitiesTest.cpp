@@ -52,13 +52,31 @@ namespace stromx
                                  runtime::Image::BGR_48);
         }
         
-        void UtilitiesTest::getOpenCvMat3Channels()
+        void UtilitiesTest::testGetOpenCvMat3Channels()
         {
             cvsupport::Matrix matrix(5, 3, runtime::Matrix::INT_16);
             
             cv::Mat cvMat = getOpenCvMat(matrix, 3);
             CPPUNIT_ASSERT_EQUAL(cvMat.cols, 1);
             CPPUNIT_ASSERT_EQUAL(cvMat.type(), CV_16SC3);
+        }
+        
+        void UtilitiesTest::testGetOpenCvRotatedRect()
+        {
+            cvsupport::Matrix matrix(1, 5, runtime::Matrix::FLOAT_32);
+            matrix.at<float>(0, 0) = 150;
+            matrix.at<float>(0, 1) = 50;
+            matrix.at<float>(0, 2) = 200;
+            matrix.at<float>(0, 3) = 100;
+            matrix.at<float>(0, 4) = -20;
+            
+            cv::RotatedRect cvRect = getOpenCvRotatedRect(matrix);
+            
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(150, cvRect.center.x, 1e-7);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(50, cvRect.center.y, 1e-7);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(200, cvRect.size.width, 1e-7);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(100, cvRect.size.height, 1e-7);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(-20, cvRect.angle, 1e-7);
         }
     }
 }

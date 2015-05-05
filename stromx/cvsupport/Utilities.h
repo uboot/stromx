@@ -47,6 +47,9 @@ namespace stromx
         STROMX_CVSUPPORT_API cv::Mat getOpenCvMat(const runtime::Matrix& matrix,
                                                   const unsigned int numChannels = 1);
         
+        /** Creates an OpenCV rotated rectangle from \c matrix. */
+        STROMX_CVSUPPORT_API cv::RotatedRect getOpenCvRotatedRect(const runtime::Matrix& matrix);
+        
         /** 
          * Converts a stromx list of matrices to a vector of OpenCV matrices.
          * \throws BadCast If one of the values in \c list can not be casted to a matrix.

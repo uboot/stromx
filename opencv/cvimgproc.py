@@ -91,6 +91,47 @@ void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
 """)
 fitLineWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 
+# extractRectangle
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+void extractRectangle(const cv::Mat & image, const cv::RotatedRect& rectangle, cv::Mat & result);
+""")
+dtnIncludes = ["<opencv2/imgproc/imgproc.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+void extractRectangle(const cv::Mat & image, const cv::RotatedRect& rectangle, cv::Mat & result)
+{
+    cv::Rect bbox = rectangle.boundingRect();
+    bbox.x = std::min(std::max(bbox.x, 0), image.cols - 1);
+    bbox.y = std::min(std::max(bbox.y, 0), image.rows - 1);
+    bbox.width = std::min(std::max(bbox.width, 1), image.cols - bbox.x);
+    bbox.height = std::min(std::max(bbox.height, 1), image.rows - bbox.y);
+    
+    cv::Mat cropped = image(bbox);
+    
+    float angle = rectangle.angle;
+    cv::Size size = rectangle.size;
+    
+    if (rectangle.angle < -45.)
+    {
+        angle += 90.0;
+        std::swap(size.width, size.height);
+    }
+    
+    cv::Point2f shiftedCenter = rectangle.center - cv::Point2f(bbox.x, bbox.y);
+    cv::Mat transform = cv::getRotationMatrix2D(shiftedCenter, angle, 1.0);
+    
+    cv::Mat rotated;
+    cv::warpAffine(cropped, rotated, transform, cropped.size(), cv::INTER_CUBIC);
+    cv::getRectSubPix(rotated, rectangle.size, shiftedCenter, result);
+}
+
+""")
+extractRectangleWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # initializations
 initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
@@ -346,6 +387,9 @@ points_f32 = test.MatrixFile("points_f32.npy")
 points_f64 = test.MatrixFile("points_f64.npy")
 non_convex_f32 = test.MatrixFile("non_convex_f32.npy")
 contourList = test.List(contour_1, contour_2)
+rotated_rect = test.MatrixFile("rotated_rect.npy")
+rotated_rect_top_right = test.MatrixFile("rotated_rect_top_right.npy")
+rotated_rect_bottom_left = test.MatrixFile("rotated_rect_bottom_left.npy")
 
 # bilateralFilter
 manual = package.Option(
@@ -1150,6 +1194,26 @@ boundingRect = package.Method(
     "boundingRect", options = [allocate]
 )
 
+# contourArea
+points = package.MatrixArgument(
+    "contour", "Input points", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
+    cols = 2
+)
+area = package.Argument(
+    "area", "Area", cvtype.Float64(), datatype.Float64()
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(points), package.ReturnValue(area)],
+    tests = [
+        [non_convex_f32, DT],
+        [points_i32, DT]
+    ]
+)
+contourArea = package.Method(
+    "contourArea", options = [allocate]
+)
+
 # convexHull
 points = package.MatrixArgument(
     "curve", "Input points", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
@@ -1468,6 +1532,24 @@ preCornerDetect = package.Method(
     "preCornerDetect", options = [manual, allocate]
 )
 
+# ExtractRectangle
+rect = package.MatrixArgument(
+    "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
+    cols = 5, rows = 1
+)
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcImg), package.Input(rect), package.Allocation(dstImg)],
+    tests = [
+        [lenna, rotated_rect, DT],
+        [lenna, rotated_rect_top_right, DT],
+        [lenna, rotated_rect_bottom_left, DT]
+    ]
+)
+extractRectangle = package.Method(
+    "extractRectangle", namespace = "", options = [allocate]
+)
+
 imgproc = package.Package(
     "cvimgproc", 0, 0, 1,
     methods = [
@@ -1499,6 +1581,7 @@ imgproc = package.Package(
         drawContours,
         approxPolyDP,
         boundingRect,
+        contourArea,
         convexHull,
         fitEllipse,
         fitLine,
@@ -1510,12 +1593,14 @@ imgproc = package.Package(
         cornerSubPix,
         goodFeaturesToTrack,
         houghLinesP,
-        preCornerDetect
+        preCornerDetect,
+        extractRectangle
     ],
     functions = [
         calcHistWrapper,
         minEnclosingCircleWrapper,
-        fitLineWrapper
+        fitLineWrapper,
+        extractRectangleWrapper
     ],
     testFiles = [
         "lenna.jpg",
@@ -1535,7 +1620,10 @@ imgproc = package.Package(
         "non_convex_f32.npy",
         "points_i32.npy",
         "points_f32.npy",
-        "points_f64.npy"
+        "points_f64.npy",
+        "rotated_rect.npy",
+        "rotated_rect_top_right.npy",
+        "rotated_rect_bottom_left.npy"
     ]
 )
 

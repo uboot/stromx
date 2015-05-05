@@ -74,6 +74,22 @@ namespace stromx
             cvsupport::Image::save("Bitwise_notTest_testAllocate0_dst.png", dstAccess());
         }
         
+        void Bitwise_notTest::testInPlace0()
+        {
+            m_operator->setParameter(Bitwise_not::DATA_FLOW, runtime::Enum(Bitwise_not::IN_PLACE));
+            m_operator->initialize();
+            m_operator->activate();
+            
+            runtime::DataContainer src1(new cvsupport::Image("lenna.jpg", cvsupport::Image::DEPTH_16));
+            
+            m_operator->setInputData(Bitwise_not::SRC_1, src1);
+            
+            runtime::DataContainer src1Result = m_operator->getOutputData(Bitwise_not::SRC_1);
+            
+            runtime::ReadAccess<runtime::Image> src1Access(src1Result);
+            cvsupport::Image::save("Bitwise_notTest_testInPlace0_src1.png", src1Access());
+        }
+        
     } // cvcore
 } // stromx
 

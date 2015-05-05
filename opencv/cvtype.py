@@ -90,6 +90,9 @@ class RotatedRect(CvType):
     """        
     def typeId(self):
         return "cv::RotatedRect"
+    
+    def cast(self, src):
+        return "cvsupport::getOpenCvRotatedRect({0})".format(src)
         
 class VectorOfMat(CvType):
     """

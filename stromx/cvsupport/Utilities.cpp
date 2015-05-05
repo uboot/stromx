@@ -51,6 +51,18 @@ namespace stromx
             return cv::Mat(matrix.rows(), matrix.cols() / numChannels, cvType, data, matrix.stride());
         }
         
+        cv::RotatedRect getOpenCvRotatedRect(const runtime::Matrix& matrix)
+        {
+            cv::RotatedRect rect;
+            
+            rect.center.x = matrix.at<float>(0, 0);
+            rect.center.y = matrix.at<float>(0, 1);
+            rect.size.width = matrix.at<float>(0, 2);
+            rect.size.height = matrix.at<float>(0, 3);
+            rect.angle = matrix.at<float>(0, 4);
+            return rect;
+        }
+        
         std::vector<cv::Mat> getOpenCvMatVector(const runtime::List& list)
         {
             std::vector<cv::Mat> vector;

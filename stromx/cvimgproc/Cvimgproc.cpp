@@ -28,6 +28,7 @@
 #include "stromx/cvimgproc/DrawContours.h"
 #include "stromx/cvimgproc/ApproxPolyDP.h"
 #include "stromx/cvimgproc/BoundingRect.h"
+#include "stromx/cvimgproc/ContourArea.h"
 #include "stromx/cvimgproc/ConvexHull.h"
 #include "stromx/cvimgproc/FitEllipse.h"
 #include "stromx/cvimgproc/FitLine.h"
@@ -40,6 +41,7 @@
 #include "stromx/cvimgproc/GoodFeaturesToTrack.h"
 #include "stromx/cvimgproc/HoughLinesP.h"
 #include "stromx/cvimgproc/PreCornerDetect.h"
+#include "stromx/cvimgproc/ExtractRectangle.h"
 #include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
 
@@ -85,6 +87,7 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new DrawContours);
     registry.registerOperator(new ApproxPolyDP);
     registry.registerOperator(new BoundingRect);
+    registry.registerOperator(new ContourArea);
     registry.registerOperator(new ConvexHull);
     registry.registerOperator(new FitEllipse);
     registry.registerOperator(new FitLine);
@@ -97,4 +100,5 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new GoodFeaturesToTrack);
     registry.registerOperator(new HoughLinesP);
     registry.registerOperator(new PreCornerDetect);
+    registry.registerOperator(new ExtractRectangle);
 }

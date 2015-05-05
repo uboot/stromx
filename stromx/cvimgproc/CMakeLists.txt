@@ -43,6 +43,7 @@ set (SOURCES
     DrawContours.cpp
     ApproxPolyDP.cpp
     BoundingRect.cpp
+    ContourArea.cpp
     ConvexHull.cpp
     FitEllipse.cpp
     FitLine.cpp
@@ -55,6 +56,7 @@ set (SOURCES
     GoodFeaturesToTrack.cpp
     HoughLinesP.cpp
     PreCornerDetect.cpp
+    ExtractRectangle.cpp
 )
 
 add_library (stromx_cvimgproc SHARED ${SOURCES})

@@ -17,8 +17,8 @@
 #include "ExportVector.h"
 
 #include <stromx/runtime/List.h>
-
 #include <boost/python.hpp>
+#include "DataCast.h"
 
 using namespace boost::python;
 using namespace stromx::runtime;
@@ -39,6 +39,8 @@ void exportList()
     class_<List, bases<Data>, std::auto_ptr<List> >("List", no_init)
         .def("__init__", make_constructor(&allocate))
         .def<std::vector<Data*> & (List::*)()>("content", &List::content, return_internal_reference<>())
+        .def("data_cast", &stromx::python::data_cast<List>, return_internal_reference<1>())
+        .staticmethod("data_cast")
     ;
     
     implicitly_convertible< std::auto_ptr<List>, std::auto_ptr<Data> >();

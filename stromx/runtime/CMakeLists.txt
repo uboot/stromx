@@ -42,6 +42,7 @@ set(SOURCES
     Exception.cpp
     Factory.cpp
     File.cpp
+    Filter.cpp
     Fork.cpp
     Id2DataComposite.cpp
     Id2DataPair.cpp
@@ -63,11 +64,13 @@ set(SOURCES
     Queue.cpp
     Primitive.cpp
     RecycleAccess.cpp
+    Repeat.cpp
     Send.cpp
     Stream.cpp
     String.cpp
     SortInputsAlgorithm.cpp
     Receive.cpp
+    Repeat.cpp
     Runtime.cpp
     Thread.cpp
     TriggerData.cpp

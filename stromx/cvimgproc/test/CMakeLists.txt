@@ -29,6 +29,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/non_convex_f32.npy ${CMAKE_CURRENT_BI
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_i32.npy ${CMAKE_CURRENT_BINARY_DIR}/points_i32.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_f32.npy ${CMAKE_CURRENT_BINARY_DIR}/points_f32.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/points_f64.npy ${CMAKE_CURRENT_BINARY_DIR}/points_f64.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/rotated_rect.npy ${CMAKE_CURRENT_BINARY_DIR}/rotated_rect.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/rotated_rect_top_right.npy ${CMAKE_CURRENT_BINARY_DIR}/rotated_rect_top_right.npy COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/rotated_rect_bottom_left.npy ${CMAKE_CURRENT_BINARY_DIR}/rotated_rect_bottom_left.npy COPYONLY)
 
 set (SOURCES 
     ../BilateralFilter.cpp
@@ -59,6 +62,7 @@ set (SOURCES
     ../DrawContours.cpp
     ../ApproxPolyDP.cpp
     ../BoundingRect.cpp
+    ../ContourArea.cpp
     ../ConvexHull.cpp
     ../FitEllipse.cpp
     ../FitLine.cpp
@@ -71,6 +75,7 @@ set (SOURCES
     ../GoodFeaturesToTrack.cpp
     ../HoughLinesP.cpp
     ../PreCornerDetect.cpp
+    ../ExtractRectangle.cpp
     ../Utility.cpp
     ../Cvimgproc.cpp
     BilateralFilterTest.cpp
@@ -101,6 +106,7 @@ set (SOURCES
     DrawContoursTest.cpp
     ApproxPolyDPTest.cpp
     BoundingRectTest.cpp
+    ContourAreaTest.cpp
     ConvexHullTest.cpp
     FitEllipseTest.cpp
     FitLineTest.cpp
@@ -113,6 +119,7 @@ set (SOURCES
     GoodFeaturesToTrackTest.cpp
     HoughLinesPTest.cpp
     PreCornerDetectTest.cpp
+    ExtractRectangleTest.cpp
     main.cpp
 )
 

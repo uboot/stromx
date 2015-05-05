@@ -14,6 +14,8 @@ namespace stromx
         void fitLine(const cv::Mat & points, cv::Mat & result, const int distType,
                      const double param, const double reps, const double aeps);
         
+        void extractRectangle(const cv::Mat & image, const cv::RotatedRect& rectangle, cv::Mat & result);
+        
     }
 }
 #endif // STROMX_CVIMGPROC_UTILITY_H

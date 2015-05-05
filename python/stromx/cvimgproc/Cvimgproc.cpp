@@ -29,6 +29,7 @@
 #include <stromx/cvimgproc/DrawContours.h>
 #include <stromx/cvimgproc/ApproxPolyDP.h>
 #include <stromx/cvimgproc/BoundingRect.h>
+#include <stromx/cvimgproc/ContourArea.h>
 #include <stromx/cvimgproc/ConvexHull.h>
 #include <stromx/cvimgproc/FitEllipse.h>
 #include <stromx/cvimgproc/FitLine.h>
@@ -41,6 +42,7 @@
 #include <stromx/cvimgproc/GoodFeaturesToTrack.h>
 #include <stromx/cvimgproc/HoughLinesP.h>
 #include <stromx/cvimgproc/PreCornerDetect.h>
+#include <stromx/cvimgproc/ExtractRectangle.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -78,6 +80,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<DrawContours>("DrawContours");
     stromx::python::exportOperatorKernel<ApproxPolyDP>("ApproxPolyDP");
     stromx::python::exportOperatorKernel<BoundingRect>("BoundingRect");
+    stromx::python::exportOperatorKernel<ContourArea>("ContourArea");
     stromx::python::exportOperatorKernel<ConvexHull>("ConvexHull");
     stromx::python::exportOperatorKernel<FitEllipse>("FitEllipse");
     stromx::python::exportOperatorKernel<FitLine>("FitLine");
@@ -90,4 +93,5 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<GoodFeaturesToTrack>("GoodFeaturesToTrack");
     stromx::python::exportOperatorKernel<HoughLinesP>("HoughLinesP");
     stromx::python::exportOperatorKernel<PreCornerDetect>("PreCornerDetect");
+    stromx::python::exportOperatorKernel<ExtractRectangle>("ExtractRectangle");
 }

@@ -39,5 +39,32 @@ namespace stromx
             result.at<float>(0, 1) = std::atan2(line[0], line[1]) * 180 / M_PI;
         }
         
+        void extractRectangle(const cv::Mat & image, const cv::RotatedRect& rectangle, cv::Mat & result)
+        {
+            cv::Rect bbox = rectangle.boundingRect();
+            bbox.x = std::min(std::max(bbox.x, 0), image.cols - 1);
+            bbox.y = std::min(std::max(bbox.y, 0), image.rows - 1);
+            bbox.width = std::min(std::max(bbox.width, 1), image.cols - bbox.x);
+            bbox.height = std::min(std::max(bbox.height, 1), image.rows - bbox.y);
+            
+            cv::Mat cropped = image(bbox);
+            
+            float angle = rectangle.angle;
+            cv::Size size = rectangle.size;
+            
+            if (rectangle.angle < -45.)
+            {
+                angle += 90.0;
+                std::swap(size.width, size.height);
+            }
+            
+            cv::Point2f shiftedCenter = rectangle.center - cv::Point2f(bbox.x, bbox.y);
+            cv::Mat transform = cv::getRotationMatrix2D(shiftedCenter, angle, 1.0);
+            
+            cv::Mat rotated;
+            cv::warpAffine(cropped, rotated, transform, cropped.size(), cv::INTER_CUBIC);
+            cv::getRectSubPix(rotated, rectangle.size, shiftedCenter, result);
+        }
+        
     }
 }

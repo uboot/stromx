@@ -18,6 +18,7 @@ namespace stromx
             CPPUNIT_TEST(testManual0);
             CPPUNIT_TEST(testManual1);
             CPPUNIT_TEST(testAllocate0);
+            CPPUNIT_TEST(testInPlace0);
             CPPUNIT_TEST_SUITE_END();
             
         public:
@@ -29,6 +30,7 @@ namespace stromx
             void testManual0();
             void testManual1();
             void testAllocate0();
+            void testInPlace0();
             
         private:
             runtime::OperatorTester* m_operator;

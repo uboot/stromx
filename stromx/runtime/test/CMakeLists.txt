@@ -53,6 +53,7 @@ set(SOURCES
     ../Exception.cpp
     ../Factory.cpp
     ../File.cpp
+    ../Filter.cpp
     ../Fork.cpp
     ../Join.cpp
     ../Id2DataComposite.cpp
@@ -74,6 +75,7 @@ set(SOURCES
     ../Queue.cpp
     ../Receive.cpp
     ../RecycleAccess.cpp
+    ../Repeat.cpp
     ../Thread.cpp
     ../Send.cpp
     ../SortInputsAlgorithm.cpp
@@ -114,6 +116,7 @@ set(SOURCES
     ExceptionOperator.cpp
     ExceptionTest.cpp
     FileTest.cpp
+    FilterTest.cpp
     Float64Test.cpp
     ForkTest.cpp
     Id2DataCompositeTest.cpp
@@ -134,6 +137,7 @@ set(SOURCES
     QueueTest.cpp
     ReadAccessTest.cpp
     RecycleAccessTest.cpp
+    RepeatTest.cpp
     TestOperator.cpp
     ThreadImplTest.cpp
     ThreadTest.cpp
