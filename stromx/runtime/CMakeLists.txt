@@ -63,6 +63,7 @@ set(SOURCES
     ParameterGroup.cpp
     Queue.cpp
     Primitive.cpp
+    ReadAccess.cpp
     RecycleAccess.cpp
     Repeat.cpp
     Send.cpp
@@ -80,6 +81,7 @@ set(SOURCES
     VariantHandle.cpp
     VariantInterface.cpp
     Version.cpp
+    WriteAccess.cpp
 )
 
 if(BUILD_FILE_PERSISTENCE)

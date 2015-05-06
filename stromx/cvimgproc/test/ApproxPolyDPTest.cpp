@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUT_CURVE);
             
-            runtime::ReadAccess<runtime::Matrix> outCurveAccess(outCurveResult);
-            cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate0_outCurve.npy", outCurveAccess());
+            runtime::ReadAccess outCurveAccess(outCurveResult);
+            cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate0_outCurve.npy", outCurveAccess.get<runtime::Matrix>());
         }
         
         void ApproxPolyDPTest::testAllocate1()
@@ -50,8 +50,8 @@ namespace stromx
             
             runtime::DataContainer outCurveResult = m_operator->getOutputData(ApproxPolyDP::OUT_CURVE);
             
-            runtime::ReadAccess<runtime::Matrix> outCurveAccess(outCurveResult);
-            cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate1_outCurve.npy", outCurveAccess());
+            runtime::ReadAccess outCurveAccess(outCurveResult);
+            cvsupport::Matrix::save("ApproxPolyDPTest_testAllocate1_outCurve.npy", outCurveAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

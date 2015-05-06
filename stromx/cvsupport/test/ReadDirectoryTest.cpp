@@ -81,17 +81,17 @@ namespace stromx
             DataContainer data;
             data = m_operator->getOutputData(ReadDirectory::OUTPUT);
             CPPUNIT_ASSERT_EQUAL((unsigned int)(868),
-                                 ReadAccess<runtime::Image>(data).get().width());
+                                 ReadAccess(data).get<runtime::Image>().width());
             
             m_operator->clearOutputData(ReadDirectory::OUTPUT);
             data = m_operator->getOutputData(ReadDirectory::OUTPUT);
             CPPUNIT_ASSERT_EQUAL((unsigned int)(500),
-                                 ReadAccess<runtime::Image>(data).get().width());
+                                 ReadAccess(data).get<runtime::Image>().width());
             
             m_operator->clearOutputData(ReadDirectory::OUTPUT);
             data = m_operator->getOutputData(ReadDirectory::OUTPUT);
             CPPUNIT_ASSERT_EQUAL((unsigned int)(868),
-                                 ReadAccess<runtime::Image>(data).get().width());
+                                 ReadAccess(data).get<runtime::Image>().width());
         }
         
         void ReadDirectoryTest::testExecuteEmptyDirectory()

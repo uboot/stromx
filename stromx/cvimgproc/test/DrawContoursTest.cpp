@@ -48,8 +48,8 @@ namespace stromx
             
             runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
             
-            runtime::ReadAccess<runtime::Image> imgAccess(imgResult);
-            cvsupport::Image::save("DrawContoursTest_testInPlace0_img.png", imgAccess());
+            runtime::ReadAccess imgAccess(imgResult);
+            cvsupport::Image::save("DrawContoursTest_testInPlace0_img.png", imgAccess.get<runtime::Image>());
         }
         
         void DrawContoursTest::testInPlace1()
@@ -80,8 +80,8 @@ namespace stromx
             
             runtime::DataContainer imgResult = m_operator->getOutputData(DrawContours::IMG);
             
-            runtime::ReadAccess<runtime::Image> imgAccess(imgResult);
-            cvsupport::Image::save("DrawContoursTest_testInPlace1_img.png", imgAccess());
+            runtime::ReadAccess imgAccess(imgResult);
+            cvsupport::Image::save("DrawContoursTest_testInPlace1_img.png", imgAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

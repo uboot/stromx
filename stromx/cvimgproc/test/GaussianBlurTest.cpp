@@ -44,8 +44,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("GaussianBlurTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("GaussianBlurTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void GaussianBlurTest::testManual1()
@@ -61,8 +61,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("GaussianBlurTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("GaussianBlurTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void GaussianBlurTest::testAllocate0()
@@ -85,8 +85,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(GaussianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("GaussianBlurTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("GaussianBlurTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void GaussianBlurTest::testInPlace0()
@@ -105,8 +105,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(GaussianBlur::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("GaussianBlurTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("GaussianBlurTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

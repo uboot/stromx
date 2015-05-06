@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
             
-            runtime::ReadAccess<runtime::Matrix> circleAccess(circleResult);
-            cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate0_circle.npy", circleAccess());
+            runtime::ReadAccess circleAccess(circleResult);
+            cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate0_circle.npy", circleAccess.get<runtime::Matrix>());
         }
         
         void MinEnclosingCircleTest::testAllocate1()
@@ -48,8 +48,8 @@ namespace stromx
             
             runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
             
-            runtime::ReadAccess<runtime::Matrix> circleAccess(circleResult);
-            cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate1_circle.npy", circleAccess());
+            runtime::ReadAccess circleAccess(circleResult);
+            cvsupport::Matrix::save("MinEnclosingCircleTest_testAllocate1_circle.npy", circleAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

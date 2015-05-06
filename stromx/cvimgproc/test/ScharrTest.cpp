@@ -46,8 +46,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ScharrTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ScharrTest::testManual1()
@@ -74,8 +74,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ScharrTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ScharrTest::testAllocate0()
@@ -94,8 +94,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ScharrTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ScharrTest::testAllocate1()
@@ -118,8 +118,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Scharr::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ScharrTest_testAllocate1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ScharrTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

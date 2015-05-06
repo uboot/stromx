@@ -57,7 +57,7 @@ namespace stromx
                 op->activate();
                 
                 DataContainer data = op->getOutputData(ConstData::OUTPUT);
-                CPPUNIT_ASSERT_EQUAL(value, ReadAccess<data_t>(data)());
+                CPPUNIT_ASSERT_EQUAL(value, ReadAccess(data).get<data_t>());
             }
             
         }
@@ -109,13 +109,13 @@ namespace stromx
             {
                 DataContainer data;
                 data = m_operator->getOutputData(ConstData::OUTPUT);
-                dataPtr = &ReadAccess<>(data)();
+                dataPtr = &ReadAccess(data).get();
             }
             
             DataContainer data;
             m_operator->clearOutputData(ConstData::OUTPUT);
             data = m_operator->getOutputData(ConstData::OUTPUT);
-            CPPUNIT_ASSERT_EQUAL(dataPtr, &ReadAccess<>(data)());
+            CPPUNIT_ASSERT_EQUAL(dataPtr, &ReadAccess(data).get());
         }
 
         void ConstDataTest::tearDown()

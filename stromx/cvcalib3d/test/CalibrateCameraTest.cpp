@@ -74,10 +74,10 @@ namespace stromx
             runtime::DataContainer cameraMatrixResult = m_operator->getOutputData(CalibrateCamera::CAMERA_MATRIX);
             runtime::DataContainer distCoeffsResult = m_operator->getOutputData(CalibrateCamera::DIST_COEFFS);
             
-            runtime::ReadAccess<runtime::Matrix> cameraMatrixAccess(cameraMatrixResult);
-            cvsupport::Matrix::save("CalibrateCameraTest_testAllocate0_cameraMatrix.npy", cameraMatrixAccess());
-            runtime::ReadAccess<runtime::Matrix> distCoeffsAccess(distCoeffsResult);
-            cvsupport::Matrix::save("CalibrateCameraTest_testAllocate0_distCoeffs.npy", distCoeffsAccess());
+            runtime::ReadAccess cameraMatrixAccess(cameraMatrixResult);
+            cvsupport::Matrix::save("CalibrateCameraTest_testAllocate0_cameraMatrix.npy", cameraMatrixAccess.get<runtime::Matrix>());
+            runtime::ReadAccess distCoeffsAccess(distCoeffsResult);
+            cvsupport::Matrix::save("CalibrateCameraTest_testAllocate0_distCoeffs.npy", distCoeffsAccess.get<runtime::Matrix>());
         }
         
     } // cvcalib3d

@@ -38,8 +38,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AbsdiffTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AbsdiffTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AbsdiffTest::testManual1()
@@ -58,8 +58,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AbsdiffTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AbsdiffTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AbsdiffTest::testAllocate0()
@@ -76,8 +76,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Absdiff::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AbsdiffTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AbsdiffTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvcore

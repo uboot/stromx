@@ -36,9 +36,9 @@ namespace stromx
 
 namespace
 {   
-    std::auto_ptr< WriteAccess<> > allocate(const DataContainer & data)
+    std::auto_ptr<WriteAccess> allocate(const DataContainer & data)
     {
-        WriteAccess<>* access = 0;  
+        WriteAccess* access = 0;  
         
         Thread* threadPtr = gThread.get();
         if (threadPtr)
@@ -47,7 +47,7 @@ namespace
         Py_BEGIN_ALLOW_THREADS
         try
         {
-            access = new WriteAccess<>(data);
+            access = new WriteAccess(data);
         }
         catch(stromx::runtime::Interrupt&)
         {
@@ -63,12 +63,12 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr< WriteAccess<> >(access);
+        return std::auto_ptr<WriteAccess>(access);
     }
     
-    std::auto_ptr< WriteAccess<> > allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
+    std::auto_ptr<WriteAccess> allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
     {
-        WriteAccess<>* access = 0;
+        WriteAccess* access = 0;
         
         Thread* threadPtr = gThread.get();
         if (threadPtr)
@@ -77,7 +77,7 @@ namespace
         Py_BEGIN_ALLOW_THREADS
         try
         {
-            access = new WriteAccess<>(data, timeout);
+            access = new WriteAccess(data, timeout);
         }
         catch(stromx::runtime::Interrupt&)
         {
@@ -93,17 +93,17 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr< WriteAccess<> >(access);
+        return std::auto_ptr<WriteAccess>(access);
     }
 }
 
 void exportWriteAccess()
 {       
-    class_<WriteAccess<> >("WriteAccess", no_init)
+    class_<WriteAccess>("WriteAccess", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateWithTimeout))
-        .def("get", &WriteAccess<>::get, return_internal_reference<>())
-        .def("empty", &WriteAccess<>::empty)
-        .def("release", &WriteAccess<>::release)
+        .def<Data & (WriteAccess::*)() const>("get", &WriteAccess::get, return_internal_reference<>())
+        .def("empty", &WriteAccess::empty)
+        .def("release", &WriteAccess::release)
     ;
 }

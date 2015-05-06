@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::CORNERS);
             
-            runtime::ReadAccess<runtime::Matrix> cornersAccess(cornersResult);
-            cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate0_corners.npy", cornersAccess());
+            runtime::ReadAccess cornersAccess(cornersResult);
+            cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate0_corners.npy", cornersAccess.get<runtime::Matrix>());
         }
         
         void FindChessboardCornersTest::testAllocate1()
@@ -48,8 +48,8 @@ namespace stromx
             
             runtime::DataContainer cornersResult = m_operator->getOutputData(FindChessboardCorners::CORNERS);
             
-            runtime::ReadAccess<runtime::Matrix> cornersAccess(cornersResult);
-            cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate1_corners.npy", cornersAccess());
+            runtime::ReadAccess cornersAccess(cornersResult);
+            cvsupport::Matrix::save("FindChessboardCornersTest_testAllocate1_corners.npy", cornersAccess.get<runtime::Matrix>());
         }
         
     } // cvcalib3d

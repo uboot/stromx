@@ -36,8 +36,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("CannyTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void CannyTest::testManual1()
@@ -57,8 +57,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("CannyTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void CannyTest::testAllocate0()
@@ -73,8 +73,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Canny::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("CannyTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("CannyTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void CannyTest::testInPlace0()
@@ -89,8 +89,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(Canny::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("CannyTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("CannyTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

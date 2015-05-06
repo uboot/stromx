@@ -47,8 +47,8 @@ namespace stromx
             boost::thread t1(boost::bind(&BlockTest::triggerDelayed, this));
             DataContainer result = m_operator->getOutputData(Block::OUTPUT);
             
-            ReadAccess<UInt32> access(result);
-            access();
+            ReadAccess access(result);
+            access.get<UInt32>();
             
             m_operator->clearOutputData(Block::OUTPUT);
             m_operator->setInputData(Block::INPUT, m_data);
@@ -86,8 +86,8 @@ namespace stromx
             m_operator->setParameter(Block::STATE, Enum(Block::PASS_ALWAYS));
             
             DataContainer result = m_operator->getOutputData(Block::OUTPUT);
-            ReadAccess<UInt32> access(result);
-            access();
+            ReadAccess access(result);
+            access.get<UInt32>();
         }
         
         void BlockTest::testExecuteTriggerInput()

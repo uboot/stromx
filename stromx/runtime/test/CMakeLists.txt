@@ -73,6 +73,7 @@ set(SOURCES
     ../PeriodicDelay.cpp
     ../Primitive.cpp
     ../Queue.cpp
+    ../ReadAccess.cpp
     ../Receive.cpp
     ../RecycleAccess.cpp
     ../Repeat.cpp
@@ -89,6 +90,7 @@ set(SOURCES
     ../VariantInterface.cpp
     ../VariantHandle.cpp
     ../Version.cpp
+    ../WriteAccess.cpp
     ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
     ../impl/Id2DataMap.cpp

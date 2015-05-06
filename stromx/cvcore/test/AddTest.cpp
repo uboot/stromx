@@ -38,8 +38,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddTest::testManual1()
@@ -58,8 +58,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddTest::testManual2()
@@ -80,8 +80,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddTest_testManual2_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testManual2_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddTest::testAllocate0()
@@ -98,8 +98,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddTest::testAllocate1()
@@ -118,8 +118,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Add::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddTest_testAllocate1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvcore

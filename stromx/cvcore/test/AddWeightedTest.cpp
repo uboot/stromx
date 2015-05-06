@@ -38,8 +38,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(AddWeighted::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddWeightedTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddWeightedTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddWeightedTest::testManual1()
@@ -64,8 +64,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(AddWeighted::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddWeightedTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddWeightedTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddWeightedTest::testManual2()
@@ -92,8 +92,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(AddWeighted::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddWeightedTest_testManual2_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddWeightedTest_testManual2_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddWeightedTest::testAllocate0()
@@ -116,8 +116,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(AddWeighted::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddWeightedTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddWeightedTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void AddWeightedTest::testAllocate1()
@@ -142,8 +142,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(AddWeighted::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("AddWeightedTest_testAllocate1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("AddWeightedTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvcore

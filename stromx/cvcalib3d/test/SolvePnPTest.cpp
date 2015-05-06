@@ -40,10 +40,10 @@ namespace stromx
             runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::RVEC);
             runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::TVEC);
             
-            runtime::ReadAccess<runtime::Matrix> rvecAccess(rvecResult);
-            cvsupport::Matrix::save("SolvePnPTest_testAllocate0_rvec.npy", rvecAccess());
-            runtime::ReadAccess<runtime::Matrix> tvecAccess(tvecResult);
-            cvsupport::Matrix::save("SolvePnPTest_testAllocate0_tvec.npy", tvecAccess());
+            runtime::ReadAccess rvecAccess(rvecResult);
+            cvsupport::Matrix::save("SolvePnPTest_testAllocate0_rvec.npy", rvecAccess.get<runtime::Matrix>());
+            runtime::ReadAccess tvecAccess(tvecResult);
+            cvsupport::Matrix::save("SolvePnPTest_testAllocate0_tvec.npy", tvecAccess.get<runtime::Matrix>());
         }
         
         void SolvePnPTest::testAllocate1()
@@ -64,10 +64,10 @@ namespace stromx
             runtime::DataContainer rvecResult = m_operator->getOutputData(SolvePnP::RVEC);
             runtime::DataContainer tvecResult = m_operator->getOutputData(SolvePnP::TVEC);
             
-            runtime::ReadAccess<runtime::Matrix> rvecAccess(rvecResult);
-            cvsupport::Matrix::save("SolvePnPTest_testAllocate1_rvec.npy", rvecAccess());
-            runtime::ReadAccess<runtime::Matrix> tvecAccess(tvecResult);
-            cvsupport::Matrix::save("SolvePnPTest_testAllocate1_tvec.npy", tvecAccess());
+            runtime::ReadAccess rvecAccess(rvecResult);
+            cvsupport::Matrix::save("SolvePnPTest_testAllocate1_rvec.npy", rvecAccess.get<runtime::Matrix>());
+            runtime::ReadAccess tvecAccess(tvecResult);
+            cvsupport::Matrix::save("SolvePnPTest_testAllocate1_tvec.npy", tvecAccess.get<runtime::Matrix>());
         }
         
     } // cvcalib3d

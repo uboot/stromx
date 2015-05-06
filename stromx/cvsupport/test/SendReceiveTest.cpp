@@ -59,11 +59,12 @@ namespace stromx
             
             m_factory->registerData(new Image);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);
-            ReadAccess<stromx::runtime::Image> access(out);
+            ReadAccess access(out);
+            const stromx::runtime::Image image & = access.get<stromx::runtime::Image>();
             
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), access().width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), access().height());
-            CPPUNIT_ASSERT_EQUAL(Image::BGR_24, access().pixelType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image.height());
+            CPPUNIT_ASSERT_EQUAL(Image::BGR_24, image.pixelType());
         }   
         
         void cvsupport::SendReceiveTest::testSendGrayImage()
@@ -73,11 +74,12 @@ namespace stromx
             
             m_factory->registerData(new Image);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);
-            ReadAccess<stromx::runtime::Image> access(out);
+            ReadAccess access(out);
+            const stromx::runtime::Image image & = access.get<stromx::runtime::Image>();
             
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), access().width());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), access().height());
-            CPPUNIT_ASSERT_EQUAL(Image::MONO_8, access().pixelType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(500), image.width());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(512), image.height());
+            CPPUNIT_ASSERT_EQUAL(Image::MONO_8, image.pixelType());
         }
         
         void cvsupport::SendReceiveTest::testSendDoubleMatrix()
@@ -87,11 +89,12 @@ namespace stromx
             
             m_factory->registerData(new Matrix);
             DataContainer out = m_receive->getOutputData(Receive::OUTPUT);
-            ReadAccess<stromx::runtime::Matrix> access(out);
+            ReadAccess access(out);
+            const stromx::runtime::Matrix matrix & = access.get<stromx::runtime::Matrix>();
             
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(50), access().rows());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), access().cols());
-            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT_64, access().valueType());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(50), matrix.rows());
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(100), matrix.cols());
+            CPPUNIT_ASSERT_EQUAL(Matrix::FLOAT_64, image.valueType());
         }  
         
         void SendReceiveTest::tearDown ( void )

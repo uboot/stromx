@@ -58,8 +58,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
@@ -77,8 +77,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::BAYERBG_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
@@ -96,8 +96,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::RGB_24, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());
@@ -121,8 +121,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(ConvertPixelType::OUTPUT);
             
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL(runtime::Image::MONO_8, image.pixelType());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(499), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(511), image.height());

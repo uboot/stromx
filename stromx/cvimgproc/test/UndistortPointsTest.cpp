@@ -37,8 +37,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("UndistortPointsTest_testAllocate0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("UndistortPointsTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void UndistortPointsTest::testAllocate1()
@@ -52,8 +52,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(UndistortPoints::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("UndistortPointsTest_testAllocate1_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("UndistortPointsTest_testAllocate1_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

@@ -45,8 +45,8 @@ namespace stromx
             
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-                ReadAccess<UInt32> access(result);
-                access();
+                ReadAccess access(result);
+                access.get<UInt32>();
             }
             
             {
@@ -80,8 +80,8 @@ namespace stromx
             
             {
                 DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
-                ReadAccess<UInt32> access(result);
-                access();
+                ReadAccess access(result);
+                access.get<UInt32>();
             }
             
             {

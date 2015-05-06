@@ -740,7 +740,7 @@ class OpImplGenerator(MethodGenerator):
         Exports data accessors for all visited inputs and outputs.
         """
         def visitInput(self, inputArg):
-            self.doc.line(("runtime::ReadAccess<> "
+            self.doc.line(("runtime::ReadAccess "
                            "{0}ReadAccess;").format(inputArg.ident))
                            
         def visitInputOutput(self, arg):
@@ -751,8 +751,8 @@ class OpImplGenerator(MethodGenerator):
             data = "{0}Data".format(output.ident)
             self.doc.line(("runtime::DataContainer inContainer = "
                            "{0}.data();").format(mapper))
-            self.doc.line("runtime::WriteAccess<> writeAccess(inContainer);")
-            self.doc.line("{0} = &writeAccess();".format(data))
+            self.doc.line("runtime::WriteAccess writeAccess(inContainer);")
+            self.doc.line("{0} = &writeAccess.get();".format(data))
             
     class CopyWriteAccessVisitor(SingleArgumentVisitor):
         """
@@ -778,10 +778,10 @@ class OpImplGenerator(MethodGenerator):
             # no write access)
             if self.output == None:
                 for i in self.inputs:
-                    l = ("{0}ReadAccess = runtime::ReadAccess<>("
+                    l = ("{0}ReadAccess = runtime::ReadAccess("
                          "{0}InMapper.data());").format(i.ident)
                     doc.line(l)
-                    l = "{0}Data = &{0}ReadAccess();".format(i.ident)
+                    l = "{0}Data = &{0}ReadAccess.get();".format(i.ident)
                     doc.line(l)
                 doc.blank()
                 return
@@ -793,7 +793,7 @@ class OpImplGenerator(MethodGenerator):
                 doc.line(l)
                 doc.scopeEnter()
                 if i.inPlace:
-                    doc.line("srcData = &writeAccess();")
+                    doc.line("srcData = &writeAccess.get();")
                 else:
                     message = '"Can not operate in place."'
                     ex = (
@@ -803,10 +803,10 @@ class OpImplGenerator(MethodGenerator):
                 doc.scopeExit()
                 doc.line("else")
                 doc.scopeEnter()
-                l = ("{0}ReadAccess = runtime::ReadAccess<>("
+                l = ("{0}ReadAccess = runtime::ReadAccess("
                      "{0}InMapper.data());").format(i.ident)
                 doc.line(l)
-                l = "{0}Data = &{0}ReadAccess();".format(i.ident)
+                l = "{0}Data = &{0}ReadAccess.get();".format(i.ident)
                 doc.line(l)
                 doc.scopeExit()
                 doc.blank()

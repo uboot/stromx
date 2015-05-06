@@ -40,8 +40,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("LaplacianTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void LaplacianTest::testManual1()
@@ -66,8 +66,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("LaplacianTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void LaplacianTest::testAllocate0()
@@ -90,8 +90,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("LaplacianTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void LaplacianTest::testAllocate1()
@@ -114,8 +114,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Laplacian::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("LaplacianTest_testAllocate1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("LaplacianTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

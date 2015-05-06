@@ -21,6 +21,7 @@
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Filter.h"
 #include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Split.h"
 #include "stromx/runtime/Join.h"
@@ -34,6 +35,7 @@
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Receive.h"
 #include "stromx/runtime/Registry.h"
+#include "stromx/runtime/Repeat.h"
 #include "stromx/runtime/Send.h"
 #include "stromx/runtime/String.h"
 #include "stromx/runtime/TriggerData.h"
@@ -64,6 +66,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new ConstData);
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);
+    registry.registerOperator(new Filter);
     registry.registerOperator(new Fork);
     registry.registerOperator(new Split);
     registry.registerOperator(new Join);
@@ -71,6 +74,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new PeriodicDelay);
     registry.registerOperator(new Queue);
     registry.registerOperator(new Receive);
+    registry.registerOperator(new Repeat);
     registry.registerOperator(new Send);
     
     registry.registerData(new Bool);

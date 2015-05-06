@@ -29,8 +29,8 @@ namespace stromx
             
             runtime::DataContainer cornersResult = m_operator->getOutputData(GeneratePattern::CORNERS);
             
-            runtime::ReadAccess<runtime::Matrix> cornersAccess(cornersResult);
-            cvsupport::Matrix::save("GeneratePatternTest_testAllocate0_corners.npy", cornersAccess());
+            runtime::ReadAccess cornersAccess(cornersResult);
+            cvsupport::Matrix::save("GeneratePatternTest_testAllocate0_corners.npy", cornersAccess.get<runtime::Matrix>());
         }
         
     } // cvcalib3d

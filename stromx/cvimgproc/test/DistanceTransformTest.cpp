@@ -36,8 +36,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("DistanceTransformTest_testManual0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testManual0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void DistanceTransformTest::testAllocate0()
@@ -56,8 +56,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void DistanceTransformTest::testAllocate1()
@@ -76,8 +76,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate1_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate1_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void DistanceTransformTest::testAllocate2()
@@ -96,8 +96,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(DistanceTransform::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("DistanceTransformTest_testAllocate2_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("DistanceTransformTest_testAllocate2_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

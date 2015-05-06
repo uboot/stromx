@@ -51,8 +51,8 @@ namespace stromx
             {
                 DataContainer data = m_operator->getOutputData(Join::OUTPUT);
                 
-                ReadAccess<UInt32> access(data);
-                CPPUNIT_ASSERT_EQUAL(UInt32(i), access());
+                ReadAccess access(data);
+                CPPUNIT_ASSERT_EQUAL(UInt32(i), access.get<UInt32>());
                 
                 m_operator->clearOutputData(Join::OUTPUT);
             }

@@ -36,8 +36,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("PreCornerDetectTest_testManual0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("PreCornerDetectTest_testManual0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void PreCornerDetectTest::testAllocate0()
@@ -56,8 +56,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(PreCornerDetect::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("PreCornerDetectTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

@@ -46,8 +46,10 @@ int main (int, char**)
     for(unsigned int i = 0; i < 5; ++i)
     {
         runtime::DataContainer data = timer->getOutputData(0);
-        runtime::ReadAccess<runtime::UInt32> count(data);
-        std::cout << "Received " <<  (unsigned int)(count()) << std::endl;
+        runtime::ReadAccess count(data);
+        std::cout << "Received " 
+                  << (unsigned int)(count.get<runtime::UInt32>()) 
+                  << std::endl;
         
         timer->clearOutputData(0);
     }

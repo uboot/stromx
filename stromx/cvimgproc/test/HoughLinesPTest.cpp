@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(HoughLinesP::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("HoughLinesPTest_testAllocate0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("HoughLinesPTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

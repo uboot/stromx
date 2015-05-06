@@ -47,8 +47,10 @@ int main (int, char**)
     for(unsigned int i = 0; i < 5; ++i)
     {
         runtime::DataContainer data = canny->getOutputData(1);
-        runtime::ReadAccess<runtime::Image> image(data);
-        std::cout << "Received image " <<  image().height() << "x" << image().width() << std::endl;
+        runtime::ReadAccess image(data);
+        std::cout << "Received image " 
+                  << image.get<runtime::Image>().height() << "x"
+                  << image.get<runtime::Image>().width() << std::endl;
         
         canny->clearOutputData(1);
         camera->clearOutputData(1);

@@ -40,8 +40,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("UndistortTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void UndistortTest::testManual1()
@@ -58,8 +58,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("UndistortTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void UndistortTest::testAllocate0()
@@ -78,8 +78,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Undistort::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("UndistortTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("UndistortTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

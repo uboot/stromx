@@ -74,9 +74,9 @@ namespace stromx
                 DataContainer out;
                 out = m_operator->getOutputData(Merge::OUTPUT);
                 m_operator->clearOutputData(Merge::OUTPUT);
-                const List & list = ReadAccess<List>(out).get();
+                const List & list = ReadAccess(out).get<List>();
                 
-                CPPUNIT_ASSERT(ReadAccess<>(out)().isVariant(Variant::LIST));
+                CPPUNIT_ASSERT(ReadAccess(out).get().isVariant(Variant::LIST));
                 CPPUNIT_ASSERT_EQUAL(std::size_t(2), list.content().size());
                 CPPUNIT_ASSERT_EQUAL((const Data*)(data1), list.content()[0]);
                 CPPUNIT_ASSERT_EQUAL((const Data*)(data2), list.content()[1]);
@@ -91,7 +91,7 @@ namespace stromx
                                          
                 DataContainer out = m_operator->getOutputData(Merge::OUTPUT);
                 m_operator->clearOutputData(Merge::OUTPUT);
-                const List & list = ReadAccess<List>(out).get();
+                const List & list = ReadAccess(out).get<List>();
                 
                 CPPUNIT_ASSERT_EQUAL(std::size_t(0), list.content().size());
             }
@@ -106,7 +106,7 @@ namespace stromx
                 
                 DataContainer out = m_operator->getOutputData(Merge::OUTPUT);
                 m_operator->clearOutputData(Merge::OUTPUT);
-                const List & list = ReadAccess<List>(out).get();
+                const List & list = ReadAccess(out).get<List>();
                 
                 CPPUNIT_ASSERT_EQUAL(std::size_t(1), list.content().size());
             }

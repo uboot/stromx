@@ -34,8 +34,8 @@ namespace stromx
             Data* data = new TestData;
             {
                 DataContainer container(data);
-                WriteAccess<> access(container);
-                CPPUNIT_ASSERT_EQUAL(data, &access());
+                WriteAccess access(container);
+                CPPUNIT_ASSERT_EQUAL(data, &access.get());
             }
             
             CPPUNIT_ASSERT(TestData::wasDestructed);  
@@ -43,7 +43,7 @@ namespace stromx
         
         void WriteAccessTest::testEmptyWriteAccess()
         {
-            WriteAccess<> access;
+            WriteAccess access;
             CPPUNIT_ASSERT(access.empty());
             CPPUNIT_ASSERT_THROW(access.get(), AccessEmpty);
         }
@@ -53,15 +53,15 @@ namespace stromx
             Data* data = new TestData;
             
             DataContainer container(data);
-            WriteAccess<TestData> access(container);
-            CPPUNIT_ASSERT_NO_THROW(access());
+            WriteAccess access(container);
+            CPPUNIT_ASSERT_NO_THROW(access.get<TestData>());
         }
         
         void WriteAccessTest::testRelease()
         {
             Data* data = new TestData;
             DataContainer container(data);
-            WriteAccess<TestData> access(container);
+            WriteAccess access(container);
 
             access.release();
             CPPUNIT_ASSERT(access.empty());
@@ -72,14 +72,14 @@ namespace stromx
             Data* data = new None;
             
             DataContainer container(data);
-            WriteAccess<TestData> access(container);
-            CPPUNIT_ASSERT_THROW(access(), BadCast);
+            WriteAccess access(container);
+            CPPUNIT_ASSERT_THROW(access.get<TestData>(), BadCast);
         }
         
         void WriteAccessTest::testWriteAccessEmptyContainer()
         {
             DataContainer container;
-            CPPUNIT_ASSERT_THROW(WriteAccess<> access(container), WrongArgument);
+            CPPUNIT_ASSERT_THROW(WriteAccess access(container), WrongArgument);
         }
         
         void WriteAccessTest::testReleaseWriteAccess()
@@ -87,11 +87,11 @@ namespace stromx
             Data* data = new TestData;
             DataContainer container(data);
             {
-                WriteAccess<> access(container);
+                WriteAccess access(container);
             }
             
-            WriteAccess<> access(container);
-            CPPUNIT_ASSERT_EQUAL(data, &access());
+            WriteAccess access(container);
+            CPPUNIT_ASSERT_EQUAL(data, &access.get());
         }
         
         void WriteAccessTest::testWriteAccessDelayed()
@@ -100,29 +100,29 @@ namespace stromx
             DataContainer container(m_data);
             
             {
-                boost::thread t(boost::bind(&WriteAccessTest::releaseDelayed, this, _1), WriteAccess<>(container));
+                boost::thread t(boost::bind(&WriteAccessTest::releaseDelayed, this, _1), WriteAccess(container));
             }
             
-            WriteAccess<> access(container);
-            CPPUNIT_ASSERT_EQUAL(m_data, &access());
+            WriteAccess access(container);
+            CPPUNIT_ASSERT_EQUAL(m_data, &access.get());
         }
         
-        void WriteAccessTest::releaseDelayed(WriteAccess<>& access)
+        void WriteAccessTest::releaseDelayed(WriteAccess& access)
         {
             boost::this_thread::sleep_for(boost::chrono::seconds(1));
-            CPPUNIT_ASSERT_EQUAL(m_data, &access());
+            CPPUNIT_ASSERT_EQUAL(m_data, &access.get());
         }
             
         void WriteAccessTest::writeAccessInterrupt(DataContainer& container)
         {
-            CPPUNIT_ASSERT_THROW(WriteAccess<> access(container), Interrupt);
+            CPPUNIT_ASSERT_THROW(WriteAccess access(container), Interrupt);
         }
         
         void WriteAccessTest::testWriteAccessInterrupt()
         {
             {
                 DataContainer container = DataContainer(new TestData());
-                WriteAccess<> access(container);
+                WriteAccess access(container);
                 boost::thread t(boost::bind(&WriteAccessTest::writeAccessInterrupt, this, _1), container);
                 
                 t.interrupt();
@@ -139,12 +139,12 @@ namespace stromx
             DataContainer container(m_data);
             
             {
-                CPPUNIT_ASSERT_NO_THROW(WriteAccess<>(container, 100));
+                CPPUNIT_ASSERT_NO_THROW(WriteAccess(container, 100));
             }
             
-            WriteAccess<> write(container);
+            WriteAccess write(container);
             
-            CPPUNIT_ASSERT_THROW(WriteAccess<>(container, 100), Timeout);
+            CPPUNIT_ASSERT_THROW(WriteAccess(container, 100), Timeout);
         }
     }
 }

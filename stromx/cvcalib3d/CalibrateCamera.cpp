@@ -197,13 +197,13 @@ namespace stromx
                     const runtime::Data* objectPointsData = 0;
                     const runtime::Data* imagePointsData = 0;
                     
-                    runtime::ReadAccess<> objectPointsReadAccess;
-                    runtime::ReadAccess<> imagePointsReadAccess;
+                    runtime::ReadAccess objectPointsReadAccess;
+                    runtime::ReadAccess imagePointsReadAccess;
                     
-                    objectPointsReadAccess = runtime::ReadAccess<>(objectPointsInMapper.data());
-                    objectPointsData = &objectPointsReadAccess();
-                    imagePointsReadAccess = runtime::ReadAccess<>(imagePointsInMapper.data());
-                    imagePointsData = &imagePointsReadAccess();
+                    objectPointsReadAccess = runtime::ReadAccess(objectPointsInMapper.data());
+                    objectPointsData = &objectPointsReadAccess.get();
+                    imagePointsReadAccess = runtime::ReadAccess(imagePointsInMapper.data());
+                    imagePointsData = &imagePointsReadAccess.get();
                     
                     if(! objectPointsData->variant().isVariant(m_objectPointsDescription->variant()))
                     {

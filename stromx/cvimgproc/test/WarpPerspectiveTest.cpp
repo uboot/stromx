@@ -42,8 +42,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpPerspectiveTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void WarpPerspectiveTest::testManual1()
@@ -64,8 +64,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpPerspectiveTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void WarpPerspectiveTest::testAllocate0()
@@ -86,8 +86,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpPerspective::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpPerspectiveTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpPerspectiveTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

@@ -29,6 +29,7 @@
 #include "stromx/runtime/impl/InputNode.h"
 #include "stromx/runtime/impl/MutexHandle.h"
 #include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/impl/ThreadImplObserver.h"
 
 namespace stromx
 {

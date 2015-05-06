@@ -26,7 +26,6 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorInfo.h"
 #include "stromx/runtime/Position.h"
-#include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace stromx
 {

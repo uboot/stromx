@@ -35,8 +35,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ExtractRectangleTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ExtractRectangleTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ExtractRectangleTest::testAllocate1()
@@ -52,8 +52,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ExtractRectangleTest_testAllocate1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ExtractRectangleTest_testAllocate1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ExtractRectangleTest::testAllocate2()
@@ -69,8 +69,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(ExtractRectangle::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ExtractRectangleTest_testAllocate2_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ExtractRectangleTest_testAllocate2_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

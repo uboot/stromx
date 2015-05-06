@@ -43,8 +43,8 @@ namespace stromx
         void FlickerTest::testExecute()
         {
             runtime::DataContainer result = m_operator->getOutputData(Flicker::OUTPUT);
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             
             cvsupport::Image::save("FlickerTest_testExecute.png", image);
         }

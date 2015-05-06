@@ -96,11 +96,11 @@ namespace stromx
                 if(srcMapper.data() == destMapper.data())
                     throw InputError(DESTINATION, *this, "Destination image must not be the same image as the source image."); 
                 
-                ReadAccess<runtime::Image> src(srcMapper.data());
-                WriteAccess<runtime::Image> dest(destMapper.data());
+                ReadAccess src(srcMapper.data());
+                WriteAccess dest(destMapper.data());
                 
-                const runtime::Image& srcImage = src();
-                runtime::Image& destImage = dest();
+                const runtime::Image& srcImage = src.get<runtime::Image>();
+                runtime::Image& destImage = dest.get<runtime::Image>();
                 
                 runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
                 
@@ -132,9 +132,9 @@ namespace stromx
                 Id2DataPair srcMapper(SOURCE);
                 provider.receiveInputData(srcMapper);
                 
-                ReadAccess<runtime::Image> src(srcMapper.data());
+                ReadAccess src(srcMapper.data());
                 
-                const runtime::Image& srcImage = src();
+                const runtime::Image& srcImage = src.get<runtime::Image>();
                 
                 runtime::Image::PixelType pixelType = runtime::Image::PixelType((unsigned int)(m_pixelType));
                 

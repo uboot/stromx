@@ -36,9 +36,9 @@ namespace stromx
 
 namespace
 {   
-    std::auto_ptr< ReadAccess<> > allocate(const DataContainer & data)
+    std::auto_ptr<ReadAccess> allocate(const DataContainer & data)
     {
-        ReadAccess<>* access = 0;
+        ReadAccess* access = 0;
         
         Thread* threadPtr = gThread.get();
         if (threadPtr)
@@ -47,7 +47,7 @@ namespace
         Py_BEGIN_ALLOW_THREADS
         try
         {
-            access = new ReadAccess<>(data);
+            access = new ReadAccess(data);
         }
         catch(stromx::runtime::Interrupt&)
         {
@@ -63,12 +63,12 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr< ReadAccess<> >(access);
+        return std::auto_ptr<ReadAccess>(access);
     }
     
-    std::auto_ptr< ReadAccess<> > allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
+    std::auto_ptr<ReadAccess> allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
     {
-        ReadAccess<>* access = 0;
+        ReadAccess* access = 0;
         
         Thread* threadPtr = gThread.get();
         if (threadPtr)
@@ -77,7 +77,7 @@ namespace
         Py_BEGIN_ALLOW_THREADS
         try
         {
-            access = new ReadAccess<>(data, timeout);
+            access = new ReadAccess(data, timeout);
         }
         catch(stromx::runtime::Interrupt&)
         {
@@ -93,17 +93,17 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr< ReadAccess<> >(access);
+        return std::auto_ptr<ReadAccess>(access);
     }
 }
 
 void exportReadAccess()
 {       
-    class_<ReadAccess<> >("ReadAccess", no_init)
+    class_<ReadAccess>("ReadAccess", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateWithTimeout))
-        .def("get", &ReadAccess<>::get, return_internal_reference<>())
-        .def("empty", &ReadAccess<>::empty)
-        .def("release", &ReadAccess<>::release)
+        .def<const Data & (ReadAccess::*)() const>("get", &ReadAccess::get, return_internal_reference<>())
+        .def("empty", &ReadAccess::empty)
+        .def("release", &ReadAccess::release)
     ;
 }

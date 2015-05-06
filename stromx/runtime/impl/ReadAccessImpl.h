@@ -28,7 +28,7 @@ namespace stromx
         
         namespace impl
         {
-            class STROMX_RUNTIME_API ReadAccessImpl
+            class ReadAccessImpl
             {
             public:
                 ReadAccessImpl(const DataContainer& data, const bool waitWithTimeout, const unsigned int timeout = 0);

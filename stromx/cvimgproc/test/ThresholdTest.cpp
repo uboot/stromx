@@ -36,8 +36,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ThresholdTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ThresholdTest::testManual1()
@@ -57,8 +57,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ThresholdTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ThresholdTest::testAllocate0()
@@ -75,8 +75,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Threshold::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("ThresholdTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("ThresholdTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void ThresholdTest::testInPlace0()
@@ -93,8 +93,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(Threshold::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("ThresholdTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("ThresholdTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

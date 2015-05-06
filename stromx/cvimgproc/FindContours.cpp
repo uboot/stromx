@@ -187,10 +187,10 @@ namespace stromx
                     
                     const runtime::Data* srcData = 0;
                     
-                    runtime::ReadAccess<> srcReadAccess;
+                    runtime::ReadAccess srcReadAccess;
                     
-                    srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                    srcData = &srcReadAccess();
+                    srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+                    srcData = &srcReadAccess.get();
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {

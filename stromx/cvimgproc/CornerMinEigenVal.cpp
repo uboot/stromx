@@ -234,10 +234,10 @@ namespace stromx
                     const runtime::Data* srcData = 0;
                     runtime::Data* dstData = 0;
                     
-                    runtime::ReadAccess<> srcReadAccess;
+                    runtime::ReadAccess srcReadAccess;
                     runtime::DataContainer inContainer = dstInMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    dstData = &writeAccess();
+                    runtime::WriteAccess writeAccess(inContainer);
+                    dstData = &writeAccess.get();
                     
                     if(srcInMapper.data() == inContainer)
                     {
@@ -245,8 +245,8 @@ namespace stromx
                     }
                     else
                     {
-                        srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                        srcData = &srcReadAccess();
+                        srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+                        srcData = &srcReadAccess.get();
                     }
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
@@ -285,10 +285,10 @@ namespace stromx
                     
                     const runtime::Data* srcData = 0;
                     
-                    runtime::ReadAccess<> srcReadAccess;
+                    runtime::ReadAccess srcReadAccess;
                     
-                    srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                    srcData = &srcReadAccess();
+                    srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+                    srcData = &srcReadAccess.get();
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {

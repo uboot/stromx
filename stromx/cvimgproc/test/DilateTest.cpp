@@ -44,8 +44,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("DilateTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void DilateTest::testManual1()
@@ -62,8 +62,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("DilateTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void DilateTest::testAllocate0()
@@ -78,8 +78,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Dilate::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("DilateTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("DilateTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void DilateTest::testInPlace0()
@@ -96,8 +96,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(Dilate::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("DilateTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("DilateTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

@@ -26,20 +26,23 @@
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/Exception.h"
-#include "stromx/runtime/impl/WriteAccessImpl.h"
 
 namespace stromx
 {
     namespace runtime
     {
+        namespace impl
+        {
+            class WriteAccessImpl;
+        }
+        
         /** 
          * \brief Write access to a data container.
          * 
          * A read access allows to read and change the content of a data container
          * which contains data of the type \c data_t.
          */
-        template<typename data_t = Data>
-        class WriteAccess
+        class STROMX_RUNTIME_API WriteAccess
         {
         public:
             /** Constructs an empty write access. */ 
@@ -52,10 +55,7 @@ namespace stromx
              * 
              * \param data The container which contains the data to be accessed.
              */
-            explicit WriteAccess(const DataContainer & data)
-              : m_impl(new impl::WriteAccessImpl(data, false))
-            {
-            }
+            explicit WriteAccess(const DataContainer & data);
             
             /** 
              * Constructs a write access from a data container. This functions
@@ -67,23 +67,23 @@ namespace stromx
              * 
              * \throws Timeout If no read access could be obtained during the timeout.
              */
-            WriteAccess(const DataContainer & data, const unsigned int timeout)
-              : m_impl(new impl::WriteAccessImpl(data, true, timeout))
-            {
-            }
+            WriteAccess(const DataContainer & data, const unsigned int timeout);
             
             /** Returns \c true if the write access is empty. */
             bool empty() const { return m_impl.get() == 0; }
             
-            /** Returns a reference to the content of the data container. */
+            /** 
+             * Returns a casted reference to the content of the data container.
+             * 
+             * \throws EmptyAccess If the read access is empty.
+             * \throws BadCast If the data can not be casted to \c data_t.
+             */
+            template<typename data_t>
             data_t & get() const
             {
-                if(empty())
-                    throw AccessEmpty();
-                
                 try
                 {
-                    return data_cast<data_t>(m_impl->get());
+                    return data_cast<data_t>(get());
                 }
                 catch(std::bad_cast &)
                 {
@@ -91,11 +91,16 @@ namespace stromx
                 }
             }
             
-            /** Returns a reference to the content of the data container. */
-            data_t & operator()() const { return get(); }
+            /** 
+             * Returns a reference to the content of the data container.
+             * 
+             * \throws EmptyAccess If the read access is empty.
+             */
+            Data & get() const;
             
             /** Releases the write access. The access is empty after calling this function. */
-            void release() { m_impl.reset(); }
+            void release();
+            
         private:
             std::tr1::shared_ptr<impl::WriteAccessImpl> m_impl;
         };

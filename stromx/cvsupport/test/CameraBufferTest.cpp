@@ -60,8 +60,8 @@ namespace stromx
             outputBuffer1 = m_operator->getOutputData(CameraBuffer::BUFFER);
             outputIndex1 = m_operator->getOutputData(CameraBuffer::INDEX);
             
-            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(output1)());
-            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(outputIndex1)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess(output1).get<UInt32>());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess(outputIndex1).get<UInt32>());
             
             // clear all outpout
             m_operator->clearOutputData(CameraBuffer::OUTPUT);
@@ -82,8 +82,8 @@ namespace stromx
             outputBuffer2 = m_operator->getOutputData(CameraBuffer::BUFFER);
             outputIndex2 = m_operator->getOutputData(CameraBuffer::INDEX);
             
-            CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess<UInt32>(output2)());
-            CPPUNIT_ASSERT_EQUAL(UInt32(2), ReadAccess<UInt32>(outputIndex2)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess(output2).get<UInt32>());
+            CPPUNIT_ASSERT_EQUAL(UInt32(2), ReadAccess(outputIndex2).get<UInt32>());
         }
 
         void CameraBufferTest::tearDown()

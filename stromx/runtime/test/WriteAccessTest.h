@@ -62,7 +62,7 @@ namespace stromx
             void testWriteAccessTimeout();
                 
         private:
-            void releaseDelayed(WriteAccess<>& access);
+            void releaseDelayed(WriteAccess& access);
             void writeAccessInterrupt(DataContainer & container);
             
             Data* m_data;

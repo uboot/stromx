@@ -145,10 +145,10 @@ namespace stromx
                     
                     const runtime::Data* contourData = 0;
                     
-                    runtime::ReadAccess<> contourReadAccess;
+                    runtime::ReadAccess contourReadAccess;
                     
-                    contourReadAccess = runtime::ReadAccess<>(contourInMapper.data());
-                    contourData = &contourReadAccess();
+                    contourReadAccess = runtime::ReadAccess(contourInMapper.data());
+                    contourData = &contourReadAccess.get();
                     
                     if(! contourData->variant().isVariant(m_contourDescription->variant()))
                     {

@@ -39,18 +39,18 @@ namespace stromx
         void CounterTest::testExecute()
         {
             DataContainer data = m_operator->getOutputData(Counter::OUTPUT);
-            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess(data).get<UInt32>());
             
             m_operator->clearOutputData(Counter::OUTPUT);
             
             data = m_operator->getOutputData(Counter::OUTPUT);
-            CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess<UInt32>(data)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(1), ReadAccess(data).get<UInt32>());
             
             m_operator->deactivate();
             m_operator->activate();
             
             data = m_operator->getOutputData(Counter::OUTPUT);
-            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess<UInt32>(data)());
+            CPPUNIT_ASSERT_EQUAL(UInt32(0), ReadAccess(data).get<UInt32>());
         }
 
         void CounterTest::tearDown()

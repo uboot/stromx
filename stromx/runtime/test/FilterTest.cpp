@@ -44,7 +44,7 @@ namespace stromx
             m_operator->setInputData(Filter::FILTER_FLAG, flag);
             
             DataContainer output = m_operator->getOutputData(Filter::OUTPUT);
-            CPPUNIT_ASSERT_EQUAL(Int32(4), ReadAccess<Int32>(output).get());
+            CPPUNIT_ASSERT_EQUAL(Int32(4), ReadAccess(output).get<Int32>());
         }
         
         void FilterTest::testExecuteRemove()

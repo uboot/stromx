@@ -89,9 +89,10 @@ namespace math
         runtime::Id2DataPair inputMapper(INPUT);
         provider.receiveInputData(inputMapper);
         
-        runtime::ReadAccess<runtime::UInt32> input(inputMapper.data());
-        
-        runtime::Data* result = new runtime::UInt32((unsigned int)(input()) + (unsigned int)(m_offset));
+        runtime::ReadAccess input(inputMapper.data());
+        unsigned int sum = (unsigned int)(input.get<runtime::UInt32>()) +
+                           (unsigned int)(m_offset);
+        runtime::Data* result = new runtime::UInt32(sum);
         
         runtime::DataContainer outContainer(result);
        

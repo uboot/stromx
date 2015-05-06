@@ -39,8 +39,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(FloodFill::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("FloodFillTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("FloodFillTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

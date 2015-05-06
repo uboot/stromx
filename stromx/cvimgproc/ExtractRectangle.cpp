@@ -151,13 +151,13 @@ namespace stromx
                     const runtime::Data* srcData = 0;
                     const runtime::Data* rectData = 0;
                     
-                    runtime::ReadAccess<> srcReadAccess;
-                    runtime::ReadAccess<> rectReadAccess;
+                    runtime::ReadAccess srcReadAccess;
+                    runtime::ReadAccess rectReadAccess;
                     
-                    srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                    srcData = &srcReadAccess();
-                    rectReadAccess = runtime::ReadAccess<>(rectInMapper.data());
-                    rectData = &rectReadAccess();
+                    srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+                    srcData = &srcReadAccess.get();
+                    rectReadAccess = runtime::ReadAccess(rectInMapper.data());
+                    rectData = &rectReadAccess.get();
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {

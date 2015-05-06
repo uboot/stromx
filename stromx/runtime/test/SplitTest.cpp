@@ -62,13 +62,13 @@ namespace stromx
                 m_operator->clearOutputData(Split::OUTPUT_DATA);
                 m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
                 
-                CPPUNIT_ASSERT_EQUAL((const Data*)(data1), &ReadAccess<>(outData)());
-                CPPUNIT_ASSERT_EQUAL(UInt64(2), ReadAccess<UInt64>(outNumItems)());
+                CPPUNIT_ASSERT_EQUAL((const Data*)(data1), &ReadAccess(outData).get());
+                CPPUNIT_ASSERT_EQUAL(UInt64(2), ReadAccess(outNumItems).get<UInt64>());
                 
                 outData = m_operator->getOutputData(Split::OUTPUT_DATA);
                 m_operator->clearOutputData(Split::OUTPUT_DATA);
                 
-                CPPUNIT_ASSERT_EQUAL((const Data*)(data2), &ReadAccess<>(outData)());
+                CPPUNIT_ASSERT_EQUAL((const Data*)(data2), &ReadAccess(outData).get());
             }
         }
         
@@ -85,7 +85,7 @@ namespace stromx
             outNumItems = m_operator->getOutputData(Split::OUTPUT_NUM_ITEMS);
             m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
             
-            CPPUNIT_ASSERT_EQUAL(UInt64(0), ReadAccess<UInt64>(outNumItems)());
+            CPPUNIT_ASSERT_EQUAL(UInt64(0), ReadAccess(outNumItems).get<UInt64>());
             
             {
                 List* list = new List();
@@ -101,7 +101,7 @@ namespace stromx
             m_operator->clearOutputData(Split::OUTPUT_DATA);
             m_operator->clearOutputData(Split::OUTPUT_NUM_ITEMS);
             
-            CPPUNIT_ASSERT_EQUAL(UInt64(1), ReadAccess<UInt64>(outNumItems)());
+            CPPUNIT_ASSERT_EQUAL(UInt64(1), ReadAccess(outNumItems).get<UInt64>());
         }
         
         void SplitTest::tearDown ( void )

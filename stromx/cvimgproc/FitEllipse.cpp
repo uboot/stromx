@@ -147,10 +147,10 @@ namespace stromx
                     
                     const runtime::Data* pointsData = 0;
                     
-                    runtime::ReadAccess<> pointsReadAccess;
+                    runtime::ReadAccess pointsReadAccess;
                     
-                    pointsReadAccess = runtime::ReadAccess<>(pointsInMapper.data());
-                    pointsData = &pointsReadAccess();
+                    pointsReadAccess = runtime::ReadAccess(pointsInMapper.data());
+                    pointsData = &pointsReadAccess.get();
                     
                     if(! pointsData->variant().isVariant(m_pointsDescription->variant()))
                     {

@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer pointMatrixResult = m_operator->getOutputData(GoodFeaturesToTrack::POINT_MATRIX);
             
-            runtime::ReadAccess<runtime::Matrix> pointMatrixAccess(pointMatrixResult);
-            cvsupport::Matrix::save("GoodFeaturesToTrackTest_testAllocate0_pointMatrix.npy", pointMatrixAccess());
+            runtime::ReadAccess pointMatrixAccess(pointMatrixResult);
+            cvsupport::Matrix::save("GoodFeaturesToTrackTest_testAllocate0_pointMatrix.npy", pointMatrixAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

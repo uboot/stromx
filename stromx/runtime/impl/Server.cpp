@@ -72,21 +72,21 @@ namespace stromx
             
             void Connection::send(const DataContainer & data)
             {
-                ReadAccess<> access(data);
+                ReadAccess access(data);
                 
                 // serialize the header
                 SerializationHeader header;
                 header.serverVersion = Server::VERSION;
-                header.package = access().package();
-                header.type = access().type();
-                header.version = access().version();
+                header.package = access.get().package();
+                header.type = access.get().type();
+                header.version = access.get().version();
                 std::ostringstream headerStream;
                 boost::archive::text_oarchive headerArchive(headerStream);
                 headerArchive << header;
                 
                 // serialize the data
                 StreamOutput output;
-                access().serialize(output);
+                access.get().serialize(output);
                 
                 m_headerData = headerStream.str();
                 m_textData = output.textData();

@@ -38,8 +38,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_or::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_orTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_orTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void Bitwise_orTest::testManual1()
@@ -58,8 +58,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_or::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_orTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_orTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void Bitwise_orTest::testAllocate0()
@@ -76,8 +76,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_or::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_orTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_orTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvcore

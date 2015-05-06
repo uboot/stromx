@@ -23,7 +23,6 @@
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/ExceptionObserver.h"
 #include "stromx/runtime/Output.h"
-#include "stromx/runtime/impl/ThreadImplObserver.h"
 
 namespace stromx
 {

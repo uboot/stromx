@@ -38,8 +38,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(MedianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("MedianBlurTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("MedianBlurTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void MedianBlurTest::testManual1()
@@ -57,8 +57,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(MedianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("MedianBlurTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("MedianBlurTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void MedianBlurTest::testAllocate0()
@@ -73,8 +73,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(MedianBlur::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("MedianBlurTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("MedianBlurTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void MedianBlurTest::testInPlace0()
@@ -89,8 +89,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(MedianBlur::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("MedianBlurTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("MedianBlurTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

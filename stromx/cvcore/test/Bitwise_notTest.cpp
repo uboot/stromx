@@ -36,8 +36,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_not::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_notTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_notTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void Bitwise_notTest::testManual1()
@@ -54,8 +54,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_not::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_notTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_notTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void Bitwise_notTest::testAllocate0()
@@ -70,8 +70,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(Bitwise_not::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("Bitwise_notTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("Bitwise_notTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void Bitwise_notTest::testInPlace0()
@@ -86,8 +86,8 @@ namespace stromx
             
             runtime::DataContainer src1Result = m_operator->getOutputData(Bitwise_not::SRC_1);
             
-            runtime::ReadAccess<runtime::Image> src1Access(src1Result);
-            cvsupport::Image::save("Bitwise_notTest_testInPlace0_src1.png", src1Access());
+            runtime::ReadAccess src1Access(src1Result);
+            cvsupport::Image::save("Bitwise_notTest_testInPlace0_src1.png", src1Access.get<runtime::Image>());
         }
         
     } // cvcore

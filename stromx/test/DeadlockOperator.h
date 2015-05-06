@@ -68,7 +68,7 @@ namespace stromx
             stromx::runtime::Bool m_lockData;
             stromx::runtime::Bool m_obtainWriteAccess;
             bool m_dataHasBeenLocked;
-            stromx::runtime::WriteAccess<stromx::runtime::UInt32> m_writeAccess;
+            stromx::runtime::WriteAccess m_writeAccess;
             stromx::runtime::UInt8 m_dummy;
         };
     }

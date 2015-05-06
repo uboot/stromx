@@ -119,18 +119,18 @@ namespace stromx
             
             if (! m_dataHasBeenLocked && m_lockData)
             {
-                m_writeAccess = WriteAccess<UInt32>(input.data());
+                m_writeAccess = WriteAccess(input.data());
                 m_dataHasBeenLocked = true;
             }
             else if (m_dataHasBeenLocked && ! m_lockData)
             {
-                m_writeAccess = WriteAccess<UInt32>(DataContainer(new UInt32()));
+                m_writeAccess = WriteAccess(DataContainer(new UInt32()));
                 m_dataHasBeenLocked = false;
             }
             
-            WriteAccess<> writeAccess;
+            WriteAccess writeAccess;
             if (m_obtainWriteAccess)
-                writeAccess = WriteAccess<>(input.data());
+                writeAccess = WriteAccess(input.data());
             
             Id2DataPair output(OUTPUT, input.data());
             provider.sendOutputData(output);

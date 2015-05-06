@@ -42,8 +42,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpAffineTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void WarpAffineTest::testManual1()
@@ -64,8 +64,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpAffineTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void WarpAffineTest::testAllocate0()
@@ -86,8 +86,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(WarpAffine::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("WarpAffineTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("WarpAffineTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

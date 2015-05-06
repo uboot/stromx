@@ -39,8 +39,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist1D::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("CalcHist1DTest_testAllocate0_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("CalcHist1DTest_testAllocate0_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
         void CalcHist1DTest::testAllocate1()
@@ -60,8 +60,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(CalcHist1D::DST);
             
-            runtime::ReadAccess<runtime::Matrix> dstAccess(dstResult);
-            cvsupport::Matrix::save("CalcHist1DTest_testAllocate1_dst.npy", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Matrix::save("CalcHist1DTest_testAllocate1_dst.npy", dstAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

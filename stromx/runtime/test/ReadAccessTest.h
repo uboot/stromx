@@ -62,7 +62,7 @@ namespace stromx
             void testDestroyReadAccess();
 
         private:
-            void releaseDelayed(WriteAccess<>& access);
+            void releaseDelayed(WriteAccess& access);
             void readAccessInterrupt(DataContainer & container);
             
             Data* m_data;

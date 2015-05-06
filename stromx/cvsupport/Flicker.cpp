@@ -105,8 +105,8 @@ namespace stromx
             provider.receiveInputData(inputDataMapper);
             
             DataContainer container = inputDataMapper.data();
-            WriteAccess<runtime::Image> access(container);
-            runtime::Image& image = access();
+            WriteAccess access(container);
+            runtime::Image& image = access.get<runtime::Image>();
             
             switch(image.depth())
             {

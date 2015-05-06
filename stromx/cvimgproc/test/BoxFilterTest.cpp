@@ -40,8 +40,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("BoxFilterTest_testManual0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testManual0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void BoxFilterTest::testManual1()
@@ -57,8 +57,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("BoxFilterTest_testManual1_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testManual1_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void BoxFilterTest::testAllocate0()
@@ -77,8 +77,8 @@ namespace stromx
             
             runtime::DataContainer dstResult = m_operator->getOutputData(BoxFilter::DST);
             
-            runtime::ReadAccess<runtime::Image> dstAccess(dstResult);
-            cvsupport::Image::save("BoxFilterTest_testAllocate0_dst.png", dstAccess());
+            runtime::ReadAccess dstAccess(dstResult);
+            cvsupport::Image::save("BoxFilterTest_testAllocate0_dst.png", dstAccess.get<runtime::Image>());
         }
         
         void BoxFilterTest::testInPlace0()
@@ -93,8 +93,8 @@ namespace stromx
             
             runtime::DataContainer srcResult = m_operator->getOutputData(BoxFilter::SRC);
             
-            runtime::ReadAccess<runtime::Image> srcAccess(srcResult);
-            cvsupport::Image::save("BoxFilterTest_testInPlace0_src.png", srcAccess());
+            runtime::ReadAccess srcAccess(srcResult);
+            cvsupport::Image::save("BoxFilterTest_testInPlace0_src.png", srcAccess.get<runtime::Image>());
         }
         
     } // cvimgproc

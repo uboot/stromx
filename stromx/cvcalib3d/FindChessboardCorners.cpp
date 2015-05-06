@@ -185,10 +185,10 @@ namespace stromx
                     
                     const runtime::Data* imageData = 0;
                     
-                    runtime::ReadAccess<> imageReadAccess;
+                    runtime::ReadAccess imageReadAccess;
                     
-                    imageReadAccess = runtime::ReadAccess<>(imageInMapper.data());
-                    imageData = &imageReadAccess();
+                    imageReadAccess = runtime::ReadAccess(imageInMapper.data());
+                    imageData = &imageReadAccess.get();
                     
                     if(! imageData->variant().isVariant(m_imageDescription->variant()))
                     {

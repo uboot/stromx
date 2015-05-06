@@ -47,8 +47,8 @@ namespace stromx
             m_operator->setParameter(AdjustRgbChannels::BLUE, Float64(1.5));
             
             runtime::DataContainer result = m_operator->getOutputData(AdjustRgbChannels::OUTPUT);
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             
             cvsupport::Image::save("AdjustRgbChannelsTest_testExecute.png", image);
         }

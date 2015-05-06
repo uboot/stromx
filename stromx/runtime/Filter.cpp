@@ -52,7 +52,7 @@ namespace stromx
             
             provider.receiveInputData(inputMapper && flagMapper);
             
-            Bool flag = ReadAccess<Bool>(flagMapper.data())();
+            Bool flag = ReadAccess(flagMapper.data()).get<Bool>();
             
             if (flag)
             {

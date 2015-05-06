@@ -49,8 +49,8 @@ namespace stromx
 
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
                 
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(100), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(90), image.height());
             
@@ -65,9 +65,9 @@ namespace stromx
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-            ReadAccess<runtime::Image> access(result);
+            ReadAccess access(result);
             
-            const runtime::Image& image = access();
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(50), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(12), image.height());
             
@@ -82,9 +82,9 @@ namespace stromx
             m_operator->setParameter(Clip::HEIGHT, UInt32(90));
             
             runtime::DataContainer result = m_operator->getOutputData(Clip::OUTPUT);
-            ReadAccess<runtime::Image> access(result);
+            ReadAccess access(result);
             
-            const runtime::Image& image = access();
+            const runtime::Image& image = access.get<runtime::Image>();
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.width());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), image.height());
         }

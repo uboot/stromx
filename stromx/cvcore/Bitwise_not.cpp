@@ -197,10 +197,10 @@ namespace stromx
                     const runtime::Data* src1Data = 0;
                     runtime::Data* dstData = 0;
                     
-                    runtime::ReadAccess<> src1ReadAccess;
+                    runtime::ReadAccess src1ReadAccess;
                     runtime::DataContainer inContainer = dstInMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    dstData = &writeAccess();
+                    runtime::WriteAccess writeAccess(inContainer);
+                    dstData = &writeAccess.get();
                     
                     if(src1InMapper.data() == inContainer)
                     {
@@ -208,8 +208,8 @@ namespace stromx
                     }
                     else
                     {
-                        src1ReadAccess = runtime::ReadAccess<>(src1InMapper.data());
-                        src1Data = &src1ReadAccess();
+                        src1ReadAccess = runtime::ReadAccess(src1InMapper.data());
+                        src1Data = &src1ReadAccess.get();
                     }
                     
                     if(! src1Data->variant().isVariant(m_src1Description->variant()))
@@ -245,10 +245,10 @@ namespace stromx
                     
                     const runtime::Data* src1Data = 0;
                     
-                    runtime::ReadAccess<> src1ReadAccess;
+                    runtime::ReadAccess src1ReadAccess;
                     
-                    src1ReadAccess = runtime::ReadAccess<>(src1InMapper.data());
-                    src1Data = &src1ReadAccess();
+                    src1ReadAccess = runtime::ReadAccess(src1InMapper.data());
+                    src1Data = &src1ReadAccess.get();
                     
                     if(! src1Data->variant().isVariant(m_src1Description->variant()))
                     {
@@ -279,8 +279,8 @@ namespace stromx
                     runtime::Data* src1Data = 0;
                     
                     runtime::DataContainer inContainer = src1InMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    src1Data = &writeAccess();
+                    runtime::WriteAccess writeAccess(inContainer);
+                    src1Data = &writeAccess.get();
                     
                     if(! src1Data->variant().isVariant(m_src1Description->variant()))
                     {

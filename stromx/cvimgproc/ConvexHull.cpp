@@ -165,10 +165,10 @@ namespace stromx
                     
                     const runtime::Data* curveData = 0;
                     
-                    runtime::ReadAccess<> curveReadAccess;
+                    runtime::ReadAccess curveReadAccess;
                     
-                    curveReadAccess = runtime::ReadAccess<>(curveInMapper.data());
-                    curveData = &curveReadAccess();
+                    curveReadAccess = runtime::ReadAccess(curveInMapper.data());
+                    curveData = &curveReadAccess.get();
                     
                     if(! curveData->variant().isVariant(m_curveDescription->variant()))
                     {

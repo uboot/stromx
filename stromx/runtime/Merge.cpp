@@ -75,11 +75,11 @@ namespace stromx
             {
                 Id2DataPair dataMapper(INPUT_NUM_ITEMS);
                 provider.receiveInputData(dataMapper);
-                ReadAccess<> access(dataMapper.data());
+                ReadAccess access(dataMapper.data());
                 
                 try
                 {
-                    m_numItems = toInt(access());
+                    m_numItems = toInt(access.get());
                 }
                 catch (BadCast&)
                 {

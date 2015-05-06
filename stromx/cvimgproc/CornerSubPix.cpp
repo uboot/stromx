@@ -191,10 +191,10 @@ namespace stromx
                     const runtime::Data* srcData = 0;
                     runtime::Data* pointMatrixData = 0;
                     
-                    runtime::ReadAccess<> srcReadAccess;
+                    runtime::ReadAccess srcReadAccess;
                     runtime::DataContainer inContainer = pointMatrixInMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    pointMatrixData = &writeAccess();
+                    runtime::WriteAccess writeAccess(inContainer);
+                    pointMatrixData = &writeAccess.get();
                     
                     if(srcInMapper.data() == inContainer)
                     {
@@ -202,8 +202,8 @@ namespace stromx
                     }
                     else
                     {
-                        srcReadAccess = runtime::ReadAccess<>(srcInMapper.data());
-                        srcData = &srcReadAccess();
+                        srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+                        srcData = &srcReadAccess.get();
                     }
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))

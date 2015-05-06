@@ -33,7 +33,7 @@ namespace stromx
         void ReadAccessTest::testReadAccessEmptyContainer()
         {
             DataContainer container;
-            CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), WrongArgument);
+            CPPUNIT_ASSERT_THROW(ReadAccess access(container), WrongArgument);
         }
 
         void ReadAccessTest::testReadAccess()
@@ -41,11 +41,11 @@ namespace stromx
             Data* data = new TestData;
             {
                 DataContainer container(data);
-                ReadAccess<> access1(container);
-                CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access1());
+                ReadAccess access1(container);
+                CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access1.get());
                 
-                ReadAccess<> access2(container);
-                CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access2());
+                ReadAccess access2(container);
+                CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(data), &access2.get());
             }
             
             CPPUNIT_ASSERT(TestData::wasDestructed);  
@@ -53,7 +53,7 @@ namespace stromx
         
         void ReadAccessTest::testEmptyReadAccess()
         {
-            ReadAccess<> access;
+            ReadAccess access;
             CPPUNIT_ASSERT(access.empty());
             CPPUNIT_ASSERT_THROW(access.get(), AccessEmpty);
         }
@@ -62,18 +62,18 @@ namespace stromx
         {
             Data* data = new TestData;
             DataContainer container(data);
-            ReadAccess<TestData> access1(container);
+            ReadAccess access1(container);
             
-            CPPUNIT_ASSERT_NO_THROW(access1());
+            CPPUNIT_ASSERT_NO_THROW(access1.get<TestData>());
         }
 
         void ReadAccessTest::testReadAccessWrongCast()
         {
             Data* data = new None;
             DataContainer container(data);
-            ReadAccess<TestData> access1(container);
+            ReadAccess access1(container);
             
-            CPPUNIT_ASSERT_THROW(access1(), BadCast);
+            CPPUNIT_ASSERT_THROW(access1.get<TestData>(), BadCast);
         }
         
         void ReadAccessTest::testDestroyReadAccess()
@@ -81,13 +81,13 @@ namespace stromx
             Data* data = new TestData;
             DataContainer container(data);
             {
-                ReadAccess<> access(container);
+                ReadAccess access(container);
                 
                 // the read access is destroyed before leaving the scope
             }
             
-            WriteAccess<> access(container);
-            CPPUNIT_ASSERT_EQUAL(data, &access());
+            WriteAccess access(container);
+            CPPUNIT_ASSERT_EQUAL(data, &access.get());
         }
         
         void ReadAccessTest::testRelease()
@@ -95,7 +95,7 @@ namespace stromx
             Data* data = new TestData;
             DataContainer container(data);
             
-            ReadAccess<> access(container);
+            ReadAccess access(container);
             access.release();
             
             CPPUNIT_ASSERT(access.empty());
@@ -107,22 +107,22 @@ namespace stromx
             DataContainer container(m_data);
             
             {
-                boost::thread t(boost::bind(&ReadAccessTest::releaseDelayed, this, _1), WriteAccess<>(container));
+                boost::thread t(boost::bind(&ReadAccessTest::releaseDelayed, this, _1), WriteAccess(container));
             }
             
-            ReadAccess<> access(container);
-            CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(m_data), &access());
+            ReadAccess access(container);
+            CPPUNIT_ASSERT_EQUAL(static_cast<const Data*>(m_data), &access.get());
         }
         
-        void ReadAccessTest::releaseDelayed(WriteAccess<>& access)
+        void ReadAccessTest::releaseDelayed(WriteAccess& access)
         {
             boost::this_thread::sleep_for(boost::chrono::seconds(1));
-            CPPUNIT_ASSERT_EQUAL(m_data, &access());
+            CPPUNIT_ASSERT_EQUAL(m_data, &access.get());
         }
             
         void ReadAccessTest::readAccessInterrupt(DataContainer& container)
         {
-            CPPUNIT_ASSERT_THROW(ReadAccess<> access(container), Interrupt);
+            CPPUNIT_ASSERT_THROW(ReadAccess access(container), Interrupt);
         }
         
         void ReadAccessTest::testReadAccessTimeout()
@@ -131,19 +131,19 @@ namespace stromx
             DataContainer container(m_data);
             
             {
-                CPPUNIT_ASSERT_NO_THROW(ReadAccess<>(container, 100));
+                CPPUNIT_ASSERT_NO_THROW(ReadAccess(container, 100));
             }
             
-            WriteAccess<> write(container);
+            WriteAccess write(container);
             
-            CPPUNIT_ASSERT_THROW(ReadAccess<>(container, 100), Timeout);
+            CPPUNIT_ASSERT_THROW(ReadAccess(container, 100), Timeout);
         }
         
         void ReadAccessTest::testReadAccessInterrupt()
         {
             {
                 DataContainer container = DataContainer(new TestData());
-                WriteAccess<> access(container);
+                WriteAccess access(container);
                 boost::thread t(boost::bind(&ReadAccessTest::readAccessInterrupt, this, _1), container);
                 
                 t.interrupt();

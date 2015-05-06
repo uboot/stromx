@@ -201,8 +201,8 @@ namespace stromx
                     runtime::Data* srcData = 0;
                     
                     runtime::DataContainer inContainer = srcInMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    srcData = &writeAccess();
+                    runtime::WriteAccess writeAccess(inContainer);
+                    srcData = &writeAccess.get();
                     
                     if(! srcData->variant().isVariant(m_srcDescription->variant()))
                     {

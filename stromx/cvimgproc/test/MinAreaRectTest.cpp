@@ -33,8 +33,8 @@ namespace stromx
             
             runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
-            cvsupport::Matrix::save("MinAreaRectTest_testAllocate0_rect.npy", rectAccess());
+            runtime::ReadAccess rectAccess(rectResult);
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate0_rect.npy", rectAccess.get<runtime::Matrix>());
         }
         
         void MinAreaRectTest::testAllocate1()
@@ -48,8 +48,8 @@ namespace stromx
             
             runtime::DataContainer rectResult = m_operator->getOutputData(MinAreaRect::RECT);
             
-            runtime::ReadAccess<runtime::Matrix> rectAccess(rectResult);
-            cvsupport::Matrix::save("MinAreaRectTest_testAllocate1_rect.npy", rectAccess());
+            runtime::ReadAccess rectAccess(rectResult);
+            cvsupport::Matrix::save("MinAreaRectTest_testAllocate1_rect.npy", rectAccess.get<runtime::Matrix>());
         }
         
     } // cvimgproc

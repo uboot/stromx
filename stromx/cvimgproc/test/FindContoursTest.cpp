@@ -34,8 +34,8 @@ namespace stromx
             runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
             
             std::size_t index = 0;
-            runtime::ReadAccess<runtime::List> dstAccess(dstResult);
-            const std::vector<const runtime::Data*> & content = dstAccess().content();
+            runtime::ReadAccess dstAccess(dstResult);
+            const std::vector<const runtime::Data*> & content = dstAccess.get<runtime::List>().content();
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);
@@ -59,8 +59,8 @@ namespace stromx
             runtime::DataContainer dstResult = m_operator->getOutputData(FindContours::DST);
             
             std::size_t index = 0;
-            runtime::ReadAccess<runtime::List> dstAccess(dstResult);
-            const std::vector<const runtime::Data*> & content = dstAccess().content();
+            runtime::ReadAccess dstAccess(dstResult);
+            const std::vector<const runtime::Data*> & content = dstAccess.get<runtime::List>().content();
             for (std::vector<const runtime::Data*>::const_iterator iter = content.begin(); iter != content.end(); ++iter)
             {
                 const runtime::Matrix* matrix = runtime::data_cast<runtime::Matrix>(*iter);

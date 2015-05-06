@@ -238,26 +238,26 @@ class SaveResultVisitor(interface.ArgumentVisitor):
     def visitOutput(self, output):
         ident = output.ident
         if isinstance(output.dataType, datatype.Image):
-            self.doc.line(("runtime::ReadAccess<runtime::Image> {0}Access"
+            self.doc.line(("runtime::ReadAccess {0}Access"
                            "({0}Result);").format(ident))
             fileName = "{0}_{1}.png".format(self.testFileName, ident)
             self.doc.line((
-                'cvsupport::Image::save("{0}", {1}Access());'
+                'cvsupport::Image::save("{0}", {1}Access.get<runtime::Image>());'
             ).format(fileName, ident))
         elif isinstance(output.dataType, datatype.Matrix):
-            self.doc.line(("runtime::ReadAccess<runtime::Matrix> {0}Access"
+            self.doc.line(("runtime::ReadAccess {0}Access"
                            "({0}Result);").format(ident))
             fileName = "{0}_{1}.npy".format(self.testFileName, ident)
             self.doc.line((
-                'cvsupport::Matrix::save("{0}", {1}Access());'
+                'cvsupport::Matrix::save("{0}", {1}Access.get<runtime::Matrix>());'
             ).format(fileName, ident))
         elif (isinstance(output.dataType, datatype.List) and
               isinstance(output.dataType.elementType, datatype.Matrix)):
             self.doc.line("std::size_t index = 0;")
-            self.doc.line(("runtime::ReadAccess<runtime::List> {0}Access"
+            self.doc.line(("runtime::ReadAccess {0}Access"
                            "({0}Result);").format(ident))
             self.doc.line(("const std::vector<const runtime::Data*> & content ="
-                           " {0}Access().content();").format(ident))
+                           " {0}Access.get<runtime::List>().content();").format(ident))
             self.doc.line("for (std::vector<const runtime::Data*>::const_iterator "
                           "iter = content.begin(); "
                           "iter != content.end(); "

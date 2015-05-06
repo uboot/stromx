@@ -60,10 +60,10 @@ namespace stromx
                 m_operator->setParameter(DummyCamera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
-                UInt32 index = ReadAccess<UInt32>(indexContainer)();
+                UInt32 index = ReadAccess(indexContainer).get<UInt32>();
                 CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
                 
-                const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+                const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();
                 cvsupport::Image::save("DummyCameraTest_testExecuteSoftwareTrigger.png", image);
             }
             
@@ -75,7 +75,7 @@ namespace stromx
                 m_operator->setParameter(DummyCamera::TRIGGER, runtime::TriggerData());
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
-                UInt32 index = ReadAccess<UInt32>(indexContainer)();
+                UInt32 index = ReadAccess(indexContainer).get<UInt32>();
                 CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
             }
             
@@ -90,7 +90,7 @@ namespace stromx
             {
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
-                UInt32 index = ReadAccess<UInt32>(indexContainer)();
+                UInt32 index = ReadAccess(indexContainer).get<UInt32>();
                 CPPUNIT_ASSERT_EQUAL(UInt32(0), index);
             }
             
@@ -100,7 +100,7 @@ namespace stromx
             {
                 DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
                 DataContainer indexContainer = m_operator->getOutputData(DummyCamera::INDEX);
-                UInt32 index = ReadAccess<UInt32>(indexContainer)();
+                UInt32 index = ReadAccess(indexContainer).get<UInt32>();
                 CPPUNIT_ASSERT_EQUAL(UInt32(1), index);
             }
         }
@@ -110,7 +110,7 @@ namespace stromx
             m_operator->setParameter(DummyCamera::PIXEL_TYPE, Enum(runtime::Image::BAYERBG_8));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
-            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();
             
             CPPUNIT_ASSERT_EQUAL(image.pixelType(), runtime::Image::BAYERBG_8);
             cvsupport::Image::save("DummyCameraTest_testAdjustPixelTypeBayerBg8.png", image);
@@ -124,7 +124,7 @@ namespace stromx
             m_operator->setParameter(DummyCamera::TOP, UInt32(46));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
-            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();;
             
             CPPUNIT_ASSERT_EQUAL(image.width(), (unsigned int)(319));
             CPPUNIT_ASSERT_EQUAL(image.height(), (unsigned int)(217));
@@ -137,7 +137,7 @@ namespace stromx
             m_operator->setParameter(DummyCamera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
-            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();;
             
             cvsupport::Image::save("DummyCameraTest_testAdjustExposure.png", image);
         }
@@ -150,7 +150,7 @@ namespace stromx
             m_operator->setParameter(DummyCamera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
-            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();;
             
             cvsupport::Image::save("DummyCameraTest_testAdjustWhiteBalance.png", image);
         }
@@ -161,7 +161,7 @@ namespace stromx
             m_operator->setParameter(DummyCamera::PIXEL_TYPE, Enum(runtime::Image::RGB_24));
             m_operator->activate();
             DataContainer imageContainer = m_operator->getOutputData(DummyCamera::OUTPUT);
-            const runtime::Image & image = ReadAccess<runtime::Image>(imageContainer)();
+            const runtime::Image & image = ReadAccess(imageContainer).get<runtime::Image>();;
             
             cvsupport::Image::save("DummyCameraTest_testFlicker.png", image);
         }

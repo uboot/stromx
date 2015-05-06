@@ -44,8 +44,8 @@ namespace stromx
         {
             runtime::DataContainer result = m_operator->getOutputData(ConstImage::OUTPUT);
             
-            ReadAccess<runtime::Image> access(result);
-            const runtime::Image& image = access();
+            ReadAccess access(result);
+            const runtime::Image& image = access.get<runtime::Image>();
             
             cvsupport::Image::save("ConstImageTest_testExecute.png", image);
         }

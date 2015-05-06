@@ -226,9 +226,9 @@ namespace stromx
                     const runtime::Data* contoursData = 0;
                     
                     runtime::DataContainer inContainer = imgInMapper.data();
-                    runtime::WriteAccess<> writeAccess(inContainer);
-                    imgData = &writeAccess();
-                    runtime::ReadAccess<> contoursReadAccess;
+                    runtime::WriteAccess writeAccess(inContainer);
+                    imgData = &writeAccess.get();
+                    runtime::ReadAccess contoursReadAccess;
                     
                     if(contoursInMapper.data() == inContainer)
                     {
@@ -236,8 +236,8 @@ namespace stromx
                     }
                     else
                     {
-                        contoursReadAccess = runtime::ReadAccess<>(contoursInMapper.data());
-                        contoursData = &contoursReadAccess();
+                        contoursReadAccess = runtime::ReadAccess(contoursInMapper.data());
+                        contoursData = &contoursReadAccess.get();
                     }
                     
                     if(! imgData->variant().isVariant(m_imgDescription->variant()))
