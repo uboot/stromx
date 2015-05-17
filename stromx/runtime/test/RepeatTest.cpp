@@ -38,7 +38,8 @@ namespace stromx
         void RepeatTest::testExecute()
         {
             DataContainer input(new Int32(10));
-            m_operator->setParameter(Repeat::NUM_ITERATIONS, UInt32(3));
+            DataContainer numIterations(new UInt32(3));
+            m_operator->setInputData(Repeat::NUM_ITERATIONS, numIterations);
             m_operator->setInputData(Repeat::INPUT, input);
             
             for (int i = 0; i < 3; ++i)
@@ -53,10 +54,11 @@ namespace stromx
         void RepeatTest::testExecuteNoIteration()
         {
             DataContainer input(new Int32(10));
-            m_operator->setParameter(Repeat::NUM_ITERATIONS, UInt32(0));
+            DataContainer numIterations(new UInt32(0));
             
             for (int i = 0; i < 3; ++i)
             {
+                m_operator->setInputData(Repeat::NUM_ITERATIONS, numIterations);
                 m_operator->setInputData(Repeat::INPUT, input);
             }
         }

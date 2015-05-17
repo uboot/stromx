@@ -44,40 +44,10 @@ namespace stromx
         const Version Repeat::VERSION(0, 1, 0);
         
         Repeat::Repeat()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs()),
             m_currentIteration(0)
         {
         }
-        
-        void Repeat::setParameter(unsigned int id, const Data& value)
-        {
-            try
-            {
-                switch(id)
-                {
-                case NUM_ITERATIONS:
-                    m_numIterations = data_cast<UInt32>(value);
-                    break;
-                default:
-                    throw WrongParameterId(id, *this);
-                }
-            }
-            catch(std::bad_cast&)
-            {
-                throw WrongParameterType(parameter(id), *this);
-            }
-        }
-
-        const DataRef Repeat::getParameter(const unsigned int id) const
-        {
-            switch(id)
-            {
-            case NUM_ITERATIONS:
-                return m_numIterations;
-            default:
-                throw WrongParameterId(id, *this);
-            }
-        } 
         
         void Repeat::activate()
         {
@@ -94,8 +64,12 @@ namespace stromx
             if (m_currentData.empty())
             {
                 Id2DataPair inputMapper(INPUT);
-                provider.receiveInputData(inputMapper);
+                Id2DataPair numIterationsMapper(NUM_ITERATIONS);
+                provider.receiveInputData(inputMapper && numIterationsMapper);
                 m_currentData = inputMapper.data();
+                
+                ReadAccess access(numIterationsMapper.data());
+                m_numIterations = access.get<UInt32>();
             }
                 
             if (m_currentIteration < m_numIterations)
@@ -118,9 +92,14 @@ namespace stromx
             std::vector<const Description*> inputs;
             
             Description* input = new Description(INPUT, Variant::DATA);
-            input->setTitle(L_("Input"));
+            input->setTitle(L_("Input data"));
             input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
+            
+            Description* numIterations = new Description(NUM_ITERATIONS, Variant::DATA);
+            numIterations->setTitle(L_("Number of iterations"));
+            numIterations->setOperatorThread(INPUT_THREAD);
+            inputs.push_back(numIterations);
             
             return inputs;
         }
@@ -135,18 +114,6 @@ namespace stromx
             outputs.push_back(output);
             
             return outputs;
-        }
-        
-        const std::vector< const Parameter* > Repeat::setupParameters()
-        {
-            std::vector<const Parameter*> parameters;
-            
-            Parameter* numIterations = new NumericParameter<UInt32>(NUM_ITERATIONS);
-            numIterations->setTitle(L_("Number of iterations"));
-            numIterations->setAccessMode(Parameter::ACTIVATED_WRITE);
-            parameters.push_back(numIterations);
-            
-            return parameters;
         }
     } 
 }

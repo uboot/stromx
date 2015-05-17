@@ -37,17 +37,13 @@ namespace stromx
         public:
             enum InputId
             {
-                INPUT
+                INPUT,
+                NUM_ITERATIONS
             };
             
             enum OutputId
             {
                 OUTPUT
-            };
-            
-            enum ParameterId
-            {
-                NUM_ITERATIONS
             };
             
             Repeat();
@@ -56,13 +52,10 @@ namespace stromx
             virtual void activate();
             virtual void deactivate();
             virtual void execute(runtime::DataProvider& provider);
-            virtual void setParameter(unsigned int id, const Data& value);
-            virtual const DataRef getParameter(const unsigned int id) const;
             
         private:
             static const std::vector<const runtime::Description*> setupOutputs();
             const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
