@@ -69,7 +69,16 @@ namespace stromx
                 m_currentData = inputMapper.data();
                 
                 ReadAccess access(numIterationsMapper.data());
-                m_numIterations = access.get<UInt32>();
+                
+                
+                try
+                {
+                    m_numIterations = toInt(access.get());
+                }
+                catch (BadCast&)
+                {
+                    throw InputError(NUM_ITERATIONS, *this, "Number of iterations must be an integer.");
+                }
             }
                 
             if (m_currentIteration < m_numIterations)
@@ -84,6 +93,7 @@ namespace stromx
             if (m_currentIteration >= m_numIterations)
             {
                 m_currentData = DataContainer();
+                m_currentIteration = 0;
             }
         }
         
@@ -96,7 +106,7 @@ namespace stromx
             input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
             
-            Description* numIterations = new Description(NUM_ITERATIONS, Variant::DATA);
+            Description* numIterations = new Description(NUM_ITERATIONS, Variant::INT);
             numIterations->setTitle(L_("Number of iterations"));
             numIterations->setOperatorThread(INPUT_THREAD);
             inputs.push_back(numIterations);

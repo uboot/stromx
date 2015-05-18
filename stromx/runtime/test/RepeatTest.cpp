@@ -51,10 +51,29 @@ namespace stromx
             }
         }
         
+        void RepeatTest::testExecuteTwice()
+        {
+            for (int j = 0; j < 2; ++j)
+            {
+                DataContainer input(new Int32(10));
+                DataContainer numIterations(new UInt32(3));
+                m_operator->setInputData(Repeat::NUM_ITERATIONS, numIterations);
+                m_operator->setInputData(Repeat::INPUT, input);
+                
+                for (int i = 0; i < 3; ++i)
+                {
+                    DataContainer output = m_operator->getOutputData(Repeat::OUTPUT);
+                    m_operator->clearOutputData(Repeat::OUTPUT);
+                    
+                    CPPUNIT_ASSERT_EQUAL(input, output);
+                }
+            }
+        }
+        
         void RepeatTest::testExecuteNoIteration()
         {
             DataContainer input(new Int32(10));
-            DataContainer numIterations(new UInt32(0));
+            DataContainer numIterations(new Int64(0));
             
             for (int i = 0; i < 3; ++i)
             {

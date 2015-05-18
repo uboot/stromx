@@ -25,7 +25,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <boost/graph/graph_concepts.hpp>
 
 #define LOW  0
 #define HIGH 1

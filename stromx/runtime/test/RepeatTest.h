@@ -33,6 +33,7 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (RepeatTest);
             CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testExecuteTwice);
             CPPUNIT_TEST (testExecuteNoIteration);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -44,6 +45,7 @@ namespace stromx
 
             protected:
                 void testExecute();
+                void testExecuteTwice();
                 void testExecuteNoIteration();
                 
             private:

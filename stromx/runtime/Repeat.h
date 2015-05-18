@@ -61,8 +61,9 @@ namespace stromx
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
             
-            UInt32 m_numIterations;
-            uint32_t m_currentIteration;
+            
+            uint64_t m_numIterations;
+            uint64_t m_currentIteration;
             DataContainer m_currentData;
         };       
     }
