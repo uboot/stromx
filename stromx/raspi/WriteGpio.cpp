@@ -103,8 +103,8 @@ namespace stromx
             runtime::Id2DataPair input(INPUT);
             provider.receiveInputData(input);
             
-            runtime::ReadAccess<runtime::Bool> access(input.data());
-            int value = access();
+            runtime::ReadAccess access(input.data());
+            int value = access.get<runtime::Bool>();
             
             if (impl::GPIOWrite(static_cast<int>(m_gpio), value))
             {

@@ -109,8 +109,8 @@ namespace stromx
             }
             DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
             DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
-            runtime::ReadAccess<runtime::Image> access(dataFrame);
-            cvsupport::Image::save("RaspiCamTestExecuteVideoOutput.png", access());
+            runtime::ReadAccess access(dataFrame);
+            cvsupport::Image::save("RaspiCamTestExecuteVideoOutput.png", access.get<runtime::Image>());
         }
 
         void RaspiCamTest::testExecuteCapture()
@@ -128,8 +128,8 @@ namespace stromx
             }
             DataContainer dataFrame = m_operator->getOutputData(RaspiCam::OUTPUT_FRAMES);
             DataContainer dataFrameIndex = m_operator->getOutputData(RaspiCam::OUTPUT_FRAME_INDEX);
-            runtime::ReadAccess<runtime::Image> access(dataFrame);
-            cvsupport::Image::save("RaspiCamTestExecuteCaptureOutput.png", access());
+            runtime::ReadAccess access(dataFrame);
+            cvsupport::Image::save("RaspiCamTestExecuteCaptureOutput.png", access.get<runtime::Image>());
         }
 
         void RaspiCamTest::testSetParameterCameraModeVideo()

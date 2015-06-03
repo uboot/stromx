@@ -69,8 +69,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("RaspiStillCamTest_testExecute.png", access());
+            runtime::ReadAccess access(result);
+            cvsupport::Image::save("RaspiStillCamTest_testExecute.png", access.get<runtime::Image>());
         }
 
         void RaspiStillCamTest::testExecuteTwice()
@@ -80,16 +80,16 @@ namespace stromx
             
             {
                 runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
-                runtime::ReadAccess<runtime::Image> access0(result);
-                cvsupport::Image::save("RaspiStillCamTest_testExecuteTwice_0.png", access0());
+                runtime::ReadAccess access0(result);
+                cvsupport::Image::save("RaspiStillCamTest_testExecuteTwice_0.png", access0.get<runtime::Image>());
             }
             
             m_operator->clearOutputData(RaspiStillCam::IMAGE);
             
             {
                 runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
-                runtime::ReadAccess<runtime::Image> access1(result);
-                cvsupport::Image::save("RaspiStillCamTest_testExecuteTwice_1.png", access1());
+                runtime::ReadAccess access1(result);
+                cvsupport::Image::save("RaspiStillCamTest_testExecuteTwice_1.png", access1.get<runtime::Image>());
             }
         }
 
@@ -101,14 +101,14 @@ namespace stromx
             
             runtime::DataContainer result;
             result = m_operator->getOutputData(RaspiStillCam::IMAGE);
-            runtime::ReadAccess<runtime::Image> access0(result);
-            cvsupport::Image::save("RaspiStillCamTest_testExecuteTwoBuffers_0.png", access0());
+            runtime::ReadAccess access0(result);
+            cvsupport::Image::save("RaspiStillCamTest_testExecuteTwoBuffers_0.png", access0.get<runtime::Image>());
             
             m_operator->clearOutputData(RaspiStillCam::IMAGE);
             
             result = m_operator->getOutputData(RaspiStillCam::IMAGE);
-            runtime::ReadAccess<runtime::Image> access1(result);
-            cvsupport::Image::save("RaspiStillCamTest_testExecuteTwoBuffers_1.png", access1());
+            runtime::ReadAccess access1(result);
+            cvsupport::Image::save("RaspiStillCamTest_testExecuteTwoBuffers_1.png", access1.get<runtime::Image>());
         }
 
         void RaspiStillCamTest::testGetShutterSpeed()
@@ -256,8 +256,8 @@ namespace stromx
             
             runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
             
-            runtime::ReadAccess<runtime::Image> access(result);
-            cvsupport::Image::save("RaspiStillCamTest_testSetRoiAndExecute.png", access());
+            runtime::ReadAccess access(result);
+            cvsupport::Image::save("RaspiStillCamTest_testSetRoiAndExecute.png", access.get<runtime::Image>());
         }
         
         void RaspiStillCamTest::tearDown()
