@@ -66,10 +66,10 @@ endif(WIN32)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/cvsupport
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
-    PATTERN "test*" EXCLUDE
+    PATTERN "impl" EXCLUDE
+    PATTERN "test" EXCLUDE
 )
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/cvsupport
-    DESTINATION include/stromx
-    FILES_MATCHING PATTERN "*.h"
+install(FILES ${CMAKE_BINARY_DIR}/stromx/cvsupport/Config.h
+    DESTINATION include/stromx/cvsupport
 )

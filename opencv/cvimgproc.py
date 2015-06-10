@@ -1551,7 +1551,7 @@ extractRectangle = package.Method(
 )
 
 imgproc = package.Package(
-    "cvimgproc", 0, 0, 1,
+    "cvimgproc", 0, 1, 0,
     methods = [
         bilateralFilter,
         blur,

@@ -188,7 +188,7 @@ class CMakeGenerator(LibGenerator):
         self.doc.line("set (STROMX_{0}_VERSION_MAJOR {1})"\
             .format(self.p.ident.upper(), self.p.major))
         self.doc.line("set (STROMX_{0}_VERSION_MINOR {1})"\
-            .format(self.p.ident.upper(), self.p.major))
+            .format(self.p.ident.upper(), self.p.minor))
         self.doc.line("set (STROMX_{0}_VERSION_PATCH {1})"\
             .format(self.p.ident.upper(), self.p.patch))
         self.doc.blank()
@@ -225,7 +225,7 @@ class CMakeGenerator(LibGenerator):
         
         self.doc.line('set(VERSION_STRING "${{STROMX_{0}_VERSION_MAJOR}}.'
                   '${{STROMX_{0}_VERSION_MINOR}}.${{STROMX_{0}_VERSION_PATCH}}")'\
-                  .format(self.p.ident.constant()))
+                  .format(self.p.ident.upper()))
         self.doc.blank()
         
         self.doc.line("set_target_properties (stromx_{0} PROPERTIES"\
@@ -275,15 +275,14 @@ class CMakeGenerator(LibGenerator):
         self.doc.increaseIndent()
         self.doc.line("DESTINATION include/stromx")
         self.doc.line('FILES_MATCHING PATTERN "*.h"')
-        self.doc.line('PATTERN "test*" EXCLUDE')
+        self.doc.line('PATTERN "test" EXCLUDE')
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()
     
-        self.doc.line("install(DIRECTORY ${{CMAKE_BINARY_DIR}}/stromx/{0}".format(self.p.ident))
+        self.doc.line("install(FILES ${{CMAKE_BINARY_DIR}}/stromx/{0}/Config.h".format(self.p.ident))
         self.doc.increaseIndent()
-        self.doc.line("DESTINATION include/stromx")
-        self.doc.line('FILES_MATCHING PATTERN "*.h"')
+        self.doc.line("DESTINATION include/stromx/{0}".format(self.p.ident))
         self.doc.decreaseIndent()
         self.doc.line(")")
         self.doc.blank()

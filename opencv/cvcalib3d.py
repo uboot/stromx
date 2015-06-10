@@ -238,7 +238,7 @@ solvePnP = package.Method(
 )
 
 calib3d = package.Package(
-    "cvcalib3d", 0, 0, 1,
+    "cvcalib3d", 0, 1, 0,
     methods = [
         calibrateCamera,
         findChessboardCorners,

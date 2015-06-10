@@ -152,11 +152,11 @@ endif(WIN32)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/runtime
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
-    PATTERN "test*" EXCLUDE
+    PATTERN "impl" EXCLUDE
+    PATTERN "test" EXCLUDE
 )
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/runtime
-    DESTINATION include/stromx
-    FILES_MATCHING PATTERN "*.h"
+install(FILES ${CMAKE_BINARY_DIR}/stromx/runtime/Config.h
+    DESTINATION include/stromx/runtime
 )
 

@@ -170,28 +170,28 @@ namespace stromx
             width->setTitle("ROI width");
             width->setAccessMode(Parameter::INITIALIZED_WRITE);
             width->setMin(Float32(0.0));
-            width->setMax(Float32(0.0));
+            width->setMax(Float32(1.0));
             parameters.push_back(width);
         
             NumericParameter<Float32>* height = new NumericParameter<Float32>(HEIGHT, roiGroup);
             height->setTitle("ROI height");
             height->setAccessMode(Parameter::INITIALIZED_WRITE);
             height->setMin(Float32(0.0));
-            height->setMax(Float32(0.0));
+            height->setMax(Float32(1.0));
             parameters.push_back(height);
             
             NumericParameter<Float32>* top = new NumericParameter<Float32>(TOP, roiGroup);
             top->setTitle("ROI top offset");
             top->setAccessMode(Parameter::INITIALIZED_WRITE);
             top->setMin(Float32(0.0));
-            top->setMax(Float32(0.0));
+            top->setMax(Float32(1.0));
             parameters.push_back(top);
             
             NumericParameter<Float32>* left = new NumericParameter<Float32>(LEFT, roiGroup);
             left->setTitle("ROI left offset");
             left->setAccessMode(Parameter::INITIALIZED_WRITE);
             left->setMin(Float32(0.0));
-            left->setMax(Float32(0.0));
+            left->setMax(Float32(1.0));
             parameters.push_back(left);
 
             return parameters;

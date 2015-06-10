@@ -278,7 +278,7 @@ bitwise_xor = package.Method(
 )
 
 core = package.Package(
-    "cvcore", 0, 0, 1,
+    "cvcore", 0, 1, 0,
     methods = [
         absdiff,
         add,

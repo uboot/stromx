@@ -71,19 +71,6 @@ namespace stromx
             return outputs;
         }
 
-        const std::vector< const runtime::Parameter* > RaspiCam::setupInitParameters()
-        {
-            std::vector<const runtime::Parameter*> parameters;
-            //m_cameraModeParameter = new runtime::EnumParameter(CAMERA_MODE);
-            //m_cameraModeParameter->setAccessMode(runtime::Parameter::NONE_WRITE);
-            //m_cameraModeParameter->setTitle(("Camera mode"));
-            //m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(STILL), ("Still")));
-            //m_cameraModeParameter->add(runtime::EnumDescription(runtime::Enum(VIDEO), ("Video")));
-            //parameters.push_back(m_cameraModeParameter);
-
-            return parameters;
-        }
-
         void RaspiCam::setParameter(unsigned int id, const runtime::Data& value)
         {
             MMAL_STATUS_T status;
@@ -171,7 +158,7 @@ namespace stromx
 
 
         RaspiCam::RaspiCam()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupInitParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs()),
             m_raspicam(NULL),
             m_outBufferPool(NULL),
             m_outQueue(NULL),

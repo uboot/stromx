@@ -16,7 +16,6 @@
 
 #include "stromx/raspi/GpioTrigger.h"
 #include "stromx/raspi/Raspi.h"
-#include "stromx/raspi/RaspiCam.h"
 #include "stromx/raspi/RaspiStillCam.h"
 #include "stromx/raspi/ReadGpio.h"
 #include "stromx/raspi/WriteGpio.h"
@@ -39,7 +38,6 @@ void stromxRaspiRegister(stromx::runtime::Registry& registry)
                                                STROMX_RASPI_LOCALE_DOMAIN);
     
     registry.registerOperator(new GpioTrigger);
-    registry.registerOperator(new RaspiCam);
     registry.registerOperator(new RaspiStillCam);
     registry.registerOperator(new ReadGpio);
     registry.registerOperator(new WriteGpio);

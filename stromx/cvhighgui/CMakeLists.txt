@@ -1,6 +1,6 @@
 set (STROMX_CVHIGHGUI_VERSION_MAJOR 0)
-set (STROMX_CVHIGHGUI_VERSION_MINOR 0)
-set (STROMX_CVHIGHGUI_VERSION_PATCH 1)
+set (STROMX_CVHIGHGUI_VERSION_MINOR 1)
+set (STROMX_CVHIGHGUI_VERSION_PATCH 0)
 
 configure_file (
     ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
@@ -51,12 +51,11 @@ endif(WIN32)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/cvhighgui
     DESTINATION include/stromx
     FILES_MATCHING PATTERN "*.h"
-    PATTERN "test*" EXCLUDE
+    PATTERN "test" EXCLUDE
 )
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/cvhighgui
-    DESTINATION include/stromx
-    FILES_MATCHING PATTERN "*.h"
+install(FILES ${CMAKE_BINARY_DIR}/stromx/cvhighgui/Config.h
+    DESTINATION include/stromx/cvhighgui
 )
 
 if(BUILD_TESTS)

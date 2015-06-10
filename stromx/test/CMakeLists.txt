@@ -1,6 +1,6 @@
 set (TEST_VERSION_MAJOR 0)
-set (TEST_VERSION_MINOR 0)
-set (TEST_VERSION_PATCH 2)
+set (TEST_VERSION_MINOR 1)
+set (TEST_VERSION_PATCH 0)
 
 configure_file (
     ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
@@ -55,7 +55,6 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/stromx/test
     FILES_MATCHING PATTERN "*.h"
 )
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/stromx/test
-    DESTINATION include/stromx
-    FILES_MATCHING PATTERN "*.h"
+install(FILES ${CMAKE_BINARY_DIR}/stromx/test/Config.h
+    DESTINATION include/stromx/test
 )
