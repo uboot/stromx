@@ -51,7 +51,8 @@ namespace stromx
                 LEFT,
                 TOP,
                 WIDTH,
-                HEIGHT
+                HEIGHT,
+                AWB_MODE
             };
             
             enum Resolution

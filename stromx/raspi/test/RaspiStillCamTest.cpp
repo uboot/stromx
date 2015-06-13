@@ -130,6 +130,25 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(UInt32(200000), data_cast<UInt32>(value));
         }
 
+        void RaspiStillCamTest::testGetAwbMode()
+        {
+            m_operator->initialize();
+            
+            DataRef value = m_operator->getParameter(RaspiStillCam::AWB_MODE);
+            
+            CPPUNIT_ASSERT_EQUAL(Enum(0), data_cast<Enum>(value));
+        }
+
+        void RaspiStillCamTest::testSetAwbMode()
+        {
+            m_operator->initialize();
+            
+            m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(2));
+            
+            DataRef value = m_operator->getParameter(RaspiStillCam::SHUTTER_SPEED);          
+            CPPUNIT_ASSERT_EQUAL(Enum(2), data_cast<Enum>(value));
+        }
+
         void RaspiStillCamTest::testFramesPerSecond640()
         {
             m_operator->initialize();

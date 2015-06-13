@@ -45,6 +45,8 @@ namespace stromx
             CPPUNIT_TEST(testFramesPerSecondRoi);
             CPPUNIT_TEST(testGetRoi);
             CPPUNIT_TEST(testSetRoi);
+            CPPUNIT_TEST(testGetAwbMode);
+            CPPUNIT_TEST(testSetAwbMode);
             CPPUNIT_TEST(testSetRoiAndExecute);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -71,6 +73,8 @@ namespace stromx
             void testFramesPerSecondRoi();
             void testGetRoi();
             void testSetRoi();
+            void testGetAwbMode();
+            void testSetAwbMode();
             void testSetRoiAndExecute();
 
         private:

@@ -143,56 +143,66 @@ namespace stromx
             std::vector<const Parameter*> parameters;
 
             Parameter* shutterSpeed = new NumericParameter<UInt32>(SHUTTER_SPEED);
-            shutterSpeed->setTitle("Shutter speed in microseconds");
+            shutterSpeed->setTitle(L_("Shutter speed in microseconds"));
             shutterSpeed->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(shutterSpeed);
             
             NumericParameter<UInt32>* numBuffers 
                 = new NumericParameter<UInt32>(NUM_BUFFERS);
-            numBuffers->setTitle("Number of buffers");
+            numBuffers->setTitle(L_("Number of buffers"));
             numBuffers->setAccessMode(Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
             parameters.push_back(numBuffers);
             
             EnumParameter* resolution = new EnumParameter(RESOLUTION);
             resolution->setAccessMode(Parameter::INITIALIZED_WRITE);
-            resolution->setTitle("Resolution");
+            resolution->setTitle(L_("Resolution"));
             resolution->add(EnumDescription(Enum(RESOLUTION_2560_BY_1920), "2560 x 1920"));
             resolution->add(EnumDescription(Enum(RESOLUTION_1280_BY_960), "1280 x 960"));
             resolution->add(EnumDescription(Enum(RESOLUTION_640_BY_480), "640 x 480"));
             parameters.push_back(resolution);
             
             ParameterGroup* roiGroup = new ParameterGroup(ROI_GROUP);
-            roiGroup->setTitle("Region of interest");
+            roiGroup->setTitle(L_("Region of interest"));
             parameters.push_back(roiGroup);
         
             NumericParameter<Float32>* width = new NumericParameter<Float32>(WIDTH, roiGroup);
-            width->setTitle("ROI width");
+            width->setTitle(L_("ROI width"));
             width->setAccessMode(Parameter::INITIALIZED_WRITE);
             width->setMin(Float32(0.0));
             width->setMax(Float32(1.0));
             parameters.push_back(width);
         
             NumericParameter<Float32>* height = new NumericParameter<Float32>(HEIGHT, roiGroup);
-            height->setTitle("ROI height");
+            height->setTitle(L_("ROI height"));
             height->setAccessMode(Parameter::INITIALIZED_WRITE);
             height->setMin(Float32(0.0));
             height->setMax(Float32(1.0));
             parameters.push_back(height);
             
             NumericParameter<Float32>* top = new NumericParameter<Float32>(TOP, roiGroup);
-            top->setTitle("ROI top offset");
+            top->setTitle(L_("ROI top offset"));
             top->setAccessMode(Parameter::INITIALIZED_WRITE);
             top->setMin(Float32(0.0));
             top->setMax(Float32(1.0));
             parameters.push_back(top);
             
             NumericParameter<Float32>* left = new NumericParameter<Float32>(LEFT, roiGroup);
-            left->setTitle("ROI left offset");
+            left->setTitle(L_("ROI left offset"));
             left->setAccessMode(Parameter::INITIALIZED_WRITE);
             left->setMin(Float32(0.0));
             left->setMax(Float32(1.0));
             parameters.push_back(left);
+            
+            EnumParameter* autoWhiteBalance = new runtime::EnumParameter(AWB_MODE);
+            autoWhiteBalance->setTitle("AWB mode");
+            autoWhiteBalance->setAccessMode(Parameter::ACTIVATED_WRITE);
+            autoWhiteBalance->add(EnumDescription(Enum(MMAL_PARAM_AWBMODE_OFF), L_("Off")));
+            autoWhiteBalance->add(EnumDescription(Enum(MMAL_PARAM_AWBMODE_AUTO), L_("Auto")));
+            autoWhiteBalance->add(EnumDescription(Enum(MMAL_PARAM_AWBMODE_SUNLIGHT), L_("Sunlight")));
+            autoWhiteBalance->add(EnumDescription(Enum(MMAL_PARAM_AWBMODE_CLOUDY), L_("Cloudy")));
+            autoWhiteBalance->add(runtime::EnumDescription(Enum(MMAL_PARAM_AWBMODE_SHADE), L_("Shade")));
+            parameters.push_back(autoWhiteBalance);
 
             return parameters;
         }
@@ -218,6 +228,7 @@ namespace stromx
         {
             MMAL_STATUS_T status;
             PARAM_FLOAT_RECT_T roi;
+            MMAL_PARAMETER_AWBMODE_T awbMode;
 
             try
             {
@@ -271,6 +282,15 @@ namespace stromx
                     if (! setRoi(roi))
                         throw runtime::WrongParameterValue(parameter(HEIGHT), *this);
                     break;
+                case AWB_MODE:
+                    awbMode = {
+                        {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
+                        MMAL_PARAM_AWBMODE_T(int(runtime::data_cast<runtime::Enum>(value)))
+                    };
+                    status = mmal_port_parameter_set(m_raspicam->control, &awbMode.hdr);
+                    if(status != MMAL_SUCCESS)
+                        throw runtime::ParameterError(parameter(id), *this);
+                    break;
                 default:
                     throw runtime::WrongParameterId(id,*this);
                 }
@@ -286,6 +306,7 @@ namespace stromx
             MMAL_STATUS_T status;
             uint32_t value = 0;
             PARAM_FLOAT_RECT_T roi;
+            MMAL_PARAMETER_AWBMODE_T awbMode;
 
             switch(id)
             {
@@ -317,6 +338,17 @@ namespace stromx
                 if(! getRoi(roi))
                     throw runtime::ParameterError(parameter(HEIGHT), *this);
                 return runtime::Float32(roi.h);
+            case AWB_MODE:
+                awbMode = {
+                    {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
+                    MMAL_PARAM_AWBMODE_AUTO
+                };
+                status = mmal_port_parameter_get(m_raspicam->control, &awbMode.hdr);
+                
+                if(status != MMAL_SUCCESS)
+                    throw runtime::ParameterError(parameter(id), *this);
+                
+                return runtime::Enum(awbMode.value);
             default:
                 throw runtime::WrongParameterId(id,*this);
             }
@@ -332,7 +364,7 @@ namespace stromx
             if(status != MMAL_SUCCESS)
             {
                 deinitialize();
-                throw runtime::OperatorError(*this,"Could not create mmal default camera.");
+                throw runtime::OperatorError(*this, "Could not create mmal default camera.");
             }
             
             MMAL_PARAMETER_INT32_T camera_num = {{MMAL_PARAMETER_CAMERA_NUM, sizeof(camera_num)}, 0};
@@ -340,20 +372,20 @@ namespace stromx
             if (status != MMAL_SUCCESS)
             {
                 deinitialize();
-                throw runtime::OperatorError(*this,"Could not select camera 0.");
+                throw runtime::OperatorError(*this, "Could not select camera 0.");
             }
             
             if(!m_raspicam->output_num)
             {
                 deinitialize();
-                throw runtime::OperatorError(*this,"Default mmal camera has no outputs.");
+                throw runtime::OperatorError(*this, "Default mmal camera has no outputs.");
             }
 
             status = mmal_port_enable(m_raspicam->control, 0);
             if(status != MMAL_SUCCESS)
             {
                 deinitialize();
-                throw runtime::OperatorError(*this,"Unable to enable control port.");
+                throw runtime::OperatorError(*this, "Unable to enable control port.");
             }
             
             m_port = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
@@ -381,7 +413,17 @@ namespace stromx
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Unable to set default shutter speed.");
+                throw runtime::OperatorError(*this, "Unable to set default shutter speed.");
+            }
+            
+            MMAL_PARAMETER_AWBMODE_T awbMode = {
+                {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
+                MMAL_PARAM_AWBMODE_T(MMAL_PARAM_AWBMODE_OFF)
+            };
+            if(status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to set default AWB mode.");
             }
             
             MMAL_RATIONAL_T value = {DEFAULT_BRIGHTNESS, 100};
@@ -389,7 +431,7 @@ namespace stromx
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Unable to set brightness.");
+                throw runtime::OperatorError(*this, "Unable to set brightness.");
             }
         }
         
@@ -428,7 +470,7 @@ namespace stromx
             if (status != MMAL_SUCCESS )
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Camera still format couldn't be set");
+                throw runtime::OperatorError(*this, "Camera still format couldn't be set");
             }
 
             // Enable camera component
@@ -436,7 +478,7 @@ namespace stromx
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Could not enable camera.");
+                throw runtime::OperatorError(*this, "Could not enable camera.");
             }
 
             // Create output buffer pool
@@ -444,7 +486,7 @@ namespace stromx
             if(m_outBufferPool == 0)
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Could not create output buffer pool.");
+                throw runtime::OperatorError(*this, "Could not create output buffer pool.");
             }
             
             // enable the still port
@@ -452,7 +494,7 @@ namespace stromx
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
-                throw runtime::OperatorError(*this,"Unable to enable still port.");
+                throw runtime::OperatorError(*this, "Unable to enable still port.");
             }
         }
 
@@ -462,10 +504,10 @@ namespace stromx
             mmal_port_parameter_set_boolean(m_port,MMAL_PARAMETER_CAPTURE, 0);
             
             // disable processing on port
-            MMAL_STATUS_T status = mmal_port_disable(m_port);
+            mmal_port_disable(m_port);
 
             // Deactivate component
-            status = mmal_component_disable(m_raspicam);
+            mmal_component_disable(m_raspicam);
 
             // Destroy buffers
             mmal_port_pool_destroy(m_port, m_outBufferPool);
@@ -477,14 +519,14 @@ namespace stromx
             MMAL_BUFFER_HEADER_T *buffer = mmal_queue_get(m_outBufferPool->queue);
             
             if (!buffer)
-                throw runtime::OperatorError(*this,"Unable to get a buffer from pool queue.");
+                throw runtime::OperatorError(*this, "Unable to get a buffer from pool queue.");
             
             if (mmal_port_send_buffer(m_port, buffer)!= MMAL_SUCCESS)
-                throw runtime::OperatorError(*this,"Unable to send a buffer to camera output port.");
+                throw runtime::OperatorError(*this, "Unable to send a buffer to camera output port.");
             
             // start capture
             if (mmal_port_parameter_set_boolean(m_port, MMAL_PARAMETER_CAPTURE, 1) != MMAL_SUCCESS)
-                throw runtime::OperatorError(*this,"Failed to start capture.");
+                throw runtime::OperatorError(*this, "Failed to start capture.");
             
             Image* image = 0;
             try
