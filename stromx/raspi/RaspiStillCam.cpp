@@ -16,6 +16,7 @@
  */
 
 #include "stromx/raspi/Config.h"
+#include "stromx/raspi/Locale.h"
 #include "stromx/raspi/RaspiStillCam.h"
 
 #include <boost/thread/condition_variable.hpp>
@@ -420,6 +421,7 @@ namespace stromx
                 {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
                 MMAL_PARAM_AWBMODE_T(MMAL_PARAM_AWBMODE_OFF)
             };
+            status = mmal_port_parameter_set(m_raspicam->control, &awbMode.hdr);
             if(status != MMAL_SUCCESS)
             {
                 deactivate();

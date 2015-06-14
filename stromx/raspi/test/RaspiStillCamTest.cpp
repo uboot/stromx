@@ -145,7 +145,7 @@ namespace stromx
             
             m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(2));
             
-            DataRef value = m_operator->getParameter(RaspiStillCam::SHUTTER_SPEED);          
+            DataRef value = m_operator->getParameter(RaspiStillCam::AWB_MODE);      
             CPPUNIT_ASSERT_EQUAL(Enum(2), data_cast<Enum>(value));
         }
 

@@ -10,6 +10,7 @@ include_directories(
 add_executable(stromx_raspi_test
     ../GpioTrigger.cpp
     ../ReadGpio.cpp
+    ../Raspi.cpp
     ../RaspiCam.cpp
     ../RaspiStillCam.cpp
     ../WriteGpio.cpp
