@@ -1,7 +1,7 @@
 project(stromx)
 
 set (STROMX_VERSION_MAJOR 0)
-set (STROMX_VERSION_MINOR 5)
+set (STROMX_VERSION_MINOR 6)
 set (STROMX_VERSION_PATCH 0)
 
 cmake_minimum_required(VERSION 2.8)
