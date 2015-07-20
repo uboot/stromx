@@ -14,9 +14,10 @@
 *  limitations under the License.
 */
 
+#include <boost/assert.hpp>
+#include <boost/functional/hash.hpp>
 #include <boost/graph/adjacency_matrix.hpp>
 #include <boost/graph/topological_sort.hpp>
-#include <boost/assert.hpp>
 #include <iostream>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Input.h"
