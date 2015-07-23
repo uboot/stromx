@@ -77,6 +77,8 @@ BOOST_PYTHON_MODULE(libruntime)
 {
     using namespace boost::python;
     
+    PyEval_InitThreads();
+    
     def("register", stromxRuntimeRegister);
     def("version", version);
     
