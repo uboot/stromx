@@ -12,10 +12,11 @@
     
     <style>
       .image-container {
-        box-shadow: 0 0 5px #ccc;
-        width: 500px;
+        box-shadow: 0 0 10px #ccc;
+        width: 100%;
         border:10px solid white;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
     </style>
   </head>
@@ -55,63 +56,68 @@
       </nav>
 
       <h1 class="page-header">Screenshots</h1>
-      
-      <h3 class="text-center">Files</h3>
-      <div class="container image-container">
-        <img src="screenshots/files.png"  width="100%">
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">        
+          <h3 class="text-center">Files</h3>
+          <div class="container image-container">
+            <img src="screenshots/files.png"  width="100%">
+          </div>
+          <p class="text-center">
+            The list of files on the device. Each file contains a stream which can be loaded. Loaded streams are indicated by the green indicator. They are connected to the respective hardware devices (cameras etc.) and ready to be executed.
+          </p>
+          
+          <hr>
+          
+          <h3 class="text-center">Stream</h3>
+          <div class="container image-container">
+            <img src="screenshots/stream.png"  width="100%">
+          </div>
+          <p class="text-center">
+            A simple stream which constantly queries images from a camera, denoises the image and dumps the result. Clicking the start button executes the stream.
+          </p>
+          
+          <hr>
+          
+          <h3 class="text-center">Operator</h3>
+          <div class="container image-container">
+            <img src="screenshots/operator.png"  width="100%">
+          </div>
+          <p class="text-center">
+            Clicking an operator loads its current parameters. Parameters can be changed while the stream is executed.
+          </p>
+          
+          <hr>
+          
+          <h3 class="text-center">View</h3>
+          <div class="container image-container">
+            <img src="screenshots/view.png"  width="100%">
+          </div>
+          <p class="text-center">
+            Intermediate results at operator inputs or outputs can be observed in so-called "views". This can be used to visualize the effect of changed parameters and debug streams. 
+          </p>
+          
+          <hr>
+          
+          <h3 class="text-center">Complex streams</h3>
+          <div class="container image-container">
+            <img src="screenshots/complex_stream.png"  width="100%">
+          </div>
+          <p class="text-center">
+            More complex streams can e.g. implement the intrinsic calibration of a camera. This streams detects chessboard patterns on the input images, merges the results into a big list and finally computes the intrinsic camera parameters from this list. The pattern detection and the calibration must be executed on different time scales (several detection are necessary for one calibration). This automatically handled by stromx.
+          </p>
+          <hr>
+          
+          <h3 class="text-center">Layered views</h3>
+          <div class="container image-container">
+            <img src="screenshots/complex_view.png"  width="100%">
+          </div>
+          <p class="text-center">
+            The data of several operator inputs and outputs can be visualized by arranging them in different layers of the view stack. Here, we can see the input image, the detected chessboard pattern (blue) and the accumulated pattern corners (red). The final calibration parameters are printed as numeric values at the bottom.
+          </p>        
+        </div>
+        <div class="col-sm-2"></div>
       </div>
-      <p class="text-center">
-        The list of files on the device. Each file contains a stream which can be loaded. Loaded streams are indicated by the green indicator. They are connected to the respective hardware devices (cameras etc.) and ready to be executed.
-      </p>
-      
-      <hr>
-      
-      <h3 class="text-center">Stream</h3>
-      <div class="container image-container">
-        <img src="screenshots/stream.png"  width="100%">
-      </div>
-      <p class="text-center">
-        A simple stream which constantly queries images from a camera, denoises the image and dumps the result. Clicking the start button executes the stream.
-      </p>
-      
-      <hr>
-      
-      <h3 class="text-center">Operator</h3>
-      <div class="container image-container">
-        <img src="screenshots/operator.png"  width="100%">
-      </div>
-      <p class="text-center">
-        Clicking an operator loads its current parameters. Parameters can be changed while the stream is executed.
-      </p>
-      
-      <hr>
-      
-      <h3 class="text-center">View</h3>
-      <div class="container image-container">
-        <img src="screenshots/view.png"  width="100%">
-      </div>
-      <p class="text-center">
-        Intermediate results at operator inputs or outputs can be observed in so-called "views". This can be used to visualize the effect of changed parameters and debug streams. 
-      </p>
-      
-      <hr>
-      
-      <h3 class="text-center">Complex streams</h3>
-      <div class="container image-container">
-        <img src="screenshots/complex_stream.png"  width="100%">
-      </div>
-      <p class="text-center">
-        More complex streams can e.g. implement the intrinsic calibration of a camera. This streams detects chessboard patterns on the input images, merges the results into a big list and finally computes the intrinsic camera parameters from this list. The pattern detection and the calibration must be executed on different time scales (several detection are necessary for one calibration). This automatically handled by stromx.
-      </p>
-      <hr>
-      
-      <h3 class="text-center">Layered views</h3>
-      <div class="container image-container">
-        <img src="screenshots/complex_view.png"  width="100%">
-      </div>
-      <p class="text-center">
-        The data of several operator inputs and outputs can be visualized by arranging them in different layers of the view stack. Here, we can see the input image, the detected chessboard pattern (blue) and the accumulated pattern corners (red). The final calibration parameters are printed as numeric values at the bottom.
-      </p>
     </div>
 
     <footer class="footer">
