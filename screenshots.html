@@ -9,6 +9,15 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.css">
+    
+    <style>
+      .image-container {
+        box-shadow: 0 0 5px #ccc;
+        width: 500px;
+        border:10px solid white;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
     <body>
     <div class="container">
@@ -31,11 +40,12 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li><a href="index.html">Home</a></li>
-              <li><a href="story.html">Story</a></li>
+              <li><a href="about.html">About</a></li>
               <li class="active"><a href="#">Screenshots</a></li>
               <li><a href="download.html">Download</a></li>
               <li><a href="develop.html">Develop</a></li>
               <li><a href="contact.html">Contact</a></li>
+              <li><a href="story.html">Story</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
               <a class="btn btn-default" href="https://github.com/uboot/stromx"><span class="fa fa-code-fork"></span> Fork!</a>
@@ -46,85 +56,62 @@
 
       <h1 class="page-header">Screenshots</h1>
       
-      
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="6"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img src="screenshots/camera.png" alt="camera">
-            <div class="carousel-caption">
-              <h3>Camera</h3>
-              <p>Create stromx streams with stromx-studio</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/observer.png" alt="observer">
-            <div class="carousel-caption">
-              <h3>Observer</h3>
-              <p>Add observers to operator inputs</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/xml.png" alt="observer">
-            <div class="carousel-caption">
-              <h3>XML files</h3>
-              <p>Persist streams as XML</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/camera_cpp.png" alt="camera_cpp">
-            <div class="carousel-caption">
-              <h3>C++ API</h3>
-              <p>Use stromx in your C++ application</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/hough.png" alt="hough">
-            <div class="carousel-caption">
-              <h3>OpenCV operators</h3>
-              <p>Many OpenCV functions are supported</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/lines.png" alt="lines">
-            <div class="carousel-caption">
-              <h3>Visualize intermediate results</h3>
-              <p>View intermediate results by observing the respective operator inputs</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="screenshots/spyder.png" alt="spyder">
-            <div class="carousel-caption">
-              <h3>Python API</h3>
-              <p>Use stromx in your Python project</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+      <h3 class="text-center">Files</h3>
+      <div class="container image-container">
+        <img src="screenshots/files.png"  width="100%">
       </div>
-
-
-
+      <p class="text-center">
+        The list of files on the device. Each file contains a stream which can be loaded. Loaded streams are indicated by the green indicator. They are connected to the respective hardware devices (cameras etc.) and ready to be executed.
+      </p>
+      
+      <hr>
+      
+      <h3 class="text-center">Stream</h3>
+      <div class="container image-container">
+        <img src="screenshots/stream.png"  width="100%">
+      </div>
+      <p class="text-center">
+        A simple stream which constantly queries images from a camera, denoises the image and dumps the result. Clicking the start button executes the stream.
+      </p>
+      
+      <hr>
+      
+      <h3 class="text-center">Operator</h3>
+      <div class="container image-container">
+        <img src="screenshots/operator.png"  width="100%">
+      </div>
+      <p class="text-center">
+        Clicking an operator loads its current parameters. Parameters can be changed while the stream is executed.
+      </p>
+      
+      <hr>
+      
+      <h3 class="text-center">View</h3>
+      <div class="container image-container">
+        <img src="screenshots/view.png"  width="100%">
+      </div>
+      <p class="text-center">
+        Intermediate results at operator inputs or outputs can be observed in so-called "views". This can be used to visualize the effect of changed parameters and debug streams. 
+      </p>
+      
+      <hr>
+      
+      <h3 class="text-center">Complex streams</h3>
+      <div class="container image-container">
+        <img src="screenshots/complex_stream.png"  width="100%">
+      </div>
+      <p class="text-center">
+        More complex streams can e.g. implement the intrinsic calibration of a camera. This streams detects chessboard patterns on the input images, merges the results into a big list and finally computes the intrinsic camera parameters from this list. The pattern detection and the calibration must be executed on different time scales (several detection are necessary for one calibration). This automatically handled by stromx.
+      </p>
+      <hr>
+      
+      <h3 class="text-center">Layered views</h3>
+      <div class="container image-container">
+        <img src="screenshots/complex_view.png"  width="100%">
+      </div>
+      <p class="text-center">
+        The data of several operator inputs and outputs can be visualized by arranging them in different layers of the view stack. Here, we can see the input image, the detected chessboard pattern (blue) and the accumulated pattern corners (red). The final calibration parameters are printed as numeric values at the bottom.
+      </p>
     </div>
 
     <footer class="footer">

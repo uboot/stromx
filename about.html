@@ -2,8 +2,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="">
     <title>stromx</title>
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -28,10 +28,10 @@
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse">
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="about.html">About</a></li>
+              <li><a href="index.html">Home</a></li>
+              <li class="active"><a href="#">About</a></li>
               <li><a href="screenshots.html">Screenshots</a></li>
               <li><a href="download.html">Download</a></li>
               <li><a href="develop.html">Develop</a></li>
@@ -45,30 +45,16 @@
         </div><!-- /.container-fluid -->
       </nav>
 
-      <div class="jumbotron">
-        <div class="row">
-          <img class="pull-right" src="assets/title.png" alt="Title"/>
-          <h1>stromx<br><small>Vision in the cloud</small></h1>
-          
-          <p>An open source solution for industrial vision in the cloud. Graphically solve vision problems on a HTML5 frontend and deploy the solution in a robust runtime system.</p>
-          <p><a class="btn btn-primary btn-large" href="https://web.stromx.org">Try online &raquo;</a></p>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-4">
-          <h2>Cloud frontend</h2>
-          <p>Stromx-web is a visual frontend to design and edit solutions for problems in industrial vision in your web browser. It allows to construct complex vision applications &#x2013; called <em>streams</em> &#x2013; by drag and drop. The effect of parameter changes can be observed in real-time while the stream is executing on the target system.</p>
-        </div>
-        <div class="col-sm-4">
-          <h2>Runtime library</h2>
-          <p>Stromx streams are executed by the stromx C++ library. It provides an API to safely start and stop the execution  of streams and to change the parameters of a running stream. The library is licensed under the permissive Apache 2.0 license which essentially allows to use it in closed source products without restrictions.</p>
-       </div>
-        <div class="col-sm-4">
-          <h2>Operators</h2>
-          <p>Implement operators and data types using the stromx API. Your own operators can then be assembled and configured using stromx-web. Custom operators can be used to easily integrate vision algorithms, to access special hardware (industrial cameras, PLC,...) or to communicate with database systems. Operators for many functions of the OpenCV and the Raspberry Pi exist.</p>
-        </div>
-      </div>
+      <h1 class="page-header">About</h1>
+      <p>
+        Stromx-web is an open source solution to create and deploy vision applications. It runs on virtually every Linux based device from low-cost embedded platforms and smart cameras to full blown industrial PCs connected to several high performance cameras. Vision applications &mdash; so called "streams" &mdash; are assembled by connecting operators in a visual editor.
+      </p>
+      <p>
+        The settings of each operator can be adjusted on-the-fly while the stream is executed. Because all interaction is done in an HTML5 based web interface the vision device can reside in remote locations or be integrated in an headless client. 
+      </p>
+      <p>
+        Nevertheless the actual image processing takes place in a robust C++ runtime and can take advantage of parallel architectures. Stromx operators can be easily created using the stromx SDK. Operators for many functions of the OpenCV library have already been implemented and are part of stromx-web. Also an operator library for the Raspberry Pi camera and its GPIOs exists.
+      </p>
     </div>
 
     <footer class="footer">
