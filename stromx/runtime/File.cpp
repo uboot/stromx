@@ -32,6 +32,13 @@ namespace stromx
         const std::string File::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version File::VERSION = Version(0, 1, 0);
         
+        const std::string File::tempPath(const std::string & extension)
+        {
+            boost::filesystem::path tempPath = boost::filesystem::unique_path();
+            tempPath += extension;
+            return tempPath.native();
+        }
+        
         File::File(const std::string & path, const OpenMode mode)
           : m_mode(mode),
             m_path(path)

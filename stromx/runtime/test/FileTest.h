@@ -30,6 +30,7 @@ namespace stromx
         class FileTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (FileTest);
+            CPPUNIT_TEST(testTempPath);
             CPPUNIT_TEST(testCopyConstructor);
             CPPUNIT_TEST(testConstructorText);
             CPPUNIT_TEST(testConstructorBinary);
@@ -50,6 +51,7 @@ namespace stromx
             void tearDown() {}
 
         protected:
+            void testTempPath();
             void testCopyConstructor();
             void testConstructorText();
             void testConstructorBinary();

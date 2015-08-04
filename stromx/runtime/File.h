@@ -43,6 +43,12 @@ namespace stromx
                 TEXT 
             };
             
+            /** 
+             * Returns a path to an unique temporary file ending with
+             * \c extension.
+             */
+            static const std::string tempPath(const std::string & extension = "");
+            
             /** Creates an empty file, i.e. a file object with no path. */
             File() : m_mode(TEXT) {}
             

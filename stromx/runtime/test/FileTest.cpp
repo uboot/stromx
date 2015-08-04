@@ -27,6 +27,12 @@ namespace stromx
     namespace runtime
     {
         const Version FileTest::VERSION(0, 1, 0);
+        
+        void FileTest::testTempPath()
+        {
+            std::string path = File::tempPath(".txt");
+            CPPUNIT_ASSERT_EQUAL(std::string(".txt"), path.substr(19));
+        }
 
         void FileTest::testCopyConstructor()
         {
