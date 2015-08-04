@@ -3,9 +3,6 @@
 from stromx import runtime
 import unittest
 
-
-    
-
 class ExceptionsTest(unittest.TestCase):
     def setUp(self):
       stream = runtime.Stream()

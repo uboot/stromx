@@ -32,6 +32,7 @@ set(SOURCES
     SortInputsAlgorithm.cpp
     Thread.cpp
     TriggerData.cpp
+    Tribool.cpp
     Variant.cpp
     VariantHandle.cpp
     VariantInterface.cpp

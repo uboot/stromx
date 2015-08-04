@@ -19,8 +19,6 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
-#include "stromx/runtime/InputProvider.h"
-#include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/String.h"
 
 namespace stromx
@@ -61,38 +59,7 @@ namespace stromx
             void testPtrCast();
             void testRefCast();
                 
-        private: 
-            class DummyInput : public InputProvider
-            {
-            public:
-                explicit DummyInput(const std::string & text)
-                  : m_text(text),
-                    m_file("")
-                {}
-                
-                std::istream & text() { return m_text; }
-                std::istream & openFile(const OpenMode) { return m_file; }
-                bool hasFile() const { return true; }
-                std::istream & file() { return m_file; }
-                
-            private:
-                std::istringstream m_text;
-                std::istringstream m_file;
-            };
-            
-            class DummyOutput : public OutputProvider
-            {
-            public:
-                std::ostream & text() { return m_text; }
-                std::ostream & openFile(const std::string &, const OpenMode) { return m_file; }
-                std::ostream & file() { return m_file; }
-                
-                const std::string value() const { return m_text.str(); }
-                
-            private:
-                std::ostringstream m_text;
-                std::ostringstream m_file;
-            };
+        private:
             
             const static Version VERSION;
             

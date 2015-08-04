@@ -51,6 +51,9 @@ namespace stromx
             /** A Bool object. */
             const static VariantHandle BOOL;
             
+            /** A Tribool object. */
+            const static VariantHandle TRIBOOL;
+            
             /** An Enum object. */
             const static VariantHandle ENUM;
             
@@ -249,7 +252,8 @@ namespace stromx
                 BGR_48_IMAGE_ID,
                 FILE_ID,
                 BINARY_FILE_ID,
-                TEXT_FILE_ID             
+                TEXT_FILE_ID,       
+                TRIBOOL_ID
             };
             
             Variant(const unsigned int id)

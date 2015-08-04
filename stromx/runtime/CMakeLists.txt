@@ -74,6 +74,7 @@ set(SOURCES
     Repeat.cpp
     Runtime.cpp
     Thread.cpp
+    Tribool.cpp
     TriggerData.cpp
     Try.cpp
     Variant.cpp

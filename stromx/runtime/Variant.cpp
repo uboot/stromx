@@ -26,6 +26,7 @@ namespace stromx
         const VariantHandle Variant::TRIGGER = VariantHandle(new Variant(TRIGGER_ID));
         const VariantHandle Variant::PRIMITIVE = VariantHandle(new Variant(PRIMITIVE_ID));
         const VariantHandle Variant::BOOL = VariantHandle(new Variant(BOOL_ID));
+        const VariantHandle Variant::TRIBOOL = VariantHandle(new Variant(TRIBOOL_ID));
         const VariantHandle Variant::ENUM = VariantHandle(new Variant(ENUM_ID));
         const VariantHandle Variant::INT = VariantHandle(new Variant(INT_ID));
         const VariantHandle Variant::UINT = VariantHandle(new Variant(UINT_ID));
@@ -88,6 +89,8 @@ namespace stromx
                 return  L_("Primitive");
             case BOOL_ID:
                 return  L_("Bool");
+            case TRIBOOL_ID:
+                return  L_("Tribool");
             case ENUM_ID:
                 return  L_("Enum");
             case INT_ID:

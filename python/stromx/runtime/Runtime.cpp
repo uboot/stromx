@@ -64,6 +64,7 @@ void exportSortInputsAlgorithm();
 void exportStream();
 void exportString();
 void exportThread();
+void exportTribool();
 void exportTriggerData();
 void exportVariant();
 void exportVariantHandle();
@@ -113,6 +114,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportStream();
     exportString();
     exportThread();
+    exportTribool();
     exportVariantInterface();
     exportVariantHandle();
     exportTriggerData();

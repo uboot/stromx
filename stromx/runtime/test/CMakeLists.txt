@@ -83,6 +83,7 @@ set(SOURCES
     ../Split.cpp
     ../Stream.cpp
     ../String.cpp
+    ../Tribool.cpp
     ../TriggerData.cpp
     ../Try.cpp
     ../Variant.cpp
@@ -143,6 +144,7 @@ set(SOURCES
     TestOperator.cpp
     ThreadImplTest.cpp
     ThreadTest.cpp
+    TriboolTest.cpp
     NetworkTest.cpp
     FactoryTest.cpp
     RuntimeTest.cpp
