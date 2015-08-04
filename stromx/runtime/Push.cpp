@@ -47,7 +47,7 @@ namespace stromx
         }
         /** \endcond */
         
-        const std::string Push::TYPE("Block");
+        const std::string Push::TYPE("Push");
         
         const std::string Push::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
         const Version Push::VERSION(0, 1, 0);
