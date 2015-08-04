@@ -30,18 +30,11 @@ namespace stromx
             m_currentFile(0)
         {
             int error = 0;
-            m_archiveHandle = zip_open(m_archive.c_str(), ZIP_CREATE, &error);
+            m_archiveHandle = zip_open(m_archive.c_str(),
+                                       ZIP_CREATE | ZIP_TRUNCATE, &error);
             
             if(! m_archiveHandle)
                 throw FileAccessFailed(m_archive, "Failed to open zip archive.");
-            
-            // delete all files in the archive
-            int numFiles = zip_get_num_files(m_archiveHandle);
-            for(int i = 0; i < numFiles; ++i)
-            {
-                if(zip_delete(m_archiveHandle, i) < 0)
-                    throw FileAccessFailed(m_archive, "Failed to delete files in zip archive.");
-            }
         }
 
         ZipFileOutput::~ZipFileOutput()
@@ -132,41 +125,41 @@ namespace stromx
         
         void ZipFileOutput::dumpFile()
         {
-            if(m_currentFile)
-            {
-                m_bufferedFiles.push_back(m_currentFile->str());
-                std::string & fileContent = m_bufferedFiles.back();
+            if(! m_currentFile)
+                return;
                 
-                zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
-                if(! source)
-                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to allocate ZLib source.");
-                
-                // check if the file exists
-                struct zip_stat stat;
-                if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
-                { 
-                    // the file does not exist
-                    // add it to the archive
-                    if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
-                    {
-                        zip_source_free(source);
-                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to add file to zip archive.");
-                    }
-                }
-                else
+            m_bufferedFiles.push_back(m_currentFile->str());
+            std::string & fileContent = m_bufferedFiles.back();
+            
+            zip_source* source = zip_source_buffer(m_archiveHandle, fileContent.c_str(), fileContent.size(), 0);
+            if(! source)
+                throw FileAccessFailed(m_currentFilename, m_archive, "Failed to allocate ZLib source.");
+            
+            // check if the file exists
+            struct zip_stat stat;
+            if(zip_stat(m_archiveHandle, m_currentFilename.c_str(), 0, &stat) < 0)
+            { 
+                // the file does not exist
+                // add it to the archive
+                if(zip_add(m_archiveHandle, m_currentFilename.c_str(), source) < 0)
                 {
-                    // the file exists
-                    // replace it in the archive
-                    if(zip_replace(m_archiveHandle, stat.index, source) < 0)
-                    {
-                        zip_source_free(source);
-                        throw FileAccessFailed(m_currentFilename, m_archive, "Failed to replace file in zip archive.");
-                    }
+                    zip_source_free(source);
+                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to add file to zip archive.");
                 }
-                
-                delete m_currentFile;
-                m_currentFile = 0;
             }
+            else
+            {
+                // the file exists
+                // replace it in the archive
+                if(zip_replace(m_archiveHandle, stat.index, source) < 0)
+                {
+                    zip_source_free(source);
+                    throw FileAccessFailed(m_currentFilename, m_archive, "Failed to replace file in zip archive.");
+                }
+            }
+            
+            delete m_currentFile;
+            m_currentFile = 0;
         }
     }
 }

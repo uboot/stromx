@@ -83,12 +83,26 @@ namespace stromx
         
         void ZipFileOutputTest::testNoAccess()
         {
-            ZipFileOutput output("/root/test/ZipFileOutputTest_testNoAccess.zip");
-            output.initialize("testFile");
-            output.openFile(".bin", OutputProvider::BINARY);
-            output.file() << 5;
+            bool exceptionWasThrown = false;
             
-            CPPUNIT_ASSERT_THROW(output.close(), FileAccessFailed);
+            // FIXME: Apparently either the constructor (on openSUSE Factory) or
+            // or the member close() (on all other systems) of ZipFileOutput 
+            // throws a FileAccessFailed exception. This is due to the varying
+            // behavior of libzip on different distributions.
+            try
+            {
+                ZipFileOutput output("/root/test/ZipFileOutputTest_testNoAccess.zip");
+                output.initialize("testFile");
+                output.openFile(".bin", OutputProvider::BINARY);
+                output.file() << 5;
+                output.close();
+            }
+            catch (FileAccessFailed &)
+            {
+                exceptionWasThrown = true;
+            }
+            
+            CPPUNIT_ASSERT(exceptionWasThrown);
         }
     }
 }
