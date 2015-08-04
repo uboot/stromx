@@ -14,6 +14,7 @@ endif()
 set(SOURCES
     impl/Client.cpp
     impl/DataContainerImpl.cpp
+    impl/DataOperatorBase.cpp
     impl/ReadAccessImpl.cpp
     impl/RecycleAccessImpl.cpp
     impl/WriteAccessImpl.cpp

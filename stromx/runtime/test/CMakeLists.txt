@@ -94,6 +94,7 @@ set(SOURCES
     ../WriteAccess.cpp
     ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
+    ../impl/DataOperatorBase.cpp
     ../impl/Id2DataMap.cpp
     ../impl/InputNode.cpp
     ../impl/Network.cpp

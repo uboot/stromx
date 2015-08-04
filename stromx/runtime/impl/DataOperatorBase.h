@@ -1,5 +1,5 @@
 /* 
-*  Copyright 2014 Matthias Fuchs
+*  Copyright 2015 Matthias Fuchs
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -14,53 +14,56 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_CONSTDATA_H
+#ifndef STROMX_RUNTIME_DATAOPERATORBASE_H
 #define STROMX_RUNTIME_CONSTDATA_H
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/RecycleAccess.h"
-#include "stromx/runtime/impl/DataOperatorBase.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        class DataContainer;
-    }
-
-    namespace runtime
-    {
         /** \brief Outputs a constant value. */
-        class STROMX_RUNTIME_API ConstData : public DataOperatorBase
+        class STROMX_RUNTIME_API DataOperatorBase : public OperatorKernel
         {
-        public:            
-            enum ParameterId
+        public:
+            enum OutputId
             {
-                ALLOCATE_DATA = DataOperatorBase::NUM_BASE_PARAMETERS
+                OUTPUT
             };
             
-            ConstData();
-            virtual ~ConstData();
+            enum ParameterId
+            {
+                DATA_TYPE,
+                VALUE,
+                NUM_BASE_PARAMETERS
+            };
             
-            virtual OperatorKernel* clone() const { return new ConstData; }
+            DataOperatorBase(const std::string & type, const std::string & package,
+                const Version & version, const std::vector<const Parameter*>& parameters);
+            virtual ~DataOperatorBase();
+            
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const DataRef getParameter(const unsigned int id) const;
-            virtual void deactivate();
-            virtual void execute(runtime::DataProvider& provider);
+            virtual void initialize();
+            
+        protected:
+            virtual const std::vector<const runtime::Parameter*> setupInitParameters();
+            const Data* valuePtr() const { return m_value; }
             
         private:
-            const std::vector<const runtime::Parameter*> setupInitParameters();
+            static const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Parameter*> setupParameters();
+            void setDataType(const runtime::Enum & value);
             
-            static const std::string TYPE;
-            static const std::string PACKAGE;
-            static const runtime::Version VERSION; 
-            
-            Bool m_allocateData;
-            RecycleAccess m_recycleAccess;
+            Enum m_type;
+            Data* m_value;
         };       
     }
 }
 
-#endif // STROMX_RUNTIME_CONSTDATA_H
+#endif // STROMX_RUNTIME_DATAOPERATORBASE_H
