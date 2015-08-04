@@ -15,7 +15,7 @@
 */
 
 #ifndef STROMX_RUNTIME_DATAOPERATORBASE_H
-#define STROMX_RUNTIME_CONSTDATA_H
+#define STROMX_RUNTIME_DATAOPERATORBASE_H
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/OperatorKernel.h"
@@ -51,13 +51,14 @@ namespace stromx
             virtual void initialize();
             
         protected:
+            virtual const std::vector<const runtime::Parameter*> setupParameters();
             virtual const std::vector<const runtime::Parameter*> setupInitParameters();
             const Data* valuePtr() const { return m_value; }
+            Data* resetValuePtr();
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();
             const std::vector<const runtime::Description*> setupOutputs();
-            const std::vector<const runtime::Parameter*> setupParameters();
             void setDataType(const runtime::Enum & value);
             
             Enum m_type;

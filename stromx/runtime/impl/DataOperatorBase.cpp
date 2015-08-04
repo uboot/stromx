@@ -86,7 +86,7 @@ namespace stromx
             const std::vector<const Parameter*>& parameters)
           : OperatorKernel(type, package, version, parameters),
             m_type(Variant::BOOL.id()),
-            m_value(new Bool)
+            m_value(new Bool())
         {
         }
         
@@ -200,6 +200,13 @@ namespace stromx
             delete m_value;
             m_value = 0;
             m_value = typeToData(value);
-        }      
+        } 
+
+        Data* DataOperatorBase::resetValuePtr() 
+        {
+            Data* value = m_value;
+            m_value = 0;
+            return value;
+        }
     } 
 }

@@ -25,11 +25,6 @@ namespace stromx
 {
     namespace runtime
     {
-        class DataContainer;
-    }
-
-    namespace runtime
-    {
         namespace impl
         {
             struct BoostConditionVariable;

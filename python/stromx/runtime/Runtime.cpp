@@ -25,6 +25,7 @@
 #include <stromx/runtime/Join.h>
 #include <stromx/runtime/Merge.h>
 #include <stromx/runtime/PeriodicDelay.h>
+#include <stromx/runtime/Push.h>
 #include <stromx/runtime/Queue.h>
 #include <stromx/runtime/Receive.h>
 #include <stromx/runtime/Registry.h>
@@ -134,6 +135,7 @@ BOOST_PYTHON_MODULE(libruntime)
     stromx::python::exportOperatorKernel<Join>("Join");
     stromx::python::exportOperatorKernel<Merge>("Merge");
     stromx::python::exportOperatorKernel<PeriodicDelay>("PeriodicDelay");
+    stromx::python::exportOperatorKernel<Push>("Push");
     stromx::python::exportOperatorKernel<Receive>("Receive");
     stromx::python::exportOperatorKernel<Repeat>("Repeat");
     stromx::python::exportOperatorKernel<Send>("Send");

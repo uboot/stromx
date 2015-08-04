@@ -31,6 +31,7 @@
 #include "stromx/runtime/Merge.h"
 #include "stromx/runtime/PeriodicDelay.h"
 #include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Push.h"
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Receive.h"
@@ -72,6 +73,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Join);
     registry.registerOperator(new Merge);
     registry.registerOperator(new PeriodicDelay);
+    registry.registerOperator(new Push);
     registry.registerOperator(new Queue);
     registry.registerOperator(new Receive);
     registry.registerOperator(new Repeat);
