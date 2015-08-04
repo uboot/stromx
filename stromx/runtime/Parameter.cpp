@@ -27,6 +27,7 @@ namespace stromx
                              ParameterGroup* const group)
           : DescriptionBase(id, variant),
             m_access(NO_ACCESS),
+            m_behavior(PERSISTENT),
             m_group(group)
         {
             if(group)

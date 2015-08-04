@@ -515,6 +515,7 @@ namespace stromx
             Parameter* trigger = new Parameter(TRIGGER, Variant::TRIGGER);
             trigger->setTitle("Trigger");
             trigger->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            trigger->setUpdateBehavior(runtime::Parameter::PUSH);
             parameters.push_back(trigger);
             
             NumericParameter<UInt32>* exposure = new NumericParameter<UInt32>(EXPOSURE);
