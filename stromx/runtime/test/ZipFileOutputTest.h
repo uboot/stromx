@@ -34,6 +34,7 @@ namespace stromx
             CPPUNIT_TEST(testFileDuplicate);
             CPPUNIT_TEST(testGetFilename);
             CPPUNIT_TEST(testNoAccess);
+            CPPUNIT_TEST(testOverwrite);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -48,6 +49,7 @@ namespace stromx
             void testFileDuplicate();
             void testGetFilename();
             void testNoAccess();
+            void testOverwrite();
         };
     }
 }

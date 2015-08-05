@@ -51,7 +51,7 @@ namespace stromx
             virtual void execute(runtime::DataProvider& provider);
             
         private:
-            const std::vector<const runtime::Parameter*> setupInitParameters();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;

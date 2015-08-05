@@ -53,7 +53,7 @@ namespace stromx
         const Version Push::VERSION(0, 1, 0);
         
         Push::Push()
-          : DataOperatorBase(TYPE, PACKAGE, VERSION, setupInitParameters()),
+          : DataOperatorBase(TYPE, PACKAGE, VERSION, DataOperatorBase::setupInitParameters()),
             m_cond(new impl::BoostConditionVariable)
         {
             delete resetValuePtr();

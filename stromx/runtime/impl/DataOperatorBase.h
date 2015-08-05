@@ -51,8 +51,9 @@ namespace stromx
             virtual void initialize();
             
         protected:
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
+            
             virtual const std::vector<const runtime::Parameter*> setupParameters();
-            virtual const std::vector<const runtime::Parameter*> setupInitParameters();
             const Data* valuePtr() const { return m_value; }
             Data* resetValuePtr();
             

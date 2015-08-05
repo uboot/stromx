@@ -1,7 +1,7 @@
 # Sets the following variables:
 #  LIBZIP_FOUND       - Set to false, or undefined, if libzip isn't found.
-#  LIBZIP_INCLUDE_DIR - The stromx include directory.
-#  LIBZIP_LIBRARY     - The stromx library to link against.
+#  LIBZIP_INCLUDE_DIR - The libzip include directory.
+#  LIBZIP_LIBRARY     - The libzip library to link against.
 
 
 find_path(LIBZIP_INCLUDE_DIR 

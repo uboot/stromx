@@ -19,6 +19,12 @@
 #include <zip.h>
 #include "stromx/runtime/Exception.h"
 
+// FIXME: remove this when libzip < 0.11 (i.e. Ubuntu Trusty)
+// is not supported any longer
+#if (LIBZIP_VERSION_MAJOR == 0 && LIBZIP_VERSION_MINOR < 11)
+#include <boost/filesystem.hpp>
+#endif
+
 namespace stromx
 {
     namespace runtime
@@ -30,8 +36,24 @@ namespace stromx
             m_currentFile(0)
         {
             int error = 0;
+
+// FIXME: remove this when libzip < 0.11 (i.e. Ubuntu Trusty)
+// is not supported any longer
+#if (LIBZIP_VERSION_MAJOR == 0 && LIBZIP_VERSION_MINOR < 11)
+            try
+            {
+                boost::filesystem::remove(m_archive);
+            }
+            catch (boost::filesystem::filesystem_error &)
+            {
+                throw FileAccessFailed(m_archive, "Failed to overwrite existing zip archive.");
+            }
+            
+            m_archiveHandle = zip_open(m_archive.c_str(), ZIP_CREATE, &error);
+#else
             m_archiveHandle = zip_open(m_archive.c_str(),
                                        ZIP_CREATE | ZIP_TRUNCATE, &error);
+#endif
             
             if(! m_archiveHandle)
                 throw FileAccessFailed(m_archive, "Failed to open zip archive.");

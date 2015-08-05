@@ -104,5 +104,20 @@ namespace stromx
             
             CPPUNIT_ASSERT(exceptionWasThrown);
         }
+        
+        void ZipFileOutputTest::testOverwrite()
+        {
+            {
+                ZipFileOutput output("ZipFileOutputTest_testOverwrite.zip");
+                output.initialize("testFile1");
+                output.openFile(".bin", OutputProvider::BINARY);
+            }
+            
+            {
+                ZipFileOutput output("ZipFileOutputTest_testOverwrite.zip");
+                output.initialize("testFile1");
+                output.openFile(".bin", OutputProvider::BINARY);
+            }
+        }
     }
 }
