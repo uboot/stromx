@@ -88,7 +88,7 @@ namespace stromx
             // FIXME: Apparently either the constructor (on openSUSE Factory) or
             // or the member close() (on all other systems) of ZipFileOutput 
             // throws a FileAccessFailed exception. This is due to the varying
-            // behavior of libzip on different distributions.
+            // behavior of different versions of libzip.
             try
             {
                 ZipFileOutput output("/root/test/ZipFileOutputTest_testNoAccess.zip");
