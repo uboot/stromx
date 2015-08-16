@@ -1,11 +1,12 @@
 // copied from cppunit/TestRunner.h
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
 #include <cppunit/TestRunner.h>
-#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/XmlOutputter.h>
 
 #include <stdexcept>
 
@@ -36,7 +37,12 @@ int main( int argc, char* argv[] )
 
         // Print test in a compiler compatible format.
         CppUnit::CompilerOutputter outputter( &result, std::cerr );
-        outputter.write();                      
+        outputter.write();    
+        
+        // Output XML for Jenkins CPPunit plugin
+        std::ofstream xmlFileOut("test_results.xml");
+        CppUnit::XmlOutputter xmlOut(&result, xmlFileOut);
+        xmlOut.write();                  
     }
     catch ( std::invalid_argument &e )  // Test path not resolved
     {
