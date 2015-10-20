@@ -30,7 +30,7 @@ namespace stromx
             struct BoostConditionVariable;
         }
         
-        /** \brief Blocks the execution until a trigger signal is received. */
+        /** \brief Blocks the execution until the value parameter is set. */
         class STROMX_RUNTIME_API Push : public DataOperatorBase
         {
         public:            

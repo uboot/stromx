@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_CVSUPPORT_EXAMPLE_H
-#define STROMX_CVSUPPORT_EXAMPLE_H
+#ifndef STROMX_CVSUPPORT_H
+#define STROMX_CVSUPPORT_H
 
 #include <locale>
 
@@ -39,4 +39,4 @@ extern "C"
     STROMX_CVSUPPORT_API void stromxCvsupportRegister(stromx::runtime::Registry& registry);
 }
 
-#endif // STROMX_CVSUPPORT_EXAMPLE_H
+#endif // STROMX_CVSUPPORT_H
