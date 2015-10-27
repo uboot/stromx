@@ -14,26 +14,22 @@
 *  limitations under the License.
 */
 
-#include "stromx/cvml/Cvml.h"
+#include <python/stromx/runtime/ExportOperatorKernel.h>
 
-#include <stromx/runtime/Locale.h>
+#include <boost/python.hpp>
+
 #include <stromx/runtime/Registry.h>
-#include "stromx/cvml/Svm.h"
+#include <stromx/cvml/Svm.h>
 
-namespace stromx
-{
-    namespace cvml
-    {
-        std::locale locale;
-    }
-}
+void exportImage();
+void exportMatrix();
 
-void stromxCvmlRegister(stromx::runtime::Registry& registry)
+using namespace boost::python;
+using namespace stromx::cvml;
+    
+BOOST_PYTHON_MODULE(libcvml)
 {
-    using namespace stromx::cvml;
+    def("register", stromxCvmlRegister);
     
-    locale = stromx::runtime::Locale::generate(STROMX_CVML_LOCALE_DIR,
-                                               STROMX_CVML_LOCALE_DOMAIN);
-    
-    registry.registerOperator(new Svm);
+    stromx::python::exportOperatorKernel<Svm>("Svm");
 }

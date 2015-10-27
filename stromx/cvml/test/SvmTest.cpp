@@ -14,26 +14,34 @@
 *  limitations under the License.
 */
 
-#include "stromx/cvml/Cvml.h"
+#include "stromx/cvml/test/SvmTest.h"
 
-#include <stromx/runtime/Locale.h>
-#include <stromx/runtime/Registry.h>
+#include <cppunit/TestAssert.h>
+#include <stromx/runtime/OperatorTester.h>
 #include "stromx/cvml/Svm.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION (stromx::cvml::SvmTest);
 
 namespace stromx
 {
+    using namespace runtime;
+
     namespace cvml
     {
-        std::locale locale;
+        void SvmTest::setUp ( void )
+        {
+            m_operator = new runtime::OperatorTester(new Svm());
+            m_operator->initialize();
+            m_operator->activate();
+        }
+        
+        void SvmTest::testExecute()
+        {
+        }
+        
+        void SvmTest::tearDown ( void )
+        {
+            delete m_operator;
+        }
     }
-}
-
-void stromxCvmlRegister(stromx::runtime::Registry& registry)
-{
-    using namespace stromx::cvml;
-    
-    locale = stromx::runtime::Locale::generate(STROMX_CVML_LOCALE_DIR,
-                                               STROMX_CVML_LOCALE_DOMAIN);
-    
-    registry.registerOperator(new Svm);
 }
