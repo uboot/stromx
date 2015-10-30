@@ -17,8 +17,12 @@
 #ifndef STROMX_CVML_SVM_H
 #define STROMX_CVML_SVM_H
 
+#include <stromx/runtime/File.h>
+#include <stromx/runtime/OperatorKernel.h>
+
 #include "stromx/cvml/Cvml.h"
-#include "stromx/runtime/OperatorKernel.h"
+
+class CvSVM;
 
 namespace stromx
 {
@@ -26,7 +30,23 @@ namespace stromx
     {
         class STROMX_CVML_API Svm : public runtime::OperatorKernel
         {
-        public:            
+        public:      
+            enum InputId
+            {
+                DATA,
+                TRAINING_RESPONSE
+            };
+            enum OutputId
+            {
+                PREDICTED_RESPONSE
+            };
+            
+            enum ParameterId
+            {
+                TRAINING_IS_ACTIVE,
+                STATISTICAL_MODEL
+            };
+            
             Svm();
             virtual ~Svm() {}
             
@@ -43,6 +63,9 @@ namespace stromx
             static const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
             static const std::vector<const runtime::Parameter*> setupParameters();
+            
+            runtime::File m_statisticalModel;
+            CvSVM* m_svm;
         };       
     }
 }

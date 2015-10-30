@@ -79,7 +79,7 @@ find_package(CppUnit)
 
 find_package(Threads)
 
-find_package(OpenCV COMPONENTS calib3d core imgproc highgui)
+find_package(OpenCV COMPONENTS calib3d core imgproc highgui ml)
 
 find_package(XercesC)
 

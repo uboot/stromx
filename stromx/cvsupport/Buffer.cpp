@@ -48,7 +48,7 @@ namespace stromx
                 switch(id)
                 {
                 case BUFFER_SIZE:
-                    m_bufferSize = stromx::runtime::data_cast<UInt32>(value);;
+                    m_bufferSize = stromx::runtime::data_cast<UInt32>(value);
                     break;
                 case NUM_BUFFERS:
                 {

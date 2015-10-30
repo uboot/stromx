@@ -19,6 +19,7 @@ include_directories(
 
 set(SOURCES
     Cvml.cpp
+    Svm.cpp
 )
 
 add_library(stromx_cvml SHARED ${SOURCES})

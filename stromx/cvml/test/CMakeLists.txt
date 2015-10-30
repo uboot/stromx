@@ -11,6 +11,8 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
 )
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/svm_model.xml ${CMAKE_CURRENT_BINARY_DIR}/svm_model.xml COPYONLY)
+
 add_executable(stromx_cvml_test
     ../Svm.cpp
     SvmTest.cpp
@@ -26,4 +28,5 @@ target_link_libraries(stromx_cvml_test
     ${CMAKE_DL_LIBS}
     ${OpenCV_LIBS}
     stromx_runtime
+    stromx_cvsupport
 )
