@@ -33,7 +33,8 @@ namespace stromx
         class SvmTest : public CPPUNIT_NS :: TestFixture
         {
             CPPUNIT_TEST_SUITE (SvmTest);
-            CPPUNIT_TEST (testExecute);
+            CPPUNIT_TEST (testExecutePredict);
+            CPPUNIT_TEST (testExecuteTrain);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -43,7 +44,8 @@ namespace stromx
                 void tearDown();
 
             protected:
-                void testExecute();
+                void testExecutePredict();
+                void testExecuteTrain();
                 
             private:
                 runtime::OperatorTester* m_operator;

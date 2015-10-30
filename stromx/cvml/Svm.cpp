@@ -17,6 +17,7 @@
 #include "stromx/cvml/Svm.h"
 
 #include <stromx/runtime/DataProvider.h>
+#include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 
 #include <stromx/runtime/OperatorException.h>
@@ -41,12 +42,30 @@ namespace stromx
             
         Svm::Svm()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
-            m_svm(new cv::SVM())
+            m_svm(new cv::SVM()),
+            m_trainingIsActive(false),
+            m_trainingData(new cv::Mat()),
+            m_trainingResponses(new cv::Mat())
         {
+        }
+        
+        Svm::~Svm()
+        {
+            delete m_svm;
+            delete m_trainingData;
         }
         
         const runtime::DataRef Svm::getParameter(const unsigned int id)
         {
+            switch(id)
+            {
+            case STATISTICAL_MODEL:
+                return m_statisticalModel;
+            case TRAINING_IS_ACTIVE:
+                return m_trainingIsActive;
+            default:
+                throw WrongParameterId(id, *this);
+            }
         }
         
         void Svm::setParameter(const unsigned int id, const runtime::Data& value)
@@ -58,6 +77,25 @@ namespace stromx
                 case STATISTICAL_MODEL:
                     m_statisticalModel = stromx::runtime::data_cast<File>(value);
                     m_svm->load(m_statisticalModel.path().c_str());
+                    break;
+                case TRAINING_IS_ACTIVE:
+                    if (m_trainingIsActive == stromx::runtime::data_cast<Bool>(value))
+                        break;
+                    
+                    m_trainingIsActive = stromx::runtime::data_cast<Bool>(value);
+                    
+                    if (m_trainingIsActive)
+                    {
+                        m_trainingData->resize(0, 0);
+                        m_trainingResponses->resize(0, 0);
+                    }
+                    else
+                    {
+                        m_svm->train(*m_trainingData, *m_trainingResponses);
+                        std::string modelPath = File::tempPath(".xml");
+                        m_svm->save(modelPath.c_str());
+                        m_statisticalModel = File(modelPath);
+                    }
                     break;
                 default:
                     throw WrongParameterId(id, *this);
@@ -71,17 +109,36 @@ namespace stromx
         
         void Svm::execute(runtime::DataProvider& provider)
         {
-            Id2DataPair dataMapper(DATA);
-            provider.receiveInputData(dataMapper);
-            ReadAccess dataAccess(dataMapper.data());
-            
-            const Matrix & data = dataAccess.get<Matrix>();
-            cv::Mat cvData = cvsupport::getOpenCvMat(data);
-            
-            float response = m_svm->predict(cvData);
-            DataContainer result(new Float32(response));
-            Id2DataPair responseMapper(PREDICTED_RESPONSE, result);
-            provider.sendOutputData(responseMapper);
+            if (m_trainingIsActive)
+            {
+                Id2DataPair dataMapper(DATA);
+                Id2DataPair responseMapper(TRAINING_RESPONSE);
+                provider.receiveInputData(dataMapper && responseMapper);
+                ReadAccess dataAccess(dataMapper.data());
+                const Matrix & data = dataAccess.get<Matrix>();
+                ReadAccess responseAccess(responseMapper.data());
+                const Float32 & response = responseAccess.get<Float32>();
+                
+                m_trainingData->push_back(cvsupport::getOpenCvMat(data));
+                m_trainingResponses->push_back(static_cast<float>(response));
+                
+                Id2DataPair outputMapper(PREDICTED_RESPONSE, dataMapper.data());
+                provider.sendOutputData(outputMapper);
+            }
+            else
+            {
+                Id2DataPair dataMapper(DATA);
+                provider.receiveInputData(dataMapper);
+                ReadAccess dataAccess(dataMapper.data());
+                
+                const Matrix & data = dataAccess.get<Matrix>();
+                cv::Mat cvData = cvsupport::getOpenCvMat(data);
+                
+                float response = m_svm->predict(cvData);
+                DataContainer result(new Float32(response));
+                Id2DataPair responseMapper(PREDICTED_RESPONSE, result);
+                provider.sendOutputData(responseMapper);
+            }
         }
         
         const std::vector<const runtime::Description*> Svm::setupInputs()
@@ -95,6 +152,7 @@ namespace stromx
             
             Description* response = new Description(TRAINING_RESPONSE, Variant::FLOAT_32);
             response->setTitle("Training response");
+            response->setOperatorThread(1);
             inputs.push_back(response);
             
             return inputs;

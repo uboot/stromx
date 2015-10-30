@@ -24,6 +24,11 @@
 
 class CvSVM;
 
+namespace cv
+{
+    class Mat;
+}
+
 namespace stromx
 {
     namespace cvml
@@ -48,7 +53,7 @@ namespace stromx
             };
             
             Svm();
-            virtual ~Svm() {}
+            virtual ~Svm();
             
             virtual OperatorKernel* clone() const { return new Svm; }
             virtual const runtime::DataRef getParameter(const unsigned int id);
@@ -66,6 +71,9 @@ namespace stromx
             
             runtime::File m_statisticalModel;
             CvSVM* m_svm;
+            runtime::Bool m_trainingIsActive;
+            cv::Mat* m_trainingData;
+            cv::Mat* m_trainingResponses;
         };       
     }
 }
