@@ -63,6 +63,10 @@ namespace stromx
         void File::serialize(OutputProvider & output) const
         {
             OutputProvider::OpenMode mode = OutputProvider::TEXT;
+            
+            if (m_path.empty())
+                return;
+            
             std::string modeString = "text";
             if (m_mode == BINARY)
             {
@@ -72,7 +76,7 @@ namespace stromx
             
             std::ifstream file(m_path.c_str());
             if (! file.is_open())
-                throw Exception((boost::format("Failed to open '%1'") % m_path).str());
+                throw Exception((boost::format("Failed to open '%1%'") % m_path).str());
                 
             std::string content((std::istreambuf_iterator<char>(file)),
                                  std::istreambuf_iterator<char>());
@@ -83,13 +87,15 @@ namespace stromx
         }
         
         void File::deserialize(InputProvider & input, const Version & /*version*/)
-        {
+        {            
             std::string modeString;
             input.text() >> modeString;
             if (modeString == "text")
                 m_mode = TEXT;
             else if (modeString == "binary")
                 m_mode = BINARY;
+            else if (modeString.empty())
+                return;
             else
                 throw Exception("Unknown file mode.");
             
@@ -102,7 +108,7 @@ namespace stromx
                 m_mode == TEXT ? std::ofstream::out : 
                                  std::ofstream::out | std::ofstream::binary);
             if (! file.is_open())
-                throw Exception((boost::format("Failed to open file.") % tempPath.native()).str());
+                throw Exception((boost::format("Failed to open file '%1%'.") % tempPath.native()).str());
             file << content;
             m_path = tempPath.native();
         }

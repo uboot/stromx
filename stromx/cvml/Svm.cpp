@@ -88,6 +88,7 @@ namespace stromx
                     {
                         m_trainingData->resize(0, 0);
                         m_trainingResponses->resize(0, 0);
+                        m_statisticalModel = File();
                     }
                     else
                     {

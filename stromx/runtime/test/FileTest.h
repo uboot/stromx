@@ -40,6 +40,8 @@ namespace stromx
             CPPUNIT_TEST(testDeserializeText);
             CPPUNIT_TEST(testSerializeBinary);
             CPPUNIT_TEST(testDeserializeBinary);
+            CPPUNIT_TEST(testSerializeEmpty);
+            CPPUNIT_TEST(testDeserializeEmpty);
             CPPUNIT_TEST(testSetExtension);
             CPPUNIT_TEST(testSetExtensionFails);
             CPPUNIT_TEST_SUITE_END ();
@@ -61,6 +63,8 @@ namespace stromx
             void testDeserializeText();
             void testSerializeBinary();
             void testDeserializeBinary();
+            void testSerializeEmpty();
+            void testDeserializeEmpty();
             void testSetExtension();
             void testSetExtensionFails();
                 

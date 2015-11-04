@@ -34,7 +34,10 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (SvmTest);
             CPPUNIT_TEST (testExecutePredict);
+            CPPUNIT_TEST (testExecutePredictInt32Data);
+            CPPUNIT_TEST (testExecutePredictWrongDimension);
             CPPUNIT_TEST (testExecuteTrain);
+            CPPUNIT_TEST (testExecuteTrainWrongDimension);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -45,7 +48,10 @@ namespace stromx
 
             protected:
                 void testExecutePredict();
+                void testExecutePredictInt32Data();
+                void testExecutePredictWrongDimension();
                 void testExecuteTrain();
+                void testExecuteTrainWrongDimension();
                 
             private:
                 runtime::OperatorTester* m_operator;

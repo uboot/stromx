@@ -124,7 +124,7 @@ namespace stromx
             std::ifstream refFile("stream.xml");
             std::string refContent((std::istreambuf_iterator<char>(refFile)),
                                     std::istreambuf_iterator<char>());
-            DummyInput in("text xml", refContent);
+            DummyInput in("text .xml", refContent);
             
             File file;
             file.deserialize(in, VERSION);
@@ -133,7 +133,7 @@ namespace stromx
             std::string content((std::istreambuf_iterator<char>(stream)),
                                  std::istreambuf_iterator<char>());
                                  
-            CPPUNIT_ASSERT_EQUAL(std::string("xml"), file.extension());
+            CPPUNIT_ASSERT_EQUAL(std::string(".xml"), file.extension());
             CPPUNIT_ASSERT_EQUAL(File::TEXT, file.mode());
             CPPUNIT_ASSERT_EQUAL(refContent, content);
         }
@@ -155,6 +155,25 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string(".npy"), file.extension());
             CPPUNIT_ASSERT_EQUAL(File::BINARY, file.mode());
             CPPUNIT_ASSERT_EQUAL(refContent, content);
+        }
+
+        void FileTest::testSerializeEmpty()
+        {
+            DummyOutput out;
+            File file;
+            
+            CPPUNIT_ASSERT_NO_THROW(file.serialize(out));
+            CPPUNIT_ASSERT_EQUAL(std::string(""), out.value());
+        }
+
+        void FileTest::testDeserializeEmpty()
+        {
+            DummyInput in("", "");
+            File file;
+            file.deserialize(in, VERSION);
+            
+            CPPUNIT_ASSERT_EQUAL(std::string(""), file.path());
+            CPPUNIT_ASSERT_EQUAL(File::TEXT, file.mode());
         }
     }
 }
