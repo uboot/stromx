@@ -32,6 +32,32 @@ namespace stromx
 
     namespace runtime
     {
+        namespace
+        {
+            Data* typeToData(const unsigned int type)
+            {
+                if (type == Variant::BOOL.id())
+                    return new Bool;
+                
+                if (type == Variant::TRIGGER.id())
+                    return new TriggerData;
+                
+                if (type == Variant::INT_32.id())
+                    return new Int32;
+                
+                if (type == Variant::UINT_32.id())
+                    return new UInt32;
+                
+                if (type == Variant::STRING.id())
+                    return new String;
+                
+                if (type == Variant::FLOAT_32.id())
+                    return new Float32;
+                    
+                throw InternalError("Unhandled data type");
+            }
+        }
+        
         const std::string ConstData::TYPE("ConstData");
         const std::string ConstData::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
         const Version ConstData::VERSION(0, 1, 0);
@@ -64,6 +90,13 @@ namespace stromx
                 {
                 case ALLOCATE_DATA:
                     m_allocateData = data_cast<Bool>(value);
+                    break;
+                case DATA_TYPE:
+                    DataOperatorBase::setParameter(id, value);
+                    
+                    // make sure some value is set 
+                    if (! valuePtr())
+                        resetValuePtr(typeToData(data_cast<Enum>(value)));
                     break;
                 default:
                     DataOperatorBase::setParameter(id, value);

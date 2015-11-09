@@ -55,7 +55,7 @@ namespace stromx
             
             virtual const std::vector<const runtime::Parameter*> setupParameters();
             const Data* valuePtr() const { return m_value; }
-            Data* resetValuePtr();
+            Data* resetValuePtr(Data* const value = 0);
             
         private:
             static const std::vector<const runtime::Description*> setupInputs();

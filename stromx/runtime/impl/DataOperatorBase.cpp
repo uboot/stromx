@@ -56,29 +56,6 @@ namespace stromx
                     
                 throw InternalError("Unhandled data type");
             }
-            
-            Data* typeToData(const unsigned int type)
-            {
-                if (type == Variant::BOOL.id())
-                    return new Bool;
-                
-                if (type == Variant::TRIGGER.id())
-                    return new TriggerData;
-                
-                if (type == Variant::INT_32.id())
-                    return new Int32;
-                
-                if (type == Variant::UINT_32.id())
-                    return new UInt32;
-                
-                if (type == Variant::STRING.id())
-                    return new String;
-                
-                if (type == Variant::FLOAT_32.id())
-                    return new Float32;
-                    
-                throw InternalError("Unhandled data type");
-            }
         }
         
         DataOperatorBase::DataOperatorBase(const std::string & type,
@@ -196,17 +173,16 @@ namespace stromx
             // update the type
             m_type = value;
             
-            // set the value to a new object of the above type
+            // set the value to a null pointer
             delete m_value;
             m_value = 0;
-            m_value = typeToData(value);
         } 
 
-        Data* DataOperatorBase::resetValuePtr() 
+        Data* DataOperatorBase::resetValuePtr(Data* const value) 
         {
-            Data* value = m_value;
-            m_value = 0;
-            return value;
+            Data* oldValue = m_value;
+            m_value = value;
+            return oldValue;
         }
     } 
 }
