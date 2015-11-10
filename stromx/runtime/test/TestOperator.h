@@ -37,7 +37,9 @@ namespace stromx
             static const unsigned int THROW_EXCEPTION = 2;
             static const unsigned int TEST_DATA = 3;
             static const unsigned int DATA_GROUP = 4;
-            static const unsigned int NUM_PARAMETERS = 5;
+            static const unsigned int PUSH_PARAMETER = 5;
+            static const unsigned int PULL_PARAMETER = 6;
+            static const unsigned int NUM_PARAMETERS = 7;
             
             TestOperator();
             

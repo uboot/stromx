@@ -38,6 +38,7 @@ namespace stromx
             CPPUNIT_TEST (testExecutePredictWrongDimension);
             CPPUNIT_TEST (testExecuteTrain);
             CPPUNIT_TEST (testExecuteTrainWrongDimension);
+            CPPUNIT_TEST (testGetStatisticalModel);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -52,6 +53,7 @@ namespace stromx
                 void testExecutePredictWrongDimension();
                 void testExecuteTrain();
                 void testExecuteTrainWrongDimension();
+                void testGetStatisticalModel();
                 
             private:
                 runtime::OperatorTester* m_operator;

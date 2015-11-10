@@ -55,7 +55,7 @@ namespace stromx
             delete m_trainingData;
         }
         
-        const runtime::DataRef Svm::getParameter(const unsigned int id)
+        const runtime::DataRef Svm::getParameter(const unsigned int id) const
         {
             switch(id)
             {
@@ -76,7 +76,8 @@ namespace stromx
                 {
                 case STATISTICAL_MODEL:
                     m_statisticalModel = stromx::runtime::data_cast<File>(value);
-                    m_svm->load(m_statisticalModel.path().c_str());
+                    if (! m_statisticalModel.path().empty())
+                        m_svm->load(m_statisticalModel.path().c_str());
                     break;
                 case TRAINING_IS_ACTIVE:
                     if (m_trainingIsActive == stromx::runtime::data_cast<Bool>(value))

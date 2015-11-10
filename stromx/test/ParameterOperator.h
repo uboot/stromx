@@ -56,7 +56,9 @@ namespace stromx
                 MATRIX_PARAM,
                 INT_MATRIX_PARAM,
                 TRIGGER_VALUE_PARAM,
-                TRIGGER_PARAM
+                TRIGGER_PARAM,
+                PUSH_PARAM,
+                PULL_PARAM
             };
             
             ParameterOperator();
@@ -84,6 +86,8 @@ namespace stromx
             stromx::cvsupport::Matrix m_matrixParam;
             stromx::cvsupport::Matrix m_intMatrixParam;
             stromx::runtime::Bool m_triggerValue;
+            stromx::runtime::Float32 m_pullValue;
+            stromx::runtime::Float32 m_pushValue;
         };
     }
 }

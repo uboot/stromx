@@ -21,6 +21,7 @@
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Enum.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/File.h"
 #include "stromx/runtime/Filter.h"
 #include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Split.h"
@@ -93,4 +94,5 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
     registry.registerData(new None);
     registry.registerData(new String);
     registry.registerData(new TriggerData);
+    registry.registerData(new File);
 }

@@ -162,6 +162,16 @@ namespace stromx
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
+            param = new Parameter(PUSH_PARAMETER, TestData::TEST_DATA);
+            param->setAccessMode(Parameter::ACTIVATED_WRITE);
+            param->setUpdateBehavior(Parameter::PUSH);
+            parameters.push_back(param);
+            
+            param = new Parameter(PULL_PARAMETER, TestData::TEST_DATA);
+            param->setAccessMode(Parameter::ACTIVATED_WRITE);
+            param->setUpdateBehavior(Parameter::PULL);
+            parameters.push_back(param);
+            
             return parameters;
         }
         

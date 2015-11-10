@@ -42,6 +42,7 @@ namespace stromx
 
         ParameterOperator::ParameterOperator()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters())
+        , m_pullValue(3.0)
         {
         }
 
@@ -91,6 +92,9 @@ namespace stromx
                     data_cast<stromx::runtime::TriggerData>(value);
                     m_triggerValue = true;
                     break;
+                case PUSH_PARAM:
+                    m_pushValue = data_cast<Float32>(value);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -119,6 +123,8 @@ namespace stromx
                 return m_intMatrixParam;
             case TRIGGER_VALUE_PARAM:
                 return m_triggerValue;
+            case PULL_PARAM:
+                return m_pullValue;
             default:
                 throw WrongParameterId(id, *this);
             }
@@ -224,6 +230,18 @@ namespace stromx
             triggerParam->setAccessMode(Parameter::INITIALIZED_WRITE);
             triggerParam->setUpdateBehavior(Parameter::PUSH);
             parameters.push_back(triggerParam);
+            
+            Parameter* pushParam = new Parameter(PUSH_PARAM, Variant::FLOAT_32);
+            pushParam->setTitle("Push");
+            pushParam->setAccessMode(Parameter::INITIALIZED_WRITE);
+            pushParam->setUpdateBehavior(Parameter::PUSH);
+            parameters.push_back(pushParam);
+            
+            Parameter* pullParam = new Parameter(PULL_PARAM, Variant::FLOAT_32);
+            pullParam->setTitle("Pull");
+            pullParam->setAccessMode(Parameter::INITIALIZED_READ);
+            pullParam->setUpdateBehavior(Parameter::PULL);
+            parameters.push_back(pullParam);
             
             return parameters;
         }

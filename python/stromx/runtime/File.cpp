@@ -37,9 +37,9 @@ void exportFile()
     scope in_File =
     class_<File, bases<Data>, std::auto_ptr<File> >("File", no_init)
         .def("__init__", make_constructor(&allocate))
-        .def("path", &File::path, return_internal_reference<>())
+        .def("path", &File::path, return_value_policy<copy_const_reference>())
         .def("mode", &File::mode)
-        .def("extension", &File::extension, return_internal_reference<>())
+        .def("extension", &File::extension, return_value_policy<copy_const_reference>())
     ;
         
     enum_<File::OpenMode>("OpenMode")

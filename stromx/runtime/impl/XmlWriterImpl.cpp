@@ -186,6 +186,14 @@ namespace stromx
                             iter_par != currOp->info().parameters().end();
                             ++iter_par)
                 {
+                    // Do not persist push operators
+                    if ((*iter_par)->updateBehavior() == Parameter::PUSH)
+                        continue;
+                    
+                    // Do not persist pull operators
+                    if ((*iter_par)->updateBehavior() == Parameter::PULL)
+                        continue;
+                    
                     try
                     {
                         // Try to access the parameter in question. 

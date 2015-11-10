@@ -35,6 +35,7 @@ set_target_properties(stromx_cvml PROPERTIES
 target_link_libraries(stromx_cvml
     ${OpenCV_LIBS}
     stromx_runtime
+    stromx_cvsupport 
 )
 
 if(WIN32)    

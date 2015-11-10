@@ -170,6 +170,13 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(Svm::PREDICTED_RESPONSE), runtime::OperatorError);
         }
         
+        void SvmTest::testGetStatisticalModel()
+        {
+            DataRef value = m_operator->getParameter(Svm::STATISTICAL_MODEL);
+            
+            CPPUNIT_ASSERT(value.isVariant(Variant::FILE));
+        }
+        
         void SvmTest::tearDown ( void )
         {
             delete m_operator;

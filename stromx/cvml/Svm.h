@@ -56,7 +56,7 @@ namespace stromx
             virtual ~Svm();
             
             virtual OperatorKernel* clone() const { return new Svm; }
-            virtual const runtime::DataRef getParameter(const unsigned int id);
+            virtual const runtime::DataRef getParameter(const unsigned int id) const;
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual void execute(runtime::DataProvider& provider);
             
