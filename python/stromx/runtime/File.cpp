@@ -40,6 +40,8 @@ void exportFile()
         .def("path", &File::path, return_value_policy<copy_const_reference>())
         .def("mode", &File::mode)
         .def("extension", &File::extension, return_value_policy<copy_const_reference>())
+        .def("tempPath", &File::tempPath)
+        .staticmethod("tempPath")
     ;
         
     enum_<File::OpenMode>("OpenMode")

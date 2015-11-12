@@ -53,6 +53,9 @@ namespace stromx
                 
                 if (type == Variant::FLOAT_32.id())
                     return Variant::FLOAT_32;
+                
+                if (type == Variant::FLOAT_32_MATRIX.id())
+                    return Variant::FLOAT_32_MATRIX;
                     
                 throw InternalError("Unhandled data type");
             }
@@ -140,12 +143,20 @@ namespace stromx
             EnumParameter* type = new EnumParameter(DATA_TYPE);
             type->setTitle("Data type");
             type->setAccessMode(runtime::Parameter::NONE_WRITE);
-            type->add(EnumDescription(Enum(Variant::BOOL.id()), "Bool"));
-            type->add(EnumDescription(Enum(Variant::TRIGGER.id()), "Trigger"));
-            type->add(EnumDescription(Enum(Variant::INT_32.id()), "Int32"));
-            type->add(EnumDescription(Enum(Variant::UINT_32.id()), "UInt32"));
-            type->add(EnumDescription(Enum(Variant::STRING.id()), "String"));
-            type->add(EnumDescription(Enum(Variant::FLOAT_32.id()), "Float32"));
+            type->add(EnumDescription(Enum(Variant::BOOL.id()),
+                                      Variant::BOOL.title()));
+            type->add(EnumDescription(Enum(Variant::TRIGGER.id()),
+                                      Variant::TRIGGER.title()));
+            type->add(EnumDescription(Enum(Variant::INT_32.id()),
+                                      Variant::INT_32.title()));
+            type->add(EnumDescription(Enum(Variant::UINT_32.id()),
+                                      Variant::UINT_32.title()));
+            type->add(EnumDescription(Enum(Variant::STRING.id()),
+                                      Variant::STRING.title()));
+            type->add(EnumDescription(Enum(Variant::FLOAT_32.id()),
+                                      Variant::FLOAT_32.title()));
+            type->add(EnumDescription(Enum(Variant::FLOAT_32_MATRIX.id()),
+                                      Variant::FLOAT_32_MATRIX.title()));
             parameters.push_back(type);
                                         
             return parameters;
