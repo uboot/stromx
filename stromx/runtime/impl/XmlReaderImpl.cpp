@@ -715,8 +715,10 @@ namespace stromx
                 }
                 catch(std::exception& e)
                 {
+                    std::string package = data->package();
+                    std::string type = data->type();
                     delete data;
-                    throw DeserializationError(data->package(), data->type(), e.what());
+                    throw DeserializationError(package, type, e.what());
                 }
                 
                 return data;

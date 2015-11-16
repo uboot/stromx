@@ -74,25 +74,48 @@ namespace stromx
             public:
                 explicit DummyInput(const std::string & text, const std::string & file)
                   : m_text(text),
-                    m_file(file)
+                    m_file(file),
+                    m_fileIsOpen(false)
                 {}
                 
                 std::istream & text() { return m_text; }
-                std::istream & openFile(const OpenMode) { return m_file; }
+                std::istream & openFile(const OpenMode)
+                { 
+                    m_fileIsOpen = true;
+                    return m_file;
+                }
+                
                 bool hasFile() const { return true; }
-                std::istream & file() { return m_file; }
+                std::istream & file()
+                {
+                    CPPUNIT_ASSERT(m_fileIsOpen);
+                    return m_file;
+                }
                 
             private:
                 std::istringstream m_text;
                 std::istringstream m_file;
+                bool m_fileIsOpen;
             };
             
             class DummyOutput : public OutputProvider
             {
             public:
+                DummyOutput() :  m_fileIsOpen(false)
+                {}
+                
                 std::ostream & text() { return m_text; }
-                std::ostream & openFile(const std::string &, const OpenMode) { return m_file; }
-                std::ostream & file() { return m_file; }
+                std::ostream & openFile(const std::string &, const OpenMode)
+                { 
+                    m_fileIsOpen = true;
+                    return m_file;
+                }
+                
+                std::ostream & file()
+                {
+                    CPPUNIT_ASSERT(m_fileIsOpen);
+                    return m_file;
+                }
                 
                 const std::string value() const { return m_text.str(); }
                 const std::string fileValue() const { return m_file.str(); }
@@ -100,6 +123,7 @@ namespace stromx
             private:
                 std::ostringstream m_text;
                 std::ostringstream m_file;
+                bool m_fileIsOpen;
             };
             
             const static Version VERSION;

@@ -89,21 +89,34 @@ namespace stromx
         void File::deserialize(InputProvider & input, const Version & /*version*/)
         {            
             std::string modeString;
+            InputProvider::OpenMode providerMode = InputProvider::TEXT;
+            
             input.text() >> modeString;
             if (modeString == "text")
+            {
                 m_mode = TEXT;
+            }
             else if (modeString == "binary")
+            {
                 m_mode = BINARY;
+                providerMode = InputProvider::BINARY;
+            }
             else if (modeString.empty())
+            {
                 return;
+            }
             else
+            {
                 throw Exception("Unknown file mode.");
+            }
             
             input.text() >> m_extension;
+            input.openFile(providerMode);
             std::string content((std::istreambuf_iterator<char>(input.file())),
                                  std::istreambuf_iterator<char>());
             
             boost::filesystem::path tempPath = boost::filesystem::unique_path();
+            tempPath += m_extension;
             std::ofstream file(tempPath.native().c_str(),
                 m_mode == TEXT ? std::ofstream::out : 
                                  std::ofstream::out | std::ofstream::binary);
