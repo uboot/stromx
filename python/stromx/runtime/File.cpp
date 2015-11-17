@@ -42,6 +42,10 @@ void exportFile()
         .def("extension", &File::extension, return_value_policy<copy_const_reference>())
         .def("tempPath", &File::tempPath)
         .staticmethod("tempPath")
+        .def("tempDir", &File::tempDir, return_value_policy<copy_const_reference>())
+        .staticmethod("tempDir")
+        .def("setTempDir", &File::setTempDir)
+        .staticmethod("setTempDir")
     ;
         
     enum_<File::OpenMode>("OpenMode")

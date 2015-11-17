@@ -44,6 +44,17 @@ namespace stromx
             };
             
             /** 
+             * Returns the path to the directory where temporary files are stored.
+             */
+            static const std::string & tempDir();
+            
+            /** 
+             * Sets the path to the directory where temporary files are stored. Pass
+             * an empty string to reset the temporary directory.
+             */
+            static void setTempDir(const std::string dir);
+            
+            /** 
              * Returns a path to an unique temporary file ending with
              * \c extension.
              */
@@ -98,6 +109,8 @@ namespace stromx
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const Version VERSION;
+            
+            static std::string staticTempDir;
             
             OpenMode m_mode;
             std::string m_path;

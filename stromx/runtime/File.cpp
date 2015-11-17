@@ -32,10 +32,27 @@ namespace stromx
         const std::string File::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version File::VERSION = Version(0, 1, 0);
         
+        std::string File::staticTempDir = boost::filesystem::temp_directory_path().native();
+        
+        const std::string& File::tempDir()
+        {
+            return staticTempDir;
+        }
+
+        void File::setTempDir(const std::string dir)
+        {
+            if (dir.empty())
+                staticTempDir = boost::filesystem::temp_directory_path().native();
+            else
+                staticTempDir = dir;
+        }
+        
         const std::string File::tempPath(const std::string & extension)
         {
-            boost::filesystem::path tempPath = boost::filesystem::unique_path();
-            tempPath += extension;
+            boost::filesystem::path model = staticTempDir;
+            model /= "%%%%-%%%%-%%%%-%%%%";
+            model += extension;
+            boost::filesystem::path tempPath = boost::filesystem::unique_path(model);
             return tempPath.native();
         }
         
@@ -115,15 +132,14 @@ namespace stromx
             std::string content((std::istreambuf_iterator<char>(input.file())),
                                  std::istreambuf_iterator<char>());
             
-            boost::filesystem::path tempPath = boost::filesystem::unique_path();
-            tempPath += m_extension;
-            std::ofstream file(tempPath.native().c_str(),
+            std::string path = tempPath(m_extension);
+            std::ofstream file(path.c_str(),
                 m_mode == TEXT ? std::ofstream::out : 
                                  std::ofstream::out | std::ofstream::binary);
             if (! file.is_open())
-                throw Exception((boost::format("Failed to open file '%1%'.") % tempPath.native()).str());
+                throw Exception((boost::format("Failed to open file '%1%'.") % path).str());
             file << content;
-            m_path = tempPath.native();
+            m_path = path;
         }
         
         void File::setExtension(const std::string & extension)
