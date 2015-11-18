@@ -31,7 +31,7 @@ namespace stromx
         void FileTest::testTempPath()
         {
             std::string path = File::tempPath(".txt");
-            CPPUNIT_ASSERT_EQUAL(std::string(".txt"), path.substr(19));
+            CPPUNIT_ASSERT_EQUAL(std::string(".txt"), path.substr(path.size() - 4));
         }
 
         void FileTest::testCopyConstructor()
