@@ -211,7 +211,7 @@ namespace stromx
             std::vector<const Description*> outputs;
             
             Description* output = new Description(OUTPUT, Variant::DATA);
-            output->setTitle("Output");
+            output->setTitle(L_("Output"));
             outputs.push_back(output);
             
             return outputs;
