@@ -127,14 +127,29 @@ namespace stromx
         const runtime::Version RaspiStillCam::VERSION(STROMX_RASPI_VERSION_MAJOR,STROMX_RASPI_VERSION_MINOR,STROMX_RASPI_VERSION_PATCH);
 
         RaspiStillCam::RaspiStillCam()
-          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),
+          : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_raspicam(0),
             m_outBufferPool(0),
             m_port(0),
             m_buffer(0),
             m_numBuffers(1),
-            m_resolution(RESOLUTION_1280_BY_960)
+            m_resolution(RESOLUTION_1280_BY_960),
+            m_hasTriggerInput(false)
         {
+        }
+
+        const std::vector<const runtime::Parameter*> RaspiStillCam::setupInitParameters()
+        {
+            using namespace runtime;
+            
+            std::vector<const Parameter*> parameters;
+
+            Parameter* hasTriggerInput = new Parameter(HAS_TRIGGER_INPUT, Variant::BOOL);
+            hasTriggerInput->setTitle(L_("Has trigger Input"));
+            hasTriggerInput->setAccessMode(Parameter::NONE_WRITE);
+            parameters.push_back(hasTriggerInput);
+
+            return parameters;
         }
 
         const std::vector<const runtime::Parameter*> RaspiStillCam::setupParameters()
@@ -148,8 +163,7 @@ namespace stromx
             shutterSpeed->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(shutterSpeed);
             
-            NumericParameter<UInt32>* numBuffers 
-                = new NumericParameter<UInt32>(NUM_BUFFERS);
+            NumericParameter<UInt32>* numBuffers = new NumericParameter<UInt32>(NUM_BUFFERS);
             numBuffers->setTitle(L_("Number of buffers"));
             numBuffers->setAccessMode(Parameter::INITIALIZED_WRITE);
             numBuffers->setMin(UInt32(1));
@@ -211,7 +225,16 @@ namespace stromx
         
         const std::vector< const runtime::Description* > RaspiStillCam::setupInputs()
         {
-            return std::vector<const runtime::Description*>();
+            std::vector<const runtime::Description*> inputs;
+            
+            if (m_hasTriggerInput)
+            {
+                runtime::Description* trigger = new runtime::Description(TRIGGER, runtime::Variant::TRIGGER);
+                trigger->setTitle(L_("Trigger"));
+                inputs.push_back(trigger);
+            }
+            
+            return inputs;
         }
 
         const std::vector< const runtime::Description* > RaspiStillCam::setupOutputs()
@@ -219,7 +242,7 @@ namespace stromx
             std::vector<const runtime::Description*> outputs;
 
             runtime::Description* outputImage = new runtime::Description(IMAGE, runtime::Variant::IMAGE);
-            outputImage->setTitle("Output image");
+            outputImage->setTitle(L_("Output image"));
             outputs.push_back(outputImage);
 
             return outputs;
@@ -292,6 +315,9 @@ namespace stromx
                     if(status != MMAL_SUCCESS)
                         throw runtime::ParameterError(parameter(id), *this);
                     break;
+                case HAS_TRIGGER_INPUT:
+                    m_hasTriggerInput = runtime::data_cast<runtime::Bool>(value);
+                    break;
                 default:
                     throw runtime::WrongParameterId(id,*this);
                 }
@@ -350,6 +376,8 @@ namespace stromx
                     throw runtime::ParameterError(parameter(id), *this);
                 
                 return runtime::Enum(awbMode.value);
+            case HAS_TRIGGER_INPUT:
+                return m_hasTriggerInput;
             default:
                 throw runtime::WrongParameterId(id,*this);
             }
@@ -357,6 +385,8 @@ namespace stromx
         
         void RaspiStillCam::initialize()
         {
+            OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
+            
             bcm_host_init();
 
             MMAL_STATUS_T status;
@@ -439,6 +469,8 @@ namespace stromx
         
         void RaspiStillCam::deinitialize()
         {           
+            OperatorKernel::deinitialize();
+            
             m_port = 0;
             mmal_component_destroy(m_raspicam);
             m_raspicam = 0;
@@ -518,6 +550,12 @@ namespace stromx
 
         void RaspiStillCam::execute(runtime::DataProvider& provider)
         {
+            if (m_hasTriggerInput)
+            {
+                runtime::Id2DataPair triggerMap(TRIGGER);
+                provider.receiveInputData(triggerMap);
+            }
+            
             MMAL_BUFFER_HEADER_T *buffer = mmal_queue_get(m_outBufferPool->queue);
             
             if (!buffer)

@@ -37,6 +37,11 @@ namespace stromx
         class RaspiStillCam : public runtime::OperatorKernel
         {
         public:
+            enum InputId
+            {
+                TRIGGER
+            };
+            
             enum OutputId
             {
                 IMAGE
@@ -52,7 +57,8 @@ namespace stromx
                 TOP,
                 WIDTH,
                 HEIGHT,
-                AWB_MODE
+                AWB_MODE,
+                HAS_TRIGGER_INPUT
             };
             
             enum Resolution
@@ -73,9 +79,10 @@ namespace stromx
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
 
         private:
-            static const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Description*> setupInputs();
             static const std::vector<const runtime::Description*> setupOutputs();
-            const std::vector<const runtime::Parameter*> setupParameters();
+            static const std::vector<const runtime::Parameter*> setupInitParameters();
+            static const std::vector<const runtime::Parameter*> setupParameters();
 
             static const std::string TYPE;
             static const std::string PACKAGE;
@@ -95,6 +102,7 @@ namespace stromx
             
             runtime::UInt32 m_numBuffers;
             runtime::Enum m_resolution;
+            runtime::Bool m_hasTriggerInput;
         };
     }
 }

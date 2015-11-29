@@ -21,6 +21,7 @@
 #include <stromx/cvsupport/Image.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ReadAccess.h>
+#include <stromx/runtime/TriggerData.h>
 #include "stromx/raspi/RaspiStillCam.h"
 
 
@@ -39,6 +40,13 @@ namespace stromx
 
         void RaspiStillCamTest::testInitialize()
         {
+            CPPUNIT_ASSERT_NO_THROW(m_operator->initialize());
+        }
+
+        void RaspiStillCamTest::testInitializeTwice()
+        {
+            m_operator->initialize();
+            m_operator->deinitialize();
             CPPUNIT_ASSERT_NO_THROW(m_operator->initialize());
         }
 
@@ -66,6 +74,19 @@ namespace stromx
         {
             m_operator->initialize();
             m_operator->activate();
+            
+            runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
+            
+            runtime::ReadAccess access(result);
+            cvsupport::Image::save("RaspiStillCamTest_testExecute.png", access.get<runtime::Image>());
+        }
+
+        void RaspiStillCamTest::testExecuteWithTrigger()
+        {
+            m_operator->setParameter(RaspiStillCam::HAS_TRIGGER_INPUT, runtime::Bool(true));
+            m_operator->initialize();
+            m_operator->activate();
+            m_operator->setInputData(RaspiStillCam::TRIGGER, runtime::DataContainer(new runtime::TriggerData()));
             
             runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
             

@@ -30,10 +30,12 @@ namespace stromx
         {
             CPPUNIT_TEST_SUITE (RaspiStillCamTest);
             CPPUNIT_TEST(testInitialize);
+            CPPUNIT_TEST(testInitializeTwice);
             CPPUNIT_TEST(testDeinitialize);
             CPPUNIT_TEST(testActivate);
             CPPUNIT_TEST(testDeactivate);
             CPPUNIT_TEST(testExecute);
+            CPPUNIT_TEST(testExecuteWithTrigger);
             CPPUNIT_TEST(testExecuteTwice);
             CPPUNIT_TEST(testExecuteTwoBuffers);
             CPPUNIT_TEST(testGetShutterSpeed);
@@ -58,10 +60,12 @@ namespace stromx
 
         protected:
             void testInitialize();
+            void testInitializeTwice();
             void testDeinitialize();
             void testActivate();
             void testDeactivate();
             void testExecute();
+            void testExecuteWithTrigger();
             void testExecuteTwice();
             void testExecuteTwoBuffers();
             void testGetShutterSpeed();
