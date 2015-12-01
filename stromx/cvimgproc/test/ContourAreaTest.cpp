@@ -33,6 +33,11 @@ namespace stromx
             
             runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::AREA);
             
+            runtime::ReadAccess areaAccess(areaResult);
+            std::ofstream areaFile;
+            areaFile.open("ContourAreaTest_testAllocate0_area.txt");
+            areaFile << areaAccess.get<runtime::Float64>();
+            areaFile.close();
         }
         
         void ContourAreaTest::testAllocate1()
@@ -46,6 +51,11 @@ namespace stromx
             
             runtime::DataContainer areaResult = m_operator->getOutputData(ContourArea::AREA);
             
+            runtime::ReadAccess areaAccess(areaResult);
+            std::ofstream areaFile;
+            areaFile.open("ContourAreaTest_testAllocate1_area.txt");
+            areaFile << areaAccess.get<runtime::Float64>();
+            areaFile.close();
         }
         
     } // cvimgproc

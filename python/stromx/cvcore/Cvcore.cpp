@@ -8,6 +8,8 @@
 #include <stromx/cvcore/Bitwise_not.h>
 #include <stromx/cvcore/Bitwise_or.h>
 #include <stromx/cvcore/Bitwise_xor.h>
+#include <stromx/cvcore/Mean.h>
+#include <stromx/cvcore/Sum.h>
 #include <python/stromx/runtime/ExportOperatorKernel.h>
 
 using namespace boost::python;
@@ -24,4 +26,6 @@ BOOST_PYTHON_MODULE(libcvcore)
     stromx::python::exportOperatorKernel<Bitwise_not>("Bitwise_not");
     stromx::python::exportOperatorKernel<Bitwise_or>("Bitwise_or");
     stromx::python::exportOperatorKernel<Bitwise_xor>("Bitwise_xor");
+    stromx::python::exportOperatorKernel<Mean>("Mean");
+    stromx::python::exportOperatorKernel<Sum>("Sum");
 }

@@ -271,6 +271,14 @@ class SaveResultVisitor(interface.ArgumentVisitor):
             self.doc.line('cvsupport::Matrix::save(fileName, *matrix);')
             self.doc.line("++index;")
             self.doc.scopeExit()
+        else:
+            self.doc.line(("runtime::ReadAccess {0}Access"
+                           "({0}Result);").format(ident))
+            self.doc.line("std::ofstream {0}File;".format(ident))
+            self.doc.line('{1}File.open("{0}_{1}.txt");'.format(self.testFileName, ident))
+            self.doc.line("{0}File << {0}Access.get<{1}>();".format(ident,
+                          output.dataType.typeId()))
+            self.doc.line("{0}File.close();".format(ident))
     
 def _visitTest(doc, args, testData, visitor):
     for arg, data in zip(args, testData):   

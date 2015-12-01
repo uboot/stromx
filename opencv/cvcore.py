@@ -17,6 +17,46 @@ import test
 # abbreviations
 DT = test.Default()
 
+# mean1DWrapper
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+double mean(const cv::Mat & input);
+""")
+dtnIncludes = ["<opencv2/core/core.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+double mean(const cv::Mat & input)
+{
+    cv::Scalar value = cv::mean(input);
+    return value[0];
+}
+
+""")
+mean1DWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
+# sum1DWrapper
+dcl = document.Document()
+dclIncludes = ["<opencv2/core/core.hpp>"]
+dcl.text(
+"""
+double sum(const cv::Mat & input);
+""")
+dtnIncludes = ["<opencv2/core/core.hpp>"]
+dtn = document.Document()              
+dtn.text(
+"""
+double sum(const cv::Mat & input)
+{
+    cv::Scalar value = cv::sum(input);
+    return value[0];
+}
+
+""")
+sum1DWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
+
 # initializations
 initInCopy = document.Document((
     "{1}->initializeImage({0}->width(), {0}->height(), {0}->stride(), "
@@ -66,6 +106,10 @@ if(m_ddepth == SAME && (src1CastedData->depth() != src2CastedData->depth()))
 """)
 
 # arguments
+srcMatrix = package.Argument(
+    "src", "Source", cvtype.Mat(),
+    datatype.Matrix("runtime::Variant::MATRIX")
+)
 srcImg1 = package.Argument(
     "src1", "Source 1", cvtype.Mat(), datatype.Image()
 )
@@ -99,6 +143,9 @@ beta = package.NumericParameter(
 gamma = package.NumericParameter(
     "gamma", "Gamma", cvtype.Float64(), datatype.Float64(), default = 1.0
 )
+scalar1D = package.Argument(
+    "value", "Value", cvtype.Float64(), datatype.Float64()
+)
 
 # test data
 lenna = test.ImageFile("lenna.jpg")
@@ -109,6 +156,7 @@ barbara = test.ImageFile("barbara.jpg")
 lenna_bw = test.ImageFile("lenna.jpg", grayscale = True)
 barbara_bw = test.ImageFile("barbara.jpg", grayscale = True)
 memory = test.ImageBuffer(5000000)
+lenna_32f = test.MatrixFile("lenna_32f.npy")
 
 # absdiff
 manual = package.Option(
@@ -277,6 +325,32 @@ bitwise_xor = package.Method(
     "bitwise_xor", options = [manual, allocate]
 )
 
+# mean
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcMatrix), package.ReturnValue(scalar1D)],
+    tests = [
+        [lenna_bw, DT],
+        [lenna_32f, DT]
+    ]
+)
+mean = package.Method(
+    "mean", namespace = "", options = [allocate]
+)
+
+# sum
+allocate = package.Option(
+    "allocate", "Allocate",
+    [package.Input(srcMatrix), package.ReturnValue(scalar1D)],
+    tests = [
+        [lenna_bw, DT],
+        [lenna_32f, DT]
+    ]
+)
+sumFunction = package.Method(
+    "sum", namespace = "", options = [allocate]
+)
+
 core = package.Package(
     "cvcore", 0, 1, 0,
     methods = [
@@ -286,11 +360,18 @@ core = package.Package(
         bitwise_and,
         bitwise_not,
         bitwise_or,
-        bitwise_xor
+        bitwise_xor,
+        mean,
+        sumFunction
+    ],
+    functions = [
+        mean1DWrapper,
+        sum1DWrapper
     ],
     testFiles = [
         "barbara.jpg",
-        "lenna.jpg"
+        "lenna.jpg",
+        "lenna_32f.npy"
     ]
 )
 
