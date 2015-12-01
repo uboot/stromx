@@ -7,6 +7,8 @@
 #include "stromx/cvcore/Bitwise_not.h"
 #include "stromx/cvcore/Bitwise_or.h"
 #include "stromx/cvcore/Bitwise_xor.h"
+#include "stromx/cvcore/Mean.h"
+#include "stromx/cvcore/Sum.h"
 #include <stromx/runtime/Locale.h>
 #include <stromx/runtime/Registry.h>
 
@@ -31,4 +33,6 @@ void stromxCvcoreRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new Bitwise_not);
     registry.registerOperator(new Bitwise_or);
     registry.registerOperator(new Bitwise_xor);
+    registry.registerOperator(new Mean);
+    registry.registerOperator(new Sum);
 }

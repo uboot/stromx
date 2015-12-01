@@ -13,6 +13,7 @@ include_directories (
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/barbara.jpg ${CMAKE_CURRENT_BINARY_DIR}/barbara.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna.jpg ${CMAKE_CURRENT_BINARY_DIR}/lenna.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lenna_32f.npy ${CMAKE_CURRENT_BINARY_DIR}/lenna_32f.npy COPYONLY)
 
 set (SOURCES 
     ../Absdiff.cpp
@@ -22,6 +23,8 @@ set (SOURCES
     ../Bitwise_not.cpp
     ../Bitwise_or.cpp
     ../Bitwise_xor.cpp
+    ../Mean.cpp
+    ../Sum.cpp
     ../Utility.cpp
     ../Cvcore.cpp
     AbsdiffTest.cpp
@@ -31,6 +34,8 @@ set (SOURCES
     Bitwise_notTest.cpp
     Bitwise_orTest.cpp
     Bitwise_xorTest.cpp
+    MeanTest.cpp
+    SumTest.cpp
     main.cpp
 )
 

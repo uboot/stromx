@@ -22,6 +22,8 @@ set (SOURCES
     Bitwise_not.cpp
     Bitwise_or.cpp
     Bitwise_xor.cpp
+    Mean.cpp
+    Sum.cpp
 )
 
 add_library (stromx_cvcore SHARED ${SOURCES})
