@@ -1,5 +1,5 @@
-#ifndef STROMX_CVIMGPROC_CALCHIST1DTEST_H
-#define STROMX_CVIMGPROC_CALCHIST1DTEST_H
+#ifndef STROMX_CVIMGPROC_CALCHISTTEST_H
+#define STROMX_CVIMGPROC_CALCHISTTEST_H
 
 #include "stromx/cvimgproc/Config.h"
 
@@ -12,15 +12,15 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        class CalcHist1DTest : public CPPUNIT_NS::TestFixture
+        class CalcHistTest : public CPPUNIT_NS::TestFixture
         {
-            CPPUNIT_TEST_SUITE(CalcHist1DTest);
+            CPPUNIT_TEST_SUITE(CalcHistTest);
             CPPUNIT_TEST(testAllocate0);
             CPPUNIT_TEST(testAllocate1);
             CPPUNIT_TEST_SUITE_END();
             
         public:
-            CalcHist1DTest() : m_operator(0) {}
+            CalcHistTest() : m_operator(0) {}
             void setUp();
             void tearDown();
             
@@ -34,4 +34,4 @@ namespace stromx
     } // cvimgproc
 } // stromx
 
-#endif // STROMX_CVIMGPROC_CALCHIST1DTEST_H
+#endif // STROMX_CVIMGPROC_CALCHISTTEST_H

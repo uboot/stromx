@@ -23,13 +23,13 @@ dcl = document.Document()
 dclIncludes = ["<opencv2/core/core.hpp>"]
 dcl.text(
 """
-void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
+void calcHist(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
 """)
 dtnIncludes = ["<opencv2/imgproc/imgproc.hpp>"]
 dtn = document.Document()              
 dtn.text(
 """
-void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
+void calcHist(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
 {
     int channels[] = {0};
     float range[] = {min, max};
@@ -1073,7 +1073,7 @@ allocate = package.Option(
     ]
 )
 calcHist = package.Method(
-    "calcHist1D", namespace = "", options = [allocate]
+    "calcHist", namespace = "", options = [allocate]
 )
 
 # findContours

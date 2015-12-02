@@ -1,4 +1,4 @@
-#include "stromx/cvimgproc/CalcHist1D.h"
+#include "stromx/cvimgproc/CalcHist.h"
 
 #include "stromx/cvimgproc/Locale.h"
 #include "stromx/cvimgproc/Utility.h"
@@ -18,11 +18,11 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        const std::string CalcHist1D::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
-        const runtime::Version CalcHist1D::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
-        const std::string CalcHist1D::TYPE("CalcHist1D");
+        const std::string CalcHist::PACKAGE(STROMX_CVIMGPROC_PACKAGE_NAME);
+        const runtime::Version CalcHist::VERSION(STROMX_CVIMGPROC_VERSION_MAJOR, STROMX_CVIMGPROC_VERSION_MINOR, STROMX_CVIMGPROC_VERSION_PATCH);
+        const std::string CalcHist::TYPE("CalcHist");
         
-        CalcHist1D::CalcHist1D()
+        CalcHist::CalcHist()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
             m_histMax(256),
             m_histMin(0),
@@ -31,7 +31,7 @@ namespace stromx
         {
         }
         
-        const runtime::DataRef CalcHist1D::getParameter(unsigned int id) const
+        const runtime::DataRef CalcHist::getParameter(unsigned int id) const
         {
             switch(id)
             {
@@ -48,7 +48,7 @@ namespace stromx
             }
         }
         
-        void CalcHist1D::setParameter(unsigned int id, const runtime::Data& value)
+        void CalcHist::setParameter(unsigned int id, const runtime::Data& value)
         {
             try
             {
@@ -108,14 +108,14 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Parameter*> CalcHist1D::setupInitParameters()
+        const std::vector<const runtime::Parameter*> CalcHist::setupInitParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
             return parameters;
         }
         
-        const std::vector<const runtime::Parameter*> CalcHist1D::setupParameters()
+        const std::vector<const runtime::Parameter*> CalcHist::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
@@ -145,7 +145,7 @@ namespace stromx
             return parameters;
         }
         
-        const std::vector<const runtime::Description*> CalcHist1D::setupInputs()
+        const std::vector<const runtime::Description*> CalcHist::setupInputs()
         {
             std::vector<const runtime::Description*> inputs;
             
@@ -164,7 +164,7 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const runtime::Description*> CalcHist1D::setupOutputs()
+        const std::vector<const runtime::Description*> CalcHist::setupOutputs()
         {
             std::vector<const runtime::Description*> outputs;
             
@@ -183,12 +183,12 @@ namespace stromx
             return outputs;
         }
         
-        void CalcHist1D::initialize()
+        void CalcHist::initialize()
         {
             runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
-        void CalcHist1D::execute(runtime::DataProvider & provider)
+        void CalcHist::execute(runtime::DataProvider & provider)
         {
             switch(int(m_dataFlow))
             {
@@ -218,7 +218,7 @@ namespace stromx
                     float histMaxCvData = float(m_histMax);
                     int histSizeCvData = int(m_histSize);
                     
-                    calcHist1D(srcCvData, dstCvData, histMinCvData, histMaxCvData, histSizeCvData);
+                    calcHist(srcCvData, dstCvData, histMinCvData, histMaxCvData, histSizeCvData);
                     
                     runtime::Matrix* dstCastedData = new cvsupport::Matrix(dstCvData);
                     runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);

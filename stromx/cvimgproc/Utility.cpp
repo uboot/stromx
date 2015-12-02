@@ -7,7 +7,7 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
+        void calcHist(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size)
         {
             int channels[] = {0};
             float range[] = {min, max};

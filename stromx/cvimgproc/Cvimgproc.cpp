@@ -23,7 +23,7 @@
 #include "stromx/cvimgproc/DistanceTransform.h"
 #include "stromx/cvimgproc/FloodFill.h"
 #include "stromx/cvimgproc/Integral.h"
-#include "stromx/cvimgproc/CalcHist1D.h"
+#include "stromx/cvimgproc/CalcHist.h"
 #include "stromx/cvimgproc/FindContours.h"
 #include "stromx/cvimgproc/DrawContours.h"
 #include "stromx/cvimgproc/ApproxPolyDP.h"
@@ -82,7 +82,7 @@ void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
     registry.registerOperator(new DistanceTransform);
     registry.registerOperator(new FloodFill);
     registry.registerOperator(new Integral);
-    registry.registerOperator(new CalcHist1D);
+    registry.registerOperator(new CalcHist);
     registry.registerOperator(new FindContours);
     registry.registerOperator(new DrawContours);
     registry.registerOperator(new ApproxPolyDP);

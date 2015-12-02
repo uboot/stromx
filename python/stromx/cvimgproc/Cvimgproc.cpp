@@ -24,7 +24,7 @@
 #include <stromx/cvimgproc/DistanceTransform.h>
 #include <stromx/cvimgproc/FloodFill.h>
 #include <stromx/cvimgproc/Integral.h>
-#include <stromx/cvimgproc/CalcHist1D.h>
+#include <stromx/cvimgproc/CalcHist.h>
 #include <stromx/cvimgproc/FindContours.h>
 #include <stromx/cvimgproc/DrawContours.h>
 #include <stromx/cvimgproc/ApproxPolyDP.h>
@@ -75,7 +75,7 @@ BOOST_PYTHON_MODULE(libcvimgproc)
     stromx::python::exportOperatorKernel<DistanceTransform>("DistanceTransform");
     stromx::python::exportOperatorKernel<FloodFill>("FloodFill");
     stromx::python::exportOperatorKernel<Integral>("Integral");
-    stromx::python::exportOperatorKernel<CalcHist1D>("CalcHist1D");
+    stromx::python::exportOperatorKernel<CalcHist>("CalcHist");
     stromx::python::exportOperatorKernel<FindContours>("FindContours");
     stromx::python::exportOperatorKernel<DrawContours>("DrawContours");
     stromx::python::exportOperatorKernel<ApproxPolyDP>("ApproxPolyDP");

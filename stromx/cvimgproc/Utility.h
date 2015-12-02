@@ -7,7 +7,7 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        void calcHist1D(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
+        void calcHist(const cv::Mat & input, cv::Mat & result, const float min, const float max, int size);
         
         void minEnclosingCircle(const cv::Mat & points, cv::Mat & result);
         

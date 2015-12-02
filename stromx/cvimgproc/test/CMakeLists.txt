@@ -57,7 +57,7 @@ set (SOURCES
     ../DistanceTransform.cpp
     ../FloodFill.cpp
     ../Integral.cpp
-    ../CalcHist1D.cpp
+    ../CalcHist.cpp
     ../FindContours.cpp
     ../DrawContours.cpp
     ../ApproxPolyDP.cpp
@@ -101,7 +101,7 @@ set (SOURCES
     DistanceTransformTest.cpp
     FloodFillTest.cpp
     IntegralTest.cpp
-    CalcHist1DTest.cpp
+    CalcHistTest.cpp
     FindContoursTest.cpp
     DrawContoursTest.cpp
     ApproxPolyDPTest.cpp

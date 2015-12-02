@@ -38,7 +38,7 @@ set (SOURCES
     DistanceTransform.cpp
     FloodFill.cpp
     Integral.cpp
-    CalcHist1D.cpp
+    CalcHist.cpp
     FindContours.cpp
     DrawContours.cpp
     ApproxPolyDP.cpp

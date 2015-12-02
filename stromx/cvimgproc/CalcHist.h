@@ -1,5 +1,5 @@
-#ifndef STROMX_CVIMGPROC_CALCHIST1D_H
-#define STROMX_CVIMGPROC_CALCHIST1D_H
+#ifndef STROMX_CVIMGPROC_CALCHIST_H
+#define STROMX_CVIMGPROC_CALCHIST_H
 
 #include "stromx/cvimgproc/Config.h"
 #include <stromx/cvsupport/Matrix.h>
@@ -17,7 +17,7 @@ namespace stromx
 {
     namespace cvimgproc
     {
-        class STROMX_CVIMGPROC_API CalcHist1D : public runtime::OperatorKernel
+        class STROMX_CVIMGPROC_API CalcHist : public runtime::OperatorKernel
         {
         public:
             enum DataFlowId
@@ -36,8 +36,8 @@ namespace stromx
                 DATA_FLOW,
                 HIST_MAX
             };
-            CalcHist1D();
-            virtual OperatorKernel* clone() const { return new CalcHist1D; }
+            CalcHist();
+            virtual OperatorKernel* clone() const { return new CalcHist; }
             virtual void setParameter(const unsigned int id, const runtime::Data& value);
             virtual const runtime::DataRef getParameter(const unsigned int id) const;
             void initialize();
@@ -67,4 +67,4 @@ namespace stromx
     } // cvimgproc
 } // stromx
 
-#endif // STROMX_CVIMGPROC_CALCHIST1D_H
+#endif // STROMX_CVIMGPROC_CALCHIST_H
