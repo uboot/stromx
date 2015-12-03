@@ -38,6 +38,7 @@ set(SOURCES
     ../AssignThreadsAlgorithm.cpp
     ../Block.cpp
     ../Color.cpp
+    ../Compare.cpp
     ../Connector.cpp
     ../ConstDataRef.cpp
     ../Runtime.cpp
@@ -111,6 +112,7 @@ set(SOURCES
     BlockTest.cpp
     BoolTest.cpp
 #     ClientTest.cpp
+    CompareTest.cpp
     ConstDataTest.cpp
     CounterTest.cpp
     DataContainerTest.cpp

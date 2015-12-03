@@ -31,7 +31,7 @@ namespace stromx
             CPPUNIT_TEST_SUITE (DataContainerTest);
             CPPUNIT_TEST (testDestroy);
             CPPUNIT_TEST (testDestroyDelayed);
-            CPPUNIT_TEST (testComparison);
+            CPPUNIT_TEST (testCompare);
             CPPUNIT_TEST (testEmpty);
             CPPUNIT_TEST (testRelease);
             CPPUNIT_TEST_SUITE_END ();
@@ -45,7 +45,7 @@ namespace stromx
             protected:
                 void testDestroy();
                 void testDestroyDelayed();
-                void testComparison();
+                void testCompare();
                 void testEmpty();
                 void testRelease();
             private:

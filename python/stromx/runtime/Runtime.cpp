@@ -17,6 +17,7 @@
 #include <boost/python.hpp>
 #include <stromx/runtime/Runtime.h>
 #include <stromx/runtime/Block.h>
+#include <stromx/runtime/Compare.h>
 #include <stromx/runtime/ConstData.h>
 #include <stromx/runtime/Counter.h>
 #include <stromx/runtime/Dump.h>
@@ -126,6 +127,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportXmlWriter();
     
     stromx::python::exportOperatorKernel<Block>("Block");
+    stromx::python::exportOperatorKernel<Compare>("Compare");
     stromx::python::exportOperatorKernel<ConstData>("ConstData");
     stromx::python::exportOperatorKernel<Dump>("Dump");
     stromx::python::exportOperatorKernel<Queue>("Queue");

@@ -16,6 +16,7 @@
 
 
 #include "stromx/runtime/Block.h"
+#include "stromx/runtime/Compare.h"
 #include "stromx/runtime/ConstData.h"
 #include "stromx/runtime/Counter.h"
 #include "stromx/runtime/Dump.h"
@@ -65,6 +66,7 @@ void stromxRuntimeRegister(stromx::runtime::Registry& registry)
                               STROMX_RUNTIME_LOCALE_DOMAIN);
     
     registry.registerOperator(new Block);
+    registry.registerOperator(new Compare);
     registry.registerOperator(new ConstData);
     registry.registerOperator(new Counter);
     registry.registerOperator(new Dump);

@@ -71,7 +71,7 @@ namespace stromx
             boost::this_thread::sleep_for(boost::chrono::seconds(1));
         }
         
-        void DataContainerTest::testComparison()
+        void DataContainerTest::testCompare()
         {
             Data* data = new TestData();
             

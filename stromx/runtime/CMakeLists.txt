@@ -29,6 +29,7 @@ set(SOURCES
     AssignThreadsAlgorithm.cpp
     Block.cpp
     Color.cpp
+    Compare.cpp
     Connector.cpp
     ConstData.cpp
     ConstDataRef.cpp
