@@ -17,9 +17,12 @@
 #include "stromx/raspi/GpioTrigger.h"
 
 #include <boost/format.hpp>
+#include <boost/thread.hpp>
+
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/TriggerData.h>
 #include "stromx/raspi/impl/Gpio.h"
@@ -56,6 +59,9 @@ namespace stromx
                 case EDGE:
                     m_edge = data_cast<runtime::Enum>(data);
                     break;
+                case DEBOUNCE_TIME:
+                    m_debounceTime = data_cast<runtime::UInt32>(data);
+                    break;
                 default:
                     throw WrongParameterId(id, *this);
                 }
@@ -74,6 +80,8 @@ namespace stromx
                 return m_gpio;
             case EDGE:
                 return m_edge;
+            case DEBOUNCE_TIME:
+                return m_debounceTime;
             default:
                 throw WrongParameterId(id, *this);
             };
@@ -147,16 +155,39 @@ namespace stromx
         
         void GpioTrigger::execute(DataProvider& provider)
         {
-            bool interrupt = false;
-            int value = impl::GPIOPoll(m_gpioSocket, m_interruptReadSocket, interrupt);
-            if (value < 0)
-            {
-                throw OperatorError(*this, 
-                    (boost::format("Failed poll GPIO %1%.") % m_gpio).str());
-            }
+            int value = 0;
             
-            if (interrupt)
-                throw Interrupt();
+            while (true)
+            {
+                bool interrupt = false;
+                int success = impl::GPIOPoll(m_gpioSocket, m_interruptReadSocket, interrupt);
+                if (success < 0)
+                {
+                    throw OperatorError(*this, 
+                        (boost::format("Failed poll GPIO %1%.") % m_gpio).str());
+                }
+                
+                if (interrupt)
+                    throw Interrupt();
+                
+                boost::this_thread::sleep_for(boost::chrono::microseconds(m_debounceTime));
+                
+                value = impl::GPIOGetValue(m_gpioSocket);
+                if (value < 0)
+                {
+                    throw OperatorError(*this, 
+                        (boost::format("Failed get value of GPIO %1%.") % m_gpio).str());
+                }
+                
+                if (m_edge == impl::BOTH)
+                    break;
+                
+                if (m_edge == impl::FALLING && value == 0)
+                    break;
+                
+                if (m_edge == impl::RISING && value == 1)
+                    break;
+            }
             
             DataContainer data(new Bool(value));
             Id2DataPair output(OUTPUT, data);
@@ -204,6 +235,11 @@ namespace stromx
             edge->add(EnumDescription(Enum(impl::FALLING), "Falling"));
             edge->add(EnumDescription(Enum(impl::BOTH), "Both"));
             parameters.push_back(edge);
+            
+            Parameter* debounceTime = new NumericParameter<UInt32>(DEBOUNCE_TIME);
+            debounceTime->setTitle("Debounce time in microseconds");
+            debounceTime->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(debounceTime);
             
             return parameters;
         }

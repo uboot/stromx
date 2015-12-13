@@ -37,7 +37,8 @@ namespace stromx
             enum ParameterId
             {
                 GPIO,
-                EDGE
+                EDGE,
+                DEBOUNCE_TIME
             };
             
             GpioTrigger();
@@ -64,6 +65,7 @@ namespace stromx
             int m_interruptReadSocket;
             int m_interruptWriteSocket;
             int m_gpioSocket;
+            runtime::UInt32 m_debounceTime;
         };
     }
 }

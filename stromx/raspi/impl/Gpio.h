@@ -46,6 +46,7 @@ namespace stromx
             int GPIOOpen(int pin, int& socket);
             int GPIOCreatePipe(int& readEnd, int& writeEnd);
             int GPIOPoll(int gpio, int readEnd, bool & interrupt);
+            int GPIOGetValue(int socket);
             int GPIOSendInterrupt(int writeEnd);
             int GPIOCloseSocket(int socket);
         }

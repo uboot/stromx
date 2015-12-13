@@ -270,17 +270,7 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
 
     if (fdset[1].revents & POLLPRI)
     {
-        if (-1 == lseek(fdset[1].fd, 0, SEEK_SET)) 
-        {
-            fprintf(stderr, "Failed to seek GPIO value!\n"); 
-            return(-1);
-        }
-        
-        if (-1 == read(fdset[1].fd, buf, MAX_BUF)) 
-        {
-            fprintf(stderr, "Failed to read GPIO value!\n"); 
-            return(-1);
-        }
+        return(0);
     }
 
     if (fdset[0].revents & POLLIN)
@@ -291,6 +281,27 @@ int GPIOPoll(int gpio, int readEnd, bool & interrupt)
             fprintf(stderr, "Failed to read pipe value!\n"); 
             return(-1);
         }
+        return(0);
+    }
+    
+    fprintf(stderr, "Unexpected return of poll()!\n"); 
+    return(-1);
+}
+
+int GPIOGetValue(int socket)
+{
+    char buf[MAX_BUF] = "";
+    
+    if (-1 == lseek(socket, 0, SEEK_SET)) 
+    {
+        fprintf(stderr, "Failed to seek GPIO value!\n"); 
+        return(-1);
+    }
+    
+    if (-1 == read(socket, buf, MAX_BUF)) 
+    {
+        fprintf(stderr, "Failed to read GPIO value!\n"); 
+        return(-1);
     }
     
     return(atoi(buf));
