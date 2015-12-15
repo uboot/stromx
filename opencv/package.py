@@ -178,7 +178,7 @@ class Argument(Acceptor):
     def __init__(self, ident, name, cvType, dataType, argType = ArgType.PLAIN,
                  description = "", initIn = None, initOut = None,
                  rules = None, minValue = None, maxValue = None, step = None,
-                 descriptions = None, rows = 0, cols = 0):
+                 descriptions = None, rows = 0, cols = 0, isAsynchronous = 0):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
@@ -194,6 +194,7 @@ class Argument(Acceptor):
         self.descriptions = [] if descriptions == None else descriptions
         self.rows = rows
         self.cols = cols
+        self.isAsynchronous = isAsynchronous
         
     def copyFrom(self, arg):
         self.ident = arg.ident
@@ -211,6 +212,7 @@ class Argument(Acceptor):
         self.description = arg.descriptions
         self.rows = arg.rows
         self.cols = arg.cols
+        self.isAsynchronous = arg.isAsynchronous
         
 class MatrixArgument(Argument):
     """

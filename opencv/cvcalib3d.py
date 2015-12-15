@@ -139,11 +139,17 @@ corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
     cols = 2
 )
+corners.isAsynchronous = True
+failedPostCall = document.Document("""
+if (cornersCvData.empty())
+    return;
+""")
 chessboard_bw = test.ImageFile("chess.png", grayscale = True)
 chessboard_color = test.ImageFile("chess.png")
 allocate = package.Option(
     "allocate", "Allocate",
     [package.Input(image), size, package.Allocation(corners)],
+    postCall = failedPostCall,
     tests = [
         [chessboard_bw, DT, DT, DT],
         [chessboard_color, DT, DT, DT]

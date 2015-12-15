@@ -597,6 +597,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             l = '{0}->setTitle(L_("{1}"));'.format(arg.ident, arg.name)
             self.doc.line(l)
+            if self.isAsynchronous:
+                l = '{0}->setOperatorThread(1);'.format(arg.ident)
+                self.doc.line(l)
             l = "outputs.push_back({0});".format(arg.ident)
             self.doc.line(l)
             self.doc.blank()
@@ -612,6 +615,9 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             l = '{0}->setCols({1});'.format(arg.ident, arg.cols)
             self.doc.line(l)
+            if arg.isAsynchronous:
+                l = '{0}->setOperatorThread(1);'.format(arg.ident)
+                self.doc.line(l)
             l = "outputs.push_back({0});".format(arg.ident)
             self.doc.line(l)
             self.doc.blank()
