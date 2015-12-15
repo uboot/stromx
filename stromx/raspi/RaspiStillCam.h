@@ -23,6 +23,7 @@
 #include <stromx/runtime/RecycleAccess.h>
 
 class MMAL_COMPONENT_T;
+class MMAL_CONNECTION_T;
 class MMAL_PORT_T;
 class MMAL_POOL_T;
 class MMAL_BUFFER_HEADER_T;
@@ -95,7 +96,9 @@ namespace stromx
             bool getRoi(PARAM_FLOAT_RECT_T & rect) const;
             bool setRoi(PARAM_FLOAT_RECT_T & rect);
 
-            MMAL_COMPONENT_T* m_raspicam;
+            MMAL_COMPONENT_T* m_cameraComponent;
+            MMAL_COMPONENT_T* m_previewComponent;
+            MMAL_CONNECTION_T* m_previewConnection;
             MMAL_POOL_T* m_outBufferPool;
             MMAL_PORT_T* m_port;
             MMAL_BUFFER_HEADER_T* m_buffer;
