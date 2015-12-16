@@ -16,6 +16,7 @@
 
 #include "stromx/raspi/test/RaspiStillCamTest.h"
 
+#include <interface/mmal/util/mmal_util_params.h>
 #include <boost/timer/timer.hpp>
 #include <cppunit/TestAssert.h>
 #include <stromx/cvsupport/Image.h>
@@ -79,6 +80,18 @@ namespace stromx
             
             runtime::ReadAccess access(result);
             cvsupport::Image::save("RaspiStillCamTest_testExecute.png", access.get<runtime::Image>());
+        }
+
+        void RaspiStillCamTest::testSetShutterSpeedAndExecute()
+        {
+            m_operator->initialize();
+            m_operator->setParameter(RaspiStillCam::SHUTTER_SPEED, UInt32(200000));
+            m_operator->activate();
+            
+            runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
+            
+            runtime::ReadAccess access(result);
+            cvsupport::Image::save("RaspiStillCamTest_testSetShutterSpeedAndExecute.png", access.get<runtime::Image>());
         }
 
         void RaspiStillCamTest::testExecuteWithTrigger()
@@ -157,17 +170,17 @@ namespace stromx
             
             DataRef value = m_operator->getParameter(RaspiStillCam::AWB_MODE);
             
-            CPPUNIT_ASSERT_EQUAL(Enum(0), data_cast<Enum>(value));
+            CPPUNIT_ASSERT_EQUAL(Enum(MMAL_PARAM_AWBMODE_OFF), data_cast<Enum>(value));
         }
 
         void RaspiStillCamTest::testSetAwbMode()
         {
             m_operator->initialize();
             
-            m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(2));
+            m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(MMAL_PARAM_AWBMODE_CLOUDY));
             
             DataRef value = m_operator->getParameter(RaspiStillCam::AWB_MODE);      
-            CPPUNIT_ASSERT_EQUAL(Enum(2), data_cast<Enum>(value));
+            CPPUNIT_ASSERT_EQUAL(Enum(MMAL_PARAM_AWBMODE_CLOUDY), data_cast<Enum>(value));
         }
 
         void RaspiStillCamTest::testFramesPerSecond640()
@@ -298,6 +311,34 @@ namespace stromx
             
             runtime::ReadAccess access(result);
             cvsupport::Image::save("RaspiStillCamTest_testSetRoiAndExecute.png", access.get<runtime::Image>());
+        }
+        
+        void RaspiStillCamTest::testSetAwbModeOffAndExecute()
+        {
+            m_operator->initialize();
+            m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(MMAL_PARAM_AWBMODE_OFF));
+            m_operator->activate();
+            
+            for (int i = 0; i < 2; ++i)
+                m_operator->getOutputData(RaspiStillCam::IMAGE);
+            
+            runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
+            runtime::ReadAccess access0(result);
+            cvsupport::Image::save("RaspiStillCamTest_testSetAwbModeOffAndExecute.png", access0.get<runtime::Image>());
+        }
+        
+        void RaspiStillCamTest::testSetAwbModeSunlightAndExecute()
+        {
+            m_operator->initialize();
+            m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(MMAL_PARAM_AWBMODE_SUNLIGHT));
+            m_operator->activate();
+            
+            for (int i = 0; i < 2; ++i)
+                m_operator->getOutputData(RaspiStillCam::IMAGE);
+            
+            runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
+            runtime::ReadAccess access0(result);
+            cvsupport::Image::save("RaspiStillCamTest_testSetAwbModeSunlightAndExecute.png", access0.get<runtime::Image>());
         }
         
         void RaspiStillCamTest::tearDown()

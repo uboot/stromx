@@ -23,6 +23,8 @@
 #include <boost/thread/mutex.hpp>
 
 #include <bcm_host.h>
+#include <interface/mmal/mmal.h>
+#include <interface/mmal/util/mmal_connection.h>
 #include <interface/mmal/util/mmal_default_components.h>
 #include <interface/mmal/util/mmal_util.h>
 #include <interface/mmal/util/mmal_util_params.h>
@@ -37,21 +39,13 @@
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/ParameterGroup.h>
 
-
-#include "interface/mmal/mmal.h"
-#include "interface/mmal/mmal_logging.h"
-#include "interface/mmal/mmal_buffer.h"
-#include "interface/mmal/util/mmal_util.h"
-#include "interface/mmal/util/mmal_util_params.h"
-#include "interface/mmal/util/mmal_default_components.h"
-#include "interface/mmal/util/mmal_connection.h"
-
-
 namespace
 {
     static boost::mutex mutex;
     static boost::condition_variable_any cond;
+    static const int MMAL_CAMERA_PREVIEW_PORT = 0;
     static const int MMAL_CAMERA_CAPTURE_PORT = 2;
+    static const int MMAL_PREVIEW_INPUT_PORT = 0;
     
     static const int STILLS_FRAME_RATE_NUM = 0;
     static const int STILLS_FRAME_RATE_DEN = 1;
@@ -128,7 +122,9 @@ namespace stromx
 
         RaspiStillCam::RaspiStillCam()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_raspicam(0),
+            m_cameraComponent(0),
+            m_previewComponent(0),
+            m_previewConnection(0),
             m_outBufferPool(0),
             m_port(0),
             m_buffer(0),
@@ -259,7 +255,7 @@ namespace stromx
                 switch(id)
                 {
                 case SHUTTER_SPEED:
-                    status = mmal_port_parameter_set_uint32(m_raspicam->control,
+                    status = mmal_port_parameter_set_uint32(m_cameraComponent->control,
                                                             MMAL_PARAMETER_SHUTTER_SPEED,
                                                             runtime::data_cast<runtime::UInt32>(value));
                     if(status != MMAL_SUCCESS)
@@ -311,7 +307,7 @@ namespace stromx
                         {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
                         MMAL_PARAM_AWBMODE_T(int(runtime::data_cast<runtime::Enum>(value)))
                     };
-                    status = mmal_port_parameter_set(m_raspicam->control, &awbMode.hdr);
+                    status = mmal_port_parameter_set(m_cameraComponent->control, &awbMode.hdr);
                     if(status != MMAL_SUCCESS)
                         throw runtime::ParameterError(parameter(id), *this);
                     break;
@@ -338,7 +334,7 @@ namespace stromx
             switch(id)
             {
             case SHUTTER_SPEED:
-                status = mmal_port_parameter_get_uint32(m_raspicam->control,
+                status = mmal_port_parameter_get_uint32(m_cameraComponent->control,
                                                         MMAL_PARAMETER_SHUTTER_SPEED,
                                                         &value);
                 if(status != MMAL_SUCCESS)
@@ -370,7 +366,7 @@ namespace stromx
                     {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
                     MMAL_PARAM_AWBMODE_AUTO
                 };
-                status = mmal_port_parameter_get(m_raspicam->control, &awbMode.hdr);
+                status = mmal_port_parameter_get(m_cameraComponent->control, &awbMode.hdr);
                 
                 if(status != MMAL_SUCCESS)
                     throw runtime::ParameterError(parameter(id), *this);
@@ -391,7 +387,7 @@ namespace stromx
 
             MMAL_STATUS_T status;
             
-            status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &m_raspicam);
+            status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &m_cameraComponent);
             if(status != MMAL_SUCCESS)
             {
                 deinitialize();
@@ -399,27 +395,27 @@ namespace stromx
             }
             
             MMAL_PARAMETER_INT32_T camera_num = {{MMAL_PARAMETER_CAMERA_NUM, sizeof(camera_num)}, 0};
-            status = mmal_port_parameter_set(m_raspicam->control, &camera_num.hdr);
+            status = mmal_port_parameter_set(m_cameraComponent->control, &camera_num.hdr);
             if (status != MMAL_SUCCESS)
             {
                 deinitialize();
                 throw runtime::OperatorError(*this, "Could not select camera 0.");
             }
             
-            if(!m_raspicam->output_num)
+            if(!m_cameraComponent->output_num)
             {
                 deinitialize();
                 throw runtime::OperatorError(*this, "Default mmal camera has no outputs.");
             }
 
-            status = mmal_port_enable(m_raspicam->control, 0);
+            status = mmal_port_enable(m_cameraComponent->control, 0);
             if(status != MMAL_SUCCESS)
             {
                 deinitialize();
                 throw runtime::OperatorError(*this, "Unable to enable control port.");
             }
             
-            m_port = m_raspicam->output[MMAL_CAMERA_CAPTURE_PORT];
+            m_port = m_cameraComponent->output[MMAL_CAMERA_CAPTURE_PORT];
             m_port->userdata = reinterpret_cast<MMAL_PORT_USERDATA_T*>(this);
 
             {
@@ -437,10 +433,10 @@ namespace stromx
                     /*.fast_preview_resume = */0,
                     /*.use_stc_timestamp = */MMAL_PARAM_TIMESTAMP_MODE_RESET_STC
                 };
-                mmal_port_parameter_set(m_raspicam->control, &cam_config.hdr);
+                mmal_port_parameter_set(m_cameraComponent->control, &cam_config.hdr);
             }
             
-            status = mmal_port_parameter_set_uint32(m_raspicam->control, MMAL_PARAMETER_SHUTTER_SPEED, DEFAULT_SHUTTER_SPEED);
+            status = mmal_port_parameter_set_uint32(m_cameraComponent->control, MMAL_PARAMETER_SHUTTER_SPEED, DEFAULT_SHUTTER_SPEED);
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
@@ -451,7 +447,7 @@ namespace stromx
                 {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
                 MMAL_PARAM_AWBMODE_T(MMAL_PARAM_AWBMODE_OFF)
             };
-            status = mmal_port_parameter_set(m_raspicam->control, &awbMode.hdr);
+            status = mmal_port_parameter_set(m_cameraComponent->control, &awbMode.hdr);
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
@@ -459,11 +455,18 @@ namespace stromx
             }
             
             MMAL_RATIONAL_T value = {DEFAULT_BRIGHTNESS, 100};
-            status = mmal_port_parameter_set_rational(m_raspicam->control, MMAL_PARAMETER_BRIGHTNESS, value);
+            status = mmal_port_parameter_set_rational(m_cameraComponent->control, MMAL_PARAMETER_BRIGHTNESS, value);
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
                 throw runtime::OperatorError(*this, "Unable to set brightness.");
+            }
+            
+            status = mmal_component_create("vc.null_sink", &m_previewComponent);
+            if (status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to create null sink component.");
             }
         }
         
@@ -472,8 +475,11 @@ namespace stromx
             OperatorKernel::deinitialize();
             
             m_port = 0;
-            mmal_component_destroy(m_raspicam);
-            m_raspicam = 0;
+            mmal_component_destroy(m_cameraComponent);
+            m_cameraComponent = 0;
+            
+            mmal_component_destroy(m_previewComponent);
+            m_previewComponent = 0;
             
             bcm_host_deinit();
         }
@@ -508,7 +514,7 @@ namespace stromx
             }
 
             // Enable camera component
-            status = mmal_component_enable(m_raspicam);
+            status = mmal_component_enable(m_cameraComponent);
             if(status != MMAL_SUCCESS)
             {
                 deactivate();
@@ -530,18 +536,46 @@ namespace stromx
                 deactivate();
                 throw runtime::OperatorError(*this, "Unable to enable still port.");
             }
+            
+            status = mmal_component_enable(m_previewComponent);
+            if (status != MMAL_SUCCESS)
+            {
+                deinitialize();
+                throw runtime::OperatorError(*this, "Unable to enable preview component.");
+            }
+            
+            MMAL_PORT_T* previewOutputPort = m_cameraComponent->output[MMAL_CAMERA_PREVIEW_PORT];
+            MMAL_PORT_T* previewInputPort = m_previewComponent->input[MMAL_PREVIEW_INPUT_PORT];
+            status =  mmal_connection_create(&m_previewConnection, previewOutputPort, previewInputPort, MMAL_CONNECTION_FLAG_TUNNELLING | MMAL_CONNECTION_FLAG_ALLOCATION_ON_INPUT);
+            if (status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to connect MMAL preview ports.");
+            }
+            
+            status =  mmal_connection_enable(m_previewConnection);
+            if (status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to enable preview connection.");
+            }
         }
 
         void RaspiStillCam::deactivate()
         {
+            // destroy connection
+            mmal_connection_destroy(m_previewConnection);
+            m_previewConnection = 0;
+            
             // stop capture
             mmal_port_parameter_set_boolean(m_port,MMAL_PARAMETER_CAPTURE, 0);
             
             // disable processing on port
             mmal_port_disable(m_port);
 
-            // Deactivate component
-            mmal_component_disable(m_raspicam);
+            // Deactivate components
+            mmal_component_disable(m_previewComponent);
+            mmal_component_disable(m_cameraComponent);
 
             // Destroy buffers
             mmal_port_pool_destroy(m_port, m_outBufferPool);
@@ -640,7 +674,7 @@ namespace stromx
         bool RaspiStillCam::getRoi(PARAM_FLOAT_RECT_T & rect) const
         {
             MMAL_PARAMETER_INPUT_CROP_T crop = {{MMAL_PARAMETER_INPUT_CROP, sizeof(MMAL_PARAMETER_INPUT_CROP_T)}};
-            MMAL_STATUS_T status = mmal_port_parameter_get(m_raspicam->control, &crop.hdr);
+            MMAL_STATUS_T status = mmal_port_parameter_get(m_cameraComponent->control, &crop.hdr);
             if(status != MMAL_SUCCESS)
                 return false;
             
@@ -661,7 +695,7 @@ namespace stromx
             crop.rect.width = rect.w * 65536;
             crop.rect.height = rect.h * 65536;
             
-            MMAL_STATUS_T status = mmal_port_parameter_set(m_raspicam->control, &crop.hdr);
+            MMAL_STATUS_T status = mmal_port_parameter_set(m_cameraComponent->control, &crop.hdr);
             if(status != MMAL_SUCCESS)
                 return false;
             

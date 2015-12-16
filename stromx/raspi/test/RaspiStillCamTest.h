@@ -40,6 +40,7 @@ namespace stromx
             CPPUNIT_TEST(testExecuteTwoBuffers);
             CPPUNIT_TEST(testGetShutterSpeed);
             CPPUNIT_TEST(testSetShutterSpeed);
+            CPPUNIT_TEST(testSetShutterSpeedAndExecute);
             CPPUNIT_TEST(testSetResolution);
             CPPUNIT_TEST(testFramesPerSecond640);
             CPPUNIT_TEST(testFramesPerSecond1280);
@@ -49,6 +50,8 @@ namespace stromx
             CPPUNIT_TEST(testSetRoi);
             CPPUNIT_TEST(testGetAwbMode);
             CPPUNIT_TEST(testSetAwbMode);
+            CPPUNIT_TEST(testSetAwbModeOffAndExecute);
+            CPPUNIT_TEST(testSetAwbModeSunlightAndExecute);
             CPPUNIT_TEST(testSetRoiAndExecute);
             CPPUNIT_TEST_SUITE_END ();
 
@@ -70,6 +73,7 @@ namespace stromx
             void testExecuteTwoBuffers();
             void testGetShutterSpeed();
             void testSetShutterSpeed();
+            void testSetShutterSpeedAndExecute();
             void testSetResolution();
             void testFramesPerSecond640();
             void testFramesPerSecond1280();
@@ -79,6 +83,8 @@ namespace stromx
             void testSetRoi();
             void testGetAwbMode();
             void testSetAwbMode();
+            void testSetAwbModeOffAndExecute();
+            void testSetAwbModeSunlightAndExecute();
             void testSetRoiAndExecute();
 
         private:
