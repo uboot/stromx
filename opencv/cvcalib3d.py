@@ -137,9 +137,8 @@ sizey = package.NumericParameter(
 size = package.Size(sizex, sizey)
 corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2
+    cols = 2, isAsynchronous = True
 )
-corners.isAsynchronous = True
 failedPostCall = document.Document("""
 if (cornersCvData.empty())
     return;

@@ -219,11 +219,13 @@ class MatrixArgument(Argument):
     Input argument which is represented by a matrix argument.
     """
     def __init__(self, ident, name, cvType, dataType, rows = 0,
-                 cols = 0, rules = None, initIn = None, initOut = None):
+                 cols = 0, rules = None, initIn = None, initOut = None,
+                 isAsynchronous = False):
         super(MatrixArgument, self).__init__(
             ident, name, cvType, dataType, rules = rules, 
             argType = ArgType.MATRIX, rows = rows, cols = cols, 
-            initIn = initIn, initOut = initOut
+            initIn = initIn, initOut = initOut,
+            isAsynchronous = isAsynchronous
         )
     
 class InputArgument(Argument):
