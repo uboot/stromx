@@ -54,6 +54,8 @@ namespace
     static const int MAX_HEIGHT = 1944;
     static const int MAX_PREVIEW_WIDTH = 1024;
     static const int MAX_PREVIEW_HEIGHT = 768;
+    static const float AWB_GAIN_MIN = -5;
+    static const float AWB_GAIN_MAX = 5;
     
     static const int DEFAULT_SHUTTER_SPEED = 100000;
     static const int DEFAULT_BRIGHTNESS = 50;
@@ -130,7 +132,9 @@ namespace stromx
             m_buffer(0),
             m_numBuffers(1),
             m_resolution(RESOLUTION_1280_BY_960),
-            m_hasTriggerInput(false)
+            m_hasTriggerInput(false),
+            m_awbGainRed(1.0),
+            m_awbGainBlue(1.0)
         {
         }
 
@@ -214,6 +218,24 @@ namespace stromx
             autoWhiteBalance->add(EnumDescription(Enum(MMAL_PARAM_AWBMODE_CLOUDY), L_("Cloudy")));
             autoWhiteBalance->add(runtime::EnumDescription(Enum(MMAL_PARAM_AWBMODE_SHADE), L_("Shade")));
             parameters.push_back(autoWhiteBalance);
+            
+            ParameterGroup* awbGroup = new ParameterGroup(AWB_GAIN_GROUP);
+            awbGroup->setTitle("White balance");
+            parameters.push_back(awbGroup);
+            
+            NumericParameter<Float32>* awbRed = new NumericParameter<Float32>(AWB_GAIN_RED, awbGroup);
+            awbRed->setTitle("AWB gain red");
+            awbRed->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            awbRed->setMin(Float32(AWB_GAIN_MIN));
+            awbRed->setMax(Float32(AWB_GAIN_MAX));
+            parameters.push_back(awbRed);
+            
+            NumericParameter<Float32>* awbBlue = new NumericParameter<Float32>(AWB_GAIN_BLUE, awbGroup);
+            awbBlue->setTitle("AWB gain blue");
+            awbBlue->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            awbBlue->setMin(Float32(AWB_GAIN_MIN));
+            awbBlue->setMax(Float32(AWB_GAIN_MAX));
+            parameters.push_back(awbBlue);
 
             return parameters;
         }
@@ -249,7 +271,9 @@ namespace stromx
             MMAL_STATUS_T status;
             PARAM_FLOAT_RECT_T roi;
             MMAL_PARAMETER_AWBMODE_T awbMode;
-
+            MMAL_PARAMETER_AWB_GAINS_T awbGains;
+            float gain;
+            
             try
             {
                 switch(id)
@@ -311,6 +335,28 @@ namespace stromx
                     if(status != MMAL_SUCCESS)
                         throw runtime::ParameterError(parameter(id), *this);
                     break;
+                case AWB_GAIN_RED:
+                    gain = runtime::data_cast<runtime::Float32>(value);
+                    awbGains = {
+                        {MMAL_PARAMETER_CUSTOM_AWB_GAINS, sizeof(MMAL_PARAMETER_AWB_GAINS_T)},
+                        {gain * 65536,65536}, {float(m_awbGainBlue) * 65536,65536}
+                    };
+                    status = mmal_port_parameter_set(m_cameraComponent->control, &awbGains.hdr);
+                    if(status != MMAL_SUCCESS)
+                        throw runtime::ParameterError(parameter(id), *this);
+                    m_awbGainRed = gain;
+                    break;
+                case AWB_GAIN_BLUE:
+                    gain = runtime::data_cast<runtime::Float32>(value);
+                    awbGains = {
+                        {MMAL_PARAMETER_CUSTOM_AWB_GAINS, sizeof(MMAL_PARAMETER_AWB_GAINS_T)},
+                        {float(m_awbGainRed) * 65536,65536}, {gain * 65536,65536}
+                    };
+                    status = mmal_port_parameter_set(m_cameraComponent->control, &awbGains.hdr);
+                    if(status != MMAL_SUCCESS)
+                        throw runtime::ParameterError(parameter(id), *this);
+                    m_awbGainBlue = gain;
+                    break;
                 case HAS_TRIGGER_INPUT:
                     m_hasTriggerInput = runtime::data_cast<runtime::Bool>(value);
                     break;
@@ -330,6 +376,7 @@ namespace stromx
             uint32_t value = 0;
             PARAM_FLOAT_RECT_T roi;
             MMAL_PARAMETER_AWBMODE_T awbMode;
+            float gainRed, gainBlue;
 
             switch(id)
             {
@@ -372,6 +419,10 @@ namespace stromx
                     throw runtime::ParameterError(parameter(id), *this);
                 
                 return runtime::Enum(awbMode.value);
+            case AWB_GAIN_RED:
+                return m_awbGainRed;
+            case AWB_GAIN_BLUE:
+                return m_awbGainBlue;
             case HAS_TRIGGER_INPUT:
                 return m_hasTriggerInput;
             default:
@@ -452,6 +503,17 @@ namespace stromx
             {
                 deactivate();
                 throw runtime::OperatorError(*this, "Unable to set default AWB mode.");
+            }
+            
+            MMAL_PARAMETER_AWB_GAINS_T awbGains = {
+                {MMAL_PARAMETER_CUSTOM_AWB_GAINS, sizeof(awbGains)},
+                {65536,65536}, {65536,65536}
+            };
+            status = mmal_port_parameter_set(m_cameraComponent->control, &awbGains.hdr);
+            if(status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to set default AWB gains.");
             }
             
             MMAL_RATIONAL_T value = {DEFAULT_BRIGHTNESS, 100};
@@ -686,7 +748,7 @@ namespace stromx
             return true;
         }
         
-        bool RaspiStillCam::setRoi(PARAM_FLOAT_RECT_T & rect)
+        bool RaspiStillCam::setRoi(const PARAM_FLOAT_RECT_T & rect)
         {
             MMAL_PARAMETER_INPUT_CROP_T crop = {{MMAL_PARAMETER_INPUT_CROP, sizeof(MMAL_PARAMETER_INPUT_CROP_T)}};
             

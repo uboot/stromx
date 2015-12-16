@@ -148,25 +148,28 @@ namespace stromx
         void RaspiStillCamTest::testGetShutterSpeed()
         {
             m_operator->initialize();
+            m_operator->activate();
             
             DataRef value = m_operator->getParameter(RaspiStillCam::SHUTTER_SPEED);
-            
-            CPPUNIT_ASSERT_EQUAL(UInt32(100000), data_cast<UInt32>(value));
+             
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(UInt32(100000), data_cast<UInt32>(value), 100);
         }
 
         void RaspiStillCamTest::testSetShutterSpeed()
         {
             m_operator->initialize();
+            m_operator->activate();
             
             m_operator->setParameter(RaspiStillCam::SHUTTER_SPEED, UInt32(200000));
             
             DataRef value = m_operator->getParameter(RaspiStillCam::SHUTTER_SPEED);          
-            CPPUNIT_ASSERT_EQUAL(UInt32(200000), data_cast<UInt32>(value));
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(UInt32(200000), data_cast<UInt32>(value), 100);
         }
 
         void RaspiStillCamTest::testGetAwbMode()
         {
             m_operator->initialize();
+            m_operator->activate();
             
             DataRef value = m_operator->getParameter(RaspiStillCam::AWB_MODE);
             
@@ -176,6 +179,7 @@ namespace stromx
         void RaspiStillCamTest::testSetAwbMode()
         {
             m_operator->initialize();
+            m_operator->activate();
             
             m_operator->setParameter(RaspiStillCam::AWB_MODE, Enum(MMAL_PARAM_AWBMODE_CLOUDY));
             
@@ -339,6 +343,31 @@ namespace stromx
             runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
             runtime::ReadAccess access0(result);
             cvsupport::Image::save("RaspiStillCamTest_testSetAwbModeSunlightAndExecute.png", access0.get<runtime::Image>());
+        }
+
+        void RaspiStillCamTest::testGetAwbGains()
+        {
+            m_operator->initialize();
+            m_operator->activate();
+            DataRef red = m_operator->getParameter(RaspiStillCam::AWB_GAIN_RED);
+            DataRef blue = m_operator->getParameter(RaspiStillCam::AWB_GAIN_BLUE);
+            
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(Float32(1.0), data_cast<Float32>(red), 1e-3);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(Float32(1.0), data_cast<Float32>(blue), 1e-3);
+        }
+
+        void RaspiStillCamTest::testSetAwbGains()
+        {
+            m_operator->initialize();
+            m_operator->activate();
+            
+            m_operator->setParameter(RaspiStillCam::AWB_GAIN_RED, Float32(2.0));
+            m_operator->setParameter(RaspiStillCam::AWB_GAIN_BLUE, Float32(3.0));
+            
+            DataRef red = m_operator->getParameter(RaspiStillCam::AWB_GAIN_RED);
+            DataRef blue = m_operator->getParameter(RaspiStillCam::AWB_GAIN_BLUE);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(Float32(2.0), data_cast<Float32>(red), 1e-3);
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(Float32(3.0), data_cast<Float32>(blue), 1e-3);
         }
         
         void RaspiStillCamTest::tearDown()

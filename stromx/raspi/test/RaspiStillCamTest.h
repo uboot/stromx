@@ -53,6 +53,8 @@ namespace stromx
             CPPUNIT_TEST(testSetAwbModeOffAndExecute);
             CPPUNIT_TEST(testSetAwbModeSunlightAndExecute);
             CPPUNIT_TEST(testSetRoiAndExecute);
+            CPPUNIT_TEST(testGetAwbGains);
+            CPPUNIT_TEST(testSetAwbGains);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -86,6 +88,8 @@ namespace stromx
             void testSetAwbModeOffAndExecute();
             void testSetAwbModeSunlightAndExecute();
             void testSetRoiAndExecute();
+            void testGetAwbGains();
+            void testSetAwbGains();
 
         private:
             runtime::OperatorTester* m_operator;

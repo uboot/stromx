@@ -59,7 +59,11 @@ namespace stromx
                 WIDTH,
                 HEIGHT,
                 AWB_MODE,
-                HAS_TRIGGER_INPUT
+                HAS_TRIGGER_INPUT,
+                AWB_GAIN_GROUP,
+                AWB_GAIN_RED,
+                AWB_GAIN_BLUE
+                
             };
             
             enum Resolution
@@ -94,7 +98,7 @@ namespace stromx
             static int height(const runtime::Enum & resolution);
             
             bool getRoi(PARAM_FLOAT_RECT_T & rect) const;
-            bool setRoi(PARAM_FLOAT_RECT_T & rect);
+            bool setRoi(const PARAM_FLOAT_RECT_T & rect);
 
             MMAL_COMPONENT_T* m_cameraComponent;
             MMAL_COMPONENT_T* m_previewComponent;
@@ -106,6 +110,8 @@ namespace stromx
             runtime::UInt32 m_numBuffers;
             runtime::Enum m_resolution;
             runtime::Bool m_hasTriggerInput;
+            runtime::Float32 m_awbGainRed;
+            runtime::Float32 m_awbGainBlue;
         };
     }
 }
