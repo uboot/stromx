@@ -494,6 +494,18 @@ namespace stromx
                 throw runtime::OperatorError(*this, "Unable to set default shutter speed.");
             }
             
+            
+            MMAL_PARAMETER_EXPOSUREMODE_T expMode = {
+                {MMAL_PARAMETER_EXPOSURE_MODE, sizeof(expMode)}, 
+                MMAL_PARAM_EXPOSUREMODE_T(MMAL_PARAM_EXPOSUREMODE_OFF)
+            };
+            status = mmal_port_parameter_set(m_cameraComponent->control, &expMode.hdr);
+            if(status != MMAL_SUCCESS)
+            {
+                deactivate();
+                throw runtime::OperatorError(*this, "Unable to set default exposure mode.");
+            }
+            
             MMAL_PARAMETER_AWBMODE_T awbMode = {
                 {MMAL_PARAMETER_AWB_MODE, sizeof(awbMode)},
                 MMAL_PARAM_AWBMODE_T(MMAL_PARAM_AWBMODE_OFF)
