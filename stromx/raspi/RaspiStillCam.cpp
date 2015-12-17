@@ -54,7 +54,7 @@ namespace
     static const int MAX_HEIGHT = 1944;
     static const int MAX_PREVIEW_WIDTH = 1024;
     static const int MAX_PREVIEW_HEIGHT = 768;
-    static const float AWB_GAIN_MIN = -5;
+    static const float AWB_GAIN_MIN = 0;
     static const float AWB_GAIN_MAX = 5;
     
     static const int DEFAULT_SHUTTER_SPEED = 100000;
@@ -517,7 +517,7 @@ namespace stromx
                 throw runtime::OperatorError(*this, "Unable to set default AWB mode.");
             }
             
-            MMAL_PARAMETER_AWB_GAINS_T awbGains = {
+            MMAL_PARAMETER_AWB_GAINS_ TawbGains = {
                 {MMAL_PARAMETER_CUSTOM_AWB_GAINS, sizeof(awbGains)},
                 {65536,65536}, {65536,65536}
             };
