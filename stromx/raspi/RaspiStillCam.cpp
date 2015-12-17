@@ -145,7 +145,7 @@ namespace stromx
             std::vector<const Parameter*> parameters;
 
             Parameter* hasTriggerInput = new Parameter(HAS_TRIGGER_INPUT, Variant::BOOL);
-            hasTriggerInput->setTitle(L_("Has trigger Input"));
+            hasTriggerInput->setTitle(L_("Has trigger input"));
             hasTriggerInput->setAccessMode(Parameter::NONE_WRITE);
             parameters.push_back(hasTriggerInput);
 
