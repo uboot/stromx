@@ -302,14 +302,13 @@ namespace stromx
 
         void RaspiStillCamTest::testSetRoiAndExecute()
         {
-            m_operator->initialize();
+            m_operator->initialize();             
+            m_operator->activate();
             
             m_operator->setParameter(RaspiStillCam::LEFT, Float32(0.25));  
             m_operator->setParameter(RaspiStillCam::TOP, Float32(0.3));   
             m_operator->setParameter(RaspiStillCam::WIDTH, Float32(0.5));  
-            m_operator->setParameter(RaspiStillCam::HEIGHT, Float32(0.4));  
-            
-            m_operator->activate();
+            m_operator->setParameter(RaspiStillCam::HEIGHT, Float32(0.4)); 
             
             runtime::DataContainer result = m_operator->getOutputData(RaspiStillCam::IMAGE);
             
