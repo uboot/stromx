@@ -106,6 +106,7 @@
           <p class="text-center">
             More complex streams can e.g. implement the intrinsic calibration of a camera. This streams detects chessboard patterns on the input images, merges the results into a big list and finally computes the intrinsic camera parameters from this list. The pattern detection and the calibration must be executed on different time scales (several detection are necessary for one calibration). This is automatically handled by stromx.
           </p>
+          
           <hr>
           
           <h3 class="text-center">Layered views</h3>
@@ -114,6 +115,16 @@
           </div>
           <p class="text-center">
             The data of several operator inputs and outputs can be visualized by arranging them in different layers of the view stack. Here, we can see the input image, the detected chessboard pattern (blue) and the accumulated pattern corners (red). The final calibration parameters are printed as numeric values at the bottom.
+          </p>  
+          
+          <hr>
+          
+          <h3 class="text-center">Raspberry Pi support</h3>
+          <div class="container image-container">
+            <img src="screenshots/raspi.png"  width="100%">
+          </div>
+          <p class="text-center">
+            The Raspberry Pi camera is supported by an operator which is part of stromx. Moreover, operators for GPIO input and output exist. Try to make sense of the rather useless example above!  
           </p>        
         </div>
         <div class="col-sm-2"></div>
