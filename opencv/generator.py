@@ -58,7 +58,7 @@ class LibHeaderGenerator(LibGenerator):
         self.doc.line('extern "C"')
         self.doc.scopeEnter()
         self.doc.line("STROMX_{0}_API void stromx{1}Register"
-                  "(stromx::runtime::Registry& registry);"\
+                  "(stromx::runtime::Registry* registry);"\
                   .format(p, self.p.ident.className()))
         self.doc.scopeExit()
         self.doc.blank()
@@ -97,7 +97,7 @@ class LibImplGenerator(LibGenerator):
         self.doc.namespaceExit()
         self.doc.blank()
         
-        self.doc.line("void stromx{0}Register(stromx::runtime::Registry& registry)"\
+        self.doc.line("void stromx{0}Register(stromx::runtime::Registry* registry)"\
             .format(self.p.ident.className()))
         self.doc.scopeEnter()
         self.doc.line("using namespace stromx::{0};".format(self.p.ident))
@@ -110,7 +110,7 @@ class LibImplGenerator(LibGenerator):
         self.doc.blank()
     
         for m in self.p.methods:
-            self.doc.line("registry.registerOperator(new {0});"\
+            self.doc.line("registry->registerOperator(new {0});"\
                 .format(m.ident.className()))
         
         self.doc.scopeExit()

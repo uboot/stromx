@@ -37,22 +37,22 @@ namespace stromx
     }
 }
 
-void stromxCvsupportRegister(stromx::runtime::Registry& registry)
+void stromxCvsupportRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvsupport;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVSUPPORT_LOCALE_DIR,
                                                STROMX_CVSUPPORT_LOCALE_DOMAIN);
     
-    registry.registerData(new Image);
-    registry.registerData(new Matrix);
+    registry->registerData(new Image);
+    registry->registerData(new Matrix);
     
-    registry.registerOperator(new AdjustRgbChannels);
-    registry.registerOperator(new Buffer);
-    registry.registerOperator(new DummyCamera);
-    registry.registerOperator(new Clip);
-    registry.registerOperator(new ConstImage);
-    registry.registerOperator(new ConvertPixelType);
-    registry.registerOperator(new Flicker);
-    registry.registerOperator(new ReadDirectory);
+    registry->registerOperator(new AdjustRgbChannels);
+    registry->registerOperator(new Buffer);
+    registry->registerOperator(new DummyCamera);
+    registry->registerOperator(new Clip);
+    registry->registerOperator(new ConstImage);
+    registry->registerOperator(new ConvertPixelType);
+    registry->registerOperator(new Flicker);
+    registry->registerOperator(new ReadDirectory);
 }

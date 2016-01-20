@@ -29,14 +29,14 @@
 
 extern "C"
 {
-    void STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry& registry)
+    void STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry* registry)
     {
         using namespace stromx::test;
         
-        registry.registerOperator(new DeadlockOperator);
-        registry.registerOperator(new ExceptionOperator);
-        registry.registerOperator(new ParameterOperator);
-        registry.registerOperator(new RandomDataOperator);
-        registry.registerOperator(new TestDataOperator);
+        registry->registerOperator(new DeadlockOperator);
+        registry->registerOperator(new ExceptionOperator);
+        registry->registerOperator(new ParameterOperator);
+        registry->registerOperator(new RandomDataOperator);
+        registry->registerOperator(new TestDataOperator);
     }
 }

@@ -36,7 +36,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVML_API void stromxCvmlRegister(stromx::runtime::Registry& registry);
+    STROMX_CVML_API void stromxCvmlRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVML_H

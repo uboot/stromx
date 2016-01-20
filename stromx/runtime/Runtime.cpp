@@ -58,43 +58,43 @@ namespace stromx
     }
 }
 
-void stromxRuntimeRegister(stromx::runtime::Registry& registry)
+void stromxRuntimeRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::runtime;
     
     locale = Locale::generate(STROMX_RUNTIME_LOCALE_DIR,
                               STROMX_RUNTIME_LOCALE_DOMAIN);
     
-    registry.registerOperator(new Block);
-    registry.registerOperator(new Compare);
-    registry.registerOperator(new ConstData);
-    registry.registerOperator(new Counter);
-    registry.registerOperator(new Dump);
-    registry.registerOperator(new Filter);
-    registry.registerOperator(new Fork);
-    registry.registerOperator(new Split);
-    registry.registerOperator(new Join);
-    registry.registerOperator(new Merge);
-    registry.registerOperator(new PeriodicDelay);
-    registry.registerOperator(new Push);
-    registry.registerOperator(new Queue);
-    registry.registerOperator(new Receive);
-    registry.registerOperator(new Repeat);
-    registry.registerOperator(new Send);
+    registry->registerOperator(new Block);
+    registry->registerOperator(new Compare);
+    registry->registerOperator(new ConstData);
+    registry->registerOperator(new Counter);
+    registry->registerOperator(new Dump);
+    registry->registerOperator(new Filter);
+    registry->registerOperator(new Fork);
+    registry->registerOperator(new Split);
+    registry->registerOperator(new Join);
+    registry->registerOperator(new Merge);
+    registry->registerOperator(new PeriodicDelay);
+    registry->registerOperator(new Push);
+    registry->registerOperator(new Queue);
+    registry->registerOperator(new Receive);
+    registry->registerOperator(new Repeat);
+    registry->registerOperator(new Send);
     
-    registry.registerData(new Bool);
-    registry.registerData(new Int8);
-    registry.registerData(new UInt8);
-    registry.registerData(new Int16);
-    registry.registerData(new UInt16);
-    registry.registerData(new Int32);
-    registry.registerData(new UInt32);
-    registry.registerData(new Float32);
-    registry.registerData(new Float64);
-    registry.registerData(new Enum);
-    registry.registerData(new List);
-    registry.registerData(new None);
-    registry.registerData(new String);
-    registry.registerData(new TriggerData);
-    registry.registerData(new File);
+    registry->registerData(new Bool);
+    registry->registerData(new Int8);
+    registry->registerData(new UInt8);
+    registry->registerData(new Int16);
+    registry->registerData(new UInt16);
+    registry->registerData(new Int32);
+    registry->registerData(new UInt32);
+    registry->registerData(new Float32);
+    registry->registerData(new Float64);
+    registry->registerData(new Enum);
+    registry->registerData(new List);
+    registry->registerData(new None);
+    registry->registerData(new String);
+    registry->registerData(new TriggerData);
+    registry->registerData(new File);
 }

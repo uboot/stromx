@@ -12,11 +12,11 @@ namespace stromx
     }
 }
 
-void stromxCvobjdetectRegister(stromx::runtime::Registry& registry)
+void stromxCvobjdetectRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvobjdetect;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVOBJDETECT_LOCALE_DIR, STROMX_CVOBJDETECT_LOCALE_DOMAIN);
     
-    registry.registerOperator(new CascadeClassifier);
+    registry->registerOperator(new CascadeClassifier);
 }

@@ -54,53 +54,53 @@ namespace stromx
     }
 }
 
-void stromxCvimgprocRegister(stromx::runtime::Registry& registry)
+void stromxCvimgprocRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvimgproc;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVIMGPROC_LOCALE_DIR, STROMX_CVIMGPROC_LOCALE_DOMAIN);
     
-    registry.registerOperator(new BilateralFilter);
-    registry.registerOperator(new Blur);
-    registry.registerOperator(new BoxFilter);
-    registry.registerOperator(new Dilate);
-    registry.registerOperator(new Erode);
-    registry.registerOperator(new GaussianBlur);
-    registry.registerOperator(new MedianBlur);
-    registry.registerOperator(new MorphologyEx);
-    registry.registerOperator(new Laplacian);
-    registry.registerOperator(new PyrDown);
-    registry.registerOperator(new PyrUp);
-    registry.registerOperator(new Scharr);
-    registry.registerOperator(new Sobel);
-    registry.registerOperator(new Resize);
-    registry.registerOperator(new AdaptiveThreshold);
-    registry.registerOperator(new Threshold);
-    registry.registerOperator(new WarpAffine);
-    registry.registerOperator(new WarpPerspective);
-    registry.registerOperator(new Undistort);
-    registry.registerOperator(new UndistortPoints);
-    registry.registerOperator(new DistanceTransform);
-    registry.registerOperator(new FloodFill);
-    registry.registerOperator(new Integral);
-    registry.registerOperator(new CalcHist);
-    registry.registerOperator(new EqualizeHist);
-    registry.registerOperator(new FindContours);
-    registry.registerOperator(new DrawContours);
-    registry.registerOperator(new ApproxPolyDP);
-    registry.registerOperator(new BoundingRect);
-    registry.registerOperator(new ContourArea);
-    registry.registerOperator(new ConvexHull);
-    registry.registerOperator(new FitEllipse);
-    registry.registerOperator(new FitLine);
-    registry.registerOperator(new MinAreaRect);
-    registry.registerOperator(new MinEnclosingCircle);
-    registry.registerOperator(new Canny);
-    registry.registerOperator(new CornerHarris);
-    registry.registerOperator(new CornerMinEigenVal);
-    registry.registerOperator(new CornerSubPix);
-    registry.registerOperator(new GoodFeaturesToTrack);
-    registry.registerOperator(new HoughLinesP);
-    registry.registerOperator(new PreCornerDetect);
-    registry.registerOperator(new ExtractRectangle);
+    registry->registerOperator(new BilateralFilter);
+    registry->registerOperator(new Blur);
+    registry->registerOperator(new BoxFilter);
+    registry->registerOperator(new Dilate);
+    registry->registerOperator(new Erode);
+    registry->registerOperator(new GaussianBlur);
+    registry->registerOperator(new MedianBlur);
+    registry->registerOperator(new MorphologyEx);
+    registry->registerOperator(new Laplacian);
+    registry->registerOperator(new PyrDown);
+    registry->registerOperator(new PyrUp);
+    registry->registerOperator(new Scharr);
+    registry->registerOperator(new Sobel);
+    registry->registerOperator(new Resize);
+    registry->registerOperator(new AdaptiveThreshold);
+    registry->registerOperator(new Threshold);
+    registry->registerOperator(new WarpAffine);
+    registry->registerOperator(new WarpPerspective);
+    registry->registerOperator(new Undistort);
+    registry->registerOperator(new UndistortPoints);
+    registry->registerOperator(new DistanceTransform);
+    registry->registerOperator(new FloodFill);
+    registry->registerOperator(new Integral);
+    registry->registerOperator(new CalcHist);
+    registry->registerOperator(new EqualizeHist);
+    registry->registerOperator(new FindContours);
+    registry->registerOperator(new DrawContours);
+    registry->registerOperator(new ApproxPolyDP);
+    registry->registerOperator(new BoundingRect);
+    registry->registerOperator(new ContourArea);
+    registry->registerOperator(new ConvexHull);
+    registry->registerOperator(new FitEllipse);
+    registry->registerOperator(new FitLine);
+    registry->registerOperator(new MinAreaRect);
+    registry->registerOperator(new MinEnclosingCircle);
+    registry->registerOperator(new Canny);
+    registry->registerOperator(new CornerHarris);
+    registry->registerOperator(new CornerMinEigenVal);
+    registry->registerOperator(new CornerSubPix);
+    registry->registerOperator(new GoodFeaturesToTrack);
+    registry->registerOperator(new HoughLinesP);
+    registry->registerOperator(new PreCornerDetect);
+    registry->registerOperator(new ExtractRectangle);
 }

@@ -13,7 +13,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVCORE_API void stromxCvcoreRegister(stromx::runtime::Registry& registry);
+    STROMX_CVCORE_API void stromxCvcoreRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVCORE_CVCORE_H

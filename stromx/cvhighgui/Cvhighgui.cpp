@@ -27,12 +27,12 @@ namespace stromx
     }
 }
 
-void stromxCvhighguiRegister(stromx::runtime::Registry& registry)
+void stromxCvhighguiRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvhighgui;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVHIGHGUI_LOCALE_DIR,
                                                STROMX_CVHIGHGUI_LOCALE_DOMAIN);
     
-    registry.registerOperator(new VideoCapture);
+    registry->registerOperator(new VideoCapture);
 }

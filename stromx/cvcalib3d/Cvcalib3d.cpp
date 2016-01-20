@@ -15,14 +15,14 @@ namespace stromx
     }
 }
 
-void stromxCvcalib3dRegister(stromx::runtime::Registry& registry)
+void stromxCvcalib3dRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvcalib3d;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVCALIB3D_LOCALE_DIR, STROMX_CVCALIB3D_LOCALE_DOMAIN);
     
-    registry.registerOperator(new CalibrateCamera);
-    registry.registerOperator(new FindChessboardCorners);
-    registry.registerOperator(new GeneratePattern);
-    registry.registerOperator(new SolvePnP);
+    registry->registerOperator(new CalibrateCamera);
+    registry->registerOperator(new FindChessboardCorners);
+    registry->registerOperator(new GeneratePattern);
+    registry->registerOperator(new SolvePnP);
 }
