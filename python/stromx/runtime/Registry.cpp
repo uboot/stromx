@@ -37,6 +37,11 @@ namespace
             this->get_override("registerData")(data);
         }
     };
+        
+    intptr_t _this(Registry& registry)
+    {
+        return reinterpret_cast<intptr_t>(&registry);
+    }
 }
 
 void exportRegistry()
@@ -44,5 +49,6 @@ void exportRegistry()
     class_<RegistryWrap, boost::noncopyable>("Registry", no_init)
         .def("registerOperator", pure_virtual(&Registry::registerOperator))
         .def("registerData", pure_virtual(&Registry::registerData))
+        .def("_this", &_this)
     ;
 }
