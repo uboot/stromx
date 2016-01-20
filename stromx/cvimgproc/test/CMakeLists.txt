@@ -58,6 +58,7 @@ set (SOURCES
     ../FloodFill.cpp
     ../Integral.cpp
     ../CalcHist.cpp
+    ../EqualizeHist.cpp
     ../FindContours.cpp
     ../DrawContours.cpp
     ../ApproxPolyDP.cpp
@@ -102,6 +103,7 @@ set (SOURCES
     FloodFillTest.cpp
     IntegralTest.cpp
     CalcHistTest.cpp
+    EqualizeHistTest.cpp
     FindContoursTest.cpp
     DrawContoursTest.cpp
     ApproxPolyDPTest.cpp

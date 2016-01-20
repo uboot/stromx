@@ -65,8 +65,11 @@ class LibHeaderGenerator(LibGenerator):
         
         self.doc.line("#endif // STROMX_{0}_{0}_H".format(p))
         
-        filename = "stromx/{0}/{1}.h".format(self.p.ident, 
-                                             self.p.ident.className())
+        dirname = "stromx/{0}".format(self.p.ident)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        filename = "{0}/{1}.h".format(dirname, self.p.ident.className())
+            
         with file(filename, "w") as f:
             f.write(self.doc.string())
            
@@ -182,7 +185,11 @@ int main( int argc, char* argv[] )
 """
         self.doc.text(text)
         
-        filename = "stromx/{0}/test/main.cpp".format(self.p.ident)
+        dirname = "stromx/{0}/test".format(self.p.ident)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        filename = "{0}/main.cpp".format(dirname)
+        
         with file(filename, "w") as f:
             f.write(self.doc.string())
 
@@ -366,7 +373,12 @@ class PythonCMakeGenerator(LibGenerator):
         self.doc.decreaseIndent()
         self.doc.line("endif()")
     
-        filename = "python/stromx/{0}/CMakeLists.txt".format(self.p.ident)
+        
+        dirname = "python/stromx/{0}".format(self.p.ident)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        filename = "{0}/CMakeLists.txt".format(dirname)
+        
         with file(filename, "w") as f:
             f.write(self.doc.string())
             

@@ -1051,7 +1051,7 @@ integral = package.Method(
     "integral", options = [manual, allocate]
 )
 
-# hist
+# calcHist
 histMin = package.NumericParameter(
     "histMin", "Minimum", cvtype.Float32(), datatype.Float32(),
     default = 0
@@ -1074,6 +1074,33 @@ allocate = package.Option(
 )
 calcHist = package.Method(
     "calcHist", namespace = "", options = [allocate]
+)
+
+# equalizeHist
+manual = package.Option(
+    "manual", "Manual", 
+    [package.Input(srcImgMono8bit, True), package.Output(dstImg)],
+    tests = [
+        [lenna_bw, memory],
+        [lenna_bw, test.RefData(lenna_bw)]
+    ]
+)
+allocate = package.Option(
+    "allocate", "Allocate", 
+    [package.Input(srcImgMono8bit), package.Allocation(dstImg)],
+    tests = [
+        [lenna_bw, DT]
+    ]
+)
+inPlace = package.Option(
+    "inPlace", "In place",
+    [package.InputOutput(srcImgMono8bit), package.RefInput(dstImg, srcImgMono)],
+    tests = [
+        [lenna_bw, DT]
+    ]
+)
+equalizeHist = package.Method(
+    "equalizeHist", options = [manual, allocate, inPlace]
 )
 
 # findContours
@@ -1577,6 +1604,7 @@ imgproc = package.Package(
         floodFill,
         integral,
         calcHist,
+        equalizeHist,
         findContours,
         drawContours,
         approxPolyDP,

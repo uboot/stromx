@@ -39,6 +39,7 @@ set (SOURCES
     FloodFill.cpp
     Integral.cpp
     CalcHist.cpp
+    EqualizeHist.cpp
     FindContours.cpp
     DrawContours.cpp
     ApproxPolyDP.cpp

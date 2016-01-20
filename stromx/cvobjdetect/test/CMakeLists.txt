@@ -1,0 +1,33 @@
+add_test(NAME stromx_cvobjdetect_test COMMAND stromx_cvobjdetect_test)
+
+if(MSVC)
+    add_definitions(/DSTROMX_CVOBJDETECT_STATIC)
+endif(MSVC)
+
+include_directories (
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+    ${CPPUNIT_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIRS}
+)
+
+set (SOURCES 
+    ../CascadeClassifier.cpp
+    ../Utility.cpp
+    ../Cvobjdetect.cpp
+    CascadeClassifierTest.cpp
+    main.cpp
+)
+
+add_executable(stromx_cvobjdetect_test ${SOURCES})
+
+set_target_properties(stromx_cvobjdetect_test PROPERTIES FOLDER "test")
+
+target_link_libraries (stromx_cvobjdetect_test
+    ${CPPUNIT_LIBRARY}
+    ${CMAKE_DL_LIBS}
+    ${OpenCV_LIBS}
+    stromx_runtime
+    stromx_cvsupport
+)
+
