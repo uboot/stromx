@@ -11,6 +11,9 @@ include_directories (
     ${Boost_INCLUDE_DIRS}
 )
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/faces.jpg ${CMAKE_CURRENT_BINARY_DIR}/faces.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/haarcascade_frontalface_alt.txt ${CMAKE_CURRENT_BINARY_DIR}/haarcascade_frontalface_alt.txt COPYONLY)
+
 set (SOURCES 
     ../CascadeClassifier.cpp
     ../Utility.cpp

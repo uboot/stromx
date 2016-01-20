@@ -41,6 +41,7 @@ namespace stromx
                 DATA,
                 TRAINING_RESPONSE
             };
+            
             enum OutputId
             {
                 PREDICTED_RESPONSE

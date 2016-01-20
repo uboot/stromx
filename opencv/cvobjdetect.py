@@ -48,7 +48,7 @@ cascadeClassifier = package.Method(
 objdetect = package.Package(
     "cvobjdetect", 0, 1, 0,
     methods = [
-        cascadeClassifier
+        #cascadeClassifier
     ]
 )
 

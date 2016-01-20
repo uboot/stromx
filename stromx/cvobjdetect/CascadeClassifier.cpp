@@ -9,9 +9,9 @@
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
+#include <stromx/runtime/List.h>
 #include <stromx/runtime/ReadAccess.h>
-#include <stromx/runtime/VariantComposite.h>
-#include <stromx/runtime/WriteAccess.h>
+
 #include <opencv2/objdetect/objdetect.hpp>
 
 namespace stromx
@@ -23,17 +23,22 @@ namespace stromx
         const std::string CascadeClassifier::TYPE("CascadeClassifier");
         
         CascadeClassifier::CascadeClassifier()
-          : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_dataFlow()
+          : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters())
+          , m_cvClassifier(new cv::CascadeClassifier())
         {
         }
         
+        CascadeClassifier::~CascadeClassifier()
+        {
+            delete m_cvClassifier;
+        }
+            
         const runtime::DataRef CascadeClassifier::getParameter(unsigned int id) const
         {
             switch(id)
             {
-            case DATA_FLOW:
-                return m_dataFlow;
+            case CLASSIFIER:
+                return m_classifier;
             default:
                 throw runtime::WrongParameterId(id, *this);
             }
@@ -45,16 +50,10 @@ namespace stromx
             {
                 switch(id)
                 {
-                case DATA_FLOW:
-                    {
-                        const runtime::Enum & castedValue = runtime::data_cast<runtime::Enum>(value);
-                        if(! castedValue.variant().isVariant(runtime::Variant::ENUM))
-                        {
-                            throw runtime::WrongParameterType(parameter(id), *this);
-                        }
-                        cvsupport::checkEnumValue(castedValue, m_dataFlowParameter, *this);
-                        m_dataFlow = castedValue;
-                    }
+                case CLASSIFIER:
+                    m_classifier = stromx::runtime::data_cast<runtime::File>(value);
+                    if (! m_classifier.path().empty())
+                        m_cvClassifier->load(m_classifier.path().c_str());
                     break;
                 default:
                     throw runtime::WrongParameterId(id, *this);
@@ -66,24 +65,14 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Parameter*> CascadeClassifier::setupInitParameters()
-        {
-            std::vector<const runtime::Parameter*> parameters;
-            
-            return parameters;
-        }
-        
         const std::vector<const runtime::Parameter*> CascadeClassifier::setupParameters()
         {
             std::vector<const runtime::Parameter*> parameters;
             
-            switch(int(m_dataFlow))
-            {
-            case(ALLOCATE):
-                {
-                }
-                break;
-            }
+            runtime::Parameter* classifier = new runtime::Parameter(CLASSIFIER, runtime::Variant::FILE);
+            classifier->setTitle("Classifier");
+            classifier->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            parameters.push_back(classifier);
             
             return parameters;
         }
@@ -92,17 +81,9 @@ namespace stromx
         {
             std::vector<const runtime::Description*> inputs;
             
-            switch(int(m_dataFlow))
-            {
-            case(ALLOCATE):
-                {
-                    m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
-                    m_srcDescription->setTitle(L_("Source"));
-                    inputs.push_back(m_srcDescription);
-                    
-                }
-                break;
-            }
+            m_srcDescription = new runtime::Description(SRC, runtime::Variant::MONO_8_IMAGE);
+            m_srcDescription->setTitle(L_("Source image"));
+            inputs.push_back(m_srcDescription);
             
             return inputs;
         }
@@ -111,63 +92,43 @@ namespace stromx
         {
             std::vector<const runtime::Description*> outputs;
             
-            switch(int(m_dataFlow))
-            {
-            case(ALLOCATE):
-                {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
-                    dst->setTitle(L_("Destination"));
-                    outputs.push_back(dst);
-                    
-                }
-                break;
-            }
+            runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
+            dst->setTitle(L_("Detected rectangles"));
+            outputs.push_back(dst);
             
             return outputs;
         }
         
-        void CascadeClassifier::initialize()
-        {
-            runtime::OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
-        }
-        
         void CascadeClassifier::execute(runtime::DataProvider & provider)
         {
-            switch(int(m_dataFlow))
+            runtime::Id2DataPair srcInMapper(SRC);
+            
+            provider.receiveInputData(srcInMapper);
+            
+            const runtime::Data* srcData = 0;
+            
+            runtime::ReadAccess srcReadAccess;
+            
+            srcReadAccess = runtime::ReadAccess(srcInMapper.data());
+            srcData = &srcReadAccess.get();
+            
+            if(! srcData->variant().isVariant(m_srcDescription->variant()))
             {
-            case(ALLOCATE):
-                {
-                    runtime::Id2DataPair srcInMapper(SRC);
-                    
-                    provider.receiveInputData(srcInMapper);
-                    
-                    const runtime::Data* srcData = 0;
-                    
-                    runtime::ReadAccess srcReadAccess;
-                    
-                    srcReadAccess = runtime::ReadAccess(srcInMapper.data());
-                    srcData = &srcReadAccess.get();
-                    
-                    if(! srcData->variant().isVariant(m_srcDescription->variant()))
-                    {
-                        throw runtime::InputError(SRC, *this, "Wrong input data variant.");
-                    }
-                    
-                    const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
-                    
-                    cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
-                    std::vector<cv::Mat> dstCvData;
-                    
-                    //cv::cascadeClassifier(srcCvData, dstCvData);
-                    
-                    runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
-                    runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
-                    runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
-                    
-                    provider.sendOutputData(dstOutMapper);
-                }
-                break;
+                throw runtime::InputError(SRC, *this, "Wrong input data variant.");
             }
+            
+            const runtime::Image* srcCastedData = runtime::data_cast<runtime::Image>(srcData);
+            
+            cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
+            std::vector<cv::Rect> dstCvData;
+            
+            m_cvClassifier->detectMultiScale(srcCvData, dstCvData);
+            
+            runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
+            runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
+            runtime::Id2DataPair dstOutMapper(DST, dstOutContainer);
+            
+            provider.sendOutputData(dstOutMapper);
         }
         
     } // cvobjdetect

@@ -15,8 +15,7 @@ namespace stromx
         class CascadeClassifierTest : public CPPUNIT_NS::TestFixture
         {
             CPPUNIT_TEST_SUITE(CascadeClassifierTest);
-            CPPUNIT_TEST(testAllocate0);
-            CPPUNIT_TEST(testAllocate1);
+            CPPUNIT_TEST(testExecute);
             CPPUNIT_TEST_SUITE_END();
             
         public:
@@ -25,8 +24,7 @@ namespace stromx
             void tearDown();
             
         protected:
-            void testAllocate0();
-            void testAllocate1();
+            void testExecute();
             
         private:
             runtime::OperatorTester* m_operator;
