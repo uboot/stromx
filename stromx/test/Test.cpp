@@ -27,16 +27,23 @@
 #include "stromx/test/RandomDataOperator.h"
 #include "stromx/test/TestDataOperator.h"
 
-extern "C"
+int STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry* registry)
 {
-    void STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry* registry)
+    using namespace stromx::test;
+    
+    try
     {
-        using namespace stromx::test;
-        
         registry->registerOperator(new DeadlockOperator);
         registry->registerOperator(new ExceptionOperator);
         registry->registerOperator(new ParameterOperator);
         registry->registerOperator(new RandomDataOperator);
         registry->registerOperator(new TestDataOperator);
     }
+    catch(stromx::runtime::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+    
+    return 0;
 }

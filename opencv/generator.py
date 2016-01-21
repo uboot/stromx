@@ -57,7 +57,7 @@ class LibHeaderGenerator(LibGenerator):
         
         self.doc.line('extern "C"')
         self.doc.scopeEnter()
-        self.doc.line("STROMX_{0}_API void stromx{1}Register"
+        self.doc.line("STROMX_{0}_API int stromx{1}Register"
                   "(stromx::runtime::Registry* registry);"\
                   .format(p, self.p.ident.className()))
         self.doc.scopeExit()
@@ -97,7 +97,7 @@ class LibImplGenerator(LibGenerator):
         self.doc.namespaceExit()
         self.doc.blank()
         
-        self.doc.line("void stromx{0}Register(stromx::runtime::Registry* registry)"\
+        self.doc.line("int stromx{0}Register(stromx::runtime::Registry* registry)"\
             .format(self.p.ident.className()))
         self.doc.scopeEnter()
         self.doc.line("using namespace stromx::{0};".format(self.p.ident))
@@ -109,9 +109,20 @@ class LibImplGenerator(LibGenerator):
                       ).format(p))
         self.doc.blank()
     
+        self.doc.line("try")
+        self.doc.scopeEnter()
         for m in self.p.methods:
             self.doc.line("registry->registerOperator(new {0});"\
                 .format(m.ident.className()))
+        self.doc.scopeExit()
+        self.doc.line("catch(stromx::runtime::Exception & e)")
+        self.doc.scopeEnter()
+        self.doc.line("std::cerr << e.what() << std::endl;")
+        self.doc.line("return 1;")
+        self.doc.scopeExit()
+        
+        self.doc.blank()
+        self.doc.line("return 0;")
         
         self.doc.scopeExit()
         

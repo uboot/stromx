@@ -37,7 +37,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_RUNTIME_API void stromxRuntimeRegister(stromx::runtime::Registry* registry);
+    STROMX_RUNTIME_API int stromxRuntimeRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_RUNTIME_RUNTIME_H

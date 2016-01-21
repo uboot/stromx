@@ -1,16 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 19 13:26:01 2016
-
-@author: matz
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  1 18:19:38 2013
-
-@author: matz
-"""
 
 import sys
 

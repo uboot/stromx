@@ -20,19 +20,29 @@ namespace stromx
     }
 }
 
-void stromxCvcoreRegister(stromx::runtime::Registry* registry)
+int stromxCvcoreRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvcore;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVCORE_LOCALE_DIR, STROMX_CVCORE_LOCALE_DOMAIN);
     
-    registry->registerOperator(new Absdiff);
-    registry->registerOperator(new Add);
-    registry->registerOperator(new AddWeighted);
-    registry->registerOperator(new Bitwise_and);
-    registry->registerOperator(new Bitwise_not);
-    registry->registerOperator(new Bitwise_or);
-    registry->registerOperator(new Bitwise_xor);
-    registry->registerOperator(new Mean);
-    registry->registerOperator(new Sum);
+    try
+    {
+        registry->registerOperator(new Absdiff);
+        registry->registerOperator(new Add);
+        registry->registerOperator(new AddWeighted);
+        registry->registerOperator(new Bitwise_and);
+        registry->registerOperator(new Bitwise_not);
+        registry->registerOperator(new Bitwise_or);
+        registry->registerOperator(new Bitwise_xor);
+        registry->registerOperator(new Mean);
+        registry->registerOperator(new Sum);
+    }
+    catch(stromx::runtime::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+    
+    return 0;
 }

@@ -82,7 +82,9 @@ namespace stromx
             {
                 if(op->type() == (*iter)->type() && op->package() == (*iter)->package())
                 {
-                    throw WrongArgument("Invalid argument: Operator already registered.");
+                    throw WrongArgument("Invalid argument: Operator (" 
+                        + op->package() + ", " + op->type() 
+                        + ") has already been registered.");
                 }
             }
             
@@ -104,7 +106,9 @@ namespace stromx
             {
                 if(data->type() == (*iter)->type() && data->package() == (*iter)->package())
                 {
-                    throw WrongArgument("Invalid argument: Data already registered.");
+                    throw WrongArgument("Invalid argument: Data (" 
+                        + data->package() + ", " + data->type() 
+                        + ") has already been registered.");
                 }
             }
             
@@ -132,8 +136,8 @@ namespace stromx
                 }
             }
             
-            throw OperatorAllocationFailed(package, type,
-                                           "Invalid argument: Operator (" + package + ", " + type + ") unknown. Register first unknown operator.");        
+            throw OperatorAllocationFailed(package, type, "Invalid argument: Operator (" 
+                + package + ", " + type + ") has not been registered.");        
         }
 
         Data* Factory::newData(const std::string& package, const std::string& type) const
@@ -150,15 +154,15 @@ namespace stromx
                     newData = (*iter)->clone();
                     if (newData == 0)
                     { 
-                        throw InternalError("Invalid argument received: Null pointer. Cloning failed");
+                        throw InternalError("Invalid argument: Null pointer. Cloning failed");
                     }
 
                     return newData;
                 }
             }
             
-            throw DataAllocationFailed(package, type, 
-                                   "Invalid argument: Data (" + package + ", " + type + ") unknown. Register first unknown data.");        
+            throw DataAllocationFailed(package, type, "Invalid argument: Data (" 
+                + package + ", " + type + ") has not been registered.");        
         }
     } 
 }

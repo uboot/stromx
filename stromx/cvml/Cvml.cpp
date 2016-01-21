@@ -28,12 +28,22 @@ namespace stromx
     }
 }
 
-void stromxCvmlRegister(stromx::runtime::Registry* registry)
+int stromxCvmlRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvml;
     
     locale = stromx::runtime::Locale::generate(STROMX_CVML_LOCALE_DIR,
                                                STROMX_CVML_LOCALE_DOMAIN);
     
-    registry->registerOperator(new Svm);
+    try
+    {
+        registry->registerOperator(new Svm);
+    }
+    catch(stromx::runtime::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+    
+    return 0;
 }

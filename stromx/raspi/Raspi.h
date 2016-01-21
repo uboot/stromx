@@ -32,7 +32,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_RASPI_API void stromxRaspiRegister(stromx::runtime::Registry* registry);
+    STROMX_RASPI_API int stromxRaspiRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_RASPI_RASPI_H

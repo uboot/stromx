@@ -29,7 +29,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_TEST_API void stromxTestRegister(stromx::runtime::Registry* registry);
+    STROMX_TEST_API int stromxTestRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_TEST_TEST_H

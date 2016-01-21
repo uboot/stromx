@@ -13,7 +13,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVIMGPROC_API void stromxCvimgprocRegister(stromx::runtime::Registry* registry);
+    STROMX_CVIMGPROC_API int stromxCvimgprocRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVIMGPROC_CVIMGPROC_H

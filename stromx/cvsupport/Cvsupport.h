@@ -36,7 +36,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVSUPPORT_API void stromxCvsupportRegister(stromx::runtime::Registry* registry);
+    STROMX_CVSUPPORT_API int stromxCvsupportRegister(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVSUPPORT_H

@@ -30,15 +30,25 @@ namespace stromx
     }
 }
 
-void stromxRaspiRegister(stromx::runtime::Registry* registry)
+int stromxRaspiRegister(stromx::runtime::Registry* registry)
 {
     using namespace stromx::raspi;
     
     locale = stromx::runtime::Locale::generate(STROMX_RASPI_LOCALE_DIR,
                                                STROMX_RASPI_LOCALE_DOMAIN);
     
-    registry.registerOperator(new GpioTrigger);
-    registry.registerOperator(new RaspiStillCam);
-    registry.registerOperator(new ReadGpio);
-    registry.registerOperator(new WriteGpio);
+    try
+    {
+        registry.registerOperator(new GpioTrigger);
+        registry.registerOperator(new RaspiStillCam);
+        registry.registerOperator(new ReadGpio);
+        registry.registerOperator(new WriteGpio);
+    }
+    catch(stromx::runtime::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+    
+    return 0;
 }
