@@ -710,14 +710,14 @@ def generatePackageFiles(package):
     g = TestCMakeGenerator()
     g.save(package)
     
-    g = PythonCMakeGenerator()
-    g.save(package)
+    #g = PythonCMakeGenerator()
+    #g.save(package)
         
-    g = PythonInitGenerator()
-    g.save(package)
+    #g = PythonInitGenerator()
+    #g.save(package)
     
-    g = PythonExportGenerator()
-    g.save(package)
+    #g = PythonExportGenerator()
+    #g.save(package)
     
     for m in package.methods:
         generateMethodFiles(package, m)
