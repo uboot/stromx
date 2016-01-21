@@ -16,4 +16,26 @@
 #  limitations under the License.
 #
 
+import ctypes
 
+def register(package, factory):
+    libName = 'libstromx_{0}.so'.format(package)
+    try:
+        lib = ctypes.CDLL(libName)
+    except OSError:
+        print 'Failed to load {0}'.format(libName)
+        return 1
+
+    functionName = 'stromx{0}Register'.format(package.capitalize())
+    try:
+        function = lib[functionName]
+    except AttributeError:
+        print '{0}() is not defined'.format(functionName)
+        return 1
+        
+    if function(factory._this()):
+        print 'Failed to call {0}'.format(functionName)
+        return 1
+    
+    return 0
+        
