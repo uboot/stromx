@@ -1124,7 +1124,7 @@ findContoursMethod = package.EnumParameter(
 )
 dstListOfMatrices = package.Argument(
     "dst", "Destination", cvtype.VectorOfMat(),
-    datatype.List(datatype.Int32Matrix())
+    datatype.PolygonsList(datatype.Int32Matrix())
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1174,19 +1174,19 @@ drawContours = package.Method(
 
 # approxPolyDP
 curve = package.MatrixArgument(
-    "curve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2
+    "curve", "Polygon", cvtype.Mat(channels = 2), 
+    datatype.Any32BitMatrix(), cols = 2
 )
 outCurve = package.MatrixArgument(
-    "outCurve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2
+    "outCurve", "Polygon", cvtype.Mat(channels = 2),
+    datatype.PolygonsAny32BitMatrix(), cols = 2
 )
 epsilon = package.NumericParameter(
     "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
     default = 10.0, minValue = 0.0
 )
 closed = package.Parameter(
-    "closed", "Curve is closed", cvtype.Bool(), datatype.Bool(), default = False
+    "closed", "Curve is closed", cvtype.Bool(), datatype.Bool(), default = True
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1202,7 +1202,7 @@ approxPolyDP = package.Method(
 
 # boundingRect
 rect = package.MatrixArgument(
-    "rect", "Rectangle", cvtype.Rect(), datatype.Int32Matrix(),
+    "rect", "Rectangle", cvtype.Rect(), datatype.RectanglesAny32BitMatrix(),
     cols = 4, rows = 1
 )
 points = package.MatrixArgument(

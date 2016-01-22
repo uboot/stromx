@@ -47,12 +47,20 @@ namespace stromx
         };
         
         /** 
-         * Constructs a variant which is a valid super-type of subtypes which are 
+         * Constructs a variant which is a valid super-type of subtypes either 
          * \c lhs or \c rhs. 
          * 
          * \throws WrongArgument If \c lhs or \c rhs is not valid.
          */
         STROMX_RUNTIME_API const VariantHandle operator||(const VariantHandle & lhs, const VariantHandle & rhs);
+        
+        /** 
+         * Constructs a variant which is a valid super-type of both subtypes 
+         * \c lhs and \c rhs. 
+         * 
+         * \throws WrongArgument If \c lhs and \c rhs is not valid.
+         */
+        STROMX_RUNTIME_API const VariantHandle operator&&(const VariantHandle & lhs, const VariantHandle & rhs);
     }
 }
 

@@ -93,7 +93,7 @@ namespace stromx
             using namespace runtime;
             std::vector<const Parameter*> parameters;
             
-            Parameter* classifier = new Parameter(CLASSIFIER, Variant::FILE);
+            Parameter* classifier = new Parameter(CLASSIFIER, Variant::TEXT_FILE);
             classifier->setTitle("Classifier");
             classifier->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(classifier);

@@ -69,8 +69,15 @@ namespace stromx
         const VariantHandle Variant::RGB_48_IMAGE = VariantHandle(new Variant(RGB_48_IMAGE_ID));
         const VariantHandle Variant::BGR_48_IMAGE = VariantHandle(new Variant(BGR_48_IMAGE_ID));
         const VariantHandle Variant::FILE = VariantHandle(new Variant(FILE_ID));
-        const VariantHandle Variant::BINARY_FILE = VariantHandle(new Variant(BINARY_FILE_ID));
         const VariantHandle Variant::TEXT_FILE = VariantHandle(new Variant(TEXT_FILE_ID));
+        const VariantHandle Variant::BINARY_FILE = VariantHandle(new Variant(BINARY_FILE_ID));
+        const VariantHandle Variant::POINTS = VariantHandle(new Variant(POINTS_ID));
+        const VariantHandle Variant::LINE_SEGMENTS = VariantHandle(new Variant(LINE_SEGMENTS_ID));
+        const VariantHandle Variant::POLYGONS = VariantHandle(new Variant(POLYGONS_ID));
+        const VariantHandle Variant::POLYLINES = VariantHandle(new Variant(POLYLINES_ID));
+        const VariantHandle Variant::RECTANGLES = VariantHandle(new Variant(RECTANGLES_ID));
+        const VariantHandle Variant::ROTATED_RECTANGLES = VariantHandle(new Variant(ROTATED_RECTANGLES_ID));
+        const VariantHandle Variant::ELLIPSES = VariantHandle(new Variant(ELLIPSES_ID));
         
         const std::string Variant::title() const
         {
@@ -179,6 +186,18 @@ namespace stromx
                 return  L_("Binary file");
             case TEXT_FILE_ID:
                 return  L_("Text file");
+            case LINE_SEGMENTS_ID:
+                return  L_("Line segments");
+            case POLYGONS_ID: 
+                return  L_("Polygons");
+            case POLYLINES_ID:
+                return  L_("Polylines");
+            case RECTANGLES_ID:
+                return  L_("Rectangles");
+            case ROTATED_RECTANGLES_ID:
+                return  L_("Rotated rectangles");
+            case ELLIPSES_ID: 
+                return  L_("Ellipses");
             default:
                 return "";
             }
@@ -264,6 +283,8 @@ namespace stromx
             case FILE_ID:
                 return isVariant(BINARY_FILE)
                     || isVariant(TEXT_FILE);
+            case ROTATED_RECTANGLES_ID:
+                return isVariant(ELLIPSES);
             default:
                 return false;
             }

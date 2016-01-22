@@ -193,6 +193,27 @@ namespace stromx
             /** A file object containing text data. */
             const static VariantHandle TEXT_FILE;
             
+            /** Matrix data which represents points. */
+            const static VariantHandle POINTS;
+            
+            /** Matrix data which represents line segments. */
+            const static VariantHandle LINE_SEGMENTS;
+            
+            /** Matrix data which represents polygons. */
+            const static VariantHandle POLYGONS;
+            
+            /** Matrix data which represents polylines. */
+            const static VariantHandle POLYLINES;
+            
+            /** Matrix data which represents axis aligned rectangles. */
+            const static VariantHandle RECTANGLES;
+            
+            /** Matrix data which represents rotated rectangles. */
+            const static VariantHandle ROTATED_RECTANGLES;
+            
+            /** Matrix data which represents a rotated ellipsis. */
+            const static VariantHandle ELLIPSES;
+            
             unsigned int id() const { return m_id; }
             
             const std::string & package() const { return m_package; }
@@ -253,7 +274,14 @@ namespace stromx
                 FILE_ID,
                 BINARY_FILE_ID,
                 TEXT_FILE_ID,       
-                TRIBOOL_ID
+                TRIBOOL_ID,
+                POINTS_ID,
+                LINE_SEGMENTS_ID,
+                POLYGONS_ID, 
+                POLYLINES_ID,
+                RECTANGLES_ID,
+                ROTATED_RECTANGLES_ID,
+                ELLIPSES_ID          
             };
             
             Variant(const unsigned int id)

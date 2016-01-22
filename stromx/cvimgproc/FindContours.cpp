@@ -159,7 +159,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST && runtime::Variant::POLYGONS);
                     dst->setTitle(L_("Destination"));
                     outputs.push_back(dst);
                     

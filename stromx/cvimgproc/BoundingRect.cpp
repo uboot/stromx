@@ -117,7 +117,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* rect = new runtime::MatrixDescription(RECT, runtime::Variant::INT_32_MATRIX);
+                    runtime::MatrixDescription* rect = new runtime::MatrixDescription(RECT, (runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX) && runtime::Variant::RECTANGLES);
                     rect->setTitle(L_("Rectangle"));
                     rect->setRows(1);
                     rect->setCols(4);

@@ -75,5 +75,11 @@ void exportVariant()
     in_Variant.attr("FLOAT_64") = Variant::FLOAT_64;
     in_Variant.attr("FILE") = Variant::FILE;
     in_Variant.attr("TEXT_FILE") = Variant::TEXT_FILE;
-    in_Variant.attr("BINARY_FILE") = Variant::BINARY_FILE;
+    in_Variant.attr("POINTS") = Variant::POINTS;
+    in_Variant.attr("LINE_SEGMENTS") = Variant::LINE_SEGMENTS;
+    in_Variant.attr("POLYGONS") = Variant::POLYGONS;
+    in_Variant.attr("POLYLINES") = Variant::POLYLINES;
+    in_Variant.attr("RECTANGLES") = Variant::RECTANGLES;
+    in_Variant.attr("ROTATED_RECTANGLES") = Variant::ROTATED_RECTANGLES;
+    in_Variant.attr("ELLIPSES") = Variant::ELLIPSES;                
 }

@@ -136,8 +136,8 @@ sizey = package.NumericParameter(
 )
 size = package.Size(sizex, sizey)
 corners = package.MatrixArgument(
-    "corners", "Corners", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2, isAsynchronous = True
+    "corners", "Corners", cvtype.Mat(channels = 2), 
+    datatype.PolylineFloat32Matrix(), cols = 2, isAsynchronous = True
 )
 failedPostCall = document.Document("""
 if (cornersCvData.empty())
@@ -173,8 +173,8 @@ squareSize = package.NumericParameter(
     minValue = 0
 )
 corners = package.MatrixArgument(
-    "corners", "Corners", cvtype.Mat(channels = 3), datatype.Float32Matrix(),
-    cols = 3
+    "corners", "Corners", cvtype.Mat(channels = 3),
+    datatype.PolylineFloat32Matrix(), cols = 3
 )
 allocate = package.Option(
     "allocate", "Allocate",

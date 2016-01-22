@@ -180,7 +180,7 @@ namespace stromx
             trainingIsActive->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(trainingIsActive);
             
-            Parameter* statisticalModel = new Parameter(STATISTICAL_MODEL, Variant::FILE);
+            Parameter* statisticalModel = new Parameter(STATISTICAL_MODEL, Variant::TEXT_FILE);
             statisticalModel->setTitle("Statistical model");
             statisticalModel->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
             parameters.push_back(statisticalModel);
