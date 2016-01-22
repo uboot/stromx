@@ -27,7 +27,11 @@ namespace stromx
             
             enum ParameterId
             {
-                CLASSIFIER
+                CLASSIFIER,
+                MIN_SIZE_X,
+                MIN_SIZE_Y,
+                MAX_SIZE_X,
+                MAX_SIZE_Y
             };
             
             CascadeClassifier();
@@ -49,6 +53,10 @@ namespace stromx
             runtime::File m_classifier;
             runtime::Description* m_srcDescription;
             cv::CascadeClassifier* m_cvClassifier;
+            runtime::UInt32 m_minSizeX;
+            runtime::UInt32 m_minSizeY;
+            runtime::UInt32 m_maxSizeX;
+            runtime::UInt32 m_maxSizeY;
         };
     } // cvobjdetect
 } // stromx

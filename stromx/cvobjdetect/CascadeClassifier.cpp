@@ -10,6 +10,7 @@
 #include <stromx/runtime/Id2DataComposite.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/List.h>
+#include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/ReadAccess.h>
 
 #include <opencv2/objdetect/objdetect.hpp>
@@ -39,6 +40,14 @@ namespace stromx
             {
             case CLASSIFIER:
                 return m_classifier;
+            case MIN_SIZE_X:
+                return m_minSizeX;
+            case MIN_SIZE_Y:
+                return m_minSizeY;
+            case MAX_SIZE_X:
+                return m_maxSizeX;
+            case MAX_SIZE_Y:
+                return m_maxSizeY;
             default:
                 throw runtime::WrongParameterId(id, *this);
             }
@@ -46,33 +55,68 @@ namespace stromx
         
         void CascadeClassifier::setParameter(unsigned int id, const runtime::Data& value)
         {
+            using namespace runtime;
+            
             try
             {
                 switch(id)
                 {
                 case CLASSIFIER:
-                    m_classifier = stromx::runtime::data_cast<runtime::File>(value);
+                    m_classifier = data_cast<File>(value);
                     if (! m_classifier.path().empty())
                         m_cvClassifier->load(m_classifier.path().c_str());
                     break;
+                case MIN_SIZE_X:
+                    m_minSizeX = data_cast<UInt32>(value);
+                    break;
+                case MIN_SIZE_Y:
+                    m_minSizeY = data_cast<UInt32>(value);
+                    break;
+                case MAX_SIZE_X:
+                    m_maxSizeX = data_cast<UInt32>(value);
+                    break;
+                case MAX_SIZE_Y:
+                    m_maxSizeY = data_cast<UInt32>(value);
+                    break;
                 default:
-                    throw runtime::WrongParameterId(id, *this);
+                    throw WrongParameterId(id, *this);
                 }
             }
-            catch(runtime::BadCast&)
+            catch(BadCast&)
             {
-                throw runtime::WrongParameterType(parameter(id), *this);
+                throw WrongParameterType(parameter(id), *this);
             }
         }
         
         const std::vector<const runtime::Parameter*> CascadeClassifier::setupParameters()
         {
-            std::vector<const runtime::Parameter*> parameters;
+            using namespace runtime;
+            std::vector<const Parameter*> parameters;
             
-            runtime::Parameter* classifier = new runtime::Parameter(CLASSIFIER, runtime::Variant::FILE);
+            Parameter* classifier = new Parameter(CLASSIFIER, Variant::FILE);
             classifier->setTitle("Classifier");
-            classifier->setAccessMode(runtime::Parameter::ACTIVATED_WRITE);
+            classifier->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(classifier);
+            
+            NumericParameter<UInt32>* minSizeX = new NumericParameter<runtime::UInt32>(MIN_SIZE_X);
+            minSizeX->setAccessMode(Parameter::ACTIVATED_WRITE);
+            minSizeX->setTitle(L_("Minimum object size X"));
+            parameters.push_back(minSizeX);
+            
+            NumericParameter<UInt32>* minSizeY = new NumericParameter<runtime::UInt32>(MIN_SIZE_Y);
+            minSizeY->setAccessMode(Parameter::ACTIVATED_WRITE);
+            minSizeY->setTitle(L_("Minimum object size Y"));
+            parameters.push_back(minSizeY);
+            
+            NumericParameter<UInt32>* maxSizeX = new NumericParameter<runtime::UInt32>(MAX_SIZE_X);
+            maxSizeX->setAccessMode(Parameter::ACTIVATED_WRITE);
+            maxSizeX->setTitle(L_("Maximum object size X"));
+            parameters.push_back(maxSizeX);
+            
+            NumericParameter<UInt32>* maxSizeY = new NumericParameter<runtime::UInt32>(MAX_SIZE_Y);
+            maxSizeY->setAccessMode(Parameter::ACTIVATED_WRITE);
+            maxSizeY->setTitle(L_("Maximum object size Y"));
+            parameters.push_back(maxSizeY);
             
             return parameters;
         }
@@ -122,7 +166,9 @@ namespace stromx
             cv::Mat srcCvData = cvsupport::getOpenCvMat(*srcCastedData);
             std::vector<cv::Rect> dstCvData;
             
-            m_cvClassifier->detectMultiScale(srcCvData, dstCvData);
+            m_cvClassifier->detectMultiScale(srcCvData, dstCvData, 1.1, 3, 0, 
+                                             cv::Size(m_minSizeX, m_minSizeY), 
+                                             cv::Size(m_maxSizeX, m_maxSizeY));
             
             runtime::List* dstCastedData = new runtime::TypedList<cvsupport::Matrix>(dstCvData);
             runtime::DataContainer dstOutContainer = runtime::DataContainer(dstCastedData);
