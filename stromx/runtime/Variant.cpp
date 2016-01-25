@@ -72,12 +72,14 @@ namespace stromx
         const VariantHandle Variant::TEXT_FILE = VariantHandle(new Variant(TEXT_FILE_ID));
         const VariantHandle Variant::BINARY_FILE = VariantHandle(new Variant(BINARY_FILE_ID));
         const VariantHandle Variant::POINTS = VariantHandle(new Variant(POINTS_ID));
+        const VariantHandle Variant::LINES = VariantHandle(new Variant(LINES_ID));
         const VariantHandle Variant::LINE_SEGMENTS = VariantHandle(new Variant(LINE_SEGMENTS_ID));
         const VariantHandle Variant::POLYGONS = VariantHandle(new Variant(POLYGONS_ID));
         const VariantHandle Variant::POLYLINES = VariantHandle(new Variant(POLYLINES_ID));
         const VariantHandle Variant::RECTANGLES = VariantHandle(new Variant(RECTANGLES_ID));
         const VariantHandle Variant::ROTATED_RECTANGLES = VariantHandle(new Variant(ROTATED_RECTANGLES_ID));
         const VariantHandle Variant::ELLIPSES = VariantHandle(new Variant(ELLIPSES_ID));
+        const VariantHandle Variant::CIRCLES = VariantHandle(new Variant(CIRCLES_ID));
         
         const std::string Variant::title() const
         {

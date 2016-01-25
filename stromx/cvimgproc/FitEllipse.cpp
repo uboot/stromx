@@ -98,6 +98,7 @@ namespace stromx
                 {
                     m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
+                    m_pointsDescription->setVisualization(runtime::Variant::POINTS);
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);
                     inputs.push_back(m_pointsDescription);
@@ -119,6 +120,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* ellipse = new runtime::MatrixDescription(ELLIPSE, runtime::Variant::FLOAT_32_MATRIX);
                     ellipse->setTitle(L_("Bounding box"));
+                    ellipse->setVisualization(runtime::Variant::ELLIPSES);
                     ellipse->setRows(1);
                     ellipse->setCols(5);
                     outputs.push_back(ellipse);

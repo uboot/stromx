@@ -600,6 +600,10 @@ class OpImplGenerator(MethodGenerator):
             if arg.isAsynchronous:
                 l = '{0}->setOperatorThread(1);'.format(arg.ident)
                 self.doc.line(l)
+            if arg.visualization:
+                variant = arg.visualization.variant
+                l = '{0}->setVisualization({1});'.format(arg.ident, variant)
+                self.doc.line(l)
             l = "outputs.push_back({0});".format(arg.ident)
             self.doc.line(l)
             self.doc.blank()
@@ -611,6 +615,10 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             l = '{0}->setTitle(L_("{1}"));'.format(arg.ident, arg.name)
             self.doc.line(l)
+            if arg.visualization:
+                variant = arg.visualization.variant
+                l = '{0}->setVisualization({1});'.format(arg.ident, variant)
+                self.doc.line(l)
             l = '{0}->setRows({1});'.format(arg.ident, arg.rows)
             self.doc.line(l)
             l = '{0}->setCols({1});'.format(arg.ident, arg.cols)
@@ -654,6 +662,10 @@ class OpImplGenerator(MethodGenerator):
             l = '{0}->setTitle(L_("{1}"));'\
                 .format(description, arg.name)
             self.doc.line(l)
+            if arg.visualization:
+                variant = arg.visualization.variant
+                l = '{0}->setVisualization({1});'.format(description, variant)
+                self.doc.line(l)
             l = "inputs.push_back({0});".format(description)
             self.doc.line(l)
             self.doc.blank()
@@ -668,6 +680,10 @@ class OpImplGenerator(MethodGenerator):
             self.doc.line(l)
             l = '{0}->setTitle("{1}");'.format(description, arg.name)
             self.doc.line(l)
+            if arg.visualization:
+                variant = arg.visualization.variant
+                l = '{0}->setVisualization({1});'.format(description, variant)
+                self.doc.line(l)
             l = '{0}->setRows({1});'.format(description, arg.rows)
             self.doc.line(l)
             l = '{0}->setCols({1});'.format(description, arg.cols)

@@ -98,6 +98,7 @@ namespace stromx
                 {
                     m_contourDescription = new runtime::MatrixDescription(CONTOUR, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_contourDescription->setTitle("Input points");
+                    m_contourDescription->setVisualization(runtime::Variant::POLYGONS);
                     m_contourDescription->setRows(0);
                     m_contourDescription->setCols(2);
                     inputs.push_back(m_contourDescription);

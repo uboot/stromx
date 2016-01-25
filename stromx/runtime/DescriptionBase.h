@@ -57,7 +57,8 @@ namespace stromx
         
         /** \brief Abstract description of an ID to variant map.
          * 
-         * Instances of this class associate an ID with a data variant.
+         * Instances of this class associate an ID with a data variant. Moreover
+         * the contain meta information of the data characterized by this mapping.
          * Input nodes, output nodes and parameters of operators are characterized
          * by such a description. In case of input and output nodes the data variant defines
          * which data type can be passed to an input node or is to be expected from
@@ -71,7 +72,8 @@ namespace stromx
             /** Constructs a description. */
             DescriptionBase(const unsigned int id, const VariantHandle& variant)
             : m_id(id),
-              m_variant(variant)
+              m_variant(variant),
+              m_visualization(Variant::NONE)
             {}
             
             virtual ~DescriptionBase() {}
@@ -82,16 +84,22 @@ namespace stromx
             /** Returns the ID. */
             unsigned int id() const { return m_id; }
             
-            /** Returns the data variant. */
+            /** Returns the data variant of this value. */
             const VariantHandle & variant() const { return m_variant; }
             
             /** Sets the title of the description. */
             void setTitle(const std::string & title) { m_title = title; }
             
-                        /** Returns the maximal value of this parameter or an instance of None. */
+            /** Returns how this data value should be visualized or an instance of Variant::None. */
+            const VariantHandle & visualization() const { return m_visualization; }
+            
+            /** Sets the visualization of this description. */
+            void setVisualization(const VariantHandle & visualization);
+            
+            /** Returns the maximal value of this data value or an instance of None. */
             virtual const Data& max() const { return NONE; }
             
-            /** Returns the minimal value of this parameter or an instance of None. */
+            /** Returns the minimal value of this data value or an instance of None. */
             virtual const Data& min() const { return NONE; }
             
             /** 
@@ -122,6 +130,7 @@ namespace stromx
             std::string m_title;
             unsigned int m_id;
             VariantHandle m_variant;
+            VariantHandle m_visualization;
         };
     }
 }

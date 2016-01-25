@@ -196,6 +196,9 @@ namespace stromx
             /** Matrix data which represents points. */
             const static VariantHandle POINTS;
             
+            /** Matrix data which represents lines. */
+            const static VariantHandle LINES;
+            
             /** Matrix data which represents line segments. */
             const static VariantHandle LINE_SEGMENTS;
             
@@ -210,6 +213,9 @@ namespace stromx
             
             /** Matrix data which represents rotated rectangles. */
             const static VariantHandle ROTATED_RECTANGLES;
+            
+            /** Matrix data which represents a circle. */
+            const static VariantHandle CIRCLES;
             
             /** Matrix data which represents a rotated ellipsis. */
             const static VariantHandle ELLIPSES;
@@ -276,12 +282,14 @@ namespace stromx
                 TEXT_FILE_ID,       
                 TRIBOOL_ID,
                 POINTS_ID,
+                LINES_ID,
                 LINE_SEGMENTS_ID,
                 POLYGONS_ID, 
                 POLYLINES_ID,
                 RECTANGLES_ID,
                 ROTATED_RECTANGLES_ID,
-                ELLIPSES_ID          
+                ELLIPSES_ID,
+                CIRCLES_ID
             };
             
             Variant(const unsigned int id)

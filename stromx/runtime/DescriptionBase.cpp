@@ -15,6 +15,7 @@
  */
 
 #include "stromx/runtime/DescriptionBase.h"
+#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {
@@ -22,5 +23,13 @@ namespace stromx
     {
         const std::vector<EnumDescription> DescriptionBase::NO_DESCRIPTIONS = std::vector<EnumDescription>();
         const None DescriptionBase::NONE = None();
+        
+        void DescriptionBase::setVisualization(const VariantHandle & visualization)
+        {
+            if (! visualization.isValid())
+                throw WrongArgument("Visualization of a description must be a valid variant.");
+            
+            m_visualization = visualization;
+        }
     }
 }

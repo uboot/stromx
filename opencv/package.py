@@ -178,7 +178,8 @@ class Argument(Acceptor):
     def __init__(self, ident, name, cvType, dataType, argType = ArgType.PLAIN,
                  description = "", initIn = None, initOut = None,
                  rules = None, minValue = None, maxValue = None, step = None,
-                 descriptions = None, rows = 0, cols = 0, isAsynchronous = 0):
+                 descriptions = None, rows = 0, cols = 0, visualization = None,
+                 isAsynchronous = 0):
         self.ident = Ident(ident)
         self.name = name
         self.cvType = cvType
@@ -190,6 +191,7 @@ class Argument(Acceptor):
         self.rules = [] if rules == None else rules
         self.minValue = minValue
         self.maxValue = maxValue
+        self.visualization = visualization
         self.step = step
         self.descriptions = [] if descriptions == None else descriptions
         self.rows = rows
@@ -208,6 +210,7 @@ class Argument(Acceptor):
         self.rules = arg.rules
         self.minValue = arg.minValue
         self.maxValue = arg.maxValue
+        self.visualization = arg.visualization
         self.step = arg.step
         self.description = arg.descriptions
         self.rows = arg.rows
@@ -219,12 +222,12 @@ class MatrixArgument(Argument):
     Input argument which is represented by a matrix argument.
     """
     def __init__(self, ident, name, cvType, dataType, rows = 0,
-                 cols = 0, rules = None, initIn = None, initOut = None,
-                 isAsynchronous = False):
+                 cols = 0, visualization = None, rules = None, initIn = None, 
+                 initOut = None, isAsynchronous = False):
         super(MatrixArgument, self).__init__(
             ident, name, cvType, dataType, rules = rules, 
             argType = ArgType.MATRIX, rows = rows, cols = cols, 
-            initIn = initIn, initOut = initOut,
+            visualization = visualization, initIn = initIn, initOut = initOut,
             isAsynchronous = isAsynchronous
         )
     

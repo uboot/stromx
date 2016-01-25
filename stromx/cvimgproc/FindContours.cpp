@@ -159,8 +159,9 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST && runtime::Variant::POLYGONS);
+                    runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
                     dst->setTitle(L_("Destination"));
+                    dst->setVisualization(runtime::Variant::POLYGONS);
                     outputs.push_back(dst);
                     
                 }

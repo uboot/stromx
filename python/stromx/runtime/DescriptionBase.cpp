@@ -32,6 +32,7 @@ void exportDescriptionBase()
     
     class_<DescriptionBase>("DescriptionBase", no_init)
         .def("title", &DescriptionBase::title, return_value_policy<copy_const_reference>())
+        .def("visualization", &DescriptionBase::visualization, return_internal_reference<>())
         .def("id", &DescriptionBase::id)
         .def("variant", &DescriptionBase::variant, return_internal_reference<>())
         .def("min", &DescriptionBase::min, return_internal_reference<>())

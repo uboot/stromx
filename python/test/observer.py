@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-from stromx import runtime, test
+from stromx import register, runtime
 import time
 import unittest
 
@@ -57,29 +57,38 @@ class OutputObserver(runtime.ConnectorObserver):
 
 class ObserversTest(unittest.TestCase):
     def setUp(self):
-      stream = runtime.Stream()
-      counter = stream.addOperator(runtime.Counter())
-      deadlock = stream.addOperator(test.DeadlockOperator())
-      dump = stream.addOperator(runtime.Dump())
-
-      stream.initializeOperator(counter)
-      stream.initializeOperator(deadlock)
-      stream.initializeOperator(dump)
-
-      # obtain write access in deadlock operator
-      deadlock.setParameter(3, runtime.Bool(True))
-
-      stream.connect(counter, 0, deadlock, 0)
-      stream.connect(deadlock, 1, dump, 0)
-
-      thread = stream.addThread()
-      thread.addInput(deadlock, 0)
-      thread.addInput(dump, 0)
-
-      stream.setDelay(100)
-
-      self.stream = stream
-      self.deadlock = deadlock
+        # set up an operator factory
+        factory = runtime.Factory()
+        register('runtime', factory)
+        register('test', factory)
+        
+        # get the operator kernels
+        counterKernel = factory.newOperator('runtime', 'Counter')
+        dumpKernel = factory.newOperator('runtime', 'Dump')
+        deadlockKernel = factory.newOperator('test', 'DeadlockOperator')
+        
+        # create the stream operator
+        stream = runtime.Stream()
+        counter = stream.addOperator(counterKernel)
+        deadlock = stream.addOperator(deadlockKernel)
+        dump = stream.addOperator(dumpKernel)
+        
+        stream.initializeOperator(counter)
+        stream.initializeOperator(deadlock)
+        stream.initializeOperator(dump)
+        
+        # obtain write access in deadlock operator
+        deadlock.setParameter(3, runtime.Bool(True))
+        
+        stream.connect(counter, 0, deadlock, 0)
+        stream.connect(deadlock, 1, dump, 0)
+        
+        thread = stream.addThread()
+        thread.addInput(deadlock, 0)
+        thread.addInput(dump, 0)
+        
+        self.stream = stream
+        self.deadlock = deadlock
         
     def tearDown(self):
         self.stream = None

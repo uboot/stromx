@@ -173,13 +173,6 @@ class Float32Matrix(Matrix):
     def __init__(self):
         super(Float32Matrix, self).__init__("runtime::Variant::FLOAT_32_MATRIX")
     
-class PolylineFloat32Matrix(Matrix):
-    def __init__(self):
-        super(PolylineFloat32Matrix, self).__init__(
-            "runtime::Variant::FLOAT_32_MATRIX && "
-            "runtime::Variant::POLYLINES"
-        )
-    
 class Float64Matrix(Matrix):
     def __init__(self):
         super(Float64Matrix, self).__init__("runtime::Variant::FLOAT_64_MATRIX")
@@ -189,30 +182,6 @@ class Any32BitMatrix(Matrix):
         super(Any32BitMatrix, self).__init__(
             "runtime::Variant::INT_32_MATRIX || "
             "runtime::Variant::FLOAT_32_MATRIX"
-        )    
-        
-class PolygonsAny32BitMatrix(Matrix):
-    def __init__(self):
-        super(PolygonsAny32BitMatrix, self).__init__(
-            "(runtime::Variant::INT_32_MATRIX || "
-            "runtime::Variant::FLOAT_32_MATRIX) && "
-            "runtime::Variant::POLYGONS"
-        )    
-        
-class RectanglesAny32BitMatrix(Matrix):
-    def __init__(self):
-        super(RectanglesAny32BitMatrix, self).__init__(
-            "(runtime::Variant::INT_32_MATRIX || "
-            "runtime::Variant::FLOAT_32_MATRIX) && "
-            "runtime::Variant::RECTANGLES"
-        )  
-        
-class PointsAny32BitMatrix(Matrix):
-    def __init__(self):
-        super(PointsAny32BitMatrix, self).__init__(
-            "(runtime::Variant::INT_32_MATRIX || "
-            "runtime::Variant::FLOAT_32_MATRIX) && "
-            "runtime::Variant::RECTANGLES"
         )
     
 class List(DataType):
@@ -235,13 +204,27 @@ class List(DataType):
         return "runtime::TypedList<{1}>({0})".format(src,
             self.elementType.concreteTypeId())
             
-class PolylinesList(List):
-    def variant(self):
-        return "runtime::Variant::LIST && runtime::Variant::POLYLINES"
-            
-class PolygonsList(List):
-    def variant(self):
-        return "runtime::Variant::LIST && runtime::Variant::POLYGONS"
+class Visualization(object):
+    """
+    Stromx runtime::Variant type for data visualization.
+    """
+    def __init__(self, variant):
+        self.variant = variant
+        
+Visualization.POINTS = Visualization("runtime::Variant::POINTS")
+Visualization.LINES = Visualization("runtime::Variant::LINES")
+Visualization.LINE_SEGMENTS = Visualization("runtime::Variant::LINE_SEGMENTS")
+Visualization.POLYLINES = Visualization("runtime::Variant::POLYLINES")
+Visualization.POLYGONS = Visualization("runtime::Variant::POLYGONS")
+Visualization.POLYGONS_OR_POLYLINES = Visualization(
+    "runtime::Variant::POLYGONS || runtime::Variant::POLYLINES"
+)
+Visualization.RECTANGLES = Visualization("runtime::Variant::RECTANGLES")
+Visualization.ROTATED_RECTANGLES = Visualization(
+    "runtime::Variant::ROTATED_RECTANGLES"
+)
+Visualization.CIRCLES = Visualization("runtime::Variant::CIRCLES")
+Visualization.ELLIPSES = Visualization("runtime::Variant::ELLIPSES")
         
 if __name__ == "__main__":
     import doctest

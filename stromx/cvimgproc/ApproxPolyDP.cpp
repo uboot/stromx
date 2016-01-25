@@ -24,7 +24,7 @@ namespace stromx
         
         ApproxPolyDP::ApproxPolyDP()
           : runtime::OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),
-            m_closed(true),
+            m_closed(false),
             m_epsilon(10.0),
             m_dataFlow()
         {
@@ -136,6 +136,7 @@ namespace stromx
                 {
                     m_curveDescription = new runtime::MatrixDescription(CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_curveDescription->setTitle("Polygon");
+                    m_curveDescription->setVisualization(runtime::Variant::POLYGONS || runtime::Variant::POLYLINES);
                     m_curveDescription->setRows(0);
                     m_curveDescription->setCols(2);
                     inputs.push_back(m_curveDescription);
@@ -155,8 +156,9 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, (runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX) && runtime::Variant::POLYGONS);
+                    runtime::MatrixDescription* outCurve = new runtime::MatrixDescription(OUT_CURVE, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     outCurve->setTitle(L_("Polygon"));
+                    outCurve->setVisualization(runtime::Variant::POLYGONS || runtime::Variant::POLYLINES);
                     outCurve->setRows(0);
                     outCurve->setCols(2);
                     outputs.push_back(outCurve);
