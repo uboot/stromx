@@ -93,7 +93,7 @@ make %{?_smp_mflags} doc
 
 %check
 cd build
-make test ARGS="-V"
+LD_LIBRARY_PATH=`pwd`/stromx/runtime:`pwd`/stromx/test make test ARGS="-V"
 
 
 %install
