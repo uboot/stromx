@@ -69,6 +69,7 @@ class ObserversTest(unittest.TestCase):
         
         # create the stream operator
         stream = runtime.Stream()
+        stream.setDelay(100)
         counter = stream.addOperator(counterKernel)
         deadlock = stream.addOperator(deadlockKernel)
         dump = stream.addOperator(dumpKernel)
