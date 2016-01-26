@@ -93,7 +93,7 @@ make %{?_smp_mflags} doc
 
 %check
 cd build
-LD_LIBRARY_PATH=`pwd`/stromx/runtime:`pwd`/stromx/cvimgproc:`pwd`/stromx/test make test ARGS="-V"
+make test ARGS="-V"
 
 
 %install
