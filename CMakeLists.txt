@@ -105,6 +105,18 @@ endif(WIN32)
 
 set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/${LOCALE_SUFFIX}")
 
+# setup the LD_LIBRARY_PATH for unit tests on launchpad 
+set(LD_LIBRARY_PATH "\
+${CMAKE_BINARY_DIR}/stromx/runtime:\
+${CMAKE_BINARY_DIR}/stromx/example:\
+${CMAKE_BINARY_DIR}/stromx/cvsupport:\
+${CMAKE_BINARY_DIR}/stromx/cvcore:\
+${CMAKE_BINARY_DIR}/stromx/cvcalib3d:\
+${CMAKE_BINARY_DIR}/stromx/cvimgproc:\
+${CMAKE_BINARY_DIR}/stromx/cvhighgui:\
+${CMAKE_BINARY_DIR}/stromx/test\
+")
+
 add_subdirectory(stromx)
 add_subdirectory(doc)
 

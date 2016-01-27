@@ -1,4 +1,5 @@
 add_test(NAME stromx_runtime_test COMMAND stromx_runtime_test)
+set_tests_properties(stromx_runtime_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
     
 if(MSVC)
     add_definitions(/DSTROMX_RUNTIME_STATIC)

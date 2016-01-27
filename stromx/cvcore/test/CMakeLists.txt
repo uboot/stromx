@@ -1,4 +1,5 @@
 add_test(NAME stromx_cvcore_test COMMAND stromx_cvcore_test)
+set_tests_properties(stromx_cvcore_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
 
 if(MSVC)
     add_definitions(/DSTROMX_CVCORE_STATIC)

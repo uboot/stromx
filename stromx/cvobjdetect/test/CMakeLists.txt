@@ -1,4 +1,5 @@
 add_test(NAME stromx_cvobjdetect_test COMMAND stromx_cvobjdetect_test)
+set_tests_properties(stromx_cvobjdetect_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
 
 if(MSVC)
     add_definitions(/DSTROMX_CVOBJDETECT_STATIC)
@@ -24,7 +25,9 @@ set (SOURCES
 
 add_executable(stromx_cvobjdetect_test ${SOURCES})
 
-set_target_properties(stromx_cvobjdetect_test PROPERTIES FOLDER "test")
+set_target_properties(stromx_cvobjdetect_test PROPERTIES
+    FOLDER "test"
+)
 
 target_link_libraries (stromx_cvobjdetect_test
     ${CPPUNIT_LIBRARY}

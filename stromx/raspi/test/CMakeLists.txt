@@ -1,4 +1,5 @@
 add_test(NAME stromx_raspi_test COMMAND stromx_raspi_test)
+set_tests_properties(stromx_raspi_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
 
 include_directories(
     ${CMAKE_SOURCE_DIR}

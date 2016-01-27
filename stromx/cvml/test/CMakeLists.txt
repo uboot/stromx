@@ -1,4 +1,5 @@
 add_test(NAME stromx_cvml_test COMMAND stromx_cvml_test)
+set_tests_properties(stromx_cvml_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
 
 if(MSVC)
     add_definitions(/DSTROMX_CVML_STATIC)

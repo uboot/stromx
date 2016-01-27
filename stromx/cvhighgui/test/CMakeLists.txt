@@ -1,4 +1,5 @@
 add_test(NAME stromx_cvhighgui_test COMMAND stromx_cvhighgui_test)
+set_tests_properties(stromx_cvhighgui_test PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
 
 if(MSVC)
     add_definitions(/DSTROMX_CVHIGHGUI_STATIC)

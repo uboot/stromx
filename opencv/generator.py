@@ -454,6 +454,10 @@ class TestCMakeGenerator(LibGenerator):
         self.doc.line((
             "add_test(NAME stromx_{0}_test COMMAND stromx_{0}_test)"
         ).format(self.p.ident))
+        self.doc.line((
+            'set_tests_properties(stromx_{0}_test PROPERTIES ENVIRONMENT '
+            '"${{TEST_ENVIRONMENT}}")'
+        ).format(self.p.ident))
         self.doc.blank()
         self.doc.line("if(MSVC)")
         self.doc.increaseIndent()
