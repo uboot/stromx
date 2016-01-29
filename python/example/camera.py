@@ -16,27 +16,28 @@
 #  limitations under the License.
 #
 
-from stromx import register, runtime, cvsupport
+from stromx import runtime, cvsupport
 
 factory = runtime.Factory()
 
 runtime.register(factory)
 cvsupport.register(factory)
-register('cvimgproc', factory)
 
 stream = runtime.XmlReader().readStream("camera.xml", factory)
 
 stream.start()
 
 camera = stream.operators()[0]
-canny = stream.operators()[2]
+convertPixelType = stream.operators()[2]
 
 for i in range(5):
-    with canny.getOutputData(1) as data, runtime.ReadAccess(data) as image:
-        print "Received image {0}x{1}".format(image.get().width(),
-                                              image.get().height())
+    with convertPixelType.getOutputData(0) as data, runtime.ReadAccess(data) as image:
+        print "Received image {0}x{1}, {2}".format(
+            image.get().width(), 
+            image.get().height(),
+            image.get().variant().title())
     
-    canny.clearOutputData(1)
+    convertPixelType.clearOutputData(0)
     camera.clearOutputData(1)
 
 stream.stop()

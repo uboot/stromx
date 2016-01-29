@@ -4,8 +4,8 @@ digraph stream
 {
     node [shape = box, fontname = Helvetica, style = "rounded"] "Camera" "Canny" "BufferArray"
     node [shape=plaintext]
-    "Camera" -> "Canny" [headlabel = "SOURCE", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+    "Camera" -> "ConvertPixelType" [headlabel = "SOURCE", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
     "Camera" -> "" [taillabel = "INDEX", labelfontname = Helvetica, labelfontsize = "10pt"]
-    "BufferArray" -> "Canny" [headlabel = "DESTINATION", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
-    "Canny" -> "" [taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+    "BufferArray" -> "ConvertPixelType" [headlabel = "DESTINATION", taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
+    "ConvertPixelType" -> "" [taillabel = "OUTPUT", labelfontname = Helvetica, labelfontsize = "10pt"]
 }

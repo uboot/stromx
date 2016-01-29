@@ -1,13 +1,13 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
-#include "stromx/cvcalib3d/Cvcalib3d.h"
-#include "stromx/cvsupport/Cvsupport.h"
-#include "stromx/runtime/AssignThreadsAlgorithm.h"
-#include "stromx/runtime/Factory.h"
-#include "stromx/runtime/Runtime.h"
-#include "stromx/runtime/Stream.h"
-#include "stromx/runtime/XmlReader.h"
+#include <stromx/cvcalib3d/Cvcalib3d.h>
+#include <stromx/cvsupport/Cvsupport.h>
+#include <stromx/runtime/AssignThreadsAlgorithm.h>
+#include <stromx/runtime/Factory.h>
+#include <stromx/runtime/Runtime.h>
+#include <stromx/runtime/Stream.h>
+#include <stromx/runtime/XmlReader.h>
 
 using namespace stromx;
 class IntegrationTest : public CPPUNIT_NS::TestFixture

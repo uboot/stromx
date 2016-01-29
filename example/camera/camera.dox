@@ -1,12 +1,12 @@
 /** \page camera Camera
 
-This example is concerned with the detection of edges in images received from a simulated camera input. The layout of the stream is as below.
+This example is concerned with the conversion of the pixel type of images received from a simulated camera input. The layout of the stream is as below.
 
 \image html example/camera/camera.png
 
-The \em Canny edge detector receives image data from two operators. The first one is the camera which constantly sends images to the edge detector. The second operator \em BufferArray owns a predefined number of empty image buffers, i.e. pre-allocated, empty images. If \em BufferArray hands out one of its images to the next operator the image is removed from the array and the \em BufferArray loses ownership of the image. However, as soon as no other object references the data container which contains the image, the image data is \em recycled, i.e. it is given back to the \em BufferArray operator.
+The \em pixel type converter receives image data from two operators. The first one is the camera which constantly sends images to the converter. The second operator \em BufferArray owns a predefined number of empty image buffers, i.e. pre-allocated, empty images. If \em BufferArray hands out one of its images to the next operator the image is removed from the array and the \em BufferArray loses ownership of the image. However, as soon as no other object references the data container which contains the image, the image data is \em recycled, i.e. it is given back to the \em BufferArray operator.
 
-In this example the \em Canny operator computes the edge map of the camera image and writes it to the image buffer it receives from \em BufferArray. This buffer is then sent to the output of the edge detector operator. In other words, the \em Canny operator does not own any allocate any image memory during processing but uses only these images it receives as input data. If the party which obtains the output from \em Canny releases this data soon enough it can be recycled and used again to store the result of the next camera image. The output image of the camera is handled the same way, i.e. as soon as the edge detector finishes processing the camera image is recycled for the acquisition of further images. As a consequence the presented stream can be operated without allocating or deallocating image data.
+In this example the \em ConvertPixelType operator converts the camera image and writes it to the image buffer it receives from \em BufferArray. This buffer is then sent to the output of the conversion operator. In other words, the \em ConvertPixelType operator does not own or allocate any image memory during processing but uses only these images it receives as input data. If the party which obtains the output from \em ConvertPixelType releases this data soon enough it can be recycled and used again to store the result of the next camera image. The output image of the camera is handled the same way, i.e. as soon as the edge detector finishes processing the camera image is recycled for the acquisition of further images. As a consequence the presented stream can be operated without allocating or deallocating image data.
 
 \note
 The camera has an additional output which contains the index of the current image acquired. If the camera runs out of available image buffers, i.e. if all image buffers are referenced by other objects, the camera can not acquire further images. However, the index is still incremented for each image which should have been acquired. Tracking and comparing the index values allows to find out which frames were lost.
@@ -15,11 +15,11 @@ The illustrated stream is configured by the XML file below. The parameter settin
 
 \include camera.xml
 
-The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em example libraries.
+The program which operates the stream is straightforward. As in the previous examples the program starts by importing all required headers and by registering the \em runtime and \em cvsupport libraries.
 
 \dontinclude camera.cpp
 \skip #include
-\until stromxRegisterExample
+\until stromxRegisterCvsupport
 
 Next the stream is read from the XML file and started.
  
@@ -27,7 +27,7 @@ Next the stream is read from the XML file and started.
 \until clearOutputData
 \until }
 
-Before starting the iteration explicit references to the \em DummyCamera and \em Canny operators are acquired. In each step the output image of the edge detector is obtained and its dimension are written to the command line. After that the output of the edge detector and the index output of the camera are cleared. It is important to clear \em all outputs which are not connected to other operators. Not doing so would eventually stop stream because no further data can be send to the outputs.
+Before starting the iteration explicit references to the \em DummyCamera and \em ConvertPixelType operators are acquired. In each step the output image of the edge detector is obtained and its dimension are written to the command line. After that the output of the edge detector and the index output of the camera are cleared. It is important to clear \em all outputs which are not connected to other operators. Not doing so would eventually stop stream because no further data can be send to the outputs.
 
 \skip stop
 \until }
@@ -35,18 +35,18 @@ Before starting the iteration explicit references to the \em DummyCamera and \em
 Finally, the stream is stopped and deleted. 
 
 \note 
-The class runtime::Image does not support saving of images to file because runtime is not linked to any 3rd party image processing library. However, example::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing example::Image objects from the more general runtime::Image data:
+The class runtime::Image does not support saving of images to file because runtime is not linked to any 3rd party image processing library. However, cvsupport::Image can write image files using OpenCV. Thus, the images in the code above can be written by constructing cvsupport::Image objects from the more general runtime::Image data:
 
 \code 
-#include <example/Image.h>
+#include <cvsupport/Image.h>
 ...
 {
     ...
     for(unsigned int i = 0; i < 5; ++i)
     {
         ...
-        example::Image exampleImage(image())
-        exampleImage.save("image.png");
+        cvsupport::Image cvsupportImage(image())
+        cvsupportImage.save("image.png");
         ...
     }
     ...
