@@ -157,6 +157,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* corners = new runtime::MatrixDescription(CORNERS, runtime::Variant::FLOAT_32_MATRIX);
                     corners->setTitle(L_("Corners"));
+                    corners->setVisualization(runtime::Variant::POLYLINES);
                     corners->setRows(0);
                     corners->setCols(2);
                     corners->setOperatorThread(1);

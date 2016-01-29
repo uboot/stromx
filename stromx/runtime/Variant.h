@@ -214,11 +214,14 @@ namespace stromx
             /** Matrix data which represents rotated rectangles. */
             const static VariantHandle ROTATED_RECTANGLES;
             
-            /** Matrix data which represents a circle. */
+            /** Matrix data which represents circles. */
             const static VariantHandle CIRCLES;
             
-            /** Matrix data which represents a rotated ellipsis. */
+            /** Matrix data which represents rotated ellipses. */
             const static VariantHandle ELLIPSES;
+            
+            /** Matrix data which represents histograms. */
+            const static VariantHandle HISTOGRAMS;
             
             unsigned int id() const { return m_id; }
             
@@ -289,7 +292,8 @@ namespace stromx
                 RECTANGLES_ID,
                 ROTATED_RECTANGLES_ID,
                 ELLIPSES_ID,
-                CIRCLES_ID
+                CIRCLES_ID,
+                HISTOGRAMS_ID
             };
             
             Variant(const unsigned int id)

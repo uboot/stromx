@@ -48,11 +48,13 @@ generatePatternWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 # calibrateCamera
 objectPoints = package.Argument(
     "objectPoints", "Object points", cvtype.VectorOfMat(),
-    datatype.List(datatype.Float32Matrix())
+    datatype.List(datatype.Float32Matrix()),
+    visualization = datatype.Visualization.POINTS
 )
 imagePoints = package.Argument(
     "imagePoints", "Image points", cvtype.VectorOfMat(),
-    datatype.List(datatype.Float32Matrix())
+    datatype.List(datatype.Float32Matrix()),
+    visualization = datatype.Visualization.POINTS
 )
 imageSizeX = package.NumericParameter(
     "imageSizeX", "Sensor size X", cvtype.Int(), datatype.UInt32(), default = 640,
@@ -137,7 +139,8 @@ sizey = package.NumericParameter(
 size = package.Size(sizex, sizey)
 corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2, isAsynchronous = True
+    cols = 2, isAsynchronous = True,
+    visualization = datatype.Visualization.POLYLINES
 )
 failedPostCall = document.Document("""
 if (cornersCvData.empty())
@@ -174,7 +177,7 @@ squareSize = package.NumericParameter(
 )
 corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 3), datatype.Float32Matrix(),
-    cols = 3
+    cols = 3, visualization = datatype.Visualization.POLYLINES
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -190,11 +193,13 @@ generatePattern = package.Method(
 # solvePnP
 objectPoints = package.MatrixArgument(
     "objectPoints", "Object points", cvtype.Mat(channels = 3),
-    datatype.Float32Matrix(), cols = 3
+    datatype.Float32Matrix(), cols = 3, 
+    visualization = datatype.Visualization.POINTS
 )
 imagePoints = package.MatrixArgument(
     "imagePoints", "Image points", cvtype.Mat(channels = 2),
-    datatype.Float32Matrix(), cols = 2
+    datatype.Float32Matrix(), cols = 2, 
+    visualization = datatype.Visualization.POINTS
 )
 pointSizeCheck = document.Document(
 """

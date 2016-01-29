@@ -84,5 +84,6 @@ void exportVariant()
     in_Variant.attr("RECTANGLES") = Variant::RECTANGLES;
     in_Variant.attr("ROTATED_RECTANGLES") = Variant::ROTATED_RECTANGLES;
     in_Variant.attr("ELLIPSES") = Variant::ELLIPSES;                
-    in_Variant.attr("CIRCLES") = Variant::CIRCLES;                
+    in_Variant.attr("CIRCLES") = Variant::CIRCLES;               
+    in_Variant.attr("HISTOGRAMS") = Variant::HISTOGRAMS;                   
 }

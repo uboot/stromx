@@ -102,6 +102,7 @@ namespace stromx
                     
                     m_rectDescription = new runtime::MatrixDescription(RECT, runtime::Variant::FLOAT_32_MATRIX);
                     m_rectDescription->setTitle("Rectangle");
+                    m_rectDescription->setVisualization(runtime::Variant::ROTATED_RECTANGLES);
                     m_rectDescription->setRows(1);
                     m_rectDescription->setCols(5);
                     inputs.push_back(m_rectDescription);

@@ -138,10 +138,12 @@ namespace stromx
                 {
                     m_objectPointsDescription = new runtime::Description(OBJECT_POINTS, runtime::Variant::LIST);
                     m_objectPointsDescription->setTitle(L_("Object points"));
+                    m_objectPointsDescription->setVisualization(runtime::Variant::POINTS);
                     inputs.push_back(m_objectPointsDescription);
                     
                     m_imagePointsDescription = new runtime::Description(IMAGE_POINTS, runtime::Variant::LIST);
                     m_imagePointsDescription->setTitle(L_("Image points"));
+                    m_imagePointsDescription->setVisualization(runtime::Variant::POINTS);
                     inputs.push_back(m_imagePointsDescription);
                     
                 }

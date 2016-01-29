@@ -80,6 +80,7 @@ namespace stromx
         const VariantHandle Variant::ROTATED_RECTANGLES = VariantHandle(new Variant(ROTATED_RECTANGLES_ID));
         const VariantHandle Variant::ELLIPSES = VariantHandle(new Variant(ELLIPSES_ID));
         const VariantHandle Variant::CIRCLES = VariantHandle(new Variant(CIRCLES_ID));
+        const VariantHandle Variant::HISTOGRAMS = VariantHandle(new Variant(HISTOGRAMS_ID));
         
         const std::string Variant::title() const
         {

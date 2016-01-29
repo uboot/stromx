@@ -200,9 +200,6 @@ dstImgDsize = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Image(),
     initIn = initInDsize, initOut = initOutCopy
 )
-dstMatrix = package.Argument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix()
-)
 dstImgFloat32 = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Float32Matrix(),
     initIn = initInFloat32
@@ -864,11 +861,11 @@ undistort = package.Method(
 # undistortPoints
 srcPts = package.MatrixArgument(
     "src", "Source", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2
+    cols = 2, visualization = datatype.Visualization.POINTS
 )
 dstPts = package.MatrixArgument(
     "dst", "Destination", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2
+    cols = 2, visualization = datatype.Visualization.POINTS
 )
 allocate = package.Option(
     "allocate", "Allocate",  
@@ -1064,6 +1061,10 @@ histSize = package.NumericParameter(
     "histSize", "Number of bins", cvtype.Int(), datatype.UInt32(),
     default = 16
 )
+dstMatrix = package.Argument(
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
+    visualization = datatype.Visualization.HISTOGRAMS
+)
 allocate = package.Option(
     "allocate", "Allocate", 
     [package.Input(srcImgMono), package.Allocation(dstMatrix), histMin, histMax, histSize],
@@ -1205,11 +1206,11 @@ approxPolyDP = package.Method(
 # boundingRect
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.Rect(), datatype.Int32Matrix(),
-    cols = 4, rows = 1
+    cols = 4, rows = 1, visualization = datatype.Visualization.RECTANGLES
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2
+    cols = 2, visualization = datatype.Visualization.POINTS
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1508,7 +1509,8 @@ goodFeaturesToTrack = package.Method(
 
 # HoughLinesP
 dstMatrixLineSegments = package.MatrixArgument(
-    "dst", "Destination", cvtype.Mat(), datatype.Matrix(), cols = 4
+    "dst", "Destination", cvtype.Mat(), datatype.Matrix(), cols = 4,
+    visualization = datatype.Visualization.LINE_SEGMENTS
 )
 rho = package.NumericParameter(
     "rho", "Distance resolution", cvtype.Float64(), datatype.Float64(),
@@ -1568,7 +1570,7 @@ preCornerDetect = package.Method(
 # ExtractRectangle
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 5, rows = 1
+    cols = 5, rows = 1, visualization = datatype.Visualization.ROTATED_RECTANGLES
 )
 allocate = package.Option(
     "allocate", "Allocate",

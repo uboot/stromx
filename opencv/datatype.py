@@ -225,6 +225,7 @@ Visualization.ROTATED_RECTANGLES = Visualization(
 )
 Visualization.CIRCLES = Visualization("runtime::Variant::CIRCLES")
 Visualization.ELLIPSES = Visualization("runtime::Variant::ELLIPSES")
+Visualization.HISTOGRAMS = Visualization("runtime::Variant::HISTOGRAMS")
         
 if __name__ == "__main__":
     import doctest

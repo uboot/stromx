@@ -1,3 +1,4 @@
+set(LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/stromx/runtime:${CMAKE_BINARY_DIR}/stromx/cvsupport:${CMAKE_BINARY_DIR}")
 set(TEST_ENVIRONMENT "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}")
 
 add_subdirectory(runtime)
