@@ -34,7 +34,7 @@ namespace stromx
         
         void CvsupportTest::testRegisterCvsupport()
         {
-            CPPUNIT_ASSERT_NO_THROW(stromxCvsupportRegister(m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxRegisterCvsupport(m_factory));
             
             runtime::OperatorKernel* kernel = 0;
             CPPUNIT_ASSERT_NO_THROW(kernel = m_factory->newOperator("cv::support", "DummyCamera"));

@@ -13,7 +13,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVHIGHGUI_API int stromxCvhighguiRegister(stromx::runtime::Registry* registry);
+    STROMX_CVHIGHGUI_API int stromxRegisterCvhighgui(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVHIGHGUI_CVHIGHGUI_H

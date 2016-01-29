@@ -34,9 +34,9 @@ protected:
     void testCalibration()
     {
         m_factory = new runtime::Factory();
-        stromxCvcalib3dRegister(m_factory);
-        stromxCvsupportRegister(m_factory);
-        stromxRuntimeRegister(m_factory);
+        stromxRegisterCvcalib3d(m_factory);
+        stromxRegisterCvsupport(m_factory);
+        stromxRegisterRuntime(m_factory);
         m_stream = runtime::XmlReader().readStream("calibration.stromx", m_factory);
         
         CPPUNIT_ASSERT_NO_THROW(runtime::AssignThreadsAlgorithm().apply(*m_stream));
@@ -45,8 +45,8 @@ protected:
     void testCamera()
     {
         m_factory = new runtime::Factory();
-        stromxCvsupportRegister(m_factory);
-        stromxRuntimeRegister(m_factory);
+        stromxRegisterCvsupport(m_factory);
+        stromxRegisterRuntime(m_factory);
         m_stream = runtime::XmlReader().readStream("camera.stromx", m_factory);
         
         runtime::AssignThreadsAlgorithm().apply(*m_stream);

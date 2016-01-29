@@ -27,7 +27,7 @@
 #include "stromx/test/RandomDataOperator.h"
 #include "stromx/test/TestDataOperator.h"
 
-int STROMX_TEST_API stromxTestRegister(stromx::runtime::Registry* registry)
+int STROMX_TEST_API stromxRegisterTest(stromx::runtime::Registry* registry)
 {
     using namespace stromx::test;
     

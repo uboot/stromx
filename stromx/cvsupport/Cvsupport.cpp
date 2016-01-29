@@ -37,7 +37,7 @@ namespace stromx
     }
 }
 
-int stromxCvsupportRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvsupport(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvsupport;
     

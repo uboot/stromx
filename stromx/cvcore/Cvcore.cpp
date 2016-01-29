@@ -20,7 +20,7 @@ namespace stromx
     }
 }
 
-int stromxCvcoreRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvcore(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvcore;
     

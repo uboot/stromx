@@ -27,7 +27,7 @@ namespace stromx
     }
 }
 
-int stromxCvhighguiRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvhighgui(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvhighgui;
     

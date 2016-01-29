@@ -30,7 +30,7 @@ namespace stromx
     }
 }
 
-int stromxRaspiRegister(stromx::runtime::Registry* registry)
+int stromxRegisterRaspi(stromx::runtime::Registry* registry)
 {
     using namespace stromx::raspi;
     

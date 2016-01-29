@@ -58,7 +58,7 @@ namespace stromx
     }
 }
 
-int stromxRuntimeRegister(stromx::runtime::Registry* registry)
+int stromxRegisterRuntime(stromx::runtime::Registry* registry)
 {
     using namespace stromx::runtime;
     

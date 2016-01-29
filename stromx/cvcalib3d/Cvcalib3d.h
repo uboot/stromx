@@ -13,7 +13,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVCALIB3D_API int stromxCvcalib3dRegister(stromx::runtime::Registry* registry);
+    STROMX_CVCALIB3D_API int stromxRegisterCvcalib3d(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVCALIB3D_CVCALIB3D_H

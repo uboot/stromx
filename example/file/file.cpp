@@ -30,7 +30,7 @@ int main (int, char**)
 {
     runtime::Factory factory;
     
-    stromxRuntimeRegister(&factory);
+    stromxRegisterRuntime(&factory);
     
     runtime::Stream* stream = runtime::XmlReader().readStream("file.xml", &factory);
     

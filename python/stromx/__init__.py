@@ -26,7 +26,7 @@ def register(package, factory):
         print 'Failed to load {0}'.format(libName)
         return 1
 
-    functionName = 'stromx{0}Register'.format(package.capitalize())
+    functionName = 'stromxRegister{0}'.format(package.capitalize())
     try:
         function = lib[functionName]
     except AttributeError:

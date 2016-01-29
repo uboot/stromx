@@ -13,7 +13,7 @@ namespace stromx
 
 extern "C"
 {
-    STROMX_CVOBJDETECT_API int stromxCvobjdetectRegister(stromx::runtime::Registry* registry);
+    STROMX_CVOBJDETECT_API int stromxRegisterCvobjdetect(stromx::runtime::Registry* registry);
 }
 
 #endif // STROMX_CVOBJDETECT_CVOBJDETECT_H

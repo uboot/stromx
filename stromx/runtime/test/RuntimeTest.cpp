@@ -34,7 +34,7 @@ namespace stromx
         
         void RuntimeTest::testregister()
         {
-            CPPUNIT_ASSERT_NO_THROW(stromxRuntimeRegister(m_factory));
+            CPPUNIT_ASSERT_NO_THROW(stromxRegisterRuntime(m_factory));
             
             runtime::Data* data = 0;
             CPPUNIT_ASSERT_NO_THROW(data = m_factory->newData("runtime", "UInt32"));

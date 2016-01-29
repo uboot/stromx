@@ -54,7 +54,7 @@ namespace stromx
     }
 }
 
-int stromxCvimgprocRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvimgproc(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvimgproc;
     

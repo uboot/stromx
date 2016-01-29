@@ -15,7 +15,7 @@ namespace stromx
     }
 }
 
-int stromxCvcalib3dRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvcalib3d(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvcalib3d;
     

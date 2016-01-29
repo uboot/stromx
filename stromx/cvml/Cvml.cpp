@@ -28,7 +28,7 @@ namespace stromx
     }
 }
 
-int stromxCvmlRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvml(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvml;
     

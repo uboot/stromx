@@ -37,7 +37,7 @@ using namespace stromx::cvsupport;
     
 BOOST_PYTHON_MODULE(libcvsupport)
 {
-    def("register", stromxCvsupportRegister);
+    def("register", stromxRegisterCvsupport);
     
     exportImage();
     exportMatrix();

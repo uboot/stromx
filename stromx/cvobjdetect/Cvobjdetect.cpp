@@ -12,7 +12,7 @@ namespace stromx
     }
 }
 
-int stromxCvobjdetectRegister(stromx::runtime::Registry* registry)
+int stromxRegisterCvobjdetect(stromx::runtime::Registry* registry)
 {
     using namespace stromx::cvobjdetect;
     

@@ -82,7 +82,7 @@ BOOST_PYTHON_MODULE(libruntime)
     
     PyEval_InitThreads();
     
-    def("register", stromxRuntimeRegister);
+    def("register", stromxRegisterRuntime);
     def("version", version);
     
     exportAssignThreadsAlgorithm();
