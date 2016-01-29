@@ -16,12 +16,11 @@
 #  limitations under the License.
 #
 
-from stromx import runtime, cvsupport
+from stromx import register, runtime, cvsupport
 
 factory = runtime.Factory()
-
-runtime.register(factory)
-cvsupport.register(factory)
+register("runtime", factory)
+register("cvsupport", factory)
 
 stream = runtime.XmlReader().readStream("camera.xml", factory)
 

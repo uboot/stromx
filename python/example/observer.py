@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-from stromx import runtime
+from stromx import register, runtime
 
 class MyObserver(runtime.ConnectorObserver):
     def observe(self, connector, oldData, newData, thread):
@@ -38,8 +38,7 @@ class MyObserver(runtime.ConnectorObserver):
             dataStr)
 
 factory = runtime.Factory()
-
-runtime.register(factory)
+register("runtime", factory)
 
 stream = runtime.XmlReader().readStream("file.xml", factory)
 

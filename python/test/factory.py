@@ -16,11 +16,10 @@
 #  limitations under the License.
 #
 
-from stromx import runtime
+from stromx import register, runtime
 
 factory = runtime.Factory()
-
-runtime.register(factory)
+register("runtime", factory)
 
 stream = runtime.Stream()
 kernel = factory.newOperator("runtime", "Counter")
