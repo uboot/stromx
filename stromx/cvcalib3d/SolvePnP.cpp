@@ -140,14 +140,14 @@ namespace stromx
                 {
                     m_objectPointsDescription = new runtime::MatrixDescription(OBJECT_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_objectPointsDescription->setTitle("Object points");
-                    m_objectPointsDescription->setVisualization(runtime::Variant::POINTS);
+                    m_objectPointsDescription->setVisualization(runtime::Variant::POINT);
                     m_objectPointsDescription->setRows(0);
                     m_objectPointsDescription->setCols(3);
                     inputs.push_back(m_objectPointsDescription);
                     
                     m_imagePointsDescription = new runtime::MatrixDescription(IMAGE_POINTS, runtime::Variant::FLOAT_32_MATRIX);
                     m_imagePointsDescription->setTitle("Image points");
-                    m_imagePointsDescription->setVisualization(runtime::Variant::POINTS);
+                    m_imagePointsDescription->setVisualization(runtime::Variant::POINT);
                     m_imagePointsDescription->setRows(0);
                     m_imagePointsDescription->setCols(2);
                     inputs.push_back(m_imagePointsDescription);

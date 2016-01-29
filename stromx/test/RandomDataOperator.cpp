@@ -60,7 +60,7 @@ namespace stromx
             Data* data = 0;
             switch(m_dataType)
             {
-            case LINE_SEGMENTS:
+            case LINE_SEGMENT:
             {
                 stromx::runtime::Matrix* segments = new stromx::cvsupport::Matrix(2, 4, ::Matrix::FLOAT_64);
                 double* doubleData = reinterpret_cast<double*>(segments->data());
@@ -114,7 +114,7 @@ namespace stromx
             EnumParameter* param = new EnumParameter(DATA_TYPE);
             param->setTitle("Data type");
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
-            param->add(EnumDescription(Enum(LINE_SEGMENTS), "Line segments"));
+            param->add(EnumDescription(Enum(LINE_SEGMENT), "Line segments"));
             param->add(EnumDescription(Enum(STRING), "String"));
             parameters.push_back(param);
             

@@ -41,7 +41,7 @@ namespace stromx {
             
             enum DataType
             {
-                LINE_SEGMENTS,
+                LINE_SEGMENT,
                 STRING
             };
             

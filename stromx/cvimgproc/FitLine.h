@@ -36,7 +36,7 @@ namespace stromx
             enum ConnectorId
             {
                 LINE,
-                POINTS
+                POINT
             };
             enum ParameterId
             {

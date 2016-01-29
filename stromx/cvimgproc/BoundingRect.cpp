@@ -96,9 +96,9 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    m_pointsDescription = new runtime::MatrixDescription(POINTS, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
+                    m_pointsDescription = new runtime::MatrixDescription(POINT, runtime::Variant::INT_32_MATRIX || runtime::Variant::FLOAT_32_MATRIX);
                     m_pointsDescription->setTitle("Point set");
-                    m_pointsDescription->setVisualization(runtime::Variant::POINTS);
+                    m_pointsDescription->setVisualization(runtime::Variant::POINT);
                     m_pointsDescription->setRows(0);
                     m_pointsDescription->setCols(2);
                     inputs.push_back(m_pointsDescription);
@@ -120,7 +120,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* rect = new runtime::MatrixDescription(RECT, runtime::Variant::INT_32_MATRIX);
                     rect->setTitle(L_("Rectangle"));
-                    rect->setVisualization(runtime::Variant::RECTANGLES);
+                    rect->setVisualization(runtime::Variant::RECTANGLE);
                     rect->setRows(1);
                     rect->setCols(4);
                     outputs.push_back(rect);
@@ -143,7 +143,7 @@ namespace stromx
             {
             case(ALLOCATE):
                 {
-                    runtime::Id2DataPair pointsInMapper(POINTS);
+                    runtime::Id2DataPair pointsInMapper(POINT);
                     
                     provider.receiveInputData(pointsInMapper);
                     
@@ -156,7 +156,7 @@ namespace stromx
                     
                     if(! pointsData->variant().isVariant(m_pointsDescription->variant()))
                     {
-                        throw runtime::InputError(POINTS, *this, "Wrong input data variant.");
+                        throw runtime::InputError(POINT, *this, "Wrong input data variant.");
                     }
                     
                     const runtime::Matrix* pointsCastedData = runtime::data_cast<runtime::Matrix>(pointsData);

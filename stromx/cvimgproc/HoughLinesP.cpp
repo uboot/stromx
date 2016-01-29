@@ -212,7 +212,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
-                    dst->setVisualization(runtime::Variant::LINE_SEGMENTS);
+                    dst->setVisualization(runtime::Variant::LINE_SEGMENT);
                     dst->setRows(0);
                     dst->setCols(4);
                     outputs.push_back(dst);

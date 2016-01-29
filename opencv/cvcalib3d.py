@@ -49,12 +49,12 @@ generatePatternWrapper = package.Function(dcl, dclIncludes, dtn, dtnIncludes)
 objectPoints = package.Argument(
     "objectPoints", "Object points", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix()),
-    visualization = datatype.Visualization.POINTS
+    visualization = datatype.Visualization.POINT
 )
 imagePoints = package.Argument(
     "imagePoints", "Image points", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix()),
-    visualization = datatype.Visualization.POINTS
+    visualization = datatype.Visualization.POINT
 )
 imageSizeX = package.NumericParameter(
     "imageSizeX", "Sensor size X", cvtype.Int(), datatype.UInt32(), default = 640,
@@ -140,7 +140,7 @@ size = package.Size(sizex, sizey)
 corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
     cols = 2, isAsynchronous = True,
-    visualization = datatype.Visualization.POLYLINES
+    visualization = datatype.Visualization.POLYLINE
 )
 failedPostCall = document.Document("""
 if (cornersCvData.empty())
@@ -177,7 +177,7 @@ squareSize = package.NumericParameter(
 )
 corners = package.MatrixArgument(
     "corners", "Corners", cvtype.Mat(channels = 3), datatype.Float32Matrix(),
-    cols = 3, visualization = datatype.Visualization.POLYLINES
+    cols = 3, visualization = datatype.Visualization.POLYLINE
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -194,12 +194,12 @@ generatePattern = package.Method(
 objectPoints = package.MatrixArgument(
     "objectPoints", "Object points", cvtype.Mat(channels = 3),
     datatype.Float32Matrix(), cols = 3, 
-    visualization = datatype.Visualization.POINTS
+    visualization = datatype.Visualization.POINT
 )
 imagePoints = package.MatrixArgument(
     "imagePoints", "Image points", cvtype.Mat(channels = 2),
     datatype.Float32Matrix(), cols = 2, 
-    visualization = datatype.Visualization.POINTS
+    visualization = datatype.Visualization.POINT
 )
 pointSizeCheck = document.Document(
 """

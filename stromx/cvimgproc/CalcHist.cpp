@@ -174,7 +174,7 @@ namespace stromx
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::Variant::MATRIX);
                     dst->setTitle(L_("Destination"));
-                    dst->setVisualization(runtime::Variant::HISTOGRAMS);
+                    dst->setVisualization(runtime::Variant::HISTOGRAM);
                     outputs.push_back(dst);
                     
                 }

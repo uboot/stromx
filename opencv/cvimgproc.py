@@ -347,7 +347,7 @@ maxLineGap = package.NumericParameter(
 )
 pointMatrix = package.MatrixArgument(
     "pointMatrix", "Point coordinates", cvtype.Mat(), datatype.Float32Matrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 winSizeX = package.NumericParameter(
     "winSizeX", "Width of search window", cvtype.Int(), datatype.UInt32(),
@@ -861,11 +861,11 @@ undistort = package.Method(
 # undistortPoints
 srcPts = package.MatrixArgument(
     "src", "Source", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 dstPts = package.MatrixArgument(
     "dst", "Destination", cvtype.Mat(channels = 2), datatype.Float32Matrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 allocate = package.Option(
     "allocate", "Allocate",  
@@ -1063,7 +1063,7 @@ histSize = package.NumericParameter(
 )
 dstMatrix = package.Argument(
     "dst", "Destination", cvtype.Mat(), datatype.Matrix(),
-    visualization = datatype.Visualization.HISTOGRAMS
+    visualization = datatype.Visualization.HISTOGRAM
 )
 allocate = package.Option(
     "allocate", "Allocate", 
@@ -1126,7 +1126,7 @@ findContoursMethod = package.EnumParameter(
 dstListOfMatrices = package.Argument(
     "dst", "Destination", cvtype.VectorOfMat(),
     datatype.List(datatype.Int32Matrix()),
-    visualization = datatype.Visualization.POLYGONS
+    visualization = datatype.Visualization.POLYGON
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1157,7 +1157,7 @@ thickness = package.NumericParameter(
 listOfContours = package.Argument(
     "contours", "Contours", cvtype.VectorOfMat(),
     datatype.List(datatype.Float32Matrix()),
-    visualization = datatype.Visualization.POLYGONS
+    visualization = datatype.Visualization.POLYGON
 )
 drawContoursImage = package.Argument(
     "img", "Image", cvtype.Mat(), datatype.Image()
@@ -1206,11 +1206,11 @@ approxPolyDP = package.Method(
 # boundingRect
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.Rect(), datatype.Int32Matrix(),
-    cols = 4, rows = 1, visualization = datatype.Visualization.RECTANGLES
+    cols = 4, rows = 1, visualization = datatype.Visualization.RECTANGLE
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1227,7 +1227,7 @@ boundingRect = package.Method(
 # contourArea
 points = package.MatrixArgument(
     "contour", "Input points", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    visualization = datatype.Visualization.POLYGONS, cols = 2
+    visualization = datatype.Visualization.POLYGON, cols = 2
 )
 area = package.Argument(
     "area", "Area", cvtype.Float64(), datatype.Float64()
@@ -1248,12 +1248,12 @@ contourArea = package.Method(
 points = package.MatrixArgument(
     "curve", "Input points", cvtype.Mat(channels = 2), 
     datatype.Any32BitMatrix(), cols = 2,
-    visualization = datatype.Visualization.POINTS
+    visualization = datatype.Visualization.POINT
 )
 hull = package.MatrixArgument(
     "outCurve", "Convex hull", cvtype.Mat(channels = 2),
     datatype.Any32BitMatrix(), cols = 2,
-    visualization = datatype.Visualization.POLYGONS
+    visualization = datatype.Visualization.POLYGON
 )
 epsilon = package.NumericParameter(
     "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),
@@ -1278,11 +1278,11 @@ convexHull = package.Method(
 # fitEllipse
 ellipse = package.MatrixArgument(
     "ellipse", "Bounding box", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 5, rows = 1, visualization = datatype.Visualization.ELLIPSES
+    cols = 5, rows = 1, visualization = datatype.Visualization.ELLIPSIS
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1299,11 +1299,11 @@ fitEllipse = package.Method(
 # fitLine
 line = package.MatrixArgument(
     "line", "Line (\\u03C1, \\u03B8)", cvtype.Mat(), datatype.Float32Matrix(),
-    cols = 3, rows = 1, visualization = datatype.Visualization.LINES
+    cols = 3, rows = 1, visualization = datatype.Visualization.LINE
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 descriptions = [
     package.EnumDescription("DIST_L2", "L2", "CV_DIST_L2"),
@@ -1343,11 +1343,11 @@ fitLine = package.Method(
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
     cols = 5, rows = 1,
-    visualization = datatype.Visualization.ROTATED_RECTANGLES
+    visualization = datatype.Visualization.ROTATED_RECTANGLE
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1364,11 +1364,11 @@ minAreaRect = package.Method(
 # minEnclosingCircle
 circle = package.MatrixArgument(
     "circle", "Circle", cvtype.Mat(), datatype.Float32Matrix(),
-    cols = 3, rows = 1, visualization = datatype.Visualization.CIRCLES
+    cols = 3, rows = 1, visualization = datatype.Visualization.CIRCLE
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    cols = 2, visualization = datatype.Visualization.POINTS
+    cols = 2, visualization = datatype.Visualization.POINT
 )
 allocate = package.Option(
     "allocate", "Allocate",
@@ -1510,7 +1510,7 @@ goodFeaturesToTrack = package.Method(
 # HoughLinesP
 dstMatrixLineSegments = package.MatrixArgument(
     "dst", "Destination", cvtype.Mat(), datatype.Matrix(), cols = 4,
-    visualization = datatype.Visualization.LINE_SEGMENTS
+    visualization = datatype.Visualization.LINE_SEGMENT
 )
 rho = package.NumericParameter(
     "rho", "Distance resolution", cvtype.Float64(), datatype.Float64(),
@@ -1570,7 +1570,7 @@ preCornerDetect = package.Method(
 # ExtractRectangle
 rect = package.MatrixArgument(
     "rect", "Rectangle", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 5, rows = 1, visualization = datatype.Visualization.ROTATED_RECTANGLES
+    cols = 5, rows = 1, visualization = datatype.Visualization.ROTATED_RECTANGLE
 )
 allocate = package.Option(
     "allocate", "Allocate",

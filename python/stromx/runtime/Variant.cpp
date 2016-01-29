@@ -76,14 +76,14 @@ void exportVariant()
     in_Variant.attr("FILE") = Variant::FILE;
     in_Variant.attr("TEXT_FILE") = Variant::TEXT_FILE;
     in_Variant.attr("BINARY_FILE") = Variant::BINARY_FILE;
-    in_Variant.attr("POINTS") = Variant::POINTS;
-    in_Variant.attr("LINES") = Variant::LINES;
-    in_Variant.attr("LINE_SEGMENTS") = Variant::LINE_SEGMENTS;
-    in_Variant.attr("POLYGONS") = Variant::POLYGONS;
-    in_Variant.attr("POLYLINES") = Variant::POLYLINES;
-    in_Variant.attr("RECTANGLES") = Variant::RECTANGLES;
-    in_Variant.attr("ROTATED_RECTANGLES") = Variant::ROTATED_RECTANGLES;
-    in_Variant.attr("ELLIPSES") = Variant::ELLIPSES;                
-    in_Variant.attr("CIRCLES") = Variant::CIRCLES;               
-    in_Variant.attr("HISTOGRAMS") = Variant::HISTOGRAMS;                   
+    in_Variant.attr("POINT") = Variant::POINT;
+    in_Variant.attr("LINE") = Variant::LINE;
+    in_Variant.attr("LINE_SEGMENT") = Variant::LINE_SEGMENT;
+    in_Variant.attr("POLYGON") = Variant::POLYGON;
+    in_Variant.attr("POLYLINE") = Variant::POLYLINE;
+    in_Variant.attr("RECTANGLE") = Variant::RECTANGLE;
+    in_Variant.attr("ROTATED_RECTANGLE") = Variant::ROTATED_RECTANGLE;
+    in_Variant.attr("ELLIPSIS") = Variant::ELLIPSIS;                
+    in_Variant.attr("CIRCLE") = Variant::CIRCLE;               
+    in_Variant.attr("HISTOGRAM") = Variant::HISTOGRAM;                   
 }

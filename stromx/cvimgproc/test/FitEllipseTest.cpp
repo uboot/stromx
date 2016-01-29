@@ -29,7 +29,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(FitEllipse::POINTS, points);
+            m_operator->setInputData(FitEllipse::POINT, points);
             
             runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
             
@@ -44,7 +44,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(FitEllipse::POINTS, points);
+            m_operator->setInputData(FitEllipse::POINT, points);
             
             runtime::DataContainer ellipseResult = m_operator->getOutputData(FitEllipse::ELLIPSE);
             

@@ -29,7 +29,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(FitLine::POINTS, points);
+            m_operator->setInputData(FitLine::POINT, points);
             
             runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
             
@@ -44,7 +44,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(FitLine::POINTS, points);
+            m_operator->setInputData(FitLine::POINT, points);
             
             runtime::DataContainer lineResult = m_operator->getOutputData(FitLine::LINE);
             

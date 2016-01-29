@@ -161,7 +161,7 @@ namespace stromx
                 {
                     runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
                     dst->setTitle(L_("Destination"));
-                    dst->setVisualization(runtime::Variant::POLYGONS);
+                    dst->setVisualization(runtime::Variant::POLYGON);
                     outputs.push_back(dst);
                     
                 }

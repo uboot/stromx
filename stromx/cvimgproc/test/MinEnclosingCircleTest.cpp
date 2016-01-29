@@ -29,7 +29,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(MinEnclosingCircle::POINTS, points);
+            m_operator->setInputData(MinEnclosingCircle::POINT, points);
             
             runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
             
@@ -44,7 +44,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(MinEnclosingCircle::POINTS, points);
+            m_operator->setInputData(MinEnclosingCircle::POINT, points);
             
             runtime::DataContainer circleResult = m_operator->getOutputData(MinEnclosingCircle::CIRCLE);
             

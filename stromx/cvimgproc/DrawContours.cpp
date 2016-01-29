@@ -178,7 +178,7 @@ namespace stromx
                     
                     m_contoursDescription = new runtime::Description(CONTOURS, runtime::Variant::LIST);
                     m_contoursDescription->setTitle(L_("Contours"));
-                    m_contoursDescription->setVisualization(runtime::Variant::POLYGONS);
+                    m_contoursDescription->setVisualization(runtime::Variant::POLYGON);
                     inputs.push_back(m_contoursDescription);
                     
                 }

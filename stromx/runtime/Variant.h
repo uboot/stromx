@@ -194,34 +194,34 @@ namespace stromx
             const static VariantHandle TEXT_FILE;
             
             /** Matrix data which represents points. */
-            const static VariantHandle POINTS;
+            const static VariantHandle POINT;
             
             /** Matrix data which represents lines. */
-            const static VariantHandle LINES;
+            const static VariantHandle LINE;
             
             /** Matrix data which represents line segments. */
-            const static VariantHandle LINE_SEGMENTS;
+            const static VariantHandle LINE_SEGMENT;
             
             /** Matrix data which represents polygons. */
-            const static VariantHandle POLYGONS;
+            const static VariantHandle POLYGON;
             
             /** Matrix data which represents polylines. */
-            const static VariantHandle POLYLINES;
+            const static VariantHandle POLYLINE;
             
             /** Matrix data which represents axis aligned rectangles. */
-            const static VariantHandle RECTANGLES;
+            const static VariantHandle RECTANGLE;
             
             /** Matrix data which represents rotated rectangles. */
-            const static VariantHandle ROTATED_RECTANGLES;
+            const static VariantHandle ROTATED_RECTANGLE;
             
             /** Matrix data which represents circles. */
-            const static VariantHandle CIRCLES;
+            const static VariantHandle CIRCLE;
             
             /** Matrix data which represents rotated ellipses. */
-            const static VariantHandle ELLIPSES;
+            const static VariantHandle ELLIPSIS;
             
             /** Matrix data which represents histograms. */
-            const static VariantHandle HISTOGRAMS;
+            const static VariantHandle HISTOGRAM;
             
             unsigned int id() const { return m_id; }
             
@@ -284,16 +284,16 @@ namespace stromx
                 BINARY_FILE_ID,
                 TEXT_FILE_ID,       
                 TRIBOOL_ID,
-                POINTS_ID,
-                LINES_ID,
-                LINE_SEGMENTS_ID,
-                POLYGONS_ID, 
-                POLYLINES_ID,
-                RECTANGLES_ID,
-                ROTATED_RECTANGLES_ID,
-                ELLIPSES_ID,
-                CIRCLES_ID,
-                HISTOGRAMS_ID
+                POINT_ID,
+                LINE_ID,
+                LINE_SEGMENT_ID,
+                POLYGON_ID, 
+                POLYLINE_ID,
+                RECTANGLE_ID,
+                ROTATED_RECTANGLE_ID,
+                ELLIPSIS_ID,
+                CIRCLE_ID,
+                HISTOGRAM_ID
             };
             
             Variant(const unsigned int id)

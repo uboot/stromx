@@ -129,13 +129,13 @@ namespace stromx
             case HISTOGRAM:
                 data = histogram();
                 break;
-            case LINE_SEGMENTS:
+            case LINE_SEGMENT:
                 data = lineSegments();
                 break;
-            case POINTS:
+            case POINT:
                 data = points();
                 break;
-            case POLYGONS:
+            case POLYGON:
                 data = polygons();
                 break;
             default:
@@ -192,9 +192,9 @@ namespace stromx
             enumParam->setAccessMode(Parameter::ACTIVATED_WRITE);
             enumParam->add(EnumDescription(Enum(IMAGE_RAMP), "Image ramp"));
             enumParam->add(EnumDescription(Enum(HISTOGRAM), "Histogram"));
-            enumParam->add(EnumDescription(Enum(LINE_SEGMENTS), "Line segments"));
-            enumParam->add(EnumDescription(Enum(POINTS), "Points"));
-            enumParam->add(EnumDescription(Enum(POLYGONS), "Polygons"));
+            enumParam->add(EnumDescription(Enum(LINE_SEGMENT), "Line segments"));
+            enumParam->add(EnumDescription(Enum(POINT), "Points"));
+            enumParam->add(EnumDescription(Enum(POLYGON), "Polygons"));
             parameters.push_back(enumParam);
             
             uint32Param = new NumericParameter<UInt32>(SIZE_X);

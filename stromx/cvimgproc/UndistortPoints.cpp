@@ -140,7 +140,7 @@ namespace stromx
                 {
                     m_srcDescription = new runtime::MatrixDescription(SRC, runtime::Variant::FLOAT_32_MATRIX);
                     m_srcDescription->setTitle("Source");
-                    m_srcDescription->setVisualization(runtime::Variant::POINTS);
+                    m_srcDescription->setVisualization(runtime::Variant::POINT);
                     m_srcDescription->setRows(0);
                     m_srcDescription->setCols(2);
                     inputs.push_back(m_srcDescription);
@@ -162,7 +162,7 @@ namespace stromx
                 {
                     runtime::MatrixDescription* dst = new runtime::MatrixDescription(DST, runtime::Variant::FLOAT_32_MATRIX);
                     dst->setTitle(L_("Destination"));
-                    dst->setVisualization(runtime::Variant::POINTS);
+                    dst->setVisualization(runtime::Variant::POINT);
                     dst->setRows(0);
                     dst->setCols(2);
                     outputs.push_back(dst);

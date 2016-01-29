@@ -27,7 +27,7 @@ namespace stromx
             enum ConnectorId
             {
                 CIRCLE,
-                POINTS
+                POINT
             };
             enum ParameterId
             {

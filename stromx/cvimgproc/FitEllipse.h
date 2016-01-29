@@ -26,7 +26,7 @@ namespace stromx
             };
             enum ConnectorId
             {
-                POINTS,
+                POINT,
                 ELLIPSE
             };
             enum ParameterId

@@ -63,9 +63,9 @@ namespace stromx
             {
                 IMAGE_RAMP,
                 HISTOGRAM,
-                LINE_SEGMENTS,
-                POINTS,
-                POLYGONS
+                LINE_SEGMENT,
+                POINT,
+                POLYGON
             };
             
         public:

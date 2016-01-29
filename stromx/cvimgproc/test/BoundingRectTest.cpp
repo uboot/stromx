@@ -29,7 +29,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_i32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(BoundingRect::POINT, points);
             
             runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
             
@@ -44,7 +44,7 @@ namespace stromx
             
             runtime::DataContainer points(new cvsupport::Matrix("points_f32.npy"));
             
-            m_operator->setInputData(BoundingRect::POINTS, points);
+            m_operator->setInputData(BoundingRect::POINT, points);
             
             runtime::DataContainer rectResult = m_operator->getOutputData(BoundingRect::RECT);
             
