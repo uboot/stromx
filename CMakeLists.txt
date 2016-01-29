@@ -106,7 +106,7 @@ endif(WIN32)
 set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/${LOCALE_SUFFIX}")
 
 # setup the LD_LIBRARY_PATH for unit tests on launchpad 
-set(LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/stromx/runtime:${CMAKE_BINARY_DIR}/stromx/cvsupport:${CMAKE_BINARY_DIR}/stromx/test")
+set(LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/stromx/runtime:${CMAKE_BINARY_DIR}/stromx/cvsupport:${CMAKE_BINARY_DIR}/stromx/test:${CMAKE_BINARY_DIR}/stromx/cvcalib3d/")
 
 add_subdirectory(stromx)
 add_subdirectory(doc)
@@ -114,7 +114,7 @@ add_subdirectory(doc)
 if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
     add_subdirectory(example)
     if (BUILD_TESTS)
-        add_subdirectory(integration)
+        #add_subdirectory(integration)
     endif()
 endif()
 
