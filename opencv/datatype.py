@@ -216,7 +216,7 @@ Visualization.LINE = Visualization("runtime::Variant::LINE")
 Visualization.LINE_SEGMENT = Visualization("runtime::Variant::LINE_SEGMENT")
 Visualization.POLYLINE = Visualization("runtime::Variant::POLYLINE")
 Visualization.POLYGON = Visualization("runtime::Variant::POLYGON")
-Visualization.POLYGONS_OR_POLYLINES = Visualization(
+Visualization.POLYGON_OR_POLYLINE = Visualization(
     "runtime::Variant::POLYGON || runtime::Variant::POLYLINE"
 )
 Visualization.RECTANGLE = Visualization("runtime::Variant::RECTANGLE")

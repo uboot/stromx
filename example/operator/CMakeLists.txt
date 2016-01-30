@@ -15,5 +15,6 @@ target_link_libraries(operator
 )
 
 add_test(NAME example_operator COMMAND operator)
+set_tests_properties(example_operator PROPERTIES ENVIRONMENT "${EXAMPLE_ENVIRONMENT}")
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/operator.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

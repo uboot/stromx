@@ -14,5 +14,6 @@ target_link_libraries(file
 )
 
 add_test(NAME example_file COMMAND file)
+set_tests_properties(example_file PROPERTIES ENVIRONMENT "${EXAMPLE_ENVIRONMENT}")
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/file.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

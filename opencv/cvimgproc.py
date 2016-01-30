@@ -1178,11 +1178,11 @@ drawContours = package.Method(
 # approxPolyDP
 curve = package.MatrixArgument(
     "curve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    visualization = datatype.Visualization.POLYGONS_OR_POLYLINES, cols = 2
+    visualization = datatype.Visualization.POLYGON_OR_POLYLINE, cols = 2
 )
 outCurve = package.MatrixArgument(
     "outCurve", "Polygon", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),
-    visualization = datatype.Visualization.POLYGONS_OR_POLYLINES, cols = 2
+    visualization = datatype.Visualization.POLYGON_OR_POLYLINE, cols = 2
 )
 epsilon = package.NumericParameter(
     "epsilon", "Maximal error in pixels", cvtype.Float64(), datatype.Float64(),

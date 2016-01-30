@@ -1,8 +1,6 @@
 add_test(NAME integration_test COMMAND integration_test)
-
-if(MSVC)
-    add_definitions(/DSTROMX_CVCALIB3D_STATIC)
-endif(MSVC)
+set(INTEGRATION_TEST_ENVIRONMENT "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}")
+set_tests_properties(integration_test PROPERTIES ENVIRONMENT "${INTEGRATION_TEST_ENVIRONMENT}")
 
 include_directories (
     ${CMAKE_SOURCE_DIR}

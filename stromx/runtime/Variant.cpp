@@ -190,15 +190,15 @@ namespace stromx
             case TEXT_FILE_ID:
                 return  L_("Text file");
             case LINE_SEGMENT_ID:
-                return  L_("Line segments");
+                return  L_("Line segment");
             case POLYGON_ID: 
-                return  L_("Polygons");
+                return  L_("Polygon");
             case POLYLINE_ID:
-                return  L_("Polylines");
+                return  L_("Polyline");
             case RECTANGLE_ID:
-                return  L_("Rectangles");
+                return  L_("Rectangle");
             case ROTATED_RECTANGLE_ID:
-                return  L_("Rotated rectangles");
+                return  L_("Rotated rectangle");
             case ELLIPSIS_ID: 
                 return  L_("Ellipsis");
             case CIRCLE_ID:

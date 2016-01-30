@@ -14,3 +14,4 @@ target_link_libraries(simple
 )
 
 add_test(NAME example_simple COMMAND simple)
+set_tests_properties(example_simple PROPERTIES ENVIRONMENT "${EXAMPLE_ENVIRONMENT}")
