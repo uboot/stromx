@@ -48,7 +48,7 @@ void exportVariant()
     in_Variant.attr("LIST") = Variant::LIST;
     in_Variant.attr("IMAGE") = Variant::IMAGE;
     in_Variant.attr("MONO_IMAGE") = Variant::MONO_IMAGE;
-    in_Variant.attr("BGR_24_IMAGE") = Variant::BGR_24_IMAGE;
+    in_Variant.attr("RGB_24_IMAGE") = Variant::RGB_24_IMAGE;
     in_Variant.attr("RGB_IMAGE") = Variant::RGB_IMAGE;
     in_Variant.attr("BGR_24_IMAGE") = Variant::BGR_24_IMAGE;
     in_Variant.attr("RGB_48_IMAGE") = Variant::RGB_48_IMAGE;
