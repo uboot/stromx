@@ -1278,7 +1278,7 @@ convexHull = package.Method(
 # fitEllipse
 ellipse = package.MatrixArgument(
     "ellipse", "Bounding box", cvtype.RotatedRect(), datatype.Float32Matrix(),
-    cols = 5, rows = 1, visualization = datatype.Visualization.ELLIPSIS
+    cols = 5, rows = 1, visualization = datatype.Visualization.ELLIPSE
 )
 points = package.MatrixArgument(
     "points", "Point set", cvtype.Mat(channels = 2), datatype.Any32BitMatrix(),

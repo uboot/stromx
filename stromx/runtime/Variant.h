@@ -218,7 +218,7 @@ namespace stromx
             const static VariantHandle CIRCLE;
             
             /** Matrix data which represents rotated ellipses. */
-            const static VariantHandle ELLIPSIS;
+            const static VariantHandle ELLIPSE;
             
             /** Matrix data which represents histograms. */
             const static VariantHandle HISTOGRAM;

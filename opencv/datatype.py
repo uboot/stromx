@@ -224,7 +224,7 @@ Visualization.ROTATED_RECTANGLE = Visualization(
     "runtime::Variant::ROTATED_RECTANGLE"
 )
 Visualization.CIRCLE = Visualization("runtime::Variant::CIRCLE")
-Visualization.ELLIPSIS = Visualization("runtime::Variant::ELLIPSIS")
+Visualization.ELLIPSE = Visualization("runtime::Variant::ELLIPSE")
 Visualization.HISTOGRAM = Visualization("runtime::Variant::HISTOGRAM")
         
 if __name__ == "__main__":

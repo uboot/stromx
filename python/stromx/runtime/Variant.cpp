@@ -83,7 +83,7 @@ void exportVariant()
     in_Variant.attr("POLYLINE") = Variant::POLYLINE;
     in_Variant.attr("RECTANGLE") = Variant::RECTANGLE;
     in_Variant.attr("ROTATED_RECTANGLE") = Variant::ROTATED_RECTANGLE;
-    in_Variant.attr("ELLIPSIS") = Variant::ELLIPSIS;                
+    in_Variant.attr("ELLIPSE") = Variant::ELLIPSE;                
     in_Variant.attr("CIRCLE") = Variant::CIRCLE;               
     in_Variant.attr("HISTOGRAM") = Variant::HISTOGRAM;                   
 }

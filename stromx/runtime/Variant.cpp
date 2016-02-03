@@ -78,7 +78,7 @@ namespace stromx
         const VariantHandle Variant::POLYLINE = VariantHandle(new Variant(POLYLINE_ID));
         const VariantHandle Variant::RECTANGLE = VariantHandle(new Variant(RECTANGLE_ID));
         const VariantHandle Variant::ROTATED_RECTANGLE = VariantHandle(new Variant(ROTATED_RECTANGLE_ID));
-        const VariantHandle Variant::ELLIPSIS = VariantHandle(new Variant(ELLIPSIS_ID));
+        const VariantHandle Variant::ELLIPSE = VariantHandle(new Variant(ELLIPSIS_ID));
         const VariantHandle Variant::CIRCLE = VariantHandle(new Variant(CIRCLE_ID));
         const VariantHandle Variant::HISTOGRAM = VariantHandle(new Variant(HISTOGRAM_ID));
         
@@ -291,7 +291,7 @@ namespace stromx
                 return isVariant(BINARY_FILE)
                     || isVariant(TEXT_FILE);
             case ROTATED_RECTANGLE_ID:
-                return isVariant(ELLIPSIS);
+                return isVariant(ELLIPSE);
             default:
                 return false;
             }
