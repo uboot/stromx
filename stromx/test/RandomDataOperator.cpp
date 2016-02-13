@@ -6,6 +6,7 @@
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
+#include <stromx/runtime/VariantComposite.h>
 #include <cstdlib>
 
 using namespace stromx::runtime;
@@ -100,7 +101,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* description = new Description(OUTPUT, Variant::NONE);
+            Description* description = new Description(OUTPUT, Variant::MATRIX || Variant::STRING);
             description->setTitle("Output");
             outputs.push_back(description);
             

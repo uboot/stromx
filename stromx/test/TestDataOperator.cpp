@@ -31,6 +31,7 @@
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
+#include <stromx/runtime/VariantComposite.h>
 
 using namespace stromx::runtime;
 
@@ -160,7 +161,7 @@ namespace stromx
         {
             std::vector<const Description*> outputs;
             
-            Description* description = new Description(OUTPUT, Variant::NONE);
+            Description* description = new Description(OUTPUT, Variant::STRING || Variant::IMAGE || Variant::MATRIX);
             description->setTitle("Output");
             outputs.push_back(description);
             

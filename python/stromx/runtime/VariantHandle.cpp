@@ -14,6 +14,7 @@
 *  limitations under the License.
 */
 
+#include <stromx/runtime/VariantComposite.h>
 #include <stromx/runtime/VariantHandle.h>
 
 #include <boost/python.hpp>
@@ -24,5 +25,7 @@ using namespace stromx::runtime;
 void exportVariantHandle()
 {         
     class_<VariantHandle, bases<VariantInterface> >("VariantHandle", no_init)
+        .def("__and__", &operator&&)
+        .def("__or__", &operator||)
     ;
 }
