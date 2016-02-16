@@ -517,7 +517,7 @@ namespace stromx
                 throw runtime::OperatorError(*this, "Unable to set default AWB mode.");
             }
             
-            MMAL_PARAMETER_AWB_GAINS_T TawbGains = {
+            MMAL_PARAMETER_AWB_GAINS_T awbGains = {
                 {MMAL_PARAMETER_CUSTOM_AWB_GAINS, sizeof(awbGains)},
                 {65536,65536}, {65536,65536}
             };
