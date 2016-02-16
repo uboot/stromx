@@ -290,8 +290,6 @@ namespace stromx
             case FILE_ID:
                 return isVariant(BINARY_FILE)
                     || isVariant(TEXT_FILE);
-            case ROTATED_RECTANGLE_ID:
-                return isVariant(ELLIPSE);
             default:
                 return false;
             }
