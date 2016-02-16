@@ -39,10 +39,10 @@ int stromxRegisterRaspi(stromx::runtime::Registry* registry)
     
     try
     {
-        registry.registerOperator(new GpioTrigger);
-        registry.registerOperator(new RaspiStillCam);
-        registry.registerOperator(new ReadGpio);
-        registry.registerOperator(new WriteGpio);
+        registry->registerOperator(new GpioTrigger);
+        registry->registerOperator(new RaspiStillCam);
+        registry->registerOperator(new ReadGpio);
+        registry->registerOperator(new WriteGpio);
     }
     catch(stromx::runtime::Exception & e)
     {
