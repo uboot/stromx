@@ -17,13 +17,18 @@
 #
 
 import ctypes
+import re
 
-def register(package, factory):
-    libName = 'libstromx_{0}.so'.format(package)
+def register(packageLib, factory):
+    match =  re.match('lib?stromx_(.+)\.(so.*|dll)', packageLib);
+    if not match:
+        print 'Failed to derive package name from "{0}"'.format(packageLib)
+    package = match.group(1)
+    
     try:
-        lib = ctypes.CDLL(libName)
+        lib = ctypes.CDLL(packageLib)
     except OSError:
-        print 'Failed to load {0}'.format(libName)
+        print 'Failed to load {0}'.format(packageLib)
         return 1
 
     functionName = 'stromxRegister{0}'.format(package.capitalize())
