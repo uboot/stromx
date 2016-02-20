@@ -19,7 +19,7 @@
 from stromx import register, runtime
 
 factory = runtime.Factory()
-register("runtime", factory)
+register("libstromx_runtime.so.0.7.0", factory)
 
 stream = runtime.XmlReader().readStream("file.xml", factory)
 
