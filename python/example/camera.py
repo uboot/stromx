@@ -19,8 +19,8 @@
 from stromx import register, runtime, cvsupport
 
 factory = runtime.Factory()
-register("libstromx_runtime.so.0.7.0", factory)
-register("libstromx_cvsupport.so.0.7.0", factory)
+register("libstromx_runtime.so", factory)
+register("libstromx_cvsupport.so", factory)
 
 stream = runtime.XmlReader().readStream("camera.xml", factory)
 

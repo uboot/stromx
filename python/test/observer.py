@@ -59,9 +59,9 @@ class ObserversTest(unittest.TestCase):
     def setUp(self):
         # set up an operator factory
         factory = runtime.Factory()
-        register("libstromx_runtime.so.0.7.0", factory)
-        register("libstromx_cvsupport.so.0.7.0", factory)
-        register("libstromx_test.so.0.1.0", factory)
+        register("libstromx_runtime.so", factory)
+        register("libstromx_cvsupport.so", factory)
+        register("libstromx_test.so", factory)
         
         # get the operator kernels
         counterKernel = factory.newOperator('runtime', 'Counter')
