@@ -24,7 +24,6 @@ set_target_properties(integration_test PROPERTIES FOLDER "test")
 target_link_libraries (integration_test
     ${CPPUNIT_LIBRARY}
     ${CMAKE_DL_LIBS}
-    ${OpenCV_LIBS}
     stromx_runtime
     stromx_cvcalib3d
     stromx_cvsupport

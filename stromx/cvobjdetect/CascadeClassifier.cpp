@@ -138,6 +138,7 @@ namespace stromx
             
             runtime::Description* dst = new runtime::Description(DST, runtime::Variant::LIST);
             dst->setTitle(L_("Detected rectangles"));
+            dst->setVisualization(runtime::Variant::RECTANGLE);
             outputs.push_back(dst);
             
             return outputs;
