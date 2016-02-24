@@ -33,7 +33,7 @@ namespace stromx
             CPPUNIT_TEST(testFile);
             CPPUNIT_TEST(testHasFile);
             CPPUNIT_TEST(testClose);
-            CPPUNIT_TEST(testInvalidZipFile);
+            //CPPUNIT_TEST(testInvalidZipFile);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
