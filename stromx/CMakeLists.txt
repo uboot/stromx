@@ -7,7 +7,3 @@ if(BUILD_OPENCV_WRAPPER)
     add_subdirectory(test)
 endif()
 
-if(BUILD_RASPI)
-    add_subdirectory(raspi)
-endif()
-
