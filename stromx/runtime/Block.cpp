@@ -26,6 +26,7 @@
 #include "stromx/runtime/Locale.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/TriggerData.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

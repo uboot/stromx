@@ -19,6 +19,7 @@
 #include <stromx/runtime/DataProvider.h>
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
+#include <stromx/runtime/Variant.h>
 #include "stromx/cvsupport/ConstImage.h"
 #include "stromx/cvsupport/Image.h"
 #include "stromx/cvsupport/Utilities.h"

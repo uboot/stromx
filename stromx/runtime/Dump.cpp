@@ -18,7 +18,7 @@
 #include "stromx/runtime/Dump.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
-#include <boost/concept_check.hpp>
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

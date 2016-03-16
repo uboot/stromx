@@ -22,6 +22,7 @@
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Queue.h"
 #include "stromx/runtime/Try.h"
+#include "stromx/runtime/Variant.h"
 
 namespace 
 {

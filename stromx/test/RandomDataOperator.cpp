@@ -6,6 +6,7 @@
 #include <stromx/runtime/Id2DataPair.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
+#include <stromx/runtime/Variant.h>
 #include <stromx/runtime/VariantComposite.h>
 #include <cstdlib>
 

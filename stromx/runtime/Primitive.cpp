@@ -15,12 +15,13 @@
  */
 
 #include "stromx/runtime/Primitive.h"
-#include <boost/lexical_cast.hpp>
-#include <boost/graph/graph_concepts.hpp>
+
 #include <cfloat>
+
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -35,6 +36,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Bool::variant() const { return Variant::BOOL; }
+        const VariantHandle & data_traits<Bool>::variant() { return Variant::BOOL; }
         template<>
         const std::string Bool::TYPE = "Bool";
         template<>
@@ -56,6 +58,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Int8::variant() const { return Variant::INT_8; }
+        const VariantHandle & data_traits<Int8>::variant() { return Variant::INT_8; }
         template<>
         const std::string Int8::TYPE = "Int8";
         template<>
@@ -83,6 +86,7 @@ namespace stromx
         
         template<>
         const VariantHandle & UInt8::variant() const { return Variant::UINT_8; }
+        const VariantHandle & data_traits<UInt8>::variant() { return Variant::UINT_8; }
         template<>
         const std::string UInt8::TYPE = "UInt8";
         template<>
@@ -110,6 +114,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Int16::variant() const { return Variant::INT_16; }
+        const VariantHandle & data_traits<Int16>::variant() { return Variant::INT_16; }
         template<>
         const std::string Int16::TYPE = "Int16";
         template<>
@@ -135,6 +140,7 @@ namespace stromx
         
         template<>
         const VariantHandle & UInt16::variant() const { return Variant::UINT_16; }
+        const VariantHandle & data_traits<UInt16>::variant() { return Variant::UINT_16; }
         template<>
         const std::string UInt16::TYPE = "UInt16";
         template<>
@@ -160,6 +166,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Int32::variant() const { return Variant::INT_32; }
+        const VariantHandle & data_traits<Int32>::variant() { return Variant::INT_32; }
         template<>
         const std::string Int32::TYPE = "Int32";
         template<>
@@ -185,6 +192,7 @@ namespace stromx
         
         template<>
         const VariantHandle & UInt32::variant() const { return Variant::UINT_32; }
+        const VariantHandle & data_traits<UInt32>::variant() { return Variant::UINT_32; }
         template<>
         const std::string UInt32::TYPE = "UInt32";
         template<>
@@ -210,6 +218,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Int64::variant() const { return Variant::INT_64; }
+        const VariantHandle & data_traits<Int64>::variant() { return Variant::INT_64; }
         template<>
         const std::string Int64::TYPE = "Int64";
         template<>
@@ -235,6 +244,7 @@ namespace stromx
         
         template<>
         const VariantHandle & UInt64::variant() const { return Variant::UINT_64; }
+        const VariantHandle & data_traits<UInt64>::variant() { return Variant::UINT_64; }
         template<>
         const std::string UInt64::TYPE = "UInt64";
         template<>
@@ -260,6 +270,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Float32::variant() const { return Variant::FLOAT_32; }
+        const VariantHandle & data_traits<Float32>::variant() { return Variant::FLOAT_32; }
         template<>
         const std::string Float32::TYPE = "Float32";
         template<>
@@ -285,6 +296,7 @@ namespace stromx
         
         template<>
         const VariantHandle & Float64::variant() const { return Variant::FLOAT_64; }
+        const VariantHandle & data_traits<Float64>::variant() { return Variant::FLOAT_64; }
         template<>
         const std::string Float64::TYPE = "Float64";
         template<>

@@ -24,6 +24,7 @@
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

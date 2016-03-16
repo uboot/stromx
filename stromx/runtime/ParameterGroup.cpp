@@ -14,10 +14,13 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Exception.h"
 #include "stromx/runtime/ParameterGroup.h"
+
 #include <algorithm>
 #include <boost/assert.hpp>
+
+#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -34,7 +37,8 @@ namespace stromx
             std::vector<const Parameter*>::const_iterator iter = 
                 std::find(m_members.begin(), m_members.end(), member);
             
-            BOOST_ASSERT(iter == m_members.end());
+            if (iter != m_members.end())
+                throw WrongArgument("Parameter has already been added to parameter group.");
             
             m_members.push_back(member);
         }

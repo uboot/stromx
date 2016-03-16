@@ -25,7 +25,6 @@
 
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Version.h"
-#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -98,7 +97,7 @@ namespace stromx
         class data_traits<Bool>
         {
         public:
-            static const VariantHandle & variant() { return Variant::BOOL; }
+            static const VariantHandle & variant();
         };
         /** \endcond */
         
@@ -116,7 +115,7 @@ namespace stromx
         class data_traits<Int8>
         {
         public:
-            static const VariantHandle & variant() { return Variant::INT_8; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -134,7 +133,7 @@ namespace stromx
         class data_traits<UInt8>
         {
         public:
-            static const VariantHandle & variant() { return Variant::UINT_8; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -152,7 +151,7 @@ namespace stromx
         class data_traits<Int16>
         {
         public:
-            static const VariantHandle & variant() { return Variant::INT_16; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
 
@@ -170,7 +169,7 @@ namespace stromx
         class data_traits<UInt16>
         {
         public:
-            static const VariantHandle & variant() { return Variant::UINT_16; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -188,7 +187,7 @@ namespace stromx
         class data_traits<Int32>
         {
         public:
-            static const VariantHandle & variant() { return Variant::INT_32; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -206,7 +205,7 @@ namespace stromx
         class data_traits<UInt32>
         {
         public:
-            static const VariantHandle & variant() { return Variant::UINT_32; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -224,7 +223,7 @@ namespace stromx
         class data_traits<Int64>
         {
         public:
-            static const VariantHandle & variant() { return Variant::INT_64; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -242,7 +241,7 @@ namespace stromx
         class data_traits<UInt64>
         {
         public:
-            static const VariantHandle & variant() { return Variant::UINT_64; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         
@@ -260,7 +259,7 @@ namespace stromx
         class data_traits<Float32>
         {
         public:
-            static const VariantHandle & variant() { return Variant::FLOAT_32; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
 
@@ -278,7 +277,7 @@ namespace stromx
         class data_traits<Float64>
         {
         public:
-            static const VariantHandle & variant() { return Variant::FLOAT_64; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         

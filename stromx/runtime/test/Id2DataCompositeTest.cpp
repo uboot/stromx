@@ -20,6 +20,7 @@
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 #include "stromx/runtime/test/Id2DataCompositeTest.h"
 

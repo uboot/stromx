@@ -23,6 +23,7 @@
 #include "stromx/runtime/Merge.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/test/TestData.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::MergeTest);

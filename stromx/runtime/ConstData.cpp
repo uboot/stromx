@@ -16,6 +16,8 @@
 
 #include "stromx/runtime/ConstData.h"
 
+#include <boost/assert.hpp>
+
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/EnumParameter.h"
@@ -23,8 +25,8 @@
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/String.h"
 #include "stromx/runtime/TriggerData.h"
+#include "stromx/runtime/Variant.h"
 
-#include <boost/assert.hpp>
 
 namespace stromx
 {

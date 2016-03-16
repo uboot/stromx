@@ -15,12 +15,18 @@
  */
 
 #include "stromx/runtime/EnumParameter.h"
+
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
     namespace runtime
     {   
+        EnumParameter::EnumParameter(const unsigned int id, ParameterGroup* const group)
+            : Parameter(id, Variant::ENUM, group)
+        {}
+        
         void EnumParameter::add(const runtime::EnumDescription& description)
         {
             for(std::vector<EnumDescription>::const_iterator iter = m_descriptions.begin();

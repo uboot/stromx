@@ -24,6 +24,7 @@
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/WriteAccess.h>
+#include <stromx/runtime/Variant.h>
 
 namespace stromx
 {

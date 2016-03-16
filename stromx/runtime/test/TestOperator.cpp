@@ -14,15 +14,18 @@
  *  limitations under the License.
  */
 
+#include "stromx/runtime/test/TestOperator.h"
+
 #include <boost/thread/thread.hpp>
 #include <typeinfo>
+
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/ParameterGroup.h"
 #include "stromx/runtime/Primitive.h"
-#include "stromx/runtime/test/TestOperator.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

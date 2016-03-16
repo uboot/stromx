@@ -16,10 +16,15 @@
 
 #include "stromx/runtime/Enum.h"
 
+#include "stromx/runtime/Variant.h"
+
 namespace stromx
 {
     namespace runtime
     {
         const std::string Enum::TYPE = "Enum";
+        
+        const VariantHandle & Enum::variant() const { return Variant::ENUM; }
+        const VariantHandle & data_traits<Enum>::variant() { return Variant::ENUM; }
     }
 }

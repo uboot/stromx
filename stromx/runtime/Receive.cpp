@@ -29,6 +29,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

@@ -18,7 +18,6 @@
 #define STROMX_RUNTIME_MATRIXDESCRIPTION_H
 
 #include "stromx/runtime/Description.h"
-#include "stromx/runtime/Exception.h"
 
 namespace stromx
 {
@@ -38,14 +37,7 @@ namespace stromx
              * Constructs a numeric parameter. 
              * \throws WrongArgument If \c variant is not a matrix variant.
              */
-            MatrixDescription(const unsigned int id, const VariantHandle& variant)
-              : Description(id, variant),
-                m_rows(0),
-                m_cols(0)
-            {
-                if(! variant.isVariant(Variant::MATRIX))
-                    throw WrongArgument("The variant of a matrix description must be a matrix variant.");
-            }
+            MatrixDescription(const unsigned int id, const VariantHandle& variant);
             
             virtual unsigned int rows() const { return m_rows; }
             virtual unsigned int cols() const { return m_cols; }

@@ -25,6 +25,7 @@
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/test/DummyInput.h"
 #include "stromx/runtime/test/DummyOutput.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

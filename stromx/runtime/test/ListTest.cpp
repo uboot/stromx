@@ -18,6 +18,7 @@
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/test/ListTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ListTest);

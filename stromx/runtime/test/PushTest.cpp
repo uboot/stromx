@@ -25,6 +25,7 @@
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/Push.h"
 #include "stromx/runtime/TriggerData.h"
+#include "stromx/runtime/Variant.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::PushTest);
 

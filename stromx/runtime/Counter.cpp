@@ -19,6 +19,7 @@
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

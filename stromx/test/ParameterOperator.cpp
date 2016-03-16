@@ -29,6 +29,7 @@
 #include <stromx/runtime/ParameterGroup.h>
 #include <stromx/runtime/Primitive.h>
 #include <stromx/runtime/TriggerData.h>
+#include <stromx/runtime/Variant.h>
 
 using namespace stromx::runtime;
 

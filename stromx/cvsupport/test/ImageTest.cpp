@@ -20,6 +20,7 @@
 #include <stromx/runtime/DirectoryFileOutput.h>
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/None.h>
+#include <stromx/runtime/Variant.h>
 #include "stromx/cvsupport/Config.h"
 #include "stromx/cvsupport/Image.h"
 #include "stromx/cvsupport/Utilities.h"

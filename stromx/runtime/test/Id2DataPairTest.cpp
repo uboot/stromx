@@ -18,6 +18,7 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 #include "stromx/runtime/test/Id2DataPairTest.h"
 

@@ -20,8 +20,9 @@
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/OperatorTester.h"
 #include "stromx/runtime/ReadAccess.h"
-#include <stromx/runtime/String.h>
-#include <stromx/runtime/TriggerData.h>
+#include "stromx/runtime/String.h"
+#include "stromx/runtime/TriggerData.h"
+#include "stromx/runtime/Variant.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ConstDataTest);
 

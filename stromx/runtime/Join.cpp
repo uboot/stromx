@@ -14,14 +14,18 @@
  *  limitations under the License.
  */
 
+#include "stromx/runtime/Join.h"
+
+#include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
+
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
-#include "stromx/runtime/Join.h"
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
-#include <boost/assert.hpp>
-#include <boost/lexical_cast.hpp>
+#include "stromx/runtime/Variant.h"
+
 
 namespace 
 {

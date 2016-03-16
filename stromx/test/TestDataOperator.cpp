@@ -31,6 +31,7 @@
 #include <stromx/runtime/NumericParameter.h>
 #include <stromx/runtime/OperatorException.h>
 #include <stromx/runtime/String.h>
+#include <stromx/runtime/Variant.h>
 #include <stromx/runtime/VariantComposite.h>
 
 using namespace stromx::runtime;

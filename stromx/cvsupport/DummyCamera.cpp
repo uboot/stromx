@@ -36,6 +36,7 @@
 #include <stromx/runtime/Stream.h>
 #include <stromx/runtime/Thread.h>
 #include <stromx/runtime/Block.h>
+#include <stromx/runtime/Variant.h>
 
 namespace stromx
 {

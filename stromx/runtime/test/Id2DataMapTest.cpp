@@ -18,6 +18,7 @@
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Primitive.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/test/Id2DataMapTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Id2DataMapTest);

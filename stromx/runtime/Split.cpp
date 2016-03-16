@@ -16,6 +16,8 @@
 
 #include "stromx/runtime/Split.h"
 
+#include <boost/assert.hpp>
+
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
@@ -24,8 +26,7 @@
 #include "stromx/runtime/NumericParameter.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/RecycleAccess.h"
-
-#include <boost/assert.hpp>
+#include "stromx/runtime/Variant.h"
 
 namespace 
 {

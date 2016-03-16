@@ -22,6 +22,7 @@
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Locale.h"
 #include "stromx/runtime/ReadAccess.h"
+#include "stromx/runtime/Variant.h"
 
 namespace 
 {
