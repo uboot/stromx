@@ -71,16 +71,6 @@ namespace stromx
         const VariantHandle Variant::FILE = VariantHandle(new Variant(FILE_ID));
         const VariantHandle Variant::TEXT_FILE = VariantHandle(new Variant(TEXT_FILE_ID));
         const VariantHandle Variant::BINARY_FILE = VariantHandle(new Variant(BINARY_FILE_ID));
-        const VariantHandle Variant::POINT = VariantHandle(new Variant(POINT_ID));
-        const VariantHandle Variant::LINE = VariantHandle(new Variant(LINE_ID));
-        const VariantHandle Variant::LINE_SEGMENT = VariantHandle(new Variant(LINE_SEGMENT_ID));
-        const VariantHandle Variant::POLYGON = VariantHandle(new Variant(POLYGON_ID));
-        const VariantHandle Variant::POLYLINE = VariantHandle(new Variant(POLYLINE_ID));
-        const VariantHandle Variant::RECTANGLE = VariantHandle(new Variant(RECTANGLE_ID));
-        const VariantHandle Variant::ROTATED_RECTANGLE = VariantHandle(new Variant(ROTATED_RECTANGLE_ID));
-        const VariantHandle Variant::ELLIPSE = VariantHandle(new Variant(ELLIPSIS_ID));
-        const VariantHandle Variant::CIRCLE = VariantHandle(new Variant(CIRCLE_ID));
-        const VariantHandle Variant::HISTOGRAM = VariantHandle(new Variant(HISTOGRAM_ID));
         
         const std::string Variant::title() const
         {
@@ -189,22 +179,6 @@ namespace stromx
                 return  L_("Binary file");
             case TEXT_FILE_ID:
                 return  L_("Text file");
-            case LINE_SEGMENT_ID:
-                return  L_("Line segment");
-            case POLYGON_ID: 
-                return  L_("Polygon");
-            case POLYLINE_ID:
-                return  L_("Polyline");
-            case RECTANGLE_ID:
-                return  L_("Rectangle");
-            case ROTATED_RECTANGLE_ID:
-                return  L_("Rotated rectangle");
-            case ELLIPSIS_ID: 
-                return  L_("Ellipsis");
-            case CIRCLE_ID:
-                return  L_("Circle");
-            case HISTOGRAM_ID: 
-                return  L_("Histogram");
             default:
                 return "";
             }

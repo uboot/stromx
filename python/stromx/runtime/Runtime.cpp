@@ -72,6 +72,7 @@ void exportVariant();
 void exportVariantHandle();
 void exportVariantInterface();
 void exportVersion();
+void exportVisualizationVariant();
 void exportWriteAccess();
 void exportXmlReader();
 void exportXmlWriter();
@@ -121,6 +122,7 @@ BOOST_PYTHON_MODULE(libruntime)
     exportTriggerData();
     exportVariant();
     exportVersion();    
+    exportVisualizationVariant();
     exportWriteAccess();
     exportXmlReader();
     exportXmlWriter();

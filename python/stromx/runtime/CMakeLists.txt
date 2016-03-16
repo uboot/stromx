@@ -37,6 +37,7 @@ set(SOURCES
     VariantHandle.cpp
     VariantInterface.cpp
     Version.cpp
+    Visualization.cpp
     WriteAccess.cpp
 )
 

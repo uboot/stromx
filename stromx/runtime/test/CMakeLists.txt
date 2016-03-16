@@ -96,6 +96,7 @@ set(SOURCES
     ../VariantInterface.cpp
     ../VariantHandle.cpp
     ../Version.cpp
+    ../Visualization.cpp
     ../WriteAccess.cpp
     ../impl/Client.cpp
     ../impl/DataContainerImpl.cpp
@@ -168,6 +169,7 @@ set(SOURCES
     UInt8Test.cpp
     VariantTest.cpp
     VersionTest.cpp
+    VisualizationTest.cpp
     WriteAccessTest.cpp
     main.cpp
 )

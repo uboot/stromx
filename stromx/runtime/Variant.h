@@ -193,36 +193,6 @@ namespace stromx
             /** A file object containing text data. */
             const static VariantHandle TEXT_FILE;
             
-            /** Matrix data which represents points. */
-            const static VariantHandle POINT;
-            
-            /** Matrix data which represents lines. */
-            const static VariantHandle LINE;
-            
-            /** Matrix data which represents line segments. */
-            const static VariantHandle LINE_SEGMENT;
-            
-            /** Matrix data which represents polygons. */
-            const static VariantHandle POLYGON;
-            
-            /** Matrix data which represents polylines. */
-            const static VariantHandle POLYLINE;
-            
-            /** Matrix data which represents axis aligned rectangles. */
-            const static VariantHandle RECTANGLE;
-            
-            /** Matrix data which represents rotated rectangles. */
-            const static VariantHandle ROTATED_RECTANGLE;
-            
-            /** Matrix data which represents circles. */
-            const static VariantHandle CIRCLE;
-            
-            /** Matrix data which represents rotated ellipses. */
-            const static VariantHandle ELLIPSE;
-            
-            /** Matrix data which represents histograms. */
-            const static VariantHandle HISTOGRAM;
-            
             unsigned int id() const { return m_id; }
             
             const std::string & package() const { return m_package; }
@@ -231,7 +201,12 @@ namespace stromx
             
             virtual bool isVariant(const VariantInterface& variant) const;
         
-        private:
+        protected:
+            Variant(const unsigned int id)
+              : m_id(id),
+                m_package(STROMX_RUNTIME_PACKAGE_NAME)
+            {}
+            
             enum Types
             {
                 NONE_ID,
@@ -284,23 +259,10 @@ namespace stromx
                 BINARY_FILE_ID,
                 TEXT_FILE_ID,       
                 TRIBOOL_ID,
-                POINT_ID,
-                LINE_ID,
-                LINE_SEGMENT_ID,
-                POLYGON_ID, 
-                POLYLINE_ID,
-                RECTANGLE_ID,
-                ROTATED_RECTANGLE_ID,
-                ELLIPSIS_ID,
-                CIRCLE_ID,
-                HISTOGRAM_ID
+                NUM_VARIANTS
             };
             
-            Variant(const unsigned int id)
-              : m_id(id),
-                m_package(STROMX_RUNTIME_PACKAGE_NAME)
-            {}
-            
+        private:
             unsigned int m_id;
             std::string m_package;
         };
