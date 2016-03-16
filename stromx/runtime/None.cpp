@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/None.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/Version.h"
 
 namespace stromx
@@ -25,5 +26,15 @@ namespace stromx
         const std::string None::TYPE = "None";
         const std::string None::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version None::VERSION = Version(0, 1, 0);
+        
+        const VariantHandle & data_traits<None>::variant()
+        { 
+            return Variant::NONE;
+        }
+        
+        const VariantHandle & None::variant() const
+        { 
+            return Variant::NONE;
+        }
     }
 }

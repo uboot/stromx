@@ -33,7 +33,7 @@ namespace stromx
             virtual const std::string & type() const { return TYPE; }
             virtual const std::string & package() const { return PACKAGE; }
             
-            virtual const VariantHandle & variant() const { return Variant::TRIGGER; }
+            virtual const VariantHandle & variant() const;
             
             virtual Data* clone() const { return new TriggerData; }
             
@@ -51,7 +51,7 @@ namespace stromx
         class data_traits<TriggerData>
         {
         public:
-            static const VariantHandle & variant() { return Variant::TRIGGER; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
     }

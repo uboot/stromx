@@ -122,7 +122,7 @@ namespace stromx
         class data_traits<File>
         {
         public:
-            static const VariantHandle & variant() { return Variant::FILE; }
+            static const VariantHandle & variant();
         };
         /** \endcond */
     }

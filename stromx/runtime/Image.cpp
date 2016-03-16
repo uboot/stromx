@@ -15,11 +15,17 @@
  */
 
 #include "stromx/runtime/Image.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
     namespace runtime
     {
+        const VariantHandle & data_traits<Image>::variant() 
+        { 
+            return Variant::IMAGE;
+        }
+        
         unsigned int Image::pixelSize() const
         {
             return Image::pixelSize(pixelType());

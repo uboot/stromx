@@ -19,6 +19,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
@@ -160,6 +161,11 @@ namespace stromx
             default:
                 throw InternalError();
             }
+        }
+        
+        const VariantHandle & data_traits<File>::variant()
+        { 
+            return Variant::FILE;
         }
     }
 }

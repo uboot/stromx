@@ -80,7 +80,7 @@ namespace stromx
         class data_traits<String>
         {
         public:
-            static const VariantHandle & variant() { return Variant::STRING; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
     }

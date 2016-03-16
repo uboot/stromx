@@ -176,7 +176,7 @@ namespace stromx
         class data_traits<Matrix>
         {
         public:
-            static const VariantHandle & variant() { return Variant::MATRIX; }
+            static const VariantHandle & variant();
         };
         /** \endcond */
     }

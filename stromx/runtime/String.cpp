@@ -17,6 +17,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/String.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/Version.h"
 
 namespace stromx
@@ -26,6 +27,11 @@ namespace stromx
         const std::string String::TYPE = "String";
         const std::string String::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version String::VERSION = Version(0, 1, 0);
+        
+        const VariantHandle & data_traits<String>::variant()
+        { 
+            return Variant::STRING;
+        }
         
         const VariantHandle & String::variant() const 
         {

@@ -18,6 +18,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/test/TestData.h"
 
 namespace stromx

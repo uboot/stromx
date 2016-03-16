@@ -19,6 +19,7 @@
 #include <cppunit/TestAssert.h>
 #include <opencv2/core/core.hpp>
 #include "stromx/runtime/ImageWrapper.h"
+#include "stromx/runtime/Variant.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::ImageWrapperTest);
 

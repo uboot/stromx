@@ -30,7 +30,6 @@ namespace stromx
     namespace runtime
     {
         class Data;
-        class Variant;
         
         namespace impl
         {

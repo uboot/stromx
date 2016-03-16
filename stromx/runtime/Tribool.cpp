@@ -19,6 +19,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -27,6 +28,11 @@ namespace stromx
         const std::string Tribool::TYPE = "Tribool";
         const std::string Tribool::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version Tribool::VERSION = Version(0, 1, 0);
+        
+        const VariantHandle & data_traits<Tribool>::variant()
+        { 
+            return Variant::TRIBOOL;
+        }
         
         const VariantHandle & Tribool::variant() const 
         {

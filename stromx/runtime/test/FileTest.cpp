@@ -19,6 +19,7 @@
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/File.h"
+#include "stromx/runtime/Variant.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::FileTest);
 

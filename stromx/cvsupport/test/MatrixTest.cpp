@@ -19,6 +19,7 @@
 #include <stromx/runtime/DirectoryFileInput.h>
 #include <stromx/runtime/DirectoryFileOutput.h>
 #include <stromx/runtime/None.h>
+#include <stromx/runtime/Variant.h>
 #include "stromx/cvsupport/Config.h"
 #include "stromx/cvsupport/Matrix.h"
 #include "stromx/cvsupport/test/MatrixTest.h"

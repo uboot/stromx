@@ -99,7 +99,7 @@ namespace stromx
         class data_traits<Image>
         {
         public:
-            static const VariantHandle & variant() { return Variant::IMAGE; }
+            static const VariantHandle & variant();
         };
         /** \endcond */
     }

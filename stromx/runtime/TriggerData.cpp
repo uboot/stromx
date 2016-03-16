@@ -14,9 +14,11 @@
  *  limitations under the License.
  */
 
-#include "stromx/runtime/Config.h"
 #include "stromx/runtime/TriggerData.h"
+
+#include "stromx/runtime/Config.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -25,5 +27,15 @@ namespace stromx
         const std::string TriggerData::TYPE = "Trigger";
         const std::string TriggerData::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version TriggerData::VERSION = Version(0, 1, 0);
+        
+        const VariantHandle & data_traits<TriggerData>::variant()
+        { 
+            return Variant::TRIGGER; 
+        }
+        
+        const VariantHandle & TriggerData::variant() const 
+        { 
+            return Variant::TRIGGER;
+        }
     }
 }

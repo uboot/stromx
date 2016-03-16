@@ -16,6 +16,7 @@
 
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/ImageWrapper.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

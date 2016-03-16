@@ -25,6 +25,7 @@
 
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

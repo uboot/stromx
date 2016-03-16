@@ -15,6 +15,7 @@
  */
 
 #include "stromx/runtime/Matrix.h"
+#include "stromx/runtime/Variant.h"
 
 #include <string.h>
 
@@ -22,6 +23,11 @@ namespace stromx
 {
     namespace runtime
     {
+        const VariantHandle & data_traits<Matrix>::variant() 
+        {
+            return Variant::MATRIX;
+        }
+        
         unsigned int Matrix::valueSize() const
         {
             return valueSize(valueType());

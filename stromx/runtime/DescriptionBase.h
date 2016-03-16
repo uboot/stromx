@@ -70,11 +70,7 @@ namespace stromx
         {
         public:
             /** Constructs a description. */
-            DescriptionBase(const unsigned int id, const VariantHandle& variant)
-            : m_id(id),
-              m_variant(variant),
-              m_visualization(Variant::NONE)
-            {}
+            DescriptionBase(const unsigned int id, const VariantHandle& variant);
             
             virtual ~DescriptionBase() {}
             

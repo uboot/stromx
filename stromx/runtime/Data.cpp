@@ -16,7 +16,7 @@
 
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/DataRef.h"
-#include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -30,6 +30,11 @@ namespace stromx
         void Data::deserialize(InputProvider &, const Version &)
         {
             throw Exception("This data type does not support deserialization.");
+        }
+        
+        const VariantHandle & data_traits<Data>::variant()
+        { 
+            return Variant::DATA;
         }
     }
 }

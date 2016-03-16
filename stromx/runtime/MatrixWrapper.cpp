@@ -21,6 +21,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/MatrixWrapper.h"
 #include "stromx/runtime/OutputProvider.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {

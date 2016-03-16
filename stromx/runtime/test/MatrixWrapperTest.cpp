@@ -21,6 +21,7 @@
 #include "stromx/runtime/DirectoryFileInput.h"
 #include "stromx/runtime/DirectoryFileOutput.h"
 #include "stromx/runtime/MatrixWrapper.h"
+#include "stromx/runtime/Variant.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::MatrixWrapperTest);
 

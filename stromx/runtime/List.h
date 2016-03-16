@@ -63,7 +63,7 @@ namespace stromx
         class data_traits<List>
         {
         public:
-            static const VariantHandle & variant() { return Variant::LIST; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
         

@@ -19,6 +19,7 @@
 #include "stromx/runtime/InputProvider.h"
 #include "stromx/runtime/OutputProvider.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 
 namespace stromx
 {
@@ -27,6 +28,11 @@ namespace stromx
         const std::string List::TYPE = "List";
         const std::string List::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         const Version List::VERSION = Version(0, 1, 0);
+        
+        const VariantHandle & data_traits<List>::variant()
+        { 
+            return Variant::LIST;
+        }
         
         List::~List()
         {

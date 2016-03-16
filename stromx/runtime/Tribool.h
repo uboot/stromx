@@ -17,6 +17,12 @@
 #ifndef STROMX_RUNTIME_TRIBOOL_H
 #define STROMX_RUNTIME_TRIBOOL_H
 
+#ifdef __GNUG__
+    #include <tr1/cstdint>
+#else
+    #include <cstdint>
+#endif
+
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/Data.h"
 
@@ -81,7 +87,7 @@ namespace stromx
         class data_traits<Tribool>
         {
         public:
-            static const VariantHandle & variant() { return Variant::TRIBOOL; }
+            static const VariantHandle & variant();
         };  
         /** \endcond */
     }

@@ -19,6 +19,7 @@
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/test/StringTest.h"
 #include "stromx/runtime/Version.h"
+#include "stromx/runtime/Variant.h"
 #include "stromx/runtime/test/DummyInput.h"
 #include "stromx/runtime/test/DummyOutput.h"
 
