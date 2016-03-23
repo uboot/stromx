@@ -48,7 +48,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<TriggerData>
+        class STROMX_RUNTIME_API data_traits<TriggerData>
         {
         public:
             static const VariantHandle & variant();

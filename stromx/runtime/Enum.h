@@ -50,7 +50,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Enum>
+        class STROMX_RUNTIME_API data_traits<Enum>
         {
         public:
             static const VariantHandle & variant();

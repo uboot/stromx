@@ -37,7 +37,7 @@ namespace stromx
             }
         }
         
-        boost::thread_specific_ptr<Thread> gThread(do_release);
+        STROMX_RUNTIME_API boost::thread_specific_ptr<Thread> gThread(do_release);
         
         Thread::Thread(const Network*const network)
           : m_thread(0),

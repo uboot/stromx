@@ -26,17 +26,21 @@
 #define STROMX_RUNTIME_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_RUNTIME_STATIC
-        #define STROMX_RUNTIME_API
-    #else
-        #ifdef stromx_runtime_EXPORTS
-            #define STROMX_RUNTIME_API __declspec(dllexport)
-        #else
-            #define STROMX_RUNTIME_API __declspec(dllimport)
-        #endif // stromx_runtime_EXPORTS
-    #endif // STROMX_RUNTIME_STATIC
+    #define STROMX_RUNTIME_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_RUNTIME_HELPER_DLL_EXPORT __declspec(dllexport)
 #else
-    #define STROMX_RUNTIME_API
+    #define STROMX_RUNTIME_HELPER_DLL_IMPORT
+    #define STROMX_RUNTIME_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_RUNTIME_STATIC
+    #define STROMX_RUNTIME_API
+#else
+    #ifdef stromx_runtime_EXPORTS
+        #define STROMX_RUNTIME_API STROMX_RUNTIME_HELPER_DLL_EXPORT
+    #else
+        #define STROMX_RUNTIME_API STROMX_RUNTIME_HELPER_DLL_IMPORT
+    #endif // stromx_runtime_EXPORTS
+#endif // STROMX_RUNTIME_STATIC
 
 #endif // STROMX_RUNTIME_CONFIG_H

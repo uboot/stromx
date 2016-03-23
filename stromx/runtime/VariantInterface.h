@@ -37,7 +37,7 @@ namespace stromx
          * A variant is uniquely characterized by its ID and the package it
          * belongs to.
          */
-        class VariantInterface
+        class STROMX_RUNTIME_API VariantInterface
         {            
         public:
             enum CompositeType

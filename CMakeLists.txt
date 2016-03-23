@@ -54,8 +54,7 @@ if(NOT DOC_INSTALL_DIR)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
-#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Werror")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -pedantic -Wall -Wextra")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(MSVC)

@@ -94,7 +94,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Bool>
+        class STROMX_RUNTIME_API data_traits<Bool>
         {
         public:
             static const VariantHandle & variant();
@@ -112,7 +112,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Int8>
+        class STROMX_RUNTIME_API data_traits<Int8>
         {
         public:
             static const VariantHandle & variant();
@@ -130,7 +130,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<UInt8>
+        class STROMX_RUNTIME_API data_traits<UInt8>
         {
         public:
             static const VariantHandle & variant();
@@ -148,7 +148,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Int16>
+        class STROMX_RUNTIME_API data_traits<Int16>
         {
         public:
             static const VariantHandle & variant();
@@ -166,7 +166,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<UInt16>
+        class STROMX_RUNTIME_API data_traits<UInt16>
         {
         public:
             static const VariantHandle & variant();
@@ -184,7 +184,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Int32>
+        class STROMX_RUNTIME_API data_traits<Int32>
         {
         public:
             static const VariantHandle & variant();
@@ -202,7 +202,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<UInt32>
+        class STROMX_RUNTIME_API data_traits<UInt32>
         {
         public:
             static const VariantHandle & variant();
@@ -220,7 +220,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Int64>
+        class STROMX_RUNTIME_API data_traits<Int64>
         {
         public:
             static const VariantHandle & variant();
@@ -238,7 +238,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<UInt64>
+        class STROMX_RUNTIME_API data_traits<UInt64>
         {
         public:
             static const VariantHandle & variant();
@@ -256,7 +256,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Float32>
+        class STROMX_RUNTIME_API data_traits<Float32>
         {
         public:
             static const VariantHandle & variant();
@@ -274,7 +274,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Float64>
+        class STROMX_RUNTIME_API data_traits<Float64>
         {
         public:
             static const VariantHandle & variant();

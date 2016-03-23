@@ -26,17 +26,21 @@
 #define STROMX_CVSUPPORT_LOCALE_DIR "@LOCALE_DIR@"
 
 #ifdef WIN32
-    #ifdef STROMX_CVSUPPORT_STATIC
-        #define STROMX_CVSUPPORT_API
-    #else
-        #ifdef stromx_cvsupport_EXPORTS
-            #define STROMX_CVSUPPORT_API __declspec(dllexport)
-        #else
-            #define STROMX_CVSUPPORT_API __declspec(dllimport)
-        #endif // stromx_cvsupport_EXPORTS
-    #endif // STROMX_CVSUPPORT_STATIC
+    #define STROMX_CVSUPPORT_HELPER_DLL_IMPORT __declspec(dllimport)
+    #define STROMX_CVSUPPORT_HELPER_DLL_EXPORT __declspec(dllexport)
 #else
-    #define STROMX_CVSUPPORT_API
+    #define STROMX_CVSUPPORT_HELPER_DLL_IMPORT
+    #define STROMX_CVSUPPORT_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif // WIN32
+
+#ifdef STROMX_CVSUPPORT_STATIC
+    #define STROMX_CVSUPPORT_API
+#else
+    #ifdef stromx_cvsupport_EXPORTS
+        #define STROMX_CVSUPPORT_API STROMX_CVSUPPORT_HELPER_DLL_EXPORT
+    #else
+        #define STROMX_CVSUPPORT_API STROMX_CVSUPPORT_HELPER_DLL_IMPORT
+    #endif // stromx_cvsupport_EXPORTS
+#endif // STROMX_CVSUPPORT_STATIC
 
 #endif // STROMX_CVSUPPORT_CONFIG_H

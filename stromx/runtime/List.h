@@ -60,7 +60,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<List>
+        class STROMX_RUNTIME_API data_traits<List>
         {
         public:
             static const VariantHandle & variant();

@@ -42,7 +42,7 @@ namespace stromx
         };  
         
         template<>
-        class data_traits<Data>
+        class STROMX_RUNTIME_API data_traits<Data>
         {
         public:
             static const VariantHandle & variant();

@@ -30,7 +30,7 @@ namespace stromx
          * 
          * \since 0.2
          */
-        class MatrixParameter : public Parameter
+        class STROMX_RUNTIME_API MatrixParameter : public Parameter
         {
         public:
             /** 
