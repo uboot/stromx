@@ -84,7 +84,7 @@ namespace stromx
         
         /** \cond */
         template <>
-        class data_traits<Tribool>
+        class STROMX_RUNTIME_API data_traits<Tribool>
         {
         public:
             static const VariantHandle & variant();
