@@ -34,7 +34,9 @@ namespace stromx
     {
         const std::string ExceptionOperator::TYPE("ExceptionOperator");
         const std::string ExceptionOperator::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version ExceptionOperator::VERSION(0, 1, 0);
+        const Version ExceptionOperator::VERSION(STROMX_RUNTIME_VERSION_MAJOR,
+                                                 STROMX_RUNTIME_VERSION_MINOR,
+                                                 STROMX_RUNTIME_VERSION_PATCH);
 
         ExceptionOperator::ExceptionOperator()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(),

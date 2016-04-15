@@ -29,9 +29,9 @@ namespace stromx
     {
         namespace 
         {
-            const unsigned int VERSION_MAJOR = 0;
-            const unsigned int VERSION_MINOR = 1;
-            const unsigned int VERSION_DESCRIPTION = 0;
+            const unsigned int VERSION_MAJOR = STROMX_RUNTIME_VERSION_MAJOR;
+            const unsigned int VERSION_MINOR = STROMX_RUNTIME_VERSION_MINOR;
+            const unsigned int VERSION_PATCH = STROMX_RUNTIME_VERSION_PATCH;
         }
         
         template<>
@@ -42,7 +42,7 @@ namespace stromx
         template<>
         const std::string Bool::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Bool::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Bool::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void Bool::serialize(OutputProvider & out) const
@@ -68,7 +68,7 @@ namespace stromx
         template<>
         const std::string Int8::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Int8::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Int8::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
         template <>
         void Int8::serialize(OutputProvider & out) const
@@ -96,7 +96,7 @@ namespace stromx
         template<>
         const std::string UInt8::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version UInt8::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version UInt8::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void UInt8::serialize(OutputProvider & out) const
@@ -124,7 +124,7 @@ namespace stromx
         template<>
         const std::string Int16::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Int16::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Int16::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void Int16::serialize(OutputProvider & out) const
@@ -150,7 +150,7 @@ namespace stromx
         template<>
         const std::string UInt16::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version UInt16::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version UInt16::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void UInt16::serialize(OutputProvider & out) const
@@ -176,7 +176,7 @@ namespace stromx
         template<>
         const std::string Int32::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Int32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Int32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void Int32::serialize(OutputProvider & out) const
@@ -202,7 +202,7 @@ namespace stromx
         template<>
         const std::string UInt32::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version UInt32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version UInt32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void UInt32::serialize(OutputProvider & out) const
@@ -228,7 +228,7 @@ namespace stromx
         template<>
         const std::string Int64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Int64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Int64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void Int64::serialize(OutputProvider & out) const
@@ -254,7 +254,7 @@ namespace stromx
         template<>
         const std::string UInt64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version UInt64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version UInt64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void UInt64::serialize(OutputProvider & out) const
@@ -280,7 +280,7 @@ namespace stromx
         template<>
         const std::string Float32::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Float32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Float32::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
         
         template <>
         void Float32::serialize(OutputProvider & out) const
@@ -306,7 +306,7 @@ namespace stromx
         template<>
         const std::string Float64::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
         template<>
-        const Version Float64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_DESCRIPTION);
+        const Version Float64::VERSION = Version(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
     
         template <>
         void Float64::serialize(OutputProvider & out) const
