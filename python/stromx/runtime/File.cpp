@@ -16,9 +16,10 @@
 
 #include "ExportVector.h"
 
-#include <stromx/runtime/File.h>
-
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
+
+#include <stromx/runtime/File.h>
 
 using namespace boost::python;
 using namespace stromx::runtime;
@@ -26,16 +27,16 @@ using namespace stromx::runtime;
 
 namespace
 {   
-    std::auto_ptr<File> allocate(const std::string & path, const File::OpenMode mode)
+    boost::shared_ptr<File> allocate(const std::string & path, const File::OpenMode mode)
     {
-        return std::auto_ptr<File>(new File(path, mode));
+        return boost::shared_ptr<File>(new File(path, mode), boost::lambda::_1);
     }
 }
 
 void exportFile()
 {
     scope in_File =
-    class_<File, bases<Data>, std::auto_ptr<File> >("File", no_init)
+    class_<File, bases<Data>, boost::shared_ptr<File> >("File", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("path", &File::path, return_value_policy<copy_const_reference>())
         .def("mode", &File::mode)
@@ -52,6 +53,4 @@ void exportFile()
         .value("TEXT", File::TEXT)
         .value("BINARY", File::BINARY)
         ;
-            
-    implicitly_convertible< std::auto_ptr<File>, std::auto_ptr<Data> >();
 }

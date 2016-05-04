@@ -19,7 +19,7 @@
 
 #include <stromx/cvsupport/Matrix.h>
 
-#include <memory>
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 using namespace boost::python;
@@ -27,22 +27,22 @@ using namespace stromx::runtime;
 
 namespace
 {  
-    std::auto_ptr<stromx::cvsupport::Matrix> allocateFromDimension(const unsigned int rows,
+    boost::shared_ptr<stromx::cvsupport::Matrix> allocateFromDimension(const unsigned int rows,
                                                                  const unsigned int cols,
                                                                  const stromx::runtime::Matrix::ValueType valueType)
     {
-        return std::auto_ptr<stromx::cvsupport::Matrix>(new stromx::cvsupport::Matrix(rows, cols, valueType));
+        return boost::shared_ptr<stromx::cvsupport::Matrix>(new stromx::cvsupport::Matrix(rows, cols, valueType), boost::lambda::_1);
     }
     
-    std::auto_ptr<stromx::cvsupport::Matrix> allocateFromFile(const std::string & filename)
+    boost::shared_ptr<stromx::cvsupport::Matrix> allocateFromFile(const std::string & filename)
     {
-        return std::auto_ptr<stromx::cvsupport::Matrix>(new stromx::cvsupport::Matrix(filename));
+        return boost::shared_ptr<stromx::cvsupport::Matrix>(new stromx::cvsupport::Matrix(filename), boost::lambda::_1);
     } 
 }
 
 void exportMatrix()
 {
-    class_<stromx::cvsupport::Matrix, bases<stromx::runtime::Matrix>, std::auto_ptr<stromx::cvsupport::Matrix> >("Matrix", no_init)
+    class_<stromx::cvsupport::Matrix, bases<stromx::runtime::Matrix>, boost::shared_ptr<stromx::cvsupport::Matrix> >("Matrix", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
         .def<void (stromx::cvsupport::Matrix::*)(const std::string &) const>("save", &stromx::cvsupport::Matrix::save)
@@ -53,6 +53,4 @@ void exportMatrix()
         .def("zeros", &stromx::cvsupport::Matrix::zeros)
         .staticmethod("zeros") 
     ;
-     
-    implicitly_convertible< std::auto_ptr<stromx::cvsupport::Matrix>, std::auto_ptr<Data> >();
 }

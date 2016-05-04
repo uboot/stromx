@@ -16,6 +16,7 @@
 
 #include <stromx/runtime/String.h>
 
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 using namespace boost::python;
@@ -23,26 +24,24 @@ using namespace stromx::runtime;
 
 namespace
 {   
-    std::auto_ptr<String> allocateFromString(const std::string & value)
+    boost::shared_ptr<String> allocateFromString(const std::string & value)
     {
-        return std::auto_ptr<String>(new String(value));
+        return boost::shared_ptr<String>(new String(value), boost::lambda::_1);
     }
     
-    std::auto_ptr<String> allocate()
+    boost::shared_ptr<String> allocate()
     {
-        return std::auto_ptr<String>(new String());
+        return boost::shared_ptr<String>(new String(), boost::lambda::_1);
     }
 }
 
 void exportString()
 {
-    class_<String, bases<Data>, std::auto_ptr<String> >("String", no_init)
+    class_<String, bases<Data>, boost::shared_ptr<String> >("String", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateFromString))
         .def("get", &String::get, return_value_policy<copy_const_reference>())
         .def(self == self)
         .def(self != self)
     ;
-    
-    implicitly_convertible< std::auto_ptr<String>, std::auto_ptr<Data> >();
 }

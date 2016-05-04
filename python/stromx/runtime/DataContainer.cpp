@@ -30,15 +30,11 @@ namespace
         return new DataContainer();
     }
     
-    DataContainer* allocateFromData(std::auto_ptr<Data> data)
+    DataContainer* allocateFromData(const boost::shared_ptr<Data> & data)
     {
-        Data* dataPtr = data.get();
-        data.release();
-        
-        return new DataContainer(dataPtr);
+        return new DataContainer(data.get());
     }
 }
-
 
 void exportDataContainer()
 {       

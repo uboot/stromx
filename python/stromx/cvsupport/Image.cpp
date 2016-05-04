@@ -19,7 +19,7 @@
 
 #include <stromx/cvsupport/Image.h>
 
-#include <memory>
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 using namespace boost::python;
@@ -27,26 +27,26 @@ using namespace stromx::runtime;
 
 namespace
 {  
-    std::auto_ptr<stromx::cvsupport::Image> allocateFromDimension(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
+    boost::shared_ptr<stromx::cvsupport::Image> allocateFromDimension(const unsigned int width, const unsigned int height, const Image::PixelType pixelType)
     {
-        return std::auto_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(width, height, pixelType));
+        return boost::shared_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(width, height, pixelType), boost::lambda::_1);
     }
     
-    std::auto_ptr<stromx::cvsupport::Image> allocateFromFile(const std::string & filename)
+    boost::shared_ptr<stromx::cvsupport::Image> allocateFromFile(const std::string & filename)
     {
-        return std::auto_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(filename));
+        return boost::shared_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(filename), boost::lambda::_1);
     } 
     
-    std::auto_ptr<stromx::cvsupport::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::cvsupport::Image::Conversion access)
+    boost::shared_ptr<stromx::cvsupport::Image> allocateFromFileWithAccess(const std::string & filename, const stromx::cvsupport::Image::Conversion access)
     {
-        return std::auto_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(filename, access));
+        return boost::shared_ptr<stromx::cvsupport::Image>(new stromx::cvsupport::Image(filename, access));
     } 
 }
 
 void exportImage()
 {
     scope in_Operator =
-    class_<stromx::cvsupport::Image, bases<stromx::runtime::Image>, std::auto_ptr<stromx::cvsupport::Image> >("Image", no_init)
+    class_<stromx::cvsupport::Image, bases<stromx::runtime::Image>, boost::shared_ptr<stromx::cvsupport::Image> >("Image", no_init)
         .def("__init__", make_constructor(&allocateFromFile))
         .def("__init__", make_constructor(&allocateFromDimension))
         .def("__init__", make_constructor(&allocateFromFileWithAccess))
@@ -61,6 +61,4 @@ void exportImage()
         .value("GRAYSCALE", stromx::cvsupport::Image::GRAYSCALE)
         .value("COLOR", stromx::cvsupport::Image::COLOR)
     ;
-    
-    implicitly_convertible< std::auto_ptr<stromx::cvsupport::Image>, std::auto_ptr<Data> >();
 }

@@ -16,6 +16,7 @@
 
 #include <stromx/runtime/Tribool.h>
 
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 using namespace boost::python;
@@ -23,20 +24,20 @@ using namespace stromx::runtime;
 
 namespace
 {   
-    std::auto_ptr<Tribool> allocateFromBool(const bool value)
+    boost::shared_ptr<Tribool> allocateFromBool(const bool value)
     {
-        return std::auto_ptr<Tribool>(new Tribool(value));
+        return boost::shared_ptr<Tribool>(new Tribool(value));
     }
     
-    std::auto_ptr<Tribool> allocate()
+    boost::shared_ptr<Tribool> allocate()
     {
-        return std::auto_ptr<Tribool>(new Tribool());
+        return boost::shared_ptr<Tribool>(new Tribool(), boost::lambda::_1);
     }
 }
 
 void exportTribool()
 {
-    class_<Tribool, bases<Data>, std::auto_ptr<Tribool> >("Tribool", no_init)
+    class_<Tribool, bases<Data>, boost::shared_ptr<Tribool> >("Tribool", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateFromBool))
         .def("__nonzero__", &Tribool::operator bool)
@@ -44,6 +45,4 @@ void exportTribool()
         .def(self == self)
         .def(self != self)
     ;
-    
-    implicitly_convertible< std::auto_ptr<Tribool>, std::auto_ptr<Data> >();
 }
