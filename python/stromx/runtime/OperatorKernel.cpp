@@ -42,8 +42,10 @@ namespace
       
 void exportOperatorKernel()
 {      
-    class_<OperatorKernelWrap, std::auto_ptr<OperatorKernel>, bases<OperatorInfo>, boost::noncopyable>("OperatorKernel", no_init)
+    class_<OperatorKernelWrap, boost::shared_ptr<OperatorKernel>, bases<OperatorInfo>, boost::noncopyable>("OperatorKernel", no_init)
     ;
+    
+    register_ptr_to_python< boost::shared_ptr<OperatorKernel> >();
 }
 
             

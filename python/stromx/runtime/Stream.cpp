@@ -60,11 +60,10 @@ namespace
         Py_END_ALLOW_THREADS
     }
     
-    Operator* addOperatorWrap(Stream& stream, std::auto_ptr<OperatorKernel> op)
+    Operator* addOperatorWrap(Stream& stream, const boost::shared_ptr<OperatorKernel> & op)
     {
         OperatorKernel* opPtr = op.get();
         Operator* newOp = stream.addOperator(opPtr);
-        op.release();
         return newOp;
     }
 }

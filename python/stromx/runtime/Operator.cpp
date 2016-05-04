@@ -49,10 +49,9 @@ namespace
 
     }
 
-    Operator* allocate(std::auto_ptr<OperatorKernel> kernel)
+    Operator* allocate(const boost::shared_ptr<OperatorKernel> & kernel)
     {
         Operator* op = new Operator(kernel.get());
-        kernel.release();
         return op;
     }
     

@@ -20,6 +20,7 @@
 #include <stromx/runtime/Factory.h>
 #include <stromx/runtime/Data.h>
 
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 using namespace boost::python;
@@ -28,14 +29,14 @@ using namespace stromx::runtime;
 
 namespace
 {
-    std::auto_ptr<OperatorKernel> newOperatorWrap(const Factory & factory, const std::string & package, const std::string & name)
+    boost::shared_ptr<OperatorKernel> newOperatorWrap(const Factory & factory, const std::string & package, const std::string & name)
     {
-        return std::auto_ptr<OperatorKernel>(factory.newOperator(package, name));
+        return boost::shared_ptr<OperatorKernel>(factory.newOperator(package, name), boost::lambda::_1);
     }
         
-    std::auto_ptr<Data> newDataWrap(const Factory & factory, const std::string & package, const std::string & name)
+    boost::shared_ptr<Data> newDataWrap(const Factory & factory, const std::string & package, const std::string & name)
     {
-        return std::auto_ptr<Data>(factory.newData(package, name));
+        return boost::shared_ptr<Data>(factory.newData(package, name), boost::lambda::_1);
     }
 }
 

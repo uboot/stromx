@@ -17,6 +17,7 @@
 #ifndef STROMX_PYTHON_EXPORTOPERATORKERNEL_H
 #define STROMX_PYTHON_EXPORTOPERATORKERNEL_H
 
+#include <boost/lambda/lambda.hpp>
 #include <boost/python.hpp>
 
 #include <stromx/runtime/OperatorKernel.h>
@@ -29,19 +30,17 @@ namespace stromx
     namespace python
     {
         template <class operator_t>
-        std::auto_ptr<OperatorKernel> allocate()
+        boost::shared_ptr<OperatorKernel> allocate()
         {
-            return std::auto_ptr<OperatorKernel>(new operator_t);
+            return boost::shared_ptr<OperatorKernel>(new operator_t, boost::lambda::_1);
         }
         
         template <class operator_t>
         void exportOperatorKernel(const char* const name)
         {
-            class_<operator_t, bases<OperatorKernel>, std::auto_ptr<operator_t>, boost::noncopyable>(name, no_init)
+            class_<operator_t, bases<OperatorKernel>, boost::shared_ptr<operator_t>, boost::noncopyable>(name, no_init)
                 .def("__init__", make_constructor(&allocate<operator_t>))
             ;
-            
-            implicitly_convertible< std::auto_ptr<operator_t>, std::auto_ptr<OperatorKernel> >();
         }
     }
 }

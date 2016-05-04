@@ -36,7 +36,7 @@ namespace stromx
 
 namespace
 {   
-    std::auto_ptr<WriteAccess> allocate(const DataContainer & data)
+    boost::shared_ptr<WriteAccess> allocate(const DataContainer & data)
     {
         WriteAccess* access = 0;  
         
@@ -63,10 +63,10 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr<WriteAccess>(access);
+        return boost::shared_ptr<WriteAccess>(access);
     }
     
-    std::auto_ptr<WriteAccess> allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
+    boost::shared_ptr<WriteAccess> allocateWithTimeout(const DataContainer & data, const unsigned int timeout)
     {
         WriteAccess* access = 0;
         
@@ -93,7 +93,7 @@ namespace
         }
         Py_END_ALLOW_THREADS
         
-        return std::auto_ptr<WriteAccess>(access);
+        return boost::shared_ptr<WriteAccess>(access);
     }
 }
 
