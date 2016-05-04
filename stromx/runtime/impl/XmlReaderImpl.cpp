@@ -224,17 +224,16 @@ namespace stromx
 
             Stream* XmlReaderImpl::readStream(FileInput & input, const std::string & filename)
             {    
-                std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
-                std::auto_ptr<XMLEntityResolver> entityResolver(new EntityResolver);
-                
-                std::auto_ptr<XercesDOMParser> parser(new XercesDOMParser());
+                XercesErrorHandler errHandler(filename);
+                EntityResolver entityResolver;
+                XercesDOMParser parser;
 
-                parser->setErrorHandler(errHandler.get());
-                parser->setXMLEntityResolver(entityResolver.get());
-                parser->setDoNamespaces(true);
-                parser->setDoSchema(true);
-                parser->setExternalNoNamespaceSchemaLocation("stromx.xsd");
-                parser->setValidationScheme(XercesDOMParser::Val_Always);
+                parser.setErrorHandler(&errHandler);
+                parser.setXMLEntityResolver(&entityResolver);
+                parser.setDoNamespaces(true);
+                parser.setDoSchema(true);
+                parser.setExternalNoNamespaceSchemaLocation("stromx.xsd");
+                parser.setValidationScheme(XercesDOMParser::Val_Always);
 
                 std::stringbuf contentBuffer;
                 m_input = &input;
@@ -247,7 +246,7 @@ namespace stromx
 
                 try
                 {
-                    parser->parse(source);
+                    parser.parse(source);
                 }
                 catch (const XMLException& toCatch)
                 {
@@ -287,7 +286,7 @@ namespace stromx
                     m_stream = new Stream();
                     m_stream->setFactory(m_factory);
                     
-                    DOMDocument* doc = parser->getDocument();
+                    DOMDocument* doc = parser.getDocument();
                     
                     if(! doc)
                         throw FileAccessFailed(filename, "Failed to read file.");
@@ -377,17 +376,16 @@ namespace stromx
             
             void XmlReaderImpl::readParameters(FileInput& input, const std::string & filename, const std::vector< stromx::runtime::Operator* > & operators)
             {
-                std::auto_ptr<ErrorHandler> errHandler(new XercesErrorHandler(filename));
-                std::auto_ptr<XMLEntityResolver> entityResolver(new EntityResolver);
-                
-                XercesDOMParser* parser = new XercesDOMParser();
+                XercesErrorHandler errHandler(filename);
+                EntityResolver entityResolver;
+                XercesDOMParser parser;
 
-                parser->setErrorHandler(errHandler.get());
-                parser->setXMLEntityResolver(entityResolver.get());
-                parser->setDoNamespaces(true);
-                parser->setDoSchema(true);
-                parser->setExternalNoNamespaceSchemaLocation("stromx.xsd");
-                parser->setValidationScheme(XercesDOMParser::Val_Always);
+                parser.setErrorHandler(&errHandler);
+                parser.setXMLEntityResolver(&entityResolver);
+                parser.setDoNamespaces(true);
+                parser.setDoSchema(true);
+                parser.setExternalNoNamespaceSchemaLocation("stromx.xsd");
+                parser.setValidationScheme(XercesDOMParser::Val_Always);
 
                 std::stringbuf contentBuffer;
                 m_input = &input;
@@ -400,7 +398,7 @@ namespace stromx
 
                 try
                 {
-                    parser->parse(source);
+                    parser.parse(source);
                 }
                 catch (const XMLException& toCatch)
                 {
@@ -437,7 +435,7 @@ namespace stromx
                 
                 try
                 {
-                    DOMDocument* doc = parser->getDocument();
+                    DOMDocument* doc = parser.getDocument();
                     
                     if(! doc)
                         throw FileAccessFailed(filename, "Failed to read file.");
@@ -529,8 +527,6 @@ namespace stromx
                 {
                     throw FileAccessFailed(filename, "", e.what());
                 }
-
-                delete parser;
             }
             
             void XmlReaderImpl::readOperator(DOMElement*const opElement)

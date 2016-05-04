@@ -93,10 +93,11 @@ namespace stromx
             std::vector<int> content;
             content.push_back(5);
             
-            std::auto_ptr<List> list(new TypedList<Int32>(content));
+            TypedList<Int32> typedList(content);
+            List & list = typedList;
             
-            CPPUNIT_ASSERT_EQUAL(std::size_t(1), list->content().size());
-            CPPUNIT_ASSERT_EQUAL(Int32(5), data_cast<Int32>(*(list->content()[0])));
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), list.content().size());
+            CPPUNIT_ASSERT_EQUAL(Int32(5), data_cast<Int32>(*(list.content()[0])));
         }
     }
 }
