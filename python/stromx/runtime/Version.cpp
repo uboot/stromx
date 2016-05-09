@@ -14,9 +14,12 @@
 *  limitations under the License.
 */
 
+#include <boost/python.hpp>
+#undef major
+#undef minor
+
 #include <stromx/runtime/Version.h>
 
-#include <boost/python.hpp>
 
 using namespace boost::python;
 using namespace stromx::runtime;
