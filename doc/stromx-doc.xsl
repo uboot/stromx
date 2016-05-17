@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- cd ../runtime && saxon9 -s:../runtime.xml -xsl:../stromx-doc.xsl > package.html -->
-<!-- cd ../example && saxon9 -s:../example.xml -xsl:../stromx-doc.xsl > package.html -->
+<!-- cd ../example && saxon9 -s:../cvimgproc.xml -xsl:../stromx-doc.xsl > package.html -->
 
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
