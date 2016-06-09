@@ -4,47 +4,47 @@
     <Stream>
         <Operator id="0" package="cv::support" type="DummyCamera" version="0.1.0">
             <!-- output image index -->
-            <Parameter id="0">
+            <Parameter id="2">
                 <Data package="runtime" type="Bool" version="0.1.0">1</Data>
             </Parameter>
             <!-- image for camera simulator -->
-            <Parameter id="1">
+            <Parameter id="3">
                 <Data type="Image" package="cv::support" version="0.1.0" file="lenna.jpg"/>
             </Parameter>
             <!-- software trigger mode -->
-            <Parameter id="2">
+            <Parameter id="4">
                 <Data type="Enum" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
-            <Parameter id="6">
+            <Parameter id="8">
                 <Data type="UInt32" package="runtime" version="0.1.0">1000000</Data>
             </Parameter>
             <!-- one buffer -->
-            <Parameter id="7">
+            <Parameter id="9">
                 <Data type="UInt32" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- 8-bit grayscale output -->
-            <Parameter id="15">
+            <Parameter id="17">
                 <Data type="Enum" package="runtime" version="0.1.0">1</Data>
             </Parameter>
         </Operator>
         <Operator id="1" package="cv::support" type="Buffer" version="0.1.0">
             <!-- one buffer -->
-            <Parameter id="0">
+            <Parameter id="1">
                 <Data type="UInt32" package="runtime" version="0.1.0">1</Data>
             </Parameter>
             <!-- the buffer size is 1 MB -->
-            <Parameter id="1">
+            <Parameter id="2">
                 <Data type="UInt32" package="runtime" version="0.1.0">1000000</Data>
             </Parameter>
         </Operator>
         <Operator id="2" package="cv::support" type="ConvertPixelType" version="0.1.0">
             <!-- write result to destination buffer -->
-            <Parameter id="0">
+            <Parameter id="3">
                 <Data type="Enum" package="runtime" version="0.1.0">0</Data>
             </Parameter>
             <!-- convert to RGB 24-bit image -->
-            <Parameter id="1">
+            <Parameter id="4">
                 <Data type="Enum" package="runtime" version="0.1.0">3</Data>
             </Parameter>
             <Input id="0" operator="0" output="0"/>

@@ -44,7 +44,7 @@ namespace stromx
             for(unsigned int i = 0; i < 3; ++i)
             {
                 DataContainer data(new UInt32(i));
-                m_operator->setInputData(i, data);
+                m_operator->setInputData(Join::INPUTS_BASE + i, data);
             }
             
             for(unsigned int i = 0; i < 3; ++i)

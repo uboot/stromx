@@ -27,14 +27,13 @@ namespace stromx
         class STROMX_RUNTIME_API Fork : public OperatorKernel
         {
         public:
-            enum InputId
+            enum DataId
             {
-                INPUT
-            };
-            
-            enum ParameterId
-            {
-                NUM_OUTPUTS
+                INPUT,
+                NUM_OUTPUTS,
+                OUTPUTS_BASE,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 1
             };
             
             Fork();

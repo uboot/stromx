@@ -35,15 +35,15 @@ namespace stromx
         /** \brief Outputs a configurable constant image. */
         class STROMX_CVSUPPORT_API ConstImage : public runtime::OperatorKernel
         {
-        public:
-            enum OutputIds
-            {
-                OUTPUT
-            };
+            STROMX_OPERATOR_KERNEL
             
-            enum ParameterIds
+        public:
+            enum DataId
             {
-                IMAGE
+                OUTPUT,
+                IMAGE,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 1
             };
             
             ConstImage();

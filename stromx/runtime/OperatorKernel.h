@@ -23,6 +23,8 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorInfo.h"
 
+#define STROMX_OPERATOR_KERNEL
+
 namespace stromx
 {
     namespace runtime

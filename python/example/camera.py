@@ -30,13 +30,13 @@ camera = stream.operators()[0]
 convertPixelType = stream.operators()[2]
 
 for i in range(5):
-    with convertPixelType.getOutputData(0) as data, runtime.ReadAccess(data) as image:
+    with convertPixelType.getOutputData(2) as data, runtime.ReadAccess(data) as image:
         print "Received image {0}x{1}, {2}".format(
             image.get().width(), 
             image.get().height(),
             image.get().variant().title())
     
-    convertPixelType.clearOutputData(0)
+    convertPixelType.clearOutputData(2)
     camera.clearOutputData(1)
 
 stream.stop()

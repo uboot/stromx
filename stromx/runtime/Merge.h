@@ -30,16 +30,16 @@ namespace stromx
         /** \brief Merges over the entries of an input list. */
         class STROMX_RUNTIME_API Merge : public OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum InputId
+            enum DataId
             {
                 INPUT_DATA,
-                INPUT_NUM_ITEMS
-            };
-            
-            enum ParameterId
-            {
-                OUTPUT
+                INPUT_NUM_ITEMS,
+                OUTPUT,
+                OUTPUT_OFFSET = 2,
+                PARAMETER_OFFSET = 3
             };
             
             Merge();

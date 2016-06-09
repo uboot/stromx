@@ -97,7 +97,7 @@ namespace stromx
             
             std::vector<Id2DataPair*> outputPairs;
             for(unsigned int i = 0; i < numOutputs; ++i)
-                outputPairs.push_back(new Id2DataPair(i, input.data()));
+                outputPairs.push_back(new Id2DataPair(OUTPUTS_BASE + i, input.data()));
             
             std::vector<Id2DataComposite*> outputComposites;
             outputComposites.push_back(new Id2DataComposite(*outputPairs[0],
@@ -166,7 +166,7 @@ namespace stromx
             
             for(unsigned int i = 0; i < (unsigned int)(m_numOutputs); ++i)
             {
-                Description* output = new Description(i, Variant::DATA);
+                Description* output = new Description(OUTPUTS_BASE + i, Variant::DATA);
                 output->setTitle("Output " + boost::lexical_cast<std::string>(i));
                 output->setOperatorThread(OUTPUT_THREADS + i);
                 outputs.push_back(output);

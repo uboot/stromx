@@ -28,12 +28,12 @@ stream.start()
 timer = stream.operators()[1]
 
 for i in range(5):
-    data = timer.getOutputData(0)
+    data = timer.getOutputData(1)
     count = runtime.ReadAccess(data)
     with runtime.ReadAccess(data) as count:
         print "Received {0}".format(count.get().get())
     
-    timer.clearOutputData(0)
+    timer.clearOutputData(1)
 
 stream.stop()
 stream.join()

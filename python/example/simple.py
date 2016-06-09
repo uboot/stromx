@@ -25,7 +25,7 @@ stream.initializeOperator(source)
 timer = stream.addOperator(runtime.PeriodicDelay())
 stream.initializeOperator(timer)
 
-timer.setParameter(0, runtime.UInt32(1000))
+timer.setParameter(2, runtime.UInt32(1000))
 
 stream.connect(source, 0, timer, 0)
 
@@ -35,11 +35,11 @@ thread.addInput(timer, 0)
 stream.start()
 
 for i in range(5):
-    data = timer.getOutputData(0)
+    data = timer.getOutputData(1)
     with runtime.ReadAccess(data) as count:
         print "Received {0}".format(count.get().get())
     
-    timer.clearOutputData(0)
+    timer.clearOutputData(1)
 
 stream.stop()
 stream.join()

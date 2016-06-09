@@ -33,20 +33,16 @@ namespace stromx
         /** \brief Applies a random coefficent to the brightness of the image. */
         class STROMX_CVSUPPORT_API Flicker : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum InputId
+            enum DataId
             {
-                INPUT
-            };
-            
-            enum OutputId
-            {
-                OUTPUT
-            };
-            
-            enum ParameterId
-            {
-                AMOUNT
+                INPUT,
+                OUTPUT,
+                AMOUNT,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 2
             };
             
             Flicker();

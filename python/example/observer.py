@@ -52,8 +52,8 @@ timer.addObserver(observer)
 stream.start()
 
 for i in range(5):
-    data = timer.getOutputData(0)
-    timer.clearOutputData(0)
+    data = timer.getOutputData(1)
+    timer.clearOutputData(1)
 
 stream.stop()
 stream.join()

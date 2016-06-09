@@ -26,18 +26,10 @@ namespace math
     class Add : public stromx::runtime::OperatorKernel
     {
     public:
-        enum InputId
+        enum DataId
         {
-            INPUT
-        };
-        
-        enum OutputId
-        {
-            OUTPUT
-        };
-        
-        enum ParameterId
-        {
+            INPUT,
+            OUTPUT,
             OFFSET
         };
         

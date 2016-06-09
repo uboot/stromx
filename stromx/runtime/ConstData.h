@@ -36,7 +36,7 @@ namespace stromx
         class STROMX_RUNTIME_API ConstData : public DataOperatorBase
         {
         public:            
-            enum ParameterId
+            enum DataId
             {
                 ALLOCATE_DATA = DataOperatorBase::NUM_BASE_PARAMETERS
             };

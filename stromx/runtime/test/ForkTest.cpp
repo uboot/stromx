@@ -49,7 +49,7 @@ namespace stromx
             
             for(unsigned int i = 0; i < 3; ++i)
             {
-                DataContainer data = m_operator->getOutputData(i);
+                DataContainer data = m_operator->getOutputData(Fork::OUTPUTS_BASE + i);
                 
                 ReadAccess access(data);
                 CPPUNIT_ASSERT_EQUAL(UInt32(i), access.get<UInt32>());

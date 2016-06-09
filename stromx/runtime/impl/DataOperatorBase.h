@@ -30,16 +30,14 @@ namespace stromx
         class STROMX_RUNTIME_API DataOperatorBase : public OperatorKernel
         {
         public:
-            enum OutputId
+            enum DataId
             {
-                OUTPUT
-            };
-            
-            enum ParameterId
-            {
+                OUTPUT,
                 DATA_TYPE,
                 VALUE,
-                NUM_BASE_PARAMETERS
+                NUM_BASE_PARAMETERS,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 1
             };
             
             DataOperatorBase(const std::string & type, const std::string & package,

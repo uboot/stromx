@@ -31,15 +31,15 @@ namespace stromx
         /** \brief Distributes input data to TCP clients. */
         class STROMX_RUNTIME_API Send : public OperatorKernel
         {
-        public:
-            enum InputId
-            {
-                INPUT
-            };
+            STROMX_OPERATOR_KERNEL
             
-            enum ParameterId
+        public:
+            enum DataId
             {
-                PORT
+                INPUT,
+                PORT,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 1
             };
             
             Send ();

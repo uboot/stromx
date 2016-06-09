@@ -34,16 +34,16 @@ namespace stromx
         /** \brief Manages an array or reusable image buffers. */
         class STROMX_CVSUPPORT_API Buffer : public runtime::OperatorKernel
         {
-        public:
-            enum OutputId
-            {
-                OUTPUT
-            };
+            STROMX_OPERATOR_KERNEL
             
-            enum ParameterId
+        public:
+            enum DataId
             {
+                OUTPUT,
                 NUM_BUFFERS,
-                BUFFER_SIZE
+                BUFFER_SIZE,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 1
             };
             
             Buffer();

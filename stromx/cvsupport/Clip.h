@@ -29,24 +29,20 @@ namespace stromx
         /** \brief Clips an image to a rectangular region. */
         class STROMX_CVSUPPORT_API Clip : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum InputId
+            enum DataId
             {
-                INPUT
-            };
-            
-            enum OutputId
-            {
-                OUTPUT
-            };
-            
-            enum ParameterId
-            {
+                INPUT,
+                OUTPUT,
                 TOP,
                 LEFT,
                 WIDTH,
                 HEIGHT,
-                NUM_PARAMS
+                NUM_PARAMS,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 2
             };
             
             Clip();

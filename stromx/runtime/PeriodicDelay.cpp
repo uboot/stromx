@@ -126,14 +126,14 @@ namespace stromx
             }
             
             Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
-            provider.sendOutputData( outputDataMapper);
+            provider.sendOutputData(outputDataMapper);
         }
         
         const std::vector<const runtime::Description*> PeriodicDelay::setupInputs()
         {
             std::vector<const Description*> inputs;
             
-            Description* input = new Description(OUTPUT, Variant::DATA);
+            Description* input = new Description(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             

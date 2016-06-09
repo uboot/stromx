@@ -42,15 +42,13 @@ namespace stromx
         /** \brief Simulates a camera input. */
         class STROMX_CVSUPPORT_API DummyCamera : public runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum OutputId
+            enum DataId
             {
                 OUTPUT,
-                INDEX
-            };
-            
-            enum ParameterId
-            {
+                INDEX,
                 OUTPUT_INDEX,
                 IMAGE,
                 TRIGGER_MODE,
@@ -69,7 +67,9 @@ namespace stromx
                 PIXEL_TYPE,
                 WHITE_BALANCE_GROUP,
                 ROI_GROUP,
-                FLICKER_AMOUNT
+                FLICKER_AMOUNT,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 2
             };
             
             enum TriggerMode

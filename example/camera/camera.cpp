@@ -44,14 +44,14 @@ int main (int, char**)
     
     for(unsigned int i = 0; i < 5; ++i)
     {
-        runtime::DataContainer data = convertPixelType->getOutputData(0);
+        runtime::DataContainer data = convertPixelType->getOutputData(2);
         runtime::ReadAccess image(data);
         std::cout << "Received image " 
                   << image.get<runtime::Image>().height() << "x"
                   << image.get<runtime::Image>().width() << ", "
                   << image.get().variant().title() << std::endl;
         
-        convertPixelType->clearOutputData(0);
+        convertPixelType->clearOutputData(2);
         camera->clearOutputData(1);
     }
     

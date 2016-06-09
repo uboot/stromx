@@ -59,8 +59,8 @@ namespace stromx
             m_stream->initializeOperator(dump);
             
             m_stream->connect(counter, Counter::OUTPUT, fork, Fork::INPUT);
-            m_stream->connect(fork, 0, join, 0);
-            m_stream->connect(fork, 1, join, 1);
+            m_stream->connect(fork, 2, join, 2);
+            m_stream->connect(fork, 3, join, 3);
             m_stream->connect(join, Join::OUTPUT, dump, Dump::INPUT);
             
             AssignThreadsAlgorithm algorithm;
@@ -290,8 +290,8 @@ namespace stromx
             m_stream->initializeOperator(delay);
             
             m_stream->connect(join, Join::OUTPUT, dump, Dump::INPUT);
-            m_stream->connect(fork, 0, join, 0);
-            m_stream->connect(fork, 1, join, 1);
+            m_stream->connect(fork, 2, join, 2);
+            m_stream->connect(fork, 3, join, 3);
             m_stream->connect(delay, PeriodicDelay::OUTPUT, fork, Fork::INPUT);
             m_stream->connect(counter, Counter::OUTPUT, delay, PeriodicDelay::INPUT);
             

@@ -30,7 +30,7 @@ namespace stromx
 
     namespace runtime
     {
-        void PeriodicDelayTest::setUp ( void )
+        void PeriodicDelayTest::setUp()
         {
             m_operator = new runtime::OperatorTester(new PeriodicDelay());
             m_operator->initialize();
@@ -44,7 +44,7 @@ namespace stromx
             m_operator->setParameter(PeriodicDelay::PERIOD, UInt32(1000));
             
             {
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
                 ReadAccess access(result);
                 access.get<UInt32>();
             }
@@ -52,19 +52,19 @@ namespace stromx
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }
 
             m_operator->clearOutputData(PeriodicDelay::OUTPUT);
@@ -79,7 +79,7 @@ namespace stromx
             m_operator->setParameter(PeriodicDelay::PERIOD, runtime::UInt32(0));
             
             {
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
                 ReadAccess access(result);
                 access.get<UInt32>();
             }
@@ -87,19 +87,19 @@ namespace stromx
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }   
             
             {
                 m_operator->clearOutputData(PeriodicDelay::OUTPUT);
                 m_operator->setInputData(PeriodicDelay::INPUT, m_data);
-                DataContainer result = m_operator->getOutputData(PeriodicDelay::PERIOD);
+                DataContainer result = m_operator->getOutputData(PeriodicDelay::OUTPUT);
             }
         }
         
@@ -108,7 +108,7 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(m_operator->getOutputData(PeriodicDelay::OUTPUT), Interrupt);
         }
         
-        void PeriodicDelayTest::tearDown ( void )
+        void PeriodicDelayTest::tearDown()
         {
             delete m_operator;
         }

@@ -28,24 +28,21 @@ namespace stromx
         /** \brief Compare operation of floating point values. */
         class STROMX_RUNTIME_API Compare : public OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
-            enum OutputId
+            
+            enum DataId
             {
+                RESULT,
                 NUMBER_1,
-                NUMBER_2
-            };
-            
-            enum InputId
-            {
-                RESULT
-            };
-            
-            enum ParameterId
-            {
+                NUMBER_2,
                 COMPARE_TO_INPUT,
                 COMPARISON_TYPE,
                 EPSILON,
-                PARAMETER_VALUE
+                PARAMETER_VALUE,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 3
             };
             
             enum CompareType
