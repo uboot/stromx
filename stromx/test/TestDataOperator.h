@@ -32,20 +32,18 @@ namespace stromx
     {
         class STROMX_TEST_API TestDataOperator : public stromx::runtime::OperatorKernel
         {
-            enum Outputs 
+            enum DataId 
             { 
-                OUTPUT
-            };
-            
-            enum Parameters
-            { 
+                OUTPUT,
                 DATA_TYPE,
                 OBJECT_TYPE,
                 SIZE_X,
                 SIZE_Y,
                 NUM_BINS,
                 NUM_LINES,
-                POINT_OFFSET
+                POINT_OFFSET,
+                OUTPUT_OFFSET = 0,
+                PARAMETER_OFFSET = 1
             };
             
             enum DataType

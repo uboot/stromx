@@ -33,20 +33,12 @@ namespace stromx
         class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
         {
         public:
-            enum Inputs 
+            enum DataId 
             { 
                 INPUT_1, 
-                INPUT_2
-            };
-            
-            enum Outputs 
-            { 
+                INPUT_2,
                 OUTPUT_1, 
-                OUTPUT_2
-            };
-            
-            enum Parameters
-            { 
+                OUTPUT_2,
                 INITIALIZE_PARAM,
                 PARAM_GROUP_1,
                 PARAM_GROUP_2,
@@ -58,7 +50,9 @@ namespace stromx
                 TRIGGER_VALUE_PARAM,
                 TRIGGER_PARAM,
                 PUSH_PARAM,
-                PULL_PARAM
+                PULL_PARAM,
+                OUTPUT_OFFSET = 2,
+                PARAMETER_OFFSET = 4
             };
             
             ParameterOperator();

@@ -31,20 +31,18 @@ namespace stromx
     {
         class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
         {
-            enum Inputs 
+            enum DataId 
             { 
-                INPUT
-            };
-            
-            enum Parameters
-            { 
+                INPUT,
                 THROW_INITIALIZE,
                 THROW_ACTIVATE,
                 THROW_EXECUTE,
                 THROW_DEACTIVATE,
                 THROW_DEINITIALIZE,
                 THROW_PARAMETER,
-                PARAMETER
+                PARAMETER,
+                OUTPUT_OFFSET = 1,
+                PARAMETER_OFFSET = 1
             };
             
         public:
