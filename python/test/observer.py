@@ -80,7 +80,7 @@ class ObserversTest(unittest.TestCase):
         stream.initializeOperator(dump)
         
         # obtain write access in deadlock operator
-        deadlock.setParameter(3, runtime.Bool(True))
+        deadlock.setParameter(5, runtime.Bool(True))
         
         stream.connect(counter, 0, deadlock, 0)
         stream.connect(deadlock, 1, dump, 0)
