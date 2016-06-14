@@ -70,24 +70,22 @@ namespace stromx
                 return path.string();
             }
             
-            const std::string XmlUtilities::stripExtension(const std::string& filename)
+            const std::string XmlUtilities::stripExtension(const std::string& filepath)
             {
-                std::size_t i = filename.find_first_of(".");
+                boost::filesystem::path parentPath = boost::filesystem::path(filepath).parent_path();
+                boost::filesystem::path stem = boost::filesystem::path(filepath).stem();
                 
-                if(i == std::string::npos)
-                    return filename;
-                
-                return std::string (filename, 0, i);
+                return (parentPath / stem).string();
             }
             
-            const std::string XmlUtilities::computeExtension(const std::string& filename)
+            const std::string XmlUtilities::computeExtension(const std::string& filepath)
             {
-                std::size_t i = filename.find_first_of(".");
+                boost::filesystem::path extension = boost::filesystem::path(filepath).extension();
                 
-                if(i == std::string::npos)
+                if (extension.string().empty())
                     return "";
                 
-                return std::string (filename, i + 1);
+                return std::string(extension.string(), 1);
             }
         }
     }

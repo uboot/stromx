@@ -49,6 +49,8 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::stripExtension(".xml"));
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc"));
             CPPUNIT_ASSERT_EQUAL(std::string("abc"), XmlUtilities::stripExtension("abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("/abc"), XmlUtilities::stripExtension("/abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("./abc"), XmlUtilities::stripExtension("./abc.txt"));
         }
         
         void XmlUtilitiesTest::testComputeExtension()
@@ -57,6 +59,8 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::string("xml"), XmlUtilities::computeExtension(".xml"));
             CPPUNIT_ASSERT_EQUAL(std::string(""), XmlUtilities::computeExtension("abc"));
             CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::computeExtension("abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::computeExtension("./abc.txt"));
+            CPPUNIT_ASSERT_EQUAL(std::string("txt"), XmlUtilities::computeExtension(".hidden.txt"));
         }
     }
 }
