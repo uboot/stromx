@@ -233,9 +233,9 @@ namespace stromx
             Parameter & parameter(const unsigned int id);
             
         private:
-            void validateInputs(const std::vector<const Description*>& descriptors);
-            void validateOutputs(const std::vector<const Description*>& descriptors);
-            void validateParameters(const std::vector<const Parameter*>& descriptors);
+            void validateDescriptions(const std::vector<const Description*>& inputs,
+                                      const std::vector<const Description*>& outputs,
+                                      const std::vector<const Parameter*>& parameters);
             const Parameter & findParameter(const unsigned int id) const;
             
             std::string m_type;

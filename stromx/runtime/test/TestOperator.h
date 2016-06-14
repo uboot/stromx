@@ -32,14 +32,15 @@ namespace stromx
             static const unsigned int INPUT_2 = 1;
             static const unsigned int OUTPUT_1 = 2;
             static const unsigned int OUTPUT_2 = 3;
-            static const unsigned int BUFFER_SIZE = 0;
-            static const unsigned int SLEEP_TIME = 1;
-            static const unsigned int THROW_EXCEPTION = 2;
-            static const unsigned int TEST_DATA = 3;
-            static const unsigned int DATA_GROUP = 4;
-            static const unsigned int PUSH_PARAMETER = 5;
-            static const unsigned int PULL_PARAMETER = 6;
+            static const unsigned int BUFFER_SIZE = 4;
+            static const unsigned int SLEEP_TIME = 5;
+            static const unsigned int THROW_EXCEPTION = 6;
+            static const unsigned int TEST_DATA = 7;
+            static const unsigned int DATA_GROUP = 8;
+            static const unsigned int PUSH_PARAMETER = 9;
+            static const unsigned int PULL_PARAMETER = 10;
             static const unsigned int NUM_PARAMETERS = 7;
+            static const unsigned int NUM_DESCRIPTIONS = 11;
             
             TestOperator();
             

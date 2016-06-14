@@ -33,7 +33,9 @@ namespace stromx
             m_version(version),
             m_properties(properties)
         {
-            validateParameters(parameters);
+            validateDescriptions(std::vector<const Description*>(), 
+                                 std::vector<const Description*>(),
+                                 parameters);
             
             for(std::vector<const runtime::Parameter*>::const_iterator iter = parameters.begin();
                 iter != parameters.end();
@@ -67,9 +69,7 @@ namespace stromx
             m_version(version),
             m_properties(properties)
         {
-            validateInputs(inputs);
-            validateOutputs(outputs);
-            validateParameters(parameters);
+            validateDescriptions(inputs, outputs, parameters);
             
             for(std::vector<const runtime::Description*>::const_iterator iter = inputs.begin();
                 iter != inputs.end();
@@ -109,8 +109,8 @@ namespace stromx
             m_version(version),
             m_properties(properties)
         {
-            validateInputs(inputs);
-            validateOutputs(outputs);
+            validateDescriptions(inputs, outputs,
+                                 std::vector<const Parameter* >());
             
             for(std::vector<const runtime::Description*>::const_iterator iter = inputs.begin();
                 iter != inputs.end();
@@ -134,9 +134,7 @@ namespace stromx
                                         const std::vector<const runtime::Description*>& outputs,
                                         const std::vector<const runtime::Parameter*>& parameters)
         {
-            validateInputs(inputs);
-            validateOutputs(outputs);
-            validateParameters(parameters);
+            validateDescriptions(inputs, outputs, parameters);
             
             for(std::vector<const runtime::Description*>::const_iterator iter = inputs.begin();
                 iter != inputs.end();
@@ -267,45 +265,14 @@ namespace stromx
                 delete *iter;
             }
         }
-
-        void OperatorKernel::validateOutputs(const std::vector<const Description*>& descriptors)
+        
+        void OperatorKernel::validateDescriptions(const std::vector<const Description*>& inputs,
+                                                  const std::vector<const Description*>& outputs,
+                                                  const std::vector<const Parameter*>& parameters)
         {
             std::set<unsigned int> existingIds;
             std::set<unsigned int> newIds;
-            
-            // collect all existing IDs
-            for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
-                iter != m_outputs.end();
-                ++iter)
-            {
-                existingIds.insert((*iter)->id());
-            }
-            
-            // collect all new IDs
-            for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
-                iter != descriptors.end();
-                ++iter)
-            {
-                if(newIds.count((*iter)->id()))
-                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
-            
-                newIds.insert((*iter)->id());
-            }
-            
-            // check if any of the new IDs matches an existing ID
-            for(std::set<unsigned int>::const_iterator iter = newIds.begin();
-                iter != newIds.end();
-                ++iter)
-            {
-                if(existingIds.count(*iter))
-                    throw WrongArgument("Parameter with ID " + boost::lexical_cast<std::string>(*iter) + " has already been added.");
-            }
-        }
-
-        void OperatorKernel::validateInputs(const std::vector<const Description*>& descriptors)
-        {
-            std::set<unsigned int> existingIds;
-            std::set<unsigned int> newIds;
+            std::set<const Parameter*> allParameters;
             
             // collect all existing IDs
             for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
@@ -315,52 +282,51 @@ namespace stromx
                 existingIds.insert((*iter)->id());
             }
             
-            // collect all new IDs
-            for(std::vector<const Description*>::const_iterator iter = descriptors.begin();
-                iter != descriptors.end();
+            for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
                 ++iter)
             {
-                if(newIds.count((*iter)->id()))
-                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
-            
-                newIds.insert((*iter)->id());
+                existingIds.insert((*iter)->id());
             }
             
-            // check if any of the new IDs matches an existing ID
-            for(std::set<unsigned int>::const_iterator iter = newIds.begin();
-                iter != newIds.end();
-                ++iter)
-            {
-                if(existingIds.count(*iter))
-                    throw WrongArgument("Parameter with ID " + boost::lexical_cast<std::string>(*iter) + " has already been added.");
-            }
-        }
-        
-        void OperatorKernel::validateParameters(const std::vector<const Parameter*>& descriptors)
-        {
-            std::set<unsigned int> existingIds;
-            std::set<unsigned int> newIds;
-            std::set<const Parameter*> params;
-            
-            // collect all existing IDs
             for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
                 iter != m_parameters.end();
                 ++iter)
             {
                 existingIds.insert((*iter)->id());
-                params.insert(*iter);
+                allParameters.insert(*iter);
             }
             
             // collect all new IDs
-            for(std::vector<const Parameter*>::const_iterator iter = descriptors.begin();
-                iter != descriptors.end();
+            for(std::vector<const Description*>::const_iterator iter = inputs.begin();
+                iter != inputs.end();
                 ++iter)
             {
                 if(newIds.count((*iter)->id()))
                     throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
-            
+                    
                 newIds.insert((*iter)->id());
-                params.insert(*iter);
+            }
+            
+            for(std::vector<const Description*>::const_iterator iter = outputs.begin();
+                iter != outputs.end();
+                ++iter)
+            {
+                if(newIds.count((*iter)->id()))
+                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                    
+                newIds.insert((*iter)->id());
+            }
+            
+            for(std::vector<const Parameter*>::const_iterator iter = parameters.begin();
+                iter != parameters.end();
+                ++iter)
+            {
+                if(newIds.count((*iter)->id()))
+                    throw WrongArgument("ID " + boost::lexical_cast<std::string>((*iter)->id()) + " appears twice.");
+                    
+                newIds.insert((*iter)->id());
+                allParameters.insert(*iter);
             }
             
             // check if any of the new IDs matches an existing ID
@@ -369,16 +335,17 @@ namespace stromx
                 ++iter)
             {
                 if(existingIds.count(*iter))
-                    throw WrongArgument("Parameter with ID " + boost::lexical_cast<std::string>(*iter) + " has already been added.");
+                    throw WrongArgument("Descriptor with ID " + boost::lexical_cast<std::string>(*iter) + " has already been added.");
             }
             
-            for(std::vector<const Parameter*>::const_iterator iter = descriptors.begin();
-                iter != descriptors.end();
+            // check if all groups of the new parameters are part of this operator
+            for(std::vector<const Parameter*>::const_iterator iter = parameters.begin();
+                iter != parameters.end();
                 ++iter)
             {
                 if((*iter)->group())
                 {
-                    if(! params.count((*iter)->group()))
+                    if(! allParameters.count((*iter)->group()))
                         throw WrongArgument("Parameter with ID "
                             + boost::lexical_cast<std::string>(*iter)
                             + " references a group which has not been added to the operator.");

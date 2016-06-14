@@ -37,6 +37,8 @@ namespace stromx
             CPPUNIT_TEST (testValidateParametersExistingId);
             CPPUNIT_TEST (testValidateParametersDuplicateId);
             CPPUNIT_TEST (testValidateParametersMissingGroup);
+            CPPUNIT_TEST (testValidateInputsAndOutputsDuplicateId);
+            CPPUNIT_TEST (testValidateParametersExistingInputId);
             CPPUNIT_TEST_SUITE_END ();
 
             public:
@@ -53,6 +55,8 @@ namespace stromx
                 void testValidateParametersExistingId();
                 void testValidateParametersDuplicateId();
                 void testValidateParametersMissingGroup();
+                void testValidateInputsAndOutputsDuplicateId();
+                void testValidateParametersExistingInputId();
                 
             private:
                 TestOperator m_op;

@@ -37,7 +37,11 @@ namespace stromx
             std::vector<const Description*> descriptors;
             descriptors.push_back(&input);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateInputs(descriptors), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    descriptors,
+                                    std::vector<const Description*>(), 
+                                    std::vector<const Parameter*>()),
+                                 WrongArgument);
         }
 
         void OperatorKernelTest::testValidateInputsDuplicateId()
@@ -47,7 +51,11 @@ namespace stromx
             descriptors.push_back(&input);
             descriptors.push_back(&input);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateInputs(descriptors), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    descriptors,
+                                    std::vector<const Description*>(), 
+                                    std::vector<const Parameter*>()),
+                                 WrongArgument);
         }
 
         void OperatorKernelTest::testValidateOutputsExistingId()
@@ -56,7 +64,11 @@ namespace stromx
             std::vector<const Description*> descriptors;
             descriptors.push_back(&output);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateOutputs(descriptors), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    descriptors, 
+                                    std::vector<const Parameter*>()),
+                                 WrongArgument);
         }
 
         void OperatorKernelTest::testValidateOutputsDuplicateId()
@@ -66,7 +78,11 @@ namespace stromx
             descriptors.push_back(&output);
             descriptors.push_back(&output);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateOutputs(descriptors), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    descriptors, 
+                                    std::vector<const Parameter*>()),
+                                 WrongArgument);
         }
 
         void OperatorKernelTest::testValidateParametersExistingId()
@@ -75,7 +91,11 @@ namespace stromx
             std::vector<const Parameter*> params;
             params.push_back(&param);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateParameters(params), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    std::vector<const Description*>(),
+                                    params),
+                                 WrongArgument);
         }
 
         void OperatorKernelTest::testValidateParametersDuplicateId()
@@ -85,20 +105,61 @@ namespace stromx
             params.push_back(&param);
             params.push_back(&param);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateParameters(params), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    std::vector<const Description*>(),
+                                    params),
+                                 WrongArgument);
         }
         
         void OperatorKernelTest::testValidateParametersMissingGroup()
         {
-            ParameterGroup group(TestOperator::NUM_PARAMETERS);
-            Parameter param(TestOperator::NUM_PARAMETERS + 1, Variant::UINT_32, &group);
+            ParameterGroup group(TestOperator::NUM_DESCRIPTIONS);
+            Parameter param(TestOperator::NUM_DESCRIPTIONS + 1, Variant::UINT_32, &group);
             std::vector<const Parameter*> params;
             params.push_back(&param);
             
-            CPPUNIT_ASSERT_THROW(m_op.validateParameters(params), WrongArgument);
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    std::vector<const Description*>(),
+                                    params),
+                                 WrongArgument);
             
             params.push_back(&group);
-            CPPUNIT_ASSERT_NO_THROW(m_op.validateParameters(params));
+            CPPUNIT_ASSERT_NO_THROW(m_op.validateDescriptions(
+                                        std::vector<const Description*>(),
+                                        std::vector<const Description*>(),
+                                        params)
+                                   );
         }
+        
+        void OperatorKernelTest::testValidateInputsAndOutputsDuplicateId()
+        {
+            Description description(TestOperator::OUTPUT_2 + 1, Variant::NONE);
+            std::vector<const Description*> inputs;
+            std::vector<const Description*> outputs;
+            inputs.push_back(&description);
+            outputs.push_back(&description);
+            
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    inputs,
+                                    outputs,
+                                    std::vector<const Parameter*>()),
+                                 WrongArgument);
+        }
+        
+        void OperatorKernelTest::testValidateParametersExistingInputId()
+        {
+            Parameter param(TestOperator::OUTPUT_1, Variant::UINT_32);
+            std::vector<const Parameter*> params;
+            params.push_back(&param);
+            
+            CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
+                                    std::vector<const Description*>(),
+                                    std::vector<const Description*>(),
+                                    params),
+                                 WrongArgument);
+        }
+        
     }
 }

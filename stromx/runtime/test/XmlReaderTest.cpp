@@ -107,8 +107,8 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.xml", m_factory, m_stream->operators()));
             
-            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
-            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(4)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(5)));
             
             XmlWriter().writeStream("XmlReaderTest_testReadParameters.xml", *m_stream);
         }
@@ -117,8 +117,8 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.zip", m_factory, m_stream->operators()));
             
-            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
-            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(4)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(5)));
             
             XmlWriter().writeStream("XmlReaderTest_testReadParametersZip.xml", *m_stream);
         }
@@ -127,8 +127,8 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.stromx", m_factory, m_stream->operators()));
             
-            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(0)));
-            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(1)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(7000), data_cast<UInt32>(m_stream->operators()[2]->getParameter(4)));
+            CPPUNIT_ASSERT_EQUAL(UInt32(200), data_cast<UInt32>(m_stream->operators()[2]->getParameter(5)));
             
             XmlWriter().writeStream("XmlReaderTest_testReadParametersStromx.xml", *m_stream);
         }

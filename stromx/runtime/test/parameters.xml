@@ -3,34 +3,34 @@
 <Stromx version="0.1.0">
     <Parameters>
         <Operator id="0" package="TestPackage" type="TestOperator" version="0.1.0">
-            <Parameter id="0">
+            <Parameter id="4">
                 <Data type="UInt32" package="runtime" version="0.1.0">2000</Data>
             </Parameter>
-            <Parameter id="1">
+            <Parameter id="5">
                 <Data type="UInt32" package="runtime" version="0.1.0">100</Data>
             </Parameter>
-            <Parameter id="3">
+            <Parameter id="7">
                 <Data package="TestPackage" type="TestData" version="0.1.0" file="data.txt"/>
             </Parameter>
         </Operator>
         <Operator id="1" package="TestPackage" type="TestOperator" version="0.1.0">
-            <Parameter id="0">
+            <Parameter id="4">
                 <Data type="UInt32" package="runtime" version="0.1.0">3000</Data>
             </Parameter>
-            <Parameter id="1">
+            <Parameter id="5">
                 <Data type="UInt32" package="runtime" version="0.1.0">150</Data>
             </Parameter>
         </Operator>
         <Operator id="2" package="TestPackage" type="TestOperator" version="0.1.0">
-            <Parameter id="0">
+            <Parameter id="4">
                 <Data type="UInt32" package="runtime" version="0.1.0">4000</Data>
             </Parameter>
-            <Parameter id="1">
+            <Parameter id="5">
                 <Data type="UInt32" package="runtime" version="0.1.0">200</Data>
             </Parameter>
         </Operator>
         <Operator id="3" package="TestPackage" type="TestOperator" version="0.1.0">
-            <Parameter id="0">
+            <Parameter id="4">
                 <Data type="UInt32" package="runtime" version="0.1.0">5000</Data>
             </Parameter>
         </Operator>
