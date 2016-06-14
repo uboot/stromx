@@ -32,6 +32,8 @@ namespace stromx
     {
         class STROMX_TEST_API ParameterOperator : public stromx::runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:
             enum DataId 
             { 

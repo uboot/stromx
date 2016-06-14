@@ -25,6 +25,8 @@ namespace math
 {
     class Add : public stromx::runtime::OperatorKernel
     {
+        STROMX_OPERATOR_KERNEL
+            
     public:
         enum DataId
         {

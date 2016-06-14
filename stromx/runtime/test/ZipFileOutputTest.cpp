@@ -119,5 +119,15 @@ namespace stromx
                 output.openFile(".bin", OutputProvider::BINARY);
             }
         }
+        
+        void ZipFileOutputTest::testPeriodInFileName()
+        {
+            ZipFileOutput output("ZipFileOutputTest_testPeriodInFileName.zip");
+            output.initialize("test");
+            output.openFile(".file", OutputProvider::BINARY);
+            output.initialize("test.file");
+            output.openFile(".bin", OutputProvider::BINARY);
+            output.file() << 6;
+        }
     }
 }

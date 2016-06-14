@@ -32,6 +32,8 @@ namespace stromx
     {
         class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
             enum DataId 
             { 
                 INPUT,

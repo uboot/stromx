@@ -29,6 +29,8 @@ namespace stromx {
     namespace test {      
         class STROMX_TEST_API RandomDataOperator : public stromx::runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
             enum DataId 
             { 
                 OUTPUT,

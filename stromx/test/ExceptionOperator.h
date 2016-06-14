@@ -31,6 +31,8 @@ namespace stromx
     {
         class STROMX_TEST_API ExceptionOperator : public stromx::runtime::OperatorKernel
         {
+            STROMX_OPERATOR_KERNEL
+            
             enum DataId 
             { 
                 INPUT,

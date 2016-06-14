@@ -33,6 +33,8 @@ namespace stromx
         /** \brief Blocks the execution until the value parameter is set. */
         class STROMX_RUNTIME_API Push : public DataOperatorBase
         {
+            STROMX_OPERATOR_KERNEL
+            
         public:            
             Push();
             virtual ~Push();
