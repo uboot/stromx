@@ -34,7 +34,7 @@ namespace stromx
             CPPUNIT_TEST (testResizeLength);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ImageWrapperTest() : m_image(0) {}
                 
                 void setUp();

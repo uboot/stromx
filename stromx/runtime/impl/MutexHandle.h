@@ -25,7 +25,7 @@ namespace stromx
             /** \cond */
             class MutexHandle
             {
-            public:
+        public:
                 boost::mutex & mutex() { return m_mutex; }
             private:
                 boost::mutex m_mutex;

@@ -35,9 +35,7 @@ namespace stromx
                 OUTPUT,
                 DATA_TYPE,
                 VALUE,
-                NUM_BASE_PARAMETERS,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                NUM_BASE_PARAMETERS
             };
             
             DataOperatorBase(const std::string & type, const std::string & package,

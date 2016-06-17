@@ -33,7 +33,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteEmptyList);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 SplitTest() : m_operator(0) {}
                 
                 void setUp();

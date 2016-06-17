@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST (testRelease);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 DataContainerTest() {}
                 
                 void setUp() {}

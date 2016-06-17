@@ -38,7 +38,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteZeroPeriod);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 PeriodicDelayTest() : m_operator(0) {}
                 
                 void setUp();

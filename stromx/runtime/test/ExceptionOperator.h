@@ -31,17 +31,13 @@ namespace stromx
     {
         class ExceptionOperator : public stromx::runtime::OperatorKernel
         {    
-            STROMX_OPERATOR_KERNEL
-            
         public:        
             enum Parameters
             { 
                 OUTPUT,
                 THROW_DEACTIVATE,
                 BLOCK_EXECUTE,
-                THROW_ACTIVATE,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                THROW_ACTIVATE
             };
             
             ExceptionOperator();

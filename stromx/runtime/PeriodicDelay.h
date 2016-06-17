@@ -35,16 +35,12 @@ namespace stromx
         /** \brief Periodically delays the execution for a defined amount of time. */
         class STROMX_RUNTIME_API PeriodicDelay : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 INPUT,
                 OUTPUT,
-                PERIOD,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 2
+                PERIOD
             };
             
             PeriodicDelay();

@@ -40,7 +40,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteMono8Allocate);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ConvertPixelTypeTest() : m_operator(0) {}
                 
                 void setUp();

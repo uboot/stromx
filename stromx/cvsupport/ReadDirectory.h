@@ -33,17 +33,13 @@ namespace stromx
         /** \brief Applies a random coefficent to the brightness of the image. */
         class STROMX_CVSUPPORT_API ReadDirectory : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
-            friend class ReadDirectoryTest;
+                friend class ReadDirectoryTest;
             
         public:
             enum DataId
             {
                 OUTPUT,
-                DIRECTORY,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                DIRECTORY
             };
             
             enum Directory

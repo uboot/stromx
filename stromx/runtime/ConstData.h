@@ -35,8 +35,6 @@ namespace stromx
         /** \brief Outputs a constant value. */
         class STROMX_RUNTIME_API ConstData : public DataOperatorBase
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:            
             enum DataId
             {

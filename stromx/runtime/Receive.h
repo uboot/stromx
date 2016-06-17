@@ -32,16 +32,12 @@ namespace stromx
         /** \brief Distributes input data to TCP clients. */
         class STROMX_RUNTIME_API Receive : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 OUTPUT,
                 URL,
-                PORT,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                PORT
             };
             
             Receive();

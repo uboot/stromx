@@ -32,7 +32,7 @@ namespace stromx
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 DumpTest() : m_operator(0) {}
                 
                 void setUp();

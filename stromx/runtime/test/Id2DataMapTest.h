@@ -49,7 +49,7 @@ namespace stromx
         private:
             class Observer : public impl::Id2DataMapObserver
             {
-            public:
+        public:
                 explicit Observer(const Id2DataMapTest* const test);
                 virtual ~Observer() {}
                 virtual void observe(const unsigned int id, const DataContainer & oldData,

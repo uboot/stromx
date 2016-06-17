@@ -34,7 +34,7 @@ namespace stromx
         
             class OutputNode
             {
-            public:
+        public:
                 OutputNode(Operator* const op, const unsigned int outputId);
                 
                 unsigned int outputId() const { return m_outputId; }

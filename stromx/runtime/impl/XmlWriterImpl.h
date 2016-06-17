@@ -35,7 +35,7 @@ namespace stromx
         {
             class XmlWriterImpl
             {
-            public:
+        public:
                 XmlWriterImpl();
                 ~XmlWriterImpl() {};
                 void writeStream(FileOutput & output, const std::string & basename, const Stream& stream);

@@ -33,16 +33,12 @@ namespace stromx
         /** \brief Filters input data depending on the filter flag. */
         class STROMX_RUNTIME_API Filter : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 INPUT,
                 FILTER_FLAG,
-                OUTPUT,
-                OUTPUT_OFFSET = 2,
-                PARAMETER_OFFSET = 3
+                OUTPUT
             };
             
             Filter();

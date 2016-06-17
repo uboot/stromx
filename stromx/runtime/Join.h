@@ -26,16 +26,12 @@ namespace stromx
         /** \brief Distributes input data to several outputs. */
         class STROMX_RUNTIME_API Join : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 OUTPUT,
                 NUM_INPUTS,
-                INPUTS_BASE,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                INPUTS_BASE
             };
             
             Join();

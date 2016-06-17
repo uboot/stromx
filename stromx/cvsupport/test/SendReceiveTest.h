@@ -38,7 +38,7 @@ namespace stromx
             CPPUNIT_TEST (testSendDoubleMatrix);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 SendReceiveTest() : m_send(0), m_receive(0), m_factory(0) {}
                 
                 void setUp();

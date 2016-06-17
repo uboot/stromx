@@ -32,7 +32,7 @@ namespace stromx
             CPPUNIT_TEST (testParameterGroup);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ParameterTest() {}
                 
                 void setUp() {}

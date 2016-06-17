@@ -34,7 +34,7 @@ namespace stromx
             CPPUNIT_TEST (testApplyOneThread);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 SortInputsAlgorithmTest() : m_stream(0), m_op1(0), m_op2(0) {}
                 
                 void setUp();

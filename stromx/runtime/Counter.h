@@ -28,14 +28,10 @@ namespace stromx
         /** \brief Outputs an increasing integer value. */
         class STROMX_RUNTIME_API Counter : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
-                OUTPUT,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                OUTPUT
             };
             
             Counter();

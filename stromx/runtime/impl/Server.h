@@ -37,7 +37,7 @@ namespace stromx
 
             class Connection
             {
-            public:
+        public:
                 
                 Connection(Server* server, boost::asio::io_service& ioService);
 
@@ -63,7 +63,7 @@ namespace stromx
                 friend class Connection;
                 friend class stromx::runtime::ServerTest;
                 
-            public:
+        public:
                 static const Version VERSION;
                 
                 Server(const unsigned int port);

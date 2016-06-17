@@ -62,7 +62,7 @@ namespace stromx
             CPPUNIT_TEST (testRefCast);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ImageTest() : m_image(0) {}
                 
                 void setUp();

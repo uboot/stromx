@@ -35,7 +35,7 @@ namespace stromx
         {
             class Client
             {
-            public:
+        public:
                 class NoConnection : public std::exception {};
                 class Stopped : public std::exception {};
                 

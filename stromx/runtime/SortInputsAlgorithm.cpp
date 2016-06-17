@@ -34,7 +34,7 @@ namespace stromx
         {
             class InputComparator
             {
-            public:
+        public:
                 InputComparator(const std::map<const Operator*, unsigned int> & op2RankMap)
                   : m_op2RankMap(op2RankMap)
                 {}

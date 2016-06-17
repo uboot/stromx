@@ -30,7 +30,7 @@ namespace stromx
         {
             class XmlError : public Exception
             {
-            public:
+        public:
                 XmlError(const std::string & message = "XmlError")
                 : Exception(message)
                 {}
@@ -38,7 +38,7 @@ namespace stromx
         
             class Str2Xml
             {
-            public:
+        public:
                 explicit Str2Xml(const char* const str);
                 ~Str2Xml();
                 
@@ -50,7 +50,7 @@ namespace stromx
             
             class Xml2Str
             {
-            public:
+        public:
                 explicit Xml2Str(const XMLCh* const str);
                 ~Xml2Str();
                 
@@ -62,7 +62,7 @@ namespace stromx
             
             class XmlUtilities
             {
-            public:
+        public:
                 static const std::string computePath(const std::string & filepath);
                 static const std::string computeName(const std::string & filepath);
                 static const std::string stripExtension(const std::string & filepath);

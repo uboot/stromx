@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST (testGetOpenCvMat3Channels);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 UtilitiesTest() {}
                 
                 void setUp() {}

@@ -38,7 +38,7 @@ namespace stromx
         {
             class SynchronizedOperatorKernel : public DataProvider
             {
-            public:    
+        public:    
                 enum Status
                 {
                     NONE,

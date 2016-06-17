@@ -41,7 +41,7 @@ namespace stromx
             CPPUNIT_TEST (testValidateParametersExistingInputId);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 OperatorKernelTest() {}
                 
                 void setUp();

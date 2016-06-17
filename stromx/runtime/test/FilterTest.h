@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST (testExecutePreserve);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 FilterTest() : m_operator(0) {}
                 
                 void setUp();

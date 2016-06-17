@@ -33,8 +33,6 @@ namespace stromx
         /** \brief Adjusts the relative values of the channels in an RGB image. */
         class STROMX_CVSUPPORT_API AdjustRgbChannels : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
@@ -42,9 +40,7 @@ namespace stromx
                 OUTPUT,
                 RED,
                 GREEN,
-                BLUE,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 2
+                BLUE
             };
             
             AdjustRgbChannels();

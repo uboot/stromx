@@ -107,7 +107,7 @@ namespace stromx
         private:
             class TestObserver : public ExceptionObserver
             {
-            public:
+        public:
                 TestObserver() : m_phase(ExceptionObserver::ACTIVATION), m_thread(0) {}
                 
                 void observe(const Phase phase, const OperatorError & ex, const Thread* const thread) const;

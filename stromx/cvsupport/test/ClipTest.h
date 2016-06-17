@@ -37,7 +37,7 @@ namespace stromx
             CPPUNIT_TEST (testAdjustClipRegion2);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ClipTest() : m_operator(0) {}
                 
                 void setUp();

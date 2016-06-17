@@ -39,7 +39,7 @@ namespace stromx
         {
             class XmlReaderImpl
             {
-            public:
+        public:
                 explicit XmlReaderImpl(const AbstractFactory* factory);
                 
                 ~XmlReaderImpl();

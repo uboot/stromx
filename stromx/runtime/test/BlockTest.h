@@ -39,7 +39,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteTriggerInput);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 BlockTest() : m_operator(0) {}
                 
                 void setUp();

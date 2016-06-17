@@ -41,7 +41,7 @@ namespace stromx
             CPPUNIT_TEST (testGet);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 Id2DataPairTest() : m_map(0) {}
                 void setUp();
                 void tearDown();

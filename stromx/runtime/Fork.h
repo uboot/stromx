@@ -26,16 +26,12 @@ namespace stromx
         /** \brief Distributes input data to several outputs. */
         class STROMX_RUNTIME_API Fork : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 INPUT,
                 NUM_OUTPUTS,
-                OUTPUTS_BASE,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 1
+                OUTPUTS_BASE
             };
             
             Fork();

@@ -28,8 +28,6 @@ namespace stromx
         /** \brief Compare operation of floating point values. */
         class STROMX_RUNTIME_API Compare : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             
             enum DataId
@@ -40,9 +38,7 @@ namespace stromx
                 COMPARE_TO_INPUT,
                 COMPARISON_TYPE,
                 EPSILON,
-                PARAMETER_VALUE,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 3
+                PARAMETER_VALUE
             };
             
             enum CompareType

@@ -27,8 +27,6 @@ namespace stromx
     {
         class TestOperator : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             static const unsigned int INPUT_1 = 0;
             static const unsigned int INPUT_2 = 1;

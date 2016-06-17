@@ -23,11 +23,6 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorInfo.h"
 
-#define STROMX_OPERATOR_KERNEL \
-public: \
-int outputOffset() { return OUTPUT_OFFSET; } \
-int parameterOffset()  { return PARAMETER_OFFSET; }
-
 namespace stromx
 {
     namespace runtime
@@ -126,14 +121,6 @@ namespace stromx
              * from a thread different than the executing thread at any time.
              */
             virtual void interrupt() {}
-            
-            enum Private 
-            {
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 0
-            };
-            virtual int outputOffset() = 0;
-            virtual int parameterOffset() = 0;
             
         protected:
             /**

@@ -29,8 +29,6 @@ namespace stromx
         /** \brief Clips an image to a rectangular region. */
         class STROMX_CVSUPPORT_API Clip : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
@@ -40,9 +38,7 @@ namespace stromx
                 LEFT,
                 WIDTH,
                 HEIGHT,
-                NUM_PARAMS,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 2
+                NUM_PARAMS
             };
             
             Clip();

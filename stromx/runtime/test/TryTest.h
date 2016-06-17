@@ -40,7 +40,7 @@ namespace stromx
             CPPUNIT_TEST (testGet);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 TryTest() : m_map(0) {}
                 void setUp();
                 void tearDown();

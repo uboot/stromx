@@ -35,7 +35,7 @@ namespace stromx
             CPPUNIT_TEST (testMatrixIsLine);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 void setUp() {}
                 void tearDown() {}
 

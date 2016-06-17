@@ -34,9 +34,7 @@ namespace stromx
         {
             class CameraBuffer : public runtime::OperatorKernel
             {
-                STROMX_OPERATOR_KERNEL
-            
-            public:
+                public:
                 enum DataId
                 {
                     INPUT,

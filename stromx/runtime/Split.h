@@ -29,16 +29,12 @@ namespace stromx
         /** \brief Splits over the entries of an input list. */
         class STROMX_RUNTIME_API Split : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 INPUT,
                 OUTPUT_DATA,
-                OUTPUT_NUM_ITEMS,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 3
+                OUTPUT_NUM_ITEMS
             };
             
             Split();

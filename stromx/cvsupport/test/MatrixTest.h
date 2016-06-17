@@ -56,7 +56,7 @@ namespace stromx
             CPPUNIT_TEST (testZeros);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 MatrixTest() : m_matrix(0) {}
                 
                 void setUp();

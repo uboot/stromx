@@ -31,8 +31,6 @@ namespace stromx
         /** \brief Converts the pixel type of image. */
         class STROMX_CVSUPPORT_API ConvertPixelType : public runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataFlowId
             {
@@ -46,9 +44,7 @@ namespace stromx
                 DESTINATION,
                 OUTPUT,
                 DATA_FLOW,
-                PIXEL_TYPE,
-                OUTPUT_OFFSET = 2,
-                PARAMETER_OFFSET = 3
+                PIXEL_TYPE
             };
             
             ConvertPixelType();

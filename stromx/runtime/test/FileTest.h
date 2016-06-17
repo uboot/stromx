@@ -71,7 +71,7 @@ namespace stromx
         private: 
             class DummyInput : public InputProvider
             {
-            public:
+        public:
                 explicit DummyInput(const std::string & text, const std::string & file)
                   : m_text(text),
                     m_file(file),
@@ -100,7 +100,7 @@ namespace stromx
             
             class DummyOutput : public OutputProvider
             {
-            public:
+        public:
                 DummyOutput() :  m_fileIsOpen(false)
                 {}
                 

@@ -34,16 +34,12 @@ namespace stromx
         /** \brief Repeats outputting the input data. */
         class STROMX_RUNTIME_API Repeat : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
                 INPUT,
                 NUM_ITERATIONS,
-                OUTPUT,
-                OUTPUT_OFFSET = 2,
-                PARAMETER_OFFSET = 3
+                OUTPUT
             };
             
             Repeat();

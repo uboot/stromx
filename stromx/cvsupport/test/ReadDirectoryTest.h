@@ -40,7 +40,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteEmptyDirectory);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 ReadDirectoryTest() : m_operator(0) {}
                 
                 void setUp();

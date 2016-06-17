@@ -29,14 +29,10 @@ namespace stromx {
     namespace test {      
         class STROMX_TEST_API RandomDataOperator : public stromx::runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
-            enum DataId 
+                enum DataId 
             { 
                 OUTPUT,
-                DATA_TYPE,
-                OUTPUT_OFFSET = 0,
-                PARAMETER_OFFSET = 1
+                DATA_TYPE
             };
             
             enum DataType

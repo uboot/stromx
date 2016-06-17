@@ -43,7 +43,7 @@ namespace stromx
             CPPUNIT_TEST (testValidateBufferSize);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 DummyCameraTest() : m_operator(0) {}
                 
                 void setUp();

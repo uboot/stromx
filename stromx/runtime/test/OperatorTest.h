@@ -88,7 +88,7 @@ namespace stromx
         private:
             class TestObserver : public ConnectorObserver
             {
-            public:
+        public:
                 void observe(const Connector & connector, const DataContainer & oldData,
                              const DataContainer & newData, const Thread* const thread) const;
                 

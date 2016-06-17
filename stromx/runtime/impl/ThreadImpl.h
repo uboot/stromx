@@ -39,7 +39,7 @@ namespace stromx
             
             class ThreadImpl
             {    
-            public:
+        public:
                 enum Status
                 {
                     INACTIVE,

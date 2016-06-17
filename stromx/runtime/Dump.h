@@ -26,8 +26,6 @@ namespace stromx
         /** \brief Accepts and releases any input data */
         class STROMX_RUNTIME_API Dump : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             static const unsigned int INPUT = 0;
             

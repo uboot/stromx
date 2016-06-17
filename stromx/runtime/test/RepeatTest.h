@@ -37,7 +37,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteNoIteration);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 RepeatTest() : m_operator(0) {}
                 
                 void setUp();

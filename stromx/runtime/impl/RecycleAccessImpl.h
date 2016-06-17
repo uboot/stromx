@@ -37,7 +37,7 @@ namespace stromx
         
             class RecycleAccessImpl : public Recycler
             {
-            public:
+        public:
                 explicit RecycleAccessImpl(const DataContainer& data);
                 ~RecycleAccessImpl();    
                 

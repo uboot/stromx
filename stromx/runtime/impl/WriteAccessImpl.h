@@ -30,7 +30,7 @@ namespace stromx
         {
             class WriteAccessImpl
             {
-            public:
+        public:
                 WriteAccessImpl(const DataContainer & data, const bool waitWithTimeout, const unsigned int timeout = 0);
                 ~WriteAccessImpl();
                 

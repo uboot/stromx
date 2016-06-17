@@ -38,7 +38,7 @@ namespace stromx
             CPPUNIT_TEST (testRegisterCvsupport);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 CvsupportTest() : m_factory(0) {}
                 
                 void setUp();

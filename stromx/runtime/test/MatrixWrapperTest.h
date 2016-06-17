@@ -49,7 +49,7 @@ namespace stromx
             CPPUNIT_TEST (testEqualityWrongDimension);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 MatrixWrapperTest() : m_matrix(0) {}
                 
                 void setUp();

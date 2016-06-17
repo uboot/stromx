@@ -36,7 +36,7 @@ namespace stromx
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 QueueTest() : m_operator(0) {}
                 
                 void setUp();

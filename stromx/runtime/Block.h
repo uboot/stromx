@@ -33,8 +33,6 @@ namespace stromx
         /** \brief Blocks the execution until a trigger signal is received. */
         class STROMX_RUNTIME_API Block : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum DataId
             {
@@ -43,9 +41,7 @@ namespace stromx
                 OUTPUT,
                 TRIGGER,
                 STATE,
-                TRIGGER_INPUT,
-                OUTPUT_OFFSET = 2,
-                PARAMETER_OFFSET = 3
+                TRIGGER_INPUT
             };
             
             enum BlockState

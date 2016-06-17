@@ -77,7 +77,7 @@ namespace stromx
         private: 
             class TestObserver : public impl::ThreadImplObserver
             {
-            public:
+        public:
                 void observe(const OperatorError & ex) const;
                 
                 const std::string message() const { return m_message; }

@@ -30,7 +30,7 @@ namespace stromx
         {
             class ReadAccessImpl
             {
-            public:
+        public:
                 ReadAccessImpl(const DataContainer& data, const bool waitWithTimeout, const unsigned int timeout = 0);
                 
                 ~ReadAccessImpl();

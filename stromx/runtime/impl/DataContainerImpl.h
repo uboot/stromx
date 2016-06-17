@@ -33,7 +33,7 @@ namespace stromx
         {
             class DataContainerImpl
             {
-            public:
+        public:
                 explicit DataContainerImpl(Data* data);
                 ~DataContainerImpl();
                 

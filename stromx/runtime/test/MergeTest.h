@@ -34,7 +34,7 @@ namespace stromx
             CPPUNIT_TEST (testExecuteNumItemsInt32);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 MergeTest() : m_operator(0) {}
                 
                 void setUp();

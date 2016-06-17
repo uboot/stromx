@@ -32,18 +32,14 @@ namespace stromx
     {
         class STROMX_TEST_API DeadlockOperator : public stromx::runtime::OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
-            enum DataId 
+                enum DataId 
             { 
                 INPUT,
                 OUTPUT,
                 LOCK_PARAMETERS,
                 LOCK_DATA,
                 DUMMY,
-                OBTAIN_WRITE_ACCESS,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 2
+                OBTAIN_WRITE_ACCESS
             };
             
         public:

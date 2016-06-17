@@ -162,7 +162,7 @@ namespace stromx
             
                 class XercesErrorHandler : public HandlerBase
                 {
-                public:
+        public:
                     explicit XercesErrorHandler(const std::string & filename) : m_filename(filename) {}
                     
                     virtual void error (const SAXParseException &/*exc*/)
@@ -176,7 +176,7 @@ namespace stromx
                 
                 class EntityResolver : public XMLEntityResolver
                 {
-                public:
+        public:
                     virtual InputSource* resolveEntity (XMLResourceIdentifier* /*resourceIdentifier*/)
                     {
                         InputSource* grammar = new MemBufInputSource(reinterpret_cast<const XMLByte*>(XSD.c_str()), XSD.size(), "");

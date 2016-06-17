@@ -31,13 +31,13 @@ namespace stromx
         {
             class Id2DataMapObserver
             {
-            public:
+        public:
                 virtual void observe(const unsigned int id, const DataContainer & oldData, const DataContainer & newData) const = 0;
             };
            
             class Id2DataMap
             {
-            public:
+        public:
                 Id2DataMap();
                 explicit Id2DataMap(const std::vector<const Description*> & descriptions);                
                 

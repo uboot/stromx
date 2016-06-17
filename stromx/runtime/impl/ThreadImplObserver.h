@@ -27,7 +27,7 @@ namespace stromx
         {
             class ThreadImplObserver
             {    
-            public:
+        public:
                 virtual void observe(const OperatorError & ex) const = 0;
                 
                 virtual ~ThreadImplObserver() {}

@@ -30,7 +30,7 @@ namespace stromx
         
             class InputNode
             {
-            public:
+        public:
                 InputNode(Operator* const op, const unsigned int inputId);
                 
                 unsigned int inputId() const { return m_inputId; }

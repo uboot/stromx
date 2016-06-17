@@ -40,7 +40,7 @@ namespace stromx
             CPPUNIT_TEST (testTwoOutputsAtOneInput);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 AssignThreadsAlgorithmTest() : m_stream(0) {}
                 
                 void setUp();

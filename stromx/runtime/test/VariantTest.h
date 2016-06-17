@@ -39,7 +39,7 @@ namespace stromx
             CPPUNIT_TEST (testFloat64MatrixIsNotInt32MatrixOrFloat32Matrix);
             CPPUNIT_TEST_SUITE_END ();
 
-            public:
+        public:
                 void setUp() {}
                 void tearDown() {}
 

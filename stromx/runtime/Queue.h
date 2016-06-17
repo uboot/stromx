@@ -30,16 +30,12 @@ namespace stromx
         /** \brief A data queue of configurable length. */
         class STROMX_RUNTIME_API Queue : public OperatorKernel
         {
-            STROMX_OPERATOR_KERNEL
-            
         public:
             enum InputId
             {
                 INPUT,
                 OUTPUT,
-                SIZE,
-                OUTPUT_OFFSET = 1,
-                PARAMETER_OFFSET = 2
+                SIZE
             };
             
             Queue();
