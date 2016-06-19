@@ -147,6 +147,11 @@ namespace stromx
                     DOMAttr* inputAttr = m_doc->createAttribute(Str2Xml("input"));
                     inputAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_inConnectors).id()).c_str()));
                     inConnectorElement->setAttributeNode(inputAttr);
+                    
+                    DOMAttr* inputTitleAttr = m_doc->createAttribute(Str2Xml("inputTitle"));
+                    const Description& desc = (*iter_inConnectors).op()->info().input((*iter_inConnectors).id());
+                    inputTitleAttr->setValue(Str2Xml(desc.title().c_str()));
+                    inConnectorElement->setAttributeNode(inputTitleAttr);
                 }
             }
             
@@ -213,6 +218,11 @@ namespace stromx
                     DOMAttr* id = m_doc->createAttribute(Str2Xml("id"));
                     id->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_par)->id()).c_str()));
                     parElement->setAttributeNode(id);
+                    
+                    DOMAttr* titleAttr = m_doc->createAttribute(Str2Xml("title"));
+                    const Parameter& desc = currOp->info().parameter((*iter_par)->id());
+                    titleAttr->setValue(Str2Xml(desc.title().c_str()));
+                    parElement->setAttributeNode(titleAttr);
                     
                     createData(*iter_par, currOp, parElement);
                 }
@@ -296,6 +306,11 @@ namespace stromx
                         idAttr->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_in)->id()).c_str()));
                         inElement->setAttributeNode(idAttr);
                         
+                        DOMAttr* titleAttr = m_doc->createAttribute(Str2Xml("title"));
+                        const Description& inputDesc = currOp->info().input((*iter_in)->id());
+                        titleAttr->setValue(Str2Xml(inputDesc.title().c_str()));
+                        inElement->setAttributeNode(titleAttr);
+                        
                         //Get the id of the source operator
                         unsigned sourceOp = translateOperatorPointerToID(node.op());
                         
@@ -308,6 +323,11 @@ namespace stromx
                         DOMAttr* outAttr = m_doc->createAttribute(Str2Xml("output"));
                         outAttr->setValue(Str2Xml(boost::lexical_cast<std::string>(node.id()).c_str()));
                         inElement->setAttributeNode(outAttr);
+                        
+                        DOMAttr* outputTitleAttr = m_doc->createAttribute(Str2Xml("outputTitle"));
+                        const Description& outputDesc = node.op()->info().output(node.id());
+                        outputTitleAttr->setValue(Str2Xml(outputDesc.title().c_str()));
+                        inElement->setAttributeNode(outputTitleAttr);
                     }
                 }
             }
