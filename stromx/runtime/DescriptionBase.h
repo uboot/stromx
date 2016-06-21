@@ -59,7 +59,7 @@ namespace stromx
          * 
          * Instances of this class associate an ID with a data variant. Moreover
          * the contain meta information of the data characterized by this mapping.
-         * Input nodes, output nodes and parameters of operators are characterized
+         * Input connectors, output connectors and parameters of operators are characterized
          * by such a description. In case of input and output nodes the data variant defines
          * which data type can be passed to an input node or is to be expected from
          * an output node. In case of parameter it characterizes the data type of the 
@@ -69,6 +69,19 @@ namespace stromx
         class STROMX_RUNTIME_API DescriptionBase
         {
         public:
+            /**  Different types objects which are annotated by an description. */
+            enum Type 
+            {
+                /** Operator parameter. */ 
+                PARAMETER,
+                /** Either input or output connector. */
+                CONNECTOR,
+                /** Input connector. */ 
+                INPUT,
+                /** Output connector. */ 
+                OUTPUT
+            };
+            
             /** Constructs a description. */
             DescriptionBase(const unsigned int id, const VariantHandle& variant);
             
@@ -118,6 +131,15 @@ namespace stromx
              * 0 if any number of columns is possible.
              */
             virtual unsigned int cols() const { return 0; }
+            
+            /** 
+             * Input and output connectors can be configured to act as operator
+             * parameters. Such a connector is listed as an operator parameter.
+             * Its original type however remains that of a connector and signals
+             * the client that the parameter can be configured back to a connector
+             * if necessary.
+             */
+            virtual Type originalType() const { return CONNECTOR; }
             
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;

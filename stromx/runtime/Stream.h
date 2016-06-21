@@ -207,6 +207,21 @@ namespace stromx
             void deinitializeOperator(Operator* const op);
             
             /**
+             * Sets the effective type of the connector/parameter \c id of the operator
+             * \c op. With this function an input or output connector can be
+             * configured to act as an operator parameter. A parameter whose original
+             * type is that of a connector can be configured to act as the respective
+             * connector.
+             *
+             * \throws WrongState If the stream is not INACTIVE.
+             * \throws WrongArgument If the operator pointer \c op is null or is not part of the stream.
+             * \throws WrongArgument If the \c id does not reference a valid connector or parameter.
+             * \throws WrongArgument If the arguments \c type and \c behavior are not compatible with the original type of the connector or parameter.
+             */
+            void setConnectorType(Operator* const op, const unsigned int id,
+                                  const DescriptionBase::Type type, const Parameter::UpdateBehavior behavior);
+            
+            /**
              * Creates a thread, adds it to the stream and returns a pointer to it.
              * 
              * \return A pointer to the created thread. The thread is owned by the stream and

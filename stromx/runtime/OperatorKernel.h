@@ -64,11 +64,11 @@ namespace stromx
             
             const Version& version() const { return m_version; }
 
-            const std::vector<const Description*>& inputs() const { return m_inputs; }
+            const std::vector<const Description*>& inputs() const { return m_visibleInputs; }
             
-            const std::vector<const Description*>& outputs() const { return m_outputs; }
+            const std::vector<const Description*>& outputs() const { return m_visibleOutputs; }
             
-            const std::vector<const Parameter*>& parameters() const { return m_parameters; }
+            const std::vector<const Parameter*>& parameters() const { return m_visibleParameters; }
             
             const Parameter & parameter(const unsigned int id) const;
             
@@ -94,7 +94,7 @@ namespace stromx
              * Initializes the operator. After initialization the operator kernel must
              * be prepared to accept calls to activate().
              */
-            virtual void initialize() {}
+            virtual void initialize();
             
             /**
              * Deinitializes the operator. Must be called from
@@ -233,6 +233,7 @@ namespace stromx
             void validateDescriptions(const std::vector<const Description*>& inputs,
                                       const std::vector<const Description*>& outputs,
                                       const std::vector<const Parameter*>& parameters);
+            void updateVisibleDescriptions(const bool isInitialized);
             const Parameter & findParameter(const unsigned int id) const;
             
             std::string m_type;
@@ -242,12 +243,16 @@ namespace stromx
             std::vector<const Description*> m_outputs;
             std::vector<const Parameter*> m_parameters;
             
+            std::vector<const Description*> m_visibleInputs;
+            std::vector<const Description*> m_visibleOutputs;
+            std::vector<const Parameter*> m_visibleParameters;
+            
             std::map<unsigned int, const Parameter*> m_parameterMap;
             std::map<unsigned int, const Description*> m_inputMap;
             std::map<unsigned int, const Description*> m_outputMap;
             
-            // the indices of all inputs, output and parameters which are
-            // have been during initialization, i.e. which must be removed
+            // the indices of all inputs, output and parameters which have
+            // been added during initialization, i.e. which must be removed
             // upon deinitialization
             std::set<unsigned int> m_activeInputs;
             std::set<unsigned int> m_activeOutputs;

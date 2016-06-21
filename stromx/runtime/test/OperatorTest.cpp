@@ -134,8 +134,8 @@ namespace stromx
         {
             OperatorTester* op = new OperatorTester(new TestOperator());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().parameters().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().inputs().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().outputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(op->info().inputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(op->info().outputs().size()));
             CPPUNIT_ASSERT_EQUAL(OperatorTester::NONE, op->status());
             
             CPPUNIT_ASSERT_NO_THROW(op->initialize());
@@ -155,8 +155,8 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(op->deinitialize());
             CPPUNIT_ASSERT_EQUAL(OperatorTester::NONE, op->status());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().parameters().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().inputs().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(op->info().outputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(op->info().inputs().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(op->info().outputs().size()));
             
             op->initialize();
             op->activate();

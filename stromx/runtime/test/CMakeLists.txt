@@ -99,6 +99,7 @@ set(SOURCES
     ../Visualization.cpp
     ../WriteAccess.cpp
     ../impl/Client.cpp
+    ../impl/ConnectorParameter.cpp
     ../impl/DataContainerImpl.cpp
     ../impl/DataOperatorBase.cpp
     ../impl/Id2DataMap.cpp

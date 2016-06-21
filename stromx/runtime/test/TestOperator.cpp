@@ -148,13 +148,10 @@ namespace stromx
         }
         
         const std::vector<const Parameter*> TestOperator::setupParameters()
-        {
+        {            
             std::vector<const Parameter*> parameters;
-            Parameter* param = new Parameter(SLEEP_TIME, Variant::UINT_32);
-            param->setAccessMode(Parameter::INITIALIZED_WRITE);
-            parameters.push_back(param);
             
-            param = new Parameter(THROW_EXCEPTION, Variant::BOOL);
+            Parameter* param = new Parameter(THROW_EXCEPTION, Variant::BOOL);
             param->setAccessMode(Parameter::ACTIVATED_WRITE);
             parameters.push_back(param);
             
@@ -181,8 +178,13 @@ namespace stromx
         const std::vector<const Parameter*> TestOperator::setupInitParameters()
         {
             std::vector<const Parameter*> parameters;
+            
             Parameter* param = new Parameter(BUFFER_SIZE, Variant::UINT_32);
             param->setAccessMode(Parameter::NONE_WRITE);
+            parameters.push_back(param);
+            
+            param = new Parameter(SLEEP_TIME, Variant::UINT_32);
+            param->setAccessMode(Parameter::INITIALIZED_WRITE);
             parameters.push_back(param);
                                         
             return parameters;

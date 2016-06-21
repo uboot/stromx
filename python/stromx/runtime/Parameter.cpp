@@ -22,31 +22,27 @@ using namespace stromx::runtime;
 
 void exportParameter()
 {              
-    {
-        scope in_Parameter =
-        class_<Parameter, bases<DescriptionBase> >("Parameter", no_init)
-            .def("accessMode", &Parameter::accessMode)
-            .def("updateBehavior", &Parameter::updateBehavior)
-            .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
-            .def("members", &Parameter::members, return_internal_reference<>())
-        ;
-            
-        enum_<Parameter::AccessMode>("AccessMode")
-            .value("NO_ACCESS", Parameter::NO_ACCESS)
-            .value("NONE_READ", Parameter::NONE_READ)
-            .value("NONE_WRITE", Parameter::NONE_WRITE)
-            .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
-            .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
-            .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
-        ;
-            
-        enum_<Parameter::UpdateBehavior>("UpdateBehavior")
-            .value("PERSISTENT", Parameter::PERSISTENT)
-            .value("PUSH", Parameter::PUSH)
-            .value("PULL", Parameter::PULL)
-            .value("INTERNAL", Parameter::INTERNAL)
-        ;
-    }
-    
-    
+    scope in_Parameter =
+    class_<Parameter, bases<DescriptionBase> >("Parameter", no_init)
+        .def("accessMode", &Parameter::accessMode)
+        .def("updateBehavior", &Parameter::updateBehavior)
+        .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())
+        .def("members", &Parameter::members, return_internal_reference<>())
+    ;
+        
+    enum_<Parameter::AccessMode>("AccessMode")
+        .value("NO_ACCESS", Parameter::NO_ACCESS)
+        .value("NONE_READ", Parameter::NONE_READ)
+        .value("NONE_WRITE", Parameter::NONE_WRITE)
+        .value("INITIALIZED_READ", Parameter::INITIALIZED_READ)
+        .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
+        .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
+    ;
+        
+    enum_<Parameter::UpdateBehavior>("UpdateBehavior")
+        .value("PERSISTENT", Parameter::PERSISTENT)
+        .value("PUSH", Parameter::PUSH)
+        .value("PULL", Parameter::PULL)
+        .value("INTERNAL", Parameter::INTERNAL)
+    ;
 }

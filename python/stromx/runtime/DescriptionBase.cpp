@@ -29,16 +29,26 @@ void exportDescriptionBase()
     ;
     
     stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");
-    
-    class_<DescriptionBase>("DescriptionBase", no_init)
-        .def("title", &DescriptionBase::title, return_value_policy<copy_const_reference>())
-        .def("visualization", &DescriptionBase::visualization, return_internal_reference<>())
-        .def("id", &DescriptionBase::id)
-        .def("variant", &DescriptionBase::variant, return_internal_reference<>())
-        .def("min", &DescriptionBase::min, return_internal_reference<>())
-        .def("max", &DescriptionBase::max, return_internal_reference<>())
-        .def("descriptions", &DescriptionBase::descriptions, return_internal_reference<>())
-        .def("rows", &DescriptionBase::rows)
-        .def("cols", &DescriptionBase::cols)
-    ;
+    {
+        scope in_DescriptionBase =
+        class_<DescriptionBase>("DescriptionBase", no_init)
+            .def("title", &DescriptionBase::title, return_value_policy<copy_const_reference>())
+            .def("visualization", &DescriptionBase::visualization, return_internal_reference<>())
+            .def("id", &DescriptionBase::id)
+            .def("variant", &DescriptionBase::variant, return_internal_reference<>())
+            .def("min", &DescriptionBase::min, return_internal_reference<>())
+            .def("max", &DescriptionBase::max, return_internal_reference<>())
+            .def("descriptions", &DescriptionBase::descriptions, return_internal_reference<>())
+            .def("rows", &DescriptionBase::rows)
+            .def("cols", &DescriptionBase::cols)
+            .def("originalType", &DescriptionBase::originalType)
+        ;
+                
+        enum_<DescriptionBase::Type>("Type")
+            .value("PARAMETER", DescriptionBase::PARAMETER)
+            .value("CONNECTOR", DescriptionBase::CONNECTOR)
+            .value("INPUT", DescriptionBase::INPUT)
+            .value("OUTPUT", DescriptionBase::OUTPUT)
+        ;
+    }
 }

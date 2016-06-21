@@ -9,6 +9,7 @@ endif()
    
 set(SOURCES
     impl/Client.cpp
+    impl/ConnectorParameter.cpp
     impl/DataContainerImpl.cpp
     impl/DataOperatorBase.cpp
     impl/ReadAccessImpl.cpp

@@ -42,8 +42,9 @@ namespace stromx
                 ++iter)
             {
                 m_parameters.push_back(*iter);
-                m_parameterMap[(*iter)->id()] = *iter;
             }
+            
+            updateVisibleDescriptions(false);
         }
         
         OperatorKernel::OperatorKernel (const std::string & type,
@@ -76,7 +77,6 @@ namespace stromx
                 ++iter)
             {
                 m_inputs.push_back(*iter);
-                m_inputMap[(*iter)->id()] = *iter;
             }
             
             
@@ -85,7 +85,6 @@ namespace stromx
                 ++iter)
             {
                 m_outputs.push_back(*iter);
-                m_outputMap[(*iter)->id()] = *iter;
             }
             
             
@@ -94,8 +93,9 @@ namespace stromx
                 ++iter)
             {
                 m_parameters.push_back(*iter);
-                m_parameterMap[(*iter)->id()] = *iter;
             }
+            
+            updateVisibleDescriptions(false);
         }
 
         OperatorKernel::OperatorKernel(const std::string& type,
@@ -117,7 +117,6 @@ namespace stromx
                 ++iter)
             {
                 m_inputs.push_back(*iter);
-                m_inputMap[(*iter)->id()] = *iter;
             }
             
             
@@ -126,8 +125,14 @@ namespace stromx
                 ++iter)
             {
                 m_outputs.push_back(*iter);
-                m_outputMap[(*iter)->id()] = *iter;
             }
+            
+            updateVisibleDescriptions(false);
+        }
+        
+        void OperatorKernel::initialize()
+        {
+            updateVisibleDescriptions(true);
         }
         
         void OperatorKernel::initialize(const std::vector<const runtime::Description*>& inputs,
@@ -141,7 +146,6 @@ namespace stromx
                 ++iter)
             {
                 m_inputs.push_back(*iter);
-                m_inputMap[(*iter)->id()] = *iter;
                 m_activeInputs.insert((*iter)->id());
             }
             
@@ -151,7 +155,6 @@ namespace stromx
                 ++iter)
             {
                 m_outputs.push_back(*iter);
-                m_outputMap[(*iter)->id()] = *iter;
                 m_activeOutputs.insert((*iter)->id());
             }
             
@@ -161,9 +164,10 @@ namespace stromx
                 ++iter)
             {
                 m_parameters.push_back(*iter);
-                m_parameterMap[(*iter)->id()] = *iter;
                 m_activeParameters.insert((*iter)->id());
             }
+            
+            updateVisibleDescriptions(true);
         }
         
         void OperatorKernel::deinitialize()
@@ -173,7 +177,6 @@ namespace stromx
                 ++iter)
             {
                 m_inputs.pop_back();
-                m_inputMap.erase(m_inputMap.find(*iter));
             }
             
             for(std::set<unsigned int>::iterator iter = m_activeOutputs.begin();
@@ -181,7 +184,6 @@ namespace stromx
                 ++iter)
             {
                 m_outputs.pop_back();
-                m_outputMap.erase(m_outputMap.find(*iter));
             }
             
             for(std::set<unsigned int>::iterator iter = m_activeParameters.begin();
@@ -189,12 +191,13 @@ namespace stromx
                 ++iter)
             {
                 m_parameters.pop_back();
-                m_parameterMap.erase(m_parameterMap.find(*iter));
             }
             
             m_activeInputs.clear();
             m_activeOutputs.clear();
             m_activeParameters.clear();
+            
+            updateVisibleDescriptions(false);
         }
         
         const Parameter & OperatorKernel::findParameter(const unsigned int id) const
@@ -349,6 +352,47 @@ namespace stromx
                         throw WrongArgument("Parameter with ID "
                             + boost::lexical_cast<std::string>(*iter)
                             + " references a group which has not been added to the operator.");
+                }
+            }
+        }
+        
+        void OperatorKernel::updateVisibleDescriptions(const bool isInitialized)
+        {
+            m_visibleInputs.clear();
+            m_visibleOutputs.clear();
+            m_visibleParameters.clear();
+            
+            for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                ++iter)
+            {
+                if (isInitialized)
+                {
+                    m_visibleInputs.push_back(*iter);
+                    m_inputMap[(*iter)->id()] = *iter;
+                }
+            }
+            
+            for(std::vector<const Description*>::const_iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                if (isInitialized)
+                {
+                    m_visibleOutputs.push_back(*iter);
+                    m_outputMap[(*iter)->id()] = *iter;
+                }
+            }
+            
+            for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
+                iter != m_parameters.end();
+                ++iter)
+            {
+                const bool isInitParameter = (*iter)->accessMode() == Parameter::NONE_READ || (*iter)->accessMode() == Parameter::NONE_WRITE;
+                if (isInitialized || isInitParameter)
+                {
+                    m_visibleParameters.push_back(*iter);
+                    m_parameterMap[(*iter)->id()] = *iter;
                 }
             }
         }
