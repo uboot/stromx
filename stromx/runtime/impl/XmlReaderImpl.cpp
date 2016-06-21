@@ -218,7 +218,7 @@ namespace stromx
                 {
                 }
                 
-                for(std::map<std::string, Data*>::iterator iter = m_id2DataMap.begin();
+                for(std::map<unsigned int, Data*>::iterator iter = m_id2DataMap.begin();
                     iter != m_id2DataMap.end();
                     ++iter)
                 {
@@ -490,20 +490,13 @@ namespace stromx
                         }
                     
                         // set parameters
-                        for(std::map<std::string, stromx::runtime::Data*>::const_iterator iter = m_id2DataMap.begin();
+                        for(std::map<unsigned int, stromx::runtime::Data*>::const_iterator iter = m_id2DataMap.begin();
                             iter != m_id2DataMap.end();
                             ++iter)
                         {
                             try
                             {
-                                unsigned int id = -1;
-                                for (std::vector<const Parameter*>::const_iterator paramIter = op->info().parameters().begin();
-                                     paramIter != op->info().parameters().end(); ++paramIter)
-                                {
-                                    if ((*paramIter)->title() == iter->first)
-                                        id = (*paramIter)->id();
-                                }
-                                op->setParameter(id, *(iter->second));
+                                op->setParameter(iter->first, *(iter->second));
                             }
                             catch(stromx::runtime::OperatorError&)
                             {
@@ -593,12 +586,12 @@ namespace stromx
                     if((*iter)->accessMode() != Parameter::NONE_WRITE)
                         continue;
                         
-                    std::map<std::string, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->title());
+                    std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
                     
                     if(idDataPair == m_id2DataMap.end())
                         continue;
                     
-                    op->setParameter((*iter)->id(), *idDataPair->second);
+                    op->setParameter(idDataPair->first, *idDataPair->second);
                     
                     delete idDataPair->second;
                     m_id2DataMap.erase(idDataPair);
@@ -620,12 +613,12 @@ namespace stromx
                             continue;
                         }
                             
-                        std::map<std::string, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->title());
+                        std::map<unsigned int, Data*>::iterator idDataPair = m_id2DataMap.find((*iter)->id());
                         
                         if(idDataPair == m_id2DataMap.end())
                             continue;
                         
-                        op->setParameter((*iter)->id(), *idDataPair->second);
+                        op->setParameter(idDataPair->first, *idDataPair->second);
                         
                         delete idDataPair->second;
                         m_id2DataMap.erase(idDataPair);
@@ -659,8 +652,9 @@ namespace stromx
             
             void XmlReaderImpl::readParameter(DOMElement*const paramElement)
             {
-                Xml2Str idStr(paramElement->getAttribute(Str2Xml("title")));
-                std::string id = boost::lexical_cast<std::string>((const char*)(idStr));
+                Xml2Str idStr(paramElement->getAttribute(Str2Xml("id")));
+                
+                unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
                 
                 DOMNodeList* dataElements = paramElement->getElementsByTagName(Str2Xml("Data"));
                 XMLSize_t numDataElements = dataElements->getLength();
@@ -758,35 +752,28 @@ namespace stromx
             void XmlReaderImpl::readInputConnector(DOMElement*const inputNodeElement, Thread*const thread)
             {
                 Xml2Str opIdStr(inputNodeElement->getAttribute(Str2Xml("operator")));
-                Xml2Str inputIdStr(inputNodeElement->getAttribute(Str2Xml("inputTitle")));
+                Xml2Str inputIdStr(inputNodeElement->getAttribute(Str2Xml("input")));
                 
                 unsigned int opId = boost::lexical_cast<unsigned int>(std::string(opIdStr));
-                std::string inputId = boost::lexical_cast<std::string>(std::string(inputIdStr));
+                unsigned int inputId = boost::lexical_cast<unsigned int>(std::string(inputIdStr));
                 
                 std::map<unsigned int, Operator*>::iterator idOpPair = m_id2OperatorMap.find(opId);
                 
                 if(idOpPair == m_id2OperatorMap.end())
                     throw XmlError("No operator with ID " + std::string(opIdStr) + ".");
                 
-                unsigned int id = -1;
-                for (std::vector<const Description*>::const_iterator inputIter = idOpPair->second->info().inputs().begin();
-                     inputIter != idOpPair->second->info().inputs().end(); ++inputIter)
-                {
-                    if ((*inputIter)->title() == inputId)
-                        id = (*inputIter)->id();
-                }
-                thread->addInput(idOpPair->second, id);
+                thread->addInput(idOpPair->second, inputId);
             }
             
             void XmlReaderImpl::readInput(DOMElement*const inputElement, Operator*const op)
             {
                 Xml2Str opIdStr(inputElement->getAttribute(Str2Xml("operator")));
-                Xml2Str inputIdStr(inputElement->getAttribute(Str2Xml("title")));
-                Xml2Str outputIdStr(inputElement->getAttribute(Str2Xml("outputTitle")));
+                Xml2Str inputIdStr(inputElement->getAttribute(Str2Xml("id")));
+                Xml2Str outputIdStr(inputElement->getAttribute(Str2Xml("output")));
                 
                 unsigned int opId = boost::lexical_cast<unsigned int>(std::string(opIdStr));
-                std::string inputId = boost::lexical_cast<std::string>(std::string(inputIdStr));
-                std::string outputId = boost::lexical_cast<std::string>(std::string(outputIdStr));
+                unsigned int inputId = boost::lexical_cast<unsigned int>(std::string(inputIdStr));
+                unsigned int outputId = boost::lexical_cast<unsigned int>(std::string(outputIdStr));
                 
                 std::map<unsigned int, Operator*>::iterator idOpPair = m_id2OperatorMap.find(opId);
                 
@@ -795,23 +782,7 @@ namespace stromx
                 
                 Operator* source = idOpPair->second;
                 
-                unsigned int intInputId = -1;
-                for (std::vector<const Description*>::const_iterator inputIter = op->info().inputs().begin();
-                     inputIter != op->info().inputs().end(); ++inputIter)
-                {
-                    if ((*inputIter)->title() == inputId)
-                        intInputId = (*inputIter)->id();
-                }
-                
-                unsigned int intOutputId = -1;
-                for (std::vector<const Description*>::const_iterator outputIter = source->info().outputs().begin();
-                     outputIter != source->info().outputs().end(); ++outputIter)
-                {
-                    if ((*outputIter)->title() == outputId)
-                        intOutputId = (*outputIter)->id();
-                }
-                
-                m_stream->connect(source, intOutputId, op, intInputId);
+                m_stream->connect(source, outputId, op, inputId);
             }
         }
     }

@@ -62,7 +62,7 @@ namespace stromx
                 Stream* m_stream;
                 FileInput* m_input;
                 std::map<unsigned int, Operator*> m_id2OperatorMap;
-                std::map<std::string, Data*> m_id2DataMap;
+                std::map<unsigned int, Data*> m_id2DataMap;
             };
         }
     }
