@@ -362,6 +362,10 @@ namespace stromx
             m_visibleOutputs.clear();
             m_visibleParameters.clear();
             
+            m_inputMap.clear();
+            m_outputMap.clear();
+            m_parameterMap.clear();
+            
             for(std::vector<const Description*>::const_iterator iter = m_inputs.begin();
                 iter != m_inputs.end();
                 ++iter)

@@ -37,7 +37,7 @@ namespace stromx
         const std::string ConvertPixelType::TYPE("ConvertPixelType");
         
         const std::string ConvertPixelType::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version ConvertPixelType::VERSION(0, 2, 0);
+        const Version ConvertPixelType::VERSION(0, 1, 0);
         
         ConvertPixelType::ConvertPixelType()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),

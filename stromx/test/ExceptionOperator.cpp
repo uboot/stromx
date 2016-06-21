@@ -112,24 +112,32 @@ namespace stromx
         {
             if(m_throwInitialize)
                 throw OperatorError(*this, "Failed to initialize operator.");
+            
+            OperatorKernel::initialize();
         }
 
         void ExceptionOperator::activate()
         {
             if(m_throwActivate)
                 throw OperatorError(*this, "Failed to activate operator.");
+            
+            OperatorKernel::activate();
         }  
 
         void ExceptionOperator::deactivate()
         {
             if(m_throwDeactivate)
                 throw OperatorError(*this, "Failed to deactivate operator.");
+            
+            OperatorKernel::deactivate();
         }
 
         void ExceptionOperator::deinitialize()
         {
             if(m_throwDeinitialize)
                 throw OperatorError(*this, "Failed to deinitialize operator.");
+                
+            OperatorKernel::deinitialize();
         }
 
         void ExceptionOperator::execute(DataProvider& provider)
