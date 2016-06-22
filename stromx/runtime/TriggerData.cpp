@@ -26,7 +26,7 @@ namespace stromx
     {
         const std::string TriggerData::TYPE = "Trigger";
         const std::string TriggerData::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
-        const Version TriggerData::VERSION = Version(0, 1, 0);
+        const Version TriggerData::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         const VariantHandle & data_traits<TriggerData>::variant()
         { 

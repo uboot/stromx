@@ -26,7 +26,7 @@ namespace stromx
 {
     namespace runtime
     {
-        const Version TriboolTest::VERSION(0, 1, 0);
+        const Version TriboolTest::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         void TriboolTest::testSerializeUndefined()
         {

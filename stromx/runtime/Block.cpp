@@ -51,7 +51,7 @@ namespace stromx
         const std::string Block::TYPE("Block");
         
         const std::string Block::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Block::VERSION(0, 1, 0);
+        const Version Block::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Block::Block()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),

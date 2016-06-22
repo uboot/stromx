@@ -50,7 +50,7 @@ namespace stromx
         const std::string Push::TYPE("Push");
         
         const std::string Push::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Push::VERSION(0, 1, 0);
+        const Version Push::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Push::Push()
           : DataOperatorBase(TYPE, PACKAGE, VERSION, DataOperatorBase::setupInitParameters()),

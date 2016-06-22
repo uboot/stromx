@@ -70,14 +70,14 @@ namespace
     
     const std::string MatrixImpl::TYPE = "MatrixImpl";
     const std::string MatrixImpl::PACKAGE = "Test";
-    const Version MatrixImpl::VERSION = Version(0, 1, 0);
+    const Version MatrixImpl::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
 }
 
 namespace stromx
 {
     namespace runtime
     {
-        const stromx::runtime::Version MatrixWrapperTest::VERSION(0, 1, 0);
+        const stromx::runtime::Version MatrixWrapperTest::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         void MatrixWrapperTest::setUp ( void )
         {

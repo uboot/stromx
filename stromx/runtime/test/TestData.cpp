@@ -49,7 +49,7 @@ namespace stromx
         
         const std::string TestData::TYPE = "TestData";
         const std::string TestData::PACKAGE = "TestPackage";
-        const Version TestData::VERSION = Version(0, 1, 0);
+        const Version TestData::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         const VariantHandle TestData::TEST_DATA = VariantHandle(new TestVariant());
         

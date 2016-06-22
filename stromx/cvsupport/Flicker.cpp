@@ -61,7 +61,7 @@ namespace stromx
     {
         const std::string Flicker::TYPE("Flicker");
         const std::string Flicker::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version Flicker::VERSION(0, 1, 0);
+        const Version Flicker::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         Flicker::Flicker()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

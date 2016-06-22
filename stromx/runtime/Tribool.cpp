@@ -27,7 +27,7 @@ namespace stromx
     {        
         const std::string Tribool::TYPE = "Tribool";
         const std::string Tribool::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
-        const Version Tribool::VERSION = Version(0, 1, 0);
+        const Version Tribool::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         const VariantHandle & data_traits<Tribool>::variant()
         { 

@@ -62,7 +62,7 @@ namespace stromx
     {
         namespace impl
         {            
-            const Version Server::VERSION(0, 1, 0);
+            const Version Server::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
 
             Connection::Connection(Server* server, boost::asio::io_service& ioService)
               : m_server(server),

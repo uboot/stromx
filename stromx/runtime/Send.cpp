@@ -34,7 +34,7 @@ namespace stromx
         const std::string Send::LINE_DELIMITER("\r\n");
         const std::string Send::TYPE("Send");
         const std::string Send::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Send::VERSION(0, 1, 0);
+        const Version Send::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         const unsigned int Send::MIN_PORT = 49152;
         const unsigned int Send::MAX_PORT = 65535;
         

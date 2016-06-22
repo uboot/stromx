@@ -40,7 +40,7 @@ namespace stromx
         
         const std::string ReadDirectory::TYPE("ReadDirectory");
         const std::string ReadDirectory::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version ReadDirectory::VERSION(0, 1, 0);
+        const Version ReadDirectory::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         ReadDirectory::ReadDirectory()
           : OperatorKernel(TYPE, PACKAGE, VERSION),

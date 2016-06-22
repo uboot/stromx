@@ -31,7 +31,7 @@ namespace stromx
     {
         const std::string File::TYPE = "File";
         const std::string File::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
-        const Version File::VERSION = Version(0, 1, 0);
+        const Version File::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         std::string File::staticTempDir = boost::filesystem::temp_directory_path().native();
         

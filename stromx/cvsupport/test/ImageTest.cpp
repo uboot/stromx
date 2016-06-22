@@ -32,7 +32,7 @@ namespace stromx
 {
     namespace cvsupport
     {
-        const stromx::runtime::Version ImageTest::VERSION(0, 1, 0);
+        const stromx::runtime::Version ImageTest::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         void ImageTest::setUp ( void )
         {

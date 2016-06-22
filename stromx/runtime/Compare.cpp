@@ -34,7 +34,7 @@ namespace stromx
     {
         const std::string Compare::TYPE("Compare");
         const std::string Compare::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Compare::VERSION(0, 1, 0);
+        const Version Compare::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Compare::Compare()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters())

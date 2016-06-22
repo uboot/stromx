@@ -47,7 +47,7 @@ namespace stromx
         const std::string DummyCamera::TYPE("DummyCamera");
         
         const std::string DummyCamera::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version DummyCamera::VERSION(0, 1, 0);
+        const Version DummyCamera::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         DummyCamera::DummyCamera()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitParameters()),

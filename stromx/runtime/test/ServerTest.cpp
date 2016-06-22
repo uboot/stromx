@@ -97,10 +97,10 @@ namespace stromx
             {
                 impl::SerializationHeader header;
                 
-                header.serverVersion = Version(0, 1, 0);
+                header.serverVersion = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
                 header.package = "runtime";
                 header.type = "UInt32";
-                header.version = Version(0, 1, 0);
+                header.version = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
                 
                 return header;
             }

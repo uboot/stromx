@@ -37,7 +37,7 @@ namespace stromx
         const std::string Queue::TYPE("Queue");
         
         const std::string Queue::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Queue::VERSION(0, 1, 0);
+        const Version Queue::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Queue::Queue()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

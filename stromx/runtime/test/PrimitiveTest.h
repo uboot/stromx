@@ -125,7 +125,7 @@ namespace stromx
         };
         
         template<class primitive_t, class repr_t>
-        const Version PrimitiveTest<primitive_t, repr_t>::VERSION(0, 1, 0);
+        const Version PrimitiveTest<primitive_t, repr_t>::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
     }
 }
 

@@ -39,7 +39,7 @@ namespace stromx
     {
         const std::string Join::TYPE("Join");
         const std::string Join::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Join::VERSION(0, 1, 0);
+        const Version Join::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         const unsigned int Join::MIN_INPUTS = 2;
         const unsigned int Join::MAX_INPUTS = 4;
         

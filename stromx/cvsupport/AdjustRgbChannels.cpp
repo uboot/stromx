@@ -34,7 +34,7 @@ namespace stromx
     {
         const std::string AdjustRgbChannels::TYPE("AdjustRgbChannels");
         const std::string AdjustRgbChannels::PACKAGE(STROMX_CVSUPPORT_PACKAGE_NAME);
-        const Version AdjustRgbChannels::VERSION(0, 1, 0);
+        const Version AdjustRgbChannels::VERSION(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         AdjustRgbChannels::AdjustRgbChannels()
         : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs(), setupParameters()),

@@ -38,7 +38,7 @@ namespace stromx
         const std::string Receive::LINE_DELIMITER("\r\n");
         const std::string Receive::TYPE("Receive");
         const std::string Receive::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Receive::VERSION(0, 1, 0);
+        const Version Receive::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         const unsigned int Receive::MIN_PORT = 49152;
         const unsigned int Receive::MAX_PORT = 65535;
         

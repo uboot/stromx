@@ -62,7 +62,7 @@ namespace stromx
         
         const std::string ConstData::TYPE("ConstData");
         const std::string ConstData::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version ConstData::VERSION(0, 1, 0);
+        const Version ConstData::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         ConstData::ConstData()
           : DataOperatorBase(TYPE, PACKAGE, VERSION, setupInitParameters()),

@@ -30,7 +30,7 @@ namespace stromx
     {
         const std::string Image::TYPE = "Image";
         const std::string Image::PACKAGE = STROMX_CVSUPPORT_PACKAGE_NAME;
-        const runtime::Version Image::VERSION = runtime::Version(0, 1, 0);
+        const runtime::Version Image::VERSION = runtime::Version(STROMX_CVSUPPORT_VERSION_MAJOR, STROMX_CVSUPPORT_VERSION_MINOR, STROMX_CVSUPPORT_VERSION_PATCH);
         
         Image::Image(const unsigned int width, const unsigned int height, const runtime::Image::PixelType pixelType)
           : m_image(new cv::Mat())

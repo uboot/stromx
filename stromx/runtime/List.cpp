@@ -27,7 +27,7 @@ namespace stromx
     {
         const std::string List::TYPE = "List";
         const std::string List::PACKAGE = STROMX_RUNTIME_PACKAGE_NAME;
-        const Version List::VERSION = Version(0, 1, 0);
+        const Version List::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         const VariantHandle & data_traits<List>::variant()
         { 

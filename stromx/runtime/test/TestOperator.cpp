@@ -33,7 +33,7 @@ namespace stromx
     {
         const std::string TestOperator::TYPE("TestOperator");
         const std::string TestOperator::PACKAGE("TestPackage");
-        const Version TestOperator::VERSION(0, 1, 0);
+        const Version TestOperator::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         TestOperator::TestOperator()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInitInputs(), setupInitOutputs(), setupInitParameters()),

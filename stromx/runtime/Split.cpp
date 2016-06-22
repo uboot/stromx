@@ -40,7 +40,7 @@ namespace stromx
     {
         const std::string Split::TYPE("Split");
         const std::string Split::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Split::VERSION(0, 1, 0);
+        const Version Split::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Split::Split()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(), setupOutputs())

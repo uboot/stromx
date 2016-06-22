@@ -26,7 +26,7 @@ namespace stromx
     {
         const std::string Dump::TYPE("Dump");
         const std::string Dump::PACKAGE(STROMX_RUNTIME_PACKAGE_NAME);
-        const Version Dump::VERSION(0, 1, 0);
+        const Version Dump::VERSION(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
         
         Dump::Dump()
           : OperatorKernel(TYPE, PACKAGE, VERSION, setupInputs(),

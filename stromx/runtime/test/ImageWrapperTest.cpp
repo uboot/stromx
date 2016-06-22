@@ -70,7 +70,7 @@ namespace
     
     const std::string ImageImpl::TYPE = "MatrixImpl";
     const std::string ImageImpl::PACKAGE = "Test";
-    const Version ImageImpl::VERSION = Version(0, 1, 0);
+    const Version ImageImpl::VERSION = Version(STROMX_RUNTIME_VERSION_MAJOR, STROMX_RUNTIME_VERSION_MINOR, STROMX_RUNTIME_VERSION_PATCH);
 }
 
 namespace stromx
