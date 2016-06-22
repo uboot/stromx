@@ -35,7 +35,8 @@ namespace stromx
             /** Constructs a description. */
             Description(const unsigned int id, const VariantHandle& variant)
               : DescriptionBase(id, variant),
-                m_operatorThread(0)
+                m_operatorThread(0),
+                m_defaultType(CONNECTOR)
             {}
             
             /** Returns the operator thread of this connector. 
@@ -72,8 +73,25 @@ namespace stromx
                 m_operatorThread = operatorThread;
             }
             
+            /**
+             * Input and output connectors can be configured to act as operator
+             * parameters. Such a connector is listed as an operator parameter.
+             * If the default type of a connectors is DescriptionBase::PARAMETER
+             * it will be a parameter upon the first initialization of the operator.
+             * It can however be converted back to a connector by the client.
+             */
+            Type defaultType() const { return m_defaultType; }
+            
+            /**
+             * Sets the default type.
+             * 
+             * \sa defaultType
+             */
+             void setDefaultType(const Type type) { m_defaultType = type; }
+            
         private:
             unsigned int m_operatorThread;
+            Type m_defaultType;
         };
     }
 }

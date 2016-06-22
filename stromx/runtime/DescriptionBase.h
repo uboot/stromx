@@ -75,11 +75,7 @@ namespace stromx
                 /** Operator parameter. */ 
                 PARAMETER,
                 /** Either input or output connector. */
-                CONNECTOR,
-                /** Input connector. */ 
-                INPUT,
-                /** Output connector. */ 
-                OUTPUT
+                CONNECTOR
             };
             
             /** Constructs a description. */
