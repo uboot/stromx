@@ -16,6 +16,8 @@
 
 #include <boost/python.hpp>
 #include <stromx/runtime/Description.h>
+#include <stromx/runtime/Input.h>
+#include <stromx/runtime/Output.h>
 
 using namespace boost::python;
 using namespace stromx::runtime;
@@ -24,5 +26,12 @@ void exportDescription()
 {       
     class_<Description, bases<DescriptionBase> >("Description", no_init)
         .def("operatorThread", &Description::operatorThread)
+        .def("defaultType", &Description::defaultType)
+    ;
+    
+    class_<Input, bases<Description> >("Input", no_init)
+    ;
+    
+    class_<Output, bases<Description> >("Output", no_init)
     ;
 }

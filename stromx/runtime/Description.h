@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef STROMX_RUNTIME_DESCRIPTION_H
-#define STROMX_RUNTIME_DESCRIPTION_H
+#ifndef STROMX_RUNTIME_CONNECTORDESCRIPTION_H
+#define STROMX_RUNTIME_CONNECTORDESCRIPTION_H
 
 #include "stromx/runtime/DescriptionBase.h"
 
@@ -89,6 +89,14 @@ namespace stromx
              */
              void setDefaultType(const Type type) { m_defaultType = type; }
             
+        protected:
+            /** Constructs a description. */
+            Description(const unsigned int id, const VariantHandle& variant, const Type defaultType)
+              : DescriptionBase(id, variant),
+                m_operatorThread(0),
+                m_defaultType(defaultType)
+            {}
+            
         private:
             unsigned int m_operatorThread;
             Type m_defaultType;
@@ -96,4 +104,4 @@ namespace stromx
     }
 }
 
-#endif // STROMX_RUNTIME_DESCRIPTION_H
+#endif // STROMX_RUNTIME_CONNECTORDESCRIPTION_H

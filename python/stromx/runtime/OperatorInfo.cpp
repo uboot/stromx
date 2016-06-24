@@ -16,7 +16,9 @@
 
 #include "ExportVector.h"
 
+#include <stromx/runtime/Input.h>
 #include <stromx/runtime/OperatorKernel.h>
+#include <stromx/runtime/Output.h>
 
 #include <boost/python.hpp>
 
@@ -77,6 +79,8 @@ namespace
 void exportOperatorInfo()
 {      
     stromx::python::exportVector<const Description*>("DescriptionVector");
+    stromx::python::exportVector<const Input*>("InputVector");
+    stromx::python::exportVector<const Output*>("OutputVector");
     stromx::python::exportVector<const Parameter*>("ParameterVector");
       
     class_<OperatorInfoWrap, boost::noncopyable>("OperatorInfo", no_init)

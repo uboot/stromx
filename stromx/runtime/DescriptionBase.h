@@ -72,10 +72,16 @@ namespace stromx
             /**  Different types objects which are annotated by an description. */
             enum Type 
             {
+                /** Undefined type.*/
+                NO_TYPE,
                 /** Operator parameter. */ 
                 PARAMETER,
                 /** Either input or output connector. */
-                CONNECTOR
+                CONNECTOR,
+                /** Input connector. */
+                INPUT,
+                /** Output connector. */
+                OUTPUT
             };
             
             /** Constructs a description. */
@@ -135,7 +141,7 @@ namespace stromx
              * the client that the parameter can be configured back to a connector
              * if necessary.
              */
-            virtual Type originalType() const { return CONNECTOR; }
+            virtual Type originalType() const { return NO_TYPE; }
             
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;
