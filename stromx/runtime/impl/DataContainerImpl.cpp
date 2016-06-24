@@ -26,11 +26,12 @@ namespace stromx
     {
         namespace impl
         {
-            DataContainerImpl::DataContainerImpl(Data* data)
+            DataContainerImpl::DataContainerImpl(Data* data, const bool isReadOnly)
             : m_readAccessCounter(0),
                 m_writeAccess(false),
                 m_recycleAccess(0),
-                m_data(data)
+                m_data(data),
+                m_isReadOnly(isReadOnly)
             {
                 if(! data)
                     throw WrongArgument();
@@ -86,6 +87,9 @@ namespace stromx
                 
             void DataContainerImpl::getWriteAccess(const bool waitWithTimeout, const unsigned int timeout)
             {
+                if (m_isReadOnly)
+                    throw WrongArgument("Failed to obtain write access for read-only data container.");
+                    
                 unique_lock_t lock(m_mutex);
                 
                 try

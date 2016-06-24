@@ -34,7 +34,7 @@ namespace stromx
             class DataContainerImpl
             {
         public:
-                explicit DataContainerImpl(Data* data);
+                explicit DataContainerImpl(Data* data, const bool isReadOnly = false);
                 ~DataContainerImpl();
                 
                 void getReadAccess(const bool waitWithTimeout, const unsigned int timeout);
@@ -47,6 +47,7 @@ namespace stromx
                 void returnRecycleAccess();
                 
                 Data* data() const { return m_data; }
+                bool isReadOnly() const { return m_isReadOnly; }
                 
             private:
                 typedef boost::lock_guard<boost::mutex> lock_t;
@@ -61,6 +62,7 @@ namespace stromx
                 bool m_writeAccess;
                 Recycler* m_recycleAccess;
                 Data* m_data;
+                const bool m_isReadOnly;
             };
         }
     }

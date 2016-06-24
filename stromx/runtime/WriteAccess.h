@@ -54,6 +54,7 @@ namespace stromx
              * read or write access  to \c data exists.
              * 
              * \param data The container which contains the data to be accessed.
+             * \throws WrongArgument The container is read-only.
              */
             explicit WriteAccess(const DataContainer & data);
             
@@ -66,6 +67,7 @@ namespace stromx
              * \param timeout The maximal time to wait in milliseconds.
              * 
              * \throws Timeout If no read access could be obtained during the timeout.
+             * \throws WrongArgument The container is read-only.
              */
             WriteAccess(const DataContainer & data, const unsigned int timeout);
             
@@ -75,7 +77,7 @@ namespace stromx
             /** 
              * Returns a casted reference to the content of the data container.
              * 
-             * \throws EmptyAccess If the read access is empty.
+             * \throws AccessEmpty If the read access is empty.
              * \throws BadCast If the data can not be casted to \c data_t.
              */
             template<typename data_t>
@@ -94,7 +96,7 @@ namespace stromx
             /** 
              * Returns a reference to the content of the data container.
              * 
-             * \throws EmptyAccess If the read access is empty.
+             * \throws AccessEmpty If the read access is empty.
              */
             Data & get() const;
             

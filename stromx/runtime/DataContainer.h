@@ -63,11 +63,25 @@ namespace stromx
              */
             explicit DataContainer(runtime::Data* data);
             
+            /**
+             * Constructs a data container holding \c data.
+             * \param data A non-zero pointer to a Data object
+             * \param isReadOnly If true the container contains read-only data, i.e. a 
+             *        WriteAccess can not be obtained for this container.
+             * \throws WrongArgument
+             */
+            explicit DataContainer(runtime::Data* data, const bool isReadOnly);
+            
             /** Returns whether to DataContainer holds any data. */
             bool empty() const { return m_impl.get() == 0; }
             
             /** Releases the data from the container. The container is empty after calling this function. */
             void release() { m_impl.reset(); }
+            
+            /** 
+             * Return true if the container is read-only. Also true for empty containers.
+             */
+            bool isReadOnly() const;
             
         private:
             std::tr1::shared_ptr<impl::DataContainerImpl> m_impl;

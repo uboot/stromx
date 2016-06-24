@@ -37,6 +37,7 @@ namespace stromx
             CPPUNIT_TEST(testWriteAccessCast);
             CPPUNIT_TEST(testWriteAccessWrongCast);
             CPPUNIT_TEST(testWriteAccessEmptyContainer);
+            CPPUNIT_TEST(testWriteAccessReadOnlyContainer);
             CPPUNIT_TEST(testReleaseWriteAccess);
             CPPUNIT_TEST(testWriteAccessDelayed);
             CPPUNIT_TEST(testWriteAccessInterrupt);
@@ -51,6 +52,7 @@ namespace stromx
 
         protected:
             void testWriteAccessEmptyContainer();
+            void testWriteAccessReadOnlyContainer();
             void testEmptyWriteAccess();
             void testWriteAccess();
             void testRelease();

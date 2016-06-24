@@ -82,6 +82,14 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(WriteAccess access(container), WrongArgument);
         }
         
+        void WriteAccessTest::testWriteAccessReadOnlyContainer()
+        {
+            Data* data = new None;
+            DataContainer container(data, true);
+            
+            CPPUNIT_ASSERT_THROW(WriteAccess access(container), WrongArgument);
+        }
+        
         void WriteAccessTest::testReleaseWriteAccess()
         {
             Data* data = new TestData;

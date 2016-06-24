@@ -27,6 +27,11 @@ namespace stromx
         {
         }
         
+        DataContainer::DataContainer(Data* data, const bool isReadOnly)
+          : m_impl(new impl::DataContainerImpl(data, isReadOnly))
+        {
+        }
+        
         bool operator==(const runtime::DataContainer& lhs, const runtime::DataContainer& rhs)
         {
             if(! lhs.m_impl.get() && ! rhs.m_impl.get())
@@ -51,6 +56,11 @@ namespace stromx
                 out << container.m_impl->data();
 
             return out;
+        }
+        
+        bool DataContainer::isReadOnly() const
+        { 
+            return m_impl.get() == 0 ? true : m_impl->isReadOnly();
         }
     }
 }

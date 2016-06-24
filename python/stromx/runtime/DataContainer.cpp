@@ -34,6 +34,11 @@ namespace
     {
         return new DataContainer(data.get());
     }
+    
+    DataContainer* allocateFromDataWithReadOnlyOption(const boost::shared_ptr<Data> & data, const bool isReadOnly)
+    {
+        return new DataContainer(data.get(), isReadOnly);
+    }
 }
 
 void exportDataContainer()
@@ -41,6 +46,7 @@ void exportDataContainer()
     class_<DataContainer>("DataContainer", no_init)
         .def("__init__", make_constructor(&allocate))
         .def("__init__", make_constructor(&allocateFromData))
+        .def("__init__", make_constructor(&allocateFromDataWithReadOnlyOption))
         .def("empty", &DataContainer::empty)
         .def("release", &DataContainer::release)
     ;
