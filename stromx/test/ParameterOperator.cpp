@@ -145,32 +145,32 @@ namespace stromx
             provider.sendOutputData(output1 && output2);
         }
                 
-        const std::vector<const Description*> ParameterOperator::setupInputs()
+        const std::vector<const Input*> ParameterOperator::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* description = 0;
+            std::vector<const Input*> inputs;
+            Input* description = 0;
             
-            description = new Description(INPUT_1, Variant::NONE);
+            description = new Input(INPUT_1, Variant::NONE);
             description->setTitle("Input 1");
             inputs.push_back(description);
             
-            description = new Description(INPUT_2, Variant::NONE);
+            description = new Input(INPUT_2, Variant::NONE);
             description->setTitle("Input 2");
             inputs.push_back(description);
             
             return inputs;
         }
 
-        const std::vector<const Description*> ParameterOperator::setupOutputs()
+        const std::vector<const Output*> ParameterOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
-            Description* description = 0;
+            std::vector<const Output*> outputs;
+            Output* description = 0;
             
-            description = new Description(OUTPUT_1, Variant::NONE);
+            description = new Output(OUTPUT_1, Variant::NONE);
             description->setTitle("Output 1");
             outputs.push_back(description);
             
-            description = new Description(OUTPUT_2, Variant::NONE);
+            description = new Output(OUTPUT_2, Variant::NONE);
             description->setTitle("Output 2");
             outputs.push_back(description);
             

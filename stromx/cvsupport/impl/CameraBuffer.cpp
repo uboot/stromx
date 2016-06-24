@@ -141,30 +141,30 @@ namespace stromx
                 ++m_id;
             }
             
-            const std::vector<const Description*> CameraBuffer::setupInputs()
+            const std::vector<const runtime::Input*> CameraBuffer::setupInputs()
             {
-                std::vector<const Description*> inputs;
+                std::vector<const Input*> inputs;
             
-                Description* input = new Description(INPUT, Variant::IMAGE);
+                Input* input = new Input(INPUT, Variant::IMAGE);
                 input->setTitle("Input");
                 inputs.push_back(input);
                 
                 return inputs;
             }
             
-            const std::vector<const Description*> CameraBuffer::setupOutputs()
+            const std::vector<const runtime::Output*> CameraBuffer::setupOutputs()
             {
-                std::vector<const Description*> outputs;
+                std::vector<const Output*> outputs;
             
-                Description* output = new Description(OUTPUT, Variant::IMAGE);
+                Output* output = new Output(OUTPUT, Variant::IMAGE);
                 output->setTitle("Output");
                 outputs.push_back(output);
             
-                Description* buffer = new Description(BUFFER, Variant::IMAGE);
+                Output* buffer = new Output(BUFFER, Variant::IMAGE);
                 buffer->setTitle("Buffer");
                 outputs.push_back(buffer);
             
-                Description* index = new Description(INDEX, Variant::UINT_32);
+                Output* index = new Output(INDEX, Variant::UINT_32);
                 index->setTitle("Index");
                 outputs.push_back(index);
                 

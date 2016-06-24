@@ -26,7 +26,8 @@ namespace stromx
 {
     namespace runtime
     {
-        class Description;
+        class Input;
+        class Output;
         
         namespace impl
         {
@@ -145,7 +146,7 @@ namespace stromx
                     if ((*iter) == op)
                     {
                         // disconnect from all sources
-                        for(std::vector<const Description*>::const_iterator desc = op->info().inputs().begin();
+                        for(std::vector<const Input*>::const_iterator desc = op->info().inputs().begin();
                             desc != op->info().inputs().end();
                             ++desc)
                         {
@@ -154,7 +155,7 @@ namespace stromx
                         
                         
                         // disconnect all targets
-                        for(std::vector<const Description*>::const_iterator desc = op->info().outputs().begin();
+                        for(std::vector<const Output*>::const_iterator desc = op->info().outputs().begin();
                             desc != op->info().outputs().end();
                             ++desc)
                         {

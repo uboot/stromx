@@ -74,8 +74,8 @@ namespace stromx
             virtual void activate();
             
         private:
-            static const std::vector<const stromx::runtime::Description*> setupInputs();
-            static const std::vector<const stromx::runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Input*> setupInputs();
+            static const std::vector<const runtime::Output*> setupOutputs();
             static const std::vector<const stromx::runtime::Parameter*> setupParameters();
             
             stromx::runtime::Data* imageRamp();

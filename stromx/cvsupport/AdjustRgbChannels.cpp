@@ -133,22 +133,22 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> AdjustRgbChannels::setupInputs()
+        const std::vector<const runtime::Input*> AdjustRgbChannels::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::RGB_IMAGE);
+            Input* input = new Input(INPUT, Variant::RGB_IMAGE);
             input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> AdjustRgbChannels::setupOutputs()
+        const std::vector<const runtime::Output*> AdjustRgbChannels::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::RGB_IMAGE);
+            Output* output = new Output(OUTPUT, Variant::RGB_IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

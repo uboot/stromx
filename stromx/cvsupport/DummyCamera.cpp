@@ -464,24 +464,24 @@ namespace stromx
             m_stream->join();
         }
         
-        const std::vector<const runtime::Description*> DummyCamera::setupInputs()
+        const std::vector<const runtime::Input*> DummyCamera::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
             return inputs;
         }
         
-        const std::vector<const Description*> DummyCamera::setupOutputs()
+        const std::vector<const runtime::Output*> DummyCamera::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             
             if(m_outputIndex)
             {
-                Description* index = new Description(INDEX, Variant::UINT_32);
+                Output* index = new Output(INDEX, Variant::UINT_32);
                 index->setTitle("Index");
                 outputs.push_back(index);
             }

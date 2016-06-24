@@ -16,22 +16,22 @@ namespace math
     const std::string Add::PACKAGE("Math");
     const runtime::Version Add::VERSION(1, 0, 0);
     
-    const std::vector<const runtime::Description*> Add::setupInputs()
+    const std::vector<const runtime::Input*> Add::setupInputs()
     {
-        std::vector<const runtime::Description*> inputs;
+        std::vector<const runtime::Input*> inputs;
         
-        runtime::Description* input = new runtime::Description(INPUT, runtime::Variant::UINT_32);
+        runtime::Input* input = new runtime::Input(INPUT, runtime::Variant::UINT_32);
         input->setTitle("Input");
         inputs.push_back(input);
         
         return inputs;
     }
     
-    const std::vector<const runtime::Description*> Add::setupOutputs()
+    const std::vector<const runtime::Output*> Add::setupOutputs()
     {
-        std::vector<const runtime::Description*> outputs;
+        std::vector<const runtime::Output*> outputs;
         
-        runtime::Description* output = new runtime::Description(OUTPUT, runtime::Variant::UINT_32);
+        runtime::Output* output = new runtime::Output(OUTPUT, runtime::Variant::UINT_32);
         output->setTitle("Output");
         outputs.push_back(output);
         

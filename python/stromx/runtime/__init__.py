@@ -101,7 +101,8 @@ def _extendVectorClass(vectorClass):
     
 _extendVectorClass(OperatorVector)
 _extendVectorClass(OperatorKernelVector)
-_extendVectorClass(DescriptionVector)
+_extendVectorClass(InputVector)
+_extendVectorClass(OutputVector)
 _extendVectorClass(ParameterVector)
 _extendVectorClass(ThreadVector)
 _extendVectorClass(InputVector)

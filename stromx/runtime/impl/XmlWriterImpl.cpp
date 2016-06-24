@@ -149,7 +149,7 @@ namespace stromx
                     inConnectorElement->setAttributeNode(inputAttr);
                     
                     DOMAttr* inputTitleAttr = m_doc->createAttribute(Str2Xml("inputTitle"));
-                    const Description& desc = (*iter_inConnectors).op()->info().input((*iter_inConnectors).id());
+                    const Input& desc = (*iter_inConnectors).op()->info().input((*iter_inConnectors).id());
                     inputTitleAttr->setValue(Str2Xml(desc.title().c_str()));
                     inConnectorElement->setAttributeNode(inputTitleAttr);
                 }
@@ -287,7 +287,7 @@ namespace stromx
             
             void XmlWriterImpl::createInputs(const Operator*const currOp, DOMElement*const opElement)
             {
-                for(std::vector<const Description*>::const_iterator iter_in = currOp->info().inputs().begin();
+                for(std::vector<const Input*>::const_iterator iter_in = currOp->info().inputs().begin();
                     iter_in != currOp->info().inputs().end();
                     ++iter_in)
                 {
@@ -307,7 +307,7 @@ namespace stromx
                         inElement->setAttributeNode(idAttr);
                         
                         DOMAttr* titleAttr = m_doc->createAttribute(Str2Xml("title"));
-                        const Description& inputDesc = currOp->info().input((*iter_in)->id());
+                        const Input& inputDesc = currOp->info().input((*iter_in)->id());
                         titleAttr->setValue(Str2Xml(inputDesc.title().c_str()));
                         inElement->setAttributeNode(titleAttr);
                         
@@ -325,7 +325,7 @@ namespace stromx
                         inElement->setAttributeNode(outAttr);
                         
                         DOMAttr* outputTitleAttr = m_doc->createAttribute(Str2Xml("outputTitle"));
-                        const Description& outputDesc = node.op()->info().output(node.id());
+                        const Output& outputDesc = node.op()->info().output(node.id());
                         outputTitleAttr->setValue(Str2Xml(outputDesc.title().c_str()));
                         inElement->setAttributeNode(outputTitleAttr);
                     }

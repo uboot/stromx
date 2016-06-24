@@ -29,14 +29,14 @@ namespace stromx
     {
         void Id2DataMapTest::setUp()
         {
-            std::vector<const Description*> descriptions;
-            descriptions.push_back(new Description(0, Variant::NONE));
-            descriptions.push_back(new Description(1, Variant::NONE));
+            std::vector<const Input*> descriptions;
+            descriptions.push_back(new Input(0, Variant::NONE));
+            descriptions.push_back(new Input(1, Variant::NONE));
             
             m_id2DataMap = new impl::Id2DataMap(descriptions);
             m_id2DataMap->setObserver(m_observer);
             
-            for(std::vector<const Description*>::iterator iter = descriptions.begin();
+            for(std::vector<const Input*>::iterator iter = descriptions.begin();
                 iter != descriptions.end();
                 ++iter)
             {

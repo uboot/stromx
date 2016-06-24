@@ -117,19 +117,19 @@ namespace stromx
             m_server->send(inputMapper.data());
         }
         
-        const std::vector<const Description*> Send::setupInputs()
+        const std::vector<const Input*> Send::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, Variant::DATA);
+            std::vector<const Input*> inputs;
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> Send::setupOutputs()
+        const std::vector<const Output*> Send::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             return outputs;
         }
         

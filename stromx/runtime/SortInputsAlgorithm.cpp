@@ -19,7 +19,7 @@
 #include <boost/graph/adjacency_matrix.hpp>
 #include <boost/graph/topological_sort.hpp>
 #include <iostream>
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
 #include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/SortInputsAlgorithm.h"
@@ -85,8 +85,8 @@ namespace stromx
                 opIter != operators.end();
                 ++opIter)
             {
-                const std::vector<const Description*> & inputs = (*opIter)->info().inputs();
-                for(std::vector<const Description*>::const_iterator inputIter = inputs.begin();
+                const std::vector<const Input*> & inputs = (*opIter)->info().inputs();
+                for(std::vector<const Input*>::const_iterator inputIter = inputs.begin();
                     inputIter != inputs.end();
                     ++inputIter)
                 {

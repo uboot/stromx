@@ -16,12 +16,13 @@
 
 #include <boost/thread.hpp>
 #include <boost/thread/tss.hpp>
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorInfo.h"
+#include "stromx/runtime/Output.h"
 #include "stromx/runtime/OutputConnector.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 #include "stromx/runtime/impl/InputNode.h"
@@ -169,7 +170,7 @@ namespace stromx
         {
             m_kernel->initialize(m_inputObserver, m_outputObserver);
             
-            for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->inputs().begin();
+            for(std::vector<const Input*>::const_iterator iter = m_kernel->info()->inputs().begin();
                 iter != m_kernel->info()->inputs().end();
                 ++iter)
             {
@@ -181,7 +182,7 @@ namespace stromx
                 m_inputs[(*iter)->id()] = new InputNode(this, (*iter)->id());
             }
             
-            for(std::vector<const Description*>::const_iterator iter = m_kernel->info()->outputs().begin();
+            for(std::vector<const Output*>::const_iterator iter = m_kernel->info()->outputs().begin();
                 iter != m_kernel->info()->outputs().end();
                 ++iter)
             {

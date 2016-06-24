@@ -22,20 +22,35 @@ namespace stromx
 {
     namespace runtime
     {
-        namespace impl
+        namespace 
         {
-            Id2DataMap::Id2DataMap(const std::vector<const Description*> & descriptions)
-              : m_observer(0)
+            template <class description_t>
+            void populateId2DataMap(const std::vector<const description_t*> & descriptions, std::map<unsigned int, DataContainer> & map)
             {
-                for(std::vector<const Description*>::const_iterator iter = descriptions.begin();
+                for(typename std::vector<const description_t*>::const_iterator iter = descriptions.begin();
                     iter != descriptions.end();
                     ++iter)
                 {
-                    if(m_map.count((*iter)->id()))
+                    if(map.count((*iter)->id()))
                         throw WrongArgument("Two descriptors with the same ID");
                     
-                    m_map[(*iter)->id()] = DataContainer();
+                    map[(*iter)->id()] = DataContainer();
                 }
+            }
+        }
+
+        namespace impl
+        {
+            Id2DataMap::Id2DataMap(const std::vector<const Input*> & descriptions)
+              : m_observer(0)
+            {
+                populateId2DataMap(descriptions, m_map);
+            }
+            
+            Id2DataMap::Id2DataMap(const std::vector<const Output*> & descriptions)
+              : m_observer(0)
+            {
+                populateId2DataMap(descriptions, m_map);
             }
             
             Id2DataMap::Id2DataMap()

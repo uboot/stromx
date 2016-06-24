@@ -142,17 +142,17 @@ namespace stromx
             provider.sendOutputData(outputMapper);
         }
         
-        const std::vector<const Description*> Receive::setupInputs()
+        const std::vector<const Input*> Receive::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             return inputs;
         }
         
-        const std::vector<const Description*> Receive::setupOutputs() const
+        const std::vector<const Output*> Receive::setupOutputs() const
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* ouput = new Description(OUTPUT, Variant::DATA);
+            Output* ouput = new Output(OUTPUT, Variant::DATA);
             ouput->setTitle("Output");
             outputs.push_back(ouput);
             

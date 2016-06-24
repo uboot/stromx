@@ -30,10 +30,10 @@ namespace stromx
     {
         void Id2DataPairTest::setUp ( void )
         {
-            std::vector<const Description*> descriptions;
-            descriptions.push_back(new Description(0, Variant::NONE));
-            descriptions.push_back(new Description(1, Variant::NONE));
-            descriptions.push_back(new Description(2, Variant::NONE));
+            std::vector<const Input*> descriptions;
+            descriptions.push_back(new Input(0, Variant::NONE));
+            descriptions.push_back(new Input(1, Variant::NONE));
+            descriptions.push_back(new Input(2, Variant::NONE));
             m_map = new impl::Id2DataMap(descriptions);
             m_dataContainer = DataContainer(new None());
         }

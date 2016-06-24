@@ -64,17 +64,17 @@ namespace stromx
             
             const Version& version() const { return m_version; }
 
-            const std::vector<const Description*>& inputs() const { return m_visibleInputs; }
+            const std::vector<const Input*>& inputs() const { return m_visibleInputs; }
             
-            const std::vector<const Description*>& outputs() const { return m_visibleOutputs; }
+            const std::vector<const Output*>& outputs() const { return m_visibleOutputs; }
             
             const std::vector<const Parameter*>& parameters() const { return m_visibleParameters; }
             
             const Parameter & parameter(const unsigned int id) const;
             
-            virtual const Description & input(const unsigned int id) const;
+            virtual const Input & input(const unsigned int id) const;
             
-            virtual const Description & output(const unsigned int id) const;
+            virtual const Output & output(const unsigned int id) const;
             
             const OperatorProperties & properties() const;
             
@@ -166,8 +166,8 @@ namespace stromx
             OperatorKernel(const std::string & type,
                     const std::string & package,
                     const Version & version,
-                    const std::vector<const Description*>& inputs,
-                    const std::vector<const Description*>& outputs,
+                    const std::vector<const Input*>& inputs,
+                    const std::vector<const Output*>& outputs,
                     const std::vector<const Parameter*>& parameters,
                     const OperatorProperties & properties = OperatorProperties());
 
@@ -187,8 +187,8 @@ namespace stromx
             OperatorKernel(const std::string& type,
                     const std::string& package,
                     const runtime::Version& version,
-                    const std::vector<const Description* >& inputs,
-                    const std::vector<const Description* >& outputs,
+                    const std::vector<const Input* >& inputs,
+                    const std::vector<const Output* >& outputs,
                     const OperatorProperties & properties = OperatorProperties());
              
             /**
@@ -220,8 +220,8 @@ namespace stromx
              *                   should be edited before initialization at this stage does
              *                   not make any sense but should be done in the constructor.
              */
-            virtual void initialize(const std::vector<const Description*>& inputs,
-                                    const std::vector<const Description*>& outputs,
+            virtual void initialize(const std::vector<const Input*>& inputs,
+                                    const std::vector<const Output*>& outputs,
                                     const std::vector<const Parameter*>& parameters);
             
             /**
@@ -230,8 +230,8 @@ namespace stromx
             Parameter & parameter(const unsigned int id);
             
         private:
-            void validateDescriptions(const std::vector<const Description*>& inputs,
-                                      const std::vector<const Description*>& outputs,
+            void validateDescriptions(const std::vector<const Input*>& inputs,
+                                      const std::vector<const Output*>& outputs,
                                       const std::vector<const Parameter*>& parameters);
             void updateVisibleDescriptions(const bool isInitialized);
             const Parameter & findParameter(const unsigned int id) const;
@@ -239,17 +239,17 @@ namespace stromx
             std::string m_type;
             std::string m_package;
             Version m_version;
-            std::vector<const Description*> m_inputs;
-            std::vector<const Description*> m_outputs;
+            std::vector<const Input*> m_inputs;
+            std::vector<const Output*> m_outputs;
             std::vector<const Parameter*> m_parameters;
             
-            std::vector<const Description*> m_visibleInputs;
-            std::vector<const Description*> m_visibleOutputs;
+            std::vector<const Input*> m_visibleInputs;
+            std::vector<const Output*> m_visibleOutputs;
             std::vector<const Parameter*> m_visibleParameters;
             
             std::map<unsigned int, const Parameter*> m_parameterMap;
-            std::map<unsigned int, const Description*> m_inputMap;
-            std::map<unsigned int, const Description*> m_outputMap;
+            std::map<unsigned int, const Input*> m_inputMap;
+            std::map<unsigned int, const Output*> m_outputMap;
             
             // the indices of all inputs, output and parameters which have
             // been added during initialization, i.e. which must be removed

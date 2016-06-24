@@ -50,19 +50,19 @@ namespace stromx
             provider.receiveInputData(input);
         }
         
-        const std::vector<const Description*> Dump::setupInputs()
+        const std::vector<const Input*> Dump::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, Variant::DATA);
+            std::vector<const Input*> inputs;
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> Dump::setupOutputs()
+        const std::vector<const Output*> Dump::setupOutputs()
         {
-            return std::vector<const Description*>();
+            return std::vector<const Output*>();
         }
         
         const std::vector<const Parameter*> Dump::setupParameters()

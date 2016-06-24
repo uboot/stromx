@@ -33,39 +33,39 @@ namespace stromx
                 
         void OperatorKernelTest::testValidateInputsExistingId()
         {
-            Description input(TestOperator::INPUT_1, Variant::NONE);
-            std::vector<const Description*> descriptors;
+            Input input(TestOperator::INPUT_1, Variant::NONE);
+            std::vector<const Input*> descriptors;
             descriptors.push_back(&input);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
                                     descriptors,
-                                    std::vector<const Description*>(), 
+                                    std::vector<const Output*>(), 
                                     std::vector<const Parameter*>()),
                                  WrongArgument);
         }
 
         void OperatorKernelTest::testValidateInputsDuplicateId()
         {
-            Description input(TestOperator::INPUT_2 + 1, Variant::NONE);
-            std::vector<const Description*> descriptors;
+            Input input(TestOperator::INPUT_2 + 1, Variant::NONE);
+            std::vector<const Input*> descriptors;
             descriptors.push_back(&input);
             descriptors.push_back(&input);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
                                     descriptors,
-                                    std::vector<const Description*>(), 
+                                    std::vector<const Output*>(), 
                                     std::vector<const Parameter*>()),
                                  WrongArgument);
         }
 
         void OperatorKernelTest::testValidateOutputsExistingId()
         {
-            Description output(TestOperator::OUTPUT_1, Variant::NONE);
-            std::vector<const Description*> descriptors;
+            Output output(TestOperator::OUTPUT_1, Variant::NONE);
+            std::vector<const Output*> descriptors;
             descriptors.push_back(&output);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
                                     descriptors, 
                                     std::vector<const Parameter*>()),
                                  WrongArgument);
@@ -73,13 +73,13 @@ namespace stromx
 
         void OperatorKernelTest::testValidateOutputsDuplicateId()
         {
-            Description output(TestOperator::OUTPUT_2 + 1, Variant::NONE);
-            std::vector<const Description*> descriptors;
+            Output output(TestOperator::OUTPUT_2 + 1, Variant::NONE);
+            std::vector<const Output*> descriptors;
             descriptors.push_back(&output);
             descriptors.push_back(&output);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
                                     descriptors, 
                                     std::vector<const Parameter*>()),
                                  WrongArgument);
@@ -92,8 +92,8 @@ namespace stromx
             params.push_back(&param);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
+                                    std::vector<const Output*>(),
                                     params),
                                  WrongArgument);
         }
@@ -106,8 +106,8 @@ namespace stromx
             params.push_back(&param);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
+                                    std::vector<const Output*>(),
                                     params),
                                  WrongArgument);
         }
@@ -120,26 +120,27 @@ namespace stromx
             params.push_back(&param);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
+                                    std::vector<const Output*>(),
                                     params),
                                  WrongArgument);
             
             params.push_back(&group);
             CPPUNIT_ASSERT_NO_THROW(m_op.validateDescriptions(
-                                        std::vector<const Description*>(),
-                                        std::vector<const Description*>(),
+                                        std::vector<const Input*>(),
+                                        std::vector<const Output*>(),
                                         params)
                                    );
         }
         
         void OperatorKernelTest::testValidateInputsAndOutputsDuplicateId()
         {
-            Description description(TestOperator::OUTPUT_2 + 1, Variant::NONE);
-            std::vector<const Description*> inputs;
-            std::vector<const Description*> outputs;
-            inputs.push_back(&description);
-            outputs.push_back(&description);
+            Input input(TestOperator::OUTPUT_2 + 1, Variant::NONE);
+            Output output(TestOperator::OUTPUT_2 + 1, Variant::NONE);
+            std::vector<const Input*> inputs;
+            std::vector<const Output*> outputs;
+            inputs.push_back(&input);
+            outputs.push_back(&output);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
                                     inputs,
@@ -155,8 +156,8 @@ namespace stromx
             params.push_back(&param);
             
             CPPUNIT_ASSERT_THROW(m_op.validateDescriptions(
-                                    std::vector<const Description*>(),
-                                    std::vector<const Description*>(),
+                                    std::vector<const Input*>(),
+                                    std::vector<const Output*>(),
                                     params),
                                  WrongArgument);
         }

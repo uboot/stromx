@@ -119,18 +119,18 @@ namespace stromx
             OperatorKernel::initialize(setupInputs(), setupOutputs(), setupParameters());
         }
         
-        const std::vector<const Description*> DataOperatorBase::setupInputs()
+        const std::vector<const Input*> DataOperatorBase::setupInputs()
         {
-            return std::vector<const Description*>();
+            return std::vector<const Input*>();
         }
         
-        const std::vector<const Description*> DataOperatorBase::setupOutputs()
+        const std::vector<const Output*> DataOperatorBase::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
             VariantHandle variant = typeToVariant(m_type);
             
-            Description* output = new Description(OUTPUT, variant);
+            Output* output = new Output(OUTPUT, variant);
             output->setTitle("Output");
             outputs.push_back(output);
             

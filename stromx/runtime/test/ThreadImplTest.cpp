@@ -66,7 +66,7 @@ namespace stromx
             
             for(unsigned int i = 1; i < 3; ++i)
             {
-                for(std::vector<const Description*>::const_iterator input = m_operators[i]->info().inputs().begin();
+                for(std::vector<const Input*>::const_iterator input = m_operators[i]->info().inputs().begin();
                     input != m_operators[i]->info().inputs().end();
                     ++input)
                 {

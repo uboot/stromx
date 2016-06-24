@@ -18,7 +18,8 @@
 #define STROMX_RUNTIME_OPERATORINFO_H
 
 #include <vector>
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Output.h"
 #include "stromx/runtime/Parameter.h"
 #include "stromx/runtime/Version.h"
 
@@ -63,14 +64,14 @@ namespace stromx
              * Returns a list of the inputs of the operator. This list can
              * change when Operator::initialize() is called.
              */
-            virtual const std::vector<const Description*>& inputs() const = 0;
+            virtual const std::vector<const Input*>& inputs() const = 0;
             
             /**
              * Returns a list of the outputs of the operator. This list can
              * change when Operator::initialize() is called. After that it is
              * constant.
              */
-            virtual const std::vector<const Description*>& outputs() const = 0;
+            virtual const std::vector<const Output*>& outputs() const = 0;
             
             /**
              * Returns a list of the parameters of the operator. This list can only
@@ -85,14 +86,14 @@ namespace stromx
              * 
              * \throws WrongId If no output with \c id exists.
              */
-            virtual const Description & output(const unsigned int id) const = 0;
+            virtual const Output & output(const unsigned int id) const = 0;
             
             /**
              * Returns the description of the output \c id.
              * 
              * \throws WrongId If no input with \c id exists.
              */
-            virtual const Description & input(const unsigned int id) const = 0;
+            virtual const Input & input(const unsigned int id) const = 0;
             
             /**
              * Returns the parameter description of the parameter \c id.

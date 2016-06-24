@@ -115,34 +115,34 @@ namespace stromx
             provider.sendOutputData(output1 && output2);
         }
         
-        const std::vector< const Description* > TestOperator::setupInitInputs()
+        const std::vector< const Input* > TestOperator::setupInitInputs()
         {
-            std::vector<const Description*> inputs;
-            inputs.push_back(new Description(INPUT_1, Variant::NONE));
+            std::vector<const Input*> inputs;
+            inputs.push_back(new Input(INPUT_1, Variant::NONE));
             
             return inputs;
         }
                 
-        const std::vector<const Description*> TestOperator::setupInputs()
+        const std::vector<const Input*> TestOperator::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            inputs.push_back(new Description(INPUT_2, Variant::NONE));
+            std::vector<const Input*> inputs;
+            inputs.push_back(new Input(INPUT_2, Variant::NONE));
             
             return inputs;
         }
         
-        const std::vector<const Description*> TestOperator::setupInitOutputs()
+        const std::vector<const Output*> TestOperator::setupInitOutputs()
         {
-            std::vector<const Description*> outputs;
-            outputs.push_back(new Description(OUTPUT_1, TestData::TEST_DATA));
+            std::vector<const Output*> outputs;
+            outputs.push_back(new Output(OUTPUT_1, TestData::TEST_DATA));
             
             return outputs;
         }
         
-        const std::vector<const Description*> TestOperator::setupOutputs()
+        const std::vector<const Output*> TestOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
-            outputs.push_back(new Description(OUTPUT_2, TestData::TEST_DATA));
+            std::vector<const Output*> outputs;
+            outputs.push_back(new Output(OUTPUT_2, TestData::TEST_DATA));
             
             return outputs;
         }

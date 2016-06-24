@@ -31,13 +31,24 @@ namespace stromx
          */
         class STROMX_RUNTIME_API Description : public DescriptionBase
         {
-        public:
-            /** Constructs a description. */
-            Description(const unsigned int id, const VariantHandle& variant)
-              : DescriptionBase(id, variant),
-                m_operatorThread(0),
-                m_defaultType(CONNECTOR)
-            {}
+        public:            
+            /** 
+             * Sets the required number of matrix rows of this parameter. 
+             * Passing 0 for \c value allows any number of rows.
+             */
+            virtual void setRows(const unsigned int value)
+            {
+                m_rows = value;
+            }
+            
+            /** 
+             * Sets the required number of matrix rows of this parameter. 
+             * Passing 0 for \c value allows any number of rows.
+             */
+            virtual void setCols(const unsigned int value)
+            {
+                m_cols = value;
+            }
             
             /** Returns the operator thread of this connector. 
              * 
@@ -87,7 +98,10 @@ namespace stromx
              * 
              * \sa defaultType
              */
-             void setDefaultType(const Type type) { m_defaultType = type; }
+            void setDefaultType(const Type type) { m_defaultType = type; }
+             
+            virtual unsigned int rows() const { return m_rows; }
+            virtual unsigned int cols() const { return m_cols; }
             
         protected:
             /** Constructs a description. */
@@ -100,6 +114,8 @@ namespace stromx
         private:
             unsigned int m_operatorThread;
             Type m_defaultType;
+            unsigned int m_rows;
+            unsigned int m_cols;
         };
     }
 }

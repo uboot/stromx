@@ -121,18 +121,18 @@ namespace stromx
             return m_blockExecute;
         }
                 
-        const std::vector<const Description*> ExceptionOperator::setupInputs()
+        const std::vector<const Input*> ExceptionOperator::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
             return inputs;
         }
 
-        const std::vector<const Description*> ExceptionOperator::setupOutputs()
+        const std::vector<const Output*> ExceptionOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            outputs.push_back(new Description(OUTPUT, Variant::NONE));
+            outputs.push_back(new Output(OUTPUT, Variant::NONE));
             
             return outputs;
         }

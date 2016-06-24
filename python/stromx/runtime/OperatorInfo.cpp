@@ -44,12 +44,12 @@ namespace
             return this->get_override("version")();
         }
             
-        const std::vector<const Description*>& inputs() const
+        const std::vector<const Input*>& inputs() const
         {
             return this->get_override("inputs")();
         }
             
-        const std::vector<const Description*>& outputs() const
+        const std::vector<const Output*>& outputs() const
         {
             return this->get_override("outputs")();
         }
@@ -64,12 +64,12 @@ namespace
             return this->get_override("parameter")(id);
         }
             
-        const Description & input(const unsigned int id) const
+        const Input & input(const unsigned int id) const
         {
             return this->get_override("input")(id);
         }
             
-        const Description & output(const unsigned int id) const
+        const Output & output(const unsigned int id) const
         {
             return this->get_override("output")(id);
         }
@@ -78,7 +78,6 @@ namespace
       
 void exportOperatorInfo()
 {      
-    stromx::python::exportVector<const Description*>("DescriptionVector");
     stromx::python::exportVector<const Input*>("InputVector");
     stromx::python::exportVector<const Output*>("OutputVector");
     stromx::python::exportVector<const Parameter*>("ParameterVector");

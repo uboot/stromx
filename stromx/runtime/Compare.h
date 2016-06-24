@@ -60,14 +60,14 @@ namespace stromx
             virtual void initialize();
             
         private:
-            static const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Output*> setupOutputs();
             static const std::vector<const runtime::Parameter*> setupInitParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
             static const runtime::Version VERSION;
             
-            const std::vector<const runtime::Description*> setupInputs();
+            const std::vector<const runtime::Input*> setupInputs();
             const std::vector<const runtime::Parameter*> setupParameters();
             
             Bool m_compareToInput;

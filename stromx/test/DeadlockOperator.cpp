@@ -137,24 +137,24 @@ namespace stromx
             provider.sendOutputData(output);
         }
                 
-        const std::vector<const Description*> DeadlockOperator::setupInputs()
+        const std::vector<const Input*> DeadlockOperator::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* description = 0;
+            std::vector<const Input*> inputs;
+            Input* description = 0;
             
-            description = new Description(INPUT, Variant::UINT_32);
+            description = new Input(INPUT, Variant::UINT_32);
             description->setTitle("Input");
             inputs.push_back(description);
             
             return inputs;
         }
 
-        const std::vector<const Description*> DeadlockOperator::setupOutputs()
+        const std::vector<const Output*> DeadlockOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
-            Description* description = 0;
+            std::vector<const Output*> outputs;
+            Output* description = 0;
             
-            description = new Description(OUTPUT, Variant::UINT_32);
+            description = new Output(OUTPUT, Variant::UINT_32);
             description->setTitle("Output");
             outputs.push_back(description);
             

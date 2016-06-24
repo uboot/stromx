@@ -60,18 +60,18 @@ namespace stromx
             provider.sendOutputData(outputDataMapper);
         }
         
-        const std::vector<const Description*> Counter::setupInputs()
+        const std::vector<const Input*> Counter::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
 
             return inputs;
         }
         
-        const std::vector<const Description*> Counter::setupOutputs()
+        const std::vector<const Output*> Counter::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::UINT_32);
+            Output* output = new Output(OUTPUT, Variant::UINT_32);
             output->setTitle("Output");
             outputs.push_back(output);
             

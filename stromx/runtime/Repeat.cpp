@@ -98,16 +98,16 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Description*> Repeat::setupInputs()
+        const std::vector<const Input*> Repeat::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::DATA);
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle(L_("Input data"));
             input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
             
-            Description* numIterations = new Description(NUM_ITERATIONS, Variant::INT);
+            Input* numIterations = new Input(NUM_ITERATIONS, Variant::INT);
             numIterations->setTitle(L_("Number of iterations"));
             numIterations->setOperatorThread(INPUT_THREAD);
             inputs.push_back(numIterations);
@@ -115,11 +115,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Repeat::setupOutputs()
+        const std::vector<const Output*> Repeat::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle(L_("Output"));
             output->setOperatorThread(OUTPUT_THREAD);
             outputs.push_back(output);

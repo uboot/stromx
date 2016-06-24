@@ -20,7 +20,6 @@
 #include <stromx/runtime/EnumParameter.h>
 #include <stromx/runtime/Exception.h>
 #include <stromx/runtime/List.h>
-#include <stromx/runtime/MatrixDescription.h>
 #include <stromx/runtime/MatrixParameter.h>
 
 #include "stromx/cvsupport/Matrix.h"
@@ -172,7 +171,7 @@ namespace stromx
         }
         
         void checkMatrixValue(const stromx::runtime::Matrix & value,
-                             const stromx::runtime::MatrixDescription* desc,
+                             const stromx::runtime::Description* desc,
                              const stromx::runtime::OperatorInfo& op)
         {
             if(desc->rows() && value.rows() != desc->rows())

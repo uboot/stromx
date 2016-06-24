@@ -114,16 +114,16 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Merge::setupInputs()
+        const std::vector<const Input*> Merge::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* data = new Description(INPUT_DATA, Variant::DATA);
+            Input* data = new Input(INPUT_DATA, Variant::DATA);
             data->setTitle(L_("List item"));
             data->setOperatorThread(ITEM_THREAD);
             inputs.push_back(data);
             
-            Description* index = new Description(INPUT_NUM_ITEMS, Variant::INT);
+            Input* index = new Input(INPUT_NUM_ITEMS, Variant::INT);
             index->setTitle(L_("Number of list items"));
             index->setOperatorThread(LIST_THREAD);
             inputs.push_back(index);
@@ -131,11 +131,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Merge::setupOutputs() const
+        const std::vector<const Output*> Merge::setupOutputs() const
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::LIST);
+            Output* output = new Output(OUTPUT, Variant::LIST);
             output->setTitle(L_("List"));
             output->setOperatorThread(LIST_THREAD);
             outputs.push_back(output);

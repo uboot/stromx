@@ -47,8 +47,8 @@ namespace stromx
             virtual void deactivate();
             
         private:
-            static const std::vector<const Description*> setupInputs();
-            const std::vector<const Description*> setupOutputs() const;
+            static const std::vector<const Input*> setupInputs();
+            const std::vector<const Output*> setupOutputs() const;
             
             static const std::string TYPE;
             static const std::string PACKAGE;

@@ -158,10 +158,10 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Join::setupOutputs()
+        const std::vector<const Output*> Join::setupOutputs()
         {
-            std::vector<const Description*> outputs;
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            std::vector<const Output*> outputs;
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             output->setOperatorThread(OUTPUT_THREAD);
             outputs.push_back(output);
@@ -169,13 +169,13 @@ namespace stromx
             return outputs;
         }
         
-        const std::vector<const Description*> Join::setupInputs() const
+        const std::vector<const Input*> Join::setupInputs() const
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
             for(unsigned int i = 0; i < (unsigned int)(m_numInputs); ++i)
             {
-                Description* input = new Description(INPUTS_BASE + i, Variant::DATA);
+                Input* input = new Input(INPUTS_BASE + i, Variant::DATA);
                 input->setTitle("Input " + boost::lexical_cast<std::string>(i));
                 input->setOperatorThread(INPUT_THREADS + i);
                 inputs.push_back(input);

@@ -95,8 +95,8 @@ namespace stromx
                                            const runtime::Enum outputType);
             
             const std::vector<const runtime::Parameter*> setupInitParameters();
-            const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             const std::vector<const runtime::Parameter*> setupParameters();
             void setRgbParameters();
             

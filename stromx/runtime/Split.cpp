@@ -109,10 +109,10 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Split::setupInputs()
+        const std::vector<const Input*> Split::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, Variant::LIST);
+            std::vector<const Input*> inputs;
+            Input* input = new Input(INPUT, Variant::LIST);
             input->setTitle(L_("List"));
             input->setOperatorThread(LIST_THREAD);
             inputs.push_back(input);
@@ -120,16 +120,16 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Split::setupOutputs() const
+        const std::vector<const Output*> Split::setupOutputs() const
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* data = new Description(OUTPUT_DATA, Variant::DATA);
+            Output* data = new Output(OUTPUT_DATA, Variant::DATA);
             data->setTitle(L_("List item"));
             data->setOperatorThread(ITEM_THREAD);
             outputs.push_back(data);
             
-            Description* index = new Description(OUTPUT_NUM_ITEMS, Variant::UINT_64);
+            Output* index = new Output(OUTPUT_NUM_ITEMS, Variant::UINT_64);
             index->setTitle(L_("Number of list items"));
             index->setOperatorThread(LIST_THREAD);
             outputs.push_back(index);

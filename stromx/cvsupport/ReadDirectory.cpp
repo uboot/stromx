@@ -153,16 +153,16 @@ namespace stromx
             provider.sendOutputData(outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> ReadDirectory::setupInputs()
+        const std::vector<const runtime::Input*> ReadDirectory::setupInputs()
         {
-            return std::vector<const Description*>();
+            return std::vector<const Input*>();
         }
         
-        const std::vector<const Description*> ReadDirectory::setupOutputs()
+        const std::vector<const runtime::Output*> ReadDirectory::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle(L_("Output"));
             outputs.push_back(output);
             

@@ -189,17 +189,17 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> Block::setupInputs()
+        const std::vector<const runtime::Input*> Block::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::DATA);
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
             if (m_triggerInput)
             {
-                Description* triggerData = new Description(TRIGGER_DATA, Variant::DATA);
+                Input* triggerData = new Input(TRIGGER_DATA, Variant::DATA);
                 triggerData->setTitle(L_("Trigger"));
                 inputs.push_back(triggerData);
             }
@@ -207,11 +207,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Block::setupOutputs()
+        const std::vector<const Output*> Block::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle(L_("Output"));
             outputs.push_back(output);
             

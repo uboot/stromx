@@ -19,7 +19,8 @@
 
 #include <map>
 #include <vector>
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Output.h"
 
 namespace stromx
 {
@@ -31,15 +32,16 @@ namespace stromx
         {
             class Id2DataMapObserver
             {
-        public:
+             public:
                 virtual void observe(const unsigned int id, const DataContainer & oldData, const DataContainer & newData) const = 0;
             };
            
             class Id2DataMap
             {
-        public:
+            public:
                 Id2DataMap();
-                explicit Id2DataMap(const std::vector<const Description*> & descriptions);                
+                explicit Id2DataMap(const std::vector<const Input*> & descriptions);
+                explicit Id2DataMap(const std::vector<const Output*> & descriptions);
                 
                 const DataContainer & get(const unsigned int id) const;
                 void set(const unsigned int id, const DataContainer & data);

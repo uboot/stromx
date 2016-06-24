@@ -29,7 +29,7 @@ namespace stromx
 {
     namespace runtime
     {
-        class ExceptionOperator : public stromx::runtime::OperatorKernel
+        class ExceptionOperator : public OperatorKernel
         {    
         public:        
             enum Parameters
@@ -43,9 +43,9 @@ namespace stromx
             ExceptionOperator();
             
             virtual OperatorKernel* clone() const { return new ExceptionOperator; }
-            virtual void setParameter(const unsigned int id, const stromx::runtime::Data& value);
-            const stromx::runtime::DataRef getParameter(const unsigned int id) const;
-            virtual void execute(stromx::runtime::DataProvider& provider);
+            virtual void setParameter(const unsigned int id, const Data& value);
+            const DataRef getParameter(const unsigned int id) const;
+            virtual void execute(DataProvider& provider);
             virtual void activate();
             virtual void deactivate();
             virtual void interrupt();
@@ -53,20 +53,20 @@ namespace stromx
         private:
             typedef boost::lock_guard<boost::mutex> lock_t;
             
-            static const std::vector<const stromx::runtime::Description*> setupInputs();
-            static const std::vector<const stromx::runtime::Description*> setupOutputs();
-            static const std::vector<const stromx::runtime::Parameter*> setupParameters();
+            static const std::vector<const Input*> setupInputs();
+            static const std::vector<const Output*> setupOutputs();
+            static const std::vector<const Parameter*> setupParameters();
             
             static const std::string TYPE;
             static const std::string PACKAGE;
-            static const stromx::runtime::Version VERSION;
+            static const Version VERSION;
             
             bool isBlocked() const;
             
             mutable boost::mutex m_mutex;
-            stromx::runtime::Bool m_blockExecute;
-            stromx::runtime::Bool m_throwDeactivate;
-            stromx::runtime::Bool m_throwActivate;
+            Bool m_blockExecute;
+            Bool m_throwDeactivate;
+            Bool m_throwActivate;
         };
     }
 }

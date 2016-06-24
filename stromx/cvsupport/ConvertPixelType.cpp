@@ -159,17 +159,17 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Description*> ConvertPixelType::setupInputs()
+        const std::vector<const runtime::Input*> ConvertPixelType::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* source = new Description(SOURCE, Variant::IMAGE);
+            Input* source = new Input(SOURCE, Variant::IMAGE);
             source->setTitle("Source");
             inputs.push_back(source);
             
             if (m_dataFlow == MANUAL)
             {
-                Description* destination = new Description(DESTINATION, Variant::IMAGE);
+                Input* destination = new Input(DESTINATION, Variant::IMAGE);
                 destination->setTitle("Destination");
                 inputs.push_back(destination);
             }
@@ -177,11 +177,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> ConvertPixelType::setupOutputs()
+        const std::vector<const runtime::Output*> ConvertPixelType::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

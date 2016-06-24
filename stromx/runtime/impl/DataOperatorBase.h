@@ -54,8 +54,8 @@ namespace stromx
             Data* resetValuePtr(Data* const value = 0);
             
         private:
-            static const std::vector<const runtime::Description*> setupInputs();
-            const std::vector<const runtime::Description*> setupOutputs();
+            static const std::vector<const runtime::Input*> setupInputs();
+            const std::vector<const runtime::Output*> setupOutputs();
             void setDataType(const runtime::Enum & value);
             
             Enum m_type;

@@ -65,7 +65,6 @@ set(SOURCES
     ../List.cpp
     ../Locale.cpp
     ../Matrix.cpp
-    ../MatrixDescription.cpp
     ../MatrixParameter.cpp
     ../MatrixWrapper.cpp
     ../Merge.cpp

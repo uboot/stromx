@@ -149,10 +149,10 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Fork::setupInputs()
+        const std::vector<const Input*> Fork::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* input = new Description(INPUT, Variant::DATA);
+            std::vector<const Input*> inputs;
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
@@ -160,13 +160,13 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Fork::setupOutputs() const
+        const std::vector<const Output*> Fork::setupOutputs() const
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
             for(unsigned int i = 0; i < (unsigned int)(m_numOutputs); ++i)
             {
-                Description* output = new Description(OUTPUTS_BASE + i, Variant::DATA);
+                Output* output = new Output(OUTPUTS_BASE + i, Variant::DATA);
                 output->setTitle("Output " + boost::lexical_cast<std::string>(i));
                 output->setOperatorThread(OUTPUT_THREADS + i);
                 outputs.push_back(output);

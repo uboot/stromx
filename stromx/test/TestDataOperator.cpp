@@ -153,16 +153,16 @@ namespace stromx
             }
         }
                 
-        const std::vector<const Description*> TestDataOperator::setupInputs()
+        const std::vector<const Input*> TestDataOperator::setupInputs()
         {
-            return std::vector<const Description*>();
+            return std::vector<const Input*>();
         }
 
-        const std::vector<const Description*> TestDataOperator::setupOutputs()
+        const std::vector<const Output*> TestDataOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* description = new Description(OUTPUT, Variant::STRING || Variant::IMAGE || Variant::MATRIX);
+            Output* description = new Output(OUTPUT, Variant::STRING || Variant::IMAGE || Variant::MATRIX);
             description->setTitle("Output");
             outputs.push_back(description);
             

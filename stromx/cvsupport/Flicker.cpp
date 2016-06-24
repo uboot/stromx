@@ -125,22 +125,22 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> Flicker::setupInputs()
+        const std::vector<const runtime::Input*> Flicker::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::IMAGE);
+            Input* input = new Input(INPUT, Variant::IMAGE);
             input->setTitle(L_("Input"));
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> Flicker::setupOutputs()
+        const std::vector<const runtime::Output*> Flicker::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle(L_("Output"));
             outputs.push_back(output);
             

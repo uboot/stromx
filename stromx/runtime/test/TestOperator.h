@@ -53,10 +53,10 @@ namespace stromx
             unsigned int numExecutes() { return m_numExecutes; }
             
         private:
-            static const std::vector<const Description*> setupInitInputs();
-            static const std::vector<const Description*> setupInputs();
-            static const std::vector<const Description*> setupInitOutputs();
-            static const std::vector<const Description*> setupOutputs();
+            static const std::vector<const Input*> setupInitInputs();
+            static const std::vector<const Input*> setupInputs();
+            static const std::vector<const Output*> setupInitOutputs();
+            static const std::vector<const Output*> setupOutputs();
             static const std::vector<const Parameter*> setupInitParameters();
             static const std::vector<const Parameter*> setupParameters();
             

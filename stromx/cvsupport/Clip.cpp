@@ -110,22 +110,22 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> Clip::setupInputs()
+        const std::vector<const runtime::Input*> Clip::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::IMAGE);
+            Input* input = new Input(INPUT, Variant::IMAGE);
             input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> Clip::setupOutputs()
+        const std::vector<const runtime::Output*> Clip::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

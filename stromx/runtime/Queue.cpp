@@ -130,11 +130,11 @@ namespace stromx
             }
         }
         
-        const std::vector<const runtime::Description*> Queue::setupInputs()
+        const std::vector<const Input*> Queue::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::DATA);
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             input->setOperatorThread(INPUT_THREAD);
             inputs.push_back(input);
@@ -142,11 +142,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Queue::setupOutputs()
+        const std::vector<const Output*> Queue::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             output->setOperatorThread(OUTPUT_THREAD);
             outputs.push_back(output);

@@ -21,9 +21,10 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/undirected_dfs.hpp>
 #include <iostream>
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/Input.h"
 #include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
+#include "stromx/runtime/Output.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
 
@@ -161,8 +162,8 @@ namespace stromx
                 op != operators.end();
                 ++op)
             {
-                const std::vector<const Description*> & inputs = (*op)->info().inputs();
-                for(std::vector<const Description*>::const_iterator input = inputs.begin();
+                const std::vector<const Input*> & inputs = (*op)->info().inputs();
+                for(std::vector<const Input*>::const_iterator input = inputs.begin();
                     input != inputs.end();
                     ++input)
                 {
@@ -171,7 +172,7 @@ namespace stromx
                     {
                         const Operator* source = connector.op();
                         const Operator* target = *op;
-                        const Description& output = source->info().output(connector.id());
+                        const Output& output = source->info().output(connector.id());
                         
                         Graph::edge_descriptor e = boost::add_edge(op2VertexMap[source], op2VertexMap[target], graph).first;
                         

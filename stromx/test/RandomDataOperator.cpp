@@ -93,16 +93,16 @@ namespace stromx
             }
         }
                 
-        const std::vector<const Description*> RandomDataOperator::setupInputs()
+        const std::vector<const Input*> RandomDataOperator::setupInputs()
         {
-            return std::vector<const Description*>();
+            return std::vector<const Input*>();
         }
 
-        const std::vector<const Description*> RandomDataOperator::setupOutputs()
+        const std::vector<const Output*> RandomDataOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* description = new Description(OUTPUT, Variant::MATRIX || Variant::STRING);
+            Output* description = new Output(OUTPUT, Variant::MATRIX || Variant::STRING);
             description->setTitle("Output");
             outputs.push_back(description);
             

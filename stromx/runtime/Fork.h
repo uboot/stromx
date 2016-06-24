@@ -43,9 +43,9 @@ namespace stromx
             virtual void execute(DataProvider& provider);
             
         private:
-            static const std::vector<const Description*> setupInputs();
+            static const std::vector<const Input*> setupInputs();
             static const std::vector<const Parameter*> setupParameters();
-            const std::vector<const Description*> setupOutputs() const;
+            const std::vector<const Output*> setupOutputs() const;
             
             static const std::string TYPE;
             static const std::string PACKAGE;

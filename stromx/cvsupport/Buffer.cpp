@@ -129,17 +129,17 @@ namespace stromx
             }
         }
         
-        const std::vector<const Description*> Buffer::setupInputs()
+        const std::vector<const runtime::Input*> Buffer::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             return inputs;
         }
         
-        const std::vector<const Description*> Buffer::setupOutputs()
+        const std::vector<const runtime::Output*> Buffer::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
         
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

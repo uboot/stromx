@@ -113,18 +113,18 @@ namespace stromx
             provider.sendOutputData( outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> ConstImage::setupInputs()
+        const std::vector<const runtime::Input*> ConstImage::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
             return inputs;
         }
         
-        const std::vector<const Description*> ConstImage::setupOutputs()
+        const std::vector<const runtime::Output*> ConstImage::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::IMAGE);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle("Output");
             outputs.push_back(output);
             

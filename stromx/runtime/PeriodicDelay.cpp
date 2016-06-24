@@ -129,22 +129,22 @@ namespace stromx
             provider.sendOutputData(outputDataMapper);
         }
         
-        const std::vector<const runtime::Description*> PeriodicDelay::setupInputs()
+        const std::vector<const Input*> PeriodicDelay::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
-            Description* input = new Description(INPUT, Variant::DATA);
+            Input* input = new Input(INPUT, Variant::DATA);
             input->setTitle("Input");
             inputs.push_back(input);
             
             return inputs;
         }
         
-        const std::vector<const Description*> PeriodicDelay::setupOutputs()
+        const std::vector<const Output*> PeriodicDelay::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* output = new Description(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::DATA);
             output->setTitle("Output");
             outputs.push_back(output);
             

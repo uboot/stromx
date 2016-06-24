@@ -52,9 +52,9 @@ namespace stromx
         private:
             const static std::string LINE_DELIMITER;
             
-            static const std::vector<const Description*> setupInputs();
+            static const std::vector<const Input*> setupInputs();
             static const std::vector<const Parameter*> setupParameters();
-            static const std::vector<const Description*> setupOutputs();
+            static const std::vector<const Output*> setupOutputs();
             static const OperatorProperties setupProperties();
             
             static const std::string TYPE;

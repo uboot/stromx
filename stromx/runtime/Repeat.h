@@ -50,8 +50,8 @@ namespace stromx
             virtual void execute(runtime::DataProvider& provider);
             
         private:
-            static const std::vector<const runtime::Description*> setupOutputs();
-            const std::vector<const runtime::Description*> setupInputs();
+            static const std::vector<const runtime::Output*> setupOutputs();
+            const std::vector<const runtime::Input*> setupInputs();
             
             static const std::string TYPE;
             static const std::string PACKAGE;

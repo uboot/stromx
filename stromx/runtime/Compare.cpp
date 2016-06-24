@@ -149,23 +149,23 @@ namespace stromx
             provider.sendOutputData(Id2DataPair(RESULT, resultContainer));
         }
         
-        const std::vector<const Description*> Compare::setupInputs()
+        const std::vector<const Input*> Compare::setupInputs()
         {
-            std::vector<const Description*> inputs;
+            std::vector<const Input*> inputs;
             
             if (m_compareToInput)
             {
-                Description* number1 = new Description(NUMBER_1, Variant::INT || Variant::FLOAT);
-                number1->setTitle(L_("Number 1"));
+                Input* number1 = new Input(NUMBER_1, Variant::INT || Variant::FLOAT);
+                number1->setTitle(L_("Input 1"));
                 inputs.push_back(number1);
                 
-                Description* number2 = new Description(NUMBER_2, Variant::INT || Variant::FLOAT);
+                Input* number2 = new Input(NUMBER_2, Variant::INT || Variant::FLOAT);
                 number2->setTitle(L_("Number 2"));
                 inputs.push_back(number2);
             }
             else
             {
-                Description* number = new Description(NUMBER_1, Variant::INT || Variant::FLOAT);
+                Input* number = new Input(NUMBER_1, Variant::INT || Variant::FLOAT);
                 number->setTitle(L_("Number"));
                 inputs.push_back(number);
             }
@@ -173,11 +173,11 @@ namespace stromx
             return inputs;
         }
         
-        const std::vector<const Description*> Compare::setupOutputs()
+        const std::vector<const Output*> Compare::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
-            Description* result = new Description(RESULT, Variant::BOOL);
+            Output* result = new Output(RESULT, Variant::BOOL);
             result->setTitle(L_("Result"));
             outputs.push_back(result);
             

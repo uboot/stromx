@@ -152,21 +152,21 @@ namespace stromx
                 throw OperatorError(*this, "Failed to execute operator.");
         }
                 
-        const std::vector<const Description*> ExceptionOperator::setupInputs()
+        const std::vector<const Input*> ExceptionOperator::setupInputs()
         {
-            std::vector<const Description*> inputs;
-            Description* description = 0;
+            std::vector<const Input*> inputs;
+            Input* description = 0;
             
-            description = new Description(INPUT, Variant::NONE);
+            description = new Input(INPUT, Variant::NONE);
             description->setTitle("Input");
             inputs.push_back(description);
             
             return inputs;
         }
 
-        const std::vector<const Description*> ExceptionOperator::setupOutputs()
+        const std::vector<const Output*> ExceptionOperator::setupOutputs()
         {
-            std::vector<const Description*> outputs;
+            std::vector<const Output*> outputs;
             
             return outputs;
         }
