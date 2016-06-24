@@ -20,7 +20,7 @@
 #include <boost/graph/topological_sort.hpp>
 #include <iostream>
 #include "stromx/runtime/Description.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/SortInputsAlgorithm.h"
 #include "stromx/runtime/Stream.h"
@@ -39,7 +39,7 @@ namespace stromx
                   : m_op2RankMap(op2RankMap)
                 {}
                 
-                bool operator()(const Input & input1, const Input & input2)
+                bool operator()(const InputConnector & input1, const InputConnector & input2)
                 {
                     
                     std::map<const Operator*, unsigned int>::const_iterator rank1 = m_op2RankMap.find(input1.op());
@@ -90,7 +90,7 @@ namespace stromx
                     inputIter != inputs.end();
                     ++inputIter)
                 {
-                    Output output = stream.connectionSource(*opIter, (*inputIter)->id());
+                    OutputConnector output = stream.connectionSource(*opIter, (*inputIter)->id());
                     if(output.valid())
                     {
                         const Operator* source = output.op();
@@ -122,7 +122,7 @@ namespace stromx
                 ++threadIter)
             {
                 Thread* thread = *threadIter;
-                std::vector<Input> inputs = thread->inputSequence();
+                std::vector<InputConnector> inputs = thread->inputSequence();
                 
                 // delete all inputs
                 while(thread->inputSequence().size())
@@ -131,7 +131,7 @@ namespace stromx
                 InputComparator comp(op2RankMap);
                 std::sort(inputs.begin(), inputs.end(), comp);
                 
-                for(std::vector<Input>::const_iterator inputIter = inputs.begin();
+                for(std::vector<InputConnector>::const_iterator inputIter = inputs.begin();
                     inputIter != inputs.end();
                     ++inputIter)
                 {

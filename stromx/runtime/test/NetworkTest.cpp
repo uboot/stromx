@@ -117,7 +117,7 @@ namespace stromx
             op1->initialize();
             m_network->addOperator(op1);
             
-            Output source;
+            OutputConnector source;
             CPPUNIT_ASSERT_NO_THROW(source = m_network->connectionSource(op1, TestOperator::INPUT_1));
             CPPUNIT_ASSERT(! source.valid());
             

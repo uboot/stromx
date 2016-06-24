@@ -44,7 +44,7 @@ namespace stromx
             
             /** 
              * Constructs an invalid connector. Valid connectors can only be constructed
-             * using the derived classes Input and Output.
+             * using the derived classes InputConnector and OutputConnector.
              */
             Connector()
               : m_type(UNDEFINED),

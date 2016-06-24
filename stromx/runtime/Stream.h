@@ -22,7 +22,7 @@
 #include <vector>
 #include "stromx/runtime/Config.h"
 #include "stromx/runtime/ExceptionObserver.h"
-#include "stromx/runtime/Output.h"
+#include "stromx/runtime/OutputConnector.h"
 
 namespace stromx
 {
@@ -134,7 +134,7 @@ namespace stromx
              * \throws WrongArgument If the operator \c targetOp does not have an input \c inputId.
              * \throws WrongState If the operator \c targetOp is not initialized.
              */
-            const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+            const OutputConnector  connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             /** 
              * Converts the operator kernel \c op to an operator and adds it to the stream.

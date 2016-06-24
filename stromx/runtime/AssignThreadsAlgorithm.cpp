@@ -22,7 +22,7 @@
 #include <boost/graph/undirected_dfs.hpp>
 #include <iostream>
 #include "stromx/runtime/Description.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/Thread.h"
@@ -166,7 +166,7 @@ namespace stromx
                     input != inputs.end();
                     ++input)
                 {
-                    Output connector = stream.connectionSource(*op, (*input)->id());
+                    OutputConnector connector = stream.connectionSource(*op, (*input)->id());
                     if(connector.valid())
                     {
                         const Operator* source = connector.op();

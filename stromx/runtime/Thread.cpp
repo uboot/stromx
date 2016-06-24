@@ -80,7 +80,7 @@ namespace stromx
             m_color = color;
         }
         
-        const std::vector<Input> & Thread::inputSequence() const
+        const std::vector<InputConnector> & Thread::inputSequence() const
         { 
             return m_inputSequence;
         }
@@ -112,7 +112,7 @@ namespace stromx
 
         void Thread::removeOperator(const Operator* op)
         {
-            typedef std::set< std::vector<Input>::iterator > IndexSet;
+            typedef std::set< std::vector<InputConnector>::iterator > IndexSet;
             
             if (op == 0)
                 throw WrongArgument("Operator must not be null.");
@@ -121,7 +121,7 @@ namespace stromx
             
             IndexSet toBeErased;
             
-            for(std::vector<Input>::iterator iter1 = m_inputSequence.begin();
+            for(std::vector<InputConnector>::iterator iter1 = m_inputSequence.begin();
                 iter1 != m_inputSequence.end();
                 ++iter1)
             {
@@ -152,7 +152,7 @@ namespace stromx
             
             InputNode* inputNode = m_network->getInputNode(op, inputId);
             m_thread->addInput(inputNode);
-            m_inputSequence.push_back(Input(op, inputId));
+            m_inputSequence.push_back(InputConnector(op, inputId));
         }
 
         void Thread::insertInput(const unsigned int position, Operator* const op, const unsigned int inputId)
@@ -165,7 +165,7 @@ namespace stromx
             
             InputNode* inputNode = m_network->getInputNode(op, inputId);
             m_thread->insertInput(position, inputNode);
-            m_inputSequence.insert(m_inputSequence.begin() + position, Input(op, inputId));
+            m_inputSequence.insert(m_inputSequence.begin() + position, InputConnector(op, inputId));
         }
 
         void Thread::removeInput(const unsigned int position)

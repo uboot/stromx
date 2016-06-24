@@ -21,7 +21,7 @@
 #include <vector>
 #include "stromx/runtime/Color.h"
 #include "stromx/runtime/Config.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 
 namespace stromx
 {
@@ -91,7 +91,7 @@ namespace stromx
             void setColor(const Color & color);
             
             /** Returns a list of the operator inputs which are assigned to this thread. */
-            const std::vector<Input> & inputSequence() const;
+            const std::vector<InputConnector> & inputSequence() const;
             
             /** 
              * Adds the input \c inputId of the operator \c op to the list of currently
@@ -163,7 +163,7 @@ namespace stromx
             impl::ThreadImpl* m_thread;
             std::string m_name;
             const impl::Network* m_network;
-            std::vector<Input> m_inputSequence;
+            std::vector<InputConnector> m_inputSequence;
             Color m_color;
             bool m_interruptedFlag;
         };

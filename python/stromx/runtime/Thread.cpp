@@ -28,7 +28,7 @@ using namespace stromx::runtime;
 
 void exportThread()
 {               
-    stromx::python::exportVector<Input>("InputVector");
+    stromx::python::exportVector<InputConnector>("InputVector");
      
     {
         scope in_Thread =

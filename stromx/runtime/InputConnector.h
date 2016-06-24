@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_INPUT_H
-#define STROMX_RUNTIME_INPUT_H
+#ifndef STROMX_RUNTIME_INPUTCONNECTOR_H
+#define STROMX_RUNTIME_INPUTCONNECTOR_H
 
 #include "stromx/runtime/Connector.h"
 
@@ -24,23 +24,23 @@ namespace stromx
     namespace runtime
     {
         /** \brief Identifier of an input connector of an operator. */
-        class Input : public Connector
+        class InputConnector : public Connector
         {
         public:
             /** 
              * Constructs an input connector which points to the input
              * \c id of the operator \c op.
              */
-            Input(const Operator* const op, const unsigned int id)
+            InputConnector(const Operator* const op, const unsigned int id)
               : Connector(Connector::INPUT, op, id)
             {}
             
             /** Constructs an invalid input connector. */
-            Input()
+            InputConnector()
               : Connector(Connector::INPUT, 0, 0)
             {}
         };
     }
 }
 
-#endif // STROMX_RUNTIME_INPUT_H
+#endif // STROMX_RUNTIME_INPUTCONNECTOR_H

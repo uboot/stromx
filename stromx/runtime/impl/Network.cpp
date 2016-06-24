@@ -179,7 +179,7 @@ namespace stromx
                 throw WrongArgument("Operator does not exist");
             }
             
-            const Output Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
+            const OutputConnector Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
             {
                 for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
                     iter != m_operators.end();
@@ -190,9 +190,9 @@ namespace stromx
                         const InputNode* input = (*iter)->getInputNode(inputId);
                         
                         if(input->isConnected())
-                            return Output(input->source().op(), input->source().outputId());
+                            return OutputConnector(input->source().op(), input->source().outputId());
                         else
-                            return Output();
+                            return OutputConnector();
                     }
                 }
                 

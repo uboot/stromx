@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#include <stromx/runtime/Input.h>
-#include <stromx/runtime/Output.h>
+#include <stromx/runtime/InputConnector.h>
+#include <stromx/runtime/OutputConnector.h>
 #include <stromx/runtime/Operator.h>
 
 #include <boost/python.hpp>
@@ -41,9 +41,9 @@ void exportConnector()
         ;
     }
     
-    class_<Output, bases<Connector> >("Output", init<Operator*, unsigned int>())
+    class_<OutputConnector, bases<Connector> >("OutputConnector", init<Operator*, unsigned int>())
     ;
     
-    class_<Input, bases<Connector> >("Input", init<Operator*, unsigned int>())
+    class_<InputConnector, bases<Connector> >("InputConnector", init<Operator*, unsigned int>())
     ;
 }

@@ -18,11 +18,11 @@
 #include <boost/thread/tss.hpp>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorInfo.h"
-#include "stromx/runtime/Output.h"
+#include "stromx/runtime/OutputConnector.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 #include "stromx/runtime/impl/InputNode.h"
 #include "stromx/runtime/impl/MutexHandle.h"
@@ -327,7 +327,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Input(this, id), oldData, newData, gThread.get());
+                    (*iter)->observe(InputConnector(this, id), oldData, newData, gThread.get());
                 }
                 catch(Interrupt &)
                 {
@@ -352,7 +352,7 @@ namespace stromx
             {
                 try
                 {
-                    (*iter)->observe(Output(this, id), oldData, newData, gThread.get());
+                    (*iter)->observe(OutputConnector(this, id), oldData, newData, gThread.get());
                 }
                 catch(Interrupt &)
                 {

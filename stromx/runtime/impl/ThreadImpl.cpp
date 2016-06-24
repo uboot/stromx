@@ -21,7 +21,7 @@
 #include "ThreadImplObserver.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorInfo.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/impl/InputNode.h"
 #include "stromx/runtime/impl/ThreadImpl.h"

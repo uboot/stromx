@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 #include "stromx/runtime/ExceptionObserver.h"
-#include "stromx/runtime/Output.h"
+#include "stromx/runtime/OutputConnector.h"
 
 namespace stromx
 {
@@ -60,7 +60,7 @@ namespace stromx
                 void connect(Operator* const sourceOp, const unsigned int outputId, 
                              Operator* const targetOp, const unsigned int inputId) ;
                 void disconnect(Operator* const targetOp, const unsigned int inputId);
-                const Output connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+                const OutputConnector connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
                 
                 void addOperator(Operator* const op);
                 void removeOperator(Operator* const op);

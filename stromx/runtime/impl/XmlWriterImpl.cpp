@@ -22,7 +22,7 @@
 #include "stromx/runtime/Data.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/FileOutput.h"
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Thread.h"
 #include "stromx/runtime/impl/XmlUtilities.h"
@@ -129,7 +129,7 @@ namespace stromx
             {
                 //Add InputConnector branches (tree structure: Stream:Thread:InputConnector)
                 //Processed for each InputConnector belonging to Thread (multiple entries for each Thread possible)
-                for(std::vector<Input>::const_iterator iter_inConnectors = currThr->inputSequence().begin();
+                for(std::vector<InputConnector>::const_iterator iter_inConnectors = currThr->inputSequence().begin();
                     iter_inConnectors != currThr->inputSequence().end();
                     ++iter_inConnectors)
                 {
@@ -292,7 +292,7 @@ namespace stromx
                     ++iter_in)
                 {
                     //Get the source node
-                    Output node = m_stream->connectionSource(currOp, (*iter_in)->id());
+                    OutputConnector node = m_stream->connectionSource(currOp, (*iter_in)->id());
                     
                     //Create Input only for connected operators
                     if (node.valid())

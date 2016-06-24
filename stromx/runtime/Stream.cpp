@@ -417,7 +417,7 @@ namespace stromx
             op->deinitialize();
         }
         
-        const Output Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
+        const OutputConnector Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
         {
             if (targetOp == 0)
                 throw WrongArgument("Operator must not be null.");

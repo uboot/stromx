@@ -19,7 +19,7 @@
 
 #include <xercesc/dom/DOM.hpp>
 #include <string>
-#include "stromx/runtime/Input.h"
+#include "stromx/runtime/InputConnector.h"
 #include "stromx/runtime/Operator.h"
 #include "stromx/runtime/Parameter.h"
 #include "stromx/runtime/Stream.h"

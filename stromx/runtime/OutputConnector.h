@@ -14,8 +14,8 @@
 *  limitations under the License.
 */
 
-#ifndef STROMX_RUNTIME_OUTPUT_H
-#define STROMX_RUNTIME_OUTPUT_H
+#ifndef STROMX_RUNTIME_OUTPUTCONNECTOR_H
+#define STROMX_RUNTIME_OUTPUTCONNECTOR_H
 
 #include "stromx/runtime/Connector.h"
 
@@ -24,23 +24,23 @@ namespace stromx
     namespace runtime
     {
         /** \brief Identifier of an output of an operator. */
-        class Output : public Connector
+        class OutputConnector : public Connector
         {
         public:
             /** 
              * Constructs an output connector which points to the output
              * \c id of the operator \c op.
              */
-            Output(const Operator* const op, const unsigned int id)
+            OutputConnector(const Operator* const op, const unsigned int id)
               : Connector(Connector::OUTPUT, op, id)
             {}
             
             /** Constructs an invalid output connector. */
-            Output()
+            OutputConnector()
               : Connector(Connector::OUTPUT, 0, 0)
             {}
         };
     }
 }
 
-#endif // STROMX_RUNTIME_OUTPUT_H
+#endif // STROMX_RUNTIME_OUTPUTCONNECTOR_H
