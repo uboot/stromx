@@ -45,8 +45,11 @@ void exportDescriptionBase()
         ;
                 
         enum_<DescriptionBase::Type>("Type")
+            .value("NO_TYPE", DescriptionBase::NO_TYPE)
             .value("PARAMETER", DescriptionBase::PARAMETER)
             .value("CONNECTOR", DescriptionBase::CONNECTOR)
+            .value("INPUT", DescriptionBase::INPUT)
+            .value("OUTPUT", DescriptionBase::OUTPUT)
         ;
     }
 }
