@@ -25,7 +25,7 @@ namespace stromx
     {      
         bool Id2DataPair::trySet(const impl::Id2DataMap& id2DataMap) const
         {
-            return id2DataMap.get(m_id).empty();   
+            return id2DataMap.canBeSet(m_id);
         }
         
         bool Id2DataPair::tryGet(const impl::Id2DataMap& id2DataMap) const
@@ -42,7 +42,8 @@ namespace stromx
                 throw WrongState("The requested output is empty.");
             
             m_data = id2DataMap.get(m_id);
-            id2DataMap.set(m_id, DataContainer());
+            if (id2DataMap.mustBeReset(m_id)) 
+                id2DataMap.set(m_id, DataContainer());
         }
 
         void Id2DataPair::set(runtime::impl::Id2DataMap& id2DataMap) const
@@ -50,7 +51,7 @@ namespace stromx
             if(m_data.empty())
                 throw WrongState("This ID-data pair contains no data");
             
-            if(! id2DataMap.get(m_id).empty())
+           if (! id2DataMap.canBeSet(m_id))
                 throw WrongState("Data has already been assigned to this connector ID.");
             
             id2DataMap.set(m_id, m_data);

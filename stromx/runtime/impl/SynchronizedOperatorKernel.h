@@ -67,6 +67,8 @@ namespace stromx
                 void clearOutputData(unsigned int id);
                 const AbstractFactory* factoryPtr() const { return m_factory; }
                 void setFactory(const AbstractFactory* const factory);
+                void setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+                                      const Parameter::UpdateBehavior updateBehavior = Parameter::PERSISTENT);
                 
                 // DataProvider implementation
                 void receiveInputData(const Id2DataMapper& mapper);

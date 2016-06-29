@@ -19,14 +19,15 @@
 
 #include <map>
 #include <vector>
-#include "stromx/runtime/Input.h"
-#include "stromx/runtime/Output.h"
 
 namespace stromx
 {
     namespace runtime
     {
         class DataContainer;
+        class Input;
+        class Output;
+        class Parameter;
         
         namespace impl
         {
@@ -40,14 +41,18 @@ namespace stromx
             {
             public:
                 Id2DataMap();
-                explicit Id2DataMap(const std::vector<const Input*> & descriptions);
-                explicit Id2DataMap(const std::vector<const Output*> & descriptions);
                 
+                void initialize(const std::vector<const Input*> & descriptions,
+                                const std::vector<const Parameter*> & parameters = std::vector<const Parameter*>());
+                void initialize(const std::vector<const Output*> & descriptions,
+                                const std::vector<const Parameter*> & parameters = std::vector<const Parameter*>());
                 const DataContainer & get(const unsigned int id) const;
                 void set(const unsigned int id, const DataContainer & data);
                 void clear();
                 bool empty() const;
                 void setObserver(const Id2DataMapObserver* const observer);
+                bool canBeSet(const unsigned int id) const;
+                bool mustBeReset(const unsigned int id) const;
                 
             private:
                 std::map<unsigned int, DataContainer> m_map;

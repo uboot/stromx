@@ -20,7 +20,11 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 #include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Output.h"
+#include "stromx/runtime/Parameter.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
+#include "stromx/runtime/impl/ConnectorParameter.h"
 
 namespace stromx
 {
@@ -32,6 +36,8 @@ namespace stromx
             CPPUNIT_TEST(testSet);
             CPPUNIT_TEST(testGet);
             CPPUNIT_TEST(testObserver);
+            CPPUNIT_TEST(testCanBeSet);
+            CPPUNIT_TEST(testMustBeReset);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -45,6 +51,8 @@ namespace stromx
             void testSet();
             void testGet();
             void testObserver();
+            void testCanBeSet();
+            void testMustBeReset();
                 
         private:
             class Observer : public impl::Id2DataMapObserver
@@ -68,6 +76,15 @@ namespace stromx
             
             Observer* m_observer;
             impl::Id2DataMap* m_id2DataMap;
+            Input m_input0;
+            Input m_input1;
+            Input m_input2;
+            Input m_input3;
+            Output m_output0;
+            impl::ConnectorParameter m_param0;
+            impl::ConnectorParameter m_param1;
+            impl::ConnectorParameter m_param2;
+            Parameter m_param3;
         };
     }
 }

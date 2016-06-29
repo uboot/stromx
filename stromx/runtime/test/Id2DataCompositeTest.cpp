@@ -19,6 +19,7 @@
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Id2DataComposite.h"
 #include "stromx/runtime/Id2DataPair.h"
+#include "stromx/runtime/Input.h"
 #include "stromx/runtime/None.h"
 #include "stromx/runtime/Variant.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
@@ -36,7 +37,8 @@ namespace stromx
             descriptions.push_back(new Input(0, Variant::NONE));
             descriptions.push_back(new Input(1, Variant::NONE));
             descriptions.push_back(new Input(2, Variant::NONE));
-            m_map = new impl::Id2DataMap(descriptions);
+            m_map = new impl::Id2DataMap;
+            m_map->initialize(descriptions);
             m_dataContainer = DataContainer(new None());
         }
 

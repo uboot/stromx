@@ -105,9 +105,7 @@ namespace stromx
                     throw OperatorError(*info(), e.what());
                 }
                 
-                m_inputMap = impl::Id2DataMap(m_op->inputs());
                 m_inputMap.setObserver(inputObserver);
-                m_outputMap = impl::Id2DataMap(m_op->outputs());
                 m_outputMap.setObserver(outputObserver);
                 
                 BOOST_ASSERT(m_inputMap.empty());
@@ -116,13 +114,15 @@ namespace stromx
                 m_status = INITIALIZED;
             }
             
-            
             void SynchronizedOperatorKernel::activate()
             {
                 lock_t lock(m_mutex);
                 
                 if(m_status != INITIALIZED)
                     throw WrongOperatorState(*info(), "Operator must be initialized.");
+                
+                m_inputMap.initialize(m_op->inputs());
+                m_outputMap.initialize(m_op->outputs());
                 
                 BOOST_ASSERT(m_inputMap.empty());
                 BOOST_ASSERT(m_outputMap.empty());
@@ -406,6 +406,23 @@ namespace stromx
                     throw WrongState("Factory can not be set if the operator is active or executing.");
                 
                 m_factory = factory;
+            }
+            
+            void SynchronizedOperatorKernel::setConnectorType(const unsigned int id,
+                const DescriptionBase::Type type, const Parameter::UpdateBehavior updateBehavior)
+            {
+                lock_t lock(m_mutex);
+                
+                if(m_status != INITIALIZED)
+                {
+                    throw WrongOperatorState(*info(),
+                        "Operator must be initialized to set the type of its connectors.");
+                }
+                
+                m_op->setConnectorType(id, type, updateBehavior);
+                
+                m_inputMap.initialize(m_op->inputs());
+                m_outputMap.initialize(m_op->outputs());
             }
             
             bool SynchronizedOperatorKernel::tryExecute()

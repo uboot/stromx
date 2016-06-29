@@ -17,8 +17,10 @@
 #include <cppunit/TestAssert.h>
 #include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Input.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/Variant.h"
+#include "stromx/runtime/impl/ConnectorParameter.h"
 #include "stromx/runtime/test/Id2DataMapTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::Id2DataMapTest);
@@ -27,21 +29,37 @@ namespace stromx
 {
     namespace runtime
     {
+            Id2DataMapTest::Id2DataMapTest()
+          : m_observer(0),
+            m_id2DataMap(0),
+            m_input0(0, Variant::NONE),
+            m_input1(1, Variant::NONE),
+            m_input2(2, Variant::NONE),
+            m_input3(3, Variant::NONE),
+            m_output0(4, Variant::NONE),
+            m_param0(&m_input2, DescriptionBase::PERSISTENT),
+            m_param1(&m_input3, DescriptionBase::PUSH),
+            m_param2(&m_output0, DescriptionBase::PULL),
+            m_param3(10, Variant::NONE)
+        {
+            m_observer = new Observer(this);
+        }
+        
         void Id2DataMapTest::setUp()
         {
             std::vector<const Input*> descriptions;
-            descriptions.push_back(new Input(0, Variant::NONE));
-            descriptions.push_back(new Input(1, Variant::NONE));
+            descriptions.push_back(&m_input0);
+            descriptions.push_back(&m_input1);
             
-            m_id2DataMap = new impl::Id2DataMap(descriptions);
+            std::vector<const Parameter*> parameters;
+            parameters.push_back(&m_param0);
+            parameters.push_back(&m_param1);
+            parameters.push_back(&m_param2);
+            parameters.push_back(&m_param3);
+            
+            m_id2DataMap = new impl::Id2DataMap;
+            m_id2DataMap->initialize(descriptions, parameters);
             m_id2DataMap->setObserver(m_observer);
-            
-            for(std::vector<const Input*>::iterator iter = descriptions.begin();
-                iter != descriptions.end();
-                ++iter)
-            {
-                delete *iter;
-            }
             
             descriptions.clear();
         }
@@ -55,7 +73,7 @@ namespace stromx
         {
             CPPUNIT_ASSERT_NO_THROW(m_id2DataMap->get(0));
             CPPUNIT_ASSERT_NO_THROW(m_id2DataMap->get(1));
-            CPPUNIT_ASSERT_THROW(m_id2DataMap->get(2), WrongId);
+            CPPUNIT_ASSERT_THROW(m_id2DataMap->get(10), WrongId);
         }
         
         void Id2DataMapTest::testSet()
@@ -67,7 +85,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(out = m_id2DataMap->get(0));
             CPPUNIT_ASSERT_EQUAL(in, out);
             
-            CPPUNIT_ASSERT_THROW(m_id2DataMap->set(2, in), WrongId);
+            CPPUNIT_ASSERT_THROW(m_id2DataMap->set(10, in), WrongId);
         }
 
         void Id2DataMapTest::testObserver()
@@ -93,12 +111,28 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(data2, m_observer->lastOldData());
             CPPUNIT_ASSERT_EQUAL(data3, m_observer->lastNewData());
         }
-
-        Id2DataMapTest::Id2DataMapTest()
-          : m_observer(0),
-            m_id2DataMap(0)
+        
+        void Id2DataMapTest::testCanBeSet()
         {
-            m_observer = new Observer(this);
+            CPPUNIT_ASSERT(m_id2DataMap->canBeSet(0));
+            CPPUNIT_ASSERT(m_id2DataMap->canBeSet(2));
+            CPPUNIT_ASSERT(m_id2DataMap->canBeSet(3));
+            
+            DataContainer data(new UInt8());
+            m_id2DataMap->set(0, data);
+            m_id2DataMap->set(2, data);
+            m_id2DataMap->set(3, data);
+            
+            CPPUNIT_ASSERT(! m_id2DataMap->canBeSet(0));
+            CPPUNIT_ASSERT(m_id2DataMap->canBeSet(2));
+            CPPUNIT_ASSERT(! m_id2DataMap->canBeSet(3));
+        }
+        
+        void Id2DataMapTest::testMustBeReset()
+        {
+            CPPUNIT_ASSERT(m_id2DataMap->mustBeReset(0));
+            CPPUNIT_ASSERT(! m_id2DataMap->mustBeReset(2));
+            CPPUNIT_ASSERT(m_id2DataMap->mustBeReset(3));
         }
         
         Id2DataMapTest::~Id2DataMapTest()

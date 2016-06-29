@@ -150,6 +150,7 @@ set(SOURCES
     ReadAccessTest.cpp
     RecycleAccessTest.cpp
     RepeatTest.cpp
+    SynchronizedOperatorKernelTest.cpp
     TestOperator.cpp
     ThreadImplTest.cpp
     ThreadTest.cpp

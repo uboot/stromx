@@ -16,6 +16,9 @@
 
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/Exception.h"
+#include "stromx/runtime/Input.h"
+#include "stromx/runtime/Output.h"
+#include "stromx/runtime/Parameter.h"
 #include "stromx/runtime/impl/Id2DataMap.h"
 
 namespace stromx
@@ -25,12 +28,29 @@ namespace stromx
         namespace 
         {
             template <class description_t>
-            void populateId2DataMap(const std::vector<const description_t*> & descriptions, std::map<unsigned int, DataContainer> & map)
+            void populateId2DataMap(const std::vector<const description_t*> & descriptions,
+                                    const std::vector<const Parameter*> & parameters, 
+                                    std::map<unsigned int, DataContainer> & map)
             {
+                map.clear();
+                
                 for(typename std::vector<const description_t*>::const_iterator iter = descriptions.begin();
                     iter != descriptions.end();
                     ++iter)
                 {
+                    if(map.count((*iter)->id()))
+                        throw WrongArgument("Two descriptors with the same ID");
+                    
+                    map[(*iter)->id()] = DataContainer();
+                }
+                
+                for(typename std::vector<const Parameter*>::const_iterator iter = parameters.begin();
+                    iter != parameters.end();
+                    ++iter)
+                {
+                    if ((*iter)->originalType() != DescriptionBase::INPUT && (*iter)->originalType() != DescriptionBase::OUTPUT)
+                        continue;
+                        
                     if(map.count((*iter)->id()))
                         throw WrongArgument("Two descriptors with the same ID");
                     
@@ -41,28 +61,25 @@ namespace stromx
 
         namespace impl
         {
-            Id2DataMap::Id2DataMap(const std::vector<const Input*> & descriptions)
-              : m_observer(0)
-            {
-                populateId2DataMap(descriptions, m_map);
-            }
-            
-            Id2DataMap::Id2DataMap(const std::vector<const Output*> & descriptions)
-              : m_observer(0)
-            {
-                populateId2DataMap(descriptions, m_map);
-            }
-            
             Id2DataMap::Id2DataMap()
               : m_observer(0)
             {
+            }
+            
+            void Id2DataMap::initialize(const std::vector<const Input*> & descriptions, const std::vector<const Parameter*> & parameters)
+            {
+                populateId2DataMap(descriptions, parameters, m_map);
+            }
+            
+            void Id2DataMap::initialize(const std::vector<const Output*> & descriptions, const std::vector<const Parameter*> & parameters)
+            {
+                populateId2DataMap(descriptions, parameters, m_map);
             }
 
             void Id2DataMap::setObserver(const Id2DataMapObserver* const observer)
             {
                 m_observer = observer;
             }
-
             
             const DataContainer & Id2DataMap::get(const unsigned int id) const
             {
@@ -111,6 +128,16 @@ namespace stromx
                 }   
                 
                 return value;
+            }
+            
+            bool Id2DataMap::canBeSet(const unsigned int id) const
+            {
+                return get(id).empty();
+            }
+            
+            bool Id2DataMap::mustBeReset(const unsigned int id) const
+            {
+                return true;
             }
         }
     }
