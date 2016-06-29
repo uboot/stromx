@@ -18,6 +18,7 @@
 #define STROMX_RUNTIME_IMPL_ID2DATAMAP_H
 
 #include <map>
+#include <set>
 #include <vector>
 
 namespace stromx
@@ -56,6 +57,7 @@ namespace stromx
                 
             private:
                 std::map<unsigned int, DataContainer> m_map;
+                std::set<unsigned int> m_persistentParameters;
                 const Id2DataMapObserver* m_observer;
             };
         }

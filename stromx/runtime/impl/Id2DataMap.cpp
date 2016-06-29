@@ -30,7 +30,8 @@ namespace stromx
             template <class description_t>
             void populateId2DataMap(const std::vector<const description_t*> & descriptions,
                                     const std::vector<const Parameter*> & parameters, 
-                                    std::map<unsigned int, DataContainer> & map)
+                                    std::map<unsigned int, DataContainer> & map,
+                                    std::set<unsigned int> & persistentParameters)
             {
                 map.clear();
                 
@@ -55,6 +56,9 @@ namespace stromx
                         throw WrongArgument("Two descriptors with the same ID");
                     
                     map[(*iter)->id()] = DataContainer();
+                    
+                    if ((*iter)->updateBehavior() == DescriptionBase::PERSISTENT)
+                        persistentParameters.insert((*iter)->id());
                 }
             }
         }
@@ -68,12 +72,12 @@ namespace stromx
             
             void Id2DataMap::initialize(const std::vector<const Input*> & descriptions, const std::vector<const Parameter*> & parameters)
             {
-                populateId2DataMap(descriptions, parameters, m_map);
+                populateId2DataMap(descriptions, parameters, m_map, m_persistentParameters);
             }
             
             void Id2DataMap::initialize(const std::vector<const Output*> & descriptions, const std::vector<const Parameter*> & parameters)
             {
-                populateId2DataMap(descriptions, parameters, m_map);
+                populateId2DataMap(descriptions, parameters, m_map, m_persistentParameters);
             }
 
             void Id2DataMap::setObserver(const Id2DataMapObserver* const observer)

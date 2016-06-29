@@ -22,16 +22,27 @@
 
 using namespace boost::python;
 
+
+namespace
+{
+    template <class T>
+    T & getVectorItem(std::vector<T> & v, const typename std::vector<T>::size_type index)
+    {
+        return v.at(index);
+    }
+}
+        
 namespace stromx
 {
     namespace python
     {
+        
         template <class T>
         void exportVector(const char* const name)
         {
             class_< std::vector<T> >(name, no_init)
                 .def("__len__", &std::vector<T>::size)
-                .def< typename std::vector<T>::reference (std::vector<T>::*)(typename std::vector<T>::size_type)>("__getitem__", &std::vector<T>::at, return_internal_reference<>())
+                .def("__getitem__", &getVectorItem<T>, return_internal_reference<>())
                 .def("__iter__", iterator< std::vector<T>, return_internal_reference<> >())
             ;
         }
