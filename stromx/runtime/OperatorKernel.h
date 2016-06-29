@@ -233,8 +233,12 @@ namespace stromx
             void validateDescriptions(const std::vector<const Input*>& inputs,
                                       const std::vector<const Output*>& outputs,
                                       const std::vector<const Parameter*>& parameters);
+            void setupDefaultTypeMap();
             void updateVisibleDescriptions(const bool isInitialized);
             const Parameter & findParameter(const unsigned int id) const;
+            const DescriptionBase* findDescription(const unsigned int id) const;
+            void setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+                                  const Parameter::UpdateBehavior updateBehavior = Parameter::PERSISTENT);
             
             std::string m_type;
             std::string m_package;
@@ -250,6 +254,10 @@ namespace stromx
             std::map<unsigned int, const Parameter*> m_parameterMap;
             std::map<unsigned int, const Input*> m_inputMap;
             std::map<unsigned int, const Output*> m_outputMap;
+            
+            // maps each description to its current type and update behavior
+            std::map<unsigned int, DescriptionBase::Type> m_typeMap;
+            std::map<unsigned int, DescriptionBase::UpdateBehavior> m_behaviorMap;
             
             // the indices of all inputs, output and parameters which have
             // been added during initialization, i.e. which must be removed

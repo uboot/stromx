@@ -177,7 +177,7 @@ namespace stromx
                 // this check is most probably redundant because OperatorKernel::initialize()
                 // makes sure the IDs are unique
                 if(m_inputs.count((*iter)->id()))
-                    throw WrongArgument("Two inputs with the same ID.");
+                    throw InternalError("Two inputs with the same ID.");
                 
                 m_inputs[(*iter)->id()] = new InputNode(this, (*iter)->id());
             }
@@ -189,7 +189,7 @@ namespace stromx
                 // this check is most probably redundant because OperatorKernel::initialize()
                 // makes sure the IDs are unique
                 if(m_outputs.count((*iter)->id()))
-                    throw WrongArgument("Two outputs with the same ID.");
+                    throw InternalError("Two outputs with the same ID.");
                 
                 m_outputs[(*iter)->id()] = new OutputNode(this, (*iter)->id());
             }

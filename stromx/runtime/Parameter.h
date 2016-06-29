@@ -121,44 +121,6 @@ namespace stromx
                 ACTIVATED_WRITE
             };
             
-            enum UpdateBehavior
-            {
-                /** 
-                 * The value of this parameter will only change when it is 
-                 * explicitly set by Operator::setParameter(). In general, it 
-                 * is not necessary to set a persistent parameter to the 
-                 * same value more than once as it will hold the correct value
-                 * after the first change. In the same spirit a read value can
-                 * be considered to be "real" value until the parameter is 
-                 * changed by the user.
-                 * 
-                 * This is the default behavior of parameters.
-                 */
-                PERSISTENT,
-                /**
-                 * The value of this parameter can be set but reading the 
-                 * parameter does not necessarily return a meaningful result. 
-                 * E.g. setting a trigger parameter causes an action to be
-                 * performed whenever the parameter is set. 
-                 * In general it makes sense set send parameters more than once.
-                 */
-                PUSH,
-                /** 
-                 * Snapshots of the value of this parameter can be read but
-                 * setting it does not have a meaningful effect. E.g. the
-                 * current state of a classifier operator which learns while
-                 * being executed could be queried from a pull parameters.
-                 * In general it makes to frequently read receive parameters.
-                 */
-                PULL,
-                /** 
-                 * This parameter is only internally used by the operator. It
-                 * makes no sense to read or write its values from outside. In 
-                 * a GUI an internal parameter would not be displayed.
-                 */
-                INTERNAL
-            };
-            
             /** Constructs a parameter description. */
             Parameter(const unsigned int id, const VariantHandle& variant, ParameterGroup* const group = 0);
             

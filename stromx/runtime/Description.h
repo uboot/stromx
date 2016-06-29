@@ -94,11 +94,24 @@ namespace stromx
             Type defaultType() const { return m_defaultType; }
             
             /**
-             * Sets the default type.
+             * Input and output connectors can be configured to act as operator
+             * parameters. Such a connector is listed as an operator parameter.
+             * If the default type of a connectors is DescriptionBase::PARAMETER
+             * its update behavior will be as set by this function.
+             */
+            UpdateBehavior defaultBehavior() const { return m_defaultBehavior; }
+            
+            /**
+             * Sets the default type. If the default type is DescriptionBase::PARAMETER,
+             * the update behavior can further be specified.
              * 
              * \sa defaultType
              */
-            void setDefaultType(const Type type) { m_defaultType = type; }
+            void setDefaultType(const Type type, const UpdateBehavior behavior = PERSISTENT)
+            { 
+                m_defaultType = type;
+                m_defaultBehavior = behavior;
+            }
              
             virtual unsigned int rows() const { return m_rows; }
             virtual unsigned int cols() const { return m_cols; }
@@ -108,12 +121,14 @@ namespace stromx
             Description(const unsigned int id, const VariantHandle& variant, const Type defaultType)
               : DescriptionBase(id, variant),
                 m_operatorThread(0),
-                m_defaultType(defaultType)
+                m_defaultType(defaultType),
+                m_defaultBehavior(PERSISTENT)
             {}
             
         private:
             unsigned int m_operatorThread;
             Type m_defaultType;
+            UpdateBehavior m_defaultBehavior;
             unsigned int m_rows;
             unsigned int m_cols;
         };

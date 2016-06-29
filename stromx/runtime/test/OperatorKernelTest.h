@@ -39,6 +39,18 @@ namespace stromx
             CPPUNIT_TEST (testValidateParametersMissingGroup);
             CPPUNIT_TEST (testValidateInputsAndOutputsDuplicateId);
             CPPUNIT_TEST (testValidateParametersExistingInputId);
+            CPPUNIT_TEST (testDefaultTypeParameter);
+            CPPUNIT_TEST (testSetConnectorTypeInputToParameter);
+            CPPUNIT_TEST (testSetConnectorTypeNoInput);
+            CPPUNIT_TEST (testSetConnectorTypeOutputToParameter);
+            CPPUNIT_TEST (testSetConnectorTypeNoOutput);
+            CPPUNIT_TEST (testSetConnectorTypeParameterToInput);
+            CPPUNIT_TEST (testSetConnectorTypeParameterToOutput);
+            CPPUNIT_TEST (testSetConnectorTypeInvalidTypeToInput);
+            CPPUNIT_TEST (testSetConnectorTypeInvalidTypeToOutput);
+            CPPUNIT_TEST (testSetConnectorTypeParameterToParameter);
+            CPPUNIT_TEST (testSetConnectorTypeInputToPullParameter);
+            CPPUNIT_TEST (testSetConnectorTypeOutputToPushParameter);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -57,6 +69,18 @@ namespace stromx
                 void testValidateParametersMissingGroup();
                 void testValidateInputsAndOutputsDuplicateId();
                 void testValidateParametersExistingInputId();
+                void testDefaultTypeParameter();
+                void testSetConnectorTypeInputToParameter();
+                void testSetConnectorTypeNoInput();
+                void testSetConnectorTypeOutputToParameter();
+                void testSetConnectorTypeNoOutput();
+                void testSetConnectorTypeParameterToInput();
+                void testSetConnectorTypeParameterToOutput();
+                void testSetConnectorTypeInvalidTypeToInput();
+                void testSetConnectorTypeInvalidTypeToOutput();
+                void testSetConnectorTypeParameterToParameter();
+                void testSetConnectorTypeInputToPullParameter();
+                void testSetConnectorTypeOutputToPushParameter();
                 
             private:
                 TestOperator m_op;

@@ -17,33 +17,35 @@
 #ifndef STROMX_RUNTIME_CONNECTORPARAMETER_H
 #define STROMX_RUNTIME_CONNECTORPARAMETER_H
 
+#include "stromx/runtime/Description.h"
 #include "stromx/runtime/Parameter.h"
 
 namespace stromx
 {
     namespace runtime
     {
-        class ConnectorParameter : public Parameter
+        namespace impl
         {
-        public:
-            ConnectorParameter(const DescriptionBase* const connector, 
-                               const UpdateBehavior behavior, const Type type);
-            
-            virtual Type originalType() const { return m_originalType; }
-            
-            virtual const std::vector<EnumDescription> & descriptions() const { return m_connector->descriptions(); }
-            
-            virtual const Data& max() const { return m_connector->max(); }
-            virtual const Data& min() const { return m_connector->min(); }
-            virtual const Data& step() const { return m_connector->step(); }
-            
-            virtual unsigned int rows() const { return m_connector->rows(); }
-            virtual unsigned int cols() const { return m_connector->cols(); }
-            
-        private:
-            const DescriptionBase* m_connector;
-            const Type m_originalType;
-        };
+            class ConnectorParameter : public Parameter
+            {
+            public:
+                ConnectorParameter(const Description* const connector, const UpdateBehavior behavior);
+                
+                virtual Type originalType() const { return m_connector->originalType(); }
+                
+                virtual const std::vector<EnumDescription> & descriptions() const { return m_connector->descriptions(); }
+                
+                virtual const Data& max() const { return m_connector->max(); }
+                virtual const Data& min() const { return m_connector->min(); }
+                virtual const Data& step() const { return m_connector->step(); }
+                
+                virtual unsigned int rows() const { return m_connector->rows(); }
+                virtual unsigned int cols() const { return m_connector->cols(); }
+                
+            private:
+                const DescriptionBase* m_connector;
+            };
+        }
     }
 }
 

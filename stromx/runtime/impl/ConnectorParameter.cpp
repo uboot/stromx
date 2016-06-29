@@ -20,15 +20,17 @@ namespace stromx
 {
     namespace runtime
     {
-        ConnectorParameter::ConnectorParameter(const DescriptionBase* const connector, 
-            const UpdateBehavior behavior, const Type type)
-          : Parameter(connector->id(), connector->variant()),
-            m_connector(connector),
-            m_originalType(type)
+        namespace impl
         {
-            setTitle(connector->title());
-            setVisualization(connector->visualization());
-            setUpdateBehavior(behavior);
+            ConnectorParameter::ConnectorParameter(const Description* const connector, const UpdateBehavior behavior)
+              : Parameter(connector->id(), connector->variant()),
+                m_connector(connector)
+            {
+                setTitle(connector->title());
+                setVisualization(connector->visualization());
+                setUpdateBehavior(behavior);
+                setAccessMode(ACTIVATED_WRITE);
+            }
         }
     }
 }

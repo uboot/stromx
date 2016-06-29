@@ -18,6 +18,7 @@
 #include <set>
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/impl/ConnectorParameter.h"
 
 namespace stromx
 {
@@ -132,6 +133,7 @@ namespace stromx
         
         void OperatorKernel::initialize()
         {
+            setupDefaultTypeMap();
             updateVisibleDescriptions(true);
         }
         
@@ -167,6 +169,7 @@ namespace stromx
                 m_activeParameters.insert((*iter)->id());
             }
             
+            setupDefaultTypeMap();
             updateVisibleDescriptions(true);
         }
         
@@ -356,8 +359,47 @@ namespace stromx
             }
         }
         
+        void OperatorKernel::setupDefaultTypeMap()
+        {           
+            m_typeMap.clear();
+            m_behaviorMap.clear();
+            
+            for(std::vector<const Input*>::const_iterator iter = m_inputs.begin();
+                iter != m_inputs.end();
+                ++iter)
+            {
+                m_typeMap[(*iter)->id()] = (*iter)->defaultType();
+                m_behaviorMap[(*iter)->id()] = (*iter)->defaultBehavior();
+            }
+            
+            for(std::vector<const Output*>::const_iterator iter = m_outputs.begin();
+                iter != m_outputs.end();
+                ++iter)
+            {
+                m_typeMap[(*iter)->id()] = (*iter)->defaultType();
+                m_behaviorMap[(*iter)->id()] = (*iter)->defaultBehavior();
+            }
+            
+            for(std::vector<const Parameter*>::const_iterator iter = m_parameters.begin();
+                iter != m_parameters.end();
+                ++iter)
+            {
+                m_typeMap[(*iter)->id()] = DescriptionBase::PARAMETER;
+                m_behaviorMap[(*iter)->id()] = (*iter)->updateBehavior();
+            }
+        }
+            
         void OperatorKernel::updateVisibleDescriptions(const bool isInitialized)
         {
+            // delete all proxy parameter (i.e. of type ConnectorParameters)
+            for(std::vector<const Parameter*>::const_iterator iter = m_visibleParameters.begin();
+                iter != m_visibleParameters.end();
+                ++iter)
+            {
+                if ((*iter)->originalType() != DescriptionBase::PARAMETER)
+                    delete *iter;
+            }
+        
             m_visibleInputs.clear();
             m_visibleOutputs.clear();
             m_visibleParameters.clear();
@@ -372,8 +414,17 @@ namespace stromx
             {
                 if (isInitialized)
                 {
-                    m_visibleInputs.push_back(*iter);
-                    m_inputMap[(*iter)->id()] = *iter;
+                    if (m_typeMap[(*iter)->id()] == DescriptionBase::PARAMETER)
+                    {
+                        Parameter* param = new impl::ConnectorParameter(*iter, m_behaviorMap[(*iter)->id()]);
+                        m_visibleParameters.push_back(param);
+                        m_parameterMap[(*iter)->id()] = param;
+                    }
+                    else
+                    {
+                        m_visibleInputs.push_back(*iter);
+                        m_inputMap[(*iter)->id()] = *iter;
+                    }
                 }
             }
             
@@ -383,8 +434,17 @@ namespace stromx
             {
                 if (isInitialized)
                 {
-                    m_visibleOutputs.push_back(*iter);
-                    m_outputMap[(*iter)->id()] = *iter;
+                    if (m_typeMap[(*iter)->id()] == DescriptionBase::PARAMETER)
+                    {
+                        Parameter* param = new impl::ConnectorParameter(*iter, m_behaviorMap[(*iter)->id()]);
+                        m_visibleParameters.push_back(param);
+                        m_parameterMap[(*iter)->id()] = param;
+                    }
+                    else
+                    {
+                        m_visibleOutputs.push_back(*iter);
+                        m_outputMap[(*iter)->id()] = *iter;
+                    }
                 }
             }
             
@@ -399,6 +459,60 @@ namespace stromx
                     m_parameterMap[(*iter)->id()] = *iter;
                 }
             }
+        }
+        
+        const DescriptionBase* OperatorKernel::findDescription(const unsigned int id) const
+        {
+            std::map<unsigned int, const Input*>::const_iterator inputIter = m_inputMap.find(id);
+            if (inputIter != m_inputMap.end())
+                return inputIter->second;
+                
+            std::map<unsigned int, const Output*>::const_iterator outputIter = m_outputMap.find(id);
+            if (outputIter != m_outputMap.end())
+                return outputIter->second;
+                
+            std::map<unsigned int, const Parameter*>::const_iterator parameterIter = m_parameterMap.find(id);
+            if (parameterIter != m_parameterMap.end())
+                return parameterIter->second;
+                
+            throw WrongArgument("No description for ID exists for this operator.");
+        }
+        
+        void OperatorKernel::setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+            const Parameter::UpdateBehavior updateBehavior)
+        {
+            const DescriptionBase* description = findDescription(id);
+            
+            switch (type)
+            {
+            case DescriptionBase::INPUT:
+                if (description->originalType() != DescriptionBase::INPUT)
+                    throw WrongArgument("Descriptions can only be turned into inputs if their original type is INPUT.");
+                break;
+            case DescriptionBase::OUTPUT:
+                if (description->originalType() != DescriptionBase::OUTPUT)
+                    throw WrongArgument("Descriptions can only be turned into outputs if their original type is OUTPUT.");
+                break;
+            case DescriptionBase::PARAMETER:
+                if (description->originalType() == DescriptionBase::INPUT &&
+                    updateBehavior == DescriptionBase::PULL)
+                {
+                    throw WrongArgument("Inputs can not be turned into pull parameters.");
+                }
+                if (description->originalType() == DescriptionBase::OUTPUT &&
+                    updateBehavior == DescriptionBase::PUSH)
+                {
+                    throw WrongArgument("Outputs can not be turned into push parameters.");
+                }
+                break;
+            default:
+                break;
+            }
+            
+            m_typeMap[id] = type;
+            m_behaviorMap[id] = updateBehavior;
+            
+            updateVisibleDescriptions(true);
         }
     }
 }

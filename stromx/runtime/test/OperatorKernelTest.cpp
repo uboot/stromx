@@ -26,6 +26,97 @@ namespace stromx
 {
     namespace runtime
     {
+        namespace
+        {
+            class DefaultParameterOperator : public OperatorKernel
+            {
+            public:
+                DefaultParameterOperator()
+                    : OperatorKernel("", "", Version(), setupInputs(), 
+                        std::vector<const Output*>())
+                {}
+                        
+                void initialize()
+                {
+                    OperatorKernel::initialize(std::vector<const Input*>(), 
+                        setupOutputs(), std::vector<const Parameter*>());
+                }
+                
+                OperatorKernel* clone() const { return 0; }
+                void execute(DataProvider&) {}
+                
+                static const std::vector<const Input* > setupInputs()
+                {
+                    std::vector<const Input*> inputs;
+                    
+                    Input* input = new Input(0, Variant::NONE);
+                    input->setDefaultType(Input::PARAMETER, Input::PUSH);
+                    inputs.push_back(input);
+                    
+                    return inputs;
+                }
+                
+                static const std::vector<const Output* > setupOutputs()
+                {
+                    std::vector<const Output*> outputs;
+                    
+                    Output* output = new Output(1, Variant::DATA);
+                    output->setDefaultType(Input::PARAMETER);
+                    outputs.push_back(output);
+                    
+                    return outputs;
+                }
+            };
+            
+            class ConnectorOperator : public OperatorKernel
+            {
+            public:
+                ConnectorOperator()
+                    : OperatorKernel("", "", Version(), setupInputs(), 
+                        std::vector<const Output*>())
+                {}
+                        
+                void initialize()
+                {
+                    OperatorKernel::initialize(std::vector<const Input*>(), 
+                        setupOutputs(), setupParameters());
+                }
+                
+                OperatorKernel* clone() const { return 0; }
+                void execute(DataProvider&) {}
+                
+                static const std::vector<const Input* > setupInputs()
+                {
+                    std::vector<const Input*> inputs;
+                    
+                    Input* input = new Input(0, Variant::NONE);
+                    inputs.push_back(input);
+                    
+                    return inputs;
+                }
+                
+                static const std::vector<const Output* > setupOutputs()
+                {
+                    std::vector<const Output*> outputs;
+                    
+                    Output* output = new Output(1, Variant::DATA);
+                    outputs.push_back(output);
+                    
+                    return outputs;
+                }
+                
+                static const std::vector<const Parameter* > setupParameters()
+                {
+                    std::vector<const Parameter*> parameters;
+                    
+                    Parameter* parameter = new Parameter(2, Variant::DATA);
+                    parameters.push_back(parameter);
+                    
+                    return parameters;
+                }
+            };
+        }
+        
         void OperatorKernelTest::setUp()
         {
             m_op.initialize();
@@ -162,5 +253,127 @@ namespace stromx
                                  WrongArgument);
         }
         
+        void OperatorKernelTest::testDefaultTypeParameter()
+        {
+            DefaultParameterOperator kernel;
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.parameters().size());
+            
+            kernel.initialize();
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.inputs().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.outputs().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());
+            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PUSH, kernel.parameter(0).updateBehavior());
+            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PERSISTENT, kernel.parameter(1).updateBehavior());
+            CPPUNIT_ASSERT(kernel.parameter(0).variant().isVariant(Variant::NONE));
+            CPPUNIT_ASSERT(kernel.parameter(1).variant().isVariant(Variant::DATA));
+        } 
+        
+        void OperatorKernelTest::testSetConnectorTypeInputToParameter()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            
+            kernel.setConnectorType(0, Description::PARAMETER, DescriptionBase::PUSH);
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.inputs().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());    
+            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PUSH, kernel.parameter(0).updateBehavior());   
+            CPPUNIT_ASSERT(kernel.parameter(0).variant().isVariant(Variant::NONE));   
+        } 
+        
+        void OperatorKernelTest::testSetConnectorTypeNoInput()
+        {
+            ConnectorOperator kernel;
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::PARAMETER),
+                                 WrongArgument);
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeOutputToParameter()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            
+            kernel.setConnectorType(1, Description::PARAMETER, DescriptionBase::PULL);
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.outputs().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());    
+            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PULL, kernel.parameter(1).updateBehavior());   
+            CPPUNIT_ASSERT(kernel.parameter(1).variant().isVariant(Variant::DATA));   
+        } 
+        
+        void OperatorKernelTest::testSetConnectorTypeNoOutput()
+        {
+            ConnectorOperator kernel;
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::PARAMETER),
+                                 WrongArgument);
+        } 
+
+        void OperatorKernelTest::testSetConnectorTypeParameterToInput()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            kernel.setConnectorType(0, Description::PARAMETER, DescriptionBase::PUSH);
+            
+            kernel.setConnectorType(0, Description::INPUT);
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.inputs().size());
+        }
+
+        void OperatorKernelTest::testSetConnectorTypeParameterToOutput()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            kernel.setConnectorType(1, Description::PARAMETER, DescriptionBase::PULL);
+            
+            kernel.setConnectorType(1, Description::OUTPUT);
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.outputs().size());
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeInvalidTypeToInput()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            kernel.setConnectorType(1, Description::PARAMETER, DescriptionBase::PULL);
+            
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::INPUT),
+                                 WrongArgument);
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeInvalidTypeToOutput()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            kernel.setConnectorType(0, Description::PARAMETER, DescriptionBase::PUSH);
+            
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::OUTPUT),
+                                 WrongArgument);
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeParameterToParameter()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            kernel.setConnectorType(2, Description::PARAMETER, DescriptionBase::PUSH);
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
+            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PERSISTENT, kernel.parameter(2).updateBehavior());   
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeInputToPullParameter()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::PARAMETER, DescriptionBase::PULL),
+                                 WrongArgument);
+        }
+        
+        void OperatorKernelTest::testSetConnectorTypeOutputToPushParameter()
+        {
+            ConnectorOperator kernel;
+            kernel.initialize();
+            
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::PARAMETER, DescriptionBase::PUSH),
+                                 WrongArgument);
+        }
     }
 }
