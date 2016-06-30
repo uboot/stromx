@@ -180,6 +180,14 @@ namespace stromx
              */
             virtual Type originalType() const { return NO_TYPE; }
             
+            /** 
+             * Input and output connectors can be configured to act as operator
+             * parameters. Such a connector is listed as an operator parameter. The 
+             * current type always refers to way the connector is currently configured,
+             * i.e. possibly as a parameter.
+             */
+            virtual Type currentType() const { return NO_TYPE; }
+            
         private:
             static const std::vector<EnumDescription> NO_DESCRIPTIONS;
             static const None NONE;

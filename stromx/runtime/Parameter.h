@@ -154,6 +154,7 @@ namespace stromx
             virtual const std::vector<const Parameter*> & members() const { return NO_MEMBERS; }
             
             virtual Type originalType() const { return PARAMETER; }
+            virtual Type currentType() const { return PARAMETER; }
             
         private:
             static const std::vector<const Parameter*> NO_MEMBERS;

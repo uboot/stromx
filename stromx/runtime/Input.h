@@ -34,6 +34,7 @@ namespace stromx
             {}
             
             virtual Type originalType() const { return INPUT; }
+            virtual Type currentType() const { return INPUT; }
             
         private:
             unsigned int m_operatorThread;

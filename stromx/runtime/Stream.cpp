@@ -611,6 +611,29 @@ namespace stromx
             if (! foundThread)
                 throw WrongArgument("Thread does not exists");
         }
+
+        void Stream::setConnectorType(Operator* const op, const unsigned int id,
+                                      const DescriptionBase::Type type, const DescriptionBase::UpdateBehavior behavior)
+        {
+            if (op == 0)
+                throw WrongArgument("Operator must not be null");
+                
+            const DescriptionBase& description = op->info().description(id);
+            
+            switch (description.currentType())
+            {
+            case DescriptionBase::INPUT:
+                m_network->removeInput(op, id);
+                break;
+            case DescriptionBase::OUTPUT:
+                m_network->removeOutput(op, id);
+                break;
+            default:
+                break;
+            } 
+            
+            op->setConnectorType(id, type, behavior);
+        }
     }
 }
 

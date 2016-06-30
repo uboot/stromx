@@ -568,5 +568,32 @@ namespace stromx
             
             delete stream;
         }
+        
+        void StreamTest::testSetConnectorTypeInput()
+        { 
+            Operator* op1 = m_stream->operators()[1];
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER);
+            
+            CPPUNIT_ASSERT_THROW(m_stream->connectionSource(op1, TestOperator::INPUT_1), WrongArgument);
+        }
+        
+        void StreamTest::testSetConnectorTypeOutput()
+        {
+            Operator* op0 = m_stream->operators()[0];
+            Operator* op1 = m_stream->operators()[1];
+            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, DescriptionBase::PARAMETER);
+            
+            CPPUNIT_ASSERT(! m_stream->connectionSource(op1, TestOperator::INPUT_1).valid());
+        }
+        
+        void StreamTest::testSetConnectorTypeParameter()
+        {
+            Operator* op0 = m_stream->operators()[0];
+            Operator* op1 = m_stream->operators()[1];
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER);
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::INPUT);
+            
+            CPPUNIT_ASSERT_NO_THROW(m_stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1));
+        }
     }
 }

@@ -42,6 +42,7 @@ void exportDescriptionBase()
             .def("rows", &DescriptionBase::rows)
             .def("cols", &DescriptionBase::cols)
             .def("originalType", &DescriptionBase::originalType)
+            .def("currentType", &DescriptionBase::currentType)
         ;
                 
         enum_<DescriptionBase::Type>("Type")

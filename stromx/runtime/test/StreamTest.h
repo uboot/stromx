@@ -64,6 +64,9 @@ namespace stromx
             CPPUNIT_TEST(testDelay);
             CPPUNIT_TEST(testStopDelay);
             CPPUNIT_TEST(testDestructorBlockingOperator);
+            CPPUNIT_TEST(testSetConnectorTypeInput);
+            CPPUNIT_TEST(testSetConnectorTypeOutput);
+            CPPUNIT_TEST(testSetConnectorTypeParameter);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -103,6 +106,9 @@ namespace stromx
             void testDelay();
             void testStopDelay();
             void testDestructorBlockingOperator();
+            void testSetConnectorTypeInput();
+            void testSetConnectorTypeOutput();
+            void testSetConnectorTypeParameter();
                 
         private:
             class TestObserver : public ExceptionObserver
