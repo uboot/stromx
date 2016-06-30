@@ -36,6 +36,8 @@ namespace stromx
             CPPUNIT_TEST(testWriteParametersZip);
             CPPUNIT_TEST(testWriteParametersStromx);
             CPPUNIT_TEST(testWriteNoAccess);
+            CPPUNIT_TEST(testWriteStreamPullParameter);
+            CPPUNIT_TEST(testWriteStreamPushParameter);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -52,6 +54,8 @@ namespace stromx
             void testWriteParametersZip();
             void testWriteParametersStromx();
             void testWriteNoAccess();
+            void testWriteStreamPullParameter();
+            void testWriteStreamPushParameter();
                 
         private:
             Stream* m_stream;

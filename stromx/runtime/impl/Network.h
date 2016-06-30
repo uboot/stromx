@@ -37,7 +37,7 @@ namespace stromx
             
             class NetworkObserver
             {    
-        public:
+            public:
                 virtual void observe(const OperatorError & ex, const ExceptionObserver::Phase phase) const = 0;
                 
                 virtual ~NetworkObserver() {}
@@ -45,7 +45,7 @@ namespace stromx
         
             class Network
             {
-        public:
+            public:
                 enum Status
                 {
                     INACTIVE,

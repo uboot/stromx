@@ -19,6 +19,7 @@
 #include "stromx/runtime/Stream.h"
 #include "stromx/runtime/XmlWriter.h"
 #include "stromx/runtime/test/TestUtilities.h"
+#include "stromx/runtime/test/TestOperator.h"
 #include "stromx/runtime/test/XmlWriterTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION (stromx::runtime::XmlWriterTest);
@@ -74,6 +75,22 @@ namespace stromx
         {
             //Attempt to write to filesystem without neccessary permission
             CPPUNIT_ASSERT_THROW(XmlWriter().writeStream("/root/test/XmlWriterTest_testWriteNoAccess.stromx", *m_stream), FileAccessFailed);
+        }
+        
+        void XmlWriterTest::testWriteStreamPullParameter()
+        {
+            Operator* op0 = m_stream->operators()[0];
+            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, DescriptionBase::PARAMETER,
+                                       DescriptionBase::PULL);
+            XmlWriter().writeStream("XmlWriterTest_testWriteStreamPullParameter.xml", *m_stream);
+        }
+        
+        void XmlWriterTest::testWriteStreamPushParameter()
+        {
+            Operator* op1 = m_stream->operators()[1];
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER,
+                                       DescriptionBase::PUSH);
+            XmlWriter().writeStream("XmlWriterTest_testWriteStreamPushParameter.xml", *m_stream);
         }
 
         void XmlWriterTest::tearDown()

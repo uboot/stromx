@@ -111,7 +111,7 @@ namespace stromx
              * \throws WrongState If the stream is not INACTIVE.
              */
             void connect(Operator* const sourceOp, const unsigned int outputId, 
-                         Operator* const targetOp, const unsigned int inputId) const;
+                         Operator* const targetOp, const unsigned int inputId);
                          
             /**
              * Disconnects the input \c inputId of the operator \c targetOp from any
@@ -122,7 +122,7 @@ namespace stromx
              * \throws WrongState If the stream is not inactive.
              * \throws WrongState If the operator \c targetOp is not initialized.
              */
-            void disconnect(Operator* const targetOp, const unsigned int inputId) const;
+            void disconnect(Operator* const targetOp, const unsigned int inputId);
             
             /**
              * Returns the output which is connected to the input \c inputId of the 
@@ -134,7 +134,7 @@ namespace stromx
              * \throws WrongArgument If the operator \c targetOp does not have an input \c inputId.
              * \throws WrongState If the operator \c targetOp is not initialized.
              */
-            const OutputConnector  connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
+            const OutputConnector connectionSource(const Operator* const targetOp, const unsigned int inputId) const;
             
             /** 
              * Converts the operator kernel \c op to an operator and adds it to the stream.

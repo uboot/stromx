@@ -172,6 +172,7 @@ namespace stromx
             
             //Valid input parameters and stream INACTIVE
             CPPUNIT_ASSERT_NO_THROW(m_stream->disconnect(ops[1], TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_EQUAL(std::size_t(3), m_stream->threads()[0]->inputSequence().size());
             
             // uninitialized operator
             m_stream->deinitializeOperator(ops[1]);
@@ -311,6 +312,15 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(op1));
             CPPUNIT_ASSERT_EQUAL(Operator::NONE, op1->status());
             CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+        }
+        
+        void StreamTest::testDeinitializeOperatorThread()
+        {
+            Operator* op1 = m_stream->operators()[1];
+            m_stream->deinitializeOperator(op1);
+            
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(0), m_stream->threads()[0]->inputSequence().size());
         }
        
         void StreamTest::testAddThread()
@@ -575,6 +585,7 @@ namespace stromx
             m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER);
             
             CPPUNIT_ASSERT_THROW(m_stream->connectionSource(op1, TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_EQUAL(std::size_t(3), m_stream->threads()[0]->inputSequence().size());
         }
         
         void StreamTest::testSetConnectorTypeOutput()
@@ -584,6 +595,7 @@ namespace stromx
             m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, DescriptionBase::PARAMETER);
             
             CPPUNIT_ASSERT(! m_stream->connectionSource(op1, TestOperator::INPUT_1).valid());
+            CPPUNIT_ASSERT_EQUAL(std::size_t(3), m_stream->threads()[0]->inputSequence().size());
         }
         
         void StreamTest::testSetConnectorTypeParameter()

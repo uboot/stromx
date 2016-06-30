@@ -190,7 +190,21 @@ namespace stromx
                 for(std::vector<const Parameter*>::const_iterator iter_par = currOp->info().parameters().begin();
                             iter_par != currOp->info().parameters().end();
                             ++iter_par)
-                {
+                {     
+                    //Create current parameter entry param being child of current operator op (one for each parameter possible)
+                    DOMElement* parElement = m_doc->createElement(Str2Xml("Parameter"));
+                    opElement->appendChild(parElement);
+                    
+                    //Create attribute id of current parameter param (one for each parameter possible)
+                    DOMAttr* id = m_doc->createAttribute(Str2Xml("id"));
+                    id->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_par)->id()).c_str()));
+                    parElement->setAttributeNode(id);
+                    
+                    DOMAttr* titleAttr = m_doc->createAttribute(Str2Xml("title"));
+                    const Parameter& desc = currOp->info().parameter((*iter_par)->id());
+                    titleAttr->setValue(Str2Xml(desc.title().c_str()));
+                    parElement->setAttributeNode(titleAttr);
+                                   
                     // Do not persist push operators
                     if ((*iter_par)->updateBehavior() == Parameter::PUSH)
                         continue;
@@ -210,21 +224,8 @@ namespace stromx
                         continue;
                     }
                     
-                    //Create current parameter entry param being child of current operator op (one for each parameter possible)
-                    DOMElement* parElement = m_doc->createElement(Str2Xml("Parameter"));
-                    opElement->appendChild(parElement);
-                    
-                    //Create attribute id of current parameter param (one for each parameter possible)
-                    DOMAttr* id = m_doc->createAttribute(Str2Xml("id"));
-                    id->setValue(Str2Xml(boost::lexical_cast<std::string>((*iter_par)->id()).c_str()));
-                    parElement->setAttributeNode(id);
-                    
-                    DOMAttr* titleAttr = m_doc->createAttribute(Str2Xml("title"));
-                    const Parameter& desc = currOp->info().parameter((*iter_par)->id());
-                    titleAttr->setValue(Str2Xml(desc.title().c_str()));
-                    parElement->setAttributeNode(titleAttr);
-                    
                     createData(*iter_par, currOp, parElement);
+                    
                 }
             }
             

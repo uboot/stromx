@@ -29,6 +29,7 @@
 #include "stromx/runtime/impl/InputNode.h"
 #include "stromx/runtime/impl/MutexHandle.h"
 #include "stromx/runtime/impl/Network.h"
+#include "stromx/runtime/impl/OutputNode.h"
 #include "stromx/runtime/impl/ThreadImplObserver.h"
 
 namespace stromx
@@ -299,7 +300,7 @@ namespace stromx
         }
         
         void Stream::connect(Operator* const sourceOp, const unsigned int outputId, 
-                             Operator* const targetOp, const unsigned int inputId) const
+                             Operator* const targetOp, const unsigned int inputId)
         {
             if (targetOp == 0 || sourceOp == 0)
                 throw WrongArgument("Operator must not be null.");
@@ -316,7 +317,7 @@ namespace stromx
             m_network->connect(sourceOp, outputId, targetOp, inputId);
         }
 
-        void Stream::disconnect(Operator* const targetOp, const unsigned int inputId) const
+        void Stream::disconnect(Operator* const targetOp, const unsigned int inputId)
         {
             
             if (targetOp == 0)
@@ -331,7 +332,12 @@ namespace stromx
             if (targetOp->status() == Operator::NONE)
                 throw WrongState("Operator must be initialized.");
             
-            m_network->disconnect(targetOp, inputId);
+            m_network->disconnect(targetOp, inputId);         
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                 iter != m_threads.end(); ++iter)
+            {
+                (*iter)->removeInput(targetOp, inputId);
+            }
         }
                 
         unsigned int Stream::delay() const
@@ -617,17 +623,32 @@ namespace stromx
         {
             if (op == 0)
                 throw WrongArgument("Operator must not be null");
+            
+            if (m_status != INACTIVE)
+                throw WrongState("Cannot remove operator while the stream is active.");
+            
+            if (! isPartOfStream(op))
+                throw WrongArgument("Operator is not part of the stream.");
                 
             const DescriptionBase& description = op->info().description(id);
+            OutputConnector output;
             
             switch (description.currentType())
             {
             case DescriptionBase::INPUT:
-                m_network->removeInput(op, id);
+                disconnect(op, id);
                 break;
             case DescriptionBase::OUTPUT:
+            {
+                const std::set<impl::InputNode*> & inputs = m_network->getOutputNode(op, id)->connectedInputs();
+                for(std::set<impl::InputNode*>::const_iterator iter = inputs.begin();
+                    iter != inputs.end(); ++iter)
+                {
+                    disconnect((*iter)->op(), (*iter)->inputId());
+                }
                 m_network->removeOutput(op, id);
                 break;
+            }
             default:
                 break;
             } 

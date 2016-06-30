@@ -182,7 +182,10 @@ namespace stromx
             for(unsigned int i = 0; i < m_inputSequence.size(); i++)
             {
                 if(m_inputSequence[i].op() == op && m_inputSequence[i].id() == inputId)
+                {
                     removeInput(i);
+                    break;
+                }
             }
         }
         
