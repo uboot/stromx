@@ -441,5 +441,51 @@ namespace stromx
             Factory factory;
             CPPUNIT_ASSERT_THROW(m_operator->setFactory(&factory), WrongState);
         }
+        
+        void OperatorTest::testSetConnectorTypeInput()
+        {
+            Operator op(new TestOperator);
+            op.initialize();
+            
+            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::PARAMETER, 
+                                DescriptionBase::PERSISTENT);
+            
+            CPPUNIT_ASSERT_THROW(op.getInputNode(TestOperator::INPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(op.setParameter(TestOperator::INPUT_1, None()));
+        }
+        
+        void OperatorTest::testSetConnectorTypeOutput()
+        {
+            Operator op(new TestOperator);
+            op.initialize();
+            
+            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::PARAMETER, 
+                                DescriptionBase::PERSISTENT);
+                                
+            CPPUNIT_ASSERT_THROW(op.getOutputNode(TestOperator::OUTPUT_1), WrongArgument);
+            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1, 0), Timeout);
+        }
+        
+        void OperatorTest::testSetConnectorTypeParameter()
+        {
+            Operator op(new TestOperator);
+            op.initialize();
+            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::PARAMETER, 
+                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::PARAMETER, 
+                                DescriptionBase::PERSISTENT);
+                                
+            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::INPUT, 
+                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::OUTPUT, 
+                                DescriptionBase::PERSISTENT);
+                                
+            CPPUNIT_ASSERT_NO_THROW(op.getInputNode(TestOperator::INPUT_1));
+            CPPUNIT_ASSERT_NO_THROW(op.getOutputNode(TestOperator::OUTPUT_1));
+            
+            CPPUNIT_ASSERT_THROW(op.setParameter(TestOperator::INPUT_1, None()), WrongParameterId);
+            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1, 0), WrongParameterId);
+        }
+        
     }
 }

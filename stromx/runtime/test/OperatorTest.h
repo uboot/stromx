@@ -54,6 +54,9 @@ namespace stromx
             CPPUNIT_TEST (testTwoObservers);
             CPPUNIT_TEST (testSetFactory);
             CPPUNIT_TEST (testSetFactoryWrongState);
+            CPPUNIT_TEST (testSetConnectorTypeInput);
+            CPPUNIT_TEST (testSetConnectorTypeOutput);
+            CPPUNIT_TEST (testSetConnectorTypeParameter);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -84,6 +87,9 @@ namespace stromx
             void testTwoObservers();
             void testSetFactory();
             void testSetFactoryWrongState();
+            void testSetConnectorTypeInput();
+            void testSetConnectorTypeOutput();
+            void testSetConnectorTypeParameter();
                 
         private:
             class TestObserver : public ConnectorObserver

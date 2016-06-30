@@ -123,14 +123,12 @@ namespace stromx
              * Removes the input \c inputId of the operator \c op from the list of currently
              * visited inputs.
              * \throws WrongState If the thread state is not INACTIVE.
-             * \throws WrongArgument If the specified input is not part of thread.
              * \throws WrongArgument If \c op is null.
              */
             void removeInput(Operator* const op, const unsigned int inputId);
                 
         private:
             explicit Thread(const impl::Network* const network);
-            unsigned int findInput(Operator* const op, const unsigned int inputId);
             
             void start();
             void stop();

@@ -179,24 +179,16 @@ namespace stromx
             if (op == 0)
                 throw WrongArgument("Operator must not be null.");
             
-            unsigned int position = findInput(op, inputId);
-            removeInput(position);
+            for(unsigned int i = 0; i < m_inputSequence.size(); i++)
+            {
+                if(m_inputSequence[i].op() == op && m_inputSequence[i].id() == inputId)
+                    removeInput(i);
+            }
         }
         
         void Thread::setObserver(const ThreadImplObserver*const observer)
         {
             m_thread->setObserver(observer);
-        }
-        
-        unsigned int Thread::findInput(Operator*const op, const unsigned int inputId)
-        {
-            for(unsigned int i = 0; i < m_inputSequence.size(); i++)
-            {
-                if(m_inputSequence[i].op() == op && m_inputSequence[i].id() == inputId)
-                    return i;
-            }
-            
-            throw WrongArgument("The input is not part of the thread.");
         }
     } 
 }

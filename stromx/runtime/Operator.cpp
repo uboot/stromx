@@ -375,5 +375,37 @@ namespace stromx
         {
             return m_kernel->factoryPtr();
         }
+        
+        void Operator::setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+                                        const Parameter::UpdateBehavior behavior)
+        {
+            m_kernel->setConnectorType(id, type, behavior);
+            const DescriptionBase& description = m_kernel->info()->description(id);
+            DescriptionBase::Type originalType = description.originalType();
+                
+            switch (type)
+            {
+            case DescriptionBase::PARAMETER:
+                if (originalType == DescriptionBase::INPUT)
+                {
+                    delete m_inputs[id];
+                    m_inputs.erase(id);
+                }
+                else if (originalType == DescriptionBase::OUTPUT)
+                {
+                    delete m_outputs[id];
+                    m_outputs.erase(id);
+                }
+                break;
+            case DescriptionBase::INPUT:
+                if (originalType == DescriptionBase::INPUT)
+                    m_inputs[id] = new InputNode(this, id);
+            case DescriptionBase::OUTPUT:
+                if (originalType == DescriptionBase::OUTPUT)
+                    m_outputs[id] = new OutputNode(this, id);
+            default:
+                break;
+            };
+        }
     }
 }

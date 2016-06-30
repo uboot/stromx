@@ -72,9 +72,11 @@ namespace stromx
             
             const Parameter & parameter(const unsigned int id) const;
             
-            virtual const Input & input(const unsigned int id) const;
+            const Input & input(const unsigned int id) const;
             
-            virtual const Output & output(const unsigned int id) const;
+            const Output & output(const unsigned int id) const;
+            
+            const DescriptionBase & description(const unsigned int id) const;
             
             const OperatorProperties & properties() const;
             

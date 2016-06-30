@@ -82,7 +82,7 @@ namespace stromx
         
         void ThreadTest::testRemoveInputOpId()
         {
-            CPPUNIT_ASSERT_THROW(m_thread->removeInput(m_op1, 1), WrongArgument);
+            CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(m_op1, 1));
             CPPUNIT_ASSERT_THROW(m_thread->removeInput(0, 0), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(m_thread->removeInput(m_op1, TestOperator::INPUT_1));
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));

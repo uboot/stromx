@@ -222,6 +222,11 @@ namespace stromx
             return findParameter(id);
         }
         
+        const DescriptionBase& OperatorKernel::description(const unsigned int id) const
+        {
+            return *findDescription(id);
+        }
+        
         const Input& OperatorKernel::input(const unsigned int id) const
         {
             std::map<unsigned int, const Input*>::const_iterator iter = m_inputMap.find(id);

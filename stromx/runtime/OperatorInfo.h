@@ -102,6 +102,13 @@ namespace stromx
              */
             virtual const Parameter & parameter(const unsigned int id) const = 0;
             
+            /**
+             * Returns the description (i.e. input, output or parameter) \c id.
+             * 
+             * \throws WrongId If no parameter with \c id exists.
+             */
+            virtual const DescriptionBase & description(const unsigned int id) const = 0;
+            
             /** 
              * Returns the properties of this operator.
              */
