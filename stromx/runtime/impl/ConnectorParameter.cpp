@@ -29,7 +29,18 @@ namespace stromx
                 setTitle(connector->title());
                 setVisualization(connector->visualization());
                 setUpdateBehavior(behavior);
-                setAccessMode(ACTIVATED_WRITE);
+                
+                switch (connector->originalType())
+                {
+                case Description::INPUT:
+                    setAccessMode(ACTIVATED_WRITE);
+                    break;
+                case Description::OUTPUT:
+                    setAccessMode(INITIALIZED_READ);
+                    break;
+                default:
+                    throw InternalError("A connector parameter can only be created from inputs or outputs");
+                }
             }
         }
     }

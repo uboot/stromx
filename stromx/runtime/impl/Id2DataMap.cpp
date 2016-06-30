@@ -28,6 +28,21 @@ namespace stromx
         namespace 
         {
             template <class description_t>
+            bool isConnector(const Parameter* parameter);
+            
+            template <>
+            bool isConnector<Input>(const Parameter* parameter)
+            {
+                return parameter->originalType() == DescriptionBase::INPUT;
+            } 
+            
+            template <>
+            bool isConnector<Output>(const Parameter* parameter)
+            {
+                return parameter->originalType() == DescriptionBase::OUTPUT;
+            }            
+            
+            template <class description_t>
             void populateId2DataMap(const std::vector<const description_t*> & descriptions,
                                     const std::vector<const Parameter*> & parameters, 
                                     std::map<unsigned int, DataContainer> & map,
@@ -49,7 +64,7 @@ namespace stromx
                     iter != parameters.end();
                     ++iter)
                 {
-                    if ((*iter)->originalType() != DescriptionBase::INPUT && (*iter)->originalType() != DescriptionBase::OUTPUT)
+                    if (! isConnector<description_t>(*iter))
                         continue;
                         
                     if(map.count((*iter)->id()))
@@ -136,11 +151,17 @@ namespace stromx
             
             bool Id2DataMap::canBeSet(const unsigned int id) const
             {
+                if (m_persistentParameters.count(id))
+                    return true;
+                    
                 return get(id).empty();
             }
             
             bool Id2DataMap::mustBeReset(const unsigned int id) const
             {
+                if (m_persistentParameters.count(id))
+                    return false;
+                    
                 return true;
             }
         }

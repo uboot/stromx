@@ -22,6 +22,7 @@
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
 #include "stromx/runtime/OperatorKernel.h"
+#include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/impl/SynchronizedOperatorKernel.h"
 
 namespace
@@ -105,6 +106,9 @@ namespace stromx
                     throw OperatorError(*info(), e.what());
                 }
                 
+                m_inputMap.initialize(m_op->inputs(), m_op->parameters());
+                m_outputMap.initialize(m_op->outputs(), m_op->parameters());
+                
                 m_inputMap.setObserver(inputObserver);
                 m_outputMap.setObserver(outputObserver);
                 
@@ -120,13 +124,7 @@ namespace stromx
                 
                 if(m_status != INITIALIZED)
                     throw WrongOperatorState(*info(), "Operator must be initialized.");
-                
-                m_inputMap.initialize(m_op->inputs());
-                m_outputMap.initialize(m_op->outputs());
-                
-                BOOST_ASSERT(m_inputMap.empty());
-                BOOST_ASSERT(m_outputMap.empty());
-                
+                                 
                 try
                 {
                     m_op->activate();
@@ -203,11 +201,39 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 
-                while(m_parametersAreLocked)
-                    waitForSignal(m_parameterCond, lock, waitWithTimeout, timeout);
-                
                 validateParameterId(id);
                 validateReadAccess(id);
+                
+                if (isInputParameter(id))
+                {   
+                    if (m_inputMap.get(id).empty())
+                    {
+                        const Parameter& param = info()->parameter(id);
+                        throw ParameterError(param, *this->info(), "No value has been set for this parameter");
+                    }
+                    
+                    DataContainer data = m_inputMap.get(id);
+                    ReadAccess access(data, timeout);
+                    return DataRef(access.get().clone());
+                } 
+                else if (isOutputParameter(id))
+                {   
+                    while (m_outputMap.get(id).empty())
+                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                    
+                    DataContainer data = m_outputMap.get(id);
+                    if (m_outputMap.mustBeReset(id))
+                    {
+                        m_outputMap.set(id, DataContainer());
+                        m_dataCond.notify_all();
+                    }
+                        
+                    ReadAccess access(data, timeout);
+                    return DataRef(access.get().clone());
+                }
+                
+                while(m_parametersAreLocked)
+                    waitForSignal(m_parameterCond, lock, waitWithTimeout, timeout);
                 
                 try
                 {
@@ -229,11 +255,21 @@ namespace stromx
                 
                 validateParameterId(id);
                 validateParameterType(id, value.variant());
+                validateWriteAccess(id);
+                
+                if (isInputParameter(id))
+                {
+                    while (! m_inputMap.canBeSet(id))
+                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                        
+                    DataContainer data(value.clone(), true);
+                    m_inputMap.set(id, data);
+                    m_dataCond.notify_all();
+                    return;
+                }
                 
                 while(m_parametersAreLocked)
                     waitForSignal(m_parameterCond, lock, waitWithTimeout, timeout);
-                
-                validateWriteAccess(id);
                 
                 try
                 {
@@ -310,6 +346,7 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
+                validateOutputId(id);
                 
                 while(m_outputMap.get(id).empty())
                 {
@@ -330,7 +367,6 @@ namespace stromx
                         testForInterrupt(); // give us some chance to escape the while loop
                 }
                 
-                m_dataCond.notify_all();
                 return m_outputMap.get(id);
             }
 
@@ -338,8 +374,9 @@ namespace stromx
             {
                 unique_lock_t lock(m_mutex);
                 validateDataAccess();
+                validateInputId(id);
                 
-                while(! m_inputMap.get(id).empty())
+                while(! m_inputMap.canBeSet(id))
                 {
                     bool success = false;
                     {
@@ -358,8 +395,8 @@ namespace stromx
                         testForInterrupt(); // give us some chance to escape the while loop
                 }
                 
-                m_dataCond.notify_all();
                 m_inputMap.set(id, data);
+                m_dataCond.notify_all();
                 
                 // if this is a greedy operator try to execute it immediately
                 if (m_op->properties().isGreedy)
@@ -373,6 +410,7 @@ namespace stromx
             {
                 lock_t lock(m_mutex);
                 validateDataAccess();
+                validateOutputId(id);
                 
                 m_outputMap.set(id, DataContainer());
                 m_dataCond.notify_all();
@@ -421,8 +459,8 @@ namespace stromx
                 
                 m_op->setConnectorType(id, type, updateBehavior);
                 
-                m_inputMap.initialize(m_op->inputs());
-                m_outputMap.initialize(m_op->outputs());
+                m_inputMap.initialize(m_op->inputs(), m_op->parameters());
+                m_outputMap.initialize(m_op->outputs(), m_op->parameters());
             }
             
             bool SynchronizedOperatorKernel::tryExecute()
@@ -557,6 +595,42 @@ namespace stromx
                     throw WrongParameterId(id, *this->info());
             }
             
+            void SynchronizedOperatorKernel::validateInputId(const unsigned int id)
+            {
+                bool isValid = false;
+                for(std::vector<const Input*>::const_iterator iter = info()->inputs().begin();
+                    iter != info()->inputs().end();
+                    ++iter)
+                {
+                    if((*iter)->id() == id)
+                    {
+                        isValid = true;
+                        break;
+                    }
+                }
+                
+                if(! isValid)
+                    throw WrongId("No input with ID " + id);
+            }
+            
+            void SynchronizedOperatorKernel::validateOutputId(const unsigned int id)
+            {
+                bool isValid = false;
+                for(std::vector<const Output*>::const_iterator iter = info()->outputs().begin();
+                    iter != info()->outputs().end();
+                    ++iter)
+                {
+                    if((*iter)->id() == id)
+                    {
+                        isValid = true;
+                        break;
+                    }
+                }
+                
+                if(! isValid)
+                    throw WrongId("No output with ID " + id);
+            }
+            
             void SynchronizedOperatorKernel::validateReadAccess(const unsigned int id)
             {
                 const Parameter& param = info()->parameter(id);
@@ -675,6 +749,20 @@ namespace stromx
                 {
                     throw OperatorError(*info(), e.what());
                 }
+            }
+            
+            bool SynchronizedOperatorKernel::isInputParameter(const unsigned int id) const
+            {
+                const Parameter& param = info()->parameter(id);
+                
+                return param.originalType() == DescriptionBase::INPUT;
+            }
+            
+            bool SynchronizedOperatorKernel::isOutputParameter(const unsigned int id) const
+            {
+                const Parameter& param = info()->parameter(id);
+                
+                return param.originalType() == DescriptionBase::OUTPUT;
             }
         }
     }

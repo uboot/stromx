@@ -18,7 +18,9 @@
 #include <cppunit/TestFixture.h>
 
 #include "stromx/runtime/DataContainer.h"
+#include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/OperatorException.h"
+#include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/Variant.h"
 #include "stromx/runtime/impl/SynchronizedOperatorKernel.h"
 
@@ -33,7 +35,7 @@ class ConnectorOperator : public OperatorKernel
 public:
     ConnectorOperator()
         : OperatorKernel("", "", Version(), setupInputs(), 
-            std::vector<const Output*>())
+            std::vector<const Output*>(), setupProperties())
     {}
             
     void initialize()
@@ -43,13 +45,25 @@ public:
     }
     
     OperatorKernel* clone() const { return 0; }
-    void execute(DataProvider&) {}
+    void execute(DataProvider& provider)
+    {
+        Id2DataPair in(0);
+        provider.receiveInputData(in);
+        
+        Int16* data = new Int16(ReadAccess(in.data()).get<UInt16>());
+        Id2DataPair out(1, DataContainer(data));
+        provider.sendOutputData(out);
+    }
     
     static const std::vector<const Input* > setupInputs()
     {
         std::vector<const Input*> inputs;
         
         Input* input = new Input(0, Variant::UINT_16);
+        inputs.push_back(input);
+        
+        input = new Input(3, Variant::UINT_16);
+        input->setDefaultType(Input::PARAMETER);
         inputs.push_back(input);
         
         return inputs;
@@ -64,6 +78,13 @@ public:
         
         return outputs;
     }
+    
+    static const OperatorProperties setupProperties()
+    {
+        OperatorProperties properties;
+        properties.isGreedy = true;
+        return properties;
+    }
 };
 }
 
@@ -75,11 +96,17 @@ class SynchronizedOperatorKernelTest : public CPPUNIT_NS :: TestFixture
     CPPUNIT_TEST (testSetConnectorNotInitialized);
     CPPUNIT_TEST (testSetConnectorActive);
     CPPUNIT_TEST (testSetConnectorTypeInputToParameter);
+    CPPUNIT_TEST (testSetInputParameterNotActivated);
     CPPUNIT_TEST (testSetConnectorTypeOutputToParameter);
     CPPUNIT_TEST (testSetConnectorTypeInputToParameterWrongVariant);
     CPPUNIT_TEST (testSetConnectorTypeOutputToParameterWrongVariant);
     CPPUNIT_TEST (testSetConnectorTypeParameterToInput);
     CPPUNIT_TEST (testSetConnectorTypeParameterToOutput);
+    CPPUNIT_TEST (testConnectorParameterWrongType);
+    CPPUNIT_TEST (testInputParameterPersistent);
+    CPPUNIT_TEST (testInputParameterPush);
+    CPPUNIT_TEST (testOutputParameterPersistent);
+    CPPUNIT_TEST (testOutputParameterPull);
     CPPUNIT_TEST_SUITE_END ();
 
 public:
@@ -130,6 +157,15 @@ protected:
         CPPUNIT_ASSERT_EQUAL(UInt16(42), data_cast<UInt16>(m_kernel->getParameter(0, false)));
     }
     
+    void testSetInputParameterNotActivated()
+    {
+        m_kernel->initialize(0, 0);
+        
+        UInt16 data(42);
+        DataContainer container(new UInt16(43));
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->setParameter(3, data, false));
+    }
+    
     void testSetConnectorTypeOutputToParameter()
     {
         m_kernel->initialize(0, 0);
@@ -138,8 +174,7 @@ protected:
         
         Int16 data(42);
         CPPUNIT_ASSERT_THROW(m_kernel->getOutputData(1), WrongId);
-        CPPUNIT_ASSERT_NO_THROW(m_kernel->setParameter(1, data, false));
-        CPPUNIT_ASSERT_EQUAL(Int16(42), data_cast<Int16>(m_kernel->getParameter(0, false)));
+        CPPUNIT_ASSERT_THROW(m_kernel->setParameter(1, data, false), ParameterAccessViolation);
     }
     
     void testSetConnectorTypeInputToParameterWrongVariant()
@@ -183,6 +218,76 @@ protected:
         Int16 data(42);
         CPPUNIT_ASSERT_NO_THROW(m_kernel->clearOutputData(1));
         CPPUNIT_ASSERT_THROW(m_kernel->setParameter(1, data, false), WrongParameterId);
+    }
+    
+    void testConnectorParameterWrongType()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        
+        Int16 data(42);
+        CPPUNIT_ASSERT_THROW(m_kernel->setParameter(0, data, false), WrongParameterType);
+    }
+    
+    void testInputParameterPersistent()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        
+        UInt16 data(42);
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(0, data), ParameterError);
+        m_kernel->setParameter(0, data, false);
+        
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->setParameter(0, data, false));
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
+    }
+    
+    void testInputParameterPush()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+        
+        UInt16 data(42);
+        m_kernel->setParameter(0, data, false);
+        
+        CPPUNIT_ASSERT_THROW(m_kernel->setParameter(0, data, true, 0), Timeout);
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
+        CPPUNIT_ASSERT_THROW(m_kernel->setParameter(0, data, true, 0), Timeout);
+        
+        m_kernel->activate();
+        m_kernel->getOutputData(1);
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->setParameter(0, data, true, 0));
+    }
+    
+    void testOutputParameterPersistent()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->activate();
+        
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
+        
+        DataContainer data(new UInt16(42));
+        m_kernel->setInputData(0, data);
+        
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(1, true, 0));
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(1, true, 0));
+    }
+    
+    void testOutputParameterPull()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PULL);
+        m_kernel->activate();
+        
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
+        
+        DataContainer data(new UInt16(42));
+        m_kernel->setInputData(0, data);
+        
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(1, true, 0));
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
     }
 };
 }

@@ -38,6 +38,8 @@ namespace stromx
             CPPUNIT_TEST(testObserver);
             CPPUNIT_TEST(testCanBeSet);
             CPPUNIT_TEST(testMustBeReset);
+            CPPUNIT_TEST(testSetInputMap);
+            CPPUNIT_TEST(testSetOutputMap);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -53,6 +55,8 @@ namespace stromx
             void testObserver();
             void testCanBeSet();
             void testMustBeReset();
+            void testSetInputMap();
+            void testSetOutputMap();
                 
         private:
             class Observer : public impl::Id2DataMapObserver
@@ -75,7 +79,8 @@ namespace stromx
             };
             
             Observer* m_observer;
-            impl::Id2DataMap* m_id2DataMap;
+            impl::Id2DataMap* m_inputMap;
+            impl::Id2DataMap* m_outputMap;
             Input m_input0;
             Input m_input1;
             Input m_input2;

@@ -88,10 +88,14 @@ namespace stromx
                 void waitForSignal(boost::condition_variable& condition, unique_lock_t& lock,
                                    const bool waitWithTimeout, const unsigned int timeout = 0);
                 void validateParameterId(const unsigned int id);
+                void validateInputId(const unsigned int id);
+                void validateOutputId(const unsigned int id);
                 void validateWriteAccess(const unsigned int id);
                 void validateReadAccess(const unsigned int id);
                 void validateParameterType(const unsigned int id, const VariantInterface& type);
                 void validateDataAccess();
+                bool isInputParameter(const unsigned int id) const;
+                bool isOutputParameter(const unsigned int id) const;
                 
                 OperatorKernel* m_op;
                 Status m_status;
