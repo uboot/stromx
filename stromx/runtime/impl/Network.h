@@ -64,6 +64,8 @@ namespace stromx
                 
                 void addOperator(Operator* const op);
                 void removeOperator(Operator* const op);
+                void removeInput(Operator* const op, const unsigned int inputId);
+                void removeOutput(Operator* const op, const unsigned int outputId);
 
                 void activate();
                 void deactivate();

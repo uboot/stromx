@@ -42,6 +42,8 @@ namespace stromx
             CPPUNIT_TEST(testDeactivateFails);
             CPPUNIT_TEST(testRemoveConnectedOperator);
             CPPUNIT_TEST(testConnectionSource);
+            CPPUNIT_TEST(testRemoveInput);
+            CPPUNIT_TEST(testRemoveOutput);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -58,8 +60,10 @@ namespace stromx
             void testDeactivate();
             void testDeactivateFails();
             void testConnectionSource();
+            void testRemoveInput();
+            void testRemoveOutput();
                 
-        private: 
+        private:             
             impl::Network* m_network;
         };
     }

@@ -27,7 +27,7 @@ namespace stromx
         namespace impl
         {
             OutputNode::OutputNode(Operator*const op, const unsigned int outputId)
-            : m_operator(op),
+              : m_operator(op),
                 m_outputId(outputId),
                 m_servedInputs(0)
             {}

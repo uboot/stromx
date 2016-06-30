@@ -150,7 +150,7 @@ namespace stromx
                             desc != op->info().inputs().end();
                             ++desc)
                         {
-                            disconnect(op, (*desc)->id());
+                            removeInput(op, (*desc)->id());
                         }
                         
                         
@@ -159,17 +159,7 @@ namespace stromx
                             desc != op->info().outputs().end();
                             ++desc)
                         {
-                            const OutputNode* output = op->getOutputNode((*desc)->id());
-                            
-                            // for each output disconnect each connected input
-                            for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
-                                input != output->connectedInputs().end(); )
-                            {
-                                std::set<InputNode*>::iterator thisInput = input;
-                                ++input;
-
-                                (*thisInput)->disconnect();
-                            } 
+                            removeOutput(op, (*desc)->id());
                         }
                             
                         m_operators.erase(iter);
@@ -180,6 +170,25 @@ namespace stromx
                 throw WrongArgument("Operator does not exist");
             }
             
+            void Network::removeInput(Operator* const op, const unsigned int inputId)
+            {
+                disconnect(op, inputId);
+            }
+            
+            void Network::removeOutput(Operator* const op, const unsigned int outputId)
+            {
+                const OutputNode* output = op->getOutputNode(outputId);
+            
+                for(std::set<InputNode*>::iterator input = output->connectedInputs().begin();
+                                input != output->connectedInputs().end(); )
+                {
+                    std::set<InputNode*>::iterator thisInput = input;
+                    ++input;
+
+                    (*thisInput)->disconnect();
+                } 
+            }
+                
             const OutputConnector Network::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
             {
                 for(std::vector<Operator*>::const_iterator iter = m_operators.begin();
