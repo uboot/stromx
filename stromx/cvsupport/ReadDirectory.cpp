@@ -162,7 +162,7 @@ namespace stromx
         {
             std::vector<const Output*> outputs;
             
-            Output* output = new Output(OUTPUT, Variant::DATA);
+            Output* output = new Output(OUTPUT, Variant::IMAGE);
             output->setTitle(L_("Output"));
             outputs.push_back(output);
             
