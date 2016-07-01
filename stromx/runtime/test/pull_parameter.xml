@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Stromx version="0.3.0">
+  <Stream name="TestStream">
+    <Operator id="0" isInitialized="true" name="Number 1" package="TestPackage" type="TestOperator" version="0.8.0">
+      <Parameter behavior="pull" id="2" title="">
+      </Parameter>
+    </Operator>
+  </Stream>
+</Stromx>

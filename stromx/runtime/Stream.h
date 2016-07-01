@@ -355,6 +355,8 @@ namespace stromx
             void attachThread(Thread* const thread);
             void detachOperator(Operator* const op);
             void detachThread(Thread* const thread);
+            void disconnectInput(Operator* const op, const unsigned int id);
+            void disconnectOutput(Operator* const op, const unsigned int id);
             
             std::string m_name; 
             impl::Network* const m_network;

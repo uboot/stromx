@@ -88,15 +88,6 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(1, int(m_thread->inputSequence().size()));
             CPPUNIT_ASSERT_EQUAL(static_cast<const Operator*>(m_op2), m_thread->inputSequence()[0].op());
         }
-        
-        void ThreadTest::testRemoveOperator()
-        {
-            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_thread->inputSequence().size()));
-            
-            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_op1));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(1), (unsigned int)(m_thread->inputSequence().size()));
-        }
 
         void ThreadTest::tearDown()
         {

@@ -12,7 +12,7 @@
             <Parameter id="6">
                 <Data package="runtime" type="Bool" version="0.1.0">0</Data>
             </Parameter>
-            <Parameter id="7">
+            <Parameter id="7" title="" behavior="persistent">
                 <Data package="TestPackage" type="TestData" version="0.1.0" file="data.txt"/>
             </Parameter>
         </Operator>

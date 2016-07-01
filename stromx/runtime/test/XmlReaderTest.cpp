@@ -103,6 +103,32 @@ namespace stromx
             CPPUNIT_ASSERT_THROW(XmlReader().readStream("dtd.xml", m_factory), InvalidFileFormat);
         }
         
+        void XmlReaderTest::testReadStreamPullParameter()
+        {
+            Stream* stream = 0;
+            stream = XmlReader().readStream("pull_parameter.xml", m_factory);
+            CPPUNIT_ASSERT_NO_THROW(stream->operators()[0]->info().parameter(TestOperator::OUTPUT_1));
+            delete stream;
+        }
+        
+        void XmlReaderTest::testReadStreamPushParameter()
+        {
+            Stream* stream = 0;
+            stream = XmlReader().readStream("push_parameter.xml", m_factory);
+            CPPUNIT_ASSERT_NO_THROW(stream->operators()[0]->info().parameter(TestOperator::INPUT_1));
+            delete stream;
+        }
+        
+        void XmlReaderTest::testReadStreamPersistentParameter()
+        {
+            Stream* stream = 0;
+            stream = XmlReader().readStream("persistent_parameter.xml", m_factory);
+            CPPUNIT_ASSERT_NO_THROW(stream->operators()[0]->info().parameter(TestOperator::INPUT_2));
+            CPPUNIT_ASSERT_EQUAL(191079, 
+                data_cast<TestData>(stream->operators()[0]->getParameter(TestOperator::INPUT_2)).value());
+            delete stream;
+        }
+        
         void XmlReaderTest::testReadParameters()
         {
             CPPUNIT_ASSERT_NO_THROW(XmlReader().readParameters("parameters.xml", m_factory, m_stream->operators()));

@@ -34,6 +34,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/empty_float_matrix.npy ${CMAKE_CURREN
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fortran_order.npy ${CMAKE_CURRENT_BINARY_DIR}/fortran_order.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/uint16_matrix.npy ${CMAKE_CURRENT_BINARY_DIR}/uint16_matrix.npy COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data.txt ${CMAKE_CURRENT_BINARY_DIR}/directory/data.txt COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/push_parameter.xml ${CMAKE_CURRENT_BINARY_DIR}/push_parameter.xml COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/pull_parameter.xml ${CMAKE_CURRENT_BINARY_DIR}/pull_parameter.xml COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/persistent_parameter.xml ${CMAKE_CURRENT_BINARY_DIR}/persistent_parameter.xml COPYONLY)
 
 set(SOURCES
     ../AssignThreadsAlgorithm.cpp

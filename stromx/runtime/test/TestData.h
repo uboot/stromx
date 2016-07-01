@@ -38,7 +38,7 @@ namespace stromx
             
             virtual const VariantHandle & variant() const { return TEST_DATA; }
             
-            virtual Data* clone() const { return new TestData; }
+            virtual Data* clone() const { return new TestData(m_value); }
             
             virtual void serialize(OutputProvider & output) const;
             virtual void deserialize(InputProvider & input, const Version & version);

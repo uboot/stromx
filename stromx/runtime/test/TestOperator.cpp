@@ -126,7 +126,7 @@ namespace stromx
         const std::vector<const Input*> TestOperator::setupInputs()
         {
             std::vector<const Input*> inputs;
-            inputs.push_back(new Input(INPUT_2, Variant::NONE));
+            inputs.push_back(new Input(INPUT_2, TestData::TEST_DATA));
             
             return inputs;
         }

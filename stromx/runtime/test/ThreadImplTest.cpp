@@ -110,17 +110,6 @@ namespace stromx
             CPPUNIT_ASSERT(m_node != m_thread->inputSequence()[0]);  
         }
         
-        void ThreadImplTest::testRemoveOperator()
-        {
-            Operator* op = m_operators[1];
-            
-            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(op));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
-            
-            CPPUNIT_ASSERT_NO_THROW(m_thread->removeOperator(m_operator));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_thread->inputSequence().size()));
-        }
-        
         void ThreadImplTest::testStart()
         {
             CPPUNIT_ASSERT_NO_THROW(m_thread->start());

@@ -257,7 +257,7 @@ namespace stromx
             //Valid input parameter and stream INACTIVE           
             CPPUNIT_ASSERT_NO_THROW(m_stream->removeOperator(op));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->operators().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
             
             //Remove uninitialized operator
             Operator* op2 = m_stream->addOperator(m_op2);
@@ -311,14 +311,12 @@ namespace stromx
             
             CPPUNIT_ASSERT_NO_THROW(m_stream->deinitializeOperator(op1));
             CPPUNIT_ASSERT_EQUAL(Operator::NONE, op1->status());
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
         }
         
-        void StreamTest::testDeinitializeOperatorThread()
+        void StreamTest::testDeinitializeRemoveConnectors()
         {
             Operator* op1 = m_stream->operators()[1];
             m_stream->deinitializeOperator(op1);
-            
             
             CPPUNIT_ASSERT_EQUAL(std::size_t(0), m_stream->threads()[0]->inputSequence().size());
         }
@@ -494,7 +492,7 @@ namespace stromx
             //Valid input parameter and stream INACTIVE           
             CPPUNIT_ASSERT_NO_THROW(m_stream->hideOperator(op));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(3), (unsigned int)(m_stream->operators().size()));
-            CPPUNIT_ASSERT_EQUAL((unsigned int)(2), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
+            CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_stream->threads()[0]->inputSequence().size()));
             
             //Cannot hide again
             CPPUNIT_ASSERT_THROW(m_stream->hideOperator(op), WrongArgument);

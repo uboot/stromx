@@ -117,19 +117,22 @@ namespace stromx
   </xs:element> \
   <xs:element name=\"Parameter\"> \
     <xs:complexType> \
-      <xs:complexContent> \
-        <xs:extension base=\"Data\"> \
+      <xs:sequence> \
+        <xs:element minOccurs=\"0\" maxOccurs=\"1\" ref=\"Data\"/> \
+      </xs:sequence> \
           <xs:attribute name=\"id\" use=\"required\" type=\"xs:NMTOKEN\"/> \
           <xs:attribute name=\"title\"/> \
-        </xs:extension> \
-      </xs:complexContent> \
+          <xs:attribute name=\"behavior\"> \
+            <xs:simpleType> \
+            <xs:restriction base=\"xs:string\"> \
+              <xs:enumeration value=\"persistent\" /> \
+              <xs:enumeration value=\"push\" /> \
+              <xs:enumeration value=\"pull\" /> \
+            </xs:restriction> \
+            </xs:simpleType> \
+          </xs:attribute> \
     </xs:complexType> \
   </xs:element> \
-  <xs:complexType name=\"Data\"> \
-    <xs:sequence> \
-      <xs:element ref=\"Data\"/> \
-    </xs:sequence> \
-  </xs:complexType> \
   <xs:element name=\"Data\"> \
     <xs:complexType mixed=\"true\"> \
       <xs:attribute name=\"type\" use=\"required\"/> \
@@ -508,6 +511,7 @@ namespace stromx
                         
                         // clear the current parameters
                         m_id2DataMap.clear();
+                        m_id2BehaviorMap.clear();
                     }
                 }
                 catch(xercesc::XMLException& toCatch)
@@ -564,6 +568,8 @@ namespace stromx
                 op->setPosition(position);
                 
                 m_id2OperatorMap[id] = op;
+                m_id2DataMap.clear();
+                m_id2BehaviorMap.clear();
                 
                 DOMNodeList* parameters = opElement->getElementsByTagName(Str2Xml("Parameter"));
                 XMLSize_t numParameters = parameters->getLength();
@@ -601,6 +607,13 @@ namespace stromx
                 if (std::string(isInitialized) != "false" && std::string(isInitialized) != "0")
                 {
                     m_stream->initializeOperator(op);
+                    
+                    // set the type of the connectors
+                    for (std::map<unsigned int, DescriptionBase::UpdateBehavior>::const_iterator iter = m_id2BehaviorMap.begin();
+                         iter != m_id2BehaviorMap.end(); ++iter)
+                    {
+                        m_stream->setConnectorType(op, iter->first, DescriptionBase::PARAMETER, iter->second);
+                    }
                 
                     // set parameters after initialization
                     for(std::vector<const Parameter*>::const_iterator iter = op->info().parameters().begin();
@@ -653,18 +666,28 @@ namespace stromx
             void XmlReaderImpl::readParameter(DOMElement*const paramElement)
             {
                 Xml2Str idStr(paramElement->getAttribute(Str2Xml("id")));
+                Xml2Str behaviorStr(paramElement->getAttribute(Str2Xml("behavior")));
                 
                 unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
+                DescriptionBase::UpdateBehavior behavior = DescriptionBase::PERSISTENT;
+                if (std::string(behaviorStr) == "pull")
+                    behavior = DescriptionBase::PULL;
+                else if (std::string(behaviorStr) == "push")
+                    behavior = DescriptionBase::PUSH;
+                    
+                if(m_id2BehaviorMap.count(id))
+                    throw XmlError("Multiple parameters with the same ID " + boost::lexical_cast<std::string>(id) + ".");
+                m_id2BehaviorMap[id] = behavior;
                 
                 DOMNodeList* dataElements = paramElement->getElementsByTagName(Str2Xml("Data"));
                 XMLSize_t numDataElements = dataElements->getLength();
                 
+                if(numDataElements > 1)
+                    throw XmlError("More than one <Data/> elements for parameter.");
+                    
                 if(! numDataElements)
                     return;
-                
-                if(numDataElements != 1)
-                    throw XmlError("More than one <Data/> elements for parameter.");
-                
+                    
                 if(dataElements->item(0)->getNodeType() != DOMElement::ELEMENT_NODE)
                     throw XmlError("No <Data/> element for parameter.");
                     

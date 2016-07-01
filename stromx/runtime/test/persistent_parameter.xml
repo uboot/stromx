@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Stromx version="0.3.0">
+  <Stream name="TestStream">
+    <Operator id="0" isInitialized="true" name="Number 1" package="TestPackage" type="TestOperator" version="0.8.0">
+      <Parameter behavior="persistent" id="1" title="">
+          <Data package="TestPackage" type="TestData" version="0.8.0" file="data.txt"/>
+      </Parameter>
+    </Operator>
+  </Stream>
+</Stromx>

@@ -49,7 +49,6 @@ namespace stromx
             CPPUNIT_TEST(testAddInput);
             CPPUNIT_TEST(testInsertInput);
             CPPUNIT_TEST(testRemoveInput);
-            CPPUNIT_TEST(testRemoveOperator);
             CPPUNIT_TEST(testObserver);
             CPPUNIT_TEST_SUITE_END ();
 

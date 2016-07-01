@@ -82,31 +82,6 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op));
             CPPUNIT_ASSERT_EQUAL((unsigned int)(0), (unsigned int)(m_network->operators().size()));
         }
-        
-        void NetworkTest::testRemoveConnectedOperator()
-        {
-            Operator* op0 = new Operator(new TestOperator);
-            op0->initialize();
-            m_network->addOperator(op0);
-            
-            Operator* op1 = new Operator(new TestOperator);
-            op1->initialize();
-            m_network->addOperator(op1);
-            
-            Operator* op2 = new Operator(new TestOperator);
-            op2->initialize();
-            m_network->addOperator(op2);
-            
-            m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            m_network->connect(op0, TestOperator::OUTPUT_2, op1, TestOperator::INPUT_2);
-            
-            m_network->connect(op1, TestOperator::OUTPUT_1, op2, TestOperator::INPUT_1);
-            m_network->connect(op1, TestOperator::OUTPUT_2, op2, TestOperator::INPUT_2);
-            
-            CPPUNIT_ASSERT_NO_THROW(m_network->removeOperator(op1));
-            CPPUNIT_ASSERT(! m_network->connectionSource(op2, TestOperator::INPUT_1).valid());
-            CPPUNIT_ASSERT(! m_network->connectionSource(op2, TestOperator::INPUT_2).valid());
-        }
     
         void NetworkTest::testConnectionSource()
         {
@@ -169,38 +144,6 @@ namespace stromx
             m_network->activate();
             
             CPPUNIT_ASSERT_NO_THROW(m_network->deactivate());
-        }
-        
-        void NetworkTest::testRemoveInput()
-        {
-            Operator* op0 = new Operator(new TestOperator);
-            op0->initialize();
-            m_network->addOperator(op0);
-            Operator* op1 = new Operator(new TestOperator);
-            op1->initialize();
-            m_network->addOperator(op1);
-            m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            
-            m_network->removeInput(op1, TestOperator::INPUT_1);
-            
-            OutputNode* output = m_network->getOutputNode(op0, TestOperator::OUTPUT_1);
-            CPPUNIT_ASSERT_EQUAL(std::size_t(0), output->connectedInputs().size());
-            
-        }
-        
-        void NetworkTest::testRemoveOutput()
-        {
-            Operator* op0 = new Operator(new TestOperator);
-            op0->initialize();
-            m_network->addOperator(op0);
-            Operator* op1 = new Operator(new TestOperator);
-            op1->initialize();
-            m_network->addOperator(op1);
-            m_network->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1);
-            
-            m_network->removeOutput(op0, TestOperator::OUTPUT_1);
-            
-            CPPUNIT_ASSERT(! m_network->connectionSource(op1, TestOperator::INPUT_1).valid());
         }
 
         void NetworkTest::tearDown()

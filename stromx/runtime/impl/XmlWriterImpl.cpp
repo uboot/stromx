@@ -38,7 +38,7 @@ namespace stromx
         {
             
             const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MAJOR = 0;
-            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MINOR = 2;
+            const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_MINOR = 3;
             const unsigned int XmlWriterImpl::XML_FORMAT_VERSION_REVISION = 0;
                 
             XmlWriterImpl::XmlWriterImpl() 
@@ -204,6 +204,24 @@ namespace stromx
                     const Parameter& desc = currOp->info().parameter((*iter_par)->id());
                     titleAttr->setValue(Str2Xml(desc.title().c_str()));
                     parElement->setAttributeNode(titleAttr);
+                    
+                    DOMAttr* behaviorAttr = m_doc->createAttribute(Str2Xml("behavior"));
+                    switch (desc.updateBehavior())
+                    {
+                    case DescriptionBase::PERSISTENT:
+                        behaviorAttr->setValue(Str2Xml("persistent"));
+                        break;
+                    case DescriptionBase::PULL:
+                        behaviorAttr->setValue(Str2Xml("pull"));
+                        break;
+                    case DescriptionBase::PUSH:
+                        behaviorAttr->setValue(Str2Xml("push"));
+                        break;
+                    case DescriptionBase::INTERNAL:
+                        behaviorAttr->setValue(Str2Xml("internal"));
+                        break;
+                    }
+                    parElement->setAttributeNode(behaviorAttr);
                                    
                     // Do not persist push operators
                     if ((*iter_par)->updateBehavior() == Parameter::PUSH)

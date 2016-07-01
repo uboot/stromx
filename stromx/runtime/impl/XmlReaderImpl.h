@@ -22,6 +22,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "stromx/runtime/DescriptionBase.h"
 #include "stromx/runtime/Version.h"
 
 namespace stromx
@@ -63,6 +64,7 @@ namespace stromx
                 FileInput* m_input;
                 std::map<unsigned int, Operator*> m_id2OperatorMap;
                 std::map<unsigned int, Data*> m_id2DataMap;
+                std::map<unsigned int, DescriptionBase::UpdateBehavior> m_id2BehaviorMap;
             };
         }
     }

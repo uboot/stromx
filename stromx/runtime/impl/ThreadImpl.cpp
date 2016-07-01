@@ -87,31 +87,6 @@ namespace stromx
                 m_inputSequence.erase(m_inputSequence.begin() + position);
             }
             
-            void ThreadImpl::removeOperator(const Operator* op)
-            {
-                if(m_status != INACTIVE)
-                    throw WrongState("Thread must be inactive.");
-                
-                typedef std::set< std::vector<InputNode*>::iterator > IndexSet;
-                
-                IndexSet toBeErased;
-                
-                for(std::vector<InputNode*>::iterator iter1 = m_inputSequence.begin();
-                    iter1 != m_inputSequence.end();
-                    ++iter1)
-                {
-                    if((*iter1)->op() == op)
-                        toBeErased.insert(iter1);
-                }
-                
-                for(IndexSet::reverse_iterator iter2 = toBeErased.rbegin();
-                    iter2 != toBeErased.rend();
-                    ++iter2)
-                {
-                    m_inputSequence.erase(*iter2);
-                }
-            }
-            
             void ThreadImpl::setDelay(const unsigned int delay)
             {
                 lock_t lock(m_mutex);

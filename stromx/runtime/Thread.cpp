@@ -110,33 +110,6 @@ namespace stromx
             m_thread->resume();
         }
 
-        void Thread::removeOperator(const Operator* op)
-        {
-            typedef std::set< std::vector<InputConnector>::iterator > IndexSet;
-            
-            if (op == 0)
-                throw WrongArgument("Operator must not be null.");
-            
-            m_thread->removeOperator(op);
-            
-            IndexSet toBeErased;
-            
-            for(std::vector<InputConnector>::iterator iter1 = m_inputSequence.begin();
-                iter1 != m_inputSequence.end();
-                ++iter1)
-            {
-                if((*iter1).op() == op)
-                    toBeErased.insert(iter1);
-            }
-            
-            for(IndexSet::reverse_iterator iter2 = toBeErased.rbegin();
-                iter2 != toBeErased.rend();
-                ++iter2)
-            {
-                m_inputSequence.erase(*iter2);
-            }
-        }
-
         void Thread::setDelay(const unsigned int delay)
         {
             m_thread->setDelay(delay);

@@ -57,7 +57,6 @@ namespace stromx
                 void addInput(InputNode* const op);
                 void insertInput(const unsigned int position, InputNode* const op);
                 void removeInput(const unsigned int position);
-                void removeOperator(const Operator* op);
                 
                 void setDelay(const unsigned int delay);
                 

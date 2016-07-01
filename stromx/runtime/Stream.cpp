@@ -332,12 +332,7 @@ namespace stromx
             if (targetOp->status() == Operator::NONE)
                 throw WrongState("Operator must be initialized.");
             
-            m_network->disconnect(targetOp, inputId);         
-            for (std::vector<Thread*>::iterator iter = m_threads.begin();
-                 iter != m_threads.end(); ++iter)
-            {
-                (*iter)->removeInput(targetOp, inputId);
-            }
+            disconnectInput(targetOp, inputId);
         }
                 
         unsigned int Stream::delay() const
@@ -410,17 +405,21 @@ namespace stromx
             if (isPartOfUninitializedStream(op))
                 return;
             
-            m_network->removeOperator(op);
-            m_uninitializedOperators.insert(op);
-            
-            for (std::vector<Thread*>::iterator iter = m_threads.begin();
-                    iter != m_threads.end();
-                    ++iter)
+            for (std::vector<const Input*>::const_iterator iter = op->info().inputs().begin();
+                 iter != op->info().inputs().end(); ++iter)
             {
-                (*iter)->removeOperator(op);
+                disconnectInput(op, (*iter)->id());
             }
             
+            for (std::vector<const Output*>::const_iterator iter = op->info().outputs().begin();
+                 iter != op->info().outputs().end(); ++iter)
+            {
+                disconnectOutput(op, (*iter)->id());
+            }
+               
             op->deinitialize();
+            m_network->removeOperator(op);
+            m_uninitializedOperators.insert(op);
         }
         
         const OutputConnector Stream::connectionSource(const Operator* const targetOp, const unsigned int inputId) const
@@ -631,29 +630,45 @@ namespace stromx
                 throw WrongArgument("Operator is not part of the stream.");
                 
             const DescriptionBase& description = op->info().description(id);
-            OutputConnector output;
-            
-            switch (description.currentType())
+            if (description.currentType() == type)
+                return;
+                
+            if (type == DescriptionBase::PARAMETER)
             {
-            case DescriptionBase::INPUT:
-                disconnect(op, id);
-                break;
-            case DescriptionBase::OUTPUT:
-            {
-                const std::set<impl::InputNode*> & inputs = m_network->getOutputNode(op, id)->connectedInputs();
-                for(std::set<impl::InputNode*>::const_iterator iter = inputs.begin();
-                    iter != inputs.end(); ++iter)
+                switch (description.currentType())
                 {
-                    disconnect((*iter)->op(), (*iter)->inputId());
-                }
-                m_network->removeOutput(op, id);
-                break;
+                case DescriptionBase::INPUT:
+                    disconnectInput(op, id);
+                    break;
+                case DescriptionBase::OUTPUT:
+                    disconnectOutput(op, id);
+                    break;
+                default:
+                    break;
+                } 
             }
-            default:
-                break;
-            } 
             
             op->setConnectorType(id, type, behavior);
+        }
+        
+        void Stream::disconnectInput(Operator* const op, const unsigned int id)
+        {
+            m_network->disconnect(op, id);         
+            for (std::vector<Thread*>::iterator iter = m_threads.begin();
+                 iter != m_threads.end(); ++iter)
+            {
+                (*iter)->removeInput(op, id);
+            }
+        }
+        
+        void Stream::disconnectOutput(Operator* const op, const unsigned int id)
+        {
+            const std::set<impl::InputNode*> & inputs = m_network->getOutputNode(op, id)->connectedInputs();
+            for(std::set<impl::InputNode*>::const_iterator iter = inputs.begin();
+                iter != inputs.end(); ++iter)
+            {
+                disconnectInput((*iter)->op(), (*iter)->inputId());
+            }
         }
     }
 }
