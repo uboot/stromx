@@ -222,7 +222,7 @@ namespace stromx
             return findParameter(id);
         }
         
-        const DescriptionBase& OperatorKernel::description(const unsigned int id) const
+        const Description& OperatorKernel::description(const unsigned int id) const
         {
             return *findDescription(id);
         }
@@ -389,7 +389,7 @@ namespace stromx
                 iter != m_parameters.end();
                 ++iter)
             {
-                m_typeMap[(*iter)->id()] = DescriptionBase::PARAMETER;
+                m_typeMap[(*iter)->id()] = Description::PARAMETER;
                 m_behaviorMap[(*iter)->id()] = (*iter)->updateBehavior();
             }
         }
@@ -401,7 +401,7 @@ namespace stromx
                 iter != m_visibleParameters.end();
                 ++iter)
             {
-                if ((*iter)->originalType() != DescriptionBase::PARAMETER)
+                if ((*iter)->originalType() != Description::PARAMETER)
                     delete *iter;
             }
         
@@ -419,7 +419,7 @@ namespace stromx
             {
                 if (isInitialized)
                 {
-                    if (m_typeMap[(*iter)->id()] == DescriptionBase::PARAMETER)
+                    if (m_typeMap[(*iter)->id()] == Description::PARAMETER)
                     {
                         Parameter* param = new impl::ConnectorParameter(*iter, m_behaviorMap[(*iter)->id()]);
                         m_visibleParameters.push_back(param);
@@ -439,7 +439,7 @@ namespace stromx
             {
                 if (isInitialized)
                 {
-                    if (m_typeMap[(*iter)->id()] == DescriptionBase::PARAMETER)
+                    if (m_typeMap[(*iter)->id()] == Description::PARAMETER)
                     {
                         Parameter* param = new impl::ConnectorParameter(*iter, m_behaviorMap[(*iter)->id()]);
                         m_visibleParameters.push_back(param);
@@ -466,7 +466,7 @@ namespace stromx
             }
         }
         
-        const DescriptionBase* OperatorKernel::findDescription(const unsigned int id) const
+        const Description* OperatorKernel::findDescription(const unsigned int id) const
         {
             std::map<unsigned int, const Input*>::const_iterator inputIter = m_inputMap.find(id);
             if (inputIter != m_inputMap.end())
@@ -483,29 +483,29 @@ namespace stromx
             throw WrongArgument("No description for ID exists for this operator.");
         }
         
-        void OperatorKernel::setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+        void OperatorKernel::setConnectorType(const unsigned int id, const Description::Type type,
             const Parameter::UpdateBehavior updateBehavior)
         {
-            const DescriptionBase* description = findDescription(id);
+            const Description* description = findDescription(id);
             
             switch (type)
             {
-            case DescriptionBase::INPUT:
-                if (description->originalType() != DescriptionBase::INPUT)
+            case Description::INPUT:
+                if (description->originalType() != Description::INPUT)
                     throw WrongArgument("Descriptions can only be turned into inputs if their original type is INPUT.");
                 break;
-            case DescriptionBase::OUTPUT:
-                if (description->originalType() != DescriptionBase::OUTPUT)
+            case Description::OUTPUT:
+                if (description->originalType() != Description::OUTPUT)
                     throw WrongArgument("Descriptions can only be turned into outputs if their original type is OUTPUT.");
                 break;
-            case DescriptionBase::PARAMETER:
-                if (description->originalType() == DescriptionBase::INPUT &&
-                    updateBehavior == DescriptionBase::PULL)
+            case Description::PARAMETER:
+                if (description->originalType() == Description::INPUT &&
+                    updateBehavior == Description::PULL)
                 {
                     throw WrongArgument("Inputs can not be turned into pull parameters.");
                 }
-                if (description->originalType() == DescriptionBase::OUTPUT &&
-                    updateBehavior == DescriptionBase::PUSH)
+                if (description->originalType() == Description::OUTPUT &&
+                    updateBehavior == Description::PUSH)
                 {
                     throw WrongArgument("Outputs can not be turned into push parameters.");
                 }

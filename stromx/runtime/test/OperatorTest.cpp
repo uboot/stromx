@@ -447,8 +447,8 @@ namespace stromx
             Operator op(new TestOperator);
             op.initialize();
             
-            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::PARAMETER, 
-                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::INPUT_1, Description::PARAMETER, 
+                                Description::PERSISTENT);
             
             CPPUNIT_ASSERT_THROW(op.getInputNode(TestOperator::INPUT_1), WrongArgument);
             CPPUNIT_ASSERT_NO_THROW(op.setParameter(TestOperator::INPUT_1, None()));
@@ -459,8 +459,8 @@ namespace stromx
             Operator op(new TestOperator);
             op.initialize();
             
-            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::PARAMETER, 
-                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::OUTPUT_1, Description::PARAMETER, 
+                                Description::PERSISTENT);
                                 
             CPPUNIT_ASSERT_THROW(op.getOutputNode(TestOperator::OUTPUT_1), WrongArgument);
             CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1, 0), Timeout);
@@ -470,15 +470,15 @@ namespace stromx
         {
             Operator op(new TestOperator);
             op.initialize();
-            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::PARAMETER, 
-                                DescriptionBase::PERSISTENT);
-            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::PARAMETER, 
-                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::INPUT_1, Description::PARAMETER, 
+                                Description::PERSISTENT);
+            op.setConnectorType(TestOperator::OUTPUT_1, Description::PARAMETER, 
+                                Description::PERSISTENT);
                                 
-            op.setConnectorType(TestOperator::INPUT_1, DescriptionBase::INPUT, 
-                                DescriptionBase::PERSISTENT);
-            op.setConnectorType(TestOperator::OUTPUT_1, DescriptionBase::OUTPUT, 
-                                DescriptionBase::PERSISTENT);
+            op.setConnectorType(TestOperator::INPUT_1, Description::INPUT, 
+                                Description::PERSISTENT);
+            op.setConnectorType(TestOperator::OUTPUT_1, Description::OUTPUT, 
+                                Description::PERSISTENT);
                                 
             CPPUNIT_ASSERT_NO_THROW(op.getInputNode(TestOperator::INPUT_1));
             CPPUNIT_ASSERT_NO_THROW(op.getOutputNode(TestOperator::OUTPUT_1));

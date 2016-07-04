@@ -254,7 +254,7 @@ namespace stromx
             
             void initialize();
             void deinitialize();
-            void setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+            void setConnectorType(const unsigned int id, const Description::Type type,
                                   const Parameter::UpdateBehavior behavior);
             impl::InputNode* getInputNode(const unsigned int id) const;
             impl::OutputNode* getOutputNode(const unsigned int id) const;

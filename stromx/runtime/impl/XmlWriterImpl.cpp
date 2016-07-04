@@ -208,16 +208,16 @@ namespace stromx
                     DOMAttr* behaviorAttr = m_doc->createAttribute(Str2Xml("behavior"));
                     switch (desc.updateBehavior())
                     {
-                    case DescriptionBase::PERSISTENT:
+                    case Description::PERSISTENT:
                         behaviorAttr->setValue(Str2Xml("persistent"));
                         break;
-                    case DescriptionBase::PULL:
+                    case Description::PULL:
                         behaviorAttr->setValue(Str2Xml("pull"));
                         break;
-                    case DescriptionBase::PUSH:
+                    case Description::PUSH:
                         behaviorAttr->setValue(Str2Xml("push"));
                         break;
-                    case DescriptionBase::INTERNAL:
+                    case Description::INTERNAL:
                         behaviorAttr->setValue(Str2Xml("internal"));
                         break;
                     }

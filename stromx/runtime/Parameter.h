@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_PARAMETER_H
 #define STROMX_RUNTIME_PARAMETER_H
 
-#include "stromx/runtime/DescriptionBase.h"
+#include "stromx/runtime/Description.h"
 
 namespace stromx
 {
@@ -31,7 +31,7 @@ namespace stromx
          * parameter descriptions store information about the access mode
          * of a given parameter. Moreover, parameter groups are supported.
          */
-        class STROMX_RUNTIME_API Parameter : public DescriptionBase
+        class STROMX_RUNTIME_API Parameter : public Description
         {
         public:
             /**

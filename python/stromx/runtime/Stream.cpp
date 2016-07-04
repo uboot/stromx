@@ -68,7 +68,7 @@ namespace
     }
             
     void setConnectorTypeWithoutUpdateBehavior(Stream & stream, Operator* const op, 
-        const unsigned int id, const DescriptionBase::Type type)
+        const unsigned int id, const Description::Type type)
     {
         stream.setConnectorType(op, id, type);
     }

@@ -76,7 +76,7 @@ namespace stromx
             
             const Output & output(const unsigned int id) const;
             
-            const DescriptionBase & description(const unsigned int id) const;
+            const Description & description(const unsigned int id) const;
             
             const OperatorProperties & properties() const;
             
@@ -238,8 +238,8 @@ namespace stromx
             void setupDefaultTypeMap();
             void updateVisibleDescriptions(const bool isInitialized);
             const Parameter & findParameter(const unsigned int id) const;
-            const DescriptionBase* findDescription(const unsigned int id) const;
-            void setConnectorType(const unsigned int id, const DescriptionBase::Type type,
+            const Description* findDescription(const unsigned int id) const;
+            void setConnectorType(const unsigned int id, const Description::Type type,
                                   const Parameter::UpdateBehavior updateBehavior = Parameter::PERSISTENT);
             
             std::string m_type;
@@ -258,8 +258,8 @@ namespace stromx
             std::map<unsigned int, const Output*> m_outputMap;
             
             // maps each description to its current type and update behavior
-            std::map<unsigned int, DescriptionBase::Type> m_typeMap;
-            std::map<unsigned int, DescriptionBase::UpdateBehavior> m_behaviorMap;
+            std::map<unsigned int, Description::Type> m_typeMap;
+            std::map<unsigned int, Description::UpdateBehavior> m_behaviorMap;
             
             // the indices of all inputs, output and parameters which have
             // been added during initialization, i.e. which must be removed

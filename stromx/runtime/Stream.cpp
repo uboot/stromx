@@ -618,7 +618,7 @@ namespace stromx
         }
 
         void Stream::setConnectorType(Operator* const op, const unsigned int id,
-                                      const DescriptionBase::Type type, const DescriptionBase::UpdateBehavior behavior)
+                                      const Description::Type type, const Description::UpdateBehavior behavior)
         {
             if (op == 0)
                 throw WrongArgument("Operator must not be null");
@@ -629,18 +629,18 @@ namespace stromx
             if (! isPartOfStream(op))
                 throw WrongArgument("Operator is not part of the stream.");
                 
-            const DescriptionBase& description = op->info().description(id);
+            const Description& description = op->info().description(id);
             if (description.currentType() == type)
                 return;
                 
-            if (type == DescriptionBase::PARAMETER)
+            if (type == Description::PARAMETER)
             {
                 switch (description.currentType())
                 {
-                case DescriptionBase::INPUT:
+                case Description::INPUT:
                     disconnectInput(op, id);
                     break;
-                case DescriptionBase::OUTPUT:
+                case Description::OUTPUT:
                     disconnectOutput(op, id);
                     break;
                 default:

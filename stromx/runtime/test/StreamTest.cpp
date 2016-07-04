@@ -580,7 +580,7 @@ namespace stromx
         void StreamTest::testSetConnectorTypeInput()
         { 
             Operator* op1 = m_stream->operators()[1];
-            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER);
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, Description::PARAMETER);
             
             CPPUNIT_ASSERT_THROW(m_stream->connectionSource(op1, TestOperator::INPUT_1), WrongArgument);
             CPPUNIT_ASSERT_EQUAL(std::size_t(3), m_stream->threads()[0]->inputSequence().size());
@@ -590,7 +590,7 @@ namespace stromx
         {
             Operator* op0 = m_stream->operators()[0];
             Operator* op1 = m_stream->operators()[1];
-            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, DescriptionBase::PARAMETER);
+            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, Description::PARAMETER);
             
             CPPUNIT_ASSERT(! m_stream->connectionSource(op1, TestOperator::INPUT_1).valid());
             CPPUNIT_ASSERT_EQUAL(std::size_t(3), m_stream->threads()[0]->inputSequence().size());
@@ -600,8 +600,8 @@ namespace stromx
         {
             Operator* op0 = m_stream->operators()[0];
             Operator* op1 = m_stream->operators()[1];
-            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER);
-            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::INPUT);
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, Description::PARAMETER);
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, Description::INPUT);
             
             CPPUNIT_ASSERT_NO_THROW(m_stream->connect(op0, TestOperator::OUTPUT_1, op1, TestOperator::INPUT_1));
         }

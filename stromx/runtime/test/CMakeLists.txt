@@ -51,7 +51,7 @@ set(SOURCES
     ../Data.cpp
     ../DataRef.cpp
     ../DataContainer.cpp
-    ../DescriptionBase.cpp
+    ../Description.cpp
     ../Dump.cpp
     ../Enum.cpp
     ../EnumParameter.cpp

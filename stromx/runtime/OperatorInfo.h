@@ -107,7 +107,7 @@ namespace stromx
              * 
              * \throws WrongId If no parameter with \c id exists.
              */
-            virtual const DescriptionBase & description(const unsigned int id) const = 0;
+            virtual const Description & description(const unsigned int id) const = 0;
             
             /** 
              * Returns the properties of this operator.

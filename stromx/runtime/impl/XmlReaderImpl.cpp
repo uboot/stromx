@@ -609,10 +609,10 @@ namespace stromx
                     m_stream->initializeOperator(op);
                     
                     // set the type of the connectors
-                    for (std::map<unsigned int, DescriptionBase::UpdateBehavior>::const_iterator iter = m_id2BehaviorMap.begin();
+                    for (std::map<unsigned int, Description::UpdateBehavior>::const_iterator iter = m_id2BehaviorMap.begin();
                          iter != m_id2BehaviorMap.end(); ++iter)
                     {
-                        m_stream->setConnectorType(op, iter->first, DescriptionBase::PARAMETER, iter->second);
+                        m_stream->setConnectorType(op, iter->first, Description::PARAMETER, iter->second);
                     }
                 
                     // set parameters after initialization
@@ -669,11 +669,11 @@ namespace stromx
                 Xml2Str behaviorStr(paramElement->getAttribute(Str2Xml("behavior")));
                 
                 unsigned int id = boost::lexical_cast<unsigned int>((const char*)(idStr));
-                DescriptionBase::UpdateBehavior behavior = DescriptionBase::PERSISTENT;
+                Description::UpdateBehavior behavior = Description::PERSISTENT;
                 if (std::string(behaviorStr) == "pull")
-                    behavior = DescriptionBase::PULL;
+                    behavior = Description::PULL;
                 else if (std::string(behaviorStr) == "push")
-                    behavior = DescriptionBase::PUSH;
+                    behavior = Description::PUSH;
                     
                 if(m_id2BehaviorMap.count(id))
                     throw XmlError("Multiple parameters with the same ID " + boost::lexical_cast<std::string>(id) + ".");

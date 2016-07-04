@@ -6,7 +6,7 @@ set(SOURCES
     ConnectorDescription.cpp
     Data.cpp
     DataContainer.cpp
-    DescriptionBase.cpp
+    Description.cpp
     Exception.cpp
     ExceptionObserver.cpp
     Factory.cpp

@@ -37,9 +37,9 @@ namespace stromx
             m_input2(2, Variant::NONE),
             m_input3(3, Variant::NONE),
             m_output0(4, Variant::NONE),
-            m_param0(&m_input2, DescriptionBase::PERSISTENT),
-            m_param1(&m_input3, DescriptionBase::PUSH),
-            m_param2(&m_output0, DescriptionBase::PULL),
+            m_param0(&m_input2, Description::PERSISTENT),
+            m_param1(&m_input3, Description::PUSH),
+            m_param2(&m_output0, Description::PULL),
             m_param3(10, Variant::NONE)
         {
             m_observer = new Observer(this);

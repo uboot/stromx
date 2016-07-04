@@ -80,16 +80,16 @@ namespace stromx
         void XmlWriterTest::testWriteStreamPullParameter()
         {
             Operator* op0 = m_stream->operators()[0];
-            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, DescriptionBase::PARAMETER,
-                                       DescriptionBase::PULL);
+            m_stream->setConnectorType(op0, TestOperator::OUTPUT_1, Description::PARAMETER,
+                                       Description::PULL);
             XmlWriter().writeStream("XmlWriterTest_testWriteStreamPullParameter.xml", *m_stream);
         }
         
         void XmlWriterTest::testWriteStreamPushParameter()
         {
             Operator* op1 = m_stream->operators()[1];
-            m_stream->setConnectorType(op1, TestOperator::INPUT_1, DescriptionBase::PARAMETER,
-                                       DescriptionBase::PUSH);
+            m_stream->setConnectorType(op1, TestOperator::INPUT_1, Description::PARAMETER,
+                                       Description::PUSH);
             XmlWriter().writeStream("XmlWriterTest_testWriteStreamPushParameter.xml", *m_stream);
         }
 

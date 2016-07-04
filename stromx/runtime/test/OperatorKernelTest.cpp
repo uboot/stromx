@@ -262,8 +262,8 @@ namespace stromx
             CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.inputs().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.outputs().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());
-            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PUSH, kernel.parameter(0).updateBehavior());
-            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PERSISTENT, kernel.parameter(1).updateBehavior());
+            CPPUNIT_ASSERT_EQUAL(Description::PUSH, kernel.parameter(0).updateBehavior());
+            CPPUNIT_ASSERT_EQUAL(Description::PERSISTENT, kernel.parameter(1).updateBehavior());
             CPPUNIT_ASSERT(kernel.parameter(0).variant().isVariant(Variant::NONE));
             CPPUNIT_ASSERT(kernel.parameter(1).variant().isVariant(Variant::DATA));
         } 
@@ -273,17 +273,17 @@ namespace stromx
             ConnectorOperator kernel;
             kernel.initialize();
             
-            kernel.setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+            kernel.setConnectorType(0, Description::PARAMETER, Description::PUSH);
             CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.inputs().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());    
-            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PUSH, kernel.parameter(0).updateBehavior());   
+            CPPUNIT_ASSERT_EQUAL(Description::PUSH, kernel.parameter(0).updateBehavior());   
             CPPUNIT_ASSERT(kernel.parameter(0).variant().isVariant(Variant::NONE));   
         } 
         
         void OperatorKernelTest::testSetConnectorTypeNoInput()
         {
             ConnectorOperator kernel;
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, DescriptionBase::PARAMETER),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::PARAMETER),
                                  WrongArgument);
         }
         
@@ -292,17 +292,17 @@ namespace stromx
             ConnectorOperator kernel;
             kernel.initialize();
             
-            kernel.setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PULL);
+            kernel.setConnectorType(1, Description::PARAMETER, Description::PULL);
             CPPUNIT_ASSERT_EQUAL(std::size_t(0), kernel.outputs().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(2), kernel.parameters().size());    
-            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PULL, kernel.parameter(1).updateBehavior());   
+            CPPUNIT_ASSERT_EQUAL(Description::PULL, kernel.parameter(1).updateBehavior());   
             CPPUNIT_ASSERT(kernel.parameter(1).variant().isVariant(Variant::DATA));   
         } 
         
         void OperatorKernelTest::testSetConnectorTypeNoOutput()
         {
             ConnectorOperator kernel;
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, DescriptionBase::PARAMETER),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::PARAMETER),
                                  WrongArgument);
         } 
 
@@ -310,9 +310,9 @@ namespace stromx
         {
             ConnectorOperator kernel;
             kernel.initialize();
-            kernel.setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+            kernel.setConnectorType(0, Description::PARAMETER, Description::PUSH);
             
-            kernel.setConnectorType(0, DescriptionBase::INPUT);
+            kernel.setConnectorType(0, Description::INPUT);
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.inputs().size());
         }
@@ -321,9 +321,9 @@ namespace stromx
         {
             ConnectorOperator kernel;
             kernel.initialize();
-            kernel.setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PULL);
+            kernel.setConnectorType(1, Description::PARAMETER, Description::PULL);
             
-            kernel.setConnectorType(1, DescriptionBase::OUTPUT);
+            kernel.setConnectorType(1, Description::OUTPUT);
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.outputs().size());
         }
@@ -332,9 +332,9 @@ namespace stromx
         {
             ConnectorOperator kernel;
             kernel.initialize();
-            kernel.setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PULL);
+            kernel.setConnectorType(1, Description::PARAMETER, Description::PULL);
             
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, DescriptionBase::INPUT),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::INPUT),
                                  WrongArgument);
         }
         
@@ -342,9 +342,9 @@ namespace stromx
         {
             ConnectorOperator kernel;
             kernel.initialize();
-            kernel.setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+            kernel.setConnectorType(0, Description::PARAMETER, Description::PUSH);
             
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, DescriptionBase::OUTPUT),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::OUTPUT),
                                  WrongArgument);
         }
         
@@ -352,10 +352,10 @@ namespace stromx
         {
             ConnectorOperator kernel;
             kernel.initialize();
-            kernel.setConnectorType(2, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+            kernel.setConnectorType(2, Description::PARAMETER, Description::PUSH);
             
             CPPUNIT_ASSERT_EQUAL(std::size_t(1), kernel.parameters().size());
-            CPPUNIT_ASSERT_EQUAL(DescriptionBase::PERSISTENT, kernel.parameter(2).updateBehavior());   
+            CPPUNIT_ASSERT_EQUAL(Description::PERSISTENT, kernel.parameter(2).updateBehavior());   
         }
         
         void OperatorKernelTest::testSetConnectorTypeInputToPullParameter()
@@ -363,8 +363,8 @@ namespace stromx
             ConnectorOperator kernel;
             kernel.initialize();
             
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, DescriptionBase::PARAMETER,
-                                                         DescriptionBase::PULL),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(0, Description::PARAMETER,
+                                                         Description::PULL),
                                  WrongArgument);
         }
         
@@ -373,8 +373,8 @@ namespace stromx
             ConnectorOperator kernel;
             kernel.initialize();
             
-            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, DescriptionBase::PARAMETER,
-                                                         DescriptionBase::PUSH),
+            CPPUNIT_ASSERT_THROW(kernel.setConnectorType(1, Description::PARAMETER,
+                                                         Description::PUSH),
                                  WrongArgument);
         }
     }

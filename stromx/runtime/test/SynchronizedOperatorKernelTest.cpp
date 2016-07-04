@@ -130,7 +130,7 @@ protected:
     void testSetConnectorNotInitialized()
     {
         CPPUNIT_ASSERT_THROW(
-            m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT), 
+            m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT), 
         WrongOperatorState);
     }
     
@@ -140,14 +140,14 @@ protected:
         m_kernel->activate();
         
         CPPUNIT_ASSERT_THROW(
-            m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT), 
+            m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT), 
         WrongOperatorState);
     }
     
     void testSetConnectorTypeInputToParameter()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
         m_kernel->activate();
         
         UInt16 data(42);
@@ -169,7 +169,7 @@ protected:
     void testSetConnectorTypeOutputToParameter()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(1, Description::PARAMETER, Description::PERSISTENT);
         m_kernel->activate();
         
         Int16 data(42);
@@ -180,7 +180,7 @@ protected:
     void testSetConnectorTypeInputToParameterWrongVariant()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
         
         Int16 data;
         CPPUNIT_ASSERT_THROW(m_kernel->setParameter(0, data, false), WrongParameterType);
@@ -189,7 +189,7 @@ protected:
     void testSetConnectorTypeOutputToParameterWrongVariant()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(1, Description::PARAMETER, Description::PERSISTENT);
         
         UInt16 data;
         CPPUNIT_ASSERT_THROW(m_kernel->setParameter(1, data, false), WrongParameterType);
@@ -198,8 +198,8 @@ protected:
     void testSetConnectorTypeParameterToInput()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
-        m_kernel->setConnectorType(0, DescriptionBase::INPUT);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
+        m_kernel->setConnectorType(0, Description::INPUT);
         m_kernel->activate();
         
         UInt16 data(42);
@@ -211,8 +211,8 @@ protected:
     void testSetConnectorTypeParameterToOutput()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
-        m_kernel->setConnectorType(1, DescriptionBase::OUTPUT);
+        m_kernel->setConnectorType(1, Description::PARAMETER, Description::PERSISTENT);
+        m_kernel->setConnectorType(1, Description::OUTPUT);
         m_kernel->activate();
         
         Int16 data(42);
@@ -223,7 +223,7 @@ protected:
     void testConnectorParameterWrongType()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
         
         Int16 data(42);
         CPPUNIT_ASSERT_THROW(m_kernel->setParameter(0, data, false), WrongParameterType);
@@ -232,7 +232,7 @@ protected:
     void testInputParameterPersistent()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
         
         UInt16 data(42);
         CPPUNIT_ASSERT_THROW(m_kernel->getParameter(0, data), ParameterError);
@@ -246,7 +246,7 @@ protected:
     void testInputParameterPush()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(0, DescriptionBase::PARAMETER, DescriptionBase::PUSH);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PUSH);
         
         UInt16 data(42);
         m_kernel->setParameter(0, data, false);
@@ -263,7 +263,7 @@ protected:
     void testOutputParameterPersistent()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PERSISTENT);
+        m_kernel->setConnectorType(1, Description::PARAMETER, Description::PERSISTENT);
         m_kernel->activate();
         
         CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
@@ -278,7 +278,7 @@ protected:
     void testOutputParameterPull()
     {
         m_kernel->initialize(0, 0);
-        m_kernel->setConnectorType(1, DescriptionBase::PARAMETER, DescriptionBase::PULL);
+        m_kernel->setConnectorType(1, Description::PARAMETER, Description::PULL);
         m_kernel->activate();
         
         CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);

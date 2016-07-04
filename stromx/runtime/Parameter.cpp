@@ -25,7 +25,7 @@ namespace stromx
         
         Parameter::Parameter(const unsigned int id, const stromx::runtime::VariantHandle& variant,
                              ParameterGroup* const group)
-          : DescriptionBase(id, variant),
+          : Description(id, variant),
             m_access(NO_ACCESS),
             m_behavior(PERSISTENT),
             m_group(group)

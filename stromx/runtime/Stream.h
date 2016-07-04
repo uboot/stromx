@@ -219,7 +219,7 @@ namespace stromx
              * \throws WrongArgument If the arguments \c type and \c behavior are not compatible with the original type of the connector or parameter.
              */
             void setConnectorType(Operator* const op, const unsigned int id,
-                                  const DescriptionBase::Type type, const DescriptionBase::UpdateBehavior behavior = DescriptionBase::PERSISTENT);
+                                  const Description::Type type, const Description::UpdateBehavior behavior = Description::PERSISTENT);
             
             /**
              * Creates a thread, adds it to the stream and returns a pointer to it.

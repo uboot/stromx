@@ -33,13 +33,13 @@ namespace stromx
             template <>
             bool isConnector<Input>(const Parameter* parameter)
             {
-                return parameter->originalType() == DescriptionBase::INPUT;
+                return parameter->originalType() == Description::INPUT;
             } 
             
             template <>
             bool isConnector<Output>(const Parameter* parameter)
             {
-                return parameter->originalType() == DescriptionBase::OUTPUT;
+                return parameter->originalType() == Description::OUTPUT;
             }            
             
             template <class description_t>
@@ -72,7 +72,7 @@ namespace stromx
                     
                     map[(*iter)->id()] = DataContainer();
                     
-                    if ((*iter)->updateBehavior() == DescriptionBase::PERSISTENT)
+                    if ((*iter)->updateBehavior() == Description::PERSISTENT)
                         persistentParameters.insert((*iter)->id());
                 }
             }

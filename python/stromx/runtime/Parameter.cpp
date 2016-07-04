@@ -23,7 +23,7 @@ using namespace stromx::runtime;
 void exportParameter()
 {              
     scope in_Parameter =
-    class_<Parameter, bases<DescriptionBase> >("Parameter", no_init)
+    class_<Parameter, bases<Description> >("Parameter", no_init)
         .def("accessMode", &Parameter::accessMode)
         .def("updateBehavior", &Parameter::updateBehavior)
         .def("group", reinterpret_cast<const Parameter* (Parameter::*)() const>(&Parameter::group), return_internal_reference<>())

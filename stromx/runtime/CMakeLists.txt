@@ -34,7 +34,7 @@ set(SOURCES
     DataContainer.cpp
     Data.cpp
     DataRef.cpp
-    DescriptionBase.cpp
+    Description.cpp
     Dump.cpp
     Enum.cpp
     EnumParameter.cpp

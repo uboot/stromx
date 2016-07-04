@@ -32,10 +32,10 @@ namespace stromx
                 
                 switch (connector->originalType())
                 {
-                case DescriptionBase::INPUT:
+                case Description::INPUT:
                     setAccessMode(ACTIVATED_WRITE);
                     break;
-                case DescriptionBase::OUTPUT:
+                case Description::OUTPUT:
                     setAccessMode(INITIALIZED_READ);
                     break;
                 default:

@@ -447,7 +447,7 @@ namespace stromx
             }
             
             void SynchronizedOperatorKernel::setConnectorType(const unsigned int id,
-                const DescriptionBase::Type type, const Parameter::UpdateBehavior updateBehavior)
+                const Description::Type type, const Parameter::UpdateBehavior updateBehavior)
             {
                 lock_t lock(m_mutex);
                 
@@ -755,14 +755,14 @@ namespace stromx
             {
                 const Parameter& param = info()->parameter(id);
                 
-                return param.originalType() == DescriptionBase::INPUT;
+                return param.originalType() == Description::INPUT;
             }
             
             bool SynchronizedOperatorKernel::isOutputParameter(const unsigned int id) const
             {
                 const Parameter& param = info()->parameter(id);
                 
-                return param.originalType() == DescriptionBase::OUTPUT;
+                return param.originalType() == Description::OUTPUT;
             }
         }
     }
