@@ -97,7 +97,7 @@ namespace stromx
          * \throws InputError If this is not the case.
          */                
         STROMX_CVSUPPORT_API void checkMatrixValue(const stromx::runtime::Matrix & value,
-                             const stromx::runtime::Description* desc,
+                             const stromx::runtime::Input* desc,
                              const stromx::runtime::OperatorInfo& op);
         
     }

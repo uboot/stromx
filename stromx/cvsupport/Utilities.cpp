@@ -171,7 +171,7 @@ namespace stromx
         }
         
         void checkMatrixValue(const stromx::runtime::Matrix & value,
-                             const stromx::runtime::Description* desc,
+                             const stromx::runtime::Input* desc,
                              const stromx::runtime::OperatorInfo& op)
         {
             if(desc->rows() && value.rows() != desc->rows())

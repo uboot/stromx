@@ -22,7 +22,7 @@ namespace stromx
     {
         namespace impl
         {
-            ConnectorParameter::ConnectorParameter(const Description* const connector, const UpdateBehavior behavior)
+            ConnectorParameter::ConnectorParameter(const ConnectorDescription* const connector, const UpdateBehavior behavior)
               : Parameter(connector->id(), connector->variant()),
                 m_connector(connector)
             {
@@ -32,10 +32,10 @@ namespace stromx
                 
                 switch (connector->originalType())
                 {
-                case Description::INPUT:
+                case DescriptionBase::INPUT:
                     setAccessMode(ACTIVATED_WRITE);
                     break;
-                case Description::OUTPUT:
+                case DescriptionBase::OUTPUT:
                     setAccessMode(INITIALIZED_READ);
                     break;
                 default:

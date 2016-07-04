@@ -15,7 +15,6 @@
 */
 
 #include <cppunit/TestAssert.h>
-#include "stromx/runtime/Description.h"
 #include "stromx/runtime/Exception.h"
 #include "stromx/runtime/Input.h"
 #include "stromx/runtime/Primitive.h"

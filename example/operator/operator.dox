@@ -62,7 +62,7 @@ Moreover, the constructor of runtime::OperatorKernel accepts vectors of descript
 \until return parameters
 \until }
 
-Each initialization function allocates an empty vector which contains pointers to runtime::Description objects (in the case of inputs and outputs) or runtime::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
+Each initialization function allocates an empty vector which contains pointers to runtime::Input or runtime::Output objects (in the case of inputs and outputs) or runtime::Parameter objects (for parameters). Input and output descriptions only contain their ID, <em>data variants</em> and names. The data variant defines which kind of data is accepted by the input or returned at the output, respectively. In case of parameters it determines the type of the data stored for this parameter.
 
 Parameters additionally provide information about their access mode. Here runtime::Parameter::ACTIVATED_WRITE means that the parameter can be read and written while the operator is initialized or activated. There exist subclasses of runtime::Parameter to describe specific types of parameters in more detail. One example is runtime::NumericParameter which contains information about the minimal and maximal value a parameter can be set to.
 

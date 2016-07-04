@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_OUTPUT_H
 #define STROMX_RUNTIME_OUTPUT_H
 
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/ConnectorDescription.h"
 
 namespace stromx
 {
@@ -25,12 +25,12 @@ namespace stromx
     {
         
         /** \brief %Description of an input. */
-        class STROMX_RUNTIME_API Output : public Description
+        class STROMX_RUNTIME_API Output : public ConnectorDescription
         {
         public:
             /** Constructs a description. */
             Output(const unsigned int id, const VariantHandle& variant)
-              : Description(id, variant, OUTPUT)
+              : ConnectorDescription(id, variant, OUTPUT)
             {}
             
             virtual Type originalType() const { return OUTPUT; }

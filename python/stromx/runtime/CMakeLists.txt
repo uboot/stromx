@@ -3,9 +3,9 @@ set(SOURCES
     AbstractFactory.cpp
     AssignThreadsAlgorithm.cpp
     Color.cpp
+    ConnectorDescription.cpp
     Data.cpp
     DataContainer.cpp
-    Description.cpp
     DescriptionBase.cpp
     Exception.cpp
     ExceptionObserver.cpp

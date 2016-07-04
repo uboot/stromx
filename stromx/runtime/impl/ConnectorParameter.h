@@ -17,7 +17,7 @@
 #ifndef STROMX_RUNTIME_CONNECTORPARAMETER_H
 #define STROMX_RUNTIME_CONNECTORPARAMETER_H
 
-#include "stromx/runtime/Description.h"
+#include "stromx/runtime/ConnectorDescription.h"
 #include "stromx/runtime/Parameter.h"
 
 namespace stromx
@@ -29,7 +29,7 @@ namespace stromx
             class ConnectorParameter : public Parameter
             {
             public:
-                ConnectorParameter(const Description* const connector, const UpdateBehavior behavior);
+                ConnectorParameter(const ConnectorDescription* const connector, const UpdateBehavior behavior);
                 
                 virtual Type originalType() const { return m_connector->originalType(); }
                 
@@ -43,7 +43,7 @@ namespace stromx
                 virtual unsigned int cols() const { return m_connector->cols(); }
                 
             private:
-                const DescriptionBase* m_connector;
+                const ConnectorDescription* m_connector;
             };
         }
     }
