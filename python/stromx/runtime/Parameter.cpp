@@ -38,11 +38,4 @@ void exportParameter()
         .value("INITIALIZED_WRITE", Parameter::INITIALIZED_WRITE)
         .value("ACTIVATED_WRITE", Parameter::ACTIVATED_WRITE)
     ;
-        
-    enum_<Parameter::UpdateBehavior>("UpdateBehavior")
-        .value("PERSISTENT", Parameter::PERSISTENT)
-        .value("PUSH", Parameter::PUSH)
-        .value("PULL", Parameter::PULL)
-        .value("INTERNAL", Parameter::INTERNAL)
-    ;
 }

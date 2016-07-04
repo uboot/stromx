@@ -27,8 +27,8 @@ void exportDescriptionBase()
         .def("value", &EnumDescription::value)
         .def("title", &EnumDescription::title, return_value_policy<copy_const_reference>())
     ;
-    
     stromx::python::exportVector<EnumDescription>("EnumDescriptionVector");
+    
     {
         scope in_DescriptionBase =
         class_<DescriptionBase>("DescriptionBase", no_init)
@@ -50,6 +50,13 @@ void exportDescriptionBase()
             .value("PARAMETER", DescriptionBase::PARAMETER)
             .value("INPUT", DescriptionBase::INPUT)
             .value("OUTPUT", DescriptionBase::OUTPUT)
+        ;
+        
+        enum_<DescriptionBase::UpdateBehavior>("UpdateBehavior")
+            .value("PERSISTENT", DescriptionBase::PERSISTENT)
+            .value("PUSH", DescriptionBase::PUSH)
+            .value("PULL", DescriptionBase::PULL)
+            .value("INTERNAL", DescriptionBase::INTERNAL)
         ;
     }
 }

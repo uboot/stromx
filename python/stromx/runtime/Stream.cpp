@@ -66,6 +66,12 @@ namespace
         Operator* newOp = stream.addOperator(opPtr);
         return newOp;
     }
+            
+    void setConnectorTypeWithoutUpdateBehavior(Stream & stream, Operator* const op, 
+        const unsigned int id, const DescriptionBase::Type type)
+    {
+        stream.setConnectorType(op, id, type);
+    }
 }
 
 void exportStream()
@@ -106,6 +112,7 @@ void exportStream()
             .def("delay", &Stream::delay)
             .def("setDelay", &Stream::setDelay)
             .def("setConnectorType", &Stream::setConnectorType)
+            .def("setConnectorType", &setConnectorTypeWithoutUpdateBehavior)
         ;
         
         enum_<Stream::Status>("Status")
