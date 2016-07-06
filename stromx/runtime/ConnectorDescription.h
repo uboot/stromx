@@ -122,7 +122,9 @@ namespace stromx
               : Description(id, variant),
                 m_operatorThread(0),
                 m_defaultType(defaultType),
-                m_defaultBehavior(PERSISTENT)
+                m_defaultBehavior(PERSISTENT),
+                m_rows(0),
+                m_cols(0)
             {}
             
         private:
