@@ -266,7 +266,7 @@ protected:
         m_kernel->setConnectorType(1, Description::PARAMETER, Description::PERSISTENT);
         m_kernel->activate();
         
-        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), ParameterError);
         
         DataContainer data(new UInt16(42));
         m_kernel->setInputData(0, data);
@@ -281,13 +281,13 @@ protected:
         m_kernel->setConnectorType(1, Description::PARAMETER, Description::PULL);
         m_kernel->activate();
         
-        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), ParameterError);
         
         DataContainer data(new UInt16(42));
         m_kernel->setInputData(0, data);
         
         CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(1, true, 0));
-        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), Timeout);
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(1, true, 0), ParameterError);
     }
 };
 }

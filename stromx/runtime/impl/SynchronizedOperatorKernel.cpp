@@ -217,9 +217,12 @@ namespace stromx
                     return DataRef(access.get().clone());
                 } 
                 else if (isOutputParameter(id))
-                {   
-                    while (m_outputMap.get(id).empty())
-                        waitForSignal(m_dataCond, lock, waitWithTimeout, timeout);
+                {      
+                    if (m_outputMap.get(id).empty())
+                    {
+                        const Parameter& param = info()->parameter(id);
+                        throw ParameterError(param, *this->info(), "No value has been set for this parameter");
+                    }
                     
                     DataContainer data = m_outputMap.get(id);
                     if (m_outputMap.mustBeReset(id))
