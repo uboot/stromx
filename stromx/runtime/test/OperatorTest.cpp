@@ -463,7 +463,7 @@ namespace stromx
                                 Description::PERSISTENT);
                                 
             CPPUNIT_ASSERT_THROW(op.getOutputNode(TestOperator::OUTPUT_1), WrongArgument);
-            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1, 0), Timeout);
+            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1), ParameterError);
         }
         
         void OperatorTest::testSetConnectorTypeParameter()
@@ -484,7 +484,7 @@ namespace stromx
             CPPUNIT_ASSERT_NO_THROW(op.getOutputNode(TestOperator::OUTPUT_1));
             
             CPPUNIT_ASSERT_THROW(op.setParameter(TestOperator::INPUT_1, None()), WrongParameterId);
-            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1, 0), WrongParameterId);
+            CPPUNIT_ASSERT_THROW(op.getParameter(TestOperator::OUTPUT_1), WrongParameterId);
         }
         
     }
