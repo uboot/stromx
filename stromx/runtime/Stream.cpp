@@ -663,7 +663,7 @@ namespace stromx
         
         void Stream::disconnectOutput(Operator* const op, const unsigned int id)
         {
-            const std::set<impl::InputNode*> & inputs = m_network->getOutputNode(op, id)->connectedInputs();
+            const std::set<impl::InputNode*> inputs = m_network->getOutputNode(op, id)->connectedInputs();
             for(std::set<impl::InputNode*>::const_iterator iter = inputs.begin();
                 iter != inputs.end(); ++iter)
             {
