@@ -629,10 +629,7 @@ namespace stromx
             if (! isPartOfStream(op))
                 throw WrongArgument("Operator is not part of the stream.");
                 
-            const Description& description = op->info().description(id);
-            if (description.currentType() == type)
-                return;
-                
+            const Description& description = op->info().description(id);                
             if (type == Description::PARAMETER)
             {
                 switch (description.currentType())

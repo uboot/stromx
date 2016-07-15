@@ -186,7 +186,7 @@ namespace stromx
             }
             
             Id2DataPair outputDataMapper(OUTPUT, inputDataMapper.data());
-            provider.sendOutputData( outputDataMapper);
+            provider.sendOutputData(outputDataMapper);
         }
         
         const std::vector<const runtime::Input*> Block::setupInputs()

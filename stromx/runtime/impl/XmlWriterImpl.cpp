@@ -236,7 +236,7 @@ namespace stromx
                         // Try to access the parameter in question. 
                         currOp->getParameter((*iter_par)->id());
                     }
-                    catch(ParameterAccessViolation&)
+                    catch(ParameterError&)
                     {
                         // If the access fails continue with the next parameter.
                         continue;
