@@ -3,3 +3,5 @@
 
 The stromx project provides tools for near real time processing of data with a focus on industrial imaging.
 Further information can be found on the project <a href="http://www.stromx.org">homepage</a>.
+
+The master branch of this repository is continuously monitored by this <a href="http://jenkins.stromx.org">Jenkins service</a>.
