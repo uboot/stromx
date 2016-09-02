@@ -36,6 +36,11 @@ namespace stromx
             void activate() { Operator::activate(); }
             void deactivate()  { Operator::deactivate(); }
             void interrupt()  { Operator::interrupt(); }
+            void setConnectorType(const unsigned int id, const Description::Type type,
+                                  const Parameter::UpdateBehavior behavior = Description::PERSISTENT)
+            {
+                Operator::setConnectorType(id, type, behavior);
+            }
         };
     }
 }
