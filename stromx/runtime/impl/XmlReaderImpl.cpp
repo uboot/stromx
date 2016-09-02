@@ -612,6 +612,10 @@ namespace stromx
                     for (std::map<unsigned int, Description::UpdateBehavior>::const_iterator iter = m_id2BehaviorMap.begin();
                          iter != m_id2BehaviorMap.end(); ++iter)
                     {
+                        Description::Type originalType = op->info().description(iter->first).originalType();
+                        if (originalType == Description::PARAMETER)
+                            continue;
+                        
                         m_stream->setConnectorType(op, iter->first, Description::PARAMETER, iter->second);
                     }
                 

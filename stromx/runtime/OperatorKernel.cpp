@@ -488,6 +488,9 @@ namespace stromx
         {
             const Description* description = findDescription(id);
             
+            if (description->originalType() == Description::PARAMETER)
+                throw WrongArgument("Can not set the connector type of parameters which are not originally connectors.");
+            
             switch (type)
             {
             case Description::INPUT:

@@ -49,6 +49,7 @@ namespace stromx
                                     std::set<unsigned int> & persistentParameters)
             {
                 map.clear();
+                persistentParameters.clear();
                 
                 for(typename std::vector<const description_t*>::const_iterator iter = descriptions.begin();
                     iter != descriptions.end();

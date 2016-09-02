@@ -51,6 +51,7 @@ namespace stromx
             CPPUNIT_TEST (testSetConnectorTypeParameterToParameter);
             CPPUNIT_TEST (testSetConnectorTypeInputToPullParameter);
             CPPUNIT_TEST (testSetConnectorTypeOutputToPushParameter);
+            CPPUNIT_TEST (testSetConnectorTypeBehavior);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -81,6 +82,7 @@ namespace stromx
                 void testSetConnectorTypeParameterToParameter();
                 void testSetConnectorTypeInputToPullParameter();
                 void testSetConnectorTypeOutputToPushParameter();
+                void testSetConnectorTypeBehavior();
                 
             private:
                 TestOperator m_op;

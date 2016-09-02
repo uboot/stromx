@@ -73,6 +73,11 @@ namespace
         {
             return this->get_override("output")(id);
         }
+            
+        const Description & description(const unsigned int id) const
+        {
+            return this->get_override("description")(id);
+        }
     };
 }
       
@@ -92,6 +97,7 @@ void exportOperatorInfo()
         .def("parameter", pure_virtual(&OperatorInfo::parameter), return_internal_reference<>())
         .def("input", pure_virtual(&OperatorInfo::input), return_internal_reference<>())
         .def("output", pure_virtual(&OperatorInfo::output), return_internal_reference<>())
+        .def("description", pure_virtual(&OperatorInfo::description), return_internal_reference<>())
     ;
 }
 
