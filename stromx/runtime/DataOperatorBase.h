@@ -26,7 +26,6 @@ namespace stromx
 {
     namespace runtime
     {
-        /** \brief Outputs a constant value. */
         class STROMX_RUNTIME_API DataOperatorBase : public OperatorKernel
         {
         public:

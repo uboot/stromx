@@ -51,6 +51,7 @@ set(SOURCES
     ../Data.cpp
     ../DataRef.cpp
     ../DataContainer.cpp
+    ../DataOperatorBase.cpp
     ../Description.cpp
     ../Dump.cpp
     ../Enum.cpp
@@ -65,10 +66,12 @@ set(SOURCES
     ../Id2DataPair.cpp
     ../Image.cpp
     ../ImageWrapper.cpp
+    ../IsEmpty.cpp
     ../List.cpp
     ../Locale.cpp
     ../Matrix.cpp
     ../MatrixParameter.cpp
+    ../MatrixPropertyBase.cpp
     ../MatrixWrapper.cpp
     ../Merge.cpp
     ../None.cpp
@@ -103,7 +106,6 @@ set(SOURCES
     ../impl/Client.cpp
     ../impl/ConnectorParameter.cpp
     ../impl/DataContainerImpl.cpp
-    ../impl/DataOperatorBase.cpp
     ../impl/Id2DataMap.cpp
     ../impl/InputNode.cpp
     ../impl/Network.cpp
@@ -139,8 +141,10 @@ set(SOURCES
     ImageWrapperTest.cpp
     InputNodeTest.cpp
     Int32Test.cpp
+    IsEmptyTest.cpp
     JoinTest.cpp
     ListTest.cpp
+    MatrixImpl.cpp
     MatrixWrapperTest.cpp
     MergeTest.cpp
     OperatorKernelTest.cpp

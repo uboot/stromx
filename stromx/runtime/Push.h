@@ -19,7 +19,7 @@
 
 #include "stromx/runtime/Runtime.h"
 #include "stromx/runtime/Primitive.h"
-#include "stromx/runtime/impl/DataOperatorBase.h"
+#include "stromx/runtime/DataOperatorBase.h"
 
 namespace stromx
 {

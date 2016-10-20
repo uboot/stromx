@@ -21,7 +21,7 @@
 #include "stromx/runtime/OperatorKernel.h"
 #include "stromx/runtime/Primitive.h"
 #include "stromx/runtime/RecycleAccess.h"
-#include "stromx/runtime/impl/DataOperatorBase.h"
+#include "stromx/runtime/DataOperatorBase.h"
 
 namespace stromx
 {

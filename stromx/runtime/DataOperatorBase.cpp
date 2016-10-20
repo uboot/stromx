@@ -14,7 +14,7 @@
 *  limitations under the License.
 */
 
-#include "stromx/runtime/impl/DataOperatorBase.h"
+#include "stromx/runtime/DataOperatorBase.h"
 
 #include "stromx/runtime/DataContainer.h"
 #include "stromx/runtime/DataProvider.h"

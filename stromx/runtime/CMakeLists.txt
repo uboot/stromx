@@ -11,7 +11,6 @@ set(SOURCES
     impl/Client.cpp
     impl/ConnectorParameter.cpp
     impl/DataContainerImpl.cpp
-    impl/DataOperatorBase.cpp
     impl/ReadAccessImpl.cpp
     impl/RecycleAccessImpl.cpp
     impl/WriteAccessImpl.cpp
@@ -33,6 +32,7 @@ set(SOURCES
     Counter.cpp
     DataContainer.cpp
     Data.cpp
+    DataOperatorBase.cpp
     DataRef.cpp
     Description.cpp
     Dump.cpp
@@ -47,11 +47,13 @@ set(SOURCES
     Id2DataPair.cpp
     Image.cpp
     ImageWrapper.cpp
+    IsEmpty.cpp
     Split.cpp
     Join.cpp
     List.cpp
     Locale.cpp
     Matrix.cpp
+    MatrixPropertyBase.cpp
     MatrixParameter.cpp
     MatrixWrapper.cpp
     Merge.cpp
