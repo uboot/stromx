@@ -104,6 +104,7 @@ class SynchronizedOperatorKernelTest : public CPPUNIT_NS :: TestFixture
     CPPUNIT_TEST (testSetConnectorTypeParameterToOutput);
     CPPUNIT_TEST (testConnectorParameterWrongType);
     CPPUNIT_TEST (testInputParameterPersistent);
+    CPPUNIT_TEST (testInputParameterDeactivate);
     CPPUNIT_TEST (testInputParameterPush);
     CPPUNIT_TEST (testOutputParameterPersistent);
     CPPUNIT_TEST (testOutputParameterPull);
@@ -235,11 +236,24 @@ protected:
         m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
         
         UInt16 data(42);
-        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(0, data), ParameterError);
+        CPPUNIT_ASSERT_THROW(m_kernel->getParameter(0, false), ParameterError);
         m_kernel->setParameter(0, data, false);
         
         CPPUNIT_ASSERT_NO_THROW(m_kernel->setParameter(0, data, false));
         CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
+        CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
+    }
+    
+    void testInputParameterDeactivate()
+    {
+        m_kernel->initialize(0, 0);
+        m_kernel->setConnectorType(0, Description::PARAMETER, Description::PERSISTENT);
+        m_kernel->activate();
+        
+        UInt16 data(42);
+        m_kernel->setParameter(0, data, false);
+        m_kernel->deactivate();
+        
         CPPUNIT_ASSERT_NO_THROW(m_kernel->getParameter(0, false));
     }
     

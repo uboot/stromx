@@ -129,7 +129,8 @@ namespace stromx
                     iter != m_map.end();
                     ++iter)
                 {
-                    iter->second = DataContainer();
+                    if (mustBeReset(iter->first))
+                        iter->second = DataContainer();
                 }       
             }
             
