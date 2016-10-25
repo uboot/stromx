@@ -32,6 +32,7 @@ namespace stromx
             CPPUNIT_TEST (testExecute);
             CPPUNIT_TEST (testExecuteEmptyList);
             CPPUNIT_TEST (testExecuteNumItemsInt32);
+            CPPUNIT_TEST (testExecuteNumItemsParameter);
             CPPUNIT_TEST_SUITE_END ();
 
         public:
@@ -44,6 +45,7 @@ namespace stromx
                 void testExecute();
                 void testExecuteEmptyList();
                 void testExecuteNumItemsInt32();
+                void testExecuteNumItemsParameter();
                 
             private:
                 runtime::OperatorTester* m_operator;

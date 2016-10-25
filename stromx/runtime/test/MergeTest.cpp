@@ -113,6 +113,32 @@ namespace stromx
             }
         }
         
+        void MergeTest::testExecuteNumItemsParameter()
+        {
+            m_operator->deactivate();
+            m_operator->setConnectorType(Merge::INPUT_NUM_ITEMS, 
+                                         Description::PARAMETER);
+                                         
+            m_operator->setParameter(Merge::INPUT_NUM_ITEMS, Int32(2));
+            m_operator->activate();
+            
+            {
+                DataContainer in(new None());
+                m_operator->setInputData(Merge::INPUT_DATA, in);
+            }
+            
+            {
+                DataContainer in(new None());
+                m_operator->setInputData(Merge::INPUT_DATA, in);
+            }
+            
+            DataContainer out = m_operator->getOutputData(Merge::OUTPUT);
+            m_operator->clearOutputData(Merge::OUTPUT);
+            const List & list = ReadAccess(out).get<List>();
+            
+            CPPUNIT_ASSERT_EQUAL(std::size_t(2), list.content().size());
+        }
+        
         void MergeTest::tearDown ( void )
         {
             delete m_operator;
