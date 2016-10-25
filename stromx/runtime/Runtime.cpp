@@ -27,6 +27,7 @@
 #include "stromx/runtime/Fork.h"
 #include "stromx/runtime/Split.h"
 #include "stromx/runtime/IsEmpty.h"
+#include "stromx/runtime/IsNotEmpty.h"
 #include "stromx/runtime/Join.h"
 #include "stromx/runtime/List.h"
 #include "stromx/runtime/Locale.h"
@@ -77,6 +78,7 @@ int stromxRegisterRuntime(stromx::runtime::Registry* registry)
         registry->registerOperator(new Fork);
         registry->registerOperator(new Split);
         registry->registerOperator(new IsEmpty);
+        registry->registerOperator(new IsNotEmpty);
         registry->registerOperator(new Join);
         registry->registerOperator(new Merge);
         registry->registerOperator(new PeriodicDelay);

@@ -67,6 +67,7 @@ set(SOURCES
     ../Image.cpp
     ../ImageWrapper.cpp
     ../IsEmpty.cpp
+    ../IsNotEmpty.cpp
     ../List.cpp
     ../Locale.cpp
     ../Matrix.cpp
@@ -142,6 +143,7 @@ set(SOURCES
     InputNodeTest.cpp
     Int32Test.cpp
     IsEmptyTest.cpp
+    IsNotEmptyTest.cpp
     JoinTest.cpp
     ListTest.cpp
     MatrixImpl.cpp

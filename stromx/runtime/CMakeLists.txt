@@ -48,6 +48,7 @@ set(SOURCES
     Image.cpp
     ImageWrapper.cpp
     IsEmpty.cpp
+    IsNotEmpty.cpp
     Split.cpp
     Join.cpp
     List.cpp
