@@ -252,7 +252,7 @@ namespace stromx
                     || isVariant(BAYERBG_8_IMAGE)
                     || isVariant(BAYERGB_8_IMAGE)
                     || isVariant(BAYERBG_16_IMAGE)
-                    || isVariant(BAYERGB_16_IMAGE);;
+                    || isVariant(BAYERGB_16_IMAGE);
             case MONO_IMAGE_ID:
                 return isVariant(MONO_8_IMAGE)
                     || isVariant(MONO_16_IMAGE);
