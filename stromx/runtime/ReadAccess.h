@@ -76,14 +76,7 @@ namespace stromx
             template<typename data_t>
             const data_t & get() const
             {
-                try
-                {
-                    return data_cast<data_t>(get());
-                }
-                catch(std::bad_cast &)
-                {
-                    throw BadCast();
-                }
+                return data_cast<data_t>(get());
             }
             
             /** 

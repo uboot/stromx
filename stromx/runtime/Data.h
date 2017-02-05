@@ -68,7 +68,7 @@ namespace stromx
         data_t & data_cast(Data & data)
         {
             if(data.isVariant(data_traits<data_t>::variant()))
-                return reinterpret_cast<data_t &>(data);
+                return static_cast<data_t &>(data);
             else
                 throw BadCast();
         }
@@ -82,7 +82,7 @@ namespace stromx
         const data_t & data_cast(const Data & data)
         {
             if(data.isVariant(data_traits<data_t>::variant()))
-                return reinterpret_cast<const data_t &>(data);
+                return static_cast<const data_t &>(data);
             else
                 throw BadCast();
         }
@@ -95,7 +95,7 @@ namespace stromx
         data_t* data_cast(Data * data)
         {
             if(data && data->isVariant(data_traits<data_t>::variant()))
-                return reinterpret_cast<data_t*>(data);
+                return static_cast<data_t*>(data);
             else
                 return 0;
         }
@@ -108,7 +108,7 @@ namespace stromx
         const data_t* data_cast(const Data * data)
         {
             if(data && data->isVariant(data_traits<data_t>::variant()))
-                return reinterpret_cast<const data_t*>(data);
+                return static_cast<const data_t*>(data);
             else
                 return 0;
         }

@@ -20,6 +20,7 @@
 #include "stromx/runtime/DataProvider.h"
 #include "stromx/runtime/Id2DataPair.h"
 #include "stromx/runtime/Locale.h"
+#include "stromx/runtime/Matrix.h"
 #include "stromx/runtime/ReadAccess.h"
 #include "stromx/runtime/Variant.h"
 
