@@ -21,6 +21,9 @@
 
 #include <iostream>
 
+#undef major
+#undef minor
+
 namespace stromx
 {
     namespace runtime

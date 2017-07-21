@@ -69,7 +69,6 @@ endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 include(FindGettext)
 include(UseDoxygen OPTIONAL)
 
-set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 find_package(Boost 1.50.0 REQUIRED COMPONENTS chrono date_time filesystem locale regex serialization system thread timer)
@@ -115,9 +114,9 @@ if (BUILD_OPENCV_WRAPPER AND BUILD_FILE_PERSISTENCE)
 endif()
 
 find_package(Boost 1.50.0 COMPONENTS filesystem python thread)
-find_package(PythonLibs)
+find_package(PythonLibs 2.7)
 
-if(Boost_FOUND AND PYTHON_INCLUDE_PATH)
+if(Boost_FOUND AND PYTHON_INCLUDE_DIRS)
     option(BUILD_PYTHON "Build Python wrapper" ON)
 endif()
 
