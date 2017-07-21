@@ -400,9 +400,11 @@ namespace stromx
             case Description::INPUT:
                 if (originalType == Description::INPUT)
                     m_inputs[id] = new InputNode(this, id);
+                break;
             case Description::OUTPUT:
                 if (originalType == Description::OUTPUT)
                     m_outputs[id] = new OutputNode(this, id);
+                break;
             default:
                 break;
             };
