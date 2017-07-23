@@ -29,13 +29,13 @@ class MyObserver(runtime.ConnectorObserver):
         if thread:
             threadName = thread.name()
             
-        print "{0}: {1} {2} of Operator '{3}/{4}' was set to: {5}".format(
+        print("{0}: {1} {2} of Operator '{3}/{4}' was set to: {5}".format(
             threadName,
             connector.type(),
             connector.id(),
             connector.op().info().package(),
             connector.op().info().type(),
-            dataStr)
+            dataStr))
 
 factory = runtime.Factory()
 register("libstromx_runtime.so", factory)

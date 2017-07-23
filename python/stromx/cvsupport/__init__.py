@@ -18,4 +18,4 @@
 
 import stromx.runtime
 
-from libcvsupport import *
+from stromx.cvsupport.libcvsupport import *

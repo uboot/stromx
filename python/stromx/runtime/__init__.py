@@ -16,7 +16,7 @@
 #  limitations under the License.
 #
 
-from libruntime import *
+from stromx.runtime.libruntime import *
 
 from ctypes import pythonapi
 import ctypes

@@ -30,5 +30,5 @@ op2 = runtime.Operator(runtime.Receive())
 try:
   stream.hideOperator(op2)
 except runtime.WrongArgument as e:
-  print e
+  print(e)
 

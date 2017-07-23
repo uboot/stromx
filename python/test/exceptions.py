@@ -31,27 +31,27 @@ class ExceptionsTest(unittest.TestCase):
         try:
             s.pause()
         except runtime.Exception as e:
-            print str(e)
+            print(str(e))
             
         try:
             s.pause()
         except runtime.WrongState as e:
-            print str(e)
+            print(str(e))
         
         i = -1
         try:
             s.pause()
         except runtime.WrongId as e:
-            print str(e)
+            print(str(e))
             i = 0
         except runtime.WrongState as e:
-            print str(e)
+            print(str(e))
             i = 1
         except runtime.Exception as e:
-            print str(e)
+            print(str(e))
             i = 2
         except Exception as e:
-            print str(e)
+            print(str(e))
             i = 3
             
         self.assertEqual(1, i)

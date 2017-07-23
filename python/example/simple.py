@@ -37,7 +37,7 @@ stream.start()
 for i in range(5):
     data = timer.getOutputData(1)
     with runtime.ReadAccess(data) as count:
-        print "Received {0}".format(count.get().get())
+        print("Received {0}".format(count.get().get()))
     
     timer.clearOutputData(1)
 

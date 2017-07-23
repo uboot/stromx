@@ -1,3 +1,3 @@
 import stromx.runtime
 
-from libtest import *
+from stromx.test.libtest import *

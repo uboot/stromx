@@ -17,9 +17,9 @@ def extractArchive(filename, root):
             dirpath = os.path.join(root, dirname)
             os.mkdir(dirpath)
             archive.extractall(dirpath)
-            print "Created {0}".format(dirpath)
+            print("Created {0}".format(dirpath))
     except zipfile.BadZipfile:
-        print "Failed to open {0}".format(path)
+        print("Failed to open {0}".format(path))
 
 def compressArchive(dirname, root):
     filename = dirname[:-len(".extracted")]
@@ -30,7 +30,7 @@ def compressArchive(dirname, root):
             memberPath = os.path.join(root, dirname, member)
             archive.write(memberPath, member)
     shutil.rmtree(dirPath)
-    print "Created {0}".format(filePath)
+    print("Created {0}".format(filePath))
     
 def readArchiveData(zipInput, filename, mode):
     zipInput.initialize("", filename)
@@ -75,10 +75,10 @@ def repackageArchive(filename, root):
         writeArchiveData(zipOutput, 'stream.studio', '.geometry', 
                          BINARY_MODE_OUT, studioGeometryData)
         zipOutput.close()
-        print "Repackaged {0}".format(filePath)
+        print("Repackaged {0}".format(filePath))
         
     except stromx.runtime.Exception as e:
-        print "Failed to repackage {0}: {1}".format(filePath, e)
+        print("Failed to repackage {0}: {1}".format(filePath, e))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('directory', type=str, nargs=1)

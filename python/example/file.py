@@ -31,7 +31,7 @@ for i in range(5):
     data = timer.getOutputData(1)
     count = runtime.ReadAccess(data)
     with runtime.ReadAccess(data) as count:
-        print "Received {0}".format(count.get().get())
+        print("Received {0}".format(count.get().get()))
     
     timer.clearOutputData(1)
 

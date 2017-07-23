@@ -34,9 +34,9 @@ class DeadlockObserver(runtime.ConnectorObserver):
         
         try:
             with runtime.ReadAccess(newData) as access:
-                print access.get().get()
+                print(access.get().get())
         except runtime.Exception as e:
-            print e
+            print(e)
             self.interrupt = True
             
 class OutputObserver(runtime.ConnectorObserver):
@@ -52,7 +52,7 @@ class OutputObserver(runtime.ConnectorObserver):
             return
         
         with runtime.ReadAccess(oldData) as access:
-            print access.get().get()
+            print(access.get().get())
             self.data = access.get().get()
 
 class ObserversTest(unittest.TestCase):

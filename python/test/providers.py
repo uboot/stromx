@@ -19,5 +19,5 @@ with sr.ZipFileInput("provider_test.zip") as inp:
     data = inp.file().read()
     stream = sr.XmlReader().readStream(inp, "stream.xml", factory)
 
-print stream.name()
-print data
+print(stream.name())
+print(data)

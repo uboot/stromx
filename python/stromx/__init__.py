@@ -22,24 +22,24 @@ import re
 def register(packageLib, factory):
     match =  re.match('lib?stromx_(.+)\.(so.*|dll)', packageLib);
     if not match:
-        print 'Failed to derive package name from "{0}"'.format(packageLib)
+        print('Failed to derive package name from "{0}"'.format(packageLib))
     package = match.group(1)
     
     try:
         lib = ctypes.CDLL(packageLib)
     except OSError:
-        print 'Failed to load {0}'.format(packageLib)
+        print('Failed to load {0}'.format(packageLib))
         return 1
 
     functionName = 'stromxRegister{0}'.format(package.capitalize())
     try:
         function = lib[functionName]
     except AttributeError:
-        print '{0}() is not defined'.format(functionName)
+        print('{0}() is not defined'.format(functionName))
         return 1
         
     if function(factory._this()):
-        print 'Failed to call {0}'.format(functionName)
+        print('Failed to call {0}'.format(functionName))
         return 1
     
     return 0
