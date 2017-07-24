@@ -9,7 +9,6 @@ include /usr/share/cdbs/1/class/cmake.mk
 
 build/libstromx::
 	cd $(DEB_BUILDDIR) && $(MAKE) test ARGS="-V"
-	touch build
- 
+
 build/stromx-doc::
 	cd $(DEB_BUILDDIR) && $(MAKE) doc
