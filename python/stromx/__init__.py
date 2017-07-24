@@ -38,7 +38,7 @@ def register(packageLib, factory):
         print('{0}() is not defined'.format(functionName))
         return 1
         
-    if function(factory._this()):
+    if function(ctypes.c_void_p(factory._this())):
         print('Failed to call {0}'.format(functionName))
         return 1
     
