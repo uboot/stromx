@@ -126,6 +126,7 @@ else()
     if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND AND Boost_FOUND)
         message("Found Python 2")
         option(BUILD_PYTHON "Build Python 2 wrapper" ON)
+    endif()
 endif()
 
 if(BUILD_PYTHON)
