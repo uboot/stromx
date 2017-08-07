@@ -83,7 +83,8 @@ BOOST_PYTHON_MODULE(libruntime)
     
     PyEval_InitThreads();
     
-    def("version", version);
+    def("version", version, return_value_policy<copy_const_reference>());
+    def("versionString", versionString, return_value_policy<copy_const_reference>());
     
     exportAssignThreadsAlgorithm();
     exportAbstractFactory();

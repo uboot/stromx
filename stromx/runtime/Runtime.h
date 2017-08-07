@@ -31,7 +31,15 @@ namespace stromx
          * 
          * \since 0.2
          */
-        STROMX_RUNTIME_API Version version();
+        STROMX_RUNTIME_API const Version & version();
+        
+        
+        /** 
+         * \brief Returns the version string (including the git SHA) of the stromx runtime library.
+         * 
+         * \since 0.8
+         */
+        STROMX_RUNTIME_API const std::string & versionString();
     }
 }
 

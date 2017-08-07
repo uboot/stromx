@@ -20,6 +20,7 @@ from stromx import register, runtime
 
 factory = runtime.Factory()
 register("libstromx_runtime.so", factory)
+print(runtime.versionString())
 
 stream = runtime.Stream()
 kernel = factory.newOperator("runtime", "Counter")

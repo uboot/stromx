@@ -51,11 +51,20 @@ namespace stromx
     {
         std::locale locale;
         
-        Version version()
+        const Version & version()
         {
-            return Version(STROMX_RUNTIME_VERSION_MAJOR,
-                           STROMX_RUNTIME_VERSION_MINOR,
-                           STROMX_RUNTIME_VERSION_PATCH);
+            const static Version VERSION(STROMX_RUNTIME_VERSION_MAJOR,
+                                         STROMX_RUNTIME_VERSION_MINOR,
+                                         STROMX_RUNTIME_VERSION_PATCH);
+            
+            return VERSION;
+        }
+        
+        const std::string &  versionString()
+        {
+            const static std::string VERSION_STRING = STROMX_RUNTIME_VERSION_STRING;
+            
+            return VERSION_STRING;
         }
     }
 }
@@ -112,3 +121,4 @@ int stromxRegisterRuntime(stromx::runtime::Registry* registry)
     
     return 0;
 }
+
