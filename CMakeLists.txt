@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(stromx)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 SET(GCC_DEBUG_FLAGS "-g")
 
@@ -31,6 +32,16 @@ set (STROMX_VERSION_MAJOR 0)
 set (STROMX_VERSION_MINOR 8)
 set (STROMX_VERSION_PATCH 0)
 
+include(GetGitRevisionDescription)
+get_git_head_revision(REFSPEC GIT_HASH)
+git_local_changes(GIT_LOCAL_CHANGES) 
+string(SUBSTRING ${GIT_HASH} 0 6 GIT_HASH)
+if(GIT_LOCAL_CHANGES EQUAL CLEAN)
+    message(STATUS "Git revision is ${GIT_HASH}")
+else()
+    message(STATUS "Git revision is dirty")
+endif()
+
 enable_testing()
 
 include(CheckTypeSize)
@@ -43,7 +54,6 @@ if(NOT DOUBLE_SIZE EQUAL 8)
     message(FATAL_ERROR "Double must be 8 bytes.")
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 set(LIB_DIR lib${LIB_SUFFIX})
 if(NOT PYTHON_INSTALL_DIR)
     set(PYTHON_INSTALL_DIR "" CACHE FILEPATH "Python install directory")
