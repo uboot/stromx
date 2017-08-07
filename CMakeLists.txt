@@ -28,19 +28,19 @@ mark_as_advanced(
     CMAKE_EXE_LINKER_FLAGS_COVERAGE
     CMAKE_SHARED_LINKER_FLAGS_COVERAGE )
 
-set (STROMX_VERSION_MAJOR 0)
-set (STROMX_VERSION_MINOR 8)
-set (STROMX_VERSION_PATCH 0)
+set(STROMX_VERSION_MAJOR 0)
+set(STROMX_VERSION_MINOR 8)
+set(STROMX_VERSION_PATCH 0)
 
 include(GetGitRevisionDescription)
 get_git_head_revision(REFSPEC GIT_HASH)
 git_local_changes(GIT_LOCAL_CHANGES) 
 string(SUBSTRING ${GIT_HASH} 0 6 GIT_HASH)
-if(GIT_LOCAL_CHANGES STREQUAL "CLEAN")
-    message(STATUS "Git revision is ${GIT_HASH}")
-else()
-    message(STATUS "Git revision is dirty")
+if(GIT_LOCAL_CHANGES STREQUAL "DIRTY")
+    set(GIT_HASH "dirty")
 endif()
+set(STROMX_VERSION_STRING ${STROMX_VERSION_MAJOR}.${STROMX_VERSION_MINOR}.${STROMX_VERSION_PATCH}-${GIT_HASH})
+message(STATUS "Stromx version: ${STROMX_VERSION_STRING}")
 
 enable_testing()
 
