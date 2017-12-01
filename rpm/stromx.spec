@@ -28,11 +28,7 @@ URL:            http://www.stromx.org
 Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
-%if 0%{?suse_version}
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel python3 python3-devel boost-devel doxygen cppunit-devel
-%else
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python3 python3-devel boost-devel doxygen lapack cppunit-devel
-%endif
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) boost-devel doxygen cppunit-devel
 # Requires:       
 
 %description
@@ -49,16 +45,13 @@ This package contains libraries and header files for
 developing applications that use stromx.
 
 
-%package        -n python-stromx
-Summary:        Python bindings for stromx
+%package        -n python3-stromx
+Summary:        Python 3 bindings for stromx
 Group:          Development/Libraries/Python
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       python-base = %{py_ver}
-%if 0%{?suse_version}
-%py_requires
-%endif
+Provides:       python3-stromx
+Obsoletes:      python3-stromx
 
-%description    -n python-stromx
+%description    -n python3-stromx
 This package contains Python bindings for stromx.
 
 
@@ -83,7 +76,7 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
 %if "%{?_lib}" == "lib64"
       -DLIB_SUFFIX=64 \
 %endif
-      -DPYTHON_INSTALL_DIR=%{python_sitearch} \
+      -DPYTHON_INSTALL_DIR=%{python3_sitearch} \
       -DDOC_INSTALL_DIR=%{_docdir} \
       ..
 
@@ -124,9 +117,9 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_datadir}/stromx
 
-%files -n python-stromx
+%files -n python3-stromx
 %defattr(0644, root, root, 0755)
-%{python_sitearch}/stromx
+%{python3_sitearch}/stromx
 
 %files -n stromx-doc
 %defattr(-, root, root, 0755)
