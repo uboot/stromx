@@ -29,9 +29,9 @@ Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
 %if 0%{?suse_version}
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel python3-devel boost-devel doxygen cppunit-devel
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel python3 python3-devel boost-devel doxygen cppunit-devel
 %else
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python3-devel boost-devel doxygen lapack cppunit-devel
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel xerces-c-devel python3 python3-devel boost-devel doxygen lapack cppunit-devel
 %endif
 # Requires:       
 
