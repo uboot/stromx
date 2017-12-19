@@ -28,7 +28,7 @@ URL:            http://www.stromx.org
 Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) boost-devel doxygen cppunit-devel
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) boost_1_65-devel doxygen cppunit-devel
 # Requires:       
 
 %description
