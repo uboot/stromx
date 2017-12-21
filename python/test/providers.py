@@ -4,7 +4,7 @@ import stromx.runtime as sr
 
 stream = sr.Stream()
 stream.setName("My stream")
-data = "dfdsfdsds\nkljöklöjkfldsjf"
+data = "dfdsfdsds\nkljkljkfldsjf"
 factory = sr.Factory()
 
 with sr.ZipFileOutput("provider_test.zip") as out:
