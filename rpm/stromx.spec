@@ -28,7 +28,7 @@ URL:            http://www.stromx.org
 Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) libboost_headers1_66_0-devel libboost_chrono1_66_0 libboost_date_time1_66_0 libboost_filesystem1_66_0 libboost_locale1_66_0 libboost_python-py3-1_66_0 libboost_regex1_66_0 libboost_serialization1_66_0 libboost_system1_66_0 libboost_thread1_66_0 doxygen cppunit-devel
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) libboost_headers1_65_1-devel libboost_chrono1_65_1-devel libboost_date_time1_65_1-devel libboost_filesystem1_65_1-devel libboost_locale1_65_1-devel libboost_python-py3-1_65_1-devel libboost_regex1_65_1-devel libboost_serialization1_65_1-devel libboost_system1_65_1-devel libboost_thread1_65_1-devel doxygen cppunit-devel
 # Requires:       
 
 %description
