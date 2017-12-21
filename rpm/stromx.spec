@@ -48,7 +48,6 @@ developing applications that use stromx.
 %package        -n python3-stromx
 Summary:        Python 3 bindings for stromx
 Group:          Development/Libraries/Python
-Provides:       python3-stromx
 Obsoletes:      python3-stromx
 
 %description    -n python3-stromx
