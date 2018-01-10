@@ -51,6 +51,18 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 This package contains libraries and header files for
 developing applications that use stromx.
 
+%if 0%{?sle_version} == 120300 && 0%{?is_opensuse}
+
+%package        -n python-stromx
+Summary:        Python bindings for stromx
+Group:          Development/Libraries/Python
+Obsoletes:      python-stromx
+
+%description    -n python-stromx
+This package contains Python bindings for stromx.
+
+%else
+%if 0%{?suse_version} > 1500
 
 %package        -n python3-stromx
 Summary:        Python 3 bindings for stromx
@@ -60,6 +72,8 @@ Obsoletes:      python3-stromx
 %description    -n python3-stromx
 This package contains Python bindings for stromx.
 
+%endif
+%endif
 
 %package        -n stromx-doc
 
@@ -126,9 +140,22 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_datadir}/stromx
 
+
+%if 0%{?sle_version} == 120300 && 0%{?is_opensuse}
+
+%files -n python-stromx
+%defattr(0644, root, root, 0755)
+%{python_sitearch}/stromx
+
+%else
+%if 0%{?suse_version} > 1500
+
 %files -n python3-stromx
 %defattr(0644, root, root, 0755)
 %{python3_sitearch}/stromx
+
+%endif
+%endif
 
 %files -n stromx-doc
 %defattr(-, root, root, 0755)
