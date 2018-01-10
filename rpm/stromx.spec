@@ -96,10 +96,14 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
 %if "%{?_lib}" == "lib64"
       -DLIB_SUFFIX=64 \
 %endif
+      -DDOC_INSTALL_DIR=%{_docdir} \
+%if 0%{?sle_version} == 120300 && 0%{?is_opensuse}
+      -DPYTHON_INSTALL_DIR=%{python_sitearch} \
+%else
 %if 0%{?suse_version} > 1500
       -DPYTHON_INSTALL_DIR=%{python3_sitearch} \
-      -DDOC_INSTALL_DIR=%{_docdir} \
       -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+%endif
 %endif
       ..
 
