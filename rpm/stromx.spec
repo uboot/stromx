@@ -28,12 +28,12 @@ URL:            http://www.stromx.org
 Source0:        %{name}-%{version}.tar.bz2
 # BuildArch:      noarch
 
-BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel pkgconfig(python3) doxygen cppunit-devel
+BuildRequires:  cmake gcc-c++ libzip-devel opencv-devel libxerces-c-devel doxygen cppunit-devel
 %if 0%{?sle_version} == 120300 && 0%{?is_opensuse}
-BuildRequires: boost-devel
+BuildRequires: pkgconfig(python) boost-devel
 %else
 %if 0%{?suse_version} > 1500
-BuildRequires:  libboost_headers1_66_0-devel libboost_chrono1_66_0-devel libboost_date_time1_66_0-devel libboost_filesystem1_66_0-devel libboost_locale1_66_0-devel libboost_python-py3-1_66_0-devel libboost_regex1_66_0-devel libboost_serialization1_66_0-devel libboost_system1_66_0-devel libboost_thread1_66_0-devel  libboost_timer1_66_0-devel
+BuildRequires:  pkgconfig(python3) libboost_headers1_66_0-devel libboost_chrono1_66_0-devel libboost_date_time1_66_0-devel libboost_filesystem1_66_0-devel libboost_locale1_66_0-devel libboost_python-py3-1_66_0-devel libboost_regex1_66_0-devel libboost_serialization1_66_0-devel libboost_system1_66_0-devel libboost_thread1_66_0-devel  libboost_timer1_66_0-devel
 %endif
 %endif
 # Requires:       
@@ -82,10 +82,12 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
 %if "%{?_lib}" == "lib64"
       -DLIB_SUFFIX=64 \
 %endif
+%if 0%{?suse_version} > 1500
       -DPYTHON_INSTALL_DIR=%{python3_sitearch} \
       -DDOC_INSTALL_DIR=%{_docdir} \
       -DPYTHON_EXECUTABLE=/usr/bin/python3 \
       ..
+%endif
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
