@@ -86,8 +86,8 @@ cmake -DCMAKE_INSTALL_PREFIX='%{_prefix}' \
       -DPYTHON_INSTALL_DIR=%{python3_sitearch} \
       -DDOC_INSTALL_DIR=%{_docdir} \
       -DPYTHON_EXECUTABLE=/usr/bin/python3 \
-      ..
 %endif
+      ..
 
 make %{?_smp_mflags}
 make %{?_smp_mflags} doc
