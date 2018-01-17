@@ -19,7 +19,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for near real-time, parallel processing of data
 
 Package: python3-stromx
-Section: python3
+Section: python
 Architecture: any
 Depends: ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}, libstromx (= ${binary:Version})
 Description: Python bindings for stromx
