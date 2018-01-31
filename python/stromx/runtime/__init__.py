@@ -72,7 +72,7 @@ def _memoryViewForMatrix(self):
     pybuffer.itemsize = matrix.valueSize()
     pybuffer.readonly = 0
     pybuffer.ndim = 2
-    pybuffer.format = f
+    pybuffer.format = str.encode(f)
     pybuffer.shape = matrix.shape
     pybuffer.strides = matrix.strides
     pybuffer.suboffsets = ctypes.POINTER(ctypes.c_ssize_t)()
